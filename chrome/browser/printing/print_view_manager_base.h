@@ -65,6 +65,7 @@ class PrintViewManagerBase : public content::NotificationObserver,
                         std::unique_ptr<IPC::Message> message);
 
   void SetPrintingRFH(content::RenderFrameHost* rfh);
+  bool IsBasicPrinting() const { return printing_rfh_; }
 
   // content::WebContentsObserver implementation.
   void RenderFrameDeleted(content::RenderFrameHost* render_frame_host) override;
