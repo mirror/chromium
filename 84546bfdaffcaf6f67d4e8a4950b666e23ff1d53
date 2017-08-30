@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e1ab29b_4ff52a1c",
+        "filename": "components/viz/service/display/skia_renderer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000770
+      },
+      "writtenOn": "2017-08-30T12:27:52Z",
+      "side": 0,
+      "message": "I should have caught this before, but this should be 0 rather than 1. Skia uses 0 to mean \"not multisampled\" and 1 to mean \"multisampled with the minimum supported sample count\" a la OpenGL. It\u0027s kind of weird and something we\u0027ve thought about changing since it is a frequent point of confusion.",
+      "range": {
+        "startLine": 187,
+        "startChar": 22,
+        "endLine": 187,
+        "endChar": 23
+      },
+      "revId": "84546bfdaffcaf6f67d4e8a4950b666e23ff1d53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
