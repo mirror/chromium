@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b0a1ed35_e4c6dd83",
+        "filename": "cc/animation/animation_curve.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-30T18:10:21Z",
+      "side": 1,
+      "message": "Nope. Removed.",
+      "parentUuid": "2729c41f_c8843680",
+      "revId": "3e4bf0bf2b728a33cc0dd14a157400f3efc65ce6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7b1c7981_5dbc6436",
         "filename": "cc/trees/target_property.h",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-30T16:10:08Z",
       "side": 1,
       "message": "I know this isn\u0027t our code, but I wonder why it wasn\u0027t\n{TRANSFORM \u003d 0,\n ...\n BOUNDS,\n NUM_TARGET_PROPERTIES\n}",
+      "revId": "3e4bf0bf2b728a33cc0dd14a157400f3efc65ce6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dd6face_5cdde157",
+        "filename": "cc/trees/target_property.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-30T18:10:21Z",
+      "side": 1,
+      "message": "Our switch statements demand that we handle every unique enumerator. If we do this, we get complaints about not handling NUM_CURVE_TYPES. I think that handling those is a bit uglier.",
+      "parentUuid": "7b1c7981_5dbc6436",
       "revId": "3e4bf0bf2b728a33cc0dd14a157400f3efc65ce6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "9a8ae664_ff5c17e1",
+        "filename": "chrome/browser/vr/elements/loading_indicator.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-30T18:10:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0958207_f47bbc27",
+      "range": {
+        "startLine": 45,
+        "startChar": 13,
+        "endLine": 45,
+        "endChar": 33
+      },
+      "revId": "3e4bf0bf2b728a33cc0dd14a157400f3efc65ce6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd3f3717_12d6ab26",
         "filename": "chrome/browser/vr/elements/transience_manager.cc",
         "patchSetId": 8
@@ -70,6 +130,24 @@
       "writtenOn": "2017-08-30T16:10:08Z",
       "side": 1,
       "message": "Can drop Show/Hide as they\u0027re now one-liners.",
+      "revId": "3e4bf0bf2b728a33cc0dd14a157400f3efc65ce6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9cf96b8_ded724a6",
+        "filename": "chrome/browser/vr/elements/transience_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-30T18:10:21Z",
+      "side": 1,
+      "message": "I was hoping to keep these to wrap up the opacity fiddling that\u0027s now required.",
+      "parentUuid": "fd3f3717_12d6ab26",
       "revId": "3e4bf0bf2b728a33cc0dd14a157400f3efc65ce6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "cdc99dd7_7404a3ba",
+        "filename": "chrome/browser/vr/elements/ui_element.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-30T18:10:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "379da0fd_aac6f8fe",
+      "revId": "3e4bf0bf2b728a33cc0dd14a157400f3efc65ce6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4148a78b_2d3a911c",
         "filename": "chrome/browser/vr/test/ui_scene_manager_test.cc",
         "patchSetId": 8
@@ -107,6 +203,24 @@
       "revId": "3e4bf0bf2b728a33cc0dd14a157400f3efc65ce6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb31055b_50a7b337",
+        "filename": "chrome/browser/vr/test/ui_scene_manager_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-30T18:10:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4148a78b_2d3a911c",
+      "revId": "3e4bf0bf2b728a33cc0dd14a157400f3efc65ce6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
