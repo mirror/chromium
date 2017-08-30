@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38955ef4_74d87ed9",
+        "filename": "chrome/test/data/webui/extensions/extension_item_test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-30T01:22:18Z",
+      "side": 0,
+      "message": "It would be nice to still test this functionality somehow.",
+      "revId": "372ef9b71b6437b796b2059c72f6e9628d612bdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

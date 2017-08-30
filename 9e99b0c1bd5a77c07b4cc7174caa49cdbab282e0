@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d83340a_cdc5c9b9",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-30T01:22:18Z",
+      "side": 1,
+      "message": "I think it might be nice to just keep the close event approach for this and the error page just because it would be good to reduce the number of things which need to know about navigateTo() and for easy testability, but I don\u0027t feel strongly.",
+      "revId": "9e99b0c1bd5a77c07b4cc7174caa49cdbab282e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
