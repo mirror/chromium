@@ -46,8 +46,7 @@ import java.util.Collections;
  * Shows a card prompting the user to sign in. This item is also an {@link OptionalLeaf}, and sign
  * in state changes control its visibility.
  */
-public class SignInPromo extends OptionalLeaf
-        implements StatusCardViewHolder.DataSource, ImpressionTracker.Listener {
+public class SignInPromo extends OptionalLeaf implements ImpressionTracker.Listener {
     /**
      * Whether the promo had been previously dismissed, before creating an instance of the
      * {@link SignInPromo}.
@@ -83,8 +82,10 @@ public class SignInPromo extends OptionalLeaf
     private final boolean mArePersonalizedPromosEnabled;
     private final @Nullable SigninPromoController mSigninPromoController;
     private final @Nullable ProfileDataCache mProfileDataCache;
+    private final @Nullable StatusCardViewHolder.DataSource mGenericPromoData;
 
     public SignInPromo(SuggestionsUiDelegate uiDelegate) {
+        Context context = ContextUtils.getApplicationContext();
         mArePersonalizedPromosEnabled =
                 ChromeFeatureList.isEnabled(ChromeFeatureList.ANDROID_SIGNIN_PROMOS);
 
@@ -96,7 +97,7 @@ public class SignInPromo extends OptionalLeaf
         }
 
         SuggestionsSource suggestionsSource = uiDelegate.getSuggestionsSource();
-        SigninManager signinManager = SigninManager.get(ContextUtils.getApplicationContext());
+        SigninManager signinManager = SigninManager.get(context);
 
         mCanSignIn = signinManager.isSignInAllowed() && !signinManager.isSignedInOnNative();
         mCanShowPersonalizedSuggestions = suggestionsSource.areRemoteSuggestionsEnabled();
@@ -108,19 +109,21 @@ public class SignInPromo extends OptionalLeaf
             mSigninObserver = null;
             mProfileDataCache = null;
             mSigninPromoController = null;
+            mGenericPromoData = null;
             return;
         }
 
         if (mArePersonalizedPromosEnabled) {
-            Context context = ContextUtils.getApplicationContext();
             int imageSize = context.getResources().getDimensionPixelSize(R.dimen.user_picture_size);
             mProfileDataCache =
                     new ProfileDataCache(context, Profile.getLastUsedProfile(), imageSize);
             mSigninPromoController = new SigninPromoController(
                     mProfileDataCache, SigninAccessPoint.NTP_CONTENT_SUGGESTIONS);
+            mGenericPromoData = null;
         } else {
             mProfileDataCache = null;
             mSigninPromoController = null;
+            mGenericPromoData = new GenericSigninPromoData();
         }
 
         mSigninObserver = new SigninObserver(signinManager, suggestionsSource);
@@ -162,7 +165,7 @@ public class SignInPromo extends OptionalLeaf
         if (mArePersonalizedPromosEnabled) {
             ((PersonalizedPromoViewHolder) holder).onBindViewHolder();
         } else {
-            ((GenericPromoViewHolder) holder).onBindViewHolder(this);
+            ((GenericPromoViewHolder) holder).onBindViewHolder(mGenericPromoData);
         }
 
         mImpressionTracker.reset(mImpressionTracker.wasTriggered() ? null : holder.itemView);
@@ -171,29 +174,6 @@ public class SignInPromo extends OptionalLeaf
     @Override
     protected void visitOptionalItem(NodeVisitor visitor) {
         visitor.visitSignInPromo();
-    }
-
-    @Override
-    @StringRes
-    public int getHeader() {
-        return R.string.snippets_disabled_generic_prompt;
-    }
-
-    @Override
-    public String getDescription() {
-        return ContextUtils.getApplicationContext().getString(
-                R.string.snippets_disabled_signed_out_instructions);
-    }
-
-    @Override
-    @StringRes
-    public int getActionLabel() {
-        return R.string.sign_in_button;
-    }
-
-    @Override
-    public void performAction(Context context) {
-        AccountSigninActivity.startIfAllowed(context, SigninAccessPoint.NTP_CONTENT_SUGGESTIONS);
     }
 
     @Override
@@ -223,15 +203,18 @@ public class SignInPromo extends OptionalLeaf
         mDismissed = true;
         updateVisibility();
 
+        final @StringRes int promoHeader;
         ChromePreferenceManager preferenceManager = ChromePreferenceManager.getInstance();
         if (mArePersonalizedPromosEnabled) {
             preferenceManager.setNewTabPagePersonalizedSigninPromoDismissed(true);
+            promoHeader = mSigninPromoController.getDescriptionStringId();
         } else {
             preferenceManager.setNewTabPageGenericSigninPromoDismissed(true);
+            promoHeader = mGenericPromoData.getHeader();
         }
 
         mSigninObserver.unregister();
-        itemRemovedCallback.onResult(ContextUtils.getApplicationContext().getString(getHeader()));
+        itemRemovedCallback.onResult(ContextUtils.getApplicationContext().getString(promoHeader));
     }
 
     @VisibleForTesting
@@ -349,8 +332,10 @@ public class SignInPromo extends OptionalLeaf
         public PersonalizedPromoViewHolder(SuggestionsRecyclerView parent,
                 ContextMenuManager contextMenuManager, UiConfig config,
                 ProfileDataCache profileDataCache, SigninPromoController signinPromoController) {
-            super(R.layout.personalized_signin_promo_view_ntp_content_suggestions, parent, config,
-                    contextMenuManager);
+            super(FeatureUtilities.isChromeHomeModernEnabled()
+                            ? R.layout.personalized_signin_promo_view_modern_content_suggestions
+                            : R.layout.personalized_signin_promo_view_ntp_content_suggestions,
+                    parent, config, contextMenuManager);
             getParams().topMargin = parent.getResources().getDimensionPixelSize(
                     R.dimen.ntp_sign_in_promo_margin_top);
 
@@ -362,6 +347,14 @@ public class SignInPromo extends OptionalLeaf
         protected void onBindViewHolder() {
             super.onBindViewHolder();
             updatePersonalizedSigninPromo();
+        }
+
+        @DrawableRes
+        @Override
+        protected int selectBackground(boolean hasCardAbove, boolean hasCardBelow) {
+            // Modern does not update the card background.
+            assert !FeatureUtilities.isChromeHomeModernEnabled();
+            return R.drawable.ntp_signin_promo_card_single;
         }
 
         private void updatePersonalizedSigninPromo() {
@@ -376,6 +369,34 @@ public class SignInPromo extends OptionalLeaf
 
             SigninPromoView view = (SigninPromoView) itemView;
             mSigninPromoController.setupSigninPromoView(view.getContext(), view, null);
+        }
+    }
+
+    /** Defines the appearance and the behaviour of a generic Sign In Promo card. */
+    @VisibleForTesting
+    public static class GenericSigninPromoData implements StatusCardViewHolder.DataSource {
+        @Override
+        @StringRes
+        public int getHeader() {
+            return R.string.snippets_disabled_generic_prompt;
+        }
+
+        @Override
+        public String getDescription() {
+            return ContextUtils.getApplicationContext().getString(
+                    R.string.snippets_disabled_signed_out_instructions);
+        }
+
+        @Override
+        @StringRes
+        public int getActionLabel() {
+            return R.string.sign_in_button;
+        }
+
+        @Override
+        public void performAction(Context context) {
+            AccountSigninActivity.startIfAllowed(
+                    context, SigninAccessPoint.NTP_CONTENT_SUGGESTIONS);
         }
     }
 
