@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5bd78b89_8c20b9df",
+        "filename": "extensions/browser/api/declarative_net_request/constants.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-30T01:42:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e50a6b89_5a22c969",
+      "range": {
+        "startLine": 72,
+        "startChar": 15,
+        "endLine": 72,
+        "endChar": 32
+      },
+      "revId": "02520a48ae15e83f38be33d4ad2a29336f834c60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60fc7f52_f055e7c5",
         "filename": "extensions/browser/api/declarative_net_request/constants.h",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "02520a48ae15e83f38be33d4ad2a29336f834c60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53dac800_4e96d09f",
+        "filename": "extensions/browser/api/declarative_net_request/constants.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-30T01:42:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60fc7f52_f055e7c5",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 86,
+        "endChar": 68
+      },
+      "revId": "02520a48ae15e83f38be33d4ad2a29336f834c60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "491c0e34_f8eebab1",
+        "filename": "extensions/browser/api/declarative_net_request/parse_info.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-30T01:42:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7dff24f_199d01ca",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 67
+      },
+      "revId": "02520a48ae15e83f38be33d4ad2a29336f834c60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8825c8b7_7a3a90de",
         "filename": "extensions/browser/api/declarative_net_request/parse_info.h",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "02520a48ae15e83f38be33d4ad2a29336f834c60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ca6cc63_80614b00",
+        "filename": "extensions/browser/api/declarative_net_request/parse_info.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-30T01:42:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8825c8b7_7a3a90de",
+      "range": {
+        "startLine": 37,
+        "startChar": 17,
+        "endLine": 37,
+        "endChar": 23
+      },
+      "revId": "02520a48ae15e83f38be33d4ad2a29336f834c60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "89087f5b_0827e91c",
+        "filename": "extensions/browser/api/declarative_net_request/utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-30T01:42:41Z",
+      "side": 1,
+      "message": "Thanks, this is pretty handy.",
+      "parentUuid": "e9567e07_d6c96064",
+      "range": {
+        "startLine": 72,
+        "startChar": 14,
+        "endLine": 72,
+        "endChar": 23
+      },
+      "revId": "02520a48ae15e83f38be33d4ad2a29336f834c60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18689ebb_7f85248e",
         "filename": "extensions/browser/api/declarative_net_request/utils.cc",
         "patchSetId": 5
@@ -137,6 +257,30 @@
       "revId": "02520a48ae15e83f38be33d4ad2a29336f834c60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dda86fa6_9853946b",
+        "filename": "extensions/browser/api/declarative_net_request/utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-30T01:42:41Z",
+      "side": 1,
+      "message": "Not really. IDs are specified by the extension developer. This is the stage where we check for duplicates.",
+      "parentUuid": "18689ebb_7f85248e",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 66
+      },
+      "revId": "02520a48ae15e83f38be33d4ad2a29336f834c60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "30c529eb_876de557",
+        "filename": "extensions/browser/api/declarative_net_request/utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-30T01:42:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3045c22_2a713d4c",
+      "range": {
+        "startLine": 91,
+        "startChar": 20,
+        "endLine": 91,
+        "endChar": 31
+      },
+      "revId": "02520a48ae15e83f38be33d4ad2a29336f834c60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3cb7b1e4_b2ce2081",
         "filename": "extensions/browser/api/declarative_net_request/utils.cc",
         "patchSetId": 5
@@ -183,6 +351,30 @@
       "revId": "02520a48ae15e83f38be33d4ad2a29336f834c60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ffa863d_eac50d60",
+        "filename": "extensions/browser/api/declarative_net_request/utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-30T01:42:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cb7b1e4_b2ce2081",
+      "range": {
+        "startLine": 104,
+        "startChar": 21,
+        "endLine": 104,
+        "endChar": 27
+      },
+      "revId": "02520a48ae15e83f38be33d4ad2a29336f834c60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "5aa4a508_8af265ed",
+        "filename": "extensions/browser/api/declarative_net_request/utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-30T01:42:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1607548_71c70b45",
+      "range": {
+        "startLine": 116,
+        "startChar": 2,
+        "endLine": 116,
+        "endChar": 21
+      },
+      "revId": "02520a48ae15e83f38be33d4ad2a29336f834c60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13b7156e_6e2e177f",
         "filename": "extensions/browser/api/declarative_net_request/utils.cc",
         "patchSetId": 5
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "afb4dd5e_52475506",
+        "filename": "extensions/browser/api/declarative_net_request/utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-30T01:42:41Z",
+      "side": 1,
+      "message": "Good idea, done. Added a TODO for DNRManifestData.",
+      "parentUuid": "13b7156e_6e2e177f",
+      "range": {
+        "startLine": 129,
+        "startChar": 0,
+        "endLine": 129,
+        "endChar": 53
+      },
+      "revId": "02520a48ae15e83f38be33d4ad2a29336f834c60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c99d0f3_ad7b7d2e",
         "filename": "extensions/browser/api/declarative_net_request/utils.cc",
         "patchSetId": 5
@@ -243,6 +483,30 @@
       "writtenOn": "2017-08-25T00:06:49Z",
       "side": 1,
       "message": "Is there a reason |error| is not passed directly to IndexAndPersistRulesImpl and let it fill it in if necessary? Avoiding multi-stage API is beneficial where we can. In that case GetErrorDescription can go away or rather be a private method.",
+      "range": {
+        "startLine": 147,
+        "startChar": 0,
+        "endLine": 147,
+        "endChar": 73
+      },
+      "revId": "02520a48ae15e83f38be33d4ad2a29336f834c60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f172f57_15db169a",
+        "filename": "extensions/browser/api/declarative_net_request/utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-30T01:42:41Z",
+      "side": 1,
+      "message": "- With ParseInfo, I think it\u0027s cleaner for IndexAndPersistRulesImpl to return ParseInfo, and have IndexAndPersistRules set the error. There are multiple return points in IndexAndPersistRulesImpl.\n- I have kept ParseInfo and exposed it in it\u0027s own header to allow for easier error testing. See ParseInfo usage in https://chromium-review.googlesource.com/c/chromium/src/+/625482/8/chrome/browser/extensions/api/declarative_net_request/rule_indexing_unittest.cc. \nThe alternative will be to remove ParseInfo, have a private GetError method and expose a public GetErrorForTest method.",
+      "parentUuid": "5c99d0f3_ad7b7d2e",
       "range": {
         "startLine": 147,
         "startChar": 0,
@@ -302,6 +566,30 @@
     },
     {
       "key": {
+        "uuid": "7a678306_2138ca4e",
+        "filename": "extensions/browser/api/declarative_net_request/utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-30T01:42:41Z",
+      "side": 1,
+      "message": "Here is the source of the warning- https://cs.chromium.org/chromium/src/extensions/common/file_util.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d368. We check for filenames with \"_\" at the start, on extension load. _metadata is not whitelisted for inclusion at load time. However it\u0027s inclusion is a warning and not a hard error (This changed recently).\n\nWe can special case this so that no warning is raised if _metadata only contains the flatbuffer file, but that would be ugly. Maybe we can create a separate directory?",
+      "parentUuid": "0264ac1a_1be48494",
+      "range": {
+        "startLine": 156,
+        "startChar": 5,
+        "endLine": 156,
+        "endChar": 12
+      },
+      "revId": "02520a48ae15e83f38be33d4ad2a29336f834c60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1077b905_fd4f3c1c",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5
@@ -325,6 +613,30 @@
     },
     {
       "key": {
+        "uuid": "42aeb363_e7e5dde0",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 20586,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-30T01:42:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1077b905_fd4f3c1c",
+      "range": {
+        "startLine": 20586,
+        "startChar": 13,
+        "endLine": 20586,
+        "endChar": 16
+      },
+      "revId": "02520a48ae15e83f38be33d4ad2a29336f834c60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4620f020_86a6e049",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5
@@ -345,6 +657,30 @@
       "revId": "02520a48ae15e83f38be33d4ad2a29336f834c60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c645ba7a_bf5340f5",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 20610,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-30T01:42:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4620f020_86a6e049",
+      "range": {
+        "startLine": 20610,
+        "startChar": 0,
+        "endLine": 20610,
+        "endChar": 75
+      },
+      "revId": "02520a48ae15e83f38be33d4ad2a29336f834c60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
