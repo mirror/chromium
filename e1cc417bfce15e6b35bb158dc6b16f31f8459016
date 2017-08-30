@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dcbf881f_68eee9da",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-30T13:03:03Z",
+      "side": 1,
+      "message": "Done (yes, I was planning on doing that, but makes sense to do it incrementally as I add the code)",
+      "parentUuid": "5d02f67f_d4c4278a",
+      "revId": "e1cc417bfce15e6b35bb158dc6b16f31f8459016",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97cbfd7d_7729c8be",
         "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "e1cc417bfce15e6b35bb158dc6b16f31f8459016",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb1258f8_19db3e47",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-30T13:03:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97cbfd7d_7729c8be",
+      "revId": "e1cc417bfce15e6b35bb158dc6b16f31f8459016",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a4e91099_68e98aca",
+        "filename": "content/browser/service_worker/service_worker_database.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 995,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-30T13:03:03Z",
+      "side": 1,
+      "message": "Done (ah, makes sense!)",
+      "parentUuid": "95dd0aa5_9c24e101",
+      "revId": "e1cc417bfce15e6b35bb158dc6b16f31f8459016",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df627955_21a03c6e",
         "filename": "content/browser/service_worker/service_worker_database.cc",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "e1cc417bfce15e6b35bb158dc6b16f31f8459016",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26271cd9_45b148aa",
+        "filename": "content/browser/service_worker/service_worker_database.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1010,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-30T13:03:03Z",
+      "side": 1,
+      "message": "No, the starts_with condition above has already matched a longer prefix. So removing a shorter prefix here is guaranteed to succeed. I added a comment to the NOTREACHED to explain this:\n\n  NOTREACHED() \u003c\u003c \"The starts_with above already matched a longer prefix\";\n\n(and also pulled the CreateUserDataKeyPrefix(registration_id) into a variable outside the loop, to avoid recalculating it)",
+      "parentUuid": "df627955_21a03c6e",
+      "revId": "e1cc417bfce15e6b35bb158dc6b16f31f8459016",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
