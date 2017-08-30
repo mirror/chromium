@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "4cad88c5_8543acee",
+        "filename": "chrome/browser/extensions/extension_service_sync_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2734,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-08-30T14:30:14Z",
+      "side": 1,
+      "message": "\u003e Yeah, please remove this. \n\nDone.\n\n\u003e That said, the idea of testing a sync change saying the extension is enabled while it\u0027s blacklisted is probably worthwhile.\n\nI think that\u0027s what the first part of the test (lines 2736 to 2745) was already doing.",
+      "parentUuid": "44adaa5c_a5a197f3",
+      "revId": "20bbe5fc5fcdd6010c5af162c9262d0bb3e8ecdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98964bce_1350eed0",
         "filename": "chrome/browser/extensions/extension_sync_service.cc",
         "patchSetId": 4
