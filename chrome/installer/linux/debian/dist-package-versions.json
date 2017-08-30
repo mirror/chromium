@@ -209,7 +209,7 @@
         "libatk1.0-0": "2.25.90-0ubuntu1",
         "libc6": "2.24-12ubuntu1",
         "libcairo2": "1.14.10-1",
-        "libcups2": "2.2.4-5",
+        "libcups2": "2.2.4-3",
         "libdbus-1-3": "1.10.22-1ubuntu1",
         "libexpat1": "2.2.3-1",
         "libfontconfig1": "2.11.94-0ubuntu2",
