@@ -16,6 +16,24 @@
       "revId": "8646832a1d809a6ab6d4f1a26de21171fe4f0c39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4352097d_ce07cbd8",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/list_container.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-08-30T08:23:51Z",
+      "side": 1,
+      "message": "Interesting, \u0027pointerdown\u0027 seems to work and successfully prevent \u0027contextmenu\u0027 from being fired.\nTrying the same with \u0027touchstart\u0027 didn\u0027t work - while looking through events, I haven\u0027t been able to find a good list with what causes what etc., do you happen to know one?\nIt also seems to be browser-specific, so I\u0027m happy we only have to look at Chrome because of ChromeOS :D",
+      "parentUuid": "d5a9f28c_9107a266",
+      "revId": "8646832a1d809a6ab6d4f1a26de21171fe4f0c39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
