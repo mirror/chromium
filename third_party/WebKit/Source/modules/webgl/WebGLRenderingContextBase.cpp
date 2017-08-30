@@ -753,7 +753,8 @@ WebGLRenderingContextBase::GetStaticBitmapImage() {
 
 RefPtr<StaticBitmapImage> WebGLRenderingContextBase::GetImage(
     AccelerationHint hint,
-    SnapshotReason reason) const {
+    SnapshotReason reason,
+    SourceDrawingBuffer sourceBuffer) const {
   if (!GetDrawingBuffer())
     return nullptr;
 
@@ -767,7 +768,7 @@ RefPtr<StaticBitmapImage> WebGLRenderingContextBase::GetImage(
     return nullptr;
   std::unique_ptr<ImageBuffer> buffer = ImageBuffer::Create(std::move(surface));
   if (!buffer->CopyRenderingResultsFromDrawingBuffer(GetDrawingBuffer(),
-                                                     kBackBuffer)) {
+                                                     sourceBuffer)) {
     // copyRenderingResultsFromDrawingBuffer is expected to always succeed
     // because we've explicitly created an Accelerated surface and have already
     // validated it.
@@ -1466,7 +1467,6 @@ bool WebGLRenderingContextBase::PaintRenderingResultsToCanvas(
   if (!marked_canvas_dirty_ && !must_clear_now)
     return false;
 
-  canvas()->ClearCopiedImage();
   marked_canvas_dirty_ = false;
 
   if (!canvas()->GetOrCreateImageBuffer())
@@ -4929,13 +4929,13 @@ SnapshotReason WebGLRenderingContextBase::FunctionIDToSnapshotReason(
 
 void WebGLRenderingContextBase::TexImageCanvasByGPU(
     TexImageFunctionID function_id,
-    HTMLCanvasElement* canvas,
+    CanvasRenderingContextHost* canvas,
     GLenum target,
     GLuint target_texture,
     GLint xoffset,
     GLint yoffset,
     const IntRect& source_sub_rectangle) {
-  if (!canvas->Is3d()) {
+  if (!canvas->RenderingContext() || !canvas->RenderingContext()->Is3d()) {
     ImageBuffer* buffer = canvas->GetOrCreateImageBuffer();
     if (buffer &&
         !buffer->CopyToPlatformTexture(
@@ -4967,7 +4967,8 @@ void WebGLRenderingContextBase::TexImageByGPU(
     GLint zoffset,
     CanvasImageSource* image,
     const IntRect& source_sub_rectangle) {
-  DCHECK(image->IsCanvasElement() || image->IsImageBitmap());
+  DCHECK(image->IsCanvasElement() || image->IsOffscreenCanvas() ||
+         image->IsImageBitmap());
   int width = source_sub_rectangle.Width();
   int height = source_sub_rectangle.Height();
 
@@ -5007,8 +5008,9 @@ void WebGLRenderingContextBase::TexImageByGPU(
     // glCopyTextureCHROMIUM has a DRAW_AND_READBACK path which will call
     // texImage2D. So, reset unpack buffer parameters before that.
     ScopedUnpackParametersResetRestore temporaryResetUnpack(this);
-    if (image->IsCanvasElement()) {
-      TexImageCanvasByGPU(function_id, static_cast<HTMLCanvasElement*>(image),
+    if (image->IsCanvasElement() || image->IsOffscreenCanvas()) {
+      TexImageCanvasByGPU(function_id,
+                          static_cast<CanvasRenderingContextHost*>(image),
                           copy_target, target_texture, copy_x_offset,
                           copy_y_offset, source_sub_rectangle);
     } else {
@@ -5042,7 +5044,7 @@ void WebGLRenderingContextBase::TexImageByGPU(
   }
 }
 
-void WebGLRenderingContextBase::TexImageHelperHTMLCanvasElement(
+void WebGLRenderingContextBase::TexImageHelperCanvasRenderingContextHost(
     SecurityOrigin* security_origin,
     TexImageFunctionID function_id,
     GLenum target,
@@ -5053,7 +5055,7 @@ void WebGLRenderingContextBase::TexImageHelperHTMLCanvasElement(
     GLint xoffset,
     GLint yoffset,
     GLint zoffset,
-    HTMLCanvasElement* canvas,
+    CanvasRenderingContextHost* canvas,
     const IntRect& source_sub_rectangle,
     GLsizei depth,
     GLint unpack_image_height,
@@ -5062,21 +5064,29 @@ void WebGLRenderingContextBase::TexImageHelperHTMLCanvasElement(
   if (isContextLost())
     return;
 
-  if (!ValidateHTMLCanvasElement(security_origin, func_name, canvas,
-                                 exception_state))
+  if (!ValidateCanvasRenderingContextHost(security_origin, func_name, canvas,
+                                          exception_state))
     return;
   WebGLTexture* texture =
       ValidateTexImageBinding(func_name, function_id, target);
   if (!texture)
     return;
+
   TexImageFunctionType function_type;
   if (function_id == kTexImage2D)
     function_type = kTexImage;
   else
     function_type = kTexSubImage;
-  if (!ValidateTexFunc(func_name, function_type, kSourceHTMLCanvasElement,
-                       target, level, internalformat, canvas->width(),
-                       canvas->height(), depth, 0, format, type, xoffset,
+
+  TexFuncValidationSourceType validation_source_type;
+  if (canvas->IsOffscreenCanvas())
+    validation_source_type = kSourceOffscreenCanvas;
+  else
+    validation_source_type = kSourceHTMLCanvasElement;
+
+  if (!ValidateTexFunc(func_name, function_type, validation_source_type, target,
+                       level, internalformat, canvas->Size().Width(),
+                       canvas->Size().Height(), depth, 0, format, type, xoffset,
                        yoffset, zoffset))
     return;
 
@@ -5097,21 +5107,22 @@ void WebGLRenderingContextBase::TexImageHelperHTMLCanvasElement(
     // upgraded to handle more formats.
     if (!canvas->IsAccelerated() || !CanUseTexImageByGPU(format, type)) {
       // 2D canvas has only FrontBuffer.
-      TexImageImpl(function_id, target, level, internalformat, xoffset, yoffset,
-                   zoffset, format, type,
-                   canvas
-                       ->CopiedImage(kFrontBuffer, kPreferAcceleration,
-                                     FunctionIDToSnapshotReason(function_id))
-                       .Get(),
-                   WebGLImageConversion::kHtmlDomCanvas, unpack_flip_y_,
-                   unpack_premultiply_alpha_, source_sub_rectangle, 1, 0);
+      TexImageImpl(
+          function_id, target, level, internalformat, xoffset, yoffset, zoffset,
+          format, type,
+          canvas->RenderingContext()
+              ->GetImage(kPreferAcceleration,
+                         FunctionIDToSnapshotReason(function_id), kBackBuffer)
+              .Get(),
+          WebGLImageConversion::kHtmlDomCanvas, unpack_flip_y_,
+          unpack_premultiply_alpha_, source_sub_rectangle, 1, 0);
       return;
     }
 
     // The GPU-GPU copy path uses the Y-up coordinate system.
     IntRect adjusted_source_sub_rectangle = source_sub_rectangle;
     if (!unpack_flip_y_) {
-      adjusted_source_sub_rectangle.SetY(canvas->height() -
+      adjusted_source_sub_rectangle.SetY(canvas->Size().Height() -
                                          adjusted_source_sub_rectangle.MaxY());
     }
 
@@ -5131,15 +5142,16 @@ void WebGLRenderingContextBase::TexImageHelperHTMLCanvasElement(
     // TODO(zmo): Implement GPU-to-GPU copy path (crbug.com/612542).
     // Note that code will also be needed to copy to layers of 3D
     // textures, and elements of 2D texture arrays.
-    TexImageImpl(function_id, target, level, internalformat, xoffset, yoffset,
-                 zoffset, format, type,
-                 canvas
-                     ->CopiedImage(kFrontBuffer, kPreferAcceleration,
-                                   FunctionIDToSnapshotReason(function_id))
-                     .Get(),
-                 WebGLImageConversion::kHtmlDomCanvas, unpack_flip_y_,
-                 unpack_premultiply_alpha_, source_sub_rectangle, depth,
-                 unpack_image_height);
+    TexImageImpl(
+        function_id, target, level, internalformat, xoffset, yoffset, zoffset,
+        format, type,
+        canvas->RenderingContext()
+            ->GetImage(kPreferAcceleration,
+                       FunctionIDToSnapshotReason(function_id), kBackBuffer)
+            .Get(),
+        WebGLImageConversion::kHtmlDomCanvas, unpack_flip_y_,
+        unpack_premultiply_alpha_, source_sub_rectangle, depth,
+        unpack_image_height);
   }
 }
 
@@ -5149,9 +5161,9 @@ void WebGLRenderingContextBase::texImage2D(ExecutionContext* execution_context,
                                            GLint internalformat,
                                            GLenum format,
                                            GLenum type,
-                                           HTMLCanvasElement* canvas,
+                                           CanvasRenderingContextHost* canvas,
                                            ExceptionState& exception_state) {
-  TexImageHelperHTMLCanvasElement(
+  TexImageHelperCanvasRenderingContextHost(
       execution_context->GetSecurityOrigin(), kTexImage2D, target, level,
       internalformat, format, type, 0, 0, 0, canvas,
       GetTextureSourceSize(canvas), 1, 0, exception_state);
@@ -5601,9 +5613,9 @@ void WebGLRenderingContextBase::texSubImage2D(
     GLint yoffset,
     GLenum format,
     GLenum type,
-    HTMLCanvasElement* canvas,
+    CanvasRenderingContextHost* canvas,
     ExceptionState& exception_state) {
-  TexImageHelperHTMLCanvasElement(
+  TexImageHelperCanvasRenderingContextHost(
       execution_context->GetSecurityOrigin(), kTexSubImage2D, target, level, 0,
       format, type, xoffset, yoffset, 0, canvas, GetTextureSourceSize(canvas),
       1, 0, exception_state);
@@ -7323,10 +7335,10 @@ bool WebGLRenderingContextBase::ValidateHTMLImageElement(
   return true;
 }
 
-bool WebGLRenderingContextBase::ValidateHTMLCanvasElement(
+bool WebGLRenderingContextBase::ValidateCanvasRenderingContextHost(
     SecurityOrigin* security_origin,
     const char* function_name,
-    HTMLCanvasElement* canvas,
+    CanvasRenderingContextHost* canvas,
     ExceptionState& exception_state) {
   if (!canvas || !canvas->IsPaintable()) {
     SynthesizeGLError(GL_INVALID_VALUE, function_name, "no canvas");

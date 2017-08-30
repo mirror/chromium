@@ -36,7 +36,6 @@
 #include "core/fileapi/BlobCallback.h"
 #include "core/html/HTMLElement.h"
 #include "core/html/canvas/CanvasDrawListener.h"
-#include "core/html/canvas/CanvasImageSource.h"
 #include "core/html/canvas/CanvasRenderingContextHost.h"
 #include "core/imagebitmap/ImageBitmapSource.h"
 #include "core/page/PageVisibilityObserver.h"
@@ -78,7 +77,6 @@ typedef CanvasRenderingContext2DOrWebGLRenderingContextOrWebGL2RenderingContextO
 class CORE_EXPORT HTMLCanvasElement final : public HTMLElement,
                                             public ContextLifecycleObserver,
                                             public PageVisibilityObserver,
-                                            public CanvasImageSource,
                                             public CanvasRenderingContextHost,
                                             public SurfaceLayerBridgeObserver,
                                             public ImageBufferClient,
@@ -109,8 +107,6 @@ class CORE_EXPORT HTMLCanvasElement final : public HTMLElement,
   CanvasRenderingContext* GetCanvasRenderingContext(
       const String&,
       const CanvasContextCreationAttributes&);
-
-  bool IsPaintable() const;
 
   String toDataURL(const String& mime_type,
                    const ScriptValue& quality_argument,
@@ -144,13 +140,11 @@ class CORE_EXPORT HTMLCanvasElement final : public HTMLElement,
   void DisableDeferral(DisableDeferralReason);
   PaintCanvas* ExistingDrawingCanvas() const;
 
-  CanvasRenderingContext* RenderingContext() const { return context_.Get(); }
+  CanvasRenderingContext* RenderingContext() const final {
+    return context_.Get();
+  }
 
   void EnsureUnacceleratedImageBuffer();
-  RefPtr<Image> CopiedImage(SourceDrawingBuffer,
-                            AccelerationHint,
-                            SnapshotReason);
-  void ClearCopiedImage();
 
   bool OriginClean() const;
   void SetOriginTainted() { origin_clean_ = false; }
@@ -332,10 +326,6 @@ class CORE_EXPORT HTMLCanvasElement final : public HTMLElement,
   mutable bool did_fail_to_create_image_buffer_;
   bool image_buffer_is_clear_;
   std::unique_ptr<ImageBuffer> image_buffer_;
-
-  // FIXME: This is temporary for platforms that have to copy the image buffer
-  // to render (and for CSSCanvasValue).
-  mutable RefPtr<Image> copied_image_;
 
   // Used for OffscreenCanvas that controls this HTML canvas element
   std::unique_ptr<::blink::SurfaceLayerBridge> surface_layer_bridge_;

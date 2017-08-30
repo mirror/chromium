@@ -129,7 +129,7 @@ RefPtr<Image> OffscreenCanvas::GetSourceImageForCanvas(
     *status = kZeroSizeCanvasSourceImageStatus;
     return nullptr;
   }
-  RefPtr<Image> image = context_->GetImage(hint, reason);
+  RefPtr<Image> image = context_->GetImage(hint, reason, kBackBuffer);
   if (!image) {
     *status = kInvalidSourceImageStatus;
   } else {
