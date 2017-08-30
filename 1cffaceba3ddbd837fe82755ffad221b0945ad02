@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "780edb1a_8683dbbe",
+        "filename": "base/trace_event/memory_allocator_dump.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-08-30T09:00:43Z",
+      "side": 1,
+      "message": "^ I created a monster :P (read: I\u0027m so proud of you two guys, now also as reviewers)",
+      "parentUuid": "60deaf92_3965b169",
+      "range": {
+        "startLine": 84,
+        "startChar": 2,
+        "endLine": 84,
+        "endChar": 43
+      },
+      "revId": "1cffaceba3ddbd837fe82755ffad221b0945ad02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e3df7433_e4265a06",
         "filename": "base/trace_event/memory_allocator_dump.cc",
         "patchSetId": 7
@@ -48,6 +72,75 @@
     },
     {
       "key": {
+        "uuid": "84ec723c_521fc95f",
+        "filename": "base/trace_event/memory_allocator_dump.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-08-30T09:00:43Z",
+      "side": 1,
+      "message": "Maybe if you add a comment saying:\n// In the TraceViewer UI table, each Each MemoryAllocatorDump is a row and each Entry generates a column (if not already existing).\n\nsuddenly everything becomes clearer.",
+      "range": {
+        "startLine": 37,
+        "startChar": 2,
+        "endLine": 37,
+        "endChar": 16
+      },
+      "revId": "1cffaceba3ddbd837fe82755ffad221b0945ad02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77dd84c3_34e38653",
+        "filename": "base/trace_event/memory_allocator_dump.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-08-30T09:00:43Z",
+      "side": 1,
+      "message": "this is declared but not defined. Maybe define it later in the next CL once you end up using it? (or define here and have a test here that exercises the std::move(Entry))",
+      "range": {
+        "startLine": 45,
+        "startChar": 4,
+        "endLine": 45,
+        "endChar": 25
+      },
+      "revId": "1cffaceba3ddbd837fe82755ffad221b0945ad02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c0f982f_e609ce93",
+        "filename": "base/trace_event/memory_allocator_dump.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-08-30T09:00:43Z",
+      "side": 1,
+      "message": "very minor thing (feel free to ignore if it\u0027s too problematic to change in the current PS, not a huge deal):\nthe type is uint64_t, the enum is called kInteger, the variable is called |value_uint|.\nFor consistency would have been nice (uint64_t, kUint64, value_uint64) (but again, not a huge deal)",
+      "range": {
+        "startLine": 53,
+        "startChar": 13,
+        "endLine": 53,
+        "endChar": 23
+      },
+      "revId": "1cffaceba3ddbd837fe82755ffad221b0945ad02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0eb0afd7_c3991caf",
         "filename": "base/trace_event/memory_allocator_dump.h",
         "patchSetId": 7
@@ -64,6 +157,29 @@
         "startChar": 31,
         "endLine": 120,
         "endChar": 53
+      },
+      "revId": "1cffaceba3ddbd837fe82755ffad221b0945ad02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5000aae2_eb54788c",
+        "filename": "base/trace_event/memory_allocator_dump.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-08-30T09:00:43Z",
+      "side": 1,
+      "message": "nit: move up on line 123, functions should be declared before fields",
+      "range": {
+        "startLine": 131,
+        "startChar": 2,
+        "endLine": 131,
+        "endChar": 48
       },
       "revId": "1cffaceba3ddbd837fe82755ffad221b0945ad02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",

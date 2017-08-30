@@ -403,6 +403,30 @@
     },
     {
       "key": {
+        "uuid": "0bd56f3c_ef1b6d76",
+        "filename": "base/trace_event/memory_allocator_dump.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-08-30T09:00:43Z",
+      "side": 1,
+      "message": "Not sure (I\u0027m asking on Slack) you can actually do StringPiece here, in the sense, I am not sure that mojo keeps the original buffer around when deserializing, so not sure you can safely just reference those in the struct_traits. The option would be having here both a StringPiece and an owned std::string for the underlying buffer to use only in one case when this gets deserialized, and use only StringPiece on the producer side. but that is maybe too complex and error-prone?\n\nYou definitely can and should use a StringPiece when serializing this (Entry -\u003e Mojo).\n\nI\u0027d probably just use std::string in the meantime here and then see if we can optimize this later. Maybe leave a TODO saying somethign like: this is by design always coming from indefinitely lived const char* strings, the only reason why its copied into a string is to handle Mojo (de)serialization.",
+      "parentUuid": "38dbf48f_eaa97397",
+      "range": {
+        "startLine": 51,
+        "startChar": 4,
+        "endLine": 51,
+        "endChar": 15
+      },
+      "revId": "edeb0bfcc9d95a0510041c6dccb31af2f5c917c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad9c7171_8149f615",
         "filename": "base/trace_event/memory_allocator_dump.h",
         "patchSetId": 4
