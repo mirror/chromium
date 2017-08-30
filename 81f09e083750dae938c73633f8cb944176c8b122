@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94041e09_e4ead49f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkOfflineDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-30T01:06:08Z",
+      "side": 0,
+      "message": "Can you describe in the CL description why this is no longer necessary?",
+      "revId": "81f09e083750dae938c73633f8cb944176c8b122",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
