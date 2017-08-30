@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "19f7045d_dbb2fe40",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 1175,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-08-30T14:04:43Z",
+      "side": 1,
+      "message": "Hmm, I think we actually do want this for java_prebuilts (android_java_prebuilts specifically) since they might contain code that we do want to enable assert for right (and later enable custom resources for)?\n\nI\u0027ve modified the change to reflect this.",
+      "parentUuid": "35d3fab9_ef283f6b",
+      "revId": "e0e232650d8f829a56262d409d8552e5b90f6838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f7602dd_52a2eece",
         "filename": "build/config/android/internal_rules.gni",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a7660638_e05ce194",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 2470,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-08-30T14:04:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f7602dd_52a2eece",
+      "revId": "e0e232650d8f829a56262d409d8552e5b90f6838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d53173ad_f11210b8",
         "filename": "third_party/gvr-android-sdk/BUILD.gn",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "e0e232650d8f829a56262d409d8552e5b90f6838",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b759a595_71b87d56",
+        "filename": "third_party/gvr-android-sdk/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-08-30T14:04:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d53173ad_f11210b8",
+      "revId": "e0e232650d8f829a56262d409d8552e5b90f6838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
