@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8036771_91cea363",
+        "filename": "third_party/WebKit/LayoutTests/shadow-dom/css-focus-recalc.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-08-30T07:38:09Z",
+      "side": 1,
+      "message": "Please move this file to LayoutTests/shadow-dom/crash/.",
+      "revId": "b9c07ca4f1db2eed3b884aa9f17325f75a752755",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be1e7516_fd5c1066",
+        "filename": "third_party/WebKit/LayoutTests/shadow-dom/css-focus-recalc.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-08-30T07:38:09Z",
+      "side": 1,
+      "message": "When you moved to crash directory you need to adjust these paths.",
+      "revId": "b9c07ca4f1db2eed3b884aa9f17325f75a752755",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9362e452_8c86612e",
+        "filename": "third_party/WebKit/LayoutTests/shadow-dom/css-focus-recalc.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-08-30T07:38:09Z",
+      "side": 1,
+      "message": "nit: you don\u0027t need this line.  Ids in the document are automatically accessible via\nwindow.{id} and in this context you can omit \"window.\".",
+      "revId": "b9c07ca4f1db2eed3b884aa9f17325f75a752755",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab915bc7_1311f40d",
+        "filename": "third_party/WebKit/LayoutTests/shadow-dom/css-focus-recalc.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-08-30T07:38:09Z",
+      "side": 1,
+      "message": "you don\u0027t need \"var shadow \u003d \" part, as |shadow| is not used elsewhere.",
+      "revId": "b9c07ca4f1db2eed3b884aa9f17325f75a752755",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
