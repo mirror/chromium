@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a1a28b4_0f47a9ae",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-08-30T21:30:18Z",
+      "side": 1,
+      "message": "don\u0027t mention in upstream CL",
+      "range": {
+        "startLine": 7,
+        "startChar": 30,
+        "endLine": 7,
+        "endChar": 46
+      },
+      "revId": "fb6e72330a14b437d480485272df7943e18e84d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2dd0511b_bfb05d4e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-08-30T21:30:18Z",
+      "side": 1,
+      "message": "[Chromecast]",
+      "revId": "fb6e72330a14b437d480485272df7943e18e84d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cd277be9_15f49dd7",
+        "filename": "chromecast/media/cma/backend/alsa/filter_group.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-08-30T21:30:18Z",
+      "side": 1,
+      "message": "Copy",
+      "range": {
+        "startLine": 121,
+        "startChar": 5,
+        "endLine": 121,
+        "endChar": 14
+      },
+      "revId": "fb6e72330a14b437d480485272df7943e18e84d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e5e3325f_d024b76b",
+        "filename": "chromecast/media/cma/backend/alsa/filter_group.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-08-30T21:30:18Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 104,
+        "startChar": 28,
+        "endLine": 104,
+        "endChar": 52
+      },
+      "revId": "fb6e72330a14b437d480485272df7943e18e84d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "247a4a0e_1465bb26",
+        "filename": "chromecast/media/cma/backend/alsa/stream_mixer_alsa.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 940,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-08-30T21:30:18Z",
+      "side": 1,
+      "message": "don\u0027t mention in upstream CL",
+      "range": {
+        "startLine": 940,
+        "startChar": 67,
+        "endLine": 940,
+        "endChar": 72
+      },
+      "revId": "fb6e72330a14b437d480485272df7943e18e84d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6db3562b_c45f609f",
+        "filename": "chromecast/media/cma/backend/alsa/stream_mixer_alsa.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1134,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-08-30T21:30:18Z",
+      "side": 1,
+      "message": "I don\u0027t see why the mix behaviour should change based on which channel is selected...?",
+      "range": {
+        "startLine": 1133,
+        "startChar": 2,
+        "endLine": 1134,
+        "endChar": 60
+      },
+      "revId": "fb6e72330a14b437d480485272df7943e18e84d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8f2a4ad6_d088db6d",
+        "filename": "chromecast/media/cma/backend/alsa/stream_mixer_alsa.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1135,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-08-30T21:30:18Z",
+      "side": 1,
+      "message": "This isn\u0027t really correct, the selected playout channel should only apply to media streams (for now)",
+      "range": {
+        "startLine": 1135,
+        "startChar": 2,
+        "endLine": 1135,
+        "endChar": 59
+      },
+      "revId": "fb6e72330a14b437d480485272df7943e18e84d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6da8394f_37f69807",
+        "filename": "chromecast/public/media/decoder_config.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-08-30T21:30:18Z",
+      "side": 1,
+      "message": "doesn\u0027t seem to be used for anything",
+      "range": {
+        "startLine": 283,
+        "startChar": 0,
+        "endLine": 299,
+        "endChar": 60
+      },
+      "revId": "fb6e72330a14b437d480485272df7943e18e84d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
