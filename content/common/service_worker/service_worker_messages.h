@@ -2,6 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#ifndef CONTENT_COMMON_SERVICE_WORKER_SERVICE_WORKER_MESSAGES_H_
+#define CONTENT_COMMON_SERVICE_WORKER_SERVICE_WORKER_MESSAGES_H_
+
 // Message definition file, included multiple times, hence no include guard.
 
 #include <stdint.h>
@@ -508,3 +511,5 @@ IPC_MESSAGE_CONTROL2(ServiceWorkerMsg_NavigateClientResponse,
 IPC_MESSAGE_CONTROL2(ServiceWorkerMsg_NavigateClientError,
                      int /* request_id */,
                      GURL /* url */)
+
+#endif  // CONTENT_COMMON_SERVICE_WORKER_SERVICE_WORKER_MESSAGES_H_

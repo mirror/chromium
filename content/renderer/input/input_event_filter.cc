@@ -39,6 +39,8 @@ using ui::DidOverscrollParams;
 
 const char* GetInputMessageTypeName(const IPC::Message& message) {
   switch (message.type()) {
+// Someone else might have included input_messages.h so undef the guard.
+#undef CONTENT_COMMON_INPUT_MESSAGES_H_
 #include "content/common/input_messages.h"
     default:
       NOTREACHED() << "Invalid message type: " << message.type();
