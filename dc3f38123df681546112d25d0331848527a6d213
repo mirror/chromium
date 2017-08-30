@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "464be8e3_eb5fac1b",
+        "filename": "components/safe_browsing/browser/threat_details.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-30T20:54:01Z",
+      "side": 1,
+      "message": "nit: You probably need this empty line.",
+      "revId": "dc3f38123df681546112d25d0331848527a6d213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38dcef9e_3988318a",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-30T20:54:01Z",
+      "side": 1,
+      "message": "out of place include. should be under line 15.",
+      "revId": "dc3f38123df681546112d25d0331848527a6d213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07d53514_6cbf68ab",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-30T20:54:01Z",
+      "side": 1,
+      "message": "How about switch statement instead of if-else?",
+      "revId": "dc3f38123df681546112d25d0331848527a6d213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a65af484_4dc5acb9",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-30T20:54:01Z",
+      "side": 1,
+      "message": "no need curly {}",
+      "revId": "dc3f38123df681546112d25d0331848527a6d213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1209e77_408be32a",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-30T20:54:01Z",
+      "side": 1,
+      "message": "er, I thought it is not recommended to use any static member function. Did I miss anything here?",
+      "revId": "dc3f38123df681546112d25d0331848527a6d213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfc16ff0_1c872a73",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-30T20:54:01Z",
+      "side": 1,
+      "message": "nit: nullptr instead of NULL.",
+      "revId": "dc3f38123df681546112d25d0331848527a6d213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66740af1_b7005bd7",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-30T20:54:01Z",
+      "side": 1,
+      "message": "you need \nif (..) {\n} \n\nbecause there are more than 1 line in the if block.",
+      "revId": "dc3f38123df681546112d25d0331848527a6d213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ce63717_5798ff2a",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-30T20:54:01Z",
+      "side": 1,
+      "message": "nit: empty line between functions",
+      "revId": "dc3f38123df681546112d25d0331848527a6d213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
