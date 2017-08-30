@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "2c2997d4_07925d73",
+        "filename": "components/offline_pages/core/offline_page_feature.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-30T18:31:14Z",
+      "side": 1,
+      "message": "Let\u0027s name it kOfflinePagesPrefetchUIFeature, and make a todo to rename the other one.",
+      "parentUuid": "59f159f7_2a4a31fe",
+      "revId": "73be4b247b8f16f66cbe054ef7d3c0bdabeaf2d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72d7cb6c_f804ec90",
         "filename": "components/offline_pages/core/offline_page_feature.cc",
         "patchSetId": 1
