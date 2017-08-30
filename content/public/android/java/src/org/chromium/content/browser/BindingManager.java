@@ -4,8 +4,6 @@
 
 package org.chromium.content.browser;
 
-import android.content.Context;
-
 import org.chromium.base.process_launcher.ChildProcessConnection;
 
 /**
@@ -14,6 +12,7 @@ import org.chromium.base.process_launcher.ChildProcessConnection;
  * normal conditions (it can still be killed under drastic memory pressure). ChildProcessConnections
  * have two oom bindings: initial binding and strong binding.
  *
+ * XXX
  * BindingManager receives calls that signal status of each service (setPriority())
  * and the entire embedding application (onSentToBackground(), onBroughtToForeground()) and
  * manipulates child process bindings accordingly.
@@ -29,22 +28,8 @@ import org.chromium.base.process_launcher.ChildProcessConnection;
  * explicitly noted.
  */
 public interface BindingManager {
-    /**
-     * Registers a freshly started child process. This can be called on any thread.
-     * @param pid handle of the service process
-     */
-    void addNewConnection(int pid, ChildProcessConnection connection);
-
-    /**
-     * Called when the service visibility changes or is determined for the first time. On low-memory
-     * devices this will also drop the oom bindings of the last process that was oom-bound if a new
-     * process is used in foreground.
-     * @param pid handle of the service process
-     * @param foreground true iff the service is visibile to the user
-     * @param boostForPendingViews true iff a pending view is hosted in service, so service is
-     *                             likely about to become foreground.
-     */
-    void setPriority(int pid, boolean foreground, boolean boostForPendingViews);
+    void increaseRecency(ChildProcessConnection connection);
+    void dropRecency(ChildProcessConnection connection);
 
     /**
      * Called when the embedding application is sent to background. We want to maintain a strong
@@ -64,19 +49,6 @@ public interface BindingManager {
      * session.
      */
     void onBroughtToForeground();
-
-    /**
-     * Should be called when the connection to the child process goes away (either after a clean
-     * exit or an unexpected crash). At this point we let go of the reference to the
-     * ChildProcessConnection. This can be called on any thread.
-     */
-    void removeConnection(int pid);
-
-    /**
-     * Starts moderate binding management.
-     * Please see https://goo.gl/tl9MQm for details.
-     */
-    void startModerateBindingManagement(Context context, int maxSize);
 
     /**
      * Releases all moderate bindings.
