@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "312a1816_bd7b561f",
+        "filename": "ios/chrome/browser/ui/commands/browser_commands.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-30T09:24:38Z",
+      "side": 1,
+      "message": "Nit: Remove \u0027popup\u0027 from the comments and method names; the fact that the page info is in a popup is a UI implementation detail that shouldn\u0027t be relevant to the commands themselves.",
+      "range": {
+        "startLine": 91,
+        "startChar": 31,
+        "endLine": 91,
+        "endChar": 36
+      },
+      "revId": "13f46eeaba7d86e8616cf5f2c4c977997c6a4300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "655b14f2_c38722a8",
+        "filename": "ios/chrome/browser/ui/commands/browser_commands.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-30T09:24:38Z",
+      "side": 1,
+      "message": "We don\u0027t want to pass around views in commands. If we need to pass a screen location for the purposes of animations, we should pass a GCPoint in UIWindow coordinates. See how OpenNewTabCommand is used for examples.",
+      "range": {
+        "startLine": 93,
+        "startChar": 42,
+        "endLine": 93,
+        "endChar": 52
+      },
+      "revId": "13f46eeaba7d86e8616cf5f2c4c977997c6a4300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93c37c1f_9d93ec6c",
+        "filename": "ios/chrome/browser/ui/omnibox/location_bar_controller_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-30T09:24:38Z",
+      "side": 1,
+      "message": "If this class is assumed to require ARC (as implied by the change from __unsafe_unretained to __weak), why use a scoped_nsobject?",
+      "range": {
+        "startLine": 93,
+        "startChar": 8,
+        "endLine": 93,
+        "endChar": 23
+      },
+      "revId": "13f46eeaba7d86e8616cf5f2c4c977997c6a4300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ac0b18c_193fac3f",
+        "filename": "ios/chrome/browser/ui/omnibox/page_info_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-30T09:24:38Z",
+      "side": 1,
+      "message": "Not to fix in this CL, but shouldn\u0027t these IDs be string resources?",
+      "range": {
+        "startLine": 474,
+        "startChar": 26,
+        "endLine": 474,
+        "endChar": 31
+      },
+      "revId": "13f46eeaba7d86e8616cf5f2c4c977997c6a4300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
