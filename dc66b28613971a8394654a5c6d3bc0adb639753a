@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fa64cf7_4d98d376",
+        "filename": "chromeos/components/tether/disconnect_tethering_request_sender_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-30T18:28:23Z",
+      "side": 1,
+      "message": "Move this above where you call AddObserver() and Initialize(). Right now, Initialize() will asynchronously call back on OnOperationFinished(), but we should not assume that this is the case. If it called back synchronously, we would try to erase it from the map before it was even added.",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 20
+      },
+      "revId": "dc66b28613971a8394654a5c6d3bc0adb639753a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deb6d155_4f2c5b59",
+        "filename": "chromeos/components/tether/disconnect_tethering_request_sender_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-30T18:28:23Z",
+      "side": 1,
+      "message": "If the device did not actually exist in the map, this would dereference a null pointer.\n\nInstead, let\u0027s do something like this:\n\nif (base::ContainsKey(device_id_to_operation_map_, device_id)) {\n  device_id_to_operations_map_.at(device_id)-\u003eRemoveObserver(this);\n  device_id_to_operation_map_.erase(device_id);\n} else {\n  // log error\n}",
+      "range": {
+        "startLine": 85,
+        "startChar": 0,
+        "endLine": 85,
+        "endChar": 66
+      },
+      "revId": "dc66b28613971a8394654a5c6d3bc0adb639753a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c28a10a_400fff81",
+        "filename": "chromeos/components/tether/disconnect_tethering_request_sender_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-30T18:28:23Z",
+      "side": 1,
+      "message": "You should only fire this event if HasPendingRequests() returned true before this. In the error case I commented on above (where the operation is not in the map), this wouldn\u0027t be true. Please store a bool after the logs at the top of this function like so:\n\nbool had_pending_requests \u003d HasPendingRequests();\n\nThen, at the bottom, you can use:\n\nif (had_pending_requests || !HasPendingRequests())\n  NotifyPendingDisconnectRequestsComplete();",
+      "range": {
+        "startLine": 95,
+        "startChar": 6,
+        "endLine": 95,
+        "endChar": 27
+      },
+      "revId": "dc66b28613971a8394654a5c6d3bc0adb639753a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b1b1fc0_6e151bdf",
+        "filename": "chromeos/components/tether/disconnect_tethering_request_sender_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-30T18:28:23Z",
+      "side": 1,
+      "message": "This is misleading. The callback is invoked once all pending requests are complete (i.e., the sender has no more requests). It is *not* called each time a pending request has been completed, only when *all* of them have been. Please reword accordingly.",
+      "range": {
+        "startLine": 78,
+        "startChar": 7,
+        "endLine": 78,
+        "endChar": 39
+      },
+      "revId": "dc66b28613971a8394654a5c6d3bc0adb639753a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1212da97_73ba34b8",
+        "filename": "chromeos/components/tether/disconnect_tethering_request_sender_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-30T18:28:23Z",
+      "side": 1,
+      "message": "nit: Either use \"int\" or \"uint32_t\".",
+      "range": {
+        "startLine": 83,
+        "startChar": 2,
+        "endLine": 83,
+        "endChar": 6
+      },
+      "revId": "dc66b28613971a8394654a5c6d3bc0adb639753a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80d6254e_b79bcfc6",
+        "filename": "chromeos/components/tether/disconnect_tethering_request_sender_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-30T18:28:23Z",
+      "side": 1,
+      "message": "Please also verify that it does have a pending request and has not notified the callback before calling NotifyFinished(), just as you did above in SendConcurrentRequestsToTwoDevices(). Also do this in the other tests below that don\u0027t do that.",
+      "range": {
+        "startLine": 162,
+        "startChar": 0,
+        "endLine": 164,
+        "endChar": 60
+      },
+      "revId": "dc66b28613971a8394654a5c6d3bc0adb639753a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47d62e13_687713e5",
+        "filename": "chromeos/components/tether/disconnect_tethering_request_sender_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-30T18:28:23Z",
+      "side": 1,
+      "message": "EXPECT_TRUE() after you call SendDisconnectRequestToDevice().",
+      "range": {
+        "startLine": 194,
+        "startChar": 2,
+        "endLine": 194,
+        "endChar": 14
+      },
+      "revId": "dc66b28613971a8394654a5c6d3bc0adb639753a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
