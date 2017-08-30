@@ -16,6 +16,24 @@
       "revId": "e558e5bb4a6eccbad1c4483dd344f704dc962e47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb1254e4_5b98f7f6",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-30T22:31:32Z",
+      "side": 1,
+      "message": "It is not possible for that to happen, since StartTetherIfPossible() calls GetTetherTechnologyState(), which will never return ENABLED once we are shut down. However, you are totally correct that this is hard to reason about, so I added an extra if() here for clarity. I suppose this also is a performance optimization too since we don\u0027t have to call those functions :P",
+      "parentUuid": "ac5d9554_70cbc229",
+      "revId": "e558e5bb4a6eccbad1c4483dd344f704dc962e47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
