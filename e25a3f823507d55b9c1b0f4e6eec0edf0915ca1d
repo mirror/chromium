@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "b220c6d7_30ee71e6",
+        "filename": "components/sync/BUILD.gn",
+        "patchSetId": 13
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-30T23:01:01Z",
+      "side": 1,
+      "message": "What about moving crc32c into public_deps in third_party/leveldatabase/BUILD.gn? Then `gn check` passes.",
+      "parentUuid": "5f58abfe_743a3399",
+      "range": {
+        "startLine": 611,
+        "startChar": 7,
+        "endLine": 611,
+        "endChar": 18
+      },
+      "revId": "e25a3f823507d55b9c1b0f4e6eec0edf0915ca1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed5fc0e3_30353da3",
         "filename": "components/sync/engine_impl/attachments/DEPS",
         "patchSetId": 13
