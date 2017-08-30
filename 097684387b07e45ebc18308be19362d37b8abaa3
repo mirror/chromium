@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4b6722db_f9146b83",
+        "filename": "chrome/browser/ui/cocoa/chrome_style.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-08-30T08:37:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "077a6407_b0ae62b9",
+      "range": {
+        "startLine": 21,
+        "startChar": 4,
+        "endLine": 21,
+        "endChar": 29
+      },
+      "revId": "097684387b07e45ebc18308be19362d37b8abaa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ebb469be_641f01ae",
         "filename": "chrome/browser/ui/cocoa/passwords/passwords_list_view_controller.mm",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "097684387b07e45ebc18308be19362d37b8abaa3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e9b0401_7a9c6e7f",
+        "filename": "chrome/browser/ui/cocoa/passwords/passwords_list_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-08-30T08:37:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebb469be_641f01ae",
+      "range": {
+        "startLine": 247,
+        "startChar": 34,
+        "endLine": 247,
+        "endChar": 46
+      },
+      "revId": "097684387b07e45ebc18308be19362d37b8abaa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "36134e92_adcd1652",
+        "filename": "chrome/browser/ui/cocoa/passwords/passwords_list_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-08-30T08:37:27Z",
+      "side": 1,
+      "message": "Turns out it doesnt, i have added that one as well.",
+      "parentUuid": "7b0e028a_f77e4060",
+      "range": {
+        "startLine": 258,
+        "startChar": 27,
+        "endLine": 258,
+        "endChar": 66
+      },
+      "revId": "097684387b07e45ebc18308be19362d37b8abaa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6bc7bf2_b3a1d7ea",
         "filename": "chrome/browser/ui/cocoa/passwords/passwords_list_view_controller.mm",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "9ccab1dd_8351d2d4",
+        "filename": "chrome/browser/ui/cocoa/passwords/passwords_list_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-08-30T08:37:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6bc7bf2_b3a1d7ea",
+      "range": {
+        "startLine": 270,
+        "startChar": 6,
+        "endLine": 271,
+        "endChar": 63
+      },
+      "revId": "097684387b07e45ebc18308be19362d37b8abaa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb484338_e8f28f56",
         "filename": "chrome/browser/ui/cocoa/passwords/passwords_list_view_controller.mm",
         "patchSetId": 1
@@ -114,6 +210,30 @@
       "revId": "097684387b07e45ebc18308be19362d37b8abaa3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f58e964_ce5ea2da",
+        "filename": "chrome/browser/ui/cocoa/passwords/passwords_list_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-08-30T08:37:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb484338_e8f28f56",
+      "range": {
+        "startLine": 290,
+        "startChar": 6,
+        "endLine": 291,
+        "endChar": 63
+      },
+      "revId": "097684387b07e45ebc18308be19362d37b8abaa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
