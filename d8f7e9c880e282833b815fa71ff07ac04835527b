@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "039880c2_719b87a6",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 1681,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-30T23:49:49Z",
+      "side": 1,
+      "message": "The study and experiment configs specified here should generally match the server-side configs.  AFAICT that\u0027s not the case here?",
+      "range": {
+        "startLine": 1681,
+        "startChar": 55,
+        "endLine": 1681,
+        "endChar": 0
+      },
+      "revId": "d8f7e9c880e282833b815fa71ff07ac04835527b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
