@@ -7,6 +7,9 @@ source_set("browser") {
   sources = [
     "account_consistency_service.h",
     "account_consistency_service.mm",
+    "gaia_auth_fetcher_ios.h",
+    "gaia_auth_fetcher_ios.mm",
+    "gaia_auth_fetcher_ios_private.h",
     "manage_accounts_delegate.h",
     "merge_session_observer_bridge.h",
     "merge_session_observer_bridge.mm",
@@ -53,6 +56,7 @@ source_set("unit_tests") {
   testonly = true
   sources = [
     "account_consistency_service_unittest.mm",
+    "gaia_auth_fetcher_ios_unittest.mm",
     "profile_oauth2_token_service_ios_delegate_unittest.mm",
   ]
 

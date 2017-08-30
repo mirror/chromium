@@ -25,9 +25,6 @@ source_set("signin") {
     "chrome_identity_service_observer_bridge.mm",
     "constants.h",
     "constants.mm",
-    "gaia_auth_fetcher_ios.h",
-    "gaia_auth_fetcher_ios.mm",
-    "gaia_auth_fetcher_ios_private.h",
     "gaia_cookie_manager_service_factory.cc",
     "gaia_cookie_manager_service_factory.h",
     "ios_chrome_signin_status_metrics_provider_delegate.cc",
@@ -106,7 +103,6 @@ source_set("unit_tests") {
   sources = [
     "authentication_service_unittest.mm",
     "chrome_identity_service_observer_bridge_unittest.mm",
-    "gaia_auth_fetcher_ios_unittest.mm",
   ]
   deps = [
     ":signin",
