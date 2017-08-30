@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3378b6a9_7ecd43b7",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8DOMConfiguration.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-30T14:58:54Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s too bad -- it\u0027s a cast that\u0027s commented to be valid at the declaration of the variable. I agree it would be cleaner not to have the cast, but it\u0027s consistent with how all of the other enum fields (like v8::PropertyAttribute, which has numerous casts in this file) are treated.",
+      "parentUuid": "7e17b233_bfac53cd",
+      "revId": "b06afd889c7b6ffe9d0e7415035bbdf744ca7f12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "397e1b1b_92ba80d2",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8DOMConfiguration.h",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-30T01:46:40Z",
       "side": 1,
       "message": "Can we have a V8PrivateProperty::CachedAccessorSymbol directly instead of a single bit?  Assuming that these things will be 8-byte aligned, I expect that the size doesn\u0027t change.",
+      "revId": "b06afd889c7b6ffe9d0e7415035bbdf744ca7f12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93cddca1_de6c0246",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8DOMConfiguration.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-30T14:58:54Z",
+      "side": 1,
+      "message": "I don\u0027t see how this is different from the other enums below. In response to this, I drafted a CL to make all of these use the enums themselves as the type of the bit field. This works, but check-webkit-style complains that all bitfields must be of type |unsigned| (not sure why -- maybe some compiler doesn\u0027t pack them nicely otherwise?).\n\nAdding a field without packing it into the bit field will enlarge it on 32-bit platforms where sizeof(unsigned) \u003d\u003d sizeof(void*) \u003d\u003d 4.",
+      "parentUuid": "397e1b1b_92ba80d2",
       "revId": "b06afd889c7b6ffe9d0e7415035bbdf744ca7f12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7917b839_d2f39c45",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8DOMConfiguration.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-30T14:58:54Z",
+      "side": 1,
+      "message": "Can do, but we have 32 bits to deal with here so it doesn\u0027t much matter.",
+      "parentUuid": "ece065a2_b4b1608d",
+      "revId": "b06afd889c7b6ffe9d0e7415035bbdf744ca7f12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc0ab939_e8d74439",
         "filename": "third_party/WebKit/Source/platform/bindings/V8PrivateProperty.h",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "b06afd889c7b6ffe9d0e7415035bbdf744ca7f12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f2538f1_9397d284",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8PrivateProperty.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-30T14:58:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc0ab939_e8d74439",
+      "revId": "b06afd889c7b6ffe9d0e7415035bbdf744ca7f12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
