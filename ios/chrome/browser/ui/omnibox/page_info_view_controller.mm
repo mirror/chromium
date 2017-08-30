@@ -14,8 +14,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "components/strings/grit/components_strings.h"
 #import "ios/chrome/browser/ui/animation_util.h"
-#import "ios/chrome/browser/ui/commands/UIKit+ChromeExecuteCommand.h"
-#include "ios/chrome/browser/ui/commands/ios_command_ids.h"
+#import "ios/chrome/browser/ui/commands/browser_commands.h"
 #import "ios/chrome/browser/ui/fancy_ui/bidi_container_view.h"
 #include "ios/chrome/browser/ui/omnibox/page_info_model.h"
 #import "ios/chrome/browser/ui/popup_menu/popup_menu_view.h"
@@ -190,9 +189,6 @@ void PageInfoModelBubbleBridge::PerformLayout() {
           toSubviews:(NSMutableArray*)subviews
             atOffset:(CGFloat)offset;
 
-// Sends the IDC_HIDE_PAGE_INFO command to hide the current popup.
-- (void)close;
-
 @property(nonatomic, strong) UIView* containerView;
 @property(nonatomic, strong) UIView* popupContainer;
 @end
@@ -256,7 +252,6 @@ void PageInfoModelBubbleBridge::PerformLayout() {
     [containerView_ addGestureRecognizer:touchDownRecognizer];
     [containerView_
         setBackgroundColor:[UIColor colorWithWhite:0 alpha:kShieldAlpha]];
-    [containerView_ setTag:IDC_HIDE_PAGE_INFO];
     [containerView_ setOpaque:NO];
     [containerView_ setAlpha:0];
     [containerView_ setAccessibilityViewIsModal:YES];
@@ -406,11 +401,6 @@ void PageInfoModelBubbleBridge::PerformLayout() {
   [scrollView_ setContentSize:innerContainerView_.frame.size];
 }
 
-- (void)close {
-  // Refactoring note: _containerView.tag is IDC_HIDE_PAGE_INFO.
-  [containerView_ chromeExecuteCommand:containerView_];
-}
-
 - (void)dismiss {
   [self animatePageInfoViewOut];
   UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification,
@@ -481,17 +471,16 @@ void PageInfoModelBubbleBridge::PerformLayout() {
       return nil;
     case PageInfoModel::BUTTON_SHOW_SECURITY_HELP:
       messageId = IDS_LEARN_MORE;
-      button.tag = IDC_SHOW_SECURITY_HELP;
       accessibilityID = @"Learn more";
-      [button addTarget:nil
-                    action:@selector(chromeExecuteCommand:)
+      [button addTarget:self.dispatcher
+                    action:@selector(showSecurityHelpPage)
           forControlEvents:UIControlEventTouchUpInside];
       break;
     case PageInfoModel::BUTTON_RELOAD:
       messageId = IDS_IOS_PAGE_INFO_RELOAD;
       accessibilityID = @"Reload button";
-      [button addTarget:self
-                    action:@selector(close)
+      [button addTarget:self.dispatcher
+                    action:@selector(hidePageInfoPopup)
           forControlEvents:UIControlEventTouchUpInside];
       [button addTarget:self.dispatcher
                     action:@selector(reload)
@@ -544,7 +533,7 @@ void PageInfoModelBubbleBridge::PerformLayout() {
 - (void)rootViewTapped:(UIGestureRecognizer*)sender {
   CGPoint pt = [sender locationInView:containerView_];
   if (!CGRectContainsPoint([popupContainer_ frame], pt)) {
-    [self close];
+    [self.dispatcher hidePageInfoPopup];
   }
 }
 
