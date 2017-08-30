@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "849ff43a_51999224",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/net/git_cl.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-08-30T14:32:08Z",
+      "side": 1,
+      "message": "It seems like you intended to make _wait_for potentially generic, not just for waiting for try jobs, in which case this log message could be modified as well (similar to the first log above). In addition, an optional argument could be passed in to specify what we are waiting for (e.g. message\u003d\u0027for try jobs\u0027, and then \u0027Waiting %s\u0027/\u0027Timed out waiting %s\u0027).",
+      "revId": "de531151b130b306f825473783c343107c1673e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
