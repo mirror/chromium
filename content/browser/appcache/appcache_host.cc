@@ -13,6 +13,9 @@
 #include "content/browser/appcache/appcache_policy.h"
 #include "content/browser/appcache/appcache_request.h"
 #include "content/browser/appcache/appcache_request_handler.h"
+#include "content/browser/appcache/appcache_subresource_url_factory.h"
+#include "content/public/common/content_features.h"
+#include "content/public/common/url_loader_factory.mojom.h"
 #include "net/url_request/url_request.h"
 #include "storage/browser/quota/quota_manager_proxy.h"
 
@@ -551,6 +554,19 @@ base::WeakPtr<AppCacheHost> AppCacheHost::GetWeakPtr() {
   return weak_factory_.GetWeakPtr();
 }
 
+void AppCacheHost::SetSubresourceFactory() {
+  if (!base::FeatureList::IsEnabled(features::kNetworkService))
+    return;
+
+  mojom::URLLoaderFactoryPtr factory_ptr = nullptr;
+
+  AppCacheSubresourceURLFactory::CreateURLLoaderFactory(
+      service()->url_loader_factory_getter(), GetWeakPtr(), &factory_ptr);
+
+  frontend_->OnSetSubresourceFactory(
+      host_id(), factory_ptr.PassInterface().PassHandle().release());
+}
+
 void AppCacheHost::AssociateNoCache(const GURL& manifest_url) {
   // manifest url can be empty.
   AssociateCacheHelper(NULL, manifest_url);
@@ -582,6 +598,12 @@ void AppCacheHost::AssociateCacheHelper(AppCache* cache,
     cache->AssociateHost(this);
 
   FillCacheInfo(cache, manifest_url, GetStatus(), &info);
+  // In the network service world, we need to pass the URLLoaderFactory
+  // instance to the renderer which it can use to request subresources.
+  // This ensures that they can be served out of the AppCache.
+  if (cache && cache->is_complete())
+    SetSubresourceFactory();
+
   frontend_->OnCacheSelected(host_id_, info);
 }
 
