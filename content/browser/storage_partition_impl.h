@@ -136,8 +136,11 @@ class CONTENT_EXPORT StoragePartitionImpl
   BrowserContext* browser_context() const;
 
   // Called by each renderer process once.
-  void Bind(int process_id,
-            mojo::InterfaceRequest<mojom::StoragePartitionService> request);
+  mojo::BindingId Bind(
+      int process_id,
+      mojo::InterfaceRequest<mojom::StoragePartitionService> request);
+
+  auto& bindings_for_testing() { return bindings_; }
 
   struct DataDeletionHelper;
   struct QuotaManagedDataDeletionHelper;

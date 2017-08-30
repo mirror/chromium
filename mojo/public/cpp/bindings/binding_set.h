@@ -123,6 +123,14 @@ class BindingSetBase {
     return true;
   }
 
+  ImplPointerType ExchangeBindingImpl(BindingId id, ImplPointerType new_impl) {
+    auto it = bindings_.find(id);
+    if (it == bindings_.end())
+      return nullptr;
+
+    return it->second->exchange_impl(new_impl);
+  }
+
   void CloseAllBindings() { bindings_.clear(); }
 
   bool empty() const { return bindings_.empty(); }
@@ -215,6 +223,10 @@ class BindingSetBase {
     }
 
     void FlushForTesting() { binding_.FlushForTesting(); }
+
+    ImplPointerType exchange_impl(ImplPointerType new_impl) {
+      return binding_.exchange_impl(new_impl);
+    }
 
    private:
     class DispatchFilter : public MessageReceiver {

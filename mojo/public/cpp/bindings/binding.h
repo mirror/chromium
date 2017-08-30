@@ -186,6 +186,9 @@ class Binding {
   // Returns the interface implementation that was previously specified. Caller
   // does not take ownership.
   Interface* impl() { return internal_state_.impl(); }
+  Interface* exchange_impl(Interface* new_impl) {
+    return internal_state_.exchange_impl(new_impl);
+  }
 
   // Indicates whether the binding has been completed (i.e., whether a message
   // pipe has been bound to the implementation).
