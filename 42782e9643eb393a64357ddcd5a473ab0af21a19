@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b94f0ced_cffddc98",
+        "filename": "ui/aura/mus/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-30T05:02:35Z",
+      "side": 1,
+      "message": "I think this should just be \"+services/ui/public\" (since this is the client, and all of that code should be accessible from here).",
+      "revId": "42782e9643eb393a64357ddcd5a473ab0af21a19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9ab5d2d_b7f695d0",
+        "filename": "ui/aura/mus/hit_test_data_provider_aura_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-30T05:02:35Z",
+      "side": 1,
+      "message": "Do you think this needs to change? (i.e. what is the task to do here?)",
+      "revId": "42782e9643eb393a64357ddcd5a473ab0af21a19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e0b5422_24e6d9a4",
+        "filename": "ui/aura/window.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-30T05:02:35Z",
+      "side": 1,
+      "message": "Return const\u0026.\n\nDocument.\n\nLooks like in LOCAL mode, this will return a valid FrameSinkId only if a LayerTreeFrameSink has been created for it (i.e. only for the root-window, and for some of the exo windows?).\n\nIn MUS mode, this should always return a valid FrameSinkId, right?",
+      "revId": "42782e9643eb393a64357ddcd5a473ab0af21a19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "714b03a1_0e7fb25e",
+        "filename": "ui/aura/window_port.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-30T05:02:35Z",
+      "side": 1,
+      "message": "Add a comment here that this can return invalid ids.\n\nReturn const\u0026",
+      "revId": "42782e9643eb393a64357ddcd5a473ab0af21a19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
