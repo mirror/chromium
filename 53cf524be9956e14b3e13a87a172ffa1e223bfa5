@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a8efaff_ae066c4e",
+        "filename": "content/renderer/input/input_event_filter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-08-30T17:00:08Z",
+      "side": 1,
+      "message": "do the same check for it being defined again here?",
+      "range": {
+        "startLine": 44,
+        "startChar": 1,
+        "endLine": 44,
+        "endChar": 8
+      },
+      "revId": "53cf524be9956e14b3e13a87a172ffa1e223bfa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be4e99b2_447ab285",
+        "filename": "ppapi/proxy/OWNERS",
+        "patchSetId": 7
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-08-30T17:00:08Z",
+      "side": 1,
+      "message": "thanks.",
+      "range": {
+        "startLine": 6,
+        "startChar": 4,
+        "endLine": 6,
+        "endChar": 8
+      },
+      "revId": "53cf524be9956e14b3e13a87a172ffa1e223bfa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
