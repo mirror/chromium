@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24669ce7_ae186313",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/support/check-layout-th.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2017-08-30T23:04:29Z",
+      "side": 1,
+      "message": "This will be the third copy of this file in w-p-t. I will take a look at condensing them into the main /resources directory after/if this lands.",
+      "revId": "57b28b0ba45e7c139451a678c1974918788e1534",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
