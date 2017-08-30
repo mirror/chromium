@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04e2c11d_57139562",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_coordinator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-30T12:16:59Z",
+      "side": 1,
+      "message": "This is unusual, but I understand why it\u0027s necessary in this context. ChromeCoordinator probably shouldn\u0027t stop on dealloc (doing anything on dealloc is generally a bad idea unless it\u0027s really necessary); at some point we will change how that works.",
+      "range": {
+        "startLine": 37,
+        "startChar": 54,
+        "endLine": 37,
+        "endChar": 62
+      },
+      "revId": "6807c32d313a8b8eeef6b91bb075ccacd27a65cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
