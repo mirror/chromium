@@ -341,6 +341,17 @@ class LocalNTPVoiceJavascriptTest : public LocalNTPTest {
   net::EmbeddedTestServer https_test_server_;
 };
 
+IN_PROC_BROWSER_TEST_F(LocalNTPVoiceJavascriptTest, MicrophoneTests) {
+  content::WebContents* active_tab =
+      OpenNewTab(browser(), GURL(chrome::kChromeUINewTabURL));
+
+  // Run the tests.
+  bool success = false;
+  ASSERT_TRUE(instant_test_utils::GetBoolFromJS(
+      active_tab, "!!runSimpleTests('microphone')", &success));
+  EXPECT_TRUE(success);
+}
+
 namespace {
 
 // Returns the RenderFrameHost corresponding to the most visited iframe in the
