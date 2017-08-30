@@ -87,6 +87,24 @@
       "revId": "f237f4da04da1e448e373944fc43e0ca566064f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39ded82f_0cfee61d",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-30T23:54:09Z",
+      "side": 1,
+      "message": "That\u0027s as expected. A detached frame can still be accessed in JS, just like any other detached element.\n\nI\u0027m not sure if there\u0027s any way to force destroying any object in JS. The only way I know that an object can get destroyed is by GC.",
+      "parentUuid": "2a63a17d_16af6a44",
+      "revId": "f237f4da04da1e448e373944fc43e0ca566064f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
