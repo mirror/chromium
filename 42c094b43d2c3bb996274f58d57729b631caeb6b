@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "611744aa_dc3c01e2",
+        "filename": "ash/system/power/power_button_display_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-30T20:38:13Z",
+      "side": 1,
+      "message": "This one can be removed actually. Sorry, I think I am too cautious here.",
+      "parentUuid": "04373acf_a0a588ae",
+      "range": {
+        "startLine": 61,
+        "startChar": 6,
+        "endLine": 61,
+        "endChar": 35
+      },
+      "revId": "42c094b43d2c3bb996274f58d57729b631caeb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "212f34c6_2d873895",
         "filename": "ash/system/power/power_button_display_controller.cc",
         "patchSetId": 10
@@ -36,6 +60,24 @@
       "writtenOn": "2017-08-30T20:20:38Z",
       "side": 1,
       "message": "why do you need to special-case the forced state here? won\u0027t the value that we get from powerd always be false when we\u0027re not using the tablet-style behavior?",
+      "revId": "42c094b43d2c3bb996274f58d57729b631caeb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7dd52d2_48cc3860",
+        "filename": "ash/system/power/power_button_display_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-30T20:38:13Z",
+      "side": 1,
+      "message": "won\u0027t the value that we get from powerd always be false when we\u0027re not using the tablet-style behavior? I am not sure for the case like: b/64972736. If backlights_force_off from powerd will be false in this case, I am happy to remove this.",
+      "parentUuid": "212f34c6_2d873895",
       "revId": "42c094b43d2c3bb996274f58d57729b631caeb6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
