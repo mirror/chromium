@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "595f2d1e_8b2e7dff",
+        "filename": "chrome/browser/chromeos/extensions/device_local_account_external_policy_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-30T01:15:28Z",
+      "side": 1,
+      "message": "How could prefs be non-null here?  It\u0027s only set, it seems, on line 83, but then it\u0027s immediately moved to LoadFinished().",
+      "revId": "805857e783e79e131eeeb3eb44dbb83825431429",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32482169_41e65cf6",
+        "filename": "chrome/browser/extensions/extension_migrator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-30T01:15:28Z",
+      "side": 1,
+      "message": "std::make_unique",
+      "revId": "805857e783e79e131eeeb3eb44dbb83825431429",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f44b89d_cbad96fb",
+        "filename": "chrome/browser/extensions/external_component_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-30T01:15:28Z",
+      "side": 1,
+      "message": "std::make_unique (here and elsewhere)",
+      "revId": "805857e783e79e131eeeb3eb44dbb83825431429",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6301d4b7_9d4401b0",
+        "filename": "chrome/browser/extensions/external_pref_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-30T01:15:28Z",
+      "side": 1,
+      "message": "Can we not use a ScopedObserver here, too?",
+      "revId": "805857e783e79e131eeeb3eb44dbb83825431429",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cecc594_840b95c7",
+        "filename": "chrome/browser/extensions/external_pref_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-30T01:15:28Z",
+      "side": 1,
+      "message": "nit: maybe OnPrioritySyncReady()?",
+      "revId": "805857e783e79e131eeeb3eb44dbb83825431429",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51cf0460_8911d8d1",
+        "filename": "chrome/browser/extensions/external_pref_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-30T01:15:28Z",
+      "side": 1,
+      "message": "does std::find() not work here yet?  (I forget which C++ version lets library methods like this use comparators from T* to std::unique_ptr\u003cT\u003e)",
+      "revId": "805857e783e79e131eeeb3eb44dbb83825431429",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eca85ca7_07b35282",
+        "filename": "chrome/browser/extensions/external_pref_loader_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-30T01:15:28Z",
+      "side": 1,
+      "message": "are these also overriding FakeSyncService?  If so, put it under CanSyncStart.",
+      "revId": "805857e783e79e131eeeb3eb44dbb83825431429",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
