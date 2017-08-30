@@ -48,6 +48,23 @@
     },
     {
       "key": {
+        "uuid": "32a486c5_4763791f",
+        "filename": "content/common/DEPS",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-30T11:11:37Z",
+      "side": 1,
+      "message": "Can you add this separtely from this chunk with the same comment as the corresponding lines in content/browser/DEPS?",
+      "revId": "7beee3b347658053ff96f69f97df8d2580a457a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c8acd205_ac4cb4fe",
         "filename": "content/renderer/renderer_blink_platform_impl.h",
         "patchSetId": 10
@@ -157,6 +174,23 @@
     },
     {
       "key": {
+        "uuid": "70a52b39_758ff663",
+        "filename": "third_party/WebKit/common/origin_trials/trial_token_validator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-30T11:11:37Z",
+      "side": 1,
+      "message": "please write a brief class-level comment",
+      "revId": "7beee3b347658053ff96f69f97df8d2580a457a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cf64871c_b643c533",
         "filename": "third_party/WebKit/public/platform/Platform.h",
         "patchSetId": 10
@@ -191,6 +225,30 @@
       "writtenOn": "2017-08-29T20:58:58Z",
       "side": 1,
       "message": "Nit: Maybe add a TODO that this is to be removed? I was initially wondering why these both needed to be exposed, until you reminded me (offline) about the pending cleanup.",
+      "range": {
+        "startLine": 701,
+        "startChar": 15,
+        "endLine": 701,
+        "endChar": 25
+      },
+      "revId": "7beee3b347658053ff96f69f97df8d2580a457a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af3c1739_af2d564b",
+        "filename": "third_party/WebKit/public/platform/Platform.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-30T11:11:37Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "b46ea4d5_0688a256",
       "range": {
         "startLine": 701,
         "startChar": 15,
