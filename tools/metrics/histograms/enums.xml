@@ -36631,6 +36631,12 @@ from previous Chrome versions.
   <int value="2" label="Enabled"/>
 </enum>
 
+<enum name="SubresourceFilterFailsafeStatus">
+  <int value="0" label="Safe"/>
+  <int value="1" label="NTP"/>
+  <int value="2" label="Non http/s"/>
+</enum>
+
 <enum name="SubresourceFilterMatchPattern">
   <int value="0" label="NoHit"/>
   <int value="1" label="Last"/>
