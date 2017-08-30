@@ -83,6 +83,10 @@ void PerformanceObserver::observe(const PerformanceObserverInit& observer_init,
   else
     performance_->RegisterPerformanceObserver(*this);
   is_registered_ = true;
+  buffered_ = observer_init.buffered();
+  if (buffered_) {
+    Deliver();
+  }
 }
 
 void PerformanceObserver::disconnect() {
@@ -109,14 +113,31 @@ bool PerformanceObserver::ShouldBeSuspended() const {
 void PerformanceObserver::Deliver() {
   DCHECK(!ShouldBeSuspended());
 
-  if (performance_entries_.IsEmpty())
-    return;
-
   PerformanceEntryVector performance_entries;
   performance_entries.swap(performance_entries_);
+
+  if (RuntimeEnabledFeatures::BufferedFlagForPerformanceObserverEnabled() &&
+      buffered_) {
+    for (const auto& type : PerformanceEntry::AllValidEntryTypes()) {
+      if (!Observing(type))
+        continue;
+      performance_->AddBufferedEntriesByType(performance_entries, type);
+    }
+    std::sort(performance_entries.begin(), performance_entries.end(),
+              PerformanceEntry::StartTimeCompareLessThan);
+  }
+
+  if (performance_entries.IsEmpty())
+    return;
+
   PerformanceObserverEntryList* entry_list =
       new PerformanceObserverEntryList(performance_entries);
   callback_->call(this, entry_list, this);
+}
+
+bool PerformanceObserver::Observing(
+    const PerformanceEntryType entryType) const {
+  return entryType & filter_options_;
 }
 
 DEFINE_TRACE(PerformanceObserver) {
