@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c083a4a6_ea10a787",
+        "filename": "android_webview/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 960,
+      "author": {
+        "id": 1239716
+      },
+      "writtenOn": "2017-08-30T22:57:07Z",
+      "side": 1,
+      "message": "This library is just AwValueCallback, which is used from both android_webview_java and android_webview_platform_services_java.\nIt exists because of the package structure of android_webview and its deps:\n\n          android_webview_java -\u003e android_webview_common_java\n                   |                          ^\n                   v                          |\nandroid_webview_platform_services_java---------\n\nIs there a way to export the AwValueCallback dependency through android_webview_java? In bazel, we have the exports\u003d attribute, where Dep A gets both Dep B and Dep C if Dep A depends on Dep B and Dep B has exports\u003d[C].\nThis seems cleaner, and will minimize diffs.",
+      "parentUuid": "edf3a656_28f310d5",
+      "revId": "16b3862bdafb068a92293faae18c1d60bee97434",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f6df8364_79eae721",
         "filename": "android_webview/glue/java/src/com/android/webview/chromium/Converters.java",
         "patchSetId": 1
@@ -39,6 +57,30 @@
       "revId": "16b3862bdafb068a92293faae18c1d60bee97434",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70a349f7_a1106507",
+        "filename": "android_webview/glue/java/src/com/android/webview/chromium/Converters.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1239716
+      },
+      "writtenOn": "2017-08-30T22:57:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6df8364_79eae721",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "16b3862bdafb068a92293faae18c1d60bee97434",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +118,30 @@
       "writtenOn": "2017-08-18T21:03:31Z",
       "side": 1,
       "message": "properly import things at the top",
+      "range": {
+        "startLine": 20,
+        "startChar": 23,
+        "endLine": 20,
+        "endChar": 51
+      },
+      "revId": "16b3862bdafb068a92293faae18c1d60bee97434",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db68f4c2_8a58ac30",
+        "filename": "android_webview/glue/java/src/com/android/webview/chromium/Converters.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1239716
+      },
+      "writtenOn": "2017-08-30T22:57:07Z",
+      "side": 1,
+      "message": "I think it might be more readable this way; there are multiple instances of names like CLOSE in this file. It\u0027s easier for readers to instantly know which CLOSE is being referenced by reading it from the line, than for them to have to remember which CLOSE is imported by default at the top of the file.",
+      "parentUuid": "3b64bcad_c3a2e129",
       "range": {
         "startLine": 20,
         "startChar": 23,
@@ -157,6 +223,24 @@
     },
     {
       "key": {
+        "uuid": "dab48a7f_0033a8a8",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwGeolocationPermissions.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1239716
+      },
+      "writtenOn": "2017-08-30T22:57:07Z",
+      "side": 1,
+      "message": "Yes; it\u0027s an argument to WebChromeClient::onGeolocationPermissionsShowPrompt.",
+      "parentUuid": "85e89a42_e95d3aba",
+      "revId": "16b3862bdafb068a92293faae18c1d60bee97434",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48b70133_31df043d",
         "filename": "android_webview/java/src/org/chromium/android_webview/AwSafeBrowsingConfigHelper.java",
         "patchSetId": 1
@@ -171,6 +255,24 @@
       "revId": "16b3862bdafb068a92293faae18c1d60bee97434",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d1374c2_4c79337e",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwSafeBrowsingConfigHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1239716
+      },
+      "writtenOn": "2017-08-30T22:57:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48b70133_31df043d",
+      "revId": "16b3862bdafb068a92293faae18c1d60bee97434",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -194,6 +296,30 @@
       "revId": "16b3862bdafb068a92293faae18c1d60bee97434",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc69a006_af5b35ee",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwSettings.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1239716
+      },
+      "writtenOn": "2017-08-30T22:57:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dae27dee_8ef63c4f",
+      "range": {
+        "startLine": 122,
+        "startChar": 7,
+        "endLine": 122,
+        "endChar": 11
+      },
+      "revId": "16b3862bdafb068a92293faae18c1d60bee97434",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -228,6 +354,24 @@
       "revId": "16b3862bdafb068a92293faae18c1d60bee97434",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a4aaf9c_6a625184",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwSettings.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1239716
+      },
+      "writtenOn": "2017-08-30T22:57:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7260df32_48de1723",
+      "revId": "16b3862bdafb068a92293faae18c1d60bee97434",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
