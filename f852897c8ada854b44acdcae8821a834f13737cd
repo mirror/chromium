@@ -247,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "62b82aaf_325fca66",
+        "filename": "media/blink/video_frame_compositor.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-30T12:46:13Z",
+      "side": 1,
+      "message": "Unless I\u0027m missing something there is no reason this can\u0027t/shouldn\u0027t be a std::unique_ptr. If the caller needs to access |submitter| after it has passed ownership to VideoFrameCompositor that\u0027s fine. The address of the object pointed to by a std::unique_ptr doesn\u0027t change when you std::move it, only the address at which the std::unique_ptr itself is stored changes, so you can call .get() before std::move\u0027ing it.\n\nObviously when VideoFrameCompositor destroys the std::unique_ptr, the raw pointer is no longer pointing at a valid object, but that problem exists with this version of the code as well.",
+      "parentUuid": "78ecd111_4449031d",
+      "revId": "f852897c8ada854b44acdcae8821a834f13737cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71ea82f4_b42f0c78",
         "filename": "media/blink/video_frame_compositor.h",
         "patchSetId": 33
