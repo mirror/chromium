@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5a9f28c_9107a266",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/list_container.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-08-30T07:53:20Z",
+      "side": 1,
+      "message": "As the function name (disableContextMenuByLongTap_) says, this code block is for disabling context menu on long tap.\nDoing something which has completely different purpose will make the code harder to understand for the future maintainers.\n\nIf listening \u0027contextmenu\u0027 event on the container element is unavoidable, we should add another listener to do it outside this function.\n\nBTW, how about just renaming \u0027mousedown\u0027 to \u0027pointerdown\u0027 in the following code? https://cs.chromium.org/chromium/src/ui/file_manager/file_manager/foreground/js/ui/file_table.js?type\u003dcs\u0026q\u003d%22cr.ui.Table%22+mousedown+%22Keep+focus+on+the+file%22\u0026sq\u003dpackage:chromium\u0026l\u003d433\nIIUC, what we want to do is to prevent the default focusing behavior about tap on table header.\nyamaguchi@, is there any concern about this approach?",
+      "revId": "8646832a1d809a6ab6d4f1a26de21171fe4f0c39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
