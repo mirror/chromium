@@ -32,7 +32,6 @@ UkmSource::UkmSource() = default;
 UkmSource::~UkmSource() = default;
 
 void UkmSource::UpdateUrl(const GURL& url) {
-  DCHECK(!url_.is_empty());
   if (url_ == url)
     return;
   if (initial_url_.is_empty())
