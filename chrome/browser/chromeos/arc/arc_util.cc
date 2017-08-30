@@ -45,6 +45,10 @@ namespace {
 constexpr char kLsbReleaseArcVersionKey[] = "CHROMEOS_ARC_ANDROID_SDK_VERSION";
 constexpr char kAndroidMSdkVersion[] = "23";
 
+// Cotnains set of profiles for which decline reson was already reported.
+base::LazyInstance<std::set<base::FilePath>>::DestructorAtExit
+    g_profile_declined_set = LAZY_INSTANCE_INITIALIZER;
+
 // Let IsAllowedForProfile() return "false" for any profile.
 bool g_disallow_for_testing = false;
 
@@ -139,11 +143,28 @@ bool IsArcMigrationAllowedInternal() {
   return false;
 }
 
+// Returns true if this is called first time for profile. Used to detect
+// duplicate message for the same profile.
+bool IsReportingFirstTimeForProfile(const Profile* profile) {
+  const base::FilePath path = profile->GetPath();
+  if (g_profile_declined_set.Get().count(path))
+    return false;
+  g_profile_declined_set.Get().insert(path);
+  return true;
+}
+
 }  // namespace
 
 bool IsArcAllowedForProfile(const Profile* profile) {
+  // Silently ignore default and lock screen profiles.
+  if (!profile || chromeos::ProfileHelper::IsSigninProfile(profile) ||
+      chromeos::ProfileHelper::IsLockScreenAppProfile(profile)) {
+    return false;
+  }
+
   if (g_disallow_for_testing) {
-    VLOG(1) << "ARC is disallowed for testing.";
+    if (IsReportingFirstTimeForProfile(profile))
+      VLOG(1) << "ARC is disallowed for testing.";
     return false;
   }
 
@@ -151,29 +172,28 @@ bool IsArcAllowedForProfile(const Profile* profile) {
   // In that case IsArcKioskMode() should return true as profile is already
   // created.
   if (!IsArcAvailable() && !(IsArcKioskMode() && IsArcKioskAvailable())) {
-    VLOG(1) << "ARC is not available.";
-    return false;
-  }
-
-  if (!profile) {
-    VLOG(1) << "ARC is not supported for systems without profile.";
+    if (IsReportingFirstTimeForProfile(profile))
+      VLOG(1) << "ARC is not available.";
     return false;
   }
 
   if (!chromeos::ProfileHelper::IsPrimaryProfile(profile)) {
-    VLOG(1) << "Non-primary users are not supported in ARC.";
+    if (IsReportingFirstTimeForProfile(profile))
+      VLOG(1) << "Non-primary users are not supported in ARC.";
     return false;
   }
 
   // IsPrimaryProfile can return true for an incognito profile corresponding
   // to the primary profile, but ARC does not support it.
   if (profile->IsOffTheRecord()) {
-    VLOG(1) << "Incognito profile is not supported in ARC.";
+    if (IsReportingFirstTimeForProfile(profile))
+      VLOG(1) << "Incognito profile is not supported in ARC.";
     return false;
   }
 
   if (profile->IsLegacySupervised()) {
-    VLOG(1) << "Supervised users are not supported in ARC.";
+    if (IsReportingFirstTimeForProfile(profile))
+      VLOG(1) << "Supervised users are not supported in ARC.";
     return false;
   }
 
@@ -184,7 +204,8 @@ bool IsArcAllowedForProfile(const Profile* profile) {
   const user_manager::User* user =
       chromeos::ProfileHelper::Get()->GetUserByProfile(profile);
   if (!IsArcAllowedForUser(user)) {
-    VLOG(1) << "ARC is not allowed for the user.";
+    if (IsReportingFirstTimeForProfile(profile))
+      VLOG(1) << "ARC is not allowed for the user.";
     return false;
   }
 
@@ -200,7 +221,8 @@ bool IsArcAllowedForProfile(const Profile* profile) {
   // also user can use ARC then.
   // TODO(igorcov): Remove this after migration. crbug.com/725493
   if (!IsArcMigrationAllowed()) {
-    VLOG(1) << "ARC migration is not allowed by policy.";
+    if (IsReportingFirstTimeForProfile(profile))
+      VLOG(1) << "ARC migration is not allowed by policy.";
     return false;
   }
 
@@ -209,7 +231,8 @@ bool IsArcAllowedForProfile(const Profile* profile) {
   chromeos::UserFlow* user_flow =
       chromeos::ChromeUserManager::Get()->GetUserFlow(user->GetAccountId());
   if (!user_flow || !user_flow->CanStartArc()) {
-    VLOG(1) << "ARC is not allowed in the current user flow.";
+    if (IsReportingFirstTimeForProfile(profile))
+      VLOG(1) << "ARC is not allowed in the current user flow.";
     return false;
   }
 
