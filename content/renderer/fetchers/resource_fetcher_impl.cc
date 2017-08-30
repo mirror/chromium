@@ -59,29 +59,8 @@ class ResourceFetcherImpl::ClientImpl : public mojom::URLLoaderClient {
 
   void Start(const ResourceRequest& request,
              mojom::URLLoaderFactory* url_loader_factory,
+             const net::NetworkTrafficAnnotationTag& annotation_tag,
              base::SingleThreadTaskRunner* task_runner) {
-    // TODO(toyoshim): NetworkTrafficAnnotationTag should be provided by each
-    // caller. content::ResourceFetcher interface will be changed to take it.
-    static const net::NetworkTrafficAnnotationTag traffic_annotation =
-        net::DefineNetworkTrafficAnnotation("content_resource_fetcher", R"(
-      semantics {
-        sender: "content ResourceFetcher"
-        description:
-          "Chrome content API initiated request, which includes network error "
-          "pages and mojo internal component downloader."
-        trigger:
-          "Showing network error pages, or needs to download mojo component."
-        data: "Anything the initiator wants."
-        destination: OTHER
-      }
-      policy {
-        cookies_allowed: YES
-        cookies_store: "user"
-        setting: "These requests cannot be disabled in settings."
-        policy_exception_justification:
-          "Not implemented. Without these requests, Chrome will not work."
-      })");
-
     status_ = Status::kStarted;
     response_.SetURL(request.url);
 
@@ -92,7 +71,7 @@ class ResourceFetcherImpl::ClientImpl : public mojom::URLLoaderClient {
         mojo::MakeRequest(&loader_), kRoutingId,
         ResourceDispatcher::MakeRequestID(), mojom::kURLLoadOptionNone, request,
         std::move(client),
-        net::MutableNetworkTrafficAnnotationTag(traffic_annotation));
+        net::MutableNetworkTrafficAnnotationTag(annotation_tag));
   }
 
   void Cancel() {
@@ -297,8 +276,44 @@ void ResourceFetcherImpl::Start(
     blink::WebLocalFrame* frame,
     blink::WebURLRequest::RequestContext request_context,
     const Callback& callback) {
+  static const net::NetworkTrafficAnnotationTag annotation_tag =
+      net::DefineNetworkTrafficAnnotation("content_resource_fetcher", R"(
+    semantics {
+      sender: "content ResourceFetcher"
+      description:
+        "Chrome content API initiated request, which includes network error "
+        "pages and mojo internal component downloader."
+      trigger:
+        "Showing network error pages, or needs to download mojo component."
+      data: "Anything the initiator wants."
+      destination: OTHER
+    }
+    policy {
+      cookies_allowed: YES
+      cookies_store: "user"
+      setting: "These requests cannot be disabled in settings."
+      policy_exception_justification:
+        "Not implemented. Without these requests, Chrome will not work."
+    })");
+
+  mojom::URLLoaderFactory* url_loader_factory =
+      RenderFrameImpl::FromWebFrame(frame)
+          ->GetDefaultURLLoaderFactoryGetter()
+          ->GetNetworkLoaderFactory();
+  DCHECK(url_loader_factory);
+
+  Start(frame, request_context, url_loader_factory, annotation_tag, callback);
+}
+
+void ResourceFetcherImpl::Start(
+    blink::WebLocalFrame* frame,
+    blink::WebURLRequest::RequestContext request_context,
+    mojom::URLLoaderFactory* url_loader_factory,
+    const net::NetworkTrafficAnnotationTag& annotation_tag,
+    const Callback& callback) {
   DCHECK(!client_);
   DCHECK(frame);
+  DCHECK(url_loader_factory);
   DCHECK(!frame->GetDocument().IsNull());
   if (request_.method.empty())
     request_.method = kHttpGetMethod;
@@ -325,14 +340,8 @@ void ResourceFetcherImpl::Start(
 
   client_.reset(new ClientImpl(this, callback));
 
-  // TODO(toyoshim): mojom::URLLoaderFactory should be given by each caller.
-  mojom::URLLoaderFactory* url_loader_factory =
-      RenderFrameImpl::FromWebFrame(frame)
-          ->GetDefaultURLLoaderFactoryGetter()
-          ->GetNetworkLoaderFactory();
-  DCHECK(url_loader_factory);
-
-  client_->Start(request_, url_loader_factory, frame->LoadingTaskRunner());
+  client_->Start(request_, url_loader_factory, annotation_tag,
+                 frame->LoadingTaskRunner());
 
   // No need to hold on to the request; reset it now.
   request_ = ResourceRequest();
