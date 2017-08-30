@@ -34,6 +34,24 @@
       "revId": "fde010ff43cbf629f1e83ac23194e8323b2a0ae0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "654e7afa_54e3db9d",
+        "filename": "media/audio/cras/audio_manager_cras.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1001841
+      },
+      "writtenOn": "2017-08-30T08:46:45Z",
+      "side": 1,
+      "message": "Hmm. I don\u0027t have a good solution yet. I need to think about this more.\n\nI also found another problem if a task is posted during shutdown.\n(1) audio manager is destroyed here.\nhttps://cs.chromium.org/chromium/src/content/browser/browser_main_loop.cc?l\u003d1399\n(2) But CrasAudioHandler is destroyed before that.\nhttps://cs.chromium.org/chromium/src/content/browser/browser_main_loop.cc?l\u003d1229\nhttps://cs.chromium.org/chromium/src/chrome/browser/chromeos/chrome_browser_main_chromeos.cc?gsn\u003dPostMainMessageLoopRun\u0026l\u003d1107\n(3) So if a task is posted during shutdown, CrasAudioHandler::Get() can be nullptr and CrasAudioHandler::Get()-\u003eGetAudioDevices(devices); will crash.",
+      "parentUuid": "350c5778_21602586",
+      "revId": "fde010ff43cbf629f1e83ac23194e8323b2a0ae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
