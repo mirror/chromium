@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bef7d92_c3947c3b",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/application_macros.tmpl",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-30T23:03:48Z",
+      "side": 1,
+      "message": "is there a reason to pull these macros out into a separate file? seems like they can be defined inside CSSPropertyAPISubclass.h.tmpl",
+      "revId": "d2b42cdfbedc46c1750afcae957c45d40ec41f38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39be570a_6f9adaf0",
+        "filename": "third_party/WebKit/Source/build/scripts/templates/StyleBuilderFunctions.cpp.tmpl",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-30T23:03:48Z",
+      "side": 1,
+      "message": "if there is a good reason to keep the macros separate in the application_macros.tmpl file, then please use that version here instead of duplicating the definitions here",
+      "revId": "d2b42cdfbedc46c1750afcae957c45d40ec41f38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3831f35_ef2b0ed0",
+        "filename": "third_party/WebKit/Source/build/scripts/templates/StyleBuilderFunctions.cpp.tmpl",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-30T23:03:48Z",
+      "side": 1,
+      "message": "as above",
+      "revId": "d2b42cdfbedc46c1750afcae957c45d40ec41f38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4b98cb1_a6bf60f2",
+        "filename": "third_party/WebKit/Source/build/scripts/templates/StyleBuilderFunctions.cpp.tmpl",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-30T23:03:48Z",
+      "side": 1,
+      "message": "can this line be deleted?",
+      "revId": "d2b42cdfbedc46c1750afcae957c45d40ec41f38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
