@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "77ee16d5_29a4ca66",
+        "filename": "tools/binary_size/diagnose_bloat.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 819,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-30T01:01:14Z",
+      "side": 1,
+      "message": "Ah, good catch! Forgot about the need to resolve \"HEAD\" to a sha1.\n\nDid what you typed out here and it worked like a charm.",
+      "parentUuid": "fa589cb5_f1eeda1d",
+      "range": {
+        "startLine": 819,
+        "startChar": 7,
+        "endLine": 819,
+        "endChar": 8
+      },
+      "revId": "accfdfaf0a4aea43cc1ab0b5342bed733150b304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d65e8080_c2d64c3e",
         "filename": "tools/binary_size/diagnose_bloat.py",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "accfdfaf0a4aea43cc1ab0b5342bed733150b304",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "190e1fc8_5b9d6f3c",
+        "filename": "tools/binary_size/diagnose_bloat.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-30T01:01:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d65e8080_c2d64c3e",
+      "range": {
+        "startLine": 824,
+        "startChar": 12,
+        "endLine": 824,
+        "endChar": 15
+      },
+      "revId": "accfdfaf0a4aea43cc1ab0b5342bed733150b304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
