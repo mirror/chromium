@@ -75,16 +75,31 @@ gfx::Rect HeaderPainterUtil::GetTitleBounds(
 
 // static
 bool HeaderPainterUtil::CanAnimateActivation(views::Widget* widget) {
-  // Do not animate the header if the parent (e.g.
+  // Do not animate the header if the window itself or the parent (e.g.
   // kShellWindowId_DefaultContainer) is already animating. All of the
   // implementers of HeaderPainter animate activation by continuously painting
-  // during the animation. This gives the parent's animation a slower frame
-  // rate.
+  // during the animation. This gives the window's or parent's animation a
+  // slower frame rate.
   // TODO(sky): Expose a better way to determine this rather than assuming the
   // parent is a toplevel container.
   aura::Window* window = widget->GetNativeWindow();
+
+  if (!window)
+    return true;
+
+  // Header animation may invalidate the cache of the render pass of the
+  // browser during animation.
+  ui::LayerAnimator* layer_animator = window->layer()->GetAnimator();
+  if (layer_animator->IsAnimatingProperty(ui::LayerAnimationElement::OPACITY) ||
+      layer_animator->IsAnimatingProperty(
+          ui::LayerAnimationElement::VISIBILITY) ||
+      layer_animator->IsAnimatingProperty(
+          ui::LayerAnimationElement::TRANSFORM)) {
+    return false;
+  }
+
   // TODO(sky): parent()->layer() is for mash until animations ported.
-  if (!window || !window->parent() || !window->parent()->layer())
+  if (!window->parent() || !window->parent()->layer())
     return true;
 
   ui::LayerAnimator* parent_layer_animator =
@@ -92,7 +107,9 @@ bool HeaderPainterUtil::CanAnimateActivation(views::Widget* widget) {
   return !parent_layer_animator->IsAnimatingProperty(
              ui::LayerAnimationElement::OPACITY) &&
          !parent_layer_animator->IsAnimatingProperty(
-             ui::LayerAnimationElement::VISIBILITY);
+             ui::LayerAnimationElement::VISIBILITY) &&
+         !parent_layer_animator->IsAnimatingProperty(
+             ui::LayerAnimationElement::TRANSFORM);
 }
 
 }  // namespace ash
