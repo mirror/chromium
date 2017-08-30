@@ -69,6 +69,24 @@
       "revId": "78a46f7e30a2bfa1bc7bb7cd5a23edbfe2c59f4c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "42c94d4a_b6de95bf",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-30T02:43:28Z",
+      "side": 1,
+      "message": "Sorry, I should have been more clear. I don\u0027t think you should actually change the visibility of the window itself, because, for example: I don\u0027t think the occlusion-tracker would send \u0027unocclude\u0027 for a hidden window. But the rest of the code in Hide() I think still needs to happen here.",
+      "parentUuid": "6df22fe9_89c38b69",
+      "revId": "78a46f7e30a2bfa1bc7bb7cd5a23edbfe2c59f4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
