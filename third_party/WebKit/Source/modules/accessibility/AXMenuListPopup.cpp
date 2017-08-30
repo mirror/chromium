@@ -81,11 +81,11 @@ int AXMenuListPopup::GetSelectedIndex() const {
   return html_select_element->selectedIndex();
 }
 
-bool AXMenuListPopup::Press() {
+bool AXMenuListPopup::OnNativeClickAction() {
   if (!parent_)
     return false;
 
-  parent_->Press();
+  parent_->OnNativeClickAction();
   return true;
 }
 

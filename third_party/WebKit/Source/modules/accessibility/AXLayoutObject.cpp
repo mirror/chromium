@@ -1906,9 +1906,9 @@ static VisiblePosition ToVisiblePosition(AXObject* obj, int offset) {
   return blink::VisiblePositionForIndex(node_index + offset, parent);
 }
 
-void AXLayoutObject::SetSelection(const AXRange& selection) {
+bool AXLayoutObject::OnNativeSetSelectionAction(const AXRange& selection) {
   if (!GetLayoutObject() || !selection.IsValid())
-    return;
+    return false;
 
   AXObject* anchor_object =
       selection.anchor_object ? selection.anchor_object.Get() : this;
@@ -1917,7 +1917,7 @@ void AXLayoutObject::SetSelection(const AXRange& selection) {
 
   if (!IsValidSelectionBound(anchor_object) ||
       !IsValidSelectionBound(focus_object)) {
-    return;
+    return false;
   }
 
   // The selection offsets are offsets into the accessible value.
@@ -1935,12 +1935,12 @@ void AXLayoutObject::SetSelection(const AXRange& selection) {
                                       selection.anchor_offset,
                                       kSelectionHasBackwardDirection);
     }
-    return;
+    return true;
   }
 
   LocalFrame* frame = GetLayoutObject()->GetFrame();
   if (!frame || !frame->Selection().IsAvailable())
-    return;
+    return false;
 
   // TODO(editing-dev): Use of updateStyleAndLayoutIgnorePendingStylesheets
   // needs to be audited.  see http://crbug.com/590369 for more details.
@@ -1955,13 +1955,14 @@ void AXLayoutObject::SetSelection(const AXRange& selection) {
   VisiblePosition focus_visible_position =
       ToVisiblePosition(focus_object, selection.focus_offset);
   if (anchor_visible_position.IsNull() || focus_visible_position.IsNull())
-    return;
+    return false;
 
   frame->Selection().SetSelection(
       SelectionInDOMTree::Builder()
           .Collapse(anchor_visible_position.ToPositionWithAffinity())
           .Extend(focus_visible_position.DeepEquivalent())
           .Build());
+  return true;
 }
 
 bool AXLayoutObject::IsValidSelectionBound(const AXObject* bound_object) const {
@@ -1972,19 +1973,26 @@ bool AXLayoutObject::IsValidSelectionBound(const AXObject* bound_object) const {
          &bound_object->AxObjectCache() == &AxObjectCache();
 }
 
-void AXLayoutObject::SetValue(const String& string) {
+bool AXLayoutObject::OnNativeSetValueAction(const String& string) {
   if (!GetNode() || !GetNode()->IsElementNode())
-    return;
+    return false;
   if (!layout_object_ || !layout_object_->IsBoxModelObject())
-    return;
+    return false;
 
   LayoutBoxModelObject* layout_object = ToLayoutBoxModelObject(layout_object_);
-  if (layout_object->IsTextField() && isHTMLInputElement(*GetNode()))
+  if (layout_object->IsTextField() && isHTMLInputElement(*GetNode())) {
     toHTMLInputElement(*GetNode())
         .setValue(string, kDispatchInputAndChangeEvent);
-  else if (layout_object->IsTextArea() && isHTMLTextAreaElement(*GetNode()))
+    return true;
+  }
+
+  if (layout_object->IsTextArea() && isHTMLTextAreaElement(*GetNode())) {
     toHTMLTextAreaElement(*GetNode())
         .setValue(string, kDispatchInputAndChangeEvent);
+    return true;
+  }
+
+  return false;
 }
 
 //
