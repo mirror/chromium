@@ -75,7 +75,6 @@ class WebMouseEvent;
 class WebSpeechRecognizer;
 class WebStorageNamespace;
 class WebURLRequest;
-struct WebActiveWheelFlingParameters;
 struct WebDateTimeChooserParams;
 struct WebMediaPlayerAction;
 struct WebPluginAction;
@@ -198,9 +197,6 @@ class CONTENT_EXPORT RenderViewImpl : public RenderWidget,
   void SetFocus(bool enable);
 
   void AttachWebFrameWidget(blink::WebFrameWidget* frame_widget);
-
-  void TransferActiveWheelFlingAnimation(
-      const blink::WebActiveWheelFlingParameters& params) override;
 
   // Starts a timer to send an UpdateState message on behalf of |frame|, if the
   // timer isn't already running. This allows multiple state changing events to

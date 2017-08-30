@@ -413,7 +413,7 @@ class CONTENT_EXPORT RenderWidget
   gfx::Point ConvertWindowPointToViewport(const gfx::Point& point);
 
   virtual void TransferActiveWheelFlingAnimation(
-      const blink::WebActiveWheelFlingParameters& params) {}
+      const blink::WebActiveWheelFlingParameters& params);
 
   uint32_t GetContentSourceId();
   void IncrementContentSourceId();
