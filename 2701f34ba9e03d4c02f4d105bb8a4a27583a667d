@@ -16,6 +16,24 @@
       "revId": "2701f34ba9e03d4c02f4d105bb8a4a27583a667d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d140d746_0d011bf6",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletObjectProxy.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-30T17:49:27Z",
+      "side": 1,
+      "message": "When the evaluation fails, the synchronization info will not be changed. Therefore, this function doesn\u0027t do anything harmful. However, I think we can early-exit the function based on |success|.\n\nDone.",
+      "parentUuid": "68709c52_6a551a37",
+      "revId": "2701f34ba9e03d4c02f4d105bb8a4a27583a667d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
