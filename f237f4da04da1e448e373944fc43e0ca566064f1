@@ -69,6 +69,24 @@
       "revId": "f237f4da04da1e448e373944fc43e0ca566064f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a63a17d_16af6a44",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-30T23:43:13Z",
+      "side": 1,
+      "message": "In JavaScript, you can still refer to the frame after it\u0027s detached from the DOM. E.g. if you do:\n\nconst frame \u003d document.getElementById(\u0027frame\u0027)\nframe.parentNode.removeChild(frame);\n\nyou can still do \"console.log(frame)\" and see there\u0027s still a DOM tree associated with it. I guess it\u0027s not a frame anymore though, just a detached DOM fragment.",
+      "parentUuid": "77f3888e_409c64e2",
+      "revId": "f237f4da04da1e448e373944fc43e0ca566064f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
