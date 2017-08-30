@@ -7,6 +7,7 @@
 #include <stdint.h>
 
 #include <string>
+#include <utility>
 
 #include "base/logging.h"
 #include "base/time/time.h"
@@ -133,6 +134,9 @@ bool ConvertFileResourceToResourceEntry(
     if (image_rotation != -1)
       file_specific_info->set_image_rotation(image_rotation);
   }
+
+  converted.set_modification_by_me_date(
+      input.modified_by_me_date().ToInternalValue());
 
   out_entry->Swap(&converted);
   swap(*out_parent_resource_id, parent_resource_id);
