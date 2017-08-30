@@ -19,6 +19,41 @@
     },
     {
       "key": {
+        "uuid": "597a1daa_9ae4d158",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-30T01:01:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "991978a9_4f0488a7",
+      "revId": "c13bdf55486ff6d4d11609d664b1e2b0513c33e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "638ff1dc_afcfe64e",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-30T01:01:49Z",
+      "side": 1,
+      "message": "Should we recompute visible_pos after this block?  I think DispatchSelectStart() is where the DOM change happens.",
+      "revId": "c13bdf55486ff6d4d11609d664b1e2b0513c33e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "64edebf8_7a1b3996",
         "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
         "patchSetId": 2
@@ -33,6 +68,24 @@
       "revId": "c13bdf55486ff6d4d11609d664b1e2b0513c33e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ee18dbc_8e149869",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-30T01:01:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64edebf8_7a1b3996",
+      "revId": "c13bdf55486ff6d4d11609d664b1e2b0513c33e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +112,30 @@
     },
     {
       "key": {
+        "uuid": "ac92c470_ada97ec3",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionControllerTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-30T01:01:49Z",
+      "side": 1,
+      "message": "I guess the test should be called \"DisconnectedPosition\" instead of \"DetachedPosition\"?",
+      "parentUuid": "71e60e4d_647186bb",
+      "range": {
+        "startLine": 140,
+        "startChar": 32,
+        "endLine": 140,
+        "endChar": 33
+      },
+      "revId": "c13bdf55486ff6d4d11609d664b1e2b0513c33e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5c101ad4_fc7ebfca",
         "filename": "third_party/WebKit/Source/core/editing/SelectionControllerTest.cpp",
         "patchSetId": 2
@@ -70,6 +147,24 @@
       "writtenOn": "2017-08-30T00:17:11Z",
       "side": 1,
       "message": "Let\u0027s assert body.innerHTML and selection type here to ensure that the event handler has run as expected.",
+      "revId": "c13bdf55486ff6d4d11609d664b1e2b0513c33e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "301e9edf_09c313e0",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionControllerTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-30T01:01:49Z",
+      "side": 1,
+      "message": "This is not very useful since body.innerHTML is empty both before and after the event handler runs.\n\nI can add an EXPECT statement that the selection type is none, but that\u0027s not very useful either, since it was also presumably none before the test ran.",
+      "parentUuid": "5c101ad4_fc7ebfca",
       "revId": "c13bdf55486ff6d4d11609d664b1e2b0513c33e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
