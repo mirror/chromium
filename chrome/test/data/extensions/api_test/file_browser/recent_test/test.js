@@ -38,10 +38,10 @@ requestAllFileSystems().then(function() {
   chrome.test.runTests([
     function testGetRecentFiles() {
       chrome.fileManagerPrivate.getRecentFiles(
-          'native_source', chrome.test.callbackPass(function(entries) {
+          'native_source', chrome.test.callbackPass(function(results) {
             var found = false;
-            for (var i = 0; i < entries.length; ++i) {
-              if (entries[i].name === 'all-justice.jpg') {
+            for (var i = 0; i < results.length; ++i) {
+              if (results[i].entry.name === 'all-justice.jpg') {
                 found = true;
               }
             }
