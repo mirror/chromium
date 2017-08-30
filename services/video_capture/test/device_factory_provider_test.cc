@@ -6,11 +6,18 @@
 
 #include "base/command_line.h"
 #include "media/base/media_switches.h"
+#include "mojo/public/cpp/bindings/strong_binding.h"
 #include "services/service_manager/public/interfaces/constants.mojom.h"
 #include "services/service_manager/public/interfaces/service_manager.mojom.h"
 #include "services/video_capture/public/interfaces/constants.mojom.h"
 
 namespace video_capture {
+
+class NullLogHandler : public video_capture::mojom::LogHandler {
+ public:
+  // video_capture::mojom::LogHandler implementation.
+  void OnLog(const std::string& message) override {}
+};
 
 ServiceManagerListenerImpl::ServiceManagerListenerImpl(
     service_manager::mojom::ServiceManagerListenerRequest request,
@@ -42,7 +49,11 @@ void DeviceFactoryProviderTest::SetUp() {
 
   connector()->BindInterface(mojom::kServiceName, &factory_provider_);
   factory_provider_->SetShutdownDelayInSeconds(0.0f);
-  factory_provider_->ConnectToDeviceFactory(mojo::MakeRequest(&factory_));
+  video_capture::mojom::LogHandlerPtr log_handler_ptr;
+  mojo::MakeStrongBinding(base::MakeUnique<NullLogHandler>(),
+                          mojo::MakeRequest(&log_handler_ptr));
+  factory_provider_->ConnectToDeviceFactory(std::move(log_handler_ptr),
+                                            mojo::MakeRequest(&factory_));
 }
 
 }  // namespace video_capture

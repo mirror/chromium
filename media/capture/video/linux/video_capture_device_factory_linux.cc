@@ -195,9 +195,10 @@ std::string GetDeviceDisplayName(const std::string& device_id) {
 }  // namespace
 
 VideoCaptureDeviceFactoryLinux::VideoCaptureDeviceFactoryLinux(
-    scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner)
-    : ui_task_runner_(ui_task_runner) {
-}
+    scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner,
+    base::RepeatingCallback<void(const std::string&)> emit_log_message_cb)
+    : ui_task_runner_(ui_task_runner),
+      emit_log_message_cb_(std::move(emit_log_message_cb)) {}
 
 VideoCaptureDeviceFactoryLinux::~VideoCaptureDeviceFactoryLinux() {
 }
@@ -206,6 +207,11 @@ std::unique_ptr<VideoCaptureDevice>
 VideoCaptureDeviceFactoryLinux::CreateDevice(
     const VideoCaptureDeviceDescriptor& device_descriptor) {
   DCHECK(thread_checker_.CalledOnValidThread());
+  std::ostringstream string_stream;
+  string_stream << "VideoCaptureDeviceFactoryLinux::CreateDevice: device_id = "
+                << device_descriptor.device_id
+                << ", display_name = " << device_descriptor.display_name;
+  emit_log_message_cb_.Run(string_stream.str());
 #if defined(OS_CHROMEOS)
   VideoCaptureDeviceChromeOS* self =
       new VideoCaptureDeviceChromeOS(ui_task_runner_, device_descriptor);
@@ -233,6 +239,9 @@ void VideoCaptureDeviceFactoryLinux::GetDeviceDescriptors(
     VideoCaptureDeviceDescriptors* device_descriptors) {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(device_descriptors->empty());
+  emit_log_message_cb_.Run(
+      "VideoCaptureDeviceFactoryLinux::GetDeviceDescriptors");
+
   const base::FilePath path("/dev/");
   base::FileEnumerator enumerator(path, false, base::FileEnumerator::FILES,
                                   "video*");
@@ -242,7 +251,11 @@ void VideoCaptureDeviceFactoryLinux::GetDeviceDescriptors(
     const std::string unique_id = path.value() + info.GetName().value();
     const base::ScopedFD fd(HANDLE_EINTR(open(unique_id.c_str(), O_RDONLY)));
     if (!fd.is_valid()) {
-      DLOG(ERROR) << "Couldn't open " << info.GetName().value();
+      std::ostringstream string_stream;
+      string_stream << "Couldn't open " << info.GetName().value()
+                    << ", skipping in enumeration.";
+      emit_log_message_cb_.Run(string_stream.str());
+      DLOG(ERROR) << string_stream.str();
       continue;
     }
     // Test if this is a V4L2 capture device and if it has at least one
@@ -298,8 +311,10 @@ void VideoCaptureDeviceFactoryLinux::GetSupportedFormats(
 VideoCaptureDeviceFactory*
 VideoCaptureDeviceFactory::CreateVideoCaptureDeviceFactory(
     scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner,
-    gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager) {
-  return new VideoCaptureDeviceFactoryLinux(ui_task_runner);
+    gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
+    base::RepeatingCallback<void(const std::string&)> emit_log_message_cb) {
+  return new VideoCaptureDeviceFactoryLinux(ui_task_runner,
+                                            std::move(emit_log_message_cb));
 }
 #endif
 

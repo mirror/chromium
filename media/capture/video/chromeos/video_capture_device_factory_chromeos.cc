@@ -107,7 +107,8 @@ bool VideoCaptureDeviceFactoryChromeOS::Init() {
 VideoCaptureDeviceFactory*
 VideoCaptureDeviceFactory::CreateVideoCaptureDeviceFactory(
     scoped_refptr<base::SingleThreadTaskRunner> task_runner_for_screen_observer,
-    gpu::GpuMemoryBufferManager* gpu_buffer_manager) {
+    gpu::GpuMemoryBufferManager* gpu_buffer_manager,
+    base::RepeatingCallback<void(const std::string&)> emit_log_message_cb) {
   // On Chrome OS we have to support two use cases:
   //
   // 1. For devices that have the camera HAL v3 service running on Chrome OS,
