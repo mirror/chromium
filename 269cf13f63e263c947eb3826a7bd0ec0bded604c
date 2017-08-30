@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5121d45c_ff59e75a",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 9768,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-30T11:28:40Z",
+      "side": 1,
+      "message": "Is it a good name for the policy value? From its description, it sounds like it may potentially be useful in non-edu cases, but this name will look weird in these configurations.\nWhat about something like \"AskIfSupportsOrDisable\"?",
+      "range": {
+        "startLine": 9768,
+        "startChar": 19,
+        "endLine": 9768,
+        "endChar": 29
+      },
+      "revId": "269cf13f63e263c947eb3826a7bd0ec0bded604c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
