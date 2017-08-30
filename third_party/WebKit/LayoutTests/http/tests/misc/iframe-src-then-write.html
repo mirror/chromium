@@ -1,0 +1,27 @@
+<html>
+<script>
+if (window.testRunner) {
+    testRunner.waitUntilDone();
+    testRunner.dumpAsText();
+}
+
+function runTest() {
+    var iframe = document.createElement('iframe');
+    iframe.src = "resources/failure.html";
+    document.body.appendChild(iframe);
+    // Do a busy loop before the document.write to leave enough time to trigger the race condition.
+    var computation1 = 1;
+    var computation2 = 1;
+    for (i = 0; i <10000000; i++) {
+      var tmp = computation1 + computation2;
+      computation1 = computation2;
+      computation2 = tmp;
+    }
+    iframe.contentDocument.write('<img src="resources/compass.jpg" onload="if (window.testRunner) setTimeout(\'testRunner.notifyDone()\', 100);">');
+    iframe.contentDocument.close();
+}
+</script>
+<body onload="runTest();">
+<div>This tests that calling iframe.src followed by writing to the iframe using document.write will not result in the iframe navigating.</div>
+</body>
+</html>
