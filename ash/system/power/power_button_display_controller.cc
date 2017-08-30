@@ -5,6 +5,7 @@
 #include "ash/system/power/power_button_display_controller.h"
 
 #include "ash/accessibility_delegate.h"
+#include "ash/public/cpp/touchscreen_enabled_source.h"
 #include "ash/shell.h"
 #include "ash/shell_delegate.h"
 #include "ash/wm/tablet_mode/tablet_mode_controller.h"
@@ -57,7 +58,7 @@ PowerButtonDisplayController::~PowerButtonDisplayController() {
 }
 
 void PowerButtonDisplayController::SetDisplayForcedOff(bool forced_off) {
-  if (backlights_forced_off_ == forced_off)
+  if (force_clamshell_power_button_ || backlights_forced_off_ == forced_off)
     return;
 
   // Set the display and keyboard backlights (if present) to |forced_off|.
@@ -144,17 +145,18 @@ void PowerButtonDisplayController::GetInitialBacklightsForcedOff() {
 
 void PowerButtonDisplayController::OnGotInitialBacklightsForcedOff(
     bool is_forced_off) {
-  backlights_forced_off_ = is_forced_off;
+  // Clamshell power button behavior should enforce the initialization of
+  // |backlights_forced_off_| to false in Chrome.
+  backlights_forced_off_ =
+      force_clamshell_power_button_ ? false : is_forced_off;
   UpdateTouchscreenStatus();
 }
 
 void PowerButtonDisplayController::UpdateTouchscreenStatus() {
   const bool enable_touchscreen =
       !backlights_forced_off_ && (screen_state_ != ScreenState::OFF_AUTO);
-  ShellDelegate* delegate = Shell::Get()->shell_delegate();
-  delegate->SetTouchscreenEnabledInPrefs(enable_touchscreen,
-                                         true /* use_local_state */);
-  delegate->UpdateTouchscreenStatusFromPrefs();
+  Shell::Get()->shell_delegate()->SetTouchscreenEnabled(
+      enable_touchscreen, TouchscreenEnabledSource::GLOBAL);
 }
 
 }  // namespace ash
