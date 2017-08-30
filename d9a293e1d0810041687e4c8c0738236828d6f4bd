@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25b873c7_66286b48",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-30T02:50:53Z",
+      "side": 1,
+      "message": "Note: I talked to xiaochengh@, and we think that if this method returns false, we should return immediately (to handle the cases where DispatchSelectStart() invalidates stuff) instead of trying to call HandlePotentialMisspelledWordTap().",
+      "revId": "d9a293e1d0810041687e4c8c0738236828d6f4bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
