@@ -496,8 +496,9 @@ bool LevelDBDatabase::OnMemoryDump(
 
   // All leveldb databases are already dumped by leveldb_env::DBTracker. Add
   // an edge to avoid double counting.
-  pmd->AddSuballocation(dump->guid(),
-                        leveldb_env::DBTracker::GetMemoryDumpName(db_.get()));
+  pmd->AddOwnershipEdge(
+      dump->guid(),
+      leveldb_env::DBTracker::GetOrCreateAllocatorDump(pmd, db_.get())->guid());
 
   return true;
 }
