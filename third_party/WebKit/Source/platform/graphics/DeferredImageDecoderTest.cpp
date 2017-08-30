@@ -114,7 +114,7 @@ class DeferredImageDecoderTest : public ::testing::Test,
     decode_request_count_ = 0;
     repetition_count_ = kAnimationNone;
     status_ = ImageFrame::kFrameComplete;
-    frame_duration_ = 0;
+    frame_duration_ = TimeDelta();
     decoded_size_ = actual_decoder_->Size();
   }
 
@@ -130,7 +130,7 @@ class DeferredImageDecoderTest : public ::testing::Test,
 
   ImageFrame::Status GetStatus() override { return status_; }
 
-  float FrameDuration() const override { return frame_duration_; }
+  TimeDelta FrameDuration() const override { return frame_duration_; }
 
   IntSize DecodedSize() const override { return decoded_size_; }
 
@@ -167,7 +167,7 @@ class DeferredImageDecoderTest : public ::testing::Test,
   size_t frame_count_;
   int repetition_count_;
   ImageFrame::Status status_;
-  float frame_duration_;
+  TimeDelta frame_duration_;
   IntSize decoded_size_;
 };
 
@@ -264,19 +264,19 @@ TEST_F(DeferredImageDecoderTest, singleFrameImageLoading) {
 TEST_F(DeferredImageDecoderTest, multiFrameImageLoading) {
   repetition_count_ = 10;
   frame_count_ = 1;
-  frame_duration_ = 10;
+  frame_duration_ = TimeDelta::FromMilliseconds(10);
   status_ = ImageFrame::kFramePartial;
   lazy_decoder_->SetData(data_, false);
 
   PaintImage image = CreatePaintImageAtIndex(0);
   ASSERT_TRUE(image);
   EXPECT_FALSE(lazy_decoder_->FrameIsReceivedAtIndex(0));
-  // Anything below .011f seconds is rounded to 0.1f seconds.
-  // See the implementaiton for details.
-  EXPECT_FLOAT_EQ(0.1f, lazy_decoder_->FrameDurationAtIndex(0));
+  // Anything <= 10ms is clamped to 100ms. See the implementaiton for details.
+  EXPECT_EQ(TimeDelta::FromMilliseconds(100),
+            lazy_decoder_->FrameDurationAtIndex(0));
 
   frame_count_ = 2;
-  frame_duration_ = 20;
+  frame_duration_ = TimeDelta::FromMilliseconds(20);
   status_ = ImageFrame::kFrameComplete;
   data_->Append(" ", 1u);
   lazy_decoder_->SetData(data_, false);
@@ -285,20 +285,24 @@ TEST_F(DeferredImageDecoderTest, multiFrameImageLoading) {
   ASSERT_TRUE(image);
   EXPECT_TRUE(lazy_decoder_->FrameIsReceivedAtIndex(0));
   EXPECT_TRUE(lazy_decoder_->FrameIsReceivedAtIndex(1));
-  EXPECT_FLOAT_EQ(0.02f, lazy_decoder_->FrameDurationAtIndex(1));
+  EXPECT_EQ(TimeDelta::FromMilliseconds(20),
+            lazy_decoder_->FrameDurationAtIndex(1));
   EXPECT_TRUE(actual_decoder_);
 
   frame_count_ = 3;
-  frame_duration_ = 30;
+  frame_duration_ = TimeDelta::FromMilliseconds(30);
   status_ = ImageFrame::kFrameComplete;
   lazy_decoder_->SetData(data_, true);
   EXPECT_FALSE(actual_decoder_);
   EXPECT_TRUE(lazy_decoder_->FrameIsReceivedAtIndex(0));
   EXPECT_TRUE(lazy_decoder_->FrameIsReceivedAtIndex(1));
   EXPECT_TRUE(lazy_decoder_->FrameIsReceivedAtIndex(2));
-  EXPECT_FLOAT_EQ(0.1f, lazy_decoder_->FrameDurationAtIndex(0));
-  EXPECT_FLOAT_EQ(0.02f, lazy_decoder_->FrameDurationAtIndex(1));
-  EXPECT_FLOAT_EQ(0.03f, lazy_decoder_->FrameDurationAtIndex(2));
+  EXPECT_EQ(TimeDelta::FromMilliseconds(100),
+            lazy_decoder_->FrameDurationAtIndex(0));
+  EXPECT_EQ(TimeDelta::FromMilliseconds(20),
+            lazy_decoder_->FrameDurationAtIndex(1));
+  EXPECT_EQ(TimeDelta::FromMilliseconds(30),
+            lazy_decoder_->FrameDurationAtIndex(2));
   EXPECT_EQ(10, lazy_decoder_->RepetitionCount());
 }
 

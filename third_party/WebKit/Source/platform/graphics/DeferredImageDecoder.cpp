@@ -45,12 +45,11 @@ struct DeferredFrameData {
  public:
   DeferredFrameData()
       : orientation_(kDefaultImageOrientation),
-        duration_(0),
         is_received_(false),
         frame_bytes_(0) {}
 
   ImageOrientation orientation_;
-  float duration_;
+  TimeDelta duration_;
   bool is_received_;
   size_t frame_bytes_;
 };
@@ -239,21 +238,21 @@ bool DeferredImageDecoder::FrameIsReceivedAtIndex(size_t index) const {
   return false;
 }
 
-float DeferredImageDecoder::FrameDurationAtIndex(size_t index) const {
-  float duration_ms = 0.f;
+TimeDelta DeferredImageDecoder::FrameDurationAtIndex(size_t index) const {
+  TimeDelta duration;
   if (metadata_decoder_)
-    duration_ms = metadata_decoder_->FrameDurationAtIndex(index);
+    duration = metadata_decoder_->FrameDurationAtIndex(index);
   if (index < frame_data_.size())
-    duration_ms = frame_data_[index].duration_;
+    duration = frame_data_[index].duration_;
 
   // Many annoying ads specify a 0 duration to make an image flash as quickly as
   // possible. We follow Firefox's behavior and use a duration of 100 ms for any
   // frames that specify a duration of <= 10 ms. See <rdar://problem/7689300>
   // and <http://webkit.org/b/36082> for more information.
-  const float duration_sec = duration_ms / 1000.f;
-  if (duration_sec < 0.011f)
-    return 0.100f;
-  return duration_sec;
+  if (duration <= TimeDelta::FromMilliseconds(10))
+    duration = TimeDelta::FromMilliseconds(100);
+
+  return duration;
 }
 
 size_t DeferredImageDecoder::FrameBytesAtIndex(size_t index) const {
