@@ -7,5 +7,9 @@ source_set("browser") {
     "url_opening.h",
   ]
 
+  deps = [
+    "//ios/web",
+  ]
+
   configs += [ "//build/config/compiler:enable_arc" ]
 }

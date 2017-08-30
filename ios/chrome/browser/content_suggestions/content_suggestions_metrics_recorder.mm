@@ -57,7 +57,7 @@
               atIndexPath:(NSIndexPath*)indexPath
     suggestionsShownAbove:(NSInteger)suggestionsAbove {
   ContentSuggestionsItem* suggestion =
-      base::mac::ObjCCastStrict<ContentSuggestionsItem>(item);
+      base::mac::ObjCCast<ContentSuggestionsItem>(item);
   ContentSuggestionsSectionInformation* sectionInfo =
       suggestion.suggestionIdentifier.sectionInfo;
   ContentSuggestionsCategoryWrapper* categoryWrapper =
