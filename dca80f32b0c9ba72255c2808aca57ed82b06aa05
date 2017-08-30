@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b80eb3f_5298d0ac",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-30T21:49:24Z",
+      "side": 1,
+      "message": "Update.",
+      "revId": "dca80f32b0c9ba72255c2808aca57ed82b06aa05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "150f3671_c182a15e",
+        "filename": "ui/events/platform/key_event_filter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-30T21:49:24Z",
+      "side": 1,
+      "message": "Can this be:\n\n  virtual void OnKeyEvent(ui::KeyEvent* event) \u003d 0\n\nAnd the override is responsible for calling event-\u003eSetHandled() or event-\u003eStopPropagation() to mark the event as having been handled? That\u0027s how we currently do this for event dispatch.",
+      "revId": "dca80f32b0c9ba72255c2808aca57ed82b06aa05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
