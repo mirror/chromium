@@ -144,6 +144,12 @@ bool ParseQuad(std::unique_ptr<protocol::Array<double>> quad_array,
   return true;
 }
 
+#if defined(OS_MACOSX)
+int kCtrlOrMeta = WebInputEvent::kMetaKey;
+#else
+int kCtrlOrMeta = WebInputEvent::kControlKey;
+#endif
+
 }  // namespace
 
 class InspectorOverlayAgent::InspectorPageOverlayDelegate final
@@ -990,7 +996,7 @@ bool InspectorOverlayAgent::HandleMouseMove(const WebMouseEvent& event) {
   if (!ShouldSearchForNode())
     return false;
 
-  if (event.GetModifiers() & WebInputEvent::kControlKey) {
+  if (event.GetModifiers() & kCtrlOrMeta) {
     InnerHideHighlight();
     hovered_node_for_inspect_mode_.Clear();
     if (screenshot_mode_) {
@@ -1059,7 +1065,7 @@ bool InspectorOverlayAgent::HandleMouseDown(const WebMouseEvent& event) {
   if (!ShouldSearchForNode())
     return false;
 
-  if ((event.GetModifiers() & WebInputEvent::kControlKey) &&
+  if ((event.GetModifiers() & kCtrlOrMeta) &&
       (event.GetModifiers() & WebInputEvent::kLeftButtonDown)) {
     InnerHideHighlight();
     hovered_node_for_inspect_mode_.Clear();
