@@ -93,6 +93,30 @@
       "revId": "6807c32d313a8b8eeef6b91bb075ccacd27a65cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87faf8ab_7f7dd4dc",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_coordinator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-30T23:40:03Z",
+      "side": 1,
+      "message": ":facepalm You\u0027re absolutely right. I didn\u0027t see your comment and learned it the hard way.",
+      "parentUuid": "1fb6a246_4c9b3c08",
+      "range": {
+        "startLine": 112,
+        "startChar": 2,
+        "endLine": 112,
+        "endChar": 61
+      },
+      "revId": "6807c32d313a8b8eeef6b91bb075ccacd27a65cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
