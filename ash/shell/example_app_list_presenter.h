@@ -31,6 +31,7 @@ class ExampleAppListPresenter : public app_list::mojom::AppListPresenter {
   void UpdateYPositionAndOpacity(int new_y_position,
                                  float background_opacity,
                                  bool is_end_gesture) override;
+  void ProcessMouseWheelEvent(int offset) override;
 
  private:
   mojo::Binding<app_list::mojom::AppListPresenter> binding_;

@@ -79,6 +79,9 @@ class APP_LIST_PRESENTER_EXPORT AppListPresenterImpl
                                  float background_opacity,
                                  bool is_end_gesture);
 
+  // Passes a MouseWheelEvent from the shelf to the AppListView.
+  void ProcessMouseWheelEvent(int offset);
+
  private:
   friend class test::AppListPresenterImplTestApi;
 
