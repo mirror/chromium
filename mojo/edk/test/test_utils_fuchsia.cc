@@ -30,7 +30,7 @@ bool BlockingWrite(const PlatformHandle& handle,
     return false;
   }
 
-  ssize_t result = HANDLE_EINTR(write(handle.as_fd(), buffer, bytes_to_write));
+  ssize_t result = write(handle.as_fd(), buffer, bytes_to_write);
 
   fcntl(handle.as_fd(), F_SETFL, original_flags);
 
@@ -51,7 +51,7 @@ bool BlockingRead(const PlatformHandle& handle,
     return false;
   }
 
-  ssize_t result = HANDLE_EINTR(read(handle.as_fd(), buffer, buffer_size));
+  ssize_t result = read(handle.as_fd(), buffer, buffer_size);
 
   fcntl(handle.as_fd(), F_SETFL, original_flags);
 
@@ -66,7 +66,7 @@ bool NonBlockingRead(const PlatformHandle& handle,
                      void* buffer,
                      size_t buffer_size,
                      size_t* bytes_read) {
-  ssize_t result = HANDLE_EINTR(read(handle.as_fd(), buffer, buffer_size));
+  ssize_t result = read(handle.as_fd(), buffer, buffer_size);
 
   if (result < 0) {
     if (errno != EAGAIN && errno != EWOULDBLOCK)
@@ -82,7 +82,7 @@ bool NonBlockingRead(const PlatformHandle& handle,
 
 ScopedPlatformHandle PlatformHandleFromFILE(base::ScopedFILE fp) {
   CHECK(fp);
-  int rv = HANDLE_EINTR(dup(fileno(fp.get())));
+  int rv = dup(fileno(fp.get()));
   PCHECK(rv != -1) << "dup";
   return ScopedPlatformHandle(PlatformHandle::ForFd(rv));
 }
