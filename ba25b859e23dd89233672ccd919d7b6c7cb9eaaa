@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d325609d_88305d84",
+        "filename": "base/mojom/values_struct_traits.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-30T08:42:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d77519d4_3fd3baef",
+      "range": {
+        "startLine": 36,
+        "startChar": 27,
+        "endLine": 36,
+        "endChar": 35
+      },
+      "revId": "ba25b859e23dd89233672ccd919d7b6c7cb9eaaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65bc3fe8_b74140f2",
         "filename": "base/mojom/values_struct_traits.h",
         "patchSetId": 17
@@ -45,6 +69,30 @@
       "revId": "ba25b859e23dd89233672ccd919d7b6c7cb9eaaa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e80851ea_0c20fed7",
+        "filename": "base/mojom/values_struct_traits.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-30T08:42:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65bc3fe8_b74140f2",
+      "range": {
+        "startLine": 38,
+        "startChar": 31,
+        "endLine": 38,
+        "endChar": 39
+      },
+      "revId": "ba25b859e23dd89233672ccd919d7b6c7cb9eaaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
