@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29a4873c_f792d23c",
+        "filename": "media/capture/content/thread_safe_capture_oracle.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-08-30T16:15:56Z",
+      "side": 1,
+      "message": "Could the two-step factory logic of creating a VideoFrame and then attaching ownership of |output_buffer_access| be simplified by making the static factory method VideoFrame::WrapExternalSharedMemory() accept |output_buffer_access| as an input parameter directly?",
+      "revId": "8bdb1ea26c7b44d6d769cdc95039d4b51a9f582e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0a9c8f0_87b7c133",
+        "filename": "media/capture/video/shared_memory_buffer_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-08-30T16:15:56Z",
+      "side": 1,
+      "message": "I am not convinced that the above is thread safe.\nCould the following sequence happen?\nThread 1 enters the critical section, sets its need_to_map_memory to true, the leaves the critical section, then remains at line 50. Thread 2 enters the critical section, sets its need_to_map_memory to false, then returns, and then the Handle may get used on Thread 2 before the memory is mapped in Thread 1.",
+      "revId": "8bdb1ea26c7b44d6d769cdc95039d4b51a9f582e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba2a4069_87b15c9d",
+        "filename": "media/capture/video/shared_memory_buffer_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-08-30T16:15:56Z",
+      "side": 1,
+      "message": "I agree that we probably want this method to be thread safe. It seems this is currently not mentioned in the class-level or base-class-level description. This was already the case before your change, but we should consider adding this information there.",
+      "revId": "8bdb1ea26c7b44d6d769cdc95039d4b51a9f582e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12a1cbba_4e7b6f76",
+        "filename": "media/capture/video/shared_memory_buffer_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-08-30T16:15:56Z",
+      "side": 1,
+      "message": "Similar to above, it appears that it can happen that a second thread returns from this before a first thread has completed the unmapping. For the unmapping case this is probably fine, though, so probably no change needed here.",
+      "revId": "8bdb1ea26c7b44d6d769cdc95039d4b51a9f582e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81834b06_40c3e810",
+        "filename": "media/capture/video/shared_memory_buffer_tracker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-08-30T16:15:56Z",
+      "side": 1,
+      "message": "SharedMemoryBufferHandle -\u003e Handle (or SharedMemoryBufferTracker::Handle)",
+      "revId": "8bdb1ea26c7b44d6d769cdc95039d4b51a9f582e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c3de3e3_0ef940d2",
+        "filename": "services/video_capture/public/cpp/receiver_media_to_mojo_adapter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-08-30T16:15:56Z",
+      "side": 1,
+      "message": "This comment at this location seems a bit verbose. DETACH_FROM_SEQUENCE implies the same information, and I don\u0027t think we would want to add this comment every time we use DETACH_FROM_SEQUENCE. I would be okay with no comment here.",
+      "revId": "8bdb1ea26c7b44d6d769cdc95039d4b51a9f582e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66962630_c8b507e2",
+        "filename": "services/video_capture/public/cpp/receiver_media_to_mojo_adapter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-08-30T16:15:56Z",
+      "side": 1,
+      "message": "Thanks for adding these. Explicitly seeing thread-safety in the other implementation made me realize that these are needed here.",
+      "revId": "8bdb1ea26c7b44d6d769cdc95039d4b51a9f582e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee5b6cc9_ca46d1be",
+        "filename": "services/video_capture/public/cpp/receiver_media_to_mojo_adapter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-08-30T16:15:56Z",
+      "side": 1,
+      "message": "nit: Since MojoBufferHandleProvider never unmaps the memory, a more appropriate name for this may be \"handle_count_\".",
+      "revId": "8bdb1ea26c7b44d6d769cdc95039d4b51a9f582e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3711e89f_4fc60313",
+        "filename": "services/video_capture/public/cpp/receiver_media_to_mojo_adapter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-08-30T16:15:56Z",
+      "side": 1,
+      "message": "After this CL, there are now a few behavior differences between MojoBufferHandleProvider and BufferPoolBufferHandleProvider:\n1.) MojoBufferHandleProvider never unmaps the memory, while BufferPoolBufferHandleProvider unmaps when the last in-process access handle is discarded.\n2.) MojoBufferHandleProvider::GetNonOwnedSharedMemoryHandleForLegacyIPC() guarantees that memory is and stays mapped. BufferPoolBufferHandleProvider::GetNonOwnedSharedMemoryHandleForLegacyIPC() does not participate in mapping/unmapping logic.\n\nBoth differences are probably fine, since the interface VideoCaptureDevice::Client::Buffer::HandleProvider does not specify any particular behavior. I just wanted to double check that you are aware and agree.",
+      "revId": "8bdb1ea26c7b44d6d769cdc95039d4b51a9f582e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
