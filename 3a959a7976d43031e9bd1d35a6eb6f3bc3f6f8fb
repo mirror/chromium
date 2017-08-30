@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a5c3e11_1ff11af0",
+        "filename": "cc/trees/layer_tree_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1236,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-30T18:37:19Z",
+      "side": 1,
+      "message": "Maybe this is a naive question, but why does UnregisterLayer erase entries in the map here? Is it that among layers, they have a unique element id, and so these animations necessarily are not affecting other layers on this tree?\n\nIt looks like there is code in UpdatePropertyTreeAnimationFromMainThread that already deletes entries in this map when the nodes are not updating.  If the goal is to try to decouple Layers and ElementIds, then could this erasing be removed and that update function be modified to handle any missing cases (node not existing? not sure what else).",
+      "revId": "3a959a7976d43031e9bd1d35a6eb6f3bc3f6f8fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
