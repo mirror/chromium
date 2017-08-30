@@ -1251,7 +1251,7 @@ PositionWithAffinity LayoutBlock::PositionForPointIfOutsideAtomicInlineLevel(
 static inline bool IsChildHitTestCandidate(LayoutBox* box) {
   return box->Size().Height() &&
          box->Style()->Visibility() == EVisibility::kVisible &&
-         !box->IsFloatingOrOutOfFlowPositioned() && !box->IsLayoutFlowThread();
+         !box->IsOutOfFlowPositioned() && !box->IsLayoutFlowThread();
 }
 
 PositionWithAffinity LayoutBlock::PositionForPoint(const LayoutPoint& point) {
