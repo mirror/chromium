@@ -67,7 +67,7 @@ class DummyTaskManager : public task_manager::TestTaskManager {
   ~DummyTaskManager() override {}
 
   // task_manager::TestTaskManager:
-  double GetCpuUsage(TaskId task_id) const override {
+  double GetPlatformIndependentCPUUsage(TaskId task_id) const override {
     return tasks_.at(task_id)->cpu_percent;
   }
   int64_t GetPhysicalMemoryUsage(TaskId task_id) const override {
