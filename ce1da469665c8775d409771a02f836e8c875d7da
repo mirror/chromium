@@ -16,6 +16,24 @@
       "revId": "ce1da469665c8775d409771a02f836e8c875d7da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bfaa795_c6eea4a6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/PictureInPictureController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-08-30T11:04:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80219474_fb525604",
+      "revId": "ce1da469665c8775d409771a02f836e8c875d7da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
