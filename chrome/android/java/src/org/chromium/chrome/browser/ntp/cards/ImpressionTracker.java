@@ -76,6 +76,10 @@ public class ImpressionTracker
         return mTriggered;
     }
 
+    public void setTriggered(boolean triggered) {
+        mTriggered = triggered;
+    }
+
     @Override
     public void onViewAttachedToWindow(View v) {
         mView.getViewTreeObserver().addOnPreDrawListener(this);
