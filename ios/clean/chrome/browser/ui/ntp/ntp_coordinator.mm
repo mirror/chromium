@@ -24,12 +24,14 @@
 @property(nonatomic, strong) NTPMediator* mediator;
 @property(nonatomic, strong) NTPViewController* viewController;
 @property(nonatomic, strong) BookmarksCoordinator* bookmarksCoordinator;
+@property(nonatomic, strong) RecentTabsCoordinator* recentTabsCoordinator;
 @end
 
 @implementation NTPCoordinator
 @synthesize mediator = _mediator;
 @synthesize viewController = _viewController;
 @synthesize bookmarksCoordinator = _bookmarksCoordinator;
+@synthesize recentTabsCoordinator = _recentTabsCoordinator;
 
 - (void)start {
   self.viewController = [[NTPViewController alloc] init];
@@ -71,6 +73,10 @@
     if (IsIPadIdiom()) {
       self.viewController.recentTabsViewController = coordinator.viewController;
     } else {
+      coordinator.viewController.modalPresentationStyle =
+          UIModalPresentationFormSheet;
+      coordinator.viewController.modalPresentationCapturesStatusBarAppearance =
+          YES;
       [self.viewController presentViewController:coordinator.viewController
                                         animated:YES
                                       completion:nil];
@@ -81,6 +87,11 @@
 - (void)childCoordinatorWillStop:(BrowserCoordinator*)childCoordinator {
   if ([childCoordinator isKindOfClass:[BookmarksCoordinator class]] &&
       !IsIPadIdiom()) {
+    [childCoordinator.viewController.presentingViewController
+        dismissViewControllerAnimated:YES
+                           completion:nil];
+  } else if ([childCoordinator isKindOfClass:[RecentTabsCoordinator class]] &&
+             !IsIPadIdiom()) {
     [childCoordinator.viewController.presentingViewController
         dismissViewControllerAnimated:YES
                            completion:nil];
@@ -105,19 +116,11 @@
 }
 
 - (void)showNTPRecentTabsPanel {
-  // TODO(crbug.com/740793): Remove alert once this feature is implemented.
-  UIAlertController* alertController =
-      [UIAlertController alertControllerWithTitle:@"Recent Sites"
-                                          message:nil
-                                   preferredStyle:UIAlertControllerStyleAlert];
-  UIAlertAction* action =
-      [UIAlertAction actionWithTitle:@"Done"
-                               style:UIAlertActionStyleCancel
-                             handler:nil];
-  [alertController addAction:action];
-  [self.viewController presentViewController:alertController
-                                    animated:YES
-                                  completion:nil];
+  if (!self.recentTabsCoordinator) {
+    self.recentTabsCoordinator = [[RecentTabsCoordinator alloc] init];
+    [self addChildCoordinator:self.recentTabsCoordinator];
+  }
+  [self.recentTabsCoordinator start];
 }
 
 @end
