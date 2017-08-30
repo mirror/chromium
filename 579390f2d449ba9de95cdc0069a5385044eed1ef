@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7a350e74_54eb852d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 83336,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-08-30T23:36:20Z",
+      "side": 1,
+      "message": "thank you! updated the comment!",
+      "parentUuid": "b8dec704_08c963f2",
+      "revId": "579390f2d449ba9de95cdc0069a5385044eed1ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d6e0ff2_3914805f",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "579390f2d449ba9de95cdc0069a5385044eed1ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deac9bf4_db25bc72",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 83341,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-08-30T23:36:20Z",
+      "side": 1,
+      "message": "thanks for the suggestion!",
+      "parentUuid": "0d6e0ff2_3914805f",
+      "revId": "579390f2d449ba9de95cdc0069a5385044eed1ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
