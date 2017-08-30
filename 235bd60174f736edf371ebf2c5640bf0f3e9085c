@@ -16,6 +16,24 @@
       "revId": "235bd60174f736edf371ebf2c5640bf0f3e9085c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "359b149d_fceb92a9",
+        "filename": "build/android/resource_sizes.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-30T18:33:02Z",
+      "side": 1,
+      "message": "The original intent was to penalize more than just the compressed size. So this is still penalizing more than before, but not by too much.",
+      "parentUuid": "8bc5076e_ec509625",
+      "revId": "235bd60174f736edf371ebf2c5640bf0f3e9085c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
