@@ -104,6 +104,24 @@
       "revId": "f2605625975dcf91cc577f2434fdaf905c351776",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80a4e584_93346e17",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-30T16:18:35Z",
+      "side": 1,
+      "message": "That sounds great, I like simpler code.\n\nDid you mean to upload a new patch?",
+      "parentUuid": "3bf4577a_4eb8d718",
+      "revId": "f2605625975dcf91cc577f2434fdaf905c351776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
