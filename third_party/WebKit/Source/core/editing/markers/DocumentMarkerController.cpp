@@ -262,6 +262,8 @@ void DocumentMarkerController::AddMarkerInternal(
         start_offset_in_current_container, end_offset_in_current_container);
     AddMarkerToNode(node, new_marker);
   }
+
+  ShowMarkers();
 }
 
 // Markers are stored in order sorted by their start offset.
