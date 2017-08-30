@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "55041ef3_8991dd81",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-30T18:22:53Z",
+      "side": 1,
+      "message": "nit: Why not \"\u003d std::move\"? This would look more conventional IMHO.",
+      "range": {
+        "startLine": 384,
+        "startChar": 13,
+        "endLine": 384,
+        "endChar": 19
+      },
+      "revId": "890a84df24903d318067d81cae17a91d37e3c2bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "37868151_d69acdf9",
         "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler.h",
         "patchSetId": 16
@@ -13,6 +36,190 @@
       "writtenOn": "2017-08-30T16:57:11Z",
       "side": 1,
       "message": "nit: drop comment for short namespace?",
+      "revId": "890a84df24903d318067d81cae17a91d37e3c2bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08560302_cf5b46ea",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-30T18:22:53Z",
+      "side": 1,
+      "message": "nit: Maybe it will be reasonable to use user_manager::kStubUserEmail. But not insisting.",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 45
+      },
+      "revId": "890a84df24903d318067d81cae17a91d37e3c2bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a413d83_ca4ca44f",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-30T18:22:53Z",
+      "side": 1,
+      "message": "nit: It looks to be a \"fake\", not a \"mock\" (the latter is typically directly related to GMock).",
+      "range": {
+        "startLine": 38,
+        "startChar": 6,
+        "endLine": 38,
+        "endChar": 18
+      },
+      "revId": "890a84df24903d318067d81cae17a91d37e3c2bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d3ade12_045e7431",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-30T18:22:53Z",
+      "side": 1,
+      "message": "nit: Add NOTIMPLEMENTED()? Or call the |callback|?",
+      "range": {
+        "startLine": 48,
+        "startChar": 57,
+        "endLine": 48,
+        "endChar": 58
+      },
+      "revId": "890a84df24903d318067d81cae17a91d37e3c2bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e45dd855_5e5e04ea",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-30T18:22:53Z",
+      "side": 1,
+      "message": "nit: Run |callback| with |has_wakelock_|? Or please add NOTIMPLEMENTED() here.",
+      "range": {
+        "startLine": 49,
+        "startChar": 75,
+        "endLine": 49,
+        "endChar": 76
+      },
+      "revId": "890a84df24903d318067d81cae17a91d37e3c2bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e280da74_ca6828da",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-30T18:22:53Z",
+      "side": 1,
+      "message": "nit: #include \"base/memory/ptr_util.h\", \u003cmemory\u003e",
+      "range": {
+        "startLine": 65,
+        "startChar": 28,
+        "endLine": 65,
+        "endChar": 38
+      },
+      "revId": "890a84df24903d318067d81cae17a91d37e3c2bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fa0b2a9_289256f4",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-30T18:22:53Z",
+      "side": 1,
+      "message": "nit: #include \u003cutility\u003e",
+      "range": {
+        "startLine": 67,
+        "startChar": 27,
+        "endLine": 67,
+        "endChar": 36
+      },
+      "revId": "890a84df24903d318067d81cae17a91d37e3c2bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd874760_75684330",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-30T18:22:53Z",
+      "side": 1,
+      "message": "nit: Move to private?",
+      "range": {
+        "startLine": 90,
+        "startChar": 3,
+        "endLine": 90,
+        "endChar": 32
+      },
+      "revId": "890a84df24903d318067d81cae17a91d37e3c2bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45e98675_c4733056",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-30T18:22:53Z",
+      "side": 1,
+      "message": "nit: Maybe drop a note that it\u0027s a non-owned pointer, and that the actual object is owned by the parent class?",
+      "range": {
+        "startLine": 97,
+        "startChar": 29,
+        "endLine": 97,
+        "endChar": 48
+      },
       "revId": "890a84df24903d318067d81cae17a91d37e3c2bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -47,6 +254,98 @@
       "writtenOn": "2017-08-30T16:57:11Z",
       "side": 1,
       "message": "I think we prefer \u003d default here too",
+      "revId": "890a84df24903d318067d81cae17a91d37e3c2bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "186d4565_d04b70fb",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-30T18:22:53Z",
+      "side": 1,
+      "message": "nit: \"Set up\"\n(same in line 127)",
+      "range": {
+        "startLine": 109,
+        "startChar": 7,
+        "endLine": 109,
+        "endChar": 12
+      },
+      "revId": "890a84df24903d318067d81cae17a91d37e3c2bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e56dfc54_c4e91bac",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-30T18:22:53Z",
+      "side": 1,
+      "message": "nit: #include \"testing/gmock/include/gmock/gmock.h\"",
+      "range": {
+        "startLine": 110,
+        "startChar": 45,
+        "endLine": 110,
+        "endChar": 53
+      },
+      "revId": "890a84df24903d318067d81cae17a91d37e3c2bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33932d4f_80c41b5c",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-30T18:22:53Z",
+      "side": 1,
+      "message": "nit: \"chromeos::\" is unnecessary throughout this file.",
+      "range": {
+        "startLine": 129,
+        "startChar": 25,
+        "endLine": 129,
+        "endChar": 35
+      },
+      "revId": "890a84df24903d318067d81cae17a91d37e3c2bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec9277b9_77596154",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-30T18:22:53Z",
+      "side": 1,
+      "message": "nit: \"OnContinueLogin\", and move to private?\n(similar below for RestartLogin())",
+      "range": {
+        "startLine": 212,
+        "startChar": 2,
+        "endLine": 212,
+        "endChar": 20
+      },
       "revId": "890a84df24903d318067d81cae17a91d37e3c2bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
