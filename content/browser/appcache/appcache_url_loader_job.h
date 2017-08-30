@@ -28,6 +28,7 @@ class NetToMojoPendingBuffer;
 
 namespace content {
 
+class AppCacheSubresourceURLFactory;
 class AppCacheRequest;
 class AppCacheURLLoaderRequest;
 class URLLoaderFactoryGetter;
@@ -100,10 +101,11 @@ class CONTENT_EXPORT AppCacheURLLoaderJob : public AppCacheJob,
   }
 
   // Ownership of the |handler| is transferred to us via this call. This is
-  // only for subresource requests.
-  void set_request_handler(std::unique_ptr<AppCacheRequestHandler> handler) {
-    sub_resource_handler_ = std::move(handler);
-  }
+  // only for subresource requests. The subresource_factory is maintained as
+  // a weak pointer.
+  void SetRequestHandlerAndFactory(
+      std::unique_ptr<AppCacheRequestHandler> handler,
+      AppCacheSubresourceURLFactory* subresource_factory);
 
   // Binds to the URLLoaderRequest instance passed in the |request| parameter.
   // The URLLoaderClient instance is passed in the |client| parameter. This
@@ -213,6 +215,12 @@ class CONTENT_EXPORT AppCacheURLLoaderJob : public AppCacheJob,
   // Set to true when we receive a response from the network URL loader.
   // Please see OnReceiveResponse()
   bool received_response_;
+
+  // The last redirect seen for a subresource.
+  net::RedirectInfo last_subresource_redirect_info_;
+
+  // Used to restart the subresource request in case of a redirect.
+  base::WeakPtr<AppCacheSubresourceURLFactory> subresource_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(AppCacheURLLoaderJob);
 };
