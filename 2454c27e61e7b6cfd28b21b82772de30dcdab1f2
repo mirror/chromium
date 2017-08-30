@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "92ba2f71_205f0cdf",
+        "filename": "third_party/WebKit/Source/platform/exported/WebHTTPHeaderMap.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-08-30T12:21:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f8e82fc_9c631b76",
+      "revId": "2454c27e61e7b6cfd28b21b82772de30dcdab1f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76f62b4c_aac7eaa4",
         "filename": "third_party/WebKit/Source/platform/exported/WebHTTPHeaderMap.cpp",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "2454c27e61e7b6cfd28b21b82772de30dcdab1f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb6ca9cb_a7decc5e",
+        "filename": "third_party/WebKit/Source/platform/exported/WebHTTPHeaderMap.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-08-30T12:21:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76f62b4c_aac7eaa4",
+      "revId": "2454c27e61e7b6cfd28b21b82772de30dcdab1f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6f7c0a37_9190505f",
+        "filename": "third_party/WebKit/Source/platform/exported/WebHTTPHeaderMap.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-08-30T12:21:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c324be3_cc826392",
+      "revId": "2454c27e61e7b6cfd28b21b82772de30dcdab1f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de52bec7_6714255d",
         "filename": "third_party/WebKit/public/platform/WebCORSPreflightResultCache.h",
         "patchSetId": 10
@@ -67,6 +121,24 @@
       "revId": "2454c27e61e7b6cfd28b21b82772de30dcdab1f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47cab26c_e868e04f",
+        "filename": "third_party/WebKit/public/platform/WebCORSPreflightResultCache.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-08-30T12:21:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de52bec7_6714255d",
+      "revId": "2454c27e61e7b6cfd28b21b82772de30dcdab1f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "1f292f6a_94e0f9e2",
+        "filename": "third_party/WebKit/public/platform/WebHTTPHeaderMap.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-08-30T12:21:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9484be98_acd4bc33",
+      "revId": "2454c27e61e7b6cfd28b21b82772de30dcdab1f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba37e55b_e898952b",
         "filename": "third_party/WebKit/public/platform/WebHTTPHeaderMap.h",
         "patchSetId": 10
@@ -98,6 +188,24 @@
       "writtenOn": "2017-08-30T10:13:19Z",
       "side": 1,
       "message": "The behavior that this just takes a reference but doesn\u0027t copy the given parameter is a bit surprising (this means the caller needs to keep the HTTPHeaderMap alive).  Is it intentional?  I think this\u0027d definitely need a clear documentation (i.e. comment) if that\u0027s the case.  (Some class that does that has a clear name like: WrappedFoo)",
+      "revId": "2454c27e61e7b6cfd28b21b82772de30dcdab1f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cac91d51_a4b067aa",
+        "filename": "third_party/WebKit/public/platform/WebHTTPHeaderMap.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-08-30T12:21:23Z",
+      "side": 1,
+      "message": "Hm, I can see that I am not consistent here, given that I actually do store a detached copy if one of the other constructors is used. I found it appealing not to copy the content of the map around \"just\" for a type conversion but it also felt like a waist of resources to compute the HTTPHeaderMap anew if called with one of the net::*Headers.\n\nAnyways, for now I uploaded a patch that creates a copy instead of holding a reference but I don\u0027t have a strong opinion on which approach would be better, so let me know if you prefer a wrapper-like solution.",
+      "parentUuid": "ba37e55b_e898952b",
       "revId": "2454c27e61e7b6cfd28b21b82772de30dcdab1f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -118,6 +226,24 @@
       "revId": "2454c27e61e7b6cfd28b21b82772de30dcdab1f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bb7c472_72cbf163",
+        "filename": "third_party/WebKit/public/platform/WebHTTPHeaderSet.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-08-30T12:21:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10bee635_03ecccba",
+      "revId": "2454c27e61e7b6cfd28b21b82772de30dcdab1f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
