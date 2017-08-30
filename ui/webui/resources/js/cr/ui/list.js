@@ -20,13 +20,20 @@ cr.define('cr.ui', function() {
    * Whether a mouse event is inside the element viewport. This will return
    * false if the mouseevent was generated over a border or a scrollbar.
    * @param {!HTMLElement} el The element to test the event with.
-   * @param {!Event} e The mouse event.
+   * @param {!Event} e Touch or mouse event.
    * @return {boolean} Whether the mouse event was inside the viewport.
    */
   function inViewport(el, e) {
     var rect = el.getBoundingClientRect();
-    var x = e.clientX;
-    var y = e.clientY;
+    var isTouch = e instanceof TouchEvent;
+    if (isTouch) {
+      console.log(e.type);
+      console.log(e.touches);
+      if (e.touches.length < 1)
+        return false;
+    }
+    var x = isTouch ? e.touches[0].clientX : e.clientX;
+    var y = isTouch ? e.touches[0].clientY : e.clientY;
     return x >= rect.left + el.clientLeft &&
         x < rect.left + el.clientLeft + el.clientWidth &&
         y >= rect.top + el.clientTop &&
@@ -579,8 +586,8 @@ cr.define('cr.ui', function() {
       // If the target was this element we need to make sure that the user did
       // not click on a border or a scrollbar.
       if (target == this) {
-        if (inViewport(target, e))
-          this.selectionController_.handleTouchEvents(e, -1);
+        // if (inViewport(target, e))
+        this.selectionController_.handleTouchEvents(e, -1);
         return;
       }
 
