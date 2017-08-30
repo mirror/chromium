@@ -310,6 +310,24 @@
       "revId": "62b3505f235d00875a619b562816ea09c4454dd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9b03fb0_6044951b",
+        "filename": "content/test/test_render_frame.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-30T15:42:07Z",
+      "side": 1,
+      "message": "So two deadlocks here...\n\nDEADLOCK #1:\n\n1.) GetFrameHost() called for the first time\n1.1.) GetRemoteAssociatedInterfaces()-\u003eGetInterface(\u0026frame_host_ptr_)\n1.1.1) ... plumbing ...\n1.1.2) Task is posted to bind the Mock implementation to the request end\n1.2) GetFrameHost returns the InterfacePtr end\n2.) GetFrameHost()-\u003eCreateNewWindow called\n2.1.) Sends sync message\n2.2.) Waits for sync response, while dispatching incoming sync messages\n\nHowever, posted tasks are not dispatched, so the implementation is never bound, the sync request message is never dispatched, response never arrives.\n\nDEADLOCK #2:\n\nWhen attempting to fix #1 by making sure that the task posted in 1.1.1 is processed before 1.2, the three obvious choices are:\n (1) InterfacePtr::FlushForTesting\n (2) base::RunLoop::RunUntilIdle\n (3) base::RunLoop(kNestableTasksAllowed)::RunUntilIdle\n\n(1) deadlocks and (2) does nothing if GetFrameHost() is first called while we are already inside a message loop, e.g. when handling on OnDidCommitProvisionalLoad.\n\n(3) seems to work, but it\u0027s the only use of kNestableTasksAllowed. :-/",
+      "parentUuid": "b8ab992d_321aa5f8",
+      "revId": "62b3505f235d00875a619b562816ea09c4454dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
