@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b4b2671_b1d526d3",
+        "filename": "third_party/WebKit/Source/core/loader/ThreadableLoadingContext.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-30T15:53:45Z",
+      "side": 1,
+      "message": "how about just returning at L78 and L83?",
+      "revId": "5b398afcab4d128b31ce83161788653001912ea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1db13671_915f3b2d",
+        "filename": "third_party/WebKit/Source/core/loader/ThreadableLoadingContext.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-30T15:53:45Z",
+      "side": 1,
+      "message": "what\u0027s the motivation behind switching from reference to pointer?",
+      "revId": "5b398afcab4d128b31ce83161788653001912ea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
