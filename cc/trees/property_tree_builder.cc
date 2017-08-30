@@ -58,6 +58,7 @@ struct DataForRecursion {
   bool not_axis_aligned_since_last_clip;
   gfx::Transform compound_transform_since_render_target;
   gfx::Vector2dF elastic_overscroll;
+  const std::multimap<const LayerType*, LayerType*>* scroll_children_map;
 };
 
 static LayerPositionConstraint PositionConstraint(Layer* layer) {
@@ -99,14 +100,6 @@ static Layer* ScrollParent(Layer* layer) {
 
 static LayerImpl* ScrollParent(LayerImpl* layer) {
   return layer->test_properties()->scroll_parent;
-}
-
-static std::set<Layer*>* ScrollChildren(Layer* layer) {
-  return layer->scroll_children();
-}
-
-static std::set<LayerImpl*>* ScrollChildren(LayerImpl* layer) {
-  return layer->test_properties()->scroll_children.get();
 }
 
 static Layer* ClipParent(Layer* layer) {
@@ -1178,21 +1171,19 @@ void BuildPropertyTreesInternal(
     SetLayerPropertyChangedForChild(layer, current_child);
     if (!ScrollParent(current_child)) {
       BuildPropertyTreesInternal(current_child, data_for_children);
-    } else {
-      // The child should be included in its scroll parent's list of scroll
-      // children.
-      DCHECK(ScrollChildren(ScrollParent(current_child))->count(current_child));
     }
   }
 
-  if (ScrollChildren(layer)) {
-    for (LayerType* scroll_child : *ScrollChildren(layer)) {
-      DCHECK_EQ(ScrollParent(scroll_child), layer);
-      DCHECK(Parent(scroll_child));
-      data_for_children.effect_tree_parent =
-          Parent(scroll_child)->effect_tree_index();
-      BuildPropertyTreesInternal(scroll_child, data_for_children);
-    }
+  auto scroll_children_range =
+      data_from_parent.scroll_children_map->equal_range(layer);
+  for (auto it = scroll_children_range.first;
+       it != scroll_children_range.second; ++it) {
+    LayerType* scroll_child = it->second;
+    DCHECK_EQ(ScrollParent(scroll_child), layer);
+    DCHECK(Parent(scroll_child));
+    data_for_children.effect_tree_parent =
+        Parent(scroll_child)->effect_tree_index();
+    BuildPropertyTreesInternal(scroll_child, data_for_children);
   }
 
   if (MaskLayer(layer)) {
@@ -1205,6 +1196,13 @@ void BuildPropertyTreesInternal(
     MaskLayer(layer)->SetEffectTreeIndex(layer->effect_tree_index());
     MaskLayer(layer)->SetScrollTreeIndex(layer->scroll_tree_index());
   }
+}
+
+const LayerTreeHost& AllLayerRange(const Layer* root_layer) {
+  return *root_layer->layer_tree_host();
+}
+const LayerTreeImpl& AllLayerRange(const LayerImpl* root_layer) {
+  return *root_layer->layer_tree_impl();
 }
 
 }  // namespace
@@ -1297,6 +1295,13 @@ void BuildPropertyTreesTopLevelInternal(
       data_for_recursion.property_trees->clip_tree.Insert(
           root_clip, ClipTree::kRootNodeId);
 
+  std::multimap<const LayerType*, LayerType*> scroll_children_map;
+  data_for_recursion.scroll_children_map = &scroll_children_map;
+  for (auto* layer : AllLayerRange(root_layer)) {
+    if (ScrollParent(layer))
+      scroll_children_map.emplace(ScrollParent(layer), layer);
+  }
+
   BuildPropertyTreesInternal(root_layer, data_for_recursion);
   property_trees->needs_rebuild = false;
 
@@ -1310,16 +1315,18 @@ void BuildPropertyTreesTopLevelInternal(
 }
 
 #if DCHECK_IS_ON()
-static void CheckScrollAndClipPointersForLayer(Layer* layer) {
+static void CheckDanglingScrollParent(Layer* root_layer) {
+  std::unordered_set<const Layer*> layers;
+  for (const auto* layer : AllLayerRange(root_layer))
+    layers.insert(layer);
+  for (auto* layer : AllLayerRange(root_layer))
+    DCHECK(!ScrollParent(layer) ||
+           layers.find(ScrollParent(layer)) != layers.end());
+}
+
+static void CheckClipPointersForLayer(Layer* layer) {
   if (!layer)
     return;
-
-  if (layer->scroll_children()) {
-    for (std::set<Layer*>::iterator it = layer->scroll_children()->begin();
-         it != layer->scroll_children()->end(); ++it) {
-      DCHECK_EQ((*it)->scroll_parent(), layer);
-    }
-  }
 
   if (layer->clip_children()) {
     for (std::set<Layer*>::iterator it = layer->clip_children()->begin();
@@ -1355,8 +1362,9 @@ void PropertyTreeBuilder::BuildPropertyTrees(
       elastic_overscroll, page_scale_factor, device_scale_factor, viewport,
       device_transform, property_trees, color);
 #if DCHECK_IS_ON()
-  for (auto* layer : *root_layer->layer_tree_host())
-    CheckScrollAndClipPointersForLayer(layer);
+  CheckDanglingScrollParent(root_layer);
+  for (auto* layer : AllLayerRange(root_layer))
+    CheckClipPointersForLayer(layer);
 #endif
   property_trees->ResetCachedData();
   // During building property trees, all copy requests are moved from layers to
