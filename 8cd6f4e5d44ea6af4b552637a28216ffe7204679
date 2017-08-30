@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "721c455d_dbca5263",
+        "filename": "content/renderer/media/webrtc/two_keys_map.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-30T16:31:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1028a59d_5e7341ac",
+      "range": {
+        "startLine": 45,
+        "startChar": 7,
+        "endLine": 45,
+        "endChar": 8
+      },
+      "revId": "8cd6f4e5d44ea6af4b552637a28216ffe7204679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5304b93_500da398",
         "filename": "content/renderer/media/webrtc/webrtc_media_stream_adapter_map.h",
         "patchSetId": 1
@@ -225,6 +249,30 @@
       "side": 1,
       "message": "Ah, no because it\u0027s a scoped_refptr, not a unique_ptr.",
       "parentUuid": "1b67e9a4_850e7902",
+      "range": {
+        "startLine": 32,
+        "startChar": 54,
+        "endLine": 32,
+        "endChar": 57
+      },
+      "revId": "8cd6f4e5d44ea6af4b552637a28216ffe7204679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6c8ba234_c4682514",
+        "filename": "content/renderer/media/webrtc/webrtc_media_stream_track_adapter_map.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-30T16:31:42Z",
+      "side": 1,
+      "message": "Ack. So many pointers :)",
+      "parentUuid": "5b78f07c_99cb947a",
       "range": {
         "startLine": 32,
         "startChar": 54,
@@ -460,6 +508,30 @@
       "side": 1,
       "message": "That would depend on what the caller has, generally speaking calls from blink come with a blink object and callbacks from webrtc come with a webrtc object, but I don\u0027t think that should be documented here. If you think I should write something about that I could do it above the class? Here I added \"The adapter is a associated with a blink and webrtc track, lookup works by either track.\"\nOnly when you\u0027re creating a new adapter are you forced to use one or the other (local are created from blink, remote are created from webrtc)",
       "parentUuid": "9714dce1_19053a42",
+      "range": {
+        "startLine": 78,
+        "startChar": 30,
+        "endLine": 78,
+        "endChar": 50
+      },
+      "revId": "8cd6f4e5d44ea6af4b552637a28216ffe7204679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "769c78b4_d5c869a7",
+        "filename": "content/renderer/media/webrtc/webrtc_media_stream_track_adapter_map.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-30T16:31:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e18b3e01_c1594a53",
       "range": {
         "startLine": 78,
         "startChar": 30,

@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7138da9f_e70cf4fa",
+        "filename": "content/renderer/media/rtc_peer_connection_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1740,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-30T16:31:42Z",
+      "side": 1,
+      "message": "nit: for (auto webrtc_receiver : webrtc_receivers) loop?",
+      "range": {
+        "startLine": 1740,
+        "startChar": 25,
+        "endLine": 1740,
+        "endChar": 41
+      },
+      "revId": "5b0465a9f71a89cc0c7be70f2e280285b638b968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27664eda_d1f4c318",
+        "filename": "content/renderer/media/rtc_peer_connection_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1743,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-30T16:31:42Z",
+      "side": 1,
+      "message": "could not -\u003e cannot",
+      "range": {
+        "startLine": 1743,
+        "startChar": 36,
+        "endLine": 1743,
+        "endChar": 41
+      },
+      "revId": "5b0465a9f71a89cc0c7be70f2e280285b638b968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "441bdea1_3559d8f2",
+        "filename": "content/renderer/media/rtc_peer_connection_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1745,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-30T16:31:42Z",
+      "side": 1,
+      "message": "asynchronous -\u003e asynchronously",
+      "range": {
+        "startLine": 1745,
+        "startChar": 7,
+        "endLine": 1745,
+        "endChar": 19
+      },
+      "revId": "5b0465a9f71a89cc0c7be70f2e280285b638b968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebe341bc_61dfad3c",
+        "filename": "content/renderer/media/webrtc/two_keys_adapter_map.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-30T16:31:42Z",
+      "side": 1,
+      "message": "the value -\u003e a pointer to the value\nMaybe mention something about the when the pointer becomes invalid.",
+      "range": {
+        "startLine": 65,
+        "startChar": 13,
+        "endLine": 65,
+        "endChar": 16
+      },
+      "revId": "5b0465a9f71a89cc0c7be70f2e280285b638b968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3e2cb99_d234d443",
+        "filename": "content/renderer/media/webrtc/two_keys_adapter_map.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-30T16:31:42Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 74,
+        "startChar": 13,
+        "endLine": 74,
+        "endChar": 16
+      },
+      "revId": "5b0465a9f71a89cc0c7be70f2e280285b638b968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "913dfcab_b5f774e6",
+        "filename": "content/renderer/media/webrtc/two_keys_adapter_map.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-30T16:31:42Z",
+      "side": 1,
+      "message": "primary -\u003e secondary",
+      "range": {
+        "startLine": 96,
+        "startChar": 42,
+        "endLine": 96,
+        "endChar": 49
+      },
+      "revId": "5b0465a9f71a89cc0c7be70f2e280285b638b968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
