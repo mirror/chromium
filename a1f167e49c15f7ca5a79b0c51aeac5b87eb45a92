@@ -22,6 +22,30 @@
       "revId": "a1f167e49c15f7ca5a79b0c51aeac5b87eb45a92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbe5bc80_84de5bca",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 5099,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-08-30T15:03:05Z",
+      "side": 1,
+      "message": "It is not stale, but I think it is inaccurate.  The way I see it, 2D canvas only has a kBackBuffer.  Either way, the point is that for 2D canvas there is no Front vs. Back to chose from.",
+      "parentUuid": "805664ef_4b02db67",
+      "range": {
+        "startLine": 5099,
+        "startChar": 22,
+        "endLine": 5099,
+        "endChar": 23
+      },
+      "revId": "a1f167e49c15f7ca5a79b0c51aeac5b87eb45a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
