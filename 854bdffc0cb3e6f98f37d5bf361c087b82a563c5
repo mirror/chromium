@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "51c114c7_8eca879e",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_benchmarks/vr_browsing_mode_vr_performance.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-30T19:04:21Z",
+      "side": 1,
+      "message": "Changed it to vr_browsing_mode.py to be consistent with the name. Putting all VR Browsing Mode related stuff in there sounds good for now. If this file becomes too big we can think about splitting later.",
+      "parentUuid": "43fa9acb_62ff45e6",
+      "range": {
+        "startLine": 3,
+        "startChar": 28,
+        "endLine": 3,
+        "endChar": 0
+      },
+      "revId": "854bdffc0cb3e6f98f37d5bf361c087b82a563c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03f627b3_1effd28e",
         "filename": "tools/perf/contrib/vr_benchmarks/vr_benchmarks/vr_browsing_mode_vr_performance.py",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-29T23:39:46Z",
       "side": 1,
       "message": "Nit: \"VrBrowsingModeVrPerformance\" sounds redundant - \"VrBrowsingModePerformance\" better?",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 33
+      },
+      "revId": "854bdffc0cb3e6f98f37d5bf361c087b82a563c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "285ea0da_57486370",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_benchmarks/vr_browsing_mode_vr_performance.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-30T19:04:21Z",
+      "side": 1,
+      "message": "Please see my comment about the naming below. I would use the same name for the class.",
+      "parentUuid": "03f627b3_1effd28e",
       "range": {
         "startLine": 14,
         "startChar": 6,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f057d085_7f0096f1",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_benchmarks/vr_browsing_mode_vr_performance.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-30T19:04:21Z",
+      "side": 1,
+      "message": "Good catch! Removed.",
+      "parentUuid": "7319f560_8596dc56",
+      "range": {
+        "startLine": 33,
+        "startChar": 29,
+        "endLine": 33,
+        "endChar": 66
+      },
+      "revId": "854bdffc0cb3e6f98f37d5bf361c087b82a563c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "848a49fc_76cf1ff7",
         "filename": "tools/perf/contrib/vr_benchmarks/vr_benchmarks/vr_browsing_mode_vr_performance.py",
         "patchSetId": 6
@@ -82,6 +154,30 @@
       "writtenOn": "2017-08-29T23:39:46Z",
       "side": 1,
       "message": "We should decide on a naming scheme to stick with. The general Telemetry format for this seems to be metric.page_set, e.g. memory.top_10_mobile. This is what I did for the memory benchmark, but I think we might want to do something different, as I think the plan is to collect multiple metrics (memory, fps, etc.) in a single benchmark.",
+      "range": {
+        "startLine": 38,
+        "startChar": 11,
+        "endLine": 38,
+        "endChar": 47
+      },
+      "revId": "854bdffc0cb3e6f98f37d5bf361c087b82a563c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1974aa0c_9e620594",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_benchmarks/vr_browsing_mode_vr_performance.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-30T19:04:21Z",
+      "side": 1,
+      "message": "If I understand benchmarks correctly, benchmarks define multiple metrics for multiple stories. That is how I wanted to use them. Generally, I wanted to use a naming scheme that looks like this:\nvr.\u003cmode\u003e.\u003ccategory\u003e\n\nE.g.\nvr.vr_browsing_mode.vr_performance (or vr.vr_browsing_mode.smoothness): for how well we do for general VR performance (UI FPS, frame cycle times, etc.),\nvr.webvr.vr_performance: (same thing for presenting WebVR),\nvr.vr_browsing_mode.responsiveness: for input latency measurements\n\nI\u0027m open to change the scheme or the naming of the parts though. I would then also name the benchmark class according to this.",
+      "parentUuid": "848a49fc_76cf1ff7",
       "range": {
         "startLine": 38,
         "startChar": 11,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "3b622925_b3094f78",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_page_sets/shared_android_vr_page_state.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-30T19:04:21Z",
+      "side": 1,
+      "message": "Yeah, probably better. This was the result of the autoformatter. Done.",
+      "parentUuid": "8a58d23d_ef7feda1",
+      "range": {
+        "startLine": 1,
+        "startChar": 42,
+        "endLine": 1,
+        "endChar": 43
+      },
+      "revId": "854bdffc0cb3e6f98f37d5bf361c087b82a563c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd34bc25_2480d635",
         "filename": "tools/perf/contrib/vr_benchmarks/vr_page_sets/vr_browsing_mode_pages.py",
         "patchSetId": 6
@@ -137,6 +257,30 @@
       "revId": "854bdffc0cb3e6f98f37d5bf361c087b82a563c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "721da984_b7e7ee77",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_page_sets/vr_browsing_mode_pages.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-30T19:04:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd34bc25_2480d635",
+      "range": {
+        "startLine": 18,
+        "startChar": 8,
+        "endLine": 18,
+        "endChar": 24
+      },
+      "revId": "854bdffc0cb3e6f98f37d5bf361c087b82a563c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "50da5987_b01d09c9",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_page_sets/vr_browsing_mode_pages.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-30T19:04:21Z",
+      "side": 1,
+      "message": "In my test the NFC app never ran unsuccessfully. Should we tackle this once it is a real problem?",
+      "parentUuid": "3d8c7016_9226fade",
+      "range": {
+        "startLine": 20,
+        "startChar": 6,
+        "endLine": 20,
+        "endChar": 73
+      },
+      "revId": "854bdffc0cb3e6f98f37d5bf361c087b82a563c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b8a6056_5dfed8db",
         "filename": "tools/perf/contrib/vr_benchmarks/vr_page_sets/vr_sample_page.py",
         "patchSetId": 6
@@ -174,6 +342,30 @@
       "writtenOn": "2017-08-30T00:21:03Z",
       "side": 1,
       "message": "Will it automatically switch to WebVR after DON flow if we use webvr sample sites for VR browsing performance tests? May consider to use top 10 mobile sites(https://cs.chromium.org/chromium/src/tools/perf/page_sets/top_10_mobile.py?dr\u003dC\u0026l\u003d6) to make the tests more realistic.",
+      "range": {
+        "startLine": 10,
+        "startChar": 19,
+        "endLine": 10,
+        "endChar": 29
+      },
+      "revId": "854bdffc0cb3e6f98f37d5bf361c087b82a563c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e6ce732_03cb77fc",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_page_sets/vr_sample_page.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-30T19:04:21Z",
+      "side": 1,
+      "message": "If you enter VR on a WebVR site it will automatically present. However, I\u0027m using the index site (https://cs.chromium.org/chromium/src/chrome/test/data/vr/webvr_info/index.html), which is 2D. If you navigate from the index to a WebVR site in VR Browsing mode it will not present.\n\nI\u0027m using a local site to make the test results more stable. However, I was planning on using also some live sites, especially youtube.com, in the future. Want me to do this in this CL?",
+      "parentUuid": "6b8a6056_5dfed8db",
       "range": {
         "startLine": 10,
         "startChar": 19,
