@@ -28,6 +28,10 @@ declare_args() {
   # and have a system dialog.
   enable_basic_print_dialog = enable_basic_printing && !is_chromeos
 
+  # Captive portal code is enabled on Android, but captive portal detection is
+  # explicitly disabled. This is so that non-detection related code can still be
+  # used (e.g. opening a portal login tab, keeping track of login tabs et.c.)
+  #  enable_captive_portal_detection = !is_chromecast
   enable_captive_portal_detection = !is_android && !is_chromecast
 
   # Google Now is disabled to prepare for its removal.

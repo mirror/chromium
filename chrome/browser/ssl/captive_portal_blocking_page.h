@@ -10,14 +10,15 @@
 
 #include "base/callback.h"
 #include "base/macros.h"
+#include "build/build_config.h"
 #include "chrome/common/features.h"
 #include "components/security_interstitials/content/security_interstitial_page.h"
 #include "content/public/browser/certificate_request_result_type.h"
 #include "net/ssl/ssl_info.h"
 #include "url/gurl.h"
 
-#if !BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
-#error This file must be built with ENABLE_CAPTIVE_PORTAL_DETECTION flag.
+#if defined(OS_IOS)
+#error Captive portal interstitial not available on iOS.
 #endif
 
 namespace content {
