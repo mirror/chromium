@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6f94d20_32bbadce",
+        "filename": "chrome/browser/task_manager/task_manager_interface.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-08-30T17:01:58Z",
+      "side": 1,
+      "message": "I\u0027m fine with this change, but I still believe the UX should be consulted first because it changes the current behavior of how the task manager shows the cpu usage. Users might freak out when they start seeing a task using say 400%.",
+      "range": {
+        "startLine": 78,
+        "startChar": 2,
+        "endLine": 78,
+        "endChar": 48
+      },
+      "revId": "bbae211d8bc34f737a31518ec422e9425067a763",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
