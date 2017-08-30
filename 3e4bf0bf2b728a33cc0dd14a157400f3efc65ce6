@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2729c41f_c8843680",
+        "filename": "cc/animation/animation_curve.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-30T16:10:08Z",
+      "side": 1,
+      "message": "Are these comments (here and below) adding any value?",
+      "revId": "3e4bf0bf2b728a33cc0dd14a157400f3efc65ce6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b1c7981_5dbc6436",
+        "filename": "cc/trees/target_property.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-30T16:10:08Z",
+      "side": 1,
+      "message": "I know this isn\u0027t our code, but I wonder why it wasn\u0027t\n{TRANSFORM \u003d 0,\n ...\n BOUNDS,\n NUM_TARGET_PROPERTIES\n}",
+      "revId": "3e4bf0bf2b728a33cc0dd14a157400f3efc65ce6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0958207_f47bbc27",
+        "filename": "chrome/browser/vr/elements/loading_indicator.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-30T16:10:08Z",
+      "side": 1,
+      "message": "For readability, possibly bracket the clause here?",
+      "range": {
+        "startLine": 45,
+        "startChar": 13,
+        "endLine": 45,
+        "endChar": 33
+      },
+      "revId": "3e4bf0bf2b728a33cc0dd14a157400f3efc65ce6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd3f3717_12d6ab26",
+        "filename": "chrome/browser/vr/elements/transience_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-30T16:10:08Z",
+      "side": 1,
+      "message": "Can drop Show/Hide as they\u0027re now one-liners.",
+      "revId": "3e4bf0bf2b728a33cc0dd14a157400f3efc65ce6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "379da0fd_aac6f8fe",
+        "filename": "chrome/browser/vr/elements/ui_element.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-30T16:10:08Z",
+      "side": 1,
+      "message": "Suggestions:\n\n// If true, the object has a non-zero opacity.\nbool IsVisible() const;\n\n// For convenience, sets opacity to |opacity_when_visible_|.\nvirtual void SetVisible(bool visible);",
+      "revId": "3e4bf0bf2b728a33cc0dd14a157400f3efc65ce6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4148a78b_2d3a911c",
+        "filename": "chrome/browser/vr/test/ui_scene_manager_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-30T16:10:08Z",
+      "side": 1,
+      "message": "Unrelated, but can we change this arg name to trace_context?  It\u0027s misleading as-is.",
+      "revId": "3e4bf0bf2b728a33cc0dd14a157400f3efc65ce6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
