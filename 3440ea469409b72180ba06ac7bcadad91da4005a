@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "985a6af0_2e1efc8c",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-08-30T20:18:24Z",
+      "side": 1,
+      "message": "Good point, the timer destructor already calls Stop.",
+      "parentUuid": "56c9d01b_85db4f57",
+      "range": {
+        "startLine": 173,
+        "startChar": 16,
+        "endLine": 173,
+        "endChar": 0
+      },
+      "revId": "3440ea469409b72180ba06ac7bcadad91da4005a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe77e7e1_4ae2e643",
         "filename": "chrome/browser/metrics/tab_stats_tracker.h",
         "patchSetId": 21
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-30T16:28:31Z",
       "side": 1,
       "message": "Can this class and TabsStatsDataStore be moved to separate files?",
+      "range": {
+        "startLine": 136,
+        "startChar": 4,
+        "endLine": 136,
+        "endChar": 0
+      },
+      "revId": "3440ea469409b72180ba06ac7bcadad91da4005a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71c39a0e_e13a339d",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-08-30T20:18:24Z",
+      "side": 1,
+      "message": "I\u0027ve moved the TabStatsDataStore one but this one needs to be more intimate with the TabStatsTracker one (the UmaStatsReportingDelegate class will have to be moved to the public section, or these classes should be friends). What\u0027s the preference here? IMO this class is small enough and specific to the TabStatsTracker that it\u0027s fine to keep it here.",
+      "parentUuid": "fe77e7e1_4ae2e643",
       "range": {
         "startLine": 136,
         "startChar": 4,
@@ -68,6 +116,30 @@
       "revId": "3440ea469409b72180ba06ac7bcadad91da4005a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c26862d_1b6ae138",
+        "filename": "chrome/browser/metrics/tab_stats_tracker_unittests.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-08-30T20:18:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c2b3e07_3c207352",
+      "range": {
+        "startLine": 23,
+        "startChar": 27,
+        "endLine": 23,
+        "endChar": 34
+      },
+      "revId": "3440ea469409b72180ba06ac7bcadad91da4005a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
