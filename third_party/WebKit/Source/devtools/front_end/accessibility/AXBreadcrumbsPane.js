@@ -73,10 +73,17 @@ Accessibility.AXBreadcrumbsPane = class extends Accessibility.AccessibilitySubPa
 
     this._setPreselectedBreadcrumb(this._inspectedNodeBreadcrumb);
 
-    for (var child of axNode.children()) {
-      var childBreadcrumb = new Accessibility.AXBreadcrumb(child, depth, false);
-      this._inspectedNodeBreadcrumb.appendChild(childBreadcrumb);
+    function append(parentBreadcrumb, axNode, localDepth) {
+      var childBreadcrumb = new Accessibility.AXBreadcrumb(axNode, localDepth, false);
+      parentBreadcrumb.appendChild(childBreadcrumb);
+
+      // In most cases there will be no children here, but there are some special cases.
+      for (var child of axNode.children())
+        append(childBreadcrumb, child, localDepth + 1);
     }
+
+    for (var child of axNode.children())
+      append(this._inspectedNodeBreadcrumb, child, depth);
 
     this._selectedByUser = false;
   }
@@ -239,15 +246,8 @@ Accessibility.AXBreadcrumbsPane = class extends Accessibility.AccessibilitySubPa
     this._selectedByUser = true;
 
     axNode.deferredDOMNode().resolve(domNode => {
-      var inspectedDOMNode = UI.context.flavor(SDK.DOMNode);
-      // Special case the root accessibility node: set the node for the
-      // accessibility panel, not the Elements tree, as it maps to the Document
-      // node which is not shown in the DOM panel, causing the first child to be
-      // inspected instead.
-      if (axNode.parentNode() && domNode !== inspectedDOMNode)
-        Common.Revealer.reveal(domNode, true /* omitFocus */);
-      else
-        this._axSidebarView.setNode(domNode);
+      this._axSidebarView.setNode(domNode, true /* direct */);
+      Common.Revealer.reveal(domNode, true /* omitFocus */);
     });
 
     return true;

@@ -751,8 +751,10 @@ UI.ViewManager._TabbedLocation = class extends UI.ViewManager._Location {
    */
   showView(view, insertBefore, userGesture) {
     this.appendView(view, insertBefore);
-    this._tabbedPane.selectTab(view.viewId(), userGesture);
-    this._tabbedPane.focus();
+    if (this._tabbedPane.selectedTabId !== view.viewId()) {
+      this._tabbedPane.selectTab(view.viewId(), userGesture);
+      this._tabbedPane.focus();
+    }
     var widget = /** @type {!UI.ViewManager._ContainerWidget} */ (this._tabbedPane.tabView(view.viewId()));
     return widget._materialize();
   }
