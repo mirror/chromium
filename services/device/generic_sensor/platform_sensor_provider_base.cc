@@ -74,9 +74,19 @@ bool PlatformSensorProviderBase::CreateSharedBufferIfNeeded() {
   return shared_buffer_handle_.is_valid();
 }
 
-void PlatformSensorProviderBase::RemoveSensor(mojom::SensorType type) {
+void PlatformSensorProviderBase::RemoveSensor(mojom::SensorType type,
+                                              PlatformSensor* sensor) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  DCHECK(ContainsKey(sensor_map_, type));
+  auto it = sensor_map_.find(type);
+  if (it == sensor_map_.end())
+    return;  // It is possible on PlatformSensorFusion creation failure.
+
+  if (sensor != it->second) {
+    NOTREACHED() << "Sensor provider is not expected to track several sensors "
+                    "of the same type";
+    return;
+  }
+
   sensor_map_.erase(type);
 
   if (sensor_map_.empty()) {
