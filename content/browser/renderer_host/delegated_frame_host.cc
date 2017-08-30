@@ -453,11 +453,10 @@ void DelegatedFrameHost::SubmitCompositorFrame(
     if (local_surface_id != local_surface_id_ || !has_frame_) {
       // manager must outlive compositors using it.
       viz::SurfaceId surface_id(frame_sink_id_, local_surface_id);
-      viz::SurfaceInfo surface_info(surface_id, frame_device_scale_factor,
-                                    frame_size);
+      viz::SurfaceInfo surface_info(surface_id, frame_size_in_dip);
       client_->DelegatedFrameHostGetLayer()->SetShowPrimarySurface(
           surface_info, manager->surface_manager()->reference_factory());
-      current_surface_size_ = frame_size;
+      current_surface_size_ = frame_size_in_dip;
       current_scale_factor_ = frame_device_scale_factor;
     }
 

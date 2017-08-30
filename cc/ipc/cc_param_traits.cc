@@ -779,15 +779,13 @@ void ParamTraits<viz::SurfaceId>::Log(const param_type& p, std::string* l) {
 void ParamTraits<viz::SurfaceInfo>::GetSize(base::PickleSizer* s,
                                             const param_type& p) {
   GetParamSize(s, p.id());
-  GetParamSize(s, p.device_scale_factor());
-  GetParamSize(s, p.size_in_pixels());
+  GetParamSize(s, p.size());
 }
 
 void ParamTraits<viz::SurfaceInfo>::Write(base::Pickle* m,
                                           const param_type& p) {
   WriteParam(m, p.id());
-  WriteParam(m, p.device_scale_factor());
-  WriteParam(m, p.size_in_pixels());
+  WriteParam(m, p.size());
 }
 
 bool ParamTraits<viz::SurfaceInfo>::Read(const base::Pickle* m,
@@ -797,15 +795,11 @@ bool ParamTraits<viz::SurfaceInfo>::Read(const base::Pickle* m,
   if (!ReadParam(m, iter, &surface_id))
     return false;
 
-  float device_scale_factor;
-  if (!ReadParam(m, iter, &device_scale_factor))
+  gfx::Size size;
+  if (!ReadParam(m, iter, &size))
     return false;
 
-  gfx::Size size_in_pixels;
-  if (!ReadParam(m, iter, &size_in_pixels))
-    return false;
-
-  *p = viz::SurfaceInfo(surface_id, device_scale_factor, size_in_pixels);
+  *p = viz::SurfaceInfo(surface_id, size);
   return p->is_valid();
 }
 
@@ -813,9 +807,7 @@ void ParamTraits<viz::SurfaceInfo>::Log(const param_type& p, std::string* l) {
   l->append("viz::SurfaceInfo(");
   LogParam(p.id(), l);
   l->append(", ");
-  LogParam(p.device_scale_factor(), l);
-  l->append(", ");
-  LogParam(p.size_in_pixels(), l);
+  LogParam(p.size(), l);
   l->append(")");
 }
 

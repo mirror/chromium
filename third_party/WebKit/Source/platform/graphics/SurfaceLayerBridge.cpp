@@ -134,7 +134,8 @@ void SurfaceLayerBridge::OnFirstSurfaceActivation(
 
   if (observer_)
     observer_->OnWebLayerReplaced();
-  cc_layer_->SetBounds(surface_info.size_in_pixels());
+  // XXX
+  cc_layer_->SetBounds(surface_info.size());
 }
 
 }  // namespace blink

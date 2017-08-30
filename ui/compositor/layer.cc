@@ -741,8 +741,7 @@ void Layer::SetShowPrimarySurface(
 
   surface_layer_->SetPrimarySurfaceInfo(surface_info);
 
-  frame_size_in_dip_ = gfx::ConvertSizeToDIP(surface_info.device_scale_factor(),
-                                             surface_info.size_in_pixels());
+  frame_size_in_dip_ = surface_info.size();
   RecomputeDrawsContentAndUVRect();
 
   for (const auto& mirror : mirrors_)

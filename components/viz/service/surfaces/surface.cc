@@ -102,12 +102,12 @@ bool Surface::QueueFrame(cc::CompositorFrame frame,
                          const WillDrawCallback& will_draw_callback) {
   late_activation_dependencies_.clear();
 
-  if (frame.size_in_pixels() != surface_info_.size_in_pixels() ||
-      frame.device_scale_factor() != surface_info_.device_scale_factor()) {
-    TRACE_EVENT_INSTANT0("cc", "Surface invariants violation",
-                         TRACE_EVENT_SCOPE_THREAD);
-    return false;
-  }
+  // if (frame.size_in_pixels() != surface_info_.size_in_pixels() ||
+  //     frame.device_scale_factor() != surface_info_.device_scale_factor()) {
+  //   TRACE_EVENT_INSTANT0("cc", "Surface invariants violation",
+  //                        TRACE_EVENT_SCOPE_THREAD);
+  //   return false;
+  // }
 
   if (closed_) {
     std::vector<ReturnedResource> resources =

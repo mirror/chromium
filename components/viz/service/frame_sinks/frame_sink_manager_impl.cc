@@ -323,7 +323,6 @@ bool FrameSinkManagerImpl::ChildContains(
 void FrameSinkManagerImpl::OnFirstSurfaceActivation(
     const SurfaceInfo& surface_info) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  DCHECK_GT(surface_info.device_scale_factor(), 0.0f);
 
   // TODO(kylechar): |client_| will try to find an owner for the temporary
   // reference to the new surface. With surface synchronization this might not

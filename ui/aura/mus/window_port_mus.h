@@ -240,7 +240,7 @@ class AURA_EXPORT WindowPortMus : public WindowPort, public WindowMus {
       const std::vector<uint8_t>* property_data) override;
   void SetFrameSinkIdFromServer(const viz::FrameSinkId& frame_sink_id) override;
   const viz::LocalSurfaceId& GetOrAllocateLocalSurfaceId(
-      const gfx::Size& surface_size_in_pixels) override;
+      const gfx::Size& surface_size) override;
   void SetFallbackSurfaceInfo(const viz::SurfaceInfo& surface_info) override;
   void DestroyFromServer() override;
   void AddTransientChildFromServer(WindowMus* child) override;
@@ -303,7 +303,7 @@ class AURA_EXPORT WindowPortMus : public WindowPort, public WindowMus {
   viz::LocalSurfaceId local_surface_id_;
   viz::LocalSurfaceIdAllocator local_surface_id_allocator_;
   float last_device_scale_factor_ = 1.0f;
-  gfx::Size last_surface_size_in_pixels_;
+  gfx::Size last_surface_size_;
 
   ui::CursorData cursor_;
 
