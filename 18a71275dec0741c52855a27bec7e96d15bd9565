@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1aeb9735_58ffd6b4",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/SimplifiedBackwardsTextIteratorTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-30T04:32:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52d94a1f_273b96a9",
+      "range": {
+        "startLine": 34,
+        "startChar": 2,
+        "endLine": 34,
+        "endChar": 34
+      },
+      "revId": "18a71275dec0741c52855a27bec7e96d15bd9565",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7feff068_6bb4a2b8",
         "filename": "third_party/WebKit/Source/core/editing/iterators/SimplifiedBackwardsTextIteratorTest.cpp",
         "patchSetId": 2
@@ -36,6 +60,24 @@
       "writtenOn": "2017-08-30T01:54:00Z",
       "side": 1,
       "message": "That\u0027s strange API that |iterator.CharacterAt(0)| doesn\u0027t return \n next of |iterator.StartPosition()|.\nIs it confusing? or we must follow the principal \n\"Start means former than End in DOM tree order\" ?",
+      "revId": "18a71275dec0741c52855a27bec7e96d15bd9565",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fcc06a3_03713c1d",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/SimplifiedBackwardsTextIteratorTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-30T04:32:26Z",
+      "side": 1,
+      "message": "\"SimplifiedBackwardsTextIterator.h\" has a comment of |CharacterAt()| with\nan example.\n\nNote: |CharacterAt()| can be private member it is used only in\n|CopyTextTo()| and |SimplifiedBackwardsTextIteratorTest|.",
+      "parentUuid": "7feff068_6bb4a2b8",
       "revId": "18a71275dec0741c52855a27bec7e96d15bd9565",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -56,6 +98,24 @@
       "revId": "18a71275dec0741c52855a27bec7e96d15bd9565",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04b78d0b_7cbaa744",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/SimplifiedBackwardsTextIteratorTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-30T04:32:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca7dfa90_f13837fa",
+      "revId": "18a71275dec0741c52855a27bec7e96d15bd9565",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
