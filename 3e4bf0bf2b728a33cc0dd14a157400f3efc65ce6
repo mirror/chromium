@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "b0304e32_54285eba",
+        "filename": "cc/trees/target_property.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-30T18:34:24Z",
+      "side": 1,
+      "message": "Oh, interesting!  Agreed.  \"//lint stfu\" is also uglier, if it were possible.",
+      "parentUuid": "3dd6face_5cdde157",
+      "revId": "3e4bf0bf2b728a33cc0dd14a157400f3efc65ce6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0958207_f47bbc27",
         "filename": "chrome/browser/vr/elements/loading_indicator.cc",
         "patchSetId": 8
