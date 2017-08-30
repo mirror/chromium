@@ -34,8 +34,9 @@ static const size_t kSystemPageOffsetMask = kSystemPageSize - 1;
 static const size_t kSystemPageBaseMask = ~kSystemPageOffsetMask;
 
 enum PageAccessibilityConfiguration {
-  PageAccessible,
   PageInaccessible,
+  PageReadWrite,
+  PageReadWriteExec,
 };
 
 // Allocate one or more pages.

@@ -166,8 +166,8 @@ using base::RoundUpToSystemPage;
 using base::SetSystemPagesAccessible;
 using base::SetSystemPagesInaccessible;
 
-using base::PageAccessible;
 using base::PageInaccessible;
+using base::PageReadWrite;
 using base::PartitionStatsDumper;
 using base::PartitionMemoryStats;
 using base::PartitionBucketMemoryStats;
