@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "313a6416_2f82b609",
+        "filename": "components/data_reduction_proxy/content/browser/content_lofi_decider.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-08-30T17:12:56Z",
+      "side": 1,
+      "message": "I agree. It may make it more complicated for our related components, but leaves content/ simpler which is preferable. Typically, PreviewsState is reserved for features that blink must know about. Raj, see how offline previews is implemented; it has a PreviewsType, but not a PreviewsState, which is the approach you should likely take here. Instead of asking the PreviewsBlacklist in GetPreviewsState, you can probably plumb a reference to PreviewsDecider into DRPIOData, and then access the client blacklist through that in the NetworkDelegate. I think the current component layering has DRP depending on previews, so this should be fine.\n\nAlternatively, we are consistently coupling DRP and previews more and more, so you could add a new NetworkDelegate for previews if you wish. Client side lofi and amp previews should both be moved out of DRP and into previews, or at some point we should flatten the two components. For this problem, you may just wish to open a bug if there isn\u0027t one, as this would require some heavy refactoring. To clarify, we\u0027ve named our components D_R_P and previews, but the two components amount to data_saver and previews_blacklist, which may be fine in the long run, but we should debate within the team how we want to move forward (i.e., rename the components as previously implied or rename d_r_p to data_saver and move previews_blacklist within it in its own directory).",
+      "parentUuid": "5b28ad94_f8a2883e",
+      "revId": "338ec7ae51257b627aaccef816c5c03aef1bd0b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "60a69d4c_d92b36ce",
         "filename": "third_party/WebKit/public/platform/WebURLRequest.h",
         "patchSetId": 10
