@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5cadce66_9540c643",
+        "filename": "net/cert/internal/system_trust_store.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-30T23:15:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c72ddab_35e07048",
+      "range": {
+        "startLine": 155,
+        "startChar": 41,
+        "endLine": 155,
+        "endChar": 45
+      },
+      "revId": "a7b764f1f14f80e804324fb9ad4e0d737f6c35d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5aca3f86_d945d2ed",
         "filename": "net/cert/test_root_certs_fuchsia.cc",
         "patchSetId": 4
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "aeb1f2e6_34c7e44d",
+        "filename": "net/cert/test_root_certs_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-30T23:15:07Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "c4788dde_5fea3d92",
+      "range": {
+        "startLine": 19,
+        "startChar": 7,
+        "endLine": 19,
+        "endChar": 37
+      },
+      "revId": "a7b764f1f14f80e804324fb9ad4e0d737f6c35d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ac74d1d_6203b008",
         "filename": "net/cert/test_root_certs_fuchsia.cc",
         "patchSetId": 4
@@ -83,6 +131,24 @@
       "writtenOn": "2017-08-30T22:27:18Z",
       "side": 1,
       "message": "Since this function can return an error result, it\u0027s probably better to use that than to CHECK on errors. You could make this a LOG(ERROR)",
+      "revId": "a7b764f1f14f80e804324fb9ad4e0d737f6c35d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19036f3f_083c0eff",
+        "filename": "net/cert/test_root_certs_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-30T23:15:07Z",
+      "side": 1,
+      "message": "Comments for ParsedCertificate::Create() say this:\n// On either success or failure, if |errors| is non-null it may have error\n// information added to it.\n\nSo I don\u0027t think we can use err to verify if the cert was parsed successfully. Or maybe I didn\u0027t understand your comment.",
+      "parentUuid": "2ac74d1d_6203b008",
       "revId": "a7b764f1f14f80e804324fb9ad4e0d737f6c35d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
