@@ -8,6 +8,7 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.os.SystemClock;
+import android.view.MotionEvent;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
@@ -142,7 +143,7 @@ public class StackLayout extends Layout implements Animatable<StackLayout.Proper
 
     private final ViewGroup mViewContainer;
 
-    private final GestureEventFilter mGestureEventFilter;
+    private final StackGestureEventFilter mGestureEventFilter;
     private final TabListSceneLayer mSceneLayer;
 
     private StackLayoutGestureHandler mGestureHandler;
@@ -155,6 +156,23 @@ public class StackLayout extends Layout implements Animatable<StackLayout.Proper
      * creation and initialization).
      */
     private boolean mIsNewTabInitialized;
+
+    /** A custom GestureEventFilter that accounts for an adjusted viewport (added margin). */
+    private class StackGestureEventFilter extends GestureEventFilter {
+        public StackGestureEventFilter(Context context, GestureHandler handler) {
+            super(context, handler);
+        }
+
+        @Override
+        public boolean onTouchEventInternal(MotionEvent e) {
+            MotionEvent offsetEvent = MotionEvent.obtain(e);
+            if (FeatureUtilities.isChromeHomeModernEnabled()) {
+                float yOffset = -MODERN_TOP_MARGIN_DP * mDpToPx;
+                offsetEvent.setLocation(e.getX(), e.getY() + yOffset);
+            }
+            return super.onTouchEventInternal(offsetEvent);
+        }
+    }
 
     private class StackLayoutGestureHandler implements GestureHandler {
         @Override
@@ -272,7 +290,7 @@ public class StackLayout extends Layout implements Animatable<StackLayout.Proper
         super(context, updateHost, renderHost);
 
         mGestureHandler = new StackLayoutGestureHandler();
-        mGestureEventFilter = new GestureEventFilter(context, mGestureHandler);
+        mGestureEventFilter = new StackGestureEventFilter(context, mGestureHandler);
         final ViewConfiguration configuration = ViewConfiguration.get(context);
         mMinDirectionThreshold = configuration.getScaledTouchSlop();
         mMinShortPressThresholdSqr =
