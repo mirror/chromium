@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "422f9bd8_4a6f3f6a",
+        "filename": "chrome/browser/chromeos/arc/tts/arc_tts_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-30T16:38:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32a2a104_81290afe",
+      "revId": "a996357c184f90da7ca68e7f24e4de0b8d72eef8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "547f44ae_8b941ef7",
         "filename": "chrome/browser/chromeos/arc/tts/arc_tts_service_unittest.cc",
         "patchSetId": 3
@@ -87,6 +105,30 @@
       "revId": "a996357c184f90da7ca68e7f24e4de0b8d72eef8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "641c3536_3db6cabe",
+        "filename": "chrome/browser/chromeos/arc/tts/arc_tts_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-30T16:38:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8150ea9_0776e798",
+      "range": {
+        "startLine": 101,
+        "startChar": 59,
+        "endLine": 101,
+        "endChar": 65
+      },
+      "revId": "a996357c184f90da7ca68e7f24e4de0b8d72eef8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
