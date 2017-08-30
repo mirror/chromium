@@ -443,6 +443,34 @@ void WindowEventDispatcher::ReleaseNativeCapture() {
 
 ////////////////////////////////////////////////////////////////////////////////
 // WindowEventDispatcher, ui::EventProcessor implementation:
+
+ui::EventTarget* WindowEventDispatcher::GetInitialEventTarget(
+    ui::Event* event) {
+  if (Env::GetInstance()->mode() == Env::Mode::LOCAL ||
+      !event->IsLocatedEvent() || !event->target()) {
+    return nullptr;
+  }
+
+  ui::LocatedEvent* located_event = event->AsLocatedEvent();
+
+  Window* forced_target = static_cast<Window*>(
+      event_targeter_->GetForcedTargetInRootWindow(window(), *located_event));
+  if (!forced_target)
+    return nullptr;
+
+  // The event has a target but we need to dispatch it using the normal path.
+  // Reset the target and location so the normal flow is used.
+  ui::Event::DispatcherApi(event).set_target(nullptr);
+  located_event->set_location_f(located_event->root_location_f());
+  if (event_targeter_->ProcessEventIfTargetsDifferentRootWindow(
+          window(), static_cast<Window*>(forced_target), event)) {
+    event->SetHandled();
+    return nullptr;
+  }
+  located_event->ConvertLocationToTarget(window(), forced_target);
+  return forced_target;
+}
+
 ui::EventTarget* WindowEventDispatcher::GetRootForEvent(ui::Event* event) {
   if (Env::GetInstance()->mode() == Env::Mode::LOCAL)
     return window();

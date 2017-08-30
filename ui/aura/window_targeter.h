@@ -60,8 +60,15 @@ class AURA_EXPORT WindowTargeter : public ui::EventTargeter {
   virtual std::unique_ptr<HitTestRects> GetExtraHitTestShapeRects(
       Window* target) const;
 
+  Window* GetForcedTargetInRootWindow(Window* root_window,
+                                      const ui::LocatedEvent& event);
+
   Window* FindTargetInRootWindow(Window* root_window,
                                  const ui::LocatedEvent& event);
+
+  bool ProcessEventIfTargetsDifferentRootWindow(Window* root_window,
+                                                Window* target,
+                                                ui::Event* event);
 
   // ui::EventTargeter:
   ui::EventTarget* FindTargetForEvent(ui::EventTarget* root,
