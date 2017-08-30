@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea758fac_f2f9fdfe",
+        "filename": "ui/aura/mus/hit_test_data_provider_aura.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-30T02:46:18Z",
+      "side": 1,
+      "message": "Should we do this check first, and return nullptr instead?",
+      "revId": "a82bbe85e294c1d7db39cacecfb8dee8b3200360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
