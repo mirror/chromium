@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "50c563fc_96d0fcbf",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_container_view_controller+internal.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-30T18:24:36Z",
+      "side": 1,
+      "message": "Maybe z-ordering isn\u0027t really that important, but I think we should at least say that |containerView| holds the toolbar and the content view, just so subclass implementers looking at this category get a clear understanding that |containerView| contains the whole \"Tab\" UI.",
+      "parentUuid": "ea489681_743a92d6",
+      "revId": "f0649b200faa089f8cdce7983f84716d9c7640ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "798d5195_1e80cba6",
         "filename": "ios/clean/chrome/browser/ui/tab/tab_container_view_controller+internal.h",
         "patchSetId": 27
@@ -218,6 +236,24 @@
     },
     {
       "key": {
+        "uuid": "ce524388_ac02842e",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_view_controller.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-30T18:24:36Z",
+      "side": 1,
+      "message": "OK that makes sense.  I wasn\u0027t aware that the tab switcher buttons are hidden/shown such that only one is visible.  Just from inspecting the code in the .mm file, it seems like tapping the same button multiple times without changing the value of |usesTabStrip| would send the same command every time.",
+      "parentUuid": "990a1726_870cfd34",
+      "revId": "f0649b200faa089f8cdce7983f84716d9c7640ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dbada746_14a57bbd",
         "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_view_controller.h",
         "patchSetId": 27
@@ -250,6 +286,24 @@
       "revId": "f0649b200faa089f8cdce7983f84716d9c7640ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d98d1d90_3e9d16d0",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_view_controller.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-30T18:24:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "17b0995d_82fd98b7",
+      "revId": "f0649b200faa089f8cdce7983f84716d9c7640ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
