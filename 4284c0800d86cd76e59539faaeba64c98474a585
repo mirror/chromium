@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfbb0995_3d6876a6",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-preflight-async-not-supported.htm",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-30T07:43:00Z",
+      "side": 1,
+      "message": "let\u0027s fix this comment using this opportunity. maybe just replacing \"without ...\" with \"unexpectedly\"",
+      "revId": "4284c0800d86cd76e59539faaeba64c98474a585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73769a34_9b88f414",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-preflight-async-not-supported.htm",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-30T07:43:00Z",
+      "side": 1,
+      "message": "let\u0027s omit the argument as it\u0027s unnecessary",
+      "revId": "4284c0800d86cd76e59539faaeba64c98474a585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bc65356_8690c999",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-preflight-async-not-supported.htm",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-30T07:43:00Z",
+      "side": 1,
+      "message": "This message may mislead readers. The description in the \u003ctitle\u003e element is already descriptive enough. You don\u0027t need to try to provide something for both.\n\nFor this case, you can just omit the description argument. See the following guideline.\n\nhttps://chromium.googlesource.com/chromium/src/+/master/docs/testing/writing_layout_tests.md\n\n\u003e Test files with a single test case should omit the test case description. The file\u0027s \u003ctitle\u003e should be sufficient to describe the scenario being tested.",
+      "revId": "4284c0800d86cd76e59539faaeba64c98474a585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
