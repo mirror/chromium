@@ -34,6 +34,24 @@
       "revId": "147c0ee827fa0b9cb8ef9312103a2de68a06e654",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad3b5866_704d12cc",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/list_container.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-08-30T06:41:57Z",
+      "side": 1,
+      "message": "I have found ListContainer.prototype.focus, which will check the current view and focus the appropriate thing - I guess this solves the grid problem! (https://cs.chromium.org/chromium/src/ui/file_manager/file_manager/foreground/js/ui/list_container.js?l\u003d296\u0026rcl\u003de0333a724798b68ff5b99bd8af09b065d53da4ea)",
+      "parentUuid": "e8b91cdd_0a775272",
+      "revId": "147c0ee827fa0b9cb8ef9312103a2de68a06e654",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
