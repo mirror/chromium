@@ -32,7 +32,11 @@ import java.util.Set;
  */
 public class WebApkUtils {
     public static final String SHARED_PREF_RUNTIME_HOST = "runtime_host";
-    public static final int PADDING_DP = 20;
+    public static final int DIALOG_SIDE_MARGIN = 24;
+    public static final int LIST_ITEM_PADDING = 16;
+    public static final int LIST_TOP_PADDING = 4;
+    public static final String COLOR_BLACK_ALPHA_87 = "#DE000000";
+    public static final String COLOR_BLACK_ALPHA_38 = "#61000000";
 
     /**
      * The package names of the channels of Chrome that support WebAPKs. The most preferred one
@@ -294,7 +298,7 @@ public class WebApkUtils {
     @SuppressWarnings("deprecation")
     public static void setPadding(
             View view, Context context, int start, int top, int end, int bottom) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             view.setPaddingRelative(dpToPx(context, start), dpToPx(context, top),
                     dpToPx(context, end), dpToPx(context, bottom));
         } else {
