@@ -91,6 +91,10 @@ class CORE_EXPORT DocumentTimeline : public AnimationTimeline {
   bool HasPendingUpdates() const {
     return !animations_needing_update_.IsEmpty();
   }
+  size_t GetNumberOfPendingAnimations() const {
+    return animations_needing_update_.size();
+  }
+  size_t GetNumberOfCouldBeCompositedAnimations() const;
   double ZeroTime();
   double currentTime(bool& is_null) override;
   double currentTime();

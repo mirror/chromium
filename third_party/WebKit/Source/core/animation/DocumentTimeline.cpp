@@ -191,6 +191,15 @@ DEFINE_TRACE(DocumentTimeline::DocumentTimelineTiming) {
   DocumentTimeline::PlatformTiming::Trace(visitor);
 }
 
+size_t DocumentTimeline::GetNumberOfCouldBeCompositedAnimations() const {
+  size_t num_maybe_composited_animations = 0;
+  for (Animation* animation : animations_needing_update_) {
+    if (animation->CouldBeCompositedButNot())
+      num_maybe_composited_animations++;
+  }
+  return num_maybe_composited_animations;
+}
+
 double DocumentTimeline::ZeroTime() {
   if (!zero_time_initialized_ && document_ && document_->Loader()) {
     zero_time_ = document_->Loader()->GetTiming().ReferenceMonotonicTime() +
