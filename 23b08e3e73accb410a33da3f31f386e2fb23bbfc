@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a17b9022_a043f24f",
+        "filename": "ui/views/bubble/tray_bubble_view.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-08-30T10:51:11Z",
+      "side": 1,
+      "message": "Might this be a little weird that key event is passed to both the widget and ViewsDelegate?\nShould we pass the key event only to the one of them?\n\nMenuController is doing the same thing as long as the menu is not closed.\nhttps://cs.chromium.org/chromium/src/ui/views/controls/menu/menu_controller.cc?l\u003d1060\n\nTrayBubbleView can be also deleted with a key event but it won\u0027t happen in a synchronous way.",
+      "range": {
+        "startLine": 160,
+        "startChar": 2,
+        "endLine": 160,
+        "endChar": 52
+      },
+      "revId": "23b08e3e73accb410a33da3f31f386e2fb23bbfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
