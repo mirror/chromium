@@ -23,11 +23,13 @@
 @interface NTPCoordinator ()<NTPCommands>
 @property(nonatomic, strong) NTPMediator* mediator;
 @property(nonatomic, strong) NTPViewController* viewController;
+@property(nonatomic, strong) BookmarksCoordinator* bookmarksCoordinator;
 @end
 
 @implementation NTPCoordinator
 @synthesize mediator = _mediator;
 @synthesize viewController = _viewController;
+@synthesize bookmarksCoordinator = _bookmarksCoordinator;
 
 - (void)start {
   self.viewController = [[NTPViewController alloc] init];
@@ -58,6 +60,8 @@
     if (IsIPadIdiom()) {
       self.viewController.bookmarksViewController = coordinator.viewController;
     } else {
+      coordinator.viewController.modalPresentationStyle =
+          UIModalPresentationFormSheet;
       [self.viewController presentViewController:coordinator.viewController
                                         animated:YES
                                       completion:nil];
@@ -74,6 +78,15 @@
   }
 }
 
+- (void)childCoordinatorWillStop:(BrowserCoordinator*)childCoordinator {
+  if ([childCoordinator isKindOfClass:[BookmarksCoordinator class]] &&
+      !IsIPadIdiom()) {
+    [childCoordinator.viewController.presentingViewController
+        dismissViewControllerAnimated:YES
+                           completion:nil];
+  }
+}
+
 #pragma mark - NTPCommands
 
 - (void)showNTPHomePanel {
@@ -83,19 +96,12 @@
 }
 
 - (void)showNTPBookmarksPanel {
-  // TODO(crbug.com/740793): Remove alert once this feature is implemented.
-  UIAlertController* alertController =
-      [UIAlertController alertControllerWithTitle:@"Bookmarks"
-                                          message:nil
-                                   preferredStyle:UIAlertControllerStyleAlert];
-  UIAlertAction* action =
-      [UIAlertAction actionWithTitle:@"Done"
-                               style:UIAlertActionStyleCancel
-                             handler:nil];
-  [alertController addAction:action];
-  [self.viewController presentViewController:alertController
-                                    animated:YES
-                                  completion:nil];
+  if (!self.bookmarksCoordinator) {
+    self.bookmarksCoordinator = [[BookmarksCoordinator alloc] init];
+    self.bookmarksCoordinator.contained = IsIPadIdiom();
+    [self addChildCoordinator:self.bookmarksCoordinator];
+  }
+  [self.bookmarksCoordinator start];
 }
 
 - (void)showNTPRecentTabsPanel {
