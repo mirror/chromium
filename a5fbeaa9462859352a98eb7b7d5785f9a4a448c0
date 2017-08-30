@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "d44d528f_3c7fd2bc",
+        "filename": "components/drive/drive.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-30T08:10:50Z",
+      "side": 1,
+      "message": "Could you just leave a comment like the ones in FileSpecificInfo about previously used IDs?",
+      "parentUuid": "14f5f3ac_3a19a1cb",
+      "revId": "a5fbeaa9462859352a98eb7b7d5785f9a4a448c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51198aa1_b3a8e720",
         "filename": "components/drive/resource_metadata_storage.cc",
         "patchSetId": 1
@@ -312,6 +330,24 @@
       "side": 1,
       "message": "I don\u0027t think naming test cases with milestone is a good idea because which milestone a change lands can differ after it lands on ToT, and also two DB schema changes can happen in one milestone. IIUC there is no reason to avoid rename existing tests.",
       "parentUuid": "d0349ae8_2449189c",
+      "revId": "a5fbeaa9462859352a98eb7b7d5785f9a4a448c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2dd1d77a_4465743b",
+        "filename": "components/drive/resource_metadata_storage_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-30T08:10:50Z",
+      "side": 1,
+      "message": "\u003e which milestone a change lands can differ after it lands on ToT\n\nSorry, I cannot understand what this sentence means.\n\n\u003e two DB schema changes can happen in one milestone\n\nOur release is based on milestones, not on DB versions. Without cherry-picks, a beta/stable (which we provide QA) device never gets updates from the development branch.\n\nThis is totally unrelated to what you are doing and I still find it difficult to understand your motivation.\nCould you just focus on what you need to do?",
+      "parentUuid": "077e702d_5e3e7d51",
       "revId": "a5fbeaa9462859352a98eb7b7d5785f9a4a448c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
