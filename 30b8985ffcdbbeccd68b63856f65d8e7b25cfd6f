@@ -69,6 +69,24 @@
       "revId": "30b8985ffcdbbeccd68b63856f65d8e7b25cfd6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d870f9f2_c7b8323e",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-30T04:33:32Z",
+      "side": 1,
+      "message": "If the title bounds are always the full width of the \"space available for the title\" and never just the \"width actually needed by the text\", then the current code already does the right thing, because basically the RHS of the rect will be \"pinned in place\", whether the icon is appearing or disappearing.\n\nI had assumed the title width was computed based on the string length.  But looking above it looks like this isn\u0027t the case.  So I think we\u0027re good!  Sorry for the distraction.",
+      "parentUuid": "a3ab2801_41a5d33d",
+      "revId": "30b8985ffcdbbeccd68b63856f65d8e7b25cfd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
