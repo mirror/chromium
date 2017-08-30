@@ -186,6 +186,24 @@
     },
     {
       "key": {
+        "uuid": "150cf86f_d9b34a92",
+        "filename": "chrome/common/media_router/mojo/media_controller.mojom",
+        "patchSetId": 16
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-30T03:46:26Z",
+      "side": 1,
+      "message": "Well with either approach it will take 2 separate Mojo calls to have \"everything bound\" for the HangoutsMediaRouteController C++ object. And either approach can issue the ConnectHMRC() immediately after the CreateMRC() call, which is what\u0027s being done in MediaRouterMojoImpl; this ensures the caller gets back a C++ object with all message pipes bound.",
+      "parentUuid": "ac73e7fe_c3af1137",
+      "revId": "d07f81fe3c743971efd7bd612870c8acef043b10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2ee847f4_b8f0e7f2",
         "filename": "chrome/common/media_router/mojo/media_router.mojom",
         "patchSetId": 16
