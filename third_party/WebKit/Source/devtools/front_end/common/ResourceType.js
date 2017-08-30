@@ -49,17 +49,18 @@ Common.ResourceType = class {
    * @return {!Common.ResourceType}
    */
   static fromMimeType(mimeType) {
-    var contentTypeAndTopLevelType = mimeType.match(/(\w*)\/\w*/);
-    if (!contentTypeAndTopLevelType)
-      return Common.resourceTypes.Other;
-
-    var resourceType = Common.ResourceType._resourceTypeByMimeType.get(contentTypeAndTopLevelType[0]);
-    if (resourceType)
-      return resourceType;
-
-    resourceType = Common.ResourceType._resourceTypeByMimeType.get(contentTypeAndTopLevelType[1]);
-    if (resourceType)
-      return resourceType;
+    if (mimeType.includes('text/html'))
+      return Common.resourceTypes.Document;
+    if (mimeType.includes('application/'))
+      return Common.resourceTypes.Script;
+    if (mimeType.includes('css/'))
+      return Common.resourceTypes.Stylesheet;
+    if (mimeType.includes('image/'))
+      return Common.resourceTypes.Image;
+    if (mimeType.includes('font/'))
+      return Common.resourceTypes.Font;
+    if (mimeType.includes('text/'))
+      return Common.resourceTypes.Script;
     return Common.resourceTypes.Other;
   }
 
@@ -314,16 +315,4 @@ Common.ResourceType._mimeTypeByExtension = new Map([
 
   // Font
   ['ttf', 'font/opentype'], ['otf', 'font/opentype'], ['ttc', 'font/opentype'], ['woff', 'application/font-woff']
-]);
-
-Common.ResourceType._resourceTypeByMimeType = new Map([
-  // Web types
-  ['text/javascript', Common.resourceTypes.Script], ['text/css', Common.resourceTypes.Stylesheet],
-  ['text/html', Common.resourceTypes.Document], ['application/json', Common.resourceTypes.Script],
-
-  // Image
-  ['image', Common.resourceTypes.Image],
-
-  // Font
-  ['font', Common.resourceTypes.Font], ['application/font-woff', Common.resourceTypes.Font]
 ]);
