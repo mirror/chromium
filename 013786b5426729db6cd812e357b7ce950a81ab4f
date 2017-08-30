@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69add998_60345d6e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/IncognitoBottomSheetContent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-30T20:10:49Z",
+      "side": 1,
+      "message": "Instead of these methods, we should throw the dimensions into dimens.xml and use getResources()#getDimensionPixelSize() to retrieve them.",
+      "range": {
+        "startLine": 169,
+        "startChar": 0,
+        "endLine": 184,
+        "endChar": 5
+      },
+      "revId": "013786b5426729db6cd812e357b7ce950a81ab4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
