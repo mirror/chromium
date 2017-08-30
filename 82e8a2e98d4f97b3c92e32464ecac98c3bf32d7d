@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85023681_42c23d9b",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1178855
+      },
+      "writtenOn": "2017-08-30T04:44:30Z",
+      "side": 1,
+      "message": "I tested.  removeFromSuperview will only set spinnerView.superview to nil.\nBut tableView.backgroundView is still pointing to spinnerView after that.\n\nTo ensure the spinnerView is detached from the view hierarchy.\nWe need to explicitly set backgroundView \u003d nil.",
+      "revId": "82e8a2e98d4f97b3c92e32464ecac98c3bf32d7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f53eadaa_eb907e79",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1178855
+      },
+      "writtenOn": "2017-08-30T04:44:30Z",
+      "side": 1,
+      "message": "Same here.\nTo ensure the emptyTableBackgroundView is detached from the view hierarchy.\nWe need to explicitly set backgroundView \u003d nil.  Otherwise, the empty background\nwill remain on the screen if use removeFromSuperview.",
+      "revId": "82e8a2e98d4f97b3c92e32464ecac98c3bf32d7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "585bb456_faf3af42",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1178855
+      },
+      "writtenOn": "2017-08-30T04:44:30Z",
+      "side": 1,
+      "message": "Thanks.  I made the curly braces consistent across the file.",
+      "parentUuid": "b0651e85_756927e9",
+      "range": {
+        "startLine": 563,
+        "startChar": 6,
+        "endLine": 564,
+        "endChar": 15
+      },
+      "revId": "18e70f2d7a3562ea7b5d87a8fa66f4fba69e9b38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38560f53_84c1e9b9",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
         "patchSetId": 14
@@ -45,6 +69,30 @@
       "revId": "18e70f2d7a3562ea7b5d87a8fa66f4fba69e9b38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dda1bf5_1f142ec4",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1178855
+      },
+      "writtenOn": "2017-08-30T04:44:30Z",
+      "side": 1,
+      "message": "Done. I skipped the checking.",
+      "parentUuid": "38560f53_84c1e9b9",
+      "range": {
+        "startLine": 594,
+        "startChar": 5,
+        "endLine": 594,
+        "endChar": 36
+      },
+      "revId": "18e70f2d7a3562ea7b5d87a8fa66f4fba69e9b38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
