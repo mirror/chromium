@@ -34,6 +34,24 @@
       "revId": "d81fad3fddd8aa5aba86c555c913900dac32695b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6f1b192c_6ab38c14",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-preflight-request-invalid-status-301.htm",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-30T11:26:52Z",
+      "side": 1,
+      "message": "No problem!",
+      "parentUuid": "18516744_bb690515",
+      "revId": "d81fad3fddd8aa5aba86c555c913900dac32695b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
