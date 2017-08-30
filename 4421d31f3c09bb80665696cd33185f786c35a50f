@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43262a09_d3fa2c53",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_metrics_recorder.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-30T15:10:42Z",
+      "side": 1,
+      "message": "This change seems disconnected from the rest of the CL?",
+      "range": {
+        "startLine": 60,
+        "startChar": 17,
+        "endLine": 60,
+        "endChar": 25
+      },
+      "revId": "4421d31f3c09bb80665696cd33185f786c35a50f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1963afd_1fcb8fd4",
+        "filename": "ios/clean/chrome/browser/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-30T15:10:42Z",
+      "side": 1,
+      "message": "Why is this needed?",
+      "range": {
+        "startLine": 11,
+        "startChar": 10,
+        "endLine": 11,
+        "endChar": 11
+      },
+      "revId": "4421d31f3c09bb80665696cd33185f786c35a50f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bc6cdce_25d5ce2d",
+        "filename": "ios/clean/chrome/browser/ui/bookmarks/bookmarks_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-30T15:10:42Z",
+      "side": 1,
+      "message": "\"Adaptor for old architecture URL loaders\".",
+      "range": {
+        "startLine": 32,
+        "startChar": 3,
+        "endLine": 32,
+        "endChar": 6
+      },
+      "revId": "4421d31f3c09bb80665696cd33185f786c35a50f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fac219cc_ef744ecf",
+        "filename": "ios/clean/chrome/browser/ui/bookmarks/bookmarks_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-30T15:10:42Z",
+      "side": 1,
+      "message": "Maybe this comment can be removed?",
+      "range": {
+        "startLine": 45,
+        "startChar": 5,
+        "endLine": 45,
+        "endChar": 9
+      },
+      "revId": "4421d31f3c09bb80665696cd33185f786c35a50f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8147d44_a68f8a08",
+        "filename": "ios/clean/chrome/browser/ui/bookmarks/bookmarks_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-30T15:10:42Z",
+      "side": 1,
+      "message": "Since the parent coordinator is already doing the presented vs. embedded logic, is there away to avoid duplicating it here? For example, could there be separate coordinator classes for presented (phone) bookmarks versus embedded (iPad) ones?\n\nThe goal is not to have IsIpadIdiom() tests outside of view controllers, so I\u0027d at least start to limit them to single decision points as much as possible.",
+      "range": {
+        "startLine": 47,
+        "startChar": 7,
+        "endLine": 47,
+        "endChar": 18
+      },
+      "revId": "4421d31f3c09bb80665696cd33185f786c35a50f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b4f1f85_317d2985",
+        "filename": "ios/clean/chrome/browser/ui/bookmarks/bookmarks_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-30T15:10:42Z",
+      "side": 1,
+      "message": "Do you need the |animated| param?",
+      "range": {
+        "startLine": 112,
+        "startChar": 45,
+        "endLine": 112,
+        "endChar": 53
+      },
+      "revId": "4421d31f3c09bb80665696cd33185f786c35a50f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d670d224_9a781274",
+        "filename": "ios/clean/chrome/browser/ui/url_loader_adaptor.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-30T15:10:42Z",
+      "side": 1,
+      "message": "\"for components from the old architecture\"",
+      "range": {
+        "startLine": 10,
+        "startChar": 49,
+        "endLine": 10,
+        "endChar": 54
+      },
+      "revId": "4421d31f3c09bb80665696cd33185f786c35a50f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
