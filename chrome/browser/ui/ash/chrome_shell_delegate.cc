@@ -534,21 +534,17 @@ gfx::Image ChromeShellDelegate::GetDeprecatedAcceleratorImage() const {
       IDR_BLUETOOTH_KEYBOARD);
 }
 
-bool ChromeShellDelegate::IsTouchscreenEnabledInPrefs(
-    bool use_local_state) const {
-  return chromeos::system::InputDeviceSettings::Get()
-      ->IsTouchscreenEnabledInPrefs(use_local_state);
+bool ChromeShellDelegate::GetTouchscreenStatus(
+    ash::TouchscreenStatusSource source) const {
+  return chromeos::system::InputDeviceSettings::Get()->GetTouchscreenStatus(
+      source);
 }
 
-void ChromeShellDelegate::SetTouchscreenEnabledInPrefs(bool enabled,
-                                                       bool use_local_state) {
-  chromeos::system::InputDeviceSettings::Get()->SetTouchscreenEnabledInPrefs(
-      enabled, use_local_state);
-}
-
-void ChromeShellDelegate::UpdateTouchscreenStatusFromPrefs() {
-  chromeos::system::InputDeviceSettings::Get()
-      ->UpdateTouchscreenStatusFromPrefs();
+void ChromeShellDelegate::SetTouchscreenStatus(
+    bool enabled,
+    ash::TouchscreenStatusSource source) {
+  chromeos::system::InputDeviceSettings::Get()->SetTouchscreenStatus(enabled,
+                                                                     source);
 }
 
 void ChromeShellDelegate::ToggleTouchpad() {
