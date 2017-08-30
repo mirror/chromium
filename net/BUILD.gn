@@ -2663,6 +2663,8 @@ static_library("test_support") {
       "test/spawned_test_server/remote_test_server.h",
       "test/spawned_test_server/remote_test_server_config.cc",
       "test/spawned_test_server/remote_test_server_config.h",
+      "test/spawned_test_server/remote_test_server_proxy.cc",
+      "test/spawned_test_server/remote_test_server_proxy.h",
       "test/spawned_test_server/spawner_communicator.cc",
       "test/spawned_test_server/spawner_communicator.h",
     ]
@@ -5358,6 +5360,11 @@ test("net_unittests") {
       "ntlm/ntlm_test_data.h",
       "ntlm/ntlm_unittest.cc",
     ]
+  }
+
+  if (is_android || is_fuchsia) {
+    sources +=
+        [ "test/spawned_test_server/remote_test_server_proxy_unittests.cc" ]
   }
 
   if (is_fuchsia) {
