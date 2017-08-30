@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fca33b1_0e63e27c",
+        "filename": "chrome/app/vector_icons/security_alert.icon",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-30T00:51:15Z",
+      "side": 1,
+      "message": "Sorry, I forgot the tell you that in my last CL, reviewer asked me to rename security_alert.icon to security.icon.\nYou can directly use chrome/app/vector_icons/security.icon",
+      "revId": "02216c80bb6da13b72f7ba96940886a4c6af11d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
