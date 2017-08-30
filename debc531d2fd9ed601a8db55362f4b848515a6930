@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "ddc3d868_876a8307",
+        "filename": "ui/aura/window_event_dispatcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-30T04:12:39Z",
+      "side": 1,
+      "message": "Without HitTestQuery, this *probably* breaks hit-testing for easy-resize or custom-shape windows (e.g. file-manager I think).",
+      "revId": "debc531d2fd9ed601a8db55362f4b848515a6930",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "02459919_fb320bd0",
         "filename": "ui/aura/window_event_dispatcher.cc",
         "patchSetId": 5
@@ -31,6 +48,58 @@
       "side": 1,
       "message": "We get here if GetForcedTargetInRootWindow() returns non-null. That basically means there is a mouse_pressed_handler, mouse capture or a touch-lock target. In that case it shouldn\u0027t matter what mus says, we need to use local state. Am I wrong there?",
       "parentUuid": "02459919_fb320bd0",
+      "revId": "debc531d2fd9ed601a8db55362f4b848515a6930",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0f7c03a_7aa77b06",
+        "filename": "ui/aura/window_event_dispatcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-30T04:12:39Z",
+      "side": 1,
+      "message": "Oh sorry, I missed that detail here. My bad.",
+      "parentUuid": "893e4ac0_5e7c61be",
+      "revId": "debc531d2fd9ed601a8db55362f4b848515a6930",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e805b4c_ba89a16e",
+        "filename": "ui/events/event_processor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-30T04:12:39Z",
+      "side": 1,
+      "message": "DCHECK(targeter) here?",
+      "revId": "debc531d2fd9ed601a8db55362f4b848515a6930",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb87f4a5_4c3f81f1",
+        "filename": "ui/events/event_processor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-30T04:12:39Z",
+      "side": 1,
+      "message": "What\u0027s this change for? Can you add a comment? I would\u0027ve thought this would be more like:\n  if (target \u003d\u003d initial_target) break;\n(or just not have anything at all?)",
       "revId": "debc531d2fd9ed601a8db55362f4b848515a6930",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

@@ -34,6 +34,24 @@
       "revId": "cc7820af772d69d0d3d8293c7aeef769a221947a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3121795c_abe0b467",
+        "filename": "ui/aura/window_event_dispatcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-30T04:12:39Z",
+      "side": 0,
+      "message": "I seem to remember this code was used because the hit-testing in the window-server was not taking into account the expanded hit-test region for easy-resize targeter etc. We include that information in the HitTestRegionList we send from aura to viz. So once we use the HitTestQuery, we will already be taking into account the expanded hit-test region for easy-resize. That means, we don\u0027t need to find a window with a targeter here.",
+      "parentUuid": "f05a8133_e3b3781a",
+      "revId": "cc7820af772d69d0d3d8293c7aeef769a221947a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
