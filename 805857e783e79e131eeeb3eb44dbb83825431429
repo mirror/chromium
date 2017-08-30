@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8a4fc1b5_3486f085",
+        "filename": "chrome/browser/chromeos/extensions/device_local_account_external_policy_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-30T02:48:16Z",
+      "side": 1,
+      "message": "Yes I noticed. The entire class\u0027s usage of StartLoading/LoadFinished is questionable, see bug reference in line 82 below, I didn\u0027t want to change the functionality in this CL.",
+      "parentUuid": "595f2d1e_8b2e7dff",
+      "revId": "805857e783e79e131eeeb3eb44dbb83825431429",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "32482169_41e65cf6",
         "filename": "chrome/browser/extensions/extension_migrator.cc",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "5821a3c8_d832c852",
+        "filename": "chrome/browser/extensions/extension_migrator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-30T02:48:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32482169_41e65cf6",
+      "revId": "805857e783e79e131eeeb3eb44dbb83825431429",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f44b89d_cbad96fb",
         "filename": "chrome/browser/extensions/external_component_loader.cc",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-30T01:15:28Z",
       "side": 1,
       "message": "std::make_unique (here and elsewhere)",
+      "revId": "805857e783e79e131eeeb3eb44dbb83825431429",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3989f83f_1e575a44",
+        "filename": "chrome/browser/extensions/external_component_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-30T02:48:16Z",
+      "side": 1,
+      "message": "Done (only for changes in this CL)",
+      "parentUuid": "9f44b89d_cbad96fb",
       "revId": "805857e783e79e131eeeb3eb44dbb83825431429",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "b45c3820_e74ef861",
+        "filename": "chrome/browser/extensions/external_pref_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-30T02:48:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6301d4b7_9d4401b0",
+      "revId": "805857e783e79e131eeeb3eb44dbb83825431429",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6cecc594_840b95c7",
         "filename": "chrome/browser/extensions/external_pref_loader.cc",
         "patchSetId": 4
@@ -84,6 +156,24 @@
       "revId": "805857e783e79e131eeeb3eb44dbb83825431429",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32bb5bad_5a3958ca",
+        "filename": "chrome/browser/extensions/external_pref_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-30T02:48:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6cecc594_840b95c7",
+      "revId": "805857e783e79e131eeeb3eb44dbb83825431429",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "0cf3d9b6_678f8db0",
+        "filename": "chrome/browser/extensions/external_pref_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-30T02:48:16Z",
+      "side": 1,
+      "message": "I actually don\u0027t know about find\u0027s T* -\u003e unique_ptr\u003cT\u003e conversion.\nI\u0027ve changed remove_if to find_if",
+      "parentUuid": "51cf0460_8911d8d1",
+      "revId": "805857e783e79e131eeeb3eb44dbb83825431429",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eca85ca7_07b35282",
         "filename": "chrome/browser/extensions/external_pref_loader_unittest.cc",
         "patchSetId": 4
@@ -118,6 +226,24 @@
       "revId": "805857e783e79e131eeeb3eb44dbb83825431429",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6b60128_265c08ab",
+        "filename": "chrome/browser/extensions/external_pref_loader_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-30T02:48:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eca85ca7_07b35282",
+      "revId": "805857e783e79e131eeeb3eb44dbb83825431429",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
