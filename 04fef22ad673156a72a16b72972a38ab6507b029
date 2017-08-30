@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d72c20e3_3c92a806",
+        "filename": "build/android/pylib/local/device/local_device_instrumentation_test_run.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-30T18:09:30Z",
+      "side": 1,
+      "message": "I think this CL could just be\n\n  # list_tests unchanged\n\n  raw_test_lists \u003d self._env.parallel_devices.pMap(lambda d: crash_handler.RetryOnSystemCrash(list_tests, d)).pGet(None)",
+      "revId": "04fef22ad673156a72a16b72972a38ab6507b029",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
