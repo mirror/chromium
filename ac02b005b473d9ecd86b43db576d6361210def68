@@ -34,6 +34,24 @@
       "revId": "ac02b005b473d9ecd86b43db576d6361210def68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c76c42e_3c1188c9",
+        "filename": "chrome/test/data/local_ntp/voice_microphone_browsertest.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-30T14:41:39Z",
+      "side": 1,
+      "message": "\u003e Given the current implementation, the activation time is (partially) random; so the answer is (probably) not :) The important assertion is actually on the previous line: the \"restart\" does not clear timeouts, it just adds a new one, hence failing the number of timeouts \u003d\u003d 1 check.\n\nThat feels like an implementation detail which might just as well go the other way: Why couldn\u0027t startInputAnimation clear any previous timeouts before setting the new one?\n\n\u003e Should I add a comment/structure the test differently to make it more apparent?\n\nThe pendingTimeouts in MockClock have IDs - can we check that the ID is still the same?",
+      "parentUuid": "b4ac3684_8e882c60",
+      "revId": "ac02b005b473d9ecd86b43db576d6361210def68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
