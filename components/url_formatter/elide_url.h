@@ -20,6 +20,7 @@ class FontList;
 
 namespace url {
 class Origin;
+struct Parsed;
 }
 
 namespace url_formatter {
@@ -42,6 +43,14 @@ base::string16 ElideUrl(const GURL& url,
                         const gfx::FontList& font_list,
                         float available_pixel_width);
 
+// This method is similar to ElideUrl, but does not treat paths specially.
+// First, everything following the host is elided, then the scheme is removed,
+// and finally the host is elided from the left.
+base::string16 SimpleElideUrl(const GURL& url,
+                              const gfx::FontList& font_list,
+                              float available_pixel_width,
+                              url::Parsed* parsed);
+
 // This function takes a GURL object and elides the host to fit within
 // the given width. The function will never elide past the TLD+1 point,
 // but after that, will leading-elide the domain name to fit the width.
@@ -51,6 +60,22 @@ base::string16 ElideHost(const GURL& host_url,
                          const gfx::FontList& font_list,
                          float available_pixel_width);
 #endif  // !defined(OS_ANDROID)
+
+// This function takes a formatted URL string, along with the original GURL and
+// parsing results, and elides it to fit a specified width. Formatting is done
+// separately for flexibility. Elision is performed according to the origin
+// presentation guidance at:
+// https://www.chromium.org/Home/chromium-security/enamel
+// It will elide from the right until any path, query or reference components
+// are gone, then elide from the left. By eliding from the left, the TLD+1 is
+// preserved as long as possible, but will itself be chopped if necessary.
+// The scheme is also chopped if helpful.
+base::string16 SecurelyElideFormattedUrl(const GURL& url,
+                                         const base::string16& url_string,
+                                         const gfx::FontList& font_list,
+                                         float available_pixel_width,
+                                         bool preserve_filename,
+                                         url::Parsed* parsed);
 
 enum class SchemeDisplay {
   SHOW,
