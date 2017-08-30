@@ -760,6 +760,7 @@ void FileManagerPrivateInternalGetRecentFilesFunction::OnGetRecentFiles(
   DCHECK(external_backend);
 
   file_manager::util::FileDefinitionList file_definition_list;
+  std::vector<chromeos::RecentFile> filtered_files;
   for (const auto& file : files) {
     DCHECK(external_backend->CanHandleType(file.url().type()));
 
@@ -782,6 +783,8 @@ void FileManagerPrivateInternalGetRecentFilesFunction::OnGetRecentFiles(
     // Recent file system only lists regular files, not directories.
     file_definition.is_directory = false;
     file_definition_list.emplace_back(std::move(file_definition));
+
+    filtered_files.emplace_back(file);
   }
 
   file_manager::util::ConvertFileDefinitionListToEntryDefinitionList(
@@ -789,29 +792,40 @@ void FileManagerPrivateInternalGetRecentFilesFunction::OnGetRecentFiles(
       file_definition_list,  // Safe, since copied internally.
       base::Bind(&FileManagerPrivateInternalGetRecentFilesFunction::
                      OnConvertFileDefinitionListToEntryDefinitionList,
-                 this));
+                 this, std::move(filtered_files)));
 }
 
 void FileManagerPrivateInternalGetRecentFilesFunction::
     OnConvertFileDefinitionListToEntryDefinitionList(
+        const std::vector<chromeos::RecentFile>& files,
         std::unique_ptr<file_manager::util::EntryDefinitionList>
             entry_definition_list) {
   DCHECK(entry_definition_list);
+  DCHECK_EQ(entry_definition_list->size(), files.size());
 
-  auto entries = base::MakeUnique<base::ListValue>();
+  auto results = base::MakeUnique<base::ListValue>();
 
-  for (const auto& definition : *entry_definition_list) {
+  for (size_t i = 0; i < entry_definition_list->size(); ++i) {
+    const auto& definition = (*entry_definition_list)[i];
+    const auto& file = files[i];
+
     if (definition.error != base::File::FILE_OK)
       continue;
+
     auto entry = base::MakeUnique<base::DictionaryValue>();
     entry->SetString("fileSystemName", definition.file_system_name);
     entry->SetString("fileSystemRoot", definition.file_system_root_url);
     entry->SetString("fileFullPath", "/" + definition.full_path.AsUTF8Unsafe());
     entry->SetBoolean("fileIsDirectory", definition.is_directory);
-    entries->Append(std::move(entry));
+
+    auto result = base::MakeUnique<base::DictionaryValue>();
+    result->SetDictionary("entry", std::move(entry));
+    result->SetDouble("modificationByMeTime", file.last_modified().ToJsTime());
+
+    results->Append(std::move(result));
   }
 
-  Respond(OneArgument(std::move(entries)));
+  Respond(OneArgument(std::move(results)));
 }
 
 }  // namespace extensions
