@@ -334,6 +334,20 @@ if (enable_extensions) {
     }
   }
 
+  source_set("test_support") {
+    testonly = true
+
+    sources = [
+      "api/declarative_net_request/test_utils.cc",
+      "api/declarative_net_request/test_utils.h",
+    ]
+
+    deps = [
+      ":common",
+      "//base",
+    ]
+  }
+
   source_set("unit_tests") {
     testonly = true
     sources = [
@@ -382,6 +396,7 @@ if (enable_extensions) {
 
     deps = [
       ":common",
+      ":test_support",
       "//base",
       "//base:i18n",
       "//base/test:test_support",
