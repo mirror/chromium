@@ -22,6 +22,30 @@
       "revId": "6c3edd24260d31ad139d7a8db17861617afaeed3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0f77772_ffce64df",
+        "filename": "chrome/installer/linux/debian/check-package-constraints-satisfied.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-08-30T23:44:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c7accc6_28e3db1f",
+      "range": {
+        "startLine": 162,
+        "startChar": 2,
+        "endLine": 162,
+        "endChar": 6
+      },
+      "revId": "6c3edd24260d31ad139d7a8db17861617afaeed3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
