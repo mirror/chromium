@@ -43,12 +43,8 @@ class SiteEngagementDetailsProviderImpl
 
     std::vector<mojom::SiteEngagementDetailsPtr> engagement_info;
     engagement_info.reserve(scores.size());
-    for (const auto& info : scores) {
-      mojom::SiteEngagementDetailsPtr origin_info(
-          mojom::SiteEngagementDetails::New());
-      *origin_info = std::move(info);
-      engagement_info.push_back(std::move(origin_info));
-    }
+    for (const auto& info : scores)
+      engagement_info.emplace_back(base::in_place, info);
 
     callback.Run(std::move(engagement_info));
   }
