@@ -43,6 +43,7 @@
 #include "core/layout/LayoutMultiColumnFlowThread.h"
 #include "core/layout/LayoutMultiColumnSpannerPlaceholder.h"
 #include "core/layout/LayoutPagedFlowThread.h"
+#include "core/layout/LayoutTableCell.h"
 #include "core/layout/LayoutView.h"
 #include "core/layout/TextAutosizer.h"
 #include "core/layout/line/GlyphOverflow.h"
@@ -433,6 +434,14 @@ void LayoutBlockFlow::UpdateBlockLayout(bool relayout_children) {
       // other hand, we now need the deep layout, to insert pagination struts.
       pagination_state_changed_ = false;
       state.SetPaginationStateChanged();
+    }
+
+    if (IsTableCell()) {
+      if (ToLayoutTableCell(this)->IsFirstColumnCollapsed()) {
+        state.SetIsInCollapsedCell(true);
+      } else {
+        state.SetIsInCollapsedCell(false);
+      }
     }
 
     LayoutChildren(relayout_children, layout_scope);
