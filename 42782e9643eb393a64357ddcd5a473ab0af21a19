@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e361b6b5_55024cf9",
+        "filename": "ui/aura/mus/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-30T22:42:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b94f0ced_cffddc98",
+      "revId": "42782e9643eb393a64357ddcd5a473ab0af21a19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9ab5d2d_b7f695d0",
         "filename": "ui/aura/mus/hit_test_data_provider_aura_unittest.cc",
         "patchSetId": 2
@@ -51,6 +69,24 @@
       "revId": "42782e9643eb393a64357ddcd5a473ab0af21a19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57a3b0fa_056fc824",
+        "filename": "ui/aura/mus/hit_test_data_provider_aura_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-30T22:42:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d537c5f5_4a80eb17",
+      "revId": "42782e9643eb393a64357ddcd5a473ab0af21a19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -89,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "b2722622_caccf2e0",
+        "filename": "ui/aura/window.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-30T22:42:05Z",
+      "side": 1,
+      "message": "re const\u0026: as discussed, can\u0027t change to that because it would ref to temp object in WindowPortMus.\n\nAdded documentation.",
+      "parentUuid": "bb6deafc_c8bd037e",
+      "revId": "42782e9643eb393a64357ddcd5a473ab0af21a19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "714b03a1_0e7fb25e",
         "filename": "ui/aura/window_port.h",
         "patchSetId": 2
@@ -103,6 +157,24 @@
       "revId": "42782e9643eb393a64357ddcd5a473ab0af21a19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d47448a_7afe1cfa",
+        "filename": "ui/aura/window_port.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-30T22:42:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "714b03a1_0e7fb25e",
+      "revId": "42782e9643eb393a64357ddcd5a473ab0af21a19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
