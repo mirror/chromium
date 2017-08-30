@@ -19,12 +19,12 @@ namespace proxy {
 class PPP_InputEvent_Proxy : public InterfaceProxy {
  public:
   PPP_InputEvent_Proxy(Dispatcher* dispatcher);
-  virtual ~PPP_InputEvent_Proxy();
+  ~PPP_InputEvent_Proxy() override;
 
   static const PPP_InputEvent* GetProxyInterface();
 
   // InterfaceProxy implementation.
-  virtual bool OnMessageReceived(const IPC::Message& msg);
+  bool OnMessageReceived(const IPC::Message& msg) override;
 
  private:
   // Message handlers.

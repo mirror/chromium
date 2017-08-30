@@ -18,12 +18,12 @@ namespace proxy {
 class PPB_Core_Proxy : public InterfaceProxy {
  public:
   PPB_Core_Proxy(Dispatcher* dispatcher);
-  virtual ~PPB_Core_Proxy();
+  ~PPB_Core_Proxy() override;
 
   static const PPB_Core* GetPPB_Core_Interface();
 
   // InterfaceProxy implementation.
-  virtual bool OnMessageReceived(const IPC::Message& msg);
+  bool OnMessageReceived(const IPC::Message& msg) override;
 
   static const ApiID kApiID = API_ID_PPB_CORE;
 
