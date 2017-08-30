@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98848066_1eca9073",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 995,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-30T06:03:32Z",
+      "side": 1,
+      "message": "So you are setting this bit in chrome...",
+      "revId": "338ec7ae51257b627aaccef816c5c03aef1bd0b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5222d3d5_36573f3a",
+        "filename": "components/data_reduction_proxy/content/browser/content_lofi_decider.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-30T06:03:32Z",
+      "side": 1,
+      "message": "to read it in your component content does not depend on.\n\nIt seems this kind of a bit should be this component\u0027s business and hence be opaque to content/. Consider exposing embedder-specific opaque data on the request or reserve a range for the embedder-specific preview bits.\n\nAlso, I am not sure how this kind of the logic is going to map to the network servicification.\n\n+John: fyi",
+      "revId": "338ec7ae51257b627aaccef816c5c03aef1bd0b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60a69d4c_d92b36ce",
+        "filename": "third_party/WebKit/public/platform/WebURLRequest.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-30T06:03:32Z",
+      "side": 1,
+      "message": "There is no point in exposing it to core/ for the sake of compile-type enum assert, simply skip this bit there and don\u0027t modify WebURLRequest.",
+      "revId": "338ec7ae51257b627aaccef816c5c03aef1bd0b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
