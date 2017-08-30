@@ -884,6 +884,7 @@ void RenderWidget::OnSetEditCommandsForNextKeyEvent(
 }
 
 void RenderWidget::OnSetFocus(bool enable) {
+  LOG(ERROR) << this << "->OnSetFocus("<<(enable?"true":"false")<<")";
   has_focus_ = enable;
 
   if (GetWebWidget())
