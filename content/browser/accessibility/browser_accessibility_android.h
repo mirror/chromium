@@ -76,6 +76,8 @@ class CONTENT_EXPORT BrowserAccessibilityAndroid : public BrowserAccessibility {
   const char* GetClassName() const;
   base::string16 GetText() const override;
 
+  std::string GetRoleString() const;
+
   base::string16 GetRoleDescription() const;
 
   int GetItemIndex() const;

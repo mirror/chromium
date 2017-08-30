@@ -448,6 +448,10 @@ base::string16 BrowserAccessibilityAndroid::GetText() const {
   return text;
 }
 
+std::string BrowserAccessibilityAndroid::GetRoleString() const {
+  return ToString(GetRole());
+}
+
 base::string16 BrowserAccessibilityAndroid::GetRoleDescription() const {
   content::ContentClient* content_client = content::GetContentClient();
 
