@@ -1542,9 +1542,23 @@ class Port(object):
         else:
             stderr_lines = [u'<empty>']
 
-        return (stderr, 'crash log for %s (pid %s):\n%s\n%s\n' % (name_str, pid_str,
-                                                                  '\n'.join(('STDOUT: ' + l) for l in stdout_lines),
-                                                                  '\n'.join(('STDERR: ' + l) for l in stderr_lines)))
+        return (stderr,
+                'crash log for %s (pid %s):\n%s\n%s\n' % (name_str, pid_str,
+                                                          '\n'.join(('STDOUT: ' + l) for l in stdout_lines),
+                                                          '\n'.join(('STDERR: ' + l) for l in stderr_lines)),
+                self._get_crash_site(stderr_lines))
+
+    def _get_crash_site(self, stderr_lines):
+        # Search pattern "[...FATAL:crash_file.xxx(line_number)]"
+        for line in stderr_lines:
+            start = line.find("FATAL:")
+            if start == -1:
+                continue
+            start += 6
+            end = line.find("]", start)
+            if end == -1:
+                continue
+            return line[start:end]
 
     def look_for_new_crash_logs(self, crashed_processes, start_time):
         pass
