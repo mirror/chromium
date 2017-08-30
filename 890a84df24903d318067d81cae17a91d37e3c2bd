@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37868151_d69acdf9",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-08-30T16:57:11Z",
+      "side": 1,
+      "message": "nit: drop comment for short namespace?",
+      "revId": "890a84df24903d318067d81cae17a91d37e3c2bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51d9f92f_cd9d4766",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-08-30T16:57:11Z",
+      "side": 1,
+      "message": "any reason this is not in the anonymous namespace?",
+      "revId": "890a84df24903d318067d81cae17a91d37e3c2bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67cd4e55_6efa86a9",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-08-30T16:57:11Z",
+      "side": 1,
+      "message": "I think we prefer \u003d default here too",
+      "revId": "890a84df24903d318067d81cae17a91d37e3c2bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
