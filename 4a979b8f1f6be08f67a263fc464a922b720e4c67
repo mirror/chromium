@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "01b0a7a7_71bdb449",
+        "filename": "ios/chrome/browser/passwords/credential_manager_util.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-30T09:58:26Z",
+      "side": 1,
+      "message": "You don\u0027t own IOSSecurityStateTabHelper. It has nothing to do with the CM API. Therefore, under no circumstances you should create an instance of IOSSecurityStateTabHelper in your classes.",
+      "parentUuid": "730e7685_9e93f7dc",
+      "range": {
+        "startLine": 32,
+        "startChar": 29,
+        "endLine": 32,
+        "endChar": 46
+      },
+      "revId": "4a979b8f1f6be08f67a263fc464a922b720e4c67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee65d7bd_c3aca2a0",
         "filename": "ios/chrome/browser/passwords/credential_manager_util.mm",
         "patchSetId": 1
