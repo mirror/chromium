@@ -16,6 +16,24 @@
       "revId": "3a959a7976d43031e9bd1d35a6eb6f3bc3f6f8fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3caa3e06_38ef3724",
+        "filename": "cc/trees/layer_tree_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1236,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-30T21:11:22Z",
+      "side": 1,
+      "message": "Re: UnregisterLayer erasing entries, your hypothesis is accurate AFAIK.\n\nYour suggested proposal seems sensible. The modification is easy and looks clean. I\u0027ve updated patch.",
+      "parentUuid": "5a5c3e11_1ff11af0",
+      "revId": "3a959a7976d43031e9bd1d35a6eb6f3bc3f6f8fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
