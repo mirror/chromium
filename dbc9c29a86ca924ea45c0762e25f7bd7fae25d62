@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1117da7a_3023825b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/LogoDelegateImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-30T23:36:34Z",
+      "side": 1,
+      "message": "It is indeed safe. FWIW, the histograms.xml representation isn\u0027t really relevant -- the XML files simply provide metadata, whereas the choice of sparse vs. enumerated affects how the histogram is represented in memory.",
+      "parentUuid": "2a18ab7b_c9ba1220",
+      "range": {
+        "startLine": 103,
+        "startChar": 77,
+        "endLine": 103,
+        "endChar": 0
+      },
+      "revId": "dbc9c29a86ca924ea45c0762e25f7bd7fae25d62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "97d3e92d_f472c76e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/LogoDelegateImpl.java",
         "patchSetId": 1
@@ -40,6 +64,29 @@
         "startLine": 122,
         "startChar": 50,
         "endLine": 122,
+        "endChar": 0
+      },
+      "revId": "dbc9c29a86ca924ea45c0762e25f7bd7fae25d62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9495df6_6b13d48b",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 47700,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-30T23:36:34Z",
+      "side": 1,
+      "message": "In general, when changing the semantics of a histogram, it\u0027s best practice to rename it as well.  Otherwise, you end up with a mix of data across versions, where the data from one set of versions should be interpreted differently vs. data from newer versions.  This can lead to confusion for anyone using the data who\u0027s not aware of or not thinking about this split.\n\nIn this particular case, it looks like you\u0027re adding a breakdown of this histogram to measure fresh vs. cached fetches.  Given that you\u0027re adding this breakdown, do you also need a histogram measuring the cumulative state?  If you do need it, then please rename the histogram, e.g. to \"NewTabPage.LogoShown2\".  If you do not, then please remove the recording code, and mark it as base\u003d\"true\" in the XML file.",
+      "range": {
+        "startLine": 47700,
+        "startChar": 66,
+        "endLine": 47700,
         "endChar": 0
       },
       "revId": "dbc9c29a86ca924ea45c0762e25f7bd7fae25d62",
