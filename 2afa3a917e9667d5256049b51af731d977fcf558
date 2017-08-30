@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7b3281a6_1e29b666",
+        "filename": "media/blink/video_frame_compositor.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-08-30T00:25:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b8350a8_907f168c",
+      "revId": "2afa3a917e9667d5256049b51af731d977fcf558",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84aca85c_d5dee785",
         "filename": "media/blink/video_frame_compositor.cc",
         "patchSetId": 37
@@ -33,6 +51,24 @@
       "revId": "2afa3a917e9667d5256049b51af731d977fcf558",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1aa63a0_cd126e4f",
+        "filename": "media/blink/video_frame_compositor.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-08-30T00:25:05Z",
+      "side": 1,
+      "message": "Wez thinks it should be more readable the other way, and I agree.",
+      "parentUuid": "84aca85c_d5dee785",
+      "revId": "2afa3a917e9667d5256049b51af731d977fcf558",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "798bb365_39da871f",
+        "filename": "media/blink/video_frame_compositor.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-08-30T00:25:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29c194f7_0f0a6738",
+      "revId": "2afa3a917e9667d5256049b51af731d977fcf558",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba728c54_28a0bc03",
         "filename": "media/blink/video_frame_compositor.cc",
         "patchSetId": 37
@@ -67,6 +121,24 @@
       "revId": "2afa3a917e9667d5256049b51af731d977fcf558",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "848f1a5a_95fc853a",
+        "filename": "media/blink/video_frame_compositor.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-08-30T00:25:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba728c54_28a0bc03",
+      "revId": "2afa3a917e9667d5256049b51af731d977fcf558",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "876817db_54e9285d",
+        "filename": "media/blink/video_frame_compositor.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-08-30T00:25:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c271736a_09a092c6",
+      "revId": "2afa3a917e9667d5256049b51af731d977fcf558",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81620b4f_8d34ccc8",
         "filename": "media/blink/video_frame_compositor.cc",
         "patchSetId": 37
@@ -101,6 +191,24 @@
       "revId": "2afa3a917e9667d5256049b51af731d977fcf558",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7abcb1db_f0946f8f",
+        "filename": "media/blink/video_frame_compositor.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-08-30T00:25:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81620b4f_8d34ccc8",
+      "revId": "2afa3a917e9667d5256049b51af731d977fcf558",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "2997f0f8_e0fb6045",
+        "filename": "media/blink/video_frame_compositor.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-08-30T00:25:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52e2b3df_f7bfdae6",
+      "revId": "2afa3a917e9667d5256049b51af731d977fcf558",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42973c6a_dd2f35e5",
         "filename": "media/blink/video_frame_compositor.h",
         "patchSetId": 37
@@ -132,6 +258,24 @@
       "writtenOn": "2017-08-29T23:46:45Z",
       "side": 1,
       "message": "Is this thread safe?",
+      "revId": "2afa3a917e9667d5256049b51af731d977fcf558",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4b4a577_2a29147e",
+        "filename": "media/blink/video_frame_compositor.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-08-30T00:25:05Z",
+      "side": 1,
+      "message": "I would reckon it is as safe as all the previous checks to |client_|. I\u0027m still learning though, so I am not very sure.",
+      "parentUuid": "42973c6a_dd2f35e5",
       "revId": "2afa3a917e9667d5256049b51af731d977fcf558",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -152,6 +296,24 @@
       "revId": "2afa3a917e9667d5256049b51af731d977fcf558",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "367609ed_9ce58f3d",
+        "filename": "media/blink/video_frame_compositor_unittest.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-08-30T00:25:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7bbca80_7847f038",
+      "revId": "2afa3a917e9667d5256049b51af731d977fcf558",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
