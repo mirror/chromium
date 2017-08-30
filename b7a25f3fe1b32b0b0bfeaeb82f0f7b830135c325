@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "42257167_b353efef",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1148594
+      },
+      "writtenOn": "2017-08-30T17:36:11Z",
+      "side": 1,
+      "message": "The enclosing class is only instantiated for versions older than 23. CanHandleResolution is a vestige of ARC M where launch bounds were selected by Chrome.",
+      "parentUuid": "d4c3d455_f693d635",
+      "range": {
+        "startLine": 216,
+        "startChar": 18,
+        "endLine": 216,
+        "endChar": 47
+      },
+      "revId": "b7a25f3fe1b32b0b0bfeaeb82f0f7b830135c325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "82962575_a363e454",
         "filename": "components/arc/common/app.mojom",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-30T16:57:57Z",
       "side": 1,
       "message": "So the intention going forward is that the dimension on screen won\u0027t be relayed to Android? Will that break anything? Will that be re-added in the future? Does it make sense to add the display_id as a [MinVersion\u003d23] param instead of creating a new method?",
+      "range": {
+        "startLine": 213,
+        "startChar": 31,
+        "endLine": 213,
+        "endChar": 49
+      },
+      "revId": "b7a25f3fe1b32b0b0bfeaeb82f0f7b830135c325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3d2a99a_aa454650",
+        "filename": "components/arc/common/app.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1148594
+      },
+      "writtenOn": "2017-08-30T17:36:11Z",
+      "side": 1,
+      "message": "Right, the dimension_on_screen parameters are only used in ARC M, i.e. launch bounds in ARC N are determined by the WM and that won\u0027t change in the foreseeable future. I think adding methods simplifies future cleanup, i.e. we can just delete the deprecated methods once ARC M is discontinued.",
+      "parentUuid": "82962575_a363e454",
       "range": {
         "startLine": 213,
         "startChar": 31,
