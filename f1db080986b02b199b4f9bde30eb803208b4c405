@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce8f3f24_f8b5587f",
+        "filename": "third_party/WebKit/Source/platform/scheduler/util/state_tracer.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-08-30T11:07:51Z",
+      "side": 1,
+      "message": "Let\u0027s make this be the char* and dereference it every time we need to check it to see if we should be tracing. Otherwise StartImpl will need to do a O(n) category lookup all the time when we\u0027re not tracing.",
+      "range": {
+        "startLine": 67,
+        "startChar": 2,
+        "endLine": 67,
+        "endChar": 6
+      },
+      "revId": "f1db080986b02b199b4f9bde30eb803208b4c405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
