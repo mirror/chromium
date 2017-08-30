@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28ca223a_18707c03",
+        "filename": "ui/android/view_android_unittests.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-30T02:04:12Z",
+      "side": 1,
+      "message": "handle_event_ \u003d true; works",
+      "revId": "cc92e2e0d50dc9b206e2348f5fc3ba512d164b9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
