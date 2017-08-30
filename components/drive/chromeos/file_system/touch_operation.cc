@@ -35,7 +35,9 @@ FileError UpdateLocalState(internal::ResourceMetadata* metadata,
   if (!last_modified_time.is_null())
     file_info->set_last_modified(last_modified_time.ToInternalValue());
   entry->set_metadata_edit_state(ResourceEntry::DIRTY);
-  entry->set_modification_date(base::Time::Now().ToInternalValue());
+  auto current_time = base::Time::Now().ToInternalValue();
+  entry->set_modification_date(current_time);
+  entry->set_modification_by_me_date(current_time);
   return metadata->RefreshEntry(*entry);
 }
 

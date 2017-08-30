@@ -8,6 +8,7 @@
 #include <stdint.h>
 
 #include <algorithm>
+#include <utility>
 
 #include "base/files/file_util.h"
 #include "base/files/scoped_temp_dir.h"
@@ -518,6 +519,28 @@ TEST_F(ResourceMetadataStorageTest, IncompatibleDB_V13) {
   EXPECT_EQ("id1", id);
   EXPECT_EQ(FILE_ERROR_NOT_FOUND,
             storage_->GetIdByResourceId("resource_id2", &id));
+
+  // largest_changestamp is cleared.
+  int64_t largest_changestamp = 0;
+  EXPECT_EQ(FILE_ERROR_OK,
+            storage_->GetLargestChangestamp(&largest_changestamp));
+  EXPECT_EQ(0, largest_changestamp);
+}
+
+TEST_F(ResourceMetadataStorageTest, IncompatibleDB_V14) {
+  const int64_t kLargestChangestamp = 1234567890;
+
+  // Construct v14 DB.
+  SetDBVersion(14);
+  EXPECT_EQ(FILE_ERROR_OK,
+            storage_->SetLargestChangestamp(kLargestChangestamp));
+
+  // Upgrade and reopen.
+  storage_.reset();
+  EXPECT_TRUE(ResourceMetadataStorage::UpgradeOldDB(temp_dir_.GetPath()));
+  storage_.reset(new ResourceMetadataStorage(
+      temp_dir_.GetPath(), base::ThreadTaskRunnerHandle::Get().get()));
+  ASSERT_TRUE(storage_->Initialize());
 
   // largest_changestamp is cleared.
   int64_t largest_changestamp = 0;
