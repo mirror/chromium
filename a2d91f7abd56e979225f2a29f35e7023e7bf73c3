@@ -16,6 +16,24 @@
       "revId": "a2d91f7abd56e979225f2a29f35e7023e7bf73c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27281cbd_e39ec4a2",
+        "filename": "chrome/installer/linux/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-08-30T22:03:57Z",
+      "side": 1,
+      "message": "\u003e Do Chromium branded official builds work at all?\n\nYes they do.  I was just able to build chromium-browser*.deb with a hack to include this file in the build (normally the targets are inaccessible because this file is unreferenced when is_chrome_branded\u003dfalse).\n\nThat sort of begs the question: how come the condition to build the installers is is_chrome_branded and not !is_component_build?  I think the answer is: we don\u0027t want the packages getting included in the gn \"all\" target on every run of linux_chromium*rel_ng.  I think this suggests what we really want is an enable_linux_packages gn argument. wdyt?\n\n\u003e I\u0027m not sure if anyone is using that or not.",
+      "parentUuid": "f395b4cd_034ddf20",
+      "revId": "a2d91f7abd56e979225f2a29f35e7023e7bf73c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
