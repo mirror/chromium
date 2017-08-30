@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "262d58f8_9624c6f6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarousel.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-30T12:53:32Z",
+      "side": 1,
+      "message": "We create a new viewholder each time the bottom sheet is pulled up. That means that every time we reset the impression tracker, we need to give it a new recycler view. This is very ugly if I try to do it from the suggestions carousel and also, it seems like it belongs in the view holder. The view holder is the thing that holds the view and shows it to the screen. So this is also where we should record that the carousel is shown.",
+      "parentUuid": "233385da_b3386a22",
+      "range": {
+        "startLine": 51,
+        "startChar": 8,
+        "endLine": 51,
+        "endChar": 26
+      },
+      "revId": "f2dc7b93dfb5387e9c73beecec56f39bea9c6fec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a20c37c8_4fe5f359",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarousel.java",
         "patchSetId": 4
@@ -84,6 +108,30 @@
       "writtenOn": "2017-08-29T16:31:53Z",
       "side": 1,
       "message": "probably could be lambda if you initialise the tracker in the constructor.",
+      "range": {
+        "startLine": 56,
+        "startChar": 16,
+        "endLine": 56,
+        "endChar": 28
+      },
+      "revId": "f2dc7b93dfb5387e9c73beecec56f39bea9c6fec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5aa1e82_6f05e22f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarousel.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-30T12:53:32Z",
+      "side": 1,
+      "message": "That means that I cant make the field final as the lambda expression would use the final field (mImpressionTracker), which will not be initialized at the time of creating the lambda expression. I moved it to the view holder. I like lambdas :D",
+      "parentUuid": "a20c37c8_4fe5f359",
       "range": {
         "startLine": 56,
         "startChar": 16,
@@ -119,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "2ea0761d_18e46f9d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarousel.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-30T12:53:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fce9926_b4aebdcd",
+      "range": {
+        "startLine": 90,
+        "startChar": 15,
+        "endLine": 90,
+        "endChar": 21
+      },
+      "revId": "f2dc7b93dfb5387e9c73beecec56f39bea9c6fec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f91fa9d4_c0b9b05c",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarousel.java",
         "patchSetId": 4
@@ -139,6 +211,30 @@
       "revId": "f2dc7b93dfb5387e9c73beecec56f39bea9c6fec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e3200c3_14f9236f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarousel.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-30T12:53:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f91fa9d4_c0b9b05c",
+      "range": {
+        "startLine": 119,
+        "startChar": 80,
+        "endLine": 119,
+        "endChar": 88
+      },
+      "revId": "f2dc7b93dfb5387e9c73beecec56f39bea9c6fec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
