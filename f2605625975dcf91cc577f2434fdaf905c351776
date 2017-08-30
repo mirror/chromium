@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e253445_697a57fe",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/ContentLayerClientImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-30T01:53:28Z",
+      "side": 1,
+      "message": "Can you share GraphicsLayer.cpp\u0027s TransformAsJSONArray? (Similarly for the point and size, above)",
+      "revId": "f2605625975dcf91cc577f2434fdaf905c351776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe6be791_67baacc1",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/ContentLayerClientImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-30T01:53:28Z",
+      "side": 1,
+      "message": "Can you add a comment that this is the SPV2 version of GraphicsLayer::LayerAsJSONInternal? Similarly for GraphicsLayer::LayerAsJSONInternal, can you add a comment that it\u0027s the SPV1 version of this function?",
+      "revId": "f2605625975dcf91cc577f2434fdaf905c351776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "834331ad_8ecd842b",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-30T01:53:28Z",
+      "side": 1,
+      "message": "Can you reference the SPV1 code that handles this?",
+      "revId": "f2605625975dcf91cc577f2434fdaf905c351776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
