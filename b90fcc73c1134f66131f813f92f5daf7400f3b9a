@@ -256,6 +256,24 @@
       "revId": "b90fcc73c1134f66131f813f92f5daf7400f3b9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "154b396e_449ab422",
+        "filename": "components/subresource_filter/content/renderer/subresource_filter_agent.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-30T12:50:09Z",
+      "side": 1,
+      "message": "The test NavigateCrossProcessBlankUrl_MaintainsActivation actually simulates this scenario for about:blank cases. I remember testing that an indirect navigation to about:blank also changes its process from the parent\u0027s to the initiator\u0027s.\n\nMy understanding is, barring the case where there is no local ancestor, for these special URLs , it could be either the parent process or the initiator process that is local to them. In both cases we should find them with this logic, so is it really a \"random local frame\"?",
+      "parentUuid": "0b5296ed_f41d8db9",
+      "revId": "b90fcc73c1134f66131f813f92f5daf7400f3b9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
