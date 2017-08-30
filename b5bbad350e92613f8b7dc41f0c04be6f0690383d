@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbc8d6c5_ae938be7",
+        "filename": "url/origin.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-30T18:26:44Z",
+      "side": 1,
+      "message": "Can you name this arg \"canonical_domain\" to make its format more obvious?",
+      "revId": "b5bbad350e92613f8b7dc41f0c04be6f0690383d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4569436d_68ce0c61",
+        "filename": "url/url_util.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-30T18:26:44Z",
+      "side": 1,
+      "message": "Ditto for \"canonical_domain\" and in other places.",
+      "revId": "b5bbad350e92613f8b7dc41f0c04be6f0690383d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
