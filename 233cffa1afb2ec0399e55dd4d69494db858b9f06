@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fb32889d_61f9fba7",
+        "filename": "content/browser/frame_host/navigation_handle_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 1031,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-30T14:17:05Z",
+      "side": 1,
+      "message": "BLOCK_REQUEST_AND_COLLAPSE \u0026 BLOCK_REQUEST should not be reached. They block the request being sent out, and by the time we reach this state the request has already been sent. Basically the only thing the NavigationThrottles should return are CANCEL, CANCEL_AND_IGNORE, DEFER and PROCEED.",
+      "parentUuid": "cc5038b7_b2360977",
+      "revId": "233cffa1afb2ec0399e55dd4d69494db858b9f06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5cd8cea_d4d50b01",
         "filename": "content/browser/frame_host/navigation_handle_impl.cc",
         "patchSetId": 18
@@ -36,6 +54,109 @@
     },
     {
       "key": {
+        "uuid": "cf11983c_6ebf6b47",
+        "filename": "content/browser/frame_host/navigation_handle_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 1177,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-30T14:17:05Z",
+      "side": 1,
+      "message": "As explained above, we shouldn\u0027t get BLOCK_REQUEST and BLOCK_REQUEST_AND_COLLAPSE when the navigation fails.",
+      "parentUuid": "b5cd8cea_d4d50b01",
+      "revId": "233cffa1afb2ec0399e55dd4d69494db858b9f06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "334902e5_4c1f239c",
+        "filename": "content/browser/frame_host/navigation_handle_impl_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-30T14:17:05Z",
+      "side": 1,
+      "message": "You should split this test in two: one test ends in SimulateWillFailRequest and one in SimulateWillProcessResponse, because you can\u0027t get a call to WillProcessResponse after WillFailRequest.",
+      "revId": "233cffa1afb2ec0399e55dd4d69494db858b9f06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74205a08_49168db1",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 750,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-30T14:17:05Z",
+      "side": 1,
+      "message": "I don\u0027t think this boolean is needed since its value is !IsRendererDebugURL(common_params_.url). Just use the call directly below.",
+      "revId": "233cffa1afb2ec0399e55dd4d69494db858b9f06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95becca4_0183661a",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 791,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-30T14:17:05Z",
+      "side": 1,
+      "message": "DCHECK(render_frame_host_);",
+      "revId": "233cffa1afb2ec0399e55dd4d69494db858b9f06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08ffde70_eb66a249",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 978,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-30T14:17:05Z",
+      "side": 1,
+      "message": "You need to return here. OnFailureNotifyRenderFrameHost commits an error page, which we shouldn\u0027t do when we get an error code of net::ERR_ABORTED. Also the check of response_should_be_rendered_ is not needed, because it\u0027s only set to false for 204/205s, streams and downloads, none of which applies to the case of a failed navigation.",
+      "revId": "233cffa1afb2ec0399e55dd4d69494db858b9f06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68da9bf9_8285cd4f",
+        "filename": "content/browser/frame_host/navigation_request.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-30T14:17:05Z",
+      "side": 1,
+      "message": "I think this would be better named CommitErrorPage.",
+      "revId": "233cffa1afb2ec0399e55dd4d69494db858b9f06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e3cd492a_960341db",
         "filename": "content/public/browser/navigation_handle.h",
         "patchSetId": 18
@@ -47,6 +168,24 @@
       "writtenOn": "2017-08-30T02:59:18Z",
       "side": 1,
       "message": "It seems that these test functions are only called when specific tests need them.\n\nI decided to just implement it for this patch, but does the \"needs a use case outside of //content\" rule apply to *ForTesting() methods?",
+      "revId": "233cffa1afb2ec0399e55dd4d69494db858b9f06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7e2b95c_e0bbd960",
+        "filename": "content/public/browser/navigation_handle.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-30T14:17:05Z",
+      "side": 1,
+      "message": "Yes. It applies to all methods.",
+      "parentUuid": "e3cd492a_960341db",
       "revId": "233cffa1afb2ec0399e55dd4d69494db858b9f06",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
