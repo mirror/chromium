@@ -22,8 +22,9 @@ namespace {
 
 class TestImageGenerator : public StubPaintImageGenerator {
  public:
-  explicit TestImageGenerator(const SkImageInfo& info)
-      : StubPaintImageGenerator(info),
+  explicit TestImageGenerator(PaintImage::Id paint_image_id,
+                              const SkImageInfo& info)
+      : StubPaintImageGenerator(paint_image_id, info),
         image_backing_memory_(info.getSafeSize(info.minRowBytes()), 0),
         image_pixmap_(info, image_backing_memory_.data(), info.minRowBytes()) {}
 
@@ -69,16 +70,21 @@ bool AreDisplayListDrawingResultsSame(const gfx::Rect& layer_rect,
   return !memcmp(pixels_a.get(), pixels_b.get(), pixel_size);
 }
 
-sk_sp<PaintImageGenerator> CreatePaintImageGenerator(const gfx::Size& size) {
+sk_sp<PaintImageGenerator> CreatePaintImageGenerator(
+    const gfx::Size& size,
+    PaintImage::Id paint_image_id) {
   return sk_make_sp<TestImageGenerator>(
-      SkImageInfo::MakeN32Premul(size.width(), size.height()));
+      paint_image_id, SkImageInfo::MakeN32Premul(size.width(), size.height()));
 }
 
 PaintImage CreateDiscardablePaintImage(const gfx::Size& size,
                                        sk_sp<SkColorSpace> color_space) {
+  const PaintImage::Id id = PaintImage::GetNextId();
+
   return PaintImageBuilder()
-      .set_id(PaintImage::GetNextId())
+      .set_id(id)
       .set_paint_image_generator(sk_make_sp<TestImageGenerator>(
+          id,
           SkImageInfo::MakeN32Premul(size.width(), size.height(), color_space)))
       .TakePaintImage();
 }

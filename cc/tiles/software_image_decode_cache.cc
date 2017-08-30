@@ -284,7 +284,7 @@ bool SoftwareImageDecodeCache::GetTaskForImageAndRefInternal(
     if (new_image_fits_in_memory) {
       RecordLockExistingCachedImageHistogram(tracing_info.requesting_tile_bin,
                                              false);
-      CleanupDecodedImagesCache(key, decoded_it);
+      decoded_images_.Erase(decoded_it);
     }
   }
 
@@ -389,7 +389,7 @@ void SoftwareImageDecodeCache::DecodeImage(const ImageKey& key,
   if (image_it != decoded_images_.end()) {
     if (image_it->second->is_locked() || image_it->second->Lock())
       return;
-    CleanupDecodedImagesCache(key, image_it);
+    decoded_images_.Erase(image_it);
   }
 
   std::unique_ptr<DecodedImage> decoded_image;
@@ -413,7 +413,7 @@ void SoftwareImageDecodeCache::DecodeImage(const ImageKey& key,
       decoded_image->Unlock();
       return;
     }
-    CleanupDecodedImagesCache(key, image_it);
+    decoded_images_.Erase(image_it);
   }
 
   // We could have finished all of the raster tasks (cancelled) while this image
@@ -429,8 +429,7 @@ void SoftwareImageDecodeCache::DecodeImage(const ImageKey& key,
 
   RecordImageMipLevelUMA(
       MipMapUtil::GetLevelForSize(key.src_rect().size(), key.target_size()));
-
-  CacheDecodedImages(key, std::move(decoded_image));
+  decoded_images_.Put(key, std::move(decoded_image));
 }
 
 std::unique_ptr<SoftwareImageDecodeCache::DecodedImage>
@@ -502,7 +501,7 @@ DecodedDrawImage SoftwareImageDecodeCache::GetDecodedImageForDrawInternal(
           GetScaleAdjustment(key), GetDecodedFilterQuality(key));
     } else {
       scoped_decoded_image = std::move(decoded_images_it->second);
-      CleanupDecodedImagesCache(key, decoded_images_it);
+      decoded_images_.Erase(decoded_images_it);
     }
   }
 
@@ -606,9 +605,9 @@ SoftwareImageDecodeCache::GetExactSizeImageDecode(
     }
   }
 
-  return std::make_unique<DecodedImage>(decoded_info, std::move(decoded_pixels),
-                                        SkSize::Make(0, 0),
-                                        next_tracing_id_.GetNext());
+  return std::make_unique<DecodedImage>(
+      this, key, decoded_info, std::move(decoded_pixels), SkSize::Make(0, 0),
+      next_tracing_id_.GetNext());
 }
 
 std::unique_ptr<SoftwareImageDecodeCache::DecodedImage>
@@ -673,6 +672,7 @@ SoftwareImageDecodeCache::GetSubrectImageDecode(const ImageKey& key,
   }
 
   return base::WrapUnique(new DecodedImage(
+      this, key,
       subrect_info.makeColorSpace(decoded_draw_image.image()->refColorSpace()),
       std::move(subrect_pixels),
       SkSize::Make(-key.src_rect().x(), -key.src_rect().y()),
@@ -753,6 +753,7 @@ SoftwareImageDecodeCache::GetScaledImageDecode(const ImageKey& key,
   }
 
   return std::make_unique<DecodedImage>(
+      this, key,
       scaled_info.makeColorSpace(decoded_draw_image.image()->refColorSpace()),
       std::move(scaled_pixels),
       SkSize::Make(-key.src_rect().x(), -key.src_rect().y()),
@@ -818,7 +819,7 @@ void SoftwareImageDecodeCache::UnrefAtRasterImage(const ImageKey& key) {
           decoded_images_ref_counts_.end()) {
         at_raster_image_it->second->Unlock();
       }
-      CacheDecodedImages(key, std::move(at_raster_image_it->second));
+      decoded_images_.Put(key, std::move(at_raster_image_it->second));
     } else if (image_it->second->is_locked()) {
       at_raster_image_it->second->Unlock();
     } else {
@@ -864,24 +865,31 @@ size_t SoftwareImageDecodeCache::GetMaximumMemoryLimitBytes() const {
   return locked_images_budget_.total_limit_bytes();
 }
 
-void SoftwareImageDecodeCache::NotifyImageUnused(
-    const PaintImage::FrameKey& frame_key) {
+void SoftwareImageDecodeCache::DestroyCachedDecode(
+    PaintImage::Id paint_image_id,
+    PaintImage::ContentId content_id) {
   base::AutoLock lock(lock_);
 
-  auto it = frame_key_to_image_keys_.find(frame_key);
-  if (it == frame_key_to_image_keys_.end())
+  auto it = paint_image_id_to_image_keys_.find(paint_image_id);
+  if (it == paint_image_id_to_image_keys_.end())
     return;
 
-  for (auto key = it->second.begin(); key != it->second.end(); ++key) {
-    // This iterates over the ImageKey vector for the given skimage_id,
-    // and deletes all entries from decoded_images_ corresponding to the
-    // skimage_id.
-    auto image_it = decoded_images_.Peek(*key);
-    // TODO(sohanjg) :Find an optimized way to cleanup locked images.
-    if (image_it != decoded_images_.end() && !image_it->second->is_locked())
-      decoded_images_.Erase(image_it);
+  std::vector<ImageKey>& keys = it->second;
+  auto key_it = keys.begin();
+  while (key_it != keys.end()) {
+    DCHECK_EQ(key_it->frame_key().paint_image_id(), paint_image_id);
+    if (key_it->frame_key().content_id() != content_id) {
+      key_it++;
+    } else {
+      DCHECK(decoded_images_ref_counts_.find(*key_it) ==
+             decoded_images_ref_counts_.end());
+      decoded_images_.Erase(decoded_images_.Peek(*key_it));
+      key_it = keys.erase(key_it);
+    }
   }
-  frame_key_to_image_keys_.erase(it);
+
+  if (keys.empty())
+    paint_image_id_to_image_keys_.erase(paint_image_id);
 }
 
 void SoftwareImageDecodeCache::RemovePendingTask(const ImageKey& key,
@@ -1091,6 +1099,8 @@ std::string ImageDecodeCacheKey::ToString() const {
 
 // DecodedImage
 SoftwareImageDecodeCache::DecodedImage::DecodedImage(
+    SoftwareImageDecodeCache* cache,
+    const ImageKey& key,
     const SkImageInfo& info,
     std::unique_ptr<base::DiscardableMemory> memory,
     const SkSize& src_rect_offset,
@@ -1100,6 +1110,9 @@ SoftwareImageDecodeCache::DecodedImage::DecodedImage(
       memory_(std::move(memory)),
       src_rect_offset_(src_rect_offset),
       tracing_id_(tracing_id) {
+  cache->paint_image_id_to_image_keys_[key.frame_key().paint_image_id()]
+      .push_back(key);
+
   SkPixmap pixmap(image_info_, memory_->data(), image_info_.minRowBytes());
   image_ = SkImage::MakeFromRaster(
       pixmap, [](const void* pixels, void* context) {}, nullptr);
@@ -1221,33 +1234,6 @@ void SoftwareImageDecodeCache::OnMemoryStateChange(base::MemoryState state) {
 void SoftwareImageDecodeCache::OnPurgeMemory() {
   base::AutoLock lock(lock_);
   ReduceCacheUsageUntilWithinLimit(0);
-}
-
-void SoftwareImageDecodeCache::CleanupDecodedImagesCache(
-    const ImageKey& key,
-    ImageMRUCache::iterator it) {
-  lock_.AssertAcquired();
-  auto vector_it = frame_key_to_image_keys_.find(key.frame_key());
-
-  // TODO(sohanjg): Check if we can DCHECK here.
-  if (vector_it != frame_key_to_image_keys_.end()) {
-    auto iter =
-        std::find(vector_it->second.begin(), vector_it->second.end(), key);
-    DCHECK(iter != vector_it->second.end());
-    vector_it->second.erase(iter);
-    if (vector_it->second.empty())
-      frame_key_to_image_keys_.erase(vector_it);
-  }
-
-  decoded_images_.Erase(it);
-}
-
-void SoftwareImageDecodeCache::CacheDecodedImages(
-    const ImageKey& key,
-    std::unique_ptr<DecodedImage> decoded_image) {
-  lock_.AssertAcquired();
-  frame_key_to_image_keys_[key.frame_key()].push_back(key);
-  decoded_images_.Put(key, std::move(decoded_image));
 }
 
 }  // namespace cc

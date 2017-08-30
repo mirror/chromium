@@ -8,6 +8,14 @@
 
 namespace cc {
 
+ImageDecodeCache::ImageDecodeCache() {
+  PaintImageDestructionTracker::GetInstance()->AddObserver(this);
+}
+
+ImageDecodeCache::~ImageDecodeCache() {
+  PaintImageDestructionTracker::GetInstance()->RemoveObserver(this);
+}
+
 void ImageDecodeCache::RecordImageMipLevelUMA(int mip_level) {
   DCHECK_GE(mip_level, 0);
   DCHECK_LT(mip_level, 32);

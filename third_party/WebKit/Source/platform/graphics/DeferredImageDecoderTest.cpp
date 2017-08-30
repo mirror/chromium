@@ -331,7 +331,8 @@ TEST_F(DeferredImageDecoderTest, frameOpacity) {
     std::unique_ptr<DeferredImageDecoder> decoder =
         DeferredImageDecoder::Create(
             data_, true, ImageDecoder::kAlphaPremultiplied,
-            ColorBehavior::TransformToTargetForTesting());
+            ColorBehavior::TransformToTargetForTesting(),
+            PaintImage::GetNextId());
 
     SkImageInfo pix_info = SkImageInfo::MakeN32Premul(1, 1);
 
