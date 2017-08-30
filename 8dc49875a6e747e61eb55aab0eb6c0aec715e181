@@ -52,6 +52,24 @@
       "revId": "8dc49875a6e747e61eb55aab0eb6c0aec715e181",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9d5905f_c9402cf3",
+        "filename": "chrome/browser/resources/settings/site_settings/category_default_setting.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-08-30T07:53:25Z",
+      "side": 1,
+      "message": "Ahh thanks for explaining. Actually it looks like we use undefined to represent no enforcement and there\u0027s no value in settingsPrivate.Enforcement currently to represent it. Do you think I should add a NONE value to the enum?",
+      "parentUuid": "8d88ce3e_7c325680",
+      "revId": "8dc49875a6e747e61eb55aab0eb6c0aec715e181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
