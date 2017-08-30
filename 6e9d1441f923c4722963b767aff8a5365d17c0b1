@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cd1505e0_c0e89288",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentApp.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2017-08-30T17:28:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "274a0c22_1636d077",
+      "revId": "6e9d1441f923c4722963b767aff8a5365d17c0b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "246d8d1e_6adbce13",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentApp.java",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2017-08-30T14:57:56Z",
       "side": 1,
       "message": "The response from the renderer will be asynchronous, so no need to add more asynchronicity with Handler.",
+      "range": {
+        "startLine": 87,
+        "startChar": 20,
+        "endLine": 87,
+        "endChar": 46
+      },
+      "revId": "6e9d1441f923c4722963b767aff8a5365d17c0b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1d53513_171ec614",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentApp.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2017-08-30T17:28:21Z",
+      "side": 1,
+      "message": "Thank you for clarification.\nI doubt it but was not sure.\n\nDone.",
+      "parentUuid": "246d8d1e_6adbce13",
       "range": {
         "startLine": 87,
         "startChar": 20,
@@ -88,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "87b6cbbc_5293c419",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentAppBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2017-08-30T17:28:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5e90304_8d5ff7ab",
+      "range": {
+        "startLine": 45,
+        "startChar": 7,
+        "endLine": 45,
+        "endChar": 29
+      },
+      "revId": "6e9d1441f923c4722963b767aff8a5365d17c0b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7842f6be_c5dc2fee",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentAppBridge.java",
         "patchSetId": 2
@@ -108,6 +174,30 @@
       "revId": "6e9d1441f923c4722963b767aff8a5365d17c0b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ff4fe11_3770eec5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentAppBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2017-08-30T17:28:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7842f6be_c5dc2fee",
+      "range": {
+        "startLine": 47,
+        "startChar": 52,
+        "endLine": 47,
+        "endChar": 61
+      },
+      "revId": "6e9d1441f923c4722963b767aff8a5365d17c0b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "f8e38230_9978c307",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentAppBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2017-08-30T17:28:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d79c92fe_9bc17075",
+      "range": {
+        "startLine": 50,
+        "startChar": 61,
+        "endLine": 50,
+        "endChar": 69
+      },
+      "revId": "6e9d1441f923c4722963b767aff8a5365d17c0b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a77549e_c7090618",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentAppBridge.java",
         "patchSetId": 2
@@ -154,6 +268,30 @@
       "revId": "6e9d1441f923c4722963b767aff8a5365d17c0b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10a4b74b_b7100529",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentAppBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2017-08-30T17:28:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a77549e_c7090618",
+      "range": {
+        "startLine": 51,
+        "startChar": 57,
+        "endLine": 51,
+        "endChar": 65
+      },
+      "revId": "6e9d1441f923c4722963b767aff8a5365d17c0b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -180,6 +318,30 @@
     },
     {
       "key": {
+        "uuid": "8e4188d1_bb5a46e5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentAppBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2017-08-30T17:28:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6d1d850_79ef6e3e",
+      "range": {
+        "startLine": 52,
+        "startChar": 7,
+        "endLine": 52,
+        "endChar": 75
+      },
+      "revId": "6e9d1441f923c4722963b767aff8a5365d17c0b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f21566d4_b9f78cb3",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentAppBridge.java",
         "patchSetId": 2
@@ -200,6 +362,30 @@
       "revId": "6e9d1441f923c4722963b767aff8a5365d17c0b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c72597ee_a02fa2d0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentAppBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2017-08-30T17:28:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f21566d4_b9f78cb3",
+      "range": {
+        "startLine": 55,
+        "startChar": 4,
+        "endLine": 55,
+        "endChar": 92
+      },
+      "revId": "6e9d1441f923c4722963b767aff8a5365d17c0b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -226,6 +412,30 @@
     },
     {
       "key": {
+        "uuid": "8c8cb612_eea24f4d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentAppBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2017-08-30T17:28:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f78e5fd_9e7eb888",
+      "range": {
+        "startLine": 61,
+        "startChar": 51,
+        "endLine": 61,
+        "endChar": 56
+      },
+      "revId": "6e9d1441f923c4722963b767aff8a5365d17c0b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa18422a_bffbe9d1",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentAppBridge.java",
         "patchSetId": 2
@@ -246,6 +456,30 @@
       "revId": "6e9d1441f923c4722963b767aff8a5365d17c0b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b604a89b_bd0fadba",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentAppBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2017-08-30T17:28:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa18422a_bffbe9d1",
+      "range": {
+        "startLine": 192,
+        "startChar": 12,
+        "endLine": 192,
+        "endChar": 18
+      },
+      "revId": "6e9d1441f923c4722963b767aff8a5365d17c0b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
