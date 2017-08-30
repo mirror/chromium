@@ -51,6 +51,41 @@
       "revId": "e18dff58ad498203b601129cd895d18437691eeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76e0683b_bd3e4cf2",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/common.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-08-30T22:32:24Z",
+      "side": 1,
+      "message": "Good question. This was moved from gerrit.cl (exportable_filename), and I actually don\u0027t see why:\n\nThere are quite a few json files in upstream, and all of them are imported to Chromium like other tests, but we never export them via Gerrit in-flight CLs (we do, however, if the PR is created from a commit). It seems to me these JSONs are just test assets/resources and should be synced. WDYT?",
+      "parentUuid": "0c702f39_a6a25ac3",
+      "revId": "e18dff58ad498203b601129cd895d18437691eeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e12e558e_c4551e1d",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/common.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-08-30T22:32:24Z",
+      "side": 1,
+      "message": "@qyearsley, speaking of legacy code that I don\u0027t understand, this is the other one: I don\u0027t think we have this file in external/wpt anymore (and it\u0027s skipped in W3CImportExpectations). Should we keep this rule?",
+      "revId": "e18dff58ad498203b601129cd895d18437691eeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
