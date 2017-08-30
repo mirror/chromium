@@ -4,6 +4,7 @@
 
 #include "ios/chrome/browser/payments/payment_request_test_util.h"
 
+#include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "components/payments/core/payment_item.h"
 #include "components/payments/core/payment_method_data.h"
@@ -22,26 +23,32 @@ web::PaymentRequest CreateTestWebPaymentRequest() {
   method_datum.supported_methods.push_back("visa");
   method_datum.supported_methods.push_back("amex");
   web_payment_request.method_data.push_back(method_datum);
-  web_payment_request.details.total.label = base::ASCIIToUTF16("Total");
-  web_payment_request.details.total.amount.value = base::ASCIIToUTF16("1.00");
-  web_payment_request.details.total.amount.currency = base::ASCIIToUTF16("USD");
+  web_payment_request.details.total = base::MakeUnique<payments::PaymentItem>();
+  web_payment_request.details.total->label = "Total";
+  web_payment_request.details.total->amount =
+      base::MakeUnique<payments::PaymentCurrencyAmount>();
+  web_payment_request.details.total->amount->value = "1.00";
+  web_payment_request.details.total->amount->currency = "USD";
   payments::PaymentItem display_item;
-  display_item.label = base::ASCIIToUTF16("Subtotal");
-  display_item.amount.value = base::ASCIIToUTF16("1.00");
-  display_item.amount.currency = base::ASCIIToUTF16("USD");
+  display_item.label = "Subtotal";
+  display_item.amount = base::MakeUnique<payments::PaymentCurrencyAmount>();
+  display_item.amount->value = "1.00";
+  display_item.amount->currency = "USD";
   web_payment_request.details.display_items.push_back(display_item);
   payments::PaymentShippingOption shipping_option;
-  shipping_option.id = base::ASCIIToUTF16("123456");
-  shipping_option.label = base::ASCIIToUTF16("1-Day");
-  shipping_option.amount.value = base::ASCIIToUTF16("0.99");
-  shipping_option.amount.currency = base::ASCIIToUTF16("USD");
+  shipping_option.id = "123456";
+  shipping_option.label = "1-Day";
+  shipping_option.amount = base::MakeUnique<payments::PaymentCurrencyAmount>();
+  shipping_option.amount->value = "0.99";
+  shipping_option.amount->currency = "USD";
   shipping_option.selected = true;
   web_payment_request.details.shipping_options.push_back(shipping_option);
   payments::PaymentShippingOption shipping_option2;
-  shipping_option2.id = base::ASCIIToUTF16("654321");
-  shipping_option2.label = base::ASCIIToUTF16("10-Days");
-  shipping_option2.amount.value = base::ASCIIToUTF16("0.01");
-  shipping_option2.amount.currency = base::ASCIIToUTF16("USD");
+  shipping_option2.id = "654321";
+  shipping_option2.label = "10-Days";
+  shipping_option2.amount = base::MakeUnique<payments::PaymentCurrencyAmount>();
+  shipping_option2.amount->value = "0.01";
+  shipping_option2.amount->currency = "USD";
   shipping_option2.selected = false;
   web_payment_request.details.shipping_options.push_back(shipping_option2);
   web_payment_request.options.request_shipping = true;

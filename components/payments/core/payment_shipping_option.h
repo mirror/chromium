@@ -5,7 +5,9 @@
 #ifndef COMPONENTS_PAYMENTS_CORE_PAYMENT_SHIPPING_OPTION_H_
 #define COMPONENTS_PAYMENTS_CORE_PAYMENT_SHIPPING_OPTION_H_
 
-#include "base/strings/string16.h"
+#include <memory>
+#include <string>
+
 #include "components/payments/core/payment_currency_amount.h"
 
 // C++ bindings for the PaymentRequest API PaymentShippingOption. Conforms to
@@ -25,6 +27,7 @@ class PaymentShippingOption {
   PaymentShippingOption(const PaymentShippingOption& other);
   ~PaymentShippingOption();
 
+  PaymentShippingOption& operator=(const PaymentShippingOption& other);
   bool operator==(const PaymentShippingOption& other) const;
   bool operator!=(const PaymentShippingOption& other) const;
 
@@ -34,14 +37,14 @@ class PaymentShippingOption {
 
   // An identifier used to reference this PaymentShippingOption. It is unique
   // for a given PaymentRequest.
-  base::string16 id;
+  std::string id;
 
   // A human-readable description of the item. The user agent should use this
   // string to display the shipping option to the user.
-  base::string16 label;
+  std::string label;
 
   // A PaymentCurrencyAmount containing the monetary amount for the option.
-  PaymentCurrencyAmount amount;
+  std::unique_ptr<PaymentCurrencyAmount> amount;
 
   // This is set to true to indicate that this is the default selected
   // PaymentShippingOption in a sequence. User agents should display this option

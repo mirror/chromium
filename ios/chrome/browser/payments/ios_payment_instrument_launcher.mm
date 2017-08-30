@@ -102,7 +102,7 @@ bool IOSPaymentInstrumentLauncher::LaunchIOSPaymentInstrument(
 
   params_to_payment_app->SetDictionary(
       kTotal, payment_request->web_payment_request()
-                  .details.total.amount.ToDictionaryValue());
+                  .details.total->amount->ToDictionaryValue());
 
   params_to_payment_app->SetList(
       kModifiers,

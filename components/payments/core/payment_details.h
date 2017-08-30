@@ -5,10 +5,10 @@
 #ifndef COMPONENTS_PAYMENTS_CORE_PAYMENT_DETAILS_H_
 #define COMPONENTS_PAYMENTS_CORE_PAYMENT_DETAILS_H_
 
+#include <memory>
 #include <string>
 #include <vector>
 
-#include "base/strings/string16.h"
 #include "components/payments/core/payment_details_modifier.h"
 #include "components/payments/core/payment_item.h"
 #include "components/payments/core/payment_shipping_option.h"
@@ -30,6 +30,7 @@ class PaymentDetails {
   PaymentDetails(const PaymentDetails& other);
   ~PaymentDetails();
 
+  PaymentDetails& operator=(const PaymentDetails& other);
   bool operator==(const PaymentDetails& other) const;
   bool operator!=(const PaymentDetails& other) const;
 
@@ -43,7 +44,7 @@ class PaymentDetails {
   std::string id;
 
   // The total amount of the payment request.
-  PaymentItem total;
+  std::unique_ptr<PaymentItem> total;
 
   // Line items for the payment request that the user agent may display. For
   // example, it might include details of products or breakdown of tax and
@@ -60,7 +61,7 @@ class PaymentDetails {
 
   // If non-empty, this is the error message the user agent should display to
   // the user when the payment request is updated using updateWith.
-  base::string16 error;
+  std::string error;
 };
 
 }  // namespace payments
