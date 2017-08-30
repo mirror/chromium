@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "9d2836e9_9b811fdc",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-30T11:15:50Z",
+      "side": 1,
+      "message": "Can we use base::LazyInstance instead?",
+      "revId": "2ea1504327cead48a7a34d897741845bbd72357d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1941fa95_19c4930c",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-30T11:15:50Z",
+      "side": 1,
+      "message": "Could this just be SUCCEEDED(), or do we care about it being specifically S_OK as opposed to another success code?",
+      "revId": "2ea1504327cead48a7a34d897741845bbd72357d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5754b027_a18d1f29",
         "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
         "patchSetId": 7
@@ -13,6 +47,30 @@
       "writtenOn": "2017-08-29T09:54:05Z",
       "side": 1,
       "message": "Does this need to be guarded with a Windows version check, or is the check in notification_display_service_factory.cc sufficient?",
+      "range": {
+        "startLine": 250,
+        "startChar": 2,
+        "endLine": 250,
+        "endChar": 29
+      },
+      "revId": "2ea1504327cead48a7a34d897741845bbd72357d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4a73fb6_f1b1d2e6",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-30T11:15:50Z",
+      "side": 1,
+      "message": "The check in the factory ought to be sufficient. You could add a DCHECK to the Create() method if you want to be absolutely certain.",
+      "parentUuid": "5754b027_a18d1f29",
       "range": {
         "startLine": 250,
         "startChar": 2,
