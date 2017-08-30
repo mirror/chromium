@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad8dabb0_71f3e9ab",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_fetcher_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-08-30T15:34:04Z",
+      "side": 1,
+      "message": "As discussed, please handle the exceptions first",
+      "range": {
+        "startLine": 203,
+        "startChar": 24,
+        "endLine": 203,
+        "endChar": 0
+      },
+      "revId": "044cccb610110e6254c34204260301c5a25765a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
