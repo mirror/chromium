@@ -22,6 +22,133 @@
       "revId": "a225e35997847b0295ec0140f22bf9ba22e36e8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c988889_1ab092f9",
+        "filename": "tools/perf/perf_device_trigger.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-08-30T01:30:19Z",
+      "side": 1,
+      "message": "Yes the format is fine.\n\nhttps://chromium.googlesource.com/infra/luci/luci-py.git/+/master/client/swarming.py#1605\n+\nhttps://chromium.googlesource.com/infra/luci/luci-py.git/+/master/client/swarming.py#249\n\nThe format needs an overhaul eventually.",
+      "parentUuid": "285e9346_45eb9307",
+      "range": {
+        "startLine": 15,
+        "startChar": 22,
+        "endLine": 16,
+        "endChar": 71
+      },
+      "revId": "a225e35997847b0295ec0140f22bf9ba22e36e8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cc5e653_469508e1",
+        "filename": "tools/perf/perf_device_trigger.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-08-30T01:30:19Z",
+      "side": 1,
+      "message": "This function is unnecessary.",
+      "revId": "a225e35997847b0295ec0140f22bf9ba22e36e8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27b64374_24c30a94",
+        "filename": "tools/perf/perf_device_trigger.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-08-30T01:30:19Z",
+      "side": 1,
+      "message": "remove sys.argv, that\u0027s why you found yourself doing line 43.",
+      "range": {
+        "startLine": 41,
+        "startChar": 44,
+        "endLine": 41,
+        "endChar": 47
+      },
+      "revId": "a225e35997847b0295ec0140f22bf9ba22e36e8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "496a8323_fa64c1d1",
+        "filename": "tools/perf/perf_device_trigger.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-08-30T01:30:19Z",
+      "side": 1,
+      "message": "you can put that as one line",
+      "range": {
+        "startLine": 47,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 13
+      },
+      "revId": "a225e35997847b0295ec0140f22bf9ba22e36e8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cee6cb9_80b2731c",
+        "filename": "tools/perf/perf_device_trigger.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-08-30T01:30:19Z",
+      "side": 1,
+      "message": "prefix\u003d\u0027perf_device_trigger\u0027\n\ntry/finally to delete the file.\n\nAdd a TODO about calling them all in parallel. :)",
+      "range": {
+        "startLine": 52,
+        "startChar": 37,
+        "endLine": 52,
+        "endChar": 0
+      },
+      "revId": "a225e35997847b0295ec0140f22bf9ba22e36e8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e04bcba_e9c98ef7",
+        "filename": "tools/perf/perf_device_trigger.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-08-30T01:30:19Z",
+      "side": 1,
+      "message": "ret \u003d subprocess.call(sys.executable, args.swarming_py_path] + args_to_pass)\nif ret:\n  return ret",
+      "revId": "a225e35997847b0295ec0140f22bf9ba22e36e8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
