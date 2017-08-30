@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "6e6ca759_0af5db85",
+        "filename": "cc/ipc/copy_output_result_struct_traits.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-30T00:57:39Z",
+      "side": 1,
+      "message": "Oh, I see, re: malformed mojo.  I think I misunderstood what this code was doing.  Thanks.  :)",
+      "parentUuid": "57615a71_971ec13b",
+      "revId": "f77b0b7e532ed47bd36f776f06bb3084f9416260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c40da30c_59160cf4",
         "filename": "cc/output/software_renderer.cc",
         "patchSetId": 6
@@ -177,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "22348217_68461e55",
+        "filename": "components/viz/common/quads/copy_output_request.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-30T00:57:39Z",
+      "side": 1,
+      "message": "Hmm, ok.  That makes sense.",
+      "parentUuid": "3084012b_4e1c49e9",
+      "revId": "f77b0b7e532ed47bd36f776f06bb3084f9416260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cf843fdf_4852d444",
         "filename": "components/viz/common/quads/copy_output_request.cc",
         "patchSetId": 6
@@ -241,6 +277,24 @@
       "side": 1,
       "message": "Good point. I see how this looks inconsistent. I think it would be best to both: 1) never DCHECK; and 2) just \"return null\" from ANY of the accessor whenever the result format doesn\u0027t jive with the accessor being called.\n\nEarlier in this process, I wrestled with the idea of moving AsSkBitmap() into just CopyOutputSkBitmapResult, and GetTextureMailbox() into just CopyOutputTextureResult; but then I was going to need to add \"downcast\" methods to CopyOutputResult. Yuk. Seemed like I was burdening clients with some extra steps when really they should simply be unconditionally calling that one accessor that was relevant to the format they originally requested.",
       "parentUuid": "a147b7e8_3eb0f3a0",
+      "revId": "f77b0b7e532ed47bd36f776f06bb3084f9416260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fd52bce_1b8827c7",
+        "filename": "components/viz/common/quads/copy_output_result.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-30T00:57:39Z",
+      "side": 1,
+      "message": "I like \"return null when mismatch\", thanks.\n\nYeah, I think your options are \"base type + virtuals\" or \"enum + casting + no virtuals\".  I think what you have is fine, in that the base class has to know about all types but since the caller knows the type, it can just call the function it wants.",
+      "parentUuid": "ec5433db_5bd4d6a5",
       "revId": "f77b0b7e532ed47bd36f776f06bb3084f9416260",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

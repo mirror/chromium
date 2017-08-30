@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a454cb0_dd9be6be",
+        "filename": "components/viz/common/quads/copy_output_result.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-30T00:57:39Z",
+      "side": 1,
+      "message": "Just as an API cleanup thought, not sure what PopulateBitmap\u0027s goal is anymore.  Could CopyOutputSkBitmapResult just override AsSkBitmap and base class just return an empty SkBitmap like it returns null for GetTextureMailBox?",
+      "revId": "d43232d550094c375455aced87f4ac79cea0317b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93af54a8_dacdabae",
+        "filename": "components/viz/common/quads/copy_output_result.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-30T00:57:39Z",
+      "side": 1,
+      "message": "Maybe optional instead of unique_ptr? No need for additional mallocs here.  Or even just store the bitmap directly and assume uninitialized if SkBitmap::isNull/empty or something like that?",
+      "revId": "d43232d550094c375455aced87f4ac79cea0317b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
