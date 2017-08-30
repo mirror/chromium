@@ -49,7 +49,7 @@ static void MixImages(const char* file_name,
       SharedBuffer::Create(file.data(), bytes_for_first_frame);
   std::unique_ptr<DeferredImageDecoder> decoder = DeferredImageDecoder::Create(
       partial_file, false, ImageDecoder::kAlphaPremultiplied,
-      ColorBehavior::Ignore());
+      ColorBehavior::Ignore(), PaintImage::GetNextId());
   ASSERT_NE(decoder, nullptr);
   sk_sp<SkImage> partial_image = CreateFrameAtIndex(decoder.get(), 0);
 
@@ -114,16 +114,16 @@ TEST(DeferredImageDecoderTestWoPlatform, fragmentedSignature) {
     EXPECT_FALSE(ImageDecoder::HasSufficientDataToSniffImageType(*buffer));
     EXPECT_EQ(nullptr, DeferredImageDecoder::Create(
                            buffer, false, ImageDecoder::kAlphaPremultiplied,
-                           ColorBehavior::Ignore()));
+                           ColorBehavior::Ignore(), PaintImage::GetNextId()));
 
     // Append the rest of the data.  We should be able to sniff the signature
     // now, even if segmented.
     buffer->Append<size_t>(data + 1, sk_data->size() - 1);
     EXPECT_TRUE(ImageDecoder::HasSufficientDataToSniffImageType(*buffer));
     std::unique_ptr<DeferredImageDecoder> decoder =
-        DeferredImageDecoder::Create(buffer, false,
-                                     ImageDecoder::kAlphaPremultiplied,
-                                     ColorBehavior::Ignore());
+        DeferredImageDecoder::Create(
+            buffer, false, ImageDecoder::kAlphaPremultiplied,
+            ColorBehavior::Ignore(), PaintImage::GetNextId());
     ASSERT_NE(decoder, nullptr);
     EXPECT_TRUE(String(test_files[i]).EndsWith(decoder->FilenameExtension()));
   }

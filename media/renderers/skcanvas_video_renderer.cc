@@ -226,8 +226,10 @@ sk_sp<SkImage> NewSkImageFromVideoFrameNative(VideoFrame* video_frame,
 // Generates an RGB image from a VideoFrame. Convert YUV to RGB plain on GPU.
 class VideoImageGenerator : public cc::PaintImageGenerator {
  public:
-  VideoImageGenerator(const scoped_refptr<VideoFrame>& frame)
+  VideoImageGenerator(cc::PaintImage::Id paint_image_id,
+                      const scoped_refptr<VideoFrame>& frame)
       : cc::PaintImageGenerator(
+            paint_image_id,
             SkImageInfo::MakeN32Premul(frame->visible_rect().width(),
                                        frame->visible_rect().height())),
         frame_(frame) {
@@ -1048,7 +1050,7 @@ bool SkCanvasVideoRenderer::UpdateLastImage(
       }
     } else {
       paint_image_builder.set_paint_image_generator(
-          sk_make_sp<VideoImageGenerator>(video_frame));
+          sk_make_sp<VideoImageGenerator>(renderer_stable_id_, video_frame));
     }
     last_image_ = paint_image_builder.TakePaintImage();
     CorrectLastImageDimensions(gfx::RectToSkIRect(video_frame->visible_rect()));

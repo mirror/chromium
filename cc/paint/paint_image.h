@@ -56,6 +56,9 @@ class CC_PAINT_EXPORT PaintImage {
     uint64_t hash() const { return hash_; }
     std::string ToString() const;
 
+    Id paint_image_id() const { return paint_image_id_; }
+    ContentId content_id() const { return content_id_; }
+
    private:
     Id paint_image_id_;
     ContentId content_id_;

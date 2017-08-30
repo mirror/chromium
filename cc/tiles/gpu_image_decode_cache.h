@@ -127,7 +127,6 @@ class CC_EXPORT GpuImageDecodeCache
       bool aggressively_free_resources) override;
   void ClearCache() override;
   size_t GetMaximumMemoryLimitBytes() const override;
-  void NotifyImageUnused(const PaintImage::FrameKey& frame_key) override;
 
   // MemoryDumpProvider overrides.
   bool OnMemoryDump(const base::trace_event::MemoryDumpArgs& args,
@@ -136,6 +135,10 @@ class CC_EXPORT GpuImageDecodeCache
   // base::MemoryCoordinatorClient overrides.
   void OnMemoryStateChange(base::MemoryState state) override;
   void OnPurgeMemory() override;
+
+  // PaintImageDestructionTracker::Observer overrides.
+  void DestroyCachedDecode(PaintImage::Id paint_image_id,
+                           PaintImage::ContentId content_id) override;
 
   // Called by Decode / Upload tasks.
   void DecodeImage(const DrawImage& image, TaskType task_type);
@@ -369,6 +372,9 @@ class CC_EXPORT GpuImageDecodeCache
   using InUseCache =
       std::unordered_map<InUseCacheKey, InUseCacheEntry, InUseCacheKeyHash>;
   InUseCache in_use_cache_;
+
+  std::unordered_map<PaintImage::Id, std::vector<PaintImage::FrameKey>>
+      paint_image_id_to_frame_keys_;
 
   size_t max_working_set_bytes_;
   const size_t normal_max_cache_bytes_;

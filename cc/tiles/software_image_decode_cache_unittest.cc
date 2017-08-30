@@ -1671,7 +1671,7 @@ TEST(SoftwareImageDecodeCacheTest, ClearCache) {
   EXPECT_EQ(0u, cache.GetNumCacheEntriesForTesting());
 }
 
-TEST(SoftwareImageDecodeCacheTest, RemoveUnusedImage) {
+/*TEST(SoftwareImageDecodeCacheTest, RemoveUnusedImage) {
   TestSoftwareImageDecodeCache cache;
   bool is_decomposable = true;
   SkFilterQuality quality = kHigh_SkFilterQuality;
@@ -1705,7 +1705,7 @@ TEST(SoftwareImageDecodeCacheTest, RemoveUnusedImage) {
     cache.NotifyImageUnused(frame_keys[i]);
     EXPECT_EQ(cache.GetNumCacheEntriesForTesting(), (10 - i - 1));
   }
-}
+}*/
 
 }  // namespace
 }  // namespace cc

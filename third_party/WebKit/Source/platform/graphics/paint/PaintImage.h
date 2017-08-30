@@ -7,11 +7,13 @@
 
 #include "cc/paint/paint_image.h"
 #include "cc/paint/paint_image_builder.h"
+#include "cc/paint/paint_image_destruction_tracker.h"
 
 namespace blink {
 using cc::FrameMetadata;
 using cc::PaintImage;
 using cc::PaintImageBuilder;
+using cc::PaintImageDestructionTracker;
 using cc::PaintImageGenerator;
 using cc::SkiaPaintImageGenerator;
 }

@@ -1739,6 +1739,7 @@ TEST_P(GpuImageDecodeCacheTest, GetTaskForImageDifferentColorSpace) {
   cache.UnrefImage(third_draw_image);
 }
 
+/*
 TEST_P(GpuImageDecodeCacheTest, RemoveUnusedImage) {
   auto context_provider = TestContextProvider::Create();
   context_provider->BindToCurrentThread();
@@ -1773,7 +1774,7 @@ TEST_P(GpuImageDecodeCacheTest, RemoveUnusedImage) {
     cache.NotifyImageUnused(frame_keys[i]);
     EXPECT_EQ(cache.GetNumCacheEntriesForTesting(), (10 - i - 1));
   }
-}
+} */
 
 INSTANTIATE_TEST_CASE_P(GpuImageDecodeCacheTests,
                         GpuImageDecodeCacheTest,

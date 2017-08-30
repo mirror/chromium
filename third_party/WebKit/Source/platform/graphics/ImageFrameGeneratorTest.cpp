@@ -60,8 +60,8 @@ class ImageFrameGeneratorTest : public ::testing::Test,
  public:
   void SetUp() override {
     ImageDecodingStore::Instance().SetCacheLimitInBytes(1024 * 1024);
-    generator_ =
-        ImageFrameGenerator::Create(FullSize(), false, ColorBehavior::Ignore());
+    generator_ = ImageFrameGenerator::Create(
+        PaintImage::GetNextId(), FullSize(), false, ColorBehavior::Ignore());
     data_ = SharedBuffer::Create();
     segment_reader_ = SegmentReader::CreateFromSharedBuffer(data_);
     UseMockImageDecoderFactory();
@@ -115,8 +115,8 @@ class ImageFrameGeneratorTest : public ::testing::Test,
     frame_count_ = count;
     if (count > 1) {
       generator_.Clear();
-      generator_ = ImageFrameGenerator::Create(FullSize(), true,
-                                               ColorBehavior::Ignore());
+      generator_ = ImageFrameGenerator::Create(
+          PaintImage::GetNextId(), FullSize(), true, ColorBehavior::Ignore());
       UseMockImageDecoderFactory();
     }
   }
