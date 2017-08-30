@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6693e341_1037c2e8",
+        "filename": "base/android/java/src/org/chromium/base/metrics/CachedMetrics.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-30T18:32:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f4aa82a_e4dbda09",
+      "range": {
+        "startLine": 41,
+        "startChar": 11,
+        "endLine": 41,
+        "endChar": 72
+      },
+      "revId": "f1b649c9db2537486e2cd1011f80a27eaecee969",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b7b131a6_10111fd0",
         "filename": "base/android/java/src/org/chromium/base/metrics/CachedMetrics.java",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-30T18:05:02Z",
       "side": 1,
       "message": "Do you want to synchronize on |sLock|? I mean, I guess you could synchronize on this too, but then |sLock| is all unused and lonely.",
+      "range": {
+        "startLine": 69,
+        "startChar": 39,
+        "endLine": 69,
+        "endChar": 47
+      },
+      "revId": "f1b649c9db2537486e2cd1011f80a27eaecee969",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d02c9b92_f5137cb9",
+        "filename": "base/android/java/src/org/chromium/base/metrics/CachedMetrics.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-30T18:32:00Z",
+      "side": 1,
+      "message": "Oops, forgot to remove sLock since in the end I decided it wasn\u0027t needed to have an extra object since we can use the List object. Removed sLock.",
+      "parentUuid": "b7b131a6_10111fd0",
       "range": {
         "startLine": 69,
         "startChar": 39,
