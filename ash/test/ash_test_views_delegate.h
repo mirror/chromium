@@ -38,8 +38,17 @@ class AshTestViewsDelegate : public views::TestViewsDelegate {
       views::internal::NativeWidgetDelegate* delegate) override;
   void NotifyAccessibilityEvent(views::View* view,
                                 ui::AXEvent event_type) override;
+  views::TestViewsDelegate::ProcessMenuAcceleratorResult
+  ProcessAcceleratorWhileMenuShowing(
+      const ui::Accelerator& accelerator) override;
+
+  void set_close_menu_accelerator(const ui::Accelerator& accelerator) {
+    close_menu_accelerator_ = accelerator;
+  }
 
  private:
+  ui::Accelerator close_menu_accelerator_;
+
   // Not owned.
   TestAccessibilityEventDelegate* test_accessibility_event_delegate_ = nullptr;
 
