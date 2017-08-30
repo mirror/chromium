@@ -125,36 +125,8 @@ std::string GetCanonicalLocale(const std::string& locale) {
   return GetLocaleString(icu::Locale::createCanonical(locale.c_str()));
 }
 
-// Convert Chrome locale name to ICU locale name
-std::string ICULocaleName(const std::string& locale_string) {
-  // If not Spanish, just return it.
-  if (locale_string.substr(0, 2) != "es")
-    return locale_string;
-  // Expand es to es-ES.
-  if (LowerCaseEqualsASCII(locale_string, "es"))
-    return "es-ES";
-  // Map es-419 (Latin American Spanish) to es-FOO depending on the system
-  // locale.  If it's es-RR other than es-ES, map to es-RR. Otherwise, map
-  // to es-MX (the most populous in Spanish-speaking Latin America).
-  if (LowerCaseEqualsASCII(locale_string, "es-419")) {
-    const icu::Locale& locale = icu::Locale::getDefault();
-    std::string language = locale.getLanguage();
-    const char* country = locale.getCountry();
-    if (LowerCaseEqualsASCII(language, "es") &&
-      !LowerCaseEqualsASCII(country, "es")) {
-        language += '-';
-        language += country;
-        return language;
-    }
-    return "es-MX";
-  }
-  // Currently, Chrome has only "es" and "es-419", but later we may have
-  // more specific "es-RR".
-  return locale_string;
-}
-
 void SetICUDefaultLocale(const std::string& locale_string) {
-  icu::Locale locale(ICULocaleName(locale_string).c_str());
+  icu::Locale locale(locale_string.c_str());
   UErrorCode error_code = U_ZERO_ERROR;
   const char* lang = locale.getLanguage();
   if (lang != nullptr && *lang != '\0') {
