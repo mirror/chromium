@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "94408a68_1d71f6d5",
+        "filename": "chrome/browser/password_manager/password_manager_util_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000389
+      },
+      "writtenOn": "2017-08-30T13:36:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53c58b03_d098fed4",
+      "revId": "936d8d2260435a685de177a59dc4b821d2d358b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4233878e_562adf64",
         "filename": "chrome/browser/password_manager/password_manager_util_win.cc",
         "patchSetId": 4
@@ -39,6 +57,30 @@
       "revId": "936d8d2260435a685de177a59dc4b821d2d358b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcb41232_0809f272",
+        "filename": "chrome/browser/password_manager/password_manager_util_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1000389
+      },
+      "writtenOn": "2017-08-30T13:36:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4233878e_562adf64",
+      "range": {
+        "startLine": 335,
+        "startChar": 3,
+        "endLine": 335,
+        "endChar": 15
+      },
+      "revId": "936d8d2260435a685de177a59dc4b821d2d358b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
