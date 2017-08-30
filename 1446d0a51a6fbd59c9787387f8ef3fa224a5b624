@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c380f1a5_07284c73",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-preflight-denied.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-30T11:33:41Z",
+      "side": 1,
+      "message": "I think the following is better.\n\nif command \u003d\u003d \"reset\":\n  if request.method \u003d\u003d \"GET\":\n    resetState(token)\n    response.content \u003d \"Server state reset\"\n  else:\n    fail(\"invalid method\")\nelif state \u003d\u003d \"Uninitialized\":\n  ...",
+      "revId": "1446d0a51a6fbd59c9787387f8ef3fa224a5b624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
