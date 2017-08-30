@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c99b01c1_61d02fe3",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 7
+      },
+      "lineNbr": 853,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-30T16:29:30Z",
+      "side": 1,
+      "message": "release_trybot includes minimal_symbols (as does debug_trybot), so these should include strip_debug_info.",
+      "revId": "244f7f322546ce6312a1908f50a91078fa0981b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
