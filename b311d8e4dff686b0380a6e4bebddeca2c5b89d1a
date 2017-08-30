@@ -16,6 +16,24 @@
       "revId": "b311d8e4dff686b0380a6e4bebddeca2c5b89d1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0e7b838_97742442",
+        "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicy.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-08-30T18:15:04Z",
+      "side": 1,
+      "message": "1. I don\u0027t think we need that. This is also the case in csp parser (https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/frame/csp/CSPDirectiveList.cpp?rcl\u003df7e84fa480be67a1fae168d7a9be8fd3c4896614\u0026l\u003d990)\nBut it doesn\u0027t hurt to have a console warning, actually I think it makes sense to have a console warning. \n\n2. Done. Please the test cases added in FeaturePolicyTest.cpp",
+      "parentUuid": "32e45dd3_c8cf8c17",
+      "revId": "b311d8e4dff686b0380a6e4bebddeca2c5b89d1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
