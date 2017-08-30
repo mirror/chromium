@@ -250,6 +250,10 @@ def summarize_results(port_obj, expectations, initial_results,
         test_dict['expected'] = expected
         test_dict['actual'] = ' '.join(actual)
 
+        if result.crash_site:
+            # TODO(xiaochengh): Handle flaky crashes
+            test_dict['crash_site'] = result.crash_site
+
         def is_expected(actual_result):
             return expectations.matches_an_expected_result(test_name, actual_result,
                                                            port_obj.get_option('pixel_tests') or result.reftest_type,
