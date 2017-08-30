@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9de2a35b_d79d4e8a",
+        "filename": "chrome/installer/linux/debian/check-package-constraints-satisfied.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-30T23:54:34Z",
+      "side": 1,
+      "message": "Put this in a separate section below.",
+      "revId": "e9e5bd00692f9335adbe4f11478e598556bbdaa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d5766f0_10950f1d",
+        "filename": "chrome/installer/linux/debian/deb_version_test.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-30T23:54:34Z",
+      "side": 1,
+      "message": "Python has a unittest framework, BTW. Maybe switch to that if this gets more complicated.",
+      "revId": "e9e5bd00692f9335adbe4f11478e598556bbdaa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
