@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "771f57f2_e456cb22",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2665,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-08-30T15:56:04Z",
+      "side": 1,
+      "message": "We didn\u0027t set background color of scrolling contents layer, which I think actually defeated the purpose of background color which is used to paint the background of checkerboards which are mainly for scrolling contents.",
+      "revId": "32c48b82c49387aa49c160c381c22f3d43784d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfd13804_4c2116c1",
+        "filename": "third_party/WebKit/Source/platform/graphics/GraphicsLayer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-08-30T15:56:04Z",
+      "side": 1,
+      "message": "This is to reduce redundant output of drawsContent: true because most layers (and all layers on SPv2) draws content. Now output drawsContent: false if !drawsContent instead.\n\nThis is included in this CL because it also needs a rebaseline of 900-layout-test, and I\u0027d like to rebaseline with the backgroundColor:#FFFFFF together.",
+      "revId": "32c48b82c49387aa49c160c381c22f3d43784d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
