@@ -75,6 +75,7 @@ class CORE_EXPORT HTMLContentElement final : public V0InsertionPoint {
   void ParseSelect();
 
   bool MatchSelector(Element&) const;
+  void CountUsage() const override;
 
   bool should_parse_select_;
   bool is_valid_selector_;
