@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f20d65cb_eaa6dad8",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1646,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-30T20:28:51Z",
+      "side": 1,
+      "message": "An alternate fix would be to not change DelegatedFrameHost, but instead, use |point_in_pixels| here as input to ConvertPointToDIP if |id| is invalid.",
+      "revId": "f2b261c4f73e3994abb9b87f7eb95c64997a1d76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
