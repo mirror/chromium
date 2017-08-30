@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "64a43630_c3531744",
+        "filename": "ios/clean/chrome/browser/ui/history_popup/history_popup_coordinator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-08-30T17:17:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fb5d022_6db5ce15",
+      "revId": "4390577035abb3e21f2f30d6f71fffe35e76c458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5618dfe_cf09444d",
         "filename": "ios/clean/chrome/browser/ui/history_popup/history_popup_coordinator_unittest.mm",
         "patchSetId": 5
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "26791b97_402d61c6",
+        "filename": "ios/clean/chrome/browser/ui/history_popup/history_popup_coordinator_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-08-30T17:17:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5618dfe_cf09444d",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 55
+      },
+      "revId": "4390577035abb3e21f2f30d6f71fffe35e76c458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9136a9da_c9123503",
         "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_coordinator.mm",
         "patchSetId": 5
@@ -56,6 +98,24 @@
       "revId": "4390577035abb3e21f2f30d6f71fffe35e76c458",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78d6b94e_fbc2ecbe",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_coordinator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-08-30T17:17:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9136a9da_c9123503",
+      "revId": "4390577035abb3e21f2f30d6f71fffe35e76c458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "2bb5ab24_841c3e1c",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_coordinator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-08-30T17:17:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4927d786_3474da8b",
+      "revId": "4390577035abb3e21f2f30d6f71fffe35e76c458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79d8161a_dac3a65e",
         "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_coordinator.mm",
         "patchSetId": 5
@@ -87,6 +165,30 @@
       "writtenOn": "2017-08-30T04:18:50Z",
       "side": 1,
       "message": "Wrap this with: \"if (!self.historyPopupCoordinator) {...}\"\nIf the child coordinator is stopped, it will still remain in the coordinator hierarchy. So we don\u0027t want to create and add another instance. Same in the method below.",
+      "range": {
+        "startLine": 136,
+        "startChar": 2,
+        "endLine": 147,
+        "endChar": 58
+      },
+      "revId": "4390577035abb3e21f2f30d6f71fffe35e76c458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a16217f_8ce79021",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_coordinator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-08-30T17:17:45Z",
+      "side": 1,
+      "message": "Good catch! Done.",
+      "parentUuid": "79d8161a_dac3a65e",
       "range": {
         "startLine": 136,
         "startChar": 2,
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "08a921e4_083ac167",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_coordinator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-08-30T17:17:45Z",
+      "side": 1,
+      "message": "I like the idea because it will save us some lines. On the other hand using all the protocols makes the HistoryPopupCoordinator code more readable, and I\u0027d also like to maintain a symmetry with the legacy Coordinator. So I think it will be good to leave this as is.",
+      "parentUuid": "a18e4cda_c0608191",
+      "range": {
+        "startLine": 154,
+        "startChar": 26,
+        "endLine": 156,
+        "endChar": 45
+      },
+      "revId": "4390577035abb3e21f2f30d6f71fffe35e76c458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0af06d1_41a40e0b",
         "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_coordinator.mm",
         "patchSetId": 5
@@ -145,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "211e443c_ae0cabb1",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_coordinator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-08-30T17:17:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0af06d1_41a40e0b",
+      "range": {
+        "startLine": 170,
+        "startChar": 9,
+        "endLine": 170,
+        "endChar": 11
+      },
+      "revId": "4390577035abb3e21f2f30d6f71fffe35e76c458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d8acc70_a5b12dbf",
         "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_view_controller.mm",
         "patchSetId": 5
@@ -165,6 +315,30 @@
       "revId": "4390577035abb3e21f2f30d6f71fffe35e76c458",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8f318a9_fd25336c",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-08-30T17:17:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d8acc70_a5b12dbf",
+      "range": {
+        "startLine": 417,
+        "startChar": 2,
+        "endLine": 417,
+        "endChar": 72
+      },
+      "revId": "4390577035abb3e21f2f30d6f71fffe35e76c458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
