@@ -172,6 +172,24 @@
     },
     {
       "key": {
+        "uuid": "6812aa64_c9daf4a7",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1108,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-08-30T10:13:27Z",
+      "side": 1,
+      "message": "I meant I\u0027m going to add such code to DispatchAfterPrintEvent() *in the next CL*.",
+      "parentUuid": "b7483bb8_850802ef",
+      "revId": "4f3c84799cf86166976b8341830c955559a66ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0d9e820f_38218b78",
         "filename": "components/printing/renderer/print_render_frame_helper.cc",
         "patchSetId": 7
