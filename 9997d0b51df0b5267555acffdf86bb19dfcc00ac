@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc7a2aec_56718151",
+        "filename": "content/browser/renderer_host/delegated_frame_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-30T18:27:45Z",
+      "side": 1,
+      "message": "The HitTestRegionList received in RenderWidgetHostImpl::SubmitCompositorFrame() needs to be routed to here, right? Can you add a TODO(kenrb) here and refer to crbug.com/750755?",
+      "revId": "9997d0b51df0b5267555acffdf86bb19dfcc00ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e2c6242_da2f3592",
+        "filename": "content/browser/renderer_host/render_widget_host_view_child_frame.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-30T18:27:45Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "9997d0b51df0b5267555acffdf86bb19dfcc00ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
