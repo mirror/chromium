@@ -14009,7 +14009,7 @@ uploading your change for review.  These are checked by presubmit scripts.
 </enum>
 
 <enum name="FeatureObserver">
-<!-- Generated from third_party/WebKit/public/platform/web_feature.mojom -->
+<!-- Generated from third_party/WebKit/public/platform/web_feature.mojom.-->
 
   <int value="0" label="OBSOLETE_PageDestruction"/>
   <int value="1" label="LegacyNotifications"/>
@@ -16185,6 +16185,27 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="2119" label="V8LabeledExpressionStatement"/>
   <int value="2120" label="PaymentRequestSupportedMethodsArray"/>
   <int value="2121" label="NavigatorDeviceMemory"/>
+  <int value="2122" label="WebkitBoxLayout"/>
+  <int value="2123" label="WebkitBoxLayoutHorizontal"/>
+  <int value="2124" label="WebkitBoxLayoutVertical"/>
+  <int value="2125" label="WebkitBoxAlignNotInitial"/>
+  <int value="2126" label="WebkitBoxDirectionNotInitial"/>
+  <int value="2127" label="WebkitBoxLinesNotInitial"/>
+  <int value="2128" label="WebkitBoxPackNotInitial"/>
+  <int value="2129" label="WebkitBoxChildFlexNotInitial"/>
+  <int value="2130" label="WebkitBoxChildFlexGroupNotInitial"/>
+  <int value="2131" label="WebkitBoxChildOrdinalGroupNotInitial"/>
+  <int value="2132" label="WebkitBoxNotDefaultOrder"/>
+  <int value="2133" label="WebkitBoxNoChildren"/>
+  <int value="2134" label="WebkitBoxOneChild"/>
+  <int value="2135" label="WebkitBoxOneChildIsAnonymous"/>
+  <int value="2136" label="WebkitBoxLineClamp"/>
+  <int value="2137" label="WebkitBoxLineClampPercentage"/>
+  <int value="2138" label="WebkitBoxLineClampNoChildren"/>
+  <int value="2139" label="WebkitBoxLineClampOneChild"/>
+  <int value="2140" label="WebkitBoxLineClampOneChildIsAnonymous"/>
+  <int value="2141" label="WebkitBoxLineClampOneChildIsLayoutBlockFlowInline"/>
+  <int value="2142" label="WebkitBoxLineClampDoesSomething"/>
 </enum>
 
 <enum name="FeedbackSource">
