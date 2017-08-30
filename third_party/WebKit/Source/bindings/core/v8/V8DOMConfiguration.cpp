@@ -71,15 +71,13 @@ void InstallAttributeInternal(
   if (attribute.property_location_configuration &
       V8DOMConfiguration::kOnInstance) {
     instance_template->SetNativeDataProperty(
-        name, getter, setter, data,
-        static_cast<v8::PropertyAttribute>(attribute.attribute),
+        name, getter, setter, data, attribute.attribute,
         v8::Local<v8::AccessorSignature>());
   }
   if (attribute.property_location_configuration &
       V8DOMConfiguration::kOnPrototype) {
     prototype_template->SetNativeDataProperty(
-        name, getter, setter, data,
-        static_cast<v8::PropertyAttribute>(attribute.attribute),
+        name, getter, setter, data, attribute.attribute,
         v8::Local<v8::AccessorSignature>());
   }
   if (attribute.property_location_configuration &
@@ -102,8 +100,7 @@ void InstallAttributeInternal(
   v8::AccessorNameSetterCallback setter = config.setter;
   v8::Local<v8::Value> data =
       v8::External::New(isolate, const_cast<WrapperTypeInfo*>(config.data));
-  v8::PropertyAttribute attribute =
-      static_cast<v8::PropertyAttribute>(config.attribute);
+  v8::PropertyAttribute attribute = config.attribute;
   const unsigned location = config.property_location_configuration;
   DCHECK(location);
 
@@ -138,15 +135,13 @@ void InstallLazyDataAttributeInternal(
   DCHECK(attribute.property_location_configuration);
   if (attribute.property_location_configuration &
       V8DOMConfiguration::kOnInstance) {
-    instance_template->SetLazyDataProperty(
-        name, getter, data,
-        static_cast<v8::PropertyAttribute>(attribute.attribute));
+    instance_template->SetLazyDataProperty(name, getter, data,
+                                           attribute.attribute);
   }
   if (attribute.property_location_configuration &
       V8DOMConfiguration::kOnPrototype) {
-    prototype_template->SetLazyDataProperty(
-        name, getter, data,
-        static_cast<v8::PropertyAttribute>(attribute.attribute));
+    prototype_template->SetLazyDataProperty(name, getter, data,
+                                            attribute.attribute);
   }
   if (attribute.property_location_configuration &
       V8DOMConfiguration::kOnInterface)
@@ -276,15 +271,13 @@ void InstallAccessorInternal(
             isolate, setter_callback, nullptr, data, signature, 1);
     if (location & V8DOMConfiguration::kOnInstance &&
         !IsObjectAndEmpty(instance_or_template)) {
-      instance_or_template->SetAccessorProperty(
-          name, getter, setter,
-          static_cast<v8::PropertyAttribute>(config.attribute));
+      instance_or_template->SetAccessorProperty(name, getter, setter,
+                                                config.attribute);
     }
     if (location & V8DOMConfiguration::kOnPrototype &&
         !IsObjectAndEmpty(prototype_or_template)) {
-      prototype_or_template->SetAccessorProperty(
-          name, getter, setter,
-          static_cast<v8::PropertyAttribute>(config.attribute));
+      prototype_or_template->SetAccessorProperty(name, getter, setter,
+                                                 config.attribute);
     }
   }
   if (location & V8DOMConfiguration::kOnInterface &&
@@ -300,9 +293,8 @@ void InstallAccessorInternal(
         CreateAccessorFunctionOrTemplate<FunctionOrTemplate>(
             isolate, setter_callback, nullptr, data, v8::Local<v8::Signature>(),
             1);
-    interface_or_template->SetAccessorProperty(
-        name, getter, setter,
-        static_cast<v8::PropertyAttribute>(config.attribute));
+    interface_or_template->SetAccessorProperty(name, getter, setter,
+                                               config.attribute);
   }
 }
 
@@ -362,7 +354,7 @@ void AddMethodToTemplate(v8::Isolate* isolate,
                          v8::Local<v8::FunctionTemplate> function_template,
                          const Configuration& method) {
   v8_template->Set(method.MethodName(isolate), function_template,
-                   static_cast<v8::PropertyAttribute>(method.attribute));
+                   method.attribute);
 }
 
 template <>
@@ -380,7 +372,7 @@ void AddMethodToTemplate(
                      function_template);
   }
   v8_template->Set(method.MethodName(isolate), function_template,
-                   static_cast<v8::PropertyAttribute>(method.attribute));
+                   method.attribute);
 }
 
 template <class Configuration>
@@ -478,16 +470,14 @@ void InstallMethodInternal(
             .ToLocalChecked();
     if (location & V8DOMConfiguration::kOnInstance && !instance.IsEmpty()) {
       instance
-          ->DefineOwnProperty(
-              isolate->GetCurrentContext(), name, function,
-              static_cast<v8::PropertyAttribute>(config.attribute))
+          ->DefineOwnProperty(isolate->GetCurrentContext(), name, function,
+                              config.attribute)
           .ToChecked();
     }
     if (location & V8DOMConfiguration::kOnPrototype && !prototype.IsEmpty()) {
       prototype
-          ->DefineOwnProperty(
-              isolate->GetCurrentContext(), name, function,
-              static_cast<v8::PropertyAttribute>(config.attribute))
+          ->DefineOwnProperty(isolate->GetCurrentContext(), name, function,
+                              config.attribute)
           .ToChecked();
     }
   }
@@ -502,7 +492,7 @@ void InstallMethodInternal(
     v8::Local<v8::Function> function =
         function_template->GetFunction(isolate->GetCurrentContext())
             .ToLocalChecked();
-    interface->DefineOwnProperty(isolate->GetCurrentContext(), name, function, static_cast<v8::PropertyAttribute>(config.attribute)).ToChecked();
+    interface->DefineOwnProperty(isolate->GetCurrentContext(), name, function, config.attribute).ToChecked();
   }
 }
 

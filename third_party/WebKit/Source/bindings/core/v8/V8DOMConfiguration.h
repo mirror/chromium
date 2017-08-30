@@ -84,15 +84,14 @@ class CORE_EXPORT V8DOMConfiguration final {
     v8::AccessorNameSetterCallback setter;
 
     const WrapperTypeInfo* data;
-    // v8::PropertyAttribute
-    unsigned attribute : 8;
-    // PropertyLocationConfiguration
-    unsigned property_location_configuration : 3;
-    // HolderCheckConfiguration
-    unsigned holder_check_configuration : 1;
-    // WorldConfiguration
-    unsigned world_configuration : 2;
+    v8::PropertyAttribute attribute : 3;
+    PropertyLocationConfiguration property_location_configuration : 3;
+    HolderCheckConfiguration holder_check_configuration : 1;
+    WorldConfiguration world_configuration : 2;
   };
+  // The trailing fields should fit in the size of one pointer.
+  static_assert(sizeof(AttributeConfiguration) == 5 * sizeof(void*),
+                "AttributeConfiguration size changed unexpected");
 
   static void InstallAttributes(
       v8::Isolate*,
@@ -147,15 +146,14 @@ class CORE_EXPORT V8DOMConfiguration final {
     // The accessor's 'result' is stored in a private property.
     CachedPropertyKey cached_property_key;
     const WrapperTypeInfo* data;
-    // v8::PropertyAttribute
-    unsigned attribute : 8;
-    // PropertyLocationConfiguration
-    unsigned property_location_configuration : 3;
-    // HolderCheckConfiguration
-    unsigned holder_check_configuration : 1;
-    // WorldConfiguration
-    unsigned world_configuration : 2;
+    v8::PropertyAttribute attribute : 3;
+    PropertyLocationConfiguration property_location_configuration : 3;
+    HolderCheckConfiguration holder_check_configuration : 1;
+    WorldConfiguration world_configuration : 2;
   };
+  // The trailing fields should fit in the size of one pointer.
+  static_assert(sizeof(AccessorConfiguration) == 6 * sizeof(void*),
+                "AccessorConfiguration size changed unexpected");
 
   static void InstallAccessors(
       v8::Isolate*,
@@ -259,17 +257,17 @@ class CORE_EXPORT V8DOMConfiguration final {
     const char* const name;
     v8::FunctionCallback callback;
     int length;
-    // v8::PropertyAttribute
-    unsigned attribute : 8;
-    // PropertyLocationConfiguration
-    unsigned property_location_configuration : 3;
-    // HolderCheckConfiguration
-    unsigned holder_check_configuration : 1;
-    // AccessCheckConfiguration
-    unsigned access_check_configuration : 1;
-    // WorldConfiguration
-    unsigned world_configuration : 2;
+    v8::PropertyAttribute attribute : 3;
+    PropertyLocationConfiguration property_location_configuration : 3;
+    HolderCheckConfiguration holder_check_configuration : 1;
+    AccessCheckConfiguration access_check_configuration : 1;
+    WorldConfiguration world_configuration : 2;
   };
+  // The trailing fields will fit in the size of one pointer.
+  // If int is smaller than void*, the bit fields pack with length.
+  static_assert(sizeof(MethodConfiguration) ==
+                    2 * sizeof(void*) + 2 * sizeof(int),
+                "MethodConfiguration size changed unexpected");
 
   struct SymbolKeyedMethodConfiguration {
     SymbolKeyedMethodConfiguration& operator=(
@@ -284,8 +282,7 @@ class CORE_EXPORT V8DOMConfiguration final {
     v8::FunctionCallback callback;
     // SymbolKeyedMethodConfiguration doesn't support per-world bindings.
     int length;
-    // v8::PropertyAttribute
-    unsigned attribute : 8;
+    v8::PropertyAttribute attribute : 3;
     // PropertyLocationConfiguration
     unsigned property_location_configuration : 3;
     // HolderCheckConfiguration
