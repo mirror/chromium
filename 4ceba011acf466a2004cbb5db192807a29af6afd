@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfbed933_6593b62c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-30T23:50:00Z",
+      "side": 1,
+      "message": "Nit: Future readers might wonder how/why, etc. you came to the conclusion that using dup2() would be a great thing to do to close the old file descriptor to make ashmem_pin_region() fail.\n\nCould you write a paragraph about this in the CL description as well? It\u0027s quite possible that most of that could also be the same as the comment you wrote, but maybe also mention what did not work in the approach of getting this to work, or at least say why the current approach forces exactly the state we want?",
+      "revId": "4ceba011acf466a2004cbb5db192807a29af6afd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4d86f5e_d68f7f46",
+        "filename": "base/memory/discardable_shared_memory_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-30T23:50:00Z",
+      "side": 1,
+      "message": "Nit: I\u0027m not 100% sure that everyone knows the inner details of the guarantees dup2(). Could you just tell our future readers that dup2() will in fact close the old handle and take it over?",
+      "revId": "4ceba011acf466a2004cbb5db192807a29af6afd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
