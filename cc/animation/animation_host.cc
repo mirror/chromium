@@ -606,4 +606,19 @@ void AnimationHost::SetNeedsMutate() {
   mutator_needs_mutate_ = true;
 }
 
+size_t AnimationHost::GetNumberOfCompositedAnimations() const {
+  size_t num_composited_animations = 0;
+  for (auto& it : ticking_players_)
+    num_composited_animations += it->GetNumberOfTickingAnimations();
+  return num_composited_animations;
+}
+
+size_t AnimationHost::GetNumberOfMainThreadAnimations() const {
+  return num_main_thread_animations_;
+}
+
+size_t AnimationHost::GetNumberOfMainThreadCouldBeCompositedAnimations() const {
+  return num_main_thread_could_be_composited_animations_;
+}
+
 }  // namespace cc

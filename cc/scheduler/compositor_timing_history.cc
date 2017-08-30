@@ -800,9 +800,13 @@ void CompositorTimingHistory::DrawAborted() {
   active_tree_main_frame_time_ = base::TimeTicks();
 }
 
-void CompositorTimingHistory::DidDraw(bool used_new_active_tree,
-                                      bool main_thread_missed_last_deadline,
-                                      base::TimeTicks impl_frame_time) {
+void CompositorTimingHistory::DidDraw(
+    bool used_new_active_tree,
+    bool main_thread_missed_last_deadline,
+    base::TimeTicks impl_frame_time,
+    size_t num_composited_animations,
+    size_t num_main_thread_animations,
+    size_t num_main_thread_could_be_composited_animations) {
   DCHECK_NE(base::TimeTicks(), draw_start_time_);
   base::TimeTicks draw_end_time = Now();
   base::TimeDelta draw_duration = draw_end_time - draw_start_time_;

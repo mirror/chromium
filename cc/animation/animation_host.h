@@ -186,6 +186,16 @@ class CC_ANIMATION_EXPORT AnimationHost : public MutatorHost,
   // LayerTreeMutatorClient.
   void SetNeedsMutate() override;
 
+  size_t GetNumberOfCompositedAnimations() const override;
+  size_t GetNumberOfMainThreadAnimations() const override;
+  size_t GetNumberOfMainThreadCouldBeCompositedAnimations() const override;
+  void SetNumberOfMainThreadAnimations(size_t num) {
+    num_main_thread_animations_ = num;
+  }
+  void SetNumberOfMainThreadCouldBeCompositedAnimations(size_t num) {
+    num_main_thread_could_be_composited_animations_ = num;
+  }
+
  private:
   explicit AnimationHost(ThreadInstance thread_instance);
 
@@ -218,6 +228,9 @@ class CC_ANIMATION_EXPORT AnimationHost : public MutatorHost,
   bool mutator_needs_mutate_;
 
   std::unique_ptr<LayerTreeMutator> mutator_;
+
+  size_t num_main_thread_animations_ = 0;
+  size_t num_main_thread_could_be_composited_animations_ = 0;
 
   DISALLOW_COPY_AND_ASSIGN(AnimationHost);
 };
