@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dfbbc2d6_8e94cb2e",
+        "filename": "chrome/browser/content_settings/host_content_settings_map_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-08-30T04:45:53Z",
+      "side": 1,
+      "message": "Please name the test GetWebsiteSettingsForOneType or something generic like that since it\u0027s not specific to client hints.",
+      "revId": "773e3f0c37273146a389a357ed0bdc5ab2283749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1578bac4_baebb959",
+        "filename": "chrome/browser/content_settings/host_content_settings_map_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-08-30T04:45:53Z",
+      "side": 1,
+      "message": "nit: are the clone() calls necessary here?",
+      "revId": "773e3f0c37273146a389a357ed0bdc5ab2283749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62aac98f_4e7353ef",
+        "filename": "chrome/browser/content_settings/host_content_settings_map_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-08-30T04:45:53Z",
+      "side": 1,
+      "message": "nit: same here",
+      "revId": "773e3f0c37273146a389a357ed0bdc5ab2283749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "097c797a_fb7704c7",
+        "filename": "chrome/browser/content_settings/host_content_settings_map_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-08-30T04:45:53Z",
+      "side": 1,
+      "message": "nit: same here",
+      "revId": "773e3f0c37273146a389a357ed0bdc5ab2283749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
