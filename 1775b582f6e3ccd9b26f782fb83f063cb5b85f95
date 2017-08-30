@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d472d551_c82c5799",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/SourceMapManager.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-08-30T00:23:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32f3a68a_9e56d208",
+      "range": {
+        "startLine": 142,
+        "startChar": 13,
+        "endLine": 142,
+        "endChar": 29
+      },
+      "revId": "1775b582f6e3ccd9b26f782fb83f063cb5b85f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aaf4a504_0a108263",
         "filename": "third_party/WebKit/Source/devtools/front_end/sdk/SourceMapManager.js",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "1775b582f6e3ccd9b26f782fb83f063cb5b85f95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7853a484_0f0a7dda",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/SourceMapManager.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-08-30T00:23:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aaf4a504_0a108263",
+      "range": {
+        "startLine": 148,
+        "startChar": 13,
+        "endLine": 148,
+        "endChar": 29
+      },
+      "revId": "1775b582f6e3ccd9b26f782fb83f063cb5b85f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
