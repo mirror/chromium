@@ -1,0 +1,274 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5fb9031c_d74fb404",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-08-30T20:21:36Z",
+      "side": 1,
+      "message": "Add description for the special case of intervals over end of a week (e.g.Sat - Mon)",
+      "range": {
+        "startLine": 150,
+        "startChar": 0,
+        "endLine": 150,
+        "endChar": 49
+      },
+      "revId": "64bf38074a1dae823e1284e437d409c52b0ac6ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4938a33_5ca09e5a",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-08-30T20:21:36Z",
+      "side": 1,
+      "message": "user_manager::UserManager::Get()-\u003eIsLoggedInAsGuest() is better as UserManager is used below and no need for including LoginState in that case.",
+      "range": {
+        "startLine": 219,
+        "startChar": 18,
+        "endLine": 219,
+        "endChar": 66
+      },
+      "revId": "64bf38074a1dae823e1284e437d409c52b0ac6ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1007e5ce_66962607",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-08-30T20:21:36Z",
+      "side": 1,
+      "message": "Add check for all other type of users who are not real users (i.e.public account, kiosks, etc.).\nI think the following works only for users \"IsLoggedInAsUserWithGaiaAccount() \u003d true\"",
+      "range": {
+        "startLine": 230,
+        "startChar": 3,
+        "endLine": 230,
+        "endChar": 0
+      },
+      "revId": "64bf38074a1dae823e1284e437d409c52b0ac6ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48002e75_c380bdd3",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-08-30T20:21:36Z",
+      "side": 1,
+      "message": "omit braces for one-line statement",
+      "range": {
+        "startLine": 253,
+        "startChar": 27,
+        "endLine": 255,
+        "endChar": 5
+      },
+      "revId": "64bf38074a1dae823e1284e437d409c52b0ac6ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e997a82_f21c1fe9",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-08-30T20:21:36Z",
+      "side": 1,
+      "message": "Please, call this getter once per function",
+      "range": {
+        "startLine": 428,
+        "startChar": 4,
+        "endLine": 428,
+        "endChar": 35
+      },
+      "revId": "64bf38074a1dae823e1284e437d409c52b0ac6ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f920994_c196a503",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-08-30T20:21:36Z",
+      "side": 1,
+      "message": "nit: mode could be changed.\n\nOr even better to name it \u0027OffHoursModeMaybeChanged()\u0027 if it could be called even when no change happened.",
+      "range": {
+        "startLine": 45,
+        "startChar": 35,
+        "endLine": 45,
+        "endChar": 59
+      },
+      "revId": "64bf38074a1dae823e1284e437d409c52b0ac6ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e9527fb_7c7e6c2e",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-08-30T20:21:36Z",
+      "side": 1,
+      "message": "Could these functions (and others as well) be moved into private section?",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 27
+      },
+      "revId": "64bf38074a1dae823e1284e437d409c52b0ac6ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cffd75f5_e2e036df",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-08-30T20:21:36Z",
+      "side": 1,
+      "message": "OffHoursModeChanged()",
+      "range": {
+        "startLine": 96,
+        "startChar": 9,
+        "endLine": 96,
+        "endChar": 30
+      },
+      "revId": "64bf38074a1dae823e1284e437d409c52b0ac6ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54598962_7dc0cbe7",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-08-30T20:21:36Z",
+      "side": 1,
+      "message": "SessionManagerClient overrides:",
+      "range": {
+        "startLine": 99,
+        "startChar": 5,
+        "endLine": 99,
+        "endChar": 25
+      },
+      "revId": "64bf38074a1dae823e1284e437d409c52b0ac6ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5557f5cc_6cf6d1ef",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-08-30T20:21:36Z",
+      "side": 1,
+      "message": "Add a comment how it\u0027s affected by the current \"Off hours\" state.",
+      "range": {
+        "startLine": 102,
+        "startChar": 5,
+        "endLine": 102,
+        "endChar": 46
+      },
+      "revId": "64bf38074a1dae823e1284e437d409c52b0ac6ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f5b410d_98a26c3b",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-08-30T20:21:36Z",
+      "side": 1,
+      "message": "nit: Currently it\u0027s pretty obvious comment here. It\u0027s better to add some context for what purposes the timer is used.",
+      "range": {
+        "startLine": 107,
+        "startChar": 2,
+        "endLine": 107,
+        "endChar": 10
+      },
+      "revId": "64bf38074a1dae823e1284e437d409c52b0ac6ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cfb07cc_2ae9f1f9",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-08-30T20:21:36Z",
+      "side": 1,
+      "message": "Please add   DISALLOW_COPY_AND_ASSIGN(DeviceOffHoursController);",
+      "revId": "64bf38074a1dae823e1284e437d409c52b0ac6ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

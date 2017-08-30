@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "f257359a_599b493a",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-08-30T20:21:36Z",
+      "side": 1,
+      "message": "I\u0027m leaning to using intervals like [17:00; 18:00) so that off hours will be turned off at 18:00. It\u0027s more clear for admins.",
+      "parentUuid": "ddfe0f26_2cec7365",
+      "range": {
+        "startLine": 228,
+        "startChar": 35,
+        "endLine": 228,
+        "endChar": 59
+      },
+      "revId": "3e12781a43eff4790ffe9bd37fdb1f6f027cd29b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fd59a2de_b9928728",
         "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
         "patchSetId": 11
