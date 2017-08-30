@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d77519d4_3fd3baef",
+        "filename": "base/mojom/values_struct_traits.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-30T08:27:05Z",
+      "side": 1,
+      "message": "Could this be const?",
+      "range": {
+        "startLine": 36,
+        "startChar": 27,
+        "endLine": 36,
+        "endChar": 35
+      },
+      "revId": "ba25b859e23dd89233672ccd919d7b6c7cb9eaaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65bc3fe8_b74140f2",
+        "filename": "base/mojom/values_struct_traits.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-30T08:27:05Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 38,
+        "startChar": 31,
+        "endLine": 38,
+        "endChar": 39
+      },
+      "revId": "ba25b859e23dd89233672ccd919d7b6c7cb9eaaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
