@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f355425_4a6b63fc",
+        "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-30T07:36:38Z",
+      "side": 1,
+      "message": "nit: you can use net::HttpRequestHeaders::kReferer",
+      "revId": "27808376edc3b3fd75d6be8b9e4463fe8f5f816d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "453b5a8e_3b71ef06",
+        "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-30T07:36:38Z",
+      "side": 1,
+      "message": "nit: Should we have last-resort upper-limit check here, and let it fail if it exceeds? (Alternatively renderer could just crash...)",
+      "revId": "27808376edc3b3fd75d6be8b9e4463fe8f5f816d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb7e9054_a94df4f8",
+        "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-30T07:36:38Z",
+      "side": 1,
+      "message": "Could you rephrase this a bit ot make it clear if it\u0027s a TODO or it\u0027s telling that RESOURCE_TYPE_SUB_RESOURCE should be fine for all cases?",
+      "revId": "27808376edc3b3fd75d6be8b9e4463fe8f5f816d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
