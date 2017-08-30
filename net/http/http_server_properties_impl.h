@@ -95,10 +95,6 @@ class NET_EXPORT HttpServerPropertiesImpl
   bool GetSupportsSpdy(const url::SchemeHostPort& server) override;
   void SetSupportsSpdy(const url::SchemeHostPort& server,
                        bool support_spdy) override;
-  bool RequiresHTTP11(const HostPortPair& server) override;
-  void SetHTTP11Required(const HostPortPair& server) override;
-  void MaybeForceHTTP11(const HostPortPair& server,
-                        SSLConfig* ssl_config) override;
   AlternativeServiceInfoVector GetAlternativeServiceInfos(
       const url::SchemeHostPort& origin) override;
   bool SetHttp2AlternativeService(const url::SchemeHostPort& origin,

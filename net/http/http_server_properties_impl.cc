@@ -239,31 +239,6 @@ void HttpServerPropertiesImpl::SetSupportsSpdy(
   spdy_servers_map_.Put(server.Serialize(), support_spdy);
 }
 
-bool HttpServerPropertiesImpl::RequiresHTTP11(
-    const HostPortPair& host_port_pair) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  if (host_port_pair.host().empty())
-    return false;
-
-  return (http11_servers_.find(host_port_pair) != http11_servers_.end());
-}
-
-void HttpServerPropertiesImpl::SetHTTP11Required(
-    const HostPortPair& host_port_pair) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  if (host_port_pair.host().empty())
-    return;
-
-  http11_servers_.insert(host_port_pair);
-}
-
-void HttpServerPropertiesImpl::MaybeForceHTTP11(const HostPortPair& server,
-                                                SSLConfig* ssl_config) {
-  if (RequiresHTTP11(server)) {
-    ForceHTTP11(ssl_config);
-  }
-}
-
 const std::string* HttpServerPropertiesImpl::GetCanonicalSuffix(
     const std::string& host) const {
   // If this host ends with a canonical suffix, then return the canonical

@@ -121,6 +121,7 @@ class MockHttpStreamFactoryImplJob : public HttpStreamFactoryImpl::Job {
                                QuicVersion quic_version,
                                const ProxyServer& alternative_proxy_server,
                                bool enable_ip_based_pooling,
+                               bool http_1_1_required,
                                NetLog* net_log);
 
   ~MockHttpStreamFactoryImplJob() override;
@@ -148,6 +149,7 @@ class TestJobFactory : public HttpStreamFactoryImpl::JobFactory {
       HostPortPair destination,
       GURL origin_url,
       bool enable_ip_based_pooling,
+      bool http_1_1_required,
       NetLog* net_log) override;
 
   std::unique_ptr<HttpStreamFactoryImpl::Job> CreateAltSvcJob(

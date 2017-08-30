@@ -52,12 +52,13 @@ std::unique_ptr<HttpStreamRequest> HttpStreamFactoryImpl::RequestStream(
     HttpStreamRequest::Delegate* delegate,
     bool enable_ip_based_pooling,
     bool enable_alternative_services,
+    bool http_1_1_required,
     const NetLogWithSource& net_log) {
   DCHECK(!for_websockets_);
   return RequestStreamInternal(
       request_info, priority, server_ssl_config, proxy_ssl_config, delegate,
       nullptr, HttpStreamRequest::HTTP_STREAM, enable_ip_based_pooling,
-      enable_alternative_services, net_log);
+      enable_alternative_services, http_1_1_required, net_log);
 }
 
 std::unique_ptr<HttpStreamRequest>
@@ -70,13 +71,14 @@ HttpStreamFactoryImpl::RequestWebSocketHandshakeStream(
     WebSocketHandshakeStreamBase::CreateHelper* create_helper,
     bool enable_ip_based_pooling,
     bool enable_alternative_services,
+    bool http_1_1_required,
     const NetLogWithSource& net_log) {
   DCHECK(for_websockets_);
   DCHECK(create_helper);
   return RequestStreamInternal(
       request_info, priority, server_ssl_config, proxy_ssl_config, delegate,
       create_helper, HttpStreamRequest::HTTP_STREAM, enable_ip_based_pooling,
-      enable_alternative_services, net_log);
+      enable_alternative_services, http_1_1_required, net_log);
 }
 
 std::unique_ptr<HttpStreamRequest>
@@ -88,6 +90,7 @@ HttpStreamFactoryImpl::RequestBidirectionalStreamImpl(
     HttpStreamRequest::Delegate* delegate,
     bool enable_ip_based_pooling,
     bool enable_alternative_services,
+    bool http_1_1_required,
     const NetLogWithSource& net_log) {
   DCHECK(!for_websockets_);
   DCHECK(request_info.url.SchemeIs(url::kHttpsScheme));
@@ -95,7 +98,7 @@ HttpStreamFactoryImpl::RequestBidirectionalStreamImpl(
   return RequestStreamInternal(
       request_info, priority, server_ssl_config, proxy_ssl_config, delegate,
       nullptr, HttpStreamRequest::BIDIRECTIONAL_STREAM, enable_ip_based_pooling,
-      enable_alternative_services, net_log);
+      enable_alternative_services, http_1_1_required, net_log);
 }
 
 std::unique_ptr<HttpStreamRequest> HttpStreamFactoryImpl::RequestStreamInternal(
@@ -109,13 +112,15 @@ std::unique_ptr<HttpStreamRequest> HttpStreamFactoryImpl::RequestStreamInternal(
     HttpStreamRequest::StreamType stream_type,
     bool enable_ip_based_pooling,
     bool enable_alternative_services,
+    bool http_1_1_required,
     const NetLogWithSource& net_log) {
   AddJobControllerCountToHistograms();
 
   auto job_controller = std::make_unique<JobController>(
       this, delegate, session_, job_factory_.get(), request_info,
       /* is_preconnect = */ false, enable_ip_based_pooling,
-      enable_alternative_services, server_ssl_config, proxy_ssl_config);
+      enable_alternative_services, http_1_1_required, server_ssl_config,
+      proxy_ssl_config);
   JobController* job_controller_raw_ptr = job_controller.get();
   job_controller_set_.insert(std::move(job_controller));
   return job_controller_raw_ptr->Start(delegate,
@@ -141,10 +146,9 @@ void HttpStreamFactoryImpl::PreconnectStreams(
 
   auto job_controller = std::make_unique<JobController>(
       this, nullptr, session_, job_factory_.get(), request_info,
-      /* is_preconnect = */ true,
-      /* enable_ip_based_pooling = */ true,
-      /* enable_alternative_services = */ true, server_ssl_config,
-      proxy_ssl_config);
+      /* is_preconnect = */ true, /* enable_ip_based_pooling = */ true,
+      /* enable_alternative_services = */ true, /* http_1_1_required = */ false,
+      server_ssl_config, proxy_ssl_config);
   JobController* job_controller_raw_ptr = job_controller.get();
   job_controller_set_.insert(std::move(job_controller));
   job_controller_raw_ptr->Preconnect(num_streams);

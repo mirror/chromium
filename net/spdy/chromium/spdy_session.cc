@@ -2453,11 +2453,6 @@ void SpdySession::DoDrainSession(Error err, const SpdyString& description) {
   }
   MakeUnavailable();
 
-  // Mark host_port_pair requiring HTTP/1.1 for subsequent connections.
-  if (err == ERR_HTTP_1_1_REQUIRED) {
-    http_server_properties_->SetHTTP11Required(host_port_pair());
-  }
-
   // If |err| indicates an error occurred, inform the peer that we're closing
   // and why. Don't GOAWAY on a graceful or idle close, as that may
   // unnecessarily wake the radio. We could technically GOAWAY on network errors
@@ -2466,8 +2461,8 @@ void SpdySession::DoDrainSession(Error err, const SpdyString& description) {
   if (err != OK &&
       err != ERR_ABORTED &&  // Used by SpdySessionPool to close idle sessions.
       err != ERR_NETWORK_CHANGED &&  // Used to deprecate sessions on IP change.
-      err != ERR_SOCKET_NOT_CONNECTED && err != ERR_HTTP_1_1_REQUIRED &&
-      err != ERR_CONNECTION_CLOSED && err != ERR_CONNECTION_RESET) {
+      err != ERR_SOCKET_NOT_CONNECTED && err != ERR_CONNECTION_CLOSED &&
+      err != ERR_CONNECTION_RESET) {
     // Enqueue a GOAWAY to inform the peer of why we're closing the connection.
     SpdyGoAwayIR goaway_ir(last_accepted_push_stream_id_,
                            MapNetErrorToGoAwayStatus(err), description);
@@ -2653,16 +2648,6 @@ void SpdySession::OnRstStream(SpdyStreamId stream_id,
     CloseActiveStreamIterator(it, ERR_SPDY_RST_STREAM_NO_ERROR_RECEIVED);
   } else if (error_code == ERROR_CODE_REFUSED_STREAM) {
     CloseActiveStreamIterator(it, ERR_SPDY_SERVER_REFUSED_STREAM);
-  } else if (error_code == ERROR_CODE_HTTP_1_1_REQUIRED) {
-    // TODO(bnc): Record histogram with number of open streams capped at 50.
-    if (net_log().IsCapturing()) {
-      it->second->LogStreamError(
-          ERR_HTTP_1_1_REQUIRED,
-          SpdyStringPrintf(
-              "Closing session because server reset stream with error %s.",
-              ErrorCodeToString(error_code)));
-    }
-    DoDrainSession(ERR_HTTP_1_1_REQUIRED, "HTTP_1_1_REQUIRED for stream.");
   } else {
     RecordProtocolErrorHistogram(
         PROTOCOL_ERROR_RST_STREAM_FOR_NON_ACTIVE_STREAM);
@@ -2692,8 +2677,7 @@ void SpdySession::OnGoAway(SpdyStreamId last_accepted_stream_id,
                  error_code, debug_data));
   MakeUnavailable();
   if (error_code == ERROR_CODE_HTTP_1_1_REQUIRED) {
-    // TODO(bnc): Record histogram with number of open streams capped at 50.
-    DoDrainSession(ERR_HTTP_1_1_REQUIRED, "HTTP_1_1_REQUIRED for stream.");
+    StartGoingAway(last_accepted_stream_id, ERR_HTTP_1_1_REQUIRED);
   } else if (error_code == ERROR_CODE_NO_ERROR) {
     StartGoingAway(last_accepted_stream_id, ERR_SPDY_SERVER_REFUSED_STREAM);
   } else {

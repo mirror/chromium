@@ -126,6 +126,7 @@ std::unique_ptr<base::Value> NetLogHttpStreamJobCallback(
     const GURL* original_url,
     const GURL* url,
     bool expect_spdy,
+    bool http_1_1_required,
     bool using_quic,
     RequestPriority priority,
     NetLogCaptureMode /* capture_mode */) {
@@ -135,6 +136,7 @@ std::unique_ptr<base::Value> NetLogHttpStreamJobCallback(
   dict->SetString("original_url", original_url->GetOrigin().spec());
   dict->SetString("url", url->GetOrigin().spec());
   dict->SetString("expect_spdy", expect_spdy ? "true" : "false");
+  dict->SetString("http_1_1_required", http_1_1_required ? "true" : "false");
   dict->SetString("using_quic", using_quic ? "true" : "false");
   dict->SetString("priority", RequestPriorityToString(priority));
   return std::move(dict);
@@ -165,6 +167,7 @@ HttpStreamFactoryImpl::Job::Job(Delegate* delegate,
                                 QuicVersion quic_version,
                                 const ProxyServer& alternative_proxy_server,
                                 bool enable_ip_based_pooling,
+                                bool http_1_1_required,
                                 NetLog* net_log)
     : request_info_(request_info),
       priority_(priority),
@@ -182,6 +185,7 @@ HttpStreamFactoryImpl::Job::Job(Delegate* delegate,
       origin_url_(origin_url),
       alternative_proxy_server_(alternative_proxy_server),
       enable_ip_based_pooling_(enable_ip_based_pooling),
+      http_1_1_required_(http_1_1_required),
       delegate_(delegate),
       job_type_(job_type),
       using_ssl_(origin_url_.SchemeIs(url::kHttpsScheme) ||
@@ -425,6 +429,9 @@ SpdySessionKey HttpStreamFactoryImpl::Job::GetSpdySessionKey(
 
 bool HttpStreamFactoryImpl::Job::CanUseExistingSpdySession() const {
   DCHECK(!using_quic_);
+
+  if (http_1_1_required_)
+    return false;
 
   // We need to make sure that if a spdy session was created for
   // https://somehost/ that we don't use that session for http://somehost:443/.
@@ -755,8 +762,8 @@ int HttpStreamFactoryImpl::Job::DoStart() {
     net_log_.BeginEvent(
         NetLogEventType::HTTP_STREAM_JOB,
         base::Bind(&NetLogHttpStreamJobCallback, net_log->source(),
-                   &request_info_.url, &origin_url_, expect_spdy_, using_quic_,
-                   priority_));
+                   &request_info_.url, &origin_url_, expect_spdy_,
+                   http_1_1_required_, using_quic_, priority_));
     net_log->AddEvent(NetLogEventType::HTTP_STREAM_REQUEST_STARTED_JOB,
                       net_log_.source().ToEventParametersCallback());
   }
@@ -801,10 +808,6 @@ int HttpStreamFactoryImpl::Job::DoEvaluateThrottle() {
 
   // Throttle connect to an HTTP/2 supported server, if there are pending
   // requests with the same SpdySessionKey.
-  if (session_->http_server_properties()->RequiresHTTP11(
-          spdy_session_key_.host_port_pair())) {
-    return OK;
-  }
   url::SchemeHostPort scheme_host_port(
       using_ssl_ ? url::kHttpsScheme : url::kHttpScheme,
       spdy_session_key_.host_port_pair().host(),
@@ -943,16 +946,6 @@ int HttpStreamFactoryImpl::Job::DoInitConnectionImpl() {
 
   if (proxy_info_.is_http() || proxy_info_.is_https())
     establishing_tunnel_ = using_ssl_;
-
-  HttpServerProperties* http_server_properties =
-      session_->http_server_properties();
-  if (http_server_properties) {
-    http_server_properties->MaybeForceHTTP11(destination_, &server_ssl_config_);
-    if (proxy_info_.is_http() || proxy_info_.is_https()) {
-      http_server_properties->MaybeForceHTTP11(
-          proxy_info_.proxy_server().host_port_pair(), &proxy_ssl_config_);
-    }
-  }
 
   if (job_type_ == PRECONNECT) {
     DCHECK(!delegate_->for_websockets());
@@ -1310,6 +1303,11 @@ void HttpStreamFactoryImpl::Job::SetSocketMotivation() {
 
 void HttpStreamFactoryImpl::Job::InitSSLConfig(SSLConfig* ssl_config,
                                                bool is_proxy) const {
+  if (http_1_1_required_) {
+    ssl_config->alpn_protos.clear();
+    ssl_config->alpn_protos.push_back(kProtoHTTP11);
+  }
+
   if (!is_proxy) {
     // Prior to HTTP/2 and SPDY, some servers use TLS renegotiation to request
     // TLS client authentication after the HTTP request was sent. Allow
@@ -1426,8 +1424,13 @@ int HttpStreamFactoryImpl::Job::HandleCertificateError(int error) {
 ClientSocketPoolManager::SocketGroupType
 HttpStreamFactoryImpl::Job::GetSocketGroup() const {
   std::string scheme = origin_url_.scheme();
-  if (scheme == url::kHttpsScheme || scheme == url::kWssScheme)
-    return ClientSocketPoolManager::SSL_GROUP;
+  if (scheme == url::kHttpsScheme || scheme == url::kWssScheme) {
+    if (http_1_1_required_) {
+      return ClientSocketPoolManager::HTTP_1_1_REQUIRED_GROUP;
+    } else {
+      return ClientSocketPoolManager::SSL_GROUP;
+    }
+  }
 
   if (scheme == url::kFtpScheme)
     return ClientSocketPoolManager::FTP_GROUP;
@@ -1470,12 +1473,13 @@ HttpStreamFactoryImpl::JobFactory::CreateMainJob(
     HostPortPair destination,
     GURL origin_url,
     bool enable_ip_based_pooling,
+    bool http_1_1_required,
     NetLog* net_log) {
   return std::make_unique<HttpStreamFactoryImpl::Job>(
       delegate, job_type, session, request_info, priority, proxy_info,
       server_ssl_config, proxy_ssl_config, destination, origin_url,
       kProtoUnknown, QUIC_VERSION_UNSUPPORTED, ProxyServer(),
-      enable_ip_based_pooling, net_log);
+      enable_ip_based_pooling, http_1_1_required, net_log);
 }
 
 std::unique_ptr<HttpStreamFactoryImpl::Job>
@@ -1498,7 +1502,7 @@ HttpStreamFactoryImpl::JobFactory::CreateAltSvcJob(
       delegate, job_type, session, request_info, priority, proxy_info,
       server_ssl_config, proxy_ssl_config, destination, origin_url,
       alternative_protocol, quic_version, ProxyServer(),
-      enable_ip_based_pooling, net_log);
+      enable_ip_based_pooling, /* http_1_1_required = */ false, net_log);
 }
 
 std::unique_ptr<HttpStreamFactoryImpl::Job>
@@ -1520,7 +1524,7 @@ HttpStreamFactoryImpl::JobFactory::CreateAltProxyJob(
       delegate, job_type, session, request_info, priority, proxy_info,
       server_ssl_config, proxy_ssl_config, destination, origin_url,
       kProtoUnknown, QUIC_VERSION_UNSUPPORTED, alternative_proxy_server,
-      enable_ip_based_pooling, net_log);
+      enable_ip_based_pooling, /* http_1_1_required = */ false, net_log);
 }
 
 }  // namespace net

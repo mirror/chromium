@@ -93,6 +93,7 @@ HttpNetworkTransaction::HttpNetworkTransaction(RequestPriority priority,
       establishing_tunnel_(false),
       enable_ip_based_pooling_(true),
       enable_alternative_services_(true),
+      http_1_1_required_(false),
       websocket_handshake_stream_base_create_helper_(NULL),
       net_error_details_(),
       retry_attempts_(0) {}
@@ -865,11 +866,12 @@ int HttpNetworkTransaction::DoCreateStream() {
                 *request_, priority_, server_ssl_config_, proxy_ssl_config_,
                 this, websocket_handshake_stream_base_create_helper_,
                 enable_ip_based_pooling_, enable_alternative_services_,
-                net_log_);
+                http_1_1_required_, net_log_);
   } else {
     stream_request_ = session_->http_stream_factory()->RequestStream(
         *request_, priority_, server_ssl_config_, proxy_ssl_config_, this,
-        enable_ip_based_pooling_, enable_alternative_services_, net_log_);
+        enable_ip_based_pooling_, enable_alternative_services_,
+        http_1_1_required_, net_log_);
   }
   DCHECK(stream_request_.get());
   return ERR_IO_PENDING;
@@ -1484,14 +1486,13 @@ int HttpNetworkTransaction::HandleCertificateRequest(int error) {
 }
 
 int HttpNetworkTransaction::HandleHttp11Required(int error) {
+  DCHECK(!http_1_1_required_);
   DCHECK(error == ERR_HTTP_1_1_REQUIRED ||
          error == ERR_PROXY_HTTP_1_1_REQUIRED);
 
-  if (error == ERR_HTTP_1_1_REQUIRED) {
-    HttpServerProperties::ForceHTTP11(&server_ssl_config_);
-  } else {
-    HttpServerProperties::ForceHTTP11(&proxy_ssl_config_);
-  }
+  net_log_.AddEventWithNetErrorCode(
+      NetLogEventType::HTTP_TRANSACTION_RESTART_AFTER_ERROR, error);
+  http_1_1_required_ = true;
   ResetConnectionAndRequestForResend();
   return OK;
 }

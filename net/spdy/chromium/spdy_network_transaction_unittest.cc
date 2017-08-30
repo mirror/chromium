@@ -4265,15 +4265,10 @@ TEST_F(SpdyNetworkTransactionTest, HTTP11RequiredRetry) {
   ssl_provider1->next_proto = kProtoHTTP11;
   helper.AddDataWithSSLSocketDataProvider(&data1, std::move(ssl_provider1));
 
-  HttpServerProperties* http_server_properties =
-      helper.session()->spdy_session_pool()->http_server_properties();
-  EXPECT_FALSE(http_server_properties->RequiresHTTP11(host_port_pair_));
-
   helper.RunPreTestSetup();
   helper.StartDefaultTest();
   helper.FinishDefaultTestWithoutVerification();
   helper.VerifyDataConsumed();
-  EXPECT_TRUE(http_server_properties->RequiresHTTP11(host_port_pair_));
 
   const HttpResponseInfo* response = helper.trans()->GetResponseInfo();
   ASSERT_TRUE(response);
@@ -4318,7 +4313,7 @@ TEST_F(SpdyNetworkTransactionTest, HTTP11RequiredProxyRetry) {
   // Expect HTTP/2 protocols too in SSLConfig.
   ssl_provider0->next_protos_expected_in_ssl_config.push_back(kProtoHTTP2);
   ssl_provider0->next_protos_expected_in_ssl_config.push_back(kProtoHTTP11);
-  // Force SPDY.
+  // Force HTTP/2.
   ssl_provider0->next_proto = kProtoHTTP2;
   helper.AddDataWithSSLSocketDataProvider(&data0, std::move(ssl_provider0));
 
@@ -4356,16 +4351,10 @@ TEST_F(SpdyNetworkTransactionTest, HTTP11RequiredProxyRetry) {
   helper.session_deps()->socket_factory->AddSSLSocketDataProvider(
       ssl_provider2.get());
 
-  HttpServerProperties* http_server_properties =
-      helper.session()->spdy_session_pool()->http_server_properties();
-  const HostPortPair proxy_host_port_pair = HostPortPair("myproxy", 70);
-  EXPECT_FALSE(http_server_properties->RequiresHTTP11(proxy_host_port_pair));
-
   helper.RunPreTestSetup();
   helper.StartDefaultTest();
   helper.FinishDefaultTestWithoutVerification();
   helper.VerifyDataConsumed();
-  EXPECT_TRUE(http_server_properties->RequiresHTTP11(proxy_host_port_pair));
 
   const HttpResponseInfo* response = helper.trans()->GetResponseInfo();
   ASSERT_TRUE(response);

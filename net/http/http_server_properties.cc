@@ -140,10 +140,4 @@ std::ostream& operator<<(std::ostream& os,
   return os;
 }
 
-// static
-void HttpServerProperties::ForceHTTP11(SSLConfig* ssl_config) {
-  ssl_config->alpn_protos.clear();
-  ssl_config->alpn_protos.push_back(kProtoHTTP11);
-}
-
 }  // namespace net

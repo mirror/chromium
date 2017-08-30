@@ -238,7 +238,8 @@ class HttpStreamFactoryImplJobControllerTest : public ::testing::Test {
       job_controller_ = new HttpStreamFactoryImpl::JobController(
           factory_, &request_delegate_, session_.get(), &job_factory_,
           request_info, is_preconnect_, enable_ip_based_pooling_,
-          enable_alternative_services_, SSLConfig(), SSLConfig());
+          enable_alternative_services_, http_1_1_required_, SSLConfig(),
+          SSLConfig());
       HttpStreamFactoryImplPeer::AddJobController(factory_, job_controller_);
     }
   }
@@ -306,6 +307,7 @@ class HttpStreamFactoryImplJobControllerTest : public ::testing::Test {
   bool is_preconnect_ = false;
   bool enable_ip_based_pooling_ = true;
   bool enable_alternative_services_ = true;
+  bool http_1_1_required_ = false;
 
  private:
   // Not owned by |this|.
@@ -428,7 +430,8 @@ class JobControllerReconsiderProxyAfterErrorTest
         new HttpStreamFactoryImpl::JobController(
             factory_, &request_delegate_, session_.get(), &default_job_factory_,
             request_info, is_preconnect_, enable_ip_based_pooling_,
-            enable_alternative_services_, SSLConfig(), SSLConfig());
+            enable_alternative_services_, http_1_1_required_, SSLConfig(),
+            SSLConfig());
     HttpStreamFactoryImplPeer::AddJobController(factory_, job_controller);
     return job_controller->Start(&request_delegate_, nullptr, net_log_.bound(),
                                  HttpStreamRequest::HTTP_STREAM,
@@ -1709,7 +1712,8 @@ TEST_F(JobControllerLimitMultipleH2Requests, MultipleRequests) {
         new HttpStreamFactoryImpl::JobController(
             factory_, request_delegates[i].get(), session_.get(), &job_factory_,
             request_info, is_preconnect_, enable_ip_based_pooling_,
-            enable_alternative_services_, SSLConfig(), SSLConfig());
+            enable_alternative_services_, http_1_1_required_, SSLConfig(),
+            SSLConfig());
     HttpStreamFactoryImplPeer::AddJobController(factory_, job_controller);
     auto request = job_controller->Start(
         request_delegates[i].get(), nullptr, net_log_.bound(),
@@ -1782,7 +1786,8 @@ TEST_F(JobControllerLimitMultipleH2Requests, MultipleRequestsFirstRequestHang) {
         new HttpStreamFactoryImpl::JobController(
             factory_, request_delegates[i].get(), session_.get(), &job_factory_,
             request_info, is_preconnect_, enable_ip_based_pooling_,
-            enable_alternative_services_, SSLConfig(), SSLConfig());
+            enable_alternative_services_, http_1_1_required_, SSLConfig(),
+            SSLConfig());
     HttpStreamFactoryImplPeer::AddJobController(factory_, job_controller);
     auto request = job_controller->Start(
         request_delegates[i].get(), nullptr, net_log_.bound(),
@@ -1854,7 +1859,8 @@ TEST_F(JobControllerLimitMultipleH2Requests,
         new HttpStreamFactoryImpl::JobController(
             factory_, request_delegates[i].get(), session_.get(), &job_factory_,
             request_info, is_preconnect_, enable_ip_based_pooling_,
-            enable_alternative_services_, SSLConfig(), SSLConfig());
+            enable_alternative_services_, http_1_1_required_, SSLConfig(),
+            SSLConfig());
     HttpStreamFactoryImplPeer::AddJobController(factory_, job_controller);
     auto request = job_controller->Start(
         request_delegates[i].get(), nullptr, net_log_.bound(),
@@ -1907,7 +1913,8 @@ TEST_F(JobControllerLimitMultipleH2Requests, MultiplePreconnects) {
         new HttpStreamFactoryImpl::JobController(
             factory_, request_delegates[i].get(), session_.get(), &job_factory_,
             request_info, is_preconnect_, enable_ip_based_pooling_,
-            enable_alternative_services_, SSLConfig(), SSLConfig());
+            enable_alternative_services_, http_1_1_required_, SSLConfig(),
+            SSLConfig());
     HttpStreamFactoryImplPeer::AddJobController(factory_, job_controller);
     job_controller->Preconnect(1);
     EXPECT_TRUE(job_controller->main_job());
@@ -1953,7 +1960,8 @@ TEST_F(JobControllerLimitMultipleH2Requests, H1NegotiatedForFirstRequest) {
         new HttpStreamFactoryImpl::JobController(
             factory_, request_delegates[i].get(), session_.get(), &job_factory_,
             request_info, is_preconnect_, enable_ip_based_pooling_,
-            enable_alternative_services_, SSLConfig(), SSLConfig());
+            enable_alternative_services_, http_1_1_required_, SSLConfig(),
+            SSLConfig());
     HttpStreamFactoryImplPeer::AddJobController(factory_, job_controller);
     auto request = job_controller->Start(
         request_delegates[i].get(), nullptr, net_log_.bound(),
@@ -2013,7 +2021,8 @@ TEST_F(JobControllerLimitMultipleH2Requests, QuicJobNotThrottled) {
       new HttpStreamFactoryImpl::JobController(
           factory_, &request_delegate_, session_.get(), &default_job_factory,
           request_info, is_preconnect_, enable_ip_based_pooling_,
-          enable_alternative_services_, SSLConfig(), SSLConfig());
+          enable_alternative_services_, http_1_1_required_, SSLConfig(),
+          SSLConfig());
   HttpStreamFactoryImplPeer::AddJobController(factory_, job_controller);
   request_ =
       job_controller->Start(&request_delegate_, nullptr, net_log_.bound(),
@@ -2107,7 +2116,8 @@ class HttpStreamFactoryImplJobControllerPreconnectTest
         factory_, &request_delegate_, session_.get(), &job_factory_,
         request_info_, /* is_preconnect = */ true,
         /* enable_ip_based_pooling = */ true,
-        /* enable_alternative_services = */ true, SSLConfig(), SSLConfig());
+        /* enable_alternative_services = */ true,
+        /* http_1_1_required = */ false, SSLConfig(), SSLConfig());
     HttpStreamFactoryImplPeer::AddJobController(factory_, job_controller_);
   }
 

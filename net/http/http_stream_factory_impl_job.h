@@ -193,6 +193,7 @@ class HttpStreamFactoryImpl::Job {
       QuicVersion quic_version,
       const ProxyServer& alternative_proxy_server,
       bool enable_ip_based_pooling,
+      bool http_1_1_required,
       NetLog* net_log);
   virtual ~Job();
 
@@ -437,6 +438,10 @@ class HttpStreamFactoryImpl::Job {
   // even if the SpdySessionKey is different.
   const bool enable_ip_based_pooling_;
 
+  // Require HTTP/1.1 (disable pooling to an existing HTTP/2 or QUIC connection
+  // or opening a new one).
+  const bool http_1_1_required_;
+
   // Unowned. |this| job is owned by |delegate_|.
   Delegate* const delegate_;
 
@@ -529,6 +534,7 @@ class HttpStreamFactoryImpl::JobFactory {
       HostPortPair destination,
       GURL origin_url,
       bool enable_ip_based_pooling,
+      bool http_1_1_required,
       NetLog* net_log);
 
   virtual std::unique_ptr<HttpStreamFactoryImpl::Job> CreateAltSvcJob(

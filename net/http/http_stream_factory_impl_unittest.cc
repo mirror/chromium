@@ -676,7 +676,8 @@ TEST_F(HttpStreamFactoryTest, JobNotifiesProxy) {
       session->http_stream_factory()->RequestStream(
           request_info, DEFAULT_PRIORITY, ssl_config, ssl_config, &waiter,
           /* enable_ip_based_pooling = */ true,
-          /* enable_alternative_services = */ true, NetLogWithSource()));
+          /* enable_alternative_services = */ true,
+          /* http_1_1_required = */ false, NetLogWithSource()));
   waiter.WaitForStream();
 
   // The proxy that failed should now be known to the proxy_service as bad.
@@ -763,7 +764,8 @@ TEST_F(HttpStreamFactoryTest, QuicProxyMarkedAsBad) {
         session->http_stream_factory()->RequestStream(
             request_info, DEFAULT_PRIORITY, ssl_config, ssl_config, &waiter,
             /* enable_ip_based_pooling = */ true,
-            /* enable_alternative_services = */ true, NetLogWithSource()));
+            /* enable_alternative_services = */ true,
+            /* http_1_1_required = */ false, NetLogWithSource()));
     waiter.WaitForStream();
 
     // The proxy that failed should now be known to the proxy_service as bad.
@@ -974,7 +976,8 @@ TEST_F(HttpStreamFactoryTest, WithQUICAlternativeProxyMarkedAsBad) {
             session->http_stream_factory()->RequestStream(
                 request_info, DEFAULT_PRIORITY, ssl_config, ssl_config, &waiter,
                 /* enable_ip_based_pooling = */ true,
-                /* enable_alternative_services = */ true, NetLogWithSource()));
+                /* enable_alternative_services = */ true,
+                /* http_1_1_required = */ false, NetLogWithSource()));
         waiter.WaitForStream();
 
         // The proxy that failed should now be known to the proxy_service as
@@ -1080,7 +1083,8 @@ TEST_F(HttpStreamFactoryTest, WithQUICAlternativeProxyNotMarkedAsBad) {
           session->http_stream_factory()->RequestStream(
               request_info, DEFAULT_PRIORITY, ssl_config, ssl_config, &waiter,
               /* enable_ip_based_pooling = */ true,
-              /* enable_alternative_services = */ true, NetLogWithSource()));
+              /* enable_alternative_services = */ true,
+              /* http_1_1_required = */ false, NetLogWithSource()));
       waiter.WaitForStream();
 
       // The proxy that failed should now be known to the proxy_service as
@@ -1370,7 +1374,8 @@ TEST_F(HttpStreamFactoryTest, PrivacyModeDisablesChannelId) {
       session->http_stream_factory()->RequestStream(
           request_info, DEFAULT_PRIORITY, ssl_config, ssl_config, &waiter,
           /* enable_ip_based_pooling = */ true,
-          /* enable_alternative_services = */ true, NetLogWithSource()));
+          /* enable_alternative_services = */ true,
+          /* http_1_1_required = */ false, NetLogWithSource()));
   waiter.WaitForStream();
 
   // The stream shouldn't come from spdy as we are using different privacy mode
@@ -1447,7 +1452,8 @@ TEST_F(HttpStreamFactoryTest, PrivacyModeUsesDifferentSocketPoolGroup) {
       session->http_stream_factory()->RequestStream(
           request_info, DEFAULT_PRIORITY, ssl_config, ssl_config, &waiter,
           /* enable_ip_based_pooling = */ true,
-          /* enable_alternative_services = */ true, NetLogWithSource()));
+          /* enable_alternative_services = */ true,
+          /* http_1_1_required = */ false, NetLogWithSource()));
   waiter.WaitForStream();
 
   EXPECT_EQ(GetSocketPoolGroupCount(ssl_pool), 1);
@@ -1456,7 +1462,8 @@ TEST_F(HttpStreamFactoryTest, PrivacyModeUsesDifferentSocketPoolGroup) {
       session->http_stream_factory()->RequestStream(
           request_info, DEFAULT_PRIORITY, ssl_config, ssl_config, &waiter,
           /* enable_ip_based_pooling = */ true,
-          /* enable_alternative_services = */ true, NetLogWithSource()));
+          /* enable_alternative_services = */ true,
+          /* http_1_1_required = */ false, NetLogWithSource()));
   waiter.WaitForStream();
 
   EXPECT_EQ(GetSocketPoolGroupCount(ssl_pool), 1);
@@ -1466,7 +1473,8 @@ TEST_F(HttpStreamFactoryTest, PrivacyModeUsesDifferentSocketPoolGroup) {
       session->http_stream_factory()->RequestStream(
           request_info, DEFAULT_PRIORITY, ssl_config, ssl_config, &waiter,
           /* enable_ip_based_pooling = */ true,
-          /* enable_alternative_services = */ true, NetLogWithSource()));
+          /* enable_alternative_services = */ true,
+          /* http_1_1_required = */ false, NetLogWithSource()));
   waiter.WaitForStream();
 
   EXPECT_EQ(GetSocketPoolGroupCount(ssl_pool), 2);
@@ -1496,7 +1504,8 @@ TEST_F(HttpStreamFactoryTest, GetLoadState) {
       session->http_stream_factory()->RequestStream(
           request_info, DEFAULT_PRIORITY, ssl_config, ssl_config, &waiter,
           /* enable_ip_based_pooling = */ true,
-          /* enable_alternative_services = */ true, NetLogWithSource()));
+          /* enable_alternative_services = */ true,
+          /* http_1_1_required = */ false, NetLogWithSource()));
 
   EXPECT_EQ(LOAD_STATE_RESOLVING_HOST, request->GetLoadState());
 
@@ -1526,7 +1535,8 @@ TEST_F(HttpStreamFactoryTest, RequestHttpStream) {
       session->http_stream_factory()->RequestStream(
           request_info, DEFAULT_PRIORITY, ssl_config, ssl_config, &waiter,
           /* enable_ip_based_pooling = */ true,
-          /* enable_alternative_services = */ true, NetLogWithSource()));
+          /* enable_alternative_services = */ true,
+          /* http_1_1_required = */ false, NetLogWithSource()));
   waiter.WaitForStream();
   EXPECT_TRUE(waiter.stream_done());
   ASSERT_TRUE(nullptr != waiter.stream());
@@ -1576,7 +1586,8 @@ TEST_F(HttpStreamFactoryTest, ReprioritizeAfterStreamReceived) {
       session->http_stream_factory()->RequestStream(
           request_info, LOWEST, ssl_config, ssl_config, &waiter,
           /* enable_ip_based_pooling = */ true,
-          /* enable_alternative_services = */ true, NetLogWithSource()));
+          /* enable_alternative_services = */ true,
+          /* http_1_1_required = */ false, NetLogWithSource()));
   EXPECT_FALSE(waiter.stream_done());
 
   // Confirm a stream has been created by asserting that a new session
@@ -1620,7 +1631,8 @@ TEST_F(HttpStreamFactoryTest, RequestHttpStreamOverSSL) {
       session->http_stream_factory()->RequestStream(
           request_info, DEFAULT_PRIORITY, ssl_config, ssl_config, &waiter,
           /* enable_ip_based_pooling = */ true,
-          /* enable_alternative_services = */ true, NetLogWithSource()));
+          /* enable_alternative_services = */ true,
+          /* http_1_1_required = */ false, NetLogWithSource()));
   waiter.WaitForStream();
   EXPECT_TRUE(waiter.stream_done());
   ASSERT_TRUE(nullptr != waiter.stream());
@@ -1663,7 +1675,8 @@ TEST_F(HttpStreamFactoryTest, RequestHttpStreamOverProxy) {
       session->http_stream_factory()->RequestStream(
           request_info, DEFAULT_PRIORITY, ssl_config, ssl_config, &waiter,
           /* enable_ip_based_pooling = */ true,
-          /* enable_alternative_services = */ true, NetLogWithSource()));
+          /* enable_alternative_services = */ true,
+          /* http_1_1_required = */ false, NetLogWithSource()));
   waiter.WaitForStream();
   EXPECT_TRUE(waiter.stream_done());
   ASSERT_TRUE(nullptr != waiter.stream());
@@ -1744,7 +1757,8 @@ TEST_F(HttpStreamFactoryTest, RequestHttpStreamOverProxyWithPreconnects) {
       session->http_stream_factory()->RequestStream(
           request_info, DEFAULT_PRIORITY, ssl_config, ssl_config, &waiter,
           /* enable_ip_based_pooling = */ true,
-          /* enable_alternative_services = */ true, NetLogWithSource()));
+          /* enable_alternative_services = */ true,
+          /* http_1_1_required = */ false, NetLogWithSource()));
   waiter.WaitForStream();
   EXPECT_TRUE(waiter.stream_done());
   ASSERT_TRUE(nullptr != waiter.stream());
@@ -1795,7 +1809,8 @@ TEST_F(HttpStreamFactoryTest, RequestWebSocketBasicHandshakeStream) {
               request_info, DEFAULT_PRIORITY, ssl_config, ssl_config, &waiter,
               &create_helper,
               /* enable_ip_based_pooling = */ true,
-              /* enable_alternative_services = */ true, NetLogWithSource()));
+              /* enable_alternative_services = */ true,
+              /* http_1_1_required = */ false, NetLogWithSource()));
   waiter.WaitForStream();
   EXPECT_TRUE(waiter.stream_done());
   EXPECT_TRUE(nullptr == waiter.stream());
@@ -1840,7 +1855,8 @@ TEST_F(HttpStreamFactoryTest, RequestWebSocketBasicHandshakeStreamOverSSL) {
               request_info, DEFAULT_PRIORITY, ssl_config, ssl_config, &waiter,
               &create_helper,
               /* enable_ip_based_pooling = */ true,
-              /* enable_alternative_services = */ true, NetLogWithSource()));
+              /* enable_alternative_services = */ true,
+              /* http_1_1_required = */ false, NetLogWithSource()));
   waiter.WaitForStream();
   EXPECT_TRUE(waiter.stream_done());
   EXPECT_TRUE(nullptr == waiter.stream());
@@ -1883,7 +1899,8 @@ TEST_F(HttpStreamFactoryTest, RequestWebSocketBasicHandshakeStreamOverProxy) {
               request_info, DEFAULT_PRIORITY, ssl_config, ssl_config, &waiter,
               &create_helper,
               /* enable_ip_based_pooling = */ true,
-              /* enable_alternative_services = */ true, NetLogWithSource()));
+              /* enable_alternative_services = */ true,
+              /* http_1_1_required = */ false, NetLogWithSource()));
   waiter.WaitForStream();
   EXPECT_TRUE(waiter.stream_done());
   EXPECT_TRUE(nullptr == waiter.stream());
@@ -1938,7 +1955,8 @@ TEST_F(HttpStreamFactoryTest, RequestSpdyHttpStreamHttpsURL) {
       session->http_stream_factory()->RequestStream(
           request_info, DEFAULT_PRIORITY, ssl_config, ssl_config, &waiter,
           /* enable_ip_based_pooling = */ true,
-          /* enable_alternative_services = */ true, NetLogWithSource()));
+          /* enable_alternative_services = */ true,
+          /* http_1_1_required = */ false, NetLogWithSource()));
   waiter.WaitForStream();
   EXPECT_TRUE(waiter.stream_done());
   EXPECT_TRUE(nullptr == waiter.websocket_stream());
@@ -1993,7 +2011,8 @@ TEST_F(HttpStreamFactoryTest, RequestSpdyHttpStreamHttpURL) {
       session->http_stream_factory()->RequestStream(
           request_info, DEFAULT_PRIORITY, ssl_config, ssl_config, &waiter,
           /* enable_ip_based_pooling = */ true,
-          /* enable_alternative_services = */ true, NetLogWithSource()));
+          /* enable_alternative_services = */ true,
+          /* http_1_1_required = */ false, NetLogWithSource()));
   waiter.WaitForStream();
   EXPECT_TRUE(waiter.stream_done());
   EXPECT_TRUE(nullptr == waiter.websocket_stream());
@@ -2080,12 +2099,14 @@ TEST_F(HttpStreamFactoryTest, NewSpdySessionCloseIdleH2Sockets) {
       session->http_stream_factory()->RequestStream(
           request_info, DEFAULT_PRIORITY, ssl_config, ssl_config, &waiter1,
           /* enable_ip_based_pooling = */ true,
-          /* enable_alternative_services = */ true, NetLogWithSource()));
+          /* enable_alternative_services = */ true,
+          /* http_1_1_required = */ false, NetLogWithSource()));
   std::unique_ptr<HttpStreamRequest> request2(
       session->http_stream_factory()->RequestStream(
           request_info, DEFAULT_PRIORITY, ssl_config, ssl_config, &waiter2,
           /* enable_ip_based_pooling = */ true,
-          /* enable_alternative_services = */ true, NetLogWithSource()));
+          /* enable_alternative_services = */ true,
+          /* http_1_1_required = */ false, NetLogWithSource()));
   waiter1.WaitForStream();
   waiter2.WaitForStream();
   EXPECT_TRUE(waiter1.stream_done());
@@ -2135,14 +2156,16 @@ TEST_F(HttpStreamFactoryTest, TwoSpdyConnects) {
       session->http_stream_factory()->RequestStream(
           request_info, DEFAULT_PRIORITY, ssl_config, ssl_config, &waiter1,
           /* enable_ip_based_pooling = */ true,
-          /* enable_alternative_services = */ true, NetLogWithSource());
+          /* enable_alternative_services = */ true,
+          /* http_1_1_required = */ false, NetLogWithSource());
 
   StreamRequestWaiter waiter2;
   std::unique_ptr<HttpStreamRequest> request2 =
       session->http_stream_factory()->RequestStream(
           request_info, DEFAULT_PRIORITY, ssl_config, ssl_config, &waiter2,
           /* enable_ip_based_pooling = */ true,
-          /* enable_alternative_services = */ true, NetLogWithSource());
+          /* enable_alternative_services = */ true,
+          /* http_1_1_required = */ false, NetLogWithSource());
 
   waiter1.WaitForStream();
   waiter2.WaitForStream();
@@ -2189,7 +2212,8 @@ TEST_F(HttpStreamFactoryTest, RequestBidirectionalStreamImpl) {
       session->http_stream_factory()->RequestBidirectionalStreamImpl(
           request_info, DEFAULT_PRIORITY, ssl_config, ssl_config, &waiter,
           /* enable_ip_based_pooling = */ true,
-          /* enable_alternative_services = */ true, NetLogWithSource()));
+          /* enable_alternative_services = */ true,
+          /* http_1_1_required = */ false, NetLogWithSource()));
   waiter.WaitForStream();
   EXPECT_TRUE(waiter.stream_done());
   EXPECT_FALSE(waiter.websocket_stream());
@@ -2364,7 +2388,8 @@ TEST_P(HttpStreamFactoryBidirectionalQuicTest,
       session()->http_stream_factory()->RequestBidirectionalStreamImpl(
           request_info, DEFAULT_PRIORITY, ssl_config, ssl_config, &waiter,
           /* enable_ip_based_pooling = */ true,
-          /* enable_alternative_services = */ true, NetLogWithSource()));
+          /* enable_alternative_services = */ true,
+          /* http_1_1_required = */ false, NetLogWithSource()));
 
   waiter.WaitForStream();
   EXPECT_TRUE(waiter.stream_done());
@@ -2429,7 +2454,8 @@ TEST_P(HttpStreamFactoryBidirectionalQuicTest,
       session()->http_stream_factory()->RequestBidirectionalStreamImpl(
           request_info, DEFAULT_PRIORITY, ssl_config, ssl_config, &waiter,
           /* enable_ip_based_pooling = */ true,
-          /* enable_alternative_services = */ true, NetLogWithSource()));
+          /* enable_alternative_services = */ true,
+          /* http_1_1_required = */ false, NetLogWithSource()));
 
   waiter.WaitForStream();
   EXPECT_TRUE(waiter.stream_done());
@@ -2490,7 +2516,8 @@ TEST_P(HttpStreamFactoryBidirectionalQuicTest,
       session()->http_stream_factory()->RequestBidirectionalStreamImpl(
           request_info, DEFAULT_PRIORITY, ssl_config, ssl_config, &waiter,
           /* enable_ip_based_pooling = */ true,
-          /* enable_alternative_services = */ true, NetLogWithSource()));
+          /* enable_alternative_services = */ true,
+          /* http_1_1_required = */ false, NetLogWithSource()));
 
   waiter.WaitForStream();
   EXPECT_TRUE(waiter.stream_done());
@@ -2558,7 +2585,8 @@ TEST_F(HttpStreamFactoryTest, RequestBidirectionalStreamImplFailure) {
       session->http_stream_factory()->RequestBidirectionalStreamImpl(
           request_info, DEFAULT_PRIORITY, ssl_config, ssl_config, &waiter,
           /* enable_ip_based_pooling = */ true,
-          /* enable_alternative_services = */ true, NetLogWithSource()));
+          /* enable_alternative_services = */ true,
+          /* http_1_1_required = */ false, NetLogWithSource()));
   waiter.WaitForStream();
   EXPECT_TRUE(waiter.stream_done());
   ASSERT_THAT(waiter.error_status(), IsError(ERR_FAILED));

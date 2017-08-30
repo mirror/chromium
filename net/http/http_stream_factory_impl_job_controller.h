@@ -36,6 +36,7 @@ class HttpStreamFactoryImpl::JobController
                 bool is_preconnect,
                 bool enable_ip_based_pooling,
                 bool enable_alternative_services,
+                bool http_1_1_required,
                 const SSLConfig& server_ssl_config,
                 const SSLConfig& proxy_ssl_config);
 
@@ -332,6 +333,10 @@ class HttpStreamFactoryImpl::JobController
 
   // Enable using alternative services for the request.
   const bool enable_alternative_services_;
+
+  // Require HTTP/1.1 (disable pooling to an existing HTTP/2 or QUIC connection
+  // or opening a new one).
+  const bool http_1_1_required_;
 
   // |main_job_| is a job waiting to see if |alternative_job_| can reuse a
   // connection. If |alternative_job_| is unable to do so, |this| will notify

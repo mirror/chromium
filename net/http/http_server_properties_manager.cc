@@ -221,25 +221,6 @@ void HttpServerPropertiesManager::SetSupportsSpdy(
     ScheduleUpdatePrefsOnNetworkSequence(SUPPORTS_SPDY);
 }
 
-bool HttpServerPropertiesManager::RequiresHTTP11(const HostPortPair& server) {
-  DCHECK(network_task_runner_->RunsTasksInCurrentSequence());
-  return http_server_properties_impl_->RequiresHTTP11(server);
-}
-
-void HttpServerPropertiesManager::SetHTTP11Required(
-    const HostPortPair& server) {
-  DCHECK(network_task_runner_->RunsTasksInCurrentSequence());
-
-  http_server_properties_impl_->SetHTTP11Required(server);
-  ScheduleUpdatePrefsOnNetworkSequence(HTTP_11_REQUIRED);
-}
-
-void HttpServerPropertiesManager::MaybeForceHTTP11(const HostPortPair& server,
-                                                   SSLConfig* ssl_config) {
-  DCHECK(network_task_runner_->RunsTasksInCurrentSequence());
-  http_server_properties_impl_->MaybeForceHTTP11(server, ssl_config);
-}
-
 AlternativeServiceInfoVector
 HttpServerPropertiesManager::GetAlternativeServiceInfos(
     const url::SchemeHostPort& origin) {

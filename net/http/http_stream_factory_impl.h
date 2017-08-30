@@ -51,6 +51,7 @@ class NET_EXPORT_PRIVATE HttpStreamFactoryImpl : public HttpStreamFactory {
       HttpStreamRequest::Delegate* delegate,
       bool enable_ip_based_pooling,
       bool enable_alternative_services,
+      bool http_1_1_required,
       const NetLogWithSource& net_log) override;
 
   std::unique_ptr<HttpStreamRequest> RequestWebSocketHandshakeStream(
@@ -62,6 +63,7 @@ class NET_EXPORT_PRIVATE HttpStreamFactoryImpl : public HttpStreamFactory {
       WebSocketHandshakeStreamBase::CreateHelper* create_helper,
       bool enable_ip_based_pooling,
       bool enable_alternative_services,
+      bool http_1_1_required,
       const NetLogWithSource& net_log) override;
 
   std::unique_ptr<HttpStreamRequest> RequestBidirectionalStreamImpl(
@@ -72,6 +74,7 @@ class NET_EXPORT_PRIVATE HttpStreamFactoryImpl : public HttpStreamFactory {
       HttpStreamRequest::Delegate* delegate,
       bool enable_ip_based_pooling,
       bool enable_alternative_services,
+      bool http_1_1_required,
       const NetLogWithSource& net_log) override;
 
   void PreconnectStreams(int num_streams, const HttpRequestInfo& info) override;
@@ -128,6 +131,7 @@ class NET_EXPORT_PRIVATE HttpStreamFactoryImpl : public HttpStreamFactory {
       HttpStreamRequest::StreamType stream_type,
       bool enable_ip_based_pooling,
       bool enable_alternative_services,
+      bool http_1_1_required,
       const NetLogWithSource& net_log);
 
   // Called when the Job detects that the endpoint indicated by the

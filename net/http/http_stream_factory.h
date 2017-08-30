@@ -211,6 +211,7 @@ class NET_EXPORT HttpStreamFactory {
       HttpStreamRequest::Delegate* delegate,
       bool enable_ip_based_pooling,
       bool enable_alternative_services,
+      bool http_1_1_required,
       const NetLogWithSource& net_log) = 0;
 
   // Request a WebSocket handshake stream.
@@ -225,6 +226,7 @@ class NET_EXPORT HttpStreamFactory {
       WebSocketHandshakeStreamBase::CreateHelper* create_helper,
       bool enable_ip_based_pooling,
       bool enable_alternative_services,
+      bool http_1_1_required,
       const NetLogWithSource& net_log) = 0;
 
   // Request a BidirectionalStreamImpl.
@@ -238,6 +240,7 @@ class NET_EXPORT HttpStreamFactory {
       HttpStreamRequest::Delegate* delegate,
       bool enable_ip_based_pooling,
       bool enable_alternative_services,
+      bool http_1_1_required,
       const NetLogWithSource& net_log) = 0;
 
   // Requests that enough connections for |num_streams| be opened.

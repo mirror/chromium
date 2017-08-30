@@ -15296,6 +15296,7 @@ class FakeStreamFactory : public HttpStreamFactory {
       HttpStreamRequest::Delegate* delegate,
       bool enable_ip_based_pooling,
       bool enable_alternative_services,
+      bool http_1_1_required,
       const NetLogWithSource& net_log) override {
     auto fake_request = std::make_unique<FakeStreamRequest>(priority, delegate);
     last_stream_request_ = fake_request->AsWeakPtr();
@@ -15310,6 +15311,7 @@ class FakeStreamFactory : public HttpStreamFactory {
       HttpStreamRequest::Delegate* delegate,
       bool enable_ip_based_pooling,
       bool enable_alternative_services,
+      bool http_1_1_required,
       const NetLogWithSource& net_log) override {
     NOTREACHED();
     return nullptr;
@@ -15324,6 +15326,7 @@ class FakeStreamFactory : public HttpStreamFactory {
       WebSocketHandshakeStreamBase::CreateHelper* create_helper,
       bool enable_ip_based_pooling,
       bool enable_alternative_services,
+      bool http_1_1_required,
       const NetLogWithSource& net_log) override {
     auto fake_request =
         std::make_unique<FakeStreamRequest>(priority, delegate, create_helper);

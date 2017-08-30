@@ -85,7 +85,9 @@ int InitSocketPoolHelper(ClientSocketPoolManager::SocketGroupType group_type,
   scoped_refptr<SOCKSSocketParams> socks_params;
   std::unique_ptr<HostPortPair> proxy_host_port;
 
-  bool using_ssl = group_type == ClientSocketPoolManager::SSL_GROUP;
+  const bool using_ssl =
+      (group_type == ClientSocketPoolManager::SSL_GROUP) ||
+      (group_type == ClientSocketPoolManager::HTTP_1_1_REQUIRED_GROUP);
   HostPortPair origin_host_port = endpoint;
 
   if (!using_ssl && session->params().testing_fixed_http_port != 0) {
@@ -107,14 +109,21 @@ int InitSocketPoolHelper(ClientSocketPoolManager::SocketGroupType group_type,
   // Determine the host and port to connect to.
   std::string connection_group = origin_host_port.ToString();
   DCHECK(!connection_group.empty());
-  if (group_type == ClientSocketPoolManager::FTP_GROUP) {
-    // Combining FTP with forced SPDY over SSL would be a "path to madness".
-    // Make sure we never do that.
-    DCHECK(!using_ssl);
-    connection_group = "ftp/" + connection_group;
-  }
-  if (using_ssl) {
-    connection_group = "ssl/" + connection_group;
+  switch (group_type) {
+    case ClientSocketPoolManager::SSL_GROUP:
+      connection_group = "ssl/" + connection_group;
+      break;
+    case ClientSocketPoolManager::HTTP_1_1_REQUIRED_GROUP:
+      connection_group = "http11/" + connection_group;
+      break;
+    case ClientSocketPoolManager::NORMAL_GROUP:
+      break;
+    case ClientSocketPoolManager::FTP_GROUP:
+      // Combining FTP with forced SPDY over SSL would be a "path to madness".
+      // Make sure we never do that.
+      DCHECK(!using_ssl);
+      connection_group = "ftp/" + connection_group;
+      break;
   }
 
   ClientSocketPool::RespectLimits respect_limits =

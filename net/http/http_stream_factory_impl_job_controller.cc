@@ -67,6 +67,7 @@ HttpStreamFactoryImpl::JobController::JobController(
     bool is_preconnect,
     bool enable_ip_based_pooling,
     bool enable_alternative_services,
+    bool http_1_1_required,
     const SSLConfig& server_ssl_config,
     const SSLConfig& proxy_ssl_config)
     : factory_(factory),
@@ -77,6 +78,7 @@ HttpStreamFactoryImpl::JobController::JobController(
       is_preconnect_(is_preconnect),
       enable_ip_based_pooling_(enable_ip_based_pooling),
       enable_alternative_services_(enable_alternative_services),
+      http_1_1_required_(http_1_1_required),
       alternative_job_net_error_(OK),
       job_bound_(false),
       main_job_is_blocked_(false),
@@ -815,6 +817,8 @@ int HttpStreamFactoryImpl::JobController::DoCreateJobs() {
     // preconnects is currently ignored (see RequestSocketsForPool()), but could
     // be used at some point for proxy resolution or something.
     if (alternative_service_info_.protocol() != kProtoUnknown) {
+      DCHECK(!http_1_1_required_);
+
       HostPortPair alternative_destination(
           alternative_service_info_.host_port_pair());
       ignore_result(
@@ -828,7 +832,7 @@ int HttpStreamFactoryImpl::JobController::DoCreateJobs() {
       main_job_ = job_factory_->CreateMainJob(
           this, PRECONNECT, session_, request_info_, IDLE, proxy_info_,
           server_ssl_config_, proxy_ssl_config_, destination, origin_url,
-          enable_ip_based_pooling_, session_->net_log());
+          enable_ip_based_pooling_, http_1_1_required_, session_->net_log());
     }
     main_job_->Preconnect(num_streams_);
     return OK;
@@ -836,11 +840,12 @@ int HttpStreamFactoryImpl::JobController::DoCreateJobs() {
   main_job_ = job_factory_->CreateMainJob(
       this, MAIN, session_, request_info_, priority_, proxy_info_,
       server_ssl_config_, proxy_ssl_config_, destination, origin_url,
-      enable_ip_based_pooling_, net_log_.net_log());
+      enable_ip_based_pooling_, http_1_1_required_, net_log_.net_log());
   // Alternative Service can only be set for HTTPS requests while Alternative
   // Proxy is set for HTTP requests.
   if (alternative_service_info_.protocol() != kProtoUnknown) {
     DCHECK(request_info_.url.SchemeIs(url::kHttpsScheme));
+    DCHECK(!http_1_1_required_);
     DVLOG(1) << "Selected alternative service (host: "
              << alternative_service_info_.host_port_pair().host()
              << " port: " << alternative_service_info_.host_port_pair().port()
@@ -863,6 +868,8 @@ int HttpStreamFactoryImpl::JobController::DoCreateJobs() {
     if (ShouldCreateAlternativeProxyServerJob(proxy_info_, request_info_.url,
                                               &alternative_proxy_server)) {
       DCHECK(!main_job_is_blocked_);
+      DCHECK(!http_1_1_required_);
+
       ProxyInfo alternative_proxy_info;
       alternative_proxy_info.UseProxyServer(alternative_proxy_server);
 
@@ -1042,7 +1049,7 @@ HttpStreamFactoryImpl::JobController::GetAlternativeServiceInfoFor(
     const HttpRequestInfo& request_info,
     HttpStreamRequest::Delegate* delegate,
     HttpStreamRequest::StreamType stream_type) {
-  if (!enable_alternative_services_)
+  if (!enable_alternative_services_ || http_1_1_required_)
     return AlternativeServiceInfo();
 
   AlternativeServiceInfo alternative_service_info =
@@ -1197,7 +1204,7 @@ bool HttpStreamFactoryImpl::JobController::
         ProxyServer* alternative_proxy_server) const {
   DCHECK(!alternative_proxy_server->is_valid());
 
-  if (!enable_alternative_services_)
+  if (!enable_alternative_services_ || http_1_1_required_)
     return false;
 
   if (!can_start_alternative_proxy_job_) {

@@ -33,7 +33,6 @@ class Value;
 namespace net {
 
 class IPAddress;
-struct SSLConfig;
 
 enum AlternateProtocolUsage {
   // Alternate Protocol was used without racing a normal connection.
@@ -290,19 +289,6 @@ class NET_EXPORT HttpServerProperties {
   // thread.
   virtual void SetSupportsSpdy(const url::SchemeHostPort& server,
                                bool support_spdy) = 0;
-
-  // Returns true if |server| has required HTTP/1.1 via HTTP/2 error code.
-  virtual bool RequiresHTTP11(const HostPortPair& server) = 0;
-
-  // Require HTTP/1.1 on subsequent connections.  Not persisted.
-  virtual void SetHTTP11Required(const HostPortPair& server) = 0;
-
-  // Modify SSLConfig to force HTTP/1.1.
-  static void ForceHTTP11(SSLConfig* ssl_config);
-
-  // Modify SSLConfig to force HTTP/1.1 if necessary.
-  virtual void MaybeForceHTTP11(const HostPortPair& server,
-                                SSLConfig* ssl_config) = 0;
 
   // Return all alternative services for |origin|, including broken ones.
   // Returned alternative services never have empty hostnames.

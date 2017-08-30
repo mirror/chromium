@@ -386,6 +386,10 @@ class NET_EXPORT_PRIVATE HttpNetworkTransaction
   // Enable using alternative services for the request.
   bool enable_alternative_services_;
 
+  // Require HTTP/1.1 (disable HTTP/2 and QUIC) on a retry
+  // after receiving HTTP_1_1_REQUIRED error code from the server.
+  bool http_1_1_required_;
+
   // When a request is retried because of errors with the alternative service,
   // this will store the alternative service used.
   AlternativeService retried_alternative_service_;
