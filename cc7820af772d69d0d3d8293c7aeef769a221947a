@@ -52,6 +52,24 @@
       "revId": "cc7820af772d69d0d3d8293c7aeef769a221947a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7f9d3c2_c6b55d79",
+        "filename": "ui/aura/window_event_dispatcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-30T17:47:30Z",
+      "side": 0,
+      "message": "The server knows about easy resize targeter because of SetExtendedHitRegionForChildren ( https://cs.chromium.org/chromium/src/services/ui/public/interfaces/window_manager.mojom?q\u003dwindow_manager.mojom\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d273 ). But you are right, there may be other targeters that won\u0027t be picked up correctly until hit testing lands. I\u0027m going to nuke this and go with https://chromium-review.googlesource.com/c/chromium/src/+/643948 . That makes it so that capture windows take priority (as they do in classic). Could you take a look at that one?",
+      "parentUuid": "3121795c_abe0b467",
+      "revId": "cc7820af772d69d0d3d8293c7aeef769a221947a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
