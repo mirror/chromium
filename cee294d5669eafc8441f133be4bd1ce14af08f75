@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c5bc3ea5_ed6b81cd",
+        "filename": "third_party/WebKit/Source/core/dom/TaskRunnerHelper.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-08-30T09:59:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eeaf6072_2e29112b",
+      "range": {
+        "startLine": 55,
+        "startChar": 24,
+        "endLine": 55,
+        "endChar": 28
+      },
+      "revId": "cee294d5669eafc8441f133be4bd1ce14af08f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8012d30f_fe1e6f24",
         "filename": "third_party/WebKit/Source/core/dom/TaskRunnerHelper.cpp",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "cee294d5669eafc8441f133be4bd1ce14af08f75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af284ab1_89ecdaae",
+        "filename": "third_party/WebKit/Source/core/dom/TaskRunnerHelper.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-08-30T09:59:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8012d30f_fe1e6f24",
+      "range": {
+        "startLine": 59,
+        "startChar": 65,
+        "endLine": 59,
+        "endChar": 70
+      },
+      "revId": "cee294d5669eafc8441f133be4bd1ce14af08f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0663e180_7e2767d6",
+        "filename": "third_party/WebKit/Source/platform/WebFrameScheduler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-08-30T09:59:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6abdaef_c46a3f7a",
+      "range": {
+        "startLine": 78,
+        "startChar": 7,
+        "endLine": 78,
+        "endChar": 10
+      },
+      "revId": "cee294d5669eafc8441f133be4bd1ce14af08f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "838c71ec_33015645",
         "filename": "third_party/WebKit/Source/platform/WebFrameScheduler.h",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2017-08-15T17:29:30Z",
       "side": 1,
       "message": "Idea for the future: we could set a debug scope while running tasks from this that disallows script execution.",
+      "range": {
+        "startLine": 86,
+        "startChar": 25,
+        "endLine": 86,
+        "endChar": 33
+      },
+      "revId": "cee294d5669eafc8441f133be4bd1ce14af08f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "64a44476_488df739",
+        "filename": "third_party/WebKit/Source/platform/WebFrameScheduler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-08-30T09:59:38Z",
+      "side": 1,
+      "message": "Good idea. I was thinking about this, but from slightly different angle — tracking V8 entrypoints and DCHECKing that scheduler is OK with running javascript at the moment.",
+      "parentUuid": "838c71ec_33015645",
       "range": {
         "startLine": 86,
         "startChar": 25,
@@ -114,6 +210,30 @@
       "revId": "cee294d5669eafc8441f133be4bd1ce14af08f75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47466fc8_cb8ea720",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-08-30T09:59:38Z",
+      "side": 1,
+      "message": "Not really — it was just moved here from NewTimerTaskQueue.",
+      "parentUuid": "ed62d58d_8317b756",
+      "range": {
+        "startLine": 323,
+        "startChar": 21,
+        "endLine": 323,
+        "endChar": 40
+      },
+      "revId": "cee294d5669eafc8441f133be4bd1ce14af08f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
