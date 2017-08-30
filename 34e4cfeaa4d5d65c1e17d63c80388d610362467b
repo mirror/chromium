@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09332290_3cf1e7af",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkUtils.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-30T20:59:35Z",
+      "side": 1,
+      "message": "Maybe add a method called applyAlertDialogContentStyle()\n\n- Specifically mention that we are imitating Chrome\u0027s @style/AlertDialogContent\n- Specifically mention that we are setting the style via Java instead of via specifying the style in the XML to avoid having layout files in both layout-v17/ and in layout/",
+      "revId": "34e4cfeaa4d5d65c1e17d63c80388d610362467b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
