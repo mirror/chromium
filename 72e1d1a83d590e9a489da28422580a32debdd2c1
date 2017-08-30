@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "27ac3759_c9044c92",
+        "filename": "services/ui/ws/event_dispatcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-30T04:35:38Z",
+      "side": 1,
+      "message": "We don\u0027t seem consistent in regards to whether the first letter should be capitalized, but it looks like maybe it\u0027s done more often than not. Updated.",
+      "parentUuid": "fd81c89e_64f3e47b",
+      "range": {
+        "startLine": 94,
+        "startChar": 11,
+        "endLine": 94,
+        "endChar": 15
+      },
+      "revId": "72e1d1a83d590e9a489da28422580a32debdd2c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "067e8b9c_707347d8",
         "filename": "services/ui/ws/event_dispatcher.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-30T02:39:07Z",
       "side": 1,
       "message": "Here, and below in UpdateCursorProviderByLastKnownLocation, we also call FindTargetForLocation in EventTargeter. Should we keep the IsHitTestInFlight and queue in EventTargeter?",
+      "range": {
+        "startLine": 227,
+        "startChar": 21,
+        "endLine": 227,
+        "endChar": 42
+      },
+      "revId": "72e1d1a83d590e9a489da28422580a32debdd2c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6be1137d_b30b127a",
+        "filename": "services/ui/ws/event_dispatcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-30T04:35:38Z",
+      "side": 1,
+      "message": "I was mildly worried about that, but AFAICT I couldn\u0027t think of a reason why they need to be tied together, especially when we won\u0027t necessarily always call to EventTargeter. Can you think of a reason why the two nee to be tied together?",
+      "parentUuid": "067e8b9c_707347d8",
       "range": {
         "startLine": 227,
         "startChar": 21,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "415653dc_3ff8969c",
+        "filename": "services/ui/ws/event_dispatcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-30T04:35:38Z",
+      "side": 1,
+      "message": "You are right. Removed IsTrackingPointer part (since I need the itererator as the function is const).",
+      "parentUuid": "f6ce8932_f468f2bf",
+      "range": {
+        "startLine": 468,
+        "startChar": 40,
+        "endLine": 468,
+        "endChar": 70
+      },
+      "revId": "72e1d1a83d590e9a489da28422580a32debdd2c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "866558ad_5cdb9c57",
         "filename": "services/ui/ws/event_dispatcher.h",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "a8acb133_9f598ae0",
+        "filename": "services/ui/ws/event_dispatcher.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-30T04:35:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "866558ad_5cdb9c57",
+      "range": {
+        "startLine": 78,
+        "startChar": 29,
+        "endLine": 78,
+        "endChar": 49
+      },
+      "revId": "72e1d1a83d590e9a489da28422580a32debdd2c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd768e58_bd6e8e63",
         "filename": "services/ui/ws/window_manager_state_unittest.cc",
         "patchSetId": 3
@@ -105,6 +201,30 @@
       "writtenOn": "2017-08-30T02:39:07Z",
       "side": 1,
       "message": "same change as above?",
+      "range": {
+        "startLine": 748,
+        "startChar": 14,
+        "endLine": 748,
+        "endChar": 77
+      },
+      "revId": "72e1d1a83d590e9a489da28422580a32debdd2c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ca2a98b_10377231",
+        "filename": "services/ui/ws/window_manager_state_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-30T04:35:38Z",
+      "side": 1,
+      "message": "The change above is necessary because no events have been generated. Where as this test need not change because the move event generated on 740 needs to go the EventTargeter because no buttons are down. As as result IsProcessingEvent here is true.",
+      "parentUuid": "fd768e58_bd6e8e63",
       "range": {
         "startLine": 748,
         "startChar": 14,
