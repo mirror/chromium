@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32c29758_6d3a2bb8",
+        "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-08-30T10:35:00Z",
+      "side": 1,
+      "message": "I don\u0027t think the setCallback method is actually necessary? You should be able to do:\n\nnew bookmarks.Debouncer(() \u003d\u003e {\n  store.dispatch(changeFolderOpen(this.lastElement.itemId))\n  this.reset()\n})",
+      "revId": "1edc672766930fabddd283987c13e481570af88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82c18dbf_40121adc",
+        "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-08-30T10:35:00Z",
+      "side": 1,
+      "message": "...and then down here, just remove this setCallback entirely.",
+      "revId": "1edc672766930fabddd283987c13e481570af88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89e85468_59bfbdee",
+        "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-08-30T10:35:00Z",
+      "side": 1,
+      "message": "It would be nice to add a comment here explicitly saying that this will fall through into the next if statement. This caught me out at first.",
+      "revId": "1edc672766930fabddd283987c13e481570af88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eecef5e_fd1c7819",
+        "filename": "chrome/browser/resources/md_bookmarks/timer_proxy.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-08-30T10:35:00Z",
+      "side": 1,
+      "message": "To remove confusion between reset() and resetTimeout(), how about renaming this method to something like restartTimeout()?",
+      "range": {
+        "startLine": 58,
+        "startChar": 4,
+        "endLine": 58,
+        "endChar": 16
+      },
+      "revId": "1edc672766930fabddd283987c13e481570af88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
