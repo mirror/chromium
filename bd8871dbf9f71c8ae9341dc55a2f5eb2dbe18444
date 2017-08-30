@@ -52,6 +52,24 @@
       "revId": "bd8871dbf9f71c8ae9341dc55a2f5eb2dbe18444",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d501d6ed_45896756",
+        "filename": "chrome/browser/chromeos/resource_reporter/resource_reporter.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-30T23:08:55Z",
+      "side": 1,
+      "message": "Add the down-scaling by NumberOfProcessors(), if we think that is what was intended.",
+      "parentUuid": "0922b229_6b8e85c2",
+      "revId": "bd8871dbf9f71c8ae9341dc55a2f5eb2dbe18444",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
