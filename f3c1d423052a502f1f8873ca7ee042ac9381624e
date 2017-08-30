@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "b6d68e75_bb377f07",
+        "filename": "chrome/browser/printing/pwg_raster_converter_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-08-30T21:39:27Z",
+      "side": 1,
+      "message": "Weird, I had grepped for the one with space, saw a bunch and assumed it was the right way.\n~/chromium/src$ git grep \u0027\\/\\*[a-z].*\u003d\\*\u0027 | wc -l\n2454\n~/chromium/src$ git grep \u0027\\/\\* [a-z].*\u003d \\*\u0027 | wc -l\n567\n~/chromium/src$ git grep \u0027\\/\\* [a-z].* \u003d \\*\u0027 | wc -l\n414\nSo I went with the majority and removed the spaces as you suggested.",
+      "parentUuid": "70c9f180_94387547",
+      "revId": "f3c1d423052a502f1f8873ca7ee042ac9381624e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a148b777_7f919f95",
         "filename": "chrome/browser/printing/pwg_raster_converter_browsertest.cc",
         "patchSetId": 1
