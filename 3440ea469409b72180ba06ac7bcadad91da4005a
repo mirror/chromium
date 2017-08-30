@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56c9d01b_85db4f57",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-30T16:28:31Z",
+      "side": 1,
+      "message": "I think this might not be necessary since I assume it should be done in the timer_ dtor already. Please double check and remove this line if not needed.",
+      "range": {
+        "startLine": 173,
+        "startChar": 16,
+        "endLine": 173,
+        "endChar": 0
+      },
+      "revId": "3440ea469409b72180ba06ac7bcadad91da4005a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe77e7e1_4ae2e643",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-30T16:28:31Z",
+      "side": 1,
+      "message": "Can this class and TabsStatsDataStore be moved to separate files?",
+      "range": {
+        "startLine": 136,
+        "startChar": 4,
+        "endLine": 136,
+        "endChar": 0
+      },
+      "revId": "3440ea469409b72180ba06ac7bcadad91da4005a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c2b3e07_3c207352",
+        "filename": "chrome/browser/metrics/tab_stats_tracker_unittests.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-30T16:28:31Z",
+      "side": 1,
+      "message": "Nit: Just put the test (including the anon namespace) inside the metrics namespace and then you don\u0027t need these using statements and can also remove the metrics:: prefix in various places in the code below.",
+      "range": {
+        "startLine": 23,
+        "startChar": 27,
+        "endLine": 23,
+        "endChar": 34
+      },
+      "revId": "3440ea469409b72180ba06ac7bcadad91da4005a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
