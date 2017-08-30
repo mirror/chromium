@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e567ca97_8f331b53",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_blocking_page_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1002294
+      },
+      "writtenOn": "2017-08-30T15:24:45Z",
+      "side": 1,
+      "message": "Hmm... why are you changing this?",
+      "range": {
+        "startLine": 323,
+        "startChar": 17,
+        "endLine": 323,
+        "endChar": 0
+      },
+      "revId": "18fee8df181c7b6017cee130e5392ed5415795f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
