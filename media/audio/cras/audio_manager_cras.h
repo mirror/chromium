@@ -14,6 +14,7 @@
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "chromeos/audio/audio_device.h"
 #include "media/audio/audio_manager_base.h"
 
 namespace media {
@@ -80,11 +81,21 @@ class MEDIA_EXPORT AudioManagerCras : public AudioManagerBase {
 
   void AddBeamformingDevices(AudioDeviceNames* device_names);
 
+  void GetAudioDevices(chromeos::AudioDeviceList* devices);
+  void GetAudioDevicesOnMainThread(chromeos::AudioDeviceList* devices,
+                                   base::WaitableEvent* event);
+  void GetPrimaryActiveOutputNodeOnMainThread(uint64_t* active_output_node_id,
+                                              base::WaitableEvent* event);
+
   // Stores the mic positions field from the device.
   std::vector<Point> mic_positions_;
 
   const char* beamforming_on_device_id_;
   const char* beamforming_off_device_id_;
+
+  // Task runner of browser main thread. CrasAudioHandler should be only
+  // accessed on this thread.
+  scoped_refptr<base::SingleThreadTaskRunner> main_task_runner_;
 
   DISALLOW_COPY_AND_ASSIGN(AudioManagerCras);
 };
