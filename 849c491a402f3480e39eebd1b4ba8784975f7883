@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e558684_7b698d5c",
+        "filename": "base/values.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-30T18:21:36Z",
+      "side": 1,
+      "message": "According to the code this will just return false if the current value isn\u0027t a dictionary. Maybe it should be more explicit about that case?",
+      "range": {
+        "startLine": 235,
+        "startChar": 23,
+        "endLine": 235,
+        "endChar": 28
+      },
+      "revId": "849c491a402f3480e39eebd1b4ba8784975f7883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
