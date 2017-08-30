@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67cf0cda_4af9996a",
+        "filename": "net/socket/udp_socket_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-30T00:06:24Z",
+      "side": 1,
+      "message": "Technically, this alone should be enough to avoid the crash, though there\u0027s still the weird case where on read failure, the same socket is reconnected, and a new async write started...  And it would do nothing about the case where |this| is destroyed during a callback, though we aren\u0027t running into that, currently, to the extent of my knowledge.",
+      "range": {
+        "startLine": 322,
+        "startChar": 26,
+        "endLine": 322,
+        "endChar": 0
+      },
+      "revId": "cb6460bcc1e11c59b4dd1ef36bb5a2583230466a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
