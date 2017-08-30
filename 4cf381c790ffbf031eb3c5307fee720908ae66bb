@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ae163516_5f984baa",
+        "filename": "chrome/browser/vr/elements/transience_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-30T14:40:48Z",
+      "side": 1,
+      "message": "I think this is no longer applicable with the new approach.",
+      "parentUuid": "b22ffe6a_9959cfe0",
+      "revId": "4cf381c790ffbf031eb3c5307fee720908ae66bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5a99a537_eed0971e",
         "filename": "chrome/browser/vr/elements/ui_element.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-04T14:21:09Z",
       "side": 1,
       "message": "Can you remind me why this isn\u0027t called NotifyClientVisibilityAnimated?",
+      "revId": "4cf381c790ffbf031eb3c5307fee720908ae66bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37a71b3f_8552838f",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-30T14:40:48Z",
+      "side": 1,
+      "message": "This has been removed in the latest patch set, but the reason for this is that the AnimationTarget interface has notification methods named according to the fundamental type of the animated property. We might have had a different animated boolean property. The property id (which defines the semantics of the property) is passed as a parameter.",
+      "parentUuid": "5a99a537_eed0971e",
       "revId": "4cf381c790ffbf031eb3c5307fee720908ae66bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "add4bf79_5216d113",
+        "filename": "chrome/browser/vr/elements/ui_element_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-30T14:40:48Z",
+      "side": 1,
+      "message": "Removed in the latest patch set.",
+      "parentUuid": "9bf3bb35_9736577e",
+      "revId": "4cf381c790ffbf031eb3c5307fee720908ae66bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "678b72ed_0a46458d",
         "filename": "chrome/browser/vr/ui_scene_manager.cc",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "4cf381c790ffbf031eb3c5307fee720908ae66bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23bf55ab_5da496d7",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-30T14:40:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "678b72ed_0a46458d",
+      "revId": "4cf381c790ffbf031eb3c5307fee720908ae66bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

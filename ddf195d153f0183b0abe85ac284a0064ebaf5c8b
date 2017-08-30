@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2b7f9b45_13f24b0a",
+        "filename": "chrome/browser/vr/elements/transience_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-30T14:40:48Z",
+      "side": 1,
+      "message": "I\u0027m hoping to keep them to wrap up the opacity-fiddling that\u0027s now required.",
+      "parentUuid": "720e5970_9de2d1a3",
+      "revId": "ddf195d153f0183b0abe85ac284a0064ebaf5c8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0519aaf4_6c566819",
         "filename": "chrome/browser/vr/elements/transience_manager_unittest.cc",
         "patchSetId": 5
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "54f92db4_35e392a8",
+        "filename": "chrome/browser/vr/elements/transient_url_bar.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-30T14:40:48Z",
+      "side": 1,
+      "message": "This is no more :)",
+      "parentUuid": "31eda2e2_4b010cf5",
+      "revId": "ddf195d153f0183b0abe85ac284a0064ebaf5c8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "954eec37_4684084a",
         "filename": "chrome/browser/vr/elements/ui_element.cc",
         "patchSetId": 5
@@ -64,6 +100,24 @@
       "writtenOn": "2017-08-08T14:35:21Z",
       "side": 1,
       "message": "I thought \"enabled\" was staying separate - basically a gate for visibility, whatever state visibility happens to be in.  Am I remembering wrong?  :)  As is, why not ditch the method completely, as it\u0027s now sugar for sugar?",
+      "revId": "ddf195d153f0183b0abe85ac284a0064ebaf5c8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecdbe516_1d9050f1",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-30T14:40:48Z",
+      "side": 1,
+      "message": "This is now removed. The visibility safeguards are now provided by toggling the visibility of the webvr and browsing subtrees.",
+      "parentUuid": "954eec37_4684084a",
       "revId": "ddf195d153f0183b0abe85ac284a0064ebaf5c8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "51ae384c_e31dc06b",
+        "filename": "chrome/browser/vr/elements/ui_element.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-30T14:40:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89e95d06_78b8fabf",
+      "revId": "ddf195d153f0183b0abe85ac284a0064ebaf5c8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5bc90416_d3b8a953",
         "filename": "chrome/browser/vr/elements/ui_element.h",
         "patchSetId": 5
@@ -101,6 +173,24 @@
       "revId": "ddf195d153f0183b0abe85ac284a0064ebaf5c8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f2eaad1_88d2a91d",
+        "filename": "chrome/browser/vr/elements/ui_element.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-30T14:40:48Z",
+      "side": 1,
+      "message": "It was to avoid a conversion as we passed the generic std::set\u003cint\u003e to the player (which I hope will move into ui/gfx/animation one day), but since that conversion is so simple, I\u0027ve changed the signature as you suggest.",
+      "parentUuid": "5bc90416_d3b8a953",
+      "revId": "ddf195d153f0183b0abe85ac284a0064ebaf5c8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "b2b34a53_650d9413",
+        "filename": "chrome/browser/vr/elements/ui_element.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-30T14:40:48Z",
+      "side": 1,
+      "message": "I\u0027ve reworded.",
+      "parentUuid": "4c00c367_9921ade2",
+      "revId": "ddf195d153f0183b0abe85ac284a0064ebaf5c8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d546bab8_1dde9b6e",
         "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
         "patchSetId": 5
@@ -132,6 +240,30 @@
       "writtenOn": "2017-08-08T14:35:21Z",
       "side": 1,
       "message": "Why not 1000 ms like others earlier?",
+      "range": {
+        "startLine": 301,
+        "startChar": 22,
+        "endLine": 301,
+        "endChar": 24
+      },
+      "revId": "ddf195d153f0183b0abe85ac284a0064ebaf5c8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a2b448f_d20904cf",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-30T14:40:48Z",
+      "side": 1,
+      "message": "Added comments to explain this.",
+      "parentUuid": "d546bab8_1dde9b6e",
       "range": {
         "startLine": 301,
         "startChar": 22,
