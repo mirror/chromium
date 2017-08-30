@@ -5,6 +5,8 @@
 #ifndef NET_CERT_TEST_ROOT_CERTS_H_
 #define NET_CERT_TEST_ROOT_CERTS_H_
 
+#include <vector>
+
 #include "base/lazy_instance.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
@@ -13,7 +15,6 @@
 
 #if defined(USE_NSS_CERTS)
 #include <cert.h>
-#include <vector>
 #include "net/cert/scoped_nss_types.h"
 #elif defined(OS_WIN)
 #include <windows.h>
@@ -30,6 +31,7 @@ class FilePath;
 
 namespace net {
 
+class ParsedCertificate;
 class X509Certificate;
 
 // TestRootCerts is a helper class for unit tests that is used to
@@ -82,6 +84,10 @@ class NET_EXPORT TestRootCerts {
   // engine is appropriate. The caller is responsible for freeing the
   // returned HCERTCHAINENGINE.
   HCERTCHAINENGINE GetChainEngine() const;
+#elif defined(OS_FUCHSIA)
+  const std::vector<scoped_refptr<ParsedCertificate>>& temporary_roots() const {
+    return temporary_roots_;
+  }
 #endif
 
  private:
@@ -126,9 +132,11 @@ class NET_EXPORT TestRootCerts {
 #elif defined(OS_MACOSX)
   base::ScopedCFTypeRef<CFMutableArrayRef> temporary_roots_;
   bool allow_system_trust_;
+#elif defined(OS_FUCHSIA)
+  std::vector<scoped_refptr<ParsedCertificate>> temporary_roots_;
 #endif
 
-#if defined(OS_WIN) || defined(OS_ANDROID) || defined(OS_FUCHSIA)
+#if defined(OS_WIN) || defined(OS_ANDROID)
   // True if there are no temporarily trusted root certificates.
   bool empty_;
 #endif
