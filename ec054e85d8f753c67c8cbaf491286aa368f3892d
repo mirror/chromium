@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5dba11d_b525c4fc",
+        "filename": "third_party/WebKit/Source/platform/wtf/experimental/ContainerTypeOperations.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1103784
+      },
+      "writtenOn": "2017-08-30T11:34:30Z",
+      "side": 1,
+      "message": "Formatting of some variable definition is broken due to crbug.com/760094.",
+      "range": {
+        "startLine": 307,
+        "startChar": 9,
+        "endLine": 307,
+        "endChar": 25
+      },
+      "revId": "ec054e85d8f753c67c8cbaf491286aa368f3892d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
