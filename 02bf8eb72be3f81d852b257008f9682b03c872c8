@@ -34,6 +34,24 @@
       "revId": "02bf8eb72be3f81d852b257008f9682b03c872c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d8e0067_552d59b9",
+        "filename": "ios/chrome/browser/ssl/ios_ssl_error_handler.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-30T18:33:06Z",
+      "side": 1,
+      "message": "Thanks for the clarification! Do you think there is value in mentioning this as a comment? (not sure if this is common knowledge for iOS folks, if yes feel free to ignore)\n\nAlso I think a more generic test could be more suitable. Otherwise those not familiar with the code could wonder if this is captive portal specific code which I understand is not.",
+      "parentUuid": "31eac94c_36692d61",
+      "revId": "02bf8eb72be3f81d852b257008f9682b03c872c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
