@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09dbe2b4_c8996ad8",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-30T01:18:55Z",
+      "side": 1,
+      "message": "Chrome is moving away from citing RFC 3987 and using the URL Standard instead. Cite \"URL Standard Section 4.8\" instead (or just use the following URL, since the section numbers are subject to change).\n\nhttps://url.spec.whatwg.org/#url-rendering",
+      "range": {
+        "startLine": 255,
+        "startChar": 47,
+        "endLine": 255,
+        "endChar": 74
+      },
+      "revId": "965d5c23592e3c4285bee6d7be96b89bfc1d756a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
