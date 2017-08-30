@@ -22,6 +22,57 @@
       "revId": "3fe0f0f372ef58ccbf315889716f256a934a614a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d4d31f2_543c94d9",
+        "filename": "services/viz/public/cpp/compositing/struct_traits_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-30T21:40:26Z",
+      "side": 1,
+      "message": "How come you need to change this?",
+      "revId": "3fe0f0f372ef58ccbf315889716f256a934a614a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3080fb46_56e4aadc",
+        "filename": "services/viz/public/cpp/compositing/struct_traits_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-30T21:40:26Z",
+      "side": 1,
+      "message": "const \u0026",
+      "revId": "3fe0f0f372ef58ccbf315889716f256a934a614a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d65f7d6e_096256ac",
+        "filename": "services/viz/public/cpp/compositing/struct_traits_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-30T21:40:26Z",
+      "side": 1,
+      "message": "Call this |quit_closure| too?",
+      "revId": "3fe0f0f372ef58ccbf315889716f256a934a614a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
