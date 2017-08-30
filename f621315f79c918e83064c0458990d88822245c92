@@ -60,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "ec9f1420_6a9f30d0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FeatureUtilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-30T17:34:16Z",
+      "side": 1,
+      "message": "\u003e Can you call nativeSetIsChromeHomeEnabled here? It\u0027s unclear why you need to expose the method above.\n\nI lack context on two points:\n* When is this method called? Is it early enough?\n* Is the native library necessarily loaded?\n\nI\u0027ll give it a try if you think this is the right place.",
+      "parentUuid": "c0d13df8_1166a04f",
+      "range": {
+        "startLine": 275,
+        "startChar": 16,
+        "endLine": 275,
+        "endChar": 97
+      },
+      "revId": "f621315f79c918e83064c0458990d88822245c92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "14ba898d_d85541c8",
         "filename": "chrome/browser/android/feature_utilities.cc",
         "patchSetId": 1
