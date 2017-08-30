@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87f77ab4_cb6d3cbc",
+        "filename": "content/public/test/browser_test.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-30T00:43:37Z",
+      "side": 1,
+      "message": "Maybe a quick comment would help, like:\n// Complain if HAS_OUT_OF_PROC_TEST_RUNNER is missing, to save debugging headaches.  Includes a hack to generate a symbol to avoid printing a second error when the macro expands.",
+      "revId": "7bf2af0b784f35e38db3f6cd3deb5932734e9807",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
