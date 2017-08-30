@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70d2dece_9a197b3b",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-08-30T21:39:58Z",
+      "side": 1,
+      "message": "why set the URL to empty string (as opposed to just leaving it unset)?",
+      "revId": "2449aeebfb924a7c988ef8eeff6f0fe4bf74dd94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "964429f0_4c57e999",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-08-30T21:39:58Z",
+      "side": 1,
+      "message": "URLs need to be set in only one place for source ids allocated via ConvertToSourceId. otherwise we run the risk of stomping on updates to the URL between different setter locations (URL can be set and updated multiple times for a single source id in UKM, and we store the original and final URL for each source).\n\nthe URL is currently set in page_load_metrics but we will be moving it to a dedicated webcontentsobserver soon. could we remove this and count on the core ukm code (currently page_load_metrics, but will move soon) to do this?\n\nif you need to have the code that sets the source id run in tests, you might be able to instantiate the page load metrics code for now, and we can switch to the ukm url setter when it is available.",
+      "revId": "2449aeebfb924a7c988ef8eeff6f0fe4bf74dd94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
