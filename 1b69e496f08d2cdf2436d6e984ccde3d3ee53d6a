@@ -138,6 +138,23 @@
       "revId": "1b69e496f08d2cdf2436d6e984ccde3d3ee53d6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50a93d1d_1706b2ff",
+        "filename": "third_party/WebKit/Source/platform/RuntimeEnabledFeatures.json5",
+        "patchSetId": 6
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-08-30T20:10:27Z",
+      "side": 1,
+      "message": "Please forgive my naive question, but why do we need this flag?\n\nCan we use FeaturePolicyExperimentalFeatures and FeaturePolicy (stable)?",
+      "revId": "1b69e496f08d2cdf2436d6e984ccde3d3ee53d6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
