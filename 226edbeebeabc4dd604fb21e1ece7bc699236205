@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6cfcd82a_78dff951",
+        "filename": "content/browser/frame_host/navigator_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-08-30T23:22:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d9a5d2e_9f4de6f5",
+      "range": {
+        "startLine": 650,
+        "startChar": 55,
+        "endLine": 650,
+        "endChar": 67
+      },
+      "revId": "226edbeebeabc4dd604fb21e1ece7bc699236205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04a1701a_2c37c54d",
         "filename": "content/browser/frame_host/navigator_impl.cc",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c841e0a4_cbb5ea97",
+        "filename": "content/browser/frame_host/navigator_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-08-30T23:22:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04a1701a_2c37c54d",
+      "range": {
+        "startLine": 652,
+        "startChar": 33,
+        "endLine": 652,
+        "endChar": 61
+      },
+      "revId": "226edbeebeabc4dd604fb21e1ece7bc699236205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee41f681_6649fd0f",
         "filename": "content/browser/frame_host/render_frame_host_impl.h",
         "patchSetId": 7
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "2ef29ded_7d1175d7",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-08-30T23:22:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee41f681_6649fd0f",
+      "revId": "226edbeebeabc4dd604fb21e1ece7bc699236205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9f0e142_00a38d9a",
         "filename": "content/browser/frame_host/render_frame_host_impl.h",
         "patchSetId": 7
@@ -76,6 +142,24 @@
       "writtenOn": "2017-08-25T21:53:56Z",
       "side": 1,
       "message": "nit: IncrementDocumentId",
+      "revId": "226edbeebeabc4dd604fb21e1ece7bc699236205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4097912d_7fcf28fa",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-08-30T23:22:31Z",
+      "side": 1,
+      "message": "That seems to imply that this will be current document ID +1, which isn\u0027t really the case since another RenderFrameHost instance might have already taken that ID?",
+      "parentUuid": "c9f0e142_00a38d9a",
       "revId": "226edbeebeabc4dd604fb21e1ece7bc699236205",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "9375d70e_faf860f3",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 1058,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-08-30T23:22:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4bfd7d0_b6e237ae",
+      "revId": "226edbeebeabc4dd604fb21e1ece7bc699236205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92911228_dd2fcd6d",
         "filename": "content/public/browser/render_frame_host.h",
         "patchSetId": 7
@@ -113,6 +215,24 @@
       "revId": "226edbeebeabc4dd604fb21e1ece7bc699236205",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca550794_79bdeeaf",
+        "filename": "content/public/browser/render_frame_host.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-08-30T23:22:31Z",
+      "side": 1,
+      "message": "Done. Left TODO as ###### until I file a bug if this gets buy-in.",
+      "parentUuid": "92911228_dd2fcd6d",
+      "revId": "226edbeebeabc4dd604fb21e1ece7bc699236205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
