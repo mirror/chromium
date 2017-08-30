@@ -67,6 +67,75 @@
       "revId": "3c36c39bb9646407ced972bde50bc0f970e97fe4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "935a448b_035f3aaf",
+        "filename": "ui/ozone/demo/surfaceless_gl_renderer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1107749
+      },
+      "writtenOn": "2017-08-30T21:33:16Z",
+      "side": 1,
+      "message": "nit: empty line below",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 11
+      },
+      "revId": "3c36c39bb9646407ced972bde50bc0f970e97fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "401f6f58_b43228f0",
+        "filename": "ui/ozone/demo/surfaceless_gl_renderer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1107749
+      },
+      "writtenOn": "2017-08-30T21:33:16Z",
+      "side": 1,
+      "message": "nit: empty line below",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 15
+      },
+      "revId": "3c36c39bb9646407ced972bde50bc0f970e97fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9c00699_1847df14",
+        "filename": "ui/ozone/demo/surfaceless_gl_renderer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1107749
+      },
+      "writtenOn": "2017-08-30T21:33:16Z",
+      "side": 1,
+      "message": "This relies heavily on the fact that the state is cached in the overlay checker. Presumably, if the number of steps is larger than the cache size we\u0027d stop displaying the overlay since the check here is synchronous but the checker is doing an asynchronous call to update state.\n\nAI: It\u0027s worth documenting this here.\n\n-------------------------------------------------\nMy rant, perhaps we can chat about it more offline:\n\nI guess, this is a good time to mention that I think the overlay validator in Ozone should be simplified a bit. Specifically, I think the whole caching should at the very least be decoupled from the querying side. IMO, I think the cache should be implemented in Chrome fully with the Ozone interface allowing only to query and perhaps a callback so that Ozone can trigger a cache invalidation.",
+      "range": {
+        "startLine": 181,
+        "startChar": 2,
+        "endLine": 181,
+        "endChar": 55
+      },
+      "revId": "3c36c39bb9646407ced972bde50bc0f970e97fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
