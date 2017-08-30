@@ -10648,7 +10648,7 @@
           "--test-launcher-filter-file=../../testing/buildbot/filters/fuchsia.base_unittests.filter"
         ],
         "swarming": {
-          "can_use_on_swarming_builders": false
+          "can_use_on_swarming_builders": true
         },
         "test": "base_unittests"
       },
@@ -10657,13 +10657,13 @@
           "--test-launcher-filter-file=../../testing/buildbot/filters/fuchsia.content_unittests.filter"
         ],
         "swarming": {
-          "can_use_on_swarming_builders": false
+          "can_use_on_swarming_builders": true
         },
         "test": "content_unittests"
       },
       {
         "swarming": {
-          "can_use_on_swarming_builders": false
+          "can_use_on_swarming_builders": true
         },
         "test": "crypto_unittests"
       },
@@ -10672,7 +10672,7 @@
           "--test-launcher-filter-file=../../testing/buildbot/filters/fuchsia.ipc_tests.filter"
         ],
         "swarming": {
-          "can_use_on_swarming_builders": false
+          "can_use_on_swarming_builders": true
         },
         "test": "ipc_tests"
       },
@@ -10681,7 +10681,7 @@
           "--test-launcher-filter-file=../../testing/buildbot/filters/fuchsia.media_unittests.filter"
         ],
         "swarming": {
-          "can_use_on_swarming_builders": false
+          "can_use_on_swarming_builders": true
         },
         "test": "media_unittests"
       },
@@ -10690,7 +10690,7 @@
           "--test-launcher-filter-file=../../testing/buildbot/filters/fuchsia.mojo_common_unittests.filter"
         ],
         "swarming": {
-          "can_use_on_swarming_builders": false
+          "can_use_on_swarming_builders": true
         },
         "test": "mojo_common_unittests"
       },
@@ -10699,19 +10699,19 @@
           "--test-launcher-filter-file=../../testing/buildbot/filters/fuchsia.mojo_js_unittests.filter"
         ],
         "swarming": {
-          "can_use_on_swarming_builders": false
+          "can_use_on_swarming_builders": true
         },
         "test": "mojo_js_unittests"
       },
       {
         "swarming": {
-          "can_use_on_swarming_builders": false
+          "can_use_on_swarming_builders": true
         },
         "test": "mojo_public_bindings_unittests"
       },
       {
         "swarming": {
-          "can_use_on_swarming_builders": false
+          "can_use_on_swarming_builders": true
         },
         "test": "mojo_public_system_unittests"
       },
@@ -10720,7 +10720,7 @@
           "--test-launcher-filter-file=../../testing/buildbot/filters/fuchsia.mojo_system_unittests.filter"
         ],
         "swarming": {
-          "can_use_on_swarming_builders": false
+          "can_use_on_swarming_builders": true
         },
         "test": "mojo_system_unittests"
       },
@@ -10730,7 +10730,7 @@
           "--test-launcher-batch-limit=200"
         ],
         "swarming": {
-          "can_use_on_swarming_builders": false
+          "can_use_on_swarming_builders": true
         },
         "test": "net_unittests"
       },
@@ -10739,13 +10739,13 @@
           "--test-launcher-filter-file=../../testing/buildbot/filters/fuchsia.service_manager_unittests.filter"
         ],
         "swarming": {
-          "can_use_on_swarming_builders": false
+          "can_use_on_swarming_builders": true
         },
         "test": "service_manager_unittests"
       },
       {
         "swarming": {
-          "can_use_on_swarming_builders": false
+          "can_use_on_swarming_builders": true
         },
         "test": "skia_unittests"
       },
@@ -10754,7 +10754,7 @@
           "--test-launcher-filter-file=../../testing/buildbot/filters/fuchsia.ui_base_unittests.filter"
         ],
         "swarming": {
-          "can_use_on_swarming_builders": false
+          "can_use_on_swarming_builders": true
         },
         "test": "ui_base_unittests"
       }
