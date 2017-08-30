@@ -331,6 +331,24 @@
       "revId": "0b88b1694574afa8ac0c25d7907090a8511d2cfc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e186657b_73418050",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-30T19:29:40Z",
+      "side": 1,
+      "message": "What I expected is a little different from xhwang\u0027s proposal -- rather than use percentages, I expected we would have IsBattery, IsAC, IsBackground, etc... we would then just have one WatchTime with no suffixes. This seems to avoid the precision issue and I would guess its trivial to query (sounds like a simple WHERE clause?)",
+      "parentUuid": "cc296ebf_702d9e50",
+      "revId": "0b88b1694574afa8ac0c25d7907090a8511d2cfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
