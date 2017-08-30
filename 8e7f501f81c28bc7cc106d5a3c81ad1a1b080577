@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad5ca857_891fb34f",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1127730
+      },
+      "writtenOn": "2017-08-30T20:52:55Z",
+      "side": 1,
+      "message": "nit: s/policy-admin/policy/tool",
+      "range": {
+        "startLine": 15,
+        "startChar": 49,
+        "endLine": 15,
+        "endChar": 54
+      },
+      "revId": "8e7f501f81c28bc7cc106d5a3c81ad1a1b080577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eff58824_85df1fcb",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1127730
+      },
+      "writtenOn": "2017-08-30T20:52:55Z",
+      "side": 1,
+      "message": "nit: Add a comment here to explain what\u0027s a valid/invalid session name.",
+      "range": {
+        "startLine": 119,
+        "startChar": 17,
+        "endLine": 119,
+        "endChar": 29
+      },
+      "revId": "8e7f501f81c28bc7cc106d5a3c81ad1a1b080577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26809b48_cc154ca8",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1127730
+      },
+      "writtenOn": "2017-08-30T20:52:55Z",
+      "side": 1,
+      "message": "Worth adding an error handling here. If base::WriteFile returns less than contents.size (including -1), alert the user that the session save failed.",
+      "range": {
+        "startLine": 141,
+        "startChar": 8,
+        "endLine": 141,
+        "endChar": 17
+      },
+      "revId": "8e7f501f81c28bc7cc106d5a3c81ad1a1b080577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
