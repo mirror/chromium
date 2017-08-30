@@ -138,6 +138,22 @@ CrasAudioHandler* CrasAudioHandler::Get() {
 }
 
 void CrasAudioHandler::OnVideoCaptureStarted(media::VideoFacingMode facing) {
+  main_task_runner_->PostTask(
+      FROM_HERE,
+      base::Bind(&CrasAudioHandler::OnVideoCaptureStartedOnMainThread,
+                 weak_ptr_factory_.GetWeakPtr(), facing));
+}
+
+void CrasAudioHandler::OnVideoCaptureStopped(media::VideoFacingMode facing) {
+  main_task_runner_->PostTask(
+      FROM_HERE,
+      base::Bind(&CrasAudioHandler::OnVideoCaptureStoppedOnMainThread,
+                 weak_ptr_factory_.GetWeakPtr(), facing));
+}
+
+void CrasAudioHandler::OnVideoCaptureStartedOnMainThread(
+    media::VideoFacingMode facing) {
+  DCHECK(main_task_runner_->BelongsToCurrentThread());
   // Do nothing if the device doesn't have both front and rear microphones.
   if (!HasDualInternalMic())
     return;
@@ -175,7 +191,9 @@ void CrasAudioHandler::OnVideoCaptureStarted(media::VideoFacingMode facing) {
   ActivateMicForCamera(facing);
 }
 
-void CrasAudioHandler::OnVideoCaptureStopped(media::VideoFacingMode facing) {
+void CrasAudioHandler::OnVideoCaptureStoppedOnMainThread(
+    media::VideoFacingMode facing) {
+  DCHECK(main_task_runner_->BelongsToCurrentThread());
   // Do nothing if the device doesn't have both front and rear microphones.
   if (!HasDualInternalMic())
     return;
@@ -648,6 +666,7 @@ CrasAudioHandler::CrasAudioHandler(
       hdmi_rediscover_grace_period_duration_in_ms_(
           kHDMIRediscoverGracePeriodDurationInMs),
       hdmi_rediscovering_(false),
+      main_task_runner_(base::ThreadTaskRunnerHandle::Get()),
       weak_ptr_factory_(this) {
   if (!audio_pref_handler.get())
     return;
