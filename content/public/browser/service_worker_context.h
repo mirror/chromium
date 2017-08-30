@@ -48,6 +48,7 @@ class ServiceWorkerContext {
   using Scope = GURL;
 
   using ResultCallback = base::Callback<void(bool success)>;
+  using ResultOnceCallback = base::OnceCallback<void(bool success)>;
 
   using GetUsageInfoCallback = base::Callback<void(
       const std::vector<ServiceWorkerUsageInfo>& usage_info)>;
@@ -171,7 +172,8 @@ class ServiceWorkerContext {
   // Stops all running workers on the given |origin|.
   //
   // This function can be called from any thread.
-  virtual void StopAllServiceWorkersForOrigin(const GURL& origin) = 0;
+  virtual void StopAllServiceWorkersForOrigin(const GURL& origin,
+                                              ResultOnceCallback callback) = 0;
 
   // Stops all running service workers and unregisters all service worker
   // registrations. This method is used in LayoutTests to make sure that the

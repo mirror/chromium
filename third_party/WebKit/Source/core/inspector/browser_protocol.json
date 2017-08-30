@@ -4066,6 +4066,12 @@
                 ]
             },
             {
+                "name": "stopWorkersForOrigin",
+                "parameters": [
+                    { "name": "scopeURL", "type":"string" }
+                ]
+            },
+            {
                 "name": "inspectWorker",
                 "parameters": [
                     { "name": "versionId", "type": "string" }
