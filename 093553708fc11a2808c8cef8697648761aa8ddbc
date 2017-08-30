@@ -126,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "73a70a5b_26645d94",
+        "filename": "ui/views/controls/button/checkbox.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-30T22:24:30Z",
+      "side": 1,
+      "message": "\u003e I took \"button\" to mean that it matches the text color of a pushbutton\u0027s label, not the checkbox label. In that sense the comment is correct. I could change the comment to be \"push-button\" to reduce the ambiguity.\n\nCheckbox inherits from LabelButton, so \"button\" is definitely ambiguous - can you update the comment?",
+      "parentUuid": "2756406a_89ba7746",
+      "revId": "093553708fc11a2808c8cef8697648761aa8ddbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81d48c79_ebc6d884",
         "filename": "ui/views/controls/button/checkbox.cc",
         "patchSetId": 3
