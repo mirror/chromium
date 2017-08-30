@@ -264,8 +264,10 @@ public class ArticleSnippetsTest {
     @Test
     @MediumTest
     @Feature({"ArticleSnippets", "RenderTest"})
-    @CommandLineParameter({"", "enable-features=" + ChromeFeatureList.CHROME_HOME + ","
-                    + ChromeFeatureList.CHROME_HOME_MODERN_LAYOUT})
+    @CommandLineFlags.Add("enable-features=" + ChromeFeatureList.CHROME_HOME + ","
+            + ChromeFeatureList.CHROME_HOME_MODERN_LAYOUT)
+    // @CommandLineParameter({"", "enable-features=" + ChromeFeatureList.CHROME_HOME + ","
+    //                 + ChromeFeatureList.CHROME_HOME_MODERN_LAYOUT})
     public void testSigninPromo() throws IOException {
         ThreadUtils.runOnUiThreadBlocking(() -> {
             mContentView = new FrameLayout(mActivityTestRule.getActivity());
@@ -284,7 +286,7 @@ public class ArticleSnippetsTest {
 
             mSigninPromo = new SignInPromo.GenericPromoViewHolder(
                     mRecyclerView, contextMenuManager, mUiConfig);
-            mSigninPromo.onBindViewHolder(new SignInPromo(mUiDelegate));
+            mSigninPromo.onBindViewHolder(new SignInPromo.GenericSigninPromoData());
             mContentView.addView(mSigninPromo.itemView);
         });
 
