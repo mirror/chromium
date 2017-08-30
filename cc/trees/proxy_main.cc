@@ -183,8 +183,8 @@ void ProxyMain::BeginMainFrame(
   layer_tree_host_->WillBeginMainFrame();
 
   layer_tree_host_->BeginMainFrame(begin_main_frame_state->begin_frame_args);
-  layer_tree_host_->AnimateLayers(
-      begin_main_frame_state->begin_frame_args.frame_time);
+  // layer_tree_host_->AnimateLayers(
+  //     begin_main_frame_state->begin_frame_args.frame_time);
 
   // Recreate all UI resources if there were evicted UI resources when the impl
   // thread initiated the commit.
