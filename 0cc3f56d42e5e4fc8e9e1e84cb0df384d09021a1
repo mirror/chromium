@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b97738ad_071dbff0",
+        "filename": "cc/resources/resource_provider.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-30T16:32:50Z",
+      "side": 1,
+      "message": "Please don\u0027t test media features here. Instead, please test in the cc embedder and inject via  ResourceSettings (via LayerTreeSettings)",
+      "revId": "0cc3f56d42e5e4fc8e9e1e84cb0df384d09021a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
