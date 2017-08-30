@@ -71,3 +71,20 @@ void SetCrashKeyValueImplEx(const char* key, const char* value) {
 void ClearCrashKeyValueImplEx(const char* key) {
   crash_reporter::ClearCrashKey(key);
 }
+
+HANDLE InjectDumpForHungInput(HANDLE process, void* serialized_crash_keys) {
+  return CreateRemoteThread(
+      process, nullptr, 0,
+      crash_reporter::internal::DumpProcessForHungInputThread,
+      serialized_crash_keys, 0, nullptr);
+}
+
+// Injects a thread into a remote process to dump state when there is no crash.
+// This method provides |reason| which will interpreted as an integer and logged
+// as a crash key.
+HANDLE InjectDumpForHungInputNoCrashKeys(HANDLE process, int reason) {
+  return CreateRemoteThread(
+      process, nullptr, 0,
+      crash_reporter::internal::DumpProcessForHungInputNoCrashKeysThread,
+      reinterpret_cast<void*>(reason), 0, nullptr);
+}
