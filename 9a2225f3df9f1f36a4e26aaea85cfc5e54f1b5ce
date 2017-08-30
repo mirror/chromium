@@ -16,6 +16,24 @@
       "revId": "9a2225f3df9f1f36a4e26aaea85cfc5e54f1b5ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "896b7a82_818bdc24",
+        "filename": "build/config/android/rules.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 1638,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-30T18:36:52Z",
+      "side": 1,
+      "message": "It self-asserts. E.g. you get a good error message during gn gen if you access it and it\u0027s not defined.",
+      "parentUuid": "95b5a1ed_272185d7",
+      "revId": "9a2225f3df9f1f36a4e26aaea85cfc5e54f1b5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
