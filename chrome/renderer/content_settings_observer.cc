@@ -487,6 +487,58 @@ void ContentSettingsObserver::PersistClientHints(
                                     duration);
 }
 
+bool ContentSettingsObserver::AllowClientHintFromSource(
+    bool enabled_per_settings,
+    blink::mojom::WebClientHintsType type,
+    const blink::WebURL& url) {
+  if (!content_setting_rules_)
+    return false;
+  const GURL primary_url(url);
+  if (!content::IsOriginSecure(primary_url))
+    return false;
+
+  int client_hint_type = static_cast<int>(type);
+  ContentSettingsForOneType::const_iterator it;
+
+  const GURL hostname = GURL(url).GetOrigin();
+
+  for (it = content_setting_rules_->client_hints_rules.begin();
+       it != content_setting_rules_->client_hints_rules.end(); ++it) {
+    // Look for an exact match since persisted client hints are disabled by
+    // default, and enabled only on per-host basis.
+    if (it->primary_pattern == ContentSettingsPattern::Wildcard() ||
+        !it->primary_pattern.Matches(hostname)) {
+      continue;
+    }
+
+    // Found an exact match.
+    DCHECK(ContentSettingsPattern::Wildcard() == it->secondary_pattern);
+    DCHECK(it->setting_value->is_dict());
+    const base::Value* expiration_time =
+        it->setting_value->FindPath({"expiration_time"});
+    DCHECK(expiration_time->is_double());
+
+    if (base::Time::Now().ToDoubleT() > expiration_time->GetDouble()) {
+      // The client hint is expired.
+      return false;
+    }
+
+    const base::Value* list_value =
+        it->setting_value->FindPath({"client_hints"});
+    DCHECK(list_value->is_list());
+    const base::Value::ListStorage& client_hints = list_value->GetList();
+    for (size_t i = 0; i < client_hints.size(); ++i) {
+      DCHECK(client_hints[i].is_int());
+      if (client_hints[i].GetInt() == client_hint_type)
+        return true;
+    }
+    // Match was found for |url|, but not for |type|.
+    return false;
+  }
+  // No match was found for |url|.
+  return false;
+}
+
 void ContentSettingsObserver::DidNotAllowPlugins() {
   DidBlockContentType(CONTENT_SETTINGS_TYPE_PLUGINS);
 }
