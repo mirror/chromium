@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "465e51f2_ca9a4cb0",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/ChromeTabUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-30T19:53:17Z",
+      "side": 1,
+      "message": "nit: use ScalableTimeout.scaleTimeout(10)",
+      "revId": "3e54f031a2c2b8b10b8b18cf2c48af12009fde47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
