@@ -105,7 +105,8 @@ ExternalMetadataProvider.prototype.convertResults_ =
     if (prop.imageWidth !== undefined || nameMap['imageWidth'])
       item.imageWidth = prop.imageWidth;
     if (prop.modificationTime !== undefined || nameMap['modificationTime'])
-      item.modificationTime = new Date(prop.modificationTime);
+      item.modificationTime = requests[i].entry.modificationByMeTime ||
+          new Date(prop.modificationTime);
     if (prop.pinned !== undefined || nameMap['pinned'])
       item.pinned = prop.pinned;
     if (prop.present !== undefined || nameMap['present'])

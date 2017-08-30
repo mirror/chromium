@@ -345,13 +345,18 @@ RecentContentScanner.prototype.__proto__ = ContentScanner.prototype;
 RecentContentScanner.prototype.scan = function(
     entriesCallback, successCallback, errorCallback) {
   chrome.fileManagerPrivate.getRecentFiles(
-      this.sourceRestriction_, function(entries) {
+      this.sourceRestriction_, function(files) {
         if (chrome.runtime.lastError) {
           console.error(chrome.runtime.lastError.message);
           errorCallback(
               util.createDOMError(util.FileError.INVALID_MODIFICATION_ERR));
           return;
         }
+        var entries = files.map((file) => {
+          var entry = file.entry;
+          entry.modificationByMeTime = file.modificationByMeTime;
+          return entry;
+        });
         if (entries.length > 0) {
           entriesCallback(entries.filter(
               entry => entry.name.toLowerCase().indexOf(this.query_) >= 0));
