@@ -28,7 +28,9 @@ bool AreDisplayListDrawingResultsSame(const gfx::Rect& layer_rect,
                                       const DisplayItemList* list_a,
                                       const DisplayItemList* list_b);
 
-sk_sp<PaintImageGenerator> CreatePaintImageGenerator(const gfx::Size& size);
+sk_sp<PaintImageGenerator> CreatePaintImageGenerator(
+    const gfx::Size& size,
+    PaintImage::Id paint_image_id = PaintImage::GetNextId());
 
 PaintImage CreateDiscardablePaintImage(
     const gfx::Size& size,

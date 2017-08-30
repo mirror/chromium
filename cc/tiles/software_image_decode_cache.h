@@ -140,7 +140,6 @@ class CC_EXPORT SoftwareImageDecodeCache
       bool aggressively_free_resources) override {}
   void ClearCache() override;
   size_t GetMaximumMemoryLimitBytes() const override;
-  void NotifyImageUnused(const PaintImage::FrameKey& frame_key) override;
 
   // Decode the given image and store it in the cache. This is only called by an
   // image decode task from a worker thread.
@@ -154,6 +153,10 @@ class CC_EXPORT SoftwareImageDecodeCache
   bool OnMemoryDump(const base::trace_event::MemoryDumpArgs& args,
                     base::trace_event::ProcessMemoryDump* pmd) override;
 
+  // PaintImageDestructionTracker::Observer implementation.
+  void DestroyCachedDecode(PaintImage::Id paint_image_id,
+                           PaintImage::ContentId content_id) override;
+
   size_t GetNumCacheEntriesForTesting() const { return decoded_images_.size(); }
 
  private:
@@ -161,7 +164,9 @@ class CC_EXPORT SoftwareImageDecodeCache
   // construct an image out of SkImageInfo and stored discardable memory.
   class DecodedImage {
    public:
-    DecodedImage(const SkImageInfo& info,
+    DecodedImage(SoftwareImageDecodeCache* cache,
+                 const ImageKey& key,
+                 const SkImageInfo& info,
                  std::unique_ptr<base::DiscardableMemory> memory,
                  const SkSize& src_rect_offset,
                  uint64_t tracing_id);
@@ -320,12 +325,10 @@ class CC_EXPORT SoftwareImageDecodeCache
   ImageMRUCache decoded_images_;
   std::unordered_map<ImageKey, int, ImageKeyHash> decoded_images_ref_counts_;
 
-  // A map of PaintImage::FrameKey to the ImageKeys for cached decodes of this
+  // A map of PaintImage::Id to the ImageKeys for cached decodes of this
   // PaintImage.
-  std::unordered_map<PaintImage::FrameKey,
-                     std::vector<ImageKey>,
-                     PaintImage::FrameKeyHash>
-      frame_key_to_image_keys_;
+  std::unordered_map<PaintImage::Id, std::vector<ImageKey>>
+      paint_image_id_to_image_keys_;
 
   // Decoded image and ref counts (at-raster decode path).
   ImageMRUCache at_raster_decoded_images_;
