@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff807f67_622aeb35",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-08-30T18:38:02Z",
+      "side": 1,
+      "message": "The case when frame is removed by event handler, do we need to add \na create a new typing command? \nShall I do here. \nLocalFrame* frame \u003d document.GetFrame();\nDCHECK(frame);",
+      "revId": "908e6fa4115b2b5b63d20ec6d5b11c10bfdb09bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
