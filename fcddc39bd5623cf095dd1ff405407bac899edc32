@@ -225,6 +225,24 @@
     },
     {
       "key": {
+        "uuid": "d8079021_0a2a9d1b",
+        "filename": "components/payments/core/payment_item.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-30T15:45:42Z",
+      "side": 1,
+      "message": "User-visible labels like this one should generally use string16.",
+      "parentUuid": "90c6411d_4bd6f8d9",
+      "revId": "fcddc39bd5623cf095dd1ff405407bac899edc32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a882283_7fe03c57",
         "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher.mm",
         "patchSetId": 1
