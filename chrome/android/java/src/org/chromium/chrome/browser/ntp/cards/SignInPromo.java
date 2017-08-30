@@ -15,7 +15,6 @@ import org.chromium.base.ContextUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
-import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.ntp.ContextMenuManager;
 import org.chromium.chrome.browser.ntp.snippets.CategoryInt;
 import org.chromium.chrome.browser.ntp.snippets.CategoryStatus;
@@ -24,13 +23,13 @@ import org.chromium.chrome.browser.ntp.snippets.SuggestionsSource;
 import org.chromium.chrome.browser.preferences.ChromePreferenceManager;
 import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.signin.AccountSigninActivity;
+import org.chromium.chrome.browser.signin.PersonalizedSigninPromoView;
 import org.chromium.chrome.browser.signin.ProfileDataCache;
 import org.chromium.chrome.browser.signin.SigninAccessPoint;
 import org.chromium.chrome.browser.signin.SigninManager;
 import org.chromium.chrome.browser.signin.SigninManager.SignInAllowedObserver;
 import org.chromium.chrome.browser.signin.SigninManager.SignInStateObserver;
 import org.chromium.chrome.browser.signin.SigninPromoController;
-import org.chromium.chrome.browser.signin.SigninPromoView;
 import org.chromium.chrome.browser.suggestions.DestructionObserver;
 import org.chromium.chrome.browser.suggestions.SuggestionsRecyclerView;
 import org.chromium.chrome.browser.suggestions.SuggestionsUiDelegate;
@@ -84,8 +83,7 @@ public class SignInPromo extends OptionalLeaf
     private final @Nullable ProfileDataCache mProfileDataCache;
 
     public SignInPromo(SuggestionsUiDelegate uiDelegate) {
-        mArePersonalizedPromosEnabled =
-                ChromeFeatureList.isEnabled(ChromeFeatureList.ANDROID_SIGNIN_PROMOS);
+        mArePersonalizedPromosEnabled = SigninPromoController.arePersonalizedPromosEnabled();
 
         ChromePreferenceManager preferenceManager = ChromePreferenceManager.getInstance();
         if (mArePersonalizedPromosEnabled) {
@@ -372,8 +370,8 @@ public class SignInPromo extends OptionalLeaf
 
             mSigninPromoController.setAccountName(defaultAccountName);
 
-            SigninPromoView view = (SigninPromoView) itemView;
-            mSigninPromoController.setupSigninPromoView(view.getContext(), view, null);
+            PersonalizedSigninPromoView view = (PersonalizedSigninPromoView) itemView;
+            mSigninPromoController.setupPromoView(view.getContext(), view, null);
         }
     }
 
