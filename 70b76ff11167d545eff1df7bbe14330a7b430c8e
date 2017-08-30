@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c10c4d4f_a4532320",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-30T15:48:00Z",
+      "side": 1,
+      "message": "I slightly prefer the enum class approach.",
+      "parentUuid": "c55ab1f0_e5f87016",
+      "revId": "70b76ff11167d545eff1df7bbe14330a7b430c8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "934efeff_43db0d61",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
         "patchSetId": 3
