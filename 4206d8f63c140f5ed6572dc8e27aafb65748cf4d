@@ -16,6 +16,24 @@
       "revId": "4206d8f63c140f5ed6572dc8e27aafb65748cf4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21ab5636_7130fc4f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 41795,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-30T17:35:44Z",
+      "side": 1,
+      "message": "I think they already have been, though it\u0027s a subtle point of syntax in histograms.xml.  The definition of the NTP histograms is in the line \"\n\n\u003chistogram_suffixes name\u003d\"NetErrorCodeSubtype\"\n\nelsewhere in the file.  They are defined in terms of the Net.RequestTime2.Success and Net.RequestTime2.ErrAborted histograms, which were marked obsolete in the obsoleting of Net.RequestTime2.  Scanning for the use of \u003cobsolete\u003e in \u003chistogram_suffixes\u003e, that tag seems to be only used when obsoleting particular suffixes, not when obsoleting the entire set.  \n\nSo I think this is moot?  But if you have deeper knowledge of histograms.xml, I\u0027m happy to follow your lead and/or raise this issue specifically with the histograms.xml owner when I bring them in for review.",
+      "parentUuid": "f77bdf31_8d52ec58",
+      "revId": "4206d8f63c140f5ed6572dc8e27aafb65748cf4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
