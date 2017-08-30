@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5f58abfe_743a3399",
+        "filename": "components/sync/BUILD.gn",
+        "patchSetId": 13
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-30T01:47:40Z",
+      "side": 1,
+      "message": "Ack.\n\nUnfortunately, I don\u0027t think I can. If I do, \"gn check\" fails, and that turns a bot red.\n\n$ gn check out/Default/\nERROR at //components/sync/engine/attachments/attachment_util.cc:8:11: Can\u0027t include this header from here.\n#include \"third_party/crc32c/src/include/crc32c/crc32c.h\"\n          ^---------------------------------------------\nThe target:\n  //components/sync:sync\nis including a file from the target:\n  //third_party/crc32c:crc32c\n\nIt\u0027s usually best to depend directly on the destination target.\nIn some cases, the destination target is considered a subcomponent\nof an intermediate target. In this case, the intermediate target\nshould depend publicly on the destination to forward the ability\nto include headers.\n\nDependency chain (there may also be others):\n  //components/sync:sync --\u003e\n  //third_party/leveldatabase:leveldatabase --[private]--\u003e\n  //third_party/crc32c:crc32c",
+      "parentUuid": "f280e999_2aed930f",
+      "range": {
+        "startLine": 611,
+        "startChar": 7,
+        "endLine": 611,
+        "endChar": 18
+      },
+      "revId": "e25a3f823507d55b9c1b0f4e6eec0edf0915ca1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed5fc0e3_30353da3",
         "filename": "components/sync/engine_impl/attachments/DEPS",
         "patchSetId": 13
@@ -45,6 +69,30 @@
       "revId": "e25a3f823507d55b9c1b0f4e6eec0edf0915ca1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52f3447e_b5d5502f",
+        "filename": "components/sync/engine_impl/attachments/DEPS",
+        "patchSetId": 13
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-30T01:47:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed5fc0e3_30353da3",
+      "range": {
+        "startLine": 4,
+        "startChar": 16,
+        "endLine": 4,
+        "endChar": 29
+      },
+      "revId": "e25a3f823507d55b9c1b0f4e6eec0edf0915ca1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "012a0569_1731267c",
+        "filename": "third_party/crc32c/BUILD.gn",
+        "patchSetId": 13
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-30T01:47:40Z",
+      "side": 1,
+      "message": "Done\n\nThank you very much for catching that!",
+      "parentUuid": "e758899c_27508fcd",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 14
+      },
+      "revId": "e25a3f823507d55b9c1b0f4e6eec0edf0915ca1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49bb7197_c7dc782c",
         "filename": "third_party/crc32c/README.chromium",
         "patchSetId": 13
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "a946e6eb_f6daea72",
+        "filename": "third_party/crc32c/README.chromium",
+        "patchSetId": 13
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-30T01:47:40Z",
+      "side": 1,
+      "message": "Done.\n\nGah, thank you for catching that! I copy-pasted without thinking :(",
+      "parentUuid": "49bb7197_c7dc782c",
+      "range": {
+        "startLine": 3,
+        "startChar": 5,
+        "endLine": 3,
+        "endChar": 36
+      },
+      "revId": "e25a3f823507d55b9c1b0f4e6eec0edf0915ca1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24cb0768_5361468a",
         "filename": "third_party/crc32c/README.chromium",
         "patchSetId": 13
@@ -105,6 +201,30 @@
       "writtenOn": "2017-08-29T21:35:51Z",
       "side": 1,
       "message": "The GitHub project has not yet been tagged with a version. Want to give it one?",
+      "range": {
+        "startLine": 4,
+        "startChar": 9,
+        "endLine": 4,
+        "endChar": 14
+      },
+      "revId": "e25a3f823507d55b9c1b0f4e6eec0edf0915ca1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8d8aa74_5f0ec16c",
+        "filename": "third_party/crc32c/README.chromium",
+        "patchSetId": 13
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-30T01:47:40Z",
+      "side": 1,
+      "message": "Yessir! After you\u0027re happy with the API, I\u0027ll tag 1.0.0, and avoid API-breaking changes.",
+      "parentUuid": "24cb0768_5361468a",
       "range": {
         "startLine": 4,
         "startChar": 9,
