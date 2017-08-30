@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "40e66366_f6ee76ca",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FeatureUtilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-30T18:02:24Z",
+      "side": 1,
+      "message": "This works and resolves the timing issue with my previous solution. Thanks!",
+      "parentUuid": "4a00798d_448be2ac",
+      "revId": "f621315f79c918e83064c0458990d88822245c92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0d13df8_1166a04f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FeatureUtilities.java",
         "patchSetId": 1
@@ -84,6 +102,30 @@
     },
     {
       "key": {
+        "uuid": "8efa0a5a_b384f529",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FeatureUtilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-30T18:02:24Z",
+      "side": 1,
+      "message": "Superseded by bauerb\u0027s proposal.",
+      "parentUuid": "ec9f1420_6a9f30d0",
+      "range": {
+        "startLine": 275,
+        "startChar": 16,
+        "endLine": 275,
+        "endChar": 97
+      },
+      "revId": "f621315f79c918e83064c0458990d88822245c92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14ba898d_d85541c8",
         "filename": "chrome/browser/android/feature_utilities.cc",
         "patchSetId": 1
@@ -104,6 +146,30 @@
       "revId": "f621315f79c918e83064c0458990d88822245c92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48f57918_01f47830",
+        "filename": "chrome/browser/android/feature_utilities.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-30T18:02:24Z",
+      "side": 1,
+      "message": "\u003e Nit: These should really be |g_snake_case|.\n\nI haven\u0027t addressed this since I\u0027m not touching this section anymore.",
+      "parentUuid": "14ba898d_d85541c8",
+      "range": {
+        "startLine": 16,
+        "startChar": 5,
+        "endLine": 16,
+        "endChar": 27
+      },
+      "revId": "f621315f79c918e83064c0458990d88822245c92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
