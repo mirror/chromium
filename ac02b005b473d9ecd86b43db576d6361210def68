@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "689b75fc_a4adc134",
+        "filename": "chrome/test/data/local_ntp/voice_microphone_browsertest.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-30T11:59:54Z",
+      "side": 1,
+      "message": "Not sure I follow this... if the animation were restarted, wouldn\u0027t the activation time still be the same, since no time has passed in between?",
+      "revId": "ac02b005b473d9ecd86b43db576d6361210def68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
