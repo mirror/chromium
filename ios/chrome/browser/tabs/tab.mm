@@ -96,7 +96,6 @@
 #import "ios/chrome/browser/ui/prerender_delegate.h"
 #import "ios/chrome/browser/ui/sad_tab/sad_tab_view.h"
 #include "ios/chrome/browser/ui/ui_util.h"
-#import "ios/chrome/browser/web/auto_reload_bridge.h"
 #import "ios/chrome/browser/web/external_app_launcher.h"
 #import "ios/chrome/browser/web/navigation_manager_util.h"
 #import "ios/chrome/browser/web/passkit_dialog_provider.h"
@@ -231,9 +230,6 @@ class TabHistoryContext : public history::Context {
 
   // Handles support for window.print JavaScript calls.
   std::unique_ptr<PrintObserver> _printObserver;
-
-  // AutoReloadBridge for this tab.
-  AutoReloadBridge* _autoReloadBridge;
 
   // WebStateImpl for this tab.
   web::WebStateImpl* _webStateImpl;
@@ -437,9 +433,6 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
 - (void)attachTabHelpers {
   _tabInfoBarObserver = base::MakeUnique<TabInfoBarObserver>(self);
   _tabInfoBarObserver->SetShouldObserveInfoBarManager(true);
-
-  if (experimental_flags::IsAutoReloadEnabled())
-    _autoReloadBridge = [[AutoReloadBridge alloc] initWithTab:self];
 
   id<PasswordsUiDelegate> passwordsUIDelegate =
       [[PasswordsUiDelegateImpl alloc] init];
@@ -1251,7 +1244,6 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
   // |disableFullScreen| is called only from one place.
   [_fullScreenController disableFullScreen];
   GURL lastCommittedURL = webState->GetLastCommittedURL();
-  [_autoReloadBridge loadStartedForURL:lastCommittedURL];
 
   if (_parentTabModel) {
     [[NSNotificationCenter defaultCenter]
@@ -1310,10 +1302,6 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
     wasPost = lastCommittedItem->HasPostData();
     lastCommittedURL = lastCommittedItem->GetVirtualURL();
   }
-  if (loadSuccess)
-    [_autoReloadBridge loadFinishedForURL:lastCommittedURL wasPost:wasPost];
-  else
-    [_autoReloadBridge loadFailedForURL:lastCommittedURL wasPost:wasPost];
   [_webControllerSnapshotHelper setSnapshotCoalescingEnabled:YES];
   if (!loadSuccess)
     [_fullScreenController disableFullScreen];
