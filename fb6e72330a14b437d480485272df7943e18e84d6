@@ -42,6 +42,48 @@
     },
     {
       "key": {
+        "uuid": "89c78340_8bfd434c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1230159
+      },
+      "writtenOn": "2017-08-30T21:56:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2dd0511b_bfb05d4e",
+      "revId": "fb6e72330a14b437d480485272df7943e18e84d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e5b9b67c_fa792e0c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1230159
+      },
+      "writtenOn": "2017-08-30T21:56:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a1a28b4_0f47a9ae",
+      "range": {
+        "startLine": 7,
+        "startChar": 30,
+        "endLine": 7,
+        "endChar": 46
+      },
+      "revId": "fb6e72330a14b437d480485272df7943e18e84d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd07c3bf_06cb2b32",
         "filename": "chromecast/media/cma/backend/alsa/audio_decoder_alsa.cc",
         "patchSetId": 2
@@ -53,6 +95,30 @@
       "writtenOn": "2017-08-30T21:38:47Z",
       "side": 1,
       "message": "config.playout_channel?",
+      "range": {
+        "startLine": 242,
+        "startChar": 41,
+        "endLine": 242,
+        "endChar": 52
+      },
+      "revId": "fb6e72330a14b437d480485272df7943e18e84d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11e08f94_0c13e286",
+        "filename": "chromecast/media/cma/backend/alsa/audio_decoder_alsa.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1230159
+      },
+      "writtenOn": "2017-08-30T21:56:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd07c3bf_06cb2b32",
       "range": {
         "startLine": 242,
         "startChar": 41,
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "6a45113a_94d86bf2",
+        "filename": "chromecast/media/cma/backend/alsa/filter_group.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1230159
+      },
+      "writtenOn": "2017-08-30T21:56:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd277be9_15f49dd7",
+      "range": {
+        "startLine": 121,
+        "startChar": 5,
+        "endLine": 121,
+        "endChar": 14
+      },
+      "revId": "fb6e72330a14b437d480485272df7943e18e84d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ed972a3_90eabdd4",
         "filename": "chromecast/media/cma/backend/alsa/filter_group.h",
         "patchSetId": 2
@@ -99,6 +189,30 @@
       "writtenOn": "2017-08-30T21:38:47Z",
       "side": 1,
       "message": "Toggles",
+      "range": {
+        "startLine": 101,
+        "startChar": 5,
+        "endLine": 101,
+        "endChar": 11
+      },
+      "revId": "fb6e72330a14b437d480485272df7943e18e84d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5155006c_573841ee",
+        "filename": "chromecast/media/cma/backend/alsa/filter_group.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1230159
+      },
+      "writtenOn": "2017-08-30T21:56:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ed972a3_90eabdd4",
       "range": {
         "startLine": 101,
         "startChar": 5,
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "5d4675b3_a2527073",
+        "filename": "chromecast/media/cma/backend/alsa/filter_group.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1230159
+      },
+      "writtenOn": "2017-08-30T21:56:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5e3325f_d024b76b",
+      "range": {
+        "startLine": 104,
+        "startChar": 28,
+        "endLine": 104,
+        "endChar": 52
+      },
+      "revId": "fb6e72330a14b437d480485272df7943e18e84d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "247a4a0e_1465bb26",
         "filename": "chromecast/media/cma/backend/alsa/stream_mixer_alsa.cc",
         "patchSetId": 2
@@ -145,6 +283,30 @@
       "writtenOn": "2017-08-30T21:30:18Z",
       "side": 1,
       "message": "don\u0027t mention in upstream CL",
+      "range": {
+        "startLine": 940,
+        "startChar": 67,
+        "endLine": 940,
+        "endChar": 72
+      },
+      "revId": "fb6e72330a14b437d480485272df7943e18e84d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "963df109_d53a5814",
+        "filename": "chromecast/media/cma/backend/alsa/stream_mixer_alsa.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 940,
+      "author": {
+        "id": 1230159
+      },
+      "writtenOn": "2017-08-30T21:56:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "247a4a0e_1465bb26",
       "range": {
         "startLine": 940,
         "startChar": 67,
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "0ab5c6a8_693ad47d",
+        "filename": "chromecast/media/cma/backend/alsa/stream_mixer_alsa.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1134,
+      "author": {
+        "id": 1230159
+      },
+      "writtenOn": "2017-08-30T21:56:55Z",
+      "side": 1,
+      "message": "We select the active channel downstream from the mix filter, so we can\u0027t downmix when a specific channel is selected.",
+      "parentUuid": "6db3562b_c45f609f",
+      "range": {
+        "startLine": 1133,
+        "startChar": 2,
+        "endLine": 1134,
+        "endChar": 60
+      },
+      "revId": "fb6e72330a14b437d480485272df7943e18e84d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f2a4ad6_d088db6d",
         "filename": "chromecast/media/cma/backend/alsa/stream_mixer_alsa.cc",
         "patchSetId": 2
@@ -203,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "4fa9ee72_3b134d1e",
+        "filename": "chromecast/media/cma/backend/alsa/stream_mixer_alsa.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1135,
+      "author": {
+        "id": 1230159
+      },
+      "writtenOn": "2017-08-30T21:56:55Z",
+      "side": 1,
+      "message": "We can\u0027t do that currently, as it would require running a separate postprocess chain for the media and non-media stream.",
+      "parentUuid": "8f2a4ad6_d088db6d",
+      "range": {
+        "startLine": 1135,
+        "startChar": 2,
+        "endLine": 1135,
+        "endChar": 59
+      },
+      "revId": "fb6e72330a14b437d480485272df7943e18e84d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6da8394f_37f69807",
         "filename": "chromecast/public/media/decoder_config.h",
         "patchSetId": 2
@@ -214,6 +424,30 @@
       "writtenOn": "2017-08-30T21:30:18Z",
       "side": 1,
       "message": "doesn\u0027t seem to be used for anything",
+      "range": {
+        "startLine": 283,
+        "startChar": 0,
+        "endLine": 299,
+        "endChar": 60
+      },
+      "revId": "fb6e72330a14b437d480485272df7943e18e84d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e67b8d1_db41b38c",
+        "filename": "chromecast/public/media/decoder_config.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1230159
+      },
+      "writtenOn": "2017-08-30T21:56:55Z",
+      "side": 1,
+      "message": "will be used upstream to set config.playout_channel",
+      "parentUuid": "6da8394f_37f69807",
       "range": {
         "startLine": 283,
         "startChar": 0,
