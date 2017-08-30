@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "257246a2_4562067f",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1634,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-08-30T15:24:07Z",
+      "side": 1,
+      "message": "This looks like it would be wrong on high-DPI devices, because |point| is already in DIPs and line 1646 below tries to convert it to DIPs again.\n\nA better place to fix this might be in DelegatedFrameHost::SurfaceIdAtPoint(). If the hit test fails to find a Surface, it already does return the original point (untransformed, because we have no transform). If that method is returning early because the top-level DFH doesn\u0027t yet have a Surface, then we can just move the line \"*transformed_point \u003d point;\" up to the top of that method before the early return.\n\nThat has the advantage of also fixing the problem on Mac.",
+      "revId": "cf296b016a29e49a45d2bd705e2bee111a906e42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
