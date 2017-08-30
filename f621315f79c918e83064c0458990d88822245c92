@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4a00798d_448be2ac",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FeatureUtilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-30T17:32:43Z",
+      "side": 1,
+      "message": "Yeah, I agree… Could we just mark this method @CalledFromNative and use that from native code?",
+      "parentUuid": "1b62f14f_c679d649",
+      "revId": "f621315f79c918e83064c0458990d88822245c92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0d13df8_1166a04f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FeatureUtilities.java",
         "patchSetId": 1
@@ -35,6 +53,29 @@
         "startChar": 16,
         "endLine": 275,
         "endChar": 97
+      },
+      "revId": "f621315f79c918e83064c0458990d88822245c92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14ba898d_d85541c8",
+        "filename": "chrome/browser/android/feature_utilities.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-30T17:32:43Z",
+      "side": 1,
+      "message": "Nit: These should really be |g_snake_case|.",
+      "range": {
+        "startLine": 16,
+        "startChar": 5,
+        "endLine": 16,
+        "endChar": 27
       },
       "revId": "f621315f79c918e83064c0458990d88822245c92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
