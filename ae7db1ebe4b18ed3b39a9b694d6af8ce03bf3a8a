@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "670c5af7_0614b810",
+        "filename": "content/browser/service_worker/service_worker_database.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1006,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-30T18:07:04Z",
+      "side": 1,
+      "message": "Actually, I also ended up renaming the |key_prefixes| parameter to |user_data_name_prefixes| (and similarly throughout the method), which makes the variable names rather clearer.",
+      "parentUuid": "fb4573ab_48301d52",
+      "revId": "ae7db1ebe4b18ed3b39a9b694d6af8ce03bf3a8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "682e7cd4_f2cd633a",
         "filename": "content/browser/service_worker/service_worker_storage.cc",
         "patchSetId": 3
