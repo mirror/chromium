@@ -15,12 +15,14 @@
 #include "base/memory/ref_counted.h"
 #include "base/memory/ref_counted_memory.h"
 #include "base/stl_util.h"
+#include "content/child/child_url_loader_factory_getter.h"
 #include "content/grit/content_resources.h"
 #include "content/public/common/content_client.h"
 #include "content/public/renderer/render_frame.h"
 #include "content/public/renderer/resource_fetcher.h"
 #include "content/renderer/mojo_bindings_controller.h"
 #include "content/renderer/mojo_main_runner.h"
+#include "content/renderer/render_frame_impl.h"
 #include "gin/converter.h"
 #include "gin/modules/module_registry.h"
 #include "gin/per_context_data.h"
@@ -186,6 +188,26 @@ void MojoContextState::FetchModules(const std::vector<std::string>& ids) {
 }
 
 void MojoContextState::FetchModule(const std::string& id) {
+  static const net::NetworkTrafficAnnotationTag network_traffic_annotation_tag =
+      net::DefineNetworkTrafficAnnotation("mojo_context_state", R"(
+    semantics {
+      sender: "MojoContextState"
+      description:
+        "Chrome does fetch JavaScript files to use mojo bindings for private "
+        "APIs."
+      trigger: "When the private API is going to be used."
+      data:
+        "Load JavaScript files for mojo bindings from embedded resources. "
+        "Nothing is sent over networks."
+      destination: OTHER
+    }
+    policy {
+      cookies_allowed: NO
+      setting: "These requests cannot be disabled in settings."
+      policy_exception_justification:
+        "Not implemented. Without these requests, Chrome will not work."
+    })");
+
   const GURL url(module_prefix_ + id);
   // TODO(sky): better error checks here?
   DCHECK(url.is_valid() && !url.is_empty());
@@ -193,7 +215,13 @@ void MojoContextState::FetchModule(const std::string& id) {
   fetched_modules_.insert(id);
   ResourceFetcher* fetcher = ResourceFetcher::Create(url);
   module_fetchers_.push_back(base::WrapUnique(fetcher));
+  // TODO(toyoshim): Use RenderFrame instead of RenderFrameImpl once the
+  // ChildURLLoaderFactoryGetter interface gets to be in content/public.
   fetcher->Start(frame_, blink::WebURLRequest::kRequestContextScript,
+                 RenderFrameImpl::FromWebFrame(frame_)
+                     ->GetDefaultURLLoaderFactoryGetter()
+                     ->GetNetworkLoaderFactory(),
+                 network_traffic_annotation_tag,
                  base::Bind(&MojoContextState::OnFetchModuleComplete,
                             base::Unretained(this), fetcher, id));
 }
