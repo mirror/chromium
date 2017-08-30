@@ -282,8 +282,11 @@ void TabletModeWindowState::AttachState(
   if (!restore_bounds.IsEmpty()) {
     // We do not want to do a session restore to our window states. Therefore
     // we tell the window to use the current default states instead.
+    ui::WindowShowState show_state = window_state->GetShowState();
+    if (show_state == ui::SHOW_STATE_FULLSCREEN)
+      show_state = ui::SHOW_STATE_DEFAULT;
     SetWindowRestoreOverrides(window_state->window(), restore_bounds,
-                              window_state->GetShowState());
+                              show_state);
   }
 
   // Initialize the state to a good preset.
