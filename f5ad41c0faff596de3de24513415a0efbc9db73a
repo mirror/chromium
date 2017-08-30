@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "42ebf1f4_0126c35c",
+        "filename": "net/cert/nss_cert_database.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-08-30T00:05:15Z",
+      "side": 1,
+      "message": "Oh geez, some of these functions doesn\u0027t even return a net error code. derp. fixed those.\n\nIn general: I think.. this may make sense actually? We do have an X509Certificate here, but just failed to convert it to a os cert handle. I think the theoretical problems is when you use ERR_CERT_INVALID to indicate that you couldn\u0027t create an X509Certificate? If it\u0027s bad to use for failure converting an X509Certificate to os cert handle, then all the cert_verify_proc impls with use_byte_certs are doing it wrong too...",
+      "parentUuid": "77125b41_706b193e",
+      "range": {
+        "startLine": 250,
+        "startChar": 11,
+        "endLine": 250,
+        "endChar": 27
+      },
+      "revId": "f5ad41c0faff596de3de24513415a0efbc9db73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fb926f2d_667f23aa",
         "filename": "net/cert/nss_cert_database.h",
         "patchSetId": 8
@@ -36,6 +60,24 @@
       "writtenOn": "2017-08-29T22:14:44Z",
       "side": 1,
       "message": "base::Owned?",
+      "revId": "f5ad41c0faff596de3de24513415a0efbc9db73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cb24b87_8f580f9c",
+        "filename": "net/cert/nss_cert_database.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-08-30T00:05:15Z",
+      "side": 1,
+      "message": "That seems to only work with bare-pointer types that can be delete-ed.",
+      "parentUuid": "fb926f2d_667f23aa",
       "revId": "f5ad41c0faff596de3de24513415a0efbc9db73a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "886edfcd_e1ac7578",
+        "filename": "net/cert/nss_cert_database_chromeos_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-08-30T00:05:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f9bf62d_bdb22239",
+      "revId": "f5ad41c0faff596de3de24513415a0efbc9db73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9b65fe2_bc59f71b",
         "filename": "net/cert/nss_profile_filter_chromeos.h",
         "patchSetId": 8
@@ -73,6 +133,24 @@
       "revId": "f5ad41c0faff596de3de24513415a0efbc9db73a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b34d3b6_dbc98a2b",
+        "filename": "net/cert/nss_profile_filter_chromeos.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-08-30T00:05:15Z",
+      "side": 1,
+      "message": "Ack, added TODO.",
+      "parentUuid": "f9b65fe2_bc59f71b",
+      "revId": "f5ad41c0faff596de3de24513415a0efbc9db73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "8e138691_e25891a2",
+        "filename": "net/cert/x509_util_nss.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-08-30T00:05:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9cab7a39_127098a9",
+      "revId": "f5ad41c0faff596de3de24513415a0efbc9db73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3a8a848_7b3c7a01",
         "filename": "net/cert/x509_util_nss.h",
         "patchSetId": 8
@@ -107,6 +203,24 @@
       "revId": "f5ad41c0faff596de3de24513415a0efbc9db73a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36fd958f_b92a0d11",
+        "filename": "net/cert/x509_util_nss.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-08-30T00:05:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3a8a848_7b3c7a01",
+      "revId": "f5ad41c0faff596de3de24513415a0efbc9db73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
