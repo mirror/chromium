@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bedc2792_8c9b49e0",
+        "filename": "services/viz/public/cpp/compositing/struct_traits_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-08-30T18:45:33Z",
+      "side": 1,
+      "message": "nit: remove commented-out code.",
+      "range": {
+        "startLine": 76,
+        "startChar": 1,
+        "endLine": 78,
+        "endChar": 4
+      },
+      "revId": "3fe0f0f372ef58ccbf315889716f256a934a614a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
