@@ -107,4 +107,60 @@ bool VideoCaptureParams::IsValid() const {
          power_line_frequency <= PowerLineFrequency::FREQUENCY_MAX;
 }
 
+VideoCaptureParams::SuggestedConstraints
+VideoCaptureParams::SuggestConstraints() const {
+  constexpr gfx::Size kDefaultFrameSize = gfx::Size(640, 360);
+
+  // The requested frame size is always the maximum frame size. Ensure that it
+  // rounds to even numbers (to match I420 chroma sample sizes).
+  gfx::Size max_frame_size = requested_format.frame_size;
+  if (max_frame_size.width() % 2 != 0)
+    max_frame_size.set_width(max_frame_size.width() - 1);
+  if (max_frame_size.height() % 2 != 0)
+    max_frame_size.set_height(max_frame_size.height() - 1);
+  // Interpret an empty size as "use a default."
+  if (max_frame_size.IsEmpty())
+    max_frame_size = kDefaultFrameSize;
+
+  // Compute the minimum frame size as a function of the maximum frame size and
+  // policy.
+  gfx::Size min_frame_size;
+  switch (resolution_change_policy) {
+    case RESOLUTION_POLICY_FIXED_RESOLUTION:
+      min_frame_size = max_frame_size;
+      break;
+
+    case RESOLUTION_POLICY_FIXED_ASPECT_RATIO: {
+      // TODO(miu): This is a place-holder until "min constraints" are plumbed-
+      // in from the MediaStream framework.  http://crbug.com/473336
+      constexpr int kMinLines = 180;
+      if (max_frame_size.height() <= kMinLines) {
+        min_frame_size = max_frame_size;
+      } else {
+        const double ideal_width = static_cast<double>(kMinLines) *
+                                   max_frame_size.width() /
+                                   max_frame_size.height();
+        // Round |ideal_width| to the nearest even whole number.
+        const int even_width = static_cast<int>(ideal_width / 2.0 + 0.5) * 2;
+        min_frame_size = gfx::Size(even_width, kMinLines);
+        if (min_frame_size.width() <= 0 ||
+            min_frame_size.width() > max_frame_size.width()) {
+          min_frame_size = max_frame_size;
+        }
+      }
+      break;
+    }
+
+    case RESOLUTION_POLICY_ANY_WITHIN_LIMIT:
+      min_frame_size = gfx::Size(2, 2);
+      break;
+  }
+  DCHECK(min_frame_size.width() % 2 == 0);
+  DCHECK(min_frame_size.height() % 2 == 0);
+
+  return SuggestedConstraints{
+      min_frame_size, max_frame_size,
+      resolution_change_policy == RESOLUTION_POLICY_FIXED_ASPECT_RATIO};
+}
+
 }  // namespace media
