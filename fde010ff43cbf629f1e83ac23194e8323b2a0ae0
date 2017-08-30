@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71acec61_d9f37296",
+        "filename": "media/audio/cras/audio_manager_cras.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-08-30T07:19:55Z",
+      "side": 1,
+      "message": "Sorry for drive-by reviewing, but I think there\u0027s a risk for deadlocking if this is posted during shutdown, since in that case the main thread will try to join the audio manager thread (https://cs.chromium.org/chromium/src/media/audio/audio_manager.cc?l\u003d350), and the posted task will never be processed.",
+      "revId": "fde010ff43cbf629f1e83ac23194e8323b2a0ae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
