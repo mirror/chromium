@@ -34,6 +34,24 @@
       "revId": "07577326451b7e0e322cce86695de7b272a5f3c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b271e8e_c3964a4c",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-30T02:35:45Z",
+      "side": 1,
+      "message": "The most straightforward way I could think of was to use a boolean to keep track of whether to call  WillFailRequest(() or call the rest of the code directly.\n\nFor lack of a better idea, I\u0027ve named that part of the code OnFailureNotifyRenderFrameHost().",
+      "parentUuid": "e622cb5d_79935058",
+      "revId": "07577326451b7e0e322cce86695de7b272a5f3c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
