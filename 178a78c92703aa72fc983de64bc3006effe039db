@@ -34,6 +34,24 @@
       "revId": "178a78c92703aa72fc983de64bc3006effe039db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3469d8db_e8f53b2b",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1552,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-30T23:23:06Z",
+      "side": 1,
+      "message": "Do we know how scroll magically worked? I don\u0027t see ShelfView is handling scroll event at all.",
+      "parentUuid": "fc66f576_5f88b1ee",
+      "revId": "178a78c92703aa72fc983de64bc3006effe039db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
