@@ -120,7 +120,8 @@ paddedGrid{
         ]
       },
       "color": "rgba(128, 128, 128, 0)",
-      "isPrimaryGrid": true
+      "isPrimaryGrid": true,
+      "lineWidth": 1
     }
   ]
 }
@@ -235,7 +236,8 @@ nestedGrid{
         ]
       },
       "color": "rgba(128, 128, 128, 0)",
-      "isPrimaryGrid": true
+      "isPrimaryGrid": true,
+      "lineWidth": 1
     },
     {
       "rows": {
@@ -257,7 +259,8 @@ nestedGrid{
         ]
       },
       "color": "rgba(128, 128, 128, 0)",
-      "isPrimaryGrid": false
+      "isPrimaryGrid": false,
+      "lineWidth": 1
     }
   ]
 }
