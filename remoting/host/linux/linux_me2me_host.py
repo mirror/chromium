@@ -130,6 +130,16 @@ MAX_LAUNCH_FAILURES = SHORT_BACKOFF_THRESHOLD + 10
 # Number of seconds to save session output to the log.
 SESSION_OUTPUT_TIME_LIMIT_SECONDS = 30
 
+# Host offline reason if the X server retry count is exceeded.
+HOST_OFFLINE_REASON_X_SERVER_RETRIES_EXCEEDED = "X_SERVER_RETRIES_EXCEEDED"
+
+# Host offline reason if the X session retry count is exceeded.
+HOST_OFFLINE_REASON_SESSION_RETRIES_EXCEEDED = "SESSION_RETRIES_EXCEEDED"
+
+# Host offline reason if the host retry count is exceeded. (Note: It may or may
+# not be possible to send this, depending on why the host is failing.)
+HOST_OFFLINE_REASON_HOST_RETRIES_EXCEEDED = "HOST_RETRIES_EXCEEDED"
+
 # This is the file descriptor used to pass messages to the user_session binary
 # during startup. It must be kept in sync with kMessageFd in
 # remoting_user_session.cc.
@@ -547,19 +557,22 @@ class Desktop:
       del env_copy["TMPDIR"]
       return env_copy
 
+  def check_x_responding(self):
+    """Checks if the X server is responding to connections."""
+    with open(os.devnull, "r+") as devnull:
+      exit_code = subprocess.call("xdpyinfo", env=self.child_env,
+                                  stdout=devnull)
+    return exit_code == 0
+
   def _wait_for_x(self):
     # Wait for X to be active.
-    with open(os.devnull, "r+") as devnull:
-      for _test in range(20):
-        exit_code = subprocess.call("xdpyinfo", env=self.child_env,
-                                    stdout=devnull)
-        if exit_code == 0:
-          break
-        time.sleep(0.5)
-      if exit_code != 0:
-        raise Exception("Could not connect to X server.")
-      else:
+    for _test in range(20):
+      if self.check_x_responding():
         logging.info("X server is active.")
+        break
+      time.sleep(0.5)
+    else:
+      raise Exception("Could not connect to X server.")
 
   def _launch_xvfb(self, display, x_auth_file, extra_x_args):
     max_width = max([width for width, height in self.sizes])
@@ -789,6 +802,13 @@ class Desktop:
       logging.error("Failed writing to host's stdin: " + str(e))
     finally:
       self.host_proc.stdin.close()
+
+  def report_offline_reason(self, host_config, reason):
+    logging.info("Attempting to report offline reason: " + reason)
+    args = [HOST_BINARY_PATH, "--host-config=-",
+            "--report-offline-reason=" + reason]
+    proc = subprocess.Popen(args, env=self.child_env, stdin=subprocess.PIPE)
+    proc.communicate(json.dumps(host_config.data).encode('UTF-8'))
 
 
 def get_daemon_proc():
@@ -1184,14 +1204,16 @@ class RelaunchInhibitor:
     self.earliest_successful_termination = time.time() + minimum_lifetime
     self.running = True
 
-  def record_stopped(self):
+  def record_stopped(self, expected):
     """Record that the process was stopped, and adjust the failure count
-    depending on whether the process ran long enough."""
+    depending on whether the process ran long enough. If the process was
+    intentionally stopped (expected is True), the failure count will not be
+    incremented."""
     self.running = False
-    if time.time() < self.earliest_successful_termination:
-      self.failures += 1
-    else:
+    if time.time() >= self.earliest_successful_termination:
       self.failures = 0
+    elif not expected:
+      self.failures += 1
     logging.info("Failure count for '%s' is now %d", self.label, self.failures)
 
 
@@ -1560,73 +1582,90 @@ Web Store: https://chrome.google.com/remotedesktop"""
   # launched at (roughly) the same time as the X server, and the termination of
   # one of these triggers the termination of the other.
   x_server_inhibitor = RelaunchInhibitor("X server")
+  session_inhibitor = RelaunchInhibitor("session")
   host_inhibitor = RelaunchInhibitor("host")
-  all_inhibitors = [x_server_inhibitor, host_inhibitor]
+  all_inhibitors = [
+      (x_server_inhibitor, HOST_OFFLINE_REASON_X_SERVER_RETRIES_EXCEEDED),
+      (session_inhibitor, HOST_OFFLINE_REASON_SESSION_RETRIES_EXCEEDED),
+      (host_inhibitor, HOST_OFFLINE_REASON_HOST_RETRIES_EXCEEDED)
+  ]
 
-  # Don't allow relaunching the script on the first loop iteration.
-  allow_relaunch_self = False
+  # Whether we are tearing down because the X server and/or session exited.
+  # This keeps us from counting processes exiting because we've terminated them
+  # as errors.
+  tearing_down = False
 
   while True:
-    # Set the backoff interval and exit if a process failed too many times.
-    backoff_time = SHORT_BACKOFF_TIME
-    for inhibitor in all_inhibitors:
-      if inhibitor.failures >= MAX_LAUNCH_FAILURES:
-        logging.error("Too many launch failures of '%s', exiting."
-                      % inhibitor.label)
-        return 1
-      elif inhibitor.failures >= SHORT_BACKOFF_THRESHOLD:
-        backoff_time = LONG_BACKOFF_TIME
-
     relaunch_times = []
 
     # If the session process or X server stops running (e.g. because the user
-    # logged out), kill the other. This will trigger the next conditional block
-    # as soon as os.waitpid() reaps its exit-code.
-    if desktop.session_proc is None and desktop.x_proc is not None:
-      logging.info("Terminating X server")
-      desktop.x_proc.terminate()
-    elif desktop.x_proc is None and desktop.session_proc is not None:
-      logging.info("Terminating X session")
-      desktop.session_proc.terminate()
-    elif desktop.x_proc is None and desktop.session_proc is None:
-      # Both processes have terminated.
-      if (allow_relaunch_self and x_server_inhibitor.failures == 0 and
-          host_inhibitor.failures == 0):
-        # Since the user's desktop is already gone at this point, there's no
-        # state to lose and now is a good time to pick up any updates to this
-        # script that might have been installed.
-        logging.info("Relaunching self")
-        relaunch_self(options.child_process)
-      else:
-        # If there is a non-zero |failures| count, restarting the whole script
-        # would lose this information, so just launch the session as normal.
-        if x_server_inhibitor.is_inhibited():
-          logging.info("Waiting before launching X server")
-          relaunch_times.append(x_server_inhibitor.earliest_relaunch_time)
+    # logged out), terminate all processes. The session will be restarted once
+    # everything has exited.
+    if tearing_down:
+      if desktop.x_proc is not None:
+        logging.info("Terminating X server")
+        desktop.x_proc.terminate()
+      if desktop.session_proc is not None:
+        logging.info("Terminating X session")
+        desktop.session_proc.terminate()
+      if desktop.host_proc is not None:
+        logging.info("Terminating host")
+        desktop.host_proc.terminate()
+
+      if (desktop.x_proc is None and desktop.session_proc is None and
+          desktop.host_proc is None):
+        if (x_server_inhibitor.failures == 0 and
+            session_inhibitor.failures == 0 and host_inhibitor.failures == 0):
+          # Since the user's desktop is already gone at this point, there's no
+          # state to lose and now is a good time to pick up any updates to this
+          # script that might have been installed.
+          logging.info("Relaunching self")
+          relaunch_self(options.child_process)
         else:
+          # If there is a non-zero |failures| count, restarting the whole script
+          # would lose this information, so just launch the session as normal,
+          # below.
+          tearing_down = False
+
+    if not tearing_down:
+      # Set the backoff interval and exit if a process failed too many times.
+      backoff_time = SHORT_BACKOFF_TIME
+      for inhibitor, offline_reason in all_inhibitors:
+        if inhibitor.failures >= MAX_LAUNCH_FAILURES:
+          logging.error("Too many launch failures of '%s', exiting."
+                        % inhibitor.label)
+          desktop.report_offline_reason(host_config, offline_reason)
+          return 1
+        elif inhibitor.failures >= SHORT_BACKOFF_THRESHOLD:
+          backoff_time = LONG_BACKOFF_TIME
+
+        if inhibitor.is_inhibited():
+          relaunch_times.append(inhibitor.earliest_relaunch_time)
+
+      if relaunch_times:
+        # We want to way until everything is ready to start so we don't end up
+        # launching things in the wrong order due to differing relaunch times.
+        logging.info("Waiting before relaunching")
+      else:
+        if desktop.x_proc is None and desktop.session_proc is None:
           logging.info("Launching X server and X session.")
           desktop.launch_session(options.child_process, args)
           x_server_inhibitor.record_started(MINIMUM_PROCESS_LIFETIME,
                                             backoff_time)
-          allow_relaunch_self = True
+          session_inhibitor.record_started(MINIMUM_PROCESS_LIFETIME,
+                                           backoff_time)
+        if desktop.host_proc is None:
+          logging.info("Launching host process")
 
-    if desktop.host_proc is None:
-      if host_inhibitor.is_inhibited():
-        logging.info("Waiting before launching host process")
-        relaunch_times.append(host_inhibitor.earliest_relaunch_time)
-      else:
-        logging.info("Launching host process")
+          extra_start_host_args = []
+          if HOST_EXTRA_PARAMS_ENV_VAR in os.environ:
+              extra_start_host_args = \
+                  re.split('\s+', os.environ[HOST_EXTRA_PARAMS_ENV_VAR].strip())
+          desktop.launch_host(host_config, extra_start_host_args)
 
-        extra_start_host_args = []
-        if HOST_EXTRA_PARAMS_ENV_VAR in os.environ:
-            extra_start_host_args = \
-                re.split('\s+', os.environ[HOST_EXTRA_PARAMS_ENV_VAR].strip())
-        desktop.launch_host(host_config, extra_start_host_args)
+          host_inhibitor.record_started(MINIMUM_PROCESS_LIFETIME, backoff_time)
 
-        host_inhibitor.record_started(MINIMUM_PROCESS_LIFETIME,
-                                      backoff_time)
-
-    deadline = min(relaunch_times) if relaunch_times else 0
+    deadline = max(relaunch_times) if relaunch_times else 0
     pid, status = waitpid_handle_exceptions(-1, deadline)
     if pid == 0:
       continue
@@ -1639,17 +1678,36 @@ Web Store: https://chrome.google.com/remotedesktop"""
     if desktop.x_proc is not None and pid == desktop.x_proc.pid:
       logging.info("X server process terminated")
       desktop.x_proc = None
-      x_server_inhibitor.record_stopped()
+      if tearing_down:
+        # May have already been marked stopped if X server was found not to be
+        # responding.
+        if x_server_inhibitor.running:
+          x_server_inhibitor.record_stopped(True)
+      else:
+        x_server_inhibitor.record_stopped(False)
+        tearing_down = True
 
     if desktop.session_proc is not None and pid == desktop.session_proc.pid:
       logging.info("Session process terminated")
       desktop.session_proc = None
+      if tearing_down:
+        session_inhibitor.record_stopped(True)
+      else:
+        # The session may have exited on it's own or been brought down by the X
+        # server dying. Check if the X server is still running so we know whom
+        # to penalize.
+        if desktop.check_x_responding():
+          session_inhibitor.record_stopped(False)
+        else:
+          session_inhibitor.record_stopped(True)
+          x_server_inhibitor.record_stopped(False)
+        # Either way, we want to tear down the session.
+        tearing_down = True
 
     if desktop.host_proc is not None and pid == desktop.host_proc.pid:
       logging.info("Host process terminated")
       desktop.host_proc = None
       desktop.host_ready = False
-      host_inhibitor.record_stopped()
 
       # These exit-codes must match the ones used by the host.
       # See remoting/host/host_error_codes.h.
@@ -1679,6 +1737,20 @@ Web Store: https://chrome.google.com/remotedesktop"""
           logging.info("Host exited with status %s." % os.WEXITSTATUS(status))
       elif os.WIFSIGNALED(status):
         logging.info("Host terminated by signal %s." % os.WTERMSIG(status))
+
+      # The host may have exited on it's own or been brought down by the X
+      # server dying. Check if the X server is still running so we know whom to
+      # penalize.
+      if tearing_down:
+        host_inhibitor.record_stopped(True)
+      else:
+        if desktop.check_x_responding():
+          host_inhibitor.record_stopped(False)
+        else:
+          host_inhibitor.record_stopped(True)
+          x_server_inhibitor.record_stopped(False)
+          # Only tear down if the X server isn't responding.
+          tearing_down = True
 
 
 if __name__ == "__main__":
