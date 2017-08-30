@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "8b7cf44d_a4a86395",
+        "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-30T04:14:11Z",
+      "side": 1,
+      "message": "I will file a bug about this, these are all still rough ideas with some whiteboard discussion, but we\u0027ll need to converge on a concrete plan.  What we talked in the gist is that basically we want to have a common, a little more portable way to get the right URLLoader, while currently the path to achieve it is a little getting complex-- we do this in two-steps:\n\n1) when CreateURLLoader() is called we first determines which URLLoaderFactory to use, attaches necessary layered URLLoaderFactory\u0027s if necessary, and creates WebURLLoaderImpl that encapsulates the URLLoaderFactory.  (We don\u0027t create URLLoader yet here)\n2) and then when WebURLLoader::Load() is called. We internally calls ResourceDispatcher\u0027s Start*ync() method (which should go away soonish if we completely migrate over mojo), and that\u0027s where we attach ThrottlingURLLoader.\n\nI want to make this happen at once in either one of these is called, and want to hide all the details around URLLoaderFactory from the callsites.  Wrapping all these set-up code into a custom URLLoaderFactory is one of the things that is discussed.  So it\u0027s not really about making ThrottlingURLLoader a mojom::URLLoaderFactory, but about making the code that sets up ThrottlingURLLoader a mojom::URLLoaderFactory.  In either way we\u0027re still just discussing this, and your comments are much appreciated.",
+      "parentUuid": "57bc31e7_3e77e415",
+      "range": {
+        "startLine": 88,
+        "startChar": 4,
+        "endLine": 88,
+        "endChar": 19
+      },
+      "revId": "3a0780e1f0fa8443195d84f656677cdad2f65375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b505f525_9d9fa1c9",
         "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
         "patchSetId": 3
