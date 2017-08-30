@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "0aa5e39e_567a2772",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-30T17:36:59Z",
+      "side": 1,
+      "message": "Can you please clarify? VisiblePosition doesn\u0027t define equality operators:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/editing/VisiblePosition.h?q\u003dvisibleposition\u0026sq\u003dpackage:chromium\u0026l\u003d85\n\nThis approach wouldn\u0027t require introducing VisiblePosition::IsValidFor(), right?",
+      "parentUuid": "7ebc2509_cbfb25dd",
+      "revId": "d9a293e1d0810041687e4c8c0738236828d6f4bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cd8c57df_ed80ec1c",
         "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
         "patchSetId": 4
