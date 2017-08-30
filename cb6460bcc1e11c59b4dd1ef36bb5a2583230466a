@@ -22,6 +22,30 @@
       "revId": "cb6460bcc1e11c59b4dd1ef36bb5a2583230466a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b66d3ab_0487812e",
+        "filename": "net/socket/udp_socket_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-30T03:54:36Z",
+      "side": 1,
+      "message": "Makes sense!",
+      "parentUuid": "67cf0cda_4af9996a",
+      "range": {
+        "startLine": 322,
+        "startChar": 26,
+        "endLine": 322,
+        "endChar": 0
+      },
+      "revId": "cb6460bcc1e11c59b4dd1ef36bb5a2583230466a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
