@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e58eabc8_9c28a671",
+        "filename": "content/shell/browser/shell.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-30T18:45:27Z",
+      "side": 1,
+      "message": "Why not add this to the initializer list? Why assign it this late?",
+      "revId": "4c148a6a48a3edc75e725d29ae089e264eedf20f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f200915f_ef090bf6",
+        "filename": "content/shell/browser/shell.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-30T18:45:27Z",
+      "side": 1,
+      "message": "Also, doing this as early in the code seems probably desirable, as I\u0027d imagine the callback we call above might try to access the WebContents.",
+      "revId": "4c148a6a48a3edc75e725d29ae089e264eedf20f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
