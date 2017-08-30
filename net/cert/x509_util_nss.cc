@@ -306,6 +306,14 @@ bool GetDEREncoded(CERTCertificate* cert, std::string* der_encoded) {
   return true;
 }
 
+bool GetPEMEncoded(CERTCertificate* cert, std::string* pem_encoded) {
+  if (!cert || !cert->derCert.len)
+    return false;
+  std::string der(reinterpret_cast<char*>(cert->derCert.data),
+                  cert->derCert.len);
+  return X509Certificate::GetPEMEncodedFromDER(der, pem_encoded);
+}
+
 void GetRFC822SubjectAltNames(CERTCertificate* cert_handle,
                               std::vector<std::string>* names) {
   crypto::ScopedSECItem alt_name(SECITEM_AllocItem(NULL, NULL, 0));

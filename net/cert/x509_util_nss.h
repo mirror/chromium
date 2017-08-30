@@ -82,6 +82,10 @@ NET_EXPORT CertificateList CreateX509CertificateListFromCERTCertificates(
 // true and writes the DER encoded certificate to |*der_encoded|.
 NET_EXPORT bool GetDEREncoded(CERTCertificate* cert, std::string* der_encoded);
 
+// Obtains the PEM encoded certificate data for |cert|. On success, returns
+// true and writes the PEM encoded certificate to |*pem_encoded|.
+NET_EXPORT bool GetPEMEncoded(CERTCertificate* cert, std::string* pem_encoded);
+
 // Stores the values of all rfc822Name subjectAltNames from |cert_handle|
 // into |names|. If no names are present, clears |names|.
 // WARNING: This method does not validate that the rfc822Name is
