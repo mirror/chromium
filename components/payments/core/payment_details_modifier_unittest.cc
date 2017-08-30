@@ -22,12 +22,6 @@ TEST(PaymentRequestTest, EmptyPaymentDetailsModifierDictionary) {
   std::unique_ptr<base::DictionaryValue> item_dict =
       base::MakeUnique<base::DictionaryValue>();
   item_dict->SetString("label", "");
-  std::unique_ptr<base::DictionaryValue> amount_dict =
-      base::MakeUnique<base::DictionaryValue>();
-  amount_dict->SetString("currency", "");
-  amount_dict->SetString("value", "");
-  amount_dict->SetString("currencySystem", "urn:iso:std:iso:4217");
-  item_dict->SetDictionary("amount", std::move(amount_dict));
   item_dict->SetBoolean("pending", false);
   expected_value.SetDictionary("total", std::move(item_dict));
 
@@ -62,8 +56,10 @@ TEST(PaymentRequestTest, PopulatedDetailsModifierDictionary) {
   payment_detials_modififer.supported_methods.push_back("visa");
   payment_detials_modififer.supported_methods.push_back("amex");
   payment_detials_modififer.total.label = "Gratuity";
-  payment_detials_modififer.total.amount.currency = "USD";
-  payment_detials_modififer.total.amount.value = "139.99";
+  payment_detials_modififer.total.amount =
+      base::MakeUnique<PaymentCurrencyAmount>();
+  payment_detials_modififer.total.amount->currency = "USD";
+  payment_detials_modififer.total.amount->value = "139.99";
 
   EXPECT_TRUE(expected_value.Equals(
       payment_detials_modififer.ToDictionaryValue().get()));

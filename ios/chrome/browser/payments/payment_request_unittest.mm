@@ -94,7 +94,9 @@ TEST_F(PaymentRequestTest, CreatesCurrencyFormatterCorrectly) {
   autofill::TestPersonalDataManager personal_data_manager;
 
   web_payment_request.details.total = base::MakeUnique<PaymentItem>();
-  web_payment_request.details.total->amount.currency = "USD";
+  web_payment_request.details.total->amount =
+      base::MakeUnique<PaymentCurrencyAmount>();
+  web_payment_request.details.total->amount->currency = "USD";
   TestPaymentRequest payment_request1(web_payment_request,
                                       chrome_browser_state_.get(), &web_state_,
                                       &personal_data_manager);
@@ -104,7 +106,7 @@ TEST_F(PaymentRequestTest, CreatesCurrencyFormatterCorrectly) {
   EXPECT_EQ(base::UTF8ToUTF16("$55.00"), currency_formatter->Format("55.00"));
   EXPECT_EQ("USD", currency_formatter->formatted_currency_code());
 
-  web_payment_request.details.total->amount.currency = "JPY";
+  web_payment_request.details.total->amount->currency = "JPY";
   TestPaymentRequest payment_request2(web_payment_request,
                                       chrome_browser_state_.get(), &web_state_,
                                       &personal_data_manager);
@@ -113,8 +115,8 @@ TEST_F(PaymentRequestTest, CreatesCurrencyFormatterCorrectly) {
   EXPECT_EQ(base::UTF8ToUTF16("¥55"), currency_formatter->Format("55.00"));
   EXPECT_EQ("JPY", currency_formatter->formatted_currency_code());
 
-  web_payment_request.details.total->amount.currency_system = "NOT_ISO4217";
-  web_payment_request.details.total->amount.currency = "USD";
+  web_payment_request.details.total->amount->currency_system = "NOT_ISO4217";
+  web_payment_request.details.total->amount->currency = "USD";
   TestPaymentRequest payment_request3(web_payment_request,
                                       chrome_browser_state_.get(), &web_state_,
                                       &personal_data_manager);
@@ -414,8 +416,9 @@ TEST_F(PaymentRequestTest, UpdatePaymentDetailsNewTotal) {
 
   PaymentDetails details;
   details.total = base::MakeUnique<PaymentItem>();
-  details.total->amount.value = "10.00";
-  details.total->amount.currency = "USD";
+  details.total->amount = base::MakeUnique<PaymentCurrencyAmount>();
+  details.total->amount->value = "10.00";
+  details.total->amount->currency = "USD";
   web_payment_request.details = std::move(details);
 
   TestPaymentRequest payment_request(web_payment_request,
@@ -425,11 +428,12 @@ TEST_F(PaymentRequestTest, UpdatePaymentDetailsNewTotal) {
   // Simulate an update with a new total amount.
   PaymentDetails new_details;
   new_details.total = base::MakeUnique<PaymentItem>();
-  new_details.total->amount.value = "20.00";
-  new_details.total->amount.currency = "CAD";
+  new_details.total->amount = base::MakeUnique<PaymentCurrencyAmount>();
+  new_details.total->amount->value = "20.00";
+  new_details.total->amount->currency = "CAD";
   payment_request.UpdatePaymentDetails(std::move(new_details));
-  EXPECT_EQ("20.00", payment_request.payment_details().total->amount.value);
-  EXPECT_EQ("CAD", payment_request.payment_details().total->amount.currency);
+  EXPECT_EQ("20.00", payment_request.payment_details().total->amount->value);
+  EXPECT_EQ("CAD", payment_request.payment_details().total->amount->currency);
 }
 
 // Tests that updating the payment details with a PaymentDetails instance that
@@ -440,8 +444,9 @@ TEST_F(PaymentRequestTest, UpdatePaymentDetailsNoTotal) {
 
   PaymentDetails details;
   details.total = base::MakeUnique<PaymentItem>();
-  details.total->amount.value = "10.00";
-  details.total->amount.currency = "USD";
+  details.total->amount = base::MakeUnique<PaymentCurrencyAmount>();
+  details.total->amount->value = "10.00";
+  details.total->amount->currency = "USD";
   web_payment_request.details = std::move(details);
 
   TestPaymentRequest payment_request(web_payment_request,
@@ -451,8 +456,8 @@ TEST_F(PaymentRequestTest, UpdatePaymentDetailsNoTotal) {
   // Simulate an update with the total amount missing.
   PaymentDetails new_details;
   payment_request.UpdatePaymentDetails(std::move(new_details));
-  EXPECT_EQ("10.00", payment_request.payment_details().total->amount.value);
-  EXPECT_EQ("USD", payment_request.payment_details().total->amount.currency);
+  EXPECT_EQ("10.00", payment_request.payment_details().total->amount->value);
+  EXPECT_EQ("USD", payment_request.payment_details().total->amount->currency);
 }
 
 // Test that loading profiles when none are available works as expected.
