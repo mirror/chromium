@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac5d9554_70cbc229",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-30T22:24:17Z",
+      "side": 1,
+      "message": "Is this common / likely in practice? I worry a little about the possibility of getting into a startup / shutdown loop. Would it be reasonable to CHECK(!TetherEnabled()) in Shutdown()? Maybe add a \u0027force_shutdown\u0027 flag if we ever call Shutdown() while Tether is enabled and make sure we don\u0027t start it up again here if set?",
+      "revId": "e558e5bb4a6eccbad1c4483dd344f704dc962e47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
