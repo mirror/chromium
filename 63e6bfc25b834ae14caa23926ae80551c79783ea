@@ -16,6 +16,24 @@
       "revId": "63e6bfc25b834ae14caa23926ae80551c79783ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3358106c_8c430756",
+        "filename": "chrome/browser/ui/views/frame/immersive_mode_controller_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-30T21:05:42Z",
+      "side": 1,
+      "message": "This seems unnecessary. My guess is you\u0027re doing a layout *before* the change and not afterwards. I recommend logging when layout is occurring and when the switch changes. It should also be possible to write a test for this.",
+      "parentUuid": "8dd95b97_837f40ab",
+      "revId": "63e6bfc25b834ae14caa23926ae80551c79783ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
