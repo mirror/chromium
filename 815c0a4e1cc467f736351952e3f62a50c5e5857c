@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "949c2e92_c2c972ee",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-30T14:33:26Z",
+      "side": 1,
+      "message": "The tiles are one thing; the other is that the chrome.embeddedSearch APIs are only available on the NTP. If none of the voice tests need that, we could get rid of all the \"NTP stuff\" (custom search provider with new_tab_url) for them, which would be nice. (It looks like the \u0027speech\u0027 module might need it, but it should be easy to inject a fake instead. Anyway, not for this CL.)",
+      "parentUuid": "0e47393a_452c6f88",
+      "revId": "815c0a4e1cc467f736351952e3f62a50c5e5857c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0897749b_914e050a",
         "filename": "chrome/test/data/local_ntp/test_utils.js",
         "patchSetId": 14
