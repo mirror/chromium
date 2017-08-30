@@ -10,7 +10,7 @@
 #include "components/viz/common/surfaces/local_surface_id.h"
 #include "components/viz/common/surfaces/surface_id.h"
 #include "components/viz/service/display/display_client.h"
-#include "components/viz/service/frame_sinks/compositor_frame_sink_support_client.h"
+#include "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
 #include "components/viz/service/hit_test/hit_test_aggregator.h"
 #include "components/viz/service/hit_test/hit_test_aggregator_delegate.h"
 #include "mojo/public/cpp/bindings/associated_binding.h"
@@ -25,8 +25,7 @@ class CompositorFrameSinkSupport;
 class Display;
 class FrameSinkManagerImpl;
 
-class RootCompositorFrameSinkImpl : public CompositorFrameSinkSupportClient,
-                                    public mojom::CompositorFrameSink,
+class RootCompositorFrameSinkImpl : public CompositorFrameSinkSupport,
                                     public mojom::DisplayPrivate,
                                     public DisplayClient,
                                     public HitTestAggregatorDelegate {
@@ -51,12 +50,10 @@ class RootCompositorFrameSinkImpl : public CompositorFrameSinkSupportClient,
                          float scale_factor) override;
 
   // mojom::CompositorFrameSink:
-  void SetNeedsBeginFrame(bool needs_begin_frame) override;
   void SubmitCompositorFrame(const LocalSurfaceId& local_surface_id,
                              cc::CompositorFrame frame,
                              mojom::HitTestRegionListPtr hit_test_region_list,
                              uint64_t submit_time) override;
-  void DidNotProduceFrame(const BeginFrameAck& begin_frame_ack) override;
 
   // HitTestAggregatorDelegate:
   void OnAggregatedHitTestRegionListUpdated(
@@ -74,19 +71,7 @@ class RootCompositorFrameSinkImpl : public CompositorFrameSinkSupportClient,
                               const cc::RenderPassList& render_passes) override;
   void DisplayDidDrawAndSwap() override;
 
-  // CompositorFrameSinkSupportClient:
-  void DidReceiveCompositorFrameAck(
-      const std::vector<ReturnedResource>& resources) override;
-  void OnBeginFrame(const BeginFrameArgs& args) override;
-  void OnBeginFramePausedChanged(bool paused) override;
-  void ReclaimResources(
-      const std::vector<ReturnedResource>& resources) override;
-  void WillDrawSurface(const LocalSurfaceId& local_surface_id,
-                       const gfx::Rect& damage_rect) override;
-
   void OnClientConnectionLost();
-
-  std::unique_ptr<CompositorFrameSinkSupport> support_;
 
   // RootCompositorFrameSinkImpl holds a Display and its BeginFrameSource if
   // it was created with a non-null gpu::SurfaceHandle.
