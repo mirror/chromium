@@ -133,7 +133,7 @@ def LoadPlist(path):
     os.unlink(name)
 
 
-def FinalizeUnpack(target_os):
+def FinalizeUnpack(output_dir, target_os):
   """Use xcodebuild to accept new toolchain license and run first launch
   installers if necessary.  Don't accept the license if a newer license has
   already been accepted. This only works if xcodebuild and xcode-select are
@@ -142,8 +142,7 @@ def FinalizeUnpack(target_os):
   # Check old license
   try:
     target_license_plist_path = \
-        os.path.join(TOOLCHAIN_BUILD_DIR % target_os,
-                     *['Contents','Resources','LicenseInfo.plist'])
+        os.path.join(output_dir, *['Contents','Resources','LicenseInfo.plist'])
     target_license_plist = LoadPlist(target_license_plist_path)
     build_type = target_license_plist['licenseType']
     build_version = target_license_plist['licenseID']
@@ -167,15 +166,13 @@ def FinalizeUnpack(target_os):
 
   print "Accepting license."
   target_version_plist_path = \
-      os.path.join(TOOLCHAIN_BUILD_DIR % target_os,
-                   *['Contents','version.plist'])
+      os.path.join(output_dir, *['Contents','version.plist'])
   target_version_plist = LoadPlist(target_version_plist_path)
   short_version_string = target_version_plist['CFBundleShortVersionString']
   old_path = subprocess.Popen(['/usr/bin/xcode-select', '-p'],
                                stdout=subprocess.PIPE).communicate()[0].strip()
   try:
-    build_dir = os.path.join(
-        TOOLCHAIN_BUILD_DIR % target_os, 'Contents/Developer')
+    build_dir = os.path.join(output_dir, 'Contents/Developer')
     subprocess.check_call(['sudo', '/usr/bin/xcode-select', '-s', build_dir])
     subprocess.check_call(['sudo', '/usr/bin/xcodebuild', '-license', 'accept'])
 
