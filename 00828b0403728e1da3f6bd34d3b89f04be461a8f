@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c53f9c4f_7ccb9c82",
+        "filename": "ios/chrome/browser/ui/ntp/google_landing_mediator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-30T19:35:14Z",
+      "side": 1,
+      "message": "Does anyone know how to trigger the bookmarks manager through a what\u0027s new promo?\nNote: legacy code in notification_promo_whats_new.mm suggests this is possible.",
+      "revId": "00828b0403728e1da3f6bd34d3b89f04be461a8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
