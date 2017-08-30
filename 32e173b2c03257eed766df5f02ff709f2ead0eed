@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04875705_119ba21d",
+        "filename": "ui/webui/resources/js/cr/ui/list.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-30T22:47:35Z",
+      "side": 1,
+      "message": "Grammar nit: singular/plural agreement. \"The scrollbars do not\"",
+      "range": {
+        "startLine": 582,
+        "startChar": 13,
+        "endLine": 582,
+        "endChar": 36
+      },
+      "revId": "32e173b2c03257eed766df5f02ff709f2ead0eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
