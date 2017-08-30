@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9bdd7ffb_2d3fbf72",
+        "filename": "ash/wm/overview/overview_window_drag_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-30T17:18:20Z",
+      "side": 1,
+      "message": "We probably should have some kind of response when a user tried to drag such window, otherwise it\u0027ll just look broken. Is it planned? If not, can you file a request?",
+      "revId": "3608edc3680d8058b248467a75f83cc206dca80c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da919fba_a6a88967",
+        "filename": "ash/wm/overview/window_selector_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2111,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-30T17:18:20Z",
+      "side": 1,
+      "message": "do you need this? Chrome should be able to shutdown from any state, so if you need it, them there must be a bug somewhere.",
+      "range": {
+        "startLine": 2111,
+        "startChar": 2,
+        "endLine": 2111,
+        "endChar": 16
+      },
+      "revId": "3608edc3680d8058b248467a75f83cc206dca80c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
