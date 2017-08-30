@@ -3,13 +3,27 @@
 // found in the LICENSE file.
 
 #include "components/multidevice/service/multidevice_service.h"
+
 #include "components/multidevice/service/device_sync_impl.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "services/service_manager/public/cpp/service_context.h"
 
 namespace multidevice {
 
-MultiDeviceService::MultiDeviceService() : weak_ptr_factory_(this) {}
+MultiDeviceService::MultiDeviceService()
+    : gcm_manager_(nullptr),
+      device_manager_(nullptr),
+      enrollment_manager_(nullptr),
+      weak_ptr_factory_(this) {}
+
+MultiDeviceService::MultiDeviceService(
+    std::unique_ptr<cryptauth::CryptAuthGCMManager> gcm_manager,
+    std::unique_ptr<cryptauth::CryptAuthDeviceManager> device_manager,
+    std::unique_ptr<cryptauth::CryptAuthEnrollmentManager> enrollment_manager)
+    : gcm_manager_(std::move(gcm_manager)),
+      device_manager_(std::move(device_manager)),
+      enrollment_manager_(std::move(enrollment_manager)),
+      weak_ptr_factory_(this) {}
 
 MultiDeviceService::~MultiDeviceService() {}
 
@@ -33,7 +47,9 @@ void MultiDeviceService::CreateDeviceSyncImpl(
     service_manager::ServiceContextRefFactory* ref_factory,
     device_sync::mojom::DeviceSyncRequest request) {
   mojo::MakeStrongBinding(
-      base::MakeUnique<DeviceSyncImpl>(ref_factory->CreateRef()),
+      base::MakeUnique<DeviceSyncImpl>(
+          ref_factory->CreateRef(), std::move(gcm_manager_),
+          std::move(device_manager_), std::move(enrollment_manager_)),
       std::move(request));
 }
 

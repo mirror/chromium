@@ -99,7 +99,8 @@ test("components_unittests") {
     "//components/machine_intelligence:unit_tests",
     "//components/metrics:unit_tests",
     "//components/multidevice:unit_tests",
-    "//components/multidevice/service:multidevice_service_unittest",
+
+    #"//components/multidevice/service:multidevice_service_unittest",
     "//components/navigation_metrics:unit_tests",
     "//components/net_log:unit_tests",
     "//components/network_session_configurator/browser:unit_tests",
