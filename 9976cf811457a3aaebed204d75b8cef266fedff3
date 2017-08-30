@@ -65,6 +65,29 @@
     },
     {
       "key": {
+        "uuid": "995a15ea_6778148c",
+        "filename": "ios/clean/chrome/browser/ui/commands/context_menu_commands.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-30T08:52:53Z",
+      "side": 1,
+      "message": "We try to avoid multiple preposition in method names, so maybe rename this \"-dismissContextMenuForUnavailableFeatureNamed:\".",
+      "range": {
+        "startLine": 38,
+        "startChar": 8,
+        "endLine": 38,
+        "endChar": 55
+      },
+      "revId": "9976cf811457a3aaebed204d75b8cef266fedff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e311cedf_7ff07b66",
         "filename": "ios/clean/chrome/browser/ui/dialogs/context_menu/context_menu_mediator.mm",
         "patchSetId": 2
