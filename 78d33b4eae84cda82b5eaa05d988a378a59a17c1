@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "883c9439_c7ab44b4",
+        "filename": "ui/base/test/ui_controls_internal_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1240765
+      },
+      "writtenOn": "2017-08-30T20:10:24Z",
+      "side": 1,
+      "message": "Thanks!\nSeems we don\u0027t need to add ALT/CTRL keys as to exceptions switch as we don\u0027t need to distinguish left and right keys. \"Enter\" works properly in all cases (I tested it). So VK_NUMLOCK is enough.",
+      "parentUuid": "1e1f4424_6160e3e4",
+      "range": {
+        "startLine": 142,
+        "startChar": 0,
+        "endLine": 142,
+        "endChar": 54
+      },
+      "revId": "78d33b4eae84cda82b5eaa05d988a378a59a17c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5bc54d34_3e54d758",
         "filename": "ui/base/test/ui_controls_internal_win.cc",
         "patchSetId": 1
