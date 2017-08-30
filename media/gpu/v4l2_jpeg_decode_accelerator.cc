@@ -290,7 +290,7 @@ void V4L2JpegDecodeAccelerator::DecodeTask(
     PostNotifyError(job_record->bitstream_buffer_id, UNREADABLE_INPUT);
     return;
   }
-  input_jobs_.push(make_linked_ptr(job_record.release()));
+  input_jobs_.push(base::MakeUnique(job_record.release()));
 
   ServiceDeviceTask(false);
 }
@@ -910,7 +910,7 @@ bool V4L2JpegDecodeAccelerator::EnqueueInputRecord() {
   DCHECK(!free_input_buffers_.empty());
 
   // Enqueue an input (VIDEO_OUTPUT) buffer for an input video frame.
-  linked_ptr<JobRecord> job_record = input_jobs_.front();
+  std::unique_ptr<JobRecord> job_record = input_jobs_.front();
   input_jobs_.pop();
   const int index = free_input_buffers_.back();
   BufferRecord& input_record = input_buffer_map_[index];
