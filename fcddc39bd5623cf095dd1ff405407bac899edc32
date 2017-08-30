@@ -261,6 +261,24 @@
     },
     {
       "key": {
+        "uuid": "658e678f_d71de945",
+        "filename": "components/payments/core/payment_item.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-30T16:54:21Z",
+      "side": 1,
+      "message": "https://www.chromium.org/developers/chromium-string-usage\n\n\"Most UI strings are UTF-16.\"",
+      "parentUuid": "155783d4_fe03b120",
+      "revId": "fcddc39bd5623cf095dd1ff405407bac899edc32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a882283_7fe03c57",
         "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher.mm",
         "patchSetId": 1
