@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "89f85ffc_309379cf",
+        "filename": "ash/system/power/power_button_display_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-30T20:48:25Z",
+      "side": 1,
+      "message": "i think that that was just a problem because chrome was restoring the value from local state (which persists across reboots), right?\n\nthe only way that powerd will return true for GetBacklightsForcedOff is if something previously called SetBacklightsForcedOff with a \u0027true\u0027 arg (since the system booted). that should never happen in the force-clamshell state, as far as i can tell.\n\n(sigh. i see that this is not entirely true, because there\u0027s an a11y api that apparently also calls SetBacklightsForcedOff for https://crbug.com/625741. i\u0027ll file a separate bug about moving that to use something else, since i think it\u0027s likely to conflict with TabletPowerButtonController. feel free to ignore that for now, though.)",
+      "parentUuid": "a7dd52d2_48cc3860",
+      "revId": "42c094b43d2c3bb996274f58d57729b631caeb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "53822c6e_dab8f9c3",
         "filename": "chrome/browser/chromeos/system/input_device_settings.cc",
         "patchSetId": 10
