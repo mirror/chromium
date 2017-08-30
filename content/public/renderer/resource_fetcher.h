@@ -9,6 +9,7 @@
 
 #include "base/callback.h"
 #include "content/common/content_export.h"
+#include "content/public/common/url_loader_factory.mojom.h"
 #include "third_party/WebKit/public/platform/WebURLRequest.h"
 
 class GURL;
@@ -20,6 +21,10 @@ class TimeDelta;
 namespace blink {
 class WebLocalFrame;
 class WebURLResponse;
+}
+
+namespace net {
+struct NetworkTrafficAnnotationTag;
 }
 
 namespace content {
@@ -49,10 +54,18 @@ class CONTENT_EXPORT ResourceFetcher {
   virtual void SetHeader(const std::string& header,
                          const std::string& value) = 0;
 
+  // DEPRECATED: Starts the request using the specified frame.  Calls |callback|
+  // when done.
+  virtual void Start(blink::WebLocalFrame* frame,
+                     blink::WebURLRequest::RequestContext request_context,
+                     const Callback& callback) = 0;
+
   // Starts the request using the specified frame.  Calls |callback| when
   // done.
   virtual void Start(blink::WebLocalFrame* frame,
                      blink::WebURLRequest::RequestContext request_context,
+                     mojom::URLLoaderFactory* url_loader_factory,
+                     const net::NetworkTrafficAnnotationTag& annotation_tag,
                      const Callback& callback) = 0;
 
   // Sets how long to wait for the server to reply.  By default, there is no
