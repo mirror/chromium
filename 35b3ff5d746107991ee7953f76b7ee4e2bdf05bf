@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "286c873e_cd4a13d9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentApp.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-08-30T17:51:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cc1611f_52a3ac59",
+      "range": {
+        "startLine": 54,
+        "startChar": 49,
+        "endLine": 54,
+        "endChar": 62
+      },
+      "revId": "35b3ff5d746107991ee7953f76b7ee4e2bdf05bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8fd716eb_2d31b21d",
         "filename": "third_party/WebKit/Source/modules/payments/PaymentManager.idl",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-30T15:09:22Z",
       "side": 1,
       "message": "The spec does not have the \"attribute\" keyword. Do we need it?",
+      "range": {
+        "startLine": 13,
+        "startChar": 4,
+        "endLine": 13,
+        "endChar": 13
+      },
+      "revId": "35b3ff5d746107991ee7953f76b7ee4e2bdf05bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee6e55c4_4dea42f6",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentManager.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-08-30T17:51:04Z",
+      "side": 1,
+      "message": "Yes, I think so, for an interface (not dictionary), the members could be constants, attributes and operations (https://www.w3.org/TR/WebIDL-1/#idl-interfaces). The userHint naturally fits in attribute.",
+      "parentUuid": "8fd716eb_2d31b21d",
       "range": {
         "startLine": 13,
         "startChar": 4,
