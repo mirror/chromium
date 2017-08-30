@@ -8,6 +8,7 @@
 
 #include <memory>
 
+#include "base/callback.h"
 #include "base/mac/foundation_util.h"
 #include "base/metrics/user_metrics.h"
 #include "base/metrics/user_metrics_action.h"
@@ -85,6 +86,8 @@ const CGFloat kSeparatorInset = 10;
   __weak id<HistoryCollectionViewControllerDelegate> _delegate;
   // Backing ivar for URLLoader property.
   __weak id<UrlLoader> _URLLoader;
+  // Closure to request next page of history.
+  base::OnceClosure _query_history_continuation;
 }
 
 // Object to manage insertion of history entries into the collection view model.
@@ -224,6 +227,7 @@ const CGFloat kSeparatorInset = 10;
 - (void)showHistoryMatchingQuery:(NSString*)query {
   self.finishedLoading = NO;
   self.currentQuery = query;
+  LOG(ERROR) << "SKYM QUERY " << query;
   [self fetchHistoryForQuery:query priorToTime:base::Time::Now()];
 }
 
@@ -337,8 +341,11 @@ const CGFloat kSeparatorInset = 10;
             (const std::vector<BrowsingHistoryService::HistoryEntry>&)results
                   queryResultsInfo:
                       (const BrowsingHistoryService::QueryResultsInfo&)
-                          queryResultsInfo {
+                          queryResultsInfo
+               continuationClosure:
+                   (base::OnceClosure continuation_closure)continuationClosure {
   self.loading = NO;
+  _query_history_continuation = std::move(continuationClosure);
 
   // If history sync is enabled and there hasn't been a response from synced
   // history, try fetching again.
@@ -550,6 +557,7 @@ const CGFloat kSeparatorInset = 10;
         [NSIndexPath indexPathForItem:lastItemIndex inSection:lastSection];
     HistoryEntryItem* lastItem = base::mac::ObjCCastStrict<HistoryEntryItem>(
         [self.collectionViewModel itemAtIndexPath:indexPath]);
+    LOG(ERROR) << "SKYM TIME BASED";
     [self fetchHistoryForQuery:_currentQuery priorToTime:lastItem.timestamp];
   }
 }
@@ -575,7 +583,9 @@ const CGFloat kSeparatorInset = 10;
   options.max_count = kMaxFetchCount;
   options.matching_algorithm =
       query_parser::MatchingAlgorithm::ALWAYS_PREFIX_SEARCH;
-  _browsingHistoryService->QueryHistory(queryString, options);
+  LOG(ERROR) << "SKYM Run _query_history_continuation when "
+                "appropriate." _browsingHistoryService->QueryHistory(
+                    queryString, options);
 }
 
 - (void)updateEntriesStatusMessage {
