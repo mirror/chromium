@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a840e36a_58338055",
+        "filename": "chrome/browser/profiling_host/background_profiling_triggers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-30T20:04:27Z",
+      "side": 1,
+      "message": "I\u0027d recommend decreasing the frequency significantly...e.g. 12 hours?\n\nIn addition, if we\u0027ve sent a report, aovid sending another report for some time [e.g. 24 hours] to avoid spamming the server with the same report.",
+      "revId": "4b033c6b67528a6f7aa475ae3800abf900cb4ea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49eb17d8_b450b9fa",
+        "filename": "chrome/browser/profiling_host/background_profiling_triggers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-30T20:04:27Z",
+      "side": 1,
+      "message": "should we reduce this by a tad to make sure we\u0027re working correctly. e.g. maybe 600MB, and then increase later?",
+      "revId": "4b033c6b67528a6f7aa475ae3800abf900cb4ea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bd3f157_d6dd2dde",
+        "filename": "chrome/browser/profiling_host/background_profiling_triggers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-30T20:04:27Z",
+      "side": 1,
+      "message": "I wouldn\u0027t bother with Renderer, since the reports aren\u0027t actionable now anyways, any we want people to run --memlog\u003dbrowser",
+      "revId": "4b033c6b67528a6f7aa475ae3800abf900cb4ea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "095cba7b_534c2299",
+        "filename": "chrome/browser/profiling_host/background_profiling_triggers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-30T20:04:27Z",
+      "side": 1,
+      "message": "probably easier to do ::FromMinutes(...)",
+      "revId": "4b033c6b67528a6f7aa475ae3800abf900cb4ea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c31017b7_5c426aa2",
+        "filename": "chrome/browser/profiling_host/background_profiling_triggers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-30T20:04:27Z",
+      "side": 1,
+      "message": "this isn\u0027t safe, isnce the object might have been destroyed. I recommend using a weak ptr. See weak_ptr.h, weakfactory, etc.",
+      "revId": "4b033c6b67528a6f7aa475ae3800abf900cb4ea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "075c018d_367159ae",
+        "filename": "chrome/browser/profiling_host/background_profiling_triggers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-30T20:04:27Z",
+      "side": 1,
+      "message": "maybe we hsould have a StartProfiling() method that gets called by PPH::EnsureStart, and we can move the check out there? Otherwise we\u0027re implicitly relying on the assumption that we\u0027ll only start profiling in the right modes.",
+      "revId": "4b033c6b67528a6f7aa475ae3800abf900cb4ea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14e153c3_f1876626",
+        "filename": "chrome/browser/profiling_host/background_profiling_triggers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-30T20:04:27Z",
+      "side": 1,
+      "message": "hm...I\u0027d recommend looking at private_memory_footprint instead.",
+      "revId": "4b033c6b67528a6f7aa475ae3800abf900cb4ea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44942c1c_28e5156d",
+        "filename": "chrome/browser/profiling_host/background_profiling_triggers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-30T20:04:27Z",
+      "side": 1,
+      "message": "ahh, I see. :)\n\nI\u0027d recommend allowing reupload afte ra while, since it\u0027s possible that users will experience a different leak. e.g. hit 800MB now ... and later hit 3000MB.",
+      "revId": "4b033c6b67528a6f7aa475ae3800abf900cb4ea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b17d6dd_24db626b",
+        "filename": "chrome/browser/profiling_host/background_profiling_triggers.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-30T20:04:27Z",
+      "side": 1,
+      "message": "Add a comment here describing what the class does and how it works.",
+      "revId": "4b033c6b67528a6f7aa475ae3800abf900cb4ea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
