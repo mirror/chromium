@@ -24,7 +24,9 @@ class CORE_EXPORT DeprecationReport : public ReportBody {
   String sourceFile() const { return location_->Url(); }
   long lineNumber() const { return location_->LineNumber(); }
 
-  DEFINE_INLINE_VIRTUAL_TRACE() { ReportBody::Trace(visitor); }
+  std::unique_ptr<base::Value> ToValue() override;
+
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   const String message_;

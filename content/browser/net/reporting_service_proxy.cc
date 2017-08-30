@@ -36,6 +36,8 @@ class ReportingServiceProxyImpl : public mojom::ReportingServiceProxy {
                    const std::string& group,
                    const std::string& type,
                    std::unique_ptr<base::Value> body) override {
+    printf("***** In QueueReport in browser\n");
+
     std::unique_ptr<const base::Value> const_body =
         base::WrapUnique(body.release());
 
