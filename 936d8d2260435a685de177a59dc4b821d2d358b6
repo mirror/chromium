@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53c58b03_d098fed4",
+        "filename": "chrome/browser/password_manager/password_manager_util_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-08-30T06:41:04Z",
+      "side": 1,
+      "message": "explicit",
+      "revId": "936d8d2260435a685de177a59dc4b821d2d358b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
