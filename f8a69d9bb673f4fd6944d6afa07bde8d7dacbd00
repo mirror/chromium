@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f2db2fe_4b8c6bd9",
+        "filename": "third_party/WebKit/Source/core/exported/WebAssociatedURLLoaderImpl.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-30T07:25:42Z",
+      "side": 1,
+      "message": ".data() is probably not needed (here and everywhere)",
+      "revId": "f8a69d9bb673f4fd6944d6afa07bde8d7dacbd00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5154f038_a9bac7ac",
+        "filename": "third_party/WebKit/public/platform/WebCORSPreflightResultCache.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-30T07:25:42Z",
+      "side": 1,
+      "message": "Don\u0027t we need to make it case insensitive?\n\nBy the way if there\u0027s no strong requirement could we use simple std::{set,map} instead of  unoredered_{set,map}?\n\nBackground:\nhttps://chromium.googlesource.com/chromium/src/+/master/base/containers/README.md#base_containers-library-map-and-set-selection-usage-advice",
+      "revId": "f8a69d9bb673f4fd6944d6afa07bde8d7dacbd00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c80c7522_f827879c",
+        "filename": "third_party/WebKit/public/platform/WebHTTPHeaderMap.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-30T07:25:42Z",
+      "side": 1,
+      "message": "Could we make these explicit ctor or static creation methods, e.g. FromHTTPResponseHeaders(...), FromHTTPRequestHeaders(...) ?",
+      "revId": "f8a69d9bb673f4fd6944d6afa07bde8d7dacbd00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22aca4ad_a1fe9d36",
+        "filename": "third_party/WebKit/public/platform/WebHTTPHeaderMap.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-30T07:25:42Z",
+      "side": 1,
+      "message": "Please use std::unique_ptr, otherwise we could easily double-free or leak it",
+      "revId": "f8a69d9bb673f4fd6944d6afa07bde8d7dacbd00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30515b95_df7ae906",
+        "filename": "third_party/WebKit/public/platform/WebHTTPHeaderSet.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-30T07:25:42Z",
+      "side": 1,
+      "message": "You can use base::ToLowerASCII (base/strings/string_util.h)",
+      "revId": "f8a69d9bb673f4fd6944d6afa07bde8d7dacbd00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c88d2f6_78c13892",
+        "filename": "third_party/WebKit/public/platform/WebHTTPHeaderSet.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-30T07:25:42Z",
+      "side": 1,
+      "message": "If we don\u0027t have good idea about the expected size on these sets/maps please just use std::set, or if the set will likely be small we can also use std::flat_set.",
+      "revId": "f8a69d9bb673f4fd6944d6afa07bde8d7dacbd00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
