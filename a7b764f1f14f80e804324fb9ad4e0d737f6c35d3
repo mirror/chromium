@@ -152,6 +152,24 @@
       "revId": "a7b764f1f14f80e804324fb9ad4e0d737f6c35d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5672f33b_976698e1",
+        "filename": "net/cert/test_root_certs_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-08-30T23:46:13Z",
+      "side": 1,
+      "message": "ah, I meant that TestRootCerts::Add is supposed to return true on success or false on error. So instead of CHECKing, TestRootCerts::Add should return false if ParsedCertificate::Create returned null.",
+      "parentUuid": "19036f3f_083c0eff",
+      "revId": "a7b764f1f14f80e804324fb9ad4e0d737f6c35d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

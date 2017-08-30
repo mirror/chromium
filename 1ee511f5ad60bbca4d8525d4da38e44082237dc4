@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45e4d453_3a6786ad",
+        "filename": "net/cert/test_root_certs.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-08-30T23:46:13Z",
+      "side": 1,
+      "message": "unused?",
+      "revId": "1ee511f5ad60bbca4d8525d4da38e44082237dc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
