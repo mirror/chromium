@@ -149,12 +149,12 @@ class BackgroundTaskSchedulerGcmNetworkManager implements BackgroundTaskSchedule
             return false;
         }
 
-        Task task = createTaskFromTaskInfo(taskInfo);
-
         try {
+            Task task = createTaskFromTaskInfo(taskInfo);
             gcmNetworkManager.schedule(task);
         } catch (IllegalArgumentException e) {
-            Log.e(TAG, "GcmNetworkManager failed to schedule task.");
+            String gcmMessage = e.getMessage() == null ? "null." : e.getMessage();
+            Log.e(TAG, "GcmNetworkManager failed to schedule task, gcm message: " + gcmMessage);
             return false;
         }
 
