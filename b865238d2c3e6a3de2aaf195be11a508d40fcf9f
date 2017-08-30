@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83a66f33_a330d57e",
+        "filename": "components/omnibox/browser/omnibox_client.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-08-30T14:57:54Z",
+      "side": 1,
+      "message": "s/callbackk/on_favicon_fetched/",
+      "revId": "b865238d2c3e6a3de2aaf195be11a508d40fcf9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
