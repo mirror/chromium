@@ -238,6 +238,24 @@
       "revId": "b90fcc73c1134f66131f813f92f5daf7400f3b9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b5296ed_f41d8db9",
+        "filename": "components/subresource_filter/content/renderer/subresource_filter_agent.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-30T12:43:25Z",
+      "side": 1,
+      "message": "That\u0027s a good point. If there aren\u0027t other cases of a non-parent frame navigating a grandchild frame to another process then we don\u0027t need this.\n\nsrcdoc frames are another weird case but I think they should always be coprocess with the parent:\nhttps://html.spec.whatwg.org/multipage/origin.html#origin\nAt least, they share an origin (if I\u0027m parsing the spec correctly)\n\nShivani, are there other cases besides data that need this?",
+      "parentUuid": "623279cd_55fa3c6d",
+      "revId": "b90fcc73c1134f66131f813f92f5daf7400f3b9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
