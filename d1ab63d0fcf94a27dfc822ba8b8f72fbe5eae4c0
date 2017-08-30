@@ -93,6 +93,29 @@
       "revId": "d1ab63d0fcf94a27dfc822ba8b8f72fbe5eae4c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "26080746_7481fc63",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-30T00:48:14Z",
+      "side": 1,
+      "message": "This one also needs to be reverted otherwise it will generate a static initializer.\nhttp://neugierig.org/software/chromium/notes/2011/08/static-initializers.html",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 73
+      },
+      "revId": "d1ab63d0fcf94a27dfc822ba8b8f72fbe5eae4c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
