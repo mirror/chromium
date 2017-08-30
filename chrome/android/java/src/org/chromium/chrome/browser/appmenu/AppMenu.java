@@ -60,6 +60,7 @@ public class AppMenu implements OnItemClickListener, OnKeyListener {
     private final int mItemDividerHeight;
     private final int mVerticalFadeDistance;
     private final int mNegativeSoftwareVerticalOffset;
+    private final int mNegativeVerticalOffsetNotTopAnchored;
     private final int[] mTempLocation;
     private final boolean mTranslateMenuItemsOnShow;
 
@@ -99,6 +100,8 @@ public class AppMenu implements OnItemClickListener, OnKeyListener {
         mNegativeSoftwareVerticalOffset =
                 res.getDimensionPixelSize(R.dimen.menu_negative_software_vertical_offset);
         mVerticalFadeDistance = res.getDimensionPixelSize(R.dimen.menu_vertical_fade_distance);
+        mNegativeVerticalOffsetNotTopAnchored =
+                res.getDimensionPixelSize(R.dimen.menu_negative_vertical_offset_not_top_anchored);
 
         mTempLocation = new int[2];
         mTranslateMenuItemsOnShow = translateMenuItemsOnShow;
@@ -197,8 +200,10 @@ public class AppMenu implements OnItemClickListener, OnKeyListener {
             mPopup.setBackgroundDrawable(
                     ApiCompatibilityUtils.getDrawable(context.getResources(), R.drawable.menu_bg));
         } else {
-            mPopup.setBackgroundDrawable(ApiCompatibilityUtils.getDrawable(
-                    context.getResources(), R.drawable.edge_menu_bg));
+            mPopup.setBackgroundDrawable(ApiCompatibilityUtils.getDrawable(context.getResources(),
+                    isAnchorAtTop(anchorView, visibleDisplayFrame)
+                            ? R.drawable.edge_menu_bg
+                            : R.drawable.bottom_anchor_edge_menu_bg));
             mPopup.setAnimationStyle(
                     anchorAtBottom ? R.style.OverflowMenuAnimBottom : R.style.OverflowMenuAnim);
         }
@@ -308,6 +313,11 @@ public class AppMenu implements OnItemClickListener, OnKeyListener {
         return (mTempLocation[1] + anchorView.getHeight()) >= visibleDisplayFrame.bottom;
     }
 
+    private boolean isAnchorAtTop(View anchorView, Rect visibleDisplayFrame) {
+        anchorView.getLocationOnScreen(mTempLocation);
+        return mTempLocation[1] == visibleDisplayFrame.top;
+    }
+
     private int[] getPopupPosition(int screenRotation, Rect appRect, Rect padding, View anchorView,
             boolean anchorAtBottom, int popupWidth, int popupHeight) {
         anchorView.getLocationInWindow(mTempLocation);
@@ -345,12 +355,14 @@ public class AppMenu implements OnItemClickListener, OnKeyListener {
             // (appRect.bottom - anchorViewLocationOnScreenY) is used to determine the visible
             // bottom edge of the anchor view.
             if (anchorAtBottom) {
-                Rect bgPadding = new Rect();
-                mPopup.getBackground().getPadding(bgPadding);
                 anchorView.getLocationOnScreen(mTempLocation);
                 int anchorViewLocationOnScreenY = mTempLocation[1];
                 offsets[1] += appRect.bottom - anchorViewLocationOnScreenY - popupHeight;
-                if (!mIsByPermanentButton) offsets[1] += bgPadding.height();
+                if (!mIsByPermanentButton) offsets[1] += padding.bottom;
+            }
+
+            if (!isAnchorAtTop(anchorView, appRect)) {
+                offsets[1] -= mNegativeVerticalOffsetNotTopAnchored;
             }
 
             if (!ApiCompatibilityUtils.isLayoutRtl(anchorView.getRootView())) {
