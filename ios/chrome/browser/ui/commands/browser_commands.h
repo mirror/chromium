@@ -13,6 +13,7 @@
 
 @class OpenNewTabCommand;
 @class ReadingListAddCommand;
+@class UIView;
 
 // Protocol for commands that will generally be handled by the "current tab",
 // which in practice is the BrowserViewController instance displaying the tab.
@@ -86,6 +87,16 @@
 // Go to the previous location of the Find In Page query string in the current
 // tab.
 - (void)findPreviousStringInPage;
+
+// Show the page security info popup. |sourceView| is the UI element which
+// triggered this command.
+- (void)showPageInfoPopupForView:(UIView*)sourceView;
+
+// Hide the page security info popup.
+- (void)hidePageInfoPopup;
+
+// Show the security help page.
+- (void)showSecurityHelpPage;
 
 @end
 
