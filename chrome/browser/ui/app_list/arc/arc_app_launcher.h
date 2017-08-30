@@ -10,6 +10,7 @@
 #include "base/macros.h"
 #include "base/optional.h"
 #include "chrome/browser/ui/app_list/arc/arc_app_list_prefs.h"
+#include "ui/display/types/display_constants.h"
 
 namespace content {
 class BrowserContext;
@@ -22,7 +23,8 @@ class ArcAppLauncher : public ArcAppListPrefs::Observer {
   ArcAppLauncher(content::BrowserContext* context,
                  const std::string& app_id,
                  const base::Optional<std::string>& launch_intent,
-                 bool deferred_launch_allowed);
+                 bool deferred_launch_allowed,
+                 int64_t display_id = display::kInvalidDisplayId);
   ~ArcAppLauncher() override;
 
   bool app_launched() const { return app_launched_; }
@@ -46,6 +48,7 @@ class ArcAppLauncher : public ArcAppListPrefs::Observer {
   // once it is registered, regardless it is ready or not. Otherwise app is
   // launched when it becomes ready.
   const bool deferred_launch_allowed_;
+  const int64_t display_id_;
   // Flag indicating that ARC app was launched.
   bool app_launched_ = false;
 
