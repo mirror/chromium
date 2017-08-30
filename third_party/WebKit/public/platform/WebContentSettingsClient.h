@@ -58,6 +58,12 @@ class WebContentSettingsClient {
     return enabled_per_settings;
   }
 
+  virtual bool AllowClientHintFromSource(bool enabled_per_settings,
+                                         mojom::WebClientHintsType type,
+                                         const blink::WebURL& url) {
+    return enabled_per_settings;
+  }
+
   // Controls whether insecure scripts are allowed to execute for this frame.
   virtual bool AllowRunningInsecureContent(bool enabled_per_settings,
                                            const WebSecurityOrigin&,

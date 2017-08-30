@@ -93,6 +93,52 @@ ContentSetting GetContentSettingFromRules(
   return CONTENT_SETTING_DEFAULT;
 }
 
+// Allow passing both WebURL and GURL here, so that we can early return without
+// allocating a new backing string if only the default rule matches.
+template <typename URL>
+bool GetContentSettingClientHintsFromRules(
+    const ContentSettingsForOneType& rules,
+    blink::mojom::WebClientHintsType type,
+    const URL& url) {
+  const GURL primary_url(url);
+  const url::Origin primary_origin(primary_url);
+  if (!content::IsOriginSecure(primary_url))
+    return false;
+
+  int client_hint_type = static_cast<int>(type);
+  ContentSettingsForOneType::const_iterator it;
+
+  const GURL hostname = GURL(url).GetOrigin();
+
+  for (it = rules.begin(); it != rules.end(); ++it) {
+    // Look for exact match.
+    if (it->primary_pattern.Matches(hostname) &&
+        it->primary_pattern != ContentSettingsPattern::Wildcard() &&
+        it->secondary_pattern == ContentSettingsPattern::Wildcard()) {
+      DCHECK(it->setting_value->is_dict());
+      const base::Value* expire_value =
+          it->setting_value->FindPath({"expiration_time"});
+      DCHECK(expire_value->is_double());
+
+      if (base::Time::Now().ToDoubleT() > expire_value->GetDouble()) {
+        // The client hint is expired.
+        return false;
+      }
+
+      const base::Value* list_value =
+          it->setting_value->FindPath({"client_hints"});
+      DCHECK(list_value->is_list()) << list_value->type();
+      const base::Value::ListStorage& client_hints = list_value->GetList();
+      for (size_t i = 0; i < client_hints.size(); ++i) {
+        DCHECK(client_hints[i].is_int());
+        if (client_hints[i].GetInt() == client_hint_type)
+          return true;
+      }
+    }
+  }
+  return false;
+}
+
 }  // namespace
 
 ContentSettingsObserver::ContentSettingsObserver(
@@ -485,6 +531,34 @@ void ContentSettingsObserver::PersistClientHints(
   render_frame()->GetRemoteAssociatedInterfaces()->GetInterface(&host_observer);
   host_observer->PersistClientHints(primary_origin, std::move(client_hints),
                                     duration);
+}
+
+bool ContentSettingsObserver::AllowClientHintFromSource(
+    bool enabled_per_settings,
+    blink::mojom::WebClientHintsType type,
+    const blink::WebURL& url) {
+  bool allow = false;
+  if (content_setting_rules_) {
+    allow = GetContentSettingClientHintsFromRules(
+        content_setting_rules_->client_hints_rules, type, url);
+  }
+  /*
+    {
+      const GURL primary_url(url);
+      const url::Origin primary_origin(primary_url);
+
+      std::vector<::blink::mojom::WebClientHintsType> client_hints;
+      client_hints.push_back(blink::mojom::WebClientHintsType::kDpr);
+
+      // Notify the embedder.
+      client_hints::mojom::ClientHintsAssociatedPtr host_observer;
+      render_frame()->GetRemoteAssociatedInterfaces()->GetInterface(
+          &host_observer);
+      host_observer->PersistClientHints(primary_origin, std::move(client_hints),
+                                        base::TimeDelta::FromDays(1));
+    }
+    */
+  return allow || IsWhitelistedForContentSettings();
 }
 
 void ContentSettingsObserver::DidNotAllowPlugins() {
