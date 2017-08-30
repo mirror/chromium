@@ -230,6 +230,7 @@ void ImmersiveModeControllerAsh::LayoutBrowserRootView() {
   // Update the window caption buttons.
   widget->non_client_view()->frame_view()->ResetWindowControls();
   widget->non_client_view()->frame_view()->InvalidateLayout();
+  widget->client_view()->InvalidateLayout();
   browser_view_->InvalidateLayout();
   widget->GetRootView()->Layout();
 }
