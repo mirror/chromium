@@ -88,6 +88,24 @@
       "revId": "709d4977cf5e618bc4b0bab290920ccf88557d97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "761146de_7a720ffc",
+        "filename": "chrome/browser/android/ntp/content_suggestions_notifier_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-30T15:38:34Z",
+      "side": 1,
+      "message": "Dang... alright, then I don\u0027t see a better solution than this :-/",
+      "parentUuid": "22fa1ce4_104313dd",
+      "revId": "709d4977cf5e618bc4b0bab290920ccf88557d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

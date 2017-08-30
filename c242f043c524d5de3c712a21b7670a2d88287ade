@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "826bb244_429fc84a",
+        "filename": "chrome/browser/android/ntp/content_suggestions_notifier.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-30T15:38:34Z",
+      "side": 1,
+      "message": "Resolved.",
+      "parentUuid": "9685b117_481b69e0",
+      "revId": "c242f043c524d5de3c712a21b7670a2d88287ade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b0d97e9_19f6e49b",
         "filename": "chrome/browser/android/ntp/content_suggestions_notifier_service.cc",
         "patchSetId": 3
@@ -68,6 +86,24 @@
       "revId": "c242f043c524d5de3c712a21b7670a2d88287ade",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efbc5f09_a90e550d",
+        "filename": "chrome/browser/android/ntp/content_suggestions_notifier_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-30T15:38:34Z",
+      "side": 1,
+      "message": "Resolved.",
+      "parentUuid": "6b0d97e9_19f6e49b",
+      "revId": "c242f043c524d5de3c712a21b7670a2d88287ade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -193,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "f15aced5_ff918a13",
+        "filename": "chrome/browser/android/ntp/content_suggestions_notifier_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-30T15:38:34Z",
+      "side": 1,
+      "message": "Resolved.",
+      "parentUuid": "47eadea3_d6292091",
+      "revId": "c242f043c524d5de3c712a21b7670a2d88287ade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a509436e_547666b1",
         "filename": "chrome/browser/android/ntp/content_suggestions_notifier_service_unittest.cc",
         "patchSetId": 3
@@ -240,6 +294,24 @@
       "side": 1,
       "message": "Ah, fair enough. Then, nit^2: Move the observer declaration down here?",
       "parentUuid": "94331cfd_db6ce876",
+      "revId": "c242f043c524d5de3c712a21b7670a2d88287ade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99f70211_288f0924",
+        "filename": "chrome/browser/android/ntp/content_suggestions_notifier_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-30T15:38:34Z",
+      "side": 1,
+      "message": "Not resolved :)",
+      "parentUuid": "43b86ada_b397d77e",
       "revId": "c242f043c524d5de3c712a21b7670a2d88287ade",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1bec80ee_56b62468",
+        "filename": "chrome/browser/android/ntp/content_suggestions_notifier_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-30T15:38:34Z",
+      "side": 1,
+      "message": "The description claims that the CL only adds tests, but this is clearly a behavior change. Intended? If so, please update the description.",
+      "revId": "2eebcece0714ef6a51bebeb88f1c8fba2d7ccba4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d900482_df69384e",
+        "filename": "chrome/browser/android/ntp/content_suggestions_notifier_service_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-30T15:38:34Z",
+      "side": 1,
+      "message": "optional nit: Ownership is a bit icky here... I guess you need a unique_ptr to ContentSuggestionsNotifier (not to StrictMock\u003c..\u003e) below, which makes this order necessary to avoid a cast?",
+      "range": {
+        "startLine": 159,
+        "startChar": 75,
+        "endLine": 159,
+        "endChar": 0
+      },
+      "revId": "2eebcece0714ef6a51bebeb88f1c8fba2d7ccba4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
