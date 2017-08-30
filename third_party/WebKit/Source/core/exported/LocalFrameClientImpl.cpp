@@ -439,6 +439,7 @@ void LocalFrameClientImpl::DispatchDidCommitLoad(
                                           false);
   }
 
+  web_frame_->DidCommitProvisionalLoad();
   if (web_frame_->Client()) {
     web_frame_->Client()->DidCommitProvisionalLoad(
         WebHistoryItem(item), static_cast<WebHistoryCommitType>(commit_type));
