@@ -16,6 +16,24 @@
       "revId": "b88f95748961a292623b7673590c85d12c4df5b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d70c183f_61161739",
+        "filename": "DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-08-30T17:39:45Z",
+      "side": 1,
+      "message": "Thanks, I was using the hash value for the tree 3.2-chromium instead of the commit.",
+      "parentUuid": "a69885ae_08042698",
+      "revId": "b88f95748961a292623b7673590c85d12c4df5b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
