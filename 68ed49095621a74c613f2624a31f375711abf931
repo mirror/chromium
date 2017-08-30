@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00111f78_07d82254",
+        "filename": "device/hid/public/interfaces/hid.mojom",
+        "patchSetId": 18
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-08-30T20:29:13Z",
+      "side": 1,
+      "message": "this struct and the other struct and enum above duplicate C++ versions. Can you remove the duplication by switching the C++ code to always use the mojom generated types always? Doesn\u0027t have to be in this cl.",
+      "range": {
+        "startLine": 53,
+        "startChar": 7,
+        "endLine": 53,
+        "endChar": 24
+      },
+      "revId": "68ed49095621a74c613f2624a31f375711abf931",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
