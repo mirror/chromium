@@ -27,7 +27,7 @@ public class NotificationBuilderForO extends NotificationBuilder {
             // does not target O or sets its own channels. E.g. Web apk notifications.
             return;
         }
-        channelsInitializer.ensureInitialized(channelId);
+        channelsInitializer.ensureInitialized(channelId, /*enabled=*/true);
         mBuilder.setChannelId(channelId);
     }
 }

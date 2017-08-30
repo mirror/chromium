@@ -33,6 +33,7 @@ import org.chromium.chrome.browser.notifications.channels.ChannelDefinitions;
 import org.chromium.chrome.browser.notifications.channels.ChannelsInitializer;
 import org.chromium.chrome.browser.ntp.snippets.ContentSuggestionsNotificationAction;
 import org.chromium.chrome.browser.ntp.snippets.ContentSuggestionsNotificationOptOut;
+import org.chromium.chrome.browser.ntp.snippets.SnippetsBridge;
 import org.chromium.chrome.browser.preferences.NotificationsPreferences;
 import org.chromium.chrome.browser.preferences.PreferencesLauncher;
 import org.chromium.content.browser.BrowserStartupController;
@@ -457,8 +458,15 @@ public class ContentSuggestionsNotifier {
                         (NotificationManager) ContextUtils.getApplicationContext().getSystemService(
                                 Context.NOTIFICATION_SERVICE)),
                 ContextUtils.getApplicationContext().getResources());
-        initializer.ensureInitialized(ChannelDefinitions.CHANNEL_ID_CONTENT_SUGGESTIONS);
+        initializer.ensureInitialized(ChannelDefinitions.CHANNEL_ID_CONTENT_SUGGESTIONS,
+                /*enabled=*/SnippetsBridge.areContentSuggestionsNotificationsEnabled());
         prefs.edit().putBoolean(PREF_CHANNEL_CREATED, true).apply();
+
+        // Once notification channels are used on O, this setting is no longer relevant and the UI
+        // to control it is gone. Set it to true so that notifications are sent unconditionally. If
+        // the channel is disabled, then notifications will be blocked at the system level, and the
+        // user can re-enable them in the system notification settings.
+        SnippetsBridge.setContentSuggestionsNotificationsEnabled(true);
     }
 
     /**
