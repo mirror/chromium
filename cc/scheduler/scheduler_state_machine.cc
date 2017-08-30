@@ -246,17 +246,18 @@ bool SchedulerStateMachine::PendingDrawsShouldBeAborted() const {
   if (resourceless_draw_)
     return is_layer_tree_frame_sink_lost || !can_draw_;
 
-  // These are all the cases where we normally cannot or do not want to draw
-  // but, if needs_redraw_ is true and we do not draw to make forward progress,
-  // we might deadlock with the main thread.
-  // This should be a superset of PendingActivationsShouldBeForced() since
-  // activation of the pending tree is blocked by drawing of the active tree and
-  // the main thread might be blocked on activation of the most recent commit.
+  // These are all the cases where we normally cannot or do not want
+  // to draw but, if |needs_redraw_| is true and we do not draw to
+  // make forward progress, we might deadlock with the main
+  // thread. This should be a superset of ShouldAbortCurrentFrame()
+  // since activation of the pending tree is blocked by drawing of the
+  // active tree and the main thread might be blocked on activation of
+  // the most recent commit.
   return is_layer_tree_frame_sink_lost || !can_draw_ || !visible_ ||
          begin_frame_source_paused_;
 }
 
-bool SchedulerStateMachine::PendingActivationsShouldBeForced() const {
+bool SchedulerStateMachine::ShouldAbortCurrentFrame() const {
   // There is no output surface to trigger our activations.
   // If we do not force activations to make forward progress, we might deadlock
   // with the main thread.
@@ -367,7 +368,7 @@ bool SchedulerStateMachine::ShouldActivatePendingTree() const {
     return false;
 
   // If we want to force activation, do so ASAP.
-  if (PendingActivationsShouldBeForced())
+  if (ShouldAbortCurrentFrame())
     return true;
 
   // At this point, only activate if we are ready to activate.
@@ -1015,7 +1016,7 @@ SchedulerStateMachine::CurrentBeginImplFrameDeadlineMode() const {
 bool SchedulerStateMachine::ShouldTriggerBeginImplFrameDeadlineImmediately()
     const {
   // If we just forced activation, we should end the deadline right now.
-  if (PendingActivationsShouldBeForced() && !has_pending_tree_)
+  if (ShouldAbortCurrentFrame() && !has_pending_tree_)
     return true;
 
   // Throttle the deadline on CompositorFrameAck since we wont draw and submit
