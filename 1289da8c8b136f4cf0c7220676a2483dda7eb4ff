@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c0343f2_c3007435",
+        "filename": "services/viz/public/interfaces/compositing/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-08-30T00:37:55Z",
+      "side": 1,
+      "message": "This file has been deleted. You want to add this to services/viz/public/interfaces.",
+      "revId": "1289da8c8b136f4cf0c7220676a2483dda7eb4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
