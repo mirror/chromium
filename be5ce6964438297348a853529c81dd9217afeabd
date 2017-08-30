@@ -16,6 +16,24 @@
       "revId": "be5ce6964438297348a853529c81dd9217afeabd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b108673_a69ab26c",
+        "filename": "chrome/browser/extensions/extension_cookie_notifier.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-30T16:22:53Z",
+      "side": 1,
+      "message": "I flip-flopped a bit, but this makes sense to me.  It relaxes the usage restrictions of this class a little bit (in that the threads don\u0027t have to be the UI and the IO) but I don\u0027t think there\u0027s any problem with that.  Done.",
+      "parentUuid": "6c6722f5_e5331624",
+      "revId": "be5ce6964438297348a853529c81dd9217afeabd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
