@@ -44,10 +44,10 @@
 #include "chrome/browser/captive_portal/captive_portal_service.h"
 #include "chrome/browser/captive_portal/captive_portal_service_factory.h"
 #include "chrome/browser/captive_portal/captive_portal_tab_helper.h"
-#include "chrome/browser/ssl/captive_portal_blocking_page.h"
 #endif
 
 #if !defined(OS_IOS)
+#include "chrome/browser/ssl/captive_portal_blocking_page.h"
 
 #if defined(OS_WIN)
 #include "base/win/win_util.h"
@@ -57,7 +57,15 @@
 
 #include "chrome/browser/ssl/mitm_software_blocking_page.h"
 #include "third_party/re2/src/re2/re2.h"
+
 #endif  // if !defined(OS_IOS)
+
+#if defined(OS_ANDROID)
+#include "base/android/jni_android.h"
+#include "base/android/jni_string.h"
+#include "chrome/browser/ssl/captive_portal_helper_android.h"
+#include "net/android/network_library.h"
+#endif
 
 namespace {
 
@@ -69,7 +77,9 @@ const base::Feature kMITMSoftwareInterstitial{
 #if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
 const base::Feature kCaptivePortalInterstitial{
     "CaptivePortalInterstitial", base::FEATURE_ENABLED_BY_DEFAULT};
+#endif
 
+#if !defined(OS_IOS)
 const base::Feature kCaptivePortalCertificateList{
     "CaptivePortalCertificateList", base::FEATURE_DISABLED_BY_DEFAULT};
 #endif
@@ -193,7 +203,9 @@ void RecordUMA(SSLErrorHandler::UMAEvent event) {
 bool IsCaptivePortalInterstitialEnabled() {
   return base::FeatureList::IsEnabled(kCaptivePortalInterstitial);
 }
+#endif
 
+#if !defined(OS_IOS)
 std::unique_ptr<std::unordered_set<std::string>> LoadCaptivePortalCertHashes(
     const chrome_browser_ssl::SSLErrorAssistantConfig& proto) {
   auto hashes = base::MakeUnique<std::unordered_set<std::string>>();
@@ -250,7 +262,7 @@ class ConfigSingleton {
   base::Clock* clock() const;
   network_time::NetworkTimeTracker* network_time_tracker() const;
 
-#if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
+#if !defined(OS_IOS)
   // Returns true if any of the SHA256 hashes in |ssl_info| is of a captive
   // portal certificate. The set of captive portal hashes is loaded on first
   // use.
@@ -273,12 +285,15 @@ class ConfigSingleton {
   void SetClockForTesting(base::Clock* clock);
   void SetNetworkTimeTrackerForTesting(
       network_time::NetworkTimeTracker* tracker);
+
+#if !defined(OS_IOS)
   void SetErrorAssistantProto(
       std::unique_ptr<chrome_browser_ssl::SSLErrorAssistantConfig>
           error_assistant_proto);
   void SetEnterpriseManagedForTesting(bool enterprise_managed);
   bool IsEnterpriseManagedFlagSetForTesting() const;
   bool IsEnterpriseManaged() const;
+#endif
 
  private:
   base::TimeDelta interstitial_delay_;
@@ -308,9 +323,7 @@ class ConfigSingleton {
     ENTERPRISE_MANAGED_STATUS_FALSE
   };
   EnterpriseManaged is_enterprise_managed_for_testing_;
-#endif
 
-#if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
   // SPKI hashes belonging to certs treated as captive portals. Null until the
   // first time IsKnownCaptivePortalCert() or SetErrorAssistantProto()
   // is called.
@@ -352,8 +365,7 @@ void ConfigSingleton::ResetForTesting() {
   error_assistant_proto_.reset();
   mitm_software_list_.reset();
   is_enterprise_managed_for_testing_ = ENTERPRISE_MANAGED_STATUS_NOT_SET;
-#endif
-#if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
+
   captive_portal_spki_hashes_.reset();
 #endif
 }
@@ -395,8 +407,8 @@ bool ConfigSingleton::IsEnterpriseManagedFlagSetForTesting() const {
 #endif
 }
 
-bool ConfigSingleton::IsEnterpriseManaged() const {
 #if !defined(OS_IOS)
+bool ConfigSingleton::IsEnterpriseManaged() const {
   // Return the value of the testing flag if it's set.
   if (is_enterprise_managed_for_testing_ == ENTERPRISE_MANAGED_STATUS_TRUE) {
     return true;
@@ -413,13 +425,10 @@ bool ConfigSingleton::IsEnterpriseManaged() const {
   if (g_browser_process->platform_part()->browser_policy_connector_chromeos()) {
     return true;
   }
-#endif  // #if defined(OS_WIN)
-
-  return false;
-#else
-  NOTREACHED();
 #endif
+  return false;
 }
+#endif
 
 #if !defined(OS_IOS)
 void ConfigSingleton::SetErrorAssistantProto(
@@ -435,14 +444,10 @@ void ConfigSingleton::SetErrorAssistantProto(
 
   mitm_software_list_ = LoadMITMSoftwareList(*error_assistant_proto_);
 
-#if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
   captive_portal_spki_hashes_ =
       LoadCaptivePortalCertHashes(*error_assistant_proto_);
-#endif  // ENABLE_CAPTIVE_PORTAL_DETECTION
 }
-#endif  // OS_IOS
 
-#if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
 bool ConfigSingleton::IsKnownCaptivePortalCert(const net::SSLInfo& ssl_info) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   if (!captive_portal_spki_hashes_) {
@@ -463,9 +468,7 @@ bool ConfigSingleton::IsKnownCaptivePortalCert(const net::SSLInfo& ssl_info) {
   }
   return false;
 }
-#endif
 
-#if !defined(OS_IOS)
 const std::string ConfigSingleton::MatchKnownMITMSoftware(
     const scoped_refptr<net::X509Certificate> cert) {
   // If the certificate doesn't have an issuer common name return an empty
@@ -591,7 +594,7 @@ bool SSLErrorHandlerDelegateImpl::IsErrorOverridable() const {
 
 void SSLErrorHandlerDelegateImpl::ShowCaptivePortalInterstitial(
     const GURL& landing_url) {
-#if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
+#if !defined(OS_IOS)
   // Show captive portal blocking page. The interstitial owns the blocking page.
   (new CaptivePortalBlockingPage(web_contents_, request_url_, landing_url,
                                  std::move(ssl_cert_reporter_), ssl_info_,
@@ -755,10 +758,19 @@ void SSLErrorHandler::StartHandlingError() {
     return;
   }
 
+#if defined(OS_ANDROID)
+  if (net::android::GetIsCaptivePortal()) {
+    const std::string url = chrome::android::GetCaptivePortalServerUrl(
+        base::android::AttachCurrentThread());
+    ShowCaptivePortalInterstitial(GURL(url));
+    return;
+  }
+#endif
+
   const bool only_error_is_name_mismatch =
       IsOnlyCertError(net::CERT_STATUS_COMMON_NAME_INVALID);
 
-#if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
+#if !defined(OS_IOS)
   // Check known captive portal certificate list if the only error is
   // name-mismatch. If there are multiple errors, it indicates that the captive
   // portal landing page itself will have SSL errors, and so it's not a very
@@ -767,8 +779,15 @@ void SSLErrorHandler::StartHandlingError() {
       only_error_is_name_mismatch &&
       g_config.Pointer()->IsKnownCaptivePortalCert(ssl_info_)) {
     RecordUMA(CAPTIVE_PORTAL_CERT_FOUND);
+
+#if defined(OS_ANDROID)
+    const std::string url = chrome::android::GetCaptivePortalServerUrl(
+        base::android::AttachCurrentThread());
+    ShowCaptivePortalInterstitial(GURL(url));
+#else
     ShowCaptivePortalInterstitial(
         GURL(captive_portal::CaptivePortalDetector::kDefaultURL));
+#endif
     return;
   }
 #endif
@@ -852,12 +871,13 @@ void SSLErrorHandler::StartHandlingError() {
 }
 
 void SSLErrorHandler::ShowCaptivePortalInterstitial(const GURL& landing_url) {
-#if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
+#if !defined(OS_IOS)
   // Show captive portal blocking page. The interstitial owns the blocking page.
   RecordUMA(delegate_->IsErrorOverridable()
                 ? SHOW_CAPTIVE_PORTAL_INTERSTITIAL_OVERRIDABLE
                 : SHOW_CAPTIVE_PORTAL_INTERSTITIAL_NONOVERRIDABLE);
   delegate_->ShowCaptivePortalInterstitial(landing_url);
+
   // Once an interstitial is displayed, no need to keep the handler around.
   // This is the equivalent of "delete this". It also destroys the timer.
   web_contents_->RemoveUserData(UserDataKey());

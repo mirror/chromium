@@ -37,6 +37,12 @@
 #include "net/ssl/ssl_info.h"
 #include "ui/base/l10n/l10n_util.h"
 
+#if defined(OS_ANDROID)
+#include "content/public/common/referrer.h"
+#include "net/android/network_library.h"
+#include "ui/base/window_open_disposition.h"
+#endif
+
 namespace {
 
 const char kMetricsName[] = "captive_portal";
@@ -118,6 +124,8 @@ std::string CaptivePortalBlockingPage::GetWiFiSSID() const {
     return std::string();
 #elif defined(OS_LINUX)
   ssid = net::GetWifiSSID();
+#elif defined(OS_ANDROID)
+  ssid = net::android::GetWifiSSID();
 #endif
   // TODO(meacer): Handle non UTF8 SSIDs.
   if (!base::IsStringUTF8(ssid))
@@ -216,7 +224,18 @@ void CaptivePortalBlockingPage::CommandReceived(const std::string& command) {
     case security_interstitials::CMD_OPEN_LOGIN:
       captive_portal::CaptivePortalMetrics::LogCaptivePortalBlockingPageEvent(
           captive_portal::CaptivePortalMetrics::OPEN_LOGIN_PAGE);
+#if defined(OS_ANDROID)
+      {
+        // CaptivePortalTabHelper is not available on Android. Simply open the
+        // login URL in a new tab.
+        content::OpenURLParams params(login_url_, content::Referrer(),
+                                      WindowOpenDisposition::NEW_FOREGROUND_TAB,
+                                      ui::PAGE_TRANSITION_LINK, false);
+        web_contents()->OpenURL(params);
+      }
+#else
       CaptivePortalTabHelper::OpenLoginTabForWebContents(web_contents(), true);
+#endif
       break;
     case security_interstitials::CMD_DO_REPORT:
       controller()->SetReportingPreference(true);
