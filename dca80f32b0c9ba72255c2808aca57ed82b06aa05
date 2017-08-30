@@ -69,6 +69,24 @@
       "revId": "dca80f32b0c9ba72255c2808aca57ed82b06aa05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "752f9cca_7430ea92",
+        "filename": "ui/events/platform/key_event_filter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-08-30T23:48:54Z",
+      "side": 1,
+      "message": "On Windows and Mac OSX, this function is for the callback of native API. So if this function returns false (or event-\u003ehandled() \u003d\u003d false in the latest version), the regular input pipeline will be used on Windows and Mac OSX. OS will send the PlatformEvent back to the message loop, i.e. WinWindow on Windows and RenderWidgetHostViewMac on Mac OSX will receive the PlatformEvent again.\n\nThere is no implementation for Mac OSX in the prototype: it uses the same mechanism as Windows, so we do not need to prove it\u0027s workable on Mac OSX.",
+      "parentUuid": "b84826e6_fc1fb446",
+      "revId": "dca80f32b0c9ba72255c2808aca57ed82b06aa05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
