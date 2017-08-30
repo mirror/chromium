@@ -720,9 +720,9 @@ void TabAndroid::UpdateBrowserControlsState(JNIEnv* env,
   content::BrowserControlsState current_state =
       static_cast<content::BrowserControlsState>(current);
   WebContents* sender = web_contents();
-  sender->Send(new ChromeViewMsg_UpdateBrowserControlsState(
-      sender->GetRenderViewHost()->GetRoutingID(), constraints_state,
-      current_state, animate));
+  content::RenderViewHost* rvh = sender->GetRenderViewHost();
+  rvh->Send(new ChromeViewMsg_UpdateBrowserControlsState(
+      rvh->GetRoutingID(), constraints_state, current_state, animate));
 
   if (sender->ShowingInterstitialPage()) {
     content::RenderViewHost* interstitial_view_host =
