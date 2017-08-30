@@ -458,4 +458,8 @@ void WebRuntimeFeatures::EnableMediaEngagementBypassAutoplayPolicies(
       enable);
 }
 
+void WebRuntimeFeatures::EnableWorkStealingInScriptRunner(bool enable) {
+  RuntimeEnabledFeatures::SetWorkStealingInScriptRunnerEnabled(enable);
+}
+
 }  // namespace blink
