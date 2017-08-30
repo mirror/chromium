@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6883d1e2_e13a09aa",
+        "filename": "content/renderer/mojo_context_state.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-08-30T10:13:01Z",
+      "side": 1,
+      "message": "Yuzhu: could you correct this network traffic annotation? I somehow filled up each property, but I do not have a confidence on these explanations.",
+      "revId": "cc7e34f621fc05d1204e141ab035a595e04c376d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
