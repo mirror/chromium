@@ -34,6 +34,7 @@
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/FrameLoadRequest.h"
 #include "core/loader/FrameLoader.h"
+#include "core/loader/NavigationScheduler.h"
 #include "core/page/Page.h"
 #include "core/plugins/PluginView.h"
 #include "platform/heap/HeapAllocator.h"
@@ -291,23 +292,15 @@ bool HTMLFrameOwnerElement::LoadOrRedirectSubframe(
   if (!child_frame)
     return false;
 
-  ResourceRequest request(url);
-  ReferrerPolicy policy = ReferrerPolicyAttribute();
-  if (policy != kReferrerPolicyDefault) {
-    request.SetHTTPReferrer(SecurityPolicy::GenerateReferrer(
-        policy, url, GetDocument().OutgoingReferrer()));
-  }
-
   FrameLoadType child_load_type = kFrameLoadTypeInitialInChildFrame;
   if (!GetDocument().LoadEventFinished() &&
       GetDocument().Loader()->LoadType() ==
           kFrameLoadTypeReloadBypassingCache) {
     child_load_type = kFrameLoadTypeReloadBypassingCache;
-    request.SetCachePolicy(WebCachePolicy::kBypassingCache);
   }
 
-  child_frame->Loader().Load(FrameLoadRequest(&GetDocument(), request),
-                             child_load_type);
+  child_frame->GetNavigationScheduler().ScheduleInitialChildFrameNavigation(
+      &GetDocument(), url, ReferrerPolicyAttribute(), child_load_type);
   return true;
 }
 

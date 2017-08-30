@@ -35,6 +35,7 @@
 #include <memory>
 #include "core/CoreExport.h"
 #include "core/dom/Document.h"
+#include "core/loader/FrameLoaderTypes.h"
 #include "platform/WebTaskRunner.h"
 #include "platform/heap/Handle.h"
 #include "platform/weborigin/KURL.h"
@@ -72,6 +73,10 @@ class CORE_EXPORT NavigationScheduler final
   void SchedulePageBlock(Document*, int reason);
   void ScheduleFormSubmission(Document*, FormSubmission*);
   void ScheduleReload();
+  void ScheduleInitialChildFrameNavigation(Document*,
+                                           const KURL&,
+                                           ReferrerPolicy,
+                                           FrameLoadType);
 
   void StartTimer();
   void Cancel();

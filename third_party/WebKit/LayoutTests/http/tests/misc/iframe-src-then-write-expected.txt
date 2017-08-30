@@ -1,0 +1,2 @@
+This tests that calling iframe.src followed by writing to the iframe using document.write will not result in the iframe navigating.
+
