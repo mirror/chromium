@@ -33,6 +33,24 @@
       "revId": "dca80f32b0c9ba72255c2808aca57ed82b06aa05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4acc637_3f37b410",
+        "filename": "ui/events/platform/key_event_filter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-08-30T22:22:31Z",
+      "side": 1,
+      "message": "Done.\nBut to be clear, this ui::KeyEvent will never reach the regular input pipeline on Windows and Mac OSX, because of the design of low level keyboard proc on these two platforms.",
+      "parentUuid": "150f3671_c182a15e",
+      "revId": "dca80f32b0c9ba72255c2808aca57ed82b06aa05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
