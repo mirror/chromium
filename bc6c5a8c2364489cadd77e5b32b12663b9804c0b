@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2907057_5055a6de",
+        "filename": "third_party/blink/tools/webkitpy/common/camel_to_snake.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-08-30T23:10:19Z",
+      "side": 1,
+      "message": "This could be rewritten as something like:\n\nspecial_cases \u003d [\n     (\u0027CSS\u0027, \u0027Css\u0027),\n     (\u0027Context2D\u0027, \u0027Context_2d\u0027),\n     (\u0027DList\u0027, \u0027Dlist\u0027),\n     (\u0027ETC1\u0027, \u0027Etc1\u0027),\n     (\u0027IFrame\u0027, \u0027Iframe\u0027),\n     (\u0027OList\u0027, \u0027Olist\u0027),\n     (\u0027OnLine\u0027, \u0027Online\u0027),\n     (\u0027Path2D\u0027, \u0027Path_2d\u0027),\n     (\u0027Point2D\u0027, \u0027Point_2d\u0027),\n     (\u0027RTCDTMF\u0027, \u0027RtcDtmf\u0027),\n     (\u0027S3TC\u0027, \u0027S3tc\u0027),\n     (\u0027UList\u0027, \u0027Ulist\u0027),\n     (\u0027XPath\u0027, \u0027Xpath\u0027),\n     (\u0027sRGB\u0027, \u0027Srgb\u0027),\n     (\u0027SVGFE\u0027, \u0027SvgFe\u0027),\n     (\u0027SVGMPath\u0027, \u0027SvgMpath\u0027),\n     (\u0027SVGTSpan\u0027, \u0027SvgTspan\u0027),\n     (\u0027SVG\u0027, \u0027Svg\u0027),\n     (\u0027XHTML\u0027, \u0027Xhtml\u0027),\n     (\u0027HTML\u0027, \u0027Html\u0027),\n     (\u0027WebGL2\u0027, \u0027Webgl2\u0027),\n     (\u0027WebGL\u0027, \u0027Webgl\u0027),\n]\n\nfor old, new in special_cases:\n    s \u003d re.sub(old, new, s)",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 37
+      },
+      "revId": "bc6c5a8c2364489cadd77e5b32b12663b9804c0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e762427c_b24780d9",
+        "filename": "third_party/blink/tools/webkitpy/common/camel_to_snake.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-08-30T23:10:19Z",
+      "side": 1,
+      "message": "The current convention is to put executable scripts all in the \"tools\" directory, and none of the files under webkitpy are executable scripts. Do you like this convention? We could add a wrapper script in blink/tools.",
+      "revId": "bc6c5a8c2364489cadd77e5b32b12663b9804c0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
