@@ -28,6 +28,7 @@
 
 #include <memory>
 #include "platform/PlatformExport.h"
+#include "platform/graphics/paint/PaintImage.h"
 #include "platform/image-decoders/ImageDecoder.h"
 #include "platform/image-decoders/SegmentReader.h"
 #include "platform/wtf/Allocator.h"
@@ -64,11 +65,12 @@ class PLATFORM_EXPORT ImageFrameGenerator final
 
  public:
   static PassRefPtr<ImageFrameGenerator> Create(
+      PaintImage::Id paint_image_id,
       const SkISize& full_size,
       bool is_multi_frame,
       const ColorBehavior& color_behavior) {
-    return AdoptRef(
-        new ImageFrameGenerator(full_size, is_multi_frame, color_behavior));
+    return AdoptRef(new ImageFrameGenerator(paint_image_id, full_size,
+                                            is_multi_frame, color_behavior));
   }
 
   ~ImageFrameGenerator();
@@ -108,8 +110,14 @@ class PLATFORM_EXPORT ImageFrameGenerator final
   // decodeToYUV().
   bool GetYUVComponentSizes(SegmentReader*, SkYUVSizeInfo*);
 
+  PaintImage::Id paint_image_id() const { return paint_image_id_; }
+  PaintImage::ContentId complete_frame_content_id() const {
+    return complete_frame_content_id_;
+  }
+
  private:
-  ImageFrameGenerator(const SkISize& full_size,
+  ImageFrameGenerator(PaintImage::Id paint_image_id,
+                      const SkISize& full_size,
                       bool is_multi_frame,
                       const ColorBehavior&);
 
@@ -145,6 +153,9 @@ class PLATFORM_EXPORT ImageFrameGenerator final
 
   // Parameters used to create internal ImageDecoder objects.
   const ColorBehavior decoder_color_behavior_;
+
+  const PaintImage::Id paint_image_id_;
+  const PaintImage::ContentId complete_frame_content_id_;
 
   const bool is_multi_frame_;
   bool decode_failed_;

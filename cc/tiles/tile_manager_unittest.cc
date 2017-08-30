@@ -2311,6 +2311,7 @@ class CheckerImagingTileManagerTest : public TestLayerTreeHostBase {
    public:
     explicit MockImageGenerator(const gfx::Size& size)
         : StubPaintImageGenerator(
+              PaintImage::GetNextId(),
               SkImageInfo::MakeN32Premul(size.width(), size.height())) {}
 
     MOCK_METHOD5(GetPixels,
