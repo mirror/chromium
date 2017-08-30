@@ -37,9 +37,8 @@ namespace internal {
 // entries and child-parent relationships between entries.
 class ResourceMetadataStorage {
  public:
-  // This should be incremented when incompatibility change is made to DB
-  // format.
-  static const int kDBVersion = 13;
+  // This should be incremented when the database needs to be upgraded.
+  static const int kDBVersion = 14;
 
   // Object to iterate over entries stored in this storage.
   class Iterator {
