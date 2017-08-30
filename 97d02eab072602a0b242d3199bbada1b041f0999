@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d9a051d_2771dc31",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlockFlow.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-08-30T23:02:12Z",
+      "side": 1,
+      "message": "This looks fishy... what if it\u0027s a nested table, and the inner table is in a collapsed cell of the outer table?",
+      "range": {
+        "startLine": 443,
+        "startChar": 14,
+        "endLine": 443,
+        "endChar": 34
+      },
+      "revId": "97d02eab072602a0b242d3199bbada1b041f0999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
