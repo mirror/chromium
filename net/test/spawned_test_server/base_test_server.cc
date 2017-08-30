@@ -260,6 +260,10 @@ BaseTestServer::BaseTestServer(Type type, const SSLOptions& ssl_options)
 
 BaseTestServer::~BaseTestServer() {}
 
+bool BaseTestServer::Start() {
+  return StartInBackground() && BlockUntilStarted();
+}
+
 const HostPortPair& BaseTestServer::host_port_pair() const {
   DCHECK(started_);
   return host_port_pair_;
