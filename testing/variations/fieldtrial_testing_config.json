@@ -1659,17 +1659,41 @@
     "NetDelayableH2AndQuicRequests": [
         {
             "platforms": [
-                "chromeos",
-                "linux",
-                "mac",
-                "win",
-                "android"
+                "win"
             ],
             "experiments": [
                 {
                     "name": "Enabled",
                     "enable_features": [
                         "PrioritySupportedRequestsDelayable"
+                    ]
+                }
+            ]
+        },
+        {
+            "platforms": [
+                "mac"
+            ],
+            "experiments": [
+                {
+                    "name": "EnabledHead",
+                    "enable_features": [
+                        "HeadPriorityRequestsDelayable"
+                    ]
+                }
+            ]
+        },
+        {
+            "platforms": [
+                "chromeos",
+                "linux",
+                "android"
+            ],
+            "experiments": [
+                {
+                    "name": "Yielding",
+                    "enable_features": [
+                        "NetworkSchedulerYielding"
                     ]
                 }
             ]
