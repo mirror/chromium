@@ -618,11 +618,13 @@ void Shell::NotifyAppListVisibilityChanged(bool visible,
 void Shell::NotifyVoiceInteractionStatusChanged(VoiceInteractionState state) {
   for (auto& observer : shell_observers_)
     observer.OnVoiceInteractionStatusChanged(state);
+  voice_interaction_state_ = state;
 }
 
 void Shell::NotifyVoiceInteractionEnabled(bool enabled) {
   for (auto& observer : shell_observers_)
     observer.OnVoiceInteractionEnabled(enabled);
+  voice_interaction_settings_enabled_ = enabled;
 }
 
 void Shell::NotifyVoiceInteractionContextEnabled(bool enabled) {
@@ -633,6 +635,19 @@ void Shell::NotifyVoiceInteractionContextEnabled(bool enabled) {
 void Shell::NotifyVoiceInteractionSetupCompleted() {
   for (auto& observer : shell_observers_)
     observer.OnVoiceInteractionSetupCompleted();
+  voice_interaction_setup_completed_ = true;
+}
+
+VoiceInteractionState Shell::GetVoiceInteractionState() {
+  return voice_interaction_state_;
+}
+
+bool Shell::IsVoiceInteractionSettingsEnabled() {
+  return voice_interaction_settings_enabled_;
+}
+
+bool Shell::IsVoiceInteractionSetupCompleted() {
+  return voice_interaction_setup_completed_;
 }
 
 ////////////////////////////////////////////////////////////////////////////////

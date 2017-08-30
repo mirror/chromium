@@ -94,6 +94,9 @@ class ASH_EXPORT AppListButton : public views::ImageButton,
   // Whether the voice interaction style should be used.
   bool UseVoiceInteractionStyle();
 
+  // Initialize the voice interaction overlay.
+  void InitializeVoiceInteractionOverlay();
+
   // True if the app list is currently showing for this display.
   // This is useful because other IsApplistVisible functions aren't per-display.
   bool is_showing_app_list_;

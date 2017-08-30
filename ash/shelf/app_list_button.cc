@@ -87,6 +87,21 @@ AppListButton::AppListButton(InkDropButtonListener* listener,
   // edge cases with ink drops, events, etc. in tablet mode where we have two
   // buttons in one.
   EnableCanvasFlippingForRTLUI(false);
+
+  // Initialize voice interaction overlay and sync the flags if active user
+  // session has already started. This could happen when an external monitor
+  // is plugged in.
+  if (Shell::Get()->session_controller()->IsActiveUserSessionStarted() &&
+      chromeos::switches::IsVoiceInteractionEnabled()) {
+    is_primary_user_active_ =
+        Shell::Get()->session_controller()->GetPrimaryUserSession() ==
+        Shell::Get()->session_controller()->GetUserSession(0);
+    voice_interaction_settings_enabled_ =
+        Shell::Get()->IsVoiceInteractionSettingsEnabled();
+    voice_interaction_setup_completed_ =
+        Shell::Get()->IsVoiceInteractionSetupCompleted();
+    InitializeVoiceInteractionOverlay();
+  }
 }
 
 AppListButton::~AppListButton() {
@@ -531,15 +546,8 @@ void AppListButton::OnActiveUserSessionChanged(const AccountId& account_id) {
   // Initialize voice interaction overlay when primary user session becomes
   // active.
   if (!voice_interaction_overlay_ &&
-      chromeos::switches::IsVoiceInteractionEnabled()) {
-    voice_interaction_overlay_ = new VoiceInteractionOverlay(this);
-    AddChildView(voice_interaction_overlay_);
-    voice_interaction_overlay_->SetVisible(false);
-    voice_interaction_animation_delay_timer_ =
-        base::MakeUnique<base::OneShotTimer>();
-    voice_interaction_animation_hide_delay_timer_ =
-        base::MakeUnique<base::OneShotTimer>();
-  }
+      chromeos::switches::IsVoiceInteractionEnabled())
+    InitializeVoiceInteractionOverlay();
 }
 
 void AppListButton::StartVoiceInteractionAnimation() {
@@ -600,6 +608,16 @@ bool AppListButton::UseVoiceInteractionStyle() {
     return true;
   }
   return false;
+}
+
+void AppListButton::InitializeVoiceInteractionOverlay() {
+  voice_interaction_overlay_ = new VoiceInteractionOverlay(this);
+  AddChildView(voice_interaction_overlay_);
+  voice_interaction_overlay_->SetVisible(false);
+  voice_interaction_animation_delay_timer_ =
+      base::MakeUnique<base::OneShotTimer>();
+  voice_interaction_animation_hide_delay_timer_ =
+      base::MakeUnique<base::OneShotTimer>();
 }
 
 }  // namespace ash
