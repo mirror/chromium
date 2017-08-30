@@ -440,18 +440,6 @@ cr.define('print_preview', function() {
           this.advancedOptionsSettings_,
           print_preview.AdvancedOptionsSettings.EventType.BUTTON_ACTIVATED,
           this.onAdvancedOptionsButtonActivated_.bind(this));
-
-      // TODO(rltoscano): Move no-destinations-promo into its own component
-      // instead being part of PrintPreview.
-      this.tracker.add(
-          this.getChildElement('#no-destinations-promo .close-button'), 'click',
-          this.onNoDestinationsPromoClose_.bind(this));
-      this.tracker.add(
-          this.getChildElement('#no-destinations-promo .not-now-button'),
-          'click', this.onNoDestinationsPromoClose_.bind(this));
-      this.tracker.add(
-          this.getChildElement('#no-destinations-promo .add-printer-button'),
-          'click', this.onNoDestinationsPromoClick_.bind(this));
     },
 
     /** @override */
@@ -1239,51 +1227,13 @@ cr.define('print_preview', function() {
     },
 
     /**
-     * Called when the destination store loads a group of destinations. Shows
-     * a promo on Chrome OS if the user has no print destinations promoting
-     * Google Cloud Print.
+     * Called when the destination store loads a group of destinations.  This
+     * used to be used to pop a promo for installing Cloud Print printers, but
+     * is currently unused.  The hook may be useful in the future, and so has
+     * been preserved.
      * @private
      */
-    onDestinationSearchDone_: function() {
-      var isPromoVisible = cr.isChromeOS && this.cloudPrintInterface_ &&
-          this.userInfo_.activeUser && !this.appState_.isGcpPromoDismissed &&
-          !this.destinationStore_.isLocalDestinationSearchInProgress &&
-          !this.destinationStore_.isCloudDestinationSearchInProgress &&
-          this.destinationStore_.hasOnlyDefaultCloudDestinations();
-      setIsVisible(
-          this.getChildElement('#no-destinations-promo'), isPromoVisible);
-      if (isPromoVisible) {
-        new print_preview.GcpPromoMetricsContext().record(
-            print_preview.Metrics.GcpPromoBucket.PROMO_SHOWN);
-      }
-    },
-
-    /**
-     * Called when the close button on the no-destinations-promotion is clicked.
-     * Hides the promotion.
-     * @private
-     */
-    onNoDestinationsPromoClose_: function() {
-      new print_preview.GcpPromoMetricsContext().record(
-          print_preview.Metrics.GcpPromoBucket.PROMO_CLOSED);
-      setIsVisible(this.getChildElement('#no-destinations-promo'), false);
-      this.appState_.persistIsGcpPromoDismissed(true);
-    },
-
-    /**
-     * Called when the no-destinations promotion link is clicked. Opens the
-     * Google Cloud Print management page and closes the print preview.
-     * @private
-     */
-    onNoDestinationsPromoClick_: function() {
-      new print_preview.GcpPromoMetricsContext().record(
-          print_preview.Metrics.GcpPromoBucket.PROMO_CLICKED);
-      this.appState_.persistIsGcpPromoDismissed(true);
-      window.open(
-          this.cloudPrintInterface_.baseUrl +
-          '?authuser=' + this.userInfo_.activeUser + '#printers');
-      this.close_(false);
-    }
+    onDestinationSearchDone_: function() {},
   };
 
   // Export
