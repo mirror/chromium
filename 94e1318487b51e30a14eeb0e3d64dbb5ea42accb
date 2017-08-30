@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9646a8d5_478c7d7d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-preflight-request-header-sorted.htm",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-30T03:48:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1943aa9d_a5adad45",
+      "revId": "94e1318487b51e30a14eeb0e3d64dbb5ea42accb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1debae85_306fbf5a",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-preflight-request-header-sorted.htm",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "94e1318487b51e30a14eeb0e3d64dbb5ea42accb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7480061d_e481af1a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-preflight-request-header-sorted.htm",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-30T03:48:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1debae85_306fbf5a",
+      "revId": "94e1318487b51e30a14eeb0e3d64dbb5ea42accb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
