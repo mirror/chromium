@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d02f67f_d4c4278a",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-30T08:43:47Z",
+      "side": 1,
+      "message": "How about leaving comments about the schema like this?\nhttps://chromium.googlesource.com/chromium/src/+/1de4db070869cd5b1450258b94794d9015089e9d/content/browser/service_worker/service_worker_database.cc#29",
+      "revId": "e1cc417bfce15e6b35bb158dc6b16f31f8459016",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97cbfd7d_7729c8be",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-30T08:43:47Z",
+      "side": 1,
+      "message": "entries.reserve(requests_.size() + 1); ?",
+      "revId": "e1cc417bfce15e6b35bb158dc6b16f31f8459016",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95dd0aa5_9c24e101",
+        "filename": "content/browser/service_worker/service_worker_database.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 995,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-30T08:43:47Z",
+      "side": 1,
+      "message": "Other functions in ServiceWorkerDatabase explicitly form a block for resetting std::unique_ptr\u003cleveldb::Iterator\u003e because Handle{Read,Write}Result() at the end of the functions may close the database and it requires all iterators are destroyed before that.\n\nIn this case, the for-loop at line 993 forms a block and it ensures the iterator gets destroyed, so this {} is not necessary.",
+      "revId": "e1cc417bfce15e6b35bb158dc6b16f31f8459016",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df627955_21a03c6e",
+        "filename": "content/browser/service_worker/service_worker_database.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1010,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-30T08:43:47Z",
+      "side": 1,
+      "message": "This seems to be possible when the database gets corrupted. How about handling this case by HandleReadResult(FROM_HERE, STATUS_ERROR_CORRUPTED)?",
+      "revId": "e1cc417bfce15e6b35bb158dc6b16f31f8459016",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
