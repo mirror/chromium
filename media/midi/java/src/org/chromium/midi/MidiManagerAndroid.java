@@ -54,6 +54,14 @@ class MidiManagerAndroid {
     private final long mNativeManagerPointer;
 
     /**
+     * Checks if Android MIDI is supported on the device.
+     */
+    @CalledByNative
+    static boolean hasSystemFeatureMidi() {
+        return ContextUtils.getPackageManager().hasSystemFeature(PackageManager.FEATURE_MIDI);
+    }
+
+    /**
      * A creation function called by C++.
      * @param nativeManagerPointer The native pointer to a midi::MidiManagerAndroid object.
      */
