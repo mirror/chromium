@@ -33,6 +33,10 @@ void ClientHintsObserver::PersistClientHints(
     base::TimeDelta expiration_duration) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
+  // check for 3p cookie block. One simpler option is to complete disable CH if
+  // 3rd party cookie is in ban. check for cookie block. Also, check for JS
+  // block.
+
   const GURL primary_url = primary_origin.GetURL();
 
   // TODO(tbansal): crbug.com/735518. Consider killing the renderer that sent

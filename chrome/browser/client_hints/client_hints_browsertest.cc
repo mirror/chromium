@@ -14,6 +14,8 @@
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/test_utils.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
+#include "net/test/embedded_test_server/http_request.h"
+#include "net/url_request/url_request.h"
 
 class ClientHintsBrowserTest : public InProcessBrowserTest {
  public:
@@ -21,9 +23,19 @@ class ClientHintsBrowserTest : public InProcessBrowserTest {
       : https_server_(net::EmbeddedTestServer::TYPE_HTTPS) {
     https_server_.ServeFilesFromSourceDirectory(
         "chrome/test/data/client_hints");
+
+    https_server_.RegisterRequestMonitor(
+        base::Bind(&ClientHintsBrowserTest::MonitorResourceRequest,
+                   base::Unretained(this)));
+
     EXPECT_TRUE(https_server_.Start());
 
     client_hint_url_ = https_server_.GetURL("/client_hints_lifetime.html");
+    EXPECT_TRUE(client_hint_url_.SchemeIsHTTPOrHTTPS());
+    EXPECT_TRUE(client_hint_url_.SchemeIsCryptographic());
+
+    client_hint_no_lifetime_url_ =
+        https_server_.GetURL("/client_hints_no_lifetime.html");
     EXPECT_TRUE(client_hint_url_.SchemeIsHTTPOrHTTPS());
     EXPECT_TRUE(client_hint_url_.SchemeIsCryptographic());
 
@@ -45,14 +57,38 @@ class ClientHintsBrowserTest : public InProcessBrowserTest {
     cmd->AppendSwitch(switches::kEnableExperimentalWebPlatformFeatures);
   }
 
-  const GURL& client_hint_url() const { return client_hint_url_; }
+  void SetExpectations(bool expect_dpr_client_hint_present,
+                       bool expect_vp_client_hint_present) {
+    expect_dpr_client_hint_present_ = expect_dpr_client_hint_present;
+    expect_vp_client_hint_present_ = expect_vp_client_hint_present;
+  }
 
+  // add comments here.
+  const GURL& client_hint_url() const { return client_hint_url_; }
+  const GURL& client_hint_no_lifetime_url() const {
+    return client_hint_no_lifetime_url_;
+  }
   const GURL& no_client_hint_url() const { return no_client_hint_url_; }
 
  private:
+  void MonitorResourceRequest(
+      const net::test_server::HttpRequest& request) const {
+    bool dpr_client_hint_present =
+        request.headers.find("dpr") != request.headers.end();
+    bool vp_client_hint_present =
+        request.headers.find("viewport-width") != request.headers.end();
+
+    EXPECT_EQ(expect_dpr_client_hint_present_, dpr_client_hint_present);
+    EXPECT_EQ(expect_vp_client_hint_present_, vp_client_hint_present);
+  }
+
   net::EmbeddedTestServer https_server_;
   GURL client_hint_url_;
+  GURL client_hint_no_lifetime_url_;
   GURL no_client_hint_url_;
+
+  bool expect_dpr_client_hint_present_ = false;
+  bool expect_vp_client_hint_present_ = false;
 };
 
 // Loads a webpage that requests persisting of client hints. Verifies that
@@ -87,6 +123,42 @@ IN_PROC_BROWSER_TEST_F(ClientHintsBrowserTest, NoClientHintsHttps) {
   // no_client_hints_url() does not sets the client hints.
   histogram_tester.ExpectTotalCount("ClientHints.UpdateSize", 0);
   histogram_tester.ExpectTotalCount("ClientHints.PersistDuration", 0);
+}
+
+IN_PROC_BROWSER_TEST_F(ClientHintsBrowserTest,
+                       ClientHintsLifetimeFollowedByNoClientHint) {
+  base::HistogramTester histogram_tester;
+  ui_test_utils::NavigateToURL(browser(), client_hint_url());
+
+  histogram_tester.ExpectUniqueSample("ClientHints.UpdateEventCount", 1, 1);
+
+  content::FetchHistogramsFromChildProcesses();
+  SubprocessMetricsProvider::MergeHistogramDeltasForTesting();
+
+  // client_hints_url() sets two client hints.
+  histogram_tester.ExpectUniqueSample("ClientHints.UpdateSize", 2, 1);
+  // client_hint_url() sets client hints persist duration to 3600 seconds.
+  histogram_tester.ExpectUniqueSample("ClientHints.PersistDuration",
+                                      3600 * 1000, 1);
+
+  SetExpectations(true, true);
+  ui_test_utils::NavigateToURL(browser(), no_client_hint_url());
+}
+
+IN_PROC_BROWSER_TEST_F(ClientHintsBrowserTest,
+                       ClientHintsNoLifetimeFollowedByNoClientHint) {
+  base::HistogramTester histogram_tester;
+  ui_test_utils::NavigateToURL(browser(), client_hint_no_lifetime_url());
+
+  histogram_tester.ExpectTotalCount("ClientHints.UpdateEventCount", 0);
+
+  content::FetchHistogramsFromChildProcesses();
+  SubprocessMetricsProvider::MergeHistogramDeltasForTesting();
+
+  histogram_tester.ExpectTotalCount("ClientHints.UpdateSize", 0);
+  histogram_tester.ExpectTotalCount("ClientHints.PersistDuration", 0);
+
+  ui_test_utils::NavigateToURL(browser(), no_client_hint_url());
 }
 
 // Check the client hints for the given URL in an incognito window.
