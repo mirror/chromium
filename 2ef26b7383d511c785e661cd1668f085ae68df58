@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0cb2a8d5_5d71f176",
+        "filename": "chrome/android/java/res/layout/personalized_signin_promo_view_ntp_content_suggestions.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-30T13:05:10Z",
+      "side": 0,
+      "message": "removed because non-modern StatusCardViewHolder would override it anyway",
+      "range": {
+        "startLine": 11,
+        "startChar": 34,
+        "endLine": 11,
+        "endChar": 62
+      },
+      "revId": "2ef26b7383d511c785e661cd1668f085ae68df58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
