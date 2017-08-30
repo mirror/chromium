@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5a75bb4_e9855c46",
+        "filename": "content/browser/service_worker/service_worker_database.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1006,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-30T15:10:53Z",
+      "side": 1,
+      "message": "Maybe it\u0027s just late and I\u0027m not super familiar with the db code, but I\u0027m having trouble following this code. There are a lot of \"prefixes\". WDYT (and what does nhiroki@ think?) of adding comments with example values? Like\n\n// Example |user_data_key_without_key_prefix| is \"REG_USER_DATA: 123_\" \n// Example |key_prefixes| is {\"abc\", \"xyz\"}\n// Example |prefix| is \"REG_USER_DATA: 123_abc\"\n// Example non-matching |key()|: ??\n\nI\u0027m a bit confused why key() wouldn\u0027t start with prefix, and why we break instead of continue.",
+      "revId": "ae7db1ebe4b18ed3b39a9b694d6af8ce03bf3a8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "682e7cd4_f2cd633a",
+        "filename": "content/browser/service_worker/service_worker_storage.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-30T15:10:53Z",
+      "side": 1,
+      "message": "can these be BindOnce?",
+      "revId": "ae7db1ebe4b18ed3b39a9b694d6af8ce03bf3a8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
