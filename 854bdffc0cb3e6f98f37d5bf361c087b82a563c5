@@ -331,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "c37766b7_014f7330",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_page_sets/vr_browsing_mode_pages.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-08-30T19:35:07Z",
+      "side": 1,
+      "message": "Yeah, feel free to leave as-is. The app is absurdly simple, so I imagine it\u0027ll run successfully every time unless something\u0027s horribly wrong.",
+      "parentUuid": "50da5987_b01d09c9",
+      "range": {
+        "startLine": 20,
+        "startChar": 6,
+        "endLine": 20,
+        "endChar": 73
+      },
+      "revId": "854bdffc0cb3e6f98f37d5bf361c087b82a563c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b8a6056_5dfed8db",
         "filename": "tools/perf/contrib/vr_benchmarks/vr_page_sets/vr_sample_page.py",
         "patchSetId": 6
