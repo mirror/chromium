@@ -22,6 +22,30 @@
       "revId": "8478b6dbd861e2c5deeec52c473595221fb5aa5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05424b55_3da8967b",
+        "filename": "content/test/fuzzer/renderer_proto_tree_fuzzer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001348
+      },
+      "writtenOn": "2017-08-30T18:25:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da80d258_aa8e6d8b",
+      "range": {
+        "startLine": 88,
+        "startChar": 2,
+        "endLine": 88,
+        "endChar": 41
+      },
+      "revId": "8478b6dbd861e2c5deeec52c473595221fb5aa5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
