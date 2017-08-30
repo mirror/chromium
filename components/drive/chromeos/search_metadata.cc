@@ -5,6 +5,7 @@
 #include "components/drive/chromeos/search_metadata.h"
 
 #include <algorithm>
+#include <map>
 #include <queue>
 #include <utility>
 
@@ -58,8 +59,8 @@ bool CompareByTimestamp(const ResourceEntry& a,
       /// viewed via drive.google.com), we use last modified time as the tie
       // breaker.
       return a_file_info.last_modified() > b_file_info.last_modified();
-    case MetadataSearchOrder::LAST_MODIFIED:
-      return a_file_info.last_modified() > b_file_info.last_modified();
+    case MetadataSearchOrder::LAST_MODIFIED_BY_ME:
+      return a.modification_by_me_date() > b.modification_by_me_date();
   }
 }
 

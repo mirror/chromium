@@ -8,6 +8,7 @@
 #include <stdint.h>
 
 #include <memory>
+#include <set>
 #include <string>
 #include <vector>
 
@@ -43,8 +44,8 @@ enum class MetadataSearchOrder {
   // Most recently accessed file comes first.
   LAST_ACCESSED = 0,
 
-  // Most recently modified file comes first.
-  LAST_MODIFIED = 1,
+  // Most recently modified-by-me file comes first.
+  LAST_MODIFIED_BY_ME = 1,
 };
 
 // Struct to represent a search result for SearchMetadata().
