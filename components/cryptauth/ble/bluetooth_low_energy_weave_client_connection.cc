@@ -13,7 +13,6 @@
 #include "base/stl_util.h"
 #include "base/task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
-#include "components/cryptauth/bluetooth_throttler.h"
 #include "components/cryptauth/connection_finder.h"
 #include "components/cryptauth/wire_message.h"
 #include "components/proximity_auth/logging/logging.h"
@@ -54,17 +53,12 @@ BluetoothLowEnergyWeaveClientConnection::Factory::NewInstance(
     const RemoteDevice& remote_device,
     const std::string& device_address,
     scoped_refptr<device::BluetoothAdapter> adapter,
-    const device::BluetoothUUID remote_service_uuid,
-    BluetoothThrottler* bluetooth_throttler) {
+    const device::BluetoothUUID remote_service_uuid) {
   if (!factory_instance_) {
     factory_instance_ = new Factory();
   }
-  return factory_instance_->BuildInstance(
-      remote_device,
-      device_address,
-      adapter,
-      remote_service_uuid,
-      bluetooth_throttler);
+  return factory_instance_->BuildInstance(remote_device, device_address,
+                                          adapter, remote_service_uuid);
 }
 
 // static
@@ -78,11 +72,9 @@ BluetoothLowEnergyWeaveClientConnection::Factory::BuildInstance(
     const RemoteDevice& remote_device,
     const std::string& device_address,
     scoped_refptr<device::BluetoothAdapter> adapter,
-    const device::BluetoothUUID remote_service_uuid,
-    BluetoothThrottler* bluetooth_throttler) {
+    const device::BluetoothUUID remote_service_uuid) {
   return base::MakeUnique<BluetoothLowEnergyWeaveClientConnection>(
-      remote_device, device_address, adapter, remote_service_uuid,
-      bluetooth_throttler);
+      remote_device, device_address, adapter, remote_service_uuid);
 }
 
 std::unique_ptr<base::Timer>
@@ -95,8 +87,7 @@ BluetoothLowEnergyWeaveClientConnection::
         const RemoteDevice& device,
         const std::string& device_address,
         scoped_refptr<device::BluetoothAdapter> adapter,
-        const device::BluetoothUUID remote_service_uuid,
-        BluetoothThrottler* bluetooth_throttler)
+        const device::BluetoothUUID remote_service_uuid)
     : Connection(device),
       device_address_(device_address),
       adapter_(adapter),
@@ -109,7 +100,6 @@ BluetoothLowEnergyWeaveClientConnection::
           {device::BluetoothUUID(kTXCharacteristicUUID), std::string()}),
       rx_characteristic_(
           {device::BluetoothUUID(kRXCharacteristicUUID), std::string()}),
-      bluetooth_throttler_(bluetooth_throttler),
       timer_factory_(base::MakeUnique<TimerFactory>()),
       task_runner_(base::ThreadTaskRunnerHandle::Get()),
       sub_status_(SubStatus::DISCONNECTED),
@@ -126,23 +116,6 @@ void BluetoothLowEnergyWeaveClientConnection::Connect() {
   DCHECK(sub_status() == SubStatus::DISCONNECTED);
   SetSubStatus(SubStatus::WAITING_CONNECTION_LATENCY);
 
-  base::TimeDelta throttler_delay = bluetooth_throttler_->GetDelay();
-  if (throttler_delay.is_zero()) {
-    SetConnectionLatency();
-    return;
-  }
-
-  // To work around crbug.com/508919, wait before creating a new connection.
-  task_runner_->PostDelayedTask(
-      FROM_HERE,
-      base::Bind(&BluetoothLowEnergyWeaveClientConnection::SetConnectionLatency,
-                 weak_ptr_factory_.GetWeakPtr()),
-      throttler_delay);
-}
-
-void BluetoothLowEnergyWeaveClientConnection::SetConnectionLatency() {
-  DCHECK(sub_status() == SubStatus::WAITING_CONNECTION_LATENCY);
-
   device::BluetoothDevice* bluetooth_device = GetBluetoothDevice();
   if (!bluetooth_device) {
     PA_LOG(WARNING) << "Device not found; cannot set connection latency for "
@@ -151,6 +124,8 @@ void BluetoothLowEnergyWeaveClientConnection::SetConnectionLatency() {
     return;
   }
 
+  PA_LOG(INFO) << "Setting connection latency for " << GetDeviceInfoLogString()
+               << ".";
   bluetooth_device->SetConnectionLatency(
       device::BluetoothDevice::ConnectionLatency::CONNECTION_LATENCY_LOW,
       base::Bind(&BluetoothLowEnergyWeaveClientConnection::CreateGattConnection,
@@ -346,18 +321,17 @@ void BluetoothLowEnergyWeaveClientConnection::GattCharacteristicValueChanged(
 void BluetoothLowEnergyWeaveClientConnection::CompleteConnection() {
   DCHECK(sub_status() == SubStatus::WAITING_CONNECTION_RESPONSE);
   SetSubStatus(SubStatus::CONNECTED);
-
   connection_response_timer_->Stop();
+
+  uint16_t max_packet_size = packet_receiver_->GetMaxPacketSize();
+  PA_LOG(INFO) << "Received uWeave \"connection response\" message; connection "
+               << "is now fully initialized for " << GetDeviceInfoLogString()
+               << ". Max packet size: " << max_packet_size;
 
   // Now that the "connection close" uWeave message has been received,
   // |packet_receiver_| should have received a max packet size from the GATT
   // server.
-  packet_generator_->SetMaxPacketSize(packet_receiver_->GetMaxPacketSize());
-
-  // Notify |bluetooth_throttler_| that the connection has been established.
-  // Note that this should *not* be done before the status is CONNECTED to
-  // prevent a possible crash (see crbug.com/756141).
-  bluetooth_throttler_->OnConnection(this);
+  packet_generator_->SetMaxPacketSize(max_packet_size);
 }
 
 void BluetoothLowEnergyWeaveClientConnection::OnSetConnectionLatencyError() {
@@ -385,6 +359,8 @@ void BluetoothLowEnergyWeaveClientConnection::OnGattConnectionCreated(
   gatt_connection_ = std::move(gatt_connection);
   SetSubStatus(SubStatus::WAITING_CHARACTERISTICS);
 
+  PA_LOG(INFO) << "Finding GATT characteristics for "
+               << GetDeviceInfoLogString() << ".";
   characteristic_finder_.reset(CreateCharacteristicsFinder(
       base::Bind(
           &BluetoothLowEnergyWeaveClientConnection::OnCharacteristicsFound,
@@ -465,6 +441,8 @@ void BluetoothLowEnergyWeaveClientConnection::StartNotifySession() {
   }
 
   SetSubStatus(SubStatus::WAITING_NOTIFY_SESSION);
+  PA_LOG(INFO) << "Starting notification session for "
+               << GetDeviceInfoLogString() << ".";
   characteristic->StartNotifySession(
       base::Bind(
           &BluetoothLowEnergyWeaveClientConnection::OnNotifySessionStarted,
