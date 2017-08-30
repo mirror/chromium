@@ -186,6 +186,13 @@ bool VisiblePositionTemplate<Strategy>::IsValid() const {
 #endif
 }
 
+template <typename Strategy>
+bool VisiblePositionTemplate<Strategy>::IsValidFor(
+    const Document& document) const {
+  return position_with_affinity_.GetDocument() == document &&
+         !position_with_affinity_.IsOrphan();
+}
+
 template class CORE_TEMPLATE_EXPORT VisiblePositionTemplate<EditingStrategy>;
 template class CORE_TEMPLATE_EXPORT
     VisiblePositionTemplate<EditingInFlatTreeStrategy>;
