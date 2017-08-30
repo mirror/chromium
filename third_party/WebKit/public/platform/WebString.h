@@ -31,12 +31,12 @@
 #ifndef WebString_h
 #define WebString_h
 
+#include <string>
 #include "WebCommon.h"
 #include "WebPrivatePtr.h"
 #include "base/strings/latin1_string_conversions.h"
 #include "base/strings/nullable_string16.h"
 #include "base/strings/string16.h"
-#include <string>
 
 #if INSIDE_BLINK
 #include "platform/wtf/Forward.h"
@@ -94,6 +94,28 @@ class WebString {
     kStrictReplacingErrorsWithFFFD,
   };
 
+  struct ASCIIHash {
+    std::size_t operator()(const WebString& value) const {
+      return value.Hash();
+    }
+  };
+
+  struct IgnoreCaseASCIIHash {
+    std::size_t operator()(const WebString& value) const {
+      return value.LowerASCII().Hash();
+    }
+  };
+
+  struct IgnoreCaseASCIIEqual {
+    bool operator()(const WebString& left, const WebString& right) const {
+      if (left.Equals(right))
+        return true;
+      if (left.length() != right.length())
+        return false;
+      return left.LowerASCII().Equals(right.LowerASCII());
+    }
+  };
+
   ~WebString() { Reset(); }
 
   WebString() {}
@@ -110,6 +132,9 @@ class WebString {
   BLINK_PLATFORM_EXPORT void Reset();
   BLINK_PLATFORM_EXPORT void Assign(const WebString&);
   BLINK_PLATFORM_EXPORT void Assign(const WebUChar* data, size_t len);
+
+  BLINK_PLATFORM_EXPORT unsigned Hash() const;
+  BLINK_PLATFORM_EXPORT WebString LowerASCII() const;
 
   BLINK_PLATFORM_EXPORT bool Equals(const WebString&) const;
   BLINK_PLATFORM_EXPORT bool Equals(const char* characters, size_t len) const;
