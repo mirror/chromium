@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8c4c9b44_f49bf0bb",
+        "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-30T07:19:24Z",
+      "side": 1,
+      "message": "Sorry, as discussed offline this comment was wrong. Never mind.",
+      "parentUuid": "a25525c0_63ccad74",
+      "range": {
+        "startLine": 105,
+        "startChar": 21,
+        "endLine": 105,
+        "endChar": 22
+      },
+      "revId": "cc21edad7da4b00c8843037ac007545eeee9a0cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b881467_ff5e5c28",
         "filename": "content/renderer/fetchers/resource_fetcher_impl.h",
         "patchSetId": 6
