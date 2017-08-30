@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99662fd2_40dd99b6",
+        "filename": "chrome/browser/content_settings/host_content_settings_map_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-08-30T02:50:33Z",
+      "side": 1,
+      "message": "Do you want to check that the settings are actually the same as what was written? I think that was the bug previously - that it was returning ALLOW instead of the value?",
+      "revId": "29189195b90ec8f9cbdc57db78673b6991f5b517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
