@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "754d6ba4_2a2ed2f2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-08-30T05:27:08Z",
+      "side": 1,
+      "message": "Could you explicitly describe the issue? e.g.\nStop long-tap on header causing focus lost from the file list",
+      "revId": "875f3ecd903f275b5b34e9a87f22e416f72c9c6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ae13fb7_9a28ce79",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-08-30T05:27:08Z",
+      "side": 1,
+      "message": "Could you add Test: line above this line?\nTest: \u003cwrite what you did for confirming this change fixed the issue\u003e",
+      "revId": "875f3ecd903f275b5b34e9a87f22e416f72c9c6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d7e0a0d_61efc5cf",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/list_container.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-08-30T05:27:08Z",
+      "side": 1,
+      "message": "Add semicolon.",
+      "revId": "875f3ecd903f275b5b34e9a87f22e416f72c9c6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
