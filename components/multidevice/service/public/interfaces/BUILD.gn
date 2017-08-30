@@ -9,4 +9,8 @@ mojom("interfaces") {
     "constants.mojom",
     "device_sync.mojom",
   ]
+
+  public_deps = [
+    "//mojo/common:common_custom_types",
+  ]
 }
