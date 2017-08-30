@@ -22,6 +22,30 @@
       "revId": "22d9bec845a93343689829a65f5c314fcf43401d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa5a7462_54e7080a",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/customtabs/CustomTabActivityTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1257,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-08-30T14:51:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03f5f1e5_4338e5b2",
+      "range": {
+        "startLine": 1257,
+        "startChar": 12,
+        "endLine": 1257,
+        "endChar": 21
+      },
+      "revId": "22d9bec845a93343689829a65f5c314fcf43401d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
