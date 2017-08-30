@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "45fd65c9_cc80eb57",
+        "filename": "chrome/installer/linux/rpm/update-package-provides.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-08-30T23:21:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93bbc436_303cd5dd",
+      "revId": "fb0b0a5e0ba85ecf66b47b8d015ea650f6d73101",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "455e6a98_a0f9026f",
         "filename": "chrome/installer/linux/rpm/update-package-provides.py",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "485494c7_f7c6805c",
+        "filename": "chrome/installer/linux/rpm/update-package-provides.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-08-30T23:21:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "455e6a98_a0f9026f",
+      "range": {
+        "startLine": 78,
+        "startChar": 20,
+        "endLine": 78,
+        "endChar": 27
+      },
+      "revId": "fb0b0a5e0ba85ecf66b47b8d015ea650f6d73101",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f7f782a_268d56a4",
         "filename": "chrome/installer/linux/rpm/update-package-provides.py",
         "patchSetId": 2
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "1cf2f8f1_3ee967d4",
+        "filename": "chrome/installer/linux/rpm/update-package-provides.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-08-30T23:21:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f7f782a_268d56a4",
+      "revId": "fb0b0a5e0ba85ecf66b47b8d015ea650f6d73101",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c89e175_42fcdaae",
         "filename": "chrome/installer/linux/rpm/update-package-provides.py",
         "patchSetId": 2
@@ -73,6 +133,24 @@
       "revId": "fb0b0a5e0ba85ecf66b47b8d015ea650f6d73101",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0852ce0_a74ae13f",
+        "filename": "chrome/installer/linux/rpm/update-package-provides.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-08-30T23:21:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c89e175_42fcdaae",
+      "revId": "fb0b0a5e0ba85ecf66b47b8d015ea650f6d73101",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
