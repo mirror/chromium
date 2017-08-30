@@ -21,8 +21,9 @@ void NopInvokeFunc() {}
 // based on a type we declared in the anonymous namespace above to remove any
 // chance of colliding with another instantiation and breaking the
 // one-definition-rule.
-struct FakeBindState : internal::BindStateBase {
-  FakeBindState() : BindStateBase(&NopInvokeFunc, &Destroy, &IsCancelled) {}
+struct FakeBindState : internal::BindStateBaseRefCounted {
+  FakeBindState()
+      : BindStateBaseRefCounted(&NopInvokeFunc, &Destroy, &IsCancelled) {}
 
  private:
   ~FakeBindState() {}

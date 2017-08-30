@@ -607,6 +607,12 @@ class scoped_refptr {
     return ptr_ < rhs.get();
   }
 
+  T* LeakRef() WARN_UNUSED_RESULT {
+    T* ptr = ptr_;
+    ptr_ = nullptr;
+    return ptr;
+  }
+
  protected:
   T* ptr_ = nullptr;
 

@@ -147,7 +147,8 @@ BindOnce(Functor&& functor, Args&&... args) {
                     UnwrappedArgsList, BoundParamsList>::ok,
                 "The bound args need to be convertible to the target params.");
 
-  using BindState = internal::MakeBindStateType<Functor, Args...>;
+  using BindState =
+      internal::MakeBindStateType<internal::BindStateBase, Functor, Args...>;
   using UnboundRunType = MakeUnboundRunType<Functor, Args...>;
   using Invoker = internal::Invoker<BindState, UnboundRunType>;
   using CallbackType = OnceCallback<UnboundRunType>;
@@ -188,7 +189,9 @@ BindRepeating(Functor&& functor, Args&&... args) {
                     UnwrappedArgsList, BoundParamsList>::ok,
                 "The bound args need to be convertible to the target params.");
 
-  using BindState = internal::MakeBindStateType<Functor, Args...>;
+  using BindState =
+      internal::MakeBindStateType<internal::BindStateBaseRefCounted, Functor,
+                                  Args...>;
   using UnboundRunType = MakeUnboundRunType<Functor, Args...>;
   using Invoker = internal::Invoker<BindState, UnboundRunType>;
   using CallbackType = RepeatingCallback<UnboundRunType>;
