@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3994496e_0b718a53",
+        "filename": "ash/public/cpp/touchscreen_status_source.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-30T06:59:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "590772b6_3fde4d21",
+      "revId": "ff5ca821b6a24d2237dec88f8c56fcb5e846d874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d7ce207_db1bb192",
         "filename": "ash/public/cpp/touchscreen_status_source.h",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "ff5ca821b6a24d2237dec88f8c56fcb5e846d874",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e25a52f_5509ac87",
+        "filename": "ash/public/cpp/touchscreen_status_source.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-30T06:59:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d7ce207_db1bb192",
+      "revId": "ff5ca821b6a24d2237dec88f8c56fcb5e846d874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "2fd009d5_9b7164f6",
+        "filename": "ash/public/cpp/touchscreen_status_source.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-30T06:59:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6788bce1_8556000b",
+      "range": {
+        "startLine": 12,
+        "startChar": 2,
+        "endLine": 12,
+        "endChar": 10
+      },
+      "revId": "ff5ca821b6a24d2237dec88f8c56fcb5e846d874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6dcf803_aa935995",
         "filename": "ash/public/cpp/touchscreen_status_source.h",
         "patchSetId": 7
@@ -73,6 +133,24 @@
       "revId": "ff5ca821b6a24d2237dec88f8c56fcb5e846d874",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdceadd5_7c6a8552",
+        "filename": "ash/public/cpp/touchscreen_status_source.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-30T06:59:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6dcf803_aa935995",
+      "revId": "ff5ca821b6a24d2237dec88f8c56fcb5e846d874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "800af6ff_665afdae",
+        "filename": "ash/shell_delegate.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-30T06:59:51Z",
+      "side": 1,
+      "message": "Agree with the suggestion.\n\nChanged to \"SetTouchscreenEnabled/GetTouchscreenEnabled/TouchscreenEnabledSource\"",
+      "parentUuid": "fcca4b1e_2fb017fe",
+      "range": {
+        "startLine": 120,
+        "startChar": 15,
+        "endLine": 120,
+        "endChar": 35
+      },
+      "revId": "ff5ca821b6a24d2237dec88f8c56fcb5e846d874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "02918a7a_2d7079b2",
         "filename": "ash/shell_test_api.cc",
         "patchSetId": 7
@@ -113,6 +215,24 @@
       "revId": "ff5ca821b6a24d2237dec88f8c56fcb5e846d874",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76b06828_0c16d340",
+        "filename": "ash/shell_test_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-30T06:59:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02918a7a_2d7079b2",
+      "revId": "ff5ca821b6a24d2237dec88f8c56fcb5e846d874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -150,6 +270,24 @@
     },
     {
       "key": {
+        "uuid": "59aadb8d_1a13f0b0",
+        "filename": "ash/system/power/power_button_display_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-30T06:59:51Z",
+      "side": 1,
+      "message": "The two GetInitialBacklightsForcedOff calls are merged. Done.",
+      "parentUuid": "f2165fa3_bc0a31b0",
+      "revId": "ff5ca821b6a24d2237dec88f8c56fcb5e846d874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9dbda13e_692e7cae",
         "filename": "ash/system/power/power_button_display_controller.h",
         "patchSetId": 7
@@ -173,6 +311,30 @@
     },
     {
       "key": {
+        "uuid": "155a57b6_535e17cf",
+        "filename": "ash/system/power/power_button_display_controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-30T06:59:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9dbda13e_692e7cae",
+      "range": {
+        "startLine": 70,
+        "startChar": 12,
+        "endLine": 70,
+        "endChar": 18
+      },
+      "revId": "ff5ca821b6a24d2237dec88f8c56fcb5e846d874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab4768ab_c7ff079d",
         "filename": "ash/system/power/power_button_display_controller.h",
         "patchSetId": 7
@@ -187,6 +349,24 @@
       "revId": "ff5ca821b6a24d2237dec88f8c56fcb5e846d874",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d33eed35_74d02f39",
+        "filename": "ash/system/power/power_button_display_controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-30T06:59:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab4768ab_c7ff079d",
+      "revId": "ff5ca821b6a24d2237dec88f8c56fcb5e846d874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -213,6 +393,30 @@
     },
     {
       "key": {
+        "uuid": "77f926b8_35711fbe",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-30T06:59:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5fe36e5f_8c5e426f",
+      "range": {
+        "startLine": 414,
+        "startChar": 58,
+        "endLine": 414,
+        "endChar": 64
+      },
+      "revId": "ff5ca821b6a24d2237dec88f8c56fcb5e846d874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a48c2f77_f35a4d86",
         "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
         "patchSetId": 7
@@ -236,6 +440,30 @@
     },
     {
       "key": {
+        "uuid": "d016adb2_f12dcf4d",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-30T06:59:51Z",
+      "side": 1,
+      "message": "makes sense. Done.",
+      "parentUuid": "a48c2f77_f35a4d86",
+      "range": {
+        "startLine": 418,
+        "startChar": 6,
+        "endLine": 418,
+        "endChar": 76
+      },
+      "revId": "ff5ca821b6a24d2237dec88f8c56fcb5e846d874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6543ae48_b97d3100",
         "filename": "ash/wm/power_button_controller.cc",
         "patchSetId": 7
@@ -247,6 +475,24 @@
       "writtenOn": "2017-08-30T01:19:48Z",
       "side": 1,
       "message": "oh, i see that you\u0027re setting the global state here. would it be possible to set it from PowerButtonDisplayController instead, since that\u0027s already getting the initial state from powerd? it feels a bit dangerous to be controlling this from two places -- i was trying to consolidate all of this code in PBDC.",
+      "revId": "ff5ca821b6a24d2237dec88f8c56fcb5e846d874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7878b5d_70529d45",
+        "filename": "ash/wm/power_button_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-30T06:59:51Z",
+      "side": 1,
+      "message": "The two GetInitialBacklightsForcedOff calls are merged. Done.",
+      "parentUuid": "6543ae48_b97d3100",
       "revId": "ff5ca821b6a24d2237dec88f8c56fcb5e846d874",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
