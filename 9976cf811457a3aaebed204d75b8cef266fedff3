@@ -217,6 +217,29 @@
       "revId": "9976cf811457a3aaebed204d75b8cef266fedff3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2126070_b4e36ce4",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/unavailable_feature_dialogs/unavailable_feature_dialog_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-30T17:09:18Z",
+      "side": 1,
+      "message": "DCHECK(featureName.length);",
+      "range": {
+        "startLine": 37,
+        "startChar": 2,
+        "endLine": 37,
+        "endChar": 22
+      },
+      "revId": "9976cf811457a3aaebed204d75b8cef266fedff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
