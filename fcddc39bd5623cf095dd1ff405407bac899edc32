@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23ea2875_ea643ffa",
+        "filename": "components/payments/core/payment_details.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-30T14:14:17Z",
+      "side": 1,
+      "message": "Does this work? PaymentDetails::PaymentDetails(const PaymentDetails\u0026 other) : id(other.id),  display_items(other.display_items),... {\n  if (other.total)\n    this-\u003etotal \u003d base::MakeUnique\u003cPaymentItem\u003e(*other.total);\n}",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 59
+      },
+      "revId": "fcddc39bd5623cf095dd1ff405407bac899edc32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4dfe423b_f540a486",
+        "filename": "components/payments/core/payment_details_modifier.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-30T14:14:17Z",
+      "side": 1,
+      "message": "remove payments::? here and below",
+      "range": {
+        "startLine": 48,
+        "startChar": 18,
+        "endLine": 48,
+        "endChar": 28
+      },
+      "revId": "fcddc39bd5623cf095dd1ff405407bac899edc32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94fea4e5_71bf10e2",
+        "filename": "components/payments/core/payment_details_modifier_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-30T14:14:17Z",
+      "side": 1,
+      "message": "Will this usually be a JSON string? I can\u0027t quite remember. If so, we should make the example more realistic",
+      "range": {
+        "startLine": 39,
+        "startChar": 36,
+        "endLine": 39,
+        "endChar": 43
+      },
+      "revId": "fcddc39bd5623cf095dd1ff405407bac899edc32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee499db7_b8fac7d6",
+        "filename": "components/payments/core/payment_details_modifier_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-30T14:14:17Z",
+      "side": 1,
+      "message": "multiple typos",
+      "range": {
+        "startLine": 53,
+        "startChar": 2,
+        "endLine": 53,
+        "endChar": 27
+      },
+      "revId": "fcddc39bd5623cf095dd1ff405407bac899edc32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4deddc4_77df8b44",
+        "filename": "components/payments/core/payment_item.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-30T14:14:17Z",
+      "side": 1,
+      "message": "If this is going to be used cross-platform, I wonder if we should not keep it string16? Can you check with someone who knows more than me?",
+      "revId": "fcddc39bd5623cf095dd1ff405407bac899edc32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a882283_7fe03c57",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-30T14:14:17Z",
+      "side": 1,
+      "message": "can total (and/or amount) be null?",
+      "range": {
+        "startLine": 105,
+        "startChar": 27,
+        "endLine": 105,
+        "endChar": 32
+      },
+      "revId": "fcddc39bd5623cf095dd1ff405407bac899edc32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "850eb92f_f6c4b4fb",
+        "filename": "ios/chrome/browser/payments/payment_request.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-30T14:14:17Z",
+      "side": 1,
+      "message": "same question, can they now be null?",
+      "range": {
+        "startLine": 230,
+        "startChar": 37,
+        "endLine": 230,
+        "endChar": 42
+      },
+      "revId": "fcddc39bd5623cf095dd1ff405407bac899edc32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e0d16a2_802e123a",
+        "filename": "ios/web/payments/payment_request.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-30T14:14:17Z",
+      "side": 1,
+      "message": "Just to make sure: what are we getting from the iOS webview, std::string or base::string16? I\u0027m thinking the former? Perhaps it doesn\u0027t matter on iOS?",
+      "range": {
+        "startLine": 74,
+        "startChar": 2,
+        "endLine": 75,
+        "endChar": 63
+      },
+      "revId": "fcddc39bd5623cf095dd1ff405407bac899edc32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
