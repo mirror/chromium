@@ -54,6 +54,8 @@
 #include "components/prefs/pref_service.h"
 #include "components/previews/core/previews_io_data.h"
 #include "components/safe_browsing/common/safe_browsing_prefs.h"
+#include "content/browser/origin_manifest/origin_manifest_store.h"
+#include "content/browser/origin_manifest/sqlite_persistent_origin_manifest_store.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/cookie_store_factory.h"
 #include "content/public/browser/notification_service.h"
@@ -136,6 +138,7 @@ void ProfileImplIOData::Handle::Init(
     const base::FilePath& cookie_path,
     const base::FilePath& channel_id_path,
     const base::FilePath& media_cache_path,
+    const base::FilePath& origin_manifest_path,
     int media_cache_max_size,
     const base::FilePath& extensions_cookie_path,
     const base::FilePath& profile_path,
@@ -477,6 +480,17 @@ void ProfileImplIOData::InitializeInternal(
   std::unique_ptr<net::ChannelIDService> channel_id_service(
       base::MakeUnique<net::ChannelIDService>(
           new net::DefaultChannelIDStore(channel_id_db.get())));
+
+  // Set up origin manifest store
+  // TODO(dhausknecht): check how to actually initialize this beyond the
+  // prototype.
+  content::OriginManifestStore::Get().Init(
+      new content::SQLitePersistentOriginManifestStore(
+          lazy_params_->origin_manifest_path,
+          BrowserThread::GetTaskRunnerForThread(BrowserThread::IO),
+          base::CreateSequencedTaskRunnerWithTraits(
+              {base::MayBlock(), base::TaskPriority::BACKGROUND,
+               base::TaskShutdownBehavior::BLOCK_SHUTDOWN})));
 
   // Set up cookie store.
   DCHECK(!lazy_params_->cookie_path.empty());

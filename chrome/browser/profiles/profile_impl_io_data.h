@@ -47,6 +47,7 @@ class ProfileImplIOData : public ProfileIOData {
     void Init(const base::FilePath& cookie_path,
               const base::FilePath& channel_id_path,
               const base::FilePath& media_cache_path,
+              const base::FilePath& origin_manifest_path,
               int media_cache_max_size,
               const base::FilePath& extensions_cookie_path,
               const base::FilePath& profile_path,
@@ -142,6 +143,7 @@ class ProfileImplIOData : public ProfileIOData {
     base::FilePath cookie_path;
     base::FilePath channel_id_path;
     base::FilePath media_cache_path;
+    base::FilePath origin_manifest_path;
     int media_cache_max_size;
     base::FilePath extensions_cookie_path;
     content::CookieStoreConfig::SessionCookieMode session_cookie_mode;

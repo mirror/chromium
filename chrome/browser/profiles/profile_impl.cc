@@ -621,6 +621,10 @@ void ProfileImpl::DoFinalInit() {
   GetMediaCacheParameters(&media_cache_path, &media_cache_max_size);
   media_cache_path = GetMediaCachePath(media_cache_path);
 
+  base::FilePath origin_manifest_path = GetPath();
+  origin_manifest_path =
+      origin_manifest_path.Append(chrome::kOriginManifestFilename);
+
   base::FilePath extensions_cookie_path = GetPath();
   extensions_cookie_path =
       extensions_cookie_path.Append(chrome::kExtensionsCookieFilename);
@@ -644,8 +648,9 @@ void ProfileImpl::DoFinalInit() {
   // initialized that we might be reading from the IO thread.
 
   io_data_.Init(cookie_path, channel_id_path, media_cache_path,
-                media_cache_max_size, extensions_cookie_path, GetPath(),
-                predictor_, session_cookie_mode, GetSpecialStoragePolicy(),
+                origin_manifest_path, media_cache_max_size,
+                extensions_cookie_path, GetPath(), predictor_,
+                session_cookie_mode, GetSpecialStoragePolicy(),
                 CreateDomainReliabilityMonitor(local_state));
 
 #if BUILDFLAG(ENABLE_PLUGINS)

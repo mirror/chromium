@@ -10,4 +10,8 @@ specific_include_rules = {
     # should be used *only* for Identity Service creation.
     "+services/identity/identity_service.h",
   ],
+  "profile_impl_io_data.cc": [
+    "+content/browser/origin_manifest/origin_manifest_store.h",
+    "+content/browser/origin_manifest/sqlite_persistent_origin_manifest_store.h",
+  ],
 }
