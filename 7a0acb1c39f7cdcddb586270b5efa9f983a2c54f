@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3185e17_ffa0901c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-08-30T04:42:10Z",
+      "side": 1,
+      "message": "We are also changing some DVLOGs to VLOGs, please mention that as well.",
+      "revId": "7a0acb1c39f7cdcddb586270b5efa9f983a2c54f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3d7a934_1096e944",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-08-30T04:42:10Z",
+      "side": 1,
+      "message": "Because l.581 is a VLOGF(4), I think the matching logs would be these two, so I\u0027d prefer keeping them as VLOGF(4) to have a complete view of when an input buffer arrives and leaves VAVDA.",
+      "revId": "7a0acb1c39f7cdcddb586270b5efa9f983a2c54f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82854860_8d8698d4",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-08-30T04:42:10Z",
+      "side": 1,
+      "message": "VLOGF?",
+      "revId": "7a0acb1c39f7cdcddb586270b5efa9f983a2c54f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9c09213_24d5a317",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 709,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-08-30T04:42:10Z",
+      "side": 1,
+      "message": "This should stay as LOG(FATAL)",
+      "revId": "7a0acb1c39f7cdcddb586270b5efa9f983a2c54f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67011dd2_87695e60",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-08-30T04:42:10Z",
+      "side": 1,
+      "message": "2, this is part of resolution change flow.",
+      "revId": "7a0acb1c39f7cdcddb586270b5efa9f983a2c54f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7fca311_4c0eecbc",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 871,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-08-30T04:42:10Z",
+      "side": 1,
+      "message": "2",
+      "revId": "7a0acb1c39f7cdcddb586270b5efa9f983a2c54f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "370ff197_85e6ab5b",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 911,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-08-30T04:42:10Z",
+      "side": 1,
+      "message": "Could we have a VLOGF(4) here printing our the picture id, to match the picture id logs before PictureReady please?",
+      "revId": "7a0acb1c39f7cdcddb586270b5efa9f983a2c54f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca259832_9fdeab9f",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 917,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-08-30T04:42:10Z",
+      "side": 1,
+      "message": "3",
+      "revId": "7a0acb1c39f7cdcddb586270b5efa9f983a2c54f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
