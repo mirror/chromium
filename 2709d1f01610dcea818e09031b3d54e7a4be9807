@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8a34c26_83d91b1d",
+        "filename": "content/child/loader/cors_url_loader.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-30T23:10:07Z",
+      "side": 1,
+      "message": "nit: double there",
+      "revId": "2709d1f01610dcea818e09031b3d54e7a4be9807",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
