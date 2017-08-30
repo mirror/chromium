@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4cb92c94_7a5a3de8",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-30T03:30:56Z",
+      "side": 1,
+      "message": "This is quadratic behaviour. Same as before, but before there was a limit of 1024 path elements. You should at least put that limit back.",
+      "range": {
+        "startLine": 162,
+        "startChar": 2,
+        "endLine": 162,
+        "endChar": 5
+      },
+      "revId": "981989ab42dc42ac70ba2078947de82680385048",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f05101c_72c2d10f",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-30T03:30:56Z",
+      "side": 1,
+      "message": "I think these tests could replace the above ones (as long as they cover the same cases). While more verbose, this is heaps neater than reading those fairly arbitrary elide-to-the-length-of-the-output tests above.\n\nI would like to see these tests added in a preliminary CL before the big change. That way, you land tests expecting the existing behaviour, and then in the big change CL, we can see in the code review exactly what behaviour is changing.",
+      "range": {
+        "startLine": 638,
+        "startChar": 21,
+        "endLine": 638,
+        "endChar": 49
+      },
+      "revId": "981989ab42dc42ac70ba2078947de82680385048",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
