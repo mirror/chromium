@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "673fff20_33e1d34a",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-30T21:02:03Z",
+      "side": 1,
+      "message": "SessionStorageDatabaseAdapter has permanent_namespace_id. So, the the name in there is kept as permanent. Changed only in DOMStorageArea.",
+      "parentUuid": "9f07b409_c3ffd819",
+      "revId": "075a04d52a86eeb4bb6931f3bd2c07fe2b3fe128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0013e372_68b3b2cd",
         "filename": "content/browser/dom_storage/dom_storage_area.cc",
         "patchSetId": 13
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "668ae999_0afd70ae",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-30T21:02:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0013e372_68b3b2cd",
+      "range": {
+        "startLine": 347,
+        "startChar": 20,
+        "endLine": 347,
+        "endChar": 28
+      },
+      "revId": "075a04d52a86eeb4bb6931f3bd2c07fe2b3fe128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0dd421b_d5842e8b",
         "filename": "content/browser/dom_storage/dom_storage_area.cc",
         "patchSetId": 13
@@ -56,6 +98,24 @@
       "revId": "075a04d52a86eeb4bb6931f3bd2c07fe2b3fe128",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f97f3a0_aab476f9",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-30T21:02:03Z",
+      "side": 1,
+      "message": "Right, removed this.",
+      "parentUuid": "c0dd421b_d5842e8b",
+      "revId": "075a04d52a86eeb4bb6931f3bd2c07fe2b3fe128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "f22a3e1b_41c88ce0",
+        "filename": "content/browser/dom_storage/dom_storage_area.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-30T21:02:03Z",
+      "side": 1,
+      "message": "Fixed the check. Still keeping the function here since it will be at most 2-3 if statements before it returns.",
+      "parentUuid": "70eaeff9_31a5642d",
+      "range": {
+        "startLine": 227,
+        "startChar": 11,
+        "endLine": 227,
+        "endChar": 26
+      },
+      "revId": "075a04d52a86eeb4bb6931f3bd2c07fe2b3fe128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "664aab10_3616b5ea",
         "filename": "content/browser/dom_storage/dom_storage_area_unittest.cc",
         "patchSetId": 13
@@ -96,6 +180,24 @@
       "revId": "075a04d52a86eeb4bb6931f3bd2c07fe2b3fe128",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42790e78_61fb07f4",
+        "filename": "content/browser/dom_storage/dom_storage_area_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-30T21:02:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "664aab10_3616b5ea",
+      "revId": "075a04d52a86eeb4bb6931f3bd2c07fe2b3fe128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "64d3dba2_9a320dec",
+        "filename": "content/browser/dom_storage/dom_storage_area_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-30T21:02:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "704e8130_f4f418e9",
+      "revId": "075a04d52a86eeb4bb6931f3bd2c07fe2b3fe128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29313ad0_793d805f",
         "filename": "content/browser/dom_storage/dom_storage_namespace.cc",
         "patchSetId": 13
@@ -130,6 +250,24 @@
       "revId": "075a04d52a86eeb4bb6931f3bd2c07fe2b3fe128",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35a0e5af_adb0e8ce",
+        "filename": "content/browser/dom_storage/dom_storage_namespace.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-30T21:02:03Z",
+      "side": 1,
+      "message": "Yeah, it might be safe.",
+      "parentUuid": "29313ad0_793d805f",
+      "revId": "075a04d52a86eeb4bb6931f3bd2c07fe2b3fe128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -150,6 +288,24 @@
     },
     {
       "key": {
+        "uuid": "c7048bee_7444adae",
+        "filename": "content/browser/dom_storage/dom_storage_namespace.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-30T21:02:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98ab1663_fe097495",
+      "revId": "075a04d52a86eeb4bb6931f3bd2c07fe2b3fe128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be90f085_469809f0",
         "filename": "content/browser/dom_storage/session_storage_database.cc",
         "patchSetId": 13
@@ -164,6 +320,24 @@
       "revId": "075a04d52a86eeb4bb6931f3bd2c07fe2b3fe128",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bfaffb8_0cbddc3d",
+        "filename": "content/browser/dom_storage/session_storage_database.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-30T21:02:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be90f085_469809f0",
+      "revId": "075a04d52a86eeb4bb6931f3bd2c07fe2b3fe128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -184,6 +358,24 @@
     },
     {
       "key": {
+        "uuid": "92483929_67797ec3",
+        "filename": "content/browser/dom_storage/session_storage_database.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-30T21:02:03Z",
+      "side": 1,
+      "message": "DOMStorageArea::ShallowCopy() inserts the current id first in the list and then adds the parent ids.",
+      "parentUuid": "cd5453df_188ee728",
+      "revId": "075a04d52a86eeb4bb6931f3bd2c07fe2b3fe128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4dcb49e0_a4849ddd",
         "filename": "content/renderer/dom_storage/dom_storage_cached_area.cc",
         "patchSetId": 13
@@ -201,6 +393,24 @@
     },
     {
       "key": {
+        "uuid": "878d54f6_403ecd1a",
+        "filename": "content/renderer/dom_storage/dom_storage_cached_area.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-30T21:02:03Z",
+      "side": 1,
+      "message": "This was the existing behavior before all these changes. I\u0027d have to change DOMStorageMap::SetItem to accept null as |old_value|. I will do a follow up cl for this.",
+      "parentUuid": "4dcb49e0_a4849ddd",
+      "revId": "075a04d52a86eeb4bb6931f3bd2c07fe2b3fe128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "380032b8_d7430eba",
         "filename": "content/renderer/dom_storage/dom_storage_cached_area.cc",
         "patchSetId": 13
@@ -215,6 +425,24 @@
       "revId": "075a04d52a86eeb4bb6931f3bd2c07fe2b3fe128",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26077dc4_0378dcf3",
+        "filename": "content/renderer/dom_storage/dom_storage_cached_area.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-30T21:02:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "380032b8_d7430eba",
+      "revId": "075a04d52a86eeb4bb6931f3bd2c07fe2b3fe128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
