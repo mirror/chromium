@@ -22,6 +22,30 @@
       "revId": "5376ff52e5c56070f8c69431fb09086d36e5dd31",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c5989cc_30026494",
+        "filename": "android_webview/browser/aw_safe_browsing_resource_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-30T21:09:06Z",
+      "side": 1,
+      "message": "This is called by the base class here:\nhttps://cs.chromium.org/chromium/src/components/safe_browsing/base_resource_throttle.cc?rcl\u003dc8d574722c215b1d16aa716edafb36d4623ed4c8\u0026l\u003d246\n\nThis was actually the code before my previous CL to this file. In my previous CL, I changed to use an intercepting callback in UnsafeResource, thinking that I could remove the virtual function BaseResourceThrottle::CancelResourceLoad(). But I realized that I couldn\u0027t do the same thing for the \"parallel\" case below. So I changed it back to use the CancelResourceLoad approach to be consistent.\n\nWDYT?",
+      "parentUuid": "35fba88c_c069ed86",
+      "range": {
+        "startLine": 91,
+        "startChar": 37,
+        "endLine": 91,
+        "endChar": 55
+      },
+      "revId": "5376ff52e5c56070f8c69431fb09086d36e5dd31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
