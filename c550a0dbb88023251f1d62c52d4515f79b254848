@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a0f00a1_9f22c3d2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-30T20:45:17Z",
+      "side": 1,
+      "message": "I would suggest something like how NetworkLogViewColumns does (https://cs.chromium.org/chromium/src/third_party/WebKit/Source/devtools/front_end/network/NetworkLogViewColumns.js?sq\u003dpackage:chromium\u0026l\u003d646)\n\nIt has a sortingFunction on each item then converts it\u0027s descriptor type into datagrid\u0027s descriptor type. This will allow us to store other potential info on each column for future use and make it more explicit in ensuring each column defines a sorting function properly.",
+      "revId": "c550a0dbb88023251f1d62c52d4515f79b254848",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c729e267_d827e791",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-30T20:45:17Z",
+      "side": 1,
+      "message": "add: /** @type {!DataGrid.DataGrid\u003c!Resources.ServiceWorkerCacheView.DataGridNode\u003e} */\n\nThis will help closure with type checking.",
+      "revId": "c550a0dbb88023251f1d62c52d4515f79b254848",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0135ee62_9b7b6173",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-30T20:45:17Z",
+      "side": 1,
+      "message": "This would then be much simpler.",
+      "revId": "c550a0dbb88023251f1d62c52d4515f79b254848",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aebe57c_8a3177fd",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-30T20:45:17Z",
+      "side": 1,
+      "message": "nit: Change these to {?Resources.ServiceWorkerCacheView.DataGridNode}",
+      "revId": "c550a0dbb88023251f1d62c52d4515f79b254848",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b981942f_29f32607",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-30T20:45:17Z",
+      "side": 1,
+      "message": "nit: use node._request.url() instead after above change.",
+      "revId": "c550a0dbb88023251f1d62c52d4515f79b254848",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c799d47_97bf501f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-30T20:45:17Z",
+      "side": 1,
+      "message": "nit: s/DataGrid.DataGridNode/Resources.ServiceWorkerCacheView.DataGridNode/",
+      "revId": "c550a0dbb88023251f1d62c52d4515f79b254848",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
