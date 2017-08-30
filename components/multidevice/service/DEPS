@@ -1,0 +1,16 @@
+include_rules = [
+  "+chrome/browser/chromeos/login/easy_unlock",
+  "+components/cryptauth",
+  "+components/signin/core/browser",
+  "+content/public/common",
+  "+content/public/renderer",
+  "+mojo/public/cpp",
+  "+services/identity/public",
+  "+services/service_manager/public/cpp",
+]
+
+specific_include_rules = {
+  "main\.cc": [
+    "+services/service_manager/public",
+  ]
+}
