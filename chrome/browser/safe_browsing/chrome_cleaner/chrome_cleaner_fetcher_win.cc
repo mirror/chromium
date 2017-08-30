@@ -60,6 +60,7 @@ enum CleanerDownloadStatusHistogramValue {
   CLEANER_DOWNLOAD_STATUS_OTHER_FAILURE = 1,
   CLEANER_DOWNLOAD_STATUS_NOT_FOUND_ON_SERVER = 2,
   CLEANER_DOWNLOAD_STATUS_FAILED_TO_CREATE_TEMP_DIR = 3,
+  CLEANER_DOWNLOAD_STATUS_FAILED_TO_SAVE_TO_FILE = 4,
 
   CLEANER_DOWNLOAD_STATUS_MAX,
 };
@@ -185,7 +186,11 @@ void ChromeCleanerFetcher::OnURLFetchComplete(const net::URLFetcher* source) {
   DCHECK(!source->GetStatus().is_io_pending());
   DCHECK(fetched_callback_);
 
-  if (source->GetResponseCode() == net::HTTP_NOT_FOUND) {
+  const int response_code = source->GetResponseCode();
+  UMA_HISTOGRAM_SPARSE_SLOWLY(
+      "SoftwareReporter.Cleaner.DownloadHttpResponseCode", response_code);
+
+  if (response_code == net::HTTP_NOT_FOUND) {
     RecordCleanerDownloadStatusHistogram(
         CLEANER_DOWNLOAD_STATUS_NOT_FOUND_ON_SERVER);
     PostCallbackAndDeleteSelf(base::FilePath(),
@@ -193,25 +198,30 @@ void ChromeCleanerFetcher::OnURLFetchComplete(const net::URLFetcher* source) {
     return;
   }
 
-  base::FilePath download_path;
-  if (!source->GetStatus().is_success() ||
-      source->GetResponseCode() != net::HTTP_OK ||
-      !source->GetResponseAsFilePath(/*take_ownership=*/true, &download_path)) {
-    RecordCleanerDownloadStatusHistogram(CLEANER_DOWNLOAD_STATUS_OTHER_FAILURE);
-    PostCallbackAndDeleteSelf(base::FilePath(),
-                              ChromeCleanerFetchStatus::kOtherFailure);
-    return;
+  bool fetch_succeeded =
+      source->GetStatus().is_success() && response_code == net::HTTP_OK;
+  if (fetch_succeeded) {
+    base::FilePath download_path;
+    if (source->GetResponseAsFilePath(/*take_ownership=*/true,
+                                      &download_path)) {
+      DCHECK(!download_path.empty());
+      DCHECK_EQ(temp_file_.value(), download_path.value());
+
+      // Take ownership of the scoped temp directory so it is not deleted.
+      scoped_temp_dir_->Take();
+
+      RecordCleanerDownloadStatusHistogram(CLEANER_DOWNLOAD_STATUS_SUCCEEDED);
+      PostCallbackAndDeleteSelf(std::move(download_path),
+                                ChromeCleanerFetchStatus::kSuccess);
+      return;
+    }
   }
 
-  DCHECK(!download_path.empty());
-  DCHECK_EQ(temp_file_.value(), download_path.value());
-
-  // Take ownership of the scoped temp directory so it is not deleted.
-  scoped_temp_dir_->Take();
-
-  RecordCleanerDownloadStatusHistogram(CLEANER_DOWNLOAD_STATUS_SUCCEEDED);
-  PostCallbackAndDeleteSelf(std::move(download_path),
-                            ChromeCleanerFetchStatus::kSuccess);
+  RecordCleanerDownloadStatusHistogram(
+      fetch_succeeded ? CLEANER_DOWNLOAD_STATUS_FAILED_TO_SAVE_TO_FILE
+                      : CLEANER_DOWNLOAD_STATUS_OTHER_FAILURE);
+  PostCallbackAndDeleteSelf(base::FilePath(),
+                            ChromeCleanerFetchStatus::kOtherFailure);
 }
 
 }  // namespace
