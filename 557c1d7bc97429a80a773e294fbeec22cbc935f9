@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "4fe2bd4e_2e20a404",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_network_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-30T17:35:33Z",
+      "side": 1,
+      "message": "May be add this comment to blink::ImageResource too?\n\nI wonder if we can add this method to net/http/http_util.h, and then share? Seems like it is general enough (not really lofi specific).",
+      "range": {
+        "startLine": 275,
+        "startChar": 50,
+        "endLine": 275,
+        "endChar": 70
+      },
+      "revId": "557c1d7bc97429a80a773e294fbeec22cbc935f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3e74e8be_8409ef96",
         "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_network_delegate.cc",
         "patchSetId": 1
