@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "308a4200_e4ab84bb",
+        "filename": "chrome/browser/printing/pwg_raster_converter_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-30T21:05:52Z",
+      "side": 1,
+      "message": "You can use base::MakeRefCounted here.",
+      "revId": "f3c1d423052a502f1f8873ca7ee042ac9381624e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6286b8ac_836f7947",
+        "filename": "chrome/browser/printing/pwg_raster_converter_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-30T21:05:52Z",
+      "side": 1,
+      "message": "Someone told me to prefer /*expect_success\u003d*/false, but I forget why it\u0027s better.",
+      "revId": "f3c1d423052a502f1f8873ca7ee042ac9381624e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a148b777_7f919f95",
+        "filename": "chrome/browser/printing/pwg_raster_converter_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-30T21:05:52Z",
+      "side": 1,
+      "message": "Many browser tests just use base::ThreadRestrictions::ScopedAllowIO instead.",
+      "revId": "f3c1d423052a502f1f8873ca7ee042ac9381624e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8db7b59e_1b2583ee",
+        "filename": "chrome/browser/printing/pwg_raster_converter_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-30T21:05:52Z",
+      "side": 1,
+      "message": "Why don\u0027t we just check again the actual file size?",
+      "revId": "f3c1d423052a502f1f8873ca7ee042ac9381624e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
