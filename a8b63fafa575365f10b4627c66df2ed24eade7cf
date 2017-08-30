@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fabd6ec_ee464b29",
+        "filename": "content/public/test/mock_render_process_host.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2017-08-30T11:23:22Z",
+      "side": 1,
+      "message": "General comment: DCHECKs in test code might not be the best idea.\n\nShould this function have a bool return value to be checked?\n\nNot a strong opinion, just a thought about drawbacks of DCHECK:\n- crashes entire process\n- only checks the condition in Debug mode (not on CQ)",
+      "range": {
+        "startLine": 484,
+        "startChar": 4,
+        "endLine": 484,
+        "endChar": 10
+      },
+      "revId": "a8b63fafa575365f10b4627c66df2ed24eade7cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd53de38_03aec451",
+        "filename": "content/public/test/mock_render_process_host.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2017-08-30T11:23:22Z",
+      "side": 1,
+      "message": "As written, it\u0027ll only run in Debug mode. Was that intended?",
+      "range": {
+        "startLine": 486,
+        "startChar": 11,
+        "endLine": 486,
+        "endChar": 42
+      },
+      "revId": "a8b63fafa575365f10b4627c66df2ed24eade7cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f83460f8_5fc038c0",
+        "filename": "content/public/test/mock_render_process_host.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2017-08-30T11:23:22Z",
+      "side": 1,
+      "message": "Consider using JoinString from base/strings/string_util.h instead of manual concatenation.\n\nOne of the advantages is avoiding unnecessary memory reallocations. Not that it matters for performance, but probably sets a better example in the code.",
+      "range": {
+        "startLine": 489,
+        "startChar": 6,
+        "endLine": 489,
+        "endChar": 19
+      },
+      "revId": "a8b63fafa575365f10b4627c66df2ed24eade7cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4da2d083_81aa349d",
+        "filename": "content/public/test/mock_render_process_host.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2017-08-30T11:23:22Z",
+      "side": 1,
+      "message": "This needs a comment.",
+      "range": {
+        "startLine": 235,
+        "startChar": 12,
+        "endLine": 235,
+        "endChar": 32
+      },
+      "revId": "a8b63fafa575365f10b4627c66df2ed24eade7cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
