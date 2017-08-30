@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93bbc436_303cd5dd",
+        "filename": "chrome/installer/linux/rpm/update-package-provides.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-30T05:57:31Z",
+      "side": 1,
+      "message": "cStringIO if it doesn\u0027t make a different.",
+      "revId": "fb0b0a5e0ba85ecf66b47b8d015ea650f6d73101",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "455e6a98_a0f9026f",
+        "filename": "chrome/installer/linux/rpm/update-package-provides.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-30T05:57:31Z",
+      "side": 1,
+      "message": "Just: set() ?",
+      "range": {
+        "startLine": 78,
+        "startChar": 20,
+        "endLine": 78,
+        "endChar": 27
+      },
+      "revId": "fb0b0a5e0ba85ecf66b47b8d015ea650f6d73101",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f7f782a_268d56a4",
+        "filename": "chrome/installer/linux/rpm/update-package-provides.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-30T05:57:31Z",
+      "side": 1,
+      "message": "Any interest in checking the sha256sum?",
+      "revId": "fb0b0a5e0ba85ecf66b47b8d015ea650f6d73101",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c89e175_42fcdaae",
+        "filename": "chrome/installer/linux/rpm/update-package-provides.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-30T05:57:31Z",
+      "side": 1,
+      "message": "It\u0027s possible for a package and its update to have different provides lists, with the update\u0027s list not being a superset of the originals. e.g. in F26, the original pynac package provides libpynac.so.9 but the update only provides libpynac.so.10.",
+      "revId": "fb0b0a5e0ba85ecf66b47b8d015ea650f6d73101",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
