@@ -307,9 +307,10 @@ const struct UmaEnumCommandIdPair {
     {86, -1, IDC_CONTENT_CONTEXT_OPEN_WITH13},
     {87, -1, IDC_CONTENT_CONTEXT_OPEN_WITH14},
     {88, -1, IDC_CONTENT_CONTEXT_EXIT_FULLSCREEN},
+    {89, -1, IDC_CONTENT_CONTENT_PICTUREINPICTURE},
     // Add new items here and use |enum_id| from the next line.
     // Also, add new items to RenderViewContextMenuItem enum in histograms.xml.
-    {89, -1, 0},  // Must be the last. Increment |enum_id| when new IDC
+    {90, -1, 0},  // Must be the last. Increment |enum_id| when new IDC
                   // was added.
 };
 
@@ -1161,6 +1162,7 @@ void RenderViewContextMenu::AppendVideoItems() {
                                   IDS_CONTENT_CONTEXT_SAVEVIDEOAS);
   menu_model_.AddItemWithStringId(IDC_CONTENT_CONTEXT_COPYAVLOCATION,
                                   IDS_CONTENT_CONTEXT_COPYVIDEOLOCATION);
+  AppendPictureInPictureItem();
   AppendMediaRouterItem();
 }
 
@@ -1444,6 +1446,13 @@ void RenderViewContextMenu::AppendPasswordItems() {
     menu_model_.AddSeparator(ui::NORMAL_SEPARATOR);
 }
 
+void RenderViewContextMenu::AppendPictureInPictureItem() {
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kEnablePictureInPicture))
+    menu_model_.AddItemWithStringId(IDC_CONTENT_CONTENT_PICTUREINPICTURE,
+                                    IDS_CONTENT_CONTENT_PICTUREINPICTURE);
+}
+
 // Menu delegate functions -----------------------------------------------------
 
 bool RenderViewContextMenu::IsCommandIdEnabled(int id) const {
@@ -1634,6 +1643,8 @@ bool RenderViewContextMenu::IsCommandIdEnabled(int id) const {
       return IsRouteMediaEnabled();
 
     case IDC_CONTENT_CONTEXT_EXIT_FULLSCREEN:
+    // TODO(apacible): Update PIP conditions when finalized.
+    case IDC_CONTENT_CONTENT_PICTUREINPICTURE:
       return true;
 
     default:
@@ -1904,6 +1915,10 @@ void RenderViewContextMenu::ExecuteCommand(int id, int event_flags) {
     case IDC_CONTENT_CONTEXT_GENERATEPASSWORD:
       ChromePasswordManagerClient::FromWebContents(source_web_contents_)->
           GeneratePassword();
+      break;
+
+    case IDC_CONTENT_CONTENT_PICTUREINPICTURE:
+      ExecPictureInPicture();
       break;
 
     default:
@@ -2474,6 +2489,10 @@ void RenderViewContextMenu::ExecProtocolHandlerSettings(int event_flags) {
       ForceNewTabDispositionFromEventFlags(event_flags);
   GURL url = chrome::GetSettingsUrl(chrome::kHandlerSettingsSubPage);
   OpenURL(url, GURL(), disposition, ui::PAGE_TRANSITION_LINK);
+}
+
+void RenderViewContextMenu::ExecPictureInPicture() {
+  LOG(ERROR) << "ExecPictureInPicture";
 }
 
 void RenderViewContextMenu::WriteURLToClipboard(const GURL& url) {
