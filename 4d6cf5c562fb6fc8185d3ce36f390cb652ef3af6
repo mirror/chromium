@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c97dbbb4_96caafdf",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/open_with_menu.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-30T19:39:59Z",
+      "side": 1,
+      "message": "Yusuke, is most arc code in chrome/browser in the arc namespace? Usually we don\u0027t put chrome code in a namespace, but I\u0027m OK with this if most of the other arc code does it.",
+      "revId": "4d6cf5c562fb6fc8185d3ce36f390cb652ef3af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d86691e5_165037d6",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/open_with_menu_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-30T19:39:59Z",
+      "side": 1,
+      "message": "optional: \"using base::ASCIIToUTF16\" might make line wrapping better.",
+      "revId": "4d6cf5c562fb6fc8185d3ce36f390cb652ef3af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb01a5bb_7ecee97d",
+        "filename": "components/arc/intent_helper/link_handler_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-30T19:39:59Z",
+      "side": 1,
+      "message": "nit: Can this be null? If not, DCHECK it.",
+      "revId": "4d6cf5c562fb6fc8185d3ce36f390cb652ef3af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "551ae75e_c6da3571",
+        "filename": "components/arc/intent_helper/link_handler_model.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-30T19:39:59Z",
+      "side": 1,
+      "message": "nit: comment what sort of id (command id I presume?)",
+      "revId": "4d6cf5c562fb6fc8185d3ce36f390cb652ef3af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "233c8e33_2c0df857",
+        "filename": "components/arc/intent_helper/link_handler_model.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-30T19:39:59Z",
+      "side": 1,
+      "message": "nit: Can you document when/why this can return null?",
+      "revId": "4d6cf5c562fb6fc8185d3ce36f390cb652ef3af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
