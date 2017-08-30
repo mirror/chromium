@@ -35,6 +35,17 @@ Polymer({
     },
 
     /**
+     * Reflects the current state of the toggle buttons (in this page and the
+     * subpage). This will be set when the adapter state change or when the user
+     * changes the toggle.
+     * @private
+     */
+    bluetoothToggleState_: {
+      type: Boolean,
+      observer: 'bluetoothToggleStateChanged_',
+    },
+
+    /**
      * The cached bluetooth adapter state.
      * @type {!chrome.bluetooth.AdapterState|undefined}
      * @private
@@ -167,14 +178,15 @@ Polymer({
    */
   onBluetoothAdapterStateChanged_: function(state) {
     this.adapterState_ = state;
+    this.bluetoothToggleState_ = state.powered;
   },
 
   /** @private */
   onTap_: function() {
     if (this.adapterState_.available === false)
       return;
-    if (!this.adapterState_.powered)
-      this.setPrefValue('ash.user.bluetooth.adapter_enabled', true);
+    if (!this.bluetoothToggleState_)
+      this.bluetoothToggleState_ = true;
     else
       this.openSubpage_();
   },
@@ -194,6 +206,12 @@ Polymer({
   onSubpageArrowTap_: function(e) {
     this.openSubpage_();
     e.stopPropagation();
+  },
+
+  /** @private */
+  bluetoothToggleStateChanged_: function() {
+    this.setPrefValue(
+        'ash.user.bluetooth.adapter_enabled', this.bluetoothToggleState_);
   },
 
   /** @private */
