@@ -418,8 +418,8 @@ bool ApplyCancellationTraits(const BindStateBase* base) {
 // BindState<>
 //
 // This stores all the state passed into Bind().
-template <typename Functor, typename... BoundArgs>
-struct BindState final : BindStateBase {
+template <typename Base, typename Functor, typename... BoundArgs>
+struct BindState final : Base {
   using IsCancellable = std::integral_constant<
       bool,
       CallbackCancellationTraits<Functor,
@@ -447,9 +447,7 @@ struct BindState final : BindStateBase {
                      BindStateBase::InvokeFuncStorage invoke_func,
                      ForwardFunctor&& functor,
                      ForwardBoundArgs&&... bound_args)
-      : BindStateBase(invoke_func,
-                      &Destroy,
-                      &ApplyCancellationTraits<BindState>),
+      : Base(invoke_func, &Destroy, &ApplyCancellationTraits<BindState>),
         functor_(std::forward<ForwardFunctor>(functor)),
         bound_args_(std::forward<ForwardBoundArgs>(bound_args)...) {
     DCHECK(!IsNull(functor_));
@@ -460,7 +458,7 @@ struct BindState final : BindStateBase {
                      BindStateBase::InvokeFuncStorage invoke_func,
                      ForwardFunctor&& functor,
                      ForwardBoundArgs&&... bound_args)
-      : BindStateBase(invoke_func, &Destroy),
+      : Base(invoke_func, &Destroy),
         functor_(std::forward<ForwardFunctor>(functor)),
         bound_args_(std::forward<ForwardBoundArgs>(bound_args)...) {
     DCHECK(!IsNull(functor_));
@@ -477,20 +475,24 @@ struct BindState final : BindStateBase {
 template <bool is_method, typename Functor, typename... BoundArgs>
 struct MakeBindStateTypeImpl;
 
-template <typename Functor, typename... BoundArgs>
-struct MakeBindStateTypeImpl<false, Functor, BoundArgs...> {
+template <typename Base, typename Functor, typename... BoundArgs>
+struct MakeBindStateTypeImpl<false, Base, Functor, BoundArgs...> {
   static_assert(!HasRefCountedTypeAsRawPtr<std::decay_t<BoundArgs>...>::value,
                 "A parameter is a refcounted type and needs scoped_refptr.");
-  using Type = BindState<std::decay_t<Functor>, std::decay_t<BoundArgs>...>;
+  using Type =
+      BindState<Base, std::decay_t<Functor>, std::decay_t<BoundArgs>...>;
 };
 
-template <typename Functor>
-struct MakeBindStateTypeImpl<true, Functor> {
-  using Type = BindState<std::decay_t<Functor>>;
+template <typename Base, typename Functor>
+struct MakeBindStateTypeImpl<true, Base, Functor> {
+  using Type = BindState<Base, std::decay_t<Functor>>;
 };
 
-template <typename Functor, typename Receiver, typename... BoundArgs>
-struct MakeBindStateTypeImpl<true, Functor, Receiver, BoundArgs...> {
+template <typename Base,
+          typename Functor,
+          typename Receiver,
+          typename... BoundArgs>
+struct MakeBindStateTypeImpl<true, Base, Functor, Receiver, BoundArgs...> {
   static_assert(!std::is_array<std::remove_reference_t<Receiver>>::value,
                 "First bound argument to a method cannot be an array.");
   static_assert(!HasRefCountedTypeAsRawPtr<std::decay_t<BoundArgs>...>::value,
@@ -501,6 +503,7 @@ struct MakeBindStateTypeImpl<true, Functor, Receiver, BoundArgs...> {
 
  public:
   using Type = BindState<
+      Base,
       std::decay_t<Functor>,
       std::conditional_t<std::is_pointer<DecayedReceiver>::value,
                          scoped_refptr<std::remove_pointer_t<DecayedReceiver>>,
@@ -508,9 +511,10 @@ struct MakeBindStateTypeImpl<true, Functor, Receiver, BoundArgs...> {
       std::decay_t<BoundArgs>...>;
 };
 
-template <typename Functor, typename... BoundArgs>
+template <typename Base, typename Functor, typename... BoundArgs>
 using MakeBindStateType =
     typename MakeBindStateTypeImpl<MakeFunctorTraits<Functor>::is_method,
+                                   Base,
                                    Functor,
                                    BoundArgs...>::Type;
 

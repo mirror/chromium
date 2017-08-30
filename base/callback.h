@@ -73,7 +73,7 @@ class RepeatingCallback<R(Args...)> : public internal::CallbackBaseCopyable {
 
   RepeatingCallback() : internal::CallbackBaseCopyable(nullptr) {}
 
-  explicit RepeatingCallback(internal::BindStateBase* bind_state)
+  explicit RepeatingCallback(internal::BindStateBaseRefCounted* bind_state)
       : internal::CallbackBaseCopyable(bind_state) {}
 
   // Copyable and movabl.
