@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "991978a9_4f0488a7",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-30T00:17:11Z",
+      "side": 1,
+      "message": "Could you add a note that we shouldn\u0027t store |visible_pos| through potential DOM changes, and triage it to crbug.com/648949?\n\nThis can be considered a source of this bug.",
+      "revId": "c13bdf55486ff6d4d11609d664b1e2b0513c33e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64edebf8_7a1b3996",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-30T00:17:11Z",
+      "side": 1,
+      "message": "nit: Add a note that the new unit test makes visible_pos disconnected. (like L332)",
+      "revId": "c13bdf55486ff6d4d11609d664b1e2b0513c33e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71e60e4d_647186bb",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionControllerTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-30T00:17:11Z",
+      "side": 1,
+      "message": "nit: capitalize \u0027s\u0027",
+      "range": {
+        "startLine": 140,
+        "startChar": 32,
+        "endLine": 140,
+        "endChar": 33
+      },
+      "revId": "c13bdf55486ff6d4d11609d664b1e2b0513c33e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c101ad4_fc7ebfca",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionControllerTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-30T00:17:11Z",
+      "side": 1,
+      "message": "Let\u0027s assert body.innerHTML and selection type here to ensure that the event handler has run as expected.",
+      "revId": "c13bdf55486ff6d4d11609d664b1e2b0513c33e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
