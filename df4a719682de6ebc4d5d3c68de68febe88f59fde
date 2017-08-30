@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e74272c6_af1398f0",
+        "filename": "content/child/loader/cors_url_loader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-30T02:12:56Z",
+      "side": 1,
+      "message": "Could you add some comments about the lifetime of this class and urlloaderfactory?\n\n\nalso could you comment that this is attached and run on iothread?",
+      "revId": "df4a719682de6ebc4d5d3c68de68febe88f59fde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "151ce35f_f5758cd8",
+        "filename": "content/child/loader/cors_url_loader_factory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-30T02:12:56Z",
+      "side": 1,
+      "message": "ditto about the class-level comment for the lifetime.",
+      "revId": "df4a719682de6ebc4d5d3c68de68febe88f59fde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
