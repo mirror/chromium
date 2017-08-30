@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8dec704_08c963f2",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 83336,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-30T20:51:53Z",
+      "side": 1,
+      "message": "Does this have some value it will be compared to? i.e. what will happen if you get an number of\n10 or 1000000; what will that mean? Or is it intended to be compared over time (like how many happened last month vs. this month)?\n\nMaybe add a note to the summary about, \"with this stat, we will be able to _______\".",
+      "revId": "579390f2d449ba9de95cdc0069a5385044eed1ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d6e0ff2_3914805f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 83341,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-30T20:51:53Z",
+      "side": 1,
+      "message": "Maybe word, \"or user visits chrome://settings, advanced then find the languages part\" as\n\"or user visits the advanced languages card in chrome://settings\"?\n\nOr something else(?), I didn\u0027t easily follow what the original sentence is trying to say.",
+      "revId": "579390f2d449ba9de95cdc0069a5385044eed1ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
