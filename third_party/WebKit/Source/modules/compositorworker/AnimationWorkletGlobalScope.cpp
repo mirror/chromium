@@ -11,6 +11,7 @@
 #include "core/dom/AnimationWorkletProxyClient.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/workers/WorkerClients.h"
+#include "platform/WaitableEvent.h"
 #include "platform/bindings/V8BindingMacros.h"
 #include "platform/bindings/V8ObjectConstructor.h"
 
@@ -72,6 +73,13 @@ void AnimationWorkletGlobalScope::Dispose() {
           AnimationWorkletProxyClient::From(Clients()))
     proxy_client->Dispose();
   ThreadedWorkletGlobalScope::Dispose();
+}
+
+void AnimationWorkletGlobalScope::MutateWithEvent(
+    AnimationWorkletGlobalScope* global,
+    WaitableEvent* whenDone) {
+  global->Mutate();
+  whenDone->Signal();
 }
 
 void AnimationWorkletGlobalScope::Mutate() {

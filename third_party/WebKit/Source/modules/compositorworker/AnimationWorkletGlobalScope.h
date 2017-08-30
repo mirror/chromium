@@ -16,6 +16,7 @@ namespace blink {
 
 class ExceptionState;
 class WorkerClients;
+class WaitableEvent;
 
 class MODULES_EXPORT AnimationWorkletGlobalScope
     : public ThreadedWorkletGlobalScope {
@@ -36,6 +37,8 @@ class MODULES_EXPORT AnimationWorkletGlobalScope
 
   Animator* CreateInstance(const String& name);
   void Mutate();
+  static void MutateWithEvent(AnimationWorkletGlobalScope*,
+                              WaitableEvent* whenDone);
 
   void registerAnimator(const String& name,
                         const ScriptValue& ctorValue,
