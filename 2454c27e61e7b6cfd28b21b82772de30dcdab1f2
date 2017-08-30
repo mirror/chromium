@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f8e82fc_9c631b76",
+        "filename": "third_party/WebKit/Source/platform/exported/WebHTTPHeaderMap.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-30T10:13:19Z",
+      "side": 1,
+      "message": "mutable_map_",
+      "revId": "2454c27e61e7b6cfd28b21b82772de30dcdab1f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76f62b4c_aac7eaa4",
+        "filename": "third_party/WebKit/Source/platform/exported/WebHTTPHeaderMap.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-30T10:13:19Z",
+      "side": 1,
+      "message": "Please make these fields private, and add a public accessor to it",
+      "revId": "2454c27e61e7b6cfd28b21b82772de30dcdab1f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c324be3_cc826392",
+        "filename": "third_party/WebKit/Source/platform/exported/WebHTTPHeaderMap.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-30T10:13:19Z",
+      "side": 1,
+      "message": "This line\u0027s not needed",
+      "revId": "2454c27e61e7b6cfd28b21b82772de30dcdab1f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de52bec7_6714255d",
+        "filename": "third_party/WebKit/public/platform/WebCORSPreflightResultCache.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-30T10:13:19Z",
+      "side": 1,
+      "message": "I think you can just use std::set\u003cstd::string\u003e now?",
+      "revId": "2454c27e61e7b6cfd28b21b82772de30dcdab1f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9484be98_acd4bc33",
+        "filename": "third_party/WebKit/public/platform/WebHTTPHeaderMap.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-30T10:13:19Z",
+      "side": 1,
+      "message": "Can you add a brief class-level comment?  E.g.\n\n\"A HTTP header map that takes net:: types but internally stores them in blink::HTTPHeaderMap\"",
+      "revId": "2454c27e61e7b6cfd28b21b82772de30dcdab1f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba37e55b_e898952b",
+        "filename": "third_party/WebKit/public/platform/WebHTTPHeaderMap.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-30T10:13:19Z",
+      "side": 1,
+      "message": "The behavior that this just takes a reference but doesn\u0027t copy the given parameter is a bit surprising (this means the caller needs to keep the HTTPHeaderMap alive).  Is it intentional?  I think this\u0027d definitely need a clear documentation (i.e. comment) if that\u0027s the case.  (Some class that does that has a clear name like: WrappedFoo)",
+      "revId": "2454c27e61e7b6cfd28b21b82772de30dcdab1f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10bee635_03ecccba",
+        "filename": "third_party/WebKit/public/platform/WebHTTPHeaderSet.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-30T10:13:19Z",
+      "side": 1,
+      "message": "Left, Right -\u003e left, right (snake_case)\n\nAlso, this should do the trick:\n\nreturn base::CompareCaseInsensitiveASCII(left, right) \u003c 0",
+      "revId": "2454c27e61e7b6cfd28b21b82772de30dcdab1f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
