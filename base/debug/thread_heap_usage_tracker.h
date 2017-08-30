@@ -89,11 +89,11 @@ class BASE_EXPORT ThreadHeapUsageTracker {
   // Returns true iff heap tracking is enabled.
   static bool IsHeapTrackingEnabled();
 
- protected:
   // Exposed for testing only - note that it's safe to re-EnableHeapTracking()
   // after calling this function in tests.
   static void DisableHeapTrackingForTesting();
 
+ protected:
   // Exposed for testing only.
   static void EnsureTLSInitialized();
 

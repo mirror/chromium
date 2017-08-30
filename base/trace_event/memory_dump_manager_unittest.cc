@@ -13,6 +13,7 @@
 #include "base/base_switches.h"
 #include "base/callback.h"
 #include "base/command_line.h"
+#include "base/debug/thread_heap_usage_tracker.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
@@ -837,16 +838,21 @@ TEST_F(MemoryDumpManagerTest, EnableHeapProfilingPseudoStack) {
   EXPECT_CALL(mdp1, OnHeapProfilingEnabled(true)).Times(1);
   EXPECT_CALL(mdp1, OnHeapProfilingEnabled(false)).Times(1);
 
-  mdm_->EnableHeapProfiling(kHeapProfilingModePseudo);
+  EXPECT_TRUE(mdm_->EnableHeapProfiling(kHeapProfilingModePseudo));
   ASSERT_EQ(AllocationContextTracker::CaptureMode::PSEUDO_STACK,
             AllocationContextTracker::capture_mode());
+  EXPECT_EQ(mdm_->GetHeapProfilingMode(), kHeapProfilingModePseudo);
   // Disable will permanently disable heap profiling.
-  mdm_->EnableHeapProfiling(kHeapProfilingModeDisabled);
+  EXPECT_TRUE(mdm_->EnableHeapProfiling(kHeapProfilingModeDisabled));
+  EXPECT_EQ(mdm_->GetHeapProfilingMode(), kHeapProfilingModeInvalid);
   ASSERT_EQ(AllocationContextTracker::CaptureMode::DISABLED,
             AllocationContextTracker::capture_mode());
-  mdm_->EnableHeapProfiling(kHeapProfilingModePseudo);
+  EXPECT_FALSE(mdm_->EnableHeapProfiling(kHeapProfilingModePseudo));
   ASSERT_EQ(AllocationContextTracker::CaptureMode::DISABLED,
             AllocationContextTracker::capture_mode());
+  EXPECT_EQ(mdm_->GetHeapProfilingMode(), kHeapProfilingModeInvalid);
+  EXPECT_FALSE(mdm_->EnableHeapProfiling(kHeapProfilingModeDisabled));
+  EXPECT_EQ(mdm_->GetHeapProfilingMode(), kHeapProfilingModeInvalid);
 }
 
 TEST_F(MemoryDumpManagerTest, EnableHeapProfilingNoStack) {
@@ -857,20 +863,42 @@ TEST_F(MemoryDumpManagerTest, EnableHeapProfilingNoStack) {
   EXPECT_CALL(mdp1, OnHeapProfilingEnabled(true)).Times(1);
   EXPECT_CALL(mdp1, OnHeapProfilingEnabled(false)).Times(1);
 
-  mdm_->EnableHeapProfiling(kHeapProfilingModeNoStack);
+  EXPECT_TRUE(mdm_->EnableHeapProfiling(kHeapProfilingModeNoStack));
   ASSERT_EQ(AllocationContextTracker::CaptureMode::NO_STACK,
             AllocationContextTracker::capture_mode());
+  EXPECT_EQ(mdm_->GetHeapProfilingMode(), kHeapProfilingModeNoStack);
   // Do nothing when already enabled.
-  mdm_->EnableHeapProfiling(kHeapProfilingModePseudo);
+  EXPECT_FALSE(mdm_->EnableHeapProfiling(kHeapProfilingModePseudo));
   ASSERT_EQ(AllocationContextTracker::CaptureMode::NO_STACK,
             AllocationContextTracker::capture_mode());
+  EXPECT_EQ(mdm_->GetHeapProfilingMode(), kHeapProfilingModeNoStack);
   // Disable will permanently disable heap profiling.
-  mdm_->EnableHeapProfiling(kHeapProfilingModeDisabled);
+  EXPECT_TRUE(mdm_->EnableHeapProfiling(kHeapProfilingModeDisabled));
   ASSERT_EQ(AllocationContextTracker::CaptureMode::DISABLED,
             AllocationContextTracker::capture_mode());
-  mdm_->EnableHeapProfiling(kHeapProfilingModePseudo);
+  EXPECT_FALSE(mdm_->EnableHeapProfiling(kHeapProfilingModePseudo));
   ASSERT_EQ(AllocationContextTracker::CaptureMode::DISABLED,
             AllocationContextTracker::capture_mode());
+  EXPECT_EQ(mdm_->GetHeapProfilingMode(), kHeapProfilingModeInvalid);
+  EXPECT_FALSE(mdm_->EnableHeapProfiling(kHeapProfilingModeDisabled));
+  EXPECT_EQ(mdm_->GetHeapProfilingMode(), kHeapProfilingModeInvalid);
+}
+
+TEST_F(MemoryDumpManagerTest, EnableHeapProfilingTask) {
+  InitializeMemoryDumpManagerForInProcessTesting(true /* is_coordinator */);
+  MockMemoryDumpProvider mdp1;
+  RegisterDumpProvider(&mdp1, nullptr);
+  testing::InSequence sequence;
+  EXPECT_CALL(mdp1, OnHeapProfilingEnabled(true)).Times(0);
+  EXPECT_CALL(mdp1, OnHeapProfilingEnabled(false)).Times(0);
+
+  ASSERT_FALSE(base::debug::ThreadHeapUsageTracker::IsHeapTrackingEnabled());
+  EXPECT_TRUE(mdm_->EnableHeapProfiling(kHeapProfilingModeTaskProfiler));
+  ASSERT_EQ(AllocationContextTracker::CaptureMode::DISABLED,
+            AllocationContextTracker::capture_mode());
+  EXPECT_EQ(mdm_->GetHeapProfilingMode(), kHeapProfilingModeTaskProfiler);
+  ASSERT_TRUE(debug::ThreadHeapUsageTracker::IsHeapTrackingEnabled());
+  debug::ThreadHeapUsageTracker::DisableHeapTrackingForTesting();
 }
 #endif  //  BUILDFLAG(USE_ALLOCATOR_SHIM) && !defined(OS_NACL)
 
