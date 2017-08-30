@@ -161,6 +161,40 @@ for (var i = 0; i < signinFunctions.length; ++i) {
   chrome.signin[signinFunction] = makeSigninFunction(signinFunction);
 }
 
+cr.define('chrome.signin.dice', function() {
+  'use strict';
+
+  function initialize() {
+    $('enableSyncButton').addEventListener(
+        'click',
+        'function(e) { chrome.send("enableSync"); }'
+    );
+  }
+
+  function refreshUI(signinInfo) {
+    var diceInfo = signinInfo.dice;
+
+    if (diceInfo == undefined) {
+      $('diceSection').hidden = true;
+      return;
+    }
+
+    $('diceSection').hidden = false;
+    if (diceInfo.isSignedIn) {
+      $('enableSyncButton').hidden = true;
+      $('disableSyncButton').hidden = false;
+    } else {
+      $('disableSyncButton').hidden = true;
+      $('enableSyncButton').hidden = false;
+    }
+  }
+
+  return {
+    initialize: initialize,
+    refreshUI: refreshUI,
+  };
+});
+
 chrome.signin.internalsInfo = {};
 
 // Replace the displayed values with the latest fetched ones.
@@ -169,6 +203,9 @@ function refreshSigninInfo(signinInfo) {
   jstProcess(new JsEvalContext(signinInfo), $('signin-info'));
   jstProcess(new JsEvalContext(signinInfo), $('token-info'));
   jstProcess(new JsEvalContext(signinInfo), $('account-info'));
+
+  // Refresh the DICE section if needed.
+  chrome.signin.dice.refreshUI(signinInfo);
 }
 
 // Replace the cookie information with the fetched values.
@@ -183,6 +220,7 @@ function onLoad() {
 
   chrome.signin.onSigninInfoChanged.addListener(refreshSigninInfo);
   chrome.signin.onCookieAccountsFetched.addListener(updateCookieAccounts);
+  chrome.signin.dice.initialize();
 }
 
 document.addEventListener('DOMContentLoaded', onLoad, false);
