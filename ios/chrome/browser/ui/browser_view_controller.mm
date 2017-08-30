@@ -1006,7 +1006,8 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
         new JavaScriptDialogPresenterImpl(_dialogPresenter));
     _webStateDelegate.reset(new web::WebStateDelegateBridge(self));
     // TODO(leng): Delay this.
-    [[UpgradeCenter sharedInstance] registerClient:self];
+    [[UpgradeCenter sharedInstance] registerClient:self
+                                    withDispatcher:self.dispatcher];
     _inNewTabAnimation = NO;
     if (model && browserState)
       [self updateWithTabModel:model browserState:browserState];
@@ -3975,7 +3976,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
        inIncognito:inIncognito
       inBackground:inBackground
           appendTo:kLastTab];
-  [self chromeExecuteCommand:command];
+  [self.dispatcher openURL:command];
 }
 
 - (void)loadSessionTab:(const sessions::SessionTab*)sessionTab {
