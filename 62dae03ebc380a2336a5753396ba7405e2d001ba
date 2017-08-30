@@ -50,6 +50,24 @@
       "revId": "62dae03ebc380a2336a5753396ba7405e2d001ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cfd1445_5a9222ca",
+        "filename": "chrome/test/data/local_ntp/voice_microphone_browsertest.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-30T10:49:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2cccd9a_c8a3d35e",
+      "revId": "62dae03ebc380a2336a5753396ba7405e2d001ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
