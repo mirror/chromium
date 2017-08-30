@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "caecc788_9ab5402f",
+        "filename": "ash/system/tray/system_tray_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 952,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-30T18:16:41Z",
+      "side": 1,
+      "message": "Nice description! Please add a similar description for AcceleratorController.",
+      "range": {
+        "startLine": 951,
+        "startChar": 3,
+        "endLine": 952,
+        "endChar": 19
+      },
+      "revId": "23b08e3e73accb410a33da3f31f386e2fb23bbfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d69e913_1db693de",
+        "filename": "ash/test/ash_test_views_delegate.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-30T18:16:41Z",
+      "side": 1,
+      "message": "Add description.",
+      "range": {
+        "startLine": 50,
+        "startChar": 2,
+        "endLine": 50,
+        "endChar": 41
+      },
+      "revId": "23b08e3e73accb410a33da3f31f386e2fb23bbfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f254fd0d_a531132a",
+        "filename": "ui/views/bubble/tray_bubble_view.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-30T18:16:41Z",
+      "side": 1,
+      "message": "I think you want Prepend, otherwise I suspect the processing done in viewsdelegate is doing thing you likely don\u0027t want.",
+      "range": {
+        "startLine": 152,
+        "startChar": 28,
+        "endLine": 152,
+        "endChar": 31
+      },
+      "revId": "23b08e3e73accb410a33da3f31f386e2fb23bbfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a17b9022_a043f24f",
         "filename": "ui/views/bubble/tray_bubble_view.cc",
         "patchSetId": 26
@@ -18,6 +87,76 @@
         "startChar": 2,
         "endLine": 160,
         "endChar": 52
+      },
+      "revId": "23b08e3e73accb410a33da3f31f386e2fb23bbfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "016c3c58_7de95c2b",
+        "filename": "ui/views/bubble/tray_bubble_view.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-30T18:16:41Z",
+      "side": 1,
+      "message": "\u003e Might this be a little weird that key event is passed to both the widget and ViewsDelegate?\n\u003e Should we pass the key event only to the one of them?\n\nThey are two separate things. The one thing I would say though, is that you should only pass to ViewsDelegate if the widget doesn\u0027t handle the event.\n\n\u003e MenuController is doing the same thing as long as the menu is not closed.\n\u003e https://cs.chromium.org/chromium/src/ui/views/controls/menu/menu_controller.cc?l\u003d1060\n\u003e \n\u003e TrayBubbleView can be also deleted with a key event but it won\u0027t happen in a synchronous way.\n\nChecking for handled should take care of things.",
+      "parentUuid": "a17b9022_a043f24f",
+      "range": {
+        "startLine": 160,
+        "startChar": 2,
+        "endLine": 160,
+        "endChar": 52
+      },
+      "revId": "23b08e3e73accb410a33da3f31f386e2fb23bbfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e9c99a7_8c02c43c",
+        "filename": "ui/views/bubble/tray_bubble_view.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-30T18:16:41Z",
+      "side": 1,
+      "message": "You\u0027re really overriding this from BubbleDialogDelegateView. Move up to 144ish.",
+      "range": {
+        "startLine": 157,
+        "startChar": 21,
+        "endLine": 157,
+        "endChar": 41
+      },
+      "revId": "23b08e3e73accb410a33da3f31f386e2fb23bbfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5d17a9a_80356372",
+        "filename": "ui/views/bubble/tray_bubble_view.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-30T18:16:41Z",
+      "side": 1,
+      "message": "tray_bubble_view (or something that isn\u0027t widget).",
+      "range": {
+        "startLine": 179,
+        "startChar": 49,
+        "endLine": 179,
+        "endChar": 55
       },
       "revId": "23b08e3e73accb410a33da3f31f386e2fb23bbfc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
