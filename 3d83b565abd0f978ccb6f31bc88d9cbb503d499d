@@ -140,6 +140,30 @@
     },
     {
       "key": {
+        "uuid": "589c8b1c_f8d51045",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/TextSuggestionHost.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-30T18:54:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "24dca09a_404b15f2",
+      "range": {
+        "startLine": 41,
+        "startChar": 33,
+        "endLine": 41,
+        "endChar": 36
+      },
+      "revId": "3d83b565abd0f978ccb6f31bc88d9cbb503d499d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "032891c7_49b9d541",
         "filename": "content/public/android/java/src/org/chromium/content/browser/input/TextSuggestionHost.java",
         "patchSetId": 8
@@ -163,6 +187,30 @@
     },
     {
       "key": {
+        "uuid": "16957e33_1b3f2817",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/TextSuggestionHost.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-30T18:54:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "032891c7_49b9d541",
+      "range": {
+        "startLine": 60,
+        "startChar": 38,
+        "endLine": 60,
+        "endChar": 41
+      },
+      "revId": "3d83b565abd0f978ccb6f31bc88d9cbb503d499d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "258054e9_02e7c27b",
         "filename": "content/public/android/java/src/org/chromium/content/browser/input/TextSuggestionHost.java",
         "patchSetId": 8
@@ -183,6 +231,30 @@
       "revId": "3d83b565abd0f978ccb6f31bc88d9cbb503d499d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d548ce55_dea57082",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/TextSuggestionHost.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-30T18:54:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "258054e9_02e7c27b",
+      "range": {
+        "startLine": 122,
+        "startChar": 8,
+        "endLine": 122,
+        "endChar": 35
+      },
+      "revId": "3d83b565abd0f978ccb6f31bc88d9cbb503d499d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
