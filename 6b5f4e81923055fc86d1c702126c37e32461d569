@@ -1,0 +1,220 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8442bc26_2aacee01",
+        "filename": "chrome/test/data/local_ntp/voice_view_browsertest.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-30T11:54:11Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem to have anything to do with what the actual cancelListeningTimeout does. What\u0027s up with that?",
+      "range": {
+        "startLine": 91,
+        "startChar": 47,
+        "endLine": 91,
+        "endChar": 0
+      },
+      "revId": "6b5f4e81923055fc86d1c702126c37e32461d569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2682f24f_fd777ae1",
+        "filename": "chrome/test/data/local_ntp/voice_view_browsertest.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-30T11:54:11Z",
+      "side": 1,
+      "message": "nit: \"when on the homepage\" doesn\u0027t apply here",
+      "revId": "6b5f4e81923055fc86d1c702126c37e32461d569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ea77e49_246ae165",
+        "filename": "chrome/test/data/local_ntp/voice_view_browsertest.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-30T11:54:11Z",
+      "side": 1,
+      "message": "nit: It feels a bit inconsistent that here all the checks are inlined, while assertViewInactive and assertViewFullyActive check the exact same set of properties for other tests. Can we extend those helper to work here as well? Or alternatively, maybe the checks should be inlined everywhere, adhering to the \"no expectations outside the main test body\" guideline? WDYT?",
+      "revId": "6b5f4e81923055fc86d1c702126c37e32461d569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ec2dece_68622ad3",
+        "filename": "chrome/test/data/local_ntp/voice_view_browsertest.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-30T11:54:11Z",
+      "side": 1,
+      "message": "This comment doesn\u0027t seem to match the test; it actually checks that the animation is *in*active..?",
+      "revId": "6b5f4e81923055fc86d1c702126c37e32461d569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "143540bd_8568c9b3",
+        "filename": "chrome/test/data/local_ntp/voice_view_browsertest.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-30T11:54:11Z",
+      "side": 1,
+      "message": ".setReadyForSpeech() isn\u0027t required?",
+      "revId": "6b5f4e81923055fc86d1c702126c37e32461d569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "245fab1d_2098260f",
+        "filename": "chrome/test/data/local_ntp/voice_view_browsertest.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-30T11:54:11Z",
+      "side": 1,
+      "message": "Similar here",
+      "revId": "6b5f4e81923055fc86d1c702126c37e32461d569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae622993_c9b7fd36",
+        "filename": "chrome/test/data/local_ntp/voice_view_browsertest.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-30T11:54:11Z",
+      "side": 1,
+      "message": "Hm, can we actually make it show that error, instead of arbitrarily overwriting a private variable? (Fine to leave this as a followup.)",
+      "revId": "6b5f4e81923055fc86d1c702126c37e32461d569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d7a7514_783ed3f9",
+        "filename": "chrome/test/data/local_ntp/voice_view_browsertest.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-30T11:54:11Z",
+      "side": 1,
+      "message": "Maybe actually compare (\u003d\u003d\u003d) to true/false to make sure these were really set? As it is, I think all the assert(!...) checks would pass if the callback were never called. (I might be wrong)",
+      "range": {
+        "startLine": 315,
+        "startChar": 38,
+        "endLine": 315,
+        "endChar": 0
+      },
+      "revId": "6b5f4e81923055fc86d1c702126c37e32461d569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c753cbf_9c43ced9",
+        "filename": "chrome/test/data/local_ntp/voice_view_browsertest.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-30T11:54:11Z",
+      "side": 1,
+      "message": "This test name seems wrong, clicking the mic in this situation actually submits the query rather than retrying.",
+      "revId": "6b5f4e81923055fc86d1c702126c37e32461d569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4439745_84bfc352",
+        "filename": "chrome/test/data/local_ntp/voice_view_browsertest.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-30T11:54:11Z",
+      "side": 1,
+      "message": "This name is also weird: In this case it\u0027s not actually a \"retry\" link, but rather \"help\" or \"learn more\" or something. (Right?)",
+      "revId": "6b5f4e81923055fc86d1c702126c37e32461d569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc132db5_d967737b",
+        "filename": "chrome/test/data/local_ntp/voice_view_browsertest.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-30T11:54:11Z",
+      "side": 1,
+      "message": "I think this should be ERROR_LINK_ID?",
+      "revId": "6b5f4e81923055fc86d1c702126c37e32461d569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fe1ae97_21acde2b",
+        "filename": "chrome/test/data/local_ntp/voice_view_browsertest.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-30T11:54:11Z",
+      "side": 1,
+      "message": "Here, I think this test would still pass if the onClick callback were never run.",
+      "revId": "6b5f4e81923055fc86d1c702126c37e32461d569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
