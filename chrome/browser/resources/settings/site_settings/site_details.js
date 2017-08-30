@@ -216,7 +216,9 @@ Polymer({
   getCategoryList_: function() {
     return Array.prototype.map.call(
         this.root.querySelectorAll('site-details-permission'), (element) => {
-          return element.category;
+          // The PROTECTED_CONTENT category is only defined on ChromeOS.
+          if (element.category)
+            return element.category;
         });
   },
 
