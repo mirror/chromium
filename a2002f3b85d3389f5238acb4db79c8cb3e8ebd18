@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e39e665_2b826514",
+        "filename": "ui/native_theme/common_theme.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-30T22:35:03Z",
+      "side": 1,
+      "message": "I\u0027d prefer a value without an alpha channel here (b3b3b3?). E.g. a risk might be that something will try to SkColorSetA on it again (e.g. with kDisabledControlAlpha) and get the wrong result. But, in general, alpha adds complexity, and it\u0027s not useful here.",
+      "revId": "a2002f3b85d3389f5238acb4db79c8cb3e8ebd18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
