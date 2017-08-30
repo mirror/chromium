@@ -34,6 +34,24 @@
       "revId": "d9676555db4b76bb09d4d52857c3c6760e1fcf4e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63787dea_6ddd3d47",
+        "filename": "content/browser/gpu/gpu_process_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-30T18:10:04Z",
+      "side": 1,
+      "message": "\u003e in gpu, it\u0027s only used by avda.  in renderer, it\u0027s used by code that is compiled everywhere.\n\u003e \n\u003e truthfully, maybe the flag is named badly anyway.  it always does nothing useful except on android -- maybe remove the #if\u0027s and name it something with \u0027Android\u0027 in it...?\n\njust remove the ifdef here. you can still pass flags even if it\u0027s unused on a platform",
+      "parentUuid": "44b22316_c27453de",
+      "revId": "d9676555db4b76bb09d4d52857c3c6760e1fcf4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
