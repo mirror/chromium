@@ -16,6 +16,24 @@
       "revId": "1155593af7ff0c95336942c0852020ce6699d7ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf9189ef_2c37ccf4",
+        "filename": "cc/layers/layer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1157921
+      },
+      "writtenOn": "2017-08-30T06:51:01Z",
+      "side": 1,
+      "message": "I remember we have to actively discard all tiles to draw the correct content in this case, but I need to verify that. I believe mask with filters does not occur so often (even in the bug case, we end up without saving memory by tiling since the mask is small enough), so for simplicity if we do need to discard, we want to keep it single textured.",
+      "parentUuid": "b34828b2_e47d0946",
+      "revId": "1155593af7ff0c95336942c0852020ce6699d7ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
