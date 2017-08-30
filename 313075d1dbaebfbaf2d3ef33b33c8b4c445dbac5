@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09428321_e30f3e63",
+        "filename": "content/public/test/browser_test_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2017-08-30T11:26:36Z",
+      "side": 1,
+      "message": "Please note this will only run in Debug mode, which is not on CQ.\n\nConsider returning \"false\" in that case.\n\nIt may also be good idea to document any issue you might have hit which led to this CL.",
+      "range": {
+        "startLine": 605,
+        "startChar": 2,
+        "endLine": 605,
+        "endChar": 8
+      },
+      "revId": "313075d1dbaebfbaf2d3ef33b33c8b4c445dbac5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
