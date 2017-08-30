@@ -168,6 +168,24 @@
     },
     {
       "key": {
+        "uuid": "ac73e7fe_c3af1137",
+        "filename": "chrome/common/media_router/mojo/media_controller.mojom",
+        "patchSetId": 16
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-30T01:40:11Z",
+      "side": 1,
+      "message": "Right, it\u0027s a bit of a tradeoff. But from a security / being able to reason about Mojo perspective, we generally prefer to have a new object created with everything bound, rather than create an object and then try to bind all the state in followup calls.",
+      "parentUuid": "4dae2428_aeb71969",
+      "revId": "d07f81fe3c743971efd7bd612870c8acef043b10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2ee847f4_b8f0e7f2",
         "filename": "chrome/common/media_router/mojo/media_router.mojom",
         "patchSetId": 16
