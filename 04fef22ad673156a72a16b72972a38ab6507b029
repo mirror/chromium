@@ -16,6 +16,24 @@
       "revId": "04fef22ad673156a72a16b72972a38ab6507b029",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b57e627d_88332c85",
+        "filename": "build/android/pylib/local/device/local_device_instrumentation_test_run.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1170419
+      },
+      "writtenOn": "2017-08-30T18:29:52Z",
+      "side": 1,
+      "message": "I didn\u0027t use a lambda because it causes logging headers to look like \"TimeoutThread-1-for-\u003clambda\u003e\", which is not desirable.",
+      "parentUuid": "d72c20e3_3c92a806",
+      "revId": "04fef22ad673156a72a16b72972a38ab6507b029",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
