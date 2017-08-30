@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c060ae6_87067897",
+        "filename": "third_party/WebKit/Source/platform/exported/WebHTTPHeaderMap.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-30T12:48:28Z",
+      "side": 1,
+      "message": "explicit",
+      "revId": "05eec8c88db1025a148ba373bd7159c686b08cbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "766ba50f_3ca5ca85",
+        "filename": "third_party/WebKit/Source/platform/exported/WebHTTPHeaderMap.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-30T12:48:28Z",
+      "side": 1,
+      "message": "explicit",
+      "revId": "05eec8c88db1025a148ba373bd7159c686b08cbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daff5e32_c76ae3f3",
+        "filename": "third_party/WebKit/Source/platform/exported/WebHTTPHeaderMap.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-30T12:48:28Z",
+      "side": 1,
+      "message": "explicit",
+      "revId": "05eec8c88db1025a148ba373bd7159c686b08cbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4575a2aa_429d6b72",
+        "filename": "third_party/WebKit/Source/platform/exported/WebHTTPHeaderMap.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-30T12:48:28Z",
+      "side": 1,
+      "message": "map() is fine for a simple getter",
+      "revId": "05eec8c88db1025a148ba373bd7159c686b08cbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "139f3b2c_715b1636",
+        "filename": "third_party/WebKit/public/platform/WebHTTPHeaderMap.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-30T12:48:28Z",
+      "side": 1,
+      "message": "nit: the comment\u0027s not needed.\n\nbtw you can also directly store std::unique_ptr\u003cHTTPHeaderMap\u003e here with forward declaration, then you don\u0027t need this wrapper class.",
+      "revId": "05eec8c88db1025a148ba373bd7159c686b08cbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
