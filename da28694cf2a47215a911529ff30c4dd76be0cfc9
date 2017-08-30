@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1716cdd0_24f8a83f",
+        "filename": "third_party/WebKit/Source/core/html/HTMLIFrameElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-30T20:49:42Z",
+      "side": 1,
+      "message": "Instead of interpreting the text of the message, what if we passed a bool* to the parse method, and if it gets set to true, then emit the deprecation message when it returns? I\u0027m worried that this is brittle, and someone could easily make a CL that changed the text of the message without knowing that anything was relying on it.",
+      "revId": "da28694cf2a47215a911529ff30c4dd76be0cfc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa4fdf1d_fa94005b",
+        "filename": "third_party/WebKit/Source/core/html/HTMLIFrameElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-30T20:49:42Z",
+      "side": 1,
+      "message": "I think you might need to add a string message to Deprecation:: DeprecationMessage for this, to about hitting the DCHECK on Deprecation.cpp:158\n\nThat would also mean that you can remove the deprecation message from the parser method.",
+      "revId": "da28694cf2a47215a911529ff30c4dd76be0cfc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
