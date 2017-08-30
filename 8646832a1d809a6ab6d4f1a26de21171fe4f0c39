@@ -34,6 +34,24 @@
       "revId": "8646832a1d809a6ab6d4f1a26de21171fe4f0c39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cde65d5_c984126d",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/list_container.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-30T10:13:57Z",
+      "side": 1,
+      "message": "I think cancelling at the pointerdown event as fukino@ suggested would be fine.\n\nFYI, these W3C Recommendations may help learn the basic principle, though I am not sure about the exact timing of the focusing in this case.\nhttps://www.w3.org/TR/pointerevents/\nhttps://www.w3.org/TR/touch-events/",
+      "parentUuid": "4352097d_ce07cbd8",
+      "revId": "8646832a1d809a6ab6d4f1a26de21171fe4f0c39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
