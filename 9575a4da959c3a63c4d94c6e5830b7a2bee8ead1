@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b16cc74a_9779d72a",
+        "filename": "cc/tiles/image_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-30T22:16:11Z",
+      "side": 1,
+      "message": "I think the code path for StopWorkerTasks will still run on shutdown because ProxyImpl calls ReleaseLayerTreeSink on LayerTreeHostImpl in its dtor which has it go through FinishTasksAndCleanUp in TileManager and resetting the cache.",
+      "range": {
+        "startLine": 27,
+        "startChar": 40,
+        "endLine": 27,
+        "endChar": 59
+      },
+      "revId": "9575a4da959c3a63c4d94c6e5830b7a2bee8ead1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b192e32a_352fec23",
+        "filename": "cc/tiles/image_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-30T22:16:11Z",
+      "side": 1,
+      "message": "If the worker has a currently running decode task, is it safe to destroy the ImageController here? ProcessNextImageDecodeOnWorkerThread will access ImageController variables after |this| has been destroyed?",
+      "range": {
+        "startLine": 29,
+        "startChar": 19,
+        "endLine": 29,
+        "endChar": 71
+      },
+      "revId": "9575a4da959c3a63c4d94c6e5830b7a2bee8ead1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
