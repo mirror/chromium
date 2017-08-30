@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
 <body>
-<script src="../../resources/js-test.js"></script>
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
 <script>
-description("Tests the optional properties of DeviceMotionEvent. Each property should be null if not set, or set to null or undefined.");
+'use strict';
 
 function ObjectThrowingException() {};
 ObjectThrowingException.prototype.valueOf = function() { throw new Error('valueOf threw exception'); }
@@ -11,130 +12,228 @@ ObjectThrowingException.prototype.__defineGetter__("x", function() { throw new E
 ObjectThrowingException.prototype.__defineGetter__("alpha", function() { throw new Error('alpha getter exception'); });
 var objectThrowingException = new ObjectThrowingException();
 
-function testException(expression, expectedException)
-{
-    shouldThrow(expression, '(function() { return "' + expectedException + '"; })();');
+function testCreateAnEvent() {
+  event = document.createEvent('DeviceMotionEvent');
+  assert_equals(event.acceleration, null);
+  assert_equals(event.accelerationIncludingGravity, null);
+  assert_equals(event.rotationRate, null);
+  assert_equals(event.interval, 0);
 }
 
-var event;
+function testNoMissingValue() {
+  event = new DeviceMotionEvent('', {acceleration: {x: 0, y: 1, z: 2},
+                                     accelerationIncludingGravity: {x: 3, y: 4, z: 5},
+                                     rotationRate: {alpha: 6, beta: 7, gamma: 8},
+                                     interval: 9});
+  assert_equals(event.acceleration.x, 0);
+  assert_equals(event.acceleration.y, 1);
+  assert_equals(event.acceleration.z, 2);
+  assert_equals(event.accelerationIncludingGravity.x, 3);
+  assert_equals(event.accelerationIncludingGravity.y, 4);
+  assert_equals(event.accelerationIncludingGravity.z, 5);
+  assert_equals(event.rotationRate.alpha, 6);
+  assert_equals(event.rotationRate.beta, 7);
+  assert_equals(event.rotationRate.gamma, 8);
+  assert_equals(event.interval, 9);
+}
 
-evalAndLog("event = document.createEvent('DeviceMotionEvent')");
-shouldBeTrue("event.acceleration == null");
-shouldBeTrue("event.accelerationIncludingGravity == null");
-shouldBeTrue("event.rotationRate == null");
-shouldBeTrue("event.interval == 0");
+function testInvalidAcceleration() {
+  event = new DeviceMotionEvent('', {acceleration: objectThrowingException,
+                                     accelerationIncludingGravity: {x: 3, z: 5},
+                                     rotationRate: {gamma: 8, beta: 7},
+                                     interval: 9});
+}
 
-evalAndLog("event = new DeviceMotionEvent('', {acceleration: {x: 0, y: 1, z: 2}, accelerationIncludingGravity: {x: 3, y: 4, z: 5}, rotationRate: {alpha: 6, beta: 7, gamma: 8}, interval: 9})");
-shouldBeTrue("event.acceleration.x == 0");
-shouldBeTrue("event.acceleration.y == 1");
-shouldBeTrue("event.acceleration.z == 2");
-shouldBeTrue("event.accelerationIncludingGravity.x == 3");
-shouldBeTrue("event.accelerationIncludingGravity.y == 4");
-shouldBeTrue("event.accelerationIncludingGravity.z == 5");
-shouldBeTrue("event.rotationRate.alpha == 6");
-shouldBeTrue("event.rotationRate.beta == 7");
-shouldBeTrue("event.rotationRate.gamma == 8");
-shouldBeTrue("event.interval == 9");
+function testInvalidAcelerationIncludingGravity() {
+  event = new DeviceMotionEvent('', {acceleration: {x: 0, y: 1, z: 2},
+                                     accelerationIncludingGravity: objectThrowingException,
+                                     rotationRate: {gamma: 8, beta: 7},
+                                     interval: 9});
+}
 
-testException("event = new DeviceMotionEvent('', {acceleration: objectThrowingException, accelerationIncludingGravity: {x: 3, z: 5}, rotationRate: {gamma: 8, beta: 7}, interval: 9})", "Error: x getter exception");
-testException("event = new DeviceMotionEvent('', {acceleration: {x: 0, y: 1, z: 2}, accelerationIncludingGravity: objectThrowingException, rotationRate: {gamma: 8, beta: 7}, interval: 9})", "Error: x getter exception");
-testException("event = new DeviceMotionEvent('', {acceleration: {x: 0, y: 1, z: 2}, accelerationIncludingGravity: {x: 3, z: 5}, rotationRate: objectThrowingException, interval: 9})", "Error: alpha getter exception");
+function testInvalidRotationRate() {
+  event = new DeviceMotionEvent('', {acceleration: {x: 0, y: 1, z: 2},
+                                     accelerationIncludingGravity: {x: 3, z: 5},
+                                     rotationRate: objectThrowingException,
+                                     interval: 9});
+}
 
-testException("event = new DeviceMotionEvent('', {acceleration: {x: objectThrowingException, y: 1, z: 2}, accelerationIncludingGravity: {x: 3, y: 4, z: 5}, rotationRate: {alpha: 6, beta: 7, gamma: 8}, interval: 9})", "Error: valueOf threw exception");
-testException("event = new DeviceMotionEvent('', {acceleration: {x: 0, y: 1, z: 2}, accelerationIncludingGravity: {x: 3, y: objectThrowingException, z: 5}, rotationRate: {alpha: 6, beta: 7, gamma: 8}, interval: 9})", "Error: valueOf threw exception");
-testException("event = new DeviceMotionEvent('', {acceleration: {x: 0, y: 1, z: 2}, accelerationIncludingGravity: {x: 3, y: 4, z: 5}, rotationRate: {alpha: 6, beta: 7, gamma: objectThrowingException}, interval: 9})", "Error: valueOf threw exception");
+function testInvalidAccelerationX() {
+  event = new DeviceMotionEvent('', {acceleration: {x: objectThrowingException, y: 1, z: 2},
+                                     accelerationIncludingGravity: {x: 3, y: 4, z: 5},
+                                     rotationRate: {alpha: 6, beta: 7, gamma: 8},
+                                     interval: 9});
+}
 
-evalAndLog("event = new DeviceMotionEvent('', {acceleration: {y: 1, x: 0}, accelerationIncludingGravity: {x: 3, z: 5}, rotationRate: {gamma: 8, beta: 7}, interval: 9})");
-shouldBeTrue("event.acceleration.x == 0");
-shouldBeTrue("event.acceleration.y == 1");
-shouldBeTrue("event.acceleration.z == null");
-shouldBeTrue("event.accelerationIncludingGravity.x == 3");
-shouldBeTrue("event.accelerationIncludingGravity.y == null");
-shouldBeTrue("event.accelerationIncludingGravity.z == 5");
-shouldBeTrue("event.rotationRate.alpha == null");
-shouldBeTrue("event.rotationRate.beta == 7");
-shouldBeTrue("event.rotationRate.gamma == 8");
-shouldBeTrue("event.interval == 9");
+function testInvalidAcelerationIncludingGravityY() {
+  event = new DeviceMotionEvent('', {acceleration: {x: 0, y: 1, z: 2},
+                                     accelerationIncludingGravity: {x: 3, y: objectThrowingException, z: 5},
+                                     rotationRate: {alpha: 6, beta: 7, gamma: 8},
+                                     interval: 9});
+}
 
-evalAndLog("event = new DeviceMotionEvent('')");
-shouldBeTrue("event.acceleration == null");
-shouldBeTrue("event.accelerationIncludingGravity == null");
-shouldBeTrue("event.rotationRate == null");
-shouldBeTrue("event.interval == 0");
+function testInvalidRotationRateGamma() {
+  event = new DeviceMotionEvent('', {acceleration: {x: 0, y: 1, z: 2},
+                                     accelerationIncludingGravity: {x: 3, y: 4, z: 5},
+                                     rotationRate: {alpha: 6, beta: 7, gamma: objectThrowingException},
+                                     interval: 9});
+}
 
-evalAndLog("event = new DeviceMotionEvent('', {acceleration: [], accelerationIncludingGravity: [], rotationRate: [], interval: []})");
-shouldBeTrue("event.acceleration.x == null");
-shouldBeTrue("event.acceleration.y == null");
-shouldBeTrue("event.acceleration.z == null");
-shouldBeTrue("event.accelerationIncludingGravity.x == null");
-shouldBeTrue("event.accelerationIncludingGravity.y == null");
-shouldBeTrue("event.accelerationIncludingGravity.z == null");
-shouldBeTrue("event.rotationRate.alpha == null");
-shouldBeTrue("event.rotationRate.beta == null");
-shouldBeTrue("event.rotationRate.gamma == null");
-shouldBeTrue("event.interval == 0");
+function testMissingValueShouldBeNull() {
+  event = new DeviceMotionEvent('', {acceleration: {y: 1, x: 0},
+                                     accelerationIncludingGravity: {x: 3, z: 5},
+                                     rotationRate: {gamma: 8, beta: 7},
+                                     interval: 9});
+  assert_equals(event.acceleration.x, 0);
+  assert_equals(event.acceleration.y, 1);
+  assert_equals(event.acceleration.z, null);
+  assert_equals(event.accelerationIncludingGravity.x, 3);
+  assert_equals(event.accelerationIncludingGravity.y, null);
+  assert_equals(event.accelerationIncludingGravity.z, 5);
+  assert_equals(event.rotationRate.alpha, null);
+  assert_equals(event.rotationRate.beta, 7);
+  assert_equals(event.rotationRate.gamma, 8);
+  assert_equals(event.interval, 9);
+}
 
-evalAndLog("event = new DeviceMotionEvent('', {acceleration: [], accelerationIncludingGravity: undefined, rotationRate: undefined, interval: undefined})");
-shouldBeTrue("event.acceleration.x == null");
-shouldBeTrue("event.acceleration.y == null");
-shouldBeTrue("event.acceleration.z == null");
-shouldBeTrue("event.accelerationIncludingGravity == null");
-shouldBeTrue("event.rotationRate == null");
-shouldBeTrue("event.interval == 0");
+function testDefaultConstructor() {
+  event = new DeviceMotionEvent('');
+  assert_equals(event.acceleration, null);
+  assert_equals(event.accelerationIncludingGravity, null);
+  assert_equals(event.rotationRate, null);
+  assert_equals(event.interval, 0);
+}
 
-evalAndLog("event = new DeviceMotionEvent('', {acceleration: null, accelerationIncludingGravity: null, rotationRate: null, interval: null})");
-shouldBeTrue("event.acceleration == null");
-shouldBeTrue("event.accelerationIncludingGravity == null");
-shouldBeTrue("event.rotationRate == null");
-shouldBeTrue("event.interval == 0");
+function testAllValuesAreEmptyArray() {
+  event = new DeviceMotionEvent('', {acceleration: [],
+                                     accelerationIncludingGravity: [],
+                                     rotationRate: [],
+                                     interval: []});
+  assert_equals(event.acceleration.x, null);
+  assert_equals(event.acceleration.y, null);
+  assert_equals(event.acceleration.z, null);
+  assert_equals(event.accelerationIncludingGravity.x, null);
+  assert_equals(event.accelerationIncludingGravity.y, null);
+  assert_equals(event.accelerationIncludingGravity.z, null);
+  assert_equals(event.rotationRate.alpha, null);
+  assert_equals(event.rotationRate.beta, null);
+  assert_equals(event.rotationRate.gamma, null);
+  assert_equals(event.interval, 0);
+}
 
-evalAndLog("event = new DeviceMotionEvent('', {acceleration: {x: null, y: null, z: null}, accelerationIncludingGravity: {x: null, y: null, z: null}, rotationRate: {alpha: null, beta: null, gamma: null}, interval: null})");
-shouldBeTrue("event.acceleration.x == null");
-shouldBeTrue("event.acceleration.y == null");
-shouldBeTrue("event.acceleration.z == null");
-shouldBeTrue("event.accelerationIncludingGravity.x == null");
-shouldBeTrue("event.accelerationIncludingGravity.y == null");
-shouldBeTrue("event.accelerationIncludingGravity.z == null");
-shouldBeTrue("event.rotationRate.alpha == null");
-shouldBeTrue("event.rotationRate.beta == null");
-shouldBeTrue("event.rotationRate.gamma == null");
-shouldBeTrue("event.interval == 0");
+function testSomeValuesAreEmptyArrayAndSomeValuesAreUndefined() {
+  event = new DeviceMotionEvent('', {acceleration: [],
+                                     accelerationIncludingGravity: undefined,
+                                     rotationRate: undefined,
+                                     interval: undefined});
+  assert_equals(event.acceleration.x, null);
+  assert_equals(event.acceleration.y, null);
+  assert_equals(event.acceleration.z, null);
+  assert_equals(event.accelerationIncludingGravity, null);
+  assert_equals(event.rotationRate, null);
+  assert_equals(event.interval, 0);
+}
 
-evalAndLog("event = new DeviceMotionEvent('', {acceleration: {x: null, y: null, z: 1}, accelerationIncludingGravity: {x: null, y: null, z: 2}, rotationRate: {alpha: null, beta: null, gamma: 3}, interval: null})");
-shouldBeTrue("event.acceleration.x == null");
-shouldBeTrue("event.acceleration.y == null");
-shouldBeTrue("event.acceleration.z == 1");
-shouldBeTrue("event.accelerationIncludingGravity.x == null");
-shouldBeTrue("event.accelerationIncludingGravity.y == null");
-shouldBeTrue("event.accelerationIncludingGravity.z == 2");
-shouldBeTrue("event.rotationRate.alpha == null");
-shouldBeTrue("event.rotationRate.beta == null");
-shouldBeTrue("event.rotationRate.gamma == 3");
-shouldBeTrue("event.interval == 0");
+function testAllValuesAreNull() {
+  event = new DeviceMotionEvent('', {acceleration: null,
+                                     accelerationIncludingGravity: null,
+                                     rotationRate: null,
+                                     interval: null});
+  assert_equals(event.acceleration, null);
+  assert_equals(event.accelerationIncludingGravity, null);
+  assert_equals(event.rotationRate, null);
+  assert_equals(event.interval, 0);
+}
 
-evalAndLog("event = new DeviceMotionEvent('', {acceleration: {x: undefined, y: undefined, z: undefined}, accelerationIncludingGravity: {x: undefined, y: undefined, z: undefined}, rotationRate: {alpha: undefined, beta: undefined, gamma: undefined}, interval: undefined})");
-shouldBeTrue("event.acceleration.x == null");
-shouldBeTrue("event.acceleration.y == null");
-shouldBeTrue("event.acceleration.z == null");
-shouldBeTrue("event.accelerationIncludingGravity.x == null");
-shouldBeTrue("event.accelerationIncludingGravity.y == null");
-shouldBeTrue("event.accelerationIncludingGravity.z == null");
-shouldBeTrue("event.rotationRate.alpha == null");
-shouldBeTrue("event.rotationRate.beta == null");
-shouldBeTrue("event.rotationRate.gamma == null");
-shouldBeTrue("event.interval == 0");
+function testAllFieldsAreNull() {
+  event = new DeviceMotionEvent('', {acceleration: {x: null, y: null, z: null},
+                                     accelerationIncludingGravity: {x: null, y: null, z: null},
+                                     rotationRate: {alpha: null, beta: null, gamma: null},
+                                     interval: null});
+  assert_equals(event.acceleration.x, null);
+  assert_equals(event.acceleration.y, null);
+  assert_equals(event.acceleration.z, null);
+  assert_equals(event.accelerationIncludingGravity.x, null);
+  assert_equals(event.accelerationIncludingGravity.y, null);
+  assert_equals(event.accelerationIncludingGravity.z, null);
+  assert_equals(event.rotationRate.alpha, null);
+  assert_equals(event.rotationRate.beta, null);
+  assert_equals(event.rotationRate.gamma, null);
+  assert_equals(event.interval, 0);
+}
 
-evalAndLog("event = new DeviceMotionEvent('', {acceleration: {x: undefined, y: undefined, z: 1}, accelerationIncludingGravity: {x: undefined, y: undefined, z: 2}, rotationRate: {alpha: undefined, beta: undefined, gamma: 3}, interval: undefined})");
-shouldBeTrue("event.acceleration.x == null");
-shouldBeTrue("event.acceleration.y == null");
-shouldBeTrue("event.acceleration.z == 1");
-shouldBeTrue("event.accelerationIncludingGravity.x == null");
-shouldBeTrue("event.accelerationIncludingGravity.y == null");
-shouldBeTrue("event.accelerationIncludingGravity.z == 2");
-shouldBeTrue("event.rotationRate.alpha == null");
-shouldBeTrue("event.rotationRate.beta == null");
-shouldBeTrue("event.rotationRate.gamma == 3");
-shouldBeTrue("event.interval == 0");
+function testSomeFieldsAreNull() {
+  event = new DeviceMotionEvent('', {acceleration: {x: null, y: null, z: 1},
+                                     accelerationIncludingGravity: {x: null, y: null, z: 2},
+                                     rotationRate: {alpha: null, beta: null, gamma: 3},
+                                     interval: null});
+  assert_equals(event.acceleration.x, null);
+  assert_equals(event.acceleration.y, null);
+  assert_equals(event.acceleration.z, 1);
+  assert_equals(event.accelerationIncludingGravity.x, null);
+  assert_equals(event.accelerationIncludingGravity.y, null);
+  assert_equals(event.accelerationIncludingGravity.z, 2);
+  assert_equals(event.rotationRate.alpha, null);
+  assert_equals(event.rotationRate.beta, null);
+  assert_equals(event.rotationRate.gamma, 3);
+  assert_equals(event.interval, 0);
+}
+
+function testAllFieldsAreUndefined() {
+  event = new DeviceMotionEvent('', {acceleration: {x: undefined, y: undefined, z: undefined},
+                                     accelerationIncludingGravity: {x: undefined, y: undefined, z: undefined},
+                                     rotationRate: {alpha: undefined, beta: undefined, gamma: undefined},
+                                     interval: undefined});
+  assert_equals(event.acceleration.x, null);
+  assert_equals(event.acceleration.y, null);
+  assert_equals(event.acceleration.z, null);
+  assert_equals(event.accelerationIncludingGravity.x, null);
+  assert_equals(event.accelerationIncludingGravity.y, null);
+  assert_equals(event.accelerationIncludingGravity.z, null);
+  assert_equals(event.rotationRate.alpha, null);
+  assert_equals(event.rotationRate.beta, null);
+  assert_equals(event.rotationRate.gamma, null);
+  assert_equals(event.interval, 0);
+}
+
+function testSomeFieldsAreUndefined() {
+  event = new DeviceMotionEvent('', {acceleration: {x: undefined, y: undefined, z: 1},
+                                     accelerationIncludingGravity: {x: undefined, y: undefined, z: 2},
+                                     rotationRate: {alpha: undefined, beta: undefined, gamma: 3},
+                                     interval: undefined});
+  assert_equals(event.acceleration.x, null);
+  assert_equals(event.acceleration.y, null);
+  assert_equals(event.acceleration.z, 1);
+  assert_equals(event.accelerationIncludingGravity.x, null);
+  assert_equals(event.accelerationIncludingGravity.y, null);
+  assert_equals(event.accelerationIncludingGravity.z, 2);
+  assert_equals(event.rotationRate.alpha, null);
+  assert_equals(event.rotationRate.beta, null);
+  assert_equals(event.rotationRate.gamma, 3);
+  assert_equals(event.interval, 0);
+}
+
+test(test => {
+  testCreateAnEvent();
+  testNoMissingValue();
+
+  assert_throws(new Error(), testInvalidAcceleration);
+  assert_throws(new Error(), testInvalidAcelerationIncludingGravity);
+  assert_throws(new Error(), testInvalidRotationRate);
+  assert_throws(new Error(), testInvalidAccelerationX);
+  assert_throws(new Error(), testInvalidAcelerationIncludingGravityY);
+  assert_throws(new Error(), testInvalidRotationRateGamma);
+
+  testMissingValueShouldBeNull();
+  testDefaultConstructor();
+  testAllValuesAreEmptyArray();
+  testSomeValuesAreEmptyArrayAndSomeValuesAreUndefined();
+  testAllValuesAreNull();
+  testAllFieldsAreNull();
+  testSomeFieldsAreNull();
+  testAllFieldsAreUndefined();
+  testSomeFieldsAreUndefined();
+}, 'Tests the optional properties of DeviceMotionEvent. Each property should be null if not set, or set to null or undefined.');
 </script>
 </body>
 </html>
