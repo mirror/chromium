@@ -72,7 +72,8 @@ static StyleSheetContents* ParseUASheet(const String& str) {
   return sheet;
 }
 
-CSSDefaultStyleSheets::CSSDefaultStyleSheets() {
+CSSDefaultStyleSheets::CSSDefaultStyleSheets()
+    : media_controls_style_sheet_loader_(nullptr) {
   default_style_ = RuleSet::Create();
   default_print_style_ = RuleSet::Create();
   default_quirks_style_ = RuleSet::Create();
@@ -158,12 +159,11 @@ bool CSSDefaultStyleSheets::EnsureDefaultStyleSheetsForElement(
     changed_default_style = true;
   }
 
-  // FIXME: We should assert that this sheet only contains rules for <video> and
-  // <audio>.
-  if (!media_controls_style_sheet_ &&
+  if (!media_controls_style_sheet_ && HasMediaControlsStyleSheetLoader() &&
       (isHTMLVideoElement(element) || isHTMLAudioElement(element))) {
-    String media_rules = GetDataResourceAsASCIIString("mediaControls.css") +
-                         LayoutTheme::GetTheme().ExtraMediaControlsStyleSheet();
+    // FIXME: We should assert that this sheet only contains rules for <video>
+    // and <audio>.
+    String media_rules = media_controls_style_sheet_loader_->GetUAStyleSheet();
     media_controls_style_sheet_ = ParseUASheet(media_rules);
     default_style_->AddRulesFromSheet(MediaControlsStyleSheet(), ScreenEval());
     default_print_style_->AddRulesFromSheet(MediaControlsStyleSheet(),
@@ -173,6 +173,11 @@ bool CSSDefaultStyleSheets::EnsureDefaultStyleSheetsForElement(
 
   DCHECK(!default_style_->Features().HasIdsInSelectors());
   return changed_default_style;
+}
+
+void CSSDefaultStyleSheets::SetMediaControlsStyleSheetLoader(
+    Member<UAStyleSheetLoader> loader) {
+  media_controls_style_sheet_loader_.Swap(loader);
 }
 
 void CSSDefaultStyleSheets::EnsureDefaultStyleSheetForFullscreen() {
@@ -201,6 +206,9 @@ DEFINE_TRACE(CSSDefaultStyleSheets) {
   visitor->Trace(mathml_style_sheet_);
   visitor->Trace(media_controls_style_sheet_);
   visitor->Trace(fullscreen_style_sheet_);
+  visitor->Trace(media_controls_style_sheet_loader_);
 }
+
+DEFINE_TRACE(CSSDefaultStyleSheets::UAStyleSheetLoader) {}
 
 }  // namespace blink
