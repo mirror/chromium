@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "dc5239bf_17abe98a",
+        "filename": "chrome/browser/subresource_filter/chrome_subresource_filter_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-30T17:37:37Z",
+      "side": 1,
+      "message": "I meant to say that in the current code is it correct to say that\nactivated_via_devtools_ \u003d\u003d true implies\nsubresource_filter::ContentSubresourceFilterDriverFactory::\n                FromWebContents(web_contents_)\n                    -\u003eGetMatchedConfigurationForLastCommittedPageLoad() \u003d\u003d subresource_filter::Configuration::MakeForForcedActivation()",
+      "parentUuid": "ec6419c3_80dbfac0",
+      "revId": "18dcb4fd62f6731f19672cb75fd0ee0d28a78b8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "74125400_cac2ed16",
         "filename": "chrome/browser/subresource_filter/subresource_filter_unittest.cc",
         "patchSetId": 8
