@@ -363,6 +363,30 @@
       "revId": "b6e781e42f775371c77cfda6b6a0f3a955d45994",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "04c6a787_862dc8ac",
+        "filename": "ios/clean/chrome/browser/ui/ntp/ntp_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-30T16:49:56Z",
+      "side": 1,
+      "message": "In that case, you should make an explicit cast with static_cast rather than implicitly compare two elements that are of different types.",
+      "parentUuid": "6fd12f3b_bcc85b4c",
+      "range": {
+        "startLine": 156,
+        "startChar": 2,
+        "endLine": 168,
+        "endChar": 3
+      },
+      "revId": "b6e781e42f775371c77cfda6b6a0f3a955d45994",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
