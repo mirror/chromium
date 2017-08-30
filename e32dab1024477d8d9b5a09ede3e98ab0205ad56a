@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be5f0e62_e913ed90",
+        "filename": "services/device/generic_sensor/platform_sensor_provider_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-30T17:28:09Z",
+      "side": 1,
+      "message": "For asynchronously initialized sensors like PlatformSensorFusion on failure the sensor will not yet have been added to |sensor_map_|.",
+      "range": {
+        "startLine": 82,
+        "startChar": 16,
+        "endLine": 82,
+        "endChar": 72
+      },
+      "revId": "e32dab1024477d8d9b5a09ede3e98ab0205ad56a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93e722fc_0e815968",
+        "filename": "services/device/generic_sensor/platform_sensor_provider_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-30T17:28:09Z",
+      "side": 1,
+      "message": "not expecting to track more than one sensor of the same type",
+      "range": {
+        "startLine": 85,
+        "startChar": 37,
+        "endLine": 86,
+        "endChar": 37
+      },
+      "revId": "e32dab1024477d8d9b5a09ede3e98ab0205ad56a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "308ab0fa_f2dcb080",
+        "filename": "services/device/generic_sensor/platform_sensor_provider_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-30T17:28:09Z",
+      "side": 1,
+      "message": "it",
+      "range": {
+        "startLine": 90,
+        "startChar": 20,
+        "endLine": 90,
+        "endChar": 24
+      },
+      "revId": "e32dab1024477d8d9b5a09ede3e98ab0205ad56a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
