@@ -25,8 +25,10 @@ namespace payments {
 class PaymentItem {
  public:
   PaymentItem();
+  PaymentItem(const PaymentItem& other);
   ~PaymentItem();
 
+  PaymentItem& operator=(const PaymentItem& other);
   bool operator==(const PaymentItem& other) const;
   bool operator!=(const PaymentItem& other) const;
 
@@ -42,7 +44,7 @@ class PaymentItem {
   std::string label;
 
   // The monetary amount for the item.
-  PaymentCurrencyAmount amount;
+  std::unique_ptr<PaymentCurrencyAmount> amount;
 
   // When set to true this flag means that the amount field is not final. This
   // is commonly used to show items such as shipping or tax amounts that depend

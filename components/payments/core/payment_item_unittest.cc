@@ -5,7 +5,6 @@
 #include "components/payments/core/payment_item.h"
 
 #include "base/memory/ptr_util.h"
-#include "base/strings/utf_string_conversions.h"
 #include "base/values.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -15,8 +14,9 @@ namespace payments {
 TEST(PaymentRequestTest, PaymentItemFromDictionaryValueSuccess) {
   PaymentItem expected;
   expected.label = "Payment Total";
-  expected.amount.currency = "NZD";
-  expected.amount.value = "2,242,093.00";
+  expected.amount = base::MakeUnique<PaymentCurrencyAmount>();
+  expected.amount->currency = "NZD";
+  expected.amount->value = "2,242,093.00";
 
   base::DictionaryValue item_dict;
   item_dict.SetString("label", "Payment Total");
@@ -66,11 +66,13 @@ TEST(PaymentRequestTest, PaymentItemEquality) {
   item2.label = "Subtotal";
   EXPECT_EQ(item1, item2);
 
-  item1.amount.value = "104.34";
+  item1.amount = base::MakeUnique<PaymentCurrencyAmount>();
+  item1.amount->value = "104.34";
   EXPECT_NE(item1, item2);
-  item2.amount.value = "104";
+  item2.amount = base::MakeUnique<PaymentCurrencyAmount>();
+  item2.amount->value = "104";
   EXPECT_NE(item1, item2);
-  item2.amount.value = "104.34";
+  item2.amount->value = "104.34";
   EXPECT_EQ(item1, item2);
 
   item1.pending = true;
@@ -84,12 +86,6 @@ TEST(PaymentRequestTest, EmptyPaymentItemDictionary) {
   base::DictionaryValue expected_value;
 
   expected_value.SetString("label", "");
-  std::unique_ptr<base::DictionaryValue> amount_dict =
-      base::MakeUnique<base::DictionaryValue>();
-  amount_dict->SetString("currency", "");
-  amount_dict->SetString("value", "");
-  amount_dict->SetString("currencySystem", "urn:iso:std:iso:4217");
-  expected_value.SetDictionary("amount", std::move(amount_dict));
   expected_value.SetBoolean("pending", false);
 
   PaymentItem payment_item;
@@ -111,8 +107,9 @@ TEST(PaymentRequestTest, PopulatedPaymentItemDictionary) {
 
   PaymentItem payment_item;
   payment_item.label = "Payment Total";
-  payment_item.amount.currency = "NZD";
-  payment_item.amount.value = "2,242,093.00";
+  payment_item.amount = base::MakeUnique<PaymentCurrencyAmount>();
+  payment_item.amount->currency = "NZD";
+  payment_item.amount->value = "2,242,093.00";
   payment_item.pending = true;
 
   EXPECT_TRUE(expected_value.Equals(payment_item.ToDictionaryValue().get()));

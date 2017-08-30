@@ -115,7 +115,7 @@ using ::payment_request_util::GetShippingSectionTitle;
       IDS_PAYMENT_REQUEST_ORDER_SUMMARY_SHEET_TOTAL_FORMAT,
       base::UTF8ToUTF16(currencyFormatter->formatted_currency_code()),
       currencyFormatter->Format(
-          self.paymentRequest->payment_details().total->amount.value)));
+          self.paymentRequest->payment_details().total->amount->value)));
   item.notification = self.totalValueChanged
                           ? l10n_util::GetNSString(IDS_PAYMENTS_UPDATED_LABEL)
                           : nil;
@@ -165,7 +165,7 @@ using ::payment_request_util::GetShippingSectionTitle;
     payments::CurrencyFormatter* currencyFormatter =
         self.paymentRequest->GetOrCreateCurrencyFormatter();
     item.detailText = base::SysUTF16ToNSString(
-        currencyFormatter->Format(option->amount.value));
+        currencyFormatter->Format(option->amount->value));
     item.accessoryType = MDCCollectionViewCellAccessoryDisclosureIndicator;
     return item;
   }
