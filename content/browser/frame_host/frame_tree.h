@@ -215,7 +215,7 @@ class CONTENT_EXPORT FrameTree {
 
   // Returns a range to iterate over all FrameTreeNodes in the frame tree in
   // breadth-first traversal order, skipping the subtree rooted at
-  // |node_to_skip|.
+  // |node_to_skip|, but including |node_to_skip| itself.
   NodeRange NodesExcept(FrameTreeNode* node_to_skip);
 
   // These delegates are installed into all the RenderViewHosts and
