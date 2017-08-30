@@ -122,6 +122,7 @@ class CORE_EXPORT WebViewImpl final
 
   void SetSuppressFrameRequestsWorkaroundFor704763Only(bool) override;
   void BeginFrame(double last_frame_time_monotonic) override;
+  void DidCommitCompositorFrame() override;
 
   void UpdateAllLifecyclePhases() override;
   void Paint(WebCanvas*, const WebRect&) override;

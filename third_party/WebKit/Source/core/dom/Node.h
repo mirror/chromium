@@ -34,6 +34,7 @@
 #include "core/editing/EditingBoundary.h"
 #include "core/events/EventTarget.h"
 #include "core/style/ComputedStyleConstants.h"
+#include "core/timing/TextElementTimingAncestorTracker.h"
 #include "platform/bindings/TraceWrapperMember.h"
 #include "platform/geometry/LayoutRect.h"
 #include "public/platform/WebFocusType.h"
@@ -630,6 +631,9 @@ class CORE_EXPORT Node : public EventTarget {
     bool clear_invalidation = false;
     // True if the previous_in_flow member is up-to-date, even if it is nullptr.
     bool use_previous_in_flow = false;
+    // Keep track of ancestor elementtiming attributes.
+    TextElementTimingAncestorTracker* text_element_timing_ancestor_tracker =
+        nullptr;
 
     AttachContext() {}
   };

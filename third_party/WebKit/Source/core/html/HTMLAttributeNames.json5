@@ -121,6 +121,7 @@
     "disableremoteplayback",
     "download",
     "draggable",
+    "elementtiming",
     "enctype",
     "end",
     "event",
