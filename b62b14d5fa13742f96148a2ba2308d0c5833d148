@@ -52,6 +52,24 @@
       "revId": "b62b14d5fa13742f96148a2ba2308d0c5833d148",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75cd3d6c_f9ece531",
+        "filename": "chrome/app/vector_icons/notification_captive_portal.icon",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-08-30T02:14:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2d355ade_5b4a02c1",
+      "revId": "b62b14d5fa13742f96148a2ba2308d0c5833d148",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
