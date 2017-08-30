@@ -16,6 +16,24 @@
       "revId": "6ed855a8518b049af222d75c7590991cc26ad637",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7aafa018_7622ba50",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 2476,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-08-30T14:15:28Z",
+      "side": 1,
+      "message": "Yep that\u0027s the plan - right now build_hooks is enabled for testonly code and assertions are tied to buildhooks.\n\nPlanning to add an _enable_custom_resources flag that is tied to build_hooks_android so that custom resources won\u0027t be enabled for testonly code, and then pass both of these flags to the bytecode rewriter which will determine the ClassVisitors to be used.",
+      "parentUuid": "02973d82_7d547ba0",
+      "revId": "6ed855a8518b049af222d75c7590991cc26ad637",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
