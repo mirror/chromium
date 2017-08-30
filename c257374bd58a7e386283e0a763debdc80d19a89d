@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cdc0ccaf_f54f4c26",
+        "filename": "cc/paint/discardable_image_map.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-30T21:08:08Z",
+      "side": 1,
+      "message": "How would this be used?",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 40,
+        "endChar": 50
+      },
+      "revId": "c257374bd58a7e386283e0a763debdc80d19a89d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4e27503_5aaab660",
+        "filename": "cc/paint/paint_image_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-30T21:08:08Z",
+      "side": 1,
+      "message": "nit: Might as well keep this in the #if block.",
+      "revId": "c257374bd58a7e386283e0a763debdc80d19a89d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
