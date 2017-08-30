@@ -138,6 +138,7 @@ PaintLayer::PaintLayer(LayoutBoxModelObject& layout_object)
       has_visible_content_(false),
       needs_descendant_dependent_flags_update_(true),
       has_visible_descendant_(false),
+      is_in_collapsed_cell_(false),
 #if DCHECK_IS_ON()
       needs_position_update_(true),
 #endif
