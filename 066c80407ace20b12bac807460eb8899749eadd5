@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47b5421a_bd96f8aa",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-08-30T02:12:44Z",
+      "side": 1,
+      "message": "After further thinking, I don\u0027t think we really need such a complicated scenario to handle flush and reset. After all, there will be at most one flush(), and reset() should not be invoked again before the previous one finished.\n\nThis means the only case we need to handle is a reset() after flush().\n\nWe can do something like:\nvoid reset(ResetCallback callback) {\n  if (reset_callback_) {\n    callback.Run(error_code);\n    return;    \n  }\n  if (flush_callback_) {\n     // A flush is on-going, pending the request.\n     reset_callback_ \u003d callback;\n     return;\n  }\n  vda-\u003eReset();\n}\n\nAnd we can invoke the pending reset() in flush_done();\n\nvoid NotifyFlushDone() {\n  ....\n  if (reset_callback_) { There was a pending reset.\n    reset(ResetAndReturn(reset_callback_));\n  }\n}\n\nIn addition, I don\u0027t think releasing those pending callbacks in destructor solves the memory leak issue. I believe those pending callback will still be released when the mojo connection is shutdown. Instead, we should call the callbacks when the error happens.",
+      "range": {
+        "startLine": 479,
+        "startChar": 10,
+        "endLine": 479,
+        "endChar": 11
+      },
+      "revId": "066c80407ace20b12bac807460eb8899749eadd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
