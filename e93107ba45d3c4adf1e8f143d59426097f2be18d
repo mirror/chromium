@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "9c5e646f_47a5bf55",
+        "filename": "content/common/service_worker/service_worker_container.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-30T04:10:30Z",
+      "side": 1,
+      "message": "I guess both \u0027pages\" and \"documents\" is wrong: these could be documents or shared workers (in addition to the \"or service worker\u0027s context\" clause). Anyway we can make the comment better in a follow-up patch.",
+      "parentUuid": "8e4b664d_b6958ddc",
+      "range": {
+        "startLine": 20,
+        "startChar": 63,
+        "endLine": 20,
+        "endChar": 68
+      },
+      "revId": "e93107ba45d3c4adf1e8f143d59426097f2be18d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6a7fb22_e2766f89",
         "filename": "content/common/service_worker/service_worker_provider.mojom",
         "patchSetId": 15
