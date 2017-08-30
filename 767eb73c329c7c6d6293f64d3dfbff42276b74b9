@@ -1,0 +1,416 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ced565f_9c1c0b67",
+        "filename": "ios/chrome/browser/passwords/js_credential_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-30T12:22:50Z",
+      "side": 1,
+      "message": "nit: we want to avoid using namespace for application code (so ideally no code in ios/chrome/browser should be in a namespace).",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 30
+      },
+      "revId": "767eb73c329c7c6d6293f64d3dfbff42276b74b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c58e6015_d3e4b0c7",
+        "filename": "ios/chrome/browser/passwords/js_credential_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-30T12:22:50Z",
+      "side": 1,
+      "message": "Why a class and not just free-functions? The object has no state except the \"web_state\" which could be passed to the free-function as an additional first parameter.\n\nMaybe using a class make sense with the code you want to add later (because you are going to expand this class, or because you want to be able to inject fakes in other classes — but in that case I would recommend making the methods \"virtual\").\n\nAlso what is the lifetime of the JsCredentialManager w.r.t. WebState? I don\u0027t see this in the CL, but it is important to not keep pointer to a WebState if your object could outlive it without also listening to WebStateDestroyed method from WebStateObserver (and setting the pointer to null then).",
+      "revId": "767eb73c329c7c6d6293f64d3dfbff42276b74b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aedae06c_faab0289",
+        "filename": "ios/chrome/browser/passwords/js_credential_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-30T12:22:50Z",
+      "side": 1,
+      "message": "Since there are only a few such methods, I would remove this and instead document what |request_id| mean in each method\u0027s comment.",
+      "range": {
+        "startLine": 18,
+        "startChar": 41,
+        "endLine": 21,
+        "endChar": 35
+      },
+      "revId": "767eb73c329c7c6d6293f64d3dfbff42276b74b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bc0a70a_bf2a9f41",
+        "filename": "ios/chrome/browser/passwords/js_credential_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-30T12:22:50Z",
+      "side": 1,
+      "message": "This is bound to change, so I would remove this. I would use something like the following instead:\n\n  // Resolves the Promise identifier by |request_id| with either Credential or undefined.\n\nThis applies to the other methods comments too (don\u0027t say to which methods they correspond as this is bound to change and document what |request_id| is).\n\nBTW, since \"request_id\" is the id of a promise, maybe rename it to \"promise_id\" or \"credential_promose_id\".",
+      "range": {
+        "startLine": 26,
+        "startChar": 59,
+        "endLine": 27,
+        "endChar": 74
+      },
+      "revId": "767eb73c329c7c6d6293f64d3dfbff42276b74b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14d83bee_a44d7455",
+        "filename": "ios/chrome/browser/passwords/js_credential_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-30T12:22:50Z",
+      "side": 1,
+      "message": "Prefer to pass complex copyable types by const-reference instead of by value (as this may cause a copy if the passed value is not a rvalue). So here I would use \"const base::string16\u0026 message\".",
+      "range": {
+        "startLine": 39,
+        "startChar": 50,
+        "endLine": 39,
+        "endChar": 64
+      },
+      "revId": "767eb73c329c7c6d6293f64d3dfbff42276b74b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d3bde91_ca9b733e",
+        "filename": "ios/chrome/browser/passwords/js_credential_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-30T12:22:50Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 44,
+        "startChar": 42,
+        "endLine": 44,
+        "endChar": 56
+      },
+      "revId": "767eb73c329c7c6d6293f64d3dfbff42276b74b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e82fef65_3425b1b7",
+        "filename": "ios/chrome/browser/passwords/js_credential_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-30T12:22:50Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 49,
+        "startChar": 42,
+        "endLine": 49,
+        "endChar": 56
+      },
+      "revId": "767eb73c329c7c6d6293f64d3dfbff42276b74b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0fd111a_1aa77834",
+        "filename": "ios/chrome/browser/passwords/js_credential_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-30T12:22:50Z",
+      "side": 1,
+      "message": "Add \"// weak\" comment after this field definition.",
+      "revId": "767eb73c329c7c6d6293f64d3dfbff42276b74b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef638e76_7c0829a4",
+        "filename": "ios/chrome/browser/passwords/js_credential_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-30T12:22:50Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN(JsCredentialManager);",
+      "revId": "767eb73c329c7c6d6293f64d3dfbff42276b74b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32c67e72_811475ed",
+        "filename": "ios/chrome/browser/passwords/js_credential_manager.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-30T12:22:50Z",
+      "side": 1,
+      "message": "ditto, should be \"const base::string16\u0026\", or better change this to use \"const base::StringPiece16\u0026\" to avoid creating temporaries for string literals.\n\nIt is especially important here as all the call are called with lvalues (i.e. named variables) thus object is not moved but copied which is inefficient.",
+      "range": {
+        "startLine": 26,
+        "startChar": 28,
+        "endLine": 26,
+        "endChar": 42
+      },
+      "revId": "767eb73c329c7c6d6293f64d3dfbff42276b74b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f141db00_5e13e892",
+        "filename": "ios/chrome/browser/passwords/js_credential_manager.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-30T12:22:50Z",
+      "side": 1,
+      "message": "ditto, should be \"const std::string\u0026\" or \"const base::StringPiece\u0026\".",
+      "range": {
+        "startLine": 32,
+        "startChar": 28,
+        "endLine": 32,
+        "endChar": 39
+      },
+      "revId": "767eb73c329c7c6d6293f64d3dfbff42276b74b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4780ed2_0803804b",
+        "filename": "ios/chrome/browser/passwords/js_credential_manager.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-30T12:22:50Z",
+      "side": 1,
+      "message": "This comment must be moved to \"ResolvePromiseWithCredentialInfo\" documentation (i.e. the public method from JsCredentialManager that invoke this private function).",
+      "range": {
+        "startLine": 37,
+        "startChar": 57,
+        "endLine": 39,
+        "endChar": 23
+      },
+      "revId": "767eb73c329c7c6d6293f64d3dfbff42276b74b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfcdfc2e_1f2078f2",
+        "filename": "ios/chrome/browser/passwords/js_credential_manager.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-30T12:22:50Z",
+      "side": 1,
+      "message": "ditto, \"const password_manager::CredentialInfo\u0026\" to avoid the copy (since you call this with a lvalue thus non-moveable). Or maybe pass the \"base::Optional\u003cpassword_manager::CredentialInfo\u003e\" directly and add the test \"if (info.has_value())\" here.\n\nBTW, I see that password_manager::CredentialType has a value CREDENTIAL_TYPE_EMPTY, so why use a base::Optional\u003cpassword_manager::CredentialInfo\u003e instead of passing a password_manager::CredentialInfo with type \u003d\u003d password_manager::CredentialType::CREDENTIAL_TYPE_EMPTY?",
+      "range": {
+        "startLine": 40,
+        "startChar": 39,
+        "endLine": 40,
+        "endChar": 71
+      },
+      "revId": "767eb73c329c7c6d6293f64d3dfbff42276b74b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b30d5ac4_c4c84f51",
+        "filename": "ios/chrome/browser/passwords/js_credential_manager.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-30T12:22:50Z",
+      "side": 1,
+      "message": "I think it is a waste to convert base::string16, to std::string, then to NSString*, to then convert back to base::string16. I think instead you could use base::StringPrintf to remove some of the conversions:\n\n  if (info.type \u003d\u003d password_manager::CredentialType::CREDENTIAL_TYPE_FEDERATED) {\n    return base::StringPrintf(\n        \"new FederatedCredential({id: %d, name: %s, iconURL: %s, provider: %s})\",\n        info.id, base::GetQuotedJSONString(info.name).c_str(),\n        info.icon.spec().c_str(), info.federation.GetURL().spec().c_str()));\n  }\n\nThis will require changing the method to return std::string instead of NSString*.",
+      "revId": "767eb73c329c7c6d6293f64d3dfbff42276b74b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3a59887_3ac6b109",
+        "filename": "ios/chrome/browser/passwords/js_credential_manager.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-30T12:22:50Z",
+      "side": 1,
+      "message": "It looks like we \"web_state_\" member variable is never changed outside of JsCredentialManager constructor, so it can never become null after that point and I do not think it make sense to create a JsCredentialManager with a null WebState.\n\nSo I recommend add \"DCHECK(web_state_)\" to JsCredentialManager constructor and removing all check that \"web_state_\" is null.",
+      "range": {
+        "startLine": 72,
+        "startChar": 7,
+        "endLine": 72,
+        "endChar": 17
+      },
+      "revId": "767eb73c329c7c6d6293f64d3dfbff42276b74b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93242a9d_e0c682ca",
+        "filename": "ios/chrome/browser/passwords/js_credential_manager.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-30T12:22:50Z",
+      "side": 1,
+      "message": "With changes recommended above, this would become:\n\n  std::string credential_str;\n  if (info.has_value)\n    credential_str \u003d CredentialInfoToJsCredential(info.value());\n  std::string script \u003d base::StringPrintf(\n      \"__gCrWeb.credentialManager.resolvers_[%d](%s);\",\n      request_id, credential_str.c_str());\n  web_state_-\u003eExecuteJavaScript(base::SysUTF8ToUTF16(script));\n\nBTW, I would also introduce another helper method/free function to resolve or reject a promise with a given value represented as a string, something like this, probably private:\n\n  void JsCredentialManager::ResolveOrRejectPromiseWithValue(\n      int promise_id, bool resolve, const std::string\u0026 value) {\n    std::string script \u003d base::StringPrintf(\n        \"__gCrWeb.credentialManager.%s[%d](%s);\",\n        resolve ? \"resolvers_\" : \"rejecters_\",\n        promise_id, value.c_str());\n    web_state_-\u003eExecuteJavaScript(base::SysUTF8ToUTF16(script));\n  }\n\nThis mean that the current method can become:\n\n  void JsCredentialManager::ResolvePromiseWithCredentialInfo(\n      int request_id,\n      base::Optional\u003cpassword_manager::CredentialInfo\u003e info) {\n    ResolveOrRejectPromiseWithValue(\n        request_id, /*resolve\u003d*/true,\n        info.has_value() ? CredentialInfoToJsCredential(info.value()) : std::string());\n  }",
+      "revId": "767eb73c329c7c6d6293f64d3dfbff42276b74b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3eae2fb_c8b9041e",
+        "filename": "ios/chrome/browser/passwords/js_credential_manager_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-30T12:22:50Z",
+      "side": 1,
+      "message": "ditto, no need for the namespace.",
+      "revId": "767eb73c329c7c6d6293f64d3dfbff42276b74b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42404078_97c166e9",
+        "filename": "ios/chrome/browser/passwords/js_credential_manager_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-30T12:22:50Z",
+      "side": 1,
+      "message": "Avoid raw \"new\", instead prefer to use \"std::make_unique\u003c\u003e\":\n\n  manager_ \u003d std::make_unique\u003cJsCredentialManager\u003e(web_state());",
+      "revId": "767eb73c329c7c6d6293f64d3dfbff42276b74b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a7a45d8_a75348b8",
+        "filename": "ios/chrome/browser/passwords/js_credential_manager_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-30T12:22:50Z",
+      "side": 1,
+      "message": "You are leaking the JsCredentialManager instance (in fact you leak one instance per test). Use std::unique_ptr\u003cJsCredentialManager\u003e instead.",
+      "revId": "767eb73c329c7c6d6293f64d3dfbff42276b74b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31e10d4c_2b00f8c0",
+        "filename": "ios/chrome/browser/passwords/js_credential_manager_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-30T12:22:50Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN(JsCredentialManagerTest);",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 0
+      },
+      "revId": "767eb73c329c7c6d6293f64d3dfbff42276b74b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
