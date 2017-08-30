@@ -304,6 +304,8 @@ WebNotificationTray::~WebNotificationTray() {
   message_center_bubble_.reset();
   popup_alignment_delegate_.reset();
   popup_collection_.reset();
+  for (auto pair : visible_small_icons_)
+    delete pair.second;
 }
 
 // static
