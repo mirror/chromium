@@ -54,6 +54,7 @@
 #include "platform/SharedBuffer.h"
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/scheduler/child/web_scheduler.h"
+#include "platform/weborigin/SecurityPolicy.h"
 #include "platform/wtf/CurrentTime.h"
 #include "platform/wtf/PtrUtil.h"
 #include "public/platform/Platform.h"
@@ -353,6 +354,50 @@ NavigationScheduler::~NavigationScheduler() {
   }
 }
 
+class ScheduledInitialChildFrameNavigation final
+    : public ScheduledURLNavigation {
+ public:
+  static ScheduledInitialChildFrameNavigation* Create(
+      Document* origin_document,
+      const KURL& url,
+      ReferrerPolicy referrer_policy,
+      FrameLoadType load_type) {
+    return new ScheduledInitialChildFrameNavigation(origin_document, url,
+                                                    referrer_policy, load_type);
+  }
+
+  void Fire(LocalFrame* frame) override {
+    ResourceRequest request(Url());
+
+    if (referrer_policy_ != kReferrerPolicyDefault) {
+      request.SetHTTPReferrer(SecurityPolicy::GenerateReferrer(
+          referrer_policy_, Url(), OriginDocument()->OutgoingReferrer()));
+    }
+
+    if (load_type_ == kFrameLoadTypeReloadBypassingCache)
+      request.SetCachePolicy(WebCachePolicy::kBypassingCache);
+
+    frame->Loader().Load(FrameLoadRequest(OriginDocument(), request),
+                         load_type_);
+  }
+
+ private:
+  ScheduledInitialChildFrameNavigation(Document* origin_document,
+                                       const KURL& url,
+                                       ReferrerPolicy referrer_policy,
+                                       FrameLoadType load_type)
+      : ScheduledURLNavigation(Reason::kInitialChildFrameNavigation,
+                               0.0,
+                               origin_document,
+                               url,
+                               false,
+                               true),
+        referrer_policy_(referrer_policy),
+        load_type_(load_type) {}
+  ReferrerPolicy referrer_policy_;
+  FrameLoadType load_type_;
+};
+
 bool NavigationScheduler::LocationChangePending() {
   return redirect_ && redirect_->IsLocationChange();
 }
@@ -476,6 +521,18 @@ void NavigationScheduler::ScheduleReload() {
   if (frame_->GetDocument()->Url().IsEmpty())
     return;
   Schedule(ScheduledReload::Create(frame_));
+}
+
+void NavigationScheduler::ScheduleInitialChildFrameNavigation(
+    Document* document,
+    const KURL& url,
+    ReferrerPolicy referrer_policy,
+    FrameLoadType load_type) {
+  DCHECK(!frame_->IsMainFrame());
+  DCHECK(load_type == kFrameLoadTypeInitialInChildFrame ||
+         load_type == kFrameLoadTypeReloadBypassingCache);
+  Schedule(ScheduledInitialChildFrameNavigation::Create(
+      document, url, referrer_policy, load_type));
 }
 
 void NavigationScheduler::NavigateTask() {

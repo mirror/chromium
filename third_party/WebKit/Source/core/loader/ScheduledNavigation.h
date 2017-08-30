@@ -27,6 +27,7 @@ class ScheduledNavigation
     kMetaTagRefresh,
     kPageBlock,
     kReload,
+    kInitialChildFrameNavigation,
   };
 
   ScheduledNavigation(Reason,
