@@ -7,6 +7,7 @@
 
 #include <stdint.h>
 
+#include <map>
 #include <memory>
 #include <string>
 #include <vector>
@@ -38,7 +39,7 @@ namespace internal {
 class ResourceMetadataStorage {
  public:
   // This should be incremented when the database needs to be upgraded.
-  static const int kDBVersion = 14;
+  static const int kDBVersion = 15;
 
   // Object to iterate over entries stored in this storage.
   class Iterator {

@@ -136,13 +136,20 @@ message ResourceEntry {
   // Indicates whether this entry's metadata is edited locally or not.
   optional EditState metadata_edit_state = 16;
 
-  // The time of the last modification.
+  // The time of the last modification. This is a timestamp that can not be
+  // modified arbitrarily by users, in contrast to last_modified in
+  // PlatformFileInfoProto.
   optional int64 modification_date = 18;
 
   // List of new properties which are not synced yet via Drive API. Note, that
   // currently existing properties are never fetched via Drive API, as they are
   // never used. That would cause growing the proto size for no reason.
   repeated Property new_properties = 19;
+
+  // The time of the last modification by the user. This is a timestamp that
+  // can not be modified arbitrarily by users, in contrast to last_modified in
+  // PlatformFileInfoProto.
+  optional int64 modification_by_me_date = 21;
 }
 
 // Container for the header part of ResourceMetadata.
