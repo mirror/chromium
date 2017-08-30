@@ -19,3 +19,21 @@ static_library("profiling_host") {
     "//content/public/common",
   ]
 }
+
+source_set("profiling_browsertests") {
+  sources = [
+    "memlog_browsertest.cc",
+  ]
+
+  testonly = true
+
+  defines = [ "HAS_OUT_OF_PROC_TEST_RUNNER" ]
+
+  deps = [
+    "//chrome/test",
+    "//skia",
+    "//testing/gmock",
+    "//testing/gtest",
+    "//third_party/WebKit/public:blink",
+  ]
+}
