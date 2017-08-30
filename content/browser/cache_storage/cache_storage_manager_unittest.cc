@@ -255,6 +255,7 @@ class CacheStorageManagerTest : public testing::Test {
     if (quota_manager_proxy_)
       quota_manager_proxy_->SimulateQuotaManagerDestroyed();
     base::RunLoop().RunUntilIdle();
+
     quota_manager_proxy_ = nullptr;
 
     url_request_job_factory_.reset();
@@ -1080,10 +1081,18 @@ TEST_F(CacheStorageManagerTest, GetAllOriginsUsageWithOldIndex) {
   base::FilePath backup_index_path = storage_dir.AppendASCII("index.txt.bak");
   EXPECT_TRUE(base::CopyFile(index_path, backup_index_path));
 
+  LOG(ERROR) << "here";
+
   // Create a new CacheStorageManager that hasn't yet loaded the origin.
   CreateStorageManager();
   quota_manager_proxy_->SimulateQuotaManagerDestroyed();
   cache_manager_ = CacheStorageManager::Create(cache_manager_.get());
+
+  LOG(ERROR) << "getting zeroth usage";
+  std::vector<CacheStorageUsageInfo> usage0 = GetAllOriginsUsage();
+  ASSERT_EQ(1ULL, usage0.size());
+  LOG(ERROR) << "x: " << usage0[0].origin << ", " << usage0[0].total_size_bytes
+             << ", " << usage0[0].last_modified;
 
   // Create a second value (V2) in the cache.
   EXPECT_TRUE(Open(origin1_, kCacheName));
@@ -1092,9 +1101,12 @@ TEST_F(CacheStorageManagerTest, GetAllOriginsUsageWithOldIndex) {
   EXPECT_TRUE(CachePut(original_handle->value(), kBarURL));
   original_handle = nullptr;
 
+  LOG(ERROR) << "getting first usage";
   std::vector<CacheStorageUsageInfo> usage = GetAllOriginsUsage();
   ASSERT_EQ(1ULL, usage.size());
   int64_t usage_before_close = usage[0].total_size_bytes;
+  LOG(ERROR) << "a: " << usage[0].origin << ", " << usage[0].total_size_bytes
+             << ", " << usage[0].last_modified;
   EXPECT_GT(usage_before_close, 0);
 
   // Close the caches and cache manager.
@@ -1111,6 +1123,8 @@ TEST_F(CacheStorageManagerTest, GetAllOriginsUsageWithOldIndex) {
   CreateStorageManager();
   usage = GetAllOriginsUsage();
   ASSERT_EQ(1ULL, usage.size());
+  LOG(ERROR) << "b: " << usage[0].origin << ", " << usage[0].total_size_bytes
+             << ", " << usage[0].last_modified;
 
   EXPECT_EQ(usage_before_close, usage[0].total_size_bytes);
 

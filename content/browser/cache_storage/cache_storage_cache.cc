@@ -430,6 +430,7 @@ void CacheStorageCache::BatchOperation(
     const std::vector<CacheStorageBatchOperation>& operations,
     ErrorCallback callback) {
   if (backend_state_ == BACKEND_CLOSED) {
+    LOG(ERROR) << "ERROR_STORAGE";
     base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE,
         base::BindOnce(std::move(callback), CACHE_STORAGE_ERROR_STORAGE));
@@ -451,6 +452,7 @@ void CacheStorageCache::BatchOperation(
     // to commit is made before the scheduled Put operation runs. By the time
     // Put runs, the cache might already be full and the origin will be larger
     // than it's supposed to be.
+    LOG(ERROR) << "space_required " << space_required;
     quota_manager_proxy_->GetUsageAndQuota(
         base::ThreadTaskRunnerHandle::Get().get(), origin_,
         storage::kStorageTypeTemporary,
@@ -475,6 +477,7 @@ void CacheStorageCache::BatchDidGetUsageAndQuota(
     int64_t quota) {
   if (status_code != storage::kQuotaStatusOk ||
       space_required > quota - usage) {
+    LOG(ERROR) << "QUOTA_EXCEEDED";
     base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE, base::BindOnce(std::move(callback),
                                   CACHE_STORAGE_ERROR_QUOTA_EXCEEDED));
@@ -1086,6 +1089,7 @@ void CacheStorageCache::Put(const CacheStorageBatchOperation& operation,
       std::move(request), std::move(response), std::move(blob_data_handle),
       scheduler_->WrapCallbackToRunNext(std::move(callback))));
 
+  LOG(ERROR) << "Scheduling PutImpl";
   scheduler_->ScheduleOperation(base::BindOnce(
       &CacheStorageCache::PutImpl, weak_ptr_factory_.GetWeakPtr(),
       base::Passed(std::move(put_context))));
@@ -1094,6 +1098,7 @@ void CacheStorageCache::Put(const CacheStorageBatchOperation& operation,
 void CacheStorageCache::PutImpl(std::unique_ptr<PutContext> put_context) {
   DCHECK_NE(BACKEND_UNINITIALIZED, backend_state_);
   if (backend_state_ != BACKEND_OPEN) {
+    LOG(ERROR) << "ERROR_STORAGE";
     std::move(put_context->callback).Run(CACHE_STORAGE_ERROR_STORAGE);
     return;
   }
@@ -1105,14 +1110,18 @@ void CacheStorageCache::PutImpl(std::unique_ptr<PutContext> put_context) {
           &CacheStorageCache::PutDidDoomEntry, weak_ptr_factory_.GetWeakPtr(),
           base::Passed(std::move(put_context))));
 
+  LOG(ERROR) << "DoomEntry";
   int rv = backend_->DoomEntry(key, callback);
-  if (rv != net::ERR_IO_PENDING)
+  if (rv != net::ERR_IO_PENDING) {
+    LOG(ERROR) << "  running callback";
     callback.Run(rv);
+  }
 }
 
 void CacheStorageCache::PutDidDoomEntry(std::unique_ptr<PutContext> put_context,
                                         int rv) {
   if (backend_state_ != BACKEND_OPEN) {
+    LOG(ERROR) << "ERROR_STORAGE";
     std::move(put_context->callback).Run(CACHE_STORAGE_ERROR_STORAGE);
     return;
   }
@@ -1131,11 +1140,14 @@ void CacheStorageCache::PutDidDoomEntry(std::unique_ptr<PutContext> put_context,
           base::Passed(std::move(scoped_entry_ptr)),
           base::Passed(std::move(put_context))));
 
+  LOG(ERROR) << "CreateEntry";
   int create_rv = backend_ptr->CreateEntry(request_ptr->url.spec(), entry_ptr,
                                            create_entry_callback);
 
-  if (create_rv != net::ERR_IO_PENDING)
+  if (create_rv != net::ERR_IO_PENDING) {
+    LOG(ERROR) << "running create_entry_callback";
     create_entry_callback.Run(create_rv);
+  }
 }
 
 void CacheStorageCache::PutDidCreateEntry(

@@ -77,10 +77,12 @@ void ListOriginsAndLastModifiedOnTaskRunner(
   base::FilePath path;
   while (!(path = file_enum.Next()).empty()) {
     base::FilePath index_path = path.AppendASCII(CacheStorage::kIndexFileName);
+    LOG(ERROR) << "  index_path=" << index_path;
     base::File::Info file_info;
     base::Time index_last_modified;
     if (GetFileInfo(index_path, &file_info))
       index_last_modified = file_info.last_modified;
+    LOG(ERROR) << "  index_last_modified=" << index_last_modified;
     std::string protobuf;
     base::ReadFileToString(path.AppendASCII(CacheStorage::kIndexFileName),
                            &protobuf);
@@ -89,8 +91,11 @@ void ListOriginsAndLastModifiedOnTaskRunner(
       if (index.has_origin()) {
         if (base::GetFileInfo(path, &file_info)) {
           int64_t storage_size = CacheStorage::kSizeUnknown;
+          LOG(ERROR) << "comparing " << file_info.last_modified << " vs. "
+                     << index_last_modified;
           if (file_info.last_modified < index_last_modified)
             storage_size = GetCacheStorageSize(index);
+          LOG(ERROR) << "  pushing=" << index.origin() << ", " << storage_size;
           usages->push_back(CacheStorageUsageInfo(
               GURL(index.origin()), storage_size, file_info.last_modified));
         }
@@ -287,11 +292,13 @@ void CacheStorageManager::GetAllOriginsUsage(
           CacheStorageUsageInfo(origin_details.first, 0 /* size */,
                                 base::Time() /* last modified */));
     }
+    LOG(ERROR) << "callign GetAllOriginsUsageGetSizes directly";
     GetAllOriginsUsageGetSizes(std::move(usages), callback);
     return;
   }
 
   std::vector<CacheStorageUsageInfo>* usages_ptr = usages.get();
+  LOG(ERROR) << "posting GetAllOriginsUsageGetSizes";
   cache_task_runner_->PostTaskAndReply(
       FROM_HERE,
       base::BindOnce(&ListOriginsAndLastModifiedOnTaskRunner, usages_ptr,
@@ -312,6 +319,7 @@ void CacheStorageManager::GetAllOriginsUsageGetSizes(
   std::vector<CacheStorageUsageInfo>* usages_ptr = usages.get();
 
   if (usages->empty()) {
+    LOG(ERROR) << "return early because usages empty";
     base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE, base::BindOnce(callback, *usages));
     return;
@@ -325,6 +333,7 @@ void CacheStorageManager::GetAllOriginsUsageGetSizes(
   for (CacheStorageUsageInfo& usage : *usages_ptr) {
     if (usage.total_size_bytes != CacheStorage::kSizeUnknown) {
       base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, barrier_closure);
+      LOG(ERROR) << "continue because not unknown";
       continue;
     }
     CacheStorage* cache_storage = FindOrCreateCacheStorage(usage.origin);

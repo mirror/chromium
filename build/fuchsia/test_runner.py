@@ -144,6 +144,7 @@ def main():
     child_args.append('--gtest_filter=' + args.gtest_filter)
   if args.gtest_repeat:
     child_args.append('--gtest_repeat=' + args.gtest_repeat)
+    child_args.append('--gtest_break_on_failure')
   if args.child_args:
     child_args.extend(args.child_args)
 

@@ -528,10 +528,12 @@ CacheStorage::CacheStorage(
 }
 
 CacheStorage::~CacheStorage() {
+  LOG(ERROR) << "~CacheStorage";
 }
 
 void CacheStorage::OpenCache(const std::string& cache_name,
                              CacheAndErrorCallback callback) {
+  LOG(ERROR) << "in OpenCache";
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
   if (!initialized_)
@@ -646,8 +648,11 @@ void CacheStorage::GetSizeThenCloseAllCaches(SizeCallback callback) {
 void CacheStorage::Size(CacheStorage::SizeCallback callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
-  if (!initialized_)
+  if (!initialized_) {
+    LOG(ERROR) << "about to do LazyInit";
+    //base::debug::StackTrace(3).Print();
     LazyInit();
+  }
 
   scheduler_->ScheduleOperation(
       base::BindOnce(&CacheStorage::SizeImpl, weak_factory_.GetWeakPtr(),
@@ -758,6 +763,7 @@ void CacheStorage::LazyInitDidLoadIndex(
   cache_index_ = std::move(index);
 
   initializing_ = false;
+  LOG(ERROR) << "  LazyInitDidLoadIndex setting initialized_";
   initialized_ = true;
 
   scheduler_->CompleteOperationAndRunNext();
@@ -1067,6 +1073,7 @@ void CacheStorage::SizeRetrievedFromCache(
     base::OnceClosure closure,
     int64_t* accumulator,
     int64_t size) {
+  LOG(ERROR) << "SizeRetrievedFromCache " << size;
   cache_index_->SetCacheSize(cache_handle->value()->cache_name(), size);
   *accumulator += size;
   std::move(closure).Run();
@@ -1117,6 +1124,7 @@ void CacheStorage::SizeImpl(SizeCallback callback) {
 
   for (const auto& cache_metadata : cache_index_->ordered_cache_metadata()) {
     if (cache_metadata.size != CacheStorage::kSizeUnknown) {
+      LOG(ERROR) << "adding " << cache_metadata.size << " to acc";
       *accumulator_ptr += cache_metadata.size;
       barrier_closure.Run();
       continue;

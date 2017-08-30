@@ -90,6 +90,7 @@ QuotaClient::ID MockStorageClient::id() const {
 }
 
 void MockStorageClient::OnQuotaManagerDestroyed() {
+  LOG(ERROR) << "MockStorageClient::OnQuotaManagerDestroyed";
   delete this;
 }
 

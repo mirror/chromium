@@ -137,6 +137,7 @@ class TestQuotaManagerProxy : public storage::QuotaManagerProxy {
 
   void SimulateQuotaManagerDestroyed() {
     if (registered_client_) {
+      LOG(ERROR) << "In SimulateQuotaManagerDestroyed";
       registered_client_->OnQuotaManagerDestroyed();
       registered_client_ = nullptr;
     }

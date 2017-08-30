@@ -1,6 +1,5 @@
 # Being ported, https://crbug.com/754861.
 
--AudioRendererSinkCacheTest.SmokeTest
 -BrowserThreadTest.PostTask
 -BrowserThreadTest.PostTaskAndReply
 -BrowserThreadTest.PostTaskViaTaskRunner
@@ -8,7 +7,6 @@
 -BrowserThreadTest.ReleaseViaTaskRunner
 -BrowserThreadTest.ReleasedOnCorrectThread
 -BrowserThreadTest.RunsTasksInCurrentSequencedDuringShutdown
--BrowsingDataRemoverImplTest.MultipleTasks
 -CacheStorageManagerTest.GetAllOriginsUsageWithOldIndex
 -ChildMemoryCoordinatorImplTest.MultipleClients
 -LegacyInputRouterImplTest.AckedTouchEventState
@@ -31,6 +29,7 @@
 -URLLoaderFactoryImplTest/URLLoaderFactoryImplTest.OnTransferSizeUpdated/1
 -URLLoaderImplTest.Basic
 -URLLoaderImplTest.BasicSSL
+-URLLoaderImplTest.CantSniffEmptyHtml
 -URLLoaderImplTest.DoNotSniffHTMLFromImageGIF
 -URLLoaderImplTest.DoNotSniffHTMLFromTextPlain
 -URLLoaderImplTest.Empty
@@ -65,6 +64,7 @@
 -AppCacheStorageImplTest.Reinitialize2
 -AppCacheStorageImplTest.Reinitialize3
 -AppCacheUpdateJobTest.AlreadyChecking/1
+-BrowsingDataRemoverImplTest.MultipleTasks
 -ChromeAppCacheServiceTest.KeepOnDestruction
 -ChromeAppCacheServiceTest.SaveSessionState
 -DOMStorageAreaTest.DeleteOrigin
