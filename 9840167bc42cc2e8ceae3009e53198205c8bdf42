@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fc0ba40_ad050468",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-08-30T03:53:09Z",
+      "side": 1,
+      "message": "Don\u0027t change the behavior of TreeScope::Retarget().\n\nTreeScope::retarget() and retargeting algorithm defined in the spec have different usages.\n\nYou can find when Node::retarget (the former TreeScope::Retarget), was introduced by doing git-blame; https://chromium.googlesource.com/chromium/src/+/4902d6ccd120be91c417b891b13d6fdb0b4e8e4c\n\nAs you see, it looks that Node::retarget is not intended as an implementation retargeting algorithm in DOM Standard.\n\n\nWhat you might want to:\n- Rename the existing TreeScope:Retarget() function to avoid confusion.\n- Then, introduce TreeSope::Retarget(), as another function, if you want to *claim* this name. :)",
+      "revId": "9840167bc42cc2e8ceae3009e53198205c8bdf42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b406d21e_04b5821b",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-08-30T03:53:09Z",
+      "side": 1,
+      "message": "TreeScope::Retarget() would take O(N^2). I prefer O(N).",
+      "revId": "9840167bc42cc2e8ceae3009e53198205c8bdf42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
