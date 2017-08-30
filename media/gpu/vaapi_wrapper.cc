@@ -272,6 +272,11 @@ bool VaapiWrapper::IsJpegDecodeSupported() {
   return GetProfileInfos()->IsProfileSupported(kDecode, VAProfileJPEGBaseline);
 }
 
+// static
+bool VaapiWrapper::IsJpegEncodeSupported() {
+  return GetProfileInfos()->IsProfileSupported(kEncode, VAProfileJPEGBaseline);
+}
+
 void VaapiWrapper::TryToSetVADisplayAttributeToLocalGPU() {
   base::AutoLock auto_lock(*va_lock_);
   VADisplayAttribute item = {VADisplayAttribRenderMode,
@@ -959,6 +964,44 @@ bool VaapiWrapper::UploadVideoFrameToSurface(
   VA_LOG_ON_ERROR(va_res, "vaUnmapBuffer failed");
 
   return ret == 0;
+}
+
+bool VaapiWrapper::UploadFrameToSurface(
+    const scoped_refptr<SharedMemoryRegion>& frame,
+    int width, int height,
+    VASurfaceID va_surface_id) {
+  base::AutoLock auto_lock(*va_lock_);
+
+  VAImage image;
+  VAStatus va_res = vaDeriveImage(va_display_, va_surface_id, &image);
+  VA_SUCCESS_OR_RETURN(va_res, "vaDeriveImage failed", false);
+  base::ScopedClosureRunner vaimage_deleter(
+      base::Bind(&DestroyVAImage, va_display_, image));
+
+  if (image.width != width || image.height != height) {
+    LOG(ERROR) << "Buffer dimension does not match the frame.";
+    return false;
+  }
+
+  void* image_ptr = NULL;
+  va_res = vaMapBuffer(va_display_, image.buf, &image_ptr);
+  VA_SUCCESS_OR_RETURN(va_res, "vaMapBuffer failed", false);
+  DCHECK(image_ptr);
+
+  {
+    base::AutoUnlock auto_unlock(*va_lock_);
+
+    uint8_t* src = static_cast<uint8_t*>(frame->memory());
+    if (src == nullptr) {
+      LOG(ERROR) << "SharedMemoryRegion |frame| has not been mapped.";
+      return false;
+    }
+    memcpy(static_cast<uint8_t*>(image_ptr), src, frame->size());
+  }
+
+  va_res = vaUnmapBuffer(va_display_, image.buf);
+  VA_LOG_ON_ERROR(va_res, "vaUnmapBuffer failed");
+  return 0;
 }
 
 bool VaapiWrapper::DownloadAndDestroyCodedBuffer(VABufferID buffer_id,
