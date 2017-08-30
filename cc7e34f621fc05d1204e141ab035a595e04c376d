@@ -16,6 +16,63 @@
       "revId": "cc7e34f621fc05d1204e141ab035a595e04c376d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bef20321_06774751",
+        "filename": "content/renderer/mojo_context_state.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-30T16:19:35Z",
+      "side": 1,
+      "message": "\"Chrome does fetch for AMD-style module loading of Mojo Javascript bindings.\"",
+      "revId": "cc7e34f621fc05d1204e141ab035a595e04c376d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e6fa7ca_5924e2dd",
+        "filename": "content/renderer/mojo_context_state.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-30T16:19:35Z",
+      "side": 1,
+      "message": "\"When AMD-style module loading of Mojo Javascript bindings is used.\"",
+      "revId": "cc7e34f621fc05d1204e141ab035a595e04c376d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be258693_7f8c514c",
+        "filename": "content/renderer/mojo_context_state.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-30T16:19:35Z",
+      "side": 1,
+      "message": "nit: Mojo (with capital M).",
+      "range": {
+        "startLine": 200,
+        "startChar": 35,
+        "endLine": 200,
+        "endChar": 39
+      },
+      "revId": "cc7e34f621fc05d1204e141ab035a595e04c376d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
