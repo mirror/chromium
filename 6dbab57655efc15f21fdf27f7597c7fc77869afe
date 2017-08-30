@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b78850df_8a87c4a2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-08-30T05:47:15Z",
+      "side": 1,
+      "message": "Let\u0027s use the following construct.\n\n\u003cone line summary what the CL does\u003e - here, let\u0027s describe the issue directly instead of asking the reader to see the bug.\n\u003cempty line\u003e\n\u003cdetailed explanation if needed\u003e\n\nc.f. https://chromium-review.googlesource.com/c/chromium/src/+/637302",
+      "revId": "6dbab57655efc15f21fdf27f7597c7fc77869afe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
