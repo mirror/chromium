@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68553045_c7d59fcf",
+        "filename": "base/debug/thread_heap_usage_tracker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-30T18:34:35Z",
+      "side": 0,
+      "message": "You can do what the other unit test does. Have a subclass with public static function. See TestingThreadHeapUsageTracker",
+      "revId": "5f8119c8911046893214e97cb28c3710ecee0572",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c86d823_7932146a",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-30T18:34:35Z",
+      "side": 0,
+      "message": "Sorry, this is not necessary. Can be removed",
+      "revId": "5f8119c8911046893214e97cb28c3710ecee0572",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e905212b_69c3e8a7",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-30T18:34:35Z",
+      "side": 0,
+      "message": "This exists here for the case where, a client enables heap profiling and some code later tries to check command line, then command line returns disabled and we will end up disabling profiling.\nAlso if it\u0027s already enabled, the next time we don\u0027t take the lock one extra time if returned here.\nI agree the check above should prevent that, but since we unlocked now, it can be enabled between the check and this point.\n\nSo:\nif(!IsHeapProfilingModeEnabled(profiling_mode))\nReturn",
+      "revId": "5f8119c8911046893214e97cb28c3710ecee0572",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "821fa525_b932b201",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-30T18:34:35Z",
+      "side": 1,
+      "message": "Suggestion:\nif(is_enabled \u0026\u0026 profiling_mode !\u003d Disabled)\nReturn false;\n\nCan remove all the checks below",
+      "revId": "d6e578c0bfeb0c0741602e3039656efb2bd8a9b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ed0f6e6_7f49fd2c",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-30T18:34:35Z",
+      "side": 1,
+      "message": "NOTREACHED()?\nWhy do we allow this argument?\n\nActually use the same code for for default.\ncase kHeapProfilingModeInvalid:\ndefault:\nNOTREACHED() \u003c\u003c \"Incorrect heap profiling mode\"",
+      "revId": "d6e578c0bfeb0c0741602e3039656efb2bd8a9b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9d1ceb3_e9d2bc02",
+        "filename": "base/trace_event/memory_dump_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-30T18:34:35Z",
+      "side": 1,
+      "message": "Can you return false if it did nothing. It\u0027ll be useful for the case where a client turns on heap profiling and if this returns false then the client need not turn it off. Do you have a use case where this needs to return true if it did nothing? Can that code use get mode to check instead",
+      "range": {
+        "startLine": 147,
+        "startChar": 8,
+        "endLine": 147,
+        "endChar": 36
+      },
+      "revId": "d6e578c0bfeb0c0741602e3039656efb2bd8a9b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a204301c_7c769632",
+        "filename": "base/trace_event/memory_dump_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-30T18:34:35Z",
+      "side": 1,
+      "message": "Invalid mode means heap profiler cannot be enabled in future. Either because its not supported in platform or was disabled in current session.\nHow about rename it to kHeapProfilingModeUnsupported?\n\nplease add comment to the enum values",
+      "range": {
+        "startLine": 151,
+        "startChar": 5,
+        "endLine": 151,
+        "endChar": 30
+      },
+      "revId": "d6e578c0bfeb0c0741602e3039656efb2bd8a9b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5c69e10_937021fd",
+        "filename": "base/trace_event/memory_dump_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-30T18:34:35Z",
+      "side": 1,
+      "message": "Comment won\u0027t be needed if you add it to enum",
+      "revId": "d6e578c0bfeb0c0741602e3039656efb2bd8a9b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbb3ce4a_9df3ea0e",
+        "filename": "base/trace_event/memory_dump_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 931,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-30T18:34:35Z",
+      "side": 1,
+      "message": "Expect true, false here and line 928",
+      "revId": "d6e578c0bfeb0c0741602e3039656efb2bd8a9b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
