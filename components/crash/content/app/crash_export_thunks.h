@@ -57,6 +57,19 @@ void SetCrashKeyValueImplEx(const char* key, const char* value);
 
 void ClearCrashKeyValueImplEx(const char* key);
 
+// Injects a thread into a remote process to dump state when there is no crash.
+// |serialized_crash_keys| is a nul terminated string in the address space of
+// |process| that represents serialized crash keys sent from the browser.
+// Keys and values are separated by ':', and key/value pairs are separated by
+// ','. All keys should be previously registered as crash keys.
+// This method is used solely to classify hung input.
+HANDLE InjectDumpForHungInput(HANDLE process, void* serialized_crash_keys);
+
+// Injects a thread into a remote process to dump state when there is no crash.
+// This method provides |reason| which will interpreted as an integer and logged
+// as a crash key.
+HANDLE InjectDumpForHungInputNoCrashKeys(HANDLE process, int reason);
+
 }  // extern "C"
 
 #endif  // COMPONENTS_CRASH_CONTENT_APP_CRASH_EXPORT_THUNKS_H_
