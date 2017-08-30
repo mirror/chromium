@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "78ffc01c_555cc4db",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_metrics_recorder.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-30T15:42:34Z",
+      "side": 1,
+      "message": "There were a bug related to that but I fixed it in another CL.\nDone.",
+      "parentUuid": "43262a09_d3fa2c53",
+      "range": {
+        "startLine": 60,
+        "startChar": 17,
+        "endLine": 60,
+        "endChar": 25
+      },
+      "revId": "4421d31f3c09bb80665696cd33185f786c35a50f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1963afd_1fcb8fd4",
         "filename": "ios/clean/chrome/browser/BUILD.gn",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "4421d31f3c09bb80665696cd33185f786c35a50f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2c7aa10_4468010e",
+        "filename": "ios/clean/chrome/browser/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-30T15:42:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1963afd_1fcb8fd4",
+      "range": {
+        "startLine": 11,
+        "startChar": 10,
+        "endLine": 11,
+        "endChar": 11
+      },
+      "revId": "4421d31f3c09bb80665696cd33185f786c35a50f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "06aef409_549a4b9f",
+        "filename": "ios/clean/chrome/browser/ui/bookmarks/bookmarks_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-30T15:42:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3bc6cdce_25d5ce2d",
+      "range": {
+        "startLine": 32,
+        "startChar": 3,
+        "endLine": 32,
+        "endChar": 6
+      },
+      "revId": "4421d31f3c09bb80665696cd33185f786c35a50f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fac219cc_ef744ecf",
         "filename": "ios/clean/chrome/browser/ui/bookmarks/bookmarks_coordinator.mm",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "4421d31f3c09bb80665696cd33185f786c35a50f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f069c3a_81cbe36b",
+        "filename": "ios/clean/chrome/browser/ui/bookmarks/bookmarks_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-30T15:42:34Z",
+      "side": 1,
+      "message": "It\u0027s still true though.",
+      "parentUuid": "fac219cc_ef744ecf",
+      "range": {
+        "startLine": 45,
+        "startChar": 5,
+        "endLine": 45,
+        "endChar": 9
+      },
+      "revId": "4421d31f3c09bb80665696cd33185f786c35a50f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "daa33d06_fc3a9fad",
+        "filename": "ios/clean/chrome/browser/ui/bookmarks/bookmarks_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-30T15:42:34Z",
+      "side": 1,
+      "message": "I don\u0027t like having one coordinator per device type as the NTPHomeCoordinator might end up with a lot of coordinators. I am setting a flag on this coordinator to know if we need the self-contained version.",
+      "parentUuid": "e8147d44_a68f8a08",
+      "range": {
+        "startLine": 47,
+        "startChar": 7,
+        "endLine": 47,
+        "endChar": 18
+      },
+      "revId": "4421d31f3c09bb80665696cd33185f786c35a50f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b4f1f85_317d2985",
         "filename": "ios/clean/chrome/browser/ui/bookmarks/bookmarks_coordinator.mm",
         "patchSetId": 3
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "6578f64f_9c1a02dc",
+        "filename": "ios/clean/chrome/browser/ui/bookmarks/bookmarks_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-30T15:42:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b4f1f85_317d2985",
+      "range": {
+        "startLine": 112,
+        "startChar": 45,
+        "endLine": 112,
+        "endChar": 53
+      },
+      "revId": "4421d31f3c09bb80665696cd33185f786c35a50f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d670d224_9a781274",
         "filename": "ios/clean/chrome/browser/ui/url_loader_adaptor.h",
         "patchSetId": 3
@@ -160,6 +304,30 @@
       "revId": "4421d31f3c09bb80665696cd33185f786c35a50f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4cd772d_b7ede94f",
+        "filename": "ios/clean/chrome/browser/ui/url_loader_adaptor.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-30T15:42:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d670d224_9a781274",
+      "range": {
+        "startLine": 10,
+        "startChar": 49,
+        "endLine": 10,
+        "endChar": 54
+      },
+      "revId": "4421d31f3c09bb80665696cd33185f786c35a50f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
