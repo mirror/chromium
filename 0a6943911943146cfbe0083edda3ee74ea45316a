@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e8a2b0c0_91b9a742",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-08-30T20:37:35Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "9c1ae80d_d304c10a",
+      "revId": "0a6943911943146cfbe0083edda3ee74ea45316a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69222b87_13d21234",
         "filename": "ui/aura/hit_test_data_provider_aura.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-30T05:11:36Z",
       "side": 1,
       "message": "I think it makes sense to remove this first. So rebase this CL on top of https://chromium-review.googlesource.com/c/chromium/src/+/641938?",
+      "revId": "0a6943911943146cfbe0083edda3ee74ea45316a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c45b755_d2fbede9",
+        "filename": "ui/aura/hit_test_data_provider_aura.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-08-30T20:37:35Z",
+      "side": 1,
+      "message": "Yes, that\u0027s the idea, I am waiting till that lands.",
+      "parentUuid": "69222b87_13d21234",
       "revId": "0a6943911943146cfbe0083edda3ee74ea45316a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "70fd5dac_c7c2ec2b",
+        "filename": "ui/aura/hit_test_data_provider_aura.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-08-30T20:37:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f746687_9451ec2e",
+      "revId": "0a6943911943146cfbe0083edda3ee74ea45316a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "164e1c4d_6f4fa2ee",
         "filename": "ui/aura/mus/hit_test_data_provider_aura_unittest.cc",
         "patchSetId": 3
@@ -64,6 +118,30 @@
       "writtenOn": "2017-08-29T22:26:23Z",
       "side": 1,
       "message": "Do we have to eliminate all ui/aura/mus uses (although looks like some classes in ui/aura do include files in ui/aura/mus) before we can move this to ui/aura (see the TODO in https://chromium-review.googlesource.com/c/chromium/src/+/641938/2/ui/aura/mus/hit_test_data_provider_aura_unittest.cc)?",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 40
+      },
+      "revId": "0a6943911943146cfbe0083edda3ee74ea45316a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35619925_4f9ff6be",
+        "filename": "ui/aura/mus/hit_test_data_provider_aura_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-08-30T20:37:35Z",
+      "side": 1,
+      "message": "We can do that separately or decide to split mus-specific tests from general aura.",
+      "parentUuid": "164e1c4d_6f4fa2ee",
       "range": {
         "startLine": 8,
         "startChar": 0,
