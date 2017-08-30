@@ -78,6 +78,7 @@ class WebFrameWidgetImpl final : public WebFrameWidgetBase,
   void DidExitFullscreen() override;
   void SetSuppressFrameRequestsWorkaroundFor704763Only(bool) final;
   void BeginFrame(double last_frame_time_monotonic) override;
+  void DidCommitCompositorFrame() override;
   void UpdateAllLifecyclePhases() override;
   void Paint(WebCanvas*, const WebRect&) override;
   void LayoutAndPaintAsync(WebLayoutAndPaintAsyncCallback*) override;

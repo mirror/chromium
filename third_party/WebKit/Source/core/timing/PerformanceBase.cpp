@@ -78,11 +78,13 @@ using PerformanceObserverVector = HeapVector<Member<PerformanceObserver>>;
 
 static const size_t kDefaultResourceTimingBufferSize = 150;
 static const size_t kDefaultFrameTimingBufferSize = 150;
+static const size_t kDefaultElementTimingBufferSize = 50;
 
 PerformanceBase::PerformanceBase(double time_origin,
                                  RefPtr<WebTaskRunner> task_runner)
     : frame_timing_buffer_size_(kDefaultFrameTimingBufferSize),
       resource_timing_buffer_size_(kDefaultResourceTimingBufferSize),
+      element_timing_buffer_size_(kDefaultElementTimingBufferSize),
       user_timing_(nullptr),
       time_origin_(time_origin),
       observer_filter_options_(PerformanceEntry::kInvalid),
@@ -172,6 +174,9 @@ PerformanceEntryVector PerformanceBase::getEntriesByType(
         entries.push_back(first_paint_timing_);
       if (first_contentful_paint_timing_)
         entries.push_back(first_contentful_paint_timing_);
+      break;
+    case PerformanceEntry::kElementTiming:
+      entries.AppendVector(element_timing_buffer_);
       break;
     // Unsupported for LongTask, TaskAttribution.
     // Per the spec, these entries can only be accessed via
@@ -386,6 +391,26 @@ void PerformanceBase::AddPaintTiming(PerformancePaintTiming::PaintType type,
   NotifyObserversOfEntry(*entry);
 }
 
+void PerformanceBase::AddTextElementTiming(const String& name,
+                                           double start_time) {
+  AddElementTiming(PerformanceElementTiming::ElementTypeEnum::kText, name,
+                   start_time);
+}
+
+void PerformanceBase::AddElementTiming(
+    PerformanceElementTiming::ElementTypeEnum type,
+    const String& name,
+    double start_time) {
+  if (!RuntimeEnabledFeatures::PerformanceElementTimingEnabled())
+    return;
+  if (element_timing_buffer_.size() >= element_timing_buffer_size_)
+    return;
+
+  PerformanceEntry* entry = new PerformanceElementTiming(
+      type, name, MonotonicTimeToDOMHighResTimeStamp(start_time));
+  element_timing_buffer_.push_back(entry);
+}
+
 void PerformanceBase::AddResourceTimingBuffer(PerformanceEntry& entry) {
   resource_timing_buffer_.push_back(&entry);
 
@@ -559,6 +584,7 @@ DOMHighResTimeStamp PerformanceBase::now() const {
 DEFINE_TRACE(PerformanceBase) {
   visitor->Trace(frame_timing_buffer_);
   visitor->Trace(resource_timing_buffer_);
+  visitor->Trace(element_timing_buffer_);
   visitor->Trace(navigation_timing_);
   visitor->Trace(user_timing_);
   visitor->Trace(first_paint_timing_);

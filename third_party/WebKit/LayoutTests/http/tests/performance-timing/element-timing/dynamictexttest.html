@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<head>
+<title>Performance Element Timing Test: Adding Dynamic Text</title>
+</head>
+<body>
+  <script src="../../resources/testharness.js"></script>
+  <script src="../../resources/testharnessreport.js"></script>
+  <script src="./resources/verifyelementtiming.js"></script>
+
+  <div>
+    <div>
+      <p elementtiming="element1">Element 4</p>
+      <div id="dynamic" elementtiming="element2"><div>
+    </div>
+  </div>
+
+  <script>
+    async_test(function (t) {
+      testRunner.capturePixelsAsyncThen(t.step_func_done(function() {
+        expectedNames = ["element1"];
+        verifyTextElementTimingEntries(expectedNames);
+
+        document.getElementById("dynamic").textContent = "adding text dynamically";
+        testRunner.capturePixelsAsyncThen(t.step_func_done(function() {
+          expectedNames = ["element1", "element2"];
+          verifyTextElementTimingEntries(expectedNames);
+
+          document.getElementById("dynamic").textContent = "adding more text dynamically";
+          testRunner.capturePixelsAsyncThen(t.step_func_done(function() {
+            expectedNames = ["element1", "element2"];
+            verifyTextElementTimingEntries(expectedNames);
+          }));
+
+        }));
+
+      }));
+    }, "Test for a new elementtiming entry after text is dynamically added.");
+  </script>
+</body>
+</html>

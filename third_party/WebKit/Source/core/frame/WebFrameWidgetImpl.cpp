@@ -65,6 +65,7 @@
 #include "core/page/PointerLockController.h"
 #include "core/page/ValidationMessageClient.h"
 #include "core/paint/compositing/PaintLayerCompositor.h"
+#include "core/timing/TextElementTiming.h"
 #include "platform/KeyboardCodes.h"
 #include "platform/WebFrameScheduler.h"
 #include "platform/animation/CompositorAnimationHost.h"
@@ -252,6 +253,15 @@ void WebFrameWidgetImpl::BeginFrame(double last_frame_time_monotonic) {
   DCHECK(last_frame_time_monotonic);
   PageWidgetDelegate::Animate(*GetPage(), last_frame_time_monotonic);
   GetPage()->GetValidationMessageClient().LayoutOverlay();
+}
+
+void WebFrameWidgetImpl::DidCommitCompositorFrame() {
+  TRACE_EVENT0("blink", "WebFrameWidgetImpl::DidCommitCompositorFrame");
+  if (!local_root_)
+    return;
+  Document* document = local_root_->GetFrame()->GetDocument();
+  if (document)
+    TextElementTiming::From(*document).DidCommitCompositorFrame();
 }
 
 void WebFrameWidgetImpl::UpdateAllLifecyclePhases() {
