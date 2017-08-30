@@ -101,6 +101,11 @@ WebString WebMediaStreamTrack::Id() const {
   return private_->Id();
 }
 
+WebString WebMediaStreamTrack::UniqueId() const {
+  DCHECK(!private_.IsNull());
+  return private_->UniqueId();
+}
+
 WebMediaStreamSource WebMediaStreamTrack::Source() const {
   DCHECK(!private_.IsNull());
   return WebMediaStreamSource(private_->Source());
