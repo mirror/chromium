@@ -22,6 +22,30 @@
       "revId": "269cf13f63e263c947eb3826a7bd0ec0bded604c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e9cd645_7e35f27a",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 9768,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-08-30T15:58:11Z",
+      "side": 1,
+      "message": "Good point, changed to AskForEcryptfsArcUsers as per offline discussion.",
+      "parentUuid": "5121d45c_ff59e75a",
+      "range": {
+        "startLine": 9768,
+        "startChar": 19,
+        "endLine": 9768,
+        "endChar": 29
+      },
+      "revId": "269cf13f63e263c947eb3826a7bd0ec0bded604c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
