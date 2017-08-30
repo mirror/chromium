@@ -89,10 +89,16 @@ class WebNotificationTrayTest : public AshTestBase {
   WebNotificationTrayTest() {}
   ~WebNotificationTrayTest() override {}
 
+  void SetUp() override {
+    WebNotificationTray::DisableAnimationsForTest(true);
+    AshTestBase::SetUp();
+  }
+
   void TearDown() override {
     GetMessageCenter()->RemoveAllNotifications(
         false /* by_user */, message_center::MessageCenter::RemoveType::ALL);
     AshTestBase::TearDown();
+    WebNotificationTray::DisableAnimationsForTest(false);
   }
 
  protected:
