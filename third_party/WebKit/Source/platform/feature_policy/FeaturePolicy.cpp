@@ -126,6 +126,9 @@ Vector<WebParsedFeaturePolicyDeclaration> ParseFeaturePolicy(
       //     "name value1 value2" or "name".
       Vector<String> tokens;
       entry.Split(' ', tokens);
+      // Empty policy. Skip.
+      if (tokens.IsEmpty())
+        continue;
       if (!feature_names.Contains(tokens[0])) {
         if (messages)
           messages->push_back("Unrecognized feature: '" + tokens[0] + "'.");
