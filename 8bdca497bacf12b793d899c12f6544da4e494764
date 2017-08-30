@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a06a9296_b43173f4",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 1560,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-08-30T18:17:52Z",
+      "side": 1,
+      "message": "I suspect that there\u0027s a more concise or more readable way to do this with regex, will look again this afternoon.",
+      "revId": "8bdca497bacf12b793d899c12f6544da4e494764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7de1e15b_2bdf5879",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/port_testcase.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-08-30T18:17:52Z",
+      "side": 1,
+      "message": "test_get_crash_log could be split into multiple test methods, e.g.\n\n    test_get_crash_log_all_none\n    test_get_crash_log_simple\n    test_get_crash_log_non_ascii\n    test_get_crash_log_newer_than\n    test_get_crash_log_crash_site\n\nIn general, writing small tests for each interesting behavior has a couple advantages:\n - It makes it clearer which behavior is meant to be tested\n - Also, for test-webkitpy, test methods are run in parallel and having a bunch of small tests enables more even splitting.\n\nhttps://engdoc.corp.google.com/eng/doc/devguide/coding/testing/unit-testing-best-practices.shtml?cl\u003dhead#behavior-testing",
+      "revId": "8bdca497bacf12b793d899c12f6544da4e494764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ffe56ad_6d1633c5",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/port_testcase.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-08-30T18:17:52Z",
+      "side": 1,
+      "message": "For functions with lots of arguments, we can improve readability by explicitly writing the argument names for more of the arguments, for example:\n\n    stderr, details, crash_site \u003d _get_crash_log(\n        self, name\u003d\u0027foo\u0027, pid\u003d1234,\n        stdout\u003d\u0027out bar\\nout baz\u0027,\n        stderr\u003d\u0027err bar\\nerr baz\\n\u0027,\n        newer_than\u003dNone)\n    self.assertEqual(stderr, \u0027err bar\\nerr baz\\n\u0027)\n    self.assertEqual(\n        details,\n        \u0027err bar\\nerr baz\\n\u0027,\n        \u0027crash log for foo (pid 1234):\\n\u0027\n        \u0027STDOUT: out bar\\n\u0027\n        \u0027STDOUT: out baz\\n\u0027\n        \u0027STDERR: err bar\\n\u0027\n        \u0027STDERR: err baz\\n\u0027)\n    self.assertIsNone(crash_site)\n\nBreaking the asserts down like this also enables you to use assertIsNone(...).",
+      "revId": "8bdca497bacf12b793d899c12f6544da4e494764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
