@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "e622ed0a_ae3cce8e",
+        "filename": "services/ui/ws/event_dispatcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-30T20:21:26Z",
+      "side": 1,
+      "message": "UpdateNonClientAreaForCurrentWindow and UpdateCursorProviderByLastKnownLocation can be called when window bounds or hierarchy etc. changes without an event, so we might call EventTargeter when it\u0027s processing a previous event? Or the opposite, we only check waiting_on_event_targeter_ before processing event, but EventTargeter might be processing requests like these two?",
+      "parentUuid": "6be1137d_b30b127a",
+      "range": {
+        "startLine": 227,
+        "startChar": 21,
+        "endLine": 227,
+        "endChar": 42
+      },
+      "revId": "72e1d1a83d590e9a489da28422580a32debdd2c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f6ce8932_f468f2bf",
         "filename": "services/ui/ws/event_dispatcher.cc",
         "patchSetId": 3
