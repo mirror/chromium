@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8dd95b97_837f40ab",
+        "filename": "chrome/browser/ui/views/frame/immersive_mode_controller_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-30T17:27:07Z",
+      "side": 1,
+      "message": "im not sure why invalidating the client layout will fix the problem with the frame..\nalternatively we can layout the root view in browser_non_client_frame_view_ash.cc, but that doesn\u0027t make sense either since thats being done in line 235.\n\nany ideas?",
+      "revId": "63e6bfc25b834ae14caa23926ae80551c79783ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
