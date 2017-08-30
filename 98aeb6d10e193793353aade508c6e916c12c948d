@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "109dd479_4f1951a8",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/breakpad/dump_reader.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-30T22:00:06Z",
+      "side": 1,
+      "message": "I\u0027m leaving a placeholder here because I don\u0027t have a way to reach this line.\n\nI\u0027ll update this part when we find a report where this placeholder appears.",
+      "range": {
+        "startLine": 73,
+        "startChar": 20,
+        "endLine": 74,
+        "endChar": 92
+      },
+      "revId": "98aeb6d10e193793353aade508c6e916c12c948d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
