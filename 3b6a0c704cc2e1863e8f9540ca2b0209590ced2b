@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1eb9a357_6e5cc639",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/SuggestionsPopupWindow.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-30T21:12:05Z",
+      "side": 1,
+      "message": "Ok, I\u0027ll change it to setAddToDictionaryEnabled().",
+      "parentUuid": "76362192_2a93c1ea",
+      "range": {
+        "startLine": 74,
+        "startChar": 19,
+        "endLine": 74,
+        "endChar": 46
+      },
+      "revId": "3b6a0c704cc2e1863e8f9540ca2b0209590ced2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "efeefe3d_3df9a6f0",
         "filename": "content/public/android/java/src/org/chromium/content/browser/input/TextSuggestionsPopupWindow.java",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-30T19:26:03Z",
       "side": 1,
       "message": "nit: could you add a comment on why this is needed?",
+      "range": {
+        "startLine": 21,
+        "startChar": 48,
+        "endLine": 21,
+        "endChar": 69
+      },
+      "revId": "3b6a0c704cc2e1863e8f9540ca2b0209590ced2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "641586ed_52753d31",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/TextSuggestionsPopupWindow.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-30T21:12:05Z",
+      "side": 1,
+      "message": "It\u0027s actually not needed (vestigial code?)",
+      "parentUuid": "efeefe3d_3df9a6f0",
       "range": {
         "startLine": 21,
         "startChar": 48,
