@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "07aad628_c316717c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-denied-preflight-cache.htm",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-30T07:14:50Z",
+      "side": 1,
+      "message": "Yes!\n\nFor the record, this is the section recommending use of parentheses for single argument arrow functions.\nhttps://google.github.io/styleguide/jsguide.html#features-functions-arrow-functions",
+      "parentUuid": "fc5b0d73_2a71699f",
+      "revId": "e2d0870021529562b12cdaff7f5f2da8887dcb82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84a8288a_5c6ee0e6",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-denied-preflight-cache.htm",
         "patchSetId": 2
