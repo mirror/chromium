@@ -282,6 +282,24 @@
     },
     {
       "key": {
+        "uuid": "ee4bf923_6831e969",
+        "filename": "media/blink/video_frame_compositor.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-30T00:32:19Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s thread safe. When you make a method part of the public API you need to verify it\u0027s thread safety and document it. In this case client_ is set on |task_runner_| so this must only be called from |task_runner_| otherwise it\u0027s a race. It seems nothing external calls this, so just make it private and add a DCHECK(task_runner_-\u003eBelongsToCurrentThread())) ?",
+      "parentUuid": "b4b4a577_2a29147e",
+      "revId": "2afa3a917e9667d5256049b51af731d977fcf558",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b7bbca80_7847f038",
         "filename": "media/blink/video_frame_compositor_unittest.cc",
         "patchSetId": 37
