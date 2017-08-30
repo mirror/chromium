@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67d97cd5_6f28462d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-30T01:37:52Z",
+      "side": 1,
+      "message": "Feature-Policy: vr \u0027none\u0027",
+      "revId": "4f61054a01f4216ff47eca8bc73e3b533236ed7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbd163f7_b1d3b29d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-30T01:37:52Z",
+      "side": 1,
+      "message": "Feature-Policy: vr *",
+      "revId": "4f61054a01f4216ff47eca8bc73e3b533236ed7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "052d09eb_7ba76a38",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-30T01:37:52Z",
+      "side": 1,
+      "message": "Feature-Policy: vr \u0027self\u0027",
+      "revId": "4f61054a01f4216ff47eca8bc73e3b533236ed7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3319858_b0f4eb0e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webvr/webvr-disabled-by-feature-policy.https.sub.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-30T01:37:52Z",
+      "side": 1,
+      "message": "Probably update to match the updated header as well",
+      "revId": "4f61054a01f4216ff47eca8bc73e3b533236ed7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "827a3acc_6d532167",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webvr/webvr-disabled-by-feature-policy.https.sub.html.headers",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-30T01:37:52Z",
+      "side": 1,
+      "message": "This should now be\nFeature-Policy: vr \u0027none\u0027",
+      "revId": "4f61054a01f4216ff47eca8bc73e3b533236ed7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "555f6542_36ce6241",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webvr/webvr-enabled-by-feature-policy.https.sub.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-30T01:37:52Z",
+      "side": 1,
+      "message": "Update to match",
+      "revId": "4f61054a01f4216ff47eca8bc73e3b533236ed7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15de4d7d_a08d3ad0",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webvr/webvr-enabled-by-feature-policy.https.sub.html.headers",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-30T01:37:52Z",
+      "side": 1,
+      "message": "Feature-Policy: vr *",
+      "revId": "4f61054a01f4216ff47eca8bc73e3b533236ed7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "631cb98d_5ce17728",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webvr/webvr-enabled-on-self-origin-by-feature-policy.https.sub.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-30T01:37:52Z",
+      "side": 1,
+      "message": "and this one as well.",
+      "revId": "4f61054a01f4216ff47eca8bc73e3b533236ed7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90247e06_d4620fc8",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webvr/webvr-enabled-on-self-origin-by-feature-policy.https.sub.html.headers",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-30T01:37:52Z",
+      "side": 1,
+      "message": "Feature-Policy: vr \u0027self\u0027",
+      "revId": "4f61054a01f4216ff47eca8bc73e3b533236ed7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
