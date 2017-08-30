@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6ffd413_a33ef38d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-preflight-denied.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-30T04:59:38Z",
+      "side": 1,
+      "message": "I think we can remove this line but it can be done later.",
+      "revId": "adc38ed4383e9eb6ec3f47f9a334b1fe1c39239e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
