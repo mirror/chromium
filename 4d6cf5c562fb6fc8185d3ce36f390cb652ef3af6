@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "968a6329_51d17eac",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/open_with_menu.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-30T19:59:45Z",
+      "side": 1,
+      "message": "Currently yes, most code in c/b/chromeos/arc/ lives in arc::.",
+      "parentUuid": "c97dbbb4_96caafdf",
+      "revId": "4d6cf5c562fb6fc8185d3ce36f390cb652ef3af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d86691e5_165037d6",
         "filename": "chrome/browser/chromeos/arc/intent_helper/open_with_menu_unittest.cc",
         "patchSetId": 4
@@ -47,6 +65,23 @@
       "writtenOn": "2017-08-30T19:39:59Z",
       "side": 1,
       "message": "nit: Can this be null? If not, DCHECK it.",
+      "revId": "4d6cf5c562fb6fc8185d3ce36f390cb652ef3af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "379d9d9e_8b63a652",
+        "filename": "components/arc/intent_helper/link_handler_model.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-30T19:59:45Z",
+      "side": 1,
+      "message": "Please fix the build failure too:\n\n[16462/28357] CXX obj/components/arc/unit_tests/link_handler_model_impl_unittest.o\nFAILED: obj/components/arc/unit_tests/link_handler_model_impl_unittest.o \n[...]\n../../components/arc/intent_helper/link_handler_model_impl_unittest.cc:5:10: fatal error: \u0027components/arc/intent_helper/link_handler_model_impl.h\u0027 file not found\n#include \"components/arc/intent_helper/link_handler_model_impl.h\"\n         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n1 error generated.",
       "revId": "4d6cf5c562fb6fc8185d3ce36f390cb652ef3af6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
