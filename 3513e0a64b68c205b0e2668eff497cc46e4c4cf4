@@ -22,6 +22,30 @@
       "revId": "3513e0a64b68c205b0e2668eff497cc46e4c4cf4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fff8d4e_0003cd7f",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-30T13:32:56Z",
+      "side": 1,
+      "message": "\u003e So this won\u0027t actually cover all the cases, it\u0027s possible for a child after the first child to be finished. E.g.\n\u003e \n\u003e \u003cdiv id\u003dmulticol\u003e\n\u003e   \u003cdiv\u003etext text text text\u003c/div\u003e\n\u003e   \u003cdiv id\u003dfloat-smaller-than-above\u003e\u003c/div\u003e\n\u003e \u003c/div\u003e\n\nI\u0027m pretty sure you didn\u0027t mean to wrap the text in a DIV? You wanted a line of text that could interact with a subsequent float, I take? I\u0027ll just assume that: :)\n\nIf #float-smaller-than-above fits in the current fragmentainer, while the line of text doesn\u0027t, shouldn\u0027t we create an unfinished break token for the line of text, and a finished one for the float?\n\n\u003e I think it should be more correct if you iterate over all the BreakToken().ChildBreakTokens() adding the ones which have finished?\n\u003e \n\u003e Hmm... except then the ChildBreakTokens will be out of order. (Which the NGBlockChildIterator relies on currently).\n\u003e \n\u003e Another option would be to modify the NGBlockChildIterator to return \"finished\" nodes, and immediately add them to the fragment builder if the token is finished? (I think this would work better?)\n\nBut isn\u0027t it bad for performance to always include everything that happened since the beginning of the fragmentation context?",
+      "parentUuid": "d16c0c69_a5b49f9a",
+      "range": {
+        "startLine": 305,
+        "startChar": 7,
+        "endLine": 306,
+        "endChar": 38
+      },
+      "revId": "3513e0a64b68c205b0e2668eff497cc46e4c4cf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
