@@ -28,12 +28,6 @@
   __weak id<KeyCommandsPlumbing> weakConsumer = consumer;
   __weak id<ApplicationCommands, BrowserCommands> weakDispatcher = dispatcher;
 
-  // Block to execute a command from the |tag|.
-  void (^execute)(NSInteger) = ^(NSInteger tag) {
-    [weakConsumer
-        chromeExecuteCommand:[GenericChromeCommand commandWithTag:tag]];
-  };
-
   // Block to have the tab model open the tab at |index|, if there is one.
   void (^focusTab)(NSUInteger) = ^(NSUInteger index) {
     [weakConsumer focusTabAtIndex:index];
@@ -246,7 +240,7 @@
                              modifierFlags:UIKeyModifierCommand
                                      title:nil
                                     action:^{
-                                      execute(IDC_HELP_PAGE_VIA_MENU);
+                                      [weakDispatcher showHelpPage];
                                     }],
       [UIKeyCommand cr_keyCommandWithInput:@"1"
                              modifierFlags:UIKeyModifierCommand

@@ -87,6 +87,9 @@
 // tab.
 - (void)findPreviousStringInPage;
 
+// Shows the help page.
+- (void)showHelpPage;
+
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_COMMANDS_BROWSER_COMMANDS_H_
