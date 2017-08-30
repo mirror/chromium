@@ -22,6 +22,8 @@
 #include "extensions/common/constants.h"
 #include "extensions/common/extension.h"
 #include "ui/base/window_open_disposition.h"
+#include "ui/display/display.h"
+#include "ui/display/screen.h"
 #include "ui/events/event_constants.h"
 
 namespace wallpaper_manager_util {
@@ -73,7 +75,8 @@ void OpenWallpaperManager() {
   if (ShouldUseAndroidWallpapersApp(profile)) {
     const std::string app_id = ArcAppListPrefs::GetAppId(
         kAndroidWallpapersAppPackage, kAndroidWallpapersAppActivity);
-    arc::LaunchApp(profile, app_id, ui::EF_NONE);
+    int64_t display_id = display::Screen::GetScreen()->GetPrimaryDisplay().id();
+    arc::LaunchApp(profile, app_id, ui::EF_NONE, display_id);
   } else {
     ExtensionService* service =
         extensions::ExtensionSystem::Get(profile)->extension_service();
