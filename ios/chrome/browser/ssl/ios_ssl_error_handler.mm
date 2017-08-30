@@ -51,6 +51,15 @@ void IOSSSLErrorHandler::HandleSSLError(
     const base::Callback<void(bool)>& callback) {
   DCHECK(!web_state->IsShowingWebInterstitial());
 
+  CaptivePortalDetectorTabHelper* tab_helper =
+      CaptivePortalDetectorTabHelper::FromWebState(web_state);
+  if (!tab_helper) {
+    // If the web_state is not attached to a tab, the interstitial cannot be
+    // shown to the user. For security reason, navigation cannot proceed.
+    callback.Run(false);
+    return;
+  }
+
   if (!base::FeatureList::IsEnabled(kCaptivePortalFeature)) {
     IOSSSLErrorHandler::RecordCaptivePortalState(web_state);
     IOSSSLErrorHandler::ShowSSLInterstitial(web_state, cert_error, info,
@@ -64,8 +73,6 @@ void IOSSSLErrorHandler::HandleSSLError(
   net::SSLInfo ssl_info(info);
   GURL url(request_url);
 
-  CaptivePortalDetectorTabHelper* tab_helper =
-      CaptivePortalDetectorTabHelper::FromWebState(web_state);
   // TODO(crbug.com/754378): The captive portal detection may take a very long
   // time. It should timeout and default to displaying the SSL error page.
   tab_helper->detector()->DetectCaptivePortal(
