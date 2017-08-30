@@ -76,6 +76,8 @@ ResourceRequest::ResourceRequest(const KURL& url)
       check_for_browser_side_navigation_(true),
       ui_start_time_(0),
       is_external_request_(false),
+      cors_prevent_preflight_(false),
+      cors_redirect_(false),
       loading_ipc_type_(RuntimeEnabledFeatures::LoadingWithMojoEnabled()
                             ? WebURLRequest::LoadingIPCType::kMojo
                             : WebURLRequest::LoadingIPCType::kChromeIPC),

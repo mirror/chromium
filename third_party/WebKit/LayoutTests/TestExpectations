@@ -776,6 +776,11 @@ crbug.com/688613 external/wpt/mediacapture-streams/MediaStreamTrack-MediaElement
 
 crbug.com/542660 fast/css/absolute-inline-alignment-2.html [ Failure ]
 
+# (hintzed): Tests that fail with OutOfBlinkCORS,LoadingWithMojo
+crbug.com/736308 virtual/outofblink-cors/external/wpt/service-workers/service-worker/foreign-fetch-cors.https.html [ Timeout ]
+crbug.com/736308 virtual/outofblink-cors/external/wpt/service-workers/service-worker/registration-updateviacache.https.html [ Timeout ]
+crbug.com/736308 virtual/outofblink-cors/external/wpt/service-workers/service-worker/fetch-request-xhr-sync.https.html [ Timeout ]
+
 # Ref tests that needs investigation.
 crbug.com/404597 [ Mac ] fast/css3-text/css3-text-justify/text-justify-crash.html [ Failure ]
 crbug.com/404597 fast/forms/long-text-in-input.html [ Skip ]
@@ -1959,6 +1964,7 @@ crbug.com/626703 external/wpt/secure-contexts/shared-worker-insecure-first.https
 crbug.com/626703 external/wpt/secure-contexts/shared-worker-secure-first.https.html [ Timeout ]
 crbug.com/626703 external/wpt/service-workers/service-worker/update-bytecheck.https.html [ Timeout ]
 crbug.com/626703 virtual/mojo-blobs/external/wpt/service-workers/service-worker/update-bytecheck.https.html [ Timeout ]
+crbug.com/626703 virtual/outofblink-cors/external/wpt/service-workers/service-worker/update-bytecheck.https.html [ Timeout ]
 crbug.com/626703 external/wpt/streams/readable-streams/general.html [ Failure Timeout ]
 crbug.com/626703 external/wpt/svg/linking/reftests/href-filter-element.html [ Failure ]
 crbug.com/626703 external/wpt/wasm/wasm_indexeddb_test.html [ Timeout ]
@@ -2432,11 +2438,13 @@ crbug.com/508728 external/wpt/html/browsers/the-window-object/security-window/wi
 crbug.com/602693 external/wpt/service-workers/service-worker/fetch-frame-resource.https.html [ Timeout ]
 crbug.com/602693 virtual/service-worker-script-streaming/external/wpt/service-workers/service-worker/fetch-frame-resource.https.html [ Timeout ]
 crbug.com/602693 virtual/mojo-blobs/external/wpt/service-workers/service-worker/fetch-frame-resource.https.html [ Timeout ]
+crbug.com/602693 virtual/outofblink-cors/external/wpt/service-workers/service-worker/fetch-frame-resource.https.html [ Timeout ]
 
 # This test requires a special browser flag and seems not suitable for a wpt test, see bug.
 crbug.com/691944 external/wpt/service-workers/service-worker/update-after-oneday.https.html [ Skip ]
 crbug.com/691944 virtual/service-worker-script-streaming/external/wpt/service-workers/service-worker/update-after-oneday.https.html [ Skip ]
 crbug.com/691944 virtual/mojo-blobs/external/wpt/service-workers/service-worker/update-after-oneday.https.html [ Skip ]
+crbug.com/691944 virtual/outofblink-cors/external/wpt/service-workers/service-worker/update-after-oneday.https.html [ Skip ]
 
 # These tests (erroneously) see a platform-specific User-Agent header
 crbug.com/595993 external/wpt/service-workers/service-worker/fetch-header-visibility.https.html [ Failure ]
@@ -2445,6 +2453,8 @@ crbug.com/595993 virtual/mojo-blobs/external/wpt/service-workers/service-worker/
 crbug.com/595993 external/wpt/service-workers/service-worker/request-end-to-end.https.html [ Failure ]
 crbug.com/595993 virtual/service-worker-script-streaming/external/wpt/service-workers/service-worker/request-end-to-end.https.html [ Failure ]
 crbug.com/595993 virtual/mojo-blobs/external/wpt/service-workers/service-worker/request-end-to-end.https.html [ Failure ]
+crbug.com/595993 virtual/outofblink-cors/external/wpt/service-workers/service-worker/request-end-to-end.https.html [ Failure ]
+crbug.com/595993 virtual/outofblink-cors/external/wpt/service-workers/service-worker/fetch-header-visibility.https.html [ Failure ]
 
 crbug.com/619427 [ Mac Linux ] fast/overflow/overflow-height-float-not-removed-crash3.html [ Pass Failure ]
 
@@ -2795,6 +2805,7 @@ crbug.com/716320 external/wpt/html/infrastructure/safe-passing-of-structured-dat
 crbug.com/688486 external/wpt/service-workers/service-worker/fetch-request-resources.https.html [ Failure Pass ]
 crbug.com/688486 virtual/service-worker-script-streaming/external/wpt/service-workers/service-worker/fetch-request-resources.https.html [ Failure Pass ]
 crbug.com/688486 virtual/mojo-blobs/external/wpt/service-workers/service-worker/fetch-request-resources.https.html [ Failure Pass ]
+crbug.com/688486 virtual/outofblink-cors/external/wpt/service-workers/service-worker/fetch-request-resources.https.html [ Failure Pass ]
 
 # Sheriff failures 2017-02-21
 crbug.com/73609 http/tests/media/video-play-stall.html [ Pass Timeout ]
