@@ -1,0 +1,199 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4fa8bcc5_529a2fc1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-30T08:12:05Z",
+      "side": 1,
+      "message": "in → is",
+      "range": {
+        "startLine": 10,
+        "startChar": 8,
+        "endLine": 10,
+        "endChar": 10
+      },
+      "revId": "9976cf811457a3aaebed204d75b8cef266fedff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f3108e8_12779955",
+        "filename": "ios/clean/chrome/browser/ui/commands/context_menu_commands.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-30T08:12:05Z",
+      "side": 1,
+      "message": "Add a comment that |featureName| should not be empty.",
+      "revId": "9976cf811457a3aaebed204d75b8cef266fedff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6fbac4b_e1ae022a",
+        "filename": "ios/clean/chrome/browser/ui/commands/context_menu_commands.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-30T08:12:05Z",
+      "side": 1,
+      "message": "All TODO should use the format TODO(crbug.com/xxxxxx) in src/ios/ (there should be a presubmit warning about that). Please create a bug and add reference here.",
+      "range": {
+        "startLine": 37,
+        "startChar": 3,
+        "endLine": 37,
+        "endChar": 7
+      },
+      "revId": "9976cf811457a3aaebed204d75b8cef266fedff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e311cedf_7ff07b66",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/context_menu/context_menu_mediator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-30T08:12:05Z",
+      "side": 1,
+      "message": "ditto, this should have been TODO(crbug.com/xxxxxx)",
+      "range": {
+        "startLine": 75,
+        "startChar": 7,
+        "endLine": 75,
+        "endChar": 11
+      },
+      "revId": "9976cf811457a3aaebed204d75b8cef266fedff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35d618f7_63c66355",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/context_menu/context_menu_mediator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-30T08:12:05Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 78,
+        "startChar": 7,
+        "endLine": 78,
+        "endChar": 11
+      },
+      "revId": "9976cf811457a3aaebed204d75b8cef266fedff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "255c4743_cdb3a84d",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/context_menu/context_menu_mediator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-30T08:12:05Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 81,
+        "startChar": 7,
+        "endLine": 81,
+        "endChar": 11
+      },
+      "revId": "9976cf811457a3aaebed204d75b8cef266fedff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37ac91d9_1539db14",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/context_menu/context_menu_overlay_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-30T08:12:05Z",
+      "side": 1,
+      "message": "Dismisal → Dismissal",
+      "range": {
+        "startLine": 73,
+        "startChar": 15,
+        "endLine": 73,
+        "endChar": 42
+      },
+      "revId": "9976cf811457a3aaebed204d75b8cef266fedff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90e5a35c_f699be6b",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/unavailable_feature_dialogs/unavailable_feature_dialog_coordinator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-30T08:12:05Z",
+      "side": 1,
+      "message": "feature_name → featureName",
+      "range": {
+        "startLine": 16,
+        "startChar": 61,
+        "endLine": 16,
+        "endChar": 73
+      },
+      "revId": "9976cf811457a3aaebed204d75b8cef266fedff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44a60af1_fda5adac",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/unavailable_feature_dialogs/unavailable_feature_dialog_coordinator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-30T08:12:05Z",
+      "side": 1,
+      "message": "I see that some of the file you\u0027ve added uses \"nonnull/nullable\" annotations and others don\u0027t. Please be consistent and use or don\u0027t use the annotation instead of mixing.",
+      "revId": "9976cf811457a3aaebed204d75b8cef266fedff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
