@@ -136,7 +136,6 @@ const char* const kGLSwitchesCopiedFromGpuProcessHost[] = {
     kDisableGLDrawingForTests,
     kOverrideUseSoftwareGLForTests,
     kUseANGLE,
-    kDisableDirectComposition,
     kEnableSwapBuffersWithBounds,
     kEnableDirectCompositionLayers,
     kDisableDirectCompositionLayers,
