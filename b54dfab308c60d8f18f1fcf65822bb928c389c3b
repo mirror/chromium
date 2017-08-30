@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7eddcdec_1172dae5",
+        "filename": "base/location.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-30T20:33:56Z",
+      "side": 1,
+      "message": "what\u0027s wrong with %p? less-well-defined behavior?",
+      "range": {
+        "startLine": 43,
+        "startChar": 10,
+        "endLine": 43,
+        "endChar": 14
+      },
+      "revId": "b54dfab308c60d8f18f1fcf65822bb928c389c3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0625109f_64b2d940",
+        "filename": "base/location.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-30T20:33:56Z",
+      "side": 1,
+      "message": "nit: TODO(crbug.com/XXX) seems to be by far the most common TODO(bug) style (I looked for \"todo\\(crbug\", \"todo\\(bug\" and \"todo\\(https?://\" on cs.chromium.org). Also in the last file.",
+      "range": {
+        "startLine": 28,
+        "startChar": 5,
+        "endLine": 28,
+        "endChar": 21
+      },
+      "revId": "b54dfab308c60d8f18f1fcf65822bb928c389c3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
