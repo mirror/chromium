@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f84d58b_ae7d6b31",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-30T15:59:41Z",
+      "side": 1,
+      "message": "DisplaySnapshot",
+      "revId": "a10859bb93c34ac536f32d26183d56c31753de01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f4e72cc_667b18ba",
+        "filename": "ui/ozone/platform/drm/common/drm_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-30T15:59:41Z",
+      "side": 1,
+      "message": "nit: I\u0027d prefer seeing each parameter on a single line.",
+      "revId": "a10859bb93c34ac536f32d26183d56c31753de01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
