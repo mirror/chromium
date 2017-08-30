@@ -18,7 +18,6 @@ import org.chromium.base.ThreadUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.base.annotations.SuppressFBWarnings;
 import org.chromium.base.library_loader.Linker;
 import org.chromium.base.process_launcher.ChildConnectionAllocator;
 import org.chromium.base.process_launcher.ChildProcessConnection;
@@ -72,7 +71,6 @@ public class ChildProcessLauncherHelper {
     private static int sSandboxedServicesCountForTesting = -1;
     private static String sSandboxedServicesNameForTesting;
 
-    // Manages OOM bindings used to bind chind services. Lazily initialized by getBindingManager().
     private static BindingManager sBindingManager;
 
     // Whether the main application is currently brought to the foreground.
@@ -123,10 +121,6 @@ public class ChildProcessLauncherHelper {
 
                     sLauncherByPid.put(pid, ChildProcessLauncherHelper.this);
 
-                    if (mUseBindingManager) {
-                        getBindingManager().addNewConnection(pid, connection);
-                    }
-
                     // If the connection fails and pid == 0, the Java-side cleanup was already
                     // handled by DeathCallback. We still have to call back to native for cleanup
                     // there.
@@ -141,17 +135,23 @@ public class ChildProcessLauncherHelper {
                 public void onConnectionLost(ChildProcessConnection connection) {
                     assert connection.getPid() > 0;
                     sLauncherByPid.remove(connection.getPid());
-                    if (mUseBindingManager) {
-                        getBindingManager().removeConnection(connection.getPid());
+                    BindingManager manager = getBindingManager();
+                    if (mUseBindingManager && manager != null) {
+                        manager.dropRecency(connection);
                     }
                 }
             };
 
     private final ChildProcessLauncher mLauncher;
 
-    // Note native pointer is only guaranteed live until nativeOnChildProcessStarted.
     private long mNativeChildProcessLauncherHelper;
 
+    // Controls the strong binding.
+    private boolean mForeground;
+    // Roughly true when process has a pending navigation and is waiting to be swapped
+    // int. Controls the initial binding, which is bound initially.
+    private boolean mBoostPriorityForPendingViews = true;
+    // Explicit signal from content embedder. Controls both strong and moderate bindings.
     private @ChildProcessImportance int mImportance = ChildProcessImportance.NORMAL;
 
     @CalledByNative
@@ -265,20 +265,15 @@ public class ChildProcessLauncherHelper {
             public void run() {
                 ChildConnectionAllocator allocator = getConnectionAllocator(
                         context, ChildProcessCreationParams.getDefault(), true /* sandboxed */);
-                getBindingManager().startModerateBindingManagement(
-                        context, allocator.getNumberOfServices());
+                sBindingManager = new BindingManagerImpl(
+                        context, allocator.getNumberOfServices(), false /* onTesting */);
             }
         });
     }
 
-    // Lazy initialize sBindingManager
-    // TODO(boliu): This should be internal to content.
-    @SuppressFBWarnings("LI_LAZY_INIT_STATIC") // Method is single thread.
-    public static BindingManager getBindingManager() {
+    // May return null.
+    private static BindingManager getBindingManager() {
         assert LauncherThread.runningOnLauncherThread();
-        if (sBindingManager == null) {
-            sBindingManager = BindingManagerImpl.createBindingManager();
-        }
         return sBindingManager;
     }
 
@@ -291,7 +286,10 @@ public class ChildProcessLauncherHelper {
         LauncherThread.post(new Runnable() {
             @Override
             public void run() {
-                getBindingManager().onSentToBackground();
+                BindingManager manager = getBindingManager();
+                if (manager != null) {
+                    manager.onSentToBackground();
+                }
             }
         });
     }
@@ -305,7 +303,10 @@ public class ChildProcessLauncherHelper {
         LauncherThread.post(new Runnable() {
             @Override
             public void run() {
-                getBindingManager().onBroughtToForeground();
+                BindingManager manager = getBindingManager();
+                if (manager != null) {
+                    manager.onBroughtToForeground();
+                }
             }
         });
     }
@@ -317,11 +318,6 @@ public class ChildProcessLauncherHelper {
         sSandboxedServiceFactoryForTesting = factory;
         sSandboxedServicesCountForTesting = serviceCount;
         sSandboxedServicesNameForTesting = serviceName;
-    }
-
-    @VisibleForTesting
-    public static void setBindingManagerForTesting(BindingManager manager) {
-        sBindingManager = manager;
     }
 
     @VisibleForTesting
@@ -382,7 +378,10 @@ public class ChildProcessLauncherHelper {
                         // Proactively releases all the moderate bindings once all the sandboxed
                         // services are allocated, which will be very likely to have some of them
                         // killed by OOM killer.
-                        getBindingManager().releaseAllModerateBindings();
+                        BindingManager manager = getBindingManager();
+                        if (manager != null) {
+                            manager.releaseAllModerateBindings();
+                        }
                     }
                 }
 
@@ -468,8 +467,21 @@ public class ChildProcessLauncherHelper {
         assert LauncherThread.runningOnLauncherThread();
         assert mLauncher.getPid() == pid;
 
-        // Add first and remove second.
         ChildProcessConnection connection = mLauncher.getConnection();
+        if (mCreationParams != null && mCreationParams.getIgnoreVisibilityForImportance()) {
+            foreground = false;
+            boostForPendingViews = false;
+        }
+
+        // Add first and remove second.
+        if (!mForeground && foreground) {
+            connection.addStrongBinding();
+            BindingManager manager = getBindingManager();
+            if (mUseBindingManager && manager != null) {
+                manager.increaseRecency(connection);
+            }
+        }
+        if (!mBoostPriorityForPendingViews && boostForPendingViews) connection.addInitialBinding();
         if (mImportance != importance) {
             switch (importance) {
                 case ChildProcessImportance.NORMAL:
@@ -489,12 +501,10 @@ public class ChildProcessLauncherHelper {
             }
         }
 
-        if (mCreationParams != null && mCreationParams.getIgnoreVisibilityForImportance()) {
-            foreground = false;
-            boostForPendingViews = false;
+        if (mForeground && !foreground) connection.removeStrongBinding();
+        if (mBoostPriorityForPendingViews && !boostForPendingViews) {
+            connection.removeInitialBinding();
         }
-        getBindingManager().setPriority(pid, foreground, boostForPendingViews);
-
         if (mImportance != importance) {
             switch (mImportance) {
                 case ChildProcessImportance.NORMAL:
@@ -513,6 +523,9 @@ public class ChildProcessLauncherHelper {
                     assert false;
             }
         }
+
+        mForeground = foreground;
+        mBoostPriorityForPendingViews = boostForPendingViews;
         mImportance = importance;
     }
 
