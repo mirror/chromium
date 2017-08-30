@@ -348,18 +348,16 @@ IN_PROC_BROWSER_TEST_P(ArcAppDeferredLauncherBrowserTest, StartAppDeferred) {
     case TEST_ACTION_EXIT:
       // Just exit Chrome.
       break;
-    case TEST_ACTION_CLOSE:
-      {
-        // Close item during animation.
-        ash::ShelfItemDelegate* delegate = GetShelfItemDelegate(app_id);
-        ASSERT_TRUE(delegate);
-        delegate->Close();
-        EXPECT_TRUE(controller->GetArcDeferredLauncher()
-                        ->GetActiveTime(app_id)
-                        .is_zero());
-        EXPECT_EQ(is_pinned(), controller->GetItem(shelf_id) != nullptr);
-      }
-      break;
+    case TEST_ACTION_CLOSE: {
+      // Close item during animation.
+      ash::ShelfItemDelegate* delegate = GetShelfItemDelegate(app_id);
+      ASSERT_TRUE(delegate);
+      delegate->Close();
+      EXPECT_TRUE(controller->GetArcDeferredLauncher()
+                      ->GetActiveTime(app_id)
+                      .is_zero());
+      EXPECT_EQ(is_pinned(), controller->GetItem(shelf_id) != nullptr);
+    } break;
   }
 }
 
@@ -408,6 +406,11 @@ IN_PROC_BROWSER_TEST_F(ArcAppLauncherBrowserTest, PinOnPackageUpdateAndRemove) {
 // This test validates that app list is shown on new package and not shown
 // on package update.
 IN_PROC_BROWSER_TEST_F(ArcAppLauncherBrowserTest, AppListShown) {
+  // TODO(newcomer): this test needs to be reevaluated for the fullscreen app
+  // list (http://crbug.com/759779).
+  if (app_list::features::IsFullscreenAppListEnabled())
+    return;
+
   StartInstance();
   AppListService* app_list_service = AppListService::Get();
   ASSERT_TRUE(app_list_service);
