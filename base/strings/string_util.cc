@@ -393,8 +393,8 @@ void TruncateUTF8ToByteSize(const std::string& input,
     }
   }
 
-  if (char_index >= 0 )
-    *output = input.substr(0, char_index);
+  if (char_index >= 0)
+    output->assign(input, 0, char_index);
   else
     output->clear();
 }
