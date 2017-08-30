@@ -1431,7 +1431,8 @@ String XMLHttpRequest::getAllResponseHeaders() const {
 
     if (!same_origin_request_ &&
         !WebCORS::IsOnAccessControlResponseHeaderWhitelist(it->key) &&
-        !access_control_expose_header_set.Contains(it->key))
+        access_control_expose_header_set.find(it->key) ==
+            access_control_expose_header_set.end())
       continue;
 
     string_builder.Append(it->key.LowerASCII());
@@ -1464,7 +1465,8 @@ const AtomicString& XMLHttpRequest::getResponseHeader(
 
   if (!same_origin_request_ &&
       !WebCORS::IsOnAccessControlResponseHeaderWhitelist(name) &&
-      !access_control_expose_header_set.Contains(name)) {
+      access_control_expose_header_set.find(name) ==
+          access_control_expose_header_set.end()) {
     LogConsoleError(GetExecutionContext(),
                     "Refused to get unsafe header \"" + name + "\"");
     return g_null_atom;
