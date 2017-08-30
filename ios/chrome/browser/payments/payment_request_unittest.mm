@@ -6,6 +6,7 @@
 
 #include <memory>
 
+#include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/scoped_feature_list.h"
 #include "base/test/scoped_task_environment.h"
@@ -59,7 +60,7 @@ class PaymentRequestTest : public testing::Test {
     PaymentDetails details;
     std::vector<PaymentShippingOption> shipping_options;
     PaymentShippingOption option1;
-    option1.id = base::UTF8ToUTF16("option:1");
+    option1.id = "option:1";
     option1.selected = true;
     shipping_options.push_back(std::move(option1));
     details.shipping_options = std::move(shipping_options);
@@ -92,7 +93,10 @@ TEST_F(PaymentRequestTest, CreatesCurrencyFormatterCorrectly) {
   web::PaymentRequest web_payment_request;
   autofill::TestPersonalDataManager personal_data_manager;
 
-  web_payment_request.details.total.amount.currency = base::ASCIIToUTF16("USD");
+  web_payment_request.details.total = base::MakeUnique<PaymentItem>();
+  web_payment_request.details.total->amount =
+      base::MakeUnique<PaymentCurrencyAmount>();
+  web_payment_request.details.total->amount->currency = "USD";
   TestPaymentRequest payment_request1(web_payment_request,
                                       chrome_browser_state_.get(), &web_state_,
                                       &personal_data_manager);
@@ -102,7 +106,7 @@ TEST_F(PaymentRequestTest, CreatesCurrencyFormatterCorrectly) {
   EXPECT_EQ(base::UTF8ToUTF16("$55.00"), currency_formatter->Format("55.00"));
   EXPECT_EQ("USD", currency_formatter->formatted_currency_code());
 
-  web_payment_request.details.total.amount.currency = base::ASCIIToUTF16("JPY");
+  web_payment_request.details.total->amount->currency = "JPY";
   TestPaymentRequest payment_request2(web_payment_request,
                                       chrome_browser_state_.get(), &web_state_,
                                       &personal_data_manager);
@@ -111,9 +115,8 @@ TEST_F(PaymentRequestTest, CreatesCurrencyFormatterCorrectly) {
   EXPECT_EQ(base::UTF8ToUTF16("¥55"), currency_formatter->Format("55.00"));
   EXPECT_EQ("JPY", currency_formatter->formatted_currency_code());
 
-  web_payment_request.details.total.amount.currency_system =
-      base::ASCIIToUTF16("NOT_ISO4217");
-  web_payment_request.details.total.amount.currency = base::ASCIIToUTF16("USD");
+  web_payment_request.details.total->amount->currency_system = "NOT_ISO4217";
+  web_payment_request.details.total->amount->currency = "USD";
   TestPaymentRequest payment_request3(web_payment_request,
                                       chrome_browser_state_.get(), &web_state_,
                                       &personal_data_manager);
@@ -376,17 +379,18 @@ TEST_F(PaymentRequestTest, SelectedShippingOptions) {
   autofill::TestPersonalDataManager personal_data_manager;
 
   PaymentDetails details;
+  details.total = base::MakeUnique<PaymentItem>();
   std::vector<PaymentShippingOption> shipping_options;
   PaymentShippingOption option1;
-  option1.id = base::UTF8ToUTF16("option:1");
+  option1.id = "option:1";
   option1.selected = false;
   shipping_options.push_back(std::move(option1));
   PaymentShippingOption option2;
-  option2.id = base::UTF8ToUTF16("option:2");
+  option2.id = "option:2";
   option2.selected = true;
   shipping_options.push_back(std::move(option2));
   PaymentShippingOption option3;
-  option3.id = base::UTF8ToUTF16("option:3");
+  option3.id = "option:3";
   option3.selected = true;
   shipping_options.push_back(std::move(option3));
   details.shipping_options = std::move(shipping_options);
@@ -396,14 +400,64 @@ TEST_F(PaymentRequestTest, SelectedShippingOptions) {
                                      chrome_browser_state_.get(), &web_state_,
                                      &personal_data_manager);
   // The last one marked "selected" should be selected.
-  EXPECT_EQ(base::UTF8ToUTF16("option:3"),
-            payment_request.selected_shipping_option()->id);
+  EXPECT_EQ("option:3", payment_request.selected_shipping_option()->id);
 
   // Simulate an update that no longer has any shipping options. There is no
   // longer a selected shipping option.
   PaymentDetails new_details;
   payment_request.UpdatePaymentDetails(std::move(new_details));
   EXPECT_EQ(nullptr, payment_request.selected_shipping_option());
+}
+
+// Tests that updating the payment details updates the total amount.
+TEST_F(PaymentRequestTest, UpdatePaymentDetailsNewTotal) {
+  web::PaymentRequest web_payment_request;
+  autofill::TestPersonalDataManager personal_data_manager;
+
+  PaymentDetails details;
+  details.total = base::MakeUnique<PaymentItem>();
+  details.total->amount = base::MakeUnique<PaymentCurrencyAmount>();
+  details.total->amount->value = "10.00";
+  details.total->amount->currency = "USD";
+  web_payment_request.details = std::move(details);
+
+  TestPaymentRequest payment_request(web_payment_request,
+                                     chrome_browser_state_.get(), &web_state_,
+                                     &personal_data_manager);
+
+  // Simulate an update with a new total amount.
+  PaymentDetails new_details;
+  new_details.total = base::MakeUnique<PaymentItem>();
+  new_details.total->amount = base::MakeUnique<PaymentCurrencyAmount>();
+  new_details.total->amount->value = "20.00";
+  new_details.total->amount->currency = "CAD";
+  payment_request.UpdatePaymentDetails(std::move(new_details));
+  EXPECT_EQ("20.00", payment_request.payment_details().total->amount->value);
+  EXPECT_EQ("CAD", payment_request.payment_details().total->amount->currency);
+}
+
+// Tests that updating the payment details with a PaymentDetails instance that
+// is missing the total amount, maintains the old total amount.
+TEST_F(PaymentRequestTest, UpdatePaymentDetailsNoTotal) {
+  web::PaymentRequest web_payment_request;
+  autofill::TestPersonalDataManager personal_data_manager;
+
+  PaymentDetails details;
+  details.total = base::MakeUnique<PaymentItem>();
+  details.total->amount = base::MakeUnique<PaymentCurrencyAmount>();
+  details.total->amount->value = "10.00";
+  details.total->amount->currency = "USD";
+  web_payment_request.details = std::move(details);
+
+  TestPaymentRequest payment_request(web_payment_request,
+                                     chrome_browser_state_.get(), &web_state_,
+                                     &personal_data_manager);
+
+  // Simulate an update with the total amount missing.
+  PaymentDetails new_details;
+  payment_request.UpdatePaymentDetails(std::move(new_details));
+  EXPECT_EQ("10.00", payment_request.payment_details().total->amount->value);
+  EXPECT_EQ("USD", payment_request.payment_details().total->amount->currency);
 }
 
 // Test that loading profiles when none are available works as expected.
