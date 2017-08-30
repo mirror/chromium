@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "caafa17b_7805cfad",
+        "filename": "media/blink/video_frame_compositor.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-30T20:05:40Z",
+      "side": 1,
+      "message": "Here you can do:\n\nsubmitter_ \u003d blink:.....::Create(this);\nclient_ \u003d submitter_.get()\n\nto avoid special-casing all over the place where we\u0027re just using the VideoFrameProviderClient API, e.g. for StopUsingProvider() etc.",
+      "revId": "836340e82c3480da00794e992e275a18a90e1a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e6e7caa_b62cc92b",
+        "filename": "media/blink/video_frame_compositor_unittest.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-30T20:05:40Z",
+      "side": 1,
+      "message": "You can have\n\nunique_ptr\u003cSM\u003cMWVFS\u003e\u003e owned_client_;\nSM\u003cMWVFS\u003e* client_;\n\nand then do:\n\nowned_client_ \u003d new ....();\n\nif (IsSLFVE()) {\n  set_submitter_for_test(std::move(owned_client_));\n\nand then use |client_| throughout to actually access it in the tests.",
+      "revId": "836340e82c3480da00794e992e275a18a90e1a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
