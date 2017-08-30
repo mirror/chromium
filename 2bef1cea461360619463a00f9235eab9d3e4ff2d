@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e22b3d1_f09cd151",
+        "filename": "components/metrics/stability_metrics_helper.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-30T19:58:26Z",
+      "side": 1,
+      "message": "Move this comment inside the function.",
+      "range": {
+        "startLine": 170,
+        "startChar": 0,
+        "endLine": 170,
+        "endChar": 70
+      },
+      "revId": "2bef1cea461360619463a00f9235eab9d3e4ff2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
