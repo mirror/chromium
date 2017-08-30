@@ -2,6 +2,103 @@
   "comments": [
     {
       "key": {
+        "uuid": "b1cfa04a_7bed2d31",
+        "filename": "ui/ozone/platform/drm/gpu/drm_thread.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-30T14:22:02Z",
+      "side": 1,
+      "message": "Why does this always return true? I\u0027m assuming this is a temporary state and it can fail? Can you add a comment as to why.",
+      "revId": "36050ee169ae3574c7ab33da069e7a16e56f8d98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10661ddc_74fb1592",
+        "filename": "ui/ozone/platform/drm/gpu/drm_thread.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-30T14:22:02Z",
+      "side": 1,
+      "message": "Can you group / comment at the top of the overrides for mojom::DrmDevice? It\u0027s not obvious what override are for what interface.",
+      "revId": "36050ee169ae3574c7ab33da069e7a16e56f8d98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "093291e5_af33cc04",
+        "filename": "ui/ozone/platform/drm/host/host_drm_device.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-30T14:22:02Z",
+      "side": 1,
+      "message": "Is this possible/correct to be called more than once? It seems like this should maybe be a DCHECK if not.",
+      "revId": "36050ee169ae3574c7ab33da069e7a16e56f8d98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b409a1a_29a43e92",
+        "filename": "ui/ozone/platform/drm/host/host_drm_device.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-30T14:22:02Z",
+      "side": 1,
+      "message": "When you say callback it sounds like I can set the callback somewhere. Instead it\u0027s always OnDrmServiceStartedCallback() that runs. Maybe clarify that?",
+      "range": {
+        "startLine": 40,
+        "startChar": 33,
+        "endLine": 40,
+        "endChar": 43
+      },
+      "revId": "36050ee169ae3574c7ab33da069e7a16e56f8d98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "674d788a_b1cd1b65",
+        "filename": "ui/ozone/platform/drm/host/host_drm_device.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-30T14:22:02Z",
+      "side": 1,
+      "message": "extra space",
+      "range": {
+        "startLine": 45,
+        "startChar": 51,
+        "endLine": 45,
+        "endChar": 52
+      },
+      "revId": "36050ee169ae3574c7ab33da069e7a16e56f8d98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1556ec74_3298ad87",
         "filename": "ui/ozone/platform/drm/ozone_platform_gbm.cc",
         "patchSetId": 2
