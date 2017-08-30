@@ -73,6 +73,7 @@
 #include "chrome/browser/policy/default_geolocation_policy_handler.h"
 #include "chromeos/chromeos_pref_names.h"
 #include "chromeos/dbus/power_policy_controller.h"
+#include "components/arc/arc_prefs.h"
 #include "components/drive/drive_pref_names.h"
 #include "components/user_manager/user.h"
 #include "components/user_manager/user_manager.h"
@@ -572,13 +573,13 @@ const PolicyToPreferenceMapEntry kSimplePolicyMap[] = {
     prefs::kUnifiedDesktopEnabledByDefault,
     base::Value::Type::BOOLEAN },
   { key::kArcEnabled,
-    prefs::kArcEnabled,
+    arc::prefs::kArcEnabled,
     base::Value::Type::BOOLEAN },
   { key::kArcBackupRestoreEnabled,
-    prefs::kArcBackupRestoreEnabled,
+    arc::prefs::kArcBackupRestoreEnabled,
     base::Value::Type::BOOLEAN },
   { key::kArcLocationServiceEnabled,
-    prefs::kArcLocationServiceEnabled,
+    arc::prefs::kArcLocationServiceEnabled,
     base::Value::Type::BOOLEAN },
   { key::kReportArcStatusEnabled,
     prefs::kReportArcStatusEnabled,
