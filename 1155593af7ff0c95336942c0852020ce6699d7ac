@@ -34,6 +34,24 @@
       "revId": "1155593af7ff0c95336942c0852020ce6699d7ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a541c9ff_84795a0a",
+        "filename": "cc/layers/layer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-30T16:21:42Z",
+      "side": 1,
+      "message": "But my concern is that it\u0027s inconsistent with the condition setting the type in Layer::SetMaskLayer.",
+      "parentUuid": "bf9189ef_2c37ccf4",
+      "revId": "1155593af7ff0c95336942c0852020ce6699d7ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
