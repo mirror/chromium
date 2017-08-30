@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1e1f4424_6160e3e4",
+        "filename": "ui/base/test/ui_controls_internal_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-08-30T17:33:03Z",
+      "side": 1,
+      "message": "Then please apply this suggestion.\n1. Do not use this function unless map_type \u003d\u003d MAPVK_VK_TO_VSC.\n2. Add comments to explain the reason of this function.\n3. Update the function name to MapVirtualkeyToScanCode().\n4. According to MSDN https://msdn.microsoft.com/en-us/library/windows/desktop/ms646267(v\u003dvs.85).aspx, several other keys should also be impacted by KF_EXTENDED flag. Please also include them in the switch statement.\n\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\nExtended-Key Flag\nThe extended-key flag indicates whether the keystroke message originated from one of the additional keys on the enhanced keyboard. The extended keys consist of the ALT and CTRL keys on the right-hand side of the keyboard; the INS, DEL, HOME, END, PAGE UP, PAGE DOWN, and arrow keys in the clusters to the left of the numeric keypad; the NUM LOCK key; the BREAK (CTRL+PAUSE) key; the PRINT SCRN key; and the divide (/) and ENTER keys in the numeric keypad. The extended-key flag is set if the key is an extended key.\n\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d",
+      "parentUuid": "3f22b999_ea7ba94d",
+      "range": {
+        "startLine": 142,
+        "startChar": 0,
+        "endLine": 142,
+        "endChar": 54
+      },
+      "revId": "78d33b4eae84cda82b5eaa05d988a378a59a17c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5bc54d34_3e54d758",
         "filename": "ui/base/test/ui_controls_internal_win.cc",
         "patchSetId": 1
@@ -69,6 +93,30 @@
       "revId": "78d33b4eae84cda82b5eaa05d988a378a59a17c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "064d9e43_dac64578",
+        "filename": "ui/base/test/ui_controls_internal_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-08-30T17:33:03Z",
+      "side": 1,
+      "message": "Thank you for the confirmation, that\u0027s triple weird though.",
+      "parentUuid": "3389e5cf_800125f3",
+      "range": {
+        "startLine": 175,
+        "startChar": 0,
+        "endLine": 175,
+        "endChar": 78
+      },
+      "revId": "78d33b4eae84cda82b5eaa05d988a378a59a17c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
