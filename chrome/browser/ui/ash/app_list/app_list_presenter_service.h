@@ -31,6 +31,7 @@ class AppListPresenterService : public app_list::mojom::AppListPresenter {
   void UpdateYPositionAndOpacity(int y_position_in_screen,
                                  float background_opacity,
                                  bool is_end_gesture) override;
+  void ProcessMouseWheelEvent(int offset) override;
 
  private:
   app_list::AppListPresenterImpl* GetPresenter();

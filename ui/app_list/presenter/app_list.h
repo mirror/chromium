@@ -30,6 +30,7 @@ class APP_LIST_PRESENTER_EXPORT AppList : public mojom::AppList {
   void UpdateYPositionAndOpacity(int y_position_in_screen,
                                  float background_opacity,
                                  bool is_end_gesture);
+  void ProcessMouseWheelEvent(int offset);
 
   void Dismiss();
   void ToggleAppList(int64_t display_id);

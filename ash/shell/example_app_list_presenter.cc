@@ -75,5 +75,7 @@ void ExampleAppListPresenter::UpdateYPositionAndOpacity(
     float background_opacity,
     bool is_end_gesture) {}
 
+void ExampleAppListPresenter::ProcessMouseWheelEvent(int offset) {}
+
 }  // namespace shell
 }  // namespace ash

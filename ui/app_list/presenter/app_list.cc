@@ -36,6 +36,11 @@ void AppList::UpdateYPositionAndOpacity(int y_position_in_screen,
   }
 }
 
+void AppList::ProcessMouseWheelEvent(int offset) {
+  if (presenter_)
+    presenter_->ProcessMouseWheelEvent(offset);
+}
+
 void AppList::Dismiss() {
   if (presenter_)
     presenter_->Dismiss();

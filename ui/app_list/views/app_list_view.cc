@@ -760,7 +760,6 @@ AppListStateTransitionSource AppListView::GetAppListStateTransitionSource(
   switch (app_list_state_) {
     case CLOSED:
       // CLOSED->X transitions are not useful for UMA.
-      NOTREACHED();
       return kMaxAppListStateTransition;
     case PEEKING:
       switch (target_state) {
@@ -877,7 +876,7 @@ void AppListView::OnScrollEvent(ui::ScrollEvent* event) {
   if (event->type() == ui::ET_SCROLL_FLING_CANCEL)
     return;
 
-  if (!HandleScroll(event))
+  if (!HandleScroll(event->y_offset(), event->type()))
     return;
 
   event->SetHandled();
@@ -894,7 +893,8 @@ void AppListView::OnMouseEvent(ui::MouseEvent* event) {
       HandleClickOrTap(event);
       break;
     case ui::ET_MOUSEWHEEL:
-      if (HandleScroll(event))
+      if (HandleScroll(event->AsMouseWheelEvent()->offset().y(),
+                       ui::ET_MOUSEWHEEL))
         event->SetHandled();
       break;
     default:
@@ -942,12 +942,15 @@ void AppListView::OnGestureEvent(ui::GestureEvent* event) {
       EndDrag(event->location());
       event->SetHandled();
       break;
-    case ui::ET_MOUSEWHEEL: {
-      if (HandleScroll(event))
+    case ui::ET_MOUSEWHEEL: {  // newcomer investigate, shouldnt this be other
+                               // type?
+      if (HandleScroll(event->AsMouseWheelEvent()->offset().y(),
+                       ui::ET_MOUSEWHEEL))
         event->SetHandled();
       break;
     }
-    default:
+    default
+        :  // newcomer breakpoint here. Does ui::ET_MOUSEWHEEL ever get called?
       break;
   }
 }
@@ -1040,14 +1043,13 @@ void AppListView::OnTabletModeChanged(bool started) {
   }
 }
 
-bool AppListView::HandleScroll(const ui::Event* event) {
+bool AppListView::HandleScroll(int offset, ui::EventType type) {
   if (app_list_state_ != PEEKING)
     return false;
 
-  switch (event->type()) {
+  switch (type) {
     case ui::ET_MOUSEWHEEL:
-      SetState(event->AsMouseWheelEvent()->y_offset() < 0 ? FULLSCREEN_ALL_APPS
-                                                          : CLOSED);
+      SetState(offset < 0 ? FULLSCREEN_ALL_APPS : CLOSED);
       if (app_list_state_ == FULLSCREEN_ALL_APPS) {
         UMA_HISTOGRAM_ENUMERATION(kAppListPeekingToFullscreenHistogram,
                                   kMousewheelScroll, kMaxPeekingToFullscreen);
@@ -1057,10 +1059,8 @@ bool AppListView::HandleScroll(const ui::Event* event) {
       return true;
     case ui::ET_SCROLL:
     case ui::ET_SCROLL_FLING_START: {
-      if (fabs(event->AsScrollEvent()->y_offset()) >
-          kAppListMinScrollToSwitchStates) {
-        SetState(event->AsScrollEvent()->y_offset() < 0 ? FULLSCREEN_ALL_APPS
-                                                        : CLOSED);
+      if (fabs(offset) > kAppListMinScrollToSwitchStates) {
+        SetState(offset < 0 ? FULLSCREEN_ALL_APPS : CLOSED);
         if (app_list_state_ == FULLSCREEN_ALL_APPS) {
           UMA_HISTOGRAM_ENUMERATION(kAppListPeekingToFullscreenHistogram,
                                     kMousepadScroll, kMaxPeekingToFullscreen);
@@ -1076,6 +1076,7 @@ bool AppListView::HandleScroll(const ui::Event* event) {
 }
 
 void AppListView::SetState(AppListState new_state) {
+  // newcomer later experiment with returning early if state is closed.
   AppListState new_state_override = new_state;
   if (is_side_shelf_ || is_tablet_mode_) {
     // If side shelf or tablet mode are active, all transitions should be

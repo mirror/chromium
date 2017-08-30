@@ -138,6 +138,11 @@ void AppListPresenterImpl::UpdateYPositionAndOpacity(int y_position_in_screen,
   }
 }
 
+void AppListPresenterImpl::ProcessMouseWheelEvent(int offset) {
+  if (view_)
+    view_->HandleScroll(offset, ui::ET_MOUSEWHEEL);
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // AppListPresenterImpl, private:
 

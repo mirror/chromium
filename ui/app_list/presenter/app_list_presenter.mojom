@@ -46,4 +46,8 @@ interface AppListPresenter {
   UpdateYPositionAndOpacity(int32 y_position_in_screen,
                             float background_opacity,
                             bool is_end_gesture);
+
+  // Passes MouseWheelEvents from the Shelf to the AppListView.
+  ProcessMouseWheelEvent(int32 offset);
+
 };

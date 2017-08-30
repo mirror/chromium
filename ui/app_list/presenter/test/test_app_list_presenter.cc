@@ -44,5 +44,9 @@ void TestAppListPresenter::UpdateYPositionAndOpacity(int y_position_in_screen,
   set_y_position_count_++;
 }
 
+void TestAppListPresenter::ProcessMouseWheelEvent(int offset) {
+  process_mouse_wheel_event_count_++;
+}
+
 }  // namespace test
 }  // namespace app_list

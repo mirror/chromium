@@ -75,6 +75,10 @@ void AppListPresenterService::UpdateYPositionAndOpacity(
                                             background_opacity, is_end_gesture);
 }
 
+void AppListPresenterService::ProcessMouseWheelEvent(int offset) {
+  GetPresenter()->ProcessMouseWheelEvent(offset);
+}
+
 app_list::AppListPresenterImpl* AppListPresenterService::GetPresenter() {
   return AppListServiceAsh::GetInstance()->GetAppListPresenter();
 }
