@@ -5,6 +5,7 @@
 #include "ios/chrome/browser/payments/payment_request.h"
 
 #include <algorithm>
+#include <memory>
 
 #include "base/containers/adapters.h"
 #include "base/feature_list.h"
@@ -199,7 +200,15 @@ PrefService* PaymentRequest::GetPrefService() {
 }
 
 void PaymentRequest::UpdatePaymentDetails(const PaymentDetails& details) {
+  DCHECK(web_payment_request_.details.total);
+  std::unique_ptr<PaymentItem> old_total =
+      base::MakeUnique<PaymentItem>(*web_payment_request_.details.total);
   web_payment_request_.details = details;
+  // Restore the old total amount if the PaymentDetails passed to updateWith()
+  // is missing a total value.
+  if (!web_payment_request_.details.total)
+    web_payment_request_.details.total = std::move(old_total);
+
   PopulateAvailableShippingOptions();
   SetSelectedShippingOption();
 }
@@ -226,9 +235,10 @@ PaymentShippingType PaymentRequest::shipping_type() const {
 
 CurrencyFormatter* PaymentRequest::GetOrCreateCurrencyFormatter() {
   if (!currency_formatter_) {
+    DCHECK(web_payment_request_.details.total);
     currency_formatter_.reset(new CurrencyFormatter(
-        web_payment_request_.details.total.amount.currency,
-        web_payment_request_.details.total.amount.currency_system,
+        web_payment_request_.details.total->amount.currency,
+        web_payment_request_.details.total->amount.currency_system,
         GetApplicationLocale()));
   }
   return currency_formatter_.get();
