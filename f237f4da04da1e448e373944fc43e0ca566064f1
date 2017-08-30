@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9866cd7f_5a4d310b",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-30T21:39:57Z",
+      "side": 1,
+      "message": "Note: this doesn\u0027t catch the case in the test case I\u0027m adding; that case ends up hitting and failing the IsValidFor() check.",
+      "revId": "f237f4da04da1e448e373944fc43e0ca566064f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0350ebc_f936d125",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-30T21:39:57Z",
+      "side": 1,
+      "message": "Do we handle the case where the frame is destroyed by the selectstart handler (is that possible)?",
+      "revId": "f237f4da04da1e448e373944fc43e0ca566064f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
