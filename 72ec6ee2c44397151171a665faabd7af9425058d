@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47faa68f_dcb1234c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 42504,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-30T23:30:26Z",
+      "side": 1,
+      "message": "nit: It\u0027s often helpful to include a date or a milestone for the removal, so that future readers don\u0027t need to dig through git log history to find that information.",
+      "range": {
+        "startLine": 42504,
+        "startChar": 37,
+        "endLine": 42504,
+        "endChar": 0
+      },
+      "revId": "72ec6ee2c44397151171a665faabd7af9425058d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
