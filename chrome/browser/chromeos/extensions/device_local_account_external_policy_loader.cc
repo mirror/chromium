@@ -59,7 +59,7 @@ void DeviceLocalAccountExternalPolicyLoader::StopCache(
 
 void DeviceLocalAccountExternalPolicyLoader::StartLoading() {
   if (prefs_)
-    LoadFinished();
+    LoadFinished(std::move(prefs_));
 }
 
 void DeviceLocalAccountExternalPolicyLoader::OnStoreLoaded(
@@ -78,8 +78,10 @@ void DeviceLocalAccountExternalPolicyLoader::OnStoreError(
 void DeviceLocalAccountExternalPolicyLoader::OnExtensionListsUpdated(
     const base::DictionaryValue* prefs) {
   DCHECK(external_cache_ || prefs->empty());
-  prefs_.reset(prefs->DeepCopy());
-  LoadFinished();
+  // TODO(tbarzic): This seems wrong, why DeviceLocalAccountExternalPolicyLoader
+  // needs to be an ExternalLoader? https://crbug.com/759162.
+  prefs_ = prefs->CreateDeepCopy();
+  LoadFinished(std::move(prefs_));
 }
 
 ExternalCache*
