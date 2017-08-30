@@ -16,6 +16,24 @@
       "revId": "178a78c92703aa72fc983de64bc3006effe039db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc66f576_5f88b1ee",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1552,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-08-30T22:33:00Z",
+      "side": 1,
+      "message": "I manually tested two finger scroll, and this already works. It\u0027s just mousewheel which doesn\u0027t work.",
+      "parentUuid": "5b94ae44_fa69be9e",
+      "revId": "178a78c92703aa72fc983de64bc3006effe039db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
