@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ad7bec9_72d2cec3",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ForeignFetchRespondWithObserver.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-30T14:34:09Z",
+      "side": 1,
+      "message": "how about headers.emplace(header.Ascii().data(), header.Ascii().length) for double sure?",
+      "revId": "eea8b3425a4acb3ef43190eb31776f53497043f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e50ce9d_0e752b47",
+        "filename": "third_party/WebKit/Source/platform/exported/WebCORS.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-30T14:34:09Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "eea8b3425a4acb3ef43190eb31776f53497043f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6d5987c_5b27f149",
+        "filename": "third_party/WebKit/public/platform/WebHTTPHeaderMap.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-30T14:34:09Z",
+      "side": 1,
+      "message": "put a blank line here",
+      "revId": "eea8b3425a4acb3ef43190eb31776f53497043f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
