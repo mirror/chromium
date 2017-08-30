@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0f6926b1_e1e47e2c",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/rule_indexing_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-30T03:13:32Z",
+      "side": 1,
+      "message": "The COMMENT blocks were just meant as reminders for me to add the following text as a comment while sending CL for review. Removed it.",
+      "parentUuid": "a6ef06ab_a2e7cb90",
+      "range": {
+        "startLine": 36,
+        "startChar": 3,
+        "endLine": 36,
+        "endChar": 10
+      },
+      "revId": "b5de490fff41a70506c41c98619239b333d44f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2a14079_d8a2d681",
         "filename": "chrome/browser/extensions/api/declarative_net_request/rule_indexing_unittest.cc",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d01e7290_a9805adf",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/rule_indexing_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-30T03:13:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2a14079_d8a2d681",
+      "range": {
+        "startLine": 52,
+        "startChar": 23,
+        "endLine": 52,
+        "endChar": 31
+      },
+      "revId": "b5de490fff41a70506c41c98619239b333d44f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d1d876d_c70fa0f4",
         "filename": "chrome/browser/extensions/api/declarative_net_request/rule_indexing_unittest.cc",
         "patchSetId": 8
@@ -62,6 +110,24 @@
       "revId": "b5de490fff41a70506c41c98619239b333d44f7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "906181d6_541663ac",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/rule_indexing_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-30T03:13:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d1d876d_c70fa0f4",
+      "revId": "b5de490fff41a70506c41c98619239b333d44f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "13a9eeca_b0c7d42b",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/rule_indexing_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-30T03:13:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b890ddb_f6d1d339",
+      "range": {
+        "startLine": 83,
+        "startChar": 4,
+        "endLine": 83,
+        "endChar": 15
+      },
+      "revId": "b5de490fff41a70506c41c98619239b333d44f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b331548_b9c5e8ba",
         "filename": "chrome/browser/extensions/api/declarative_net_request/rule_indexing_unittest.cc",
         "patchSetId": 8
@@ -108,6 +198,30 @@
       "revId": "b5de490fff41a70506c41c98619239b333d44f7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "150a7c3f_4acd10c5",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/rule_indexing_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-30T03:13:32Z",
+      "side": 1,
+      "message": "Tests can either use SetRules (this will set rules_) or add rules using AddRule() (in this case rules_ will be null initially).",
+      "parentUuid": "7b331548_b9c5e8ba",
+      "range": {
+        "startLine": 130,
+        "startChar": 0,
+        "endLine": 130,
+        "endChar": 18
+      },
+      "revId": "b5de490fff41a70506c41c98619239b333d44f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -182,6 +296,30 @@
     },
     {
       "key": {
+        "uuid": "6d37959b_cd87f239",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/rule_indexing_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-30T03:13:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22b66294_a2f00ff9",
+      "range": {
+        "startLine": 168,
+        "startChar": 18,
+        "endLine": 168,
+        "endChar": 43
+      },
+      "revId": "b5de490fff41a70506c41c98619239b333d44f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38a46742_c9607fa1",
         "filename": "chrome/browser/extensions/api/declarative_net_request/rule_indexing_unittest.cc",
         "patchSetId": 8
@@ -202,6 +340,30 @@
       "revId": "b5de490fff41a70506c41c98619239b333d44f7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f0f60bf_d296bba1",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/rule_indexing_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-30T03:13:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38a46742_c9607fa1",
+      "range": {
+        "startLine": 287,
+        "startChar": 3,
+        "endLine": 287,
+        "endChar": 9
+      },
+      "revId": "b5de490fff41a70506c41c98619239b333d44f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -276,6 +438,30 @@
     },
     {
       "key": {
+        "uuid": "bad1685c_ff86ede0",
+        "filename": "chrome/browser/extensions/unpacked_installer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-30T03:13:32Z",
+      "side": 1,
+      "message": "Yeah unless the command line case is taken care of, this is probably here to stay. Is this a security bug as per our security model though, or do we assume that it\u0027s ok since the user is loading an unpacked extension?",
+      "parentUuid": "677a8d52_d7f0e5eb",
+      "range": {
+        "startLine": 321,
+        "startChar": 2,
+        "endLine": 321,
+        "endChar": 27
+      },
+      "revId": "b5de490fff41a70506c41c98619239b333d44f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c7cfb207_5b644adf",
         "filename": "chrome/browser/extensions/unpacked_installer.h",
         "patchSetId": 8
@@ -290,6 +476,24 @@
       "revId": "b5de490fff41a70506c41c98619239b333d44f7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df7853ab_4e8b2374",
+        "filename": "chrome/browser/extensions/unpacked_installer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-30T03:13:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7cfb207_5b644adf",
+      "revId": "b5de490fff41a70506c41c98619239b333d44f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -316,6 +520,30 @@
     },
     {
       "key": {
+        "uuid": "3c7c2925_2e411479",
+        "filename": "chrome/browser/extensions/unpacked_installer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-30T03:13:32Z",
+      "side": 1,
+      "message": "Yeah seems both variants are in use. Keeping it as is for now.",
+      "parentUuid": "806bd308_b242ed8b",
+      "range": {
+        "startLine": 135,
+        "startChar": 7,
+        "endLine": 135,
+        "endChar": 35
+      },
+      "revId": "b5de490fff41a70506c41c98619239b333d44f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc387728_c618ecfe",
         "filename": "extensions/common/api/declarative_net_request/test_utils.cc",
         "patchSetId": 8
@@ -339,6 +567,30 @@
     },
     {
       "key": {
+        "uuid": "c6f45524_c918ed6c",
+        "filename": "extensions/common/api/declarative_net_request/test_utils.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-30T03:13:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc387728_c618ecfe",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 51
+      },
+      "revId": "b5de490fff41a70506c41c98619239b333d44f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca720961_87a1be8a",
         "filename": "extensions/common/api/declarative_net_request/test_utils.cc",
         "patchSetId": 8
@@ -359,6 +611,30 @@
       "revId": "b5de490fff41a70506c41c98619239b333d44f7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da6a8b32_7a710bb2",
+        "filename": "extensions/common/api/declarative_net_request/test_utils.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-30T03:13:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca720961_87a1be8a",
+      "range": {
+        "startLine": 104,
+        "startChar": 33,
+        "endLine": 104,
+        "endChar": 45
+      },
+      "revId": "b5de490fff41a70506c41c98619239b333d44f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
