@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "188be91c_26d5532b",
+        "filename": "components/ui_devtools/views/window_element.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-30T22:52:57Z",
+      "side": 1,
+      "message": "It sounds like OnWindowStackingChanged() is getting called when the stacking order did not actually change? Is that the case? Can we change the code so that doesn\u0027t happen? Probably early out from Window::StackChildRelativeTo() if |child_i| \u003d\u003d |dest_i| here [1]?\n\n[1] https://cs.chromium.org/chromium/src/ui/aura/window.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d857",
+      "revId": "69b5eb3a696d84dca27eedd2859870f4c60587a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
