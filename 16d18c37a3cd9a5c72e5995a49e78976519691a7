@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fb3e0cc_59695004",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2555,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-30T02:13:25Z",
+      "side": 1,
+      "message": "I don\u0027t think this is a direct user action.",
+      "revId": "16d18c37a3cd9a5c72e5995a49e78976519691a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ada2d38_06468ca0",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3454,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-30T02:13:25Z",
+      "side": 1,
+      "message": "This is also not a direct user action. This is an internal drawing call.",
+      "revId": "16d18c37a3cd9a5c72e5995a49e78976519691a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
