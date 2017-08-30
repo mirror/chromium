@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "feee8e9a_b5192b76",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-30T23:58:18Z",
+      "side": 1,
+      "message": "Done, I rephrased this.  I wanted to say that the subframe\u0027s message should reach F\u0027s current RenderFrame which is still in a.com, but yes, it has to be sent through a proxy.",
+      "parentUuid": "10d44942_341e4324",
+      "range": {
+        "startLine": 39,
+        "startChar": 22,
+        "endLine": 39,
+        "endChar": 25
+      },
+      "revId": "0c09b277ef1f79d2fc8bbc0b2d24f3ff38ece7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a6fec0c1_d88a524a",
         "filename": "content/browser/frame_host/frame_tree.cc",
         "patchSetId": 8
@@ -83,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "e5418c73_4c499b29",
+        "filename": "content/browser/frame_host/frame_tree.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-30T23:58:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b902d33_694e44e6",
+      "range": {
+        "startLine": 264,
+        "startChar": 9,
+        "endLine": 264,
+        "endChar": 12
+      },
+      "revId": "0c09b277ef1f79d2fc8bbc0b2d24f3ff38ece7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "278488af_932534c7",
         "filename": "content/browser/frame_host/frame_tree.cc",
         "patchSetId": 8
@@ -118,6 +166,24 @@
     },
     {
       "key": {
+        "uuid": "7d1dbdb8_aba89a3f",
+        "filename": "content/browser/frame_host/frame_tree.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-30T23:58:18Z",
+      "side": 1,
+      "message": "Yup - you\u0027re right, nice catch!  I noticed that many tests fall under the single-tab case and thought this optimization might be useful in general, but with your example I agree it doesn\u0027t make sense.  I changed this to just always create the proxy now.",
+      "parentUuid": "34a95580_0a3d76df",
+      "revId": "0c09b277ef1f79d2fc8bbc0b2d24f3ff38ece7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9297d5b_fb7d868f",
         "filename": "content/browser/frame_host/frame_tree.h",
         "patchSetId": 8
@@ -135,6 +201,24 @@
     },
     {
       "key": {
+        "uuid": "85ba042c_c3e82e88",
+        "filename": "content/browser/frame_host/frame_tree.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-30T23:58:18Z",
+      "side": 1,
+      "message": "Good idea, done.  Also changed NodeIterator and NodeRange to use root_of_subtree_to_skip, since just |node| would\u0027ve been confusing there.",
+      "parentUuid": "e9297d5b_fb7d868f",
+      "revId": "0c09b277ef1f79d2fc8bbc0b2d24f3ff38ece7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aa3ab8e3_2e4c1f7c",
         "filename": "content/browser/frame_host/render_frame_host_manager.cc",
         "patchSetId": 8
@@ -146,6 +230,24 @@
       "writtenOn": "2017-08-30T21:32:46Z",
       "side": 1,
       "message": "Side question: Is it possible for frames in the same tree to be in different BrowsingInstances?  I was under the impression we don\u0027t allow that.",
+      "revId": "0c09b277ef1f79d2fc8bbc0b2d24f3ff38ece7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6041b36_8a368908",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1607,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-30T23:58:18Z",
+      "side": 1,
+      "message": "I\u0027m curious about that myself: the BI check predated my time :), but I\u0027m not aware of any cases where we would allow it.  Let\u0027s clean this up in a separate CL.",
+      "parentUuid": "aa3ab8e3_2e4c1f7c",
       "revId": "0c09b277ef1f79d2fc8bbc0b2d24f3ff38ece7f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -245,6 +347,30 @@
     },
     {
       "key": {
+        "uuid": "3fc8e387_9e423da0",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 11120,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-30T23:58:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "489606fa_43e2ccd4",
+      "range": {
+        "startLine": 11120,
+        "startChar": 31,
+        "endLine": 11120,
+        "endChar": 33
+      },
+      "revId": "0c09b277ef1f79d2fc8bbc0b2d24f3ff38ece7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "359309ca_cda92a87",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 8
@@ -256,6 +382,24 @@
       "writtenOn": "2017-08-30T21:32:46Z",
       "side": 1,
       "message": "Can we hit the same CHECK failure in this post-crash case?  For example, tab 1 on a.com opens tab 2 to b.com.  Tab 2 crashes.  The user starts navigating tab 1 to b.com/slow, which creates a local RenderFrame in the new b.com process.  Before it commits, they reload tab 2 to b.com, which needs an opener proxy in tab 1 until/if tab 1 commits.",
+      "revId": "0c09b277ef1f79d2fc8bbc0b2d24f3ff38ece7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f4c6795_2f801da3",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1029,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-30T23:58:18Z",
+      "side": 1,
+      "message": "Good question - I don\u0027t think so: if tab 1 opens tab 2 to b.com, that will create a proxy for tab 1 in b.com.  When tab 2 crashes, that proxy will become non-live, but the RFPH will still exist.  So, when the user navigates to b.com/slow in tab 1, that will utilize the remote-to-local path and not this one, and make the RFPH live before creating the RenderFrame.  When tab 2 is reloaded to b.com, it\u0027ll find that opener proxy.  I\u0027ve just verified that this works manually.\n\nI\u0027ve tried something like this before, but using b.com/slow in a subframe, so that it really needs the parent here rather than going through CreateMainFrame.  This also worked for the same reason: the RFPHs stay around after the crash and are reinitialized as needed.",
+      "parentUuid": "359309ca_cda92a87",
       "revId": "0c09b277ef1f79d2fc8bbc0b2d24f3ff38ece7f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
