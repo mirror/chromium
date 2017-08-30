@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "a325ccdf_4aa5deab",
+        "filename": "ash/wm/overview/overview_window_drag_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-30T18:57:37Z",
+      "side": 1,
+      "message": "Thanks. (Most of) androd app will be snappable, but we should still handle non snappable case properly because such case will exist always.",
+      "parentUuid": "42a636b3_91e10c62",
+      "revId": "3608edc3680d8058b248467a75f83cc206dca80c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "da919fba_a6a88967",
         "filename": "ash/wm/overview/window_selector_unittest.cc",
         "patchSetId": 2
