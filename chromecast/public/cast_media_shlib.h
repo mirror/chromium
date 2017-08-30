@@ -120,6 +120,9 @@ class CHROMECAST_EXPORT CastMediaShlib {
   static void RemoveLoopbackAudioObserver(LoopbackAudioObserver* observer)
       __attribute__((__weak__));
 
+  // 5.1 AAC will be allowed IFF this function is present and returns true.
+  static bool AllowAAC51() __attribute__((__weak__));
+
   // Updates all postprocessors with the given |name| to have new configuration
   // |config|.
   static void SetPostProcessorConfig(const std::string& name,
