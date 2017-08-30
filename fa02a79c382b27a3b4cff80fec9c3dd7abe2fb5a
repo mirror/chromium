@@ -16,6 +16,24 @@
       "revId": "fa02a79c382b27a3b4cff80fec9c3dd7abe2fb5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9715d4d_1f822834",
+        "filename": "ppapi/proxy/interface_proxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-30T22:33:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e33fbba_6ea8aa2c",
+      "revId": "fa02a79c382b27a3b4cff80fec9c3dd7abe2fb5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
