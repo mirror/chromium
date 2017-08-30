@@ -70,6 +70,32 @@ void ScreenPositionController::ConvertHostPointToRelativeToRootWindow(
   *point = point_in_root;
 }
 
+void ScreenPositionController::ConvertFloatPointToScreen(
+    const aura::Window* window,
+    gfx::PointF* point) {
+  const aura::Window* root = window->GetRootWindow();
+  aura::Window::ConvertFloatPointToTarget(window, root, point);
+  const gfx::Point display_origin =
+      display::Screen::GetScreen()
+          ->GetDisplayNearestWindow(const_cast<aura::Window*>(root))
+          .bounds()
+          .origin();
+  point->Offset(display_origin.x(), display_origin.y());
+}
+
+void ScreenPositionController::ConvertFloatPointFromScreen(
+    const aura::Window* window,
+    gfx::PointF* point) {
+  const aura::Window* root = window->GetRootWindow();
+  const gfx::Point display_origin =
+      display::Screen::GetScreen()
+          ->GetDisplayNearestWindow(const_cast<aura::Window*>(root))
+          .bounds()
+          .origin();
+  point->Offset(-display_origin.x(), -display_origin.y());
+  aura::Window::ConvertFloatPointToTarget(root, window, point);
+}
+
 void ScreenPositionController::ConvertPointToScreen(const aura::Window* window,
                                                     gfx::Point* point) {
   const aura::Window* root = window->GetRootWindow();
