@@ -16,6 +16,24 @@
       "revId": "301423941d3dfd46afc2bd53edaf5964ee7ba1e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e999437c_1a1ee1fa",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 915,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-30T06:47:56Z",
+      "side": 1,
+      "message": "Ack. Yeah if we decided to use mojo::BadMessage() instead, we can provide more details to it.",
+      "parentUuid": "7ecd740b_c4fb90f5",
+      "revId": "301423941d3dfd46afc2bd53edaf5964ee7ba1e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "e97b6b09_c57ed948",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-30T06:47:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87cb1067_7886a716",
+      "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3089c00_e437af3d",
         "filename": "content/browser/service_worker/service_worker_dispatcher_host_unittest.cc",
         "patchSetId": 4
@@ -137,6 +155,24 @@
       "side": 1,
       "message": "I\u0027d prefer to have the tests move with the implementation but maybe I don\u0027t understand the concern. Is it difficult to add unit tests for ServiceWorkerProviderHost::Register() in ServiceWorkerProviderHostTest now?",
       "parentUuid": "b3089c00_e437af3d",
+      "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6cbe189_80a3623c",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-30T06:47:56Z",
+      "side": 1,
+      "message": "I was thinking that we\u0027d better keep the tests for all SWContainer related IPCs at one place, including Register,GetRegistration etc. As some tests logic may involve multiple of them. Then after all got mojofied, we can move them all at once easily.",
+      "parentUuid": "9e4e4139_8cdc04f9",
       "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -190,6 +226,24 @@
       "side": 1,
       "message": "I think if you use mojo::ReportBadMessage, you don\u0027t need to worry about the callback.\n\nhttps://groups.google.com/a/chromium.org/d/msg/chromium-mojo/NNsogKNurlA/HdyJxDsBAQAJ",
       "parentUuid": "53e8c4d0_feb79d5d",
+      "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89059e71_ada467fa",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 946,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-30T06:47:56Z",
+      "side": 1,
+      "message": "Seems mojo::ReportBadMessage is a better choice.. But I have no idea how to adapt unit test to check the output from mojo::ReportBadMessage. Anyway I\u0027ve asked about this in the original discussion thread.\n\nAnd, I\u0027ve confirmed that even with mojo::ReportBadMessage we still need to either run the response callback or just close the mojo binding explicitly, seems the latter is preferred from Ken\u0027s comment in the above discussion thread.",
+      "parentUuid": "5341f3fc_4aea6bff",
       "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
