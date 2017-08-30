@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4df98ac4_57aabe27",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/shadow-dom/DocumentOrShadowRoot-prototype-elementFromPoint.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-08-30T10:31:43Z",
+      "side": 1,
+      "message": "If this is imported from WebKit\u0027s layout test, could you check the history to check\nthe real author?\nhttps://git.webkit.org/\n\nHow much of the test is rewritten?  Tests themselves are not modified but you only\nrewrote the expected results?",
+      "revId": "ca4a168c656c42cffaa4a647cfb5d1a3ba82e32a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca4d2612_f9578654",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-08-30T10:31:43Z",
+      "side": 1,
+      "message": "In google3 C++ style, variable declarations should be one per line.\n\nLocal variable names are like |snake_case|, not |camelCase|.",
+      "revId": "ca4a168c656c42cffaa4a647cfb5d1a3ba82e32a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f68f524_f62a575a",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-08-30T10:31:43Z",
+      "side": 1,
+      "message": "I feel that you can rewrite this loop with reverse iterator, and as\nloop termination conditions, you can include lines 402-403 and 405\nin the loop.\n\nThis may not improve the readability, but could you try?",
+      "revId": "ca4a168c656c42cffaa4a647cfb5d1a3ba82e32a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

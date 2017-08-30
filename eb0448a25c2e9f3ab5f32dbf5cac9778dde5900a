@@ -120,6 +120,24 @@
       "revId": "eb0448a25c2e9f3ab5f32dbf5cac9778dde5900a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eff8299a_0b77ad98",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-08-30T10:31:43Z",
+      "side": 1,
+      "message": "\u003e InnerNode does not return the shadow root either.\n\nThen please add DCHECK(!node-\u003eIsShadowRoot()) just in case someone changes\nInnerNode() to return shadow root accidentally.",
+      "parentUuid": "cbc48148_773e3aee",
+      "revId": "eb0448a25c2e9f3ab5f32dbf5cac9778dde5900a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
