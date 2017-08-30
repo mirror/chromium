@@ -2,6 +2,282 @@
   "comments": [
     {
       "key": {
+        "uuid": "fd3da85f_7e49054d",
+        "filename": "content/renderer/media/webrtc/two_keys_map.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-30T09:48:38Z",
+      "side": 1,
+      "message": "It would be good to also document something about the rationale for this data structure.",
+      "range": {
+        "startLine": 17,
+        "startChar": 22,
+        "endLine": 17,
+        "endChar": 23
+      },
+      "revId": "8cd6f4e5d44ea6af4b552637a28216ffe7204679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d4a07fb_3eefaf80",
+        "filename": "content/renderer/media/webrtc/two_keys_map.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-30T09:48:38Z",
+      "side": 1,
+      "message": "Name sounds a bit too generic for the content namespace, even if the class itself is generic. Maybe TwoKeysAdapterMap?\nAlso, consider moving this to a .cc file if possible to avoid exposing it.\nIf you do expose it, add documentation for all methods, including preconditions, etc.",
+      "range": {
+        "startLine": 21,
+        "startChar": 6,
+        "endLine": 21,
+        "endChar": 16
+      },
+      "revId": "8cd6f4e5d44ea6af4b552637a28216ffe7204679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6390b37c_377bee28",
+        "filename": "content/renderer/media/webrtc/two_keys_map.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-30T09:48:38Z",
+      "side": 1,
+      "message": "Would returning by const ref instead of by pointer work?",
+      "range": {
+        "startLine": 45,
+        "startChar": 7,
+        "endLine": 45,
+        "endChar": 8
+      },
+      "revId": "8cd6f4e5d44ea6af4b552637a28216ffe7204679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5304b93_500da398",
+        "filename": "content/renderer/media/webrtc/webrtc_media_stream_adapter_map.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-30T09:48:38Z",
+      "side": 1,
+      "message": "Remove reference to crbug.com/758850. Leave only the one the reference to crbug.com/705901 and add extra details in that bug itself if necessary.",
+      "range": {
+        "startLine": 20,
+        "startChar": 37,
+        "endLine": 20,
+        "endChar": 38
+      },
+      "revId": "8cd6f4e5d44ea6af4b552637a28216ffe7204679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b67e9a4_850e7902",
+        "filename": "content/renderer/media/webrtc/webrtc_media_stream_track_adapter_map.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-30T09:48:38Z",
+      "side": 1,
+      "message": "you can use release() and avoid the nullptr assignment.",
+      "range": {
+        "startLine": 32,
+        "startChar": 54,
+        "endLine": 32,
+        "endChar": 57
+      },
+      "revId": "8cd6f4e5d44ea6af4b552637a28216ffe7204679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7010cdc2_b602d763",
+        "filename": "content/renderer/media/webrtc/webrtc_media_stream_track_adapter_map.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-30T09:48:38Z",
+      "side": 1,
+      "message": "how can you be sure that there will be a secondary key?\nWould it be incorrect to delete by primary key?",
+      "range": {
+        "startLine": 37,
+        "startChar": 36,
+        "endLine": 37,
+        "endChar": 52
+      },
+      "revId": "8cd6f4e5d44ea6af4b552637a28216ffe7204679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a17f71b7_1bc37b8e",
+        "filename": "content/renderer/media/webrtc/webrtc_media_stream_track_adapter_map.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-30T09:48:38Z",
+      "side": 1,
+      "message": "these scoped_refptrs should be passed by values since they are saved.",
+      "range": {
+        "startLine": 60,
+        "startChar": 35,
+        "endLine": 60,
+        "endChar": 67
+      },
+      "revId": "8cd6f4e5d44ea6af4b552637a28216ffe7204679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "412c60c3_c503e5eb",
+        "filename": "content/renderer/media/webrtc/webrtc_media_stream_track_adapter_map.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-30T09:48:38Z",
+      "side": 1,
+      "message": "HasOneRef-\u003eHasOneRef()\nAlso, add \"when an adapter is in use\"  or something like that to explain when HasOneRef() is false.",
+      "range": {
+        "startLine": 66,
+        "startChar": 57,
+        "endLine": 66,
+        "endChar": 66
+      },
+      "revId": "8cd6f4e5d44ea6af4b552637a28216ffe7204679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65051ceb_2d93900e",
+        "filename": "content/renderer/media/webrtc/webrtc_media_stream_track_adapter_map.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-30T09:48:38Z",
+      "side": 1,
+      "message": "the new reference -\u003e a new reference",
+      "range": {
+        "startLine": 74,
+        "startChar": 10,
+        "endLine": 74,
+        "endChar": 13
+      },
+      "revId": "8cd6f4e5d44ea6af4b552637a28216ffe7204679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9714dce1_19053a42",
+        "filename": "content/renderer/media/webrtc/webrtc_media_stream_track_adapter_map.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-30T09:48:38Z",
+      "side": 1,
+      "message": "How do you know which one to call?",
+      "range": {
+        "startLine": 78,
+        "startChar": 30,
+        "endLine": 78,
+        "endChar": 50
+      },
+      "revId": "8cd6f4e5d44ea6af4b552637a28216ffe7204679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2da0008_ec519d00",
+        "filename": "content/renderer/media/webrtc/webrtc_media_stream_track_adapter_map.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-30T09:48:38Z",
+      "side": 1,
+      "message": "the new reference -\u003e a new reference",
+      "range": {
+        "startLine": 82,
+        "startChar": 37,
+        "endLine": 82,
+        "endChar": 38
+      },
+      "revId": "8cd6f4e5d44ea6af4b552637a28216ffe7204679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc4858f4_73c6239d",
+        "filename": "content/renderer/media/webrtc/webrtc_media_stream_track_adapter_map.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-30T09:48:38Z",
+      "side": 1,
+      "message": "If you create by web_track, why do you ever need to look up by webrtc_track?\nWhat value does having the two keys add in this case?\nThe CL description mentions a problem only with remote tracks.",
+      "range": {
+        "startLine": 87,
+        "startChar": 40,
+        "endLine": 87,
+        "endChar": 49
+      },
+      "revId": "8cd6f4e5d44ea6af4b552637a28216ffe7204679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d17d7c4d_a4872edf",
         "filename": "third_party/WebKit/Source/platform/mediastream/MediaStreamDescriptor.h",
         "patchSetId": 1
@@ -13,6 +289,29 @@
       "writtenOn": "2017-08-29T17:18:19Z",
       "side": 1,
       "message": "Note: Since I only needed to update the track adapter map, I could wait with adding a UniqueId to the descriptor until I fix the stream adapter map.",
+      "revId": "8cd6f4e5d44ea6af4b552637a28216ffe7204679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3584e87_c44ea402",
+        "filename": "third_party/WebKit/public/platform/WebMediaStream.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-30T09:48:38Z",
+      "side": 1,
+      "message": "Why not call this UniqueId?",
+      "range": {
+        "startLine": 75,
+        "startChar": 34,
+        "endLine": 75,
+        "endChar": 46
+      },
       "revId": "8cd6f4e5d44ea6af4b552637a28216ffe7204679",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
