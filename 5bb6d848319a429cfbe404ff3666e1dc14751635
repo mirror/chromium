@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7e48601_7816a0a3",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/customtabs/CustomTabActivityTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1235,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-08-30T10:56:02Z",
+      "side": 1,
+      "message": "nit: We prefer to not proactively add @RetryOnFailure, though it will probably end up requiring it...",
+      "revId": "5bb6d848319a429cfbe404ff3666e1dc14751635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dd71c76_3fdbbc0f",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/customtabs/CustomTabActivityTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1237,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-08-30T10:56:02Z",
+      "side": 1,
+      "message": "nit: Can you make the histogram name a static final String constant in CustomTabsActivity, with \n@VisibleForTesting?\nThen you can use it here.",
+      "revId": "5bb6d848319a429cfbe404ff3666e1dc14751635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9574389d_bea12370",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/customtabs/CustomTabActivityTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1255,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-08-30T10:56:02Z",
+      "side": 1,
+      "message": "nit: Not sure you need this flag.",
+      "revId": "5bb6d848319a429cfbe404ff3666e1dc14751635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c57db62_b6819d98",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/customtabs/CustomTabActivityTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1259,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-08-30T10:56:02Z",
+      "side": 1,
+      "message": "Callbacks are issued on the UI thread, so you need to poll it instead of the instrumentation thread.\n\nAlternatively, Can you use a semaphore instead of polling? Makes the code easier, and gets rid of the ugly polling.",
+      "revId": "5bb6d848319a429cfbe404ff3666e1dc14751635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
