@@ -4,6 +4,9 @@ scheib@chromium.org
 # For changes related to Chrome OS.
 rkc@chromium.org
 
+# For changes related to macOS.
+jlebel@chromium.org
+
 per-file *.gyp*=*
 per-file BUILD.gn=*
 
