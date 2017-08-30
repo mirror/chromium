@@ -151,6 +151,14 @@ public class FeatureUtilities {
         nativeSetIsInMultiWindowMode(isInMultiWindowMode);
     }
 
+    /**
+     * Records whether Chrome Home is enabled and exposes the fact to native code.
+     * @param isChromeHomeEnabled Whether Chrome Home is enabled.
+     */
+    public static void setIsChromeHomeEnabled(boolean isChromeHomeEnabled) {
+        nativeSetIsChromeHomeEnabled(isChromeHomeEnabled);
+    }
+
     private static boolean isHerbDisallowed(Context context) {
         return isDocumentMode(context);
     }
@@ -339,4 +347,5 @@ public class FeatureUtilities {
 
     private static native void nativeSetCustomTabVisible(boolean visible);
     private static native void nativeSetIsInMultiWindowMode(boolean isInMultiWindowMode);
+    private static native void nativeSetIsChromeHomeEnabled(boolean isChromeHomeEnabled);
 }

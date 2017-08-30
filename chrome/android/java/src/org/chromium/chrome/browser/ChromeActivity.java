@@ -874,6 +874,7 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
         FeatureUtilities.setCustomTabVisible(isCustomTab());
         FeatureUtilities.setIsInMultiWindowMode(
                 MultiWindowUtils.getInstance().isInMultiWindowMode(this));
+        FeatureUtilities.setIsChromeHomeEnabled(FeatureUtilities.isChromeHomeEnabled());
 
         if (mPictureInPictureController != null) {
             mPictureInPictureController.cleanup(this);

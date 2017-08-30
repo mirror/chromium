@@ -13,6 +13,7 @@ using base::android::JavaParamRef;
 namespace {
 bool custom_tab_visible = false;
 bool is_in_multi_window_mode = false;
+bool is_chrome_home_enabled = false;
 } // namespace
 
 namespace chrome {
@@ -25,6 +26,10 @@ CustomTabsVisibilityHistogram GetCustomTabsVisibleValue() {
 
 bool GetIsInMultiWindowModeValue() {
   return is_in_multi_window_mode;
+}
+
+bool GetIsChromeHomeEnabled() {
+  return is_chrome_home_enabled;
 }
 
 } // namespace android
@@ -41,4 +46,10 @@ static void SetIsInMultiWindowMode(JNIEnv* env,
                                    const JavaParamRef<jclass>& clazz,
                                    jboolean j_is_in_multi_window_mode) {
   is_in_multi_window_mode = j_is_in_multi_window_mode;
+}
+
+static void SetIsChromeHomeEnabled(JNIEnv* env,
+                                   const JavaParamRef<jclass>& clazz,
+                                   jboolean j_is_chrome_home_enabled) {
+  is_chrome_home_enabled = j_is_chrome_home_enabled;
 }
