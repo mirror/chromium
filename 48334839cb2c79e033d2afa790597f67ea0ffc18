@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9bb15fd_9976d56f",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-30T21:16:45Z",
+      "side": 1,
+      "message": "As per the discussion in the other CL, I am hoping we don\u0027t need this in RenderWidgetHostView (and this instead moves into aura::WindowDelegate). But until then, this should be OK.",
+      "revId": "48334839cb2c79e033d2afa790597f67ea0ffc18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
