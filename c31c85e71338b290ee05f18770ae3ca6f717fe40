@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b73bbbc_33adebe7",
+        "filename": "third_party/WebKit/Source/platform/exported/WebHTTPHeaderMap.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-08-30T13:45:26Z",
+      "side": 1,
+      "message": "nit. simple getters are all lower-case",
+      "revId": "c31c85e71338b290ee05f18770ae3ca6f717fe40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c16a4d7_7caa4522",
+        "filename": "third_party/WebKit/public/platform/WebCORSPreflightResultCache.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-08-30T13:45:26Z",
+      "side": 1,
+      "message": "base::flat_set maybe? (I\u0027d expect at most three methods)",
+      "revId": "c31c85e71338b290ee05f18770ae3ca6f717fe40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "600fb753_a41e7aeb",
+        "filename": "third_party/WebKit/public/platform/WebHTTPHeaderSet.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-08-30T13:45:26Z",
+      "side": 1,
+      "message": "it\u0027s a bit odd to have this in the blink namespace, but not sure what else to do here..",
+      "revId": "c31c85e71338b290ee05f18770ae3ca6f717fe40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
