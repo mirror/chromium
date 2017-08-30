@@ -58,11 +58,14 @@ class TestRenderFrame : public RenderFrameImpl {
       const blink::WebURLRequest& request,
       base::SingleThreadTaskRunner* task_runner) override;
 
-  mojom::FrameHostAssociatedPtr GetFrameHost() override;
+  std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params>
+  TakeLastCommitParams();
 
  private:
-  void BindFrameHost(mojo::ScopedInterfaceEndpointHandle handle);
   explicit TestRenderFrame(const RenderFrameImpl::CreateParams& params);
+
+  void BindFrameHost(mojo::ScopedInterfaceEndpointHandle handle);
+  mojom::FrameHost* GetFrameHost() override;
 
   std::unique_ptr<MockFrameHost> mock_frame_host_;
 
