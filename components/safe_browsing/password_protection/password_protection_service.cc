@@ -76,12 +76,17 @@ GURL GetHostNameWithHTTPScheme(const GURL& url) {
 
 }  // namespace
 
-const char kPasswordOnFocusRequestOutcomeHistogramName[] =
-    "PasswordProtection.RequestOutcome.PasswordFieldOnFocus";
-const char kPasswordEntryRequestOutcomeHistogramName[] =
-    "PasswordProtection.RequestOutcome.ProtectedPasswordEntry";
+// Matches sync and/or saved password
+const char kAnyPasswordEntryRequestOutcomeHistogramName[] =
+    "PasswordProtection.RequestOutcome.AnyPasswordEntry";
+// Matches sync and maybe also saved password
 const char kSyncPasswordEntryRequestOutcomeHistogramName[] =
     "PasswordProtection.RequestOutcome.SyncPasswordEntry";
+// Matches saved password but NOT sync password
+const char kProtectedPasswordEntryRequestOutcomeHistogramName[] =
+    "PasswordProtection.RequestOutcome.ProtectedPasswordEntry";
+const char kPasswordOnFocusRequestOutcomeHistogramName[] =
+    "PasswordProtection.RequestOutcome.PasswordFieldOnFocus";
 const char kSyncPasswordWarningDialogHistogramName[] =
     "PasswordProtection.ModalWarningDialogAction.SyncPasswordEntry";
 const char kSyncPasswordPageInfoHistogramName[] =
@@ -412,13 +417,13 @@ void PasswordProtectionService::MaybeStartProtectedPasswordEntryRequest(
 
 bool PasswordProtectionService::CanSendPing(const base::Feature& feature,
                                             const GURL& main_frame_url,
-                                            bool is_sync_password) {
+                                            bool matches_sync_password) {
   RequestOutcome request_outcome = URL_NOT_VALID_FOR_REPUTATION_COMPUTING;
   if (IsPingingEnabled(feature, &request_outcome) &&
       CanGetReputationOfURL(main_frame_url)) {
     return true;
   }
-  RecordNoPingingReason(feature, request_outcome, is_sync_password);
+  RecordNoPingingReason(feature, request_outcome, matches_sync_password);
   return false;
 }
 
@@ -776,24 +781,35 @@ PasswordProtectionService::CreateDictionaryFromVerdict(
 void PasswordProtectionService::RecordNoPingingReason(
     const base::Feature& feature,
     RequestOutcome reason,
-    bool is_sync_password) {
+    bool matches_sync_password) {
   DCHECK(feature.name == kProtectedPasswordEntryPinging.name ||
          feature.name == kPasswordFieldOnFocusPinging.name);
 
   bool is_password_entry_ping =
       feature.name == kProtectedPasswordEntryPinging.name;
 
-  if (is_password_entry_ping) {
-    if (is_sync_password) {
-      UMA_HISTOGRAM_ENUMERATION(kSyncPasswordEntryRequestOutcomeHistogramName,
-                                reason, MAX_OUTCOME);
-    } else {
-      UMA_HISTOGRAM_ENUMERATION(kPasswordEntryRequestOutcomeHistogramName,
-                                reason, MAX_OUTCOME);
-    }
-  } else {
+  if (!is_password_entry_ping) {
     UMA_HISTOGRAM_ENUMERATION(kPasswordOnFocusRequestOutcomeHistogramName,
                               reason, MAX_OUTCOME);
+    return;
+  }
+
+  LogPasswordEntryRequestOutcome(reason, matches_sync_password);
+}
+
+// static
+void PasswordProtectionService::LogPasswordEntryRequestOutcome(
+    RequestOutcome reason,
+    bool matches_sync_password) {
+  UMA_HISTOGRAM_ENUMERATION(kAnyPasswordEntryRequestOutcomeHistogramName,
+                            reason, MAX_OUTCOME);
+  if (matches_sync_password) {
+    UMA_HISTOGRAM_ENUMERATION(kSyncPasswordEntryRequestOutcomeHistogramName,
+                              reason, MAX_OUTCOME);
+  } else {
+    UMA_HISTOGRAM_ENUMERATION(
+        kProtectedPasswordEntryRequestOutcomeHistogramName, reason,
+        MAX_OUTCOME);
   }
 }
 
