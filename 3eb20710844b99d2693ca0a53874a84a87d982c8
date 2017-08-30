@@ -16,6 +16,24 @@
       "revId": "3eb20710844b99d2693ca0a53874a84a87d982c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06307bab_60b02b7b",
+        "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_page.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-30T22:38:05Z",
+      "side": 1,
+      "message": "Er, I meant \u0027asymmetric\u0027. Too many code reviews...",
+      "parentUuid": "5693bdba_a68f4570",
+      "revId": "3eb20710844b99d2693ca0a53874a84a87d982c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
