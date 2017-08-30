@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "cd441a43_9866bc7c",
+        "filename": "chrome/browser/content_settings/host_content_settings_map_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-08-30T05:05:29Z",
+      "side": 1,
+      "message": "Couldn\u0027t you just dereference the unique_ptrs, e.g. \n*expiration_times_dictionary\n\nI might be missing something though.",
+      "parentUuid": "3dbf329b_5eee40c8",
+      "revId": "773e3f0c37273146a389a357ed0bdc5ab2283749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62aac98f_4e7353ef",
         "filename": "chrome/browser/content_settings/host_content_settings_map_unittest.cc",
         "patchSetId": 6
