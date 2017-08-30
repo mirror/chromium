@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "core/loader/modulescript/ModuleScriptFetcher.h"
+#include "core/loader/modulescript/DocumentModuleScriptFetcher.h"
 
 #include "core/dom/ExecutionContext.h"
 #include "core/inspector/ConsoleMessage.h"
@@ -57,15 +57,13 @@ bool WasModuleLoadSuccessful(Resource* resource,
 
 }  // namespace
 
-ModuleScriptFetcher::ModuleScriptFetcher(const FetchParameters& fetch_params,
-                                         ResourceFetcher* fetcher,
-                                         Client* client)
-    : fetch_params_(fetch_params),
-      fetcher_(fetcher),
-      client_(client) {}
+DocumentModuleScriptFetcher::DocumentModuleScriptFetcher(
+    ResourceFetcher* fetcher,
+    ModuleScriptFetcher::Client* client)
+    : fetcher_(fetcher), client_(client) {}
 
-void ModuleScriptFetcher::Fetch() {
-  ScriptResource* resource = ScriptResource::Fetch(fetch_params_, fetcher_);
+void DocumentModuleScriptFetcher::Fetch(FetchParameters& fetch_params) {
+  ScriptResource* resource = ScriptResource::Fetch(fetch_params, fetcher_);
   if (was_fetched_) {
     // ScriptResource::Fetch() has succeeded synchronously,
     // ::NotifyFinished() already took care of the |resource|.
@@ -81,7 +79,7 @@ void ModuleScriptFetcher::Fetch() {
   SetResource(resource);
 }
 
-void ModuleScriptFetcher::NotifyFinished(Resource* resource) {
+void DocumentModuleScriptFetcher::NotifyFinished(Resource* resource) {
   ClearResource();
 
   ScriptResource* script_resource = ToScriptResource(resource);
@@ -98,14 +96,14 @@ void ModuleScriptFetcher::NotifyFinished(Resource* resource) {
   Finalize(params, nullptr /* error_message */);
 }
 
-void ModuleScriptFetcher::Finalize(
+void DocumentModuleScriptFetcher::Finalize(
     const WTF::Optional<ModuleScriptCreationParams>& params,
     ConsoleMessage* error_message) {
   was_fetched_ = true;
   client_->NotifyFetchFinished(params, error_message);
 }
 
-DEFINE_TRACE(ModuleScriptFetcher) {
+DEFINE_TRACE(DocumentModuleScriptFetcher) {
   visitor->Trace(fetcher_);
   visitor->Trace(client_);
   ResourceOwner<ScriptResource>::Trace(visitor);
