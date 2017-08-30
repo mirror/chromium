@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0651e85_756927e9",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-08-30T03:31:19Z",
+      "side": 1,
+      "message": "let\u0027s follow adding curly braces always. even for one liners, so that we are consistent across the file.",
+      "range": {
+        "startLine": 563,
+        "startChar": 6,
+        "endLine": 564,
+        "endChar": 15
+      },
+      "revId": "18e70f2d7a3562ea7b5d87a8fa66f4fba69e9b38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38560f53_84c1e9b9",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-08-30T03:31:19Z",
+      "side": 1,
+      "message": "You are assuming that the background is emptybackground view here. I don\u0027t think this check is necessary, you can directly call removeFromSuperview on emptybackgroundview.",
+      "range": {
+        "startLine": 594,
+        "startChar": 5,
+        "endLine": 594,
+        "endChar": 36
+      },
+      "revId": "18e70f2d7a3562ea7b5d87a8fa66f4fba69e9b38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
