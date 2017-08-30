@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea75b24c_9c0eb4be",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-30T14:06:25Z",
+      "side": 1,
+      "message": "Best. superpower. ever.",
+      "range": {
+        "startLine": 564,
+        "startChar": 46,
+        "endLine": 564,
+        "endChar": 58
+      },
+      "revId": "85ce9ac91cb97f9643f7163e9b13eb2c445d74b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "92d29661_12f2a586",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-30T14:06:25Z",
+      "side": 1,
+      "message": "nit: prefer base::MakeRefCounted to avoid bare new:\nauto task_runner \u003d base::MakeRefCounted\u003cbase::TestMockTimeTaskRunner\u003e();\n\nditto below",
+      "revId": "85ce9ac91cb97f9643f7163e9b13eb2c445d74b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
