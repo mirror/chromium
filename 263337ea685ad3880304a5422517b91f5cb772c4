@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "6ce4ed2a_5a9f363c",
+        "filename": "third_party/WebKit/Source/core/dom/Node.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-30T00:38:37Z",
+      "side": 1,
+      "message": "I like this (implemented in latest patch). I was looking to do something like this originally, but I was lacking Optional :).\n\nSlight amendment:\n\n  if (tracker)\n    context.text_element_timing_ancestor_tracker \u003d nullptr;",
+      "parentUuid": "5ead3f4b_5aeebe3f",
+      "range": {
+        "startLine": 635,
+        "startChar": 11,
+        "endLine": 635,
+        "endChar": 43
+      },
+      "revId": "263337ea685ad3880304a5422517b91f5cb772c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e32fc9b_1ffa0e34",
         "filename": "third_party/WebKit/Source/core/dom/Text.cpp",
         "patchSetId": 7
