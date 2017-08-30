@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43bb72fd_3fe69540",
+        "filename": "ash/system/web_notification/web_notification_tray.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-30T14:22:05Z",
+      "side": 1,
+      "message": "Can visible_small_icons_ be made into a std::map\u003cstd::string, std::unique_ptr\u003cWebNotificationImage\u003e\u003e? That would make the ownership clear.",
+      "revId": "fc14ea318af550c208af5e6bbbcaf3cfd32fbb9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
