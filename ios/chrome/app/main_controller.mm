@@ -2226,6 +2226,7 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
       // They must be started after the BVC view is added in the hierarchy.
       self.NTPActionAfterTabSwitcherDismissal =
           [_startupParameters postOpeningAction];
+      [self setStartupParameters:nil];
       tab = [_tabSwitcherController
           dismissWithNewTabAnimationToModel:targetBVC.tabModel
                                     withURL:url
@@ -2528,6 +2529,10 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
 
 - (BOOL)dismissingTabSwitcher {
   return _dismissingStackView;
+}
+
+- (void)setStartupParameters:(AppStartupParameters*)startupParameters {
+  _startupParameters = startupParameters;
 }
 
 - (void)setStartupParametersWithURL:(const GURL&)launchURL {
