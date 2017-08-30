@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "889b60b3_b79b16ba",
+        "filename": "services/viz/public/cpp/compositing/struct_traits_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-08-30T22:04:50Z",
+      "side": 1,
+      "message": "Sorry about this. I was trying ways to fix SerializeAndDeserialize",
+      "parentUuid": "bedc2792_8c9b49e0",
+      "range": {
+        "startLine": 76,
+        "startChar": 1,
+        "endLine": 78,
+        "endChar": 4
+      },
+      "revId": "3fe0f0f372ef58ccbf315889716f256a934a614a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4d4d31f2_543c94d9",
         "filename": "services/viz/public/cpp/compositing/struct_traits_unittest.cc",
         "patchSetId": 9
@@ -36,6 +60,24 @@
       "writtenOn": "2017-08-30T21:40:26Z",
       "side": 1,
       "message": "How come you need to change this?",
+      "revId": "3fe0f0f372ef58ccbf315889716f256a934a614a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86c45b48_ab19e8aa",
+        "filename": "services/viz/public/cpp/compositing/struct_traits_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-08-30T22:04:50Z",
+      "side": 1,
+      "message": "I had conversation with Ken Rokot, what i understand is that: SerializeAndDeserialize does not work with (non-nullable) handle fields. When serialize doesn\u0027t include a required handle in the message, and so deserialize fails, resulting in a null output. So i got segmentation fault when i try output-\u003eforce_bitmap_result() which is a nullptr deref. What i am doing right now is use serialized message to call TakeMojoMessage(), and then construct a new mojo::Message over the result of that.",
+      "parentUuid": "4d4d31f2_543c94d9",
       "revId": "3fe0f0f372ef58ccbf315889716f256a934a614a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -56,6 +98,24 @@
       "revId": "3fe0f0f372ef58ccbf315889716f256a934a614a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f10877e4_3d223604",
+        "filename": "services/viz/public/cpp/compositing/struct_traits_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-08-30T22:04:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3080fb46_56e4aadc",
+      "revId": "3fe0f0f372ef58ccbf315889716f256a934a614a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
