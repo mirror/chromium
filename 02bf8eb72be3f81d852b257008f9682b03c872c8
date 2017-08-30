@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6927aa39_97c5364b",
+        "filename": "ios/chrome/browser/ssl/ios_ssl_error_handler.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-30T17:22:26Z",
+      "side": 1,
+      "message": "In which cases there wouldn\u0027t be a tab helper? Also, it sounds a bit overkill to cancel the whole navigation, as captive portal interstitials are generally rare.",
+      "revId": "02bf8eb72be3f81d852b257008f9682b03c872c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
