@@ -16,6 +16,24 @@
       "revId": "165e9a6f468f0f6adfd2f2ff83107f5ea214b989",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce30bcd9_3d65495b",
+        "filename": "chromecast/browser/cast_browser_main_parts.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1186127
+      },
+      "writtenOn": "2017-08-30T04:57:14Z",
+      "side": 1,
+      "message": "I did a quick test on ATV, and overlapping shutdown with media suspend looks good. We should be able to safely enable this on Android. There are only two places we ever suspend the media session:\n\n1. In CastMediaBlocker for media to stop media loading for backgrounded apps or when another audio stream needs focus: Enabling media suspend is beneficial to match the logic on other platforms. Currently on Android it is just a no-op.\n2. To stop the media session when we initiate app shutdown in CastWebContentsManager: This is actually critical ensure media sessions/pipelines don\u0027t overlap with extended shutdown.\n\nDerek: Let me know if there are any other cases. Also adding Tavis to for due diligence.",
+      "parentUuid": "7842fe29_c3897b8f",
+      "revId": "165e9a6f468f0f6adfd2f2ff83107f5ea214b989",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
