@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7d4925bd_821e21dd",
+        "filename": "chrome/browser/ui/cocoa/passwords/passwords_list_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-08-30T16:19:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33664bd0_0f623d55",
+      "range": {
+        "startLine": 292,
+        "startChar": 8,
+        "endLine": 292,
+        "endChar": 9
+      },
+      "revId": "6f9238f46cbb7175f0472de32c43b87dccb9f55c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e441fe8_2a558d3f",
         "filename": "chrome/browser/ui/cocoa/passwords/passwords_list_view_controller.mm",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "6f9238f46cbb7175f0472de32c43b87dccb9f55c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0889e48b_b9c45d6b",
+        "filename": "chrome/browser/ui/cocoa/passwords/passwords_list_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-08-30T16:19:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e441fe8_2a558d3f",
+      "range": {
+        "startLine": 298,
+        "startChar": 19,
+        "endLine": 298,
+        "endChar": 38
+      },
+      "revId": "6f9238f46cbb7175f0472de32c43b87dccb9f55c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
