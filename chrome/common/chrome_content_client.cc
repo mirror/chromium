@@ -15,6 +15,7 @@
 #include "base/debug/crash_logging.h"
 #include "base/files/file_util.h"
 #include "base/json/json_reader.h"
+#include "base/lazy_instance.h"
 #include "base/memory/ptr_util.h"
 #include "base/native_library.h"
 #include "base/path_service.h"
@@ -713,5 +714,7 @@ media::MediaDrmBridgeClient* ChromeContentClient::GetMediaDrmBridgeClient() {
 
 void ChromeContentClient::OnServiceManagerConnected(
     content::ServiceManagerConnection* connection) {
-  memlog_client_.OnServiceManagerConnected(connection);
+  static base::LazyInstance<profiling::MemlogClient>::Leaky memlog_client =
+      LAZY_INSTANCE_INITIALIZER;
+  memlog_client.Get().OnServiceManagerConnected(connection);
 }

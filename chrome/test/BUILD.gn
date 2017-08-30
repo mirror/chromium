@@ -1115,6 +1115,7 @@ test("browser_tests") {
     ":browser_tests_runner",
     ":test_support",
     "//base",
+    "//chrome/browser/profiling_host:profiling_browsertests",
     "//components/spellcheck:build_features",
     "//components/sync:test_support_model",
     "//extensions/features",

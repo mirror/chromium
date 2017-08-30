@@ -114,7 +114,6 @@ class ChromeContentClient : public content::ContentClient {
   // Used to lock when |origin_trial_policy_| is initialized.
   base::Lock origin_trial_policy_lock_;
   std::unique_ptr<ChromeOriginTrialPolicy> origin_trial_policy_;
-  profiling::MemlogClient memlog_client_;
 };
 
 #endif  // CHROME_COMMON_CHROME_CONTENT_CLIENT_H_
