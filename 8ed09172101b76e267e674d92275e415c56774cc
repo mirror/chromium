@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "4224ea4f_a7285c7c",
+        "filename": "build/android/pylib/symbols/deobfuscator.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-30T17:56:37Z",
+      "side": 1,
+      "message": "Yet!\n\n(ack)",
+      "parentUuid": "6f5c50a7_54ec667b",
+      "revId": "8ed09172101b76e267e674d92275e415c56774cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6dec8f66_de553fdf",
         "filename": "build/android/pylib/symbols/deobfuscator.py",
         "patchSetId": 3
@@ -69,6 +87,24 @@
       "revId": "8ed09172101b76e267e674d92275e415c56774cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b1d5719_217dd4f1",
+        "filename": "build/android/pylib/symbols/deobfuscator.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-30T17:56:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9dd163d7_2b0637eb",
+      "revId": "8ed09172101b76e267e674d92275e415c56774cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
