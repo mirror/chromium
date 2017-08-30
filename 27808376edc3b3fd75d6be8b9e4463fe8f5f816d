@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "75512da1_89f79f35",
+        "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-08-30T08:48:27Z",
+      "side": 1,
+      "message": "Thanks. Will fix \"GET\" too.",
+      "parentUuid": "3f355425_4a6b63fc",
+      "revId": "27808376edc3b3fd75d6be8b9e4463fe8f5f816d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "453b5a8e_3b71ef06",
         "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "be5378c0_e8befe79",
+        "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-08-30T08:48:27Z",
+      "side": 1,
+      "message": "today, resource loading in blink does not have such limit, and just crash due to OOM, right?\nso, I\u0027m not sure having such limit here is useful because contents that are fetched by this interface are more reliable and predictable, and even would be things under our control.\n\non the other hands, SimpleURLLoader already has such limit. So, probably it\u0027s consistent and make migration easier in the future to have a similar limit.",
+      "parentUuid": "453b5a8e_3b71ef06",
+      "revId": "27808376edc3b3fd75d6be8b9e4463fe8f5f816d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb7e9054_a94df4f8",
         "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
         "patchSetId": 7
@@ -50,6 +86,24 @@
       "revId": "27808376edc3b3fd75d6be8b9e4463fe8f5f816d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "032c58fb_43251dc4",
+        "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-08-30T08:48:27Z",
+      "side": 1,
+      "message": "my original plan was to change the interface to take ResourceRequest in the next CL and each caller sets this, but it does not happen. so, probably it would be better to use content/child/web_url_request_util with a small change.",
+      "parentUuid": "bb7e9054_a94df4f8",
+      "revId": "27808376edc3b3fd75d6be8b9e4463fe8f5f816d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
