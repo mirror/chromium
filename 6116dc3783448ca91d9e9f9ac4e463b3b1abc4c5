@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6d175fb1_5ae6f597",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-08-30T14:19:18Z",
+      "side": 1,
+      "message": "I was treating the name |main-frame| as sort of a legacy naming thing ... it seems that HandleInputEvent() checks for the lack of a MainFrameImpl() and early outs, while other more-specific HandleX() functions don\u0027t, so let\u0027s assume (for now) it\u0027s safe not to check here.",
+      "parentUuid": "1ed51a52_4c82cd41",
+      "range": {
+        "startLine": 553,
+        "startChar": 45,
+        "endLine": 553,
+        "endChar": 60
+      },
+      "revId": "6116dc3783448ca91d9e9f9ac4e463b3b1abc4c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0da6d44d_c6ea8b49",
         "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
         "patchSetId": 6
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "fd4e1d7e_b4e6084b",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1846,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-08-30T14:19:18Z",
+      "side": 1,
+      "message": "Yikes, I missed that! I\u0027ll move this code down ...",
+      "parentUuid": "0da6d44d_c6ea8b49",
+      "revId": "6116dc3783448ca91d9e9f9ac4e463b3b1abc4c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b1d6a83_0416c829",
         "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
         "patchSetId": 6
@@ -53,6 +95,24 @@
       "writtenOn": "2017-08-30T11:38:28Z",
       "side": 1,
       "message": "How does this work for remote frames? Do we not need to end the fling in that case?",
+      "revId": "6116dc3783448ca91d9e9f9ac4e463b3b1abc4c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41ed5b30_4e7060ea",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 3460,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-08-30T14:19:18Z",
+      "side": 1,
+      "message": "It would seem reasonable that we should end the fling in that case too. But I looked, and didn\u0027t see any corresponding DidCommit() function in the WebFrameWidget* hierarchy (WebViewImpl isn\u0027t overloading this function ...) ... where are the commits handled for subframes then?",
+      "parentUuid": "3b1d6a83_0416c829",
       "revId": "6116dc3783448ca91d9e9f9ac4e463b3b1abc4c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "a3d132ce_282e89f7",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetBase.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-08-30T14:19:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1abf69d2_2a401a2c",
+      "range": {
+        "startLine": 360,
+        "startChar": 27,
+        "endLine": 360,
+        "endChar": 51
+      },
+      "revId": "6116dc3783448ca91d9e9f9ac4e463b3b1abc4c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11143dcc_40e6c0d9",
         "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetBase.cpp",
         "patchSetId": 6
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "7dd238e1_c82b8da9",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetBase.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-08-30T14:19:18Z",
+      "side": 1,
+      "message": "Done.\n\nLooking through the rest of the code I can\u0027t see any reason why it would be null ... I was  apparently just being overly cautious.",
+      "parentUuid": "11143dcc_40e6c0d9",
+      "range": {
+        "startLine": 361,
+        "startChar": 7,
+        "endLine": 361,
+        "endChar": 18
+      },
+      "revId": "6116dc3783448ca91d9e9f9ac4e463b3b1abc4c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8e51b06_454123e7",
         "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetBase.cpp",
         "patchSetId": 6
@@ -119,6 +227,24 @@
       "revId": "6116dc3783448ca91d9e9f9ac4e463b3b1abc4c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c2b1e74_9df2f052",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetBase.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-08-30T14:19:18Z",
+      "side": 1,
+      "message": "Done.\n\nI refactored the code in WVI (and accepted bokan@\u0027s suggestion) and just redirected the call there to point to this function for both events.",
+      "parentUuid": "c8e51b06_454123e7",
+      "revId": "6116dc3783448ca91d9e9f9ac4e463b3b1abc4c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -145,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "d4c1a722_99193a0f",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetBase.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-08-30T14:19:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b114a379_7be62c28",
+      "range": {
+        "startLine": 488,
+        "startChar": 25,
+        "endLine": 488,
+        "endChar": 36
+      },
+      "revId": "6116dc3783448ca91d9e9f9ac4e463b3b1abc4c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a951164_f64af426",
         "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetBase.cpp",
         "patchSetId": 6
@@ -168,6 +318,30 @@
     },
     {
       "key": {
+        "uuid": "3ca762f9_ef78f805",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetBase.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-08-30T14:19:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a951164_f64af426",
+      "range": {
+        "startLine": 519,
+        "startChar": 29,
+        "endLine": 519,
+        "endChar": 35
+      },
+      "revId": "6116dc3783448ca91d9e9f9ac4e463b3b1abc4c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a0f2e1f_dc2e7c31",
         "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetBase.h",
         "patchSetId": 6
@@ -182,6 +356,24 @@
       "revId": "6116dc3783448ca91d9e9f9ac4e463b3b1abc4c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23f99431_9240aa17",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetBase.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-08-30T14:19:18Z",
+      "side": 1,
+      "message": "Done. We\u0027ll have to see if it\u0027s ok on the bots, but no real reason it shouldn\u0027t be.",
+      "parentUuid": "6a0f2e1f_dc2e7c31",
+      "revId": "6116dc3783448ca91d9e9f9ac4e463b3b1abc4c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -202,6 +394,24 @@
     },
     {
       "key": {
+        "uuid": "2456afc4_88d343ea",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetBase.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-08-30T14:19:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cc61cc2_8856cea1",
+      "revId": "6116dc3783448ca91d9e9f9ac4e463b3b1abc4c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2ea635f_f992b7ab",
         "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetBase.h",
         "patchSetId": 6
@@ -216,6 +426,24 @@
       "revId": "6116dc3783448ca91d9e9f9ac4e463b3b1abc4c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee606db7_ce3e0a7c",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetBase.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-08-30T14:19:18Z",
+      "side": 1,
+      "message": "Done.\n\nI knew that :-) ... though not sure why I put these in the wrong place!",
+      "parentUuid": "d2ea635f_f992b7ab",
+      "revId": "6116dc3783448ca91d9e9f9ac4e463b3b1abc4c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -236,6 +464,24 @@
     },
     {
       "key": {
+        "uuid": "0b3ffecd_ed7ecb3f",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetImpl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-08-30T14:19:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78bfe78e_8eafb7a4",
+      "revId": "6116dc3783448ca91d9e9f9ac4e463b3b1abc4c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2bd3a391_5db64d4a",
         "filename": "third_party/WebKit/public/web/WebView.h",
         "patchSetId": 6
@@ -247,6 +493,24 @@
       "writtenOn": "2017-08-30T11:38:28Z",
       "side": 1,
       "message": "Is it possible to remove this now?",
+      "revId": "6116dc3783448ca91d9e9f9ac4e463b3b1abc4c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ce7b513_60070cb8",
+        "filename": "third_party/WebKit/public/web/WebView.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-08-30T14:19:18Z",
+      "side": 1,
+      "message": "It seems to be used in layout tests ... so I would guess \u0027no\u0027?",
+      "parentUuid": "2bd3a391_5db64d4a",
       "revId": "6116dc3783448ca91d9e9f9ac4e463b3b1abc4c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
