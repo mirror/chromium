@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c591f528_e77aba1c",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_browsertest_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-08-30T17:31:06Z",
+      "side": 1,
+      "message": "In the code, incoming_seed_ corresponds to 1 and old_seed_ to 2. Which order is the correct one?",
+      "revId": "22146aa4e74db41ea5a27b128963b190a935c7c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57224358_acd41a9d",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_browsertest_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-08-30T17:31:06Z",
+      "side": 1,
+      "message": "You can write:\n  std::tie(in_browser_cleaner_ui_, incoming_seed_, old_seed) \u003d GetParam();",
+      "revId": "22146aa4e74db41ea5a27b128963b190a935c7c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fea7264d_22aef07d",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_browsertest_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-08-30T17:31:06Z",
+      "side": 1,
+      "message": "Please add \"override\" to the header.",
+      "revId": "22146aa4e74db41ea5a27b128963b190a935c7c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a815df4_19b5c3a4",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_browsertest_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-08-30T17:31:06Z",
+      "side": 1,
+      "message": "Please use the same order as in the params.",
+      "revId": "22146aa4e74db41ea5a27b128963b190a935c7c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6186b32_257878c9",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_browsertest_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-08-30T17:31:06Z",
+      "side": 1,
+      "message": "Nit: please document the fields here. Something like:\n  /*in_browser_ui\u003d*..., /*incoming_seed\u003d*/..., /*old_seed\u003d*/...",
+      "range": {
+        "startLine": 675,
+        "startChar": 65,
+        "endLine": 675,
+        "endChar": 0
+      },
+      "revId": "22146aa4e74db41ea5a27b128963b190a935c7c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b880a760_89ca1eb0",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-08-30T17:31:06Z",
+      "side": 1,
+      "message": "Please add in the CL description that changes in non-test files were only to make the old flow testable without any change in the behavior expected in prod. This might be useful for justifying merging up the previous CL.",
+      "range": {
+        "startLine": 669,
+        "startChar": 28,
+        "endLine": 669,
+        "endChar": 0
+      },
+      "revId": "22146aa4e74db41ea5a27b128963b190a935c7c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
