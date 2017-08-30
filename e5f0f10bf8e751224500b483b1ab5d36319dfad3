@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fecac7eb_fe709c60",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-08-30T05:06:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "955f990b_45ffced1",
+      "revId": "e5f0f10bf8e751224500b483b1ab5d36319dfad3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f74f4e24_880b6b63",
         "filename": "chrome/browser/renderer_context_menu/render_view_context_menu.cc",
         "patchSetId": 5
@@ -30,6 +48,30 @@
       "writtenOn": "2017-08-30T01:30:27Z",
       "side": 1,
       "message": "Nit: Combine this into the previous if with an \u0026\u0026.",
+      "range": {
+        "startLine": 996,
+        "startChar": 6,
+        "endLine": 996,
+        "endChar": 8
+      },
+      "revId": "e5f0f10bf8e751224500b483b1ab5d36319dfad3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02bfbdf9_87d10643",
+        "filename": "chrome/browser/renderer_context_menu/render_view_context_menu.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 996,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-08-30T05:06:03Z",
+      "side": 1,
+      "message": "I don\u0027t think we can? This:\n\n    if (base::FeatureList::IsEnabled(features::kDesktopPWAWindowing) \u0026\u0026\n        (const Extension* bookmark_app \u003d\n           GetBookmarkAppForURL(browser_context_, params_.link_url))) {\n\n\nresults in:\n\n../../chrome/browser/renderer_context_menu/render_view_context_menu.cc:996:27: error: expected \u0027)\u0027\n        (const Extension* bookmark_app \u003d\n                          ^\n../../chrome/browser/renderer_context_menu/render_view_context_menu.cc:996:9: note: to match this \u0027(\u0027\n        (const Extension* bookmark_app \u003d\n        ^\n../../chrome/browser/renderer_context_menu/render_view_context_menu.cc:997:69: error: expected expression\n           GetBookmarkAppForURL(browser_context_, params_.link_url))) {\n                                                                    ^\n\nI tried no parentheses, and !!, but I still get the same error :/ I haven\u0027t been able to find any reason why this should or shouldn\u0027t work.",
+      "parentUuid": "f74f4e24_880b6b63",
       "range": {
         "startLine": 996,
         "startChar": 6,
@@ -62,6 +104,30 @@
       "revId": "e5f0f10bf8e751224500b483b1ab5d36319dfad3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27577d54_41a5b704",
+        "filename": "chrome/browser/renderer_context_menu/render_view_context_menu.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2201,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-08-30T05:06:03Z",
+      "side": 1,
+      "message": "I think it\u0027s possible, though it\u0027ll be rare e.g.\n\n1. User right + clicks an in-scope link for |app|.\n2. Sync runs and removes |app|.\n3. User clicks \"Open in |app|\".",
+      "parentUuid": "bec542a2_3f640636",
+      "range": {
+        "startLine": 2201,
+        "startChar": 7,
+        "endLine": 2201,
+        "endChar": 19
+      },
+      "revId": "e5f0f10bf8e751224500b483b1ab5d36319dfad3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
