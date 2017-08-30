@@ -16,6 +16,24 @@
       "revId": "b1699100facc4616a97e1f190cee0fc333d20c27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a323f9e_0c43b328",
+        "filename": "components/ukm/ukm_source.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-30T22:18:38Z",
+      "side": 0,
+      "message": "As indicated previously, we need to call UpdateSourceUrl on an empty URL to create a source_ entry.",
+      "parentUuid": "94fe89cd_ce74e904",
+      "revId": "b1699100facc4616a97e1f190cee0fc333d20c27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

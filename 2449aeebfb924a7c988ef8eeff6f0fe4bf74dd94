@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f34c0164_9a92ef1c",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-30T22:18:38Z",
+      "side": 1,
+      "message": "UpdateSourceURL is the code that actually updates sources_.\n\nhttps://cs.chromium.org/chromium/src/components/ukm/ukm_recorder_impl.cc?type\u003dcs\u0026l\u003d143",
+      "parentUuid": "70d2dece_9a197b3b",
+      "revId": "2449aeebfb924a7c988ef8eeff6f0fe4bf74dd94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "964429f0_4c57e999",
         "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.cc",
         "patchSetId": 3
@@ -48,6 +66,24 @@
       "side": 1,
       "message": "That introduces a dependency for resource_coordinator to page load metrics code. Could you please point me to the code of the dedicated webcontentsobserver?\n\nI am not against setting source id in one place, but I think it\u0027s better not to have dependency between webcontentsobserver.",
       "parentUuid": "964429f0_4c57e999",
+      "revId": "2449aeebfb924a7c988ef8eeff6f0fe4bf74dd94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a445f2d2_9cd7148b",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-30T22:18:38Z",
+      "side": 1,
+      "message": "Can you fix this then, once you move the URL setting to \"a dedicated webcontentsobserver\"",
+      "parentUuid": "9b8d640d_9c55c0d8",
       "revId": "2449aeebfb924a7c988ef8eeff6f0fe4bf74dd94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
