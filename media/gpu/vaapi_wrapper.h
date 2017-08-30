@@ -25,6 +25,7 @@
 #include "media/base/video_decoder_config.h"
 #include "media/base/video_frame.h"
 #include "media/gpu/media_gpu_export.h"
+#include "media/gpu/shared_memory_region.h"
 #include "media/gpu/va_surface.h"
 #include "media/video/jpeg_decode_accelerator.h"
 #include "media/video/video_decode_accelerator.h"
@@ -87,6 +88,9 @@ class MEDIA_GPU_EXPORT VaapiWrapper
 
   // Return true when JPEG decode is supported.
   static bool IsJpegDecodeSupported();
+
+  // Return true when JPEG encode is supported.
+  static bool IsJpegEncodeSupported();
 
   // Create |num_surfaces| backing surfaces in driver for VASurfaces of
   // |va_format|, each of size |size|. Returns true when successful, with the
@@ -182,6 +186,12 @@ class MEDIA_GPU_EXPORT VaapiWrapper
   // Upload contents of |frame| into |va_surface_id| for encode.
   bool UploadVideoFrameToSurface(const scoped_refptr<VideoFrame>& frame,
                                  VASurfaceID va_surface_id);
+
+  // Upload contents of |frame| into |va_surface_id| for encode.
+  //  |frame| contains I420 image
+  bool UploadFrameToSurface(const scoped_refptr<SharedMemoryRegion>& frame,
+                            int width, int height,
+                            VASurfaceID va_surface_id);
 
   // Create a buffer of |size| bytes to be used as encode output.
   bool CreateCodedBuffer(size_t size, VABufferID* buffer_id);
