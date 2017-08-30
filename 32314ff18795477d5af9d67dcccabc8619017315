@@ -16,6 +16,24 @@
       "revId": "32314ff18795477d5af9d67dcccabc8619017315",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a28a575_332720c9",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletThread.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-30T17:15:53Z",
+      "side": 1,
+      "message": "I get this when it\u0027s complied:\n\n../../third_party/WebKit/Source/modules/webaudio/AudioWorkletThread.cpp:25:48: error: declaration requires a global destructor [-Werror,-Wglobal-constructors]\nstd::unique_ptr\u003cWebThread\u003e AudioWorkletThread::s_backing_thread_;",
+      "parentUuid": "90b063e0_8b433c04",
+      "revId": "32314ff18795477d5af9d67dcccabc8619017315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
