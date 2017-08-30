@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "9b0127fe_a9dcfcab",
+        "filename": "ui/events/android/motion_event_android.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-08-30T01:20:27Z",
+      "side": 1,
+      "message": "FYI turns out JNI_MotionEvent is necessary to specify the right namespace, since in the definition within this class, the enum from MotionEvent takes precedence. Those without JNI_MotionEvent (used at the top of this file) are okay because they are referenced outside the class.",
+      "parentUuid": "540ae2e3_848f5420",
+      "revId": "244172eb8682bb567cfbfd619f106974cb3df87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b93db05a_0d2b8ec6",
         "filename": "ui/events/android/motion_event_android.h",
         "patchSetId": 6
