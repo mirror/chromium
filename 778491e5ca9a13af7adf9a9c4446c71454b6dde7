@@ -22,6 +22,54 @@
       "revId": "778491e5ca9a13af7adf9a9c4446c71454b6dde7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1265b968_3942e160",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SuggestionView.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-08-30T21:34:14Z",
+      "side": 1,
+      "message": "The setter is called in initSuggestionList since it\u0027s called after setBottomSheet.",
+      "parentUuid": "16e322fc_e247f660",
+      "range": {
+        "startLine": 198,
+        "startChar": 81,
+        "endLine": 198,
+        "endChar": 99
+      },
+      "revId": "778491e5ca9a13af7adf9a9c4446c71454b6dde7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b3b2a19_a1290912",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SuggestionView.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-08-30T21:34:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16e322fc_e247f660",
+      "range": {
+        "startLine": 198,
+        "startChar": 81,
+        "endLine": 198,
+        "endChar": 99
+      },
+      "revId": "778491e5ca9a13af7adf9a9c4446c71454b6dde7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
