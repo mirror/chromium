@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "1d695560_8f049770",
+        "filename": "ui/views/controls/button/checkbox.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-30T13:57:52Z",
+      "side": 1,
+      "message": "\u003e I don\u0027t think this is coincidence.  I think these colors always have to stay in sync and matching the text color is correct.\n\nIt matches the color of text used on MdTextButton, but not color of text used on Checkbox. If we feel that\u0027s not just coincidence, style::GetColor() makes sense - it just needs a comment. Something like,\n\n  // Under MD, the stroke color is chosen to match the text color used on MD dialog buttons.\n  // Note this will be different to the color used for the Checkbox label.",
+      "parentUuid": "32909268_0f78eb79",
+      "revId": "093553708fc11a2808c8cef8697648761aa8ddbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "81d48c79_ebc6d884",
         "filename": "ui/views/controls/button/checkbox.cc",
         "patchSetId": 3
