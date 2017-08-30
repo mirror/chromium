@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d60c4f6f_29ba6864",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1110,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-30T02:19:03Z",
+      "side": 1,
+      "message": "Could you add a comment to say that we are trying to use these TRACE_EVENTs for perf benchmark to confirm if all of fetch events have completed?",
+      "revId": "4ce910b71239a43094a317fcd7a034e237544bb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30a39dd2_4de21f94",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1571,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-30T02:19:03Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "4ce910b71239a43094a317fcd7a034e237544bb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
