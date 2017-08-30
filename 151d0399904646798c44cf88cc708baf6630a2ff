@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "59036931_3c9dd110",
+        "filename": "remoting/client/audio/audio_player_buffer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-08-30T17:20:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d87bea3f_dd636364",
+      "range": {
+        "startLine": 99,
+        "startChar": 28,
+        "endLine": 99,
+        "endChar": 57
+      },
+      "revId": "151d0399904646798c44cf88cc708baf6630a2ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ce6e618_25d6ceb8",
         "filename": "remoting/client/audio/audio_player_buffer.cc",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "151d0399904646798c44cf88cc708baf6630a2ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f90b89c_754ff778",
+        "filename": "remoting/client/audio/audio_player_buffer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-08-30T17:20:51Z",
+      "side": 1,
+      "message": "No this is not a good idea. I would have to do a std::move to use the object but then it is weird because I don\u0027t know if I want to pop off the request yet. Better to just use the pointer and allow the queue to own the object.",
+      "parentUuid": "1ce6e618_25d6ceb8",
+      "range": {
+        "startLine": 164,
+        "startChar": 4,
+        "endLine": 164,
+        "endChar": 22
+      },
+      "revId": "151d0399904646798c44cf88cc708baf6630a2ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "51aa01be_c0ec6d5c",
+        "filename": "remoting/client/audio/audio_player_buffer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-08-30T17:20:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "188b6ea0_fd341225",
+      "range": {
+        "startLine": 166,
+        "startChar": 55,
+        "endLine": 166,
+        "endChar": 59
+      },
+      "revId": "151d0399904646798c44cf88cc708baf6630a2ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd690d5c_73ca58c6",
         "filename": "remoting/client/audio/audio_player_buffer.h",
         "patchSetId": 8
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "03171c57_74dde26f",
+        "filename": "remoting/client/audio/audio_player_buffer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-08-30T17:20:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd690d5c_73ca58c6",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 18
+      },
+      "revId": "151d0399904646798c44cf88cc708baf6630a2ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "550ad237_c4870896",
         "filename": "remoting/client/audio/audio_player_buffer.h",
         "patchSetId": 8
@@ -114,6 +210,30 @@
       "revId": "151d0399904646798c44cf88cc708baf6630a2ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15fb194e_ee8e46ba",
+        "filename": "remoting/client/audio/audio_player_buffer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-08-30T17:20:51Z",
+      "side": 1,
+      "message": "Ok I moved the struct to be private.",
+      "parentUuid": "550ad237_c4870896",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 51
+      },
+      "revId": "151d0399904646798c44cf88cc708baf6630a2ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
