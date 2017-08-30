@@ -9,6 +9,7 @@
 #include <memory>
 #include <string>
 #include "core/editing/Position.h"
+#include "core/editing/SelectionTemplate.h"
 #include "core/testing/DummyPageHolder.h"
 #include "platform/wtf/Forward.h"
 
@@ -29,6 +30,10 @@ class EditingTestBase : public ::testing::Test {
  protected:
   EditingTestBase();
   ~EditingTestBase() override;
+
+  Position AsPosition(const std::string& html_text);
+  SelectionInDOMTree AsSelection(const std::string& html_text);
+  std::string ToSelectionText(const Node&, const SelectionInDOMTree&) const;
 
   void SetUp() override;
 
