@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4532a974_eb380c12",
+        "filename": "chrome/installer/linux/rpm/update-package-provides.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-30T23:33:25Z",
+      "side": 1,
+      "message": "Maybe add a comment to mention the ordering here matters, since we want the entries for the updates to overwrite the originals?",
+      "revId": "b838982a30b700fba9f83d4b0b98c0768a3f1198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fb18898_d8aaf5b4",
+        "filename": "chrome/installer/linux/rpm/update-package-provides.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-30T23:33:25Z",
+      "side": 1,
+      "message": "Move this down below the continue, in case the next line evals to true?",
+      "revId": "b838982a30b700fba9f83d4b0b98c0768a3f1198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
