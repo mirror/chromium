@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7464ac50_72343eda",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-30T07:10:15Z",
+      "side": 1,
+      "message": "Sorry, I gave bad advice before. Upon closer reading of the spec, all this should happen on ACTIVATED. The \"Try Activate\" algorithm blocks until activation finishes, if \"Activate\" was invoked. So the current code which does this in ACTIVATED is right.\n\nAnd actually, we should resolve the promise after the state has been changed to \u0027activated\u0027, i.e., below line 388. But let\u0027s work on that in a follow-up patch.",
+      "revId": "482fedaef54623ac091195ce3fe2e38dfa470bbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bcd49e0_651951ae",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-30T07:10:15Z",
+      "side": 1,
+      "message": "Please update the comments too when changing back to ACTIVATED. I guess now ACTIVATING should say something like \"Do nothing with the skip waiting promise until the worker reaches ACTIVATED.\"",
+      "revId": "482fedaef54623ac091195ce3fe2e38dfa470bbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e7063d3_b71bba52",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1377,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-30T07:10:15Z",
+      "side": 1,
+      "message": "wrong msg :)\n\nAlso we have to clear pending_skip_waiting_requests_, or else we\u0027ll send the message again when the worker does activate. \n\nBut to narrow the scope of this patch to getting the existing WPT test to pass, let\u0027s just remove lines 1372-1377. We can fix it in a follow-up patch with more extensive tests.",
+      "revId": "482fedaef54623ac091195ce3fe2e38dfa470bbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
