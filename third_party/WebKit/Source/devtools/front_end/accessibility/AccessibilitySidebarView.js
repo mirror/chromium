@@ -9,6 +9,7 @@ Accessibility.AccessibilitySidebarView = class extends UI.ThrottledWidget {
     super();
     this._node = null;
     this._axNode = null;
+    this._nodeSelectedFromAXTree = false;
     this._sidebarPaneStack = UI.viewManager.createStackLocation();
     this._breadcrumbsSubPane = new Accessibility.AXBreadcrumbsPane(this);
     this._sidebarPaneStack.showView(this._breadcrumbsSubPane);
