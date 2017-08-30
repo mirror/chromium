@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86095d76_2157bc27",
+        "filename": "chrome/android/java/res/layout/bookmark_row_content.xml",
+        "patchSetId": 20
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-30T23:28:18Z",
+      "side": 1,
+      "message": "I chatted with twellington@ and I was initially thinking we should just reuse the existing icon but add additional padding to make it appear 24x24, but since that is a short term solution this seems fine.  If we find ourselves needing to support both, I think we should actually ship a smaller one and add padding to achieve this look elsewhere.",
+      "range": {
+        "startLine": 26,
+        "startChar": 35,
+        "endLine": 26,
+        "endChar": 58
+      },
+      "revId": "5d43b79628d1e4f67b64ab32b605f07a9df9a652",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
