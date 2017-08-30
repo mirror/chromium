@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62155c5c_615ad4cf",
+        "filename": "base/strings/string_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-30T17:31:21Z",
+      "side": 1,
+      "message": "We don\u0027t need this forward decl if we either move the ReplaceChars() definitions down so that they\u0027re after DoReplaceMatchesAfterOffset, or hoist the DoReplaceMatchesAfterOffset implementation up. I haven\u0027t done that yet, to keep the diff aligned.",
+      "range": {
+        "startLine": 248,
+        "startChar": 10,
+        "endLine": 248,
+        "endChar": 16
+      },
+      "revId": "02c7bc7e25707f2cc280f92b12886e9228a304d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
