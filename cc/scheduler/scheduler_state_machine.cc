@@ -47,8 +47,8 @@ const char* SchedulerStateMachine::BeginImplFrameStateToString(
       return "BEGIN_IMPL_FRAME_STATE_IDLE";
     case BEGIN_IMPL_FRAME_STATE_INSIDE_BEGIN_FRAME:
       return "BEGIN_IMPL_FRAME_STATE_INSIDE_BEGIN_FRAME";
-    case BEGIN_IMPL_FRAME_STATE_INSIDE_DEADLINE:
-      return "BEGIN_IMPL_FRAME_STATE_INSIDE_DEADLINE";
+    case BEGIN_IMPL_FRAME_STATE_INSIDE_DRAW:
+      return "BEGIN_IMPL_FRAME_STATE_INSIDE_DRAW";
   }
   NOTREACHED();
   return "???";
@@ -332,7 +332,7 @@ bool SchedulerStateMachine::ShouldDraw() const {
 
   // Except for the cases above, do not draw outside of the BeginImplFrame
   // deadline.
-  if (begin_impl_frame_state_ != BEGIN_IMPL_FRAME_STATE_INSIDE_DEADLINE)
+  if (begin_impl_frame_state_ != BEGIN_IMPL_FRAME_STATE_INSIDE_DRAW)
     return false;
 
   // Wait for ready to draw in full-pipeline mode or the browser compositor's
@@ -491,10 +491,10 @@ bool SchedulerStateMachine::ShouldSendBeginMainFrame() const {
     // main-thread throughput.
     // TODO(brianderson): Remove this restriction to improve throughput or
     // make it conditional on ImplLatencyTakesPriority.
-    bool just_submitted_in_deadline =
-        begin_impl_frame_state_ == BEGIN_IMPL_FRAME_STATE_INSIDE_DEADLINE &&
+    bool just_submitted_in_draw =
+        begin_impl_frame_state_ == BEGIN_IMPL_FRAME_STATE_INSIDE_DRAW &&
         did_submit_in_last_frame_;
-    if (IsDrawThrottled() && !just_submitted_in_deadline)
+    if (IsDrawThrottled() && !just_submitted_in_draw)
       return false;
   }
 
@@ -533,7 +533,7 @@ bool SchedulerStateMachine::ShouldPrepareTiles() const {
 
   // Limiting to once per-frame is not enough, since we only want to prepare
   // tiles _after_ draws.
-  if (begin_impl_frame_state_ != BEGIN_IMPL_FRAME_STATE_INSIDE_DEADLINE)
+  if (begin_impl_frame_state_ != BEGIN_IMPL_FRAME_STATE_INSIDE_DRAW)
     return false;
 
   return needs_prepare_tiles_;
@@ -592,7 +592,7 @@ bool SchedulerStateMachine::ShouldPerformImplSideInvalidation() const {
 
   // Only perform impl side invalidation after the frame ends so that we wait
   // for any commit to happen before invalidating.
-  if (begin_impl_frame_state_ != BEGIN_IMPL_FRAME_STATE_INSIDE_DEADLINE)
+  if (begin_impl_frame_state_ != BEGIN_IMPL_FRAME_STATE_INSIDE_DRAW)
     return false;
 
   if (!CouldCreatePendingTree())
@@ -963,10 +963,10 @@ void SchedulerStateMachine::OnBeginImplFrame(uint32_t source_id,
   did_perform_impl_side_invalidation_ = false;
 }
 
-void SchedulerStateMachine::OnBeginImplFrameDeadline() {
-  begin_impl_frame_state_ = BEGIN_IMPL_FRAME_STATE_INSIDE_DEADLINE;
+void SchedulerStateMachine::OnBeginImplFrameDraw() {
+  begin_impl_frame_state_ = BEGIN_IMPL_FRAME_STATE_INSIDE_DRAW;
 
-  // Clear funnels for any actions we perform during the deadline.
+  // Clear funnels for any actions we perform during the draw.
   did_draw_ = false;
 }
 
@@ -997,9 +997,9 @@ SchedulerStateMachine::CurrentBeginImplFrameDeadlineMode() const {
   if (settings_.using_synchronous_renderer_compositor) {
     // No deadline for synchronous compositor.
     return BEGIN_IMPL_FRAME_DEADLINE_MODE_NONE;
-  } else if (ShouldBlockDeadlineIndefinitely()) {
+  } else if (ShouldBlockDrawIndefinitely()) {
     return BEGIN_IMPL_FRAME_DEADLINE_MODE_BLOCKED;
-  } else if (ShouldTriggerBeginImplFrameDeadlineImmediately()) {
+  } else if (ShouldTriggerBeginImplFrameDrawImmediately()) {
     return BEGIN_IMPL_FRAME_DEADLINE_MODE_IMMEDIATE;
   } else if (needs_redraw_) {
     // We have an animation or fast input path on the impl thread that wants
@@ -1012,13 +1012,12 @@ SchedulerStateMachine::CurrentBeginImplFrameDeadlineMode() const {
   }
 }
 
-bool SchedulerStateMachine::ShouldTriggerBeginImplFrameDeadlineImmediately()
-    const {
-  // If we just forced activation, we should end the deadline right now.
+bool SchedulerStateMachine::ShouldTriggerBeginImplFrameDrawImmediately() const {
+  // If we just forced activation, we should end the draw right now.
   if (PendingActivationsShouldBeForced() && !has_pending_tree_)
     return true;
 
-  // Throttle the deadline on CompositorFrameAck since we wont draw and submit
+  // Throttle the draw on CompositorFrameAck since we won't draw and submit
   // anyway.
   if (IsDrawThrottled())
     return false;
@@ -1049,7 +1048,7 @@ bool SchedulerStateMachine::ShouldTriggerBeginImplFrameDeadlineImmediately()
   return false;
 }
 
-bool SchedulerStateMachine::ShouldBlockDeadlineIndefinitely() const {
+bool SchedulerStateMachine::ShouldBlockDrawIndefinitely() const {
   if (!settings_.wait_for_all_pipeline_stages_before_draw &&
       !settings_.commit_to_active_tree) {
     return false;
@@ -1190,7 +1189,7 @@ void SchedulerStateMachine::NotifyReadyToCommit() {
 void SchedulerStateMachine::BeginMainFrameAborted(CommitEarlyOutReason reason) {
   DCHECK_EQ(begin_main_frame_state_, BEGIN_MAIN_FRAME_STATE_STARTED);
 
-  // If the main thread aborted, it doesn't matter if the  main thread missed
+  // If the main thread aborted, it doesn't matter if the main thread missed
   // the last deadline since it didn't have an update anyway.
   main_thread_missed_last_deadline_ = false;
 

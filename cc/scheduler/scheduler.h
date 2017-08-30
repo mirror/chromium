@@ -192,8 +192,8 @@ class CC_EXPORT Scheduler : public viz::BeginFrameObserverBase {
   BeginFrameTracker begin_impl_frame_tracker_;
   viz::BeginFrameArgs begin_main_frame_args_;
 
-  base::Closure begin_impl_frame_deadline_closure_;
-  base::CancelableClosure begin_impl_frame_deadline_task_;
+  base::Closure begin_impl_frame_draw_closure_;
+  base::CancelableClosure begin_impl_frame_draw_task_;
   base::CancelableClosure missed_begin_frame_task_;
 
   SchedulerStateMachine state_machine_;
@@ -204,8 +204,8 @@ class CC_EXPORT Scheduler : public viz::BeginFrameObserverBase {
   bool stopped_ = false;
 
  private:
-  void ScheduleBeginImplFrameDeadline();
-  void ScheduleBeginImplFrameDeadlineIfNeeded();
+  void ScheduleBeginImplFrameDraw();
+  void ScheduleBeginImplFrameDrawIfNeeded();
   void BeginImplFrameNotExpectedSoon();
   void BeginMainFrameNotExpectedUntil(base::TimeTicks time);
   void SetupNextBeginFrameIfNeeded();
@@ -230,7 +230,7 @@ class CC_EXPORT Scheduler : public viz::BeginFrameObserverBase {
   enum BeginFrameResult { kBeginFrameSkipped, kBeginFrameFinished };
   void SendBeginFrameAck(const viz::BeginFrameArgs& args,
                          BeginFrameResult result);
-  void OnBeginImplFrameDeadline();
+  void OnBeginImplFrameDraw();
   void PollToAdvanceCommitState();
 
   bool IsInsideAction(SchedulerStateMachine::Action action) {
