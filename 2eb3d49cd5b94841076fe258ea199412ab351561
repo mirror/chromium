@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25252f9e_5c48cab0",
+        "filename": "content/shell/browser/shell_content_browser_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-30T11:06:33Z",
+      "side": 1,
+      "message": "It seems a bit unfortunate that we need to use a unique_ptr just to avoid calling a virtual in the ctor. I guess ContentBrowserClient doesn\u0027t provide any Init()-type hooks?",
+      "revId": "2eb3d49cd5b94841076fe258ea199412ab351561",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd543d55_94205dab",
+        "filename": "third_party/WebKit/LayoutTests/mojo/bind-interface.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-30T11:06:33Z",
+      "side": 1,
+      "message": "Delete these new lines?",
+      "revId": "2eb3d49cd5b94841076fe258ea199412ab351561",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
