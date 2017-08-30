@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4c3d455_f693d635",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-30T16:57:57Z",
+      "side": 1,
+      "message": "Seems like this codepath is still being used. Why is it being called \"Deprecated\"?",
+      "range": {
+        "startLine": 216,
+        "startChar": 18,
+        "endLine": 216,
+        "endChar": 47
+      },
+      "revId": "b7a25f3fe1b32b0b0bfeaeb82f0f7b830135c325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82962575_a363e454",
+        "filename": "components/arc/common/app.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-30T16:57:57Z",
+      "side": 1,
+      "message": "So the intention going forward is that the dimension on screen won\u0027t be relayed to Android? Will that break anything? Will that be re-added in the future? Does it make sense to add the display_id as a [MinVersion\u003d23] param instead of creating a new method?",
+      "range": {
+        "startLine": 213,
+        "startChar": 31,
+        "endLine": 213,
+        "endChar": 49
+      },
+      "revId": "b7a25f3fe1b32b0b0bfeaeb82f0f7b830135c325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
