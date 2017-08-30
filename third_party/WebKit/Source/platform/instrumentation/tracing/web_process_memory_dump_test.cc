@@ -50,16 +50,8 @@ TEST(WebProcessMemoryDumpTest, IntegrationTest) {
   ASSERT_EQ(wmad, wpmd2->GetMemoryAllocatorDump("2/new"));
 
   // Check that the attributes are propagated correctly.
-  auto raw_attrs = mad->attributes_for_testing()->ToBaseValue();
-  base::DictionaryValue* attrs = nullptr;
-  ASSERT_TRUE(raw_attrs->GetAsDictionary(&attrs));
-  base::DictionaryValue* attr = nullptr;
-  ASSERT_TRUE(attrs->GetDictionary("attr_name", &attr));
-  std::string attr_value;
-  ASSERT_TRUE(attr->GetString("type", &attr_value));
-  ASSERT_EQ(base::trace_event::MemoryAllocatorDump::kTypeScalar, attr_value);
-  ASSERT_TRUE(attr->GetString("units", &attr_value));
-  ASSERT_EQ("bytes", attr_value);
+  MemoryAllocatorDump::Entry expected("attr_name", "bytes", 42);
+  ASSERT_THAT(dump->entries_for_testing(), Contains(Eq(ByRef(expected))));
 
   // Check that AsValueInto() doesn't cause a crash.
   wpmd2->process_memory_dump()->AsValueInto(traced_value.get());

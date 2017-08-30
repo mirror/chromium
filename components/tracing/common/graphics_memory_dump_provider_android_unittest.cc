@@ -19,29 +19,25 @@ TEST(GraphicsMemoryDumpProviderTest, ParseResponse) {
   char buf[] = "graphics_total 12\ngraphics_pss 34\ngl_total 56\ngl_pss 78";
   instance->ParseResponseAndAddToDump(buf, strlen(buf), &pmd);
 
-  // Check the "graphics" row.
-  auto* mad = pmd.GetAllocatorDump(kDumpBaseName + std::string("graphics"));
-  ASSERT_TRUE(mad);
-  std::string json;
-  mad->attributes_for_testing()->AppendAsTraceFormat(&json);
-  ASSERT_EQ(
-      "{\"memtrack_total\":{\"type\":\"scalar\",\"units\":\"bytes\",\"value\":"
-      "\"c\"},"
-      "\"memtrack_pss\":{\"type\":\"scalar\",\"units\":\"bytes\",\"value\":"
-      "\"22\"}}",
-      json);
+  {
+    // Check the "graphics" row.
+    auto* mad = pmd.GetAllocatorDump(kDumpBaseName + std::string("graphics"));
+    ASSERT_TRUE(mad);
+    MemoryAllocatorDump::Entry total("memtrack_total", "bytes", 12);
+    MemoryAllocatorDump::Entry pss("memtrack_pss", "bytes", 34);
+    ASSERT_THAT(dump->entries_for_testing(), Contains(Eq(ByRef(total))));
+    ASSERT_THAT(dump->entries_for_testing(), Contains(Eq(ByRef(pss))));
+  }
 
-  // Check the "gl" row.
-  mad = pmd.GetAllocatorDump(kDumpBaseName + std::string("gl"));
-  ASSERT_TRUE(mad);
-  json = "";
-  mad->attributes_for_testing()->AppendAsTraceFormat(&json);
-  ASSERT_EQ(
-      "{\"memtrack_total\":{\"type\":\"scalar\",\"units\":\"bytes\",\"value\":"
-      "\"38\"},"
-      "\"memtrack_pss\":{\"type\":\"scalar\",\"units\":\"bytes\",\"value\":"
-      "\"4e\"}}",
-      json);
+  {
+    // Check the "gl" row.
+    auto* mad = pmd.GetAllocatorDump(kDumpBaseName + std::string("gl"));
+    ASSERT_TRUE(mad);
+    MemoryAllocatorDump::Entry total("memtrack_total", "bytes", 56);
+    MemoryAllocatorDump::Entry pss("memtrack_pss", "bytes", 58);
+    ASSERT_THAT(dump->entries_for_testing(), Contains(Eq(ByRef(total))));
+    ASSERT_THAT(dump->entries_for_testing(), Contains(Eq(ByRef(pss))));
+  }
 
   // Test for truncated input.
   pmd.Clear();
