@@ -121,7 +121,7 @@ class PLATFORM_EXPORT PaintArtifactCompositor final
 
     FloatRect bounds;
     Vector<const PaintChunk*> paint_chunks;
-    bool known_to_be_opaque;
+    FloatRect rect_known_to_be_opaque;
     bool backface_hidden;
     PropertyTreeState property_tree_state;
     bool requires_own_layer;

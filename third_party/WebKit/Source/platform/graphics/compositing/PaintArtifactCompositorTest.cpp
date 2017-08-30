@@ -270,11 +270,11 @@ TEST_F(PaintArtifactCompositorTestWithPropertyTrees, OneChunkWithAnOffset) {
 
   ASSERT_EQ(1u, ContentLayerCount());
   const cc::Layer* child = ContentLayerAt(0);
-  EXPECT_THAT(
-      child->GetPicture(),
-      Pointee(DrawsRectangle(FloatRect(0, 0, 100, 100), Color::kWhite)));
-  EXPECT_EQ(Translation(50, -50), child->ScreenSpaceTransform());
-  EXPECT_EQ(gfx::Size(100, 100), child->bounds());
+  // The top-lefts of the layer and drawings are clipped to (0,0).
+  EXPECT_THAT(child->GetPicture(),
+              Pointee(DrawsRectangle(FloatRect(0, 0, 100, 50), Color::kWhite)));
+  EXPECT_EQ(Translation(50, 0), child->ScreenSpaceTransform());
+  EXPECT_EQ(gfx::Size(100, 50), child->bounds());
 }
 
 TEST_F(PaintArtifactCompositorTestWithPropertyTrees, OneTransform) {
@@ -1337,13 +1337,14 @@ TEST_F(PaintArtifactCompositorTestWithPropertyTrees, MergeTransformOrigin) {
   ASSERT_EQ(1u, ContentLayerCount());
   {
     Vector<RectWithColor> rects_with_color;
+    // The top-lefts of the layer and drawings are clipped to (0,0).
     rects_with_color.push_back(
-        RectWithColor(FloatRect(0, 42, 100, 100), Color::kWhite));
+        RectWithColor(FloatRect(0, 0, 100, 100), Color::kWhite));
     // Transform is applied to this PaintChunk.
-    rects_with_color.push_back(RectWithColor(
-        FloatRect(29.2893, 0.578644, 141.421, 141.421), Color::kBlack));
     rects_with_color.push_back(
-        RectWithColor(FloatRect(00, 42, 200, 300), Color::kGray));
+        RectWithColor(FloatRect(29.2893, 0, 141.421, 100), Color::kBlack));
+    rects_with_color.push_back(
+        RectWithColor(FloatRect(0, 0, 200, 300), Color::kGray));
 
     const cc::Layer* layer = ContentLayerAt(0);
     EXPECT_THAT(layer->GetPicture(),
@@ -1834,8 +1835,8 @@ TEST_F(PaintArtifactCompositorTestWithPropertyTrees, PendingLayer) {
   PendingLayer pending_layer(chunk1, false);
 
   EXPECT_TRUE(pending_layer.backface_hidden);
-  EXPECT_TRUE(pending_layer.known_to_be_opaque);
   EXPECT_EQ(FloatRect(0, 0, 30, 40), pending_layer.bounds);
+  EXPECT_EQ(pending_layer.bounds, pending_layer.rect_known_to_be_opaque);
 
   PaintChunk chunk2 = DefaultChunk();
   chunk2.properties.property_tree_state = chunk1.properties.property_tree_state;
@@ -1846,8 +1847,8 @@ TEST_F(PaintArtifactCompositorTestWithPropertyTrees, PendingLayer) {
 
   EXPECT_TRUE(pending_layer.backface_hidden);
   // Bounds not equal to one PaintChunk.
-  EXPECT_FALSE(pending_layer.known_to_be_opaque);
   EXPECT_EQ(FloatRect(0, 0, 40, 60), pending_layer.bounds);
+  EXPECT_NE(pending_layer.bounds, pending_layer.rect_known_to_be_opaque);
 
   PaintChunk chunk3 = DefaultChunk();
   chunk3.properties.property_tree_state = chunk1.properties.property_tree_state;
@@ -1857,8 +1858,8 @@ TEST_F(PaintArtifactCompositorTestWithPropertyTrees, PendingLayer) {
   pending_layer.Merge(PendingLayer(chunk3, false));
 
   EXPECT_TRUE(pending_layer.backface_hidden);
-  EXPECT_FALSE(pending_layer.known_to_be_opaque);
   EXPECT_EQ(FloatRect(-5, -25, 45, 85), pending_layer.bounds);
+  EXPECT_NE(pending_layer.bounds, pending_layer.rect_known_to_be_opaque);
 }
 
 TEST_F(PaintArtifactCompositorTestWithPropertyTrees, PendingLayerWithGeometry) {
@@ -1899,7 +1900,7 @@ TEST_F(PaintArtifactCompositorTestWithPropertyTrees,
   chunk1.known_to_be_opaque = false;
   PendingLayer pending_layer(chunk1, false);
 
-  EXPECT_FALSE(pending_layer.known_to_be_opaque);
+  EXPECT_TRUE(pending_layer.rect_known_to_be_opaque.IsEmpty());
 
   PaintChunk chunk2 = DefaultChunk();
   chunk2.properties.property_tree_state = chunk1.properties.property_tree_state;
@@ -1908,7 +1909,8 @@ TEST_F(PaintArtifactCompositorTestWithPropertyTrees,
   pending_layer.Merge(PendingLayer(chunk2, false));
 
   // Chunk 2 doesn't cover the entire layer, so not opaque.
-  EXPECT_FALSE(pending_layer.known_to_be_opaque);
+  EXPECT_EQ(chunk2.bounds, pending_layer.rect_known_to_be_opaque);
+  EXPECT_NE(pending_layer.bounds, pending_layer.rect_known_to_be_opaque);
 
   PaintChunk chunk3 = DefaultChunk();
   chunk3.properties.property_tree_state = chunk1.properties.property_tree_state;
@@ -1917,7 +1919,8 @@ TEST_F(PaintArtifactCompositorTestWithPropertyTrees,
   pending_layer.Merge(PendingLayer(chunk3, false));
 
   // Chunk 3 covers the entire layer, so now it's opaque.
-  EXPECT_TRUE(pending_layer.known_to_be_opaque);
+  EXPECT_EQ(chunk3.bounds, pending_layer.bounds);
+  EXPECT_EQ(pending_layer.bounds, pending_layer.rect_known_to_be_opaque);
 }
 
 PassRefPtr<EffectPaintPropertyNode> CreateSampleEffectNodeWithElementId() {

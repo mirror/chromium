@@ -259,7 +259,8 @@ PaintArtifactCompositor::PendingLayer::PendingLayer(
     const PaintChunk& first_paint_chunk,
     bool chunk_requires_own_layer)
     : bounds(first_paint_chunk.bounds),
-      known_to_be_opaque(first_paint_chunk.known_to_be_opaque),
+      rect_known_to_be_opaque(
+          first_paint_chunk.known_to_be_opaque ? bounds : FloatRect()),
       backface_hidden(first_paint_chunk.properties.backface_hidden),
       property_tree_state(first_paint_chunk.properties.property_tree_state),
       requires_own_layer(chunk_requires_own_layer) {
@@ -274,13 +275,11 @@ void PaintArtifactCompositor::PendingLayer::Merge(const PendingLayer& guest) {
   FloatClipRect guest_bounds_in_home(guest.bounds);
   GeometryMapper::LocalToAncestorVisualRect(
       guest.property_tree_state, property_tree_state, guest_bounds_in_home);
-  FloatRect old_bounds = bounds;
   bounds.Unite(guest_bounds_in_home.Rect());
-  if (bounds != old_bounds)
-    known_to_be_opaque = false;
   // TODO(crbug.com/701991): Upgrade GeometryMapper.
   // If we knew the new bounds is enclosed by the mapped opaque region of
-  // the guest layer, we can deduce the merged layer being opaque too.
+  // the guest layer, we can deduce the merged layer being opaque too, and
+  // update rect_known_to_be_opaque accordingly.
 }
 
 static bool CanUpcastTo(const PropertyTreeState& guest,
@@ -311,7 +310,7 @@ void PaintArtifactCompositor::PendingLayer::Upcast(
   // region. To determine whether the layer is still opaque, we need to
   // query conservative opaque rect after mapping to an ancestor space,
   // which is not supported by GeometryMapper yet.
-  known_to_be_opaque = false;
+  rect_known_to_be_opaque = FloatRect();
 }
 
 static bool IsNonCompositingAncestorOf(
@@ -663,6 +662,16 @@ void PaintArtifactCompositor::Update(
   store_debug_info = true;
 #endif
 
+  if (pending_layers.size()) {
+    // Clamp the top-left position of the first layer to (0,0) because the
+    // negative part is never visible.
+    auto& first_bounds = pending_layers.front().bounds;
+    if (first_bounds.X() < 0.0f)
+      first_bounds.ShiftXEdgeTo(0.0f);
+    if (first_bounds.Y() < 0.0f)
+      first_bounds.ShiftYEdgeTo(0.0f);
+  }
+
   for (const PendingLayer& pending_layer : pending_layers) {
     gfx::Vector2dF layer_offset;
     scoped_refptr<cc::Layer> layer = CompositedLayerForPendingLayer(
@@ -718,7 +727,8 @@ void PaintArtifactCompositor::Update(
     layer->SetClipTreeIndex(clip_id);
     layer->SetEffectTreeIndex(effect_id);
 
-    layer->SetContentsOpaque(pending_layer.known_to_be_opaque);
+    layer->SetContentsOpaque(pending_layer.rect_known_to_be_opaque ==
+                             pending_layer.bounds);
     layer->SetShouldCheckBackfaceVisibility(pending_layer.backface_hidden);
   }
   property_tree_manager.Finalize();
