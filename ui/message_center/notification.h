@@ -110,7 +110,7 @@ class MESSAGE_CENTER_EXPORT RichNotificationData {
 
   // Vector version of |small_image|. Used by Notification::GetMaskedSmallIcon.
   // If not available, |small_image| will be used by the method. Optional.
-  gfx::VectorIcon vector_small_image = gfx::kNoneIcon;
+  const gfx::VectorIcon* vector_small_image = &gfx::kNoneIcon;
 
   // Items to display on the notification. Only applicable for notifications
   // that have type NOTIFICATION_TYPE_MULTIPLE.
@@ -323,10 +323,10 @@ class MESSAGE_CENTER_EXPORT Notification {
   }
 
   const gfx::VectorIcon& vector_small_image() const {
-    return optional_fields_.vector_small_image;
+    return *optional_fields_.vector_small_image;
   }
   void set_vector_small_image(const gfx::VectorIcon& image) {
-    optional_fields_.vector_small_image = image;
+    optional_fields_.vector_small_image = &image;
   }
 
   // Mask the color of |small_image| to the given |color|.
