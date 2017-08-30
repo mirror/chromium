@@ -16,6 +16,7 @@
 #include "base/lazy_instance.h"
 #include "base/location.h"
 #include "base/logging.h"
+#include "base/memory/weak_ptr.h"
 #include "base/profiler/scoped_tracker.h"
 #include "base/single_thread_task_runner.h"
 #include "base/task_scheduler/post_task.h"
@@ -39,6 +40,43 @@
 namespace content {
 
 namespace {
+
+class StopWorkerBarrier : public base::RefCounted<StopWorkerBarrier> {
+ public:
+  StopWorkerBarrier(ServiceWorkerContext::ResultOnceCallback callback)
+      : callback_(std::move(callback)) {}
+
+  base::Callback<void(ServiceWorkerStatusCode)> CreateChildCallBack() {
+    counter_++;
+    return base::Bind(&StopWorkerBarrier::StopWorkerCallbackHandler, this);
+  }
+
+  void PostedAllChildCallback() {
+    StopWorkerCallbackHandler(SERVICE_WORKER_OK);
+  }
+
+ private:
+  friend class base::RefCounted<StopWorkerBarrier>;
+  ~StopWorkerBarrier() = default;
+  void StopWorkerCallbackHandler(ServiceWorkerStatusCode result) {
+    DCHECK_GE(counter_, 1);
+    results_.push_back(result);
+    if (--counter_ == 0) {
+      bool ret = true;
+      for (auto status : results_) {
+        if (status != SERVICE_WORKER_OK) {
+          ret = false;
+          break;
+        }
+      }
+      std::move(callback_).Run(ret);
+    }
+  }
+
+  int counter_ = 1;
+  std::vector<ServiceWorkerStatusCode> results_;
+  ServiceWorkerContext::ResultOnceCallback callback_;
+};
 
 typedef std::set<std::string> HeaderNameSet;
 base::LazyInstance<HeaderNameSet>::DestructorAtExit g_excluded_header_name_set =
@@ -426,24 +464,29 @@ void ServiceWorkerContextWrapper::DidCheckHasServiceWorker(
 }
 
 void ServiceWorkerContextWrapper::StopAllServiceWorkersForOrigin(
-    const GURL& origin) {
+    const GURL& origin,
+    ResultOnceCallback callback) {
   if (!BrowserThread::CurrentlyOn(BrowserThread::IO)) {
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
         base::BindOnce(
             &ServiceWorkerContextWrapper::StopAllServiceWorkersForOrigin, this,
-            origin));
+            origin, base::Passed(&callback)));
     return;
   }
   if (!context_core_.get()) {
+    std::move(callback).Run(false);
     return;
   }
   std::vector<ServiceWorkerVersionInfo> live_versions = GetAllLiveVersionInfo();
+  scoped_refptr<StopWorkerBarrier> barrier =
+      base::MakeRefCounted<StopWorkerBarrier>(std::move(callback));
   for (const ServiceWorkerVersionInfo& info : live_versions) {
     ServiceWorkerVersion* version = GetLiveVersion(info.version_id);
     if (version && version->scope().GetOrigin() == origin)
-      version->StopWorker(base::Bind(&ServiceWorkerUtils::NoOpStatusCallback));
+      version->StopWorker(barrier->CreateChildCallBack());
   }
+  barrier->PostedAllChildCallback();
 }
 
 void ServiceWorkerContextWrapper::DidFindRegistrationForUpdate(

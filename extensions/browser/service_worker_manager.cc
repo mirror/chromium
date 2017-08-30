@@ -31,7 +31,8 @@ void ServiceWorkerManager::OnExtensionUnloaded(
   content::BrowserContext::GetStoragePartitionForSite(browser_context_,
                                                       extension->url())
       ->GetServiceWorkerContext()
-      ->StopAllServiceWorkersForOrigin(extension->url());
+      ->StopAllServiceWorkersForOrigin(extension->url(),
+                                       base::BindOnce(&EmptySuccessCallback));
 }
 
 void ServiceWorkerManager::OnExtensionUninstalled(
