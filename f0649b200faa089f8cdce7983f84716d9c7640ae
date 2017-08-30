@@ -159,6 +159,30 @@
     },
     {
       "key": {
+        "uuid": "adfaa674_b62123bc",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_features.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-30T16:20:50Z",
+      "side": 1,
+      "message": "I followed convention in the code:\nhttps://cs.chromium.org/chromium/src/ios/chrome/browser/passwords/credential_manager_features.cc?q\u003d_features.cc+file:ios/chrome\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d7\nhttps://cs.chromium.org/chromium/src/ios/chrome/browser/bookmarks/bookmark_new_generation_features.cc?q\u003d_features.cc+file:ios/chrome\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d7",
+      "parentUuid": "88a8376a_647af4a2",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 20
+      },
+      "revId": "f0649b200faa089f8cdce7983f84716d9c7640ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b8b2e081_de1ca1e8",
         "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_view_controller.h",
         "patchSetId": 27
