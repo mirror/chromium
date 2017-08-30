@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e8889e8_51e86e2b",
+        "filename": "third_party/WebKit/LayoutTests/virtual/scroll_customization/fast/scroll-behavior/scroll-customization-property.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-08-30T18:15:42Z",
+      "side": 1,
+      "message": "Looking at this again, the log message might be too long. I could maybe drop the last sentence.",
+      "revId": "1a542c6b052f3a876dbb27bb4ece96b3b0af86e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "017463b6_7dfe47ee",
+        "filename": "cc/input/scroll_customization.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-08-30T18:15:42Z",
+      "side": 1,
+      "message": "Thanks. I was about to suggest the same. I could use \"uint32_t\" for enum though but I am not sure if it is needed/suggested (e.g., \"enum ScrollCustomization : uint32 {\").",
+      "parentUuid": "157b6c6e_5def2111",
+      "revId": "8a31dab0139b0909e6a193d7cc857246ecb4d28f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f04f5be6_a2f05f27",
         "filename": "cc/input/scroll_customization.h",
         "patchSetId": 9
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "0fd8a5c6_89038ea7",
+        "filename": "cc/input/scroll_customization.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-08-30T18:15:42Z",
+      "side": 1,
+      "message": "I think this falls into the same question above and AFAICT this is correct. It is vague as in for the example you mentioned we do not \"define\" a value. However, the corresponding \"int\" value is within the accepted range for ScrollCustomization but the value is not equal to any of the names mentioned. Nonetheless, we do bit manipulation on this so it should be fine (also ditto \n on being derived from TouchAction logic).",
+      "parentUuid": "f04f5be6_a2f05f27",
+      "revId": "8a31dab0139b0909e6a193d7cc857246ecb4d28f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8fff17b2_03f1c797",
         "filename": "cc/input/scroll_customization.h",
         "patchSetId": 9
@@ -65,6 +101,30 @@
       "writtenOn": "2017-08-28T19:11:46Z",
       "side": 1,
       "message": "s/touch_action/scroll_customization/",
+      "range": {
+        "startLine": 53,
+        "startChar": 24,
+        "endLine": 53,
+        "endChar": 36
+      },
+      "revId": "8a31dab0139b0909e6a193d7cc857246ecb4d28f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f61ea9ae_77845ea0",
+        "filename": "cc/input/scroll_customization.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-08-30T18:15:42Z",
+      "side": 1,
+      "message": "Thanks. Done.",
+      "parentUuid": "8fff17b2_03f1c797",
       "range": {
         "startLine": 53,
         "startChar": 24,
@@ -100,6 +160,30 @@
     },
     {
       "key": {
+        "uuid": "548486fb_65dfa7e6",
+        "filename": "cc/input/scroll_customization.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-08-30T18:15:42Z",
+      "side": 1,
+      "message": "\u003e hmmm, you are actually returning a \"mask\" so perhaps \n\u003e |GetScrollCustomizationMaskFromScrollStateData|\n\nI don\u0027t see this as a \"mask\" TBH. This is actually the direction of scrolling based on X \u0026 Y. I personally consider the output as \"direction\" rather than mask, esp. given that we do look at X and Y (also we do return a ScrollCustomization type so GetScrollCustomization is sounds like the safest name to me).\n\nThat being said I am quite open to renaming the method if you believe Mask is a better term.\n\n\u003e why is this inline?\nThanks for pointing this out. I am open to any suggestions for this. Here is the situation:\n\nAdding the inline modifier will make sure that we get different definitions of inline in different translation units. Without inline there will be link errors due to multiple definitions of the cc::GetScrollCustomizationFromScrollStateData.\n\nWe could remove inline and add the implementation to a cc file but then the cc file will be inside cc/input and we cannot rely on it from inside blink.\n\nWe could mark it as static inline and leave the implementation in cc-file but then that will be external linkage which I am not quite sure if it is considered as a good approach in coding (+ we are again using \"inline\" anyway).\n\nAnything I am missing/suggests?",
+      "parentUuid": "4c7bd04a_aac35069",
+      "range": {
+        "startLine": 94,
+        "startChar": 27,
+        "endLine": 94,
+        "endChar": 68
+      },
+      "revId": "8a31dab0139b0909e6a193d7cc857246ecb4d28f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c5d12096_1fec7bfc",
         "filename": "cc/input/scroll_customization.h",
         "patchSetId": 9
@@ -111,6 +195,30 @@
       "writtenOn": "2017-08-28T19:11:46Z",
       "side": 1,
       "message": "I have seen this being used a few times, should we have a helper method on \nScrollStateDate e.g., GetEffectiveDelta{X, Y}() which returns this\nvalue?\n\nThat way you don\u0027t need to pass in the whole scrollStateData but just the\neffective delta.",
+      "range": {
+        "startLine": 98,
+        "startChar": 9,
+        "endLine": 98,
+        "endChar": 16
+      },
+      "revId": "8a31dab0139b0909e6a193d7cc857246ecb4d28f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4601e3d_9257dc21",
+        "filename": "cc/input/scroll_customization.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-08-30T18:15:42Z",
+      "side": 1,
+      "message": "Thanks. Good suggestion! I believe you are referring to examples such as this: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/input/ScrollManager.cpp?rcl\u003d2cf2b39b0730d15af71ac6e1e24125bcce663fe0\u0026l\u003d142\n\nI think it is a good idea but it should perhaps be added to ScrollState as opposed to ScrollStateData which is more of a \"Raw\" value.\n\nI have added ScrollState::effectiveDeltaX/Y(). If this sticks I can go ahead (later) and refactor the code base to use the newly added methods).",
+      "parentUuid": "c5d12096_1fec7bfc",
       "range": {
         "startLine": 98,
         "startChar": 9,
@@ -146,6 +254,30 @@
     },
     {
       "key": {
+        "uuid": "4db8602f_39175b4d",
+        "filename": "third_party/WebKit/LayoutTests/virtual/scroll_customization/fast/scroll-behavior/scroll-customization-property.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-08-30T18:15:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4691a67d_040e6882",
+      "range": {
+        "startLine": 2,
+        "startChar": 1,
+        "endLine": 2,
+        "endChar": 5
+      },
+      "revId": "8a31dab0139b0909e6a193d7cc857246ecb4d28f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c3ec7e8_c3fe34a2",
         "filename": "third_party/WebKit/LayoutTests/virtual/scroll_customization/fast/scroll-behavior/scroll-customization-property.html",
         "patchSetId": 9
@@ -163,6 +295,24 @@
     },
     {
       "key": {
+        "uuid": "772894b6_8719a2b6",
+        "filename": "third_party/WebKit/LayoutTests/virtual/scroll_customization/fast/scroll-behavior/scroll-customization-property.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-08-30T18:15:42Z",
+      "side": 1,
+      "message": "Done. Thanks for the suggestion.",
+      "parentUuid": "3c3ec7e8_c3fe34a2",
+      "revId": "8a31dab0139b0909e6a193d7cc857246ecb4d28f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cdceec8f_3bbde0d1",
         "filename": "third_party/WebKit/LayoutTests/virtual/scroll_customization/fast/scroll-behavior/scroll-customization-property.html",
         "patchSetId": 9
@@ -174,6 +324,24 @@
       "writtenOn": "2017-08-28T19:11:46Z",
       "side": 1,
       "message": "This is hard to read and understand. I think what you want is to set the \n|numberOfSetApplyScrollCalls| to zero just above and check here it it is \nnone zero. Also get rid of callsToApplyScroll etc.",
+      "revId": "8a31dab0139b0909e6a193d7cc857246ecb4d28f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70f18b75_4cbdee82",
+        "filename": "third_party/WebKit/LayoutTests/virtual/scroll_customization/fast/scroll-behavior/scroll-customization-property.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-08-30T18:15:42Z",
+      "side": 1,
+      "message": "Hopefully the new one makes more sense. (I believe) I now test all (16) possible configurations of \"scroll-customization\" against all 4 gestures.",
+      "parentUuid": "cdceec8f_3bbde0d1",
       "revId": "8a31dab0139b0909e6a193d7cc857246ecb4d28f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -220,6 +388,24 @@
     },
     {
       "key": {
+        "uuid": "dde5d3af_7db7c22b",
+        "filename": "third_party/WebKit/LayoutTests/virtual/scroll_customization/fast/scroll-behavior/scroll-customization-property.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-08-30T18:15:42Z",
+      "side": 1,
+      "message": "I am wondering if it is even needed. Wouldn\u0027t the assert on line 39 exit the layout test altogether?",
+      "parentUuid": "e14823dc_1436ee24",
+      "revId": "8a31dab0139b0909e6a193d7cc857246ecb4d28f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c500c3d1_2ad160fd",
         "filename": "third_party/WebKit/LayoutTests/virtual/scroll_customization/fast/scroll-behavior/scroll-customization-property.html",
         "patchSetId": 9
@@ -231,6 +417,30 @@
       "writtenOn": "2017-08-28T19:11:46Z",
       "side": 1,
       "message": "Most tests below do the same thing. Perhaps these should be a parametric test.\nEach table row will have an entry like this:\n\nconst test_table \u003d [\n [GESTURE_RIGHT, GESTURE_LEFT, GESTURE_TOP, GESTURE_DOWN], \"none\", , false]\n  ....\n];\n\n\nSo \ntest_table.forEach([gestures, value, expected, test_prefix]) {\n   gestures.forEach(gesture) {\n      testGesture(value, gesture, expected, `Verify if property \"${value}\" works correctly with gesture ${gesture}`);\n   }\n}\n\nThe test() is actually invoked inside testGesture. This way you get an individual test for\neach combination and also get rid of most of the boilerplate. \n\nbonus 1: make GESTURE_RIGHT etc strings so you can print them properly.\nbonus 2: each test is verifying a set gestures for true and the reverse of that set for false. I think you can event remove this bilerplate and generate both set of tests from a single entry in\ntest_table.",
+      "range": {
+        "startLine": 121,
+        "startChar": 10,
+        "endLine": 121,
+        "endChar": 21
+      },
+      "revId": "8a31dab0139b0909e6a193d7cc857246ecb4d28f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "307e4040_43765ffa",
+        "filename": "third_party/WebKit/LayoutTests/virtual/scroll_customization/fast/scroll-behavior/scroll-customization-property.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-08-30T18:15:42Z",
+      "side": 1,
+      "message": "Thanks for the suggestion. I think I did something similar in the newer version. Note quite sure if I understand bonus #2 though.",
+      "parentUuid": "c500c3d1_2ad160fd",
       "range": {
         "startLine": 121,
         "startChar": 10,
@@ -266,6 +476,30 @@
     },
     {
       "key": {
+        "uuid": "30f9a827_58a3ecae",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-08-30T18:15:42Z",
+      "side": 1,
+      "message": "Sure. Done. The reason I did not merge this in the first place was to get a bit of efficiency given that perhaps most of the time an element does not have a callback so we should not try to get the scroll customization (which is kNone) and try to get direction.",
+      "parentUuid": "4f36cff3_e74a5145",
+      "range": {
+        "startLine": 637,
+        "startChar": 4,
+        "endLine": 637,
+        "endChar": 26
+      },
+      "revId": "8a31dab0139b0909e6a193d7cc857246ecb4d28f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49f5fe54_41692605",
         "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
         "patchSetId": 9
@@ -277,6 +511,24 @@
       "writtenOn": "2017-08-28T19:11:46Z",
       "side": 1,
       "message": "Is this comment accurate? No value is being cached atm.",
+      "revId": "8a31dab0139b0909e6a193d7cc857246ecb4d28f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61a8ff5e_4c7a74e9",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 731,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-08-30T18:15:42Z",
+      "side": 1,
+      "message": "Thanks! Fixed. I also think we do not need to cache any value anymore (following our discussion offline).",
+      "parentUuid": "49f5fe54_41692605",
       "revId": "8a31dab0139b0909e6a193d7cc857246ecb4d28f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
