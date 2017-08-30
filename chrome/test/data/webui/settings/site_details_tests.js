@@ -59,6 +59,11 @@ suite('SiteDetails', function() {
         unsandboxed_plugins: {
           setting: settings.ContentSetting.ASK,
         },
+  // <if expr="chromeos">
+        protectedContent: {
+          setting: settings.ContentSetting.ALLOW,
+        },
+  // </if>
       },
       exceptions: {
         auto_downloads: [
@@ -165,6 +170,16 @@ suite('SiteDetails', function() {
             source: settings.SiteSettingSource.PREFERENCE,
           },
         ],
+  // <if expr="chromeos">
+        protectedContent: [
+          {
+            embeddingOrigin: 'https://foo.com:443',
+            origin: 'https://foo.com:443',
+            setting: settings.ContentSetting.ALLOW,
+            source: settings.SiteSettingSource.PREFERENCE,
+          },
+        ],
+  // </if>
       }
     };
 
@@ -216,8 +231,17 @@ suite('SiteDetails', function() {
           return browserProxy.whenCalled('getOriginPermissions');
         })
         .then(() => {
+          var permissionCount = 0;
           testElement.root.querySelectorAll('site-details-permission')
               .forEach((siteDetailsPermission) => {
+                // PROTECTED_CONTENT will only show up on ChromeOS, and is
+                // undefined on other platforms. Make sure the number of
+                // permissions tested is correct to make sure that categories
+                // are defined otherwise.
+                if (siteDetailsPermission.category == undefined)
+                  return;
+                ++permissionCount;
+
                 // Verify settings match the values specified in |prefs|.
                 var expectedSetting = settings.ContentSetting.ALLOW;
                 var expectedSource = settings.SiteSettingSource.PREFERENCE;
@@ -253,6 +277,7 @@ suite('SiteDetails', function() {
                     expectedMenuValue,
                     siteDetailsPermission.$.permission.value);
               });
+          assertTrue(permissionCount > 0);
         });
   });
 
