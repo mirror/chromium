@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "285e9346_45eb9307",
+        "filename": "tools/perf/perf_device_trigger.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-08-30T00:54:11Z",
+      "side": 1,
+      "message": "+maruel@ Is this all I need? I looked at an example https://luci-logdog.appspot.com/v/?s\u003dchromium%2Fbb%2Fchromium.linux%2FLinux_Tests__dbg__1_%2F66106%2F%2B%2Frecipes%2Fsteps%2Ftest_pre_run%2F0%2Fsteps%2Fs__trigger__telemetry_unittests%2F0%2Flogs%2Fjson.output%2F0, and I wasn\u0027t sure what the request and other stuff is used for; do I need it? Didn\u0027t see those being used in the recipe code.",
+      "range": {
+        "startLine": 15,
+        "startChar": 22,
+        "endLine": 16,
+        "endChar": 71
+      },
+      "revId": "a225e35997847b0295ec0140f22bf9ba22e36e8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
