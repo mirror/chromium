@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "b2271b5c_f8616f8e",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-08-30T07:36:23Z",
+      "side": 1,
+      "message": "If we remove lines 1372-1377 and add SendMessage to ACTIVATED, it seems no difference with original code? That means WPT test can\u0027t be passed, because the WPT test wants the promise to be handled before the SW status changes to activate, am I understand right?",
+      "parentUuid": "2bcd49e0_651951ae",
+      "revId": "482fedaef54623ac091195ce3fe2e38dfa470bbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e7063d3_b71bba52",
         "filename": "content/browser/service_worker/service_worker_version.cc",
         "patchSetId": 7
