@@ -57,6 +57,8 @@
 
 #if BUILDFLAG(ENABLE_PRINT_PREVIEW) || \
     (BUILDFLAG(ENABLE_BASIC_PRINTING) && defined(OS_WIN))
+#include "chrome/common/printing/pdf_to_pwg_raster_converter.mojom.h"
+#include "chrome/utility/printing/printing_utility_service.h"
 #include "chrome/utility/printing_handler.h"
 #endif
 
@@ -305,11 +307,6 @@ void ChromeContentUtilityClient::UtilityThreadStarted() {
     registry->AddInterface(base::Bind(&SafeArchiveAnalyzerImpl::Create),
                            base::ThreadTaskRunnerHandle::Get());
 #endif
-#if BUILDFLAG(ENABLE_PRINT_PREVIEW)
-    registry->AddInterface(
-        base::Bind(&printing::PDFToPWGRasterConverterImpl::Create),
-        base::ThreadTaskRunnerHandle::Get());
-#endif
   }
 
   connection->AddConnectionFilter(
@@ -336,6 +333,15 @@ void ChromeContentUtilityClient::RegisterServices(
   pdf_compositor_info.factory =
       base::Bind(&printing::CreatePdfCompositorService, GetUserAgent());
   services->emplace(printing::mojom::kServiceName, pdf_compositor_info);
+
+#if BUILDFLAG(ENABLE_PRINT_PREVIEW)
+  service_manager::EmbeddedServiceInfo printing_utility_info;
+  printing_utility_info.factory =
+      base::Bind(&printing::PrintingUtilityService::CreateService);
+  services->emplace(printing::mojom::kUtilityServiceName,
+                    printing_utility_info);
+#endif
+
 #endif
 
   service_manager::EmbeddedServiceInfo profiling_info;

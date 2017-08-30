@@ -1,0 +1,14 @@
+{
+  "name": "printing_utility",
+  "display_name": "Printing Utility",
+  "interface_provider_specs": {
+    "service_manager:connector": {
+      "provides": {
+        "utility": [ "printing::mojom::PDFToPWGRasterConverter" ]
+       },
+       "requires": {
+         "service_manager": [ "service_manager:all_users" ]
+       }
+     }
+  }
+}
