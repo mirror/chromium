@@ -50,11 +50,11 @@ FrameTree::NodeIterator::NodeIterator(const NodeIterator& other) = default;
 FrameTree::NodeIterator::~NodeIterator() {}
 
 FrameTree::NodeIterator& FrameTree::NodeIterator::operator++() {
-  for (size_t i = 0; i < current_node_->child_count(); ++i) {
-    FrameTreeNode* child = current_node_->child_at(i);
-    if (child == node_to_skip_)
-      continue;
-    queue_.push(child);
+  if (current_node_ != node_to_skip_) {
+    for (size_t i = 0; i < current_node_->child_count(); ++i) {
+      FrameTreeNode* child = current_node_->child_at(i);
+      queue_.push(child);
+    }
   }
 
   if (!queue_.empty()) {
@@ -73,8 +73,7 @@ bool FrameTree::NodeIterator::operator==(const NodeIterator& rhs) const {
 
 FrameTree::NodeIterator::NodeIterator(FrameTreeNode* starting_node,
                                       FrameTreeNode* node_to_skip)
-    : current_node_(starting_node != node_to_skip ? starting_node : nullptr),
-      node_to_skip_(node_to_skip) {}
+    : current_node_(starting_node), node_to_skip_(node_to_skip) {}
 
 FrameTree::NodeIterator FrameTree::NodeRange::begin() {
   return NodeIterator(root_, node_to_skip_);
@@ -247,12 +246,34 @@ void FrameTree::CreateProxiesForSiteInstance(
 
   // Proxies are created in the FrameTree in response to a node navigating to a
   // new SiteInstance. Since |source|'s navigation will replace the currently
-  // loaded document, the entire subtree under |source| will be removed.
+  // loaded document, the entire subtree under |source| will be removed, and
+  // thus proxy creation is skipped for all nodes in that subtree.
+  //
+  // However, a proxy *might* be needed for the |source| node itself.  This
+  // lets cross-process navigations in |source| start with a proxy and follow a
+  // remote-to-local transition, which avoids race conditions in cases where
+  // other navigations need to reference |source| before it commits. See
+  // https://crbug.com/756790 for more background.  Therefore,
+  // NodesExcept(source) will include |source| in the nodes traversed (see
+  // NodeIterator::operator++), and the final decision on whether to create the
+  // proxy for |source| is made below.
   for (FrameTreeNode* node : NodesExcept(source)) {
+    SiteInstanceImpl* current_instance = static_cast<SiteInstanceImpl*>(
+        node->render_manager()->current_frame_host()->GetSiteInstance());
+    if (node == source) {
+      // the proxy for |source| is needed only when other frames might commit
+      // navigations in |site_instance| and start referencing |source| before
+      // |source| itself commits the navigation to |site_instance|.  This can
+      // only happen if its SiteInstance has other frames, or if it has any
+      // proxies, which imply script-connected frames in other SiteInstances.
+      bool needs_proxy = node->render_manager()->GetProxyCount() > 0 ||
+                         current_instance->active_frame_count() > 1;
+      if (!needs_proxy)
+        continue;
+    }
+
     // If a new frame is created in the current SiteInstance, other frames in
     // that SiteInstance don't need a proxy for the new frame.
-    SiteInstance* current_instance =
-        node->render_manager()->current_frame_host()->GetSiteInstance();
     if (current_instance != site_instance)
       node->render_manager()->CreateRenderFrameProxy(site_instance);
   }
