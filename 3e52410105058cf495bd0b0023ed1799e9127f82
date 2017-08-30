@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "538a50de_0fd8f08f",
+        "filename": "chrome/browser/extensions/api/web_request/web_request_apitest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1011,
+      "author": {
+        "id": 1146654
+      },
+      "writtenOn": "2017-08-30T00:07:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a7c9181_250dcf51",
+      "revId": "3e52410105058cf495bd0b0023ed1799e9127f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da136a1a_180cdd95",
         "filename": "chrome/browser/extensions/api/web_request/web_request_apitest.cc",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "3e52410105058cf495bd0b0023ed1799e9127f82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c78fedab_a5035d9c",
+        "filename": "chrome/browser/extensions/api/web_request/web_request_apitest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1024,
+      "author": {
+        "id": 1146654
+      },
+      "writtenOn": "2017-08-30T00:07:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da136a1a_180cdd95",
+      "revId": "3e52410105058cf495bd0b0023ed1799e9127f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8a7222b9_e75213f4",
+        "filename": "chrome/browser/extensions/api/web_request/web_request_apitest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1027,
+      "author": {
+        "id": 1146654
+      },
+      "writtenOn": "2017-08-30T00:07:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a441b69b_15e5b7d7",
+      "revId": "3e52410105058cf495bd0b0023ed1799e9127f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b23fd3f1_0a41f9da",
         "filename": "chrome/test/data/extensions/api_test/webrequest/framework.js",
         "patchSetId": 10
@@ -67,6 +121,24 @@
       "revId": "3e52410105058cf495bd0b0023ed1799e9127f82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "466208e6_fbc3e357",
+        "filename": "chrome/test/data/extensions/api_test/webrequest/framework.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1146654
+      },
+      "writtenOn": "2017-08-30T00:07:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b23fd3f1_0a41f9da",
+      "revId": "3e52410105058cf495bd0b0023ed1799e9127f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "22e8c792_4662262a",
+        "filename": "chrome/test/data/extensions/api_test/webrequest/framework.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1146654
+      },
+      "writtenOn": "2017-08-30T00:07:41Z",
+      "side": 1,
+      "message": "I avoided 0 and 1 so someone couldn\u0027t pass in a boolean by accident.",
+      "parentUuid": "0eb73d7e_f3f1fd93",
+      "revId": "3e52410105058cf495bd0b0023ed1799e9127f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e9a9cc0_2e2275fb",
         "filename": "chrome/test/data/extensions/api_test/webrequest/framework.js",
         "patchSetId": 10
@@ -101,6 +191,24 @@
       "revId": "3e52410105058cf495bd0b0023ed1799e9127f82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "937f6652_a88e74d5",
+        "filename": "chrome/test/data/extensions/api_test/webrequest/framework.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1146654
+      },
+      "writtenOn": "2017-08-30T00:07:41Z",
+      "side": 1,
+      "message": "They aren\u0027t considered properties so hasOwnProperty will always return false. I switched this to use Objects.value which is less complicated.",
+      "parentUuid": "8e9a9cc0_2e2275fb",
+      "revId": "3e52410105058cf495bd0b0023ed1799e9127f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "9936e560_48edeeb8",
+        "filename": "chrome/test/data/extensions/api_test/webrequest/framework.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1146654
+      },
+      "writtenOn": "2017-08-30T00:07:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e52a04cb_3319e8bf",
+      "revId": "3e52410105058cf495bd0b0023ed1799e9127f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4752b3c2_61aaccbd",
         "filename": "chrome/test/data/extensions/api_test/webrequest/test_blocking.js",
         "patchSetId": 10
@@ -135,6 +261,24 @@
       "revId": "3e52410105058cf495bd0b0023ed1799e9127f82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2399d6d5_392ab3a6",
+        "filename": "chrome/test/data/extensions/api_test/webrequest/test_blocking.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 1146654
+      },
+      "writtenOn": "2017-08-30T00:07:41Z",
+      "side": 1,
+      "message": "I was running gjslint which kept complaining the line was longer than 80 characters.",
+      "parentUuid": "4752b3c2_61aaccbd",
+      "revId": "3e52410105058cf495bd0b0023ed1799e9127f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "15a79e86_03677a78",
+        "filename": "chrome/test/data/extensions/api_test/webrequest_permissions/initiator/background.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1146654
+      },
+      "writtenOn": "2017-08-30T00:07:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c83748f_72a6a22e",
+      "revId": "3e52410105058cf495bd0b0023ed1799e9127f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ba09c20_3bb5de67",
         "filename": "extensions/browser/api/web_request/web_request_event_details.cc",
         "patchSetId": 10
@@ -169,6 +331,24 @@
       "revId": "3e52410105058cf495bd0b0023ed1799e9127f82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed3c5ce2_dd3d77c8",
+        "filename": "extensions/browser/api/web_request/web_request_event_details.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1146654
+      },
+      "writtenOn": "2017-08-30T00:07:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ba09c20_3bb5de67",
+      "revId": "3e52410105058cf495bd0b0023ed1799e9127f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -192,6 +372,30 @@
       "revId": "3e52410105058cf495bd0b0023ed1799e9127f82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8e7b5f8_d9ae17df",
+        "filename": "extensions/browser/api/web_request/web_request_event_details.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1146654
+      },
+      "writtenOn": "2017-08-30T00:07:41Z",
+      "side": 1,
+      "message": "If I forward declared Origin it\u0027d be an used in type trait expression (due to base::Optional).\nI forward declared the InfoMap, and added an include for the ExtensionID since IWYU.",
+      "parentUuid": "13f955f6_acd66e32",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 23
+      },
+      "revId": "3e52410105058cf495bd0b0023ed1799e9127f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
