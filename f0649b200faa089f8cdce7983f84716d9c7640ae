@@ -118,6 +118,47 @@
     },
     {
       "key": {
+        "uuid": "e25b74b1_705021d6",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_coordinator_unittest.mm",
+        "patchSetId": 27
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-08-30T11:41:31Z",
+      "side": 1,
+      "message": "no only that, but in Chromium using base::Feature gives you automatic command line and finch control of the feature…",
+      "parentUuid": "4846deb2_8239d32f",
+      "revId": "f0649b200faa089f8cdce7983f84716d9c7640ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "88a8376a_647af4a2",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_features.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-08-30T11:41:31Z",
+      "side": 1,
+      "message": "The rule is to not use namespaces in chrome/browser or ios/chrome/browser. I don\u0027t believe we changed that rule in clean, did we?",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 20
+      },
+      "revId": "f0649b200faa089f8cdce7983f84716d9c7640ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b8b2e081_de1ca1e8",
         "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_view_controller.h",
         "patchSetId": 27
