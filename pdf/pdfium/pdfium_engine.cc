@@ -19,6 +19,7 @@
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/numerics/safe_conversions.h"
 #include "base/stl_util.h"
 #include "base/strings/string_number_conversions.h"
@@ -72,6 +73,23 @@ using printing::kPixelsPerInch;
 namespace chrome_pdf {
 
 namespace {
+
+// This enum is used to back an UMA histogram, and should therefore be treated
+// as append only.
+enum PdfActionBuckets {
+  PRINT_PREVIEW = 0,
+  ROTATE_CW = 1,
+  ROTATE_CCW = 2,
+  HIGHLIGHT = 3,
+  SELECT_TEXT = 4,
+  UPDATE_ZOOM = 5,
+  PDFACTION_BUCKET_BOUNDARY,
+};
+
+void ReportPrintPreviewPdfActionHistogram(enum PdfActionBuckets event) {
+  UMA_HISTOGRAM_ENUMERATION("PrintPreview.PdfAction", event,
+                            PDFACTION_BUCKET_BOUNDARY);
+}
 
 const int32_t kPageShadowTop = 3;
 const int32_t kPageShadowBottom = 7;
@@ -838,6 +856,9 @@ PDFiumEngine::PDFiumEngine(PDFEngine::Client* client)
   if (instance)
     g_last_instance_id = instance->pp_instance();
 #endif
+
+  if (client_->IsPrintPreview())
+    ReportPrintPreviewPdfActionHistogram(PRINT_PREVIEW);
 }
 
 PDFiumEngine::~PDFiumEngine() {
@@ -2502,16 +2523,22 @@ void PDFiumEngine::ZoomUpdated(double new_zoom_level) {
 
   CalculateVisiblePages();
   UpdateTickMarks();
+  if (client_->IsPrintPreview())
+    ReportPrintPreviewPdfActionHistogram(UPDATE_ZOOM);
 }
 
 void PDFiumEngine::RotateClockwise() {
   current_rotation_ = (current_rotation_ + 1) % 4;
   RotateInternal();
+  if (client_->IsPrintPreview())
+    ReportPrintPreviewPdfActionHistogram(ROTATE_CW);
 }
 
 void PDFiumEngine::RotateCounterclockwise() {
   current_rotation_ = (current_rotation_ - 1) % 4;
   RotateInternal();
+  if (client_->IsPrintPreview())
+    ReportPrintPreviewPdfActionHistogram(ROTATE_CCW);
 }
 
 void PDFiumEngine::InvalidateAllPages() {
@@ -2524,6 +2551,8 @@ void PDFiumEngine::InvalidateAllPages() {
 std::string PDFiumEngine::GetSelectedText() {
   if (!HasPermission(PDFEngine::PERMISSION_COPY))
     return std::string();
+  if (client_->IsPrintPreview())
+    ReportPrintPreviewPdfActionHistogram(SELECT_TEXT);
 
   base::string16 result;
   base::string16 new_line_char = base::UTF8ToUTF16("\n");
@@ -3420,6 +3449,9 @@ void PDFiumEngine::Highlight(void* buffer,
                              std::vector<pp::Rect>* highlighted_rects) {
   if (!buffer)
     return;
+
+  if (client_->IsPrintPreview())
+    ReportPrintPreviewPdfActionHistogram(HIGHLIGHT);
 
   pp::Rect new_rect = rect;
   for (const auto& highlighted : *highlighted_rects)
