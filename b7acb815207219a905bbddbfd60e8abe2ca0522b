@@ -187,6 +187,30 @@
       "revId": "b7acb815207219a905bbddbfd60e8abe2ca0522b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "103e90dd_ae36adea",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1932,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-30T18:16:38Z",
+      "side": 1,
+      "message": "Isn\u0027t the same also true of any case where we might restart? E.g., RestartIgnoringLastError, RestartWithCertificate, and RestartWithAuth? It seems like we need to handle every place that the start machine returns an error.\n\nPerhaps, if the start machine fails, it should move to a START_MACHINE_FAILED state instead of FINISH_HEADERS. If Read() is called instead of one of the Restart* methods, then remove the transaction from the ActiveEntry and continue reading from the network.\n\nWDYT?",
+      "parentUuid": "70c02329_0636b653",
+      "range": {
+        "startLine": 1931,
+        "startChar": 0,
+        "endLine": 1932,
+        "endChar": 14
+      },
+      "revId": "b7acb815207219a905bbddbfd60e8abe2ca0522b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
