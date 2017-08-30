@@ -296,6 +296,8 @@ bool SelectionController::HandleSingleClick(
 
   const VisiblePositionInFlatTree& visible_hit_pos =
       VisiblePositionOfHitTestResult(event.GetHitTestResult());
+  // We shouldn't store visible_pos across potential DOM changes. See
+  // crbug.com/648949.
   const VisiblePositionInFlatTree& visible_pos =
       visible_hit_pos.IsNull()
           ? CreateVisiblePosition(
@@ -387,7 +389,10 @@ bool SelectionController::HandleSingleClick(
       is_handle_visible ? HandleVisibility::kVisible
                         : HandleVisibility::kNotVisible);
 
-  if (has_editable_style && event.Event().FromTouch()) {
+  // Note: SelectionControllerTest_SetCaretAtHitTestResultWithDetachedPosition
+  // tests the case where IsConnected() is false.
+  if (has_editable_style && event.Event().FromTouch() &&
+      visible_pos.DeepEquivalent().IsConnected()) {
     frame_->GetTextSuggestionController().HandlePotentialMisspelledWordTap(
         visible_pos.DeepEquivalent());
   }
