@@ -6,7 +6,6 @@
 #define WorkletModuleScriptFetcher_h
 
 #include "core/loader/modulescript/ModuleScriptFetcher.h"
-
 #include "core/workers/WorkletModuleResponsesMap.h"
 #include "core/workers/WorkletModuleResponsesMapProxy.h"
 #include "platform/wtf/Optional.h"
@@ -24,18 +23,17 @@ namespace blink {
 // fetches the module script via the default module fetch path and then caches
 // it in the map.
 class CORE_EXPORT WorkletModuleScriptFetcher final
-    : public ModuleScriptFetcher,
+    : public GarbageCollectedFinalized<WorkletModuleScriptFetcher>,
+      public ModuleScriptFetcher,
       public WorkletModuleResponsesMap::Client {
   USING_GARBAGE_COLLECTED_MIXIN(WorkletModuleScriptFetcher);
 
  public:
-  WorkletModuleScriptFetcher(const FetchParameters&,
-                             ResourceFetcher*,
-                             ModuleScriptFetcher::Client*,
+  WorkletModuleScriptFetcher(ModuleScriptFetcher::Client*,
                              WorkletModuleResponsesMapProxy*);
 
   // Implements ModuleScriptFetcher.
-  void Fetch() override;
+  void Fetch(FetchParameters&) override;
 
   // Implements WorkletModuleResponsesMap::Client.
   void OnRead(const ModuleScriptCreationParams&) override;
@@ -44,6 +42,10 @@ class CORE_EXPORT WorkletModuleScriptFetcher final
   DECLARE_TRACE();
 
  private:
+  void Finalize(const WTF::Optional<ModuleScriptCreationParams>&,
+                ConsoleMessage* error_message);
+
+  Member<ModuleScriptFetcher::Client> client_;
   Member<WorkletModuleResponsesMapProxy> module_responses_map_proxy_;
 };
 
