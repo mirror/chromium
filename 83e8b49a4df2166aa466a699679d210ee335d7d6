@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "eb3c2d2d_1d201cf8",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-08-30T06:19:44Z",
+      "side": 1,
+      "message": "I have a slight preference to use the existing mechanism if we are going to be relying on the base solution as this now feels a bit of a hybrid (partially our solution, partially the base solution from BackoffEntry::Policy).\n\nWill it not work to use the delay instead of attempt count?  Do we have explicit reasons we need to use a retry attempt count instead of a delay?  (in which case I\u0027m fine with the hybrid approach for now, but if we have a strong use case for it perhaps the base solution should be updated to support max retry attempt count as well?)",
+      "parentUuid": "a218e661_f3ff8278",
+      "revId": "83e8b49a4df2166aa466a699679d210ee335d7d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a80aedd8_304f522d",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
         "patchSetId": 2
