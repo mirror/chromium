@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1d39960_51cf2d4a",
+        "filename": "chrome/browser/chromeos/tether/tether_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-30T18:33:31Z",
+      "side": 1,
+      "message": "Future cleanup note: This class seems like it should be in namespace chromeos::tether.",
+      "revId": "890e239a2d71400339dd295426e85b4bd214ba39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
