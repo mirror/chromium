@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "89c286b0_7a237da6",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-08-30T14:05:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbd670b6_65dd7d71",
+      "range": {
+        "startLine": 255,
+        "startChar": 47,
+        "endLine": 255,
+        "endChar": 74
+      },
+      "revId": "965d5c23592e3c4285bee6d7be96b89bfc1d756a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a3c1832_268cd300",
         "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.mm",
         "patchSetId": 1
@@ -60,6 +84,24 @@
       "writtenOn": "2017-08-30T09:46:43Z",
       "side": 1,
       "message": "Is this the exact same fix that we use in non-editing mode, or are we doing something different from the preedit label?",
+      "revId": "965d5c23592e3c4285bee6d7be96b89bfc1d756a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7090f58_943ab1a5",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-08-30T14:05:07Z",
+      "side": 1,
+      "message": "Same exact fix",
+      "parentUuid": "3a3c1832_268cd300",
       "revId": "965d5c23592e3c4285bee6d7be96b89bfc1d756a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
