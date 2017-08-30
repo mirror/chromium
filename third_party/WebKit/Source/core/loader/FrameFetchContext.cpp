@@ -606,9 +606,6 @@ void FrameFetchContext::RecordLoadingActivity(
     const ResourceRequest& request,
     Resource::Type type,
     const AtomicString& fetch_initiator_name) {
-  TRACE_EVENT_ASYNC_BEGIN1(
-      "blink.net", "Resource", identifier, "data",
-      LoadResourceTraceData(identifier, request.Url(), request.Priority()));
   if (!document_loader_ || document_loader_->Fetcher()->Archive() ||
       !request.Url().IsValid())
     return;
