@@ -52,6 +52,24 @@
       "revId": "ec06031738b83f356770e8a6583385caa9588ac4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df971091_6a3c1254",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-30T15:54:02Z",
+      "side": 1,
+      "message": "hmm. this might not be necessary anymore. It is probably only necessary when we share the same elements for fullscreen toast and webvr toast. Because the toast may already showing before webvr toast shows, so we want to kickvisibility in that case.",
+      "parentUuid": "70fb6dbe_c50dd2fb",
+      "revId": "ec06031738b83f356770e8a6583385caa9588ac4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
