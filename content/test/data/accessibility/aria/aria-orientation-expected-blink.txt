@@ -1,7 +1,7 @@
 rootWebArea
-++comboBox vertical
-++comboBox horizontal
-++comboBox vertical
+++comboBoxGrouping
+++comboBoxGrouping
+++comboBoxGrouping
 ++listBox vertical
 ++listBox horizontal
 ++listBox vertical
