@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2a9feeba_8029ec38",
+        "filename": "chrome/renderer/autofill/devtools_page_passwords_analyser_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-08-30T16:05:28Z",
+      "side": 1,
+      "message": "Ah, I didn\u0027t realise Google Mock was so powerful! I\u0027ve changed the testing infrastructure to use it instead.",
+      "parentUuid": "a8125cce_e4bf5fb6",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 47
+      },
+      "revId": "4a389449ec26c035ea87e7f669192dfda5bd4218",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50994cfc_4332abcc",
         "filename": "chrome/renderer/autofill/devtools_page_passwords_analyser_browsertest.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "4a389449ec26c035ea87e7f669192dfda5bd4218",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5323490b_8df27b82",
+        "filename": "chrome/renderer/autofill/devtools_page_passwords_analyser_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-08-30T16:05:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50994cfc_4332abcc",
+      "range": {
+        "startLine": 135,
+        "startChar": 2,
+        "endLine": 135,
+        "endChar": 13
+      },
+      "revId": "4a389449ec26c035ea87e7f669192dfda5bd4218",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e5188330_f91d4fec",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-08-30T16:05:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f889b011_5ae7dfdb",
+      "range": {
+        "startLine": 17,
+        "startChar": 6,
+        "endLine": 17,
+        "endChar": 27
+      },
+      "revId": "4a389449ec26c035ea87e7f669192dfda5bd4218",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c85eeecd_1bfaca21",
         "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.h",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "4a389449ec26c035ea87e7f669192dfda5bd4218",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b217b623_78932366",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-08-30T16:05:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c85eeecd_1bfaca21",
+      "range": {
+        "startLine": 56,
+        "startChar": 26,
+        "endLine": 56,
+        "endChar": 55
+      },
+      "revId": "4a389449ec26c035ea87e7f669192dfda5bd4218",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
