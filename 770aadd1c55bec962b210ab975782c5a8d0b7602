@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90b56962_cd7ace7b",
+        "filename": "chrome/android/java/res/layout/chrome_home_iph_header.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-30T04:56:05Z",
+      "side": 1,
+      "message": "Is this supposed to reference a text style instead of the color (also missing the a in alph[a])?  BlackHint2 or BlackBody?  If we set the theme it is overridden during inflation?",
+      "range": {
+        "startLine": 17,
+        "startChar": 39,
+        "endLine": 17,
+        "endChar": 52
+      },
+      "revId": "770aadd1c55bec962b210ab975782c5a8d0b7602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
