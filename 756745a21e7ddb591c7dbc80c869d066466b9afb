@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2bed4c5f_25323951",
+        "filename": "third_party/zlib/contrib/inffast64/inffast64.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1240200
+      },
+      "writtenOn": "2017-08-30T00:51:17Z",
+      "side": 1,
+      "message": "There\u0027s a good chance this can be made to work efficiently for strictly-aligned and big-endian architectures if `*((uint64_t *)(in))` is replaced with `(in[0] | ((uint64_t)in[1] \u003c\u003c 8) | ... | ((uint64_t)in[6] \u003c\u003c 48) | (uint64_t)in[7] \u003c\u003c 56))`.  Such an idiom allows the compiler to fuse the byte loads into whatever is appropriate for the target, and most relevant targets appear to have endian reversal and/or piecewise unaligned load instructions that the compiler will use if there\u0027s no alignment contract for the load.",
+      "revId": "756745a21e7ddb591c7dbc80c869d066466b9afb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6d566c0a_38dcc4a0",
+        "filename": "third_party/zlib/contrib/inffast64/inffast64.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1240200
+      },
+      "writtenOn": "2017-08-30T00:51:17Z",
+      "side": 1,
+      "message": "It\u0027s possible (ie., possibly target-dependent) that the following is faster:\n\n    unsigned got \u003d (64u - bits) \u003e\u003e 3;\n    in +\u003d got;\n    bits +\u003d got * 8;\n\nIt costs more to calculate, but the whole block occurs a little less frequently.",
+      "revId": "756745a21e7ddb591c7dbc80c869d066466b9afb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f4e40a_36b6591d",
+        "filename": "third_party/zlib/contrib/inffast64/inffast64.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1240200
+      },
+      "writtenOn": "2017-08-30T00:51:17Z",
+      "side": 1,
+      "message": "FWIW, 32-bit targets can benefit from `hold |\u003d (unsigned long)*(uint16_t*)in \u003c\u003c bits;` here, and below (x3).  Though this change probably belongs in a different version of the file, or a different patch.",
+      "revId": "756745a21e7ddb591c7dbc80c869d066466b9afb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
