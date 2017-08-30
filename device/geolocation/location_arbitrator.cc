@@ -104,6 +104,7 @@ void LocationArbitrator::StopProvider() {
 void LocationArbitrator::OnAccessTokenStoresLoaded(
     AccessTokenStore::AccessTokenMap access_token_map,
     const scoped_refptr<net::URLRequestContextGetter>& context_getter) {
+  DCHECK(GetAccessTokenStore());
   // If there are no access tokens, boot strap it with the default server URL.
   if (access_token_map.empty())
     access_token_map[DefaultNetworkProviderURL()];
