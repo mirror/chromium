@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18b2ea09_58f12c2b",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1841,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-30T10:13:26Z",
+      "side": 1,
+      "message": "nit: s/Emptry/Empty/",
+      "range": {
+        "startLine": 1841,
+        "startChar": 28,
+        "endLine": 1841,
+        "endChar": 0
+      },
+      "revId": "296718b37e5e6b38b7e263dc5b46925b20594724",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40f58117_d2669a5f",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1845,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-30T10:13:26Z",
+      "side": 1,
+      "message": "Unrelated, but this would be easier to read if all the cases actually were separate tests. As it is, I have to look for the previous EXPECT on the same histogram to figure out what this case actually tests.\n(Or instead of separate tests, maybe it\u0027d be enough to instantiate a separate HistogramTester for each case?)\n\nAnyway, not for this CL, but maybe add a TODO?",
+      "range": {
+        "startLine": 1845,
+        "startChar": 65,
+        "endLine": 1845,
+        "endChar": 0
+      },
+      "revId": "296718b37e5e6b38b7e263dc5b46925b20594724",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d3d47a7_016934c1",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3889,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-30T10:13:26Z",
+      "side": 1,
+      "message": "Doesn\u0027t this violate the contract for the callback? If the Status isn\u0027t SUCCESS, I\u0027d expect the Optional\u003cFetchedCategories\u003e to be empty?",
+      "range": {
+        "startLine": 3889,
+        "startChar": 55,
+        "endLine": 3889,
+        "endChar": 0
+      },
+      "revId": "296718b37e5e6b38b7e263dc5b46925b20594724",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a45cb3b_38ed6dec",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3891,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-30T10:13:26Z",
+      "side": 1,
+      "message": "This comment doesn\u0027t match the expectations below",
+      "range": {
+        "startLine": 3891,
+        "startChar": 57,
+        "endLine": 3891,
+        "endChar": 0
+      },
+      "revId": "296718b37e5e6b38b7e263dc5b46925b20594724",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce9d3772_de805e52",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3931,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-30T10:13:26Z",
+      "side": 1,
+      "message": "Also here, inaccurate comment",
+      "range": {
+        "startLine": 3931,
+        "startChar": 57,
+        "endLine": 3931,
+        "endChar": 0
+      },
+      "revId": "296718b37e5e6b38b7e263dc5b46925b20594724",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
