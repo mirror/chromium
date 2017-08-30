@@ -131,6 +131,8 @@ WindowPortMus::RequestLayerTreeFrameSink(
       enable_surface_synchronization);
   window_tree_client_->AttachCompositorFrameSink(
       server_id(), std::move(sink_request), std::move(client));
+  local_surface_id_ = local_surface_id_allocator_.GenerateId();
+  layer_tree_frame_sink->SetLocalSurfaceId(local_surface_id_);
   return layer_tree_frame_sink;
 }
 
@@ -404,6 +406,8 @@ WindowPortMus::ChangeSource WindowPortMus::OnTransientChildRemoved(
 
 void WindowPortMus::AllocateLocalSurfaceId() {
   local_surface_id_ = local_surface_id_allocator_.GenerateId();
+  if (local_layer_tree_frame_sink_)
+    local_layer_tree_frame_sink_->SetLocalSurfaceId(local_surface_id_);
 }
 
 const viz::LocalSurfaceId& WindowPortMus::GetLocalSurfaceId() {
@@ -568,7 +572,6 @@ WindowPortMus::CreateLayerTreeFrameSink() {
       nullptr,
       aura::Env::GetInstance()->context_factory()->GetGpuMemoryBufferManager());
   local_layer_tree_frame_sink_ = frame_sink->GetWeakPtr();
-  local_surface_id_ = local_surface_id_allocator_.GenerateId();
   return std::move(frame_sink);
 }
 
