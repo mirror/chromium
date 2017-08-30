@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "afb7ebe1_80586c91",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-30T17:01:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f84d58b_ae7d6b31",
+      "revId": "a10859bb93c34ac536f32d26183d56c31753de01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f4e72cc_667b18ba",
         "filename": "ui/ozone/platform/drm/common/drm_util.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "a10859bb93c34ac536f32d26183d56c31753de01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb7bbd30_df8aaf7e",
+        "filename": "ui/ozone/platform/drm/common/drm_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-30T17:01:43Z",
+      "side": 1,
+      "message": "That would be nice (it\u0027s how google-java-format works) but not clang format does it. Presubmit is unhappy if I don\u0027t format it.",
+      "parentUuid": "9f4e72cc_667b18ba",
+      "revId": "a10859bb93c34ac536f32d26183d56c31753de01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
