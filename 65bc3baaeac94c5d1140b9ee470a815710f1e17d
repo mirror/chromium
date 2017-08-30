@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7a3141cf_45df06b0",
+        "filename": "chrome/browser/chromeos/net/cert_verify_proc_chromeos_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-08-30T02:02:52Z",
+      "side": 1,
+      "message": "Yeah, root_1_ only has a single element, so the old code of creating a new list was just unnecessary.",
+      "parentUuid": "9db82ded_c5218e0e",
+      "range": {
+        "startLine": 268,
+        "startChar": 35,
+        "endLine": 268,
+        "endChar": 42
+      },
+      "revId": "65bc3baaeac94c5d1140b9ee470a815710f1e17d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc8fae07_f99daf9c",
         "filename": "net/cert/nss_profile_filter_chromeos.cc",
         "patchSetId": 7
@@ -36,6 +60,24 @@
       "writtenOn": "2017-08-29T22:30:23Z",
       "side": 1,
       "message": "Hrm, so if I\u0027m following this route correctly, this FindCERT call is needed because  ClientCertStoreChromeOS::CertFilter takes an X509Certificate and needs to sniff at the NSS module or so associated with the CERTCertificate?\n\nThe other option would be if CertFilter took a CERTCertificate. That doesn\u0027t immediately work because it sees a ClientCertIdentity rather than the actual ClientCertIdentityNSS objects that ClientCertStoreNSS fills in. This seems like it should be resolvable, either by erasing the types a hair later or letting ClientCertStoreNSS::GetPlatformCertsOnWorkerThread see the filter.",
+      "revId": "65bc3baaeac94c5d1140b9ee470a815710f1e17d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a3d3920_5e6ceca6",
+        "filename": "net/cert/nss_profile_filter_chromeos.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-08-30T02:02:52Z",
+      "side": 1,
+      "message": "Hm, yeah.\nI went with passing a filter into GetPlatformCertsOnWorkerThread, seemed the cleanest way. (I guess the other way would be to have GetPlatformCertsOnWorkerThread actually return CERTCertificates instead of identities, and then convert them into identities in a separate step, but that seemed a bit uglier to expose a way to make arbitrary ClientCertIdentityNSS objects..)",
+      "parentUuid": "bc8fae07_f99daf9c",
       "revId": "65bc3baaeac94c5d1140b9ee470a815710f1e17d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
