@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d5c8003_7ba43ad6",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-30T17:05:26Z",
+      "side": 1,
+      "message": "Since we\u0027re now changing this line, let\u0027s make this kDefaultPromoShowTimeInHours.\n\nThis helps the reader figure out the purpose of the value.",
+      "range": {
+        "startLine": 19,
+        "startChar": 10,
+        "endLine": 19,
+        "endChar": 19
+      },
+      "revId": "3c2efd90a2a1686ac5597518201a182e3e3b4a0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
