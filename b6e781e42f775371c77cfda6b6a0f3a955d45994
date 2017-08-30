@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e1d29f28_eef85c29",
+        "filename": "ios/clean/chrome/browser/ui/ntp/ntp_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-30T07:53:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb0cddc0_73bc7a1c",
+      "revId": "b6e781e42f775371c77cfda6b6a0f3a955d45994",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "801bde2b_335712d1",
         "filename": "ios/clean/chrome/browser/ui/ntp/ntp_coordinator.mm",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "b6e781e42f775371c77cfda6b6a0f3a955d45994",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb02f0cb_53adb53f",
+        "filename": "ios/clean/chrome/browser/ui/ntp/ntp_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-30T07:53:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "801bde2b_335712d1",
+      "revId": "b6e781e42f775371c77cfda6b6a0f3a955d45994",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -56,6 +92,30 @@
       "revId": "b6e781e42f775371c77cfda6b6a0f3a955d45994",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97a55fdc_c527222a",
+        "filename": "ios/clean/chrome/browser/ui/ntp/ntp_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-30T07:53:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3ac244b_061410fd",
+      "range": {
+        "startLine": 66,
+        "startChar": 4,
+        "endLine": 66,
+        "endChar": 64
+      },
+      "revId": "b6e781e42f775371c77cfda6b6a0f3a955d45994",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -106,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "4a0e9def_9baa0d4f",
+        "filename": "ios/clean/chrome/browser/ui/ntp/ntp_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-30T07:53:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bcfd3f90_6187dc05",
+      "range": {
+        "startLine": 69,
+        "startChar": 4,
+        "endLine": 75,
+        "endChar": 5
+      },
+      "revId": "b6e781e42f775371c77cfda6b6a0f3a955d45994",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72caaeeb_9f0660f4",
         "filename": "ios/clean/chrome/browser/ui/ntp/ntp_home_header_coordinator.mm",
         "patchSetId": 3
@@ -120,6 +204,24 @@
       "revId": "b6e781e42f775371c77cfda6b6a0f3a955d45994",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63e9155f_e70047ac",
+        "filename": "ios/clean/chrome/browser/ui/ntp/ntp_home_header_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-30T07:53:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72caaeeb_9f0660f4",
+      "revId": "b6e781e42f775371c77cfda6b6a0f3a955d45994",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -146,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "d4f7eca3_91023372",
+        "filename": "ios/clean/chrome/browser/ui/ntp/ntp_home_header_mediator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-30T07:53:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e22999d_f5234a72",
+      "range": {
+        "startLine": 20,
+        "startChar": 3,
+        "endLine": 20,
+        "endChar": 12
+      },
+      "revId": "b6e781e42f775371c77cfda6b6a0f3a955d45994",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce5dc188_ba4af30a",
         "filename": "ios/clean/chrome/browser/ui/ntp/ntp_home_header_mediator.mm",
         "patchSetId": 3
@@ -169,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "1046c308_0f0bb61b",
+        "filename": "ios/clean/chrome/browser/ui/ntp/ntp_home_header_mediator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-30T07:53:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce5dc188_ba4af30a",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 11
+      },
+      "revId": "b6e781e42f775371c77cfda6b6a0f3a955d45994",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12762f38_170217e9",
         "filename": "ios/clean/chrome/browser/ui/ntp/ntp_view_controller.mm",
         "patchSetId": 3
@@ -189,6 +339,30 @@
       "revId": "b6e781e42f775371c77cfda6b6a0f3a955d45994",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fd12f3b_bcc85b4c",
+        "filename": "ios/clean/chrome/browser/ui/ntp/ntp_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-30T07:53:53Z",
+      "side": 1,
+      "message": "I can\u0027t. item.identifier is not a ntp_home::PanelIdentifier.",
+      "parentUuid": "12762f38_170217e9",
+      "range": {
+        "startLine": 156,
+        "startChar": 2,
+        "endLine": 168,
+        "endChar": 3
+      },
+      "revId": "b6e781e42f775371c77cfda6b6a0f3a955d45994",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
