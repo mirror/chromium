@@ -36,6 +36,57 @@
     },
     {
       "key": {
+        "uuid": "ff27249e_3205acd6",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-30T20:02:01Z",
+      "side": 1,
+      "message": "In a test like this, it\u0027s really nice to have each expected result on a new line.  However, it\u0027s also nice to be able to \u0027git cl format\u0027 without trashing formatting.  In GL shaders, we use \u0027/* clang-format off/on */\u0027 to instruct the formatter to ignore blocks.  We could do that here.  Preference?",
+      "revId": "7ca4bbd80257b49bc5808d7fda48c354ec88c6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85148355_90b7bbb1",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-30T20:02:01Z",
+      "side": 1,
+      "message": "Is this a current bug?",
+      "revId": "7ca4bbd80257b49bc5808d7fda48c354ec88c6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b1db7d8_461c445f",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-30T20:02:01Z",
+      "side": 1,
+      "message": "And this?  Why doesn\u0027t \u0027subdir\u0027 disappear first?",
+      "revId": "7ca4bbd80257b49bc5808d7fda48c354ec88c6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23ce80e8_b91f53b2",
         "filename": "components/url_formatter/elide_url_unittest.cc",
         "patchSetId": 1
