@@ -142,6 +142,30 @@
       "revId": "fdd81ddf1053dd8930d89e7da5ee854bdf7230d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69d7129e_db4eb9b9",
+        "filename": "mojo/edk/test/test_utils_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-30T00:07:41Z",
+      "side": 1,
+      "message": "https://chromium-review.googlesource.com/c/chromium/src/+/642519 removes all HANDLE_EINTR from this file which is Fuchsia only. Defer to y\u0027all if you want to approve it :)",
+      "parentUuid": "64aca676_973a160d",
+      "range": {
+        "startLine": 85,
+        "startChar": 11,
+        "endLine": 85,
+        "endChar": 23
+      },
+      "revId": "fdd81ddf1053dd8930d89e7da5ee854bdf7230d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
