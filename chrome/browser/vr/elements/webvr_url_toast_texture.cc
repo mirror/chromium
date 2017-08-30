@@ -4,6 +4,7 @@
 
 #include "chrome/browser/vr/elements/webvr_url_toast_texture.h"
 
+#include "base/strings/utf_string_conversions.h"
 #include "cc/paint/skia_paint_canvas.h"
 #include "chrome/browser/vr/color_scheme.h"
 #include "components/url_formatter/url_formatter.h"
@@ -111,10 +112,14 @@ void WebVrUrlToastTexture::RenderUrl(const gfx::Size& texture_size,
   url_formatter::FormatUrlTypes format_types =
       url_formatter::kFormatUrlOmitDefaults;
   format_types |= url_formatter::kFormatUrlOmitHTTPS;
-  format_types |= url_formatter::kFormatUrlExperimentalElideAfterHost;
   const base::string16 formatted_url = url_formatter::FormatUrl(
       state_.gurl, format_types, net::UnescapeRule::NORMAL, &parsed, nullptr,
       nullptr);
+
+  base::string16 url = formatted_url.substr(parsed.host.begin, parsed.host.len);
+  if (parsed.path.is_nonempty()) {
+    url += base::UTF8ToUTF16("/...");
+  }
 
   gfx::FontList font_list;
   if (!UiTexture::GetFontList(pixel_font_height, formatted_url, &font_list))
@@ -125,7 +130,7 @@ void WebVrUrlToastTexture::RenderUrl(const gfx::Size& texture_size,
   render_text->SetHorizontalAlignment(gfx::ALIGN_LEFT);
   render_text->SetElideBehavior(gfx::ELIDE_HEAD);
   render_text->SetDirectionalityMode(gfx::DIRECTIONALITY_FORCE_LTR);
-  render_text->SetText(formatted_url);
+  render_text->SetText(url);
 
   url_render_text_ = std::move(render_text);
 }
