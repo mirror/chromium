@@ -28,8 +28,13 @@ bool IsScreenCaptureMediaType(MediaStreamType type) {
           type == MEDIA_DESKTOP_VIDEO_CAPTURE);
 }
 
+// static
+const int MediaStreamDevice::kNoId = -1;
+
 MediaStreamDevice::MediaStreamDevice()
-    : type(MEDIA_NO_SERVICE), video_facing(media::MEDIA_VIDEO_FACING_NONE) {}
+    : type(MEDIA_NO_SERVICE),
+      video_facing(media::MEDIA_VIDEO_FACING_NONE),
+      session_id(kNoId) {}
 
 MediaStreamDevice::MediaStreamDevice(MediaStreamType type,
                                      const std::string& id,
@@ -37,7 +42,8 @@ MediaStreamDevice::MediaStreamDevice(MediaStreamType type,
     : type(type),
       id(id),
       video_facing(media::MEDIA_VIDEO_FACING_NONE),
-      name(name) {
+      name(name),
+      session_id(kNoId) {
 #if defined(OS_ANDROID)
   if (name.find("front") != std::string::npos) {
     video_facing = media::MEDIA_VIDEO_FACING_USER;
@@ -51,7 +57,7 @@ MediaStreamDevice::MediaStreamDevice(MediaStreamType type,
                                      const std::string& id,
                                      const std::string& name,
                                      media::VideoFacingMode facing)
-    : type(type), id(id), video_facing(facing), name(name) {}
+    : type(type), id(id), video_facing(facing), name(name), session_id(kNoId) {}
 
 MediaStreamDevice::MediaStreamDevice(MediaStreamType type,
                                      const std::string& id,
@@ -67,7 +73,8 @@ MediaStreamDevice::MediaStreamDevice(MediaStreamType type,
             static_cast<media::ChannelLayout>(channel_layout),
             sample_rate,
             16,
-            frames_per_buffer) {
+            frames_per_buffer),
+      session_id(kNoId) {
   DCHECK(input.IsValid());
 }
 
