@@ -651,6 +651,15 @@ void FileSystem::GetResourceEntryAfterRead(
   DVLOG_IF(1, error != FILE_ERROR_OK) << "ReadDirectory failed. "
                                       << FileErrorToString(error);
 
+  GetResourceEntryFromCache(file_path, callback);
+}
+
+void FileSystem::GetResourceEntryFromCache(
+    const base::FilePath& file_path,
+    const GetResourceEntryCallback& callback) {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  DCHECK(!callback.is_null());
+
   std::unique_ptr<ResourceEntry> entry(new ResourceEntry);
   ResourceEntry* entry_ptr = entry.get();
   base::PostTaskAndReplyWithResult(

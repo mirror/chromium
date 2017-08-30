@@ -8,6 +8,7 @@
 #include <stdint.h>
 
 #include <memory>
+#include <set>
 #include <string>
 #include <vector>
 
@@ -43,8 +44,8 @@ enum class MetadataSearchOrder {
   // Most recently accessed file comes first.
   LAST_ACCESSED = 0,
 
-  // Most recently modified file comes first.
-  LAST_MODIFIED = 1,
+  // Most recently modified-by-me file comes first.
+  LAST_MODIFIED_BY_ME = 1,
 };
 
 // Struct to represent a search result for SearchMetadata().
@@ -378,6 +379,14 @@ class FileSystemInterface {
   // |callback| must not be null.
   virtual void GetResourceEntry(const base::FilePath& file_path,
                                 const GetResourceEntryCallback& callback) = 0;
+
+  // Finds an entry (a file or a directory) by |file_path|. This call will read
+  // entries only from disk cache and do not refresh file system content.
+  //
+  // |callback| must not be null.
+  virtual void GetResourceEntryFromCache(
+      const base::FilePath& file_path,
+      const GetResourceEntryCallback& callback) = 0;
 
   // Finds and reads a directory by |file_path|. This call will also retrieve
   // and refresh file system content from server and disk cache.

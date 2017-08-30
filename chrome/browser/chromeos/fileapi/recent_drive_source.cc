@@ -12,6 +12,7 @@
 #include "chrome/browser/chromeos/drive/file_system_util.h"
 #include "chrome/browser/chromeos/file_manager/fileapi_util.h"
 #include "chrome/browser/chromeos/fileapi/recent_file.h"
+#include "components/drive/drive.pb.h"
 #include "content/public/browser/browser_thread.h"
 #include "storage/browser/fileapi/file_system_operation.h"
 #include "storage/browser/fileapi/file_system_operation_runner.h"
@@ -21,31 +22,6 @@
 using content::BrowserThread;
 
 namespace chromeos {
-
-namespace {
-
-void OnGetMetadataOnIOThread(
-    const storage::FileSystemOperation::GetMetadataCallback& callback,
-    base::File::Error result,
-    const base::File::Info& info) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-
-  BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
-                          base::BindOnce(callback, result, info));
-}
-
-void GetMetadataOnIOThread(
-    scoped_refptr<storage::FileSystemContext> file_system_context,
-    const storage::FileSystemURL& url,
-    int fields,
-    const storage::FileSystemOperation::GetMetadataCallback& callback) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-
-  file_system_context->operation_runner()->GetMetadata(
-      url, fields, base::Bind(&OnGetMetadataOnIOThread, callback));
-}
-
-}  // namespace
 
 const char RecentDriveSource::kLoadHistogramName[] =
     "FileBrowser.Recent.LoadDrive";
@@ -78,11 +54,12 @@ void RecentDriveSource::GetRecentFiles(Params params) {
     return;
   }
 
-  file_system->SearchMetadata(
-      "" /* query */, drive::SEARCH_METADATA_EXCLUDE_DIRECTORIES,
-      params_.value().max_files(), drive::MetadataSearchOrder::LAST_MODIFIED,
-      base::Bind(&RecentDriveSource::OnSearchMetadata,
-                 weak_ptr_factory_.GetWeakPtr()));
+  file_system->SearchMetadata("" /* query */,
+                              drive::SEARCH_METADATA_EXCLUDE_DIRECTORIES,
+                              params_.value().max_files(),
+                              drive::MetadataSearchOrder::LAST_MODIFIED_BY_ME,
+                              base::Bind(&RecentDriveSource::OnSearchMetadata,
+                                         weak_ptr_factory_.GetWeakPtr()));
 }
 
 void RecentDriveSource::OnSearchMetadata(
@@ -101,41 +78,50 @@ void RecentDriveSource::OnSearchMetadata(
 
   DCHECK(results.get());
 
-  std::string extension_id = params_.value().origin().host();
+  drive::FileSystemInterface* file_system =
+      drive::util::GetFileSystemByProfile(profile_);
+  if (!file_system) {
+    // |file_system| is nullptr if Drive is disabled.
+    OnComplete();
+    return;
+  }
 
   for (const auto& result : *results) {
     if (result.is_directory)
       continue;
 
-    base::FilePath virtual_path =
-        file_manager::util::ConvertDrivePathToRelativeFileSystemPath(
-            profile_, extension_id, result.path);
-    storage::FileSystemURL url =
-        params_.value().file_system_context()->CreateCrackedFileSystemURL(
-            params_.value().origin(), storage::kFileSystemTypeExternal,
-            virtual_path);
     ++num_inflight_stats_;
-    BrowserThread::PostTask(
-        BrowserThread::IO, FROM_HERE,
-        base::BindOnce(
-            &GetMetadataOnIOThread,
-            make_scoped_refptr(params_.value().file_system_context()), url,
-            storage::FileSystemOperation::GET_METADATA_FIELD_LAST_MODIFIED,
-            base::Bind(&RecentDriveSource::OnGetMetadata,
-                       weak_ptr_factory_.GetWeakPtr(), url)));
+    file_system->GetResourceEntryFromCache(
+        result.path, base::Bind(&RecentDriveSource::OnGetResourceEntryFromCache,
+                                weak_ptr_factory_.GetWeakPtr(), result.path));
   }
 
   if (num_inflight_stats_ == 0)
     OnComplete();
 }
 
-void RecentDriveSource::OnGetMetadata(const storage::FileSystemURL& url,
-                                      base::File::Error result,
-                                      const base::File::Info& info) {
+void RecentDriveSource::OnGetResourceEntryFromCache(
+    const base::FilePath& path,
+    drive::FileError error,
+    std::unique_ptr<drive::ResourceEntry> entry) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  DCHECK(params_.has_value());
 
-  if (result == base::File::FILE_OK)
-    files_.emplace_back(url, info.last_modified);
+  if (error == drive::FILE_ERROR_OK) {
+    DCHECK(entry.get());
+
+    base::FilePath virtual_path =
+        file_manager::util::ConvertDrivePathToRelativeFileSystemPath(
+            profile_, params_.value().origin().host(), path);
+
+    storage::FileSystemURL url =
+        params_.value().file_system_context()->CreateCrackedFileSystemURL(
+            params_.value().origin(), storage::kFileSystemTypeExternal,
+            virtual_path);
+
+    files_.emplace_back(
+        url, base::Time::FromInternalValue(entry->modification_by_me_date()));
+  }
 
   --num_inflight_stats_;
   if (num_inflight_stats_ == 0)

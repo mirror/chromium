@@ -170,6 +170,13 @@ void FakeFileSystem::GetResourceEntry(
           weak_ptr_factory_.GetWeakPtr(), file_path.BaseName(), callback));
 }
 
+void FakeFileSystem::GetResourceEntryFromCache(
+    const base::FilePath& file_path,
+    const GetResourceEntryCallback& callback) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  GetResourceEntry(file_path, callback);
+}
+
 void FakeFileSystem::ReadDirectory(
     const base::FilePath& file_path,
     const ReadDirectoryEntriesCallback& entries_callback,

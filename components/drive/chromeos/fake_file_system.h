@@ -95,6 +95,9 @@ class FakeFileSystem : public FileSystemInterface {
       const FileOperationCallback& completion_callback) override;
   void GetResourceEntry(const base::FilePath& file_path,
                         const GetResourceEntryCallback& callback) override;
+  void GetResourceEntryFromCache(
+      const base::FilePath& file_path,
+      const GetResourceEntryCallback& callback) override;
   void ReadDirectory(const base::FilePath& file_path,
                      const ReadDirectoryEntriesCallback& entries_callback,
                      const FileOperationCallback& completion_callback) override;
