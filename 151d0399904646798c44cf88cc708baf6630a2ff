@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "d07aea98_4cd22b37",
+        "filename": "remoting/client/audio/audio_player_buffer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-30T18:47:27Z",
+      "side": 1,
+      "message": "I think a *reference* to std::unique_ptr is not unique...\nAnyway it\u0027s probably better to use raw pointer here, otherwise \"-\u003e\" will dereference twice...",
+      "parentUuid": "9f90b89c_754ff778",
+      "range": {
+        "startLine": 164,
+        "startChar": 4,
+        "endLine": 164,
+        "endChar": 22
+      },
+      "revId": "151d0399904646798c44cf88cc708baf6630a2ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "188b6ea0_fd341225",
         "filename": "remoting/client/audio/audio_player_buffer.cc",
         "patchSetId": 8
