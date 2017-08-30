@@ -583,8 +583,11 @@ void SearchBoxView::HandleSearchBoxEvent(ui::LocatedEvent* located_event) {
     return;
 
   if (located_event->type() == ui::ET_MOUSEWHEEL) {
-    if (!app_list_view_->HandleScroll(located_event))
+    if (!app_list_view_->HandleScroll(
+            located_event->AsMouseWheelEvent()->offset().y(),
+            ui::ET_MOUSEWHEEL)) {
       return;
+    }
 
   } else if (located_event->type() == ui::ET_MOUSE_PRESSED ||
              located_event->type() == ui::ET_GESTURE_TAP) {
@@ -841,7 +844,8 @@ bool SearchBoxView::HandleMouseEvent(views::Textfield* sender,
     return false;
 
   if (mouse_event.type() == ui::ET_MOUSEWHEEL) {
-    return app_list_view_->HandleScroll(&mouse_event);
+    return app_list_view_->HandleScroll(
+        (&mouse_event)->AsMouseWheelEvent()->offset().y(), ui::ET_MOUSEWHEEL);
   } else {
     return OnTextfieldEvent();
   }
