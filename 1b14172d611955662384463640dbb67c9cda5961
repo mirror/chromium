@@ -52,6 +52,24 @@
       "revId": "1b14172d611955662384463640dbb67c9cda5961",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3021aede_be9d4b58",
+        "filename": "ui/webui/resources/cr_elements/cr_toolbar/cr_toolbar.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-08-30T04:29:39Z",
+      "side": 1,
+      "message": "Cool. Removed.",
+      "parentUuid": "9225da2b_6be77fe9",
+      "revId": "1b14172d611955662384463640dbb67c9cda5961",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -16,6 +16,24 @@
       "revId": "7873c573ac12fdc83389bc94cac6c78bd881db12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1624009f_5ccbaa28",
+        "filename": "ui/webui/resources/cr_elements/cr_toolbar/cr_toolbar.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-08-30T04:29:39Z",
+      "side": 1,
+      "message": "I think Downloads and History don\u0027t set page-wide line-heights, which makes the toolbar inconsistent across pages. I think it\u0027s good to say that the toolbar title will have a line height that\u0027s divorced from whatever it\u0027s put in, so that the embedder can\u0027t ruin consistency across pages.",
+      "parentUuid": "a8454b15_a1eb5e59",
+      "revId": "7873c573ac12fdc83389bc94cac6c78bd881db12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
