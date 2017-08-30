@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python2
 # Copyright (c) 2012 The Chromium Authors. All rights reserved.
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
@@ -11,6 +11,12 @@
 
 from __future__ import print_function
 
+import sys
+if sys.version_info[0] != 2 or sys.version_info[1] < 7:
+  print("This script requires Python version 2.7")
+  sys.exit(1)
+
+import argparse
 import atexit
 import errno
 import fcntl
@@ -19,7 +25,6 @@ import grp
 import hashlib
 import json
 import logging
-import optparse
 import os
 import pipes
 import platform
@@ -30,7 +35,6 @@ import re
 import signal
 import socket
 import subprocess
-import sys
 import tempfile
 import threading
 import time
@@ -129,6 +133,16 @@ MAX_LAUNCH_FAILURES = SHORT_BACKOFF_THRESHOLD + 10
 
 # Number of seconds to save session output to the log.
 SESSION_OUTPUT_TIME_LIMIT_SECONDS = 30
+
+# Host offline reason if the X server retry count is exceeded.
+HOST_OFFLINE_REASON_X_SERVER_RETRIES_EXCEEDED = "X_SERVER_RETRIES_EXCEEDED"
+
+# Host offline reason if the X session retry count is exceeded.
+HOST_OFFLINE_REASON_SESSION_RETRIES_EXCEEDED = "SESSION_RETRIES_EXCEEDED"
+
+# Host offline reason if the host retry count is exceeded. (Note: It may or may
+# not be possible to send this, depending on why the host is failing.)
+HOST_OFFLINE_REASON_HOST_RETRIES_EXCEEDED = "HOST_RETRIES_EXCEEDED"
 
 # This is the file descriptor used to pass messages to the user_session binary
 # during startup. It must be kept in sync with kMessageFd in
@@ -547,19 +561,22 @@ class Desktop:
       del env_copy["TMPDIR"]
       return env_copy
 
+  def check_x_responding(self):
+    """Checks if the X server is responding to connections."""
+    with open(os.devnull, "r+") as devnull:
+      exit_code = subprocess.call("xdpyinfo", env=self.child_env,
+                                  stdout=devnull)
+    return exit_code == 0
+
   def _wait_for_x(self):
     # Wait for X to be active.
-    with open(os.devnull, "r+") as devnull:
-      for _test in range(20):
-        exit_code = subprocess.call("xdpyinfo", env=self.child_env,
-                                    stdout=devnull)
-        if exit_code == 0:
-          break
-        time.sleep(0.5)
-      if exit_code != 0:
-        raise Exception("Could not connect to X server.")
-      else:
+    for _test in range(20):
+      if self.check_x_responding():
         logging.info("X server is active.")
+        break
+      time.sleep(0.5)
+    else:
+      raise Exception("Could not connect to X server.")
 
   def _launch_xvfb(self, display, x_auth_file, extra_x_args):
     max_width = max([width for width, height in self.sizes])
@@ -790,8 +807,42 @@ class Desktop:
     finally:
       self.host_proc.stdin.close()
 
+  def report_offline_reason(self, host_config, reason):
+    logging.info("Attempting to report offline reason: " + reason)
+    args = [HOST_BINARY_PATH, "--host-config=-",
+            "--report-offline-reason=" + reason]
+    proc = subprocess.Popen(args, env=self.child_env, stdin=subprocess.PIPE)
+    proc.communicate(json.dumps(host_config.data).encode('UTF-8'))
 
-def get_daemon_proc():
+
+def parse_config_arg(args):
+  """Parses only the --config option from a given command-line.
+
+  Returns:
+    A two-tuple. The first element is the value of the --config option (or None
+    if it is not specified), and the second is a list containing the remaining
+    arguments
+  """
+
+  # By default, argparse will exit the program on error. We would like it not to
+  # do that.
+  class ArgumentParserError(Exception):
+    pass
+  class ThrowingArgumentParser(argparse.ArgumentParser):
+    def error(self, message):
+      raise ArgumentParserError(message)
+
+  parser = ThrowingArgumentParser()
+  parser.add_argument("--config", nargs='?', action="store")
+
+  try:
+    result = parser.parse_known_args(args)
+    return (result[0].config, result[1])
+  except ArgumentParserError:
+    return (None, list(args))
+
+
+def get_daemon_proc(config_file):
   """Checks if there is already an instance of this script running, and returns
   a psutil.Process instance for it.
 
@@ -826,8 +877,18 @@ def get_daemon_proc():
       cmdline = psget(process.cmdline)
       if len(cmdline) < 2:
         continue
-      if cmdline[0] == sys.executable and cmdline[1] == sys.argv[0]:
-        return process
+      if (os.path.basename(cmdline[0]).startswith('python')
+          and os.path.basename(cmdline[1]) == os.path.basename(sys.argv[0])):
+        process_config = parse_config_arg(cmdline[2:])[0]
+        if process_config is None:
+          # Fall back to old behavior if there is no --config argument
+          # TODO(rkjnsn): Consider removing this fallback once sufficient time
+          # has passed.
+          if cmdline[1] == sys.argv[0]:
+            return process
+        elif process_config == config_file:
+          return process
+
     except (psutil.NoSuchProcess, psutil.AccessDenied):
       continue
 
@@ -1184,14 +1245,16 @@ class RelaunchInhibitor:
     self.earliest_successful_termination = time.time() + minimum_lifetime
     self.running = True
 
-  def record_stopped(self):
+  def record_stopped(self, expected):
     """Record that the process was stopped, and adjust the failure count
-    depending on whether the process ran long enough."""
+    depending on whether the process ran long enough. If the process was
+    intentionally stopped (expected is True), the failure count will not be
+    incremented."""
     self.running = False
-    if time.time() < self.earliest_successful_termination:
-      self.failures += 1
-    else:
+    if time.time() >= self.earliest_successful_termination:
       self.failures = 0
+    elif not expected:
+      self.failures += 1
     logging.info("Failure count for '%s' is now %d", self.label, self.failures)
 
 
@@ -1323,57 +1386,63 @@ def main():
   EPILOG = """This script is not intended for use by end-users.  To configure
 Chrome Remote Desktop, please install the app from the Chrome
 Web Store: https://chrome.google.com/remotedesktop"""
-  parser = optparse.OptionParser(
-      usage="Usage: %prog [options] [ -- [ X server options ] ]",
+  parser = argparse.ArgumentParser(
+      usage="Usage: %(prog)s [options] [ -- [ X server options ] ]",
       epilog=EPILOG)
-  parser.add_option("-s", "--size", dest="size", action="append",
-                    help="Dimensions of virtual desktop. This can be specified "
-                    "multiple times to make multiple screen resolutions "
-                    "available (if the X server supports this).")
-  parser.add_option("-f", "--foreground", dest="foreground", default=False,
-                    action="store_true",
-                    help="Don't run as a background daemon.")
-  parser.add_option("", "--start", dest="start", default=False,
-                    action="store_true",
-                    help="Start the host.")
-  parser.add_option("-k", "--stop", dest="stop", default=False,
-                    action="store_true",
-                    help="Stop the daemon currently running.")
-  parser.add_option("", "--get-status", dest="get_status", default=False,
-                    action="store_true",
-                    help="Prints host status")
-  parser.add_option("", "--check-running", dest="check_running", default=False,
-                    action="store_true",
-                    help="Return 0 if the daemon is running, or 1 otherwise.")
-  parser.add_option("", "--config", dest="config", action="store",
-                    help="Use the specified configuration file.")
-  parser.add_option("", "--reload", dest="reload", default=False,
-                    action="store_true",
-                    help="Signal currently running host to reload the config.")
-  parser.add_option("", "--add-user", dest="add_user", default=False,
-                    action="store_true",
-                    help="Add current user to the chrome-remote-desktop group.")
-  parser.add_option("", "--add-user-as-root", dest="add_user_as_root",
-                    action="store", metavar="USER",
-                    help="Adds the specified user to the chrome-remote-desktop "
-                    "group (must be run as root).")
+  parser.add_argument("-s", "--size", dest="size", action="append",
+                      help="Dimensions of virtual desktop. This can be "
+                      "specified multiple times to make multiple screen "
+                      "resolutions available (if the X server supports this).")
+  parser.add_argument("-f", "--foreground", dest="foreground", default=False,
+                      action="store_true",
+                      help="Don't run as a background daemon.")
+  parser.add_argument("--start", dest="start", default=False,
+                      action="store_true",
+                      help="Start the host.")
+  parser.add_argument("-k", "--stop", dest="stop", default=False,
+                      action="store_true",
+                      help="Stop the daemon currently running.")
+  parser.add_argument("--get-status", dest="get_status", default=False,
+                      action="store_true",
+                      help="Prints host status")
+  parser.add_argument("--check-running", dest="check_running",
+                      default=False, action="store_true",
+                      help="Return 0 if the daemon is running, or 1 otherwise.")
+  parser.add_argument("--config", dest="config", action="store",
+                      help="Use the specified configuration file.")
+  parser.add_argument("--reload", dest="reload", default=False,
+                      action="store_true",
+                      help="Signal currently running host to reload the "
+                      "config.")
+  parser.add_argument("--add-user", dest="add_user", default=False,
+                      action="store_true",
+                      help="Add current user to the chrome-remote-desktop "
+                      "group.")
+  parser.add_argument("--add-user-as-root", dest="add_user_as_root",
+                      action="store", metavar="USER",
+                      help="Adds the specified user to the "
+                      "chrome-remote-desktop group (must be run as root).")
   # The script is being run as a child process under the user-session binary.
   # Don't daemonize and use the inherited environment.
-  parser.add_option("", "--child-process", dest="child_process", default=False,
-                    action="store_true",
-                    help=optparse.SUPPRESS_HELP)
-  parser.add_option("", "--watch-resolution", dest="watch_resolution",
-                    type="int", nargs=2, default=False, action="store",
-                    help=optparse.SUPPRESS_HELP)
-  (options, args) = parser.parse_args()
+  parser.add_argument("--child-process", dest="child_process", default=False,
+                      action="store_true",
+                      help=argparse.SUPPRESS)
+  parser.add_argument("--watch-resolution", dest="watch_resolution",
+                      type=int, nargs=2, default=False, action="store",
+                      help=argparse.SUPPRESS)
+  parser.add_argument(dest="args", nargs="*", help=argparse.SUPPRESS)
+  options = parser.parse_args()
 
-  # Determine the filename of the host configuration and PID files.
-  if not options.config:
-    options.config = os.path.join(CONFIG_DIR, "host#%s.json" % g_host_hash)
+  # Determine the filename of the host configuration.
+  if options.config:
+    config_file = options.config
+  else:
+    config_file = os.path.join(CONFIG_DIR, "host#%s.json" % g_host_hash)
+  config_file = os.path.realpath(config_file)
 
   # Check for a modal command-line option (start, stop, etc.)
   if options.get_status:
-    proc = get_daemon_proc()
+    proc = get_daemon_proc(config_file)
     if proc is not None:
       print("STARTED")
     elif is_supported_platform():
@@ -1385,11 +1454,11 @@ Web Store: https://chrome.google.com/remotedesktop"""
   # TODO(sergeyu): Remove --check-running once NPAPI plugin and NM host are
   # updated to always use get-status flag instead.
   if options.check_running:
-    proc = get_daemon_proc()
+    proc = get_daemon_proc(config_file)
     return 1 if proc is None else 0
 
   if options.stop:
-    proc = get_daemon_proc()
+    proc = get_daemon_proc(config_file)
     if proc is None:
       print("The daemon is not currently running")
     else:
@@ -1403,7 +1472,7 @@ Web Store: https://chrome.google.com/remotedesktop"""
     return 0
 
   if options.reload:
-    proc = get_daemon_proc()
+    proc = get_daemon_proc(config_file)
     if proc is None:
       return 1
     proc.send_signal(signal.SIGHUP)
@@ -1466,6 +1535,21 @@ Web Store: https://chrome.google.com/remotedesktop"""
     print(EPILOG, file=sys.stderr)
     return 1
 
+  # Determine whether a desktop is already active for the specified host
+  # host configuration.
+  proc = get_daemon_proc(config_file)
+  if proc is not None:
+    # Debian policy requires that services should "start" cleanly and return 0
+    # if they are already running.
+    print("Service already running.")
+    return 0
+
+  if config_file != options.config:
+    # Canonicalize config flag so get_daemon_proc can find us.
+    exec_args = [sys.argv[0], "--config=" + config_file]
+    exec_args += parse_config_arg(sys.argv[1:])[1]
+    os.execvp(SCRIPT_PATH, exec_args)
+
   # If a RANDR-supporting Xvfb is not available, limit the default size to
   # something more sensible.
   if USE_XORG_ENV_VAR not in os.environ and locate_xvfb_randr():
@@ -1502,7 +1586,7 @@ Web Store: https://chrome.google.com/remotedesktop"""
   atexit.register(cleanup)
 
   # Load the initial host configuration.
-  host_config = Config(options.config)
+  host_config = Config(config_file)
   try:
     host_config.load()
   except (IOError, ValueError) as e:
@@ -1521,15 +1605,6 @@ Web Store: https://chrome.google.com/remotedesktop"""
   if not host_config_valid or not auth_config_valid:
     logging.error("Failed to load host configuration.")
     return 1
-
-  # Determine whether a desktop is already active for the specified host
-  # host configuration.
-  proc = get_daemon_proc()
-  if proc is not None:
-    # Debian policy requires that services should "start" cleanly and return 0
-    # if they are already running.
-    print("Service already running.")
-    return 0
 
   # If we're running under user-session, try to open the messaging pipe.
   if options.child_process:
@@ -1560,73 +1635,90 @@ Web Store: https://chrome.google.com/remotedesktop"""
   # launched at (roughly) the same time as the X server, and the termination of
   # one of these triggers the termination of the other.
   x_server_inhibitor = RelaunchInhibitor("X server")
+  session_inhibitor = RelaunchInhibitor("session")
   host_inhibitor = RelaunchInhibitor("host")
-  all_inhibitors = [x_server_inhibitor, host_inhibitor]
+  all_inhibitors = [
+      (x_server_inhibitor, HOST_OFFLINE_REASON_X_SERVER_RETRIES_EXCEEDED),
+      (session_inhibitor, HOST_OFFLINE_REASON_SESSION_RETRIES_EXCEEDED),
+      (host_inhibitor, HOST_OFFLINE_REASON_HOST_RETRIES_EXCEEDED)
+  ]
 
-  # Don't allow relaunching the script on the first loop iteration.
-  allow_relaunch_self = False
+  # Whether we are tearing down because the X server and/or session exited.
+  # This keeps us from counting processes exiting because we've terminated them
+  # as errors.
+  tearing_down = False
 
   while True:
-    # Set the backoff interval and exit if a process failed too many times.
-    backoff_time = SHORT_BACKOFF_TIME
-    for inhibitor in all_inhibitors:
-      if inhibitor.failures >= MAX_LAUNCH_FAILURES:
-        logging.error("Too many launch failures of '%s', exiting."
-                      % inhibitor.label)
-        return 1
-      elif inhibitor.failures >= SHORT_BACKOFF_THRESHOLD:
-        backoff_time = LONG_BACKOFF_TIME
-
     relaunch_times = []
 
     # If the session process or X server stops running (e.g. because the user
-    # logged out), kill the other. This will trigger the next conditional block
-    # as soon as os.waitpid() reaps its exit-code.
-    if desktop.session_proc is None and desktop.x_proc is not None:
-      logging.info("Terminating X server")
-      desktop.x_proc.terminate()
-    elif desktop.x_proc is None and desktop.session_proc is not None:
-      logging.info("Terminating X session")
-      desktop.session_proc.terminate()
-    elif desktop.x_proc is None and desktop.session_proc is None:
-      # Both processes have terminated.
-      if (allow_relaunch_self and x_server_inhibitor.failures == 0 and
-          host_inhibitor.failures == 0):
-        # Since the user's desktop is already gone at this point, there's no
-        # state to lose and now is a good time to pick up any updates to this
-        # script that might have been installed.
-        logging.info("Relaunching self")
-        relaunch_self(options.child_process)
-      else:
-        # If there is a non-zero |failures| count, restarting the whole script
-        # would lose this information, so just launch the session as normal.
-        if x_server_inhibitor.is_inhibited():
-          logging.info("Waiting before launching X server")
-          relaunch_times.append(x_server_inhibitor.earliest_relaunch_time)
+    # logged out), terminate all processes. The session will be restarted once
+    # everything has exited.
+    if tearing_down:
+      if desktop.x_proc is not None:
+        logging.info("Terminating X server")
+        desktop.x_proc.terminate()
+      if desktop.session_proc is not None:
+        logging.info("Terminating X session")
+        desktop.session_proc.terminate()
+      if desktop.host_proc is not None:
+        logging.info("Terminating host")
+        desktop.host_proc.terminate()
+
+      if (desktop.x_proc is None and desktop.session_proc is None and
+          desktop.host_proc is None):
+        if (x_server_inhibitor.failures == 0 and
+            session_inhibitor.failures == 0 and host_inhibitor.failures == 0):
+          # Since the user's desktop is already gone at this point, there's no
+          # state to lose and now is a good time to pick up any updates to this
+          # script that might have been installed.
+          logging.info("Relaunching self")
+          relaunch_self(options.child_process)
         else:
+          # If there is a non-zero |failures| count, restarting the whole script
+          # would lose this information, so just launch the session as normal,
+          # below.
+          tearing_down = False
+
+    if not tearing_down:
+      # Set the backoff interval and exit if a process failed too many times.
+      backoff_time = SHORT_BACKOFF_TIME
+      for inhibitor, offline_reason in all_inhibitors:
+        if inhibitor.failures >= MAX_LAUNCH_FAILURES:
+          logging.error("Too many launch failures of '%s', exiting."
+                        % inhibitor.label)
+          desktop.report_offline_reason(host_config, offline_reason)
+          return 1
+        elif inhibitor.failures >= SHORT_BACKOFF_THRESHOLD:
+          backoff_time = LONG_BACKOFF_TIME
+
+        if inhibitor.is_inhibited():
+          relaunch_times.append(inhibitor.earliest_relaunch_time)
+
+      if relaunch_times:
+        # We want to way until everything is ready to start so we don't end up
+        # launching things in the wrong order due to differing relaunch times.
+        logging.info("Waiting before relaunching")
+      else:
+        if desktop.x_proc is None and desktop.session_proc is None:
           logging.info("Launching X server and X session.")
-          desktop.launch_session(options.child_process, args)
+          desktop.launch_session(options.child_process, options.args)
           x_server_inhibitor.record_started(MINIMUM_PROCESS_LIFETIME,
                                             backoff_time)
-          allow_relaunch_self = True
+          session_inhibitor.record_started(MINIMUM_PROCESS_LIFETIME,
+                                           backoff_time)
+        if desktop.host_proc is None:
+          logging.info("Launching host process")
 
-    if desktop.host_proc is None:
-      if host_inhibitor.is_inhibited():
-        logging.info("Waiting before launching host process")
-        relaunch_times.append(host_inhibitor.earliest_relaunch_time)
-      else:
-        logging.info("Launching host process")
+          extra_start_host_args = []
+          if HOST_EXTRA_PARAMS_ENV_VAR in os.environ:
+              extra_start_host_args = \
+                  re.split('\s+', os.environ[HOST_EXTRA_PARAMS_ENV_VAR].strip())
+          desktop.launch_host(host_config, extra_start_host_args)
 
-        extra_start_host_args = []
-        if HOST_EXTRA_PARAMS_ENV_VAR in os.environ:
-            extra_start_host_args = \
-                re.split('\s+', os.environ[HOST_EXTRA_PARAMS_ENV_VAR].strip())
-        desktop.launch_host(host_config, extra_start_host_args)
+          host_inhibitor.record_started(MINIMUM_PROCESS_LIFETIME, backoff_time)
 
-        host_inhibitor.record_started(MINIMUM_PROCESS_LIFETIME,
-                                      backoff_time)
-
-    deadline = min(relaunch_times) if relaunch_times else 0
+    deadline = max(relaunch_times) if relaunch_times else 0
     pid, status = waitpid_handle_exceptions(-1, deadline)
     if pid == 0:
       continue
@@ -1639,17 +1731,36 @@ Web Store: https://chrome.google.com/remotedesktop"""
     if desktop.x_proc is not None and pid == desktop.x_proc.pid:
       logging.info("X server process terminated")
       desktop.x_proc = None
-      x_server_inhibitor.record_stopped()
+      if tearing_down:
+        # May have already been marked stopped if X server was found not to be
+        # responding.
+        if x_server_inhibitor.running:
+          x_server_inhibitor.record_stopped(True)
+      else:
+        x_server_inhibitor.record_stopped(False)
+        tearing_down = True
 
     if desktop.session_proc is not None and pid == desktop.session_proc.pid:
       logging.info("Session process terminated")
       desktop.session_proc = None
+      if tearing_down:
+        session_inhibitor.record_stopped(True)
+      else:
+        # The session may have exited on it's own or been brought down by the X
+        # server dying. Check if the X server is still running so we know whom
+        # to penalize.
+        if desktop.check_x_responding():
+          session_inhibitor.record_stopped(False)
+        else:
+          session_inhibitor.record_stopped(True)
+          x_server_inhibitor.record_stopped(False)
+        # Either way, we want to tear down the session.
+        tearing_down = True
 
     if desktop.host_proc is not None and pid == desktop.host_proc.pid:
       logging.info("Host process terminated")
       desktop.host_proc = None
       desktop.host_ready = False
-      host_inhibitor.record_stopped()
 
       # These exit-codes must match the ones used by the host.
       # See remoting/host/host_error_codes.h.
@@ -1679,6 +1790,20 @@ Web Store: https://chrome.google.com/remotedesktop"""
           logging.info("Host exited with status %s." % os.WEXITSTATUS(status))
       elif os.WIFSIGNALED(status):
         logging.info("Host terminated by signal %s." % os.WTERMSIG(status))
+
+      # The host may have exited on it's own or been brought down by the X
+      # server dying. Check if the X server is still running so we know whom to
+      # penalize.
+      if tearing_down:
+        host_inhibitor.record_stopped(True)
+      else:
+        if desktop.check_x_responding():
+          host_inhibitor.record_stopped(False)
+        else:
+          host_inhibitor.record_stopped(True)
+          x_server_inhibitor.record_stopped(False)
+          # Only tear down if the X server isn't responding.
+          tearing_down = True
 
 
 if __name__ == "__main__":
