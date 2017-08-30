@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b89fec92_0f3b19c8",
+        "filename": "chromeos/components/tether/disconnect_tethering_request_sender_impl_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-30T01:22:28Z",
+      "side": 1,
+      "message": "CallSendRequestTwiceWithOneDevice",
+      "range": {
+        "startLine": 110,
+        "startChar": 7,
+        "endLine": 110,
+        "endChar": 43
+      },
+      "revId": "e2f4e3149f9ca0d09c92737b136aa79a03024ec9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
