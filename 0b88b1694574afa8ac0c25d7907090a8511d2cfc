@@ -349,6 +349,24 @@
       "revId": "0b88b1694574afa8ac0c25d7907090a8511d2cfc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74b67d8d_8fd159b7",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-30T20:47:15Z",
+      "side": 1,
+      "message": "Doesn\u0027t work since we can have both IsBattery and IsAC in the same report. I prefer not to require us to do calculations on our keys to get values here. Since we have some keys that are tri-state a simple subtraction doesn\u0027t quite work either in all cases. So instead of mixing paradigms I\u0027ve just recorded all cases.",
+      "parentUuid": "e186657b_73418050",
+      "revId": "0b88b1694574afa8ac0c25d7907090a8511d2cfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8d598c56_f46e88fc",
+        "filename": "media/base/ipc/media_param_traits_macros.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-30T20:47:15Z",
+      "side": 1,
+      "message": "Mojo still uses this file for validation. I know, I was also confused by that :)",
+      "parentUuid": "f97ff151_6052733f",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 25
+      },
+      "revId": "e20277a2b7edddbfaaf96b8aedd8eebd64e5dc8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "750fb8b0_4e945cf7",
         "filename": "media/blink/watch_time_reporter.cc",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-30T19:29:40Z",
       "side": 1,
       "message": "Don\u0027t think you have a |status| here. \n\nDo you have have a test to verify background reporter is getting the forwarded all the right signals?",
+      "range": {
+        "startLine": 159,
+        "startChar": 38,
+        "endLine": 159,
+        "endChar": 44
+      },
+      "revId": "e20277a2b7edddbfaaf96b8aedd8eebd64e5dc8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "900fcd7f_8f27ac78",
+        "filename": "media/blink/watch_time_reporter.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-30T20:47:15Z",
+      "side": 1,
+      "message": "Deleted this since I realized this will impact our metrics on MTBR. Will have to separate this out to avoid fudging current UMA values.",
+      "parentUuid": "750fb8b0_4e945cf7",
       "range": {
         "startLine": 159,
         "startChar": 38,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0f61318e_2ba3e0ca",
+        "filename": "media/mojo/services/watch_time_recorder.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-30T20:47:15Z",
+      "side": 1,
+      "message": "Nope, you reminded me why earlier patch sets had aggregate_watch_time_info instead. Switched to only finalizing on a complete finalize and summing the watch time across all partial finalize events.",
+      "parentUuid": "f80edc19_ff415993",
+      "range": {
+        "startLine": 191,
+        "startChar": 24,
+        "endLine": 191,
+        "endChar": 27
+      },
+      "revId": "e20277a2b7edddbfaaf96b8aedd8eebd64e5dc8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f450f1f0_d7793b20",
         "filename": "media/mojo/services/watch_time_recorder.cc",
         "patchSetId": 9
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "6241d7d1_48150bf2",
+        "filename": "media/mojo/services/watch_time_recorder.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-30T20:47:15Z",
+      "side": 1,
+      "message": "Very cool! This is much better than const char\u0027ing a bunch of strings :)",
+      "parentUuid": "f450f1f0_d7793b20",
+      "range": {
+        "startLine": 222,
+        "startChar": 6,
+        "endLine": 222,
+        "endChar": 71
+      },
+      "revId": "e20277a2b7edddbfaaf96b8aedd8eebd64e5dc8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ae7b5cc_c88aa9ca",
         "filename": "media/mojo/services/watch_time_recorder.cc",
         "patchSetId": 9
@@ -105,6 +201,30 @@
       "writtenOn": "2017-08-30T19:29:40Z",
       "side": 1,
       "message": "Maybe add an else { ... } warning here to catch new metrics that need to be added to the builder?",
+      "range": {
+        "startLine": 254,
+        "startChar": 5,
+        "endLine": 254,
+        "endChar": 0
+      },
+      "revId": "e20277a2b7edddbfaaf96b8aedd8eebd64e5dc8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "910a239f_65654a3b",
+        "filename": "media/mojo/services/watch_time_recorder.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-30T20:47:15Z",
+      "side": 1,
+      "message": "Can\u0027t, there are other keys in the watch time info struct, we\u0027re just ignoring them.",
+      "parentUuid": "3ae7b5cc_c88aa9ca",
       "range": {
         "startLine": 254,
         "startChar": 5,
