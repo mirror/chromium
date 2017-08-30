@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5693bdba_a68f4570",
+        "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_page.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-30T22:29:50Z",
+      "side": 1,
+      "message": "I\u0027m not super keen on the asynchronous nature of this. If we are unable to successfully enable Bluetooth, then changing the toggle will set the pref, but state.powered will be false, so the toggle doesn\u0027t represent the pref value. This feels like a hack.",
+      "revId": "3eb20710844b99d2693ca0a53874a84a87d982c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
