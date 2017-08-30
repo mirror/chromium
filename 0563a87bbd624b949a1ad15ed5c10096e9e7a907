@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2f16a2f6_fc8443f8",
+        "filename": "cc/animation/animation_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-30T21:36:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07a6f4e5_3ba4dec5",
+      "revId": "0563a87bbd624b949a1ad15ed5c10096e9e7a907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d9184f7_2e08e764",
         "filename": "cc/animation/animation_player_unittest.cc",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-28T20:57:09Z",
       "side": 1,
       "message": "I\u0027m confused how this is testing the custom timing model.",
+      "revId": "0563a87bbd624b949a1ad15ed5c10096e9e7a907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e12f2d7_b12c4073",
+        "filename": "cc/animation/animation_player_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-30T21:36:23Z",
+      "side": 1,
+      "message": "Ops! This is just included by mistake. Removed.",
+      "parentUuid": "0d9184f7_2e08e764",
       "revId": "0563a87bbd624b949a1ad15ed5c10096e9e7a907",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c5210e89_16e0aebe",
+        "filename": "cc/animation/worklet_animation_player.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-30T21:36:23Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "49f13b27_30cf0c5a",
+      "revId": "0563a87bbd624b949a1ad15ed5c10096e9e7a907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8bc97ed9_77b50829",
         "filename": "cc/animation/worklet_animation_player.cc",
         "patchSetId": 9
@@ -67,6 +121,24 @@
       "revId": "0563a87bbd624b949a1ad15ed5c10096e9e7a907",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8882960e_b3a535ea",
+        "filename": "cc/animation/worklet_animation_player.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-30T21:36:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8bc97ed9_77b50829",
+      "revId": "0563a87bbd624b949a1ad15ed5c10096e9e7a907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "5b107e33_8c87e9db",
+        "filename": "cc/animation/worklet_animation_player.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-30T21:36:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b28b7cf_1695a721",
+      "revId": "0563a87bbd624b949a1ad15ed5c10096e9e7a907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2561c32_4ef0e864",
         "filename": "cc/trees/layer_tree_mutator.h",
         "patchSetId": 9
@@ -98,6 +188,24 @@
       "writtenOn": "2017-08-28T20:57:09Z",
       "side": 1,
       "message": "Needs comment. Also, it seems like we should have a separate mechanism / structure for passing new animation data since they need to be explicitly constructed and will also have options dictionaries. This can be a TODO for now.",
+      "revId": "0563a87bbd624b949a1ad15ed5c10096e9e7a907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1382137_2abe8012",
+        "filename": "cc/trees/layer_tree_mutator.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-30T21:36:23Z",
+      "side": 1,
+      "message": "Added a comment discussing the stateless nature of current sync implementation\nand its potential downside.\n\nSide note: In my dreams, we keep generating the whole state here and what we\nsend over the pipe to worklet becomes an implementation detail of sync protocol\ni.e., a dumb sync protocol may send everything while a smarter one computes just\nthe delta. There may already be something like in existence (maybe for blimp?)\nor perhaps this is overengineering it and it is not worth the cost. I will look\ninto it once it becomes needed.",
+      "parentUuid": "e2561c32_4ef0e864",
       "revId": "0563a87bbd624b949a1ad15ed5c10096e9e7a907",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "88ca8779_f3ab07f9",
+        "filename": "cc/trees/layer_tree_mutator.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-30T21:36:23Z",
+      "side": 1,
+      "message": "Added comment.\n\nOne your second point. I think those are two different concepts:\n 1- \"currentTime\" which is the current time of animation (normally its primary\n     timeline but could also be controller via animation.currentTime directly)\n 2- We have \"attached timelines\" for which we may send current times separately.\n\nI am not sure event if we should send #2 as part of each animator\u0027s state or\nperhaps it should have its separate timeline states sync\u0027d. Latter makes more\nsense if a few timelines are attached to by many animators.",
+      "parentUuid": "24d882b0_5a0fea5f",
+      "revId": "0563a87bbd624b949a1ad15ed5c10096e9e7a907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7740bf80_221288c8",
         "filename": "cc/trees/layer_tree_mutator.h",
         "patchSetId": 9
@@ -132,6 +258,24 @@
       "writtenOn": "2017-08-28T20:57:09Z",
       "side": 1,
       "message": "Presumably this will need to change when we implement group effects?",
+      "revId": "0563a87bbd624b949a1ad15ed5c10096e9e7a907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a88a29f8_e0e018c6",
+        "filename": "cc/trees/layer_tree_mutator.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-30T21:36:23Z",
+      "side": 1,
+      "message": "Correct. Added a comment to indicate this.\n\nI think to support that we will has a sub-struct for each effect.",
+      "parentUuid": "7740bf80_221288c8",
       "revId": "0563a87bbd624b949a1ad15ed5c10096e9e7a907",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -161,6 +305,30 @@
     },
     {
       "key": {
+        "uuid": "02763d94_f2f34572",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-30T21:36:23Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "7faeb46c_1007e483",
+      "range": {
+        "startLine": 76,
+        "startChar": 35,
+        "endLine": 76,
+        "endChar": 42
+      },
+      "revId": "0563a87bbd624b949a1ad15ed5c10096e9e7a907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a6549360_f3e0d16d",
         "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletGlobalScope.cpp",
         "patchSetId": 9
@@ -178,6 +346,24 @@
     },
     {
       "key": {
+        "uuid": "e15d496e_1aa57450",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletGlobalScope.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-30T21:36:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6549360_f3e0d16d",
+      "revId": "0563a87bbd624b949a1ad15ed5c10096e9e7a907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a433a02_af45115f",
         "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletProxyClientImpl.cpp",
         "patchSetId": 9
@@ -189,6 +375,24 @@
       "writtenOn": "2017-08-28T20:57:09Z",
       "side": 1,
       "message": "This seems like the likely place we\u0027ll do the thread hop, maybe call this out with a TODO(petermayo)?",
+      "revId": "0563a87bbd624b949a1ad15ed5c10096e9e7a907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ace0d39_8bd73e6f",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-30T21:36:23Z",
+      "side": 1,
+      "message": "Yes. I suspect this is the place to do the thread hop and we should get a callback.\nNote the rest of API is designed to work fine with a callback.",
+      "parentUuid": "1a433a02_af45115f",
       "revId": "0563a87bbd624b949a1ad15ed5c10096e9e7a907",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -212,6 +416,24 @@
     },
     {
       "key": {
+        "uuid": "a2cf57d5_e19a3506",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-30T21:36:23Z",
+      "side": 1,
+      "message": "Well, CompositorAnimator is the interface that is implemented by CompositorWorker and AnimationWorklet. The former one still controls whether it needs mutation.\n\nI agree with your sentiment but will defer doing so until after we remove CompositorWorker.",
+      "parentUuid": "bc1e1315_d538cd8c",
+      "revId": "0563a87bbd624b949a1ad15ed5c10096e9e7a907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1ad05601_879111ad",
         "filename": "third_party/WebKit/Source/modules/compositorworker/CompositorWorkerProxyClientImpl.cpp",
         "patchSetId": 9
@@ -229,6 +451,24 @@
     },
     {
       "key": {
+        "uuid": "f119745c_faa5ebe7",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/CompositorWorkerProxyClientImpl.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-30T21:36:23Z",
+      "side": 1,
+      "message": "I went ahead and separated SetNeedsMutate and SetMutationUpdates. So it is not\nas awkward as before.\n\nI prefer keeping this patch clean of the CW removal stuff if possible.",
+      "parentUuid": "1ad05601_879111ad",
+      "revId": "0563a87bbd624b949a1ad15ed5c10096e9e7a907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ecf2076_64bf335b",
         "filename": "third_party/WebKit/Source/modules/compositorworker/EffectProxy.h",
         "patchSetId": 9
@@ -240,6 +480,24 @@
       "writtenOn": "2017-08-28T20:57:09Z",
       "side": 1,
       "message": "Since localTime is spec\u0027d to be a double, why not just use a double here and convert to time within cc internals?",
+      "revId": "0563a87bbd624b949a1ad15ed5c10096e9e7a907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7be58c6a_701ed7e6",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/EffectProxy.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-30T21:36:23Z",
+      "side": 1,
+      "message": "hmmm, I think it is to use strongly typed time values as long as possible i.e.,\nuntil we cross the JS binding boundary.\n\nWe really should have a way to cross the cc-\u003eblink boundary without losing the\ntype here. Let me try to figure out what that i otherwise I will do as you\nsuggest.",
+      "parentUuid": "7ecf2076_64bf335b",
       "revId": "0563a87bbd624b949a1ad15ed5c10096e9e7a907",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
