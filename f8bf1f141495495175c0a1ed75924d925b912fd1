@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87dbb022_6835377a",
+        "filename": "base/allocator/partition_allocator/address_space_randomization.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-30T13:47:45Z",
+      "side": 1,
+      "message": "I did some later research that suggested we leak slightly more memory than your comment [based on my first comment] currently indicates. PDEs never get cleaned up. This means that we leak 2^10 bytes every 2^22 bytes of address space we use. So confining the hint to 2^39 bytes, will confine the leak to 2^10 * 2^17 bytes, ~128MB. This still seems much higher than desired. Is there a particular reason you want 39-bits of virtual address space?",
+      "revId": "f8bf1f141495495175c0a1ed75924d925b912fd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
