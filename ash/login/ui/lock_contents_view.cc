@@ -4,17 +4,21 @@
 
 #include "ash/login/ui/lock_contents_view.h"
 
+#include "ash/focus_cycler.h"
 #include "ash/login/ui/lock_screen.h"
 #include "ash/login/ui/login_auth_user_view.h"
 #include "ash/login/ui/login_display_style.h"
 #include "ash/login/ui/login_user_view.h"
 #include "ash/shell.h"
+#include "ash/system/status_area_widget_delegate.h"
+#include "ash/system/tray/system_tray_notifier.h"
 #include "ui/display/display.h"
 #include "ui/display/manager/display_manager.h"
 #include "ui/display/manager/managed_display_info.h"
 #include "ui/gfx/geometry/insets.h"
 #include "ui/views/background.h"
 #include "ui/views/controls/scroll_view.h"
+#include "ui/views/focus/focus_search.h"
 #include "ui/views/layout/box_layout.h"
 #include "ui/views/view.h"
 #include "ui/views/widget/widget.h"
@@ -101,6 +105,19 @@ bool ShouldShowLandscape(views::Widget* widget) {
   return true;
 }
 
+// Returns the first or last focusable child of |root|. If |reverse| is false,
+// this returns the first focusable child. If |reverse| is true, this returns
+// the last focusable child.
+views::View* FindFocusableChild(views::View* root, bool reverse) {
+  views::FocusSearch search(root, reverse /*cycle*/,
+                            false /*accessibility_mode*/);
+  views::FocusTraversable* dummy_focus_traversable;
+  views::View* dummy_focus_traversable_view;
+  return search.FindNextFocusableView(
+      root, reverse, views::FocusSearch::DOWN, false /*check_starting_view*/,
+      &dummy_focus_traversable, &dummy_focus_traversable_view);
+}
+
 }  // namespace
 
 LockContentsView::TestApi::TestApi(LockContentsView* view) : view_(view) {}
@@ -127,10 +144,17 @@ LockContentsView::LockContentsView(LoginDataDispatcher* data_dispatcher)
     : data_dispatcher_(data_dispatcher), display_observer_(this) {
   data_dispatcher_->AddObserver(this);
   display_observer_.Add(display::Screen::GetScreen());
+  Shell::Get()->system_tray_notifier()->AddStatusAreaFocusObserver(this);
+
+  // We reuse the focusable state on this view as a signal that focus should
+  // switch to the status area. LockContentsView should otherwise not be
+  // focusable.
+  SetFocusBehavior(FocusBehavior::ALWAYS);
 }
 
 LockContentsView::~LockContentsView() {
   data_dispatcher_->RemoveObserver(this);
+  Shell::Get()->system_tray_notifier()->RemoveStatusAreaFocusObserver(this);
 }
 
 void LockContentsView::Layout() {
@@ -144,6 +168,20 @@ void LockContentsView::AddedToWidget() {
 
   // Focus the primary user when showing the UI. This will focus the password.
   primary_auth_->RequestFocus();
+}
+
+void LockContentsView::OnFocus() {
+  // If LockContentsView gains focus, immediately forward the focus to the
+  // primary_auth_ since LockContentsView has no real focusable content by
+  // itself.
+  primary_auth_->RequestFocus();
+}
+
+void LockContentsView::AboutToRequestFocusFromTabTraversal(bool reverse) {
+  // The LockContentsView itself doesn't have anything to focus. If it gets
+  // focused we should change the currently focused widget (ie, to the shelf or
+  // status area).
+  FocusNextWidget(reverse);
 }
 
 void LockContentsView::OnUsersChanged(
@@ -217,6 +255,14 @@ void LockContentsView::OnPinEnabledForUserChanged(const AccountId& user,
   }
 }
 
+void LockContentsView::OnFocusOut(bool reverse) {
+  // This function is called when the status area is losing focus. We want to
+  // switch the focused widget to the next one in the cycle and focus the
+  // correct view inside of this widget in case this widget is gaining focus.
+  FocusNextWidget(reverse);
+  FindFocusableChild(this, reverse)->RequestFocus();
+}
+
 void LockContentsView::OnDisplayMetricsChanged(const display::Display& display,
                                                uint32_t changed_metrics) {
   // Ignore all metric changes except rotation.
@@ -224,6 +270,15 @@ void LockContentsView::OnDisplayMetricsChanged(const display::Display& display,
     return;
 
   DoLayout();
+}
+
+void LockContentsView::FocusNextWidget(bool reverse) {
+  // Tell the status area the focus direction so it can focus the correct child
+  // view (assuming the status area widget receives focus next).
+  ash::StatusAreaWidgetDelegate::GetPrimaryInstance()
+      ->set_default_last_focusable_child(reverse);
+  ash::Shell::Get()->focus_cycler()->RotateFocus(
+      reverse ? ash::FocusCycler::BACKWARD : ash::FocusCycler::FORWARD);
 }
 
 void LockContentsView::CreateLowDensityLayout(
