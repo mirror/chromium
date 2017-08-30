@@ -117,6 +117,7 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &offline_pages::kOfflinePagesCTFeature,    // See crbug.com/620421.
     &offline_pages::kOfflinePagesCTV2Feature,  // See crbug.com/734753.
     &offline_pages::kOfflinePagesSharingFeature,
+    &offline_pages::kPrefetchingOfflinePagesUIFeature,
     &password_manager::features::kViewPasswords,
     &subresource_filter::kSafeBrowsingSubresourceFilterExperimentalUI,
 };

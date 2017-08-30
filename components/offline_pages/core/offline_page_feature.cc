@@ -57,6 +57,9 @@ const base::Feature kNewBackgroundLoaderFeature{
 const base::Feature kOfflinePagesCTV2Feature{"OfflinePagesCTV2",
                                              base::FEATURE_DISABLED_BY_DEFAULT};
 
+const base::Feature kPrefetchingOfflinePagesUIFeature{
+    "OfflinePagesPrefetchingUI", base::FEATURE_DISABLED_BY_DEFAULT};
+
 bool IsOfflineBookmarksEnabled() {
   return base::FeatureList::IsEnabled(kOfflineBookmarksFeature);
 }

@@ -2275,6 +2275,10 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kOfflinePagesRenovationsName,
      flag_descriptions::kOfflinePagesRenovationsDescription, kOsAndroid,
      FEATURE_VALUE_TYPE(offline_pages::kOfflinePagesRenovationsFeature)},
+    {"offline-pages-prefetching-ui",
+     flag_descriptions::kOfflinePagesPrefetchingUIName,
+     flag_descriptions::kOfflinePagesPrefetchingUIDescription, kOsAndroid,
+     FEATURE_VALUE_TYPE(offline_pages::kPrefetchingOfflinePagesUIFeature)},
 #endif  // OS_ANDROID
     {"disallow-doc-written-script-loads",
      flag_descriptions::kDisallowDocWrittenScriptsUiName,
