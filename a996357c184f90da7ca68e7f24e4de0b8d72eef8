@@ -63,6 +63,30 @@
       "revId": "a996357c184f90da7ca68e7f24e4de0b8d72eef8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8150ea9_0776e798",
+        "filename": "chrome/browser/chromeos/arc/tts/arc_tts_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-08-30T07:02:46Z",
+      "side": 1,
+      "message": "Yes. How about those values?\n\nrequestID: 1\neventType: Start\ncharIndex: 0\nerrorMsg: \"\"\n\nrequestID: 1\neventType: End\ncharIndex: 10 (let\u0027s consider the case where length of the requested sentence was 10)\nerrorMsg: \"\"\n\nrequestID: 2\neventType: Interrupted\ncharIndex: 0\nerrorMsg: \"\"\n\nrequestID: 3\neventType: Error\ncharIndex: 0\nerrorMsg: \"\" (Current our Android side implementation sets no error message. It should be fine to set any value (e.g. \"Error\") as pretending that Android side sets the error message.)",
+      "parentUuid": "9338a077_0f9d702e",
+      "range": {
+        "startLine": 101,
+        "startChar": 59,
+        "endLine": 101,
+        "endChar": 65
+      },
+      "revId": "a996357c184f90da7ca68e7f24e4de0b8d72eef8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
