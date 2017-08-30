@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af05c237_eba92d96",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/TimelineFlameChartDataProvider.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-30T01:52:19Z",
+      "side": 1,
+      "message": "Let\u0027s move the check into the paintEventsFilter()",
+      "revId": "fc416f10e079e9b47fc1f15049335a53c3218830",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
