@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c55ab1f0_e5f87016",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-30T04:32:31Z",
+      "side": 1,
+      "message": "Could you comment like,\n\nShutdownSession(true /* system_shutdown */);\n\netc. Ditto for below (false cases).\nOr, using enum class as named constant is another approach. Up to you.",
+      "revId": "70b76ff11167d545eff1df7bbe14330a7b430c8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "934efeff_43db0d61",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-30T04:32:31Z",
+      "side": 1,
+      "message": "Could you call arc_session_runner_-\u003eOnShutdown() unconditionally in case of |system_shutdown| \u003d true, regardless of state_?",
+      "revId": "70b76ff11167d545eff1df7bbe14330a7b430c8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
