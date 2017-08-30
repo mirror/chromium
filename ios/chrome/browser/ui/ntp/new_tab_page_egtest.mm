@@ -8,6 +8,7 @@
 #include "base/ios/ios_util.h"
 #include "components/strings/grit/components_strings.h"
 #include "ios/chrome/browser/bookmarks/bookmark_new_generation_features.h"
+#import "ios/chrome/browser/ui/commands/browser_commands.h"
 #import "ios/chrome/browser/ui/commands/generic_chrome_command.h"
 #include "ios/chrome/browser/ui/commands/ios_command_ids.h"
 #import "ios/chrome/browser/ui/content_suggestions/ntp_home_constant.h"
@@ -68,7 +69,8 @@ void SelectNewTabPagePanel(ntp_home::PanelIdentifier panel_type) {
   } else {
     NSUInteger tag = 0;
     if (panel_type == ntp_home::BOOKMARKS_PANEL) {
-      tag = IDC_SHOW_BOOKMARK_MANAGER;
+      [chrome_test_util::BrowserCommandDispatcherForMainBVC()
+          showBookmarksManager];
     } else if (panel_type == ntp_home::RECENT_TABS_PANEL) {
       tag = IDC_SHOW_OTHER_DEVICES;
     }
