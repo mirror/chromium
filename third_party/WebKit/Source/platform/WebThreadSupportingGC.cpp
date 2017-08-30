@@ -51,7 +51,6 @@ WebThreadSupportingGC::~WebThreadSupportingGC() {
 void WebThreadSupportingGC::InitializeOnThread() {
   DCHECK(thread_->IsCurrentThread());
   ThreadState::AttachCurrentThread();
-  gc_task_runner_ = WTF::MakeUnique<GCTaskRunner>(thread_);
 }
 
 void WebThreadSupportingGC::ShutdownOnThread() {
@@ -59,8 +58,6 @@ void WebThreadSupportingGC::ShutdownOnThread() {
 #if defined(LEAK_SANITIZER)
   ThreadState::Current()->ReleaseStaticPersistentNodes();
 #endif
-  // Ensure no posted tasks will run from this point on.
-  gc_task_runner_.reset();
 
   // Shutdown the thread (via its scheduler) only when the thread is created
   // and is owned by this instance.

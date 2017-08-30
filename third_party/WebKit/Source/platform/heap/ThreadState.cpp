@@ -1119,14 +1119,6 @@ size_t ThreadState::ObjectPayloadSizeForTesting() {
   return object_payload_size;
 }
 
-void ThreadState::SafePoint(BlinkGC::StackState stack_state) {
-  DCHECK(CheckThread());
-  ThreadHeap::ReportMemoryUsageForTracing();
-
-  RunScheduledGC(stack_state);
-  stack_state_ = BlinkGC::kHeapPointersOnStack;
-}
-
 #ifdef ADDRESS_SANITIZER
 // When we are running under AddressSanitizer with
 // detect_stack_use_after_return=1 then stack marker obtained from

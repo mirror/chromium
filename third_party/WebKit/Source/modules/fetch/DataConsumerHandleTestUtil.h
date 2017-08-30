@@ -9,6 +9,7 @@
 
 #include "core/testing/NullExecutionContext.h"
 #include "gin/public/isolate_holder.h"
+#include "platform/CrossThreadFunctional.h"
 #include "platform/WaitableEvent.h"
 #include "platform/WebThreadSupportingGC.h"
 #include "platform/bindings/ScriptState.h"
