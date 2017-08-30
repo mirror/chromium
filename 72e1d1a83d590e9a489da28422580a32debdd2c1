@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd81c89e_64f3e47b",
+        "filename": "services/ui/ws/event_dispatcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-30T02:39:07Z",
+      "side": 1,
+      "message": "nit: This",
+      "range": {
+        "startLine": 94,
+        "startChar": 11,
+        "endLine": 94,
+        "endChar": 15
+      },
+      "revId": "72e1d1a83d590e9a489da28422580a32debdd2c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "067e8b9c_707347d8",
+        "filename": "services/ui/ws/event_dispatcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-30T02:39:07Z",
+      "side": 1,
+      "message": "Here, and below in UpdateCursorProviderByLastKnownLocation, we also call FindTargetForLocation in EventTargeter. Should we keep the IsHitTestInFlight and queue in EventTargeter?",
+      "range": {
+        "startLine": 227,
+        "startChar": 21,
+        "endLine": 227,
+        "endChar": 42
+      },
+      "revId": "72e1d1a83d590e9a489da28422580a32debdd2c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6ce8932_f468f2bf",
+        "filename": "services/ui/ws/event_dispatcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-30T02:39:07Z",
+      "side": 1,
+      "message": "I think IsTrackingPointer already checks this?",
+      "range": {
+        "startLine": 468,
+        "startChar": 40,
+        "endLine": 468,
+        "endChar": 70
+      },
+      "revId": "72e1d1a83d590e9a489da28422580a32debdd2c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "866558ad_5cdb9c57",
+        "filename": "services/ui/ws/event_dispatcher.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-30T02:39:07Z",
+      "side": 1,
+      "message": "can this be a const method?",
+      "range": {
+        "startLine": 78,
+        "startChar": 29,
+        "endLine": 78,
+        "endChar": 49
+      },
+      "revId": "72e1d1a83d590e9a489da28422580a32debdd2c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd768e58_bd6e8e63",
+        "filename": "services/ui/ws/window_manager_state_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-30T02:39:07Z",
+      "side": 1,
+      "message": "same change as above?",
+      "range": {
+        "startLine": 748,
+        "startChar": 14,
+        "endLine": 748,
+        "endChar": 77
+      },
+      "revId": "72e1d1a83d590e9a489da28422580a32debdd2c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
