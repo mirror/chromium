@@ -367,6 +367,24 @@
       "revId": "0b88b1694574afa8ac0c25d7907090a8511d2cfc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ed28d49_9544eb22",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-30T22:53:34Z",
+      "side": 1,
+      "message": "ACK. We chatted. One option would be to finalize UKM reports at the transition from battery to AC, etc... but the issue is the UKM report would then cease to capture the full playback story... which is a goal I overlooked.",
+      "parentUuid": "74b67d8d_8fd159b7",
+      "revId": "0b88b1694574afa8ac0c25d7907090a8511d2cfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
