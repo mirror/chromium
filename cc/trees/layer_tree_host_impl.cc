@@ -2954,6 +2954,7 @@ InputHandler::ScrollStatus LayerTreeHostImpl::ScrollBegin(
     }
   }
 
+  // Nothing change.
   if (scroll_on_main_thread) {
     RecordCompositorSlowScrollMetric(type, MAIN_THREAD);
 
