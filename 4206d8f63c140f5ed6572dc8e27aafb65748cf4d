@@ -34,6 +34,24 @@
       "revId": "4206d8f63c140f5ed6572dc8e27aafb65748cf4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5b6f18a_a6910534",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 41795,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-30T19:27:02Z",
+      "side": 1,
+      "message": "Ah, I missed that those are generated through histogram_suffix magic. All good then.",
+      "parentUuid": "21ab5636_7130fc4f",
+      "revId": "4206d8f63c140f5ed6572dc8e27aafb65748cf4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
