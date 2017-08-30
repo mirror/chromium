@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6ae4ba8f_8e106630",
+        "filename": "third_party/WebKit/public/platform/WebMediaPlayer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1172235
+      },
+      "writtenOn": "2017-08-30T00:06:03Z",
+      "side": 1,
+      "message": "Thanks for catching this. Fixed.\n\nUnfortunately I don\u0027t know that much about the other arguments to this function. I don\u0027t want to write documentation on them that\u0027s subtly wrong. I have added docs for the two new arguments, though.",
+      "parentUuid": "701127a1_6084964e",
+      "range": {
+        "startLine": 194,
+        "startChar": 21,
+        "endLine": 194,
+        "endChar": 48
+      },
+      "revId": "b0ea6e0eee31709f7b749ad7e9979d6a49371a9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3041f54_7d60243d",
         "filename": "third_party/WebKit/public/platform/WebMediaPlayer.h",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "b0ea6e0eee31709f7b749ad7e9979d6a49371a9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac062e23_b732c383",
+        "filename": "third_party/WebKit/public/platform/WebMediaPlayer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1172235
+      },
+      "writtenOn": "2017-08-30T00:06:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3041f54_7d60243d",
+      "range": {
+        "startLine": 211,
+        "startChar": 6,
+        "endLine": 212,
+        "endChar": 54
+      },
+      "revId": "b0ea6e0eee31709f7b749ad7e9979d6a49371a9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
