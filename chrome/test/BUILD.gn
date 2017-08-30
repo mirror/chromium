@@ -1584,6 +1584,7 @@ test("browser_tests") {
       "../common/time_format_browsertest.cc",
       "../profiling/profiling_browsertest.cc",
       "../renderer/autofill/autofill_renderer_browsertest.cc",
+      "../renderer/autofill/devtools_page_passwords_analyser_browsertest.cc",
       "../renderer/autofill/fake_content_password_manager_driver.cc",
       "../renderer/autofill/fake_content_password_manager_driver.h",
       "../renderer/autofill/fake_password_manager_client.cc",
