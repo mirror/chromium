@@ -16,6 +16,7 @@
 #include "chrome/browser/vr/color_scheme.h"
 #include "chrome/browser/vr/elements/draw_phase.h"
 #include "chrome/browser/vr/elements/ui_element_name.h"
+#include "chrome/browser/vr/target_property.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/gfx/geometry/point3_f.h"
 #include "ui/gfx/geometry/quaternion.h"
@@ -64,9 +65,6 @@ class UiElement : public cc::AnimationTarget {
 
   void Animate(const base::TimeTicks& time);
 
-  // Indicates whether the element should be visually rendered.
-  bool IsVisible() const;
-
   // Indicates whether the element should be tested for cursor input.
   bool IsHitTestable() const;
 
@@ -103,9 +101,23 @@ class UiElement : public cc::AnimationTarget {
 
   int id() const { return id_; }
 
-  // If true, this object will be visible.
-  bool visible() const { return visible_; }
-  void SetVisible(bool visible);
+  // If true, this object will be visible. NB: this is sugar for setting opacity
+  // which is the property that actually drives visibility.
+  bool IsVisible() const;
+  virtual void SetVisible(bool visible);
+
+  // SetVisible(true) is an alias for SetOpacity(opacity_when_visible_).
+  void set_opacity_when_visible(float opacity) {
+    opacity_when_visible_ = opacity;
+  }
+  float opacity_when_visible() const { return opacity_when_visible_; }
+
+  // If an element requires layout, then it should be considered by its parent
+  // in |LayOutChildren|.
+  bool requires_layout() const { return requires_layout_; }
+  void set_requires_layout(bool requires_layout) {
+    requires_layout_ = requires_layout;
+  }
 
   // If false, the reticle will not hit the element, even if visible.
   bool hit_testable() const { return hit_testable_; }
@@ -113,7 +125,9 @@ class UiElement : public cc::AnimationTarget {
 
   // TODO(bshe): We might be able to remove this state.
   bool viewport_aware() const { return viewport_aware_; }
-  void set_viewport_aware(bool enable) { viewport_aware_ = enable; }
+  void set_viewport_aware(bool viewport_aware) {
+    viewport_aware_ = viewport_aware;
+  }
   bool computed_viewport_aware() const { return computed_viewport_aware_; }
   void set_computed_viewport_aware(bool computed_lock) {
     computed_viewport_aware_ = computed_lock;
@@ -147,7 +161,7 @@ class UiElement : public cc::AnimationTarget {
 
   // The opacity of the object (between 0.0 and 1.0).
   float opacity() const { return opacity_; }
-  void SetOpacity(float opacity);
+  virtual void SetOpacity(float opacity);
 
   // The corner radius of the object. Analogous to CSS's border-radius. This is
   // in meters (same units as |size|).
@@ -185,10 +199,6 @@ class UiElement : public cc::AnimationTarget {
   // An optional, but stable and semantic identifier for an element.
   UiElementName name() const { return name_; }
   void set_name(UiElementName name) { name_ = name; }
-
-  // By default, sets an element to be visible or not. This may be overridden to
-  // allow finer control of element visibility.
-  virtual void SetEnabled(bool enabled);
 
   void SetMode(ColorScheme::Mode mode);
   ColorScheme::Mode mode() const { return mode_; }
@@ -235,9 +245,12 @@ class UiElement : public cc::AnimationTarget {
   void NotifyClientSizeAnimated(const gfx::SizeF& size,
                                 int transform_property_id,
                                 cc::Animation* animation) override;
-  void NotifyClientBooleanAnimated(bool visible,
-                                   int transform_property_id,
-                                   cc::Animation* animation) override;
+
+  void SetTransitionedProperties(const std::set<int>& properties);
+
+  void AddAnimation(std::unique_ptr<cc::Animation> animation);
+  void RemoveAnimation(int animation_id);
+  bool IsAnimatingProperty(TargetProperty property) const;
 
   // Handles positioning adjustments for children. This will be overridden by
   // UiElements providing custom layout modes. See the documentation of the
@@ -270,9 +283,6 @@ class UiElement : public cc::AnimationTarget {
   // Valid IDs are non-negative.
   int id_ = -1;
 
-  // If true, this object will be visible.
-  bool visible_ = false;
-
   // If false, the reticle will not hit the element, even if visible.
   bool hit_testable_ = true;
 
@@ -293,6 +303,9 @@ class UiElement : public cc::AnimationTarget {
 
   // The opacity of the object (between 0.0 and 1.0).
   float opacity_ = 1.0f;
+  float opacity_when_visible_ = 1.0f;
+
+  bool requires_layout_ = true;
 
   float corner_radius_ = 0.0f;
 
