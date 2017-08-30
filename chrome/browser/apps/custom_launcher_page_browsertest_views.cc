@@ -16,6 +16,7 @@
 #include "extensions/common/extension.h"
 #include "extensions/common/switches.h"
 #include "extensions/test/extension_test_message_listener.h"
+#include "ui/app_list/app_list_features.h"
 #include "ui/app_list/app_list_switches.h"
 #include "ui/app_list/presenter/app_list_presenter_impl.h"
 #include "ui/app_list/views/app_list_main_view.h"
@@ -140,6 +141,11 @@ IN_PROC_BROWSER_TEST_F(CustomLauncherPageBrowserTest,
 // click inside the clickzone, or a mouse scroll event.
 IN_PROC_BROWSER_TEST_F(CustomLauncherPageBrowserTest,
                        EventsActivateSwitchToCustomPage) {
+  // TODO(newcomer): this test needs to be reevaluated for the fullscreen app
+  // list (http://crbug.com/759779).
+  if (app_list::features::IsFullscreenAppListEnabled())
+    return;
+
   LoadAndLaunchPlatformApp(kCustomLauncherPagePath, "Launched");
   // Use an event generator to ensure targeting is correct.
   app_list::AppListView* app_list_view = GetAppListView();
