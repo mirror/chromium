@@ -23,6 +23,7 @@
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
 #include "extensions/browser/extension_registry.h"
+#include "extensions/browser/renderer_startup_helper.h"
 #include "extensions/common/extension_builder.h"
 #endif
 
@@ -101,10 +102,14 @@ void ToolbarModelTest::SetUp() {
   // Install a fake extension so that the ID in the chrome-extension test URL is
   // valid. Invalid extension URLs may result in error pages (if blocked by
   // ExtensionNavigationThrottle), which this test doesn't wish to exercise.
-  ASSERT_TRUE(extensions::ExtensionRegistry::Get(profile())->AddEnabled(
+  scoped_refptr<const extensions::Extension> extension =
       extensions::ExtensionBuilder("Test")
           .SetID("fooooooooooooooooooooooooooooooo")
-          .Build()));
+          .Build();
+  extensions::RendererStartupHelperFactory::GetForBrowserContext(profile())
+      ->OnExtensionLoaded(*extension);
+  ASSERT_TRUE(
+      extensions::ExtensionRegistry::Get(profile())->AddEnabled(extension));
 #endif
 }
 

@@ -8,7 +8,6 @@
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
-#include "content/public/browser/render_view_host.h"
 #include "content/public/browser/site_instance.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/url_constants.h"
@@ -87,10 +86,16 @@ content::WebContents* ExtensionWebContentsObserver::GetAssociatedWebContents()
   return web_contents();
 }
 
-void ExtensionWebContentsObserver::RenderViewCreated(
-    content::RenderViewHost* render_view_host) {
-  // TODO(devlin): Most/all of this should move to RenderFrameCreated.
-  const Extension* extension = GetExtension(render_view_host);
+void ExtensionWebContentsObserver::RenderFrameCreated(
+    content::RenderFrameHost* render_frame_host) {
+  InitializeRenderFrame(render_frame_host);
+
+  // Optimization: Look up the extension API frame ID to force the mapping to be
+  // cached. This minimizes the number of IO->UI->IO thread hops when the ID is
+  // looked up again on the IO thread for the webRequest API.
+  ExtensionApiFrameIdMap::Get()->CacheFrameData(render_frame_host);
+
+  const Extension* extension = GetExtensionFromFrame(render_frame_host, false);
   if (!extension)
     return;
 
@@ -102,30 +107,20 @@ void ExtensionWebContentsObserver::RenderViewCreated(
     ExtensionPrefs* prefs = ExtensionPrefs::Get(browser_context_);
     if (prefs->AllowFileAccess(extension->id())) {
       content::ChildProcessSecurityPolicy::GetInstance()->GrantScheme(
-          render_view_host->GetProcess()->GetID(), url::kFileScheme);
+          render_frame_host->GetProcess()->GetID(), url::kFileScheme);
     }
   }
 
-  // Tells the new view that it's hosted in an extension process.
+  // Tells the new frame that it's hosted in an extension process.
   //
-  // This will often be a rendant IPC, because activating extensions happens at
-  // the process level, not at the view level. However, without some mild
+  // This will often be a redundant IPC, because activating extensions happens
+  // at the process level, not at the frame level. However, without some mild
   // refactoring this isn't trivial to do, and this way is simpler.
   //
   // Plus, we can delete the concept of activating an extension once site
   // isolation is turned on.
   RendererStartupHelperFactory::GetForBrowserContext(browser_context_)
-      ->ActivateExtensionInProcess(*extension, render_view_host->GetProcess());
-}
-
-void ExtensionWebContentsObserver::RenderFrameCreated(
-    content::RenderFrameHost* render_frame_host) {
-  InitializeRenderFrame(render_frame_host);
-
-  // Optimization: Look up the extension API frame ID to force the mapping to be
-  // cached. This minimizes the number of IO->UI->IO thread hops when the ID is
-  // looked up again on the IO thread for the webRequest API.
-  ExtensionApiFrameIdMap::Get()->CacheFrameData(render_frame_host);
+      ->ActivateExtensionInProcess(*extension, render_frame_host->GetProcess());
 }
 
 void ExtensionWebContentsObserver::RenderFrameDeleted(
@@ -234,32 +229,6 @@ const Extension* ExtensionWebContentsObserver::GetExtensionFromFrame(
   }
 
   return extension;
-}
-
-const Extension* ExtensionWebContentsObserver::GetExtension(
-    content::RenderViewHost* render_view_host) {
-  std::string extension_id = GetExtensionId(render_view_host);
-  if (extension_id.empty())
-    return NULL;
-
-  // May be null if the extension doesn't exist, for example if somebody typos
-  // a chrome-extension:// URL.
-  return ExtensionRegistry::Get(browser_context_)
-      ->GetExtensionById(extension_id, ExtensionRegistry::ENABLED);
-}
-
-// static
-std::string ExtensionWebContentsObserver::GetExtensionId(
-    content::RenderViewHost* render_view_host) {
-  // Note that due to ChromeContentBrowserClient::GetEffectiveURL(), hosted apps
-  // (excluding bookmark apps) will have a chrome-extension:// URL for their
-  // site, so we can ignore that wrinkle here.
-  const GURL& site = render_view_host->GetSiteInstance()->GetSiteURL();
-
-  if (!site.SchemeIs(kExtensionScheme))
-    return std::string();
-
-  return site.host();
 }
 
 void ExtensionWebContentsObserver::OnRequest(

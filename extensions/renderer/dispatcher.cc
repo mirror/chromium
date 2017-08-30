@@ -941,6 +941,9 @@ void Dispatcher::OnActivateExtension(const std::string& extension_id) {
     LOG(FATAL) << extension_id << " was never loaded: " << error;
   }
 
+  if (IsExtensionActive(extension_id))
+    return;
+
   active_extension_ids_.insert(extension_id);
 
   // This is called when starting a new extension page, so start the idle
