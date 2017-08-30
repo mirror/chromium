@@ -7,7 +7,6 @@
 
 #include <memory>
 #include "platform/WebTaskRunner.h"
-#include "platform/heap/GCTaskRunner.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Noncopyable.h"
 #include "public/platform/Platform.h"
@@ -77,8 +76,6 @@ class PLATFORM_EXPORT WebThreadSupportingGC final {
 
  private:
   WebThreadSupportingGC(const char* name, WebThread*);
-
-  std::unique_ptr<GCTaskRunner> gc_task_runner_;
 
   // m_thread is guaranteed to be non-null after this instance is constructed.
   // m_owningThread is non-null unless this instance is constructed for an

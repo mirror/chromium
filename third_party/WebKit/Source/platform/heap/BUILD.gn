@@ -17,7 +17,6 @@ source_set("heap") {
     "CallbackStack.h",
     "GCInfo.cpp",
     "GCInfo.h",
-    "GCTaskRunner.h",
     "GarbageCollected.h",
     "Handle.h",
     "Heap.cpp",

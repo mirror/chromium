@@ -1119,14 +1119,6 @@ size_t ThreadState::ObjectPayloadSizeForTesting() {
   return object_payload_size;
 }
 
-void ThreadState::SafePoint(BlinkGC::StackState stack_state) {
-  DCHECK(CheckThread());
-  ThreadHeap::ReportMemoryUsageForTracing();
-
-  RunScheduledGC(stack_state);
-  stack_state_ = BlinkGC::kHeapPointersOnStack;
-}
-
 #ifdef ADDRESS_SANITIZER
 // When we are running under AddressSanitizer with
 // detect_stack_use_after_return=1 then stack marker obtained from
@@ -1485,8 +1477,6 @@ void ThreadState::CollectGarbage(BlinkGC::StackState stack_state,
     CrossThreadPersistentRegion::LockScope persistent_lock(
         ProcessHeap::GetCrossThreadPersistentRegion());
     {
-      SafePointScope safe_point_scope(stack_state, this);
-
       std::unique_ptr<Visitor> visitor;
       if (gc_type == BlinkGC::kTakeSnapshot) {
         visitor = Visitor::Create(this, Visitor::kSnapshotMarking);
@@ -1534,7 +1524,10 @@ void ThreadState::CollectGarbage(BlinkGC::StackState stack_state,
         // the
         // given stackState since other threads might have a different stack
         // state.
-        Heap().VisitStackRoots(visitor.get());
+        if (stack_state == BlinkGC::kHeapPointersOnStack) {
+          SafePointScope safe_point_scope(stack_state, this);
+          Heap().VisitStackRoots(visitor.get());
+        }
 
         // 3. Transitive closure to trace objects including ephemerons.
         Heap().ProcessMarkingStack(visitor.get());

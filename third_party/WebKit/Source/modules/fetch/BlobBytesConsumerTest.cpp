@@ -9,6 +9,7 @@
 #include "core/testing/DummyPageHolder.h"
 #include "modules/fetch/BytesConsumerTestUtil.h"
 #include "modules/fetch/DataConsumerHandleTestUtil.h"
+#include "platform/CrossThreadFunctional.h"
 #include "platform/blob/BlobData.h"
 #include "platform/loader/fetch/ResourceError.h"
 #include "platform/loader/fetch/ResourceResponse.h"
