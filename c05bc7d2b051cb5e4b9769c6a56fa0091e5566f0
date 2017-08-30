@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b8b7b14_dc921efe",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-30T15:21:39Z",
+      "side": 1,
+      "message": "nit: or inactive. (note: on the doc, https://developer.apple.com/documentation/uikit/uiapplicationstate?language\u003dobjc inactive state is foreground).",
+      "range": {
+        "startLine": 116,
+        "startChar": 44,
+        "endLine": 116,
+        "endChar": 54
+      },
+      "revId": "c05bc7d2b051cb5e4b9769c6a56fa0091e5566f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
