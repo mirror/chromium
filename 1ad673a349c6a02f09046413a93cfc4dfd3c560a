@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a819b5b_90b2f12b",
+        "filename": "base/bind.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-08-30T04:41:34Z",
+      "side": 1,
+      "message": "|is_once| is no longer used?",
+      "range": {
+        "startLine": 41,
+        "startChar": 10,
+        "endLine": 41,
+        "endChar": 22
+      },
+      "revId": "1ad673a349c6a02f09046413a93cfc4dfd3c560a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
