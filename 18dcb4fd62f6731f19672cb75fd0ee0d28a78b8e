@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ec6419c3_80dbfac0",
+        "filename": "chrome/browser/subresource_filter/chrome_subresource_filter_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-30T16:17:10Z",
+      "side": 1,
+      "message": "It\u0027s not quite the same condition. |activated_via_devtools_| is a proxy for if the devtools window is open and the ad blocking checkbox is checked.\n\nThis DCHECK could potentially fire if we start using the forced activation for something else (other than the devtools toggle).\n\nI\u0027m not exactly sure what you mean by your second sentence, can you elaborate?",
+      "parentUuid": "b2c711c8_8c2dcdc6",
+      "revId": "18dcb4fd62f6731f19672cb75fd0ee0d28a78b8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "74125400_cac2ed16",
         "filename": "chrome/browser/subresource_filter/subresource_filter_unittest.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "18dcb4fd62f6731f19672cb75fd0ee0d28a78b8e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6967dd4a_5ff2e2dc",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-30T16:17:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74125400_cac2ed16",
+      "revId": "18dcb4fd62f6731f19672cb75fd0ee0d28a78b8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
