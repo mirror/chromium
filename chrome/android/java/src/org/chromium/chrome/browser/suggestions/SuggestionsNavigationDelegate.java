@@ -32,6 +32,9 @@ public interface SuggestionsNavigationDelegate {
     /** Opens the help page for the content suggestions in the current tab. */
     void navigateToHelpPage();
 
+    /** Opens the suggestion page without recording metrics. */
+    void navigateToSuggestionUrl(int windowOpenDisposition, SnippetArticle suggestion);
+
     /**
      * Opens a content suggestion and records related metrics.
      * @param windowOpenDisposition How to open (current tab, new tab, new window etc).
