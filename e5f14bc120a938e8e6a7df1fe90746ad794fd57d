@@ -16,6 +16,24 @@
       "revId": "e5f14bc120a938e8e6a7df1fe90746ad794fd57d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a30bfe7b_a9f0e515",
+        "filename": "third_party/WebKit/Source/core/css/resolver/ScopedStyleResolver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-30T14:28:37Z",
+      "side": 1,
+      "message": "I saw there\u0027s a design document in the crbug issue.\n\nI think we should move storage of user stylesheets off of ScopedStyleResolver and let them apply to all tree scopes like we do for UA sheets: a div {} rule would apply to div elements in every scope. Store them in the StyleEngine or a compound class of StyleEngine.",
+      "parentUuid": "c5329ad7_ebcef8e9",
+      "revId": "e5f14bc120a938e8e6a7df1fe90746ad794fd57d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
