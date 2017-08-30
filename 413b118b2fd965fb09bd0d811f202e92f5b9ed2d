@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04ed64af_e4f64447",
+        "filename": "chrome/browser/ui/cocoa/passwords/passwords_list_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-30T17:48:32Z",
+      "side": 1,
+      "message": "Here and below: it\u0027s just right without top.",
+      "range": {
+        "startLine": 296,
+        "startChar": 19,
+        "endLine": 296,
+        "endChar": 22
+      },
+      "revId": "413b118b2fd965fb09bd0d811f202e92f5b9ed2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
