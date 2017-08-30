@@ -25,9 +25,8 @@ std::unique_ptr<CompositorFrameSinkSupport> CompositorFrameSinkSupport::Create(
     const FrameSinkId& frame_sink_id,
     bool is_root,
     bool needs_sync_tokens) {
-  std::unique_ptr<CompositorFrameSinkSupport> support =
-      base::WrapUnique(new CompositorFrameSinkSupport(
-          client, frame_sink_id, is_root, needs_sync_tokens));
+  std::unique_ptr<CompositorFrameSinkSupport> support = base::WrapUnique(
+      new CompositorFrameSinkSupport(client, frame_sink_id, is_root, false));
   support->Init(frame_sink_manager);
   return support;
 }
