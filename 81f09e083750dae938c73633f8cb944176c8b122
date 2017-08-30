@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fdd0e8ab_eb31d4ed",
+        "filename": "third_party/WebKit/Source/bindings/modules/v8/custom/V8IDBObserverCustom.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-30T04:54:46Z",
+      "side": 0,
+      "message": "Can we now remove the private property from V8PrivateProperty.h?",
+      "revId": "81f09e083750dae938c73633f8cb944176c8b122",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
