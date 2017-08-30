@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d67a6ebc_b039e23e",
+        "filename": "content/browser/frame_host/navigation_entry_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-30T14:54:17Z",
+      "side": 1,
+      "message": "So one thing to note: if you put this on a NavigationEntry, it could also be used by subframe navigations. Do you want this to happen?\n\nAlso note that it\u0027s quite likely that this needs to be reset at commit time.\n\nAll in all, I think it might be better to add your disposition as a parameter to NavigationControllerImpl::LoadEntry than as a member of NavigationEntry itself.",
+      "revId": "ab6f9412f9f8c7ac3f2ddfcd0dcfa006e9367546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc5b5749_b9c16f85",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 4187,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-30T14:54:17Z",
+      "side": 1,
+      "message": "Pass CURRENT here. We\u0027re in a case where we\u0027ll commit right away, so NavigationThrottles won\u0027t run anyway. (It\u0027s a rare edge case).",
+      "revId": "ab6f9412f9f8c7ac3f2ddfcd0dcfa006e9367546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd8ac71d_7d3d4c33",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 6465,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-30T14:54:17Z",
+      "side": 1,
+      "message": "Can you check if we ever get a different default_policy than CurrentTab here? I don\u0027t think it is case. If indeed we don\u0027t get it, remove this parameter from BeginNavigationParams.",
+      "revId": "ab6f9412f9f8c7ac3f2ddfcd0dcfa006e9367546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
