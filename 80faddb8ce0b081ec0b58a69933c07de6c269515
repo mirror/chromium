@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2a0ec44_c3e33344",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMappingTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2326,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-30T23:31:14Z",
+      "side": 1,
+      "message": "Please also add a layout test for a case like this, and the other unittest below.",
+      "revId": "80faddb8ce0b081ec0b58a69933c07de6c269515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
