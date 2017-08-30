@@ -1,0 +1,291 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4da40123_0650368f",
+        "filename": "chrome/installer/zucchini/encoded_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-30T23:05:12Z",
+      "side": 1,
+      "message": "Remove.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 9
+      },
+      "revId": "7bad71098bb77f0c899c6363a37e401be11bb8a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12cc7bfb_164fdcc8",
+        "filename": "chrome/installer/zucchini/encoded_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-30T23:05:12Z",
+      "side": 1,
+      "message": "value_type?",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 8
+      },
+      "revId": "7bad71098bb77f0c899c6363a37e401be11bb8a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0aa992e_3797083c",
+        "filename": "chrome/installer/zucchini/encoded_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-30T23:05:12Z",
+      "side": 1,
+      "message": "value_type?",
+      "range": {
+        "startLine": 48,
+        "startChar": 2,
+        "endLine": 48,
+        "endChar": 8
+      },
+      "revId": "7bad71098bb77f0c899c6363a37e401be11bb8a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c82d84c_c99a1efe",
+        "filename": "chrome/installer/zucchini/encoded_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-30T23:05:12Z",
+      "side": 1,
+      "message": "NIT: describes the content at",
+      "range": {
+        "startLine": 121,
+        "startChar": 48,
+        "endLine": 121,
+        "endChar": 71
+      },
+      "revId": "7bad71098bb77f0c899c6363a37e401be11bb8a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d110e1e8_f606b1b6",
+        "filename": "chrome/installer/zucchini/encoded_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-30T23:05:12Z",
+      "side": 1,
+      "message": "Update comment?",
+      "range": {
+        "startLine": 131,
+        "startChar": 2,
+        "endLine": 131,
+        "endChar": 20
+      },
+      "revId": "7bad71098bb77f0c899c6363a37e401be11bb8a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccbe15d4_bd638596",
+        "filename": "chrome/installer/zucchini/image_index.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-30T23:05:12Z",
+      "side": 1,
+      "message": "Would TypeInfo{groups.traits} work? Or does it fail because you\u0027d need to specify {groups.traits, std::vector\u003cReference\u003e()}, which is rather ugly? Or maybe since you\u0027re using emplace(), you don\u0027t need the default constructor, and can replace it with\n  explicit TypeInfo(ReferenceTypeTraits traits_in) {}\n?",
+      "range": {
+        "startLine": 27,
+        "startChar": 51,
+        "endLine": 27,
+        "endChar": 61
+      },
+      "revId": "7bad71098bb77f0c899c6363a37e401be11bb8a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88873a7d_2d1825c8",
+        "filename": "chrome/installer/zucchini/image_index.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-30T23:05:12Z",
+      "side": 1,
+      "message": "false on finding any overlap, to signal error.",
+      "range": {
+        "startLine": 31,
+        "startChar": 62,
+        "endLine": 32,
+        "endChar": 19
+      },
+      "revId": "7bad71098bb77f0c899c6363a37e401be11bb8a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49765159_ef49e1d1",
+        "filename": "chrome/installer/zucchini/image_index.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-30T23:05:12Z",
+      "side": 1,
+      "message": "Oops, redundant \"so \".",
+      "range": {
+        "startLine": 38,
+        "startChar": 28,
+        "endLine": 38,
+        "endChar": 31
+      },
+      "revId": "7bad71098bb77f0c899c6363a37e401be11bb8a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "775b039c_06e045ec",
+        "filename": "chrome/installer/zucchini/image_index.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-30T23:05:12Z",
+      "side": 1,
+      "message": "Check seems a bit paranoid.",
+      "range": {
+        "startLine": 74,
+        "startChar": 4,
+        "endLine": 74,
+        "endChar": 48
+      },
+      "revId": "7bad71098bb77f0c899c6363a37e401be11bb8a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6829bf98_a914fba3",
+        "filename": "chrome/installer/zucchini/image_index.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-30T23:05:12Z",
+      "side": 1,
+      "message": "// Inserts to |*this| index, all references of type |type_tag| read from |ref_reader|, which gets consumed.",
+      "range": {
+        "startLine": 143,
+        "startChar": 1,
+        "endLine": 144,
+        "endChar": 11
+      },
+      "revId": "7bad71098bb77f0c899c6363a37e401be11bb8a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73d7313a_d15c185a",
+        "filename": "chrome/installer/zucchini/test_disassembler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-30T23:05:12Z",
+      "side": 1,
+      "message": "// Disassembler::ReaderFactory:",
+      "revId": "7bad71098bb77f0c899c6363a37e401be11bb8a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a127d952_4f8b6769",
+        "filename": "chrome/installer/zucchini/test_disassembler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-30T23:05:12Z",
+      "side": 1,
+      "message": "|lower| and |upper| are unused. If deliberate, I think typically we\u0027d mark them as\n\n..(offset_t /* lower */, offset_t /* upper */).\n\nAlternatively, have\n  CHECK_LE(lower, upper);\nso the inputs get used.",
+      "range": {
+        "startLine": 38,
+        "startChar": 58,
+        "endLine": 38,
+        "endChar": 63
+      },
+      "revId": "7bad71098bb77f0c899c6363a37e401be11bb8a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46aa3788_f7420093",
+        "filename": "chrome/installer/zucchini/test_disassembler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-30T23:05:12Z",
+      "side": 1,
+      "message": "// Disassembler::WriterFactory:",
+      "revId": "7bad71098bb77f0c899c6363a37e401be11bb8a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
