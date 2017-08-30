@@ -131,6 +131,12 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
   // occur and ensuring the Clients API doesn't return the client).
   void OnNetworkProviderDestroyed();
 
+  // Only for clients that are Documents, see comments of |provider_host_|. Gets
+  // the mojom::ServiceWorkerProviderHost* for sending requests to browser-side
+  // ServiceWorkerProviderHost. May be nullptr if above
+  // OnNetworkProviderDestroyed() has already been called.
+  mojom::ServiceWorkerProviderHost* provider_host() const;
+
  private:
   friend class base::DeleteHelper<ServiceWorkerProviderContext>;
   friend class base::RefCountedThreadSafe<ServiceWorkerProviderContext,
@@ -146,6 +152,7 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
   // shared) worker, when the connection to the worker is disconnected.
   void UnregisterWorkerFetchContext(mojom::ServiceWorkerWorkerClient*);
 
+  const ServiceWorkerProviderType provider_type_;
   const int provider_id_;
   scoped_refptr<base::SingleThreadTaskRunner> main_thread_task_runner_;
 
@@ -153,7 +160,13 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
   // connection to the content::ServiceWorkerProviderHost in the browser process
   // alive.
   mojo::AssociatedBinding<mojom::ServiceWorkerProvider> binding_;
-  // Browser-side Mojo endpoint for provider host.
+  // The |provider_host_| interface (which implements functions for
+  // navigator.serviceWorker), can only be used if |this| is a provider for a
+  // Document, since currently navigator.serviceWorker is only implemented for
+  // Document (https://crbug.com/371690). For other providers, |provider_host_|
+  // is just for keeping alive the corresponding browser-side
+  // ServiceWorkerProviderHost instance.
+  // Note: Currently this is always bound on main thread.
   mojom::ServiceWorkerProviderHostAssociatedPtr provider_host_;
 
   // Either |controllee_state_| or |controller_state_| is non-null.

@@ -75,7 +75,8 @@ ServiceWorkerProviderContext::ServiceWorkerProviderContext(
     mojom::ServiceWorkerProviderHostAssociatedPtrInfo host_ptr_info,
     ServiceWorkerDispatcher* dispatcher,
     scoped_refptr<ChildURLLoaderFactoryGetter> default_loader_factory_getter)
-    : provider_id_(provider_id),
+    : provider_type_(provider_type),
+      provider_id_(provider_id),
       main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()),
       binding_(this, std::move(request)) {
   provider_host_.Bind(std::move(host_ptr_info));
@@ -173,6 +174,12 @@ mojom::URLLoaderFactory*
 ServiceWorkerProviderContext::subresource_loader_factory() {
   DCHECK(controllee_state_);
   return controllee_state_->subresource_loader_factory.get();
+}
+
+mojom::ServiceWorkerProviderHost* ServiceWorkerProviderContext::provider_host()
+    const {
+  DCHECK(provider_type_ == SERVICE_WORKER_PROVIDER_FOR_WINDOW);
+  return provider_host_.get();
 }
 
 void ServiceWorkerProviderContext::CountFeature(uint32_t feature) {
