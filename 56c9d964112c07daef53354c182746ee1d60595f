@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbc4aa07_a7e0a210",
+        "filename": "content/browser/security_exploit_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-30T16:43:09Z",
+      "side": 0,
+      "message": "This assumption is wrong now - the pending RVH won\u0027t have a main frame until commit.  So I just get the pending RFH directly.",
+      "revId": "56c9d964112c07daef53354c182746ee1d60595f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6fec0c1_d88a524a",
+        "filename": "content/browser/frame_host/frame_tree.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-30T16:43:09Z",
+      "side": 1,
+      "message": "I modified NodesExcept to always include |source|, since the traversal here is really its only use case.  In one of my earlier attempts, I tried directly creating the proxy in CreateProxiesForNewRenderFrameHost after this walk, but that doesn\u0027t work because the proxy has to be created at the right position in the tree.  An alternative to this would be to introduce a previous_sibling reference into CreateFrameProxy.  This would avoid modifying NodesExcept and allow us to do the new proxy creation outside of this walk (e.g., in CreateProxiesForNewRenderFrameHost), but would require changing CreateFrameProxy and always passing the previous sibling just to handle this case, which I felt was a bit more complex.",
+      "revId": "0c09b277ef1f79d2fc8bbc0b2d24f3ff38ece7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "278488af_932534c7",
+        "filename": "content/browser/frame_host/frame_tree.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-30T16:43:09Z",
+      "side": 1,
+      "message": "This lets us avoid the extra proxy in cases where no other frames can reach this one, e.g. cross-process navigations in a tab without openers or subframes, as the race isn\u0027t possible in that case.",
+      "revId": "0c09b277ef1f79d2fc8bbc0b2d24f3ff38ece7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a589c230_77a7bc51",
+        "filename": "content/browser/frame_host/render_frame_host_manager_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2592,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-30T16:43:09Z",
+      "side": 1,
+      "message": "This is https://crbug.com/760403. :(  I changed this to not block this CL on that bug, since the test isn\u0027t really about this behavior, and the bug doesn\u0027t seem like a major issue - we can change it back or introduce a new test along with the bug fix.  But let me know if you think it\u0027s worth fixing before this CL lands.",
+      "revId": "0c09b277ef1f79d2fc8bbc0b2d24f3ff38ece7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe7403af_6f8c21aa",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 5487,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-30T16:43:09Z",
+      "side": 1,
+      "message": "I think we just got lucky here before -- the test should\u0027ve really checked both process ID and routing ID.  This failed because routing IDs were now assigned in slightly different order in this test, causing them to be the same in the two processes.",
+      "revId": "0c09b277ef1f79d2fc8bbc0b2d24f3ff38ece7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
