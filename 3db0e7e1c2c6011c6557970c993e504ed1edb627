@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a723a244_b714fac8",
+        "filename": "services/ui/ws/cursor_location_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-30T07:45:38Z",
+      "side": 1,
+      "message": "Can you clarify what \u0027transformed screen-coord\u0027 means?",
+      "revId": "3db0e7e1c2c6011c6557970c993e504ed1edb627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20500622_5020de29",
+        "filename": "ui/aura/window_event_dispatcher.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-30T07:45:38Z",
+      "side": 1,
+      "message": "My worry is that we would synthesize the mouse-move in the wrong location in high-dpi (in non-mus). Would it be possible to have a test for that?",
+      "revId": "3db0e7e1c2c6011c6557970c993e504ed1edb627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3255216e_b79442da",
+        "filename": "ui/aura/window_event_dispatcher_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1131,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-30T07:45:38Z",
+      "side": 1,
+      "message": "This is where we test that we synthesize mouse-move events correctly. Would it be possible to write have a similar test for WindowEventDispatcherTestInHighDPI below (where we also verify that the location of the mouse-move is correct)?",
+      "revId": "3db0e7e1c2c6011c6557970c993e504ed1edb627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
