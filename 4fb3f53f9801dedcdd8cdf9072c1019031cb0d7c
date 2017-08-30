@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9f34ddb_6b7924e7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/ResourceType.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-30T17:31:17Z",
+      "side": 1,
+      "message": "s/includes/startsWith/?",
+      "revId": "4fb3f53f9801dedcdd8cdf9072c1019031cb0d7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d25be85_f7b707e9",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/ResourceType.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-30T17:31:17Z",
+      "side": 1,
+      "message": "Let\u0027s not do this. I think things like application/x-octet-stream is fairly common.",
+      "revId": "4fb3f53f9801dedcdd8cdf9072c1019031cb0d7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7bdea39_0007f764",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/ResourceType.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-30T17:31:17Z",
+      "side": 1,
+      "message": "There\u0027s also application/font-woff.",
+      "revId": "4fb3f53f9801dedcdd8cdf9072c1019031cb0d7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c377049_67d98868",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/ResourceType.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-30T17:31:17Z",
+      "side": 1,
+      "message": "I don\u0027t think we handle text/css properly.",
+      "revId": "4fb3f53f9801dedcdd8cdf9072c1019031cb0d7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ccba242_00bc67da",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-30T17:31:17Z",
+      "side": 1,
+      "message": "Can we have a switch instead?",
+      "revId": "4fb3f53f9801dedcdd8cdf9072c1019031cb0d7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8ebba1b_26445f16",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-30T17:31:17Z",
+      "side": 1,
+      "message": "s/data/_request/ so it\u0027s typed?",
+      "revId": "4fb3f53f9801dedcdd8cdf9072c1019031cb0d7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d293bd1_b8e1fea6",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-30T17:31:17Z",
+      "side": 1,
+      "message": "...children.slice()? It works as it, but feels a bit fragile.",
+      "revId": "4fb3f53f9801dedcdd8cdf9072c1019031cb0d7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1800dd6_bd21950c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-30T17:31:17Z",
+      "side": 1,
+      "message": "s/har/something-else/?",
+      "revId": "4fb3f53f9801dedcdd8cdf9072c1019031cb0d7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4ea485b_214b500b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-30T17:31:17Z",
+      "side": 1,
+      "message": "nit: (header \u0026\u0026 header.value) | 0",
+      "revId": "4fb3f53f9801dedcdd8cdf9072c1019031cb0d7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64ecfb9b_7a2f1fb3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-30T17:31:17Z",
+      "side": 1,
+      "message": "drop || \u0027\u0027",
+      "revId": "4fb3f53f9801dedcdd8cdf9072c1019031cb0d7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1564370e_cfacc829",
+        "filename": "third_party/WebKit/Source/modules/cachestorage/InspectorCacheStorageAgent.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-30T17:31:17Z",
+      "side": 1,
+      "message": "nit: for (auto\u0026 entry : headers)",
+      "revId": "4fb3f53f9801dedcdd8cdf9072c1019031cb0d7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
