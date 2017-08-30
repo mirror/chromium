@@ -93,6 +93,7 @@ class MediaRouterMojoImpl : public MediaRouterBase,
   scoped_refptr<MediaRouteController> GetRouteController(
       const MediaRoute::Id& route_id) final;
   void RegisterMediaRouteProvider(
+      const std::string& provider_name,
       mojom::MediaRouteProviderPtr media_route_provider_ptr,
       mojom::MediaRouter::RegisterMediaRouteProviderCallback callback) override;
 
@@ -274,14 +275,15 @@ class MediaRouterMojoImpl : public MediaRouterBase,
 
   // mojom::MediaRouter implementation.
   void OnIssue(const IssueInfo& issue) override;
-  void OnSinksReceived(const std::string& media_source,
+  void OnSinksReceived(const std::string& provider_name,
+    const std::string& media_source,
                        const std::vector<MediaSinkInternal>& internal_sinks,
                        const std::vector<url::Origin>& origins) override;
-  void OnRoutesUpdated(
+  void OnRoutesUpdated(const std::string& provider_name,
       const std::vector<MediaRoute>& routes,
       const std::string& media_source,
       const std::vector<std::string>& joinable_route_ids) override;
-  void OnSinkAvailabilityUpdated(
+  void OnSinkAvailabilityUpdated(const std::string& provider_name,
       mojom::MediaRouter::SinkAvailability availability) override;
   void OnPresentationConnectionStateChanged(
       const std::string& route_id,

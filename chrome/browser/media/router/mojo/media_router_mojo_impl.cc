@@ -88,6 +88,7 @@ void MediaRouterMojoImpl::OnConnectionError() {
 }
 
 void MediaRouterMojoImpl::RegisterMediaRouteProvider(
+  const std::string& provider_name,
     mojom::MediaRouteProviderPtr media_route_provider_ptr,
     mojom::MediaRouter::RegisterMediaRouteProviderCallback callback) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
@@ -113,6 +114,7 @@ void MediaRouterMojoImpl::OnIssue(const IssueInfo& issue) {
 }
 
 void MediaRouterMojoImpl::OnSinksReceived(
+  const std::string& provider_name,
     const std::string& media_source,
     const std::vector<MediaSinkInternal>& internal_sinks,
     const std::vector<url::Origin>& origins) {
@@ -145,6 +147,7 @@ void MediaRouterMojoImpl::OnSinksReceived(
 }
 
 void MediaRouterMojoImpl::OnRoutesUpdated(
+  const std::string& provider_name,
     const std::vector<MediaRoute>& routes,
     const std::string& media_source,
     const std::vector<std::string>& joinable_route_ids) {
@@ -672,6 +675,7 @@ void MediaRouterMojoImpl::OnRouteMessagesReceived(
 }
 
 void MediaRouterMojoImpl::OnSinkAvailabilityUpdated(
+  const std::string& provider_name,
     SinkAvailability availability) {
   if (availability_ == availability)
     return;

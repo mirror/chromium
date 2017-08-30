@@ -30,6 +30,8 @@ static_library("router") {
     "issue_manager.h",
     "issues_observer.cc",
     "issues_observer.h",
+    "media_route_provider_manager.cc",
+    "media_route_provider_manager.h",
     "media_router.h",
     "media_router_base.cc",
     "media_router_base.h",

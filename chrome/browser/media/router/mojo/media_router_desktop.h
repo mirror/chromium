@@ -133,6 +133,7 @@ class MediaRouterDesktop : public MediaRouterMojoImpl {
   // Notifies |request_manager_| that the Mojo connection to MediaRouteProvider
   // is valid.
   void RegisterMediaRouteProvider(
+    const std::string& provider_name,
       mojom::MediaRouteProviderPtr media_route_provider_ptr,
       mojom::MediaRouter::RegisterMediaRouteProviderCallback callback) override;
 

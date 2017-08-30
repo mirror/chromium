@@ -343,9 +343,10 @@ MediaRouterDesktop::MediaRouterDesktop(content::BrowserContext* context,
 }
 
 void MediaRouterDesktop::RegisterMediaRouteProvider(
+  const std::string& provider_name,
     mojom::MediaRouteProviderPtr media_route_provider_ptr,
     mojom::MediaRouter::RegisterMediaRouteProviderCallback callback) {
-  MediaRouterMojoImpl::RegisterMediaRouteProvider(
+  MediaRouterMojoImpl::RegisterMediaRouteProvider(provider_name,
       std::move(media_route_provider_ptr), std::move(callback));
 #if defined(OS_WIN)
   // The MRPM may have been upgraded or otherwise reload such that we could be
