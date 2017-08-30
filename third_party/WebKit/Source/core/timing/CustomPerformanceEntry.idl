@@ -1,0 +1,10 @@
+interface CustomPerformanceEntry : PerformanceEntry {
+    readonly attribute any detail;
+};
+
+partial interface Performance {
+    void queueEntry(DOMString name, 
+                    optional DOMHighResTimeStamp startTime, 
+                    optional DOMHighResTimeStamp duration, 
+                    optional any detail);
+};

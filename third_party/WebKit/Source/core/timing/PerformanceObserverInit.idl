@@ -6,4 +6,5 @@
 
 dictionary PerformanceObserverInit {
     required sequence<DOMString> entryTypes;
+    [RuntimeEnabled=BufferedFlagForPerformanceObserver] boolean buffered = false;
 };
