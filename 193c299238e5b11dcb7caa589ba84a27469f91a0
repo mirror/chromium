@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ea37c93_c66afa78",
+        "filename": "components/offline_pages/core/renovations/page_renovation.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-30T00:24:30Z",
+      "side": 1,
+      "message": "nit: better to replace \"{}\" with \"\u003d default;\"",
+      "revId": "193c299238e5b11dcb7caa589ba84a27469f91a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
