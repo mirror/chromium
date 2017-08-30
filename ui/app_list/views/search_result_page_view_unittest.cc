@@ -10,6 +10,7 @@
 #include "base/command_line.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
+#include "ui/app_list/app_list_features.h"
 #include "ui/app_list/app_list_model.h"
 #include "ui/app_list/app_list_switches.h"
 #include "ui/app_list/test/app_list_test_view_delegate.h"
@@ -52,8 +53,9 @@ class SearchResultPageViewTest : public views::ViewsTestBase,
     return view_delegate_.GetModel()->results();
   }
 
-  void SetUpSearchResults(const std::vector<
-      std::pair<SearchResult::DisplayType, int>> result_types) {
+  void SetUpSearchResults(
+      const std::vector<std::pair<SearchResult::DisplayType, int>>
+          result_types) {
     AppListModel::SearchResults* results = GetResults();
     results->DeleteAll();
     double relevance = result_types.size();
@@ -185,6 +187,11 @@ TEST_F(SearchResultPageViewTest, TabMovement) {
   EXPECT_EQ(-1, tile_list_view()->selected_index());
   EXPECT_EQ(0, list_view()->selected_index());
 
+  // TODO(newcomer): this test needs to be reevaluated for the fullscreen app
+  // list (http://crbug.com/759779).
+  if (app_list::features::IsFullscreenAppListEnabled())
+    return;
+
   // Navigate to the second result in the list view.
   EXPECT_TRUE(KeyPress(ui::VKEY_TAB));
   EXPECT_EQ(1, GetSelectedIndex());
@@ -248,7 +255,10 @@ TEST_F(SearchResultPageViewTest, ResultsSorted) {
 
   results->NotifyItemsChanged(0, 1);
   RunPendingMessages();
-
+  // TODO(newcomer): this test needs to be reevaluated for the fullscreen app
+  // list (http://crbug.com/759779).
+  if (app_list::features::IsFullscreenAppListEnabled())
+    return;
   EXPECT_EQ(list_view(), view()->result_container_views()[0]);
   EXPECT_EQ(tile_list_view(), view()->result_container_views()[1]);
 }
