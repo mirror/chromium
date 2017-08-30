@@ -1702,6 +1702,22 @@ bool IsTabDetachingInFullscreenEnabled() {
                object:[translateBubbleController_ window]];
 }
 
+- (void)showPasswordReuseForWebContents:(content::WebContents*)contents
+                               callback:(safe_browsing::OnWarningDone)callback {
+  if (passwordReuseDialogController_)
+    return;
+
+  passwordReuseDialogController_ = [[PasswordReuseWarningDialogController alloc]
+      initWithParentWindow:[self window]];
+  [passwordReuseDialogController_ showDialogWithCallback:std::move(callback)];
+
+  NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+  [center addObserver:self
+             selector:@selector(passwordReuseDialogWindowWillClose:)
+                 name:NSWindowWillCloseNotification
+               object:[passwordReuseDialogController_ window]];
+}
+
 - (void)dismissPermissionBubble {
   PermissionPrompt::Delegate* delegate = [self permissionRequestManager];
   if (delegate)
@@ -1717,6 +1733,17 @@ bool IsTabDetachingInFullscreenEnabled() {
                     name:NSWindowWillCloseNotification
                   object:[translateBubbleController_ window]];
   translateBubbleController_ = nil;
+}
+
+// Nil out the weak translate bubble controller reference.
+- (void)passwordReuseDialogWindowWillClose:(NSNotification*)notification {
+  DCHECK_EQ([notification object], [passwordReuseDialogController_ window]);
+
+  NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+  [center removeObserver:self
+                    name:NSWindowWillCloseNotification
+                  object:[passwordReuseDialogController_ window]];
+  passwordReuseDialogController_ = nil;
 }
 
 // If the browser is in incognito mode or has multi-profiles, install the image

@@ -17,6 +17,8 @@ UI_BASE_EXPORT
 // over to NSTextField.
 + (NSTextField*)labelWithString:(NSString*)text;
 
++ (NSTextField*)titleWithString:(NSString*)text;
+
 @end
 
 #endif  // UI_BASE_COCOA_CONTROLS_TEXTFIELD_UTILS_H_
