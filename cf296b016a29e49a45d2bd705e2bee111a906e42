@@ -16,6 +16,24 @@
       "revId": "cf296b016a29e49a45d2bd705e2bee111a906e42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00ba44c6_04bf0835",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1634,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-30T15:37:19Z",
+      "side": 1,
+      "message": "Ugh; ya I saw that when I uploaded it. I wanted to cover the delegate_frame_host_ being null but I\u0027ve rewritten that part in this function and added it to the DelegateFrameHost as well.",
+      "parentUuid": "257246a2_4562067f",
+      "revId": "cf296b016a29e49a45d2bd705e2bee111a906e42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
