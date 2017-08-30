@@ -1,0 +1,619 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc8e8e86_21c242ca",
+        "filename": "components/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-30T17:40:48Z",
+      "side": 1,
+      "message": "Remove.",
+      "revId": "600486fe218101e0c982450240d2b9ab19d92f12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "724e622b_9c491c34",
+        "filename": "components/multidevice/service/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-30T17:40:48Z",
+      "side": 1,
+      "message": "This should be a dependency, not a source.",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 86
+      },
+      "revId": "600486fe218101e0c982450240d2b9ab19d92f12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78a458a0_aa13ebad",
+        "filename": "components/multidevice/service/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-30T17:40:48Z",
+      "side": 1,
+      "message": "I don\u0027t believe this is needed.",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 39
+      },
+      "revId": "600486fe218101e0c982450240d2b9ab19d92f12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48ae277f_01e58fa8",
+        "filename": "components/multidevice/service/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-30T17:40:48Z",
+      "side": 1,
+      "message": "This should be a public dep, I believe. I think you can remove the \"//components/signin/core/browser\" one.",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 52
+      },
+      "revId": "600486fe218101e0c982450240d2b9ab19d92f12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acad27ef_48968e21",
+        "filename": "components/multidevice/service/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-30T17:40:48Z",
+      "side": 1,
+      "message": "Remove.",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 41
+      },
+      "revId": "600486fe218101e0c982450240d2b9ab19d92f12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f97d06bf_25d71b8b",
+        "filename": "components/multidevice/service/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-30T17:40:48Z",
+      "side": 1,
+      "message": "Remove +content/*.",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 27
+      },
+      "revId": "600486fe218101e0c982450240d2b9ab19d92f12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2366c175_0751536b",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-30T17:40:48Z",
+      "side": 1,
+      "message": "Remove.",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 50
+      },
+      "revId": "600486fe218101e0c982450240d2b9ab19d92f12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81ff1eec_e3169c21",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-30T17:40:48Z",
+      "side": 1,
+      "message": "Please take a Connector as an input to this class\u0027 constructor. You can pass the service\u0027s connector when you construct it.",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 46
+      },
+      "revId": "600486fe218101e0c982450240d2b9ab19d92f12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3632da88_b467e0be",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-30T17:40:48Z",
+      "side": 1,
+      "message": "This is really dense and difficult to read/understand. Instead, just create a private function for each of these callbacks and handle them accordingly.\n\nI\u0027d suggest creating an enum for your state and setting the status accordingly when each thing gets done.\n\nFor example,\n\nenum class State {\n  WAITING_FOR_PRIMARY_ACCOUNT,\n  WAITING_FOR_KEYPAIR_GENERATION,\n  ...\n};\n\nYou can model your code after this example: https://cs.chromium.org/chromium/src/components/cryptauth/ble/bluetooth_low_energy_weave_client_connection.h",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 73
+      },
+      "revId": "600486fe218101e0c982450240d2b9ab19d92f12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5afd073_96a217bc",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-30T17:40:48Z",
+      "side": 1,
+      "message": "The AddObserver() and Start() calls should be in the ctor, and a RemoveObserver() call should be in the dtor. Here, you should call ForceEnrollmentNow().\n\nSame with ForceSyncNow().",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 41
+      },
+      "revId": "600486fe218101e0c982450240d2b9ab19d92f12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "708e8aeb_d07a1d99",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-30T17:40:48Z",
+      "side": 1,
+      "message": "Don\u0027t remove until the destructor. Same for device syncs.",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 44
+      },
+      "revId": "600486fe218101e0c982450240d2b9ab19d92f12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7aceed2_9be34283",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-30T17:40:48Z",
+      "side": 1,
+      "message": "nit: No curlies for single lines.",
+      "range": {
+        "startLine": 78,
+        "startChar": 15,
+        "endLine": 78,
+        "endChar": 16
+      },
+      "revId": "600486fe218101e0c982450240d2b9ab19d92f12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3df82ffe_0bcc75e9",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-30T17:40:48Z",
+      "side": 1,
+      "message": "Nope.",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 79,
+        "endChar": 80
+      },
+      "revId": "600486fe218101e0c982450240d2b9ab19d92f12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccc83536_b77ee95f",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-30T17:40:48Z",
+      "side": 1,
+      "message": "Actually, can you add an extra field to the Observer function which also takes a boolean for CHANGED vs NOT_CHANGED, then pass the value of device_change_result here?",
+      "range": {
+        "startLine": 93,
+        "startChar": 14,
+        "endLine": 93,
+        "endChar": 29
+      },
+      "revId": "600486fe218101e0c982450240d2b9ab19d92f12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60763108_6ebfccd7",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-30T17:40:48Z",
+      "side": 1,
+      "message": "Don\u0027t remove until dtor.",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 40
+      },
+      "revId": "600486fe218101e0c982450240d2b9ab19d92f12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "387f9cb3_ab8f320b",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-30T17:40:48Z",
+      "side": 1,
+      "message": "You dereference the Optional without first checking whether it has a value. Please check that first, or else you could crash.",
+      "range": {
+        "startLine": 108,
+        "startChar": 9,
+        "endLine": 108,
+        "endChar": 30
+      },
+      "revId": "600486fe218101e0c982450240d2b9ab19d92f12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55896a75_83fddce5",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-30T17:40:48Z",
+      "side": 1,
+      "message": "/* parameter_name */",
+      "range": {
+        "startLine": 112,
+        "startChar": 6,
+        "endLine": 112,
+        "endChar": 10
+      },
+      "revId": "600486fe218101e0c982450240d2b9ab19d92f12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9256c398_1209a799",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-30T17:40:48Z",
+      "side": 1,
+      "message": "nit: OnKeyPairGenerated()",
+      "range": {
+        "startLine": 128,
+        "startChar": 21,
+        "endLine": 128,
+        "endChar": 38
+      },
+      "revId": "600486fe218101e0c982450240d2b9ab19d92f12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7908e5d_a655c667",
+        "filename": "components/multidevice/service/device_sync_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-30T17:40:48Z",
+      "side": 1,
+      "message": "Forward declare this class and #include in the .cc.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 56
+      },
+      "revId": "600486fe218101e0c982450240d2b9ab19d92f12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07b76e2c_775c737e",
+        "filename": "components/multidevice/service/device_sync_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-30T17:40:48Z",
+      "side": 1,
+      "message": "Remember to #include this. The compiler isn\u0027t complaining right now since it\u0027s transitively #included, but you should include it later. Otherwise, if someone removes the transitive #include from another file, it could break your file, even though that person didn\u0027t even touch your file.",
+      "range": {
+        "startLine": 26,
+        "startChar": 41,
+        "endLine": 26,
+        "endChar": 63
+      },
+      "revId": "600486fe218101e0c982450240d2b9ab19d92f12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1f3d733_92ce1713",
+        "filename": "components/multidevice/service/device_sync_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-30T17:40:48Z",
+      "side": 1,
+      "message": "Remove.",
+      "range": {
+        "startLine": 28,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 10
+      },
+      "revId": "600486fe218101e0c982450240d2b9ab19d92f12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d9dd0db_70a18df8",
+        "filename": "components/multidevice/service/device_sync_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-30T17:40:48Z",
+      "side": 1,
+      "message": "Please change these to normal pointers.",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 66
+      },
+      "revId": "600486fe218101e0c982450240d2b9ab19d92f12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bd57ce5_b0276763",
+        "filename": "components/multidevice/service/device_sync_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-30T17:40:48Z",
+      "side": 1,
+      "message": "nit: Colon at end.",
+      "range": {
+        "startLine": 43,
+        "startChar": 16,
+        "endLine": 43,
+        "endChar": 44
+      },
+      "revId": "600486fe218101e0c982450240d2b9ab19d92f12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c48d67c_c6f6e5a2",
+        "filename": "components/multidevice/service/public/interfaces/device_sync.typemap",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-30T17:40:48Z",
+      "side": 1,
+      "message": "nit: Remember to include the Copyright stuff at the top.",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 1
+      },
+      "revId": "600486fe218101e0c982450240d2b9ab19d92f12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3971bed4_ebca335a",
+        "filename": "components/multidevice/service/public/interfaces/device_sync.typemap",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-30T17:40:48Z",
+      "side": 1,
+      "message": "nit: This is all on one line, but the other ones are not. Use consistent style.",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 101
+      },
+      "revId": "600486fe218101e0c982450240d2b9ab19d92f12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d1f70b4_1f7a2ba1",
+        "filename": "components/multidevice/service/public/interfaces/device_sync_struct_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-30T17:40:48Z",
+      "side": 1,
+      "message": "nit: Add comments to this file describing what is here.",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 41
+      },
+      "revId": "600486fe218101e0c982450240d2b9ab19d92f12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5183a04e_5786e00e",
+        "filename": "components/multidevice/service/public/interfaces/device_sync_struct_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-30T17:40:48Z",
+      "side": 1,
+      "message": "I believe this should be a const reference. Same in the other Read().",
+      "range": {
+        "startLine": 22,
+        "startChar": 19,
+        "endLine": 22,
+        "endChar": 62
+      },
+      "revId": "600486fe218101e0c982450240d2b9ab19d92f12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
