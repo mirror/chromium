@@ -57,6 +57,7 @@ class CORE_EXPORT PerformanceObserver final
                       PerformanceObserverCallback*);
   void Deliver();
   bool ShouldBeSuspended() const;
+  bool Observing(const PerformanceEntryType) const;
 
   Member<ExecutionContext> execution_context_;
   TraceWrapperMember<PerformanceObserverCallback> callback_;
@@ -64,6 +65,7 @@ class CORE_EXPORT PerformanceObserver final
   PerformanceEntryVector performance_entries_;
   PerformanceEntryTypeMask filter_options_;
   bool is_registered_;
+  bool buffered_;
 };
 
 }  // namespace blink
