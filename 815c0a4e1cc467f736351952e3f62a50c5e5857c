@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "158e3877_b4796b27",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-30T09:46:23Z",
+      "side": 1,
+      "message": "\u003e nit: I might prefer to have this inlined into the tests that use it, even if that means duplicating it. IMO outsourcing the actual \"meat\" of the test into a helper function makes it hard to read; basically I have to jump here to understand the test. (Rule of thumb: EXPECT outside of the main test body is a bad sign.) Also, if the test does anything else than call this, it might be unexpected that this opens a new tab.\n\nEven though this function makes the tests shorter, I do agree it doesn\u0027t really help in terms of readability. Also, the test is sufficiently short. Will inline. (Off topic: I\u0027ve heard this advice time and time again, yet I still tend to de-duplicate code in tests despite sacrificing readability :)\n\n\u003e OTOH, you could argue that for these tests the actual \"meat\" is in the JS rather than here, so... eh. Up to you.\n\nTrue, but context switching and jumping is hard even without having to change languages.",
+      "parentUuid": "9ff45cb0_27525d09",
+      "range": {
+        "startLine": 58,
+        "startChar": 75,
+        "endLine": 58,
+        "endChar": 0
+      },
+      "revId": "815c0a4e1cc467f736351952e3f62a50c5e5857c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d899b532_20e5bbd4",
         "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
         "patchSetId": 14
@@ -36,6 +60,24 @@
       "writtenOn": "2017-08-29T13:54:40Z",
       "side": 1,
       "message": "Is this actually relevant for the voice tests? I guess it is for the integration tests.",
+      "revId": "815c0a4e1cc467f736351952e3f62a50c5e5857c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e47393a_452c6f88",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-30T09:46:23Z",
+      "side": 1,
+      "message": "Hmm, as far as I can tell, no, it isn\u0027t. Is it only relevant for Most Visited \"tiles\"?",
+      "parentUuid": "d899b532_20e5bbd4",
       "revId": "815c0a4e1cc467f736351952e3f62a50c5e5857c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "958790a4_68c4def8",
+        "filename": "chrome/test/data/local_ntp/test_utils.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-30T09:46:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0897749b_914e050a",
+      "revId": "815c0a4e1cc467f736351952e3f62a50c5e5857c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41970f9f_8d420f58",
         "filename": "chrome/test/data/local_ntp/test_utils.js",
         "patchSetId": 14
@@ -73,6 +133,24 @@
       "revId": "815c0a4e1cc467f736351952e3f62a50c5e5857c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "878bd7e4_e016e97d",
+        "filename": "chrome/test/data/local_ntp/test_utils.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-30T09:46:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41970f9f_8d420f58",
+      "revId": "815c0a4e1cc467f736351952e3f62a50c5e5857c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "96a0ddca_f4a51a4e",
+        "filename": "chrome/test/data/local_ntp/test_utils.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-30T09:46:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88c4e925_43db0292",
+      "revId": "815c0a4e1cc467f736351952e3f62a50c5e5857c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dcc3f1df_dd519c6c",
         "filename": "chrome/test/data/local_ntp/voice_browsertest.html",
         "patchSetId": 14
@@ -107,6 +203,24 @@
       "revId": "815c0a4e1cc467f736351952e3f62a50c5e5857c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb7f4527_f8143708",
+        "filename": "chrome/test/data/local_ntp/voice_browsertest.html",
+        "patchSetId": 14
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-30T09:46:23Z",
+      "side": 1,
+      "message": "Indeed :)",
+      "parentUuid": "dcc3f1df_dd519c6c",
+      "revId": "815c0a4e1cc467f736351952e3f62a50c5e5857c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
