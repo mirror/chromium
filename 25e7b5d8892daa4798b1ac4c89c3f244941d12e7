@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ab82a0a_88537d68",
+        "filename": "chrome/installer/linux/debian/check-package-constraints-satisfied.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-30T06:30:47Z",
+      "side": 1,
+      "message": "if left \u003d\u003d right:\n  return 0\nreturn -1 if left \u003c right else 1",
+      "revId": "25e7b5d8892daa4798b1ac4c89c3f244941d12e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0dfc841_21985ba3",
+        "filename": "chrome/installer/linux/debian/check-package-constraints-satisfied.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-30T06:30:47Z",
+      "side": 1,
+      "message": "You can do: isinstance(left, (str, unicode))",
+      "revId": "25e7b5d8892daa4798b1ac4c89c3f244941d12e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d378bbc_02af0df7",
+        "filename": "chrome/installer/linux/debian/check-package-constraints-satisfied.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-30T06:30:47Z",
+      "side": 1,
+      "message": "Since you check this on the next line, you can assert(isinstance(right, int)) between lines 37-38, and move the rest of the assert() after the return.",
+      "revId": "25e7b5d8892daa4798b1ac4c89c3f244941d12e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac99b5ff_c90da5a7",
+        "filename": "chrome/installer/linux/debian/check-package-constraints-satisfied.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-30T06:30:47Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 55,
+        "startChar": 8,
+        "endLine": 55,
+        "endChar": 16
+      },
+      "revId": "25e7b5d8892daa4798b1ac4c89c3f244941d12e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c410696f_4e5f9ed7",
+        "filename": "chrome/installer/linux/debian/check-package-constraints-satisfied.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-30T06:30:47Z",
+      "side": 1,
+      "message": "Just if? i.e no else after return.",
+      "revId": "25e7b5d8892daa4798b1ac4c89c3f244941d12e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c00eef95_64123ec3",
+        "filename": "chrome/installer/linux/debian/check-package-constraints-satisfied.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-30T06:30:47Z",
+      "side": 1,
+      "message": "Does this need to be sys.exit(1) or should it be for consistency?",
+      "revId": "25e7b5d8892daa4798b1ac4c89c3f244941d12e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db5f733d_b79cf40c",
+        "filename": "chrome/installer/linux/debian/check-package-constraints-satisfied.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-30T06:30:47Z",
+      "side": 1,
+      "message": "nit: blank line above.",
+      "revId": "25e7b5d8892daa4798b1ac4c89c3f244941d12e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b554202_94b9f540",
+        "filename": "chrome/installer/linux/debian/check-package-constraints-satisfied.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-30T06:30:47Z",
+      "side": 1,
+      "message": "Maybe look at Python style guides regarding mixing procedural code and class definitions?",
+      "revId": "25e7b5d8892daa4798b1ac4c89c3f244941d12e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
