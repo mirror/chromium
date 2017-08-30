@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "44509fea_95c3d48a",
+        "filename": "chrome/browser/android/ntp/content_suggestions_notifier_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-30T16:25:59Z",
+      "side": 1,
+      "message": "The change to call SetBoolean() here is a behavior change, but that\u0027s part of https://crrev.com/c/641670, not this CL.\n\nThis change in this CL—using prefs_ instead of profile_-\u003eGetPrefs()—shouldn\u0027t be a behavior change.\n\nOr is there something I\u0027m missing?",
+      "parentUuid": "1bec80ee_56b62468",
+      "revId": "2eebcece0714ef6a51bebeb88f1c8fba2d7ccba4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d900482_df69384e",
         "filename": "chrome/browser/android/ntp/content_suggestions_notifier_service_unittest.cc",
         "patchSetId": 5
@@ -39,6 +57,30 @@
       "revId": "2eebcece0714ef6a51bebeb88f1c8fba2d7ccba4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a47be90_b58dfcd3",
+        "filename": "chrome/browser/android/ntp/content_suggestions_notifier_service_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-30T16:25:59Z",
+      "side": 1,
+      "message": "\u003e optional nit: Ownership is a bit icky here... I guess you need a unique_ptr to ContentSuggestionsNotifier (not to StrictMock\u003c..\u003e) below, which makes this order necessary to avoid a cast?\n\nYes. There are other, more verbose ways I could go about this, but this seemed simplest.",
+      "parentUuid": "9d900482_df69384e",
+      "range": {
+        "startLine": 159,
+        "startChar": 75,
+        "endLine": 159,
+        "endChar": 0
+      },
+      "revId": "2eebcece0714ef6a51bebeb88f1c8fba2d7ccba4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
