@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b71e4b2_cdc92371",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-30T20:26:34Z",
+      "side": 1,
+      "message": "DCHECK instead. CHECK() should be for security issues or for specific debugging instrumentation temporarily.",
+      "range": {
+        "startLine": 26,
+        "startChar": 33,
+        "endLine": 26,
+        "endChar": 0
+      },
+      "revId": "7eebaf978499461be6dfafc39f91fe3326bf8bff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd57a6d6_5f32103d",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-30T20:26:34Z",
+      "side": 1,
+      "message": "Nit: TabStats not TabsStats - also to match file name. :)",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 24
+      },
+      "revId": "7eebaf978499461be6dfafc39f91fe3326bf8bff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dad6187_939ce0f6",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-30T20:26:34Z",
+      "side": 1,
+      "message": "Nit: Prefer ctor and dtor to be at the top, above even the static ones.",
+      "range": {
+        "startLine": 39,
+        "startChar": 58,
+        "endLine": 39,
+        "endChar": 0
+      },
+      "revId": "7eebaf978499461be6dfafc39f91fe3326bf8bff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5f6d283_0d07434c",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-30T20:26:34Z",
+      "side": 1,
+      "message": "Members should not be protected.\n\ngo/cpp-style/#Access_Control\n\nAdd protected accessors if necessary.",
+      "range": {
+        "startLine": 94,
+        "startChar": 65,
+        "endLine": 94,
+        "endChar": 0
+      },
+      "revId": "7eebaf978499461be6dfafc39f91fe3326bf8bff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
