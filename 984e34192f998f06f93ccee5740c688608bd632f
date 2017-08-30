@@ -22,6 +22,30 @@
       "revId": "984e34192f998f06f93ccee5740c688608bd632f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c2bcfa6_d6673e0c",
+        "filename": "ios/clean/chrome/browser/ui/bookmarks/bookmarks_coordinator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-30T02:49:30Z",
+      "side": 1,
+      "message": "The problem with sending to the parent is that there could be two parents -- NTP and tools menu. Since the dispatcher is many-to-one, this is a problem. You could have two separate commands, but you would need to know which to call. The best pattern we have for this (right now) is to call [self stop] here. Then override -childCoordinatorWillStop: in the parents. (see link below for example). \n\nhttps://cs.chromium.org/chromium/src/ios/clean/chrome/browser/ui/toolbar/toolbar_coordinator.mm?q\u003dtoolbar_coordinator.mm\u0026dr\u0026l\u003d96",
+      "parentUuid": "5e94929c_ceef82ca",
+      "range": {
+        "startLine": 117,
+        "startChar": 6,
+        "endLine": 117,
+        "endChar": 44
+      },
+      "revId": "984e34192f998f06f93ccee5740c688608bd632f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
