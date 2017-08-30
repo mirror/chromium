@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bad7c894_16da9d62",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-30T18:27:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1c92003_502097cf",
+      "revId": "1133e48b1b340c60e51424f2c1716ffae9bd87e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b954c9fc_7a8b65d0",
         "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.cc",
         "patchSetId": 20
@@ -33,6 +51,24 @@
       "revId": "1133e48b1b340c60e51424f2c1716ffae9bd87e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fab0636_fceac9a3",
+        "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-30T18:27:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b954c9fc_7a8b65d0",
+      "revId": "1133e48b1b340c60e51424f2c1716ffae9bd87e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6299b37b_4bad43b8",
+        "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-30T18:27:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58d2ae41_677b4319",
+      "revId": "1133e48b1b340c60e51424f2c1716ffae9bd87e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e42a81c0_cf2be329",
         "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.cc",
         "patchSetId": 20
@@ -67,6 +121,24 @@
       "revId": "1133e48b1b340c60e51424f2c1716ffae9bd87e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "008473d8_1ef6e19a",
+        "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-30T18:27:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e42a81c0_cf2be329",
+      "revId": "1133e48b1b340c60e51424f2c1716ffae9bd87e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "066b4873_5cbcb115",
+        "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-30T18:27:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b741a1db_51371430",
+      "revId": "1133e48b1b340c60e51424f2c1716ffae9bd87e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35b5703d_5e28b755",
         "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.cc",
         "patchSetId": 20
@@ -101,6 +191,24 @@
       "revId": "1133e48b1b340c60e51424f2c1716ffae9bd87e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a647ce19_f00fdb60",
+        "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-30T18:27:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35b5703d_5e28b755",
+      "revId": "1133e48b1b340c60e51424f2c1716ffae9bd87e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
