@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11a38495_ed15a3dd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-30T16:50:36Z",
+      "side": 1,
+      "message": "Beware of https://crbug.com/757285.",
+      "range": {
+        "startLine": 11,
+        "startChar": 7,
+        "endLine": 11,
+        "endChar": 28
+      },
+      "revId": "d8f6a4bf7bdfc6a9f7a679471c4b606cd9fb711f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6152eb38_049f4892",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-30T16:50:36Z",
+      "side": 1,
+      "message": "When talking about matching the spec, please link to the exact section numbers and quote the spec.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 14
+      },
+      "revId": "d8f6a4bf7bdfc6a9f7a679471c4b606cd9fb711f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
