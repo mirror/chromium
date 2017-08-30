@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4837c766_ee32b6da",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1238298
+      },
+      "writtenOn": "2017-08-30T07:07:48Z",
+      "side": 1,
+      "message": "I renamed previous Retarget to AdjustedFocusedElementInternal.",
+      "parentUuid": "0fc0ba40_ad050468",
+      "revId": "9840167bc42cc2e8ceae3009e53198205c8bdf42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b406d21e_04b5821b",
         "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "9840167bc42cc2e8ceae3009e53198205c8bdf42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25b486e9_546e2cd0",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1238298
+      },
+      "writtenOn": "2017-08-30T07:07:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b406d21e_04b5821b",
+      "revId": "9840167bc42cc2e8ceae3009e53198205c8bdf42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
