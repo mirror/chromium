@@ -10,6 +10,7 @@
 #include "base/process/process.h"
 #include "base/trace_event/memory_dump_provider.h"
 #include "build/build_config.h"
+#include "chrome/browser/profiling_host/background_profiling_triggers.h"
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/profiling/memlog.mojom.h"
 #include "chrome/common/profiling/memlog_client.h"
@@ -134,6 +135,8 @@ class ProfilingProcessHost : public content::BrowserChildProcessObserver,
   content::NotificationRegistrar registrar_;
   std::unique_ptr<service_manager::Connector> connector_;
   mojom::MemlogPtr memlog_;
+
+  BackgroundProfilingTriggers background_triggers_;
 
   // The mode determines which processes should be profiled.
   Mode mode_;
