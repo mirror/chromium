@@ -1053,7 +1053,34 @@ bool LayoutTableCell::IsFirstColumnCollapsed() const {
     return false;
   if (!HasSetAbsoluteColumnIndex())
     return false;
+  UpdatePaintLayers(true);
   return Table()->IsAbsoluteColumnCollapsed(AbsoluteColumnIndex());
+}
+
+void LayoutTableCell::UpdatePaintLayers(bool is_in_collapsed_cell) const {
+  // Using a queue, go through cell's subtree to update any layers within the
+  // collapsed cell.
+  Vector<LayoutObject*> children;
+  for (LayoutObject* child = FirstChild(); child; child = child->NextSibling())
+    children.push_back(child);
+
+  while (children.size()) {
+    LayoutObject* front = children.front();
+    if (front->HasLayer()) {
+      PaintLayer* layer = front->PaintingLayer();
+      if (layer) {
+        layer->SetIsInCollapsedCell(is_in_collapsed_cell);
+        layer->UpdateDescendantDependentFlags();
+      }
+    }
+    if (front->IsLayoutBlock()) {
+      for (LayoutObject* c = ToLayoutBlock(front)->FirstChild(); c;
+           c = c->NextSibling()) {
+        children.push_back(c);
+      }
+    }
+    children.erase(0);
+  }
 }
 
 void LayoutTableCell::Paint(const PaintInfo& paint_info,
