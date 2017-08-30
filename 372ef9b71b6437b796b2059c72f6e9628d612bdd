@@ -16,6 +16,24 @@
       "revId": "372ef9b71b6437b796b2059c72f6e9628d612bdd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcf68b75_2afd38d9",
+        "filename": "chrome/test/data/webui/extensions/extension_item_test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-08-30T04:08:37Z",
+      "side": 0,
+      "message": "I tried to do this earlier but was having issues with manager.js code invoking assert() errors. But then I realized I can make the test preload just item.html and not go through manager.js code at all.\n\nI was able to rewrite this part of the test with navigation route change listener, PTAL.",
+      "parentUuid": "38955ef4_74d87ed9",
+      "revId": "372ef9b71b6437b796b2059c72f6e9628d612bdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

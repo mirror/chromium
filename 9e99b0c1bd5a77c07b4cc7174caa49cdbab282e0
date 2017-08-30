@@ -16,6 +16,24 @@
       "revId": "9e99b0c1bd5a77c07b4cc7174caa49cdbab282e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5b690bb_82f130f6",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-08-30T04:08:37Z",
+      "side": 1,
+      "message": "I think anything that triggers navigation should call navigateTo directly, otherwise manager will have to have an additional listener per event-that-triggers-navigation again, which I think is less preferable than having to know about navigateTo.\n\nI don\u0027t think there\u0027s additional burden for an element to have to know about navigateTo (aside from closure-compiler target dependency), since navigation_helper.html is included at a higher level already anyway, so extensions.navigation.navigateTo will always exist anyway. \n\nAs an example, in settings, we also treat settings.Router as a global thing that always exists within the settings namespace.",
+      "parentUuid": "8d83340a_cdc5c9b9",
+      "revId": "9e99b0c1bd5a77c07b4cc7174caa49cdbab282e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
