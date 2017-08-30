@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b878bc95_53093c92",
+        "filename": "ash/wm/overview/overview_window_drag_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-08-30T17:24:59Z",
+      "side": 1,
+      "message": "We will implement the same thing as on Android device. The unsnappable window will gray out and has a half-transparent widget place above it saying it could not be snapped. But it still can be dragged around. It\u0027s not logged in the buganizer though. I\u0027ll file a bug.",
+      "parentUuid": "9bdd7ffb_2d3fbf72",
+      "revId": "3608edc3680d8058b248467a75f83cc206dca80c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "da919fba_a6a88967",
         "filename": "ash/wm/overview/window_selector_unittest.cc",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2017-08-30T17:18:20Z",
       "side": 1,
       "message": "do you need this? Chrome should be able to shutdown from any state, so if you need it, them there must be a bug somewhere.",
+      "range": {
+        "startLine": 2111,
+        "startChar": 2,
+        "endLine": 2111,
+        "endChar": 16
+      },
+      "revId": "3608edc3680d8058b248467a75f83cc206dca80c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f5e56b3_f81577a7",
+        "filename": "ash/wm/overview/window_selector_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2111,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-08-30T17:24:59Z",
+      "side": 1,
+      "message": "It\u0027s a known bug. Without this line, it will fail asan builder with \"free-after-use\" failure. I tried to debug into it but haven\u0027t found the root cause yet:(",
+      "parentUuid": "da919fba_a6a88967",
       "range": {
         "startLine": 2111,
         "startChar": 2,
