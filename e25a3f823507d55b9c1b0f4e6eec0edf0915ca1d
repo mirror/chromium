@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "3f4ef6c7_81f61cf6",
+        "filename": "components/sync/BUILD.gn",
+        "patchSetId": 13
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-30T23:28:22Z",
+      "side": 1,
+      "message": "That makes sense, sorry I didn\u0027t interpret the earlier suggestion correctly!\n\nPer in-person discussion, code that wants to compute CRC32C checksums will have to explicitly depend on //third_party/crc32c.",
+      "parentUuid": "b220c6d7_30ee71e6",
+      "range": {
+        "startLine": 611,
+        "startChar": 7,
+        "endLine": 611,
+        "endChar": 18
+      },
+      "revId": "e25a3f823507d55b9c1b0f4e6eec0edf0915ca1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed5fc0e3_30353da3",
         "filename": "components/sync/engine_impl/attachments/DEPS",
         "patchSetId": 13
@@ -258,6 +282,30 @@
       "revId": "e25a3f823507d55b9c1b0f4e6eec0edf0915ca1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d257185d_eb6bedba",
+        "filename": "third_party/crc32c/README.chromium",
+        "patchSetId": 13
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-30T23:28:22Z",
+      "side": 1,
+      "message": "Done.\n\nI tagged 1.0.0 and updated the SHA in DEPS. Thank you very much for noticing the issues in the repo!",
+      "parentUuid": "d8d8aa74_5f0ec16c",
+      "range": {
+        "startLine": 4,
+        "startChar": 9,
+        "endLine": 4,
+        "endChar": 14
+      },
+      "revId": "e25a3f823507d55b9c1b0f4e6eec0edf0915ca1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
