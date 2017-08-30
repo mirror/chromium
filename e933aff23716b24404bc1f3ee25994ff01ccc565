@@ -46,6 +46,30 @@
       "revId": "e933aff23716b24404bc1f3ee25994ff01ccc565",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ce64641_b3910851",
+        "filename": "ui/gl/gl_implementation.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1105324
+      },
+      "writtenOn": "2017-08-30T15:27:07Z",
+      "side": 1,
+      "message": "That seems reasonable to me. ANGLE will have kGLImplementationEGLGLES2.\n\nMaybe at some point we should make it have kImplementationANGLEGL",
+      "parentUuid": "a56e7dfb_c395b03e",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 19
+      },
+      "revId": "e933aff23716b24404bc1f3ee25994ff01ccc565",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
