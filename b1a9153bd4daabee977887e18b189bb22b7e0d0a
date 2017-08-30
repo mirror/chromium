@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2b5b908_179619be",
+        "filename": "ios/build/bots/scripts/test_runner.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-08-30T18:55:23Z",
+      "side": 1,
+      "message": "After the \u0027idevice_id --list\u0027 id showing up, device actually still in starting mode, and not fully ready yet. We locally tested and found it takes about less then 10 seconds to really get the main tab. So add 10 seconds delay here to make sure device ready for testing.",
+      "revId": "b1a9153bd4daabee977887e18b189bb22b7e0d0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
