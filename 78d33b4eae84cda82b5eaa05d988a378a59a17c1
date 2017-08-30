@@ -45,6 +45,30 @@
       "revId": "78d33b4eae84cda82b5eaa05d988a378a59a17c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3389e5cf_800125f3",
+        "filename": "ui/base/test/ui_controls_internal_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1240765
+      },
+      "writtenOn": "2017-08-30T13:38:32Z",
+      "side": 1,
+      "message": "Thanks. I know about it, but unfortunatelly it doeasn\u0027t help.\n\nI tried to switch to ::MapVirtualKeyEx + MAPVK_VK_TO_VSC_EX, but the result is the same.",
+      "parentUuid": "5bc54d34_3e54d758",
+      "range": {
+        "startLine": 175,
+        "startChar": 0,
+        "endLine": 175,
+        "endChar": 78
+      },
+      "revId": "78d33b4eae84cda82b5eaa05d988a378a59a17c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
