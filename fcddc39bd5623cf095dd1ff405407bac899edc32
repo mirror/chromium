@@ -243,6 +243,24 @@
     },
     {
       "key": {
+        "uuid": "155783d4_fe03b120",
+        "filename": "components/payments/core/payment_item.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-30T16:13:46Z",
+      "side": 1,
+      "message": "Why do you think that\u0027s the case Rouslan?\n\nI initially decided to change these types to std::string because that\u0027s what the types are in payment_request.mojom.h:\nhttps://cs.chromium.org/chromium/src/out/Debug/gen/third_party/WebKit/public/platform/modules/payments/payment_request.mojom.h?type\u003dcs\u0026l\u003d824\n\nin iOS we construct these objects from a base::DictionaryValue. So string16 vs string shouldn\u0027t matter. And it seems like on all other platforms we already work with string.",
+      "parentUuid": "d8079021_0a2a9d1b",
+      "revId": "fcddc39bd5623cf095dd1ff405407bac899edc32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a882283_7fe03c57",
         "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher.mm",
         "patchSetId": 1
