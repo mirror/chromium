@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4921bd39_d6fd4e1f",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-30T23:36:10Z",
+      "side": 1,
+      "message": "Could you add a note here about why we abort?",
+      "revId": "38ff07ca0cd3324f20e0a2eba931b144ae25096d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ad354df_39c9124c",
+        "filename": "third_party/WebKit/Source/core/editing/VisiblePosition.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-30T23:36:10Z",
+      "side": 1,
+      "message": "Null position should be considered valid.\n\nExample: SelectionForUndoStep::IsValidFor()",
+      "revId": "38ff07ca0cd3324f20e0a2eba931b144ae25096d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
