@@ -26,7 +26,6 @@ import org.chromium.chrome.browser.ShortcutHelper;
 import org.chromium.chrome.browser.document.ChromeLauncherActivity;
 import org.chromium.chrome.browser.notifications.ChromeNotificationBuilder;
 import org.chromium.chrome.browser.notifications.NotificationBuilderFactory;
-import org.chromium.chrome.browser.notifications.NotificationManagerProxy;
 import org.chromium.chrome.browser.notifications.NotificationManagerProxyImpl;
 import org.chromium.chrome.browser.notifications.NotificationUmaTracker;
 import org.chromium.chrome.browser.notifications.channels.ChannelDefinitions;
@@ -445,38 +444,25 @@ public class ContentSuggestionsNotifier {
      * missing, the channel will be (re-)registered.
      *
      * <p>May be called on any Android version; before Android O, it is a no-op.
+     *
+     * <p>Returns true if the channel was registered, false if not (pre-O, or already registered).
+     *
+     * @param enabled If false, the channel is created in a disabled state.
      */
     @CalledByNative
-    private static void registerChannel() {
-        if (!BuildInfo.isAtLeastO()) return;
+    private static boolean registerChannel(boolean enabled) {
+        if (!BuildInfo.isAtLeastO()) return false;
         SharedPreferences prefs = ContextUtils.getAppSharedPreferences();
-        if (prefs.getBoolean(PREF_CHANNEL_CREATED, false)) return;
+        if (prefs.getBoolean(PREF_CHANNEL_CREATED, false)) return false;
 
         ChannelsInitializer initializer = new ChannelsInitializer(
                 new NotificationManagerProxyImpl(
                         (NotificationManager) ContextUtils.getApplicationContext().getSystemService(
                                 Context.NOTIFICATION_SERVICE)),
                 ContextUtils.getApplicationContext().getResources());
-        initializer.ensureInitialized(ChannelDefinitions.CHANNEL_ID_CONTENT_SUGGESTIONS);
+        initializer.ensureInitialized(ChannelDefinitions.CHANNEL_ID_CONTENT_SUGGESTIONS, enabled);
         prefs.edit().putBoolean(PREF_CHANNEL_CREATED, true).apply();
-    }
-
-    /**
-     * Unregisters the Content Suggestions notification channel on Android O.
-     *
-     * <p>May be called on any Android version; before Android O, it is a no-op.
-     */
-    @CalledByNative
-    private static void unregisterChannel() {
-        if (!BuildInfo.isAtLeastO()) return;
-        SharedPreferences prefs = ContextUtils.getAppSharedPreferences();
-        if (!prefs.getBoolean(PREF_CHANNEL_CREATED, false)) return;
-
-        NotificationManagerProxy manager = new NotificationManagerProxyImpl(
-                (NotificationManager) ContextUtils.getApplicationContext().getSystemService(
-                        Context.NOTIFICATION_SERVICE));
-        manager.deleteNotificationChannel(ChannelDefinitions.CHANNEL_ID_CONTENT_SUGGESTIONS);
-        prefs.edit().remove(PREF_CHANNEL_CREATED).apply();
+        return true;
     }
 
     /**

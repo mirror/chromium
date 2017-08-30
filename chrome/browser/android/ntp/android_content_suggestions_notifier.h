@@ -36,8 +36,7 @@ class AndroidContentSuggestionsNotifier : public ContentSuggestionsNotifier {
   void HideAllNotifications(ContentSuggestionsNotificationAction why) override;
   void FlushCachedMetrics() override;
   bool IsEnabledForProfile(Profile* profile) override;
-  void RegisterChannel() override;
-  void UnregisterChannel() override;
+  bool RegisterChannel(bool enabled) override;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(AndroidContentSuggestionsNotifier);
