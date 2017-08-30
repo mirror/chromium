@@ -46,7 +46,6 @@ bool UnsafeResource::IsMainPageLoadBlocked() const {
     // the page is finished loading.
     case safe_browsing::SB_THREAT_TYPE_URL_CLIENT_SIDE_PHISHING:
     case safe_browsing::SB_THREAT_TYPE_URL_CLIENT_SIDE_MALWARE:
-    case safe_browsing::SB_THREAT_TYPE_URL_PASSWORD_PROTECTION_PHISHING:
     // Ad sampling happens in the background.
     case safe_browsing::SB_THREAT_TYPE_AD_SAMPLE:
       return false;
