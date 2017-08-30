@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af2be376_24ebc121",
+        "filename": "media/blink/video_frame_compositor.cc",
+        "patchSetId": 39
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-30T00:42:20Z",
+      "side": 1,
+      "message": "No () around this.",
+      "revId": "b22f586e0bac52f66fe31bcc484f3bb0ea1f26d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6e85e2e_b45ae164",
+        "filename": "media/blink/video_frame_compositor.h",
+        "patchSetId": 39
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-30T00:42:20Z",
+      "side": 1,
+      "message": "s/Client/IsClient/ too for clarity.",
+      "revId": "b22f586e0bac52f66fe31bcc484f3bb0ea1f26d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
