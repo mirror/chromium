@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "05a0c3fb_7621f00f",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/customtabs/CustomTabActivityTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1235,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-08-30T13:59:52Z",
+      "side": 1,
+      "message": "I have similar hesitation, but thought that it is very similar to testPageLoadMetricIsSent(), which has @RetryOnFailure. Flakiness dashboard says that it basically does not flake. Based on this I am courageous enough to remove the retry.\n\nDone.",
+      "parentUuid": "a7e48601_7816a0a3",
+      "revId": "5bb6d848319a429cfbe404ff3666e1dc14751635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8dd71c76_3fdbbc0f",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/customtabs/CustomTabActivityTest.java",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-30T10:56:02Z",
       "side": 1,
       "message": "nit: Can you make the histogram name a static final String constant in CustomTabsActivity, with \n@VisibleForTesting?\nThen you can use it here.",
+      "revId": "5bb6d848319a429cfbe404ff3666e1dc14751635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60e7f1e3_874e1c45",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/customtabs/CustomTabActivityTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1237,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-08-30T13:59:52Z",
+      "side": 1,
+      "message": "Is it for sharing the constant between main and test code? Then you are probably suggesting to have the constant in CustomTabObserver? Since the prefix is dynamic we would still make a tweak of the constant here, which looks to me as less robust against accidental changes in the constant manipulation of the main code.",
+      "parentUuid": "8dd71c76_3fdbbc0f",
       "revId": "5bb6d848319a429cfbe404ff3666e1dc14751635",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "07575c81_9fe91b7d",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/customtabs/CustomTabActivityTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1255,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-08-30T13:59:52Z",
+      "side": 1,
+      "message": "I think it\u0027s not necessary because regardless of it the test would start a new custom tab. But since the majority of tests I see around are using it, I\u0027m doing it as well for consistency and maybe easier refactoring in future.",
+      "parentUuid": "9574389d_bea12370",
+      "revId": "5bb6d848319a429cfbe404ff3666e1dc14751635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c57db62_b6819d98",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/customtabs/CustomTabActivityTest.java",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-30T10:56:02Z",
       "side": 1,
       "message": "Callbacks are issued on the UI thread, so you need to poll it instead of the instrumentation thread.\n\nAlternatively, Can you use a semaphore instead of polling? Makes the code easier, and gets rid of the ugly polling.",
+      "revId": "5bb6d848319a429cfbe404ff3666e1dc14751635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "498fd1bb_f7551d65",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/customtabs/CustomTabActivityTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1259,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-08-30T13:59:52Z",
+      "side": 1,
+      "message": "oh wow, I just copied this part from testCallbacksAreSent() and forgot that the callback arrives at the UI thread. That test looks racy on navigationEvents -\u003e converted both tests to j.u.c.Semaphore.",
+      "parentUuid": "7c57db62_b6819d98",
       "revId": "5bb6d848319a429cfbe404ff3666e1dc14751635",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
