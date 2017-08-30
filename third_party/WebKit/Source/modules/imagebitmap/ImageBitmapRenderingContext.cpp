@@ -60,7 +60,8 @@ void ImageBitmapRenderingContext::Stop() {
 
 RefPtr<StaticBitmapImage> ImageBitmapRenderingContext::GetImage(
     AccelerationHint,
-    SnapshotReason) const {
+    SnapshotReason,
+    SourceDrawingBuffer) const {
   return image_layer_bridge_->GetImage();
 }
 

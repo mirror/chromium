@@ -76,6 +76,7 @@
 #include "core/html/HTMLImageElement.h"
 #include "core/html/HTMLInputElement.h"
 #include "core/html/HTMLTextAreaElement.h"
+#include "core/html/canvas/CanvasRenderingContext.h"
 #include "core/html/parser/HTMLParserIdioms.h"
 #include "core/input/EventHandler.h"
 #include "core/inspector/ConsoleMessage.h"
@@ -89,6 +90,7 @@
 #include "core/page/Page.h"
 #include "core/svg/SVGImageElement.h"
 #include "platform/KillRing.h"
+#include "platform/graphics/StaticBitmapImage.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/wtf/PtrUtil.h"
@@ -573,8 +575,9 @@ static RefPtr<Image> ImageFromNode(const Node& node) {
 
   if (layout_object->IsCanvas()) {
     return toHTMLCanvasElement(const_cast<Node&>(node))
-        .CopiedImage(kFrontBuffer, kPreferNoAcceleration,
-                     kSnapshotReasonCopyToClipboard);
+        .RenderingContext()
+        ->GetImage(kPreferNoAcceleration, kSnapshotReasonCopyToClipboard,
+                   kFrontBuffer);
   }
 
   if (layout_object->IsImage()) {

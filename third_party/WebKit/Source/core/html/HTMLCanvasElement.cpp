@@ -307,11 +307,6 @@ bool HTMLCanvasElement::ShouldBeDirectComposited() const {
          (!!surface_layer_bridge_);
 }
 
-bool HTMLCanvasElement::IsPaintable() const {
-  return (context_ && context_->IsPaintable()) ||
-         ImageBuffer::CanCreateImageBuffer(Size());
-}
-
 bool HTMLCanvasElement::IsAccelerated() const {
   return context_ && context_->IsAccelerated();
 }
@@ -334,7 +329,7 @@ void HTMLCanvasElement::DidDraw(const FloatRect& rect) {
   if (rect.IsEmpty())
     return;
   image_buffer_is_clear_ = false;
-  ClearCopiedImage();
+
   if (GetLayoutObject())
     GetLayoutObject()->SetMayNeedPaintInvalidation();
   if (Is2d() && context_->ShouldAntialias() && GetPage() &&
@@ -632,7 +627,7 @@ void HTMLCanvasElement::SetSurfaceSize(const IntSize& size) {
   size_ = size;
   did_fail_to_create_image_buffer_ = false;
   DiscardImageBuffer();
-  ClearCopiedImage();
+
   if (Is2d() && context_->isContextLost()) {
     context_->DidSetSurfaceSize();
   }
@@ -1082,8 +1077,6 @@ void HTMLCanvasElement::UpdateExternallyAllocatedMemory() const {
       buffer_count += 2;
     }
   }
-  if (copied_image_)
-    buffer_count++;
 
   // Multiplying number of buffers by bytes per pixel
   CheckedNumeric<intptr_t> checked_externally_allocated_memory =
@@ -1151,48 +1144,10 @@ void HTMLCanvasElement::EnsureUnacceleratedImageBuffer() {
   did_fail_to_create_image_buffer_ = !image_buffer_;
 }
 
-RefPtr<Image> HTMLCanvasElement::CopiedImage(SourceDrawingBuffer source_buffer,
-                                             AccelerationHint hint,
-                                             SnapshotReason snapshot_reason) {
-  if (!IsPaintable())
-    return nullptr;
-  if (!context_)
-    return CreateTransparentImage(Size());
-
-  if (context_->GetContextType() ==
-      CanvasRenderingContext::kContextImageBitmap) {
-    RefPtr<Image> image = context_->GetImage(hint, snapshot_reason);
-    // TODO(fserb): return image?
-    if (image)
-      return context_->GetImage(hint, snapshot_reason);
-    // Special case: transferFromImageBitmap is not yet called.
-    sk_sp<SkSurface> surface =
-        SkSurface::MakeRasterN32Premul(width(), height());
-    return StaticBitmapImage::Create(surface->makeImageSnapshot());
-  }
-
-  bool need_to_update = !copied_image_;
-  // The concept of SourceDrawingBuffer is valid on only WebGL.
-  if (context_->Is3d())
-    need_to_update |= context_->PaintRenderingResultsToCanvas(source_buffer);
-  if (need_to_update && GetOrCreateImageBuffer()) {
-    copied_image_ = GetImageBuffer()->NewImageSnapshot(hint, snapshot_reason);
-    UpdateExternallyAllocatedMemory();
-  }
-  return copied_image_;
-}
-
 void HTMLCanvasElement::DiscardImageBuffer() {
   image_buffer_.reset();
   dirty_rect_ = FloatRect();
   UpdateExternallyAllocatedMemory();
-}
-
-void HTMLCanvasElement::ClearCopiedImage() {
-  if (copied_image_) {
-    copied_image_.Clear();
-    UpdateExternallyAllocatedMemory();
-  }
 }
 
 AffineTransform HTMLCanvasElement::BaseTransform() const {
@@ -1209,7 +1164,6 @@ void HTMLCanvasElement::PageVisibilityChanged() {
 
   context_->SetIsHidden(hidden);
   if (hidden) {
-    ClearCopiedImage();
     if (Is3d()) {
       DiscardImageBuffer();
     }
@@ -1280,7 +1234,7 @@ RefPtr<Image> HTMLCanvasElement::GetSourceImageForCanvas(
   if (context_->GetContextType() ==
       CanvasRenderingContext::kContextImageBitmap) {
     *status = kNormalSourceImageStatus;
-    RefPtr<Image> result = context_->GetImage(hint, reason);
+    RefPtr<Image> result = context_->GetImage(hint, reason, kBackBuffer);
     if (!result)
       result = CreateTransparentImage(Size());
     *status = result ? kNormalSourceImageStatus : kInvalidSourceImageStatus;
@@ -1307,7 +1261,7 @@ RefPtr<Image> HTMLCanvasElement::GetSourceImageForCanvas(
         GetImageBuffer()->IsAccelerated()) {
       GetImageBuffer()->DisableAcceleration();
     }
-    image = RenderingContext()->GetImage(hint, reason);
+    image = RenderingContext()->GetImage(hint, reason, kBackBuffer);
     if (!image) {
       image = CreateTransparentImage(Size());
     }
@@ -1328,8 +1282,8 @@ bool HTMLCanvasElement::WouldTaintOrigin(SecurityOrigin*) const {
 FloatSize HTMLCanvasElement::ElementSize(const FloatSize&) const {
   if (context_ && context_->GetContextType() ==
                       CanvasRenderingContext::kContextImageBitmap) {
-    RefPtr<Image> image =
-        context_->GetImage(kPreferNoAcceleration, kSnapshotReasonDrawImage);
+    RefPtr<Image> image = context_->GetImage(
+        kPreferNoAcceleration, kSnapshotReasonDrawImage, kBackBuffer);
     if (image)
       return FloatSize(image->width(), image->height());
     return FloatSize(0, 0);

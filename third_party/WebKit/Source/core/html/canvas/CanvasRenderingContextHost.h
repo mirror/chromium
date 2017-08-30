@@ -10,6 +10,7 @@
 #include "core/CoreExport.h"
 #include "core/dom/events/EventDispatcher.h"
 #include "core/dom/events/EventTarget.h"
+#include "core/html/canvas/CanvasImageSource.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/geometry/FloatRect.h"
 #include "platform/geometry/IntSize.h"
@@ -18,11 +19,13 @@
 
 namespace blink {
 
+class CanvasRenderingContext;
 class FontSelector;
 class StaticBitmapImage;
 class KURL;
 
-class CORE_EXPORT CanvasRenderingContextHost : public GarbageCollectedMixin {
+class CORE_EXPORT CanvasRenderingContextHost : public GarbageCollectedMixin,
+                                               public CanvasImageSource {
  public:
   CanvasRenderingContextHost();
 
@@ -54,9 +57,9 @@ class CORE_EXPORT CanvasRenderingContextHost : public GarbageCollectedMixin {
   virtual bool IsWebGLAllowed() const = 0;
 
   virtual FontSelector* GetFontSelector() = 0;
+  virtual CanvasRenderingContext* RenderingContext() const = 0;
 
-  // TODO(fserb): remove this.
-  virtual bool IsOffscreenCanvas() const { return false; }
+  bool IsPaintable() const;
 
  protected:
   virtual ~CanvasRenderingContextHost() {}

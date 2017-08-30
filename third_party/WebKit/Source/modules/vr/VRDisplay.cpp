@@ -694,8 +694,8 @@ void VRDisplay::submitFrame() {
     // We get a non-texture-backed image when running layout tests
     // on desktop builds. Add a slow fallback so that these continue
     // working.
-    image_ref = rendering_context_->GetImage(kPreferAcceleration,
-                                             kSnapshotReasonCreateImageBitmap);
+    image_ref = rendering_context_->GetImage(
+        kPreferAcceleration, kSnapshotReasonCreateImageBitmap, kBackBuffer);
     if (!image_ref.Get() || !image_ref->IsTextureBacked()) {
       NOTREACHED()
           << "WebVR requires hardware-accelerated rendering to texture";
