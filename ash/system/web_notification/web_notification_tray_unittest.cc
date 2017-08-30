@@ -250,6 +250,7 @@ TEST_F(WebNotificationTrayTest, ManyPopupNotifications) {
 
 // Verifies if the notification appears on both displays when extended mode.
 TEST_F(WebNotificationTrayTest, PopupShownOnBothDisplays) {
+  WebNotificationTray::DisableAnimationsForTest(true);
   // TODO: needs ScreenLayoutObserver, http://crbug.com/696752.
   if (Shell::GetAshConfig() == Config::MASH)
     return;
@@ -279,6 +280,7 @@ TEST_F(WebNotificationTrayTest, PopupShownOnBothDisplays) {
   secondary_tray = GetSecondaryTray();
   ASSERT_TRUE(secondary_tray);
   EXPECT_TRUE(secondary_tray->IsPopupVisible());
+  WebNotificationTray::DisableAnimationsForTest(false);
 }
 
 // PopupAndSystemTray may fail in platforms other than ChromeOS because the
