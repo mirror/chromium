@@ -13,9 +13,6 @@ import android.os.Process;
 import android.provider.Settings;
 import android.util.Log;
 import android.webkit.WebSettings;
-import android.webkit.WebSettings.LayoutAlgorithm;
-import android.webkit.WebSettings.PluginState;
-import android.webkit.WebSettings.ZoomDensity;
 
 import org.chromium.base.BuildInfo;
 import org.chromium.base.ThreadUtils;
@@ -119,6 +116,37 @@ public class AwSettings {
     static class LazyDefaultUserAgent{
         // Lazy Holder pattern
         private static final String sInstance = nativeGetDefaultUserAgent();
+    }
+
+    /* See {@link android.webkit.WebSettings}. */
+    // Note: These must match LayoutAlgorithm in Settings.h in WebCore.
+    public enum LayoutAlgorithm {
+        NORMAL,
+        /* See {@link android.webkit.WebSettings}. */
+        SINGLE_COLUMN,
+        /* See {@link android.webkit.WebSettings}. */
+        NARROW_COLUMNS,
+        TEXT_AUTOSIZING
+    }
+
+    /* See {@link android.webkit.WebSettings}. */
+    public enum PluginState { ON, ON_DEMAND, OFF }
+
+    /* See {@link android.webkit.WebSettings}. */
+    public enum ZoomDensity {
+        FAR(150), // 240dpi
+        MEDIUM(100), // 160dpi
+        CLOSE(75); // 120dpi
+        ZoomDensity(int size) {
+            mValue = size;
+        }
+
+        /* See {@link android.webkit.WebSettings}. */
+        public int getValue() {
+            return mValue;
+        }
+
+        int mValue;
     }
 
     // Protects access to settings global fields.

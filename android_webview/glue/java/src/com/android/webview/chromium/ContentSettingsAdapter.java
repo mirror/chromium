@@ -182,12 +182,12 @@ public class ContentSettingsAdapter extends android.webkit.WebSettings {
 
     @Override
     public void setDefaultZoom(ZoomDensity zoom) {
-        mAwSettings.setDefaultZoom(zoom);
+        mAwSettings.setDefaultZoom(Converters.toAwType(zoom));
     }
 
     @Override
     public ZoomDensity getDefaultZoom() {
-        return mAwSettings.getDefaultZoom();
+        return Converters.fromAwType(mAwSettings.getDefaultZoom());
     }
 
     @Override
@@ -234,12 +234,12 @@ public class ContentSettingsAdapter extends android.webkit.WebSettings {
 
     @Override
     public synchronized void setLayoutAlgorithm(LayoutAlgorithm l) {
-        mAwSettings.setLayoutAlgorithm(l);
+        mAwSettings.setLayoutAlgorithm(Converters.toAwType(l));
     }
 
     @Override
     public synchronized LayoutAlgorithm getLayoutAlgorithm() {
-        return mAwSettings.getLayoutAlgorithm();
+        return Converters.fromAwType(mAwSettings.getLayoutAlgorithm());
     }
 
     @Override
@@ -394,7 +394,7 @@ public class ContentSettingsAdapter extends android.webkit.WebSettings {
 
     @Override
     public synchronized void setPluginState(PluginState state) {
-        mAwSettings.setPluginState(state);
+        mAwSettings.setPluginState(Converters.toAwType(state));
     }
 
     @Override
@@ -475,7 +475,7 @@ public class ContentSettingsAdapter extends android.webkit.WebSettings {
 
     @Override
     public synchronized PluginState getPluginState() {
-        return mAwSettings.getPluginState();
+        return Converters.fromAwType(mAwSettings.getPluginState());
     }
 
     @Override
