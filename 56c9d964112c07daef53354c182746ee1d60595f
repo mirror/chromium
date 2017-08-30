@@ -16,6 +16,24 @@
       "revId": "56c9d964112c07daef53354c182746ee1d60595f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fcca0a9_1c215341",
+        "filename": "content/browser/security_exploit_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-30T21:32:46Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "dbc4aa07_a7e0a210",
+      "revId": "56c9d964112c07daef53354c182746ee1d60595f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

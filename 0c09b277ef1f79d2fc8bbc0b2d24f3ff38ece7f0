@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "10d44942_341e4324",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-30T21:32:46Z",
+      "side": 1,
+      "message": "Proxy, right?  (Might want to slightly rephrase this, since the subframe isn\u0027t expecting an RFH to be there for its non-local parent.)",
+      "range": {
+        "startLine": 39,
+        "startChar": 22,
+        "endLine": 39,
+        "endChar": 25
+      },
+      "revId": "0c09b277ef1f79d2fc8bbc0b2d24f3ff38ece7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a6fec0c1_d88a524a",
         "filename": "content/browser/frame_host/frame_tree.cc",
         "patchSetId": 8
@@ -13,6 +36,47 @@
       "writtenOn": "2017-08-30T16:43:09Z",
       "side": 1,
       "message": "I modified NodesExcept to always include |source|, since the traversal here is really its only use case.  In one of my earlier attempts, I tried directly creating the proxy in CreateProxiesForNewRenderFrameHost after this walk, but that doesn\u0027t work because the proxy has to be created at the right position in the tree.  An alternative to this would be to introduce a previous_sibling reference into CreateFrameProxy.  This would avoid modifying NodesExcept and allow us to do the new proxy creation outside of this walk (e.g., in CreateProxiesForNewRenderFrameHost), but would require changing CreateFrameProxy and always passing the previous sibling just to handle this case, which I felt was a bit more complex.",
+      "revId": "0c09b277ef1f79d2fc8bbc0b2d24f3ff38ece7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "201194dd_3ee1eaff",
+        "filename": "content/browser/frame_host/frame_tree.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-30T21:32:46Z",
+      "side": 1,
+      "message": "I\u0027m fine with modifying it, at least if we can give it a more sensible name now.  :)",
+      "parentUuid": "a6fec0c1_d88a524a",
+      "revId": "0c09b277ef1f79d2fc8bbc0b2d24f3ff38ece7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b902d33_694e44e6",
+        "filename": "content/browser/frame_host/frame_tree.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-30T21:32:46Z",
+      "side": 1,
+      "message": "nit: The",
+      "range": {
+        "startLine": 264,
+        "startChar": 9,
+        "endLine": 264,
+        "endChar": 12
+      },
       "revId": "0c09b277ef1f79d2fc8bbc0b2d24f3ff38ece7f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -36,6 +100,58 @@
     },
     {
       "key": {
+        "uuid": "34a95580_0a3d76df",
+        "filename": "content/browser/frame_host/frame_tree.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-30T21:32:46Z",
+      "side": 1,
+      "message": "What about the case where a single tab on A starts going to a slow URL on B, but then adds a subframe to B after starting the navigation (in which case the subframe might commit first)?  I just confirmed that causes a crash (ce95c7802b86bdad, though it hasn\u0027t been processed yet), but it seems like it would skip creating a proxy here.\n\nI would imagine it\u0027s simpler to just always create the proxy, but does that create a problem in some cases?",
+      "parentUuid": "278488af_932534c7",
+      "revId": "0c09b277ef1f79d2fc8bbc0b2d24f3ff38ece7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9297d5b_fb7d868f",
+        "filename": "content/browser/frame_host/frame_tree.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-30T21:32:46Z",
+      "side": 1,
+      "message": "Maybe rename to NodesExceptSubtree, and rename node_to_skip to be something like node, now that we don\u0027t skip it?",
+      "revId": "0c09b277ef1f79d2fc8bbc0b2d24f3ff38ece7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa3ab8e3_2e4c1f7c",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1607,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-30T21:32:46Z",
+      "side": 1,
+      "message": "Side question: Is it possible for frames in the same tree to be in different BrowsingInstances?  I was under the impression we don\u0027t allow that.",
+      "revId": "0c09b277ef1f79d2fc8bbc0b2d24f3ff38ece7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a589c230_77a7bc51",
         "filename": "content/browser/frame_host/render_frame_host_manager_browsertest.cc",
         "patchSetId": 8
@@ -53,6 +169,24 @@
     },
     {
       "key": {
+        "uuid": "dc06a264_b265c54a",
+        "filename": "content/browser/frame_host/render_frame_host_manager_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2592,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-30T21:32:46Z",
+      "side": 1,
+      "message": "Yeah, we can solve it later in that bug.",
+      "parentUuid": "a589c230_77a7bc51",
+      "revId": "0c09b277ef1f79d2fc8bbc0b2d24f3ff38ece7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fe7403af_6f8c21aa",
         "filename": "content/browser/site_per_process_browsertest.cc",
         "patchSetId": 8
@@ -64,6 +198,64 @@
       "writtenOn": "2017-08-30T16:43:09Z",
       "side": 1,
       "message": "I think we just got lucky here before -- the test should\u0027ve really checked both process ID and routing ID.  This failed because routing IDs were now assigned in slightly different order in this test, causing them to be the same in the two processes.",
+      "revId": "0c09b277ef1f79d2fc8bbc0b2d24f3ff38ece7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d5ae8f9_0dd26979",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 5487,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-30T21:32:46Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fe7403af_6f8c21aa",
+      "revId": "0c09b277ef1f79d2fc8bbc0b2d24f3ff38ece7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "489606fa_43e2ccd4",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 11120,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-30T21:32:46Z",
+      "side": 1,
+      "message": "s/is/in/",
+      "range": {
+        "startLine": 11120,
+        "startChar": 31,
+        "endLine": 11120,
+        "endChar": 33
+      },
+      "revId": "0c09b277ef1f79d2fc8bbc0b2d24f3ff38ece7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "359309ca_cda92a87",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1029,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-30T21:32:46Z",
+      "side": 1,
+      "message": "Can we hit the same CHECK failure in this post-crash case?  For example, tab 1 on a.com opens tab 2 to b.com.  Tab 2 crashes.  The user starts navigating tab 1 to b.com/slow, which creates a local RenderFrame in the new b.com process.  Before it commits, they reload tab 2 to b.com, which needs an opener proxy in tab 1 until/if tab 1 commits.",
       "revId": "0c09b277ef1f79d2fc8bbc0b2d24f3ff38ece7f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
