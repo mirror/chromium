@@ -10,6 +10,7 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/sys_info.h"
 #include "base/task_scheduler/post_task.h"
+#include "base/timer/timer.h"
 #include "base/trace_event/memory_dump_manager.h"
 #include "build/build_config.h"
 #include "chrome/common/chrome_content_client.h"
