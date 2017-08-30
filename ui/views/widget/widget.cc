@@ -592,7 +592,7 @@ void Widget::Close() {
   // |FocusManager::ViewRemoved()| calls are fouled.  We clear focus here
   // to avoid these redundant steps and to avoid accessing deleted views
   // that may have been in focus.
-  if (is_top_level() && focus_manager_.get())
+  if (is_top_level() && focus_manager_)
     focus_manager_->SetFocusedView(nullptr);
 
   for (WidgetObserver& observer : observers_)
@@ -1429,6 +1429,8 @@ internal::RootView* Widget::CreateRootView() {
 }
 
 void Widget::DestroyRootView() {
+  if (is_top_level() && focus_manager_)
+    focus_manager_->SetFocusedView(nullptr);
   NotifyWillRemoveView(root_view_.get());
   non_client_view_ = NULL;
   root_view_.reset();
