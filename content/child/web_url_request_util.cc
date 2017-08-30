@@ -14,6 +14,7 @@
 #include "content/child/request_extra_data.h"
 #include "net/base/load_flags.h"
 #include "net/base/net_errors.h"
+#include "net/http/http_util.h"
 #include "third_party/WebKit/public/platform/FilePathConversion.h"
 #include "third_party/WebKit/public/platform/WebCachePolicy.h"
 #include "third_party/WebKit/public/platform/WebData.h"
@@ -31,6 +32,30 @@ using blink::WebURLRequest;
 namespace content {
 
 namespace {
+
+class HttpRequestHeadersVisitor : public blink::WebHTTPHeaderVisitor {
+ public:
+  explicit HttpRequestHeadersVisitor(net::HttpRequestHeaders* headers)
+      : headers_(headers) {}
+  ~HttpRequestHeadersVisitor() override = default;
+
+  void VisitHeader(const WebString& name, const WebString& value) override {
+    // Headers are latin1.
+    const std::string& name_latin1 = name.Latin1();
+    const std::string& value_latin1 = value.Latin1();
+
+    // Skip over referrer headers found in the header map because we already
+    // pulled it out as a separate parameter.
+    if (base::LowerCaseEqualsASCII(name_latin1, "referer"))
+      return;
+
+    DCHECK(net::HttpUtil::IsValidHeaderName(name_latin1));
+    headers_->SetHeader(name_latin1, value_latin1);
+  }
+
+ private:
+  net::HttpRequestHeaders* const headers_;
+};
 
 class HeaderFlattener : public blink::WebHTTPHeaderVisitor {
  public:
@@ -177,7 +202,16 @@ ResourceType WebURLRequestToResourceType(const WebURLRequest& request) {
   }
 }
 
-std::string GetWebURLRequestHeaders(const blink::WebURLRequest& request) {
+net::HttpRequestHeaders GetWebURLRequestHeaders(
+    const blink::WebURLRequest& request) {
+  net::HttpRequestHeaders headers;
+  HttpRequestHeadersVisitor visitor(&headers);
+  request.VisitHTTPHeaderFields(&visitor);
+  return headers;
+}
+
+std::string GetWebURLRequestHeadersAsString(
+    const blink::WebURLRequest& request) {
   HeaderFlattener flattener;
   request.VisitHTTPHeaderFields(&flattener);
   return flattener.GetBuffer();
