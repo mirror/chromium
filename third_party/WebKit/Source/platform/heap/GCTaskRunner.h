@@ -62,7 +62,7 @@ class GCTaskObserver final : public WebThread::TaskObserver {
     if (nesting_)
       nesting_--;
 
-    ThreadState::Current()->SafePoint(nesting_
+    ThreadState::Current()->RunGCTask(nesting_
                                           ? BlinkGC::kHeapPointersOnStack
                                           : BlinkGC::kNoHeapPointersOnStack);
   }

@@ -345,30 +345,7 @@ class PLATFORM_EXPORT ThreadState {
 
   void FlushHeapDoesNotContainCacheIfNeeded();
 
-  // Safepoint related functionality.
-  //
-  // When a thread attempts to perform GC it needs to stop all other threads
-  // that use the heap or at least guarantee that they will not touch any
-  // heap allocated object until GC is complete.
-  //
-  // We say that a thread is at a safepoint if this thread is guaranteed to
-  // not touch any heap allocated object or any heap related functionality until
-  // it leaves the safepoint.
-  //
-  // Notice that a thread does not have to be paused if it is at safepoint it
-  // can continue to run and perform tasks that do not require interaction
-  // with the heap. It will be paused if it attempts to leave the safepoint and
-  // there is a GC in progress.
-  //
-  // Each thread that has ThreadState attached must:
-  //   - periodically check if GC is requested from another thread by calling a
-  //     safePoint() method;
-  //   - use SafePointScope around long running loops that have no safePoint()
-  //     invocation inside, such loops must not touch any heap object;
-  //
-  // Check if GC is requested by another thread and pause this thread if this is
-  // the case.  Can only be called when current thread is in a consistent state.
-  void SafePoint(BlinkGC::StackState);
+  void RunGCTask(BlinkGC::StackState);
 
   // Mark current thread as running inside safepoint.
   void EnterSafePoint(BlinkGC::StackState, void*);
