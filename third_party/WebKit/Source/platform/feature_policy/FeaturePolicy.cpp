@@ -1,4 +1,3 @@
-// Copyright 2016 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -77,6 +76,18 @@ Vector<WebParsedFeaturePolicyDeclaration> ParseOldAllowSyntax(
   return whitelists;
 }
 
+// Looks for an empty policy and adds a console warning message if found one.
+bool CheckForEmptyPolicy(const String& policy,
+                         const Vector<String>& policy_items,
+                         Vector<String>* messages) {
+  if (policy_items.IsEmpty()) {
+    if (messages)
+      messages->push_back("Empty feature policy found in :" + policy + ".");
+    return true;
+  }
+  return false;
+}
+
 }  // namespace
 
 WebParsedFeaturePolicy ParseFeaturePolicyHeader(const String& policy,
@@ -117,15 +128,20 @@ Vector<WebParsedFeaturePolicyDeclaration> ParseFeaturePolicy(
   Vector<String> policy_items;
   // policy_items = [ policy *( "," [ policy ] ) ]
   policy.Split(',', policy_items);
+  CheckForEmptyPolicy(policy, policy_items, messages);
   for (const String& item : policy_items) {
     Vector<String> entry_list;
     // entry_list = [ entry *( ";" [ entry ] ) ]
     item.Split(';', entry_list);
+    CheckForEmptyPolicy(policy, entry_list, messages);
     for (const String& entry : entry_list) {
       // Split removes extra whitespaces by default
       //     "name value1 value2" or "name".
       Vector<String> tokens;
       entry.Split(' ', tokens);
+      // Empty policy. Skip.
+      if (CheckForEmptyPolicy(policy, tokens, messages))
+        continue;
       if (!feature_names.Contains(tokens[0])) {
         if (messages)
           messages->push_back("Unrecognized feature: '" + tokens[0] + "'.");

@@ -17,7 +17,6 @@ namespace blink {
 namespace {
 
 const char* const kValidPolicies[] = {
-    ";;",  // Empty policies.
     "vibrate 'none'",
     "vibrate 'self'",
     "vibrate 'src'",  // Only valid for iframe allow attribute.
@@ -34,6 +33,14 @@ const char* const kValidPolicies[] = {
     "fullscreen " ORIGIN_A "; payment *, vibrate 'self'"};
 
 const char* const kInvalidPolicies[] = {
+    "",      // An empty policy.
+    " ",     // An empty policy.
+    ";;",    // Empty policies.
+    ",,",    // Empty policies.
+    " ",     // Empty policies.
+    " ; ;",  // Empty policies.
+    " , ,",  // Empty policies.
+    ",;,",   // Empty policies.
     "badfeaturename",
     "badfeaturename 'self'",
     "1.0",
