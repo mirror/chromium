@@ -178,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "3a20e0ba_9f05e815",
+        "filename": "chrome/browser/resources/print_preview/settings/other_options_settings.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-08-30T18:22:31Z",
+      "side": 1,
+      "message": "Yes, should be length -1. Done.",
+      "parentUuid": "16992734_6157c8b9",
+      "revId": "578b444d82ff6fde6c4acbb3cdd0110f7f3b8a2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4ad1455_5fa72e8f",
         "filename": "chrome/browser/resources/print_preview/settings/scaling_settings.js",
         "patchSetId": 7
