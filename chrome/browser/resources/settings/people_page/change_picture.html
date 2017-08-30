@@ -16,6 +16,7 @@
     <style>
       #title {
         -webkit-margin-start: 20px;
+        padding-bottom: 288px;
         padding-top: 16px;
       }
 
@@ -25,6 +26,7 @@
         display: flex;
         padding-top: 16px;
         position: absolute;
+        top: 108px;
       }
 
       #picturePane {
@@ -44,14 +46,17 @@
       }
 
       #pictureList {
-        /* 162px is the size of header above the picture list.
+        /* 174px is the size of header above the picture list.
            TODO(reveman): Find a way to have height align to viewport
            without having to make assumptions about header height. */
-        height: calc(100vh - 162px);
+        height: calc(100vh - 174px);
+        min-height: 322px;
         overflow-x: hidden;
         overflow-y: auto;
         position: relative;
-        width: 320px;
+        width: 328px;
+        /* Workaround overflow rendering issue. */
+        z-index: 0;
       }
 
     </style>
