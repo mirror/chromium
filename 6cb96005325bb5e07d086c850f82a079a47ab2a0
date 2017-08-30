@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53fc90fb_f79c859e",
+        "filename": "third_party/WebKit/Source/bindings/tests/results/core/V8TestInterfaceNamedConstructor.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-08-30T03:00:30Z",
+      "side": 1,
+      "message": "V8T::NamedConstrcutorAttributeGetter has a special implementation different from the common constructor code.  In case of named constructors, we need to do something different, so we cannot use V8ConstructorAttributeGetter.",
+      "revId": "6cb96005325bb5e07d086c850f82a079a47ab2a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
