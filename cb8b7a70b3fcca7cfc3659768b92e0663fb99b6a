@@ -88,6 +88,24 @@
       "revId": "cb8b7a70b3fcca7cfc3659768b92e0663fb99b6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea5215a8_9d0cfc30",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-30T03:17:57Z",
+      "side": 1,
+      "message": "[I wish polygerrit made it easier to inline-respond.]\n\n@zijiehe:\nTo be clear: I am not questioning how we receive the events from the platform into DesktopWindowTreeHostWin|X11 (LowLevelKeyboardProc, XNextEvent etc.). My comments are more about once we receive the event from the platform, how we dispatch them into the aura window-tree.\n\n@jamiewalch:\n\u003e one of the problems in creating a ui::KeyEvent is that doing so affects global state\n\u003e (specifically the repeat timer)\n\nAt least for repeat timer, we can get around by using a different version of the ctor [1] (instead of the one that creates the event from MSG and sets the repeated flag [2]) for the low-level events. I don\u0027t think this would be a concern in X11 (or in evdev for chromeos).\n\nAre there additional issues this would run into? It would be useful to have only a small amount of platform-specific code, and share the rest of the code across platforms. Having a single type of KeyEventFilter that deals only with ui::KeyEvent would accomplish that. With this, the only platform-specific code would be the construction of a KeyEvent (which already is the case for all input events).\n\nDoes that make sense?\n\n[1] https://cs.chromium.org/chromium/src/ui/events/event.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d1175\n[2] https://cs.chromium.org/chromium/src/ui/events/event.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d1150",
+      "parentUuid": "3a6bb69c_81f9d85a",
+      "revId": "cb8b7a70b3fcca7cfc3659768b92e0663fb99b6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
