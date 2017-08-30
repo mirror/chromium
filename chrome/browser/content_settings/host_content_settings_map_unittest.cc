@@ -286,6 +286,62 @@ TEST_F(HostContentSettingsMapTest, IndividualSettings) {
   EXPECT_EQ(1U, host_settings.size());
 }
 
+TEST_F(HostContentSettingsMapTest, IndividualClientHintsSettings) {
+  TestingProfile profile;
+  GURL host1("https://example1.com/");
+  GURL host2("https://example2.com/");
+  ContentSettingsForOneType client_hints_settings;
+  HostContentSettingsMap* host_content_settings_map =
+      HostContentSettingsMapFactory::GetForProfile(&profile);
+
+  host_content_settings_map->GetSettingsForOneType(
+      CONTENT_SETTINGS_TYPE_CLIENT_HINTS, std::string(),
+      &client_hints_settings);
+  EXPECT_EQ(0U, client_hints_settings.size());
+
+  // Add setting for |host1|.
+  const double expiration_time =
+      (base::Time::Now() + base::TimeDelta::FromDays(1)).ToDoubleT();
+  std::unique_ptr<base::ListValue> expiration_times_list =
+      base::MakeUnique<base::ListValue>();
+  expiration_times_list->AppendInteger(0 /* client hint  value */);
+  auto expiration_times_dictionary = std::make_unique<base::DictionaryValue>();
+  expiration_times_dictionary->SetList("client_hints",
+                                       std::move(expiration_times_list));
+  expiration_times_dictionary->SetDouble("expiration_time", expiration_time);
+  host_content_settings_map->SetWebsiteSettingDefaultScope(
+      host1, GURL(), CONTENT_SETTINGS_TYPE_CLIENT_HINTS, std::string(),
+      base::MakeUnique<base::Value>(expiration_times_dictionary->Clone()));
+
+  // Reading the settings should now return one setting.
+  host_content_settings_map->GetSettingsForOneType(
+      CONTENT_SETTINGS_TYPE_CLIENT_HINTS, std::string(),
+      &client_hints_settings);
+  EXPECT_EQ(1U, client_hints_settings.size());
+
+  // Add setting for |host2|.
+  host_content_settings_map->SetWebsiteSettingDefaultScope(
+      host2, GURL(), CONTENT_SETTINGS_TYPE_CLIENT_HINTS, std::string(),
+      base::MakeUnique<base::Value>(expiration_times_dictionary->Clone()));
+
+  // Reading the settings should now return two settings.
+  host_content_settings_map->GetSettingsForOneType(
+      CONTENT_SETTINGS_TYPE_CLIENT_HINTS, std::string(),
+      &client_hints_settings);
+  EXPECT_EQ(2U, client_hints_settings.size());
+
+  // Add settings again for |host1|.
+  host_content_settings_map->SetWebsiteSettingDefaultScope(
+      host1, GURL(), CONTENT_SETTINGS_TYPE_CLIENT_HINTS, std::string(),
+      base::MakeUnique<base::Value>(expiration_times_dictionary->Clone()));
+
+  // Reading the settings should still return two settings.
+  host_content_settings_map->GetSettingsForOneType(
+      CONTENT_SETTINGS_TYPE_CLIENT_HINTS, std::string(),
+      &client_hints_settings);
+  EXPECT_EQ(2U, client_hints_settings.size());
+}
+
 TEST_F(HostContentSettingsMapTest, Clear) {
   TestingProfile profile;
   HostContentSettingsMap* host_content_settings_map =
