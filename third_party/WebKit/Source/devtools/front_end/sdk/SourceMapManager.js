@@ -21,6 +21,8 @@ SDK.SourceMapManager = class extends Common.Object {
     this._relativeSourceMapURL = new Map();
     /** @type {!Map<!T, string>} */
     this._resolvedSourceMapURL = new Map();
+    /** @type {!Map<string, !Promise<?SDK.SourceMap>>} */
+    this._sourceMapPromise = new Map();
 
     /** @type {!Map<string, !SDK.SourceMap>} */
     this._sourceMapByURL = new Map();
@@ -115,14 +117,15 @@ SDK.SourceMapManager = class extends Common.Object {
    * @param {!T} client
    * @param {string} sourceURL
    * @param {?string} sourceMapURL
+   * @return {!Promise<?SDK.SourceMap>}
    */
   attachSourceMap(client, sourceURL, sourceMapURL) {
     if (!sourceMapURL)
-      return;
+      return Promise.resolve(/** @type {?SDK.SourceMap} */ (null));
     console.assert(!this._resolvedSourceMapURL.has(client), 'SourceMap is already attached to client');
     var resolvedURLs = this._resolveRelativeURLs(sourceURL, sourceMapURL);
     if (!resolvedURLs.sourceURL || !resolvedURLs.sourceMapURL)
-      return;
+      return Promise.resolve(/** @type {?SDK.SourceMap} */ (null));
     this._relativeSourceURL.set(client, sourceURL);
     this._relativeSourceMapURL.set(client, sourceMapURL);
     this._resolvedSourceMapURL.set(client, resolvedURLs.sourceMapURL);
@@ -130,20 +133,29 @@ SDK.SourceMapManager = class extends Common.Object {
     sourceURL = resolvedURLs.sourceURL;
     sourceMapURL = resolvedURLs.sourceMapURL;
     if (!this._isEnabled)
-      return;
+      return Promise.resolve(/** @type {?SDK.SourceMap} */ (null));
 
     this.dispatchEventToListeners(SDK.SourceMapManager.Events.SourceMapWillAttach, client);
 
     if (this._sourceMapByURL.has(sourceMapURL)) {
       attach.call(this, sourceMapURL, client);
-      return;
+      return Promise.resolve(/** @type {?SDK.SourceMap} */ (this._sourceMapByURL.get(sourceMapURL)));
     }
+
     if (!this._sourceMapURLToLoadingClients.has(sourceMapURL)) {
+      var sourceMapPromiseResolve;
+      var sourceMapPromise = new Promise(resolve => sourceMapPromiseResolve = resolve);
       SDK.TextSourceMap.load(sourceMapURL, sourceURL)
+          .then(sourceMap => {
+            sourceMapPromiseResolve(sourceMap);
+            return sourceMap;
+          })
           .then(onTextSourceMapLoaded.bind(this, sourceMapURL))
           .then(onSourceMap.bind(this, sourceMapURL));
+      this._sourceMapPromise.set(sourceMapURL, sourceMapPromise);
     }
     this._sourceMapURLToLoadingClients.set(sourceMapURL, client);
+    return this._sourceMapPromise.get(sourceMapURL);
 
     /**
      * @param {string} sourceMapURL
@@ -166,6 +178,7 @@ SDK.SourceMapManager = class extends Common.Object {
     /**
      * @param {string} sourceMapURL
      * @param {?SDK.SourceMap} sourceMap
+     * @return {?SDK.SourceMap}
      * @this {SDK.SourceMapManager}
      */
     function onSourceMap(sourceMapURL, sourceMap) {
@@ -173,15 +186,16 @@ SDK.SourceMapManager = class extends Common.Object {
       var clients = this._sourceMapURLToLoadingClients.get(sourceMapURL);
       this._sourceMapURLToLoadingClients.deleteAll(sourceMapURL);
       if (!clients.size)
-        return;
+        return sourceMap;
       if (!sourceMap) {
         for (var client of clients)
           this.dispatchEventToListeners(SDK.SourceMapManager.Events.SourceMapFailedToAttach, client);
-        return;
+        return null;
       }
       this._sourceMapByURL.set(sourceMapURL, sourceMap);
       for (var client of clients)
         attach.call(this, sourceMapURL, client);
+      return sourceMap;
     }
 
     /**
@@ -231,8 +245,10 @@ SDK.SourceMapManager = class extends Common.Object {
     }
     this._sourceMapURLToClients.delete(sourceMapURL, client);
     var sourceMap = this._sourceMapByURL.get(sourceMapURL);
-    if (!this._sourceMapURLToClients.has(sourceMapURL))
+    if (!this._sourceMapURLToClients.has(sourceMapURL)) {
       this._sourceMapByURL.delete(sourceMapURL);
+      this._sourceMapPromise.delete(sourceMapURL);
+    }
     this.dispatchEventToListeners(
         SDK.SourceMapManager.Events.SourceMapDetached, {client: client, sourceMap: sourceMap});
   }

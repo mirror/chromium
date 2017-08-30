@@ -1,0 +1,12 @@
+CONSOLE MESSAGE: line 1: 1
+CONSOLE MESSAGE: line 1: 2
+CONSOLE MESSAGE: line 1: 11
+Tests that we update source code content on source map reload.
+
+Evaluating script with new source map..
+console.log(1);
+Evaluating script with new source map..
+console.log(2);
+Evaluating script with new source map..
+console.log(11);
+
