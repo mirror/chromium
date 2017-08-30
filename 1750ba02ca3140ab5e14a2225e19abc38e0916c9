@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc8f1277_82f58db2",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1041,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-30T16:34:40Z",
+      "side": 1,
+      "message": "nit: merge this with the SelectAll around line 1036\n\ni.e.\n  if (IsSearchBoxTrimmedQueryEmpty()) {\n     SetBorder(...);\n  }\n\n  if (!search_box_-\u003etext().empty())\n    search_box_-\u003eSelectAll(false);",
+      "revId": "1750ba02ca3140ab5e14a2225e19abc38e0916c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
