@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c464a12c_eef5198c",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-30T15:22:16Z",
+      "side": 0,
+      "message": "I don\u0027t think this class has any search deps anymore, can you remove them?",
+      "range": {
+        "startLine": 302,
+        "startChar": 0,
+        "endLine": 302,
+        "endChar": 51
+      },
+      "revId": "44fc2421eccfc4c19bd0c212fdcfe4fc8cdf4c08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
