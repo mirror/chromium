@@ -65,6 +65,8 @@ class SystemTrustStore {
 // inspected by testing whether UsesSystemTrustStore() returns false.
 NET_EXPORT std::unique_ptr<SystemTrustStore> CreateSslSystemTrustStore();
 
+void AddTrustAnchor(ParsedCertificate* cert);
+
 }  // namespace net
 
 #endif  // NET_CERT_INTERNAL_SYSTEM_TRUST_STORE_H_
