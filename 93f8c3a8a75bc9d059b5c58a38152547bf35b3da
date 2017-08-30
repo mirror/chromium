@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43a83055_c9b6d8a5",
+        "filename": "ios/clean/chrome/browser/DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-30T20:10:13Z",
+      "side": 1,
+      "message": "I don\u0027t see any BUILD.gn files referencing this. Am I missing them?",
+      "range": {
+        "startLine": 7,
+        "startChar": 4,
+        "endLine": 7,
+        "endChar": 23
+      },
+      "revId": "93f8c3a8a75bc9d059b5c58a38152547bf35b3da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
