@@ -15,7 +15,6 @@ import android.net.Uri;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SmallTest;
 import android.view.ViewGroup;
-import android.webkit.ValueCallback;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -36,6 +35,7 @@ import org.chromium.android_webview.AwSafeBrowsingConversionHelper;
 import org.chromium.android_webview.AwSafeBrowsingResponse;
 import org.chromium.android_webview.AwSettings;
 import org.chromium.android_webview.AwSwitches;
+import org.chromium.android_webview.AwValueCallback;
 import org.chromium.android_webview.AwWebContentsObserver;
 import org.chromium.android_webview.ErrorCodeConversionHelper;
 import org.chromium.android_webview.SafeBrowsingAction;
@@ -246,7 +246,7 @@ public class SafeBrowsingTest {
 
         @Override
         public void onSafeBrowsingHit(AwWebResourceRequest request, int threatType,
-                ValueCallback<AwSafeBrowsingResponse> callback) {
+                AwValueCallback<AwSafeBrowsingResponse> callback) {
             mLastRequest = request;
             mLastThreatType = threatType;
             callback.onReceiveValue(new AwSafeBrowsingResponse(mAction, mReporting));
@@ -293,7 +293,8 @@ public class SafeBrowsingTest {
         }
     }
 
-    private static class WhitelistHelper extends CallbackHelper implements ValueCallback<Boolean> {
+    private static class WhitelistHelper
+            extends CallbackHelper implements AwValueCallback<Boolean> {
         public boolean success;
 
         public void onReceiveValue(Boolean success) {
@@ -338,7 +339,7 @@ public class SafeBrowsingTest {
     }
 
     private void evaluateJavaScriptOnInterstitialOnUiThread(
-            final String script, final ValueCallback<String> callback) {
+            final String script, final AwValueCallback<String> callback) {
         ThreadUtils.runOnUiThread(
                 () -> mAwContents.evaluateJavaScriptOnInterstitialForTesting(script, callback));
     }
@@ -347,7 +348,7 @@ public class SafeBrowsingTest {
         final String script = "document.readyState;";
         final JavaScriptHelper helper = new JavaScriptHelper();
 
-        final ValueCallback<String> callback = value -> {
+        final AwValueCallback<String> callback = value -> {
             helper.setValue(value);
             helper.notifyCalled();
         };
