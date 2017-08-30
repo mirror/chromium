@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e933fd0_2641dc42",
+        "filename": "ios/clean/chrome/browser/ui/ntp/ntp_home_header_mediator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-30T15:17:33Z",
+      "side": 1,
+      "message": "Can the logic for those UI updates more easily be shifted into their respective view controllers now (by having those view controllers be broadcast observers)?",
+      "range": {
+        "startLine": 23,
+        "startChar": 66,
+        "endLine": 23,
+        "endChar": 68
+      },
+      "revId": "c0d91fbad538045f9c9f6209593b2db5ac82139f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
