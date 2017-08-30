@@ -63,6 +63,24 @@
       "revId": "98aeb6d10e193793353aade508c6e916c12c948d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b491e815_47fa5a59",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 1562,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-30T22:53:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec4269cb_12857284",
+      "revId": "98aeb6d10e193793353aade508c6e916c12c948d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
