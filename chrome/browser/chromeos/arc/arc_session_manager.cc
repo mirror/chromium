@@ -452,7 +452,8 @@ void ArcSessionManager::Initialize() {
 
 void ArcSessionManager::Shutdown() {
   enable_requested_ = false;
-  ShutdownSession();
+  ResetArcState();
+  arc_session_runner_->OnShutdown();
   if (support_host_) {
     support_host_->SetErrorDelegate(nullptr);
     support_host_->Close();
@@ -469,10 +470,7 @@ void ArcSessionManager::Shutdown() {
 }
 
 void ArcSessionManager::ShutdownSession() {
-  arc_sign_in_timer_.Stop();
-  playstore_launcher_.reset();
-  terms_of_service_negotiator_.reset();
-  android_management_checker_.reset();
+  ResetArcState();
   switch (state_) {
     case State::NOT_INITIALIZED:
       // Ignore in NOT_INITIALIZED case. This is called in initial SetProfile
@@ -506,6 +504,13 @@ void ArcSessionManager::ShutdownSession() {
       // Now ARC is stopping. Do nothing here.
       break;
   }
+}
+
+void ArcSessionManager::ResetArcState() {
+  arc_sign_in_timer_.Stop();
+  playstore_launcher_.reset();
+  terms_of_service_negotiator_.reset();
+  android_management_checker_.reset();
 }
 
 void ArcSessionManager::AddObserver(Observer* observer) {
