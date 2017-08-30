@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "92bed8e6_913b8e5f",
+        "filename": "android_webview/browser/aw_print_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-08-30T21:41:37Z",
+      "side": 1,
+      "message": "Thanks for digging into this and providing a snippet with an example - much appreciated.\n\nDone.\n\nPS. As you\u0027ve noticed, after this CL there is only one remaining place that uses the IPC_MESSAGE_HANDLER_WITH_PARAM_DELAY_REPLY macro (in ResourceDispatcherHostImpl::OnMessageReceived).  FWIW, this usage seems okay to me (i.e. calls Send on the right object) so I am not going to touch it.",
+      "parentUuid": "c349de16_5875c288",
+      "revId": "1684365348eccaf00110c034d8048f6f165f0005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c323a4c_31744f25",
         "filename": "chrome/browser/plugins/plugin_observer.cc",
         "patchSetId": 4
@@ -39,6 +57,53 @@
       "revId": "1684365348eccaf00110c034d8048f6f165f0005",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db885860_aa1b89b4",
+        "filename": "chrome/browser/plugins/plugin_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-08-30T21:41:37Z",
+      "side": 1,
+      "message": "I\u0027ve started to make changes to fix this, but they kept getting bigger and bigger, so I\u0027ve opened https://crbug.com/760637 to track this (and unblock the current CL under review).  I think the fix shouldn\u0027t be too difficult (just propagate process_id from the sender/RFH and use it when sending new IPCs + make the process_id part of map key).\n\nAnd yes - I\u0027ve added an IOU^H^H^HTODO comment above... :-P\n\nPS. I have a draft of a fix here: https://chromium-review.googlesource.com/644507",
+      "parentUuid": "4c323a4c_31744f25",
+      "range": {
+        "startLine": 140,
+        "startChar": 26,
+        "endLine": 140,
+        "endChar": 34
+      },
+      "revId": "1684365348eccaf00110c034d8048f6f165f0005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b94e2240_b247000d",
+        "filename": "components/guest_view/browser/guest_view_base.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-08-30T21:41:37Z",
+      "side": 1,
+      "message": "I\u0027ve looked at the changes above again, and it seems okay, because this is a control (i.e. non-routed) message.  OTOH, I notice that the |element_instance_id_| ultimately comes via GuestViewHostMsg_AttachToEmbedderFrame IPC that is sent via RenderFrame (and it is not immediately obvious that sending a reply via RenderViewHost will get back to the same process).\n\nStill - since the problem wil go away when the browser plugin goes away, I think it is fine to let it be.",
+      "range": {
+        "startLine": 439,
+        "startChar": 0,
+        "endLine": 440,
+        "endChar": 60
+      },
+      "revId": "1684365348eccaf00110c034d8048f6f165f0005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
