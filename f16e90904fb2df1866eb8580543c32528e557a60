@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dff1d894_9348f38d",
+        "filename": "ui/message_center/views/notification_header_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-30T15:44:41Z",
+      "side": 1,
+      "message": "i don\u0027t think you should need this call. The provided images should be the right size already. The risk here is that if you provide the wrong size image then this call papers over that problem by scaling it (suboptimally).",
+      "range": {
+        "startLine": 171,
+        "startChar": 18,
+        "endLine": 171,
+        "endChar": 30
+      },
+      "revId": "f16e90904fb2df1866eb8580543c32528e557a60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
