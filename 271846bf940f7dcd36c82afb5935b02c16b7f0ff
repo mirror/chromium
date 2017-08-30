@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d8a3ab9_4f9be0f1",
+        "filename": "chrome/installer/linux/debian/download-repo-signing-keys.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-30T22:38:59Z",
+      "side": 1,
+      "message": "Do we need this one still?",
+      "revId": "271846bf940f7dcd36c82afb5935b02c16b7f0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
