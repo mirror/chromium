@@ -92,6 +92,7 @@ void ArcCastReceiverService::OnCastReceiverEnabledChanged() const {
                                   SetEnabled);
   if (!cast_receiver_instance)
     return;
+  LOG(ERROR) << "*** DRC *** ArcCastReceiverService *** Receiver enabled: " << pref_change_registrar_->prefs()->GetBoolean(prefs::kCastReceiverEnabled);
   cast_receiver_instance->SetEnabled(
       pref_change_registrar_->prefs()->GetBoolean(prefs::kCastReceiverEnabled),
       base::Bind(&OnResultReceivedIgnoreResult));
@@ -105,8 +106,10 @@ void ArcCastReceiverService::OnCastReceiverNameChanged() const {
     return;
   const PrefService::Preference* pref =
       pref_change_registrar_->prefs()->FindPreference(prefs::kCastReceiverName);
+  if (!pref) LOG(ERROR) << "*** DRC *** ArcCastReceiverService *** Receiver name: unset";
   if (!pref)
     return;
+  LOG(ERROR) << "*** DRC *** ArcCastReceiverService *** Receiver name: " << pref->GetValue()->GetString();
   cast_receiver_instance->SetName(pref->GetValue()->GetString(),
                                   base::Bind(&OnResultReceivedIgnoreResult));
 }

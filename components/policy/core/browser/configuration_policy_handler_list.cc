@@ -9,6 +9,7 @@
 #include "components/policy/core/browser/configuration_policy_handler.h"
 #include "components/policy/core/browser/configuration_policy_handler_parameters.h"
 #include "components/policy/core/browser/policy_error_map.h"
+#include "components/policy/policy_constants.h"
 #include "components/prefs/pref_value_map.h"
 #include "components/strings/grit/components_strings.h"
 
@@ -62,6 +63,30 @@ void ConfigurationPolicyHandlerList::ApplyPolicySettings(
     }
   }
 
+  if (filtered_policies->GetValue(key::kCastReceiverName)) {
+    LOG(ERROR) << "*** DRC *** Value for policy " << key::kCastReceiverName << " is: " << *filtered_policies->GetValue(key::kCastReceiverName);
+    std::string value;
+    bool found = prefs->GetString("cast_receiver.name", &value);
+    if (found) {
+        LOG(ERROR) << "*** DRC *** Value for pref cast_receiver.name is: \"" << value << "\"";
+    } else {
+        LOG(ERROR) << "*** DRC *** Value for pref cast_receiver.name is unset";
+    }
+  } else {
+    LOG(ERROR) << "*** DRC *** Value for policy " << key::kCastReceiverName << " is unset";
+  }
+  if (filtered_policies->GetValue(key::kCastReceiverEnabled)) {
+    LOG(ERROR) << "*** DRC *** Value for policy " << key::kCastReceiverEnabled << " is: " << *filtered_policies->GetValue(key::kCastReceiverEnabled);
+    bool value;
+    bool found = prefs->GetBoolean("cast_receiver.enabled", &value);
+    if (found) {
+        LOG(ERROR) << "*** DRC *** Value for pref cast_receiver.enabled is: " << value;
+    } else {
+        LOG(ERROR) << "*** DRC *** Value for pref cast_receiver.enabled is unset";
+    }
+  } else {
+    LOG(ERROR) << "*** DRC *** Value for policy " << key::kCastReceiverEnabled << " is unset";
+  }
   if (details_callback_) {
     for (PolicyMap::const_iterator it = filtered_policies->begin();
          it != filtered_policies->end();
