@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "42a636b3_91e10c62",
+        "filename": "ash/wm/overview/overview_window_drag_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-08-30T18:03:10Z",
+      "side": 1,
+      "message": "On a second thought, we probably should not allow drag unsnappable window around. I\u0027ll talk with Omri to see what is the expected behavior.",
+      "parentUuid": "b878bc95_53093c92",
+      "revId": "3608edc3680d8058b248467a75f83cc206dca80c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "da919fba_a6a88967",
         "filename": "ash/wm/overview/window_selector_unittest.cc",
         "patchSetId": 2
