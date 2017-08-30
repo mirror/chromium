@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e0051f57_9c0c53b1",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-30T05:27:05Z",
+      "side": 1,
+      "message": "I wouldn\u0027t optimize unless you know it\u0027s a problem.  If you do, then I\u0027d go the route the RenderText folks have suggested, which is basically to combine eliding into RenderText, which already knows the exact extents for each glyph and doesn\u0027t need to re-measure anything.",
+      "parentUuid": "66d1b266_713e1744",
+      "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0d3f4953_0252200b",
         "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
         "patchSetId": 2
@@ -255,6 +273,24 @@
       "side": 1,
       "message": "I moved away from specific names like \"host_only\" because in several spots, I do the same \"build the shortest possible string and test it\" check.",
       "parentUuid": "0236f516_ca000886",
+      "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2706053a_d6997def",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-30T05:27:05Z",
+      "side": 1,
+      "message": "I used \"host_only\" because it looked correct for all uses I saw.  If that\u0027s not the case, then consider using different temps with more specific names for each different short string.\n\nBut maybe this will all change in your future patch set.",
+      "parentUuid": "2854d521_a032bd3f",
       "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
