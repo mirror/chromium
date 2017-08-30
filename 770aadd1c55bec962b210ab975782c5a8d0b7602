@@ -22,6 +22,30 @@
       "revId": "770aadd1c55bec962b210ab975782c5a8d0b7602",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "808600e6_0217e4c7",
+        "filename": "chrome/android/java/res/layout/chrome_home_iph_header.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-30T15:43:58Z",
+      "side": 1,
+      "message": "Yes, it\u0027s supposed to reference a text style (BlankHint2) instead of a color. If we set the textAppearance\u003d\"@style/BlackHint2\" it\u0027s overriden by the text appearance in OverflowMenuTheme on inflation.\n\nI updated the comment.",
+      "parentUuid": "90b56962_cd7ace7b",
+      "range": {
+        "startLine": 17,
+        "startChar": 39,
+        "endLine": 17,
+        "endChar": 52
+      },
+      "revId": "770aadd1c55bec962b210ab975782c5a8d0b7602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
