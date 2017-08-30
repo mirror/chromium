@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "266cf271_0c289319",
+        "filename": "components/safe_browsing/browser/threat_details.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-30T21:00:47Z",
+      "side": 1,
+      "message": "Comment not useful since the code says the same thing",
+      "range": {
+        "startLine": 745,
+        "startChar": 0,
+        "endLine": 745,
+        "endChar": 34
+      },
+      "revId": "dc3f38123df681546112d25d0331848527a6d213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "38dcef9e_3988318a",
         "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
         "patchSetId": 14
