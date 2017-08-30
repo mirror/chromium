@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6b169d8_1691dc7f",
+        "filename": "chrome/installer/linux/debian/update-dist-package-versions.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-30T06:17:41Z",
+      "side": 1,
+      "message": "cStringIO if possible.",
+      "revId": "9c88ef46358de25e2fbda9f186b2cd81ee573555",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37bf708d_498de4c6",
+        "filename": "chrome/installer/linux/debian/update-dist-package-versions.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-30T06:17:41Z",
+      "side": 1,
+      "message": "Want to check Release against Release.gpg, and then verify the SHA256 on these?",
+      "revId": "9c88ef46358de25e2fbda9f186b2cd81ee573555",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
