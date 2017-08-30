@@ -22,6 +22,7 @@ class ArcAppDeferredLauncherItemController : public ash::ShelfItemDelegate {
   ArcAppDeferredLauncherItemController(
       const std::string& arc_app_id,
       int event_flags,
+      int64_t display_id,
       const base::WeakPtr<ArcAppDeferredLauncherController>& host);
 
   ~ArcAppDeferredLauncherItemController() override;
@@ -29,6 +30,7 @@ class ArcAppDeferredLauncherItemController : public ash::ShelfItemDelegate {
   base::TimeDelta GetActiveTime() const;
 
   int event_flags() const { return event_flags_; }
+  int64_t display_id() const { return display_id_; }
 
   // ash::ShelfItemDelegate:
   void ItemSelected(std::unique_ptr<ui::Event> event,
@@ -45,6 +47,8 @@ class ArcAppDeferredLauncherItemController : public ash::ShelfItemDelegate {
   // The flags of the event that caused the ARC app to be activated. These will
   // be propagated to the launch event once the app is actually launched.
   const int event_flags_;
+
+  const int64_t display_id_;
 
   base::WeakPtr<ArcAppDeferredLauncherController> host_;
   const base::Time start_time_;

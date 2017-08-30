@@ -11,6 +11,8 @@
 #include "chrome/browser/ui/app_list/arc/arc_app_utils.h"
 #include "chrome/browser/ui/ash/launcher/arc_app_window_launcher_controller.h"
 #include "ui/aura/env.h"
+#include "ui/display/display.h"
+#include "ui/display/screen.h"
 #include "ui/events/event_constants.h"
 
 namespace chromeos {
@@ -23,7 +25,8 @@ ArcKioskAppLauncher::ArcKioskAppLauncher(content::BrowserContext* context,
   prefs_->AddObserver(this);
   aura::Env::GetInstance()->AddObserver(this);
   // Launching the app by app id in landscape mode and in non-touch mode.
-  arc::LaunchApp(context, app_id_, ui::EF_NONE);
+  int64_t display_id = display::Screen::GetScreen()->GetPrimaryDisplay().id();
+  arc::LaunchApp(context, app_id_, ui::EF_NONE, display_id);
 }
 
 ArcKioskAppLauncher::~ArcKioskAppLauncher() {

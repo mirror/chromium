@@ -35,7 +35,9 @@ class ArcAppDeferredLauncherController
   // Registers deferred ARC app launch. |app_id| is the app to be launched, and
   // |event_flags| describes the original event flags that triggered the app's
   // activation.
-  void RegisterDeferredLaunch(const std::string& app_id, int event_flags);
+  void RegisterDeferredLaunch(const std::string& app_id,
+                              int event_flags,
+                              int64_t display_id);
 
   // Applies spinning effect if requested app is handled by deferred controller.
   void MaybeApplySpinningEffect(const std::string& app_id,
