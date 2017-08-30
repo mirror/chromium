@@ -16,6 +16,24 @@
       "revId": "fc416f10e079e9b47fc1f15049335a53c3218830",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c449a38_c4a2f388",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/TimelineFlameChartDataProvider.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-08-30T15:54:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af05c237_eba92d96",
+      "revId": "fc416f10e079e9b47fc1f15049335a53c3218830",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
