@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38f9b573_dd27495f",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorOverlayAgent.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-30T21:08:44Z",
+      "side": 1,
+      "message": "static const int, or even use constexpr.",
+      "revId": "03f3ddcc30396f533f433c986aab866453e8070f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c9a3b22_3bae8d0b",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorOverlayAgent.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-30T21:08:44Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "03f3ddcc30396f533f433c986aab866453e8070f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
