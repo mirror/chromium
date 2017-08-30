@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "363559c7_b83650ec",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-30T19:52:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55e0dfdf_8a893f85",
+      "revId": "9f1f25bdf627d4a3f8c089d8cd7d92f1422a2e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4142bc9_7c859ceb",
         "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
         "patchSetId": 29
@@ -33,6 +51,24 @@
       "revId": "9f1f25bdf627d4a3f8c089d8cd7d92f1422a2e86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4f46f2f_a3070730",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 2110,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-30T19:52:53Z",
+      "side": 1,
+      "message": "Done.\n\n(This file was the only one without base::nullopt, and I\u0027ve updated both cases her.)",
+      "parentUuid": "f4142bc9_7c859ceb",
+      "revId": "9f1f25bdf627d4a3f8c089d8cd7d92f1422a2e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
