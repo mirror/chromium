@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a70e0359_a97e74f8",
+        "filename": "components/payments/content/payment_request.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-30T16:45:19Z",
+      "side": 1,
+      "message": "Please put these converters into their own file and add a unit test.",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 11
+      },
+      "revId": "5190f7c8e88c603356b653d9a920ee4ba242a189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45a24ff9_7c23b880",
+        "filename": "components/payments/core/payment_details_validation.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-30T16:45:19Z",
+      "side": 1,
+      "message": "Weren\u0027t there unit tests for thi? If not, we need them.",
+      "range": {
+        "startLine": 19,
+        "startChar": 5,
+        "endLine": 19,
+        "endChar": 40
+      },
+      "revId": "5190f7c8e88c603356b653d9a920ee4ba242a189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1ca3640_06e39037",
+        "filename": "components/payments/core/payment_details_validation.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-30T16:45:19Z",
+      "side": 1,
+      "message": "V",
+      "range": {
+        "startLine": 14,
+        "startChar": 5,
+        "endLine": 14,
+        "endChar": 6
+      },
+      "revId": "5190f7c8e88c603356b653d9a920ee4ba242a189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
