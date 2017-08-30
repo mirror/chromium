@@ -16,6 +16,24 @@
       "revId": "fcef610090812401c93c03110a5680d3d95b347a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cae6887_8e73bd9a",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2654,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-08-30T23:19:31Z",
+      "side": 1,
+      "message": "This affects almost every layout test which dumps the GraphicsLayer tree and in which the LayoutView doesn\u0027t have background. Previously the root LayoutView layer had no background color, and now has white background (which is the base background color).\n\nThe background_color is opaque if the document element or \u003cbody\u003e is specified an opaque background. If the background is translucent, it and the base background is blended.\n\nThe new CompositedLayerMappingTest tests cover these cases.",
+      "parentUuid": "f697b8d3_83b90896",
+      "revId": "fcef610090812401c93c03110a5680d3d95b347a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
