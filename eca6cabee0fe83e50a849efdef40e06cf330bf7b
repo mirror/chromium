@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d6e6d66_7b459a84",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 82064,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-30T04:58:36Z",
+      "side": 1,
+      "message": "optional nit: you might want to use units BooleanOverlap\nand add to enums.xml:\n\u003cenum name\u003d\"BooleanOverlap\"\u003e\n  \u003cint value\u003d\"0\" label\u003d\"No overlap\"/\u003e\n  \u003cint value\u003d\"1\" label\u003d\"Overlapped\"/\u003e\n\u003c/enum\u003e\n\nditto below",
+      "range": {
+        "startLine": 82064,
+        "startChar": 11,
+        "endLine": 82064,
+        "endChar": 18
+      },
+      "revId": "eca6cabee0fe83e50a849efdef40e06cf330bf7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
