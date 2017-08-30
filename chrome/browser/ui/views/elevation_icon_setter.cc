@@ -10,8 +10,9 @@
 #include "ui/views/controls/button/label_button.h"
 
 #if defined(OS_WIN)
-#include <windows.h>
 #include <shellapi.h>
+#include <windows.h>
+#include "base/win/scoped_com_initializer.h"
 #include "base/win/win_util.h"
 #include "ui/display/win/dpi.h"
 #include "ui/gfx/icon_util.h"
@@ -37,6 +38,7 @@ std::unique_ptr<SkBitmap> GetElevationIcon() {
   // address on startup, which will break on XP.
   GetStockIconInfo func = reinterpret_cast<GetStockIconInfo>(
       GetProcAddress(GetModuleHandle(L"shell32.dll"), "SHGetStockIconInfo"));
+  base::win::ScopedCOMInitializer com_guard;  // SHGetStockIconInfo needs COM
   // TODO(pkasting): Run on a background thread since this call spins a nested
   // message loop.
   if (FAILED((*func)(SIID_SHIELD, SHGSI_ICON | SHGSI_SMALLICON, &icon_info)))
