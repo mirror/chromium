@@ -1,4 +1,4 @@
-// Copyright 2016 The Chromium Authors. All rights reserved.
+o  // Copyright 2016 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -18,7 +18,7 @@
 #error "This file requires ARC support."
 #endif
 
-using history::BrowsingHistoryService;
+    using history::BrowsingHistoryService;
 
 #pragma mark - IOSBrowsingHistoryDriver
 
@@ -37,9 +37,11 @@ IOSBrowsingHistoryDriver::~IOSBrowsingHistoryDriver() {
 
 void IOSBrowsingHistoryDriver::OnQueryComplete(
     const std::vector<BrowsingHistoryService::HistoryEntry>& results,
-    const BrowsingHistoryService::QueryResultsInfo& query_results_info) {
+    const BrowsingHistoryService::QueryResultsInfo& query_results_info,
+    base::OnceClosure continuation_closure) {
   [delegate_ onQueryCompleteWithResults:results
-                       queryResultsInfo:query_results_info];
+                       queryResultsInfo:query_results_info
+                    continuationClosure:std::move(continuation_closure)];
 }
 
 void IOSBrowsingHistoryDriver::OnRemoveVisitsComplete() {

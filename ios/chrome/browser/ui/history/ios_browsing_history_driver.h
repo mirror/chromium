@@ -56,7 +56,8 @@ class IOSBrowsingHistoryDriver : public history::BrowsingHistoryDriver {
   void OnQueryComplete(
       const std::vector<history::BrowsingHistoryService::HistoryEntry>& results,
       const history::BrowsingHistoryService::QueryResultsInfo&
-          query_results_info) override;
+          query_results_info,
+      base::OnceClosure continuation_closure) override;
   void OnRemoveVisitsComplete() override;
   void OnRemoveVisitsFailed() override;
   void OnRemoveVisits(
