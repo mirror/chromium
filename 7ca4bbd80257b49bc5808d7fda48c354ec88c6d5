@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33759be7_16135cce",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-30T19:34:54Z",
+      "side": 1,
+      "message": "Folks, please scrutinize this. The original per-pixel approach ends up taking multiple seconds per testcase for long URLs.",
+      "revId": "7ca4bbd80257b49bc5808d7fda48c354ec88c6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cba72f40_9ce17dca",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-30T19:34:54Z",
+      "side": 1,
+      "message": "This block came up from TestMoreEliding to live with its progressive friends.  Personally, I would either:\n- Get rid of TestMoreEliding, and move its remaining cases into this test as non-progressive extra cases, or\n- Rename it to TestElisionSpecialCases",
+      "revId": "7ca4bbd80257b49bc5808d7fda48c354ec88c6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23ce80e8_b91f53b2",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-30T19:34:54Z",
+      "side": 1,
+      "message": "This TODO should be resolved via this code review.",
+      "revId": "7ca4bbd80257b49bc5808d7fda48c354ec88c6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
