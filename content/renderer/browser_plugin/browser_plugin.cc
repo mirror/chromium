@@ -224,6 +224,8 @@ void BrowserPlugin::OnGuestGone(int browser_plugin_instance_id) {
 
 void BrowserPlugin::OnGuestReady(int browser_plugin_instance_id) {
   guest_crashed_ = false;
+
+  UpdateGuestFocusState(blink::WebFocusType::kWebFocusTypeNone);
 }
 
 void BrowserPlugin::OnSetCursor(int browser_plugin_instance_id,
@@ -281,6 +283,9 @@ void BrowserPlugin::UpdateGuestFocusState(blink::WebFocusType focus_type) {
   if (!attached())
     return;
   bool should_be_focused = ShouldGuestBeFocused();
+  LOG(ERROR) << "BrowserPlugin::UpdateFocus to " << should_be_focused
+             << " for plugin id " << browser_plugin_instance_id_
+             << " type=" << focus_type;
   BrowserPluginManager::Get()->Send(new BrowserPluginHostMsg_SetFocus(
       browser_plugin_instance_id_,
       should_be_focused,
@@ -291,10 +296,17 @@ bool BrowserPlugin::ShouldGuestBeFocused() const {
   bool embedder_focused = false;
   auto* render_frame =
       RenderFrameImpl::FromRoutingID(render_frame_routing_id());
+  LOG(ERROR) << "ShouldGuestBeFocused: render_frame=" << render_frame;
   auto* render_view = static_cast<RenderViewImpl*>(
       render_frame ? render_frame->GetRenderView() : nullptr);
+  LOG(ERROR) << "ShouldGuestBeFocused: render_view=" << render_view;
   if (render_view)
     embedder_focused = render_view->has_focus();
+  else
+    LOG(ERROR) << "No renderview for frame routing id "
+               << render_frame_routing_id();
+  LOG(ERROR) << "plugin_focused_=" << plugin_focused_
+             << " embedder_focused=" << embedder_focused;
   return plugin_focused_ && embedder_focused;
 }
 

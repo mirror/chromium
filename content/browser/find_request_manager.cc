@@ -550,8 +550,10 @@ void FindRequestManager::FindInternal(const FindRequest& request) {
     // one, or the first frame with matches otherwise.
     RenderFrameHost* target_rfh =
         contents_->GetFocusedWebContents()->GetFocusedFrame();
+    LOG(ERROR) << "FindInternal original rfh=" << target_rfh;
     if (!target_rfh || !CheckFrame(target_rfh))
       target_rfh = GetInitialFrame(request.options.forward);
+    LOG(ERROR) << "FindInternal final=" << target_rfh;
 
     SendFindIPC(request, target_rfh);
     current_request_ = request;

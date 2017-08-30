@@ -5234,13 +5234,22 @@ void WebContentsImpl::EnsureOpenerProxiesExist(RenderFrameHost* source_rfh) {
 void WebContentsImpl::SetAsFocusedWebContentsIfNecessary() {
   // Only change focus if we are not currently focused.
   WebContentsImpl* old_contents = GetFocusedWebContents();
+  LOG(ERROR) << "SetAsFocused this=" << this
+             << "(parent = " << GetOuterWebContents()
+             << "), old_contents=" << old_contents << "(parent = "
+             << (old_contents ? old_contents->GetOuterWebContents() : nullptr)
+             << "), guest is " << browser_plugin_guest_.get();
   if (old_contents == this)
     return;
 
   GetOutermostWebContents()->node_.SetFocusedWebContents(this);
 
-  if (!GuestMode::IsCrossProcessFrameGuest(this) && browser_plugin_guest_)
+  if (!GuestMode::IsCrossProcessFrameGuest(this) && browser_plugin_guest_) {
+    LOG(ERROR) << "Early out 1";
+    GetOuterWebContents()->GetMainFrame()->GetRenderWidgetHost()->SetPageFocus(
+        true);
     return;
+  }
 
   // Send a page level blur to the old contents so that it displays inactive UI
   // and focus this contents to activate it.
