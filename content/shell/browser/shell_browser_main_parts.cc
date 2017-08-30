@@ -64,9 +64,11 @@ namespace {
 class ShellGeolocationDelegate : public device::GeolocationDelegate {
  public:
   explicit ShellGeolocationDelegate(ShellBrowserContext* context)
-      : context_(context) {}
+      : context_(context) {
+      }
 
   scoped_refptr<device::AccessTokenStore> CreateAccessTokenStore() final {
+        NOTREACHED() << "no one calls Shell CreateAccessTokenStore()";
     return new ShellAccessTokenStore(context_);
   }
 
@@ -184,6 +186,7 @@ int ShellBrowserMainParts::PreCreateThreads() {
 
 void ShellBrowserMainParts::PreMainMessageLoopRun() {
   net_log_.reset(new ShellNetLog("content_shell"));
+
   InitializeBrowserContexts();
   device::GeolocationProvider::SetGeolocationDelegate(
       new ShellGeolocationDelegate(browser_context()));

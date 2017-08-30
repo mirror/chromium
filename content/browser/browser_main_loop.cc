@@ -1172,6 +1172,7 @@ int BrowserMainLoop::PreMainMessageLoopRun() {
   ui::SetScreenAndroid();
 #endif
 
+
   if (parts_) {
     TRACE_EVENT0("startup",
         "BrowserMainLoop::CreateThreads:PreMainMessageLoopRun");

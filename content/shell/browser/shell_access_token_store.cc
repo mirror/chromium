@@ -17,6 +17,7 @@ ShellAccessTokenStore::ShellAccessTokenStore(
     content::ShellBrowserContext* shell_browser_context)
     : shell_browser_context_(shell_browser_context),
       system_request_context_(NULL) {
+        LOG(INFO) << " ShellAccessTokenStore::ShellAccessTokenStore";
 }
 
 ShellAccessTokenStore::~ShellAccessTokenStore() {
@@ -45,6 +46,7 @@ void ShellAccessTokenStore::RespondOnOriginatingThread(
   // we provide a dummy access_token set to avoid hitting the server.
   AccessTokenMap access_token_map;
   access_token_map[GURL()] = base::ASCIIToUTF16("chromium_content_shell");
+  LOG(INFO) << "access_token_map.size(); " << access_token_map.size();
   callback.Run(access_token_map, system_request_context_.get());
   system_request_context_ = NULL;
 }
