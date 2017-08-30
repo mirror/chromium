@@ -1,0 +1,170 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fb5d022_6db5ce15",
+        "filename": "ios/clean/chrome/browser/ui/history_popup/history_popup_coordinator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-30T04:18:50Z",
+      "side": 1,
+      "message": "if (self.started) return;",
+      "revId": "4390577035abb3e21f2f30d6f71fffe35e76c458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5618dfe_cf09444d",
+        "filename": "ios/clean/chrome/browser/ui/history_popup/history_popup_coordinator_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-30T04:18:50Z",
+      "side": 1,
+      "message": "EXPECT_NSNE(nil, ...)\nEXPECT_NSEQ(nil, ...)",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 55
+      },
+      "revId": "4390577035abb3e21f2f30d6f71fffe35e76c458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9136a9da_c9123503",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_coordinator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-30T04:18:50Z",
+      "side": 1,
+      "message": "Please add comments.",
+      "revId": "4390577035abb3e21f2f30d6f71fffe35e76c458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4927d786_3474da8b",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_coordinator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-30T04:18:50Z",
+      "side": 1,
+      "message": "browser_coordinator.h recommends: if (self.started) return;",
+      "revId": "4390577035abb3e21f2f30d6f71fffe35e76c458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79d8161a_dac3a65e",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_coordinator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-30T04:18:50Z",
+      "side": 1,
+      "message": "Wrap this with: \"if (!self.historyPopupCoordinator) {...}\"\nIf the child coordinator is stopped, it will still remain in the coordinator hierarchy. So we don\u0027t want to create and add another instance. Same in the method below.",
+      "range": {
+        "startLine": 136,
+        "startChar": 2,
+        "endLine": 147,
+        "endChar": 58
+      },
+      "revId": "4390577035abb3e21f2f30d6f71fffe35e76c458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a18e4cda_c0608191",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_coordinator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-30T04:18:50Z",
+      "side": 1,
+      "message": "It\u0027s fantastic that these were broken up into logical protocols. Since in practice there is a single provider, perhaps we can consolidate them like so:\nid\u003cTabHistoryPositioner, TabHistoryPresentation, TabHistoryUpdater\u003e tabHistoryDelegate;\n...\nhistoryPopupCoordinator.tabHistoryDelegate \u003d self.viewController;",
+      "range": {
+        "startLine": 154,
+        "startChar": 26,
+        "endLine": 156,
+        "endChar": 45
+      },
+      "revId": "4390577035abb3e21f2f30d6f71fffe35e76c458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0af06d1_41a40e0b",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_coordinator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-30T04:18:50Z",
+      "side": 1,
+      "message": "nit: DCHECK_GT",
+      "range": {
+        "startLine": 170,
+        "startChar": 9,
+        "endLine": 170,
+        "endChar": 11
+      },
+      "revId": "4390577035abb3e21f2f30d6f71fffe35e76c458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d8acc70_a5b12dbf",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-30T04:18:50Z",
+      "side": 1,
+      "message": "This is a bit too slick for me.\nhistoryButton \u003d (toolbarButton \u003d\u003d ToolbarButtonTypeBack) ? self.backButton : self.forwardButton;",
+      "range": {
+        "startLine": 417,
+        "startChar": 2,
+        "endLine": 417,
+        "endChar": 72
+      },
+      "revId": "4390577035abb3e21f2f30d6f71fffe35e76c458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
