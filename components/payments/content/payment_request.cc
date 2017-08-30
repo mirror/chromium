@@ -11,14 +11,115 @@
 #include "base/stl_util.h"
 #include "components/payments/content/can_make_payment_query_factory.h"
 #include "components/payments/content/origin_security_checker.h"
-#include "components/payments/content/payment_details_validation.h"
 #include "components/payments/content/payment_request_web_contents_manager.h"
 #include "components/payments/core/can_make_payment_query.h"
+#include "components/payments/core/payment_currency_amount.h"
+#include "components/payments/core/payment_details.h"
+#include "components/payments/core/payment_details_modifier.h"
+#include "components/payments/core/payment_details_validation.h"
+#include "components/payments/core/payment_item.h"
 #include "components/payments/core/payment_prefs.h"
+#include "components/payments/core/payment_shipping_option.h"
 #include "components/prefs/pref_service.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
+
+namespace {
+
+payments::PaymentCurrencyAmount CreatePaymentCurrencyAmount(
+    const payments::mojom::PaymentCurrencyAmountPtr& amount_entry) {
+  payments::PaymentCurrencyAmount amount;
+  amount.currency = amount_entry->currency;
+  amount.value = amount_entry->value;
+  amount.currency_system = amount_entry->currency_system;
+  return amount;
+}
+
+payments::PaymentItem CreatePaymentItem(
+    const payments::mojom::PaymentItemPtr& item_entry) {
+  payments::PaymentItem item;
+  item.label = item_entry->label;
+  if (item_entry->amount) {
+    item.amount = base::MakeUnique<payments::PaymentCurrencyAmount>(
+        CreatePaymentCurrencyAmount(item_entry->amount));
+  }
+  item.pending = item_entry->pending;
+  return item;
+}
+
+payments::PaymentMethodData CreatePaymentMethodData(
+    const payments::mojom::PaymentMethodDataPtr& method_data_entry) {
+  payments::PaymentMethodData method_data;
+  method_data.supported_methods.reserve(
+      method_data_entry->supported_methods.size());
+  for (std::string supported_method : method_data_entry->supported_methods)
+    method_data.supported_methods.push_back(supported_method);
+  method_data.data = method_data_entry->stringified_data;
+  return method_data;
+}
+
+payments::PaymentDetailsModifier CreatePaymentDetailsModifier(
+    const payments::mojom::PaymentDetailsModifierPtr& modifier_entry) {
+  payments::PaymentDetailsModifier modifier;
+  if (modifier_entry->total) {
+    modifier.total = base::MakeUnique<payments::PaymentItem>(
+        CreatePaymentItem(modifier_entry->total));
+  }
+  modifier.additional_display_items.reserve(
+      modifier_entry->additional_display_items.size());
+  for (const payments::mojom::PaymentItemPtr& additional_display_item :
+       modifier_entry->additional_display_items) {
+    modifier.additional_display_items.push_back(
+        CreatePaymentItem(additional_display_item));
+  }
+  if (modifier_entry->method_data)
+    modifier.method_data = CreatePaymentMethodData(modifier_entry->method_data);
+  return modifier;
+}
+
+payments::PaymentShippingOption CreatePaymentShippingOption(
+    const payments::mojom::PaymentShippingOptionPtr& option_entry) {
+  payments::PaymentShippingOption option;
+  option.id = option_entry->id;
+  option.label = option_entry->label;
+  if (option_entry->amount) {
+    option.amount = base::MakeUnique<payments::PaymentCurrencyAmount>(
+        CreatePaymentCurrencyAmount(option_entry->amount));
+  }
+  option.selected = option_entry->selected;
+  return option;
+}
+
+payments::PaymentDetails CreatePaymentDetails(
+    const payments::mojom::PaymentDetailsPtr& details_entry) {
+  payments::PaymentDetails details;
+  if (details_entry->total) {
+    details.total = base::MakeUnique<payments::PaymentItem>(
+        CreatePaymentItem(details_entry->total));
+  }
+  details.display_items.reserve(details_entry->display_items.size());
+  for (const payments::mojom::PaymentItemPtr& display_item :
+       details_entry->display_items) {
+    details.display_items.push_back(CreatePaymentItem(display_item));
+  }
+  details.shipping_options.reserve(details_entry->shipping_options.size());
+  for (const payments::mojom::PaymentShippingOptionPtr& shipping_option :
+       details_entry->shipping_options) {
+    details.shipping_options.push_back(
+        CreatePaymentShippingOption(shipping_option));
+  }
+  details.modifiers.reserve(details_entry->modifiers.size());
+  for (const payments::mojom::PaymentDetailsModifierPtr& modifier :
+       details_entry->modifiers) {
+    details.modifiers.push_back(CreatePaymentDetailsModifier(modifier));
+  }
+  details.error = details_entry->error;
+  details.id = details_entry->id.value();
+  return details;
+}
+
+}  // namespace
 
 namespace payments {
 
@@ -93,7 +194,7 @@ void PaymentRequest::Init(mojom::PaymentRequestClientPtr client,
   }
 
   std::string error;
-  if (!validatePaymentDetails(details, &error)) {
+  if (!validatePaymentDetails(CreatePaymentDetails(details), &error)) {
     LOG(ERROR) << error;
     OnConnectionTerminated();
     return;
@@ -171,7 +272,7 @@ void PaymentRequest::Show() {
 
 void PaymentRequest::UpdateWith(mojom::PaymentDetailsPtr details) {
   std::string error;
-  if (!validatePaymentDetails(details, &error)) {
+  if (!validatePaymentDetails(CreatePaymentDetails(details), &error)) {
     LOG(ERROR) << error;
     OnConnectionTerminated();
     return;
