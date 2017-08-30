@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "878e6aa9_c8e87c08",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/context_menu/context_menu_mediator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-30T18:09:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25e84992_71636cfa",
+      "range": {
+        "startLine": 76,
+        "startChar": 7,
+        "endLine": 76,
+        "endChar": 11
+      },
+      "revId": "311896a0d281f21fa20450923ef82e8d95cf6c22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7bd9cd26_4395ddb0",
         "filename": "ios/clean/chrome/browser/ui/dialogs/context_menu/context_menu_mediator.mm",
         "patchSetId": 2
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "32855e62_c2a23b93",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/context_menu/context_menu_mediator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-30T18:09:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bd9cd26_4395ddb0",
+      "revId": "311896a0d281f21fa20450923ef82e8d95cf6c22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26488906_de1e2899",
         "filename": "ios/clean/chrome/browser/ui/dialogs/context_menu/context_menu_mediator.mm",
         "patchSetId": 2
@@ -56,6 +98,24 @@
       "revId": "311896a0d281f21fa20450923ef82e8d95cf6c22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee1ccca7_0b9acd8d",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/context_menu/context_menu_mediator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-30T18:09:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26488906_de1e2899",
+      "revId": "311896a0d281f21fa20450923ef82e8d95cf6c22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -106,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "a28f5527_908f95dd",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/context_menu/context_menu_overlay_coordinator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-30T18:09:38Z",
+      "side": 1,
+      "message": "Done.  I\u0027ve named everything in terms of ContextMenuDialog[Coordinator/Mediator/Request] to match the pattern for other dialogs.",
+      "parentUuid": "60ef3ecd_fd3a42e4",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 25
+      },
+      "revId": "311896a0d281f21fa20450923ef82e8d95cf6c22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1396ad1_da1fbc9d",
         "filename": "ios/clean/chrome/browser/ui/dialogs/context_menu/context_menu_overlay_coordinator.h",
         "patchSetId": 2
@@ -117,6 +201,30 @@
       "writtenOn": "2017-08-30T08:21:46Z",
       "side": 1,
       "message": "ditto",
+      "range": {
+        "startLine": 15,
+        "startChar": 3,
+        "endLine": 15,
+        "endChar": 7
+      },
+      "revId": "311896a0d281f21fa20450923ef82e8d95cf6c22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7077b35_d755e81c",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/context_menu/context_menu_overlay_coordinator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-30T18:09:38Z",
+      "side": 1,
+      "message": "not needed anymore.",
+      "parentUuid": "b1396ad1_da1fbc9d",
       "range": {
         "startLine": 15,
         "startChar": 3,
