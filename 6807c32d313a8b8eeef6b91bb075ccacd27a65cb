@@ -69,6 +69,30 @@
       "revId": "6807c32d313a8b8eeef6b91bb075ccacd27a65cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fb6a246_4c9b3c08",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_coordinator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-30T14:17:34Z",
+      "side": 1,
+      "message": "No, you can\u0027t! _weakSelf inside the block will cause the block to retain |self|.",
+      "parentUuid": "62695b16_4b804260",
+      "range": {
+        "startLine": 112,
+        "startChar": 2,
+        "endLine": 112,
+        "endChar": 61
+      },
+      "revId": "6807c32d313a8b8eeef6b91bb075ccacd27a65cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
