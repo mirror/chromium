@@ -16,6 +16,23 @@
       "revId": "efaec923ccc515267929ddbe9ecbbf93ac5e363c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44e39109_fe69f2d8",
+        "filename": "ios/chrome/test/app/password_test_util.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-30T16:51:44Z",
+      "side": 1,
+      "message": "#if !defined(__has_feature) || !__has_feature(objc_arc)\n#error \"This file requires ARC support.\"\n#endif",
+      "revId": "efaec923ccc515267929ddbe9ecbbf93ac5e363c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
