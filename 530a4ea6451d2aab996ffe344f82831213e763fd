@@ -42,6 +42,166 @@
     },
     {
       "key": {
+        "uuid": "ab0f9118_a49609d4",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-30T17:29:03Z",
+      "side": 1,
+      "message": "Can this be constexpr?",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 5
+      },
+      "revId": "530a4ea6451d2aab996ffe344f82831213e763fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e53c959_c0d328c1",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-30T17:29:03Z",
+      "side": 1,
+      "message": "Could you add a comment on why 15s is chosen?",
+      "revId": "530a4ea6451d2aab996ffe344f82831213e763fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57327992_3a9c5f39",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-30T17:29:03Z",
+      "side": 1,
+      "message": "- 0 means no jitter, not 50%?\n- agree with previous comment that some jitter would be good in situations where we open channels to devices around the same time (initial mdns event, or network change)",
+      "revId": "530a4ea6451d2aab996ffe344f82831213e763fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb9e5401_67cb341a",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-30T17:29:03Z",
+      "side": 1,
+      "message": "Does this mean we no longer track the known number of devices? Please add a comment to clarify, or maybe add back some way to compute number of known (not necessarily connected) devices?",
+      "range": {
+        "startLine": 148,
+        "startChar": 61,
+        "endLine": 148,
+        "endChar": 0
+      },
+      "revId": "530a4ea6451d2aab996ffe344f82831213e763fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c021c38_1d2661ed",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-30T17:29:03Z",
+      "side": 1,
+      "message": "Why this is a PostTask?",
+      "range": {
+        "startLine": 173,
+        "startChar": 25,
+        "endLine": 173,
+        "endChar": 0
+      },
+      "revId": "530a4ea6451d2aab996ffe344f82831213e763fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cae9ba1_0c0a9623",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-30T17:29:03Z",
+      "side": 1,
+      "message": "IIRC, this is to handle a channel error that occurred after a success open, right? Why do we need to call InformOfRequest(false) here? (it seems this will only allow N-1 attempts as opposed to N normally)?",
+      "revId": "530a4ea6451d2aab996ffe344f82831213e763fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77ed255b_02dca3df",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-30T17:29:03Z",
+      "side": 1,
+      "message": "- Wouldn\u0027t we need to keep the pending_for_open_ip_endpoints_ entry around if retrying?\n- Do we have checks to ensure we don\u0027t call OpenChannel for sinks that already have a channel open?",
+      "revId": "530a4ea6451d2aab996ffe344f82831213e763fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07a5a305_2890427d",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-30T17:29:03Z",
+      "side": 1,
+      "message": "nit: place this before |socket|.",
+      "range": {
+        "startLine": 119,
+        "startChar": 79,
+        "endLine": 119,
+        "endChar": 0
+      },
+      "revId": "530a4ea6451d2aab996ffe344f82831213e763fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9a6323d_e5c14ba6",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_unittest.cc",
         "patchSetId": 3
