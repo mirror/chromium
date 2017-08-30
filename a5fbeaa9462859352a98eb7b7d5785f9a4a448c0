@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "ab18941f_58c85ee9",
+        "filename": "components/drive/drive.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-30T09:32:44Z",
+      "side": 1,
+      "message": "BTW I found Chrome\u0027s current protoc is new enough to support \"reserved\" keyword:\n\nhttps://cs.chromium.org/chromium/src/google_apis/gcm/protocol/mcs.proto?type\u003dcs\u0026q\u003dfile:proto+reserved\u0026sq\u003dpackage:chromium\u0026l\u003d97\n\nI\u0027m also fine with this.",
+      "parentUuid": "64a4e5c0_1e62633c",
+      "revId": "a5fbeaa9462859352a98eb7b7d5785f9a4a448c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51198aa1_b3a8e720",
         "filename": "components/drive/resource_metadata_storage.cc",
         "patchSetId": 1
