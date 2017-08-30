@@ -55,6 +55,10 @@ namespace url {
 class Origin;
 }
 
+namespace service_manager {
+class Connector;
+}
+
 namespace content {
 
 class AudioInputDeviceManager;
@@ -283,7 +287,8 @@ class CONTENT_EXPORT MediaStreamManager
   using DeviceRequests = std::list<LabeledDeviceRequest>;
 
   void InitializeMaybeAsync(
-      std::unique_ptr<VideoCaptureProvider> video_capture_provider);
+      std::unique_ptr<VideoCaptureProvider> video_capture_provider,
+      std::unique_ptr<service_manager::Connector> connector);
 
   // |output_parameters| contains real values only if the request requires it.
   void HandleAccessRequestResponse(

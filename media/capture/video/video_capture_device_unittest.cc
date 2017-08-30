@@ -93,6 +93,9 @@ using ::testing::SaveArg;
 namespace media {
 namespace {
 
+static const auto kIgnoreLogMessageCB =
+    base::BindRepeating([](const std::string&) {});
+
 ACTION_P(RunClosure, closure) {
   closure.Run();
 }
@@ -276,11 +279,11 @@ class VideoCaptureDeviceTest : public testing::TestWithParam<gfx::Size> {
         video_capture_device_factory_(VideoCaptureDeviceFactory::CreateFactory(
             base::ThreadTaskRunnerHandle::Get(),
 #if defined(OS_CHROMEOS)
-            local_gpu_memory_buffer_manager_.get()
+            local_gpu_memory_buffer_manager_.get(),
 #else
-            nullptr
+            nullptr,
 #endif
-                )) {
+            kIgnoreLogMessageCB)) {
   }
 
   void SetUp() override {

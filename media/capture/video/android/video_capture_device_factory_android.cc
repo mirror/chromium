@@ -145,7 +145,8 @@ bool VideoCaptureDeviceFactoryAndroid::IsLegacyOrDeprecatedDevice(
 VideoCaptureDeviceFactory*
 VideoCaptureDeviceFactory::CreateVideoCaptureDeviceFactory(
     scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner,
-    gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager) {
+    gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
+    base::RepeatingCallback<void(const std::string&)> emit_log_message_cb) {
   return new VideoCaptureDeviceFactoryAndroid();
 }
 

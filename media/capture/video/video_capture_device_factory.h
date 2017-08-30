@@ -29,7 +29,8 @@ class CAPTURE_EXPORT VideoCaptureDeviceFactory {
  public:
   static std::unique_ptr<VideoCaptureDeviceFactory> CreateFactory(
       scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner,
-      gpu::GpuMemoryBufferManager* gpu_buffer_manager);
+      gpu::GpuMemoryBufferManager* gpu_buffer_manager,
+      base::RepeatingCallback<void(const std::string&)> emit_log_message_cb);
 
   VideoCaptureDeviceFactory();
   virtual ~VideoCaptureDeviceFactory();
@@ -59,7 +60,8 @@ class CAPTURE_EXPORT VideoCaptureDeviceFactory {
  private:
   static VideoCaptureDeviceFactory* CreateVideoCaptureDeviceFactory(
       scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner,
-      gpu::GpuMemoryBufferManager* gpu_buffer_manager);
+      gpu::GpuMemoryBufferManager* gpu_buffer_manager,
+      base::RepeatingCallback<void(const std::string&)> emit_log_message_cb);
 
   DISALLOW_COPY_AND_ASSIGN(VideoCaptureDeviceFactory);
 };
