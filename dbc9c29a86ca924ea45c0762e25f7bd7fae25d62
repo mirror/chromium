@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "2a18ab7b_c9ba1220",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/LogoDelegateImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-30T16:26:08Z",
+      "side": 1,
+      "message": "I\u0027m switching this one from SparseSlowly to Enumerated, because:\n- A SparseSlowly histogram with 2 possible values is just silly,\n- it\u0027s already declared as an enum histogram in histograms.xml, and\n- it\u0027s already recorded with UMA_HISTOGRAM_ENUMERATION on iOS.\n\nI *think* this should be safe, can you confirm?",
+      "range": {
+        "startLine": 103,
+        "startChar": 77,
+        "endLine": 103,
+        "endChar": 0
+      },
+      "revId": "dbc9c29a86ca924ea45c0762e25f7bd7fae25d62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "97d3e92d_f472c76e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/LogoDelegateImpl.java",
         "patchSetId": 1
