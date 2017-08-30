@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2e79c3c3_732a39e2",
+        "filename": "chrome/browser/profiling_host/background_profiling_triggers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1145704
+      },
+      "writtenOn": "2017-08-30T20:57:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a840e36a_58338055",
+      "revId": "4b033c6b67528a6f7aa475ae3800abf900cb4ea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49eb17d8_b450b9fa",
         "filename": "chrome/browser/profiling_host/background_profiling_triggers.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c0db2904_63dd59b0",
+        "filename": "chrome/browser/profiling_host/background_profiling_triggers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1145704
+      },
+      "writtenOn": "2017-08-30T20:57:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49eb17d8_b450b9fa",
+      "revId": "4b033c6b67528a6f7aa475ae3800abf900cb4ea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9bd3f157_d6dd2dde",
         "filename": "chrome/browser/profiling_host/background_profiling_triggers.cc",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-30T20:04:27Z",
       "side": 1,
       "message": "I wouldn\u0027t bother with Renderer, since the reports aren\u0027t actionable now anyways, any we want people to run --memlog\u003dbrowser",
+      "revId": "4b033c6b67528a6f7aa475ae3800abf900cb4ea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d570c25_c2321ba0",
+        "filename": "chrome/browser/profiling_host/background_profiling_triggers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1145704
+      },
+      "writtenOn": "2017-08-30T20:57:07Z",
+      "side": 1,
+      "message": "yes for the users.\nBut, I\u0027m running local tests on my computers, and these ones are running --memlog\u003dall\nand I would like to see these reports uploaded.",
+      "parentUuid": "9bd3f157_d6dd2dde",
       "revId": "4b033c6b67528a6f7aa475ae3800abf900cb4ea5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "36699e6f_fc300f1e",
+        "filename": "chrome/browser/profiling_host/background_profiling_triggers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1145704
+      },
+      "writtenOn": "2017-08-30T20:57:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "095cba7b_534c2299",
+      "revId": "4b033c6b67528a6f7aa475ae3800abf900cb4ea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c31017b7_5c426aa2",
         "filename": "chrome/browser/profiling_host/background_profiling_triggers.cc",
         "patchSetId": 3
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "7d95f36b_2f9e14ef",
+        "filename": "chrome/browser/profiling_host/background_profiling_triggers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1145704
+      },
+      "writtenOn": "2017-08-30T20:57:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c31017b7_5c426aa2",
+      "revId": "4b033c6b67528a6f7aa475ae3800abf900cb4ea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "075c018d_367159ae",
         "filename": "chrome/browser/profiling_host/background_profiling_triggers.cc",
         "patchSetId": 3
@@ -98,6 +188,24 @@
       "writtenOn": "2017-08-30T20:04:27Z",
       "side": 1,
       "message": "maybe we hsould have a StartProfiling() method that gets called by PPH::EnsureStart, and we can move the check out there? Otherwise we\u0027re implicitly relying on the assumption that we\u0027ll only start profiling in the right modes.",
+      "revId": "4b033c6b67528a6f7aa475ae3800abf900cb4ea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f802365_28fa7f4a",
+        "filename": "chrome/browser/profiling_host/background_profiling_triggers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1145704
+      },
+      "writtenOn": "2017-08-30T20:57:07Z",
+      "side": 1,
+      "message": "I don\u0027t see why this is useful.\nThe PPH won\u0027t exists if the mode is None.\n\nAnyway, I added a more explicit test, which make that class less dependant of PPH.",
+      "parentUuid": "075c018d_367159ae",
       "revId": "4b033c6b67528a6f7aa475ae3800abf900cb4ea5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "7987ba1d_2452a564",
+        "filename": "chrome/browser/profiling_host/background_profiling_triggers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1145704
+      },
+      "writtenOn": "2017-08-30T20:57:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14e153c3_f1876626",
+      "revId": "4b033c6b67528a6f7aa475ae3800abf900cb4ea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44942c1c_28e5156d",
         "filename": "chrome/browser/profiling_host/background_profiling_triggers.cc",
         "patchSetId": 3
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "3600562b_07bc6a44",
+        "filename": "chrome/browser/profiling_host/background_profiling_triggers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1145704
+      },
+      "writtenOn": "2017-08-30T20:57:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44942c1c_28e5156d",
+      "revId": "4b033c6b67528a6f7aa475ae3800abf900cb4ea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b17d6dd_24db626b",
         "filename": "chrome/browser/profiling_host/background_profiling_triggers.h",
         "patchSetId": 3
@@ -152,6 +296,24 @@
       "revId": "4b033c6b67528a6f7aa475ae3800abf900cb4ea5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b54d6478_8f1dab53",
+        "filename": "chrome/browser/profiling_host/background_profiling_triggers.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1145704
+      },
+      "writtenOn": "2017-08-30T20:57:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b17d6dd_24db626b",
+      "revId": "4b033c6b67528a6f7aa475ae3800abf900cb4ea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
