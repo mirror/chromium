@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1556ec74_3298ad87",
+        "filename": "ui/ozone/platform/drm/ozone_platform_gbm.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1000985
+      },
+      "writtenOn": "2017-08-30T00:13:26Z",
+      "side": 1,
+      "message": "Any reason to use rjk and rjkroege interchangeably?\n\nAlso, nit: \"fold\"",
+      "range": {
+        "startLine": 241,
+        "startChar": 12,
+        "endLine": 241,
+        "endChar": 15
+      },
+      "revId": "36050ee169ae3574c7ab33da069e7a16e56f8d98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
