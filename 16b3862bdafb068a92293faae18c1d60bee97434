@@ -107,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "f804bb95_d33cec9c",
+        "filename": "android_webview/glue/java/src/com/android/webview/chromium/Converters.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1239716
+      },
+      "writtenOn": "2017-08-30T23:40:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a3dcd74_5611c854",
+      "range": {
+        "startLine": 13,
+        "startChar": 70,
+        "endLine": 13,
+        "endChar": 78
+      },
+      "revId": "16b3862bdafb068a92293faae18c1d60bee97434",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b64bcad_c3a2e129",
         "filename": "android_webview/glue/java/src/com/android/webview/chromium/Converters.java",
         "patchSetId": 1
@@ -203,6 +227,24 @@
       "revId": "16b3862bdafb068a92293faae18c1d60bee97434",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40348f72_a5afbb23",
+        "filename": "android_webview/glue/java/src/com/android/webview/chromium/Converters.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1239716
+      },
+      "writtenOn": "2017-08-30T23:40:52Z",
+      "side": 1,
+      "message": "Done. I removed the unused converters, and made fromAwMessageLevel private.",
+      "parentUuid": "19615c5d_b3501e85",
+      "revId": "16b3862bdafb068a92293faae18c1d60bee97434",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
