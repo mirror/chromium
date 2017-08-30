@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a873dcc_d4861dae",
+        "filename": "chrome/browser/android/ntp/content_suggestions_notifier_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-08-30T17:17:30Z",
+      "side": 1,
+      "message": "I understand there is no longer a user-toggle in O to disable this, but are there any other code paths that end up here? eg a feature kill switch? If there are then you might want to keep the unregistration to clean up the channel from settings. (I will be doing something similar for site notification channels because we\u0027re keeping the feature flag in but enabled as default for one release as a kill switch).",
+      "revId": "af0c4af89cbee1094466e52ca8efcc5625bf9b6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
