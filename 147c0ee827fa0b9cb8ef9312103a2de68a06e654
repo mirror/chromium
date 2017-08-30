@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15b872d0_f33cb719",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/list_container.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-08-30T06:11:42Z",
+      "side": 1,
+      "message": "When the view is in Grid mode, we should not focus the table.\n\nI don\u0027t think this is the right place to focus the list.\nIs there a way to do it by listening events on the file table header?",
+      "revId": "147c0ee827fa0b9cb8ef9312103a2de68a06e654",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
