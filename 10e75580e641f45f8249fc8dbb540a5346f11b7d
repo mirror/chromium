@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65d7d39c_3f152800",
+        "filename": "third_party/WebKit/Source/platform/scheduler/util/state_tracer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-08-30T10:30:21Z",
+      "side": 1,
+      "message": "Add braces please.",
+      "range": {
+        "startLine": 48,
+        "startChar": 17,
+        "endLine": 48,
+        "endChar": 18
+      },
+      "revId": "10e75580e641f45f8249fc8dbb540a5346f11b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "477de9fc_07316d42",
+        "filename": "third_party/WebKit/Source/platform/scheduler/util/state_tracer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-08-30T10:30:21Z",
+      "side": 1,
+      "message": "This should be a const unsigned char* -- the enabledness is checked by dereferencing the pointer. See https://cs.chromium.org/chromium/src/base/trace_event/trace_event.h?rcl\u003dbdc9d1e7b3ee463c73a903a56273102d9b02a41a\u0026l\u003d82",
+      "range": {
+        "startLine": 65,
+        "startChar": 2,
+        "endLine": 65,
+        "endChar": 6
+      },
+      "revId": "10e75580e641f45f8249fc8dbb540a5346f11b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
