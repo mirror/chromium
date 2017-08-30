@@ -26,6 +26,7 @@
 
 #include "core/CSSPropertyNames.h"
 #include "core/HTMLNames.h"
+#include "core/frame/Deprecation.h"
 #include "core/frame/UseCounter.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/html/HTMLDocument.h"
@@ -179,13 +180,24 @@ void HTMLIFrameElement::ParseAttribute(
       allow_ = value;
       Vector<String> messages;
       UpdateContainerPolicy(&messages);
-      UseCounter::Count(GetDocument(),
-                        WebFeature::kFeaturePolicyAllowAttribute);
+      bool old_syntax = false;
       if (!messages.IsEmpty()) {
         for (const String& message : messages) {
+          // Check if message = "The old syntax (allow="feature1 feature2
+          // feature3 ...) will soon be deprecated.
+          if (message.Contains("old syntax"))
+            old_syntax = true;
           GetDocument().AddConsoleMessage(ConsoleMessage::Create(
               kOtherMessageSource, kWarningMessageLevel, message));
         }
+      }
+
+      if (old_syntax) {
+        Deprecation::CountDeprecation(
+            GetDocument(), WebFeature::kFeaturePolicyAllowAttributeDeprecate);
+      } else {
+        UseCounter::Count(GetDocument(),
+                          WebFeature::kFeaturePolicyAllowAttribute);
       }
     }
   } else {
