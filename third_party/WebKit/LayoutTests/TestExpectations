@@ -3623,3 +3623,4 @@ crbug.com/v8/6448 [ Debug ] external/wpt/hr-time/window-worker-time-origin.html 
 crbug.com/669329 inspector/tracing/timeline-js/timeline-runtime-stats.html [ Pass Failure Crash ]
 crbug.com/669329 virtual/threaded/inspector/tracing/timeline-js/timeline-runtime-stats.html [ Pass Failure Crash ]
 
+crbug.com/760405 [ Debug ] shadow-dom/crashes/css-focus-recalc.html [ Crash ]
