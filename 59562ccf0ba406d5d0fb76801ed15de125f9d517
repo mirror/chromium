@@ -16,6 +16,24 @@
       "revId": "59562ccf0ba406d5d0fb76801ed15de125f9d517",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0b6061e_d298db02",
+        "filename": "content/browser/storage_partition_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-30T20:58:37Z",
+      "side": 1,
+      "message": "Oh, thanks for pointing that out! I think it will end up calling into the same code, so I don\u0027t think we will see difference in behavior, though I think rockot@ will be the ultimate authority on that.\n\nFrom code correctness perspective, it might make sense to change this to call the bindings_ version of ReportBadMessage.",
+      "parentUuid": "8da3a634_748926ce",
+      "revId": "59562ccf0ba406d5d0fb76801ed15de125f9d517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
