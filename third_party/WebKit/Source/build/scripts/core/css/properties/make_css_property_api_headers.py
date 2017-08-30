@@ -63,6 +63,7 @@ class CSSPropertyAPIHeadersWriter(CSSPropertyAPIWriter):
                 'is_repeated': True if property_['separator'] else False,
                 'is_descriptor': property_['is_descriptor'],
                 'supports_percentage': 'Percent' in property_['typedom_types'],
+                'is_property': property_['is_property'],
             }
         return generate_property_api_h
 
