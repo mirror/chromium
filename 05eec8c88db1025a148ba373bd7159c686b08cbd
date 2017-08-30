@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "86fc9030_552457ae",
+        "filename": "third_party/WebKit/Source/platform/exported/WebHTTPHeaderMap.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-08-30T13:28:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c060ae6_87067897",
+      "revId": "05eec8c88db1025a148ba373bd7159c686b08cbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "766ba50f_3ca5ca85",
         "filename": "third_party/WebKit/Source/platform/exported/WebHTTPHeaderMap.cpp",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "05eec8c88db1025a148ba373bd7159c686b08cbd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e465f1d_88669f26",
+        "filename": "third_party/WebKit/Source/platform/exported/WebHTTPHeaderMap.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-08-30T13:28:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "766ba50f_3ca5ca85",
+      "revId": "05eec8c88db1025a148ba373bd7159c686b08cbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4f9a8c28_e4767e4a",
+        "filename": "third_party/WebKit/Source/platform/exported/WebHTTPHeaderMap.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-08-30T13:28:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "daff5e32_c76ae3f3",
+      "revId": "05eec8c88db1025a148ba373bd7159c686b08cbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4575a2aa_429d6b72",
         "filename": "third_party/WebKit/Source/platform/exported/WebHTTPHeaderMap.cpp",
         "patchSetId": 11
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "b8c8fbc7_65e4aafc",
+        "filename": "third_party/WebKit/Source/platform/exported/WebHTTPHeaderMap.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-08-30T13:28:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4575a2aa_429d6b72",
+      "revId": "05eec8c88db1025a148ba373bd7159c686b08cbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "139f3b2c_715b1636",
         "filename": "third_party/WebKit/public/platform/WebHTTPHeaderMap.h",
         "patchSetId": 11
@@ -81,6 +153,24 @@
       "writtenOn": "2017-08-30T12:48:28Z",
       "side": 1,
       "message": "nit: the comment\u0027s not needed.\n\nbtw you can also directly store std::unique_ptr\u003cHTTPHeaderMap\u003e here with forward declaration, then you don\u0027t need this wrapper class.",
+      "revId": "05eec8c88db1025a148ba373bd7159c686b08cbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6dd85e9_b00b5813",
+        "filename": "third_party/WebKit/public/platform/WebHTTPHeaderMap.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-08-30T13:28:37Z",
+      "side": 1,
+      "message": "Removed the comment.\n\nRegarding std::unique_ptr\u003cHTTPHeaderMap\u003e, I think DISALLOW_NEW in HTTPHeaderMap prevents me from creating an instance on heap which I think I would need?",
+      "parentUuid": "139f3b2c_715b1636",
       "revId": "05eec8c88db1025a148ba373bd7159c686b08cbd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
