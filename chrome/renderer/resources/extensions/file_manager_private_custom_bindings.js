@@ -208,10 +208,12 @@ binding.registerCustomHook(function(bindingsAPI) {
 
   apiFunctions.setHandleRequest('getRecentFiles', function(
         restriction, callback) {
-    fileManagerPrivateInternal.getRecentFiles(restriction, function(
-          entryDescriptions) {
-      callback(entryDescriptions.map(function(description) {
-        return GetExternalFileEntry(description);
+    fileManagerPrivateInternal.getRecentFiles(restriction, function(files) {
+      callback(files.map(function(file) {
+        return {
+          'entry': GetExternalFileEntry(file.entry),
+          'modificationByMeTime': new Date(file.modificationByMeTime),
+        };
       }));
     });
   });

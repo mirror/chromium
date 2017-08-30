@@ -300,6 +300,7 @@ class FileManagerPrivateInternalGetRecentFilesFunction
       api::file_manager_private::SourceRestriction restriction,
       const std::vector<chromeos::RecentFile>& files);
   void OnConvertFileDefinitionListToEntryDefinitionList(
+      const std::vector<chromeos::RecentFile>& files,
       std::unique_ptr<file_manager::util::EntryDefinitionList>
           entry_definition_list);
 
