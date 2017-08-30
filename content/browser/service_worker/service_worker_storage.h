@@ -197,6 +197,10 @@ class CONTENT_EXPORT ServiceWorkerStorage
   void ClearUserData(int64_t registration_id,
                      const std::vector<std::string>& keys,
                      const StatusCallback& callback);
+  // Responds OK if all are successfully deleted or none found in the database.
+  void ClearUserDataByKeyPrefixes(int64_t registration_id,
+                                  const std::vector<std::string>& key_prefixes,
+                                  const StatusCallback& callback);
   // Responds with all registrations that have user data with a particular key,
   // as well as that user data.
   void GetUserDataForAllRegistrations(

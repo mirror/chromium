@@ -976,6 +976,59 @@ ServiceWorkerDatabase::Status ServiceWorkerDatabase::DeleteUserData(
 }
 
 ServiceWorkerDatabase::Status
+ServiceWorkerDatabase::DeleteUserDataByKeyPrefixes(
+    int64_t registration_id,
+    const std::vector<std::string>& key_prefixes) {
+  // Example |key_prefixes| is {"abc", "xyz"}.
+  DCHECK(sequence_checker_.CalledOnValidSequence());
+  DCHECK_NE(kInvalidServiceWorkerRegistrationId, registration_id);
+
+  Status status = LazyOpen(false);
+  if (IsNewOrNonexistentDatabase(status))
+    return STATUS_OK;
+  if (status != STATUS_OK)
+    return status;
+
+  // Example |user_data_key_without_key_prefix| is "REG_USER_DATA:123456\x00".
+  std::string user_data_key_without_key_prefix =
+      CreateUserDataKeyPrefix(registration_id);
+
+  leveldb::WriteBatch batch;
+
+  for (const std::string& key_prefix : key_prefixes) {
+    // Example |prefix| is "REG_USER_DATA:123456\x00abc".
+    std::string prefix = CreateUserDataKey(registration_id, key_prefix);
+    std::unique_ptr<leveldb::Iterator> itr(
+        db_->NewIterator(leveldb::ReadOptions()));
+    for (itr->Seek(prefix); itr->Valid(); itr->Next()) {
+      status = LevelDBStatusToStatus(itr->status());
+      if (status != STATUS_OK)
+        return status;
+
+      // Example |itr->key()| is "REG_USER_DATA:123456\x00abcdef".
+      if (!itr->key().starts_with(prefix)) {
+        // |itr| reached the end of the range of keys that start with |prefix|.
+        break;
+      }
+
+      // Example |user_data_name| is "abcdef".
+      std::string user_data_name;
+      if (!RemovePrefix(itr->key().ToString(), user_data_key_without_key_prefix,
+                        &user_data_name)) {
+        NOTREACHED() << "The starts_with above already matched a longer prefix";
+        return STATUS_ERROR_FAILED;
+      }
+
+      batch.Delete(itr->key());
+      // Example |CreateHasUserDataKey| is "REG_HAS_USER_DATA:abcdef\x00123456".
+      batch.Delete(CreateHasUserDataKey(registration_id, user_data_name));
+    }
+  }
+
+  return WriteBatch(&batch);
+}
+
+ServiceWorkerDatabase::Status
 ServiceWorkerDatabase::ReadUserDataForAllRegistrations(
     const std::string& user_data_name,
     std::vector<std::pair<int64_t, std::string>>* user_data) {
