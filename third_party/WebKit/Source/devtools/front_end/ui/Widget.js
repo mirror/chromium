@@ -82,17 +82,24 @@ UI.Widget = class extends Common.Object {
 
   /**
    * @param {?Node} node
+   * @return {?UI.Widget} widget
    */
-  static focusWidgetForNode(node) {
+  static widgetForNode(node) {
     while (node) {
       if (node.__widget)
-        break;
+        return node.__widget;
       node = node.parentNodeOrShadowHost();
     }
-    if (!node)
-      return;
+    return null;
+  }
 
-    var widget = node.__widget;
+  /**
+   * @param {?Node} node
+   */
+  static focusWidgetForNode(node) {
+    var widget = UI.Widget.widgetForNode(node);
+    if (!widget)
+      return;
     while (widget._parentWidget) {
       widget._parentWidget._defaultFocusedChild = widget;
       widget = widget._parentWidget;

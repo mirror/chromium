@@ -41,6 +41,38 @@ Resources.ServiceWorkersView = class extends UI.VBox {
   }
 
   /**
+   * @param {!SDK.ServiceWorkerRegistration} registrationA
+   * @param {!SDK.ServiceWorkerRegistration} registrationB
+   * @return {number}
+   */
+  static _compareScopeURLs(registrationA, registrationB) {
+    function trimProtocolAndWWW(url) {
+      return url.trimURL().replace(/^www\./, '');
+    }
+    var result = trimProtocolAndWWW(registrationA.scopeURL).compareTo(trimProtocolAndWWW(registrationB.scopeURL));
+    if (result)
+      return result;
+    return registrationA.scopeURL.compareTo(registrationB.scopeURL);
+  }
+
+  /**
+   * @param {!Set<string>} securityOrigins
+   * @param {!SDK.ServiceWorkerRegistration} registrationA
+   * @param {!SDK.ServiceWorkerRegistration} registrationB
+   * @return {number}
+   */
+  static _compareRegistrations(securityOrigins, registrationA, registrationB) {
+    // with current security origin will come first
+    var result = securityOrigins.has(registrationB.securityOrigin) - securityOrigins.has(registrationA.securityOrigin);
+    if (result)
+      return result;
+    result = Resources.ServiceWorkersView._compareScopeURLs(registrationA, registrationB);
+    if (result)
+      return result;
+    return registrationA.id.compareTo(registrationB.id);
+  }
+
+  /**
    * @override
    * @param {!SDK.ServiceWorkerManager} serviceWorkerManager
    */
@@ -61,9 +93,9 @@ Resources.ServiceWorkersView = class extends UI.VBox {
       this._manager.addEventListener(
           SDK.ServiceWorkerManager.Events.RegistrationErrorAdded, this._registrationErrorAdded, this),
       this._securityOriginManager.addEventListener(
-          SDK.SecurityOriginManager.Events.SecurityOriginAdded, this._updateSectionVisibility, this),
+          SDK.SecurityOriginManager.Events.SecurityOriginAdded, this._updateSectionOrderForOriginChange, this),
       this._securityOriginManager.addEventListener(
-          SDK.SecurityOriginManager.Events.SecurityOriginRemoved, this._updateSectionVisibility, this),
+          SDK.SecurityOriginManager.Events.SecurityOriginRemoved, this._updateSectionOrderForOriginChange, this),
     ]);
   }
 
@@ -79,6 +111,38 @@ Resources.ServiceWorkersView = class extends UI.VBox {
     this._eventListeners.delete(serviceWorkerManager);
     this._manager = null;
     this._securityOriginManager = null;
+  }
+
+  /**
+   * @return {?SDK.ServiceWorkerRegistration}
+   */
+  _registrationInWrongOrder() {
+    var securityOriginsSet = new Set(this._securityOriginManager.securityOrigins());
+    var previous = null;
+    var expectThisOrigin = null;
+    for (var section of this._reportView.sections()) {
+      var registration = Resources.ServiceWorkersView.Section._registrationForSection(section);
+      var isThisOrigin = securityOriginsSet.has(registration.securityOrigin);
+      if (previous) {
+        if (isThisOrigin && !expectThisOrigin)
+          return registration;
+        if (!isThisOrigin && expectThisOrigin)
+          continue;
+        if (Resources.ServiceWorkersView._compareScopeURLs(previous, registration) > 0)
+          return registration;
+      }
+      previous = registration;
+      expectThisOrigin = isThisOrigin;
+    }
+    return null;
+  }
+
+  _updateSectionOrderForOriginChange() {
+    for (var node = this._registrationInWrongOrder(); node; node = this._registrationInWrongOrder()) {
+      this._removeRegistrationFromList(node);
+      this._updateRegistration(node);
+    }
+    this._updateSectionVisibility();
   }
 
   _updateSectionVisibility() {
@@ -135,14 +199,44 @@ Resources.ServiceWorkersView = class extends UI.VBox {
 
   /**
    * @param {!SDK.ServiceWorkerRegistration} registration
+   * @return {?UI.ReportView.Section}
+   */
+  _findSectionInsertionPoint(registration) {
+    var securityOrigins = new Set(this._securityOriginManager.securityOrigins());
+    for (var section of this._reportView.sections()) {
+      var anotherRegistration = Resources.ServiceWorkersView.Section._registrationForSection(section);
+      if (Resources.ServiceWorkersView._compareRegistrations(securityOrigins, registration, anotherRegistration) <= 0)
+        return section;
+    }
+    return null;
+  }
+
+  /**
+   * @param {string} scopeURL
+   */
+  _removeRegistrationsByScope(scopeURL) {
+    for (var section of this._sections.values()) {
+      var registration = section._registration;
+      if (registration.scopeURL === scopeURL)
+        this._removeRegistrationFromList(registration);
+    }
+  }
+
+  /**
+   * @param {!SDK.ServiceWorkerRegistration} registration
    */
   _updateRegistration(registration) {
     var section = this._sections.get(registration);
     if (!section) {
-      section =
-          new Resources.ServiceWorkersView.Section(this._manager, this._reportView.appendSection(''), registration);
+      this._removeRegistrationsByScope(registration.scopeURL);
+      var nextSection = this._findSectionInsertionPoint(registration);
+      var reportSection =
+          nextSection ? this._reportView.insertSectionBefore(nextSection, '') : this._reportView.appendSection('');
+      section = new Resources.ServiceWorkersView.Section(this._manager, reportSection, registration);
       this._sections.set(registration, section);
     }
+    if (!section)
+      return;
     this._updateSectionVisibility();
     section._scheduleUpdate();
   }
@@ -179,6 +273,7 @@ Resources.ServiceWorkersView.Section = class {
     this._manager = manager;
     this._section = section;
     this._registration = registration;
+    section[Resources.ServiceWorkersView.Section._registrationSymbol] = registration;
 
     this._toolbar = section.createToolbar();
     this._toolbar.renderAsLinks();
@@ -211,6 +306,13 @@ Resources.ServiceWorkersView.Section = class {
     for (var error of registration.errors)
       this._addError(error);
     this._throttler = new Common.Throttler(500);
+  }
+
+  /**
+   * @param {!UI.ReportView.Section} section
+   */
+  static _registrationForSection(section) {
+    return section[Resources.ServiceWorkersView.Section._registrationSymbol];
   }
 
   _scheduleUpdate() {
@@ -462,3 +564,5 @@ Resources.ServiceWorkersView.Section = class {
     return contentElement;
   }
 };
+
+Resources.ServiceWorkersView.Section._registrationSymbol = Symbol('registration');
