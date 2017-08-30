@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e74e8be_8409ef96",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_network_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-08-30T17:15:45Z",
+      "side": 1,
+      "message": "nit maybe: s/client_lofi/client_lofi_partial_image/",
+      "revId": "557c1d7bc97429a80a773e294fbeec22cbc935f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
