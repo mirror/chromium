@@ -16,6 +16,24 @@
       "revId": "7289ddcb575e40c8a660a3a8cdda8e3ffceb7d3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91edc0b5_b9e5dd9b",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/desktop_automation_handler.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-08-30T16:45:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2dcadc9_278ea2a8",
+      "revId": "7289ddcb575e40c8a660a3a8cdda8e3ffceb7d3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
