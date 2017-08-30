@@ -6,7 +6,7 @@
 
 #include <memory>
 
-#include "base/strings/utf_string_conversions.h"
+#include "base/memory/ptr_util.h"
 #include "base/values.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -18,8 +18,9 @@ TEST(PaymentRequestTest, PaymentShippingOptionFromDictionaryValueSuccess) {
   PaymentShippingOption expected;
   expected.id = "123";
   expected.label = "Ground Shipping";
-  expected.amount.currency = "BRL";
-  expected.amount.value = "4,000.32";
+  expected.amount = base::MakeUnique<PaymentCurrencyAmount>();
+  expected.amount->currency = "BRL";
+  expected.amount->value = "4,000.32";
   expected.selected = true;
 
   base::DictionaryValue shipping_option_dict;
@@ -43,8 +44,9 @@ TEST(PaymentRequestTest, PaymentShippingOptionFromDictionaryValueFailure) {
   PaymentShippingOption expected;
   expected.id = "123";
   expected.label = "Ground Shipping";
-  expected.amount.currency = "BRL";
-  expected.amount.value = "4,000.32";
+  expected.amount = base::MakeUnique<PaymentCurrencyAmount>();
+  expected.amount->currency = "BRL";
+  expected.amount->value = "4,000.32";
   expected.selected = true;
 
   PaymentShippingOption actual;
@@ -94,11 +96,13 @@ TEST(PaymentRequestTest, PaymentShippingOptionEquality) {
   shipping_option2.label = "Overnight";
   EXPECT_EQ(shipping_option1, shipping_option2);
 
-  shipping_option1.amount.currency = "AUD";
+  shipping_option1.amount = base::MakeUnique<PaymentCurrencyAmount>();
+  shipping_option1.amount->currency = "AUD";
   EXPECT_NE(shipping_option1, shipping_option2);
-  shipping_option2.amount.currency = "HKD";
+  shipping_option2.amount = base::MakeUnique<PaymentCurrencyAmount>();
+  shipping_option2.amount->currency = "HKD";
   EXPECT_NE(shipping_option1, shipping_option2);
-  shipping_option2.amount.currency = "AUD";
+  shipping_option2.amount->currency = "AUD";
   EXPECT_EQ(shipping_option1, shipping_option2);
 
   shipping_option1.selected = true;

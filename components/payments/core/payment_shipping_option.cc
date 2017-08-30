@@ -4,6 +4,7 @@
 
 #include "components/payments/core/payment_shipping_option.h"
 
+#include "base/memory/ptr_util.h"
 #include "base/values.h"
 
 namespace payments {
@@ -20,14 +21,31 @@ static const char kPaymentShippingOptionSelected[] = "selected";
 }  // namespace
 
 PaymentShippingOption::PaymentShippingOption() : selected(false) {}
-PaymentShippingOption::PaymentShippingOption(
-    const PaymentShippingOption& other) = default;
 PaymentShippingOption::~PaymentShippingOption() = default;
+
+PaymentShippingOption::PaymentShippingOption(
+    const PaymentShippingOption& other) {
+  *this = other;
+}
+
+PaymentShippingOption& PaymentShippingOption::operator=(
+    const PaymentShippingOption& other) {
+  this->id = other.id;
+  this->label = other.label;
+  if (other.amount)
+    this->amount = base::MakeUnique<PaymentCurrencyAmount>(*other.amount);
+  else
+    this->amount.reset(nullptr);
+  this->selected = other.selected;
+  return *this;
+}
 
 bool PaymentShippingOption::operator==(
     const PaymentShippingOption& other) const {
   return this->id == other.id && this->label == other.label &&
-         this->amount == other.amount && this->selected == other.selected;
+         ((!this->amount && !other.amount) ||
+          (this->amount && other.amount && *this->amount == *other.amount)) &&
+         this->selected == other.selected;
 }
 
 bool PaymentShippingOption::operator!=(
@@ -49,7 +67,8 @@ bool PaymentShippingOption::FromDictionaryValue(
   if (!value.GetDictionary(kPaymentShippingOptionAmount, &amount_dict)) {
     return false;
   }
-  if (!this->amount.FromDictionaryValue(*amount_dict)) {
+  this->amount = base::MakeUnique<PaymentCurrencyAmount>();
+  if (!this->amount->FromDictionaryValue(*amount_dict)) {
     return false;
   }
 

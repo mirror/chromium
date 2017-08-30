@@ -236,9 +236,10 @@ PaymentShippingType PaymentRequest::shipping_type() const {
 CurrencyFormatter* PaymentRequest::GetOrCreateCurrencyFormatter() {
   if (!currency_formatter_) {
     DCHECK(web_payment_request_.details.total);
+    DCHECK(web_payment_request_.details.total->amount);
     currency_formatter_ = base::MakeUnique<CurrencyFormatter>(
-        web_payment_request_.details.total->amount.currency,
-        web_payment_request_.details.total->amount.currency_system,
+        web_payment_request_.details.total->amount->currency,
+        web_payment_request_.details.total->amount->currency_system,
         GetApplicationLocale());
   }
   return currency_formatter_.get();

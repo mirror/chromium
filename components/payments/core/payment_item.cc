@@ -22,8 +22,24 @@ static const char kPaymentItemPending[] = "pending";
 PaymentItem::PaymentItem() : pending(false) {}
 PaymentItem::~PaymentItem() = default;
 
+PaymentItem::PaymentItem(const PaymentItem& other) {
+  *this = other;
+}
+
+PaymentItem& PaymentItem::operator=(const PaymentItem& other) {
+  this->label = other.label;
+  if (other.amount)
+    this->amount = base::MakeUnique<PaymentCurrencyAmount>(*other.amount);
+  else
+    this->amount.reset(nullptr);
+  this->pending = other.pending;
+  return *this;
+}
+
 bool PaymentItem::operator==(const PaymentItem& other) const {
-  return this->label == other.label && this->amount == other.amount &&
+  return this->label == other.label &&
+         ((!this->amount && !other.amount) ||
+          (this->amount && other.amount && *this->amount == *other.amount)) &&
          this->pending == other.pending;
 }
 
@@ -40,7 +56,8 @@ bool PaymentItem::FromDictionaryValue(const base::DictionaryValue& value) {
   if (!value.GetDictionary(kPaymentItemAmount, &amount_dict)) {
     return false;
   }
-  if (!this->amount.FromDictionaryValue(*amount_dict)) {
+  this->amount = base::MakeUnique<PaymentCurrencyAmount>();
+  if (!this->amount->FromDictionaryValue(*amount_dict)) {
     return false;
   }
 
@@ -55,7 +72,10 @@ std::unique_ptr<base::DictionaryValue> PaymentItem::ToDictionaryValue() const {
       base::MakeUnique<base::DictionaryValue>();
 
   result->SetString(kPaymentItemLabel, this->label);
-  result->SetDictionary(kPaymentItemAmount, this->amount.ToDictionaryValue());
+  if (this->amount) {
+    result->SetDictionary(kPaymentItemAmount,
+                          this->amount->ToDictionaryValue());
+  }
   result->SetBoolean(kPaymentItemPending, this->pending);
 
   return result;
