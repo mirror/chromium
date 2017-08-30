@@ -10,6 +10,7 @@
 #include <vector>
 
 #include "base/files/file.h"
+#include "base/files/file_path.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/optional.h"
@@ -20,11 +21,11 @@
 
 class Profile;
 
-namespace storage {
+namespace drive {
 
-class FileSystemURL;
+class ResourceEntry;
 
-}  // namespace storage
+}  // namespace drive
 
 namespace chromeos {
 
@@ -49,9 +50,9 @@ class RecentDriveSource : public RecentSource {
   void OnSearchMetadata(
       drive::FileError error,
       std::unique_ptr<drive::MetadataSearchResultVector> results);
-  void OnGetMetadata(const storage::FileSystemURL& url,
-                     base::File::Error result,
-                     const base::File::Info& info);
+  void OnGetResourceEntry(const base::FilePath& path,
+                          drive::FileError error,
+                          std::unique_ptr<drive::ResourceEntry> entry);
   void OnComplete();
 
   Profile* const profile_;

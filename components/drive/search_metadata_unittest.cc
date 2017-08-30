@@ -152,29 +152,29 @@ class SearchMetadataTest : public testing::Test {
   ResourceEntry GetFileEntry(const std::string& name,
                              const std::string& resource_id,
                              int64_t last_accessed,
-                             int64_t last_modified,
+                             int64_t last_modified_by_me,
                              const std::string& parent_local_id) {
     ResourceEntry entry;
     entry.set_title(name);
     entry.set_resource_id(resource_id);
     entry.set_parent_local_id(parent_local_id);
     entry.mutable_file_info()->set_last_accessed(last_accessed);
-    entry.mutable_file_info()->set_last_modified(last_modified);
+    entry.set_modification_by_me_date(last_modified_by_me);
     return entry;
   }
 
   ResourceEntry GetDirectoryEntry(const std::string& name,
                                   const std::string& resource_id,
                                   int64_t last_accessed,
-                                  int64_t last_modified,
+                                  int64_t last_modified_by_me,
                                   const std::string& parent_local_id) {
     ResourceEntry entry;
     entry.set_title(name);
     entry.set_resource_id(resource_id);
     entry.set_parent_local_id(parent_local_id);
     entry.mutable_file_info()->set_last_accessed(last_accessed);
-    entry.mutable_file_info()->set_last_modified(last_modified);
     entry.mutable_file_info()->set_is_directory(true);
+    entry.set_modification_by_me_date(last_modified_by_me);
     return entry;
   }
 
@@ -282,7 +282,7 @@ TEST_F(SearchMetadataTest, SearchMetadata_AtMostOneFile_LastAccessed) {
             result->at(0).path.AsUTF8Unsafe());
 }
 
-TEST_F(SearchMetadataTest, SearchMetadata_AtMostOneFile_LastModified) {
+TEST_F(SearchMetadataTest, SearchMetadata_AtMostOneFile_LastModifiedByMe) {
   FileError error = FILE_ERROR_FAILED;
   std::unique_ptr<MetadataSearchResultVector> result;
 
@@ -292,7 +292,7 @@ TEST_F(SearchMetadataTest, SearchMetadata_AtMostOneFile_LastModified) {
       base::ThreadTaskRunnerHandle::Get(), resource_metadata_.get(), "SubDir",
       base::Bind(&MatchesType, SEARCH_METADATA_ALL),
       1,  // at_most_num_matches
-      MetadataSearchOrder::LAST_MODIFIED,
+      MetadataSearchOrder::LAST_MODIFIED_BY_ME,
       google_apis::test_util::CreateCopyResultCallback(&error, &result));
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(FILE_ERROR_OK, error);
