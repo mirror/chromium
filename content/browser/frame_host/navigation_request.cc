@@ -250,6 +250,7 @@ std::unique_ptr<NavigationRequest> NavigationRequest::CreateBrowserInitiated(
   std::unique_ptr<NavigationRequest> navigation_request(new NavigationRequest(
       frame_tree_node, common_params,
       BeginNavigationParams(entry.extra_headers(), net::LOAD_NORMAL,
+                            entry.get_disposition(),
                             false,  // has_user_gestures
                             false,  // skip_service_worker
                             REQUEST_CONTEXT_TYPE_LOCATION,
@@ -495,7 +496,9 @@ void NavigationRequest::CreateNavigationHandle() {
 
   std::unique_ptr<NavigationHandleImpl> navigation_handle =
       NavigationHandleImpl::Create(common_params_.url, redirect_chain,
-                                   frame_tree_node_, !browser_initiated_,
+                                   begin_params_.disposition,
+                                   frame_tree_node_,
+                                   !browser_initiated_,
                                    FrameMsg_Navigate_Type::IsSameDocument(
                                        common_params_.navigation_type),
                                    common_params_.navigation_start,

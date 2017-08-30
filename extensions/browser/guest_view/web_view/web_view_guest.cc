@@ -1259,6 +1259,7 @@ bool WebViewGuest::LoadDataWithBaseURL(const std::string& data_url,
   load_params.virtual_url_for_data_url = virtual_gurl;
   load_params.override_user_agent =
       content::NavigationController::UA_OVERRIDE_INHERIT;
+  load_params.disposition = WindowOpenDisposition::CURRENT_TAB;
 
   // Navigate to the data URL.
   GuestViewBase::LoadURLWithParams(load_params);
@@ -1438,6 +1439,7 @@ void WebViewGuest::LoadURLWithParams(
   load_url_params.transition_type = transition_type;
   load_url_params.extra_headers = std::string();
   load_url_params.transferred_global_request_id = GlobalRequestID();
+  load_url_params.disposition = WindowOpenDisposition::CURRENT_TAB;
   if (is_overriding_user_agent_) {
     load_url_params.override_user_agent =
         content::NavigationController::UA_OVERRIDE_TRUE;

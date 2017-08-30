@@ -6462,6 +6462,7 @@ void RenderFrameImpl::BeginNavigation(const NavigationPolicyInfo& info) {
 
   BeginNavigationParams begin_navigation_params(
       GetWebURLRequestHeaders(info.url_request), load_flags,
+      RenderViewImpl::NavigationPolicyToDisposition(info.default_policy),
       info.url_request.HasUserGesture(),
       info.url_request.GetServiceWorkerMode() !=
           blink::WebURLRequest::ServiceWorkerMode::kAll,

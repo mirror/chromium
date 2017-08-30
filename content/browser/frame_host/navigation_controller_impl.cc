@@ -679,6 +679,7 @@ void NavigationControllerImpl::LoadURL(
   LoadURLParams params(url);
   params.referrer = referrer;
   params.transition_type = transition;
+  params.disposition = WindowOpenDisposition::CURRENT_TAB;
   params.extra_headers = extra_headers;
   LoadURLWithParams(params);
 }
@@ -807,6 +808,7 @@ void NavigationControllerImpl::LoadURLWithParams(const LoadURLParams& params) {
   };
 
   entry->set_started_from_context_menu(params.started_from_context_menu);
+  entry->set_disposition(params.disposition);
   LoadEntry(std::move(entry));
 }
 

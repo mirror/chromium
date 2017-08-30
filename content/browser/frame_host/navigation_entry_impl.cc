@@ -24,6 +24,7 @@
 #include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/content_constants.h"
 #include "content/public/common/url_constants.h"
+#include "ui/base/window_open_disposition.h"
 #include "ui/gfx/text_elider.h"
 
 using base::UTF16ToUTF8;
@@ -269,6 +270,7 @@ NavigationEntryImpl::NavigationEntryImpl(
       frame_tree_node_id_(-1),
       reload_type_(ReloadType::NONE),
       started_from_context_menu_(false),
+      disposition_(WindowOpenDisposition::UNKNOWN),
       ssl_error_(false) {
 #if defined(OS_ANDROID)
   has_user_gesture_ = false;

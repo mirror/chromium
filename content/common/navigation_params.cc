@@ -14,6 +14,7 @@
 #include "url/gurl.h"
 #include "url/url_constants.h"
 #include "url/url_util.h"
+#include "ui/base/window_open_disposition.h"
 
 namespace content {
 
@@ -113,6 +114,7 @@ CommonNavigationParams::~CommonNavigationParams() {
 
 BeginNavigationParams::BeginNavigationParams()
     : load_flags(0),
+      disposition(WindowOpenDisposition::UNKNOWN),
       has_user_gesture(false),
       skip_service_worker(false),
       request_context_type(REQUEST_CONTEXT_TYPE_LOCATION),
@@ -122,6 +124,7 @@ BeginNavigationParams::BeginNavigationParams()
 BeginNavigationParams::BeginNavigationParams(
     std::string headers,
     int load_flags,
+    WindowOpenDisposition disposition,
     bool has_user_gesture,
     bool skip_service_worker,
     RequestContextType request_context_type,
@@ -130,6 +133,7 @@ BeginNavigationParams::BeginNavigationParams(
     const base::Optional<url::Origin>& initiator_origin)
     : headers(headers),
       load_flags(load_flags),
+      disposition(disposition),
       has_user_gesture(has_user_gesture),
       skip_service_worker(skip_service_worker),
       request_context_type(request_context_type),

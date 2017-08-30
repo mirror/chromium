@@ -19,6 +19,7 @@
 #include "ui/base/page_transition_types.h"
 
 class GURL;
+enum class WindowOpenDisposition;
 
 namespace net {
 class HttpResponseHeaders;
@@ -144,6 +145,9 @@ class CONTENT_EXPORT NavigationHandle {
 
   // Returns the page transition type.
   virtual ui::PageTransition GetPageTransition() = 0;
+
+  // Returns the window open disposition.
+  virtual WindowOpenDisposition GetDisposition() = 0;
 
   // Whether the target URL cannot be handled by the browser's internal protocol
   // handlers.

@@ -229,6 +229,8 @@ void NavigatorImpl::DidStartProvisionalLoad(
     render_process_host->FilterURL(false, &validated_redirect_chain[i]);
   render_frame_host->SetNavigationHandle(NavigationHandleImpl::Create(
       validated_url, validated_redirect_chain,
+      // Not PlzNavigate.
+      WindowOpenDisposition::UNKNOWN,
       render_frame_host->frame_tree_node(), is_renderer_initiated,
       false,  // is_same_document
       navigation_start, pending_nav_entry_id, started_from_context_menu,

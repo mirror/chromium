@@ -69,6 +69,7 @@ void NotifyAbandonedTransferNavigation(const GlobalRequestID& id) {
 std::unique_ptr<NavigationHandleImpl> NavigationHandleImpl::Create(
     const GURL& url,
     const std::vector<GURL>& redirect_chain,
+    WindowOpenDisposition disposition,
     FrameTreeNode* frame_tree_node,
     bool is_renderer_initiated,
     bool is_same_document,
@@ -78,7 +79,7 @@ std::unique_ptr<NavigationHandleImpl> NavigationHandleImpl::Create(
     CSPDisposition should_check_main_world_csp,
     bool is_form_submission) {
   return std::unique_ptr<NavigationHandleImpl>(new NavigationHandleImpl(
-      url, redirect_chain, frame_tree_node, is_renderer_initiated,
+      url, redirect_chain, disposition, frame_tree_node, is_renderer_initiated,
       is_same_document, navigation_start, pending_nav_entry_id,
       started_from_context_menu, should_check_main_world_csp,
       is_form_submission));
@@ -87,6 +88,7 @@ std::unique_ptr<NavigationHandleImpl> NavigationHandleImpl::Create(
 NavigationHandleImpl::NavigationHandleImpl(
     const GURL& url,
     const std::vector<GURL>& redirect_chain,
+    WindowOpenDisposition disposition,
     FrameTreeNode* frame_tree_node,
     bool is_renderer_initiated,
     bool is_same_document,
@@ -98,6 +100,7 @@ NavigationHandleImpl::NavigationHandleImpl(
     : url_(url),
       has_user_gesture_(false),
       transition_(ui::PAGE_TRANSITION_LINK),
+      disposition_(disposition),
       is_external_protocol_(false),
       net_error_code_(net::OK),
       render_frame_host_(nullptr),
@@ -299,6 +302,12 @@ ui::PageTransition NavigationHandleImpl::GetPageTransition() {
   CHECK_NE(INITIAL, state_)
       << "This accessor should not be called before the request is started.";
   return transition_;
+}
+
+WindowOpenDisposition NavigationHandleImpl::GetDisposition() {
+  CHECK_NE(INITIAL, state_)
+      << "This accessor should not be called before the request is started.";
+  return disposition_;
 }
 
 bool NavigationHandleImpl::IsExternalProtocol() {

@@ -11,6 +11,7 @@ NavigationParams::NavigationParams(const GURL& url,
                                    bool has_user_gesture,
                                    bool is_post,
                                    ui::PageTransition transition_type,
+                                   WindowOpenDisposition disposition,
                                    bool is_redirect,
                                    bool is_external_protocol,
                                    bool is_main_frame,
@@ -20,6 +21,7 @@ NavigationParams::NavigationParams(const GURL& url,
       has_user_gesture_(has_user_gesture),
       is_post_(is_post),
       transition_type_(transition_type),
+      disposition_(disposition),
       is_redirect_(is_redirect),
       is_external_protocol_(is_external_protocol),
       is_main_frame_(is_main_frame),
@@ -28,4 +30,3 @@ NavigationParams::NavigationParams(const GURL& url,
 NavigationParams::NavigationParams(const NavigationParams&) = default;
 
 }  // namespace navigation_interception
-

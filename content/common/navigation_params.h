@@ -29,6 +29,8 @@
 #include "url/gurl.h"
 #include "url/origin.h"
 
+enum class WindowOpenDisposition;
+
 namespace content {
 
 // PlzNavigate
@@ -170,6 +172,7 @@ struct CONTENT_EXPORT BeginNavigationParams {
   BeginNavigationParams(
       std::string headers,
       int load_flags,
+      WindowOpenDisposition disposition,
       bool has_user_gesture,
       bool skip_service_worker,
       RequestContextType request_context_type,
@@ -184,6 +187,8 @@ struct CONTENT_EXPORT BeginNavigationParams {
 
   // net::URLRequest load flags (net::LOAD_NORMAL) by default).
   int load_flags;
+
+  WindowOpenDisposition disposition;
 
   // True if the request was user initiated.
   bool has_user_gesture;

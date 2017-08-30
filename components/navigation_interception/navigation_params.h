@@ -7,8 +7,9 @@
 
 #include "content/public/common/referrer.h"
 #include "ui/base/page_transition_types.h"
-#include "ui/base/page_transition_types.h"
 #include "url/gurl.h"
+
+enum class WindowOpenDisposition;
 
 namespace navigation_interception {
 
@@ -19,6 +20,7 @@ class NavigationParams {
                    bool has_user_gesture,
                    bool is_post,
                    ui::PageTransition page_transition_type,
+                   WindowOpenDisposition disposition,
                    bool is_redirect,
                    bool is_external_protocol,
                    bool is_main_frame,
@@ -32,6 +34,7 @@ class NavigationParams {
   bool has_user_gesture() const { return has_user_gesture_; }
   bool is_post() const { return is_post_; }
   ui::PageTransition transition_type() const { return transition_type_; }
+  WindowOpenDisposition disposition() const { return disposition_; }
   bool is_redirect() const { return is_redirect_; }
   bool is_external_protocol() const { return is_external_protocol_; }
   bool is_main_frame() const { return is_main_frame_; }
@@ -44,6 +47,7 @@ class NavigationParams {
   bool has_user_gesture_;
   bool is_post_;
   ui::PageTransition transition_type_;
+  WindowOpenDisposition disposition_;
   bool is_redirect_;
   bool is_external_protocol_;
   bool is_main_frame_;

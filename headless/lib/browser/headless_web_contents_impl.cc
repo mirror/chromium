@@ -177,6 +177,7 @@ class HeadlessWebContentsImpl::Delegate : public content::WebContentsDelegate {
           content::NavigationController::LOAD_TYPE_HTTP_POST;
       load_url_params.post_data = params.post_data;
     }
+    load_url_params.disposition = params.disposition;
 
     target->GetController().LoadURLWithParams(load_url_params);
     return target;
@@ -376,6 +377,7 @@ bool HeadlessWebContentsImpl::OpenURL(const GURL& url) {
   content::NavigationController::LoadURLParams params(url);
   params.transition_type = ui::PageTransitionFromInt(
       ui::PAGE_TRANSITION_TYPED | ui::PAGE_TRANSITION_FROM_ADDRESS_BAR);
+  params.disposition = WindowOpenDisposition::CURRENT_TAB;
   web_contents_->GetController().LoadURLWithParams(params);
   web_contents_delegate_->ActivateContents(web_contents_.get());
   web_contents_->Focus();

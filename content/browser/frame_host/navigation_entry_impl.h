@@ -29,6 +29,8 @@
 #include "content/public/common/previews_state.h"
 #include "content/public/common/resource_request_body.h"
 
+enum class WindowOpenDisposition;
+
 namespace content {
 class ResourceRequestBody;
 struct CommonNavigationParams;
@@ -265,6 +267,12 @@ class CONTENT_EXPORT NavigationEntryImpl : public NavigationEntry {
   bool has_started_from_context_menu() const {
     return started_from_context_menu_;
   }
+
+  void set_disposition(WindowOpenDisposition disposition) {
+    disposition_ = disposition;
+  }
+
+  WindowOpenDisposition get_disposition() const { return disposition_; }
 
   // The SiteInstance represents which pages must share processes. This is a
   // reference counted pointer to a shared SiteInstance.
@@ -544,6 +552,8 @@ class CONTENT_EXPORT NavigationEntryImpl : public NavigationEntry {
 
   // Determine if the navigation was started within a context menu.
   bool started_from_context_menu_;
+
+  WindowOpenDisposition disposition_;
 
   // Used to store extra data to support browser features. This member is not
   // persisted, unless specific data is taken out/put back in at save/restore

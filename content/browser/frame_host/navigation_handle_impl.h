@@ -86,6 +86,7 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   static std::unique_ptr<NavigationHandleImpl> Create(
       const GURL& url,
       const std::vector<GURL>& redirect_chain,
+      WindowOpenDisposition disposition,
       FrameTreeNode* frame_tree_node,
       bool is_renderer_initiated,
       bool is_same_document,
@@ -127,6 +128,7 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   const Referrer& GetReferrer() override;
   bool HasUserGesture() override;
   ui::PageTransition GetPageTransition() override;
+  WindowOpenDisposition GetDisposition() override;
   bool IsExternalProtocol() override;
   net::Error GetNetErrorCode() override;
   RenderFrameHostImpl* GetRenderFrameHost() override;
@@ -401,6 +403,7 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
 
   NavigationHandleImpl(const GURL& url,
                        const std::vector<GURL>& redirect_chain,
+                       WindowOpenDisposition disposition,
                        FrameTreeNode* frame_tree_node,
                        bool is_renderer_initiated,
                        bool is_same_document,
@@ -467,6 +470,7 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   Referrer sanitized_referrer_;
   bool has_user_gesture_;
   ui::PageTransition transition_;
+  WindowOpenDisposition disposition_;
   bool is_external_protocol_;
   net::Error net_error_code_;
   RenderFrameHostImpl* render_frame_host_;
