@@ -88,6 +88,16 @@ void ServiceVideoCaptureDeviceLauncher::LaunchDeviceAsync(
                                     callbacks, std::move(done_cb));
     return;
   }
+
+  if (receiver) {
+    receiver->OnLog(
+        (std::ostringstream()
+         << "ServiceVideoCaptureDeviceLauncher::LaunchDeviceAsync: Asking "
+            "video capture service to create device for device_id = "
+         << device_id)
+            .str());
+  }
+
   video_capture::mojom::DevicePtr device;
   auto device_request = mojo::MakeRequest(&device);
   // Ownership of |done_cb| is moved to |this|. It is not sufficient to attach
