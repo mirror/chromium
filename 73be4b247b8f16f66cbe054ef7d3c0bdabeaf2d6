@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6839477e_e2b7646f",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2278,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-08-30T03:08:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "adfa1ab7_b3790f9a",
+      "revId": "73be4b247b8f16f66cbe054ef7d3c0bdabeaf2d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95d00fa0_1bf889fa",
         "filename": "chrome/browser/android/chrome_feature_list.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "73be4b247b8f16f66cbe054ef7d3c0bdabeaf2d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dbef14d_2fe2d469",
+        "filename": "chrome/browser/android/chrome_feature_list.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-08-30T03:08:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95d00fa0_1bf889fa",
+      "revId": "73be4b247b8f16f66cbe054ef7d3c0bdabeaf2d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "59f159f7_2a4a31fe",
+        "filename": "components/offline_pages/core/offline_page_feature.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-08-30T03:08:54Z",
+      "side": 1,
+      "message": "Just to double check - we want to keep the strings as is, and add todo to fix? or do we want to name kPrefetchingOfflinePagesUIFeature to kOfflinePagesPrefetchingUIFeature?",
+      "parentUuid": "01315c6f_4329ca5a",
+      "revId": "73be4b247b8f16f66cbe054ef7d3c0bdabeaf2d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72d7cb6c_f804ec90",
         "filename": "components/offline_pages/core/offline_page_feature.cc",
         "patchSetId": 1
@@ -85,6 +139,24 @@
       "revId": "73be4b247b8f16f66cbe054ef7d3c0bdabeaf2d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0d7f604_13dd0ce8",
+        "filename": "components/offline_pages/core/offline_page_feature.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-08-30T03:08:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72d7cb6c_f804ec90",
+      "revId": "73be4b247b8f16f66cbe054ef7d3c0bdabeaf2d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
