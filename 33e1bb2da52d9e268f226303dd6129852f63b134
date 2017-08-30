@@ -139,6 +139,24 @@
       "revId": "33e1bb2da52d9e268f226303dd6129852f63b134",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a365d2b3_354c08f4",
+        "filename": "services/ui/ws/window_tree.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-30T06:10:32Z",
+      "side": 1,
+      "message": "Since |client_window_id| is coming from client, it would be useful to validate that first before using.\n\nAlso, I think we need to validate here that client_window_id\u0027s client-id is the same as WindowTree::id_. Because otherwise, I think it would be possible for a client to set a spoofed client-id in the ClientWindowId it sends, and we would not be able to catch that.",
+      "parentUuid": "5d9bf310_ad0c4dcd",
+      "revId": "33e1bb2da52d9e268f226303dd6129852f63b134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
