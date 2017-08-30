@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "759542d5_a50a0b3b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-30T21:26:09Z",
+      "side": 1,
+      "message": "nit: and avoids scheduling the overlay",
+      "revId": "3c36c39bb9646407ced972bde50bc0f970e97fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6386f6ab_b4ec95f5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-30T21:26:09Z",
+      "side": 1,
+      "message": "nit: if the result says that it is not supported",
+      "revId": "3c36c39bb9646407ced972bde50bc0f970e97fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a9f6a99_4ecca15c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-30T21:26:09Z",
+      "side": 1,
+      "message": "are delayed by?",
+      "revId": "3c36c39bb9646407ced972bde50bc0f970e97fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf3f0e9a_70de8a5a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-30T21:26:09Z",
+      "side": 1,
+      "message": "one -\u003e once",
+      "revId": "3c36c39bb9646407ced972bde50bc0f970e97fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
