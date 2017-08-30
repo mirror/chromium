@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9eb62e1d_6088069c",
+        "filename": "content/browser/frame_host/navigator_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-08-30T04:31:55Z",
+      "side": 1,
+      "message": "The feature is set to launch on 63/64 so that\u0027s definitely a possibility. The newest patchset only wires down PlzNavigate codepaths. When will PlzNavigate be enabled in trunk? It\u0027s a bit annoying to have to set two flags to test the feature.",
+      "parentUuid": "f6e8d45e_138ebcf3",
+      "revId": "a1da693bf4490054e9d05ef1200b807edc04cea8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea3f5c79_505e9836",
         "filename": "content/browser/frame_host/navigator_impl.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "a1da693bf4490054e9d05ef1200b807edc04cea8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "387fcef4_41f7a2eb",
+        "filename": "content/browser/frame_host/navigator_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 901,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-08-30T04:31:55Z",
+      "side": 1,
+      "message": "Good to know. The latest patchset does not change CreateNavigationEntry so we don\u0027t need to pass the disposition here.",
+      "parentUuid": "ea3f5c79_505e9836",
+      "revId": "a1da693bf4490054e9d05ef1200b807edc04cea8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "bd231afb_78f8cc79",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 4092,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-08-30T04:31:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "141f603e_4e765e33",
+      "revId": "a1da693bf4490054e9d05ef1200b807edc04cea8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22eecc0c_02c85051",
         "filename": "content/common/navigation_params.h",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "a1da693bf4490054e9d05ef1200b807edc04cea8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "091672e9_248811b5",
+        "filename": "content/common/navigation_params.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-08-30T04:31:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22eecc0c_02c85051",
+      "revId": "a1da693bf4490054e9d05ef1200b807edc04cea8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "ac9fe0e6_83b81b58",
+        "filename": "content/public/browser/navigation_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-08-30T04:31:55Z",
+      "side": 1,
+      "message": "I see. The newest patchset avoids changing this function or the public API. I\u0027m a bit worried that it might cause us to miss setting the disposition though. Changing this functions forces us to fix all places in which the disposition is passed.",
+      "parentUuid": "299e024e_2351a2b2",
+      "revId": "a1da693bf4490054e9d05ef1200b807edc04cea8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "070fae34_a4d5d8a1",
         "filename": "content/public/browser/navigation_entry.h",
         "patchSetId": 4
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "ef1a3a6f_8c0c8227",
+        "filename": "content/public/browser/navigation_entry.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-08-30T04:31:55Z",
+      "side": 1,
+      "message": "Removed. I added them to the impl instead.",
+      "parentUuid": "070fae34_a4d5d8a1",
+      "revId": "a1da693bf4490054e9d05ef1200b807edc04cea8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3abfc953_fc8e2744",
         "filename": "content/renderer/render_view_impl.h",
         "patchSetId": 4
@@ -118,6 +226,24 @@
       "revId": "a1da693bf4490054e9d05ef1200b807edc04cea8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b7939b4_01fe3aa1",
+        "filename": "content/renderer/render_view_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-08-30T04:31:55Z",
+      "side": 1,
+      "message": "Good catch. Done.",
+      "parentUuid": "3abfc953_fc8e2744",
+      "revId": "a1da693bf4490054e9d05ef1200b807edc04cea8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
