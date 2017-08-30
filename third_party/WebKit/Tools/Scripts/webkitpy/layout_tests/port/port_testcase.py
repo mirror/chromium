@@ -197,7 +197,8 @@ class PortTestCase(LoggingTestCase):
                          (None,
                           'crash log for <unknown process name> (pid <unknown>):\n'
                           'STDOUT: <empty>\n'
-                          'STDERR: <empty>\n'))
+                          'STDERR: <empty>\n',
+                          None))
 
         self.assertEqual(port._get_crash_log('foo', 1234, 'out bar\nout baz', 'err bar\nerr baz\n', newer_than=None),
                          ('err bar\nerr baz\n',
@@ -205,19 +206,29 @@ class PortTestCase(LoggingTestCase):
                           'STDOUT: out bar\n'
                           'STDOUT: out baz\n'
                           'STDERR: err bar\n'
-                          'STDERR: err baz\n'))
+                          'STDERR: err baz\n',
+                          None))
 
         self.assertEqual(port._get_crash_log('foo', 1234, 'foo\xa6bar', 'foo\xa6bar', newer_than=None),
                          ('foo\xa6bar',
                           u'crash log for foo (pid 1234):\n'
                           u'STDOUT: foo\ufffdbar\n'
-                          u'STDERR: foo\ufffdbar\n'))
+                          u'STDERR: foo\ufffdbar\n',
+                          None))
 
         self.assertEqual(port._get_crash_log('foo', 1234, 'foo\xa6bar', 'foo\xa6bar', newer_than=1.0),
                          ('foo\xa6bar',
                           u'crash log for foo (pid 1234):\n'
                           u'STDOUT: foo\ufffdbar\n'
-                          u'STDERR: foo\ufffdbar\n'))
+                          u'STDERR: foo\ufffdbar\n',
+                          None))
+
+        self.assertEqual(port._get_crash_log('foo', 1234, 'out bar', '[1:2:3:4:FATAL:example.cc(567)] err baz.', newer_than=None),
+                         ('[1:2:3:4:FATAL:example.cc(567)] err baz.',
+                          'crash log for foo (pid 1234):\n'
+                          'STDOUT: out bar\n'
+                          'STDERR: [1:2:3:4:FATAL:example.cc(567)] err baz.\n',
+                          'example.cc(567)'))
 
     def test_expectations_files(self):
         port = self.make_port()
