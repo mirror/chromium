@@ -22,6 +22,30 @@
       "revId": "5f409dafe5371ecd8289f8bf4633be7e32635c9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69301b33_e02a2c33",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 1517,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-30T22:44:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2fee7a7_5572cc51",
+      "range": {
+        "startLine": 1516,
+        "startChar": 68,
+        "endLine": 1517,
+        "endChar": 8
+      },
+      "revId": "5f409dafe5371ecd8289f8bf4633be7e32635c9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
