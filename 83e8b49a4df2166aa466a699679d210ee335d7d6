@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "1d584e05_13023a7c",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-30T17:22:41Z",
+      "side": 1,
+      "message": "Right, but if the initial set of connections is unable to be served by the receiver, each sender will backoff and retry at a different time, which will prevent the retries from happening all at once.\n\nHistorically, Cast receivers were unable to handle simultaneous incoming connections because of a dependency on the key signing mechanism (which could only handle one request at a time). I believe that improvements have been made, but I am pretty sure there are still some underlying constraints.\n\nI don\u0027t feel strongly about setting it now, but it\u0027s something we can experiment with in the field if we enable UMA parameters: see if the ratio of successful attempts increases when we set a fuzz percentage.",
+      "parentUuid": "6a79e46e_1fa2abbf",
+      "revId": "83e8b49a4df2166aa466a699679d210ee335d7d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0ee5a9c_066c8181",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
         "patchSetId": 2
@@ -247,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "466d5267_acecc051",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-30T17:22:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f59a16f8_9c814d96",
+      "revId": "83e8b49a4df2166aa466a699679d210ee335d7d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89ff94bd_bf7e4ea4",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_unittest.cc",
         "patchSetId": 2
@@ -317,6 +353,24 @@
     },
     {
       "key": {
+        "uuid": "eb5df9fc_b9d828cc",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-30T17:22:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "49156c9b_47f0ca38",
+      "revId": "83e8b49a4df2166aa466a699679d210ee335d7d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3b2dde2_cb463b36",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_unittest.cc",
         "patchSetId": 2
@@ -349,6 +403,24 @@
       "revId": "83e8b49a4df2166aa466a699679d210ee335d7d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "831082f0_9941df25",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-30T17:22:41Z",
+      "side": 1,
+      "message": "Okay, maybe leave a TODO() to be done with the map cleanup?",
+      "parentUuid": "34762603_ad8f149b",
+      "revId": "83e8b49a4df2166aa466a699679d210ee335d7d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
