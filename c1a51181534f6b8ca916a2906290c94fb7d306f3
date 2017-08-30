@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "deb29ab6_30348b62",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-30T04:41:04Z",
+      "side": 1,
+      "message": "we should add:\n\n# OS: Android\n# COMPONENT: UI\u003eBrowser\u003eFirstRun \n\nAlso, do we have firstrun test files?  If so, we should add owners files for those directories and have them use the relative file://chrome/android/java/src/org/chromium/chrome/browser/firstrun/OWNERS\nformat to have them just use this as the source of truth",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 6
+      },
+      "revId": "c1a51181534f6b8ca916a2906290c94fb7d306f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
