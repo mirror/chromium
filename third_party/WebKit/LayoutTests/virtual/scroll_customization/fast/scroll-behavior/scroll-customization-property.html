@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Scroll customization properties.</title>
+<script src="../../../../resources/testharness.js"></script>
+<script src="../../../../resources/testharnessreport.js"></script>
+<style>
+
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
+  *::-webkit-scrollbar {
+    width: 0 !important;
+    height: 0 !important;
+  }
+
+  .a {
+    height: 400px;
+    width: 400px;
+    overflow: scroll;
+  }
+
+  body {
+    height: 3000px;
+  }
+
+</style>
+
+<div class="a">
+</div>
+
+<script>
+  test(function() {
+    assert_true('ScrollState' in window, "'ScrollState' in window");
+  }, 'These tests only work with scroll customization enabled.');
+
+  internals.settings.setScrollAnimatorEnabled(false);
+
+  var element = document.querySelector('div');
+  test(function() {
+    assert_true('scrollCustomization' in element.style);
+  }, 'Verify "scroll-customization" is part of element\'s style.');
+
+  var GESTURE_RIGHT = 'pan-right';
+  var GESTURE_LEFT = 'pan-left';
+  var GESTURE_UP = 'pan-up';
+  var GESTURE_DOWN = 'pan-down';
+  var ALL_GESTURES = [GESTURE_RIGHT, GESTURE_LEFT, GESTURE_UP, GESTURE_DOWN];
+
+  element.setApplyScroll(function(unused_ss) {
+    element.applyScrollCalled = true;
+  }, 'perform-before-native-scroll');
+
+  element.setDistributeScroll(function(unused_ss) {
+    element.distributeScrollCalled = true;
+  }, 'perform-before-native-scroll');
+
+  function resetState() {
+    element.applyScrollCalled = false;
+    element.distributeScrollCalled = false;
+  }
+
+  function scrollCustomizationHandlersCalled() {
+    return element.applyScrollCalled || element.distributeScrollCalled;
+  }
+
+  // Apply the given gesture and and returns a thenable Promise.
+  function applyGesture(gesture) {
+    var deltaX = 0, deltaY = 0, delta = 100;
+    switch (gesture) {
+      case GESTURE_LEFT:
+        deltaX = -delta;
+        break;
+      case GESTURE_RIGHT:
+        deltaX = delta;
+        break;
+      case GESTURE_DOWN:
+        deltaY = -delta;
+        break;
+      case GESTURE_UP:
+        deltaY = delta
+        break;
+    }
+    return new Promise(function(resolve, reject) {
+      chrome.gpuBenchmarking.pointerActionSequence(
+        [{
+          source: 'touch',
+          actions: [
+          { name: 'pointerDown', x: 0, y: 0 },
+          { name: 'pointerMove', x: deltaX, y: deltaY },
+          { name: 'pointerUp', x: (deltaX * 2), y: (deltaY * 2) },
+          ]}], resolve);
+    });
+  }
+
+  // Set of all subsets of |iterable|.
+  function getPowerSet(iterable) {
+    var elementSet = new Set(iterable);
+    if (elementSet.size === 1)
+      return new Set([ new Set(), elementSet]);
+    var next = elementSet.keys().next().value;
+    elementSet.delete(next);
+    subPowerSet = getPowerSet(elementSet);
+    var powerSet = new Set();
+    subPowerSet.forEach(function(s) {
+      var newSet = new Set(s);
+      newSet.add(next);
+      powerSet.add(newSet);
+      powerSet.add(s);
+    });
+
+    return powerSet;
+  }
+
+
+  // Given a set of |gestureSet| as proposed supported gestures for
+  // customization, return a string which can be set as
+  // style.scrollCustomization property.
+  function getScrollCustomizationFromValidGestureSet(gestureSet) {
+    if (gestureSet.size === 0)
+      return 'none';
+
+    var summarized = new Set(gestureSet);
+    if (summarized.has(GESTURE_RIGHT) && summarized.has(GESTURE_LEFT)) {
+      summarized.delete(GESTURE_RIGHT);
+      summarized.delete(GESTURE_LEFT);
+      summarized.add('pan-x');
+    }
+
+    if (summarized.has(GESTURE_UP) && summarized.has(GESTURE_DOWN)) {
+      summarized.delete(GESTURE_UP);
+      summarized.delete(GESTURE_DOWN);
+      summarized.add('pan-y');
+    }
+
+    if (summarized.has('pan-x') && summarized.has('pan-y'))
+      return 'auto';
+
+    return Array.from(summarized).join(' ');
+  }
+
+  function verifyChange(actual, expected, testMessage) {
+    assert_equals(actual, expected, testMessage);
+  }
+
+  // Runs a test for the scenario where all the gestures in |validGestureSet|
+  // are valid (i.e., the handler should be called when any of the said gestures
+  // happen).
+  function testGestureSet(validGestureSet) {
+    var validGestureSetString = Array.from(validGestureSet).join(',');
+    var scrollCustomization =
+    getScrollCustomizationFromValidGestureSet(validGestureSet);
+    element.style.scrollCustomization = scrollCustomization;
+    ALL_GESTURES.forEach(function(testGesture) {
+      test(function() {
+        resetState();
+        applyGesture(testGesture).then(function() {
+          assert_equals(
+            scrollCustomizationHandlersCalled(),
+            validGestureSet.has(testGesture),
+            `Unexpected behavior for gesture "${testGesture}".`
+            );}
+          );
+      }, `Verify if property "${scrollCustomization}" works correctly with gesture "${testGesture}" given that the set of valid gestures is: {${validGestureSetString}}".`);
+    });
+  }
+
+  getPowerSet(ALL_GESTURES).forEach(function(gestureSet) {
+    testGestureSet(gestureSet);
+  });
+
+</script>
