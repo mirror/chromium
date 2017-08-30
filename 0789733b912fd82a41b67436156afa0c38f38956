@@ -94,6 +94,30 @@
       "revId": "0789733b912fd82a41b67436156afa0c38f38956",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a71b571f_64d41c7d",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-30T04:46:43Z",
+      "side": 1,
+      "message": "I\u0027m not familiar at all with that. Can you ask someone on the extensions side?",
+      "parentUuid": "404f2067_b8a9a099",
+      "range": {
+        "startLine": 558,
+        "startChar": 7,
+        "endLine": 558,
+        "endChar": 67
+      },
+      "revId": "0789733b912fd82a41b67436156afa0c38f38956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
