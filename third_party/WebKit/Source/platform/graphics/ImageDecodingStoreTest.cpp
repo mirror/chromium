@@ -37,7 +37,8 @@ class ImageDecodingStoreTest : public ::testing::Test,
  public:
   void SetUp() override {
     ImageDecodingStore::Instance().SetCacheLimitInBytes(1024 * 1024);
-    generator_ = ImageFrameGenerator::Create(SkISize::Make(100, 100), true,
+    generator_ = ImageFrameGenerator::Create(PaintImage::GetNextId(),
+                                             SkISize::Make(100, 100), true,
                                              ColorBehavior::Ignore());
     decoders_destroyed_ = 0;
   }

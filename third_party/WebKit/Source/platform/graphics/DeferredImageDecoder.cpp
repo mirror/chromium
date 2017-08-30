@@ -57,14 +57,15 @@ std::unique_ptr<DeferredImageDecoder> DeferredImageDecoder::Create(
     RefPtr<SharedBuffer> data,
     bool data_complete,
     ImageDecoder::AlphaOption alpha_option,
-    const ColorBehavior& color_behavior) {
+    const ColorBehavior& color_behavior,
+    PaintImage::Id paint_image_id) {
   std::unique_ptr<ImageDecoder> metadata_decoder =
       ImageDecoder::Create(data, data_complete, alpha_option, color_behavior);
   if (!metadata_decoder)
     return nullptr;
 
   std::unique_ptr<DeferredImageDecoder> decoder(
-      new DeferredImageDecoder(std::move(metadata_decoder)));
+      new DeferredImageDecoder(paint_image_id, std::move(metadata_decoder)));
 
   // Since we've just instantiated a fresh decoder, there's no need to reset its
   // data.
@@ -75,17 +76,19 @@ std::unique_ptr<DeferredImageDecoder> DeferredImageDecoder::Create(
 
 std::unique_ptr<DeferredImageDecoder> DeferredImageDecoder::CreateForTesting(
     std::unique_ptr<ImageDecoder> metadata_decoder) {
-  return WTF::WrapUnique(new DeferredImageDecoder(std::move(metadata_decoder)));
+  return WTF::WrapUnique(new DeferredImageDecoder(PaintImage::GetNextId(),
+                                                  std::move(metadata_decoder)));
 }
 
 DeferredImageDecoder::DeferredImageDecoder(
+    PaintImage::Id paint_image_id,
     std::unique_ptr<ImageDecoder> metadata_decoder)
     : metadata_decoder_(std::move(metadata_decoder)),
       repetition_count_(kAnimationNone),
       all_data_received_(false),
       can_yuv_decode_(false),
       has_hot_spot_(false),
-      complete_frame_content_id_(PaintImage::GetNextContentId()) {}
+      paint_image_id_(paint_image_id) {}
 
 DeferredImageDecoder::~DeferredImageDecoder() {}
 
@@ -127,7 +130,7 @@ sk_sp<PaintImageGenerator> DeferredImageDecoder::CreateGenerator(size_t index) {
 
   auto generator = DecodingImageGenerator::Create(
       frame_generator_, info, std::move(segment_reader), std::move(frames),
-      complete_frame_content_id_, all_data_received_);
+      all_data_received_);
   generator->SetCanYUVDecode(can_yuv_decode_);
 
   return generator;
@@ -272,7 +275,8 @@ void DeferredImageDecoder::ActivateLazyDecoding() {
       SkISize::Make(metadata_decoder_->DecodedSize().Width(),
                     metadata_decoder_->DecodedSize().Height());
   frame_generator_ = ImageFrameGenerator::Create(
-      decoded_size, !is_single_frame, metadata_decoder_->GetColorBehavior());
+      paint_image_id_, decoded_size, !is_single_frame,
+      metadata_decoder_->GetColorBehavior());
 }
 
 void DeferredImageDecoder::PrepareLazyDecodedFrames() {

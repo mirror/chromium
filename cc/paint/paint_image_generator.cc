@@ -5,12 +5,15 @@
 #include "cc/paint/paint_image_generator.h"
 
 #include "base/atomic_sequence_num.h"
+#include "cc/paint/paint_image_destruction_tracker.h"
 
 namespace cc {
 
-PaintImageGenerator::PaintImageGenerator(const SkImageInfo& info,
+PaintImageGenerator::PaintImageGenerator(PaintImage::Id paint_image_id,
+                                         const SkImageInfo& info,
                                          std::vector<FrameMetadata> frames)
-    : info_(info),
+    : paint_image_id_(paint_image_id),
+      info_(info),
       generator_content_id_(PaintImage::GetNextContentId()),
       frames_(std::move(frames)) {}
 
@@ -19,6 +22,9 @@ PaintImage::ContentId PaintImageGenerator::GetContentIdForFrame(
   return generator_content_id_;
 }
 
-PaintImageGenerator::~PaintImageGenerator() = default;
+PaintImageGenerator::~PaintImageGenerator() {
+  PaintImageDestructionTracker::GetInstance()->NotifyImageDestroyed(
+      paint_image_id_, generator_content_id_);
+}
 
 }  // namespace cc

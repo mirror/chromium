@@ -9,6 +9,7 @@
 #include "cc/base/devtools_instrumentation.h"
 #include "cc/paint/decoded_draw_image.h"
 #include "cc/paint/draw_image.h"
+#include "cc/paint/paint_image_destruction_tracker.h"
 #include "cc/tiles/tile_priority.h"
 
 namespace cc {
@@ -33,7 +34,8 @@ class TileTask;
 //    and it needs to be scaled/decoded, then this decode will happen as part of
 //    getting the image. As such, this should only be accessed from a raster
 //    thread.
-class CC_EXPORT ImageDecodeCache {
+class CC_EXPORT ImageDecodeCache
+    : public PaintImageDestructionTracker::Observer {
  public:
   enum class TaskType { kInRaster, kOutOfRaster };
 
@@ -72,7 +74,7 @@ class CC_EXPORT ImageDecodeCache {
     return ScopedTaskType::kInRaster;
   }
 
-  virtual ~ImageDecodeCache() {}
+  ~ImageDecodeCache() override;
 
   // Fill in an TileTask which will decode the given image when run. In
   // case the image is already cached, fills in nullptr. Returns true if the
@@ -129,13 +131,9 @@ class CC_EXPORT ImageDecodeCache {
   // locked budget before creating a task.
   virtual size_t GetMaximumMemoryLimitBytes() const = 0;
 
-  // Indicate to the cache that the image is no longer going
-  // to be used. This means it can be deleted altogether. If the
-  // image is locked, then the cache can do its best to clean it
-  // up later.
-  virtual void NotifyImageUnused(const PaintImage::FrameKey& frame_key) = 0;
-
  protected:
+  ImageDecodeCache();
+
   void RecordImageMipLevelUMA(int mip_level);
 };
 

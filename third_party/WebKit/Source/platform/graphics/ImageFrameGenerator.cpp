@@ -110,11 +110,14 @@ static bool UpdateYUVComponentSizes(ImageDecoder* decoder,
   return true;
 }
 
-ImageFrameGenerator::ImageFrameGenerator(const SkISize& full_size,
+ImageFrameGenerator::ImageFrameGenerator(PaintImage::Id paint_image_id,
+                                         const SkISize& full_size,
                                          bool is_multi_frame,
                                          const ColorBehavior& color_behavior)
     : full_size_(full_size),
       decoder_color_behavior_(color_behavior),
+      paint_image_id_(paint_image_id),
+      complete_frame_content_id_(PaintImage::GetNextContentId()),
       is_multi_frame_(is_multi_frame),
       decode_failed_(false),
       yuv_decoding_failed_(false),
@@ -122,6 +125,8 @@ ImageFrameGenerator::ImageFrameGenerator(const SkISize& full_size,
 
 ImageFrameGenerator::~ImageFrameGenerator() {
   ImageDecodingStore::Instance().RemoveCacheIndexedByGenerator(this);
+  PaintImageDestructionTracker::GetInstance()->NotifyImageDestroyed(
+      paint_image_id_, complete_frame_content_id_);
 }
 
 bool ImageFrameGenerator::DecodeAndScale(

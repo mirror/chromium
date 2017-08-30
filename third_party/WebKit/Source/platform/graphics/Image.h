@@ -253,6 +253,8 @@ class PLATFORM_EXPORT Image : public ThreadSafeRefCounted<Image> {
   // Initializes a PaintImageBuilder with the metadata flags for the PaintImage.
   void InitPaintImageBuilder(PaintImageBuilder&);
 
+  PaintImage::Id paint_image_id() const { return stable_image_id_; }
+
  private:
   bool image_observer_disabled_;
   RefPtr<SharedBuffer> encoded_image_data_;

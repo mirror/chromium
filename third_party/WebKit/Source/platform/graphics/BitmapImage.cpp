@@ -208,7 +208,7 @@ Image::SizeAvailability BitmapImage::SetData(RefPtr<SharedBuffer> data,
   bool has_enough_data = ImageDecoder::HasSufficientDataToSniffImageType(*data);
   decoder_ = DeferredImageDecoder::Create(std::move(data), all_data_received,
                                           ImageDecoder::kAlphaPremultiplied,
-                                          color_behavior);
+                                          color_behavior, paint_image_id());
   // If we had enough data but couldn't create a decoder, it implies a decode
   // failure.
   if (has_enough_data && !decoder_)

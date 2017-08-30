@@ -667,22 +667,33 @@ size_t GpuImageDecodeCache::GetMaximumMemoryLimitBytes() const {
   return normal_max_cache_bytes_;
 }
 
-void GpuImageDecodeCache::NotifyImageUnused(
-    const PaintImage::FrameKey& frame_key) {
-  auto it = persistent_cache_.Peek(frame_key);
-  if (it != persistent_cache_.end()) {
-    if (it->second->decode.ref_count != 0 ||
-        it->second->upload.ref_count != 0) {
-      it->second->is_orphaned = true;
-    } else if (it->second->upload.image()) {
-      DCHECK(!it->second->decode.is_locked());
-      bytes_used_ -= it->second->size;
-      images_pending_deletion_.push_back(it->second->upload.image());
-      it->second->upload.SetImage(nullptr);
-      it->second->upload.budgeted = false;
+void GpuImageDecodeCache::DestroyCachedDecode(
+    PaintImage::Id paint_image_id,
+    PaintImage::ContentId content_id) {
+  base::AutoLock lock(lock_);
+
+  auto it = paint_image_id_to_frame_keys_.find(paint_image_id);
+  if (it == paint_image_id_to_frame_keys_.end())
+    return;
+
+  std::vector<PaintImage::FrameKey>& keys = it->second;
+  auto key_it = keys.begin();
+  while (key_it != keys.end()) {
+    DCHECK_EQ(key_it->paint_image_id(), paint_image_id);
+    if (key_it->content_id() != content_id) {
+      key_it++;
+    } else {
+      auto data_it = persistent_cache_.Peek(*key_it);
+      if (data_it != persistent_cache_.end()) {
+        DCHECK_EQ(data_it->second->upload.ref_count, 0u);
+        persistent_cache_.Erase(data_it);
+      }
+      key_it = keys.erase(key_it);
     }
-    persistent_cache_.Erase(it);
   }
+
+  if (keys.empty())
+    paint_image_id_to_frame_keys_.erase(paint_image_id);
 }
 
 bool GpuImageDecodeCache::OnMemoryDump(
@@ -1284,6 +1295,9 @@ GpuImageDecodeCache::CreateImageData(const DrawImage& draw_image) {
   TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("cc.debug"),
                "GpuImageDecodeCache::CreateImageData");
   lock_.AssertAcquired();
+
+  paint_image_id_to_frame_keys_[draw_image.paint_image().stable_id()].push_back(
+      draw_image.frame_key());
 
   DecodedDataMode mode;
   int upload_scale_mip_level = CalculateUploadScaleMipLevel(draw_image);
