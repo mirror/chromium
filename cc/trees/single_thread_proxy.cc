@@ -380,6 +380,19 @@ void SingleThreadProxy::PostAnimationEventsToMainThreadOnImplThread(
   layer_tree_host_->SetAnimationEvents(std::move(events));
 }
 
+size_t SingleThreadProxy::GetNumberOfCompositedAnimations() const {
+  return 0;
+}
+
+size_t SingleThreadProxy::GetNumberOfMainThreadAnimations() const {
+  return 0;
+}
+
+size_t SingleThreadProxy::GetNumberOfMainThreadCouldBeCompositedAnimations()
+    const {
+  return 0;
+}
+
 bool SingleThreadProxy::IsInsideDraw() {
   return inside_draw_;
 }
