@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35d3fab9_ef283f6b",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 1175,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-30T01:59:32Z",
+      "side": 1,
+      "message": "nit: let\u0027s not make this optional and explicitly set it to false for java_prebuilt_impl",
+      "revId": "e0e232650d8f829a56262d409d8552e5b90f6838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f7602dd_52a2eece",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 2470,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-30T01:59:32Z",
+      "side": 1,
+      "message": "nit: add a comment saying why we don\u0027t bother for testonly targets.",
+      "revId": "e0e232650d8f829a56262d409d8552e5b90f6838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d53173ad_f11210b8",
+        "filename": "third_party/gvr-android-sdk/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-30T01:59:32Z",
+      "side": 1,
+      "message": "It looks like this is the only of the \"various deps issues are fixed\". And afaict, it\u0027s unrelated to the changes to the GN rules. Probably better to put it in a separate commit.",
+      "revId": "e0e232650d8f829a56262d409d8552e5b90f6838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
