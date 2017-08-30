@@ -117,7 +117,7 @@ cr.define('extensions', function() {
       let path;
       switch (entry.page) {
         case Page.LIST:
-          if (entry.type && entry.type == extensions.ShowingType.APPS)
+          if (entry.type == extensions.ShowingType.APPS)
             path = '/apps';
           else
             path = '/';

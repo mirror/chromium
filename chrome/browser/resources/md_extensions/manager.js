@@ -166,6 +166,19 @@ cr.define('extensions', function() {
     /** @private */
     onMenuButtonTap_: function() {
       this.$.drawer.toggle();
+      if (this.$.drawer.open) {
+        // Sidebar needs manager to inform it of what to highlight since it
+        // has no access to item-specific page.
+        let page = extensions.navigation.getCurrentPage();
+        if (page.extensionId) {
+          // Find out what type of item we're looking at, and replace page info
+          // with that list type.
+          const data = assert(this.getData_(page.extensionId));
+          page = {page: Page.LIST, type: extensions.getItemListType(data)};
+        }
+
+        this.$.sidebar.fire('sidebar-opened', {pageState: page});
+      }
     },
 
     /**
