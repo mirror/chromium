@@ -247,6 +247,23 @@
     },
     {
       "key": {
+        "uuid": "25f19098_c52efba0",
+        "filename": "media/blink/video_frame_compositor.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-30T16:22:17Z",
+      "side": 1,
+      "message": "typo: relevant\n\nAlso, the note isn\u0027t very useful to the reader; if this is code that will persist then just remove the note. If it\u0027s code that we\u0027ll get rid of / replace eventually then make it a TODO with clear criteria for which that will happen.",
+      "revId": "2afa3a917e9667d5256049b51af731d977fcf558",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "42973c6a_dd2f35e5",
         "filename": "media/blink/video_frame_compositor.h",
         "patchSetId": 37

@@ -265,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "9c8bec58_816b8724",
+        "filename": "media/blink/video_frame_compositor.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-30T16:22:17Z",
+      "side": 1,
+      "message": "Yes, if you have a test with a local variable |my_submitter| and you std::move() it into this setter then my_submitter is then null.\n\nHowever, there\u0027s nothing stopping the caller doing:\n\nunique_ptr\u003c...\u003e my_submitter \u003d ....\nWebVideoFrameSubmitter* submitter \u003d my_submitter.get();\nset_submitter_for_test(std::move(my_submitter));\n\nThis involves an extra line, taking a raw copy of the pointer before passing it to the setter, but it has the advantage of clearly documenting the ownership of the object referred to by |submitter|. :)",
+      "parentUuid": "78ecd111_4449031d",
+      "revId": "f852897c8ada854b44acdcae8821a834f13737cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71ea82f4_b42f0c78",
         "filename": "media/blink/video_frame_compositor.h",
         "patchSetId": 33
@@ -300,6 +318,24 @@
     },
     {
       "key": {
+        "uuid": "042ef89b_d0383843",
+        "filename": "media/blink/video_frame_compositor.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-30T16:22:17Z",
+      "side": 1,
+      "message": "If you\u0027re unsure of the semantics, best not to add any further comment on them. :D\n\nIf you *intend* that this class is basically called only on this |task_runner_|, but with some special-cases that are well-understood and documented separately, then good to make that clear.\n\nMy understanding, though, was that this class really _is_ only called on |task_runner_|, once we\u0027ve created it?",
+      "parentUuid": "b26505eb_9c8eda74",
+      "revId": "f852897c8ada854b44acdcae8821a834f13737cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "77a873f1_8050947b",
         "filename": "media/blink/video_frame_compositor.h",
         "patchSetId": 33
@@ -329,6 +365,24 @@
       "side": 1,
       "message": "We are using a SurfaceLayer. The Surface is a browser-side concept. Here in the renderer it is a SurfaceLayer. Also, since we are using this flag elsewhere, not just in this class, it is perhaps cleaner to keep it as it is.",
       "parentUuid": "77a873f1_8050947b",
+      "revId": "f852897c8ada854b44acdcae8821a834f13737cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9646704d_bcba4d0f",
+        "filename": "media/blink/video_frame_compositor.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-30T16:22:17Z",
+      "side": 1,
+      "message": "This particular |bool| is still a member of this class, though, so there\u0027s nothing else outside this class that can be using it. Having it separate from |submitter_| makes it less clear, IMO, that the two must be kept in-sync, so I\u0027d still recommend having a private getter called surface_layer_for_video_enabled() that returns true if |submitter_| is set.",
+      "parentUuid": "d2536618_e711334d",
       "revId": "f852897c8ada854b44acdcae8821a834f13737cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
