@@ -16,6 +16,8 @@
 #include "components/password_manager/core/browser/password_store.h"
 #include "components/password_manager/core/browser/password_store_consumer.h"
 #include "components/prefs/pref_member.h"
+#include "components/undo/undo_manager.h"
+#include "components/undo/undo_operation.h"
 #include "ui/shell_dialogs/select_file_dialog.h"
 
 namespace autofill {
@@ -65,6 +67,12 @@ class PasswordManagerPresenter
   // Removes the saved password exception entry at |index|.
   // |index| the entry index to be removed.
   void RemovePasswordException(size_t index);
+
+  // Undoes the last password removal.
+  void UndoRemovePassword();
+
+  // Redoes the last password removal.
+  void RedoRemovePassword();
 
   // Requests the plain text password for entry at |index| to be revealed.
   // |index| The index of the entry.
@@ -133,6 +141,44 @@ class PasswordManagerPresenter
         std::vector<std::unique_ptr<autofill::PasswordForm>> results) override;
   };
 
+  class PasswordRemoveOperation : public UndoOperation {
+   public:
+    PasswordRemoveOperation(UndoManager* undo_manager,
+                            password_manager::PasswordStore* password_store,
+                            const autofill::PasswordForm& password_form);
+
+    // UndoOperation:
+    void Undo() override;
+    int GetUndoLabelId() const override;
+    int GetRedoLabelId() const override;
+
+   private:
+    UndoManager* undo_manager_;
+    password_manager::PasswordStore* password_store_;
+    autofill::PasswordForm password_form_;
+
+    DISALLOW_COPY_AND_ASSIGN(PasswordRemoveOperation);
+  };
+
+  class PasswordAddOperation : public UndoOperation {
+   public:
+    PasswordAddOperation(UndoManager* undo_manager,
+                         password_manager::PasswordStore* password_store,
+                         const autofill::PasswordForm& password_form);
+
+    // UndoOperation:
+    void Undo() override;
+    int GetUndoLabelId() const override;
+    int GetRedoLabelId() const override;
+
+   private:
+    UndoManager* undo_manager_;
+    password_manager::PasswordStore* password_store_;
+    autofill::PasswordForm password_form_;
+
+    DISALLOW_COPY_AND_ASSIGN(PasswordAddOperation);
+  };
+
   // Password store consumer for populating the password list and exceptions.
   PasswordListPopulater populater_;
   PasswordExceptionListPopulater exception_populater_;
@@ -141,6 +187,10 @@ class PasswordManagerPresenter
   std::vector<std::unique_ptr<autofill::PasswordForm>> password_exception_list_;
   DuplicatesMap password_duplicates_;
   DuplicatesMap password_exception_duplicates_;
+
+  autofill::PasswordForm last_deleted_password_;
+
+  UndoManager undo_manager_;
 
   // Whether to show stored passwords or not.
   BooleanPrefMember show_passwords_;

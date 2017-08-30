@@ -196,11 +196,16 @@ void PasswordManagerPresenter::RemoveSavedPassword(size_t index) {
   if (!store)
     return;
 
-  RemoveDuplicates(*password_list_[index], &password_duplicates_, store,
+  const autofill::PasswordForm password_entry = *password_list_[index];
+  RemoveDuplicates(password_entry, &password_duplicates_, store,
                    PasswordEntryType::SAVED);
-  store->RemoveLogin(*password_list_[index]);
+  store->RemoveLogin(password_entry);
   base::RecordAction(
       base::UserMetricsAction("PasswordManager_RemoveSavedPassword"));
+
+  last_deleted_password_ = password_entry;
+  undo_manager_.AddUndoOperation(std::make_unique<PasswordRemoveOperation>(
+      &undo_manager_, store, password_entry));
 }
 
 void PasswordManagerPresenter::RemovePasswordException(size_t index) {
@@ -214,12 +219,26 @@ void PasswordManagerPresenter::RemovePasswordException(size_t index) {
   PasswordStore* store = GetPasswordStore();
   if (!store)
     return;
-  RemoveDuplicates(*password_exception_list_[index],
-                   &password_exception_duplicates_, store,
-                   PasswordEntryType::BLACKLISTED);
-  store->RemoveLogin(*password_exception_list_[index]);
+
+  const autofill::PasswordForm password_exception_entry =
+      *password_exception_list_[index];
+  RemoveDuplicates(password_exception_entry, &password_exception_duplicates_,
+                   store, PasswordEntryType::BLACKLISTED);
+  store->RemoveLogin(password_exception_entry);
   base::RecordAction(
       base::UserMetricsAction("PasswordManager_RemovePasswordException"));
+
+  last_deleted_password_ = password_exception_entry;
+  undo_manager_.AddUndoOperation(std::make_unique<PasswordRemoveOperation>(
+      &undo_manager_, store, password_exception_entry));
+}
+
+void PasswordManagerPresenter::UndoRemovePassword() {
+  undo_manager_.Undo();
+}
+
+void PasswordManagerPresenter::RedoRemovePassword() {
+  undo_manager_.Redo();
 }
 
 void PasswordManagerPresenter::RequestShowPassword(size_t index) {
@@ -420,4 +439,48 @@ void PasswordManagerPresenter::PasswordExceptionListPopulater::
                                       &page_->password_exception_duplicates_,
                                       PasswordEntryType::BLACKLISTED);
   page_->SetPasswordExceptionList();
+}
+
+PasswordManagerPresenter::PasswordRemoveOperation::PasswordRemoveOperation(
+    UndoManager* undo_manager,
+    PasswordStore* password_store,
+    const autofill::PasswordForm& password_form)
+    : undo_manager_(undo_manager),
+      password_store_(password_store),
+      password_form_(password_form) {}
+
+void PasswordManagerPresenter::PasswordRemoveOperation::Undo() {
+  undo_manager_->AddUndoOperation(std::make_unique<PasswordAddOperation>(
+      undo_manager_, password_store_, password_form_));
+  password_store_->AddLogin(password_form_);
+}
+
+int PasswordManagerPresenter::PasswordRemoveOperation::GetUndoLabelId() const {
+  return 0;
+}
+
+int PasswordManagerPresenter::PasswordRemoveOperation::GetRedoLabelId() const {
+  return 0;
+}
+
+PasswordManagerPresenter::PasswordAddOperation::PasswordAddOperation(
+    UndoManager* undo_manager,
+    PasswordStore* password_store,
+    const autofill::PasswordForm& password_form)
+    : undo_manager_(undo_manager),
+      password_store_(password_store),
+      password_form_(password_form) {}
+
+void PasswordManagerPresenter::PasswordAddOperation::Undo() {
+  undo_manager_->AddUndoOperation(std::make_unique<PasswordRemoveOperation>(
+      undo_manager_, password_store_, password_form_));
+  password_store_->RemoveLogin(password_form_);
+}
+
+int PasswordManagerPresenter::PasswordAddOperation::GetUndoLabelId() const {
+  return 0;
+}
+
+int PasswordManagerPresenter::PasswordAddOperation::GetRedoLabelId() const {
+  return 0;
 }

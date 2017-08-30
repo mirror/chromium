@@ -81,6 +81,18 @@ chrome.passwordsPrivate.removeSavedPassword = function(loginPair) {};
 chrome.passwordsPrivate.removePasswordException = function(exceptionUrl) {};
 
 /**
+ * Undoes the last removal of a saved password or password exception entry.
+ * @see https://developer.chrome.com/extensions/passwordsPrivate#method-undoRemovePassword
+ */
+chrome.passwordsPrivate.undoRemovePassword = function() {};
+
+/**
+ * Redoes the last removal of a saved password or password exception entry.
+ * @see https://developer.chrome.com/extensions/passwordsPrivate#method-redoRemovePassword
+ */
+chrome.passwordsPrivate.redoRemovePassword = function() {};
+
+/**
  * Returns the plaintext password corresponding to |loginPair|. Note that on
  * some operating systems, this call may result in an OS-level reauthentication.
  * Once the password has been fetched, it will be returned via the

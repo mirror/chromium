@@ -47,6 +47,8 @@ class PasswordsPrivateDelegateImpl : public PasswordsPrivateDelegate,
   void RemoveSavedPassword(
       const std::string& origin_url, const std::string& username) override;
   void RemovePasswordException(const std::string& exception_url) override;
+  void UndoRemovePassword() override;
+  void RedoRemovePassword() override;
   void RequestShowPassword(const std::string& origin_url,
                            const std::string& username,
                            content::WebContents* web_contents) override;
@@ -84,6 +86,8 @@ class PasswordsPrivateDelegateImpl : public PasswordsPrivateDelegate,
   void RemoveSavedPasswordInternal(
       const std::string& origin_url, const std::string& username);
   void RemovePasswordExceptionInternal(const std::string& exception_url);
+  void UndoRemovePasswordInternal();
+  void RedoRemovePasswordInternal();
   void RequestShowPasswordInternal(const std::string& origin_url,
                                    const std::string& username,
                                    content::WebContents* web_contents);

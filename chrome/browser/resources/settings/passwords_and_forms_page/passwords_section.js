@@ -64,6 +64,18 @@ class PasswordManager {
   removeException(exception) {}
 
   /**
+   * Should undo the last password or password exception removal and notify that
+   * the list has changed.
+   */
+  undoRemovePassword() {}
+
+  /**
+   * Should redo the last password or password exception removal and notify that
+   * the list has changed.
+   */
+  redoRemovePassword() {}
+
+  /**
    * Gets the saved password for a given login pair.
    * @param {!PasswordManager.LoginPair} loginPair The saved password that
    *     should be retrieved.
@@ -130,6 +142,16 @@ class PasswordManagerImpl {
   /** @override */
   removeException(exception) {
     chrome.passwordsPrivate.removePasswordException(exception);
+  }
+
+  /** @override */
+  undoRemovePassword() {
+    chrome.passwordsPrivate.undoRemovePassword();
+  }
+
+  /** @override */
+  redoRemovePassword() {
+    chrome.passwordsPrivate.redoRemovePassword();
   }
 
   /** @override */
@@ -327,6 +349,24 @@ Polymer({
    */
   onMenuRemovePasswordTap_: function() {
     this.passwordManager_.removeSavedPassword(this.activePassword.loginPair);
+    /** @type {CrActionMenuElement} */ (this.$.menu).close();
+  },
+
+  /**
+   * Fires an event that should undo the saved password removal.
+   * @private
+   */
+  onMenuUndoRemovePasswordTap_: function() {
+    this.passwordManager_.undoRemovePassword();
+    /** @type {CrActionMenuElement} */ (this.$.menu).close();
+  },
+
+  /**
+   * Fires an event that should redo the saved password removal.
+   * @private
+   */
+  onMenuRedoRemovePasswordTap_: function() {
+    this.passwordManager_.redoRemovePassword();
     /** @type {CrActionMenuElement} */ (this.$.menu).close();
   },
 

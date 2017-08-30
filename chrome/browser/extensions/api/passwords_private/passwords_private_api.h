@@ -48,6 +48,40 @@ class PasswordsPrivateRemovePasswordExceptionFunction :
   DISALLOW_COPY_AND_ASSIGN(PasswordsPrivateRemovePasswordExceptionFunction);
 };
 
+class PasswordsPrivateUndoRemovePasswordFunction
+    : public UIThreadExtensionFunction {
+ public:
+  PasswordsPrivateUndoRemovePasswordFunction() {}
+  DECLARE_EXTENSION_FUNCTION("passwordsPrivate.undoRemovePassword",
+                             PASSWORDSPRIVATE_UNDOREMOVEPASSWORD);
+
+ protected:
+  ~PasswordsPrivateUndoRemovePasswordFunction() override;
+
+  // ExtensionFunction overrides.
+  ResponseAction Run() override;
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(PasswordsPrivateUndoRemovePasswordFunction);
+};
+
+class PasswordsPrivateRedoRemovePasswordFunction
+    : public UIThreadExtensionFunction {
+ public:
+  PasswordsPrivateRedoRemovePasswordFunction() {}
+  DECLARE_EXTENSION_FUNCTION("passwordsPrivate.redoRemovePassword",
+                             PASSWORDSPRIVATE_REDOREMOVEPASSWORD);
+
+ protected:
+  ~PasswordsPrivateRedoRemovePasswordFunction() override;
+
+  // ExtensionFunction overrides.
+  ResponseAction Run() override;
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(PasswordsPrivateRedoRemovePasswordFunction);
+};
+
 class PasswordsPrivateRequestPlaintextPasswordFunction :
     public UIThreadExtensionFunction {
  public:
