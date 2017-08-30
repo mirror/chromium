@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "57dda7f0_a9cde184",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-30T13:26:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1bc62b05_05605f63",
+      "range": {
+        "startLine": 9,
+        "startChar": 44,
+        "endLine": 9,
+        "endChar": 51
+      },
+      "revId": "d372d298837cd1797e1046ee50bdb610009c74ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "075b3178_c37289ff",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsCardViewHolder.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-30T12:50:33Z",
       "side": 1,
       "message": "maybe just use `navigateToUrl(int windowOpenDisposition, String url)` instead? It makes it simpler to guess what it does and differentiates it more from openSnippet? Alternatively, just call openUrl here? It\u0027s a public method and what tiles use.",
+      "range": {
+        "startLine": 48,
+        "startChar": 52,
+        "endLine": 48,
+        "endChar": 75
+      },
+      "revId": "d372d298837cd1797e1046ee50bdb610009c74ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71eaa183_eebd1a76",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsCardViewHolder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-30T13:26:36Z",
+      "side": 1,
+      "message": "I don\u0027t want the viewHolder to deal with LoadUrlParams. It is the responsibility of the NavigationDelegate to do this. And this is also why I called the method navigateToSuggestionUrl. This resonates with the PageTransition.AUTO_BOOKMARK description, which talks about suggestions. WDYT?\n\nI agree that the method should take a \u0027String url\u0027 instead of a suggestion.",
+      "parentUuid": "075b3178_c37289ff",
       "range": {
         "startLine": 48,
         "startChar": 52,

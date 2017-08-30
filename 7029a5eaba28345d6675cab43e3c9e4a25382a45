@@ -22,6 +22,30 @@
       "revId": "7029a5eaba28345d6675cab43e3c9e4a25382a45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eff0938_0eed7727",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsCardViewHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-30T13:26:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0655f499_65f39e3d",
+      "range": {
+        "startLine": 48,
+        "startChar": 52,
+        "endLine": 48,
+        "endChar": 63
+      },
+      "revId": "7029a5eaba28345d6675cab43e3c9e4a25382a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
