@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "955f990b_45ffced1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-30T01:30:27Z",
+      "side": 1,
+      "message": "Should say somewhere that this only has an effect behind the DesktopPWAWindowing flag.",
+      "revId": "e5f0f10bf8e751224500b483b1ab5d36319dfad3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f74f4e24_880b6b63",
+        "filename": "chrome/browser/renderer_context_menu/render_view_context_menu.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 996,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-30T01:30:27Z",
+      "side": 1,
+      "message": "Nit: Combine this into the previous if with an \u0026\u0026.",
+      "range": {
+        "startLine": 996,
+        "startChar": 6,
+        "endLine": 996,
+        "endChar": 8
+      },
+      "revId": "e5f0f10bf8e751224500b483b1ab5d36319dfad3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bec542a2_3f640636",
+        "filename": "chrome/browser/renderer_context_menu/render_view_context_menu.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2201,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-30T01:30:27Z",
+      "side": 1,
+      "message": "Should you DCHECK this instead? Is there any situation where bookmark_app can reasonably be null here?",
+      "range": {
+        "startLine": 2201,
+        "startChar": 7,
+        "endLine": 2201,
+        "endChar": 19
+      },
+      "revId": "e5f0f10bf8e751224500b483b1ab5d36319dfad3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
