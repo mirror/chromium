@@ -49,10 +49,13 @@ class AXARIAGridRow final : public AXTableRow {
   bool CanSetSelectedAttribute() const final {
     return Restriction() != kDisabled;
   }
+  AXObject* ParentTable() const;
 
  private:
   bool IsARIATreeGridRow() const override;
 };
+
+DEFINE_AX_OBJECT_TYPE_CASTS(AXARIAGridRow, IsTableRow());
 
 }  // namespace blink
 
