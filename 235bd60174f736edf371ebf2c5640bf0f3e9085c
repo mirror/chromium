@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8bc5076e_ec509625",
+        "filename": "build/android/resource_sizes.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-08-30T18:25:34Z",
+      "side": 1,
+      "message": "I guess there\u0027s no real benefit of adding back \"normalized_apk_size -\u003d java_code.ComputeZippedSize()\"? Just curious, was the original intent of the -\u003d ZippedSize() followed by +\u003d UncompressedSize() to keep normalized_apk_size from being too huge?",
+      "revId": "235bd60174f736edf371ebf2c5640bf0f3e9085c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
