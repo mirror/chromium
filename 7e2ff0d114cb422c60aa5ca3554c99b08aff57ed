@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e73e0f8c_24bc0520",
+        "filename": "gpu/config/gpu_driver_bug_list.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 2612,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-08-30T17:51:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77f46758_122b6f35",
+      "range": {
+        "startLine": 2612,
+        "startChar": 7,
+        "endLine": 2612,
+        "endChar": 14
+      },
+      "revId": "7e2ff0d114cb422c60aa5ca3554c99b08aff57ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b21928be_745a11ea",
         "filename": "gpu/config/gpu_driver_bug_list.json",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "7e2ff0d114cb422c60aa5ca3554c99b08aff57ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa3c9548_1f9828ee",
+        "filename": "gpu/config/gpu_driver_bug_list.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 2615,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-08-30T17:51:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b21928be_745a11ea",
+      "range": {
+        "startLine": 2615,
+        "startChar": 9,
+        "endLine": 2615,
+        "endChar": 13
+      },
+      "revId": "7e2ff0d114cb422c60aa5ca3554c99b08aff57ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
