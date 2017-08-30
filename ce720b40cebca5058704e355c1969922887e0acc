@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e11fff7_68817416",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/java_script_dialogs/dialog_blocking/java_script_dialog_blocking_confirmation_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-30T04:35:40Z",
+      "side": 1,
+      "message": "Add weak.",
+      "range": {
+        "startLine": 27,
+        "startChar": 10,
+        "endLine": 27,
+        "endChar": 29
+      },
+      "revId": "ce720b40cebca5058704e355c1969922887e0acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddd64292_ce5291ef",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/java_script_dialogs/dialog_blocking/java_script_dialog_blocking_confirmation_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-30T04:35:40Z",
+      "side": 1,
+      "message": "In other code, I\u0027ve seen super stop called first, then stop dispatching. Is there a reason you chose to do this? (should we change the pattern?)",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 70,
+        "endChar": 60
+      },
+      "revId": "ce720b40cebca5058704e355c1969922887e0acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
