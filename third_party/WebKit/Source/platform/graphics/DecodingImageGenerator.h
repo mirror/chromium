@@ -60,7 +60,6 @@ class PLATFORM_EXPORT DecodingImageGenerator final
                                               const SkImageInfo&,
                                               PassRefPtr<SegmentReader>,
                                               std::vector<FrameMetadata>,
-                                              PaintImage::ContentId,
                                               bool all_data_received);
 
   ~DecodingImageGenerator() override;
@@ -86,14 +85,12 @@ class PLATFORM_EXPORT DecodingImageGenerator final
                          const SkImageInfo&,
                          PassRefPtr<SegmentReader>,
                          std::vector<FrameMetadata>,
-                         PaintImage::ContentId,
                          bool all_data_received);
 
   RefPtr<ImageFrameGenerator> frame_generator_;
   const RefPtr<SegmentReader> data_;  // Data source.
   const bool all_data_received_;
   bool can_yuv_decode_;
-  const PaintImage::ContentId complete_frame_content_id_;
 };
 
 }  // namespace blink

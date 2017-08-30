@@ -51,7 +51,8 @@ class PLATFORM_EXPORT DeferredImageDecoder final {
   static std::unique_ptr<DeferredImageDecoder> Create(RefPtr<SharedBuffer> data,
                                                       bool data_complete,
                                                       ImageDecoder::AlphaOption,
-                                                      const ColorBehavior&);
+                                                      const ColorBehavior&,
+                                                      PaintImage::Id);
 
   static std::unique_ptr<DeferredImageDecoder> CreateForTesting(
       std::unique_ptr<ImageDecoder>);
@@ -81,7 +82,8 @@ class PLATFORM_EXPORT DeferredImageDecoder final {
   bool HotSpot(IntPoint&) const;
 
  private:
-  explicit DeferredImageDecoder(std::unique_ptr<ImageDecoder> metadata_decoder);
+  explicit DeferredImageDecoder(PaintImage::Id paint_image_id,
+                                std::unique_ptr<ImageDecoder> metadata_decoder);
 
   friend class DeferredImageDecoderTest;
   ImageFrameGenerator* FrameGenerator() { return frame_generator_.Get(); }
@@ -107,7 +109,7 @@ class PLATFORM_EXPORT DeferredImageDecoder final {
   bool has_hot_spot_;
   sk_sp<SkColorSpace> color_space_for_sk_images_;
   IntPoint hot_spot_;
-  const PaintImage::ContentId complete_frame_content_id_;
+  const PaintImage::Id paint_image_id_;
 
   // Caches frame state information.
   Vector<DeferredFrameData> frame_data_;
