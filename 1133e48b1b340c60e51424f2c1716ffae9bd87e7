@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1c92003_502097cf",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-30T07:54:02Z",
+      "side": 1,
+      "message": "Rename |show_distances_| (e.g. |highlight_rect_config_|)",
+      "revId": "1133e48b1b340c60e51424f2c1716ffae9bd87e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b954c9fc_7a8b65d0",
+        "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-30T07:54:02Z",
+      "side": 1,
+      "message": "Don\u0027t need this comment.",
+      "revId": "1133e48b1b340c60e51424f2c1716ffae9bd87e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58d2ae41_677b4319",
+        "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-30T07:54:02Z",
+      "side": 1,
+      "message": "// Pin the hovered element on click.",
+      "revId": "1133e48b1b340c60e51424f2c1716ffae9bd87e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e42a81c0_cf2be329",
+        "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-30T07:54:02Z",
+      "side": 1,
+      "message": "// Display only guidelines if hovering without a pinned element.",
+      "revId": "1133e48b1b340c60e51424f2c1716ffae9bd87e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b741a1db_51371430",
+        "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-30T07:54:02Z",
+      "side": 1,
+      "message": "// If hovering with a pinned element, then show the distances between the pinned element and the hover element.",
+      "revId": "1133e48b1b340c60e51424f2c1716ffae9bd87e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35b5703d_5e28b755",
+        "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-30T07:54:02Z",
+      "side": 1,
+      "message": "// Unpin element.",
+      "revId": "1133e48b1b340c60e51424f2c1716ffae9bd87e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
