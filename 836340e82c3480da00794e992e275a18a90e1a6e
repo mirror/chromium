@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "50ab129c_08afc374",
+        "filename": "media/blink/video_frame_compositor.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-08-30T21:52:16Z",
+      "side": 1,
+      "message": "We can\u0027t do it this way. The client that is sideloaded in with SetVideoFrameProviderClient is a very different implementation than the one created here.",
+      "parentUuid": "caafa17b_7805cfad",
+      "revId": "836340e82c3480da00794e992e275a18a90e1a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7e6e7caa_b62cc92b",
         "filename": "media/blink/video_frame_compositor_unittest.cc",
         "patchSetId": 40
@@ -33,6 +51,24 @@
       "revId": "836340e82c3480da00794e992e275a18a90e1a6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b65c139a_25872046",
+        "filename": "media/blink/video_frame_compositor_unittest.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-08-30T21:52:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e6e7caa_b62cc92b",
+      "revId": "836340e82c3480da00794e992e275a18a90e1a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

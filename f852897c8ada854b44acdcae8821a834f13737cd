@@ -283,6 +283,24 @@
     },
     {
       "key": {
+        "uuid": "e3077f47_716c4ec4",
+        "filename": "media/blink/video_frame_compositor.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-08-30T21:52:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c8bec58_816b8724",
+      "revId": "f852897c8ada854b44acdcae8821a834f13737cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71ea82f4_b42f0c78",
         "filename": "media/blink/video_frame_compositor.h",
         "patchSetId": 33
@@ -336,6 +354,24 @@
     },
     {
       "key": {
+        "uuid": "38f2dad7_b40624f9",
+        "filename": "media/blink/video_frame_compositor.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-08-30T21:52:16Z",
+      "side": 1,
+      "message": "Start/Stop, and sometimes PaintSingleFrame (not an exhaustive list) will be called on different threads. They do some work then post using the task_runner.",
+      "parentUuid": "042ef89b_d0383843",
+      "revId": "f852897c8ada854b44acdcae8821a834f13737cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "77a873f1_8050947b",
         "filename": "media/blink/video_frame_compositor.h",
         "patchSetId": 33
@@ -383,6 +419,24 @@
       "side": 1,
       "message": "This particular |bool| is still a member of this class, though, so there\u0027s nothing else outside this class that can be using it. Having it separate from |submitter_| makes it less clear, IMO, that the two must be kept in-sync, so I\u0027d still recommend having a private getter called surface_layer_for_video_enabled() that returns true if |submitter_| is set.",
       "parentUuid": "d2536618_e711334d",
+      "revId": "f852897c8ada854b44acdcae8821a834f13737cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a27bc08_6faaa096",
+        "filename": "media/blink/video_frame_compositor.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-08-30T21:52:16Z",
+      "side": 1,
+      "message": "|submitter_| can be null even if the surface_layer_for_video_enabled returns true.",
+      "parentUuid": "9646704d_bcba4d0f",
       "revId": "f852897c8ada854b44acdcae8821a834f13737cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
