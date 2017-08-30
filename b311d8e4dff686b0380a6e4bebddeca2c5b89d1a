@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32e45dd3_c8cf8c17",
+        "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicy.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-30T15:33:52Z",
+      "side": 1,
+      "message": "1. Confirm that this is the expected behaviour (this should be silently ignored rather than an error)?\n2. Could you please add a test for this case (wpt seems reasonable given that it seems web-visible if my understanding above is correct; a unit test might not hurt either).",
+      "revId": "b311d8e4dff686b0380a6e4bebddeca2c5b89d1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
