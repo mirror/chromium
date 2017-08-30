@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f035af60_a5685349",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-30T21:31:57Z",
+      "side": 1,
+      "message": "/o\\",
+      "range": {
+        "startLine": 14,
+        "startChar": 43,
+        "endLine": 14,
+        "endChar": 54
+      },
+      "revId": "0d00b06f298b7bf3dcb198fd2551f9cc07217b5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fb8d1d98_7688ad81",
+        "filename": "cc/layers/painted_scrollbar_layer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-30T21:31:57Z",
+      "side": 1,
+      "message": "I\u0027m kind of hesitant about this. AFAICT this will only fail on true memory allocation failure, not on any kind of reasonable limit. So, in theory it\u0027s possible that we would allocate most of available memory for this one bitmap. That doesn\u0027t seem good. \n\nHave you considered just flat out limiting it to some size? It seems that we\u0027d still rasterize it, but just lose quality due to a smaller backing bitmap. \n\nFWIW, I think this is okay and better than before, but I\u0027m just wondering if we\u0027re being too lenient.",
+      "range": {
+        "startLine": 263,
+        "startChar": 16,
+        "endLine": 263,
+        "endChar": 33
+      },
+      "revId": "0d00b06f298b7bf3dcb198fd2551f9cc07217b5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
