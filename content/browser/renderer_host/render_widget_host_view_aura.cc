@@ -1644,8 +1644,10 @@ viz::FrameSinkId RenderWidgetHostViewAura::FrameSinkIdAtPoint(
 
   // It is possible that the renderer has not yet produced a surface, in which
   // case we return our current namespace.
-  if (!id.is_valid())
+  if (!id.is_valid()) {
+    *transformed_point = point;
     return GetFrameSinkId();
+  }
   return id.frame_sink_id();
 }
 
