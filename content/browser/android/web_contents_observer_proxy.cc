@@ -224,6 +224,14 @@ void WebContentsObserverProxy::DidChangeThemeColor(SkColor color) {
   Java_WebContentsObserverProxy_didChangeThemeColor(env, obj, color);
 }
 
+void WebContentsObserverProxy::MediaEffectivelyFullscreenChanged(
+    bool is_fullscreen) {
+  JNIEnv* env = AttachCurrentThread();
+  ScopedJavaLocalRef<jobject> obj(java_observer_);
+  Java_WebContentsObserverProxy_didEffectivelyFullscreenVideoChange(
+      env, obj, is_fullscreen);
+}
+
 void WebContentsObserverProxy::DidFirstVisuallyNonEmptyPaint() {
   JNIEnv* env = AttachCurrentThread();
   ScopedJavaLocalRef<jobject> obj(java_observer_);

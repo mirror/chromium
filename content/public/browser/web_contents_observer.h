@@ -442,6 +442,7 @@ class CONTENT_EXPORT WebContentsObserver : public IPC::Listener,
   virtual void MediaStoppedPlaying(const MediaPlayerInfo& video_type,
                                    const MediaPlayerId& id) {}
   virtual void MediaResized(const gfx::Size& size, const MediaPlayerId& id) {}
+  virtual void MediaEffectivelyFullscreenChanged(bool is_fullscreen) {}
   virtual void MediaMutedStatusChanged(const MediaPlayerId& id, bool muted) {}
 
   // Invoked when the renderer process changes the page scale factor.
