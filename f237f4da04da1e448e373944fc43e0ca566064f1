@@ -33,6 +33,24 @@
       "revId": "f237f4da04da1e448e373944fc43e0ca566064f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "876428eb_a134e8f6",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-30T21:51:31Z",
+      "side": 1,
+      "message": "I guess this must be handled properly since this code doesn\u0027t crash:\n\n\u003c!DOCTYPE html\u003e\n\u003cscript\u003e\nfunction closeFrame() {\n  const frame \u003d document.getElementById(\u0027frame\u0027)\n  frame.parentNode.removeChild(frame);\n}\n\u003c/script\u003e\n\n\u003cbody\u003e\n\u003ciframe id\u003d\"frame\" srcdoc\u003d\"\n\u003cscript\u003e\ndocument.designMode \u003d \u0027on\u0027;\ndocument.addEventListener(\u0027selectstart\u0027, parent.closeFrame);\n\u003c/script\u003e\nkwyjibo\"\u003e\n\u003c/frame\u003e\n\u003c/body\u003e\n\nIs it not actually possible to destroy a frame from JavaScript, only remove it from the DOM?",
+      "parentUuid": "f0350ebc_f936d125",
+      "revId": "f237f4da04da1e448e373944fc43e0ca566064f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
