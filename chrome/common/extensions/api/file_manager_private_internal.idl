@@ -14,6 +14,12 @@ namespace fileManagerPrivateInternal {
     boolean fileIsDirectory;
   };
 
+  // Describes a file in Recent root.
+  dictionary RecentFile {
+    EntryDescription entry;
+    double modificationByMeTime;
+  };
+
   callback SimpleCallback = void();
   callback ResolveIsolatedEntriesCallback = void(EntryDescription[] entries);
   callback GetEntryPropertiesCallback = void(
@@ -31,7 +37,7 @@ namespace fileManagerPrivateInternal {
   callback ZipSelectionCallback = void(optional boolean success);
   callback ValidatePathNameLengthCallback = void(boolean result);
   callback GetDirectorySizeCallback = void(double size);
-  callback GetRecentFilesCallback = void(EntryDescription[] entries);
+  callback GetRecentFilesCallback = void(RecentFile[] files);
 
   interface Functions {
     static void resolveIsolatedEntries(DOMString[] urls,
