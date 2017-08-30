@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4eee2124_49a08ded",
+        "filename": "chrome/browser/content_settings/host_content_settings_map_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-30T04:53:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfbbc2d6_8e94cb2e",
+      "revId": "773e3f0c37273146a389a357ed0bdc5ab2283749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1578bac4_baebb959",
         "filename": "chrome/browser/content_settings/host_content_settings_map_unittest.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "773e3f0c37273146a389a357ed0bdc5ab2283749",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dbf329b_5eee40c8",
+        "filename": "chrome/browser/content_settings/host_content_settings_map_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-30T04:53:54Z",
+      "side": 1,
+      "message": "Yes, comparing the unqiue_ptrs just compares their address.\n\nAnd, the \u003d\u003d operator in base::Value class is defined on the Value object, and it does a deep comparison:\nhttps://cs.chromium.org/chromium/src/base/values.cc?rcl\u003d1c6810ef1c13ded11a414d832386eb535e65d0b8\u0026l\u003d498",
+      "parentUuid": "1578bac4_baebb959",
+      "revId": "773e3f0c37273146a389a357ed0bdc5ab2283749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a779bb9d_6d125216",
+        "filename": "chrome/browser/content_settings/host_content_settings_map_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-30T04:53:54Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "62aac98f_4e7353ef",
+      "revId": "773e3f0c37273146a389a357ed0bdc5ab2283749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "097c797a_fb7704c7",
         "filename": "chrome/browser/content_settings/host_content_settings_map_unittest.cc",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "773e3f0c37273146a389a357ed0bdc5ab2283749",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "299981f7_dcfd90fb",
+        "filename": "chrome/browser/content_settings/host_content_settings_map_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-30T04:53:54Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "097c797a_fb7704c7",
+      "revId": "773e3f0c37273146a389a357ed0bdc5ab2283749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
