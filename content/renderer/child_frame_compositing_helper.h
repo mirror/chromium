@@ -85,7 +85,7 @@ class CONTENT_EXPORT ChildFrameCompositingHelper
   const int host_routing_id_;
 
   viz::SurfaceId last_primary_surface_id_;
-  gfx::Size last_surface_size_in_pixels_;
+  gfx::Size last_surface_size_;
 
   viz::SurfaceInfo fallback_surface_info_;
 

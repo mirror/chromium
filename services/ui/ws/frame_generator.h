@@ -40,7 +40,7 @@ class FrameGenerator : public viz::mojom::CompositorFrameSinkClient {
   void SwapSurfaceWith(FrameGenerator* other);
 
   void OnWindowDamaged();
-  void OnWindowSizeChanged(const gfx::Size& pixel_size);
+  void OnWindowSizeChanged(const gfx::Size& size_in_pixels);
   void Bind(
       std::unique_ptr<viz::mojom::CompositorFrameSink> compositor_frame_sink);
 
@@ -63,7 +63,7 @@ class FrameGenerator : public viz::mojom::CompositorFrameSinkClient {
   void SetNeedsBeginFrame(bool needs_begin_frame);
 
   float device_scale_factor_ = 1.f;
-  gfx::Size pixel_size_;
+  gfx::Size size_in_pixels_;
 
   std::unique_ptr<viz::mojom::CompositorFrameSink> compositor_frame_sink_;
   viz::BeginFrameArgs last_begin_frame_args_;

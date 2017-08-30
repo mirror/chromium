@@ -62,11 +62,11 @@ void FrameGenerator::OnWindowDamaged() {
   SetNeedsBeginFrame(true);
 }
 
-void FrameGenerator::OnWindowSizeChanged(const gfx::Size& pixel_size) {
-  if (pixel_size_ == pixel_size)
+void FrameGenerator::OnWindowSizeChanged(const gfx::Size& size_in_pixels) {
+  if (size_in_pixels_ == size_in_pixels)
     return;
 
-  pixel_size_ = pixel_size;
+  size_in_pixels_ = size_in_pixels;
   SetNeedsBeginFrame(true);
 }
 
@@ -114,7 +114,7 @@ void FrameGenerator::OnBeginFrame(const viz::BeginFrameArgs& begin_frame_args) {
 
 cc::CompositorFrame FrameGenerator::GenerateCompositorFrame() {
   const int render_pass_id = 1;
-  const gfx::Rect bounds(pixel_size_);
+  const gfx::Rect bounds(size_in_pixels_);
   std::unique_ptr<cc::RenderPass> render_pass = cc::RenderPass::Create();
   render_pass->SetNew(render_pass_id, bounds, bounds, gfx::Transform());
 
@@ -127,9 +127,13 @@ cc::CompositorFrame FrameGenerator::GenerateCompositorFrame() {
     invert_pass->SetNew(2, bounds, bounds, gfx::Transform());
     viz::SharedQuadState* shared_state =
         invert_pass->CreateAndAppendSharedQuadState();
+#if 0
     gfx::Size scaled_bounds = gfx::ScaleToCeiledSize(
-        pixel_size_, window_manager_surface_info_.device_scale_factor(),
+        size_in_pixels_, window_manager_surface_info_.device_scale_factor(),
         window_manager_surface_info_.device_scale_factor());
+#else
+    gfx::Size scaled_bounds = size_in_pixels_;
+#endif
     shared_state->SetAll(gfx::Transform(), gfx::Rect(scaled_bounds), bounds,
                          bounds, false, 1.f, SkBlendMode::kSrcOver, 0);
     auto* quad = invert_pass->CreateAndAppendDrawQuad<cc::RenderPassDrawQuad>();
@@ -156,8 +160,7 @@ cc::CompositorFrame FrameGenerator::GenerateCompositorFrame() {
 void FrameGenerator::DrawWindow(cc::RenderPass* pass) {
   DCHECK(window_manager_surface_info_.is_valid());
 
-  const gfx::Rect bounds_at_origin(
-      window_manager_surface_info_.size_in_pixels());
+  const gfx::Rect bounds_at_origin(window_manager_surface_info_.size());
 
   gfx::Transform quad_to_target_transform;
   quad_to_target_transform.Translate(bounds_at_origin.x(),
@@ -165,10 +168,14 @@ void FrameGenerator::DrawWindow(cc::RenderPass* pass) {
 
   viz::SharedQuadState* sqs = pass->CreateAndAppendSharedQuadState();
 
+#if 0
   gfx::Size scaled_bounds = gfx::ScaleToCeiledSize(
       bounds_at_origin.size(),
       window_manager_surface_info_.device_scale_factor(),
       window_manager_surface_info_.device_scale_factor());
+#else
+  gfx::Size scaled_bounds = bounds_at_origin.size();
+#endif
 
   // TODO(fsamuel): These clipping and visible rects are incorrect. They need
   // to be populated from CompositorFrame structs.

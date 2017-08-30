@@ -79,10 +79,14 @@ void SurfaceLayerImpl::AppendQuads(RenderPass* render_pass,
     if (fallback_surface_info_.is_valid()) {
       // We can use the same SharedQuadState as the primary SurfaceDrawQuad if
       // we don't need a different transform on the fallback.
+#if 0
       bool use_common_shared_quad_state =
           !stretch_content_to_fill_bounds_ &&
           primary_surface_info_.device_scale_factor() ==
               fallback_surface_info_.device_scale_factor();
+#else
+      bool use_common_shared_quad_state = true;
+#endif
       primary->fallback_quad = CreateSurfaceDrawQuad(
           render_pass, SurfaceDrawQuadType::FALLBACK, fallback_surface_info_,
           use_common_shared_quad_state ? &common_shared_quad_state : nullptr);
@@ -97,7 +101,7 @@ SurfaceDrawQuad* SurfaceLayerImpl::CreateSurfaceDrawQuad(
     viz::SharedQuadState** common_shared_quad_state) {
   DCHECK(surface_info.is_valid());
 
-  gfx::Rect quad_rect(surface_info.size_in_pixels());
+  gfx::Rect quad_rect(surface_info.size());
   gfx::Rect visible_quad_rect =
       draw_properties().occlusion_in_content_space.GetUnoccludedContentRect(
           gfx::Rect(bounds()));
@@ -107,14 +111,13 @@ SurfaceDrawQuad* SurfaceLayerImpl::CreateSurfaceDrawQuad(
     // Stretches the surface contents to exactly fill the layer bounds,
     // regardless of scale or aspect ratio differences.
     layer_to_content_scale_x =
-        static_cast<float>(surface_info.size_in_pixels().width()) /
-        bounds().width();
+        static_cast<float>(surface_info.size().width()) / bounds().width();
     layer_to_content_scale_y =
-        static_cast<float>(surface_info.size_in_pixels().height()) /
-        bounds().height();
+        static_cast<float>(surface_info.size().height()) / bounds().height();
   } else {
-    layer_to_content_scale_x = layer_to_content_scale_y =
-        surface_info.device_scale_factor();
+    // layer_to_content_scale_x = layer_to_content_scale_y =
+    //     surface_info.device_scale_factor();
+    layer_to_content_scale_x = layer_to_content_scale_y = 1.0f;
   }
 
   visible_quad_rect = gfx::ScaleToEnclosingRect(

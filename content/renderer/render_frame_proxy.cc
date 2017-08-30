@@ -552,12 +552,15 @@ void RenderFrameProxy::FrameRectsChanged(const blink::WebRect& frame_rect) {
     local_surface_id_ = local_surface_id_allocator_.GenerateId();
     if (compositing_helper_ && enable_surface_synchronization_ &&
         frame_sink_id_.is_valid()) {
-      float device_scale_factor =
-          render_widget()->GetOriginalDeviceScaleFactor();
+      // float device_scale_factor =
+      //     render_widget()->GetOriginalDeviceScaleFactor();
+      // viz::SurfaceInfo surface_info(
+      //     viz::SurfaceId(frame_sink_id_, local_surface_id_),
+      //     device_scale_factor,
+      //     gfx::ScaleToCeiledSize(frame_rect_.size(), device_scale_factor));
       viz::SurfaceInfo surface_info(
           viz::SurfaceId(frame_sink_id_, local_surface_id_),
-          device_scale_factor,
-          gfx::ScaleToCeiledSize(frame_rect_.size(), device_scale_factor));
+          frame_rect_.size());
       compositing_helper_->SetPrimarySurfaceInfo(surface_info);
     }
   }

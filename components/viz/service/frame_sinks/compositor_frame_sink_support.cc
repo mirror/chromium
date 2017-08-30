@@ -15,6 +15,7 @@
 #include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
 #include "components/viz/service/surfaces/surface.h"
 #include "components/viz/service/surfaces/surface_reference.h"
+#include "ui/gfx/geometry/dip_util.h"
 
 namespace viz {
 
@@ -166,9 +167,9 @@ bool CompositorFrameSinkSupport::SubmitCompositorFrame(
     current_surface = prev_surface;
   } else {
     SurfaceId surface_id(frame_sink_id_, local_surface_id);
-    SurfaceInfo surface_info(surface_id, frame.device_scale_factor(),
-                             frame.size_in_pixels());
-
+    SurfaceInfo surface_info(surface_id,
+                             gfx::ConvertSizeToDIP(frame.device_scale_factor(),
+                                                   frame.size_in_pixels()));
     if (!surface_info.is_valid()) {
       TRACE_EVENT_INSTANT0("cc", "Invalid SurfaceInfo",
                            TRACE_EVENT_SCOPE_THREAD);

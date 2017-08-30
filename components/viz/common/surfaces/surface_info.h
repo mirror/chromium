@@ -23,37 +23,26 @@ class SurfaceInfoDataView;
 class SurfaceInfo {
  public:
   SurfaceInfo() = default;
-  SurfaceInfo(const SurfaceId& id,
-              float device_scale_factor,
-              const gfx::Size& size_in_pixels)
-      : id_(id),
-        device_scale_factor_(device_scale_factor),
-        size_in_pixels_(size_in_pixels) {}
+  SurfaceInfo(const SurfaceId& id, const gfx::Size& size)
+      : id_(id), size_(size) {}
 
-  bool is_valid() const {
-    return id_.is_valid() && device_scale_factor_ != 0 &&
-           !size_in_pixels_.IsEmpty();
-  }
+  bool is_valid() const { return id_.is_valid() && !size_.IsEmpty(); }
 
   bool operator==(const SurfaceInfo& info) const {
-    return id_ == info.id() &&
-           device_scale_factor_ == info.device_scale_factor() &&
-           size_in_pixels_ == info.size_in_pixels();
+    return id_ == info.id() && size_ == info.size();
   }
 
   bool operator!=(const SurfaceInfo& info) const { return !(*this == info); }
 
   const SurfaceId& id() const { return id_; }
-  float device_scale_factor() const { return device_scale_factor_; }
-  const gfx::Size& size_in_pixels() const { return size_in_pixels_; }
+  const gfx::Size& size() const { return size_; }
 
  private:
   friend struct mojo::StructTraits<mojom::SurfaceInfoDataView, SurfaceInfo>;
   friend struct IPC::ParamTraits<SurfaceInfo>;
 
   SurfaceId id_;
-  float device_scale_factor_ = 1.f;
-  gfx::Size size_in_pixels_;
+  gfx::Size size_;
 };
 
 }  // namespace viz

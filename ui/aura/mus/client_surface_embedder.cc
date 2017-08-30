@@ -49,12 +49,8 @@ void ClientSurfaceEmbedder::UpdateSizeAndGutters() {
   gfx::Size fallback_surface_size_in_dip;
   const viz::SurfaceInfo* fallback_surface_info =
       surface_layer_->GetFallbackSurfaceInfo();
-  if (fallback_surface_info) {
-    float fallback_device_scale_factor =
-        fallback_surface_info->device_scale_factor();
-    fallback_surface_size_in_dip = gfx::ConvertSizeToDIP(
-        fallback_device_scale_factor, fallback_surface_info->size_in_pixels());
-  }
+  if (fallback_surface_info)
+    fallback_surface_size_in_dip = fallback_surface_info->size();
   gfx::Rect window_bounds(window_->bounds());
   if (!window_->transparent() &&
       fallback_surface_size_in_dip.width() < window_bounds.width()) {

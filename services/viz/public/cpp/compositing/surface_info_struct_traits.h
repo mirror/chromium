@@ -17,19 +17,14 @@ struct StructTraits<viz::mojom::SurfaceInfoDataView, viz::SurfaceInfo> {
     return surface_info.id();
   }
 
-  static float device_scale_factor(const viz::SurfaceInfo& surface_info) {
-    return surface_info.device_scale_factor();
-  }
-
-  static const gfx::Size& size_in_pixels(const viz::SurfaceInfo& surface_info) {
-    return surface_info.size_in_pixels();
+  static const gfx::Size& size(const viz::SurfaceInfo& surface_info) {
+    return surface_info.size();
   }
 
   static bool Read(viz::mojom::SurfaceInfoDataView data,
                    viz::SurfaceInfo* out) {
-    out->device_scale_factor_ = data.device_scale_factor();
-    return data.ReadSurfaceId(&out->id_) &&
-           data.ReadSizeInPixels(&out->size_in_pixels_) && out->is_valid();
+    return data.ReadSurfaceId(&out->id_) && data.ReadSize(&out->size_) &&
+           out->is_valid();
   }
 };
 

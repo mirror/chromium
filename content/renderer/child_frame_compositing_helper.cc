@@ -210,16 +210,11 @@ void ChildFrameCompositingHelper::UpdateWebLayer(
 void ChildFrameCompositingHelper::CheckSizeAndAdjustLayerProperties(
     const viz::SurfaceInfo& surface_info,
     cc::Layer* layer) {
-  if (last_surface_size_in_pixels_ == surface_info.size_in_pixels())
+  if (last_surface_size_ == surface_info.size())
     return;
 
-  last_surface_size_in_pixels_ = surface_info.size_in_pixels();
-  // The container size is in DIP, so is the layer size.
-  // Buffer size is in physical pixels, so we need to adjust
-  // it by the device scale factor.
-  gfx::Size device_scale_adjusted_size = gfx::ScaleToFlooredSize(
-      surface_info.size_in_pixels(), 1.0f / surface_info.device_scale_factor());
-  layer->SetBounds(device_scale_adjusted_size);
+  last_surface_size_ = surface_info.size();
+  layer->SetBounds(last_surface_size_);
 }
 
 void ChildFrameCompositingHelper::OnContainerDestroy() {
@@ -262,18 +257,19 @@ void ChildFrameCompositingHelper::ChildFrameGone() {
 void ChildFrameCompositingHelper::SetPrimarySurfaceInfo(
     const viz::SurfaceInfo& surface_info) {
   last_primary_surface_id_ = surface_info.id();
-  float scale_factor = surface_info.device_scale_factor();
-  // TODO(oshima): This is a stopgap fix so that the compositor does not
-  // scaledown the content when 2x frame data is added to 1x parent frame data.
-  // Fix this in cc/.
-  if (IsUseZoomForDSFEnabled())
-    scale_factor = 1.0f;
+  // float scale_factor = surface_info.device_scale_factor();
+  // // TODO(oshima): This is a stopgap fix so that the compositor does not
+  // // scaledown the content when 2x frame data is added to 1x parent frame
+  // data.
+  // // Fix this in cc/.
+  // if (IsUseZoomForDSFEnabled())
+  //   scale_factor = 1.0f;
 
   surface_layer_ = cc::SurfaceLayer::Create(surface_reference_factory_);
   surface_layer_->SetMasksToBounds(true);
 
-  viz::SurfaceInfo modified_surface_info(surface_info.id(), scale_factor,
-                                         surface_info.size_in_pixels());
+  viz::SurfaceInfo modified_surface_info(surface_info.id(),
+                                         surface_info.size());
   surface_layer_->SetPrimarySurfaceInfo(modified_surface_info);
   surface_layer_->SetFallbackSurfaceInfo(fallback_surface_info_);
 
@@ -296,12 +292,12 @@ void ChildFrameCompositingHelper::SetFallbackSurfaceInfo(
     const viz::SurfaceInfo& surface_info,
     const viz::SurfaceSequence& sequence) {
   fallback_surface_info_ = surface_info;
-  float scale_factor = surface_info.device_scale_factor();
+  // float scale_factor = surface_info.device_scale_factor();
   // TODO(oshima): This is a stopgap fix so that the compositor does not
   // scaledown the content when 2x frame data is added to 1x parent frame data.
   // Fix this in cc/.
-  if (IsUseZoomForDSFEnabled())
-    scale_factor = 1.0f;
+  // if (IsUseZoomForDSFEnabled())
+  //   scale_factor = 1.0f;
 
   // The RWHV creates a destruction dependency on the surface that needs to be
   // satisfied. The reference factory will satisfy it when a new reference has
@@ -318,8 +314,8 @@ void ChildFrameCompositingHelper::SetFallbackSurfaceInfo(
     }
   }
 
-  viz::SurfaceInfo modified_surface_info(surface_info.id(), scale_factor,
-                                         surface_info.size_in_pixels());
+  viz::SurfaceInfo modified_surface_info(surface_info.id(),
+                                         surface_info.size());
   surface_layer_->SetFallbackSurfaceInfo(modified_surface_info);
 }
 

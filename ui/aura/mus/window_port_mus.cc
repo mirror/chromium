@@ -24,16 +24,6 @@
 
 namespace aura {
 
-namespace {
-// Helper function to get the device_scale_factor() of the display::Display
-// nearest to |window|.
-float ScaleFactorForDisplay(Window* window) {
-  return display::Screen::GetScreen()
-      ->GetDisplayNearestWindow(window)
-      .device_scale_factor();
-}
-}  // namespace
-
 WindowPortMus::WindowMusChangeDataImpl::WindowMusChangeDataImpl() = default;
 
 WindowPortMus::WindowMusChangeDataImpl::~WindowMusChangeDataImpl() = default;
@@ -250,9 +240,7 @@ void WindowPortMus::SetBoundsFromServer(
   ServerChangeData data;
   data.bounds_in_dip = bounds;
   ScopedServerChange change(this, ServerChangeType::BOUNDS, data);
-  float device_scale_factor = ScaleFactorForDisplay(window_);
-  last_surface_size_in_pixels_ =
-      gfx::ConvertSizeToPixel(device_scale_factor, bounds.size());
+  last_surface_size_ = bounds.size();
   if (local_surface_id)
     local_surface_id_ = *local_surface_id;
   else
@@ -306,14 +294,13 @@ void WindowPortMus::SetFrameSinkIdFromServer(
 }
 
 const viz::LocalSurfaceId& WindowPortMus::GetOrAllocateLocalSurfaceId(
-    const gfx::Size& surface_size_in_pixels) {
-  if (last_surface_size_in_pixels_ == surface_size_in_pixels &&
-      local_surface_id_.is_valid()) {
+    const gfx::Size& surface_size) {
+  if (last_surface_size_ == surface_size && local_surface_id_.is_valid()) {
     return local_surface_id_;
   }
 
   local_surface_id_ = local_surface_id_allocator_.GenerateId();
-  last_surface_size_in_pixels_ = surface_size_in_pixels;
+  last_surface_size_ = surface_size;
 
   // If the FrameSinkId is available, then immediately embed the SurfaceId.
   // The newly generated frame by the embedder will block in the display
@@ -595,9 +582,9 @@ void WindowPortMus::UpdatePrimarySurfaceInfo() {
   if (!embed_frame_sink_id_.is_valid() || !local_surface_id_.is_valid())
     return;
 
-  primary_surface_info_ = viz::SurfaceInfo(
-      viz::SurfaceId(embed_frame_sink_id_, local_surface_id_),
-      ScaleFactorForDisplay(window_), last_surface_size_in_pixels_);
+  primary_surface_info_ =
+      viz::SurfaceInfo(viz::SurfaceId(embed_frame_sink_id_, local_surface_id_),
+                       last_surface_size_);
   UpdateClientSurfaceEmbedder();
 }
 

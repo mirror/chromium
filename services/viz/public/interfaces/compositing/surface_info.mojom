@@ -11,7 +11,6 @@ import "ui/gfx/geometry/mojo/geometry.mojom";
 // across clients to embed the associated surface in another client.
 struct SurfaceInfo {
   SurfaceId surface_id;
-  float device_scale_factor;
-  gfx.mojom.Size size_in_pixels;
+  gfx.mojom.Size size;
 };
 

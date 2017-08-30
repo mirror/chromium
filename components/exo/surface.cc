@@ -434,6 +434,7 @@ void Surface::CommitSurfaceHierarchy(
       frame_type == FRAME_TYPE_COMMIT && needs_commit_surface_hierarchy_;
   bool needs_full_damage = frame_type == FRAME_TYPE_RECREATED_RESOURCES;
 
+  bool update_resource = false;
   if (needs_commit) {
     needs_commit_surface_hierarchy_ = false;
 
@@ -459,6 +460,7 @@ void Surface::CommitSurfaceHierarchy(
       current_buffer_ = std::move(pending_buffer_);
 
       UpdateResource(frame_sink_holder, true);
+      update_resource = true;
     }
 
     // Move pending frame callbacks to the end of frame_callbacks.
@@ -511,6 +513,12 @@ void Surface::CommitSurfaceHierarchy(
   if (needs_commit)
     pending_damage_.setEmpty();
 
+  bool dcheck_value =
+      !current_resource_.id ||
+      frame_sink_holder->HasReleaseCallbackForResource(current_resource_.id);
+  if (!dcheck_value) {
+    fprintf(stderr, "EEE update_resource=%d\n", update_resource);
+  }
   DCHECK(
       !current_resource_.id ||
       frame_sink_holder->HasReleaseCallbackForResource(current_resource_.id));

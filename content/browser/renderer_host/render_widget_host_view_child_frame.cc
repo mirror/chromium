@@ -39,6 +39,7 @@
 #include "gpu/ipc/common/gpu_messages.h"
 #include "services/service_manager/runner/common/client_util.h"
 #include "third_party/WebKit/public/platform/WebTouchEvent.h"
+#include "ui/gfx/geometry/dip_util.h"
 #include "ui/gfx/geometry/size_conversions.h"
 #include "ui/gfx/geometry/size_f.h"
 #include "ui/touch_selection/touch_selection_controller.h"
@@ -476,8 +477,9 @@ void RenderWidgetHostViewChildFrame::DidCreateNewRendererCompositorFrameSink(
 void RenderWidgetHostViewChildFrame::ProcessCompositorFrame(
     const viz::LocalSurfaceId& local_surface_id,
     cc::CompositorFrame frame) {
-  current_surface_size_ = frame.size_in_pixels();
-  current_surface_scale_factor_ = frame.device_scale_factor();
+  current_surface_scale_factor_ = frame.metadata.device_scale_factor;
+  current_surface_size_ = gfx::ConvertSizeToDIP(current_surface_scale_factor_,
+                                                frame.size_in_pixels());
 
   bool result =
       support_->SubmitCompositorFrame(local_surface_id, std::move(frame));
@@ -511,8 +513,12 @@ void RenderWidgetHostViewChildFrame::SendSurfaceInfoToEmbedder() {
   // SurfaceLayer.
   if (!manager->using_surface_references())
     manager->RequireSequence(surface_id, sequence);
-  viz::SurfaceInfo surface_info(surface_id, current_surface_scale_factor_,
+  viz::SurfaceInfo surface_info(surface_id, /* current_surface_scale_factor_, */
                                 current_surface_size_);
+  fprintf(stderr,
+          "EEE RenderWidgetHostViewChildFrame::SendSurfaceInfoToEmbedder() "
+          "scale_factor = %f\n",
+          current_surface_scale_factor_);
   SendSurfaceInfoToEmbedderImpl(surface_info, sequence);
 }
 
