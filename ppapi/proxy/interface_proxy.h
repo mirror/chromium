@@ -23,15 +23,15 @@ class InterfaceProxy : public IPC::Listener, public IPC::Sender {
   // is transferred to the caller.
   typedef InterfaceProxy* (*Factory)(Dispatcher* dispatcher);
 
-  virtual ~InterfaceProxy();
+  ~InterfaceProxy() override;
 
   Dispatcher* dispatcher() const { return dispatcher_; }
 
   // IPC::Sender implementation.
-  virtual bool Send(IPC::Message* msg);
+  bool Send(IPC::Message* msg) override;
 
   // Sub-classes must implement IPC::Listener which contains this:
-  //virtual bool OnMessageReceived(const IPC::Message& msg);
+  // bool OnMessageReceived(const IPC::Message& msg) override;
 
  protected:
   // Creates the given interface associated with the given dispatcher. The
