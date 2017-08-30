@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afa4be21_9ba2b5f8",
+        "filename": "chrome/browser/extensions/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 968,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-30T15:32:13Z",
+      "side": 1,
+      "message": "IIUC this is only added because of the prefs. Can we add a `//components/arc:prefs` build target to minimize the exposure of stuff?",
+      "range": {
+        "startLine": 968,
+        "startChar": 7,
+        "endLine": 968,
+        "endChar": 23
+      },
+      "revId": "0fdbe4452aa77c948e7876d9e42ed5b7493d7aaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c18a6e36_494aeed4",
+        "filename": "components/arc/arc_export.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-30T15:32:13Z",
+      "side": 1,
+      "message": "nit: newline below.\n\nqq: under which circumstances is this file included when OS_CHROMEOS is not defined, but COMPONENT_BUILD and ARC_IMPLEMENTATION are? Is it possible to unconditionally make this check/error? That way you can model the whole thing like\n\n\n #if !defined(OS_CHROMEOS)\n #error \"ARC can be built only for ChromeOS.\"\n #endif  // defined(OS_CHROMEOS)\n\n #if defined(COMPONENT_BUILD) \u0026\u0026 defined(ARC_IMPLEMENTATION)\n #define ARC_EXPORT __attribute__((visibility(\"default\")))\n #else  // !defined(COMPONENT_BUILD) || !defined(ARC_IMPLEMENTATION)\n #define ARC_EXPORT\n #endif",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 31
+      },
+      "revId": "0fdbe4452aa77c948e7876d9e42ed5b7493d7aaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4baa9c68_929418ef",
+        "filename": "components/arc/arc_export.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-30T15:32:13Z",
+      "side": 1,
+      "message": "nit: !defined(COMPONENT_BUILD) || !defined(ARC_IMPLEMENTATION)",
+      "range": {
+        "startLine": 15,
+        "startChar": 10,
+        "endLine": 15,
+        "endChar": 65
+      },
+      "revId": "0fdbe4452aa77c948e7876d9e42ed5b7493d7aaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e503f8c1_ebce1b81",
+        "filename": "components/arc/arc_prefs.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-30T15:32:13Z",
+      "side": 1,
+      "message": "Should we keep the comment to sort lexicographically?",
+      "range": {
+        "startLine": 12,
+        "startChar": 10,
+        "endLine": 12,
+        "endChar": 15
+      },
+      "revId": "0fdbe4452aa77c948e7876d9e42ed5b7493d7aaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
