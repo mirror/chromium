@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58d0ec02_419fe133",
+        "filename": "components/multidevice/BUILD.gn",
+        "patchSetId": 43
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-08-30T10:16:33Z",
+      "side": 1,
+      "message": "that target doesn\u0027t seem to serve any purpose? The higher-level BUILD.gn already references the unit test this depends on...",
+      "revId": "2ccabb5f1f7e6381f108d929c2ef7fa3b4d5ef06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
