@@ -136,6 +136,7 @@ PaintLayer::PaintLayer(LayoutBoxModelObject& layout_object)
       has_self_painting_layer_descendant_dirty_(false),
       is_root_layer_(layout_object.IsLayoutView()),
       has_visible_content_(false),
+      is_in_collapsed_cell_(false),
       needs_descendant_dependent_flags_update_(true),
       has_visible_descendant_(false),
 #if DCHECK_IS_ON()

@@ -1286,6 +1286,7 @@ void LayoutTableSection::UpdateLogicalWidthForCollapsedCells(
         continue;
       if (!col_collapsed_width.size()) {
         cell->SetIsSpanningCollapsedColumn(false);
+        cell->UpdatePaintLayers(false);
         continue;
       }
       // TODO(joysyu): Current behavior assumes that collapsing the first column

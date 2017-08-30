@@ -182,6 +182,10 @@ class CORE_EXPORT LayoutTableCell final : public LayoutBlockFlow {
   // a column-spanning cell starts in a collapsed column.
   bool IsFirstColumnCollapsed() const;
 
+  // Update paint layers so that they are properly hidden/shown when cell
+  // is/isn't collapsed.
+  void UpdatePaintLayers(bool is_cell_collapsed) const;
+
   LayoutUnit BorderLeft() const override;
   LayoutUnit BorderRight() const override;
   LayoutUnit BorderTop() const override;
