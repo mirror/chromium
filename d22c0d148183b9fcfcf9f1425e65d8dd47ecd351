@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0cfec54d_5c7e422f",
+        "filename": "ios/chrome/browser/passwords/js_credential_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-30T15:26:52Z",
+      "side": 1,
+      "message": "nit: \"Resolves the Promise\" here and below (ditto for \"Rejects the Promise\").",
+      "range": {
+        "startLine": 17,
+        "startChar": 3,
+        "endLine": 17,
+        "endChar": 19
+      },
+      "revId": "d22c0d148183b9fcfcf9f1425e65d8dd47ecd351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47aa47b8_4494093c",
+        "filename": "ios/chrome/browser/passwords/js_credential_manager.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-30T15:26:52Z",
+      "side": 1,
+      "message": "DCHECK(web_state);",
+      "revId": "d22c0d148183b9fcfcf9f1425e65d8dd47ecd351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76b13329_d652e3b2",
+        "filename": "ios/chrome/browser/passwords/js_credential_manager.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-30T15:26:52Z",
+      "side": 1,
+      "message": "Ah, sorry, I meant that this should got the comment the method in js_credential_manager.h (since this is part of the public contract of the method).",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 60,
+        "endChar": 42
+      },
+      "revId": "d22c0d148183b9fcfcf9f1425e65d8dd47ecd351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32a660cc_0c6c93cf",
+        "filename": "ios/chrome/browser/passwords/js_credential_manager.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-30T15:26:52Z",
+      "side": 1,
+      "message": "nit: Use std::string() instead of \"\" to represent an empty string (using \"\" ends up in a call to std::string::string(const char*) constructor that parses the string which is not necessary).\n\nHere and below.",
+      "range": {
+        "startLine": 69,
+        "startChar": 70,
+        "endLine": 69,
+        "endChar": 72
+      },
+      "revId": "d22c0d148183b9fcfcf9f1425e65d8dd47ecd351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
