@@ -87,6 +87,24 @@
       "revId": "78a46f7e30a2bfa1bc7bb7cd5a23edbfe2c59f4c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "783a0171_14f50491",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-30T16:41:09Z",
+      "side": 1,
+      "message": "Done. Changed to move everything except visibility change in Show/Hide to WasUnOccluded/WasOcclueded.",
+      "parentUuid": "42c94d4a_b6de95bf",
+      "revId": "78a46f7e30a2bfa1bc7bb7cd5a23edbfe2c59f4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
