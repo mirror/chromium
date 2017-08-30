@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4128a5dc_4ae82bf1",
+        "filename": "cc/paint/discardable_image_map.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-30T23:47:23Z",
+      "side": 1,
+      "message": "Each time we get a new recording, the animation system will copy the updated metadata from this image. Specifically:\n\nFrameMetadata (for frame complete and duration state).\nRepetitionPolicy (for how many loops of the animation to make).\n\nThe Layer will register itself for each animated image it receives in a recording, and unregisters images from the previous recording once they are updated.",
+      "parentUuid": "cdc0ccaf_f54f4c26",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 40,
+        "endChar": 50
+      },
+      "revId": "c257374bd58a7e386283e0a763debdc80d19a89d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c4e27503_5aaab660",
         "filename": "cc/paint/paint_image_builder.cc",
         "patchSetId": 3
