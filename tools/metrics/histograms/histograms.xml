@@ -83268,6 +83268,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Translate.LanguageSettingsChanges">
+  <owner>renjieliu@chromium.org</owner>
+  <summary>
+    Logs everytime users make a change to their language settings. This value
+    will be used to tell us how often users change their language settings
+    (add/remove language, move language up/down).
+  </summary>
+</histogram>
+
 <histogram name="Translate.LanguageVerification"
     enum="TranslateLanguageVerification">
   <owner>yyushkina@chromium.org</owner>
