@@ -16,6 +16,29 @@
       "revId": "f621315f79c918e83064c0458990d88822245c92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0d13df8_1166a04f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FeatureUtilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-08-30T17:26:30Z",
+      "side": 1,
+      "message": "Can you call nativeSetIsChromeHomeEnabled here? It\u0027s unclear why you need to expose the method above.",
+      "range": {
+        "startLine": 275,
+        "startChar": 16,
+        "endLine": 275,
+        "endChar": 97
+      },
+      "revId": "f621315f79c918e83064c0458990d88822245c92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
