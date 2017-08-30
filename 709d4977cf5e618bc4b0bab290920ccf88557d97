@@ -70,6 +70,24 @@
       "revId": "709d4977cf5e618bc4b0bab290920ccf88557d97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22fa1ce4_104313dd",
+        "filename": "chrome/browser/android/ntp/content_suggestions_notifier_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-30T15:10:11Z",
+      "side": 1,
+      "message": "I looked further into ApplicationState.onStateChangeForTesting: it can\u0027t really be exposed to C++ because it needs an Activity parameter. I\u0027ve renamed to g_… here and cleared to nullptr at the end of the test.",
+      "parentUuid": "db917dc2_c6061185",
+      "revId": "709d4977cf5e618bc4b0bab290920ccf88557d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
