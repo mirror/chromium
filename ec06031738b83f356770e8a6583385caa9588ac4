@@ -16,6 +16,24 @@
       "revId": "ec06031738b83f356770e8a6583385caa9588ac4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6bc07d1_71c2efd1",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-30T15:29:30Z",
+      "side": 1,
+      "message": "We probably can\u0027t simply remove this. For example, if user exit WebVR to fullscreen state. The fullscreen toast will be set to visible after ConfigureScene. But we don\u0027t really want to show the toast at this situation. Because user had entered fullscreen before WebVR presentation. And the fullscreen toast should have already seen by the user when they enter fullscreen.",
+      "parentUuid": "ddd2d989_849a6274",
+      "revId": "ec06031738b83f356770e8a6583385caa9588ac4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
