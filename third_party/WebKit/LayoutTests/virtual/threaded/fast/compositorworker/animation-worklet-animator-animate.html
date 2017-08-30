@@ -5,12 +5,19 @@ registerAnimator("test", class {
   constructor() {
     console.log("test animator constructor called.");
   }
-  animate() {
+  animate(currentTime, effect) {
     if (!this.animated)
         console.log("test animator animate called.");
+
+    console.log(currentTime);
+    console.log(effect);
     this.animated = true;
   }
 });
+
+// instantiate one test animator
+createAnimatorForTest(1, "test");
 </script>
 
 <script src="resources/animation-worklet-tests.js"></script>
+<script type=""></script>

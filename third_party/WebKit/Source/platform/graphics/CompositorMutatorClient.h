@@ -22,10 +22,12 @@ class PLATFORM_EXPORT CompositorMutatorClient
   CompositorMutatorClient(CompositorMutator*, CompositorMutationsTarget*);
   virtual ~CompositorMutatorClient();
 
+  void SetMutationUpdate(std::unique_ptr<cc::AnimatorsOutputState>);
   void SetNeedsMutate();
 
   // cc::LayerTreeMutator
-  bool Mutate(base::TimeTicks monotonic_time) override;
+  void Mutate(base::TimeTicks monotonic_time,
+              std::unique_ptr<cc::AnimatorsInputState>) override;
   void SetClient(cc::LayerTreeMutatorClient*) override;
   base::Closure TakeMutations() override;
 

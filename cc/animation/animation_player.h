@@ -7,6 +7,7 @@
 
 #include <vector>
 
+#include <memory>
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/time/time.h"
@@ -36,6 +37,16 @@ struct PropertyAnimationState;
 class CC_ANIMATION_EXPORT AnimationPlayer
     : public base::RefCounted<AnimationPlayer> {
  public:
+  // TimingModel defines a time transformation function. It is used to transform
+  // a timeline time to a local time that is used when ticking animation
+  // player's animations.
+  class TimingModel {
+   public:
+    virtual base::TimeTicks GetValue(base::TimeTicks monotonic_time,
+                                     const Animation& animation) const = 0;
+    virtual std::unique_ptr<TimingModel> Clone() const = 0;
+  };
+
   static scoped_refptr<AnimationPlayer> Create(int id);
   scoped_refptr<AnimationPlayer> CreateImplInstance() const;
 
@@ -54,6 +65,10 @@ class CC_ANIMATION_EXPORT AnimationPlayer
     return animation_timeline_;
   }
   void SetAnimationTimeline(AnimationTimeline* timeline);
+
+  void set_timing_model(std::unique_ptr<TimingModel> model) {
+    timing_model_ = std::move(model);
+  }
 
   // ElementAnimations object where this player is listed.
   scoped_refptr<ElementAnimations> element_animations() const {
@@ -110,9 +125,6 @@ class CC_ANIMATION_EXPORT AnimationPlayer
   void MarkAnimationsForDeletion(base::TimeTicks monotonic_time,
                                  AnimationEvents* events);
 
-  static void TickAnimation(base::TimeTicks monotonic_time,
-                            Animation* animation,
-                            AnimationTarget* target);
   void TickAnimations(base::TimeTicks monotonic_time);
 
   void MarkFinishedAnimations(base::TimeTicks monotonic_time);
@@ -176,11 +188,10 @@ class CC_ANIMATION_EXPORT AnimationPlayer
 
   std::string ToString() const;
 
+  virtual bool IsWorkletAnimationPlayer() const;
+
  private:
   friend class base::RefCounted<AnimationPlayer>;
-
-  explicit AnimationPlayer(int id);
-  ~AnimationPlayer();
 
   void SetNeedsCommit();
 
@@ -199,7 +210,6 @@ class CC_ANIMATION_EXPORT AnimationPlayer
       AnimationPlayer* animation_player_impl) const;
   void RemoveAnimationsCompletedOnMainThread(
       AnimationPlayer* animation_player_impl) const;
-  void PushPropertiesToImplThread(AnimationPlayer* animation_player_impl);
 
   std::string AnimationsToString() const;
 
@@ -225,6 +235,18 @@ class CC_ANIMATION_EXPORT AnimationPlayer
   bool is_ticking_;
 
   bool scroll_offset_animation_was_interrupted_;
+
+ protected:
+  explicit AnimationPlayer(int id);
+  AnimationPlayer(int id, std::unique_ptr<TimingModel>);
+  virtual ~AnimationPlayer();
+
+  virtual void PushPropertiesToImplThread(
+      AnimationPlayer* animation_player_impl);
+
+  // Defines transformation from the animation timeline's time value to
+  // animation's local time value and is used when animations are ticked.
+  std::unique_ptr<TimingModel> timing_model_;
 
   DISALLOW_COPY_AND_ASSIGN(AnimationPlayer);
 };

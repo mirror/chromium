@@ -529,6 +529,8 @@ cc_static_library("test_support") {
     "test/layer_tree_pixel_test.h",
     "test/layer_tree_test.cc",
     "test/layer_tree_test.h",
+    "test/mock_layer_tree_mutator.cc",
+    "test/mock_layer_tree_mutator.h",
     "test/mock_occlusion_tracker.h",
     "test/ordered_texture_map.cc",
     "test/ordered_texture_map.h",
@@ -768,6 +770,7 @@ cc_test("cc_unittests") {
     "animation/keyframed_animation_curve_unittest.cc",
     "animation/scroll_offset_animation_curve_unittest.cc",
     "animation/transform_operations_unittest.cc",
+    "animation/worklet_animation_player_unittest.cc",
 
     # Setup.
     "test/cc_test_suite.cc",
