@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "207896ff_c6738671",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-30T23:41:38Z",
+      "side": 1,
+      "message": "Can you eliminate this member variable entirely and use SessionController::IsUserPrimary() where you need it?",
+      "revId": "0fc1c91b61aba785476601552d49233921e30d8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3cb2689_9ddbcf13",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-30T23:41:38Z",
+      "side": 1,
+      "message": "Instead of copying this data, can you eliminate this member variable and just always use the state from ash::Shell?\n\nditto below",
+      "revId": "0fc1c91b61aba785476601552d49233921e30d8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a02b6d89_01042e8f",
+        "filename": "ash/shelf/app_list_button_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-30T23:41:38Z",
+      "side": 1,
+      "message": "I like how the screens are different sizes and offsets.",
+      "revId": "0fc1c91b61aba785476601552d49233921e30d8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddb122e5_9f395684",
+        "filename": "ash/shelf/app_list_button_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-30T23:41:38Z",
+      "side": 1,
+      "message": "Thanks for adding test coverage.",
+      "revId": "0fc1c91b61aba785476601552d49233921e30d8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52d832fa_6b828fb6",
+        "filename": "ash/shell.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-30T23:41:38Z",
+      "side": 1,
+      "message": "nit: I suggest changing the cached state before notifying the observers, just in case someone adds code in the future that allows an observer to call into shell to get the current state. Ditto below.",
+      "revId": "0fc1c91b61aba785476601552d49233921e30d8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb0e5d21_e5044d6c",
+        "filename": "ash/shell.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-30T23:41:38Z",
+      "side": 1,
+      "message": "How about just calling this |voice_interaction_enabled_|? Or if you think the fact that it\u0027s the setting is important (which maybe it is? since I see \"context\" enabled below) then |setting| singular. Or are there multiple settings that cause it to be enabled?\n\nIf |setting_enabled| is a better name then you should rename the method and observer. That could happen when you move these methods out to a voice interaction controller. I would add a TODO and a note in the bug.",
+      "revId": "0fc1c91b61aba785476601552d49233921e30d8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4346a80_c86a5503",
+        "filename": "ash/shell.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-30T23:41:38Z",
+      "side": 1,
+      "message": "nit: const, and below\n\noptional: for trivial getters we often use voice_interaction_settings_enabled() and inline the method.",
+      "revId": "0fc1c91b61aba785476601552d49233921e30d8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
