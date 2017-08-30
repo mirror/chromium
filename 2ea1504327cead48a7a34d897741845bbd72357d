@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e6859dd0_c00e7d41",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-08-30T17:15:19Z",
+      "side": 1,
+      "message": "I was taking a queue from this:\nhttps://codereview.chromium.org/2668813002\n\nWe can probably resolve this as I move it to win/base.",
+      "parentUuid": "9d2836e9_9b811fdc",
+      "revId": "2ea1504327cead48a7a34d897741845bbd72357d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1941fa95_19c4930c",
         "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "2ea1504327cead48a7a34d897741845bbd72357d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6840ab5f_49c1c1b2",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-08-30T17:15:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1941fa95_19c4930c",
+      "revId": "2ea1504327cead48a7a34d897741845bbd72357d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -80,6 +116,30 @@
       "revId": "2ea1504327cead48a7a34d897741845bbd72357d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35781aa1_ff6aa70f",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-08-30T17:15:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d4a73fb6_f1b1d2e6",
+      "range": {
+        "startLine": 250,
+        "startChar": 2,
+        "endLine": 250,
+        "endChar": 29
+      },
+      "revId": "2ea1504327cead48a7a34d897741845bbd72357d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
