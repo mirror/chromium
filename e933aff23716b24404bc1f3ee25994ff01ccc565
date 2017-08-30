@@ -70,6 +70,30 @@
       "revId": "e933aff23716b24404bc1f3ee25994ff01ccc565",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c95f942_66ce2109",
+        "filename": "ui/gl/gl_implementation.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-30T16:41:51Z",
+      "side": 1,
+      "message": "style nit: if you are going to do this, please don\u0027t mix #ifdefs and run-time ifs, it makes the core hard to read. Instead, do something like:\n\nbool unload_libraries \u003d true;\n#if defined(USE_X11)\n// comments\nunload_libraries \u003d GetGLImplementation() !\u003d kGLImplementation;\n#endif\nif (unload_libraries) {\n  // unload libraries\n}",
+      "parentUuid": "2ce64641_b3910851",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 19
+      },
+      "revId": "e933aff23716b24404bc1f3ee25994ff01ccc565",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
