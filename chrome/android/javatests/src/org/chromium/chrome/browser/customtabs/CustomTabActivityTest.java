@@ -61,6 +61,7 @@ import org.chromium.base.PathUtils;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.library_loader.LibraryLoader;
 import org.chromium.base.library_loader.LibraryProcessType;
+import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.base.test.util.CallbackHelper;
 import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.base.test.util.DisabledTest;
@@ -1223,6 +1224,51 @@ public class CustomTabActivityTest {
         } catch (InterruptedException e) {
             Assert.fail();
         }
+    }
+
+    /**
+     * Tests that one navigation in a custom tab records the histograms reflecting time from
+     * intent to first navigation commit.
+     */
+    @Test
+    @SmallTest
+    @RetryOnFailure
+    public void testNavigationCommitUmaRecorded() {
+        String zoomedOutHistogramName = "CustomTabs.IntentToFirstCommitNavigationTime3.ZoomedOut";
+        String zoomedInHistogramName = "CustomTabs.IntentToFirstCommitNavigationTime3.ZoomedIn";
+        Assert.assertEquals(
+                0, RecordHistogram.getHistogramTotalCountForTesting(zoomedOutHistogramName));
+        Assert.assertEquals(
+                0, RecordHistogram.getHistogramTotalCountForTesting(zoomedInHistogramName));
+        final ArrayList<Integer> navigationEvents = new ArrayList<>();
+        CustomTabsSession session = bindWithCallback(new CustomTabsCallback() {
+            @Override
+            public void onNavigationEvent(int navigationEvent, Bundle extras) {
+                navigationEvents.add(navigationEvent);
+            }
+        });
+        Intent intent = new CustomTabsIntent.Builder(session).build().intent;
+        intent.setData(Uri.parse(mTestPage));
+        intent.setComponent(
+                new ComponentName(InstrumentationRegistry.getInstrumentation().getTargetContext(),
+                        ChromeLauncherActivity.class));
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        try {
+            mCustomTabActivityTestRule.startCustomTabActivityWithIntent(intent);
+            CriteriaHelper.pollInstrumentationThread(new Criteria() {
+                @Override
+                public boolean isSatisfied() {
+                    return navigationEvents.contains(CustomTabsCallback.NAVIGATION_FINISHED);
+                }
+            });
+        } catch (InterruptedException e) {
+            Assert.fail();
+        }
+        Assert.assertEquals(
+                1, RecordHistogram.getHistogramTotalCountForTesting(zoomedOutHistogramName));
+        Assert.assertEquals(
+                1, RecordHistogram.getHistogramTotalCountForTesting(zoomedInHistogramName));
     }
 
     /**
