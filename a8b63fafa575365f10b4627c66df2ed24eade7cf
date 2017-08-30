@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5f789616_8227aca0",
+        "filename": "content/public/test/mock_render_process_host.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-30T11:53:14Z",
+      "side": 1,
+      "message": "I recommended this - but you\u0027re definitely right, having a boolean output parameter would be preferable.\n\nAnother option: we\u0027re using this to expect that we\u0027ve received a specific set of message types.\nWhat if we took in the message types, and returned a gtest AssertionResult?\n\nAlso, should this be a method on MockRenderProcessHost?\n\ne.g:\n\n::testing::AssertionResult MockRenderProcessHost::InputMessageTypesAre(string inputMessageTypes) {\n  if (...) {\n    return ::testing::AssertionSuccess();\n  }\n  return ::testing::AssertionFailure() \u003c\u003c \" something bad happened.\";\n}",
+      "parentUuid": "7fabd6ec_ee464b29",
+      "range": {
+        "startLine": 484,
+        "startChar": 4,
+        "endLine": 484,
+        "endChar": 10
+      },
+      "revId": "a8b63fafa575365f10b4627c66df2ed24eade7cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bd53de38_03aec451",
         "filename": "content/public/test/mock_render_process_host.cc",
         "patchSetId": 13
