@@ -131,6 +131,7 @@ class UiSceneManager {
   std::vector<UiElement*> system_indicators_;
 
   bool in_cct_;
+  bool leaving_web_vr_mode_ = false;
   bool web_vr_mode_;
   bool web_vr_show_toast_ = false;
   bool started_for_autopresentation_ = false;

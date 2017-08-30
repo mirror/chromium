@@ -7,36 +7,21 @@
 namespace vr {
 
 TransienceManager::TransienceManager(UiElement* element,
-                                     float opacity_when_enabled,
                                      const base::TimeDelta& timeout)
     : element_(element),
-      opacity_when_enabled_(opacity_when_enabled),
       timeout_(timeout) {
-  element_->SetVisible(false);
+  element_->SetOpacity(0);
 }
 
-void TransienceManager::SetEnabled(bool enabled) {
-  if (enabled_ == enabled)
+void TransienceManager::SetVisible(bool visible) {
+  if (visible_ == visible) {
     return;
-  enabled_ = enabled;
-  if (enabled) {
+  }
+  visible_ = visible;
+  if (visible) {
     Show();
     StartTimer();
   } else {
-    Hide();
-    visibility_timer_.Stop();
-  }
-}
-
-void TransienceManager::KickVisibilityIfEnabled() {
-  if (enabled_) {
-    Show();
-    StartTimer();
-  }
-}
-
-void TransienceManager::EndVisibilityIfEnabled() {
-  if (enabled_) {
     Hide();
     visibility_timer_.Stop();
   }
@@ -53,12 +38,10 @@ void TransienceManager::OnTimeout() {
 }
 
 void TransienceManager::Show() {
-  element_->SetVisible(true);
-  element_->SetOpacity(opacity_when_enabled_);
+  element_->SetOpacity(element_->opacity_when_visible());
 }
 
 void TransienceManager::Hide() {
-  element_->SetVisible(false);
   element_->SetOpacity(0);
 }
 
