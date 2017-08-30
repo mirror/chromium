@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "e0f7f31a_27363479",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-30T19:20:22Z",
+      "side": 1,
+      "message": "After handling \u0027webkitBeforeTextInserted\u0027, we should check:\n\n1. If the frame is still alive: document.GetFrame() \u0026\u0026 document.GetFrame().GetDocument() \u003d\u003d document\n\n2. If |passed_selection_for_insertion| is still valid. We need to use InvalidSelectionResetter.",
+      "revId": "908e6fa4115b2b5b63d20ec6d5b11c10bfdb09bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1bfdf94_bf396b4e",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-30T19:20:22Z",
+      "side": 1,
+      "message": "Ditto after \u0027textInput\u0027.",
+      "revId": "908e6fa4115b2b5b63d20ec6d5b11c10bfdb09bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff807f67_622aeb35",
         "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
         "patchSetId": 1
@@ -13,6 +47,24 @@
       "writtenOn": "2017-08-30T18:38:02Z",
       "side": 1,
       "message": "The case when frame is removed by event handler, do we need to add \na create a new typing command? \nShall I do here. \nLocalFrame* frame \u003d document.GetFrame();\nDCHECK(frame);",
+      "revId": "908e6fa4115b2b5b63d20ec6d5b11c10bfdb09bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7e1a57e_cc158de1",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-30T19:20:22Z",
+      "side": 1,
+      "message": "I guess we should still compute |current_selection| at the beginning of the function, since the event handlers may change the frame selection.\n\nI don\u0027t like storing VisibleSelection across DOM changes. But I don\u0027t have a good idea how not to do that, either... So I\u0027m OK if you keep that.",
+      "parentUuid": "ff807f67_622aeb35",
       "revId": "908e6fa4115b2b5b63d20ec6d5b11c10bfdb09bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
