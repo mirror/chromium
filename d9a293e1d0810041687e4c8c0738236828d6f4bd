@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "7ebc2509_cbfb25dd",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-30T04:40:54Z",
+      "side": 1,
+      "message": "Sounds good idea.\n\nanother approach is comparing VP before and after this function.\n\nconst VisiblePosition\u0026 after_vp \u003d CreateVisiblePosition(visible_pos.DeepEquaivalent());\nif (after_vp !\u003d visible_pos)\n  return;",
+      "parentUuid": "25b873c7_66286b48",
+      "revId": "d9a293e1d0810041687e4c8c0738236828d6f4bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cd8c57df_ed80ec1c",
         "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
         "patchSetId": 4
