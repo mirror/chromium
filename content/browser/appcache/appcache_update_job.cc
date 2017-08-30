@@ -78,7 +78,7 @@ class HostNotifier {
 
   // Caller is responsible for ensuring there will be no duplicate hosts.
   void AddHost(AppCacheHost* host) {
-    std::pair<NotifyHostMap::iterator , bool> ret = hosts_to_notify.insert(
+    std::pair<NotifyHostMap::iterator, bool> ret = hosts_to_notify.insert(
         NotifyHostMap::value_type(host->frontend(), HostIds()));
     ret.first->second.push_back(host->host_id());
   }
@@ -98,13 +98,13 @@ class HostNotifier {
     }
   }
 
-  void SendProgressNotifications(
-      const GURL& url, int num_total, int num_complete) {
+  void SendProgressNotifications(const GURL& url,
+                                 int num_total,
+                                 int num_complete) {
     for (NotifyHostMap::iterator it = hosts_to_notify.begin();
          it != hosts_to_notify.end(); ++it) {
       AppCacheFrontend* frontend = it->first;
-      frontend->OnProgressEventRaised(it->second, url,
-                                      num_total, num_complete);
+      frontend->OnProgressEventRaised(it->second, url, num_total, num_complete);
     }
   }
 
@@ -121,8 +121,8 @@ class HostNotifier {
     for (NotifyHostMap::iterator it = hosts_to_notify.begin();
          it != hosts_to_notify.end(); ++it) {
       AppCacheFrontend* frontend = it->first;
-      for (HostIds::iterator id = it->second.begin();
-           id != it->second.end(); ++id) {
+      for (HostIds::iterator id = it->second.begin(); id != it->second.end();
+           ++id) {
         frontend->OnLogMessage(*id, APPCACHE_LOG_WARNING, message);
       }
     }
@@ -131,7 +131,6 @@ class HostNotifier {
  private:
   NotifyHostMap hosts_to_notify;
 };
-
 AppCacheUpdateJob::UrlToFetch::UrlToFetch(const GURL& url,
                                           bool checked,
                                           AppCacheResponseInfo* info)
@@ -281,14 +280,14 @@ void AppCacheUpdateJob::HandleCacheFailure(
   if (update_type_ == CACHE_ATTEMPT ||
       !IsEvictableError(result, error_details) ||
       service_->storage() != storage_) {
-    DeleteSoon();
+    DeleteSoon(UPDATE_APPCACHE_STATE);
     return;
   }
 
   if (group_->first_evictable_error_time().is_null()) {
     group_->set_first_evictable_error_time(base::Time::Now());
     storage_->StoreEvictionTimes(group_);
-    DeleteSoon();
+    DeleteSoon(UPDATE_APPCACHE_STATE);
     return;
   }
 
@@ -305,7 +304,7 @@ void AppCacheUpdateJob::HandleCacheFailure(
                                   base::Bind(EmptyCompletionCallback));
   }
 
-  DeleteSoon();  // To unwind the stack prior to deletion.
+  DeleteSoon(UPDATE_APPCACHE_STATE);  // To unwind the stack prior to deletion.
 }
 
 void AppCacheUpdateJob::FetchManifest(bool is_first_fetch) {
@@ -1275,6 +1274,8 @@ void AppCacheUpdateJob::MaybeCompleteUpdate() {
     return;
   }
 
+  GroupAppCacheStatus group_appcache_status = UPDATE_APPCACHE_STATE;
+
   switch (internal_state_) {
     case NO_UPDATE:
       if (master_entries_completed_ > 0) {
@@ -1312,6 +1313,11 @@ void AppCacheUpdateJob::MaybeCompleteUpdate() {
     case REFETCH_MANIFEST:
       DCHECK(stored_state_ == STORED);
       NotifyAllFinalProgress();
+
+      group_appcache_status = DONT_UPDATE_APPCACHE_STATE;
+
+      group_->SetUpdateAppCacheStatus(AppCacheGroup::IDLE);
+
       if (update_type_ == CACHE_ATTEMPT)
         NotifyAllAssociatedHosts(APPCACHE_CACHED_EVENT);
       else
@@ -1330,7 +1336,7 @@ void AppCacheUpdateJob::MaybeCompleteUpdate() {
   // Let the stack unwind before deletion to make it less risky as this
   // method is called from multiple places in this file.
   if (internal_state_ == COMPLETED)
-    DeleteSoon();
+    DeleteSoon(group_appcache_status);
 }
 
 void AppCacheUpdateJob::ScheduleUpdateRetry(int delay_ms) {
@@ -1451,7 +1457,7 @@ void AppCacheUpdateJob::LogHistogramStats(
       off_origin_resource_failure);
 }
 
-void AppCacheUpdateJob::DeleteSoon() {
+void AppCacheUpdateJob::DeleteSoon(GroupAppCacheStatus group_appcache_status) {
   ClearPendingMasterEntries();
   manifest_response_writer_.reset();
   storage_->CancelDelegateCallbacks(this);
@@ -1460,7 +1466,7 @@ void AppCacheUpdateJob::DeleteSoon() {
 
   // Break the connection with the group so the group cannot call delete
   // on this object after we've posted a task to delete ourselves.
-  if (group_) {
+  if (group_ && group_appcache_status == UPDATE_APPCACHE_STATE) {
     group_->SetUpdateAppCacheStatus(AppCacheGroup::IDLE);
     group_ = NULL;
   }

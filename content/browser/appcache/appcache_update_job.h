@@ -104,6 +104,11 @@ class CONTENT_EXPORT AppCacheUpdateJob
     STORED,
   };
 
+  enum GroupAppCacheStatus {
+    UPDATE_APPCACHE_STATE,
+    DONT_UPDATE_APPCACHE_STATE
+  };
+
   struct UrlToFetch {
     UrlToFetch(const GURL& url, bool checked, AppCacheResponseInfo* info);
     UrlToFetch(const UrlToFetch& other);
@@ -211,7 +216,9 @@ class CONTENT_EXPORT AppCacheUpdateJob
   void MadeProgress() { last_progress_time_ = base::Time::Now(); }
 
   // Deletes this object after letting the stack unwind.
-  void DeleteSoon();
+  // The |group_appcache_status| parameter indicates whether the AppCache group
+  // status should be updated.
+  void DeleteSoon(GroupAppCacheStatus group_appcache_status);
 
   bool IsTerminating() { return internal_state_ >= REFETCH_MANIFEST ||
                                 stored_state_ != UNSTORED; }
