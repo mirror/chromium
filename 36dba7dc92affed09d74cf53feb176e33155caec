@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b2db2d3_c3cff4fa",
+        "filename": "third_party/WebKit/Source/core/html/HTMLCanvasElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 899,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-30T23:34:24Z",
+      "side": 1,
+      "message": "This would fix it for M61, but would fail M62 due to the GetCanvasColorParams().UsesOutputSpaceBlending check above.\n\nWe have more time with M62 thought, so maybe merge it in right away?",
+      "revId": "36dba7dc92affed09d74cf53feb176e33155caec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
