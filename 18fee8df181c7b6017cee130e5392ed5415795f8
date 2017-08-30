@@ -22,6 +22,30 @@
       "revId": "18fee8df181c7b6017cee130e5392ed5415795f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84263a7e_4be7ccda",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_blocking_page_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1214679
+      },
+      "writtenOn": "2017-08-30T15:29:28Z",
+      "side": 1,
+      "message": "The behavior has changed here, everything is now cross process (as it should be given the url domains). This was before only used in navigations that were forced to be same process and therefore was false.\n\nThe GoBack() function should be deleted altogether when we add back/forward navigations to the the simulator.",
+      "parentUuid": "e567ca97_8f331b53",
+      "range": {
+        "startLine": 323,
+        "startChar": 17,
+        "endLine": 323,
+        "endChar": 0
+      },
+      "revId": "18fee8df181c7b6017cee130e5392ed5415795f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
