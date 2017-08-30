@@ -267,7 +267,6 @@ source_set("eg_tests") {
     ":ntp_internal",
     "//components/strings",
     "//ios/chrome/app/strings",
-    "//ios/chrome/browser/bookmarks:features",
     "//ios/chrome/browser/ui",
     "//ios/chrome/browser/ui/commands",
     "//ios/chrome/browser/ui/content_suggestions:content_suggestions_constant",

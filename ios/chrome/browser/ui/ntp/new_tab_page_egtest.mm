@@ -6,9 +6,7 @@
 #import <XCTest/XCTest.h>
 
 #include "base/ios/ios_util.h"
-#include "base/test/scoped_feature_list.h"
 #include "components/strings/grit/components_strings.h"
-#include "ios/chrome/browser/bookmarks/bookmark_new_generation_features.h"
 #import "ios/chrome/browser/ui/commands/generic_chrome_command.h"
 #include "ios/chrome/browser/ui/commands/ios_command_ids.h"
 #import "ios/chrome/browser/ui/content_suggestions/ntp_home_constant.h"
@@ -123,11 +121,9 @@ void AssertNTPScrolledToTop(bool scrolledToTop) {
 }
 
 // Tests that all items are accessible on the bookmarks page.
+// TODO(crbug.com/695749): This test will break in the new bookmark UI.  We
+// might remove this test when the new bookmark becomes enabled by default.
 - (void)testAccessibilityOnBookmarks {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndDisableFeature(
-      bookmark_new_generation::features::kBookmarkNewGeneration);
-
   SelectNewTabPagePanel(ntp_home::BOOKMARKS_PANEL);
   chrome_test_util::VerifyAccessibilityForCurrentScreen();
   DismissNewTabPagePanel();

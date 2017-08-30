@@ -7,9 +7,7 @@
 
 #include "base/strings/sys_string_conversions.h"
 #import "base/test/ios/wait_util.h"
-#include "base/test/scoped_feature_list.h"
 #include "components/signin/core/browser/signin_manager.h"
-#include "ios/chrome/browser/bookmarks/bookmark_new_generation_features.h"
 #include "ios/chrome/browser/experimental_flags.h"
 #include "ios/chrome/browser/signin/signin_manager_factory.h"
 #import "ios/chrome/browser/ui/authentication/signin_promo_view.h"
@@ -498,11 +496,9 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
 // Opens the sign in screen from the bookmarks and then cancel it by opening a
 // new tab. Ensures that the sign in screen is correctly dismissed.
 // Regression test for crbug.com/596029.
+// TODO(crbug.com/695749): This test will break in the new bookmark UI.  We
+// might rewrite this test when the new bookmark becomes enabled by default.
 - (void)testSignInCancelFromBookmarks {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndDisableFeature(
-      bookmark_new_generation::features::kBookmarkNewGeneration);
-
   ChromeIdentity* identity = GetFakeIdentity1();
   ios::FakeChromeIdentityService::GetInstanceFromChromeProvider()->AddIdentity(
       identity);
