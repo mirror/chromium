@@ -8,6 +8,7 @@
 #include "content/child/child_url_loader_factory_getter.h"
 #include "content/common/service_worker/service_worker_provider.mojom.h"
 #include "content/common/service_worker/service_worker_types.h"
+#include "content/public/child/child_url_loader_factory_getter.h"
 #include "content/public/common/service_worker_modes.h"
 #include "content/public/common/url_loader_factory.mojom.h"
 #include "ipc/ipc_message.h"
