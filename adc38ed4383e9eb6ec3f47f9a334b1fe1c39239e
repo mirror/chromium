@@ -16,6 +16,24 @@
       "revId": "adc38ed4383e9eb6ec3f47f9a334b1fe1c39239e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be3edd52_9c5ecca1",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-preflight-denied.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-30T06:26:24Z",
+      "side": 1,
+      "message": "Oh, right! Because \u0027GET\u0027 is CORS-safelisted. Thanks for pointing that out! I\u0027ll change it and make sure it works.",
+      "parentUuid": "e6ffd413_a33ef38d",
+      "revId": "adc38ed4383e9eb6ec3f47f9a334b1fe1c39239e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
