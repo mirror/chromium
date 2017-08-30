@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "e7b3b86e_10630d92",
+        "filename": "chromeos/components/tether/disconnect_tethering_request_sender_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-30T00:47:34Z",
+      "side": 1,
+      "message": "The operation is the one that sends the request, and there is only one request per operation. Thus, you are only sending one request with this function.",
+      "parentUuid": "6fdeebdb_7c16f871",
+      "range": {
+        "startLine": 110,
+        "startChar": 7,
+        "endLine": 110,
+        "endChar": 40
+      },
+      "revId": "3df5ad9196c3e52e5ea315793b447e91d1d53906",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f70bf4e_00f9ed20",
         "filename": "chromeos/components/tether/disconnect_tethering_request_sender_unittest.cc",
         "patchSetId": 7
@@ -319,6 +343,30 @@
       "side": 1,
       "message": "When I do this I get this error at compile time\n\"cannot pass initializer list to variadic function\"",
       "parentUuid": "da622e45_2be6f649",
+      "range": {
+        "startLine": 398,
+        "startChar": 0,
+        "endLine": 403,
+        "endChar": 80
+      },
+      "revId": "3df5ad9196c3e52e5ea315793b447e91d1d53906",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f4c4fc9a_a86a21cb",
+        "filename": "chromeos/components/tether/tether_disconnector_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-30T00:47:34Z",
+      "side": 1,
+      "message": "Can you try wrapping the first parameter in parentheses?\n\n(std::vector\u003cstd::string\u003e{test_devices_[0].GetDeviceId()})\n\nIf that doesn\u0027t work, then just use:\n\nstd::vector\u003cstd::string\u003e expected {test_devices_[0].GetDeviceId()};\nEXPECT_EQ(expected, other);",
+      "parentUuid": "1d003c79_f8bc266e",
       "range": {
         "startLine": 398,
         "startChar": 0,
