@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac78c4c2_6dd2bc51",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-08-30T09:00:20Z",
+      "side": 1,
+      "message": "Conventionally title does not use capitalized words except for the first one.\n\nI\u0027d use a phrase \"hit DCHECK\", such as\n\"Add a test which hits DCHECK in Node::AssignedSlot()\"\n\nI think for this case indefinite article is better (but I\u0027m not a native speaker,\ncould be wrong).",
+      "revId": "d72324098b453e97417f9249dff8a1e9311a7cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "733d8472_f3e92c16",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 3
+      },
+      "lineNbr": 3626,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-08-30T09:00:20Z",
+      "side": 1,
+      "message": "You can annotate that this test only crashes on debug builds, by inserting \"[ Debug ]\" between\ncrbug and file path (see line 3621 for example).",
+      "revId": "d72324098b453e97417f9249dff8a1e9311a7cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e691dcce_b16d39b8",
+        "filename": "third_party/WebKit/LayoutTests/shadow-dom/crashes/css-focus-recalc.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-08-30T09:00:20Z",
+      "side": 1,
+      "message": "This test doesn\u0027t use any function in shadow-dom.js, so you can omit this line.",
+      "revId": "d72324098b453e97417f9249dff8a1e9311a7cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f7b37bc_cc31bf5f",
+        "filename": "third_party/WebKit/LayoutTests/shadow-dom/crashes/css-focus-recalc.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-08-30T09:00:20Z",
+      "side": 1,
+      "message": "A test without any assertion does not make much sense - how about adding\nassert_true(true, \"This test should not crash.\");\n?",
+      "revId": "d72324098b453e97417f9249dff8a1e9311a7cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
