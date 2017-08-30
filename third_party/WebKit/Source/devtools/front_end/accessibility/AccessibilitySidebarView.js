@@ -9,6 +9,7 @@ Accessibility.AccessibilitySidebarView = class extends UI.ThrottledWidget {
     super();
     this._node = null;
     this._axNode = null;
+    this._nodeSelectedFromAXTree = false;
     this._sidebarPaneStack = UI.viewManager.createStackLocation();
     this._breadcrumbsSubPane = new Accessibility.AXBreadcrumbsPane(this);
     this._sidebarPaneStack.showView(this._breadcrumbsSubPane);
@@ -37,8 +38,10 @@ Accessibility.AccessibilitySidebarView = class extends UI.ThrottledWidget {
 
   /**
    * @param {?SDK.DOMNode} node
+   * @param {boolean=} fromAXTree
    */
-  setNode(node) {
+  setNode(node, fromAXTree) {
+    this._nodeSelectedFromAXTree = !!fromAXTree;
     this._node = node;
     this.update();
   }
@@ -115,6 +118,20 @@ Accessibility.AccessibilitySidebarView = class extends UI.ThrottledWidget {
   }
 
   _pullNode() {
+    if (this._nodeSelectedFromAXTree) {
+      // When a node is selected via the Accessibility Tree pane, it causes the
+      // inspected node to be updated, which causes a flavor change, which
+      // causes this method to be called. However, occasionally the inspected
+      // node is not the node corresponding to the node selected via the
+      // Accessibility tree pane: Text nodes and Document nodes often can't be
+      // inspected, so a close relative is selected instead.
+      //
+      // For this reason, ignore the *first* node update after a node is
+      // selected via the Accessibility Tree pane, as either it is the same as
+      // the previously selected node, or it will be an update we should ignore.
+      this._nodeSelectedFromAXTree = false;
+      return;
+    }
     this.setNode(UI.context.flavor(SDK.DOMNode));
   }
 
