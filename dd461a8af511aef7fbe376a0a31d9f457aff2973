@@ -16,6 +16,24 @@
       "revId": "dd461a8af511aef7fbe376a0a31d9f457aff2973",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e37771df_7f807182",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-basic-whitelist-response-headers.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-30T07:03:13Z",
+      "side": 1,
+      "message": "That\u0027s a really good idea! I should have done that. Thanks for the help!",
+      "parentUuid": "fb85380a_8e3c4575",
+      "revId": "dd461a8af511aef7fbe376a0a31d9f457aff2973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
