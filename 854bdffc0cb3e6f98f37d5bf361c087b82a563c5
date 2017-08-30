@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "43fa9acb_62ff45e6",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_benchmarks/vr_browsing_mode_vr_performance.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1116794
+      },
+      "writtenOn": "2017-08-30T00:21:03Z",
+      "side": 1,
+      "message": "I prefer to rename the file name to vr_browsing.py, since it is under vr_benchmarks folder, no need to duplicate benchmark in file name. And we can put all vr browsing related benchmarks in this file.",
+      "range": {
+        "startLine": 3,
+        "startChar": 28,
+        "endLine": 3,
+        "endChar": 0
+      },
+      "revId": "854bdffc0cb3e6f98f37d5bf361c087b82a563c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "03f627b3_1effd28e",
         "filename": "tools/perf/contrib/vr_benchmarks/vr_benchmarks/vr_browsing_mode_vr_performance.py",
         "patchSetId": 6
@@ -71,6 +94,52 @@
     },
     {
       "key": {
+        "uuid": "8a58d23d_ef7feda1",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_page_sets/shared_android_vr_page_state.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116794
+      },
+      "writtenOn": "2017-08-30T00:21:03Z",
+      "side": 1,
+      "message": "Consider to revert this file since no change here.",
+      "range": {
+        "startLine": 1,
+        "startChar": 42,
+        "endLine": 1,
+        "endChar": 43
+      },
+      "revId": "854bdffc0cb3e6f98f37d5bf361c087b82a563c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd34bc25_2480d635",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_page_sets/vr_browsing_mode_pages.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116794
+      },
+      "writtenOn": "2017-08-30T00:21:03Z",
+      "side": 1,
+      "message": "Please use CapWords for function name to keep consistent within file.",
+      "range": {
+        "startLine": 18,
+        "startChar": 8,
+        "endLine": 18,
+        "endChar": 24
+      },
+      "revId": "854bdffc0cb3e6f98f37d5bf361c087b82a563c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3d8c7016_9226fade",
         "filename": "tools/perf/contrib/vr_benchmarks/vr_page_sets/vr_browsing_mode_pages.py",
         "patchSetId": 6
@@ -87,6 +156,29 @@
         "startChar": 6,
         "endLine": 20,
         "endChar": 73
+      },
+      "revId": "854bdffc0cb3e6f98f37d5bf361c087b82a563c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b8a6056_5dfed8db",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_page_sets/vr_sample_page.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116794
+      },
+      "writtenOn": "2017-08-30T00:21:03Z",
+      "side": 1,
+      "message": "Will it automatically switch to WebVR after DON flow if we use webvr sample sites for VR browsing performance tests? May consider to use top 10 mobile sites(https://cs.chromium.org/chromium/src/tools/perf/page_sets/top_10_mobile.py?dr\u003dC\u0026l\u003d6) to make the tests more realistic.",
+      "range": {
+        "startLine": 10,
+        "startChar": 19,
+        "endLine": 10,
+        "endChar": 29
       },
       "revId": "854bdffc0cb3e6f98f37d5bf361c087b82a563c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
