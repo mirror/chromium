@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e168622_5fdfe7d0",
+        "filename": "chrome/browser/net/network_context_configuration_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-30T19:26:59Z",
+      "side": 1,
+      "message": "Why?  I don\u0027t see the usage.",
+      "range": {
+        "startLine": 14,
+        "startChar": 20,
+        "endLine": 14,
+        "endChar": 24
+      },
+      "revId": "9ad7b88a44f3bc0c814a6683151a57a1971ba290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55d8bfcb_3b161236",
+        "filename": "content/public/test/simple_url_loader_test_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-30T19:26:59Z",
+      "side": 1,
+      "message": "suggestion: DCHECK if this is called twice?  I think the run_loop_.Run() just silently returns, so if someone tries to use this class for two SimpleURLLoaders in a row, wonky things will happen before the OnCompleteCallback() DCHECK below is hit.  \n\nAlternatively, you may be fine just DCHECK(!response_body_) here as well.",
+      "range": {
+        "startLine": 26,
+        "startChar": 32,
+        "endLine": 26,
+        "endChar": 47
+      },
+      "revId": "9ad7b88a44f3bc0c814a6683151a57a1971ba290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

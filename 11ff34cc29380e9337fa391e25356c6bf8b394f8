@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "861c64e7_6bf07d9a",
+        "filename": "chrome/browser/net/network_context_configuration_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-30T19:26:59Z",
+      "side": 0,
+      "message": "Why kill the request method?  Looking at ResourceRequest() that leaves it unset, so that implies that you\u0027re relying on the default behavior of SimpleURLLoader or URLLoader to do a GET if the method isn\u0027t set.  I\u0027d think if that was valid, it should be documented in the ResourceRequest header, the SimpleURLLoader header, or one of the mojoms?",
+      "range": {
+        "startLine": 139,
+        "startChar": 10,
+        "endLine": 139,
+        "endChar": 16
+      },
+      "revId": "11ff34cc29380e9337fa391e25356c6bf8b394f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
