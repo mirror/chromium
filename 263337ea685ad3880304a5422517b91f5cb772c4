@@ -273,6 +273,24 @@
     },
     {
       "key": {
+        "uuid": "f5457ad5_8d23eae9",
+        "filename": "third_party/WebKit/Source/core/timing/TextElementTimingAncestorTracker.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-30T17:26:52Z",
+      "side": 1,
+      "message": "Used \"false /* is_tracked */\"\n\nThe struct initializer with designator version failed to compile on some platforms.",
+      "parentUuid": "d162bb94_cef8f90c",
+      "revId": "263337ea685ad3880304a5422517b91f5cb772c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75ee656c_bc46daeb",
         "filename": "third_party/WebKit/Source/core/timing/TextElementTimingAncestorTracker.h",
         "patchSetId": 7
