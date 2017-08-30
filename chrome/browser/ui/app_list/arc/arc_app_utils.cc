@@ -209,11 +209,11 @@ class AppLauncher {
     }
 
     arc::mojom::AppInstance* app_instance =
-        GET_APP_INSTANCE(CanHandleResolution);
+        GET_APP_INSTANCE(CanHandleResolutionDeprecated);
     if (!app_instance)
       return false;
 
-    app_instance->CanHandleResolution(
+    app_instance->CanHandleResolutionDeprecated(
         app_info->package_name, app_info->activity, gfx::Rect(kNexus7Size),
         base::Bind(&AppLauncher::Callback, base::Unretained(this)));
     instance.release();
@@ -239,18 +239,18 @@ class AppLauncher {
            [&bounds](const std::string& package_name,
                      const std::string& activity) -> bool {
              arc::mojom::AppInstance* app_instance =
-                 GET_APP_INSTANCE(LaunchApp);
+                 GET_APP_INSTANCE(LaunchAppDeprecated);
              if (!app_instance)
                return false;
-             app_instance->LaunchApp(package_name, activity, bounds);
+             app_instance->LaunchAppDeprecated(package_name, activity, bounds);
              return true;
            },
            [&bounds](const std::string& intent_uri) -> bool {
              arc::mojom::AppInstance* app_instance =
-                 GET_APP_INSTANCE(LaunchIntent);
+                 GET_APP_INSTANCE(LaunchIntentDeprecated);
              if (!app_instance)
                return false;
-             app_instance->LaunchIntent(intent_uri, bounds);
+             app_instance->LaunchIntentDeprecated(intent_uri, bounds);
              return true;
            });
   }
@@ -276,8 +276,9 @@ bool ShouldShowInLauncher(const std::string& app_id) {
 }
 
 bool LaunchAndroidSettingsApp(content::BrowserContext* context,
-                              int event_flags) {
-  return LaunchApp(context, kSettingsAppId, event_flags);
+                              int event_flags,
+                              int64_t display_id) {
+  return LaunchApp(context, kSettingsAppId, event_flags, display_id);
 }
 
 bool LaunchPlayStoreWithUrl(const std::string& url) {
@@ -294,16 +295,28 @@ bool LaunchPlayStoreWithUrl(const std::string& url) {
 bool LaunchApp(content::BrowserContext* context,
                const std::string& app_id,
                int event_flags) {
+  return LaunchApp(context, app_id, event_flags, display::kInvalidDisplayId);
+}
+
+bool LaunchApp(content::BrowserContext* context,
+               const std::string& app_id,
+               int event_flags,
+               int64_t display_id) {
   return LaunchAppWithIntent(context, app_id,
                              base::Optional<std::string>() /* launch_intent */,
-                             event_flags);
+                             event_flags, display_id);
 }
 
 bool LaunchAppWithIntent(content::BrowserContext* context,
                          const std::string& app_id,
                          const base::Optional<std::string>& launch_intent,
-                         int event_flags) {
+                         int event_flags,
+                         int64_t display_id) {
   DCHECK(!launch_intent.has_value() || !launch_intent->empty());
+
+  auto* screen = display::Screen::GetScreen();
+  if (screen && display_id == display::kInvalidDisplayId)
+    display_id = screen->GetPrimaryDisplay().id();
 
   Profile* const profile = Profile::FromBrowserContext(context);
 
@@ -361,7 +374,7 @@ bool LaunchAppWithIntent(content::BrowserContext* context,
     DCHECK(chrome_controller || !ash::Shell::HasInstance());
     if (chrome_controller) {
       chrome_controller->GetArcDeferredLauncher()->RegisterDeferredLaunch(
-          app_id, event_flags);
+          app_id, event_flags, display_id);
 
       // On some boards, ARC is booted with a restricted set of resources by
       // default to avoid slowing down Chrome's user session restoration.
@@ -374,8 +387,23 @@ bool LaunchAppWithIntent(content::BrowserContext* context,
   }
   arc::ArcBootPhaseMonitorBridge::RecordFirstAppLaunchDelayUMA(context);
 
-  return (new AppLauncher(context, app_id, launch_intent, event_flags))
-      ->LaunchAndRelease();
+  arc::mojom::AppInstance* app_instance = GET_APP_INSTANCE(LaunchApp);
+  if (!app_instance) {
+    return (new AppLauncher(context, app_id, launch_intent, event_flags))
+        ->LaunchAndRelease();
+  }
+
+  return Launch(
+      context, app_id, launch_intent, event_flags,
+      [app_instance, display_id](const std::string& package_name,
+                                 const std::string& activity) -> bool {
+        app_instance->LaunchApp(package_name, activity, display_id);
+        return true;
+      },
+      [app_instance, display_id](const std::string& intent_uri) -> bool {
+        app_instance->LaunchIntent(intent_uri, display_id);
+        return true;
+      });
 }
 
 void SetTaskActive(int task_id) {
@@ -447,12 +475,18 @@ void RemoveCachedIcon(const std::string& icon_resource_id) {
 }
 
 bool ShowPackageInfo(const std::string& package_name,
-                     mojom::ShowPackageInfoPage page) {
+                     mojom::ShowPackageInfoPage page,
+                     int64_t display_id) {
   VLOG(2) << "Showing package info for " << package_name;
 
   if (auto* app_instance = GET_APP_INSTANCE(ShowPackageInfoOnPage)) {
-    app_instance->ShowPackageInfoOnPage(package_name, page,
-                                        GetTargetRect(kNexus7Size));
+    app_instance->ShowPackageInfoOnPage(package_name, page, display_id);
+    return true;
+  }
+
+  if (auto* app_instance = GET_APP_INSTANCE(ShowPackageInfoOnPageDeprecated)) {
+    app_instance->ShowPackageInfoOnPageDeprecated(package_name, page,
+                                                  GetTargetRect(kNexus7Size));
     return true;
   }
 
