@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5131ea3f_1dc6694c",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-30T23:07:03Z",
+      "side": 1,
+      "message": "maybe early return if is_shutdown_ since commit_batches gets cleared on the other sequence, this method gets after the clone task completes which could occur after shutdown",
+      "revId": "d94daac334bd7b3418fe3147d5c2901315bf7f50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d42608ab_28ea581a",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-30T23:07:03Z",
+      "side": 1,
+      "message": "maybe early return if is_shutdown_ since commit_batches gets cleared on the other sequence, this method gets called by an outside agency at arbitrary times",
+      "revId": "d94daac334bd7b3418fe3147d5c2901315bf7f50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7308072_d482e5ca",
+        "filename": "content/browser/dom_storage/dom_storage_area.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-30T23:07:03Z",
+      "side": 1,
+      "message": "Method can be const (also applies to the previous method)\n\nAlso, since this isn\u0027t a simple accessor, our style guide calls for it to be in the .cc file. Ditto for the previous method. And the style guide encourages CamelCase() naming for methods that aren\u0027t inlined accessors.",
+      "revId": "d94daac334bd7b3418fe3147d5c2901315bf7f50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "858980c4_f8c3d34a",
+        "filename": "content/browser/dom_storage/dom_storage_namespace.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-30T23:07:03Z",
+      "side": 1,
+      "message": "i know it\u0027s preexisting code, but while your here, i think we can remove .get() here and in the arg list to BindOnce below, scoped_refptr is directly testable and i think the bind magic knows how to handle a scoped_refptr as input.",
+      "revId": "d94daac334bd7b3418fe3147d5c2901315bf7f50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d3fa284_5c0cdf0b",
+        "filename": "content/browser/dom_storage/dom_storage_namespace.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-30T23:07:03Z",
+      "side": 1,
+      "message": "We don\u0027t need to use RetainedRef here, |clone| here should be fine, RetainedRef is more for retaining a refcounted object which is passed to the bound function as a rawptr.",
+      "revId": "d94daac334bd7b3418fe3147d5c2901315bf7f50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
