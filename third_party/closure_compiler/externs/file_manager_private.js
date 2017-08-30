@@ -214,6 +214,14 @@ var ProvidingExtension;
 
 /**
  * @typedef {{
+ *   entry: Entry,
+ *   modificationByMeTime: Date
+ * }}
+ */
+var RecentFile;
+
+/**
+ * @typedef {{
  *   id: string,
  *   title: (string|undefined)
  * }}
@@ -670,7 +678,7 @@ chrome.fileManagerPrivate.getDirectorySize = function(entry, callback) {};
 /**
  * Gets recently modified files across file systems.
  * @param {string} restriction
- * @param {function((!Array<!FileEntry>))} callback
+ * @param {function((!Array<!RecentFile>))} callback
  */
 chrome.fileManagerPrivate.getRecentFiles = function(restriction, callback) {};
 
