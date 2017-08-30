@@ -155,6 +155,53 @@ TEST(X509UtilNSSTest, CreateCERTCertificateListFromBytes) {
   EXPECT_STREQ("CN=D Root CA - Multi-root", certs[3]->subjectName);
 }
 
+TEST(X509UtilNSSTest, FindCERTCertificateFromBytes) {
+  // Find should fail since the cert doesn't exist in NSS currently.
+  EXPECT_FALSE(x509_util::FindCERTCertificateFromBytes(google_der,
+                                                       arraysize(google_der)));
+
+  // Create an NSS cert for google_der.
+  ScopedCERTCertificate google_nss_cert(
+      x509_util::CreateCERTCertificateFromBytes(google_der,
+                                                arraysize(google_der)));
+  ASSERT_TRUE(google_nss_cert);
+
+  // Now the FindCERTCertificateFromBytes should succeed.
+  ScopedCERTCertificate found_cert = x509_util::FindCERTCertificateFromBytes(
+      google_der, arraysize(google_der));
+  ASSERT_TRUE(found_cert);
+  EXPECT_TRUE(
+      x509_util::IsSameCertificate(found_cert.get(), google_nss_cert.get()));
+}
+
+TEST(X509UtilNSSTest, FindCERTCertificateFromX509Certificate) {
+  scoped_refptr<X509Certificate> google_x509_cert(
+      X509Certificate::CreateFromBytes(
+          reinterpret_cast<const char*>(google_der), arraysize(google_der)));
+  ASSERT_TRUE(google_x509_cert);
+
+#if BUILDFLAG(USE_BYTE_CERTS)
+  // Find should fail since the cert doesn't exist in NSS currently.
+  EXPECT_FALSE(x509_util::FindCERTCertificateFromX509Certificate(
+      google_x509_cert.get()));
+
+  // Create an NSS cert for google_der.
+  ScopedCERTCertificate google_nss_cert(
+      x509_util::CreateCERTCertificateFromBytes(google_der,
+                                                arraysize(google_der)));
+  ASSERT_TRUE(google_nss_cert);
+// Now the FindCERTCertificateFromX509Certificate should succeed.
+#else
+// When use_byte_certs=false, google_x509_cert already holds an NSS
+// os_cert_handle, so the first find should succeed.
+#endif
+  ScopedCERTCertificate found_cert =
+      x509_util::FindCERTCertificateFromX509Certificate(google_x509_cert.get());
+  ASSERT_TRUE(found_cert);
+  EXPECT_TRUE(
+      x509_util::IsSameCertificate(found_cert.get(), google_x509_cert.get()));
+}
+
 TEST(X509UtilNSSTest, DupCERTCertificate) {
   ScopedCERTCertificate cert(x509_util::CreateCERTCertificateFromBytes(
       google_der, arraysize(google_der)));

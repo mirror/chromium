@@ -10,6 +10,7 @@
 #include "base/strings/string_piece.h"
 #include "base/strings/stringprintf.h"
 #include "net/cert/x509_certificate.h"
+#include "net/cert/x509_util_nss.h"
 
 namespace net {
 
@@ -137,6 +138,13 @@ bool NSSProfileFilterChromeOS::IsCertAllowed(CERTCertificate* cert) const {
   DVLOG(2) << "cert from " << CertSlotsString(cert)
            << " filtered: " << base::StringPiece(cert->nickname);
   return false;
+}
+
+bool NSSProfileFilterChromeOS::IsCertAllowed(
+    const X509Certificate* cert) const {
+  ScopedCERTCertificate nss_cert(
+      x509_util::FindCERTCertificateFromX509Certificate(cert));
+  return nss_cert && IsCertAllowed(nss_cert.get());
 }
 
 NSSProfileFilterChromeOS::CertNotAllowedForProfilePredicate::
