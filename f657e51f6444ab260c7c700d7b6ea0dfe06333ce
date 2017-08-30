@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "09ccb0fe_c26f816d",
+        "filename": "components/signin/core/browser/resources/signin_internals.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-08-30T14:33:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f97de073_1f7f7a41",
+      "revId": "f657e51f6444ab260c7c700d7b6ea0dfe06333ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e6baf8a_98e30939",
         "filename": "components/signin/core/browser/resources/signin_internals.js",
         "patchSetId": 12
@@ -33,6 +51,24 @@
       "revId": "f657e51f6444ab260c7c700d7b6ea0dfe06333ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2c90800_43560a10",
+        "filename": "components/signin/core/browser/resources/signin_internals.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-08-30T14:33:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e6baf8a_98e30939",
+      "revId": "f657e51f6444ab260c7c700d7b6ea0dfe06333ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "91e592c8_7d411d21",
+        "filename": "components/signin/core/browser/resources/signin_internals.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-08-30T14:33:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92e03b4f_654045aa",
+      "revId": "f657e51f6444ab260c7c700d7b6ea0dfe06333ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81946142_1f8c3445",
         "filename": "components/signin/core/browser/resources/signin_internals.js",
         "patchSetId": 12
@@ -67,6 +121,24 @@
       "revId": "f657e51f6444ab260c7c700d7b6ea0dfe06333ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b102177c_2f00c0d8",
+        "filename": "components/signin/core/browser/resources/signin_internals.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-08-30T14:33:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81946142_1f8c3445",
+      "revId": "f657e51f6444ab260c7c700d7b6ea0dfe06333ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
