@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "9a6ed068_2e87787e",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1129,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-30T03:15:41Z",
+      "side": 1,
+      "message": "Yeah, I will. I just wanted to get your impression of the two approaches at a high level.",
+      "parentUuid": "e31307af_0c67a2ca",
+      "revId": "43c9ed46983f2336c8b55577d3bd864e26858f25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c2e54435_5cb1c9a6",
         "filename": "ui/gfx/render_text.cc",
         "patchSetId": 1
@@ -47,6 +65,24 @@
       "writtenOn": "2017-08-30T02:33:43Z",
       "side": 1,
       "message": "Is this intentional?",
+      "revId": "43c9ed46983f2336c8b55577d3bd864e26858f25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5441e604_74a17c3b",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1132,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-30T03:15:41Z",
+      "side": 1,
+      "message": "Yes, this effectively nullifies the previous CL (other than adding the flag + tests).\n\nI pushed a new patch set that actually deletes all the code, so this CL lets you compare the difference between the two approaches. If we go with this one, I\u0027ll squash this onto the parent CL so we (obviously) don\u0027t land the force_ltrs stuff then revert it.",
+      "parentUuid": "c2e54435_5cb1c9a6",
       "revId": "43c9ed46983f2336c8b55577d3bd864e26858f25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
