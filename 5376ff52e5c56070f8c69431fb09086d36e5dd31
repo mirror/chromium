@@ -46,6 +46,53 @@
       "revId": "5376ff52e5c56070f8c69431fb09086d36e5dd31",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65f0c09a_cc124532",
+        "filename": "android_webview/browser/aw_safe_browsing_resource_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-08-30T21:38:46Z",
+      "side": 1,
+      "message": "Yeah, nevermind. I was misremembering something. This is correct, SetUserData is all we need to get the correct error code in WebView.",
+      "parentUuid": "7c5989cc_30026494",
+      "range": {
+        "startLine": 91,
+        "startChar": 37,
+        "endLine": 91,
+        "endChar": 55
+      },
+      "revId": "5376ff52e5c56070f8c69431fb09086d36e5dd31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ca63a722_bd890dbb",
+        "filename": "android_webview/browser/aw_safe_browsing_resource_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-08-30T21:38:46Z",
+      "side": 1,
+      "message": "This part is a bit confusing, perhaps we can add a comment here.\n\nCancelWithError sets the error code for the resource to error_code (which is ERR_ABORTED). However, SetUserData also functions to override the error code with a SafeBrowsing-specific code (see [1]). At first glance, this is a bit confusing and hard to read (I was initially worried that this would create 2 network errors for the same resource, and had to dig through the code to figure out the real behavior).\n\nPerhaps we can clarify this behavior with a comment?\n\n[1] https://cs.chromium.org/chromium/src/android_webview/java/src/org/chromium/android_webview/AwContentsClientBridge.java?q\u003df:android_webview+lang:java+awcontentsclientbridge\u0026dr\u003dCSs\u0026l\u003d307",
+      "range": {
+        "startLine": 116,
+        "startChar": 2,
+        "endLine": 118,
+        "endChar": 30
+      },
+      "revId": "5376ff52e5c56070f8c69431fb09086d36e5dd31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
