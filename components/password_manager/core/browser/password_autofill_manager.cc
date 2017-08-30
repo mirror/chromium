@@ -135,12 +135,14 @@ void GetSuggestions(const autofill::PasswordFormFillData& fill_data,
   }
 }
 
-bool IsPreLollipopAndroid() {
+bool ShouldShowManualFallbackForPreLollipop(syncer::SyncService* sync_service) {
 #if defined(OS_ANDROID)
-  return (base::android::BuildInfo::GetInstance()->sdk_int() <
-          base::android::SDK_VERSION_LOLLIPOP);
+  return ((base::android::BuildInfo::GetInstance()->sdk_int() >=
+           base::android::SDK_VERSION_LOLLIPOP) ||
+          (password_manager_util::GetPasswordSyncState(sync_service) ==
+           SYNCING_NORMAL_ENCRYPTION));
 #else
-  return false;
+  return true;
 #endif
 }
 
@@ -286,7 +288,8 @@ void PasswordAutofillManager::OnShowPasswordSuggestions(
     suggestions.back().frontend_id = autofill::POPUP_ITEM_ID_SEPARATOR;
 #endif
 
-    if (!IsPreLollipopAndroid()) {
+    if (ShouldShowManualFallbackForPreLollipop(
+            autofill_client_->GetSyncService())) {
       autofill::Suggestion all_saved_passwords(
           l10n_util::GetStringUTF8(IDS_AUTOFILL_SHOW_ALL_SAVED_FALLBACK),
           std::string(), std::string(),
@@ -335,7 +338,8 @@ void PasswordAutofillManager::OnShowManualFallbackSuggestion(
   // CroS SimpleWebviewDialog used for the captive portal dialog is a special
   // case because it doesn't instantiate many helper classes. |autofill_client_|
   // is NULL too.
-  if (!autofill_client_ || IsPreLollipopAndroid())
+  if (!autofill_client_ || !ShouldShowManualFallbackForPreLollipop(
+                               autofill_client_->GetSyncService()))
     return;
   if (!password_client_ ||
       !password_client_->IsFillingFallbackEnabledForCurrentPage())
