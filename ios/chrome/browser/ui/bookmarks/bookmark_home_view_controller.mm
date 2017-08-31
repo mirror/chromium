@@ -19,6 +19,7 @@
 #import "ios/chrome/browser/ui/bookmarks/bookmark_collection_view.h"
 #import "ios/chrome/browser/ui/bookmarks/bookmark_controller_factory.h"
 #import "ios/chrome/browser/ui/bookmarks/bookmark_edit_view_controller.h"
+#import "ios/chrome/browser/ui/bookmarks/bookmark_extended_button.h"
 #import "ios/chrome/browser/ui/bookmarks/bookmark_folder_editor_view_controller.h"
 #import "ios/chrome/browser/ui/bookmarks/bookmark_folder_view_controller.h"
 #import "ios/chrome/browser/ui/bookmarks/bookmark_home_primary_view.h"
@@ -38,6 +39,7 @@
 #import "ios/chrome/browser/ui/url_loader.h"
 #import "ios/chrome/browser/ui/util/constraints_ui_util.h"
 #include "ios/chrome/grit/ios_strings.h"
+#import "ios/third_party/material_components_ios/src/components/Typography/src/MaterialTypography.h"
 #include "ios/web/public/referrer.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/l10n/l10n_util_mac.h"
@@ -47,6 +49,9 @@ using bookmarks::BookmarkNode;
 namespace {
 // The width of the bookmark menu, displaying the different sections.
 const CGFloat kMenuWidth = 264;
+
+// The spacer between title and done button on the navigation bar.
+const CGFloat kSpacer = 50;
 }
 
 @interface BookmarkHomeViewController ()<
@@ -132,6 +137,28 @@ const CGFloat kMenuWidth = 264;
                                action:@selector(navigationBarWantsEditing:)];
     [self.navigationBar setBackTarget:self
                                action:@selector(navigationBarBack:)];
+  } else {
+    [self setupNavigationBar];
+  }
+}
+
+- (void)viewWillLayoutSubviews {
+  [super viewWillLayoutSubviews];
+  if (base::FeatureList::IsEnabled(
+          bookmark_new_generation::features::kBookmarkNewGeneration)) {
+    // Resize the custom title view on the navigation bar according to the space
+    // available, so that we truncate it correctly.
+    CGRect frame = self.navigationItem.leftBarButtonItem.customView.frame;
+    NSDictionary* attributes = [self.navigationItem.rightBarButtonItem
+        titleTextAttributesForState:UIControlStateNormal];
+    CGFloat rightButtonWidth =
+        attributes ? [self.navigationItem.rightBarButtonItem.title
+                         sizeWithAttributes:attributes]
+                         .width
+                   : 0;
+    frame.size.width = self.view.bounds.size.width - frame.origin.x -
+                       rightButtonWidth - kSpacer;
+    self.navigationItem.leftBarButtonItem.customView.frame = frame;
   }
 }
 
@@ -183,28 +210,6 @@ const CGFloat kMenuWidth = 264;
                           forButton:ContextBarTrailingButton];
 
     [_containerView addSubview:self.contextBar];
-
-    // Set up the navigation bar.
-    NSString* doneTitle =
-        l10n_util::GetNSString(IDS_IOS_NAVIGATION_BAR_DONE_BUTTON)
-            .uppercaseString;
-    UIBarButtonItem* doneButton =
-        [[UIBarButtonItem alloc] initWithTitle:doneTitle
-                                         style:UIBarButtonItemStyleDone
-                                        target:self
-                                        action:@selector(navigationBarCancel:)];
-    doneButton.accessibilityIdentifier = @"DONE";
-    self.navigationItem.rightBarButtonItem = doneButton;
-    self.navigationItem.backBarButtonItem =
-        [[UIBarButtonItem alloc] initWithTitle:@""
-                                         style:UIBarButtonItemStylePlain
-                                        target:nil
-                                        action:nil];
-    self.navigationItem.title =
-        bookmark_utils_ios::TitleForBookmarkNode(_rootNode);
-    self.navigationController.navigationBar.tintColor = UIColor.blackColor;
-    self.navigationController.navigationBar.backgroundColor =
-        bookmark_utils_ios::mainBackgroundColor();
   } else {
     // Set up old UI view.
     LayoutRect menuLayout =
@@ -862,6 +867,72 @@ const CGFloat kMenuWidth = 264;
 
 #pragma mark - private
 
+- (void)setupNavigationBar {
+  // Add custom back button.
+  self.navigationItem.backBarButtonItem = [self customizedBackButton];
+
+  // Add custom title.
+  self.navigationItem.leftBarButtonItem = [self customizedNavigationTitle];
+
+  // Add custom done button.
+  self.navigationItem.rightBarButtonItem = [self customizedDoneButton];
+
+  self.navigationController.navigationBar.tintColor = UIColor.blackColor;
+  self.navigationController.navigationBar.backgroundColor =
+      bookmark_utils_ios::mainBackgroundColor();
+}
+
+- (UIBarButtonItem*)customizedBackButton {
+  UIImage* backImage = [UIImage imageNamed:@"bookmark_gray_back"];
+  // Set these two properties to customize the back button.
+  [UINavigationBar appearance].backIndicatorImage = backImage;
+  [UINavigationBar appearance].backIndicatorTransitionMaskImage = backImage;
+  // Removes back button label.
+  UIBarButtonItem* backButton =
+      [[UIBarButtonItem alloc] initWithTitle:@""
+                                       style:UIBarButtonItemStylePlain
+                                      target:nil
+                                      action:nil];
+  backImage.accessibilityLabel =
+      l10n_util::GetNSString(IDS_IOS_BOOKMARK_NEW_BACK_LABEL);
+  return backButton;
+}
+
+- (UIBarButtonItem*)customizedNavigationTitle {
+  NSDictionary* titleAttributes = @{
+    NSForegroundColorAttributeName :
+        [UIColor colorWithWhite:68 / 255.0 alpha:1.0],
+    NSFontAttributeName : [MDCTypography titleFont]
+  };
+  UILabel* titleView = [[UILabel alloc] initWithFrame:CGRectZero];
+  [titleView
+      setAttributedText:
+          [[NSAttributedString alloc]
+              initWithString:bookmark_utils_ios::TitleForBookmarkNode(_rootNode)
+                  attributes:titleAttributes]];
+  [titleView sizeToFit];
+  self.navigationItem.leftItemsSupplementBackButton = YES;
+  return [[UIBarButtonItem alloc] initWithCustomView:titleView];
+}
+
+- (UIBarButtonItem*)customizedDoneButton {
+  UIBarButtonItem* doneButton = [[UIBarButtonItem alloc]
+      initWithTitle:l10n_util::GetNSString(IDS_IOS_NAVIGATION_BAR_DONE_BUTTON)
+                        .uppercaseString
+              style:UIBarButtonItemStylePlain
+             target:self
+             action:@selector(navigationBarCancel:)];
+  NSDictionary* attributes = @{
+    NSForegroundColorAttributeName :
+        [UIColor colorWithWhite:68 / 255.0 alpha:1.0],
+    NSFontAttributeName : [MDCTypography buttonFont]
+  };
+  [doneButton setTitleTextAttributes:attributes forState:UIControlStateNormal];
+  doneButton.accessibilityLabel = doneButton.title;
+  doneButton.accessibilityIdentifier = @"Exit";
+  return doneButton;
+}
+
 // Saves the current position and asks the delegate to open the url, if delegate
 // is set, otherwise opens the URL using loader.
 - (void)dismissWithURL:(const GURL&)url {
@@ -920,8 +991,9 @@ const CGFloat kMenuWidth = 264;
       @"contextBar" : self.contextBar,
     };
     NSArray* constraints = @[
-      @"V:|[tableView][contextBar(==48)]|", @"H:|[tableView]|",
-      @"H:|[contextBar]|"
+      @"V:|[tableView][contextBar(==48)]|",
+      @"H:|[tableView]|",
+      @"H:|[contextBar]|",
     ];
     ApplyVisualConstraints(constraints, views);
   }
