@@ -58,6 +58,12 @@ class BluetoothPrivateSetAdapterStateFunction
  private:
   ~BluetoothPrivateSetAdapterStateFunction() override;
 
+  // Called when set adapter power completed. |save_to_pref| indicates whether
+  // to save the adapter power state to user pref before running the callback.
+  void OnSetAdapterPowerSuccess(bool save_to_pref,
+                                bool enabled,
+                                const base::Closure& callback);
+
   base::Closure CreatePropertySetCallback(const std::string& property_name);
   base::Closure CreatePropertyErrorCallback(const std::string& property_name);
   void OnAdapterPropertySet(const std::string& property);
