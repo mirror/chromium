@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e828f3a8_a795fabe",
+        "filename": "cc/resources/resource_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-31T17:34:43Z",
+      "side": 0,
+      "message": "Does this need to happen before the deleting resources below? Is there a reason to move this same call to each base class?",
+      "revId": "9529a6ae15007abd5f99de7d32a59eddaf999960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

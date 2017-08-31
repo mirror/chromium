@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "044034ea_7d4819a5",
+        "filename": "cc/resources/resource_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-31T17:34:43Z",
+      "side": 1,
+      "message": "Is there a reason to move this?",
+      "revId": "8b0c544c38f72cd8bd6b42b7ab284868de1149f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e8af16c_0bf67fe6",
+        "filename": "cc/resources/resource_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-31T17:34:43Z",
+      "side": 1,
+      "message": "I think this should be pure virtual instead of doing nothing.",
+      "revId": "8b0c544c38f72cd8bd6b42b7ab284868de1149f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
