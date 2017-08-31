@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fa0d035_5497a31d",
+        "filename": "content/common/site_isolation_policy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-08-31T00:05:37Z",
+      "side": 1,
+      "message": "Actually, checking the switch first is better - this way if there is a switch on the cmdline (or specified via chrome://flags), then we won\u0027t check the feature and so such case won\u0027t be considered part of a trial.  This probably doesn\u0027t matter much, but should result in more confidence in the data we\u0027ll get.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 65
+      },
+      "revId": "8114a2d2dfd2245d441459490c9864fcc0eeaf7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
