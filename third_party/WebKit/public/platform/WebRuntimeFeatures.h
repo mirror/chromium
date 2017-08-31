@@ -176,6 +176,7 @@ class WebRuntimeFeatures {
   BLINK_PLATFORM_EXPORT static void EnableClientHintsPersistent(bool);
   BLINK_PLATFORM_EXPORT static void EnableMediaEngagementBypassAutoplayPolicies(
       bool);
+  BLINK_PLATFORM_EXPORT static void EnableWorkStealingInScriptRunner(bool);
 
  private:
   WebRuntimeFeatures();
