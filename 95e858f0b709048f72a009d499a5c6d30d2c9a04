@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5bcde6d_7693c5ec",
+        "filename": "headless/lib/browser/headless_web_contents_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-31T20:18:02Z",
+      "side": 1,
+      "message": "You are sending this to all the clients (of all sessions), regardless of whether they wanted these.",
+      "revId": "95e858f0b709048f72a009d499a5c6d30d2c9a04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
