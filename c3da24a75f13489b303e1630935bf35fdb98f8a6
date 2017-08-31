@@ -16,6 +16,24 @@
       "revId": "c3da24a75f13489b303e1630935bf35fdb98f8a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e30dd622_19d36439",
+        "filename": "build/mac_toolchain.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-08-31T17:43:34Z",
+      "side": 1,
+      "message": "Is there any reason to support both \u0027mac\u0027 and \u0027ios\u0027 at the same time?",
+      "parentUuid": "dcf71442_f159e2c3",
+      "revId": "c3da24a75f13489b303e1630935bf35fdb98f8a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
