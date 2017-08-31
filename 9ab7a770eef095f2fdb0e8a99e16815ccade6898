@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4eb4ff8e_0b4f3db4",
+        "filename": "base/trace_event/memory_dump_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-31T17:37:28Z",
+      "side": 1,
+      "message": "we can think about it as HP can be disabled or enabled or disabled permanently. HP is disabled permanently when allocator shim is not supported or if it was enabled and disabled once in the current session.",
+      "range": {
+        "startLine": 144,
+        "startChar": 49,
+        "endLine": 145,
+        "endChar": 56
+      },
+      "revId": "9ab7a770eef095f2fdb0e8a99e16815ccade6898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a884722_7330388e",
+        "filename": "base/trace_event/memory_dump_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-31T17:37:28Z",
+      "side": 1,
+      "message": "I feel like the pseudo code is not necessary as a comment here. We could just say HP can be disabled only once and it gets disabled permanently. If the heap profiler mode is changed to the desired |profiling_mode|, returns true, else returns false.\n\nAlso it is hard to parse the comment, the code itself is readable. \"some enabled mode\" is not defined too.",
+      "revId": "9ab7a770eef095f2fdb0e8a99e16815ccade6898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7987c10_1ce10a36",
+        "filename": "base/trace_event/memory_dump_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 910,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-31T17:37:28Z",
+      "side": 1,
+      "message": "can this be part of one of the previous tests?\nJust 3 lines at the start of EnableHeapProfilingPseudoStack should be okay.\nBut I am fine with this.",
+      "range": {
+        "startLine": 910,
+        "startChar": 30,
+        "endLine": 910,
+        "endChar": 64
+      },
+      "revId": "9ab7a770eef095f2fdb0e8a99e16815ccade6898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c82d5c08_f22a399a",
+        "filename": "base/trace_event/memory_dump_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 912,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-31T17:37:28Z",
+      "side": 1,
+      "message": "This is only needed if we have multiple EXPECT_CALL macros.\nA normal expect call looks like this:\nEXPECT_CALL(mdp1, OnHeapProfilingEnabled(true)).Times(N);\n\nIf you want to test a sequence of expect calls\nEXPECT_CALL(mdp1, OnHeapProfilingEnabled(true)).Times(N);\nEXPECT_CALL(mdp1, OnHeapProfilingEnabled(false)).Times(N);\nThis gives 2 failures since both it expects exactly N calls due to first statement and exactly N calls due to second.\n\n\nBut, you could write:\ntesting::InSequence sequence;\nEXPECT_CALL(mdp1, OnHeapProfilingEnabled(true)).Times(N);\nEXPECT_CALL(mdp1, OnHeapProfilingEnabled(false)).Times(N);\nEXPECT_CALL(mdp1, OnHeapProfilingEnabled(true)).Times(N);",
+      "range": {
+        "startLine": 912,
+        "startChar": 2,
+        "endLine": 912,
+        "endChar": 31
+      },
+      "revId": "9ab7a770eef095f2fdb0e8a99e16815ccade6898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25fe7ff7_8c0daab4",
+        "filename": "base/trace_event/memory_dump_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 954,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-31T17:37:28Z",
+      "side": 1,
+      "message": "ditto, remove",
+      "revId": "9ab7a770eef095f2fdb0e8a99e16815ccade6898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45d5923b_19c1ac4b",
+        "filename": "base/trace_event/memory_dump_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 964,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-31T17:37:28Z",
+      "side": 1,
+      "message": "um I will remove this in next CL :P it\u0027s fine now.",
+      "range": {
+        "startLine": 963,
+        "startChar": 2,
+        "endLine": 964,
+        "endChar": 69
+      },
+      "revId": "9ab7a770eef095f2fdb0e8a99e16815ccade6898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
