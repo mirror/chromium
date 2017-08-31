@@ -1,0 +1,175 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5767946e_ae87d590",
+        "filename": "content/browser/accessibility/one_shot_accessibility_tree_search.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-08-31T15:18:26Z",
+      "side": 1,
+      "message": "What\u0027s the difference between AX_ROLE_COMBO_BOX_MENU_BUTTON and AX_ROLE_POP_UP_BUTTON ?",
+      "revId": "7ef8f7e0287c1861232cb47c6fc59ec2b57951ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16bc12f2_a9b7e93f",
+        "filename": "content/test/data/accessibility/aria/aria-orientation-expected-blink.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-08-31T15:18:26Z",
+      "side": 1,
+      "message": "Intentional change? I see that role\u003d\"combobox\" supports aria-orientation in the spec.",
+      "range": {
+        "startLine": 4,
+        "startChar": 2,
+        "endLine": 4,
+        "endChar": 18
+      },
+      "revId": "7ef8f7e0287c1861232cb47c6fc59ec2b57951ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59e072c0_2cb4905a",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-08-31T15:18:26Z",
+      "side": 1,
+      "message": "Wow, I did not know about \u003cinput list\u003e. Very cool.\n\nNeeds test. Should be exposed with autocomplete properties as well as correct role, right?",
+      "revId": "7ef8f7e0287c1861232cb47c6fc59ec2b57951ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1323c545_43bf0772",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 821,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-08-31T15:18:26Z",
+      "side": 1,
+      "message": "I like the way you commented this.",
+      "revId": "7ef8f7e0287c1861232cb47c6fc59ec2b57951ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf1aba74_cf3e8c8b",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1356,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-08-31T15:18:26Z",
+      "side": 1,
+      "message": "Perhaps the readonly restriction should be forwarded to a combobox group\u0027s textfield child.",
+      "revId": "7ef8f7e0287c1861232cb47c6fc59ec2b57951ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "854484fa_cb982a11",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-08-31T15:18:26Z",
+      "side": 1,
+      "message": "Do we not want different names for these?",
+      "revId": "7ef8f7e0287c1861232cb47c6fc59ec2b57951ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f98dbb6_c62de39e",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 941,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-08-31T15:18:26Z",
+      "side": 1,
+      "message": "Do we want listbox role here?",
+      "revId": "7ef8f7e0287c1861232cb47c6fc59ec2b57951ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34ad543d_2527df3b",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2545,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-08-31T15:18:26Z",
+      "side": 1,
+      "message": "Menu button probably should also expose haspopup state?",
+      "range": {
+        "startLine": 2545,
+        "startChar": 9,
+        "endLine": 2545,
+        "endChar": 38
+      },
+      "revId": "7ef8f7e0287c1861232cb47c6fc59ec2b57951ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1daee0c9_79581f52",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2776,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-08-31T15:18:26Z",
+      "side": 1,
+      "message": "Perhaps also needs autocomplete semantics and haspopup state?",
+      "range": {
+        "startLine": 2776,
+        "startChar": 13,
+        "endLine": 2776,
+        "endChar": 33
+      },
+      "revId": "7ef8f7e0287c1861232cb47c6fc59ec2b57951ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
