@@ -454,6 +454,8 @@ void SearchEngineObserver::OnTemplateURLServiceChanged() {
     int command_id = _notificationPromo->command_id();
     if (command_id == IDC_RATE_THIS_APP) {
       [self.dispatcher performSelector:@selector(showRateThisAppDialog)];
+    } else if (command_id == IDC_SHOW_BOOKMARK_MANAGER) {
+      [self.dispatcher performSelector:@selector(showBookmarksManager)];
     } else {
       GenericChromeCommand* command =
           [[GenericChromeCommand alloc] initWithTag:command_id];
