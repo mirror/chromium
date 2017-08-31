@@ -12,6 +12,17 @@ struct VideoFramePlane {
   int32_t stride;  // in bytes
 };
 
+// Format specification of the picture buffer request.
+struct PictureBufferFormat {
+  uint32_t pixel_format;
+  uint32_t buffer_size;
+
+  // minimal number of buffers required to process the video.
+  uint32_t min_num_buffers;
+  uint32_t coded_width;
+  uint32_t coded_height;
+};
+
 }  // namespace arc
 
 #endif  // COMPONENTS_ARC_VIDEO_ACCELERATOR_VIDEO_ACCELERATOR_H_
