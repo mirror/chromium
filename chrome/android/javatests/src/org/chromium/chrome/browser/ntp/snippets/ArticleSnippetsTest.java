@@ -25,11 +25,8 @@ import org.junit.runner.RunWith;
 import org.chromium.base.Callback;
 import org.chromium.base.DiscardableReferencePool;
 import org.chromium.base.ThreadUtils;
-import org.chromium.base.annotations.SuppressFBWarnings;
 import org.chromium.base.test.util.CommandLineFlags;
-import org.chromium.base.test.util.DisabledTest;
 import org.chromium.base.test.util.Feature;
-import org.chromium.base.test.util.RetryOnFailure;
 import org.chromium.base.test.util.UrlUtils;
 import org.chromium.base.test.util.parameter.CommandLineParameter;
 import org.chromium.chrome.R;
@@ -42,12 +39,9 @@ import org.chromium.chrome.browser.download.ui.ThumbnailProvider.ThumbnailReques
 import org.chromium.chrome.browser.favicon.LargeIconBridge;
 import org.chromium.chrome.browser.ntp.ContextMenuManager;
 import org.chromium.chrome.browser.ntp.ContextMenuManager.TouchEnabledDelegate;
-import org.chromium.chrome.browser.ntp.cards.NewTabPageAdapter;
 import org.chromium.chrome.browser.ntp.cards.SignInPromo;
 import org.chromium.chrome.browser.ntp.cards.SuggestionsCategoryInfo;
-import org.chromium.chrome.browser.offlinepages.OfflinePageBridge;
 import org.chromium.chrome.browser.preferences.ChromePreferenceManager;
-import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.suggestions.ContentSuggestionsAdditionalAction;
 import org.chromium.chrome.browser.suggestions.DestructionObserver;
 import org.chromium.chrome.browser.suggestions.ImageFetcher;
@@ -70,7 +64,6 @@ import org.chromium.chrome.test.util.browser.suggestions.SuggestionsDependencies
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -91,155 +84,181 @@ public class ArticleSnippetsTest {
     public RenderTestRule mRenderTestRule =
             new RenderTestRule("chrome/test/data/android/render_tests");
 
-    // Rules must be public for JUnit to access them, but FindBugs complains about that.
-    @SuppressFBWarnings("URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD")
     @Rule
-    public ExternalResource mDisableChromeAnimationsRule = new ExternalResource() {
+    public ExternalResource disableChromeAnimations() {
+        return new ExternalResource() {
+            private float mOldAnimationMultiplier;
 
-        private float mOldAnimationMultiplier;
+            @Override
+            protected void before() {
+                mOldAnimationMultiplier = ChromeAnimation.Animation.getAnimationMultiplier();
+                ChromeAnimation.Animation.setAnimationMultiplierForTesting(0f);
+            }
 
-        @Override
-        protected void before() {
-            mOldAnimationMultiplier = ChromeAnimation.Animation.getAnimationMultiplier();
-            ChromeAnimation.Animation.setAnimationMultiplierForTesting(0f);
-        }
-
-        @Override
-        protected void after() {
-            ChromeAnimation.Animation.setAnimationMultiplierForTesting(mOldAnimationMultiplier);
-        }
-    };
+            @Override
+            protected void after() {
+                ChromeAnimation.Animation.setAnimationMultiplierForTesting(mOldAnimationMultiplier);
+            }
+        };
+    }
 
     private SuggestionsUiDelegate mUiDelegate;
     private FakeSuggestionsSource mSnippetsSource;
-    private SuggestionsRecyclerView mRecyclerView;
-    private NewTabPageAdapter mAdapter;
+    private MockThumbnailProvider mThumbnailProvider;
 
+    private SuggestionsRecyclerView mRecyclerView;
+    private ContextMenuManager mContextMenuManager;
     private FrameLayout mContentView;
     private SnippetArticleViewHolder mSuggestion;
     private SignInPromo.GenericPromoViewHolder mSigninPromo;
 
     private UiConfig mUiConfig;
 
-    private MockThumbnailProvider mThumbnailProvider;
+    private static final int FULL_CATEGORY = 0;
+    private static final int MINIMAL_CATEGORY = 1;
 
-    @Test
-    @MediumTest
-    @DisabledTest(message = "crbug.com/757735")
-    @Feature({"ArticleSnippets", "RenderTest"})
-    @CommandLineParameter({"", "enable-features=" + ChromeFeatureList.CHROME_HOME + ","
-            + ChromeFeatureList.CHROME_HOME_MODERN_LAYOUT})
-    @RetryOnFailure
-    public void testSnippetAppearance() throws IOException {
-        // Don't load the Bitmap on the UI thread - this is a StrictModeViolation.
-        final Bitmap watch = BitmapFactory.decodeFile(
-                UrlUtils.getIsolatedTestFilePath("chrome/test/data/android/watch.jpg"));
+    private long mTimestamp;
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                setupTestData(watch);
+    @Before
+    public void setUp() throws Exception {
+        mActivityTestRule.startMainActivityOnBlankPage();
+        ChromePreferenceManager.getInstance().setNewTabPageGenericSigninPromoDismissed(true);
+        mThumbnailProvider = new MockThumbnailProvider();
+        mSnippetsSource = new FakeSuggestionsSource();
+        mSuggestionsDeps.getFactory().thumbnailProvider = mThumbnailProvider;
+        mSuggestionsDeps.getFactory().suggestionsSource = mSnippetsSource;
+        mUiDelegate = new MockUiDelegate();
+        mSnippetsSource.setDefaultFavicon(getBitmap(R.drawable.star_green));
 
-                mContentView = new FrameLayout(mActivityTestRule.getActivity());
-                mUiConfig = new UiConfig(mContentView);
+        mTimestamp = System.currentTimeMillis() - 5 * DateUtils.MINUTE_IN_MILLIS;
 
-                mActivityTestRule.getActivity().setContentView(mContentView);
+        FeatureUtilities.resetChromeHomeEnabledForTests();
+        FeatureUtilities.cacheChromeHomeEnabled();
 
-                mRecyclerView = new SuggestionsRecyclerView(mActivityTestRule.getActivity());
-                mContentView.addView(mRecyclerView);
+        if (FeatureUtilities.isChromeHomeModernEnabled()) {
+            mRenderTestRule.setVariantPrefix("modern");
+        }
 
-                mAdapter = new NewTabPageAdapter(mUiDelegate, /* aboveTheFold = */ null, mUiConfig,
-                        OfflinePageBridge.getForProfile(Profile.getLastUsedProfile()),
-                        /* contextMenuManager = */ null, /* tileGroupDelegate = */ null,
-                        /* suggestionsCarousel = */ null);
-                mAdapter.refreshSuggestions();
-                mRecyclerView.setAdapter(mAdapter);
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            mContentView = new FrameLayout(mActivityTestRule.getActivity());
+            mUiConfig = new UiConfig(mContentView);
+
+            mActivityTestRule.getActivity().setContentView(mContentView);
+
+            mRecyclerView = new SuggestionsRecyclerView(mActivityTestRule.getActivity());
+            TouchEnabledDelegate touchEnabledDelegate =
+                    enabled -> mRecyclerView.setTouchEnabled(enabled);
+            mContextMenuManager = new ContextMenuManager(mActivityTestRule.getActivity(),
+                    mUiDelegate.getNavigationDelegate(), touchEnabledDelegate);
+            mRecyclerView.init(mUiConfig, mContextMenuManager);
+
+            mSuggestion = new SnippetArticleViewHolder(
+                    mRecyclerView, mContextMenuManager, mUiDelegate, mUiConfig);
+            mSigninPromo = new SignInPromo.GenericPromoViewHolder(
+                    mRecyclerView, mContextMenuManager, mUiConfig);
         });
-
-        InstrumentationRegistry.getInstrumentation().waitForIdleSync();
-
-        int first = mAdapter.getFirstCardPosition();
-        mRenderTestRule.render(mRecyclerView.getChildAt(first), "short_snippet");
-        mRenderTestRule.render(mRecyclerView.getChildAt(first + 1), "long_snippet");
-
-        int firstOfSecondCategory = first + 1 /* card 2 */ + 1 /* header */ + 1 /* card 3 */;
-
-        mRenderTestRule.render(mRecyclerView.getChildAt(firstOfSecondCategory), "minimal_snippet");
-        mRenderTestRule.render(mRecyclerView, "snippets");
-
-        // See how everything looks in narrow layout.
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                // Since we inform the UiConfig manually about the desired display style, the only
-                // reason we actually change the LayoutParams is for the rendered Views to look
-                // right.
-                ViewGroup.LayoutParams params = mContentView.getLayoutParams();
-                params.width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 350,
-                        mRecyclerView.getResources().getDisplayMetrics());
-                mContentView.setLayoutParams(params);
-
-                mUiConfig.setDisplayStyleForTesting(new UiConfig.DisplayStyle(
-                        HorizontalDisplayStyle.NARROW, VerticalDisplayStyle.REGULAR));
-            }
-        });
-
-        InstrumentationRegistry.getInstrumentation().waitForIdleSync();
-
-        mRenderTestRule.render(mRecyclerView.getChildAt(first), "short_snippet_narrow");
-        mRenderTestRule.render(mRecyclerView.getChildAt(first + 1), "long_snippet_narrow");
-        mRenderTestRule.render(
-                mRecyclerView.getChildAt(firstOfSecondCategory), "long_minimal_snippet_narrow");
-        mRenderTestRule.render(mRecyclerView.getChildAt(firstOfSecondCategory + 1),
-                "short_minimal_snippet_narrow");
-        mRenderTestRule.render(mRecyclerView, "snippets_narrow");
     }
 
     @Test
     @MediumTest
     @Feature({"ArticleSnippets", "RenderTest"})
+    @CommandLineParameter({"", "enable-features=" + ChromeFeatureList.CHROME_HOME + ","
+            + ChromeFeatureList.CHROME_HOME_MODERN_LAYOUT})
+    public void testSnippetAppearance() throws IOException {
+        SuggestionsCategoryInfo fullCategoryInfo = new SuggestionsCategoryInfo(FULL_CATEGORY,
+                "Section Title", ContentSuggestionsCardLayout.FULL_CARD,
+                ContentSuggestionsAdditionalAction.NONE,
+                /* show_if_empty = */ true, "No suggestions");
+
+        SnippetArticle shortSnippet = new SnippetArticle(FULL_CATEGORY, "id1", "Snippet",
+                "Publisher", "Preview Text", "www.google.com",
+                mTimestamp, // Publish timestamp
+                10f, // Score
+                mTimestamp, // Fetch timestamp
+                false); // IsVideoSuggestion
+        Bitmap watch = BitmapFactory.decodeFile(
+                UrlUtils.getIsolatedTestFilePath("chrome/test/data/android/watch.jpg"));
+        Drawable drawable = ThumbnailGradient.createDrawableWithGradientIfNeeded(
+                watch, mActivityTestRule.getActivity().getResources());
+        shortSnippet.setThumbnail(mUiDelegate.getReferencePool().put(drawable));
+
+        renderSuggestion(shortSnippet, fullCategoryInfo, "short_snippet");
+
+        SnippetArticle longSnippet = new SnippetArticle(FULL_CATEGORY, "id2",
+                new String(new char[20]).replace("\0", "Snippet "),
+                new String(new char[20]).replace("\0", "Publisher "),
+                new String(new char[80]).replace("\0", "Preview Text "), "www.google.com",
+                mTimestamp, // Publish timestamp
+                20f, // Score
+                mTimestamp, // Fetch timestamp
+                false); // IsVideoSuggestion
+        renderSuggestion(longSnippet, fullCategoryInfo, "long_snippet");
+
+        SuggestionsCategoryInfo minimalCategory = new SuggestionsCategoryInfo(MINIMAL_CATEGORY,
+                "Section Title", ContentSuggestionsCardLayout.MINIMAL_CARD,
+                ContentSuggestionsAdditionalAction.NONE,
+                /* show_if_empty = */ true, "No suggestions");
+
+        SnippetArticle minimalSnippet = new SnippetArticle(MINIMAL_CATEGORY, "id3",
+                new String(new char[20]).replace("\0", "Bookmark "), "Publisher",
+                "This should not be displayed", "www.google.com",
+                mTimestamp, // Publish timestamp
+                10f, // Score
+                mTimestamp, // Fetch timestamp
+                false); // IsVideoSuggestion
+        renderSuggestion(minimalSnippet, minimalCategory, "minimal_snippet");
+
+        SnippetArticle minimalSnippet2 = new SnippetArticle(MINIMAL_CATEGORY, "id4", "Bookmark",
+                "Publisher", "This should not be displayed", "www.google.com",
+                mTimestamp, // Publish timestamp
+                10f, // Score
+                mTimestamp, // Fetch timestamp
+                false);
+
+        // See how everything looks in narrow layout.
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            // Since we inform the UiConfig manually about the desired display style, the only
+            // reason we actually change the LayoutParams is for the rendered Views to look
+            // right.
+            ViewGroup.LayoutParams params = mContentView.getLayoutParams();
+            params.width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 350,
+                    mRecyclerView.getResources().getDisplayMetrics());
+            mContentView.setLayoutParams(params);
+
+            mUiConfig.setDisplayStyleForTesting(new UiConfig.DisplayStyle(
+                    HorizontalDisplayStyle.NARROW, VerticalDisplayStyle.REGULAR));
+        });
+
+        InstrumentationRegistry.getInstrumentation().waitForIdleSync();
+
+        renderSuggestion(shortSnippet, fullCategoryInfo, "short_snippet_narrow");
+        renderSuggestion(longSnippet, fullCategoryInfo, "long_snippet_narrow");
+        renderSuggestion(minimalSnippet, minimalCategory, "long_minimal_snippet_narrow");
+        renderSuggestion(minimalSnippet2, minimalCategory, "short_minimal_snippet_narrow");
+    }
+
+    // TODO(bauerb): Test top, middle, and bottom card backgrounds.
+
+    @Test
+    @MediumTest
+    @Feature({"ArticleSnippets", "RenderTest"})
+    @CommandLineParameter({"", "enable-features=" + ChromeFeatureList.CHROME_HOME + ","
+            + ChromeFeatureList.CHROME_HOME_MODERN_LAYOUT})
     public void testDownloadSuggestion() throws IOException {
-        final String filePath =
+        final String downloadFilePath =
                 UrlUtils.getIsolatedTestFilePath("chrome/test/data/android/capybara.jpg");
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mContentView = new FrameLayout(mActivityTestRule.getActivity());
-                mUiConfig = new UiConfig(mContentView);
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            SnippetArticle downloadSuggestion = new SnippetArticle(KnownCategories.DOWNLOADS, "id1",
+                    "test_image.jpg", "example.com", null, "http://example.com", mTimestamp, 10f,
+                    mTimestamp, false);
+            downloadSuggestion.setAssetDownloadData("asdf", downloadFilePath, "image/jpeg");
+            SuggestionsCategoryInfo downloadsCategory = new SuggestionsCategoryInfo(
+                    KnownCategories.DOWNLOADS, "Downloads", ContentSuggestionsCardLayout.FULL_CARD,
+                    ContentSuggestionsAdditionalAction.NONE,
+                    /* show_if_empty = */ true, "No suggestions");
 
-                mActivityTestRule.getActivity().setContentView(mContentView);
-
-                mRecyclerView = new SuggestionsRecyclerView(mActivityTestRule.getActivity());
-                TouchEnabledDelegate touchEnabledDelegate = new TouchEnabledDelegate() {
-                    @Override
-                    public void setTouchEnabled(boolean enabled) {
-                        mRecyclerView.setTouchEnabled(enabled);
-                    }
-                };
-                ContextMenuManager contextMenuManager =
-                        new ContextMenuManager(mActivityTestRule.getActivity(),
-                                mUiDelegate.getNavigationDelegate(), touchEnabledDelegate);
-                mRecyclerView.init(mUiConfig, contextMenuManager);
-                mRecyclerView.setAdapter(mAdapter);
-
-                mSuggestion = new SnippetArticleViewHolder(
-                        mRecyclerView, contextMenuManager, mUiDelegate, mUiConfig);
-
-                long timestamp = System.currentTimeMillis() - 5 * DateUtils.MINUTE_IN_MILLIS;
-
-                SnippetArticle download = new SnippetArticle(KnownCategories.DOWNLOADS, "id1",
-                        "test_image.jpg", "example.com", null, "http://example.com", timestamp, 10f,
-                        timestamp, false);
-                download.setAssetDownloadData("asdf", filePath, "image/jpeg");
-                SuggestionsCategoryInfo categoryInfo =
-                        new SuggestionsCategoryInfo(KnownCategories.DOWNLOADS, "Downloads",
-                                ContentSuggestionsCardLayout.FULL_CARD,
-                                ContentSuggestionsAdditionalAction.NONE,
-                                /* show_if_empty = */ true, "No suggestions");
-                mSuggestion.onBindViewHolder(download, categoryInfo);
-                mContentView.addView(mSuggestion.itemView);
-            }
+            mSuggestion.onBindViewHolder(downloadSuggestion, downloadsCategory);
+            mContentView.addView(mSuggestion.itemView);
         });
 
         mRenderTestRule.render(mSuggestion.itemView, "download_snippet_placeholder");
@@ -248,16 +267,14 @@ public class ArticleSnippetsTest {
         List<ThumbnailRequest> requests = mThumbnailProvider.getRequests();
         Assert.assertEquals(1, requests.size());
         final ThumbnailRequest request = requests.get(0);
-        Assert.assertEquals(filePath, request.getFilePath());
+        Assert.assertEquals(downloadFilePath, request.getFilePath());
 
-        final Bitmap thumbnail = BitmapFactory.decodeFile(filePath);
+        final Bitmap thumbnail = BitmapFactory.decodeFile(downloadFilePath);
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mThumbnailProvider.fulfillRequest(request, thumbnail);
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            mThumbnailProvider.fulfillRequest(request, thumbnail);
         });
+
         mRenderTestRule.render(mSuggestion.itemView, "download_snippet_thumbnail");
     }
 
@@ -280,7 +297,6 @@ public class ArticleSnippetsTest {
                     new ContextMenuManager(mActivityTestRule.getActivity(),
                             mUiDelegate.getNavigationDelegate(), touchEnabledDelegate);
             mRecyclerView.init(mUiConfig, contextMenuManager);
-            mRecyclerView.setAdapter(mAdapter);
 
             mSigninPromo = new SignInPromo.GenericPromoViewHolder(
                     mRecyclerView, contextMenuManager, mUiConfig);
@@ -288,85 +304,22 @@ public class ArticleSnippetsTest {
             mContentView.addView(mSigninPromo.itemView);
         });
 
+        InstrumentationRegistry.getInstrumentation().waitForIdleSync();
         mRenderTestRule.render(mSigninPromo.itemView, "signin_promo");
     }
 
-    private void setupTestData(Bitmap thumbnail) {
-        @CategoryInt
-        int fullCategory = 0;
-        @CategoryInt
-        int minimalCategory = 1;
-        SnippetArticle shortSnippet = new SnippetArticle(fullCategory, "id1", "Snippet",
-                "Publisher", "Preview Text", "www.google.com",
-                1466614774, // Publish timestamp
-                10f, // Score
-                1466634774, // Fetch timestamp
-                false); // IsVideoSuggestion
+    private void renderSuggestion(SnippetArticle suggestion, SuggestionsCategoryInfo categoryInfo,
+            String renderId) throws IOException {
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            mSuggestion.onBindViewHolder(suggestion, categoryInfo);
+            mContentView.addView(mSuggestion.itemView);
+        });
+        mRenderTestRule.render(mSuggestion.itemView, renderId);
 
-        Drawable drawable = ThumbnailGradient.createDrawableWithGradientIfNeeded(
-                thumbnail, mActivityTestRule.getActivity().getResources());
-        shortSnippet.setThumbnail(mUiDelegate.getReferencePool().put(drawable));
-
-        SnippetArticle longSnippet = new SnippetArticle(fullCategory, "id2",
-                new String(new char[20]).replace("\0", "Snippet "),
-                new String(new char[20]).replace("\0", "Publisher "),
-                new String(new char[80]).replace("\0", "Preview Text "), "www.google.com",
-                1466614074, // Publish timestamp
-                20f, // Score
-                1466634774, // Fetch timestamp
-                false); // IsVideoSuggestion
-
-        SnippetArticle minimalSnippet = new SnippetArticle(minimalCategory, "id3",
-                new String(new char[20]).replace("\0", "Bookmark "), "Publisher",
-                "This should not be displayed", "www.google.com",
-                1466614774, // Publish timestamp
-                10f, // Score
-                1466634774, // Fetch timestamp
-                false); // IsVideoSuggestion
-
-        SnippetArticle minimalSnippet2 = new SnippetArticle(minimalCategory, "id4", "Bookmark",
-                "Publisher", "This should not be displayed", "www.google.com",
-                1466614774, // Publish timestamp
-                10f, // Score
-                1466634774, // Fetch timestamp
-                false); // IsVideoSuggestion
-
-        mSnippetsSource.setInfoForCategory(fullCategory,
-                new SuggestionsCategoryInfo(fullCategory, "Section Title",
-                        ContentSuggestionsCardLayout.FULL_CARD,
-                        ContentSuggestionsAdditionalAction.NONE,
-                        /*show_if_empty=*/true, "No suggestions"));
-        mSnippetsSource.setStatusForCategory(fullCategory, CategoryStatus.AVAILABLE);
-        mSnippetsSource.setSuggestionsForCategory(
-                fullCategory, Arrays.asList(shortSnippet, longSnippet));
-
-        mSnippetsSource.setInfoForCategory(minimalCategory,
-                new SuggestionsCategoryInfo(minimalCategory, "Section Title",
-                        ContentSuggestionsCardLayout.MINIMAL_CARD,
-                        ContentSuggestionsAdditionalAction.NONE,
-                        /* show_if_empty = */ true, "No suggestions"));
-        mSnippetsSource.setStatusForCategory(minimalCategory, CategoryStatus.AVAILABLE);
-        mSnippetsSource.setSuggestionsForCategory(
-                minimalCategory, Arrays.asList(minimalSnippet, minimalSnippet2));
-    }
-
-    @Before
-    public void setUp() throws Exception {
-        mActivityTestRule.startMainActivityOnBlankPage();
-        ChromePreferenceManager.getInstance().setNewTabPageGenericSigninPromoDismissed(true);
-        mThumbnailProvider = new MockThumbnailProvider();
-        mSnippetsSource = new FakeSuggestionsSource();
-        mSuggestionsDeps.getFactory().thumbnailProvider = mThumbnailProvider;
-        mSuggestionsDeps.getFactory().suggestionsSource = mSnippetsSource;
-        mUiDelegate = new MockUiDelegate();
-        mSnippetsSource.setDefaultFavicon(getBitmap(R.drawable.star_green));
-
-        FeatureUtilities.resetChromeHomeEnabledForTests();
-        FeatureUtilities.cacheChromeHomeEnabled();
-
-        if (FeatureUtilities.isChromeHomeModernEnabled()) {
-            mRenderTestRule.setVariantPrefix("modern");
-        }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            mContentView.removeView(mSuggestion.itemView);
+            mSuggestion.recycle();
+        });
     }
 
     private Bitmap getBitmap(@DrawableRes int resId) {
