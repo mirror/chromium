@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "884c8aaa_7a9c9d55",
+        "filename": "third_party/WebKit/Source/core/css/properties/README.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-31T23:43:18Z",
+      "side": 1,
+      "message": "https://gerrit.googlesource.com/gitiles/+/master/Documentation/markdown.md#Table-of-contents",
+      "parentUuid": "bc4b12fb_79328af3",
+      "revId": "144e2d57dcf2d1dfd76da62425b003aea9fb7039",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0b6157a0_c4c68139",
         "filename": "third_party/WebKit/Source/core/css/properties/README.md",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2bb92ddc_842d94e0",
+        "filename": "third_party/WebKit/Source/core/css/properties/README.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-31T23:43:18Z",
+      "side": 1,
+      "message": "as per offline conversation, split between generated vs non generated is enough detail",
+      "parentUuid": "0b6157a0_c4c68139",
+      "revId": "144e2d57dcf2d1dfd76da62425b003aea9fb7039",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "87345b23_50b8b562",
         "filename": "third_party/WebKit/Source/core/css/properties/README.md",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-31T06:21:00Z",
       "side": 1,
       "message": "why is this date so stale already?",
+      "revId": "144e2d57dcf2d1dfd76da62425b003aea9fb7039",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7a55c11_f0cde635",
+        "filename": "third_party/WebKit/Source/core/css/properties/README.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-31T23:43:18Z",
+      "side": 1,
+      "message": "this was when the patch was first written. i can update it",
+      "parentUuid": "87345b23_50b8b562",
       "revId": "144e2d57dcf2d1dfd76da62425b003aea9fb7039",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
