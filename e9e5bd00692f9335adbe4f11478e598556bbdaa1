@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7721d7de_6a319be3",
+        "filename": "chrome/installer/linux/debian/check-package-constraints-satisfied.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-08-31T00:00:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9de2a35b_d79d4e8a",
+      "revId": "e9e5bd00692f9335adbe4f11478e598556bbdaa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d5766f0_10950f1d",
         "filename": "chrome/installer/linux/debian/deb_version_test.py",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "e9e5bd00692f9335adbe4f11478e598556bbdaa1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "824533e1_a4a23014",
+        "filename": "chrome/installer/linux/debian/deb_version_test.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-08-31T00:00:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1d5766f0_10950f1d",
+      "revId": "e9e5bd00692f9335adbe4f11478e598556bbdaa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
