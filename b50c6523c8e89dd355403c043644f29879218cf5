@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "e7ba9ddf_a559d23e",
+        "filename": "chrome/browser/ui/ash/multi_user/multi_user_notification_blocker_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-31T21:46:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39c486f4_252d7ab5",
+      "range": {
+        "startLine": 26,
+        "startChar": 7,
+        "endLine": 26,
+        "endChar": 68
+      },
+      "revId": "b50c6523c8e89dd355403c043644f29879218cf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7987685_4c202bd9",
         "filename": "chrome/browser/ui/ash/multi_user/multi_user_window_manager.h",
         "patchSetId": 2
