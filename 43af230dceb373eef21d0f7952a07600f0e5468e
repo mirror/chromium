@@ -144,6 +144,24 @@
     },
     {
       "key": {
+        "uuid": "da943c3a_2ea87fe4",
+        "filename": "chromeos/dbus/cryptohome_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 929,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-08-31T15:31:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abc42ded_639c4099",
+      "revId": "43af230dceb373eef21d0f7952a07600f0e5468e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d33f5c82_53a8f822",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 10
