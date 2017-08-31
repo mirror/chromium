@@ -9,6 +9,7 @@
 #include <string>
 
 #include "base/macros.h"
+#include "base/trace_event/memory_dump_provider.h"
 #include "content/browser/indexed_db/leveldb/leveldb_iterator.h"
 #include "content/common/content_export.h"
 #include "third_party/leveldatabase/src/include/leveldb/iterator.h"
@@ -20,7 +21,9 @@ class Snapshot;
 namespace content {
 class LevelDBDatabase;
 
-class CONTENT_EXPORT LevelDBIteratorImpl : public content::LevelDBIterator {
+class CONTENT_EXPORT LevelDBIteratorImpl
+    : public content::LevelDBIterator,
+      public base::trace_event::MemoryDumpProvider {
  public:
   ~LevelDBIteratorImpl() override;
   bool IsValid() const override;
@@ -32,6 +35,10 @@ class CONTENT_EXPORT LevelDBIteratorImpl : public content::LevelDBIterator {
   base::StringPiece Value() const override;
   void Detach() override;
   bool IsDetached() const override;
+
+  // base::trace_event::MemoryDumpProvider implementation.
+  bool OnMemoryDump(const base::trace_event::MemoryDumpArgs& dump_args,
+                    base::trace_event::ProcessMemoryDump* pmd) override;
 
  protected:
   explicit LevelDBIteratorImpl(std::unique_ptr<leveldb::Iterator> iterator,
