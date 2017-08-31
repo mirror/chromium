@@ -118,7 +118,7 @@ QUIC_FLAG(bool, FLAGS_quic_enable_version_40, false)
 
 // In QUIC, QuicSession gets notified when stream frames are acked, discarded or
 // retransmitted.
-QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_use_stream_notifier2, false)
+QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_use_stream_notifier2, true)
 
 // When true, defaults to BBR congestion control instead of Cubic.
 QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_default_to_bbr, false)
@@ -165,7 +165,7 @@ QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_bbr_exit_startup_on_loss, false)
 // If true, application data is saved before consumption in QUIC.
 QUIC_FLAG(bool,
           FLAGS_quic_reloadable_flag_quic_save_data_before_consumption2,
-          false)
+          true)
 
 // If buffered data in QUIC stream is less than this threshold, buffers all
 // provided data or asks upper layer for more data.
