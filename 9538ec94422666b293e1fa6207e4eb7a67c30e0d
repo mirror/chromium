@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c7abe54_2b662bd8",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-31T03:57:00Z",
+      "side": 1,
+      "message": "a renderer\n\nlooks majority of .*Name don\u0027t have a period at the end",
+      "revId": "9538ec94422666b293e1fa6207e4eb7a67c30e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d72c4815_3abb198a",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-31T03:57:00Z",
+      "side": 1,
+      "message": "a renderer process",
+      "revId": "9538ec94422666b293e1fa6207e4eb7a67c30e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1bd57cc_a23e9278",
+        "filename": "content/browser/frame_host/keep_alive_handle_factory.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-31T03:57:00Z",
+      "side": 1,
+      "message": "RENDERER -\u003e FRAME",
+      "revId": "9538ec94422666b293e1fa6207e4eb7a67c30e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2466e1ef_e5b8e034",
+        "filename": "content/child/web_url_loader_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-31T03:57:00Z",
+      "side": 1,
+      "message": "remove",
+      "revId": "9538ec94422666b293e1fa6207e4eb7a67c30e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e810544_dd6615d7",
+        "filename": "content/child/web_url_loader_impl.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-31T03:57:00Z",
+      "side": 1,
+      "message": "for what is this?",
+      "revId": "9538ec94422666b293e1fa6207e4eb7a67c30e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b1cc05f_d3abcd90",
+        "filename": "content/child/web_url_loader_impl.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-31T03:57:00Z",
+      "side": 1,
+      "message": "let\u0027s add \u003cvector\u003e using this opportunity",
+      "revId": "9538ec94422666b293e1fa6207e4eb7a67c30e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9158503c_df5304a2",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-31T03:57:00Z",
+      "side": 1,
+      "message": "keeps the associated renderer process alive even ...\n\nor\n\nprolongs the lifetime of ...",
+      "revId": "9538ec94422666b293e1fa6207e4eb7a67c30e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83208a50_e8d25c6b",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-31T03:57:00Z",
+      "side": 1,
+      "message": "KeepAliveHandle?",
+      "revId": "9538ec94422666b293e1fa6207e4eb7a67c30e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1c21d31_8dd4ee2d",
+        "filename": "content/public/browser/render_process_host.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-31T03:57:00Z",
+      "side": 1,
+      "message": "the KeepAliveRendererForKeepaliveRequests feature",
+      "revId": "9538ec94422666b293e1fa6207e4eb7a67c30e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deeaca7a_e1f49973",
+        "filename": "content/public/browser/render_process_host.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-31T03:57:00Z",
+      "side": 1,
+      "message": "remove \u0027a\u0027\n\nalive -\u003e to be kept alive",
+      "revId": "9538ec94422666b293e1fa6207e4eb7a67c30e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
