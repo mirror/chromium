@@ -16,6 +16,24 @@
       "revId": "69b5eb3a696d84dca27eedd2859870f4c60587a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1315f6d9_0259239d",
+        "filename": "components/ui_devtools/views/window_element.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-31T01:53:31Z",
+      "side": 1,
+      "message": "It makes sense, but I tried adding \"if |child_i| \u003d\u003d |dest_i|\" and it doesn\u0027t fix the bug. I tried a variation of line 848-850 (change + to - sign):\n\n  // Don\u0027t move the child if it is already in the right place.\n  if ((direction \u003d\u003d STACK_ABOVE \u0026\u0026 child_i \u003d\u003d target_i - 1) ||\n      (direction \u003d\u003d STACK_BELOW \u0026\u0026 child_i - 1 \u003d\u003d target_i))\n    return;\n\nwhich results in the a working patch but some tests in ash_unittestss test fail. I think there are some logic that requires these lines:\n\n  port_-\u003eOnWillMoveChild(child_i, dest_i);\n  children_.erase(children_.begin() + child_i);\n  children_.insert(children_.begin() + dest_i, child);\n\nto get called in ash.\n\nThis working patch 3 basically inherits already ordered trees and don\u0027t reshuffle children if they are same order.",
+      "parentUuid": "188be91c_26d5532b",
+      "revId": "69b5eb3a696d84dca27eedd2859870f4c60587a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
