@@ -12,7 +12,6 @@
 #include "base/bind.h"
 #include "base/bit_cast.h"
 #include "base/trace_event/trace_event.h"
-#include "cc/base/math_util.h"
 #include "cc/paint/skia_paint_canvas.h"
 #include "cc/resources/resource_provider.h"
 #include "cc/resources/resource_util.h"
@@ -26,6 +25,7 @@
 #include "third_party/libyuv/include/libyuv.h"
 #include "third_party/skia/include/core/SkCanvas.h"
 #include "ui/gfx/geometry/size_conversions.h"
+#include "ui/gfx/math_util.h"
 
 namespace cc {
 
@@ -495,7 +495,7 @@ VideoFrameExternalResources VideoResourceUpdater::CreateForSoftwarePlanes(
       // Use 4-byte row alignment (OpenGL default) for upload performance.
       // Assuming that GL_UNPACK_ALIGNMENT has not changed from default.
       size_t upload_image_stride =
-          MathUtil::CheckedRoundUp<size_t>(bytes_per_row, 4u);
+          gfx::MathUtil::CheckedRoundUp<size_t>(bytes_per_row, 4u);
 
       bool needs_conversion = false;
       int shift = 0;

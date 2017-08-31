@@ -12,12 +12,12 @@
 
 #include "base/logging.h"
 #include "build/build_config.h"
-#include "cc/base/base_export.h"
 #include "ui/gfx/geometry/box_f.h"
 #include "ui/gfx/geometry/point3_f.h"
 #include "ui/gfx/geometry/point_f.h"
 #include "ui/gfx/geometry/scroll_offset.h"
 #include "ui/gfx/geometry/size.h"
+#include "ui/gfx/gfx_export.h"
 #include "ui/gfx/transform.h"
 
 namespace base {
@@ -36,9 +36,6 @@ class Transform;
 class Vector2dF;
 class Vector2d;
 class Vector3dF;
-}
-
-namespace cc {
 
 struct HomogeneousCoordinate {
   HomogeneousCoordinate(SkMScalar x, SkMScalar y, SkMScalar z, SkMScalar w) {
@@ -80,7 +77,7 @@ struct HomogeneousCoordinate {
   SkMScalar vec[4];
 };
 
-class CC_BASE_EXPORT MathUtil {
+class GFX_EXPORT MathUtil {
  public:
   static const double kPiDouble;
   static const float kPiFloat;
@@ -156,7 +153,8 @@ class CC_BASE_EXPORT MathUtil {
     return RoundDownInternal(n, mul);
   }
 
-  template <typename T> static T ClampToRange(T value, T min, T max) {
+  template <typename T>
+  static T ClampToRange(T value, T min, T max) {
     return std::min(std::max(value, min), max);
   }
 
@@ -326,12 +324,12 @@ class CC_BASE_EXPORT MathUtil {
 
   template <typename T>
   static T RoundDownInternal(T n, T mul) {
-    return (n > 0) ? (n / mul) * mul : (n == 0) ? 0
-                                                : ((n - mul + 1) / mul) * mul;
+    return (n > 0) ? (n / mul) * mul
+                   : (n == 0) ? 0 : ((n - mul + 1) / mul) * mul;
   }
 };
 
-class CC_BASE_EXPORT ScopedSubnormalFloatDisabler {
+class GFX_EXPORT ScopedSubnormalFloatDisabler {
  public:
   ScopedSubnormalFloatDisabler();
   ~ScopedSubnormalFloatDisabler();
@@ -343,6 +341,6 @@ class CC_BASE_EXPORT ScopedSubnormalFloatDisabler {
   DISALLOW_COPY_AND_ASSIGN(ScopedSubnormalFloatDisabler);
 };
 
-}  // namespace cc
+}  // namespace gfx
 
 #endif  // CC_BASE_MATH_UTIL_H_

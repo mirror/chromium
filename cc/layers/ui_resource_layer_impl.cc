@@ -6,11 +6,11 @@
 
 #include "base/strings/stringprintf.h"
 #include "base/values.h"
-#include "cc/base/math_util.h"
 #include "cc/quads/texture_draw_quad.h"
 #include "cc/trees/layer_tree_impl.h"
 #include "cc/trees/occlusion.h"
 #include "ui/gfx/geometry/rect_f.h"
+#include "ui/gfx/math_util.h"
 
 namespace cc {
 
@@ -143,7 +143,7 @@ const char* UIResourceLayerImpl::LayerTypeAsString() const {
 std::unique_ptr<base::DictionaryValue> UIResourceLayerImpl::LayerTreeAsJson() {
   std::unique_ptr<base::DictionaryValue> result = LayerImpl::LayerTreeAsJson();
 
-  result->Set("ImageBounds", MathUtil::AsValue(image_bounds_));
+  result->Set("ImageBounds", gfx::MathUtil::AsValue(image_bounds_));
 
   auto list = std::make_unique<base::ListValue>();
   list->AppendDouble(vertex_opacity_[0]);
@@ -152,8 +152,8 @@ std::unique_ptr<base::DictionaryValue> UIResourceLayerImpl::LayerTreeAsJson() {
   list->AppendDouble(vertex_opacity_[3]);
   result->Set("VertexOpacity", std::move(list));
 
-  result->Set("UVTopLeft", MathUtil::AsValue(uv_top_left_));
-  result->Set("UVBottomRight", MathUtil::AsValue(uv_bottom_right_));
+  result->Set("UVTopLeft", gfx::MathUtil::AsValue(uv_top_left_));
+  result->Set("UVBottomRight", gfx::MathUtil::AsValue(uv_bottom_right_));
 
   return result;
 }
