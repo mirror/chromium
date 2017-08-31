@@ -117,6 +117,30 @@
       "revId": "7508117ca02e78f20269c845139a1a21ead82a9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f4c6742_97b8dd78",
+        "filename": "android_webview/browser/aw_safe_browsing_resource_throttle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-31T19:29:51Z",
+      "side": 1,
+      "message": "This UserData class is not used for any purposes other than being used as a flag, so maybe I could simply expose a helper function:\nbool IsSafeBrowsingHit(const net::URLRequest* request);\n\nAnd then I can hide the user data key as an implementation detail in aw_safe_browsing_resource_throttle.cc\n\nWDYT?\n\nAnd yes, if it is okay I would like to do this in a different CL (no matter we use the UserData subclass approach or the approach above).\n\nThanks!",
+      "parentUuid": "4405bb70_7cf0cc43",
+      "range": {
+        "startLine": 46,
+        "startChar": 1,
+        "endLine": 46,
+        "endChar": 68
+      },
+      "revId": "7508117ca02e78f20269c845139a1a21ead82a9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
