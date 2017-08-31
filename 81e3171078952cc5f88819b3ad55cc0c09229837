@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbdde3e2_d25bae6e",
+        "filename": "content/browser/frame_host/keep_alive_handle_factory.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-31T07:29:41Z",
+      "side": 1,
+      "message": "Nit: constexpr base::TimeDelta kDefaultTimeout \u003d base::TimeDelta::FromSeconds(30);",
+      "revId": "81e3171078952cc5f88819b3ad55cc0c09229837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b57d1a0_e8d07ea8",
+        "filename": "content/browser/frame_host/keep_alive_handle_factory.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-31T07:29:41Z",
+      "side": 1,
+      "message": "Consider just using PostTask to the current task runner here; the Timer doesn\u0027t seem necessary.",
+      "revId": "81e3171078952cc5f88819b3ad55cc0c09229837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c56b078c_08fec950",
+        "filename": "content/browser/frame_host/keep_alive_handle_factory.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-31T07:29:41Z",
+      "side": 1,
+      "message": "Move these checks were moved out of the ctor (so we check it before creating the object at all--and just leave it null if it\u0027s not enabled).\n\ni.e.\n\nif (GetProcess()-\u003eIsKeepAliveRefCountedDisabled())\n  return;\nif (!base::FeatureList::IsEnabled(...)) {\n  // I think getting this IPC means the renderer is out of sync?\n  content::ReceivedBadMessage(...);\n  return;\n}\nif (!keep_alive_handle_factory_) { ... }\nkeep_alive_handle_factory_-\u003eCreate(...);",
+      "revId": "81e3171078952cc5f88819b3ad55cc0c09229837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1512aaa_a86023eb",
+        "filename": "content/browser/frame_host/keep_alive_handle_factory.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-31T07:29:41Z",
+      "side": 1,
+      "message": "Then I think we don\u0027t need to check for context_ here and below",
+      "revId": "81e3171078952cc5f88819b3ad55cc0c09229837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
