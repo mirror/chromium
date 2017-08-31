@@ -400,6 +400,7 @@ source_set("common") {
     "//media/capture",
     "//media/capture/ipc",
     "//media/gpu:features",
+    "//media/gpu:gpu",
     "//media/gpu/ipc/client",
     "//media/gpu/ipc/common",
     "//media/midi",
