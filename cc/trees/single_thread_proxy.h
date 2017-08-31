@@ -79,6 +79,9 @@ class CC_EXPORT SingleThreadProxy : public Proxy,
   void SendBeginMainFrameNotExpectedSoon() override;
   void ScheduledActionBeginMainFrameNotExpectedUntil(
       base::TimeTicks time) override;
+  size_t GetNumberOfCompositedAnimations() const override;
+  size_t GetNumberOfMainThreadAnimations() const override;
+  size_t GetNumberOfMainThreadCouldBeCompositedAnimations() const override;
 
   // LayerTreeHostImplClient implementation
   void DidLoseLayerTreeFrameSinkOnImplThread() override;

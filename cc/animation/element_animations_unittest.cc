@@ -3587,5 +3587,56 @@ TEST_F(ElementAnimationsTest, RemoveAndReAddPlayerToTicking) {
   EXPECT_EQ(1u, host_->ticking_players_for_testing().size());
 }
 
+TEST_F(ElementAnimationsTest, NumberOfTickingAnimations) {
+  CreateTestLayer(false, false);
+  AttachTimelinePlayerLayer();
+
+  // Add an animation and ensure the player is in the host's ticking players.
+  player_->AddAnimation(CreateAnimation(
+      std::unique_ptr<AnimationCurve>(new FakeFloatTransition(1.0, 1.f, 0.5f)),
+      2, TargetProperty::OPACITY));
+  EXPECT_EQ(1u, player_->GetNumberOfTickingAnimations());
+  player_->AddAnimation(CreateAnimation(
+      std::unique_ptr<AnimationCurve>(new FakeTransformTransition(1)), 1,
+      TargetProperty::TRANSFORM));
+  EXPECT_EQ(2u, player_->GetNumberOfTickingAnimations());
+  player_->RemoveFromTicking();
+  EXPECT_EQ(0u, host_->GetNumberOfCompositedAnimations());
+}
+
+TEST_F(ElementAnimationsTest, NumberOfCompositedAnimations) {
+  CreateTestLayer(false, false);
+  AttachTimelinePlayerLayer();
+
+  scoped_refptr<AnimationPlayer> player1 =
+      AnimationPlayer::Create(AnimationIdProvider::NextPlayerId());
+  scoped_refptr<AnimationPlayer> player2 =
+      AnimationPlayer::Create(AnimationIdProvider::NextPlayerId());
+
+  timeline_->AttachPlayer(player1);
+  timeline_->AttachPlayer(player2);
+  player1->AttachElement(element_id_);
+  player2->AttachElement(element_id_);
+
+  player_->AddAnimation(CreateAnimation(
+      std::unique_ptr<AnimationCurve>(new FakeFloatTransition(1.0, 1.f, 0.5f)),
+      1, TargetProperty::OPACITY));
+  EXPECT_EQ(1u, host_->GetNumberOfCompositedAnimations());
+  player1->AddAnimation(CreateAnimation(
+      std::unique_ptr<AnimationCurve>(new FakeFloatTransition(2.0, 1.f, 0.5f)),
+      2, TargetProperty::OPACITY));
+  EXPECT_EQ(2u, host_->GetNumberOfCompositedAnimations());
+  player2->AddAnimation(CreateAnimation(
+      std::unique_ptr<AnimationCurve>(new FakeTransformTransition(1)), 1,
+      TargetProperty::TRANSFORM));
+  EXPECT_EQ(3u, host_->GetNumberOfCompositedAnimations());
+  player_->RemoveFromTicking();
+  EXPECT_EQ(2u, host_->GetNumberOfCompositedAnimations());
+  player1->RemoveFromTicking();
+  EXPECT_EQ(1u, host_->GetNumberOfCompositedAnimations());
+  player2->RemoveFromTicking();
+  EXPECT_EQ(0u, host_->GetNumberOfCompositedAnimations());
+}
+
 }  // namespace
 }  // namespace cc
