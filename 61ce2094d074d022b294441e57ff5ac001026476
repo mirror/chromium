@@ -16,6 +16,24 @@
       "revId": "61ce2094d074d022b294441e57ff5ac001026476",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "776a6577_3637ffe2",
+        "filename": "media/gpu/android_video_decode_accelerator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-31T22:40:09Z",
+      "side": 1,
+      "message": "What\u0027s the reason to explicitly specify \": int\" as the backing storage type?",
+      "parentUuid": "6d085531_e1079bb5",
+      "revId": "61ce2094d074d022b294441e57ff5ac001026476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
