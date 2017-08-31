@@ -195,15 +195,20 @@ void FakeShillManagerClient::RequestScan(const std::string& type,
                                          const ErrorCallback& error_callback) {
   VLOG(1) << "RequestScan: " << type;
   // For Stub purposes, default to a Wifi scan.
-  std::string device_type = shill::kTypeWifi;
-  if (!type.empty())
-    device_type = type;
-  ShillDeviceClient::TestInterface* device_client =
-      DBusThreadManager::Get()->GetShillDeviceClient()->GetTestInterface();
-  std::string device_path = device_client->GetDevicePathForType(device_type);
+  std::string device_type = type.empty() ? shill::kTypeWifi : type;
+  ShillDeviceClient* device_client =
+      DBusThreadManager::Get()->GetShillDeviceClient();
+  ShillDeviceClient::TestInterface* test_interface =
+      device_client->GetTestInterface();
+  std::string device_path = test_interface->GetDevicePathForType(device_type);
   if (!device_path.empty()) {
-    device_client->SetDeviceProperty(device_path, shill::kScanningProperty,
-                                     base::Value(true));
+    test_interface->SetDeviceProperty(device_path, shill::kScanningProperty,
+                                      base::Value(true));
+    if (type == shill::kTypeCellular) {
+      device_client->ProposeScan(
+          dbus::ObjectPath(device_path),
+          base::Bind([](chromeos::DBusMethodCallStatus call_status) {}));
+    }
   }
   base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
       FROM_HERE,
