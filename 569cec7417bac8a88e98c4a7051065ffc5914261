@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6c3be658_6b719048",
+        "filename": "chrome/browser/chromeos/tether/tether_service.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-08-31T18:19:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "098cf627_db2c82e7",
+      "range": {
+        "startLine": 116,
+        "startChar": 0,
+        "endLine": 116,
+        "endChar": 45
+      },
+      "revId": "569cec7417bac8a88e98c4a7051065ffc5914261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41894c03_17e513d2",
         "filename": "chrome/browser/chromeos/tether/tether_service_unittest.cc",
         "patchSetId": 12
@@ -45,6 +69,30 @@
       "revId": "569cec7417bac8a88e98c4a7051065ffc5914261",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25d37c3e_eec754b3",
+        "filename": "chrome/browser/chromeos/tether/tether_service_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-08-31T18:19:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41894c03_17e513d2",
+      "range": {
+        "startLine": 398,
+        "startChar": 0,
+        "endLine": 428,
+        "endChar": 1
+      },
+      "revId": "569cec7417bac8a88e98c4a7051065ffc5914261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ca7adb9a_a404543c",
+        "filename": "chromeos/components/tether/BUILD.gn",
+        "patchSetId": 12
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-08-31T18:19:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a75e40f_6e11ecf6",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 29
+      },
+      "revId": "569cec7417bac8a88e98c4a7051065ffc5914261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42064e3c_b95cc62d",
         "filename": "chromeos/components/tether/BUILD.gn",
         "patchSetId": 12
@@ -91,6 +163,30 @@
       "revId": "569cec7417bac8a88e98c4a7051065ffc5914261",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cdcfb79_62db9607",
+        "filename": "chromeos/components/tether/BUILD.gn",
+        "patchSetId": 12
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-08-31T18:19:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42064e3c_b95cc62d",
+      "range": {
+        "startLine": 126,
+        "startChar": 0,
+        "endLine": 126,
+        "endChar": 34
+      },
+      "revId": "569cec7417bac8a88e98c4a7051065ffc5914261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "8836c37e_60de5380",
+        "filename": "chromeos/components/tether/async_shutdown_task.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-08-31T18:19:58Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "1b0fccdf_de34bbe9",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 60
+      },
+      "revId": "569cec7417bac8a88e98c4a7051065ffc5914261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c6576a8_e0ea9475",
         "filename": "chromeos/components/tether/async_shutdown_task.h",
         "patchSetId": 12
@@ -137,6 +257,30 @@
       "revId": "569cec7417bac8a88e98c4a7051065ffc5914261",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffa2493f_1b497737",
+        "filename": "chromeos/components/tether/async_shutdown_task.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-08-31T18:19:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c6576a8_e0ea9475",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 60
+      },
+      "revId": "569cec7417bac8a88e98c4a7051065ffc5914261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "cd03be67_ef992ddd",
+        "filename": "chromeos/components/tether/async_shutdown_task_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-08-31T18:19:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da25b360_95e5a0f6",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 60
+      },
+      "revId": "569cec7417bac8a88e98c4a7051065ffc5914261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4e17dc1_1895ab17",
         "filename": "chromeos/components/tether/async_shutdown_task_impl.h",
         "patchSetId": 12
@@ -183,6 +351,30 @@
       "revId": "569cec7417bac8a88e98c4a7051065ffc5914261",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "754a2408_4556b983",
+        "filename": "chromeos/components/tether/async_shutdown_task_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-08-31T18:19:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4e17dc1_1895ab17",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 60
+      },
+      "revId": "569cec7417bac8a88e98c4a7051065ffc5914261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "c9215eca_fe313298",
+        "filename": "chromeos/components/tether/disconnect_tethering_request_sender_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-08-31T18:19:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89aa2062_b7f53dfa",
+      "range": {
+        "startLine": 85,
+        "startChar": 0,
+        "endLine": 85,
+        "endChar": 75
+      },
+      "revId": "569cec7417bac8a88e98c4a7051065ffc5914261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc4627ef_a5125163",
         "filename": "chromeos/components/tether/disconnect_tethering_request_sender_impl_unittest.cc",
         "patchSetId": 12
@@ -229,6 +445,30 @@
       "revId": "569cec7417bac8a88e98c4a7051065ffc5914261",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd782cff_bcba8733",
+        "filename": "chromeos/components/tether/disconnect_tethering_request_sender_impl_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-08-31T18:19:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc4627ef_a5125163",
+      "range": {
+        "startLine": 74,
+        "startChar": 7,
+        "endLine": 74,
+        "endChar": 42
+      },
+      "revId": "569cec7417bac8a88e98c4a7051065ffc5914261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "7ffe22da_86301ed1",
+        "filename": "chromeos/components/tether/disconnect_tethering_request_sender_impl_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-08-31T18:19:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e542479f_6a9357fe",
+      "range": {
+        "startLine": 83,
+        "startChar": 11,
+        "endLine": 83,
+        "endChar": 43
+      },
+      "revId": "569cec7417bac8a88e98c4a7051065ffc5914261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c39d1d63_e29f7368",
         "filename": "chromeos/components/tether/fake_async_shutdown_task.cc",
         "patchSetId": 12
@@ -269,6 +533,24 @@
       "revId": "569cec7417bac8a88e98c4a7051065ffc5914261",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f30b791_fe37f63f",
+        "filename": "chromeos/components/tether/fake_async_shutdown_task.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-08-31T18:19:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c39d1d63_e29f7368",
+      "revId": "569cec7417bac8a88e98c4a7051065ffc5914261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -295,6 +577,30 @@
     },
     {
       "key": {
+        "uuid": "6faeed6e_923529b6",
+        "filename": "chromeos/components/tether/fake_async_shutdown_task.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-08-31T18:19:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae2422d0_b645c575",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 60
+      },
+      "revId": "569cec7417bac8a88e98c4a7051065ffc5914261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05d4ec06_7cd39729",
         "filename": "chromeos/components/tether/fake_disconnect_tethering_request_sender.cc",
         "patchSetId": 12
@@ -315,6 +621,30 @@
       "revId": "569cec7417bac8a88e98c4a7051065ffc5914261",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3597917_7d9a2c61",
+        "filename": "chromeos/components/tether/fake_disconnect_tethering_request_sender.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-08-31T18:19:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05d4ec06_7cd39729",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 36
+      },
+      "revId": "569cec7417bac8a88e98c4a7051065ffc5914261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -341,6 +671,30 @@
     },
     {
       "key": {
+        "uuid": "8b89abf9_42c6f979",
+        "filename": "chromeos/components/tether/fake_disconnect_tethering_request_sender.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-08-31T18:19:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a2b2a1c_905ca9fa",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 33,
+        "endChar": 26
+      },
+      "revId": "569cec7417bac8a88e98c4a7051065ffc5914261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d78f28d4_0c842255",
         "filename": "chromeos/components/tether/initializer_impl.cc",
         "patchSetId": 12
@@ -364,6 +718,30 @@
     },
     {
       "key": {
+        "uuid": "902638ce_35c2edaf",
+        "filename": "chromeos/components/tether/initializer_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-08-31T18:19:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d78f28d4_0c842255",
+      "range": {
+        "startLine": 175,
+        "startChar": 0,
+        "endLine": 188,
+        "endChar": 69
+      },
+      "revId": "569cec7417bac8a88e98c4a7051065ffc5914261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99d45bba_c349a85d",
         "filename": "chromeos/components/tether/tether_disconnector_impl_unittest.cc",
         "patchSetId": 12
@@ -384,6 +762,30 @@
       "revId": "569cec7417bac8a88e98c4a7051065ffc5914261",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f890a01_3b9e95e6",
+        "filename": "chromeos/components/tether/tether_disconnector_impl_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-08-31T18:19:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99d45bba_c349a85d",
+      "range": {
+        "startLine": 318,
+        "startChar": 2,
+        "endLine": 321,
+        "endChar": 20
+      },
+      "revId": "569cec7417bac8a88e98c4a7051065ffc5914261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -430,6 +832,54 @@
       "revId": "569cec7417bac8a88e98c4a7051065ffc5914261",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5de1c18_f371c7b6",
+        "filename": "chromeos/components/tether/tether_network_disconnection_handler.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-08-31T18:19:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e1de58f_e47d74ee",
+      "range": {
+        "startLine": 26,
+        "startChar": 38,
+        "endLine": 26,
+        "endChar": 50
+      },
+      "revId": "569cec7417bac8a88e98c4a7051065ffc5914261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "45662b68_6fd7c690",
+        "filename": "chromeos/components/tether/tether_network_disconnection_handler.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-08-31T18:19:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93c0a155_1d1bfa7e",
+      "range": {
+        "startLine": 25,
+        "startChar": 67,
+        "endLine": 26,
+        "endChar": 10
+      },
+      "revId": "569cec7417bac8a88e98c4a7051065ffc5914261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
