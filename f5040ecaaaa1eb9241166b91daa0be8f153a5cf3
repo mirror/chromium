@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ae82c67_96a0db74",
+        "filename": "net/cert/test_root_certs_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-08-31T01:19:52Z",
+      "side": 1,
+      "message": "is this include needed?",
+      "revId": "f5040ecaaaa1eb9241166b91daa0be8f153a5cf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32aaae5a_6cb4cae9",
+        "filename": "net/cert/test_root_certs_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-08-31T01:19:52Z",
+      "side": 1,
+      "message": "unused now?",
+      "revId": "f5040ecaaaa1eb9241166b91daa0be8f153a5cf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
