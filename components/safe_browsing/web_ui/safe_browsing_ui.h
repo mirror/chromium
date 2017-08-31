@@ -6,6 +6,7 @@
 #define COMPONENTS_SAFE_BROWSING_WEBUI_SAFE_BROWSING_UI_H_
 
 #include "base/macros.h"
+#include "components/safe_browsing/proto/csd.pb.h"
 #include "components/safe_browsing/proto/webui.pb.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_ui_controller.h"
@@ -14,6 +15,8 @@
 
 namespace base {
 class ListValue;
+template <typename T>
+struct DefaultSingletonTraits;
 }
 
 namespace safe_browsing {
@@ -22,14 +25,31 @@ class SafeBrowsingUIHandler : public content::WebUIMessageHandler {
   SafeBrowsingUIHandler(content::BrowserContext*);
   ~SafeBrowsingUIHandler() override;
 
+  // Get the experiments that are currently enabled per Chrome instance.
   void GetExperiments(const base::ListValue* args);
+
+  // Get the Safe Browsing related preferences for the current user.
   void GetPrefs(const base::ListValue* args);
+
+  // Get the information related to the Safe Browsing database and full hash
+  // cache.
   void GetDatabaseManagerInfo(const base::ListValue* args);
 
+  // Get the ThreatDetails that have been collected since the oldest currently
+  // open chrome://safe-browsing tab was opened.
+  void GetSentThreatDetails(const base::ListValue* args);
+
+  // Get the new ThreatDetails messages sent from ThreatDetails when a ping is
+  // sent, while one or more WebUI tabs are opened.
+  void GetThreatDetailsUpdate(ClientSafeBrowsingReportRequest* threat_detail);
+
+  // Register callbacks for WebUI messages.
   void RegisterMessages() override;
 
  private:
   content::BrowserContext* browser_context_;
+  // List that keeps all the WebUI listener objects.
+  static std::vector<SafeBrowsingUIHandler*> webui_list_;
   DISALLOW_COPY_AND_ASSIGN(SafeBrowsingUIHandler);
 };
 
@@ -42,6 +62,34 @@ class SafeBrowsingUI : public content::WebUIController {
  private:
   DISALLOW_COPY_AND_ASSIGN(SafeBrowsingUI);
 };
+
+class WebUIInfoSingleton {
+ public:
+  static WebUIInfoSingleton* GetInstance();
+
+  const std::vector<std::unique_ptr<ClientSafeBrowsingReportRequest>>&
+  reports_sent() const;
+
+  const std::vector<SafeBrowsingUIHandler*>& webui_instances() const;
+
+  void ClearReportsSent();
+
+  void AddToReportsSent(
+      std::unique_ptr<ClientSafeBrowsingReportRequest> report_request);
+
+  void RegisterWebUIInstance(SafeBrowsingUIHandler* webui);
+
+  void UnregisterWebUIInstance(SafeBrowsingUIHandler* webui);
+
+ private:
+  WebUIInfoSingleton();
+  ~WebUIInfoSingleton();
+
+  friend struct base::DefaultSingletonTraits<WebUIInfoSingleton>;
+  std::vector<std::unique_ptr<ClientSafeBrowsingReportRequest>> reports_sent_;
+  std::vector<SafeBrowsingUIHandler*> webui_instances_;
+};
+
 }  // namespace safe_browsing
 
 #endif  // COMPONENTS_SAFE_BROWSING_WEBUI_SAFE_BROWSING_UI_H_
