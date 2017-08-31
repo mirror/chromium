@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7a24482f_3db18b1f",
+        "filename": "services/ui/ws/ids.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-31T02:26:02Z",
+      "side": 1,
+      "message": "good point, done",
+      "parentUuid": "765a6776_97a8d5aa",
+      "revId": "e80cc754857df0ab58c9d2b5709a8d1617d7b52a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58a511e3_509f4bd5",
         "filename": "services/ui/ws/server_window.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-30T06:10:32Z",
       "side": 1,
       "message": "DCHECK that frame_sink_id_ is valid?",
+      "revId": "e80cc754857df0ab58c9d2b5709a8d1617d7b52a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eebaae0f_bc84bc3a",
+        "filename": "services/ui/ws/server_window.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-31T02:26:02Z",
+      "side": 1,
+      "message": "right, DCHECKed (and modified tests)",
+      "parentUuid": "58a511e3_509f4bd5",
       "revId": "e80cc754857df0ab58c9d2b5709a8d1617d7b52a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "72c22949_d24a72fc",
+        "filename": "services/ui/ws/window_manager_state.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-31T02:26:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d18e0420_79aa953c",
+      "revId": "e80cc754857df0ab58c9d2b5709a8d1617d7b52a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9c20e62_884df72d",
         "filename": "services/ui/ws/window_tree.cc",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-30T06:10:32Z",
       "side": 1,
       "message": "Should we make ClientSpecificId to be uint32_t instead?",
+      "revId": "e80cc754857df0ab58c9d2b5709a8d1617d7b52a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a8d6ba1_77c87c90",
+        "filename": "services/ui/ws/window_tree.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1112,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-31T02:26:02Z",
+      "side": 1,
+      "message": "As discussed offline, we want to keep transport id to be uint32.",
+      "parentUuid": "b9c20e62_884df72d",
       "revId": "e80cc754857df0ab58c9d2b5709a8d1617d7b52a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -84,6 +156,24 @@
       "revId": "e80cc754857df0ab58c9d2b5709a8d1617d7b52a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a702f1f5_607cb5a2",
+        "filename": "services/ui/ws/window_tree.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-31T02:26:02Z",
+      "side": 1,
+      "message": "sg, done",
+      "parentUuid": "f9fd43cd_ad4db97e",
+      "revId": "e80cc754857df0ab58c9d2b5709a8d1617d7b52a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

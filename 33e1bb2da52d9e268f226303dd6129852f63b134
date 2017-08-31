@@ -157,6 +157,24 @@
       "revId": "33e1bb2da52d9e268f226303dd6129852f63b134",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dfc892b_802ac82b",
+        "filename": "services/ui/ws/window_tree.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-31T02:26:02Z",
+      "side": 1,
+      "message": "Makes sense, added in the first check block.",
+      "parentUuid": "a365d2b3_354c08f4",
+      "revId": "33e1bb2da52d9e268f226303dd6129852f63b134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
