@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0da7009f_f7f68025",
+        "filename": "net/test/spawned_test_server/remote_test_server.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-31T20:05:06Z",
+      "side": 1,
+      "message": "Ah, it\u0027s not related, will land it separately.",
+      "parentUuid": "d12e9bc4_884e6bf0",
+      "range": {
+        "startLine": 37,
+        "startChar": 14,
+        "endLine": 37,
+        "endChar": 24
+      },
+      "revId": "781224f925ca7e8404e648a8cb8b0ae060fbc57e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a99f2921_abaf9791",
         "filename": "net/test/spawned_test_server/remote_test_server.cc",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "6943762b_a053ff62",
+        "filename": "net/test/spawned_test_server/remote_test_server.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-31T20:05:06Z",
+      "side": 1,
+      "message": "server_data_ is private in BaseTestServer, and server_data() DCHECKs that started_ is true.\nInstead I added started() in BaseTestServer and DCHECK(!started()) here.",
+      "parentUuid": "a99f2921_abaf9791",
+      "range": {
+        "startLine": 77,
+        "startChar": 26,
+        "endLine": 77,
+        "endChar": 0
+      },
+      "revId": "781224f925ca7e8404e648a8cb8b0ae060fbc57e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1b6d9e1_5d6006b5",
         "filename": "net/test/spawned_test_server/remote_test_server.cc",
         "patchSetId": 6
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-31T16:50:52Z",
       "side": 1,
       "message": "CHECK?  LOG(ERROR)?",
+      "range": {
+        "startLine": 108,
+        "startChar": 22,
+        "endLine": 108,
+        "endChar": 0
+      },
+      "revId": "781224f925ca7e8404e648a8cb8b0ae060fbc57e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0b90b5b_d99d3fcc",
+        "filename": "net/test/spawned_test_server/remote_test_server.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-31T20:05:06Z",
+      "side": 1,
+      "message": "RemoteTestServerSpawnerRequest already logs the errors. There is no need to log it again. Also most test CHECK or ASSERT that BlockUntilStarted() returns true.",
+      "parentUuid": "a1b6d9e1_5d6006b5",
       "range": {
         "startLine": 108,
         "startChar": 22,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "baad932e_c117a4ba",
+        "filename": "net/test/spawned_test_server/remote_test_server.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-31T20:05:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8796d2b_bb5bb4b0",
+      "range": {
+        "startLine": 132,
+        "startChar": 17,
+        "endLine": 132,
+        "endChar": 22
+      },
+      "revId": "781224f925ca7e8404e648a8cb8b0ae060fbc57e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb57ea4f_1131d391",
         "filename": "net/test/spawned_test_server/remote_test_server.cc",
         "patchSetId": 6
@@ -114,6 +210,30 @@
       "revId": "781224f925ca7e8404e648a8cb8b0ae060fbc57e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26be3750_7a723e33",
+        "filename": "net/test/spawned_test_server/remote_test_server.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-31T20:05:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb57ea4f_1131d391",
+      "range": {
+        "startLine": 156,
+        "startChar": 14,
+        "endLine": 156,
+        "endChar": 20
+      },
+      "revId": "781224f925ca7e8404e648a8cb8b0ae060fbc57e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "36466067_a9c1421f",
+        "filename": "net/test/spawned_test_server/remote_test_server_spawner_request.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-31T20:05:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ae70bb9_8d44a153",
+      "range": {
+        "startLine": 40,
+        "startChar": 23,
+        "endLine": 40,
+        "endChar": 29
+      },
+      "revId": "781224f925ca7e8404e648a8cb8b0ae060fbc57e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4ce05bf_23feb53d",
         "filename": "net/test/spawned_test_server/remote_test_server_spawner_request.cc",
         "patchSetId": 6
@@ -160,6 +304,30 @@
       "revId": "781224f925ca7e8404e648a8cb8b0ae060fbc57e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04cd43a3_cdadbb20",
+        "filename": "net/test/spawned_test_server/remote_test_server_spawner_request.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-31T20:05:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4ce05bf_23feb53d",
+      "range": {
+        "startLine": 87,
+        "startChar": 19,
+        "endLine": 87,
+        "endChar": 0
+      },
+      "revId": "781224f925ca7e8404e648a8cb8b0ae060fbc57e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "47f87ee3_48739a38",
+        "filename": "net/test/spawned_test_server/remote_test_server_spawner_request.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-31T20:05:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35482b1b_b37330c1",
+      "range": {
+        "startLine": 99,
+        "startChar": 14,
+        "endLine": 99,
+        "endChar": 36
+      },
+      "revId": "781224f925ca7e8404e648a8cb8b0ae060fbc57e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe3afd32_2b633710",
         "filename": "net/test/spawned_test_server/remote_test_server_spawner_request.cc",
         "patchSetId": 6
@@ -206,6 +398,30 @@
       "revId": "781224f925ca7e8404e648a8cb8b0ae060fbc57e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3267f6e7_8b4a8f54",
+        "filename": "net/test/spawned_test_server/remote_test_server_spawner_request.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-31T20:05:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe3afd32_2b633710",
+      "range": {
+        "startLine": 151,
+        "startChar": 17,
+        "endLine": 151,
+        "endChar": 27
+      },
+      "revId": "781224f925ca7e8404e648a8cb8b0ae060fbc57e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "1e28bc9e_902c425c",
+        "filename": "net/test/spawned_test_server/remote_test_server_spawner_request.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-31T20:05:06Z",
+      "side": 1,
+      "message": "Yes, sorry",
+      "parentUuid": "dd43ee5a_eccc1cdc",
+      "range": {
+        "startLine": 156,
+        "startChar": 21,
+        "endLine": 156,
+        "endChar": 36
+      },
+      "revId": "781224f925ca7e8404e648a8cb8b0ae060fbc57e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10ac4833_12a8eb4c",
         "filename": "net/test/spawned_test_server/remote_test_server_spawner_request.cc",
         "patchSetId": 6
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "e4dd9535_8c11bf36",
+        "filename": "net/test/spawned_test_server/remote_test_server_spawner_request.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-31T20:05:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10ac4833_12a8eb4c",
+      "range": {
+        "startLine": 175,
+        "startChar": 21,
+        "endLine": 175,
+        "endChar": 36
+      },
+      "revId": "781224f925ca7e8404e648a8cb8b0ae060fbc57e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c59dfd6_7adaf1d0",
         "filename": "net/test/spawned_test_server/remote_test_server_spawner_request.cc",
         "patchSetId": 6
@@ -275,6 +539,30 @@
       "revId": "781224f925ca7e8404e648a8cb8b0ae060fbc57e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1d36bf4_86ec18e3",
+        "filename": "net/test/spawned_test_server/remote_test_server_spawner_request.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-31T20:05:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c59dfd6_7adaf1d0",
+      "range": {
+        "startLine": 189,
+        "startChar": 2,
+        "endLine": 189,
+        "endChar": 20
+      },
+      "revId": "781224f925ca7e8404e648a8cb8b0ae060fbc57e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
