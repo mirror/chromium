@@ -342,7 +342,8 @@ void ImmersiveModeControllerAsh::OnPostWindowStateTypeChange(
   // case if the user exits fullscreen via the restore button.
   if (controller_->IsEnabled() &&
       !window_state->IsFullscreen() &&
-      !window_state->IsMinimized()) {
+      !window_state->IsMinimized() &&
+      old_type == ash::wm::WINDOW_STATE_TYPE_FULLSCREEN) {
     browser_view_->FullscreenStateChanged();
   }
 }
