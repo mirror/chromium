@@ -126,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "f7e30635_66ca4633",
+        "filename": "services/preferences/pref_store_manager_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-08-31T21:55:16Z",
+      "side": 1,
+      "message": "I don\u0027t see a programmatic guarantee of that security-relevant assertion.",
+      "parentUuid": "8451451f_ec8facce",
+      "revId": "0c563a5e813e6da6734da55c765a29b03b2e0f2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10bd6ac2_5d3df3ee",
         "filename": "services/preferences/public/cpp/pref_service_main.cc",
         "patchSetId": 6
