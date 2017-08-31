@@ -59,7 +59,7 @@ std::unique_ptr<TrayPopupItemStyle> TrayItemMore::CreateStyle() const {
 }
 
 std::unique_ptr<TrayPopupItemStyle> TrayItemMore::HandleCreateStyle() const {
-  return base::MakeUnique<TrayPopupItemStyle>(
+  return std::make_unique<TrayPopupItemStyle>(
       TrayPopupItemStyle::FontStyle::DEFAULT_VIEW_LABEL);
 }
 

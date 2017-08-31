@@ -48,11 +48,11 @@ class PaletteTrayTest : public AshTestBase {
 
     palette_tray_ =
         StatusAreaWidgetTestHelper::GetStatusAreaWidget()->palette_tray();
-    test_api_ = base::MakeUnique<PaletteTray::TestApi>(palette_tray_);
+    test_api_ = std::make_unique<PaletteTray::TestApi>(palette_tray_);
 
     // Set the test palette delegate here, since this requires an instance of
     // shell to be available.
-    ShellTestApi().SetPaletteDelegate(base::MakeUnique<TestPaletteDelegate>());
+    ShellTestApi().SetPaletteDelegate(std::make_unique<TestPaletteDelegate>());
     // Initialize the palette tray again since this test requires information
     // from the palette delegate. (It was initialized without the delegate in
     // AshTestBase::SetUp()).

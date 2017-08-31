@@ -138,7 +138,7 @@ class ImmersiveFullscreenControllerDelegateMus
         NonClientFrameController::GetPreferredClientAreaInsets().top());
     bounds.set_y(bounds.y() - bounds.height());
     title_area_renderer_ =
-        base::MakeUnique<DetachedTitleAreaRendererForInternal>(frame_);
+        std::make_unique<DetachedTitleAreaRendererForInternal>(frame_);
     title_area_renderer_->widget()->SetBounds(bounds);
     title_area_renderer_->widget()->ShowInactive();
   }
@@ -192,7 +192,7 @@ class WmNativeWidgetAura : public views::NativeWidgetAura {
 
   // views::NativeWidgetAura:
   views::NonClientFrameView* CreateNonClientFrameView() override {
-    move_event_handler_ = base::MakeUnique<MoveEventHandler>(
+    move_event_handler_ = std::make_unique<MoveEventHandler>(
         window_manager_client_, GetNativeView());
     // TODO(sky): investigate why we have this. Seems this should be the same
     // as not specifying client area insets.
@@ -203,7 +203,7 @@ class WmNativeWidgetAura : public views::NativeWidgetAura {
         ui::mojom::WindowType::PANEL)
       return new PanelFrameView(GetWidget(), PanelFrameView::FRAME_ASH);
     immersive_delegate_ =
-        base::MakeUnique<ImmersiveFullscreenControllerDelegateMus>(GetWidget(),
+        std::make_unique<ImmersiveFullscreenControllerDelegateMus>(GetWidget(),
                                                                    window);
     // See description for details on ownership.
     custom_frame_view_ =

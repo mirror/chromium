@@ -34,7 +34,7 @@ void ShowNotification(const base::DictionaryValue* message,
   const char kNotificationId[] = "chrome://network/sms";
   std::unique_ptr<message_center::Notification> notification;
 
-  notification = base::MakeUnique<message_center::Notification>(
+  notification = std::make_unique<message_center::Notification>(
       message_center::NOTIFICATION_TYPE_SIMPLE,
       kNotificationId + std::to_string(message_id),
       base::ASCIIToUTF16(message_number), base::ASCIIToUTF16(message_text),

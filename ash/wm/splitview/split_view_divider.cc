@@ -165,8 +165,8 @@ SplitViewDivider::SplitViewDivider(SplitViewController* controller,
 
   aura::Window* always_on_top_container =
       Shell::GetContainer(root_window, kShellWindowId_AlwaysOnTopContainer);
-  split_view_window_targeter_ = base::MakeUnique<aura::ScopedWindowTargeter>(
-      always_on_top_container, base::MakeUnique<AlwaysOnTopWindowTargeter>(
+  split_view_window_targeter_ = std::make_unique<aura::ScopedWindowTargeter>(
+      always_on_top_container, std::make_unique<AlwaysOnTopWindowTargeter>(
                                    divider_widget_->GetNativeWindow()));
 }
 
@@ -255,7 +255,7 @@ void SplitViewDivider::OnDisplayMetricsChanged(const display::Display& display,
 
 void SplitViewDivider::CreateDividerWidget(aura::Window* root_window) {
   DCHECK(!divider_widget_.get());
-  divider_widget_ = base::MakeUnique<views::Widget>();
+  divider_widget_ = std::make_unique<views::Widget>();
   views::Widget::InitParams params(views::Widget::InitParams::TYPE_POPUP);
   params.ownership = views::Widget::InitParams::WIDGET_OWNS_NATIVE_WIDGET;
   params.opacity = views::Widget::InitParams::OPAQUE_WINDOW;

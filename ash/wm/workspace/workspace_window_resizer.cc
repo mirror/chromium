@@ -895,7 +895,7 @@ void WorkspaceWindowResizer::UpdateSnapPhantomWindow(const gfx::Point& location,
 
   if (!snap_phantom_window_controller_) {
     snap_phantom_window_controller_ =
-        base::MakeUnique<PhantomWindowController>(GetTarget());
+        std::make_unique<PhantomWindowController>(GetTarget());
   }
   gfx::Rect phantom_bounds_in_screen(phantom_bounds);
   ::wm::ConvertRectToScreen(GetTarget()->parent(), &phantom_bounds_in_screen);

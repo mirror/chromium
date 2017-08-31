@@ -81,7 +81,7 @@ void LogoutButtonTray::ButtonPressed(views::Button* sender,
 
 void LogoutButtonTray::OnActiveUserPrefServiceChanged(PrefService* prefs) {
   pref_change_registrar_.reset();
-  pref_change_registrar_ = base::MakeUnique<PrefChangeRegistrar>();
+  pref_change_registrar_ = std::make_unique<PrefChangeRegistrar>();
   pref_change_registrar_->Init(prefs);
   pref_change_registrar_->Add(
       prefs::kShowLogoutButtonInTray,

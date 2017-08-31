@@ -30,10 +30,10 @@ class MetalayerToolTest : public AshTestBase {
   void SetUp() override {
     AshTestBase::SetUp();
 
-    ShellTestApi().SetPaletteDelegate(base::MakeUnique<TestPaletteDelegate>());
+    ShellTestApi().SetPaletteDelegate(std::make_unique<TestPaletteDelegate>());
 
-    palette_tool_delegate_ = base::MakeUnique<MockPaletteToolDelegate>();
-    tool_ = base::MakeUnique<MetalayerMode>(palette_tool_delegate_.get());
+    palette_tool_delegate_ = std::make_unique<MockPaletteToolDelegate>();
+    tool_ = std::make_unique<MetalayerMode>(palette_tool_delegate_.get());
   }
 
   void TearDown() override {

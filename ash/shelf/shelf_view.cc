@@ -488,9 +488,9 @@ void ShelfView::ButtonPressed(views::Button* sender,
   if (Shell::GetAshConfig() == Config::MASH &&
       ui::PointerEvent::CanConvertFrom(event)) {
     if (event.IsMouseEvent())
-      pointer_event = base::MakeUnique<ui::PointerEvent>(*event.AsMouseEvent());
+      pointer_event = std::make_unique<ui::PointerEvent>(*event.AsMouseEvent());
     else if (event.IsTouchEvent())
-      pointer_event = base::MakeUnique<ui::PointerEvent>(*event.AsTouchEvent());
+      pointer_event = std::make_unique<ui::PointerEvent>(*event.AsTouchEvent());
     else
       NOTREACHED() << "Need conversion of event to pointer event.";
   }
@@ -526,7 +526,7 @@ void ShelfView::CreateDragIconProxy(
   drag_replaced_view_ = replaced_view;
   aura::Window* root_window =
       drag_replaced_view_->GetWidget()->GetNativeWindow()->GetRootWindow();
-  drag_image_ = base::MakeUnique<DragImageView>(
+  drag_image_ = std::make_unique<DragImageView>(
       root_window, ui::DragDropTypes::DRAG_EVENT_SOURCE_MOUSE);
   drag_image_->SetImage(icon);
   gfx::Size size = drag_image_->GetPreferredSize();
@@ -1707,7 +1707,7 @@ void ShelfView::AfterItemSelected(
       // Show the app menu with 2 or more items, if no window was created.
       ink_drop->AnimateToState(views::InkDropState::ACTIVATED);
       context_menu_id_ = item.id;
-      ShowMenu(base::MakeUnique<ShelfApplicationMenuModel>(
+      ShowMenu(std::make_unique<ShelfApplicationMenuModel>(
                    item.title, std::move(*menu_items),
                    model_->GetShelfItemDelegate(item.id)),
                sender, gfx::Point(), false,
@@ -1728,7 +1728,7 @@ void ShelfView::AfterGetContextMenuItems(
     std::vector<mojom::MenuItemPtr> menu_items) {
   context_menu_id_ = shelf_id;
   const int64_t display_id = GetDisplayIdForView(this);
-  ShowMenu(base::MakeUnique<ShelfContextMenuModel>(
+  ShowMenu(std::make_unique<ShelfContextMenuModel>(
                std::move(menu_items), model_->GetShelfItemDelegate(shelf_id),
                display_id),
            nullptr /* source */, point, true /* context_menu */, source_type,
@@ -1769,7 +1769,7 @@ void ShelfView::ShowContextMenuForView(views::View* source,
   const ShelfItem* item = ShelfItemForView(source);
   if (!item || !model_->GetShelfItemDelegate(item->id)) {
     context_menu_id_ = ShelfID();
-    ShowMenu(base::MakeUnique<ShelfContextMenuModel>(
+    ShowMenu(std::make_unique<ShelfContextMenuModel>(
                  std::vector<mojom::MenuItemPtr>(), nullptr, display_id),
              source, context_menu_point, true, source_type, nullptr);
     return;

@@ -63,7 +63,7 @@ void AshBackgroundFilterBlurPerfTest::SetUp() {
 std::unique_ptr<ui::Layer>
 AshBackgroundFilterBlurPerfTest::CreateSolidColorLayer(SkColor color) {
   std::unique_ptr<ui::Layer> layer =
-      base::MakeUnique<ui::Layer>(ui::LAYER_SOLID_COLOR);
+      std::make_unique<ui::Layer>(ui::LAYER_SOLID_COLOR);
   layer->SetBounds(root_layer_->bounds());
   layer->SetColor(color);
   root_layer_->Add(layer.get());

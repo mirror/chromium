@@ -112,7 +112,7 @@ void HighlighterView::AddNewPoint(const gfx::PointF& point,
 void HighlighterView::Animate(const gfx::PointF& pivot,
                               HighlighterGestureType gesture_type,
                               const base::Closure& done) {
-  animation_timer_ = base::MakeUnique<base::OneShotTimer>();
+  animation_timer_ = std::make_unique<base::OneShotTimer>();
   animation_timer_->Start(
       FROM_HERE, base::TimeDelta::FromMilliseconds(kStrokeFadeoutDelayMs),
       base::Bind(&HighlighterView::FadeOut, base::Unretained(this), pivot,
@@ -152,7 +152,7 @@ void HighlighterView::FadeOut(const gfx::PointF& pivot,
     layer->SetTransform(transform);
   }
 
-  animation_timer_ = base::MakeUnique<base::OneShotTimer>();
+  animation_timer_ = std::make_unique<base::OneShotTimer>();
   animation_timer_->Start(FROM_HERE, duration, done);
 }
 

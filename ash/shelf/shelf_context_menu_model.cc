@@ -192,7 +192,7 @@ void ShelfContextMenuModel::AddItems(ui::SimpleMenuModel* model,
       case ui::MenuModel::TYPE_SUBMENU:
         if (item->submenu.has_value()) {
           std::unique_ptr<ui::MenuModel> submenu =
-              base::MakeUnique<ShelfContextSubMenuModel>(
+              std::make_unique<ShelfContextSubMenuModel>(
                   delegate, item->submenu.value(), submenus);
           model->AddSubMenu(item->command_id, item->label, submenu.get());
           submenus->push_back(std::move(submenu));

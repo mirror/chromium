@@ -218,7 +218,7 @@ LoginUserView::LoginUserView(LoginDisplayStyle style,
                              const OnTap& on_tap)
     : views::Button(this),
       on_tap_(on_tap),
-      opacity_input_handler_(base::MakeUnique<OpacityInputHandler>(this)),
+      opacity_input_handler_(std::make_unique<OpacityInputHandler>(this)),
       display_style_(style) {
   // show_dropdown can only be true when the user view is rendering in large
   // mode.
@@ -276,7 +276,7 @@ void LoginUserView::UpdateForUser(const mojom::UserInfoPtr& user,
     user_image_->layer()->GetAnimator()->StopAnimating();
 
     // Create the image flip animation.
-    auto image_transition = base::MakeUnique<UserSwitchFlipAnimation>(
+    auto image_transition = std::make_unique<UserSwitchFlipAnimation>(
         user_image_->width(), 0 /*start_degrees*/, 90 /*midpoint_degrees*/,
         180 /*end_degrees*/,
         base::TimeDelta::FromMilliseconds(
@@ -373,7 +373,7 @@ void LoginUserView::UpdateOpacity() {
 
   // Animate to new opacity.
   auto build_settings = [](views::View* view) {
-    auto settings = base::MakeUnique<ui::ScopedLayerAnimationSettings>(
+    auto settings = std::make_unique<ui::ScopedLayerAnimationSettings>(
         view->layer()->GetAnimator());
     settings->SetTransitionDuration(
         base::TimeDelta::FromMilliseconds(kUserFadeAnimationDurationMs));

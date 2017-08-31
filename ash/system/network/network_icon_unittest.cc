@@ -38,18 +38,18 @@ class NetworkIconTest : public chromeos::NetworkStateTest {
     handler_ = chromeos::NetworkHandler::Get()->network_state_handler();
 
     tether_network_ =
-        base::MakeUnique<chromeos::NetworkState>("tetherNetworkPath");
+        std::make_unique<chromeos::NetworkState>("tetherNetworkPath");
     tether_network_->set_type(chromeos::kTypeTether);
 
-    wifi_network_ = base::MakeUnique<chromeos::NetworkState>("wifiServicePath");
+    wifi_network_ = std::make_unique<chromeos::NetworkState>("wifiServicePath");
     wifi_network_->set_type(shill::kTypeWifi);
 
     cellular_network_ =
-        base::MakeUnique<chromeos::NetworkState>("cellularServicePath");
+        std::make_unique<chromeos::NetworkState>("cellularServicePath");
     cellular_network_->set_type(shill::kTypeCellular);
 
     wifi_tether_network_ =
-        base::MakeUnique<chromeos::NetworkState>("wifiTetherServicePath");
+        std::make_unique<chromeos::NetworkState>("wifiTetherServicePath");
     wifi_tether_network_->set_type(shill::kTypeWifi);
     wifi_tether_network_.get()->set_tether_guid("tetherNetworkGuid");
   }

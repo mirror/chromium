@@ -193,7 +193,7 @@ void LoginAuthUserView::SetAuthMethods(uint32_t auth_methods) {
 
 void LoginAuthUserView::CaptureStateForAnimationPreLayout() {
   DCHECK(!cached_animation_state_);
-  cached_animation_state_ = base::MakeUnique<AnimationState>(this);
+  cached_animation_state_ = std::make_unique<AnimationState>(this);
 }
 
 void LoginAuthUserView::ApplyAnimationPostLayout() {
@@ -216,7 +216,7 @@ void LoginAuthUserView::ApplyAnimationPostLayout() {
   // requires a y offset.
   // Note: Doing this animation via ui::ScopedLayerAnimationSettings works, but
   // it seems that the timing gets slightly out of sync with the PIN animation.
-  auto move_to_center = base::MakeUnique<ui::InterpolatedTranslation>(
+  auto move_to_center = std::make_unique<ui::InterpolatedTranslation>(
       gfx::PointF(0, cached_animation_state_->non_pin_y_start_in_screen -
                          non_pin_y_end_in_screen),
       gfx::PointF());
@@ -266,7 +266,7 @@ void LoginAuthUserView::ApplyAnimationPostLayout() {
       pin_view_->SetBoundsRect(pin_bounds);
     }
 
-    auto transition = base::MakeUnique<PinKeyboardAnimation>(
+    auto transition = std::make_unique<PinKeyboardAnimation>(
         has_pin /*grow*/, pin_view_->height(),
         base::TimeDelta::FromMilliseconds(
             login_constants::kChangeUserAnimationDurationMs),

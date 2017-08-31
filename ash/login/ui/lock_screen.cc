@@ -60,7 +60,7 @@ void LockScreen::Show() {
   CHECK(!instance_);
   instance_ = new LockScreen();
 
-  auto data_dispatcher = base::MakeUnique<LoginDataDispatcher>();
+  auto data_dispatcher = std::make_unique<LoginDataDispatcher>();
   auto* contents = BuildContentsView(data_dispatcher.get());
 
   // TODO(jdufault|crbug.com/731191): Call NotifyUsers via

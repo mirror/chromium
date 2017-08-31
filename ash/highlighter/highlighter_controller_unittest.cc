@@ -22,9 +22,9 @@ class HighlighterControllerTest : public AshTestBase {
 
   void SetUp() override {
     AshTestBase::SetUp();
-    controller_ = base::MakeUnique<HighlighterController>();
+    controller_ = std::make_unique<HighlighterController>();
     controller_test_api_ =
-        base::MakeUnique<HighlighterControllerTestApi>(controller_.get());
+        std::make_unique<HighlighterControllerTestApi>(controller_.get());
   }
 
   void TearDown() override {

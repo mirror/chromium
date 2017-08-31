@@ -124,9 +124,9 @@ TEST_F(LoginPinViewTest, BackspaceAutoSubmitsAndRepeats) {
   LoginPinView::TestApi test_api(view_);
 
   // Install mock timers into the PIN view.
-  auto delay_timer0 = base::MakeUnique<base::MockTimer>(
+  auto delay_timer0 = std::make_unique<base::MockTimer>(
       true /*retain_user_task*/, false /*is_repeating*/);
-  auto repeat_timer0 = base::MakeUnique<base::MockTimer>(
+  auto repeat_timer0 = std::make_unique<base::MockTimer>(
       true /*retain_user_task*/, true /*is_repeating*/);
   base::MockTimer* delay_timer = delay_timer0.get();
   base::MockTimer* repeat_timer = repeat_timer0.get();

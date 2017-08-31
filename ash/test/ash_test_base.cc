@@ -312,7 +312,7 @@ std::unique_ptr<aura::Window> AshTestBase::CreateChildWindow(
     const gfx::Rect& bounds,
     int shell_window_id) {
   std::unique_ptr<aura::Window> window =
-      base::MakeUnique<aura::Window>(nullptr, aura::client::WINDOW_TYPE_NORMAL);
+      std::make_unique<aura::Window>(nullptr, aura::client::WINDOW_TYPE_NORMAL);
   window->Init(ui::LAYER_NOT_DRAWN);
   window->SetBounds(bounds);
   window->set_id(shell_window_id);

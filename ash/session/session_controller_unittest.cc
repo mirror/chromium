@@ -90,7 +90,7 @@ class SessionControllerTest : public testing::Test {
 
   // testing::Test:
   void SetUp() override {
-    controller_ = base::MakeUnique<SessionController>(nullptr);
+    controller_ = std::make_unique<SessionController>(nullptr);
     controller_->AddObserver(&observer_);
   }
 
@@ -435,7 +435,7 @@ TEST_F(SessionControllerPrefsTest, Observer) {
   session->SwitchActiveUser(kUserAccount1);
   EXPECT_EQ(nullptr, observer.last_user_pref_service());
 
-  auto pref_service = base::MakeUnique<TestingPrefServiceSimple>();
+  auto pref_service = std::make_unique<TestingPrefServiceSimple>();
   Shell::RegisterProfilePrefs(pref_service->registry());
   controller->ProvideUserPrefServiceForTest(kUserAccount1,
                                             std::move(pref_service));
@@ -462,7 +462,7 @@ TEST_F(SessionControllerPrefsTest, Observer) {
   // There should be no notification about a PrefService for an inactive user
   // becoming initialized.
   observer.clear_last_user_pref_service();
-  pref_service = base::MakeUnique<TestingPrefServiceSimple>();
+  pref_service = std::make_unique<TestingPrefServiceSimple>();
   Shell::RegisterProfilePrefs(pref_service->registry());
   controller->ProvideUserPrefServiceForTest(kUserAccount2,
                                             std::move(pref_service));

@@ -20,9 +20,9 @@ std::unique_ptr<ui::InterpolatedTransform> BuildRotation(int width,
   gfx::Transform to_center;
   to_center.Translate(width / 2.f, 0);
   auto move_to_center =
-      base::MakeUnique<ui::InterpolatedConstantTransform>(to_center);
+      std::make_unique<ui::InterpolatedConstantTransform>(to_center);
 
-  auto rotate = base::MakeUnique<ui::InterpolatedAxisAngleRotation>(
+  auto rotate = std::make_unique<ui::InterpolatedAxisAngleRotation>(
       gfx::Vector3dF(0, 1, 0), start_degrees, end_degrees);
 
   gfx::Transform from_center;
@@ -30,7 +30,7 @@ std::unique_ptr<ui::InterpolatedTransform> BuildRotation(int width,
     from_center.RotateAboutYAxis(180);
   from_center.Translate(-width / 2.f, 0);
   auto move_from_center =
-      base::MakeUnique<ui::InterpolatedConstantTransform>(from_center);
+      std::make_unique<ui::InterpolatedConstantTransform>(from_center);
 
   rotate->SetChild(std::move(move_to_center));
   move_from_center->SetChild(std::move(rotate));

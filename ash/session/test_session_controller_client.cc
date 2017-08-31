@@ -121,7 +121,7 @@ void TestSessionControllerClient::AddUserSession(
 
   if (provide_pref_service &&
       !controller_->GetUserPrefServiceForUser(account_id)) {
-    auto pref_service = base::MakeUnique<TestingPrefServiceSimple>();
+    auto pref_service = std::make_unique<TestingPrefServiceSimple>();
     Shell::RegisterProfilePrefs(pref_service->registry());
     controller_->ProvideUserPrefServiceForTest(account_id,
                                                std::move(pref_service));

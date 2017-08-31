@@ -258,9 +258,9 @@ void StartGrayscaleBrightnessAnimationForWindow(
   ui::LayerAnimator* animator = window->layer()->GetAnimator();
 
   std::unique_ptr<ui::LayerAnimationSequence> brightness_sequence =
-      base::MakeUnique<ui::LayerAnimationSequence>();
+      std::make_unique<ui::LayerAnimationSequence>();
   std::unique_ptr<ui::LayerAnimationSequence> grayscale_sequence =
-      base::MakeUnique<ui::LayerAnimationSequence>();
+      std::make_unique<ui::LayerAnimationSequence>();
 
   std::unique_ptr<ui::LayerAnimationElement> brightness_element =
       ui::LayerAnimationElement::CreateBrightnessElement(target, duration);

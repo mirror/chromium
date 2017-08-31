@@ -22,7 +22,7 @@ namespace {
 // size.
 std::unique_ptr<views::LayoutManager> CreatePreferredSizeLayoutManager() {
   auto layout =
-      base::MakeUnique<views::BoxLayout>(views::BoxLayout::kHorizontal);
+      std::make_unique<views::BoxLayout>(views::BoxLayout::kHorizontal);
   layout->set_cross_axis_alignment(
       views::BoxLayout::CROSS_AXIS_ALIGNMENT_START);
   return std::move(layout);
@@ -52,7 +52,7 @@ class TriViewTest : public testing::Test {
   DISALLOW_COPY_AND_ASSIGN(TriViewTest);
 };
 
-TriViewTest::TriViewTest() : tri_view_(base::MakeUnique<TriView>()) {}
+TriViewTest::TriViewTest() : tri_view_(std::make_unique<TriView>()) {}
 
 int TriViewTest::GetMinHeight(TriView::Container container) const {
   return tri_view_->GetMinSize(container).height();
@@ -79,7 +79,7 @@ TEST_F(TriViewTest, PaddingBetweenContainers) {
   const int kEndChildExpectedX =
       kCenterChildExpectedX + kViewWidth + kPaddingBetweenContainers;
 
-  tri_view_ = base::MakeUnique<TriView>(kPaddingBetweenContainers);
+  tri_view_ = std::make_unique<TriView>(kPaddingBetweenContainers);
   tri_view_->SetBounds(0, 0, 100, 10);
 
   views::View* start_child = new views::StaticSizedView(kViewSize);
@@ -102,7 +102,7 @@ TEST_F(TriViewTest, VerticalOrientation) {
   const int kViewHeight = 10;
   const gfx::Size kViewSize(kViewWidth, kViewHeight);
 
-  tri_view_ = base::MakeUnique<TriView>(TriView::Orientation::VERTICAL);
+  tri_view_ = std::make_unique<TriView>(TriView::Orientation::VERTICAL);
   tri_view_->SetBounds(0, 0, 10, 100);
 
   views::View* start_child = new views::StaticSizedView(kViewSize);
