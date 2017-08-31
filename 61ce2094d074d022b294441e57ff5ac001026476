@@ -52,6 +52,24 @@
       "revId": "61ce2094d074d022b294441e57ff5ac001026476",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8e56190_363bf645",
+        "filename": "media/gpu/android_video_decode_accelerator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-31T22:51:18Z",
+      "side": 1,
+      "message": "Hmm, are you sure?  I believe that \"int\" is the default, and I haven\u0027t actually seen any issues come up for folks who don\u0027t specify the backing type.  Sorry for being so nit-picky about this!  I\u0027d like to understand whether there really is a need to specify the backing type; if there is, I\u0027ll start asking for it in code that I review as well.",
+      "parentUuid": "5204fd67_71079395",
+      "revId": "61ce2094d074d022b294441e57ff5ac001026476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
