@@ -122,14 +122,13 @@ void MultiBuffer::GlobalLRU::PruneTask() {
   SchedulePrune();
 }
 
-void MultiBuffer::GlobalLRU::Prune(int64_t max_to_free) {
+void MultiBuffer::GlobalLRU::TryFree(int64_t max_to_free) {
   // We group the blocks by multibuffer so that we can free as many blocks as
   // possible in one call. This reduces the number of callbacks to clients
   // when their available ranges change.
   std::map<MultiBuffer*, std::vector<MultiBufferBlockId>> to_free;
   int64_t freed = 0;
-  while (data_size_ - freed > max_size_ && !lru_.Empty() &&
-         freed < max_to_free) {
+  while (!lru_.Empty() && freed < max_to_free) {
     GlobalBlockId block_id = lru_.Pop();
     to_free[block_id.first].push_back(block_id.second);
     freed++;
@@ -137,6 +136,10 @@ void MultiBuffer::GlobalLRU::Prune(int64_t max_to_free) {
   for (const auto& to_free_pair : to_free) {
     to_free_pair.first->ReleaseBlocks(to_free_pair.second);
   }
+}
+
+void MultiBuffer::GlobalLRU::Prune(int64_t max_to_free) {
+  TryFree(std::min(max_to_free, data_size_ - max_size_));
 }
 
 int64_t MultiBuffer::GlobalLRU::Size() const {
