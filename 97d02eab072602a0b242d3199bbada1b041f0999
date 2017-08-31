@@ -138,6 +138,30 @@
     },
     {
       "key": {
+        "uuid": "b8b803fb_c095c1ed",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlockFlow.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-31T16:38:24Z",
+      "side": 1,
+      "message": "Ah, yes, I see your point now. It should never be set to false. That would indeed cause trouble in your test case above.",
+      "parentUuid": "0ef40881_522532f3",
+      "range": {
+        "startLine": 443,
+        "startChar": 14,
+        "endLine": 443,
+        "endChar": 34
+      },
+      "revId": "97d02eab072602a0b242d3199bbada1b041f0999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4294c69a_fbe67eca",
         "filename": "third_party/WebKit/Source/core/layout/LayoutState.cpp",
         "patchSetId": 2
