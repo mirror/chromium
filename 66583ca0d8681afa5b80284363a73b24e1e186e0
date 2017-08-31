@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c7b8100_96d31cc5",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-31T15:47:02Z",
+      "side": 1,
+      "message": "can you reorganize the code a bit this way?\n\nboolean is_fullscreen \u003d false;\nif () {\n   is_fullscreen \u003d restore_state \u003d\u003d\u003d ui::SHOW_STATE_FULLSCREEN;\n} else {\n   is_fullscreen \u003d IsFullscreen();\n}\n\nif (is_fullscreen) {\n   if (immersive enabled) {\n       // Restore windows ....\n      return maximized;\n   }\n   return fullscreen;\n}",
+      "revId": "66583ca0d8681afa5b80284363a73b24e1e186e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ec570fa_9995f514",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-31T15:47:02Z",
+      "side": 1,
+      "message": "can you test if the window is in fullscreen?",
+      "revId": "66583ca0d8681afa5b80284363a73b24e1e186e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
