@@ -105,6 +105,24 @@
       "revId": "bc696b4cf77627116308166386d1e67ce6b27dcf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72f337d8_69de267f",
+        "filename": "third_party/WebKit/public/platform/input_host.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-31T21:05:21Z",
+      "side": 1,
+      "message": "So I should add a check in TextSuggestionHostAndroid::ShowSpellCheckSuggestionMenu()/ShowTextSuggestionMenu() before converting the suggestions to Java strings/objects?",
+      "parentUuid": "e7430d85_24c0a4ee",
+      "revId": "bc696b4cf77627116308166386d1e67ce6b27dcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
