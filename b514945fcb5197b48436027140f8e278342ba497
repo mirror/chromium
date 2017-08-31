@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "390aaf54_4f67d8f8",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-31T07:20:49Z",
+      "side": 1,
+      "message": "Maybe: VLOG_IF(1, IsReportingFirstTimeForProfile(profile)) ...;",
+      "revId": "b514945fcb5197b48436027140f8e278342ba497",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
