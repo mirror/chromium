@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c89f0cd2_b892f930",
+        "filename": "components/subresource_filter/content/common/subresource_filter_utils.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-31T15:42:57Z",
+      "side": 1,
+      "message": "These conditions are specifically for non-PlzNavigate scenario since IsURLHandledByNetworkRequest is only for PlzNavigate",
+      "parentUuid": "bdea8a10_04dc866c",
+      "revId": "6c7bba3379d1a3d74b8195e806d1e5028fcbc354",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "39bf1c4c_e12f7ae6",
         "filename": "content/public/common/url_utils.h",
         "patchSetId": 15
@@ -30,6 +48,30 @@
       "writtenOn": "2017-08-30T20:46:22Z",
       "side": 1,
       "message": "In discussion about naming, creis@ suggested IsURLHandledByNetworkStack.",
+      "range": {
+        "startLine": 25,
+        "startChar": 20,
+        "endLine": 25,
+        "endChar": 48
+      },
+      "revId": "6c7bba3379d1a3d74b8195e806d1e5028fcbc354",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad746d47_11e8834b",
+        "filename": "content/public/common/url_utils.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-31T15:42:57Z",
+      "side": 1,
+      "message": "Yes, that sounds better since the request may be served from the http cache. Renamed.",
+      "parentUuid": "39bf1c4c_e12f7ae6",
       "range": {
         "startLine": 25,
         "startChar": 20,
@@ -62,6 +104,30 @@
       "revId": "6c7bba3379d1a3d74b8195e806d1e5028fcbc354",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5153c4f1_597d7495",
+        "filename": "content/public/common/url_utils_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-31T15:42:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dcb6d992_816a5bc4",
+      "range": {
+        "startLine": 24,
+        "startChar": 61,
+        "endLine": 24,
+        "endChar": 63
+      },
+      "revId": "6c7bba3379d1a3d74b8195e806d1e5028fcbc354",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
