@@ -187,6 +187,7 @@ class FilePathWatcherImpl : public FilePathWatcher::PlatformDelegate {
   std::unordered_map<InotifyReader::Watch, FilePath> recursive_paths_by_watch_;
   std::map<FilePath, InotifyReader::Watch> recursive_watches_by_path_;
 
+  WeakPtr<FilePathWatcherImpl> weak_ptr_;
   WeakPtrFactory<FilePathWatcherImpl> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(FilePathWatcherImpl);
@@ -313,7 +314,9 @@ void InotifyReader::OnInotifyEvent(const inotify_event* event) {
 }
 
 FilePathWatcherImpl::FilePathWatcherImpl()
-    : recursive_(false), weak_factory_(this) {}
+    : recursive_(false), weak_factory_(this) {
+  weak_ptr_ = weak_factory_.GetWeakPtr();
+}
 
 FilePathWatcherImpl::~FilePathWatcherImpl() {
   DCHECK(!task_runner() || task_runner()->RunsTasksInCurrentSequence());
@@ -332,8 +335,7 @@ void FilePathWatcherImpl::OnFilePathChanged(InotifyReader::Watch fired_watch,
   task_runner()->PostTask(
       FROM_HERE,
       BindOnce(&FilePathWatcherImpl::OnFilePathChangedOnOriginSequence,
-               weak_factory_.GetWeakPtr(), fired_watch, child, created, deleted,
-               is_dir));
+               weak_ptr_, fired_watch, child, created, deleted, is_dir));
 }
 
 void FilePathWatcherImpl::OnFilePathChangedOnOriginSequence(
