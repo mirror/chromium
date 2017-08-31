@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbb5ef0f_b66ddcb5",
+        "filename": "third_party/WebKit/Source/core/css/properties/README.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-08-31T05:17:35Z",
+      "side": 1,
+      "message": "\"which all property implementations are derived from\"",
+      "revId": "9d3c71b497a6e16f0788256aabcc8dac327987dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94e553ee_3d2bd185",
+        "filename": "third_party/WebKit/Source/core/css/properties/README.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-08-31T05:17:35Z",
+      "side": 1,
+      "message": "property API, and a",
+      "revId": "9d3c71b497a6e16f0788256aabcc8dac327987dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "198fcca7_ccf11fe7",
+        "filename": "third_party/WebKit/Source/core/css/properties/README.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-08-31T05:17:35Z",
+      "side": 1,
+      "message": "Some methods have a working default\nimplementation in the base class, others assert that this default\nimplementation is not reached\n\nOR\n\nMethods may have a working default\nimplementation in the base class, or may assert that this default\nimplementation is not reached",
+      "revId": "9d3c71b497a6e16f0788256aabcc8dac327987dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
