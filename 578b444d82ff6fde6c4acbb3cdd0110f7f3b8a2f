@@ -143,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "6e145c56_8057ad81",
+        "filename": "chrome/browser/resources/print_preview/data/ticket_items/scaling.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-08-31T21:00:33Z",
+      "side": 1,
+      "message": "Added an assert in the ticket item and added comments in scaling_settings.js on values that are used to update the ticket item.",
+      "parentUuid": "d88ebc0d_195af1ef",
+      "revId": "578b444d82ff6fde6c4acbb3cdd0110f7f3b8a2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fbbc6823_e77dc258",
         "filename": "chrome/browser/resources/print_preview/settings/other_options_settings.js",
         "patchSetId": 7
