@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "6ba7f911_de88e7eb",
+        "filename": "services/network/public/cpp/http_request_headers_struct_traits.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-31T06:22:53Z",
+      "side": 1,
+      "message": "OK, that\u0027s fine.\n\n(Another approach to consider would be to just allow HttpRequestHeaders to take a vector, and then to normalize and use that vector internally, like flat_map does. I defer to //net OWNERS on what they\u0027d like to see here, since I don\u0027t really know typical sizes of the keys / values / vector)",
+      "parentUuid": "131559bc_88da283b",
+      "revId": "26c54eb6fef99e066ece7ceee81db91806212536",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5bc2439d_41b17f41",
         "filename": "services/network/public/cpp/network_struct_traits_unittest.cc",
         "patchSetId": 15
