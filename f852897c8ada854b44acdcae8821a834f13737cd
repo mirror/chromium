@@ -443,6 +443,24 @@
     },
     {
       "key": {
+        "uuid": "e75c6cb6_0b47f326",
+        "filename": "media/blink/video_frame_compositor.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-31T17:56:01Z",
+      "side": 1,
+      "message": "Are you sure? You currently have it being created directly in the constructor, when this bool is set, and it\u0027s never cleared, so how can it ever be null if the flag is true?",
+      "parentUuid": "7a27bc08_6faaa096",
+      "revId": "f852897c8ada854b44acdcae8821a834f13737cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d18af776_5e6b0164",
         "filename": "media/blink/webmediaplayer_impl.cc",
         "patchSetId": 33

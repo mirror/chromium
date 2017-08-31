@@ -37,6 +37,41 @@
     },
     {
       "key": {
+        "uuid": "2ee40768_1a30b79b",
+        "filename": "media/blink/video_frame_compositor.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-31T17:56:01Z",
+      "side": 1,
+      "message": "Both classes implement the cc::VideoFrameProvider::Client interface, which is where the Start/StopRendering, DidReceiveFrame and StopUsingProvider APIs are defined, and from my earlier read-through this CL, you\u0027re calling those in exactly the same way as before - the only difference between the two implementations is that the submitter case has the extra StartSubmitting() API.\n\nIf you\u0027re arguing that the implementation of those calls is so fundamentally different that the two Client implementations are fundamentally not equivalent, then they shouldn\u0027t both be inheriting from the VideoFrameProvider::Client interface in the first place.",
+      "parentUuid": "50ab129c_08afc374",
+      "revId": "836340e82c3480da00794e992e275a18a90e1a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2001258c_2985e608",
+        "filename": "media/blink/video_frame_compositor.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-31T17:56:01Z",
+      "side": 1,
+      "message": "This is an example of the VideoFrameProvider::Client interface being called; if you have submitter_ be a unique_ptr to the VideoFrameSubmitter, or null, and have client_ be a raw pointer to a VideoFrameProvider::Client, whether it\u0027s the Submitter or some other implementation, provided via SetVideoFrameProviderClient(), then you don\u0027t need this check - you just call client_-\u003eStartRendering() or client_-\u003eStopRendering() as before.",
+      "revId": "836340e82c3480da00794e992e275a18a90e1a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7e6e7caa_b62cc92b",
         "filename": "media/blink/video_frame_compositor_unittest.cc",
         "patchSetId": 40
