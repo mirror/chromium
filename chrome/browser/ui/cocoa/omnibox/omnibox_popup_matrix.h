@@ -10,6 +10,7 @@
 
 #import "ui/base/cocoa/tracking_area.h"
 #include "ui/base/window_open_disposition.h"
+#include "ui/gfx/image/image.h"
 
 class AutocompleteResult;
 @class OmniboxPopupCell;
@@ -31,6 +32,8 @@ class OmniboxPopupViewMac;
 
 // Set the hovered highlight.
 - (void)setHighlightedRow:(NSInteger)rowIndex;
+
+- (void)setMatchIcon:(gfx::Image)icon forRow:(NSInteger)rowIndex;
 
 // Which row has the hovered highlight.
 - (NSInteger)highlightedRow;
@@ -101,6 +104,9 @@ class OmniboxPopupMatrixObserver {
 
 // Setup the NSTableView data source.
 - (void)setController:(OmniboxPopupTableController*)controller;
+
+// Sets a custom match icon.
+- (void)setMatchIcon:(gfx::Image)icon forRow:(NSInteger)rowIndex;
 
 @end
 
