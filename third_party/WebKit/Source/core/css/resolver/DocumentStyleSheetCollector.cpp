@@ -26,12 +26,12 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include "core/dom/DocumentStyleSheetCollector.h"
+#include "core/css/resolver/DocumentStyleSheetCollector.h"
 
 #include "core/css/CSSStyleSheet.h"
 #include "core/css/StyleSheet.h"
+#include "core/css/resolver/DocumentStyleSheetCollection.h"
 #include "core/dom/Document.h"
-#include "core/dom/DocumentStyleSheetCollection.h"
 
 namespace blink {
 

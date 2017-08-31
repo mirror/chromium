@@ -38,11 +38,11 @@
 #include "core/css/StyleRule.h"
 #include "core/css/StyleSheetContents.h"
 #include "core/css/resolver/MatchRequest.h"
+#include "core/css/resolver/StyleChangeReason.h"
+#include "core/css/resolver/StyleEngine.h"
 #include "core/dom/Document.h"
 #include "core/dom/ElementShadow.h"
 #include "core/dom/ShadowRoot.h"
-#include "core/dom/StyleChangeReason.h"
-#include "core/dom/StyleEngine.h"
 #include "core/html/HTMLStyleElement.h"
 #include "core/svg/SVGStyleElement.h"
 

@@ -28,6 +28,7 @@
 
 #include "core/HTMLNames.h"
 #include "core/css/resolver/ScopedStyleResolver.h"
+#include "core/css/resolver/StyleChangeReason.h"
 #include "core/dom/ContainerNode.h"
 #include "core/dom/Document.h"
 #include "core/dom/Element.h"
@@ -36,7 +37,6 @@
 #include "core/dom/IdTargetObserverRegistry.h"
 #include "core/dom/NodeComputedStyle.h"
 #include "core/dom/ShadowRoot.h"
-#include "core/dom/StyleChangeReason.h"
 #include "core/dom/TreeScopeAdopter.h"
 #include "core/dom/events/EventPath.h"
 #include "core/editing/DOMSelection.h"

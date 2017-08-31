@@ -26,16 +26,16 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include "core/dom/ShadowTreeStyleSheetCollection.h"
+#include "core/css/resolver/ShadowTreeStyleSheetCollection.h"
 
 #include "core/HTMLNames.h"
 #include "core/css/CSSStyleSheet.h"
+#include "core/css/resolver/StyleChangeReason.h"
+#include "core/css/resolver/StyleEngine.h"
 #include "core/css/resolver/StyleResolver.h"
+#include "core/css/resolver/StyleSheetCandidate.h"
 #include "core/dom/Element.h"
 #include "core/dom/ShadowRoot.h"
-#include "core/dom/StyleChangeReason.h"
-#include "core/dom/StyleEngine.h"
-#include "core/dom/StyleSheetCandidate.h"
 #include "core/html/HTMLStyleElement.h"
 
 namespace blink {

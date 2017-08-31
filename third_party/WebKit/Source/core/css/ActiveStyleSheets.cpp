@@ -7,9 +7,9 @@
 #include "core/css/CSSStyleSheet.h"
 #include "core/css/RuleSet.h"
 #include "core/css/resolver/ScopedStyleResolver.h"
+#include "core/css/resolver/StyleChangeReason.h"
+#include "core/css/resolver/StyleEngine.h"
 #include "core/dom/ContainerNode.h"
-#include "core/dom/StyleChangeReason.h"
-#include "core/dom/StyleEngine.h"
 
 namespace blink {
 

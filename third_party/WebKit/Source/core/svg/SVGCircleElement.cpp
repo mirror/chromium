@@ -20,7 +20,7 @@
 
 #include "core/svg/SVGCircleElement.h"
 
-#include "core/dom/StyleChangeReason.h"
+#include "core/css/resolver/StyleChangeReason.h"
 #include "core/layout/svg/LayoutSVGEllipse.h"
 #include "core/svg/SVGLength.h"
 

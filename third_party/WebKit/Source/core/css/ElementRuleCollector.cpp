@@ -39,11 +39,11 @@
 #include "core/css/CSSStyleSheet.h"
 #include "core/css/CSSSupportsRule.h"
 #include "core/css/StylePropertySet.h"
+#include "core/css/resolver/StyleEngine.h"
 #include "core/css/resolver/StyleResolver.h"
 #include "core/css/resolver/StyleResolverStats.h"
 #include "core/css/resolver/StyleRuleUsageTracker.h"
 #include "core/dom/ShadowRoot.h"
-#include "core/dom/StyleEngine.h"
 #include "core/style/ComputedStyle.h"
 
 namespace blink {
