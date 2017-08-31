@@ -34,6 +34,24 @@
       "revId": "1b628e44e5c645a3fd82052a664b369c5d31cb77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8b4e2b9c_30e55e36",
+        "filename": "chromeos/network/onc/onc_certificate_importer_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-31T20:13:38Z",
+      "side": 1,
+      "message": "I wonder if this is a remnant of stashing the fingerprint on every X509Certificate. This now has to compute it all the time but if you had it readily available, I guess it\u0027s a more efficient sort?",
+      "parentUuid": "58ced594_d1b8b8d5",
+      "revId": "1b628e44e5c645a3fd82052a664b369c5d31cb77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
