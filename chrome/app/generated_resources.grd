@@ -476,6 +476,9 @@ are declared in build/common.gypi.
           <message name="IDS_CONTENT_CONTEXT_OPENAUDIONEWTAB" desc="The name of the Open Audio in New Tab command in the content area context menu">
             &amp;Open audio in new tab
           </message>
+          <message name="IDS_CONTENT_CONTENT_PICTUREINPICTURE" desc="The name of the Picture in Picture command in the content area context menu.">
+            Picture in Picture
+          </message>
 
           <message name="IDS_CONTENT_CONTEXT_UNDO" desc="The name of the Undo command in the content area context menu">
             &amp;Undo
