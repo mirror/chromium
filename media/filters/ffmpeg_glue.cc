@@ -8,6 +8,7 @@
 #include "base/macros.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/synchronization/lock.h"
+#include "base/threading/scoped_blocking_call.h"
 #include "media/base/container_names.h"
 #include "media/ffmpeg/ffmpeg_common.h"
 
@@ -20,6 +21,7 @@ namespace media {
 enum { kBufferSize = 32 * 1024 };
 
 static int AVIOReadOperation(void* opaque, uint8_t* buf, int buf_size) {
+  base::ScopedBlockingCall scoped_blocking_call(base::BlockingType::WILL_BLOCK);
   FFmpegURLProtocol* protocol = reinterpret_cast<FFmpegURLProtocol*>(opaque);
   int result = protocol->Read(buf_size, buf);
   if (result < 0)
@@ -28,6 +30,7 @@ static int AVIOReadOperation(void* opaque, uint8_t* buf, int buf_size) {
 }
 
 static int64_t AVIOSeekOperation(void* opaque, int64_t offset, int whence) {
+  base::ScopedBlockingCall scoped_blocking_call(base::BlockingType::WILL_BLOCK);
   FFmpegURLProtocol* protocol = reinterpret_cast<FFmpegURLProtocol*>(opaque);
   int64_t new_offset = AVERROR(EIO);
   switch (whence) {
@@ -65,6 +68,7 @@ static int64_t AVIOSeekOperation(void* opaque, int64_t offset, int whence) {
 }
 
 static int LockManagerOperation(void** lock, enum AVLockOp op) {
+  base::ScopedBlockingCall scoped_blocking_call(base::BlockingType::WILL_BLOCK);
   switch (op) {
     case AV_LOCK_CREATE:
       *lock = new base::Lock();
