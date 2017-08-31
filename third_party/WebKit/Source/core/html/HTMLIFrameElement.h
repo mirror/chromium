@@ -46,7 +46,8 @@ class CORE_EXPORT HTMLIFrameElement final
   DOMTokenList* sandbox() const;
 
   Vector<WebParsedFeaturePolicyDeclaration> ConstructContainerPolicy(
-      Vector<String>* messages = nullptr) const override;
+      Vector<String>*,
+      bool*) const override;
 
  private:
   explicit HTMLIFrameElement(Document&);

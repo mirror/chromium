@@ -44,7 +44,8 @@ PLATFORM_EXPORT Vector<WebParsedFeaturePolicyDeclaration>
 ParseFeaturePolicyAttribute(const String& policy,
                             RefPtr<SecurityOrigin> self_origin,
                             RefPtr<SecurityOrigin> src_origin,
-                            Vector<String>* messages);
+                            Vector<String>* messages,
+                            bool* old_syntax = nullptr);
 
 // Converts a feature policy string into a vector of whitelists (see comments
 // above), with an explicit FeatureNameMap. This algorithm is called by both
@@ -55,7 +56,8 @@ PLATFORM_EXPORT Vector<WebParsedFeaturePolicyDeclaration> ParseFeaturePolicy(
     RefPtr<SecurityOrigin> self_origin,
     RefPtr<SecurityOrigin> src_origin,
     Vector<String>* messages,
-    const FeatureNameMap& feature_names);
+    const FeatureNameMap& feature_names,
+    bool* old_syntax = nullptr);
 
 // Verifies whether feature policy is enabled and |feature| is supported in
 // feature policy.
