@@ -223,8 +223,17 @@ const char kNTPHelpURL[] = "https://support.google.com/chrome/?p=ios_new_tab";
   web::NavigationManager* navigationManager = webState->GetNavigationManager();
   web::NavigationItem* item = navigationManager->GetVisibleItem();
   if (item && item->GetPageDisplayState().scroll_state().offset_y() > 0) {
-    self.suggestionsViewController.collectionView.contentOffset =
-        CGPointMake(0, item->GetPageDisplayState().scroll_state().offset_y());
+    // Don't set the offset such as elements outside of the collection should be
+    // displayed, and take into account the size of the toolbar.
+    CGFloat offset = item->GetPageDisplayState().scroll_state().offset_y();
+    UICollectionView* collection =
+        self.suggestionsViewController.collectionView;
+    offset = MAX(0, MIN(offset, collection.contentSize.height -
+                                    collection.bounds.size.height -
+                                    ntp_header::kToolbarHeight));
+    collection.contentOffset = CGPointMake(0, offset);
+    // Updates the constraints in case the omnibox needs to be moved.
+    [self.suggestionsViewController updateConstraints];
   }
 }
 
