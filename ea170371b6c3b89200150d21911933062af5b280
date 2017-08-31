@@ -104,6 +104,24 @@
       "revId": "ea170371b6c3b89200150d21911933062af5b280",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0de0f9c2_52de6952",
+        "filename": "gpu/config/gpu_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-31T23:01:50Z",
+      "side": 1,
+      "message": "I see, I missed that one. I guess I would rather have the const_cast at the highest level where it\u0027s clear where it comes from and ensuring it\u0027s safe (though if MainFuncionParams was changed to have a non-reference field, this would break because we\u0027re no longer changing the process\u0027s command line). Another option being to grab base::CommandLine::ForCurrentProcess() again to make it clear that we\u0027re modifying the process\u0027s command line, not a copy of it.",
+      "parentUuid": "3662218b_448cfebd",
+      "revId": "ea170371b6c3b89200150d21911933062af5b280",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
