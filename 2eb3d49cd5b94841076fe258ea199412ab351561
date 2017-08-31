@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "00c21354_89984b49",
+        "filename": "content/shell/browser/shell_content_browser_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-31T21:26:20Z",
+      "side": 1,
+      "message": "ContentBrowserClient is not normally layered like it is between ShellContentBrowserClient and LayoutTestContentBrowserClient so it\u0027s not an issue for ChromeContentBrowserClient.",
+      "parentUuid": "25252f9e_5c48cab0",
+      "revId": "2eb3d49cd5b94841076fe258ea199412ab351561",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cd543d55_94205dab",
         "filename": "third_party/WebKit/LayoutTests/mojo/bind-interface.html",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "2eb3d49cd5b94841076fe258ea199412ab351561",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb8516b6_6cf764b8",
+        "filename": "third_party/WebKit/LayoutTests/mojo/bind-interface.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-31T21:26:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd543d55_94205dab",
+      "revId": "2eb3d49cd5b94841076fe258ea199412ab351561",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
