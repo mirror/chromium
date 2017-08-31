@@ -461,6 +461,24 @@
     },
     {
       "key": {
+        "uuid": "8ef671ba_7951f24d",
+        "filename": "media/blink/video_frame_compositor.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-08-31T19:17:20Z",
+      "side": 1,
+      "message": "Yes. We haven\u0027t yet implemented the check that would clear it. There\u0027s a TODO item for that.",
+      "parentUuid": "e75c6cb6_0b47f326",
+      "revId": "f852897c8ada854b44acdcae8821a834f13737cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d18af776_5e6b0164",
         "filename": "media/blink/webmediaplayer_impl.cc",
         "patchSetId": 33
