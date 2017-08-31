@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "67989062_1f00dd02",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-31T01:05:28Z",
+      "side": 1,
+      "message": "Would be good to include reasoning for why the weakSelf reference is used in a dealloc called method here.",
+      "revId": "e69d0db8ed9c3dde4199bcd6a8dd2bcfbdc77c60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d9bff62_868ce70d",
         "filename": "ios/chrome/browser/ui/payments/payment_request_coordinator.mm",
         "patchSetId": 2
