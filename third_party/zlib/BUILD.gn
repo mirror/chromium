@@ -93,6 +93,10 @@ static_library("zlib") {
     sources += [ "x86.c" ]
   }
 
+  # Use the inffast64 patch.
+  defines = [ "INFLATE_FAST64" ]
+  sources += [ "contrib/inffast64/inffast64.c" ]
+
   configs -= [ "//build/config/compiler:chromium_code" ]
   configs += [
     "//build/config/compiler:no_chromium_code",
