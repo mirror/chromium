@@ -14,7 +14,9 @@
 
 namespace {
 
-base::LazyInstance<std::string>::DestructorAtExit g_overridden_locale =
+base::LazyInstance<std::string>::DestructorAtExit g_overridden_app_locale =
+    LAZY_INSTANCE_INITIALIZER;
+base::LazyInstance<std::string>::DestructorAtExit g_overridden_format_locale =
     LAZY_INSTANCE_INITIALIZER;
 base::LazyInstance<base::scoped_nsobject<NSLocale>>::DestructorAtExit
     mac_locale = LAZY_INSTANCE_INITIALIZER;
@@ -60,7 +62,11 @@ base::string16 GetDisplayNameForLocale(const std::string& locale,
 }
 
 const std::string& GetLocaleOverride() {
-  return g_overridden_locale.Get();
+  return g_overridden_app_locale.Get();
+}
+
+const std::string& GetFormatLocaleOverride() {
+  return g_overridden_format_locale.Get();
 }
 
 void OverrideLocaleWithCocoaLocale() {
@@ -74,21 +80,48 @@ void OverrideLocaleWithCocoaLocale() {
   // "Today" are in the same language as raw dates like "March 20, 1999" (Chrome
   // strings resources vs ICU generated strings).  This also makes the Mac acts
   // like other Chrome platforms.
+
   NSArray* languageList = [base::mac::OuterBundle() preferredLocalizations];
   NSString* firstLocale = [languageList objectAtIndex:0];
   // Mac OS X uses "_" instead of "-", so swap to get a real locale value.
-  std::string locale_value =
-      [[firstLocale stringByReplacingOccurrencesOfString:@"_"
-                                              withString:@"-"] UTF8String];
+  std::string app_locale = base::SysNSStringToUTF8(
+      [firstLocale stringByReplacingOccurrencesOfString:@"_" withString:@"-"]);
 
   // On disk the "en-US" resources are just "en" (http://crbug.com/25578), so
   // the reverse mapping is done here to continue to feed Chrome the same values
   // in all cases on all platforms.  (l10n_util maps en to en-US if it gets
   // passed this on the command line)
-  if (locale_value == "en")
-    locale_value = "en-US";
+  if (app_locale == "en")
+    app_locale = "en-US";
 
-  g_overridden_locale.Get() = locale_value;
+  VLOG(4) << "App locale is set to " << app_locale;
+
+  g_overridden_app_locale.Get() = app_locale;
+
+  // Use the first locale variant matching |app_locale| (string bundle locale)
+  // as |format_locale|. e.g. for {en-NZ, en-AU, zh-TW}, |app_locale| will be
+  // en-GB and |format_locale| will be en-NZ.
+  NSArray* preferredLanguages = [NSLocale preferredLanguages];
+  std::string format_locale;
+  for (NSUInteger i = 0; i < [preferredLanguages count]; ++i) {
+    format_locale = base::SysNSStringToUTF8([[preferredLanguages
+        objectAtIndex:i] stringByReplacingOccurrencesOfString:@"_"
+                                                   withString:@"-"]);
+    VLOG(4) << "Considering " << format_locale << " for format_locale";
+    if (app_locale == format_locale ||
+        GetLanguage(app_locale) == GetLanguage(format_locale)) {
+      g_overridden_format_locale.Get() = format_locale;
+      VLOG(4) << format_locale << " was picked for format locale";
+      return;
+    }
+  }
+
+  // We'd get here if none of locales or their non-variant counterparts in the
+  // preferred language list has translated string bundles. In that case, en-US
+  // will be picked for app_locale and format_locale has to be set to that as
+  // well.
+  VLOG(4) << app_locale << " was picked for format locale as a fallback";
+  g_overridden_format_locale.Get() = app_locale;
 }
 
 // Remove the Windows-style accelerator marker and change "..." into an

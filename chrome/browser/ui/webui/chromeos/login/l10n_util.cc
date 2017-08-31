@@ -161,7 +161,10 @@ std::unique_ptr<base::ListValue> GetLanguageList(
       continue;
     }
     std::string resolved_locale;
-    if (!l10n_util::CheckAndResolveLocale(language_id, &resolved_locale))
+    // TODO(jshin): Review the way CheckAndResolveLocale() is used here in
+    // light of locale variant support.
+    if (!l10n_util::CheckAndResolveLocale(language_id, &resolved_locale,
+                                          nullptr))
       continue;
 
     if (!base::ContainsValue(base_language_codes, resolved_locale)) {
@@ -336,7 +339,10 @@ void GetKeyboardLayoutsForResolvedLocale(
 std::string CalculateSelectedLanguage(const std::string& requested_locale,
                                       const std::string& loaded_locale) {
   std::string resolved_locale;
-  if (!l10n_util::CheckAndResolveLocale(requested_locale, &resolved_locale))
+  // TODO(jshin): Review the way CheckAndResolveLocale() is used here in
+  // light of locale variant support.
+  if (!l10n_util::CheckAndResolveLocale(requested_locale, &resolved_locale,
+                                        nullptr))
     return loaded_locale;
 
   if (resolved_locale == loaded_locale)

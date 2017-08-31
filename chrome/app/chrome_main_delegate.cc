@@ -892,9 +892,19 @@ void ChromeMainDelegate::PreSandboxStartup() {
           base::File(pak_fd), pak_region, ui::SCALE_FACTOR_100P);
     }
 
+    // TODO(jshin): |locale| passed via --lang cmd line flag is not a locale
+    // variant. For ICU, it'd be set to the most specific locale compatible with
+    // application (resource bundle) locale. Find out a way to pass format
+    // locale from the browser process and use it to set the ICU default locale.
+    // On other platforms, ResourceBundle::InitSharedInsatnceWithLocale calls
+    // GetApplicationLocale and SetICUDefaultLocale(), but apparently it's
+    // not possible on Android due to sandbox.
     base::i18n::SetICUDefaultLocale(locale);
     const std::string loaded_locale = locale;
 #else
+#if defined(OS_MACOSX)
+    l10n_util::OverrideLocaleWithCocoaLocale();
+#endif
     ui::MaterialDesignController::Initialize();
     const std::string loaded_locale =
         ui::ResourceBundle::InitSharedInstanceWithLocale(

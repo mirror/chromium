@@ -42,6 +42,7 @@
 #include "base/single_thread_task_runner.h"
 #include "base/stl_util.h"
 #include "base/strings/string_number_conversions.h"
+#include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/supports_user_data.h"
 #include "base/synchronization/lock.h"
@@ -213,6 +214,7 @@
 #include "content/public/browser/android/java_interfaces.h"
 #include "ipc/ipc_sync_channel.h"
 #include "media/audio/android/audio_manager_android.h"
+#include "third_party/icu/source/common/unicode/locid.h"
 #endif
 
 #if defined(OS_WIN)
@@ -2435,9 +2437,21 @@ void RenderProcessHostImpl::AppendRendererCommandLine(
       *base::CommandLine::ForCurrentProcess();
   PropagateBrowserCommandLineToRenderer(browser_command_line, command_line);
 
+// On Android, the browser locale (app locae, resource bundle locale) is passed
+// via another channel and what's passed via kLang is used to set the ICU
+// default locale. The ICU default locale can be different from the resource
+// bundle locale  when a locale variant without string translation is selected
+// by a user. For instance, when a user picks en-AU, the resource bundle locale
+// (browser locale) will fall back to en-GB, but the ICU default locale will be
+// en-AU for en-AU specific formatting.
+#if defined(OS_ANDROID)
+  std::string locale = icu::Locale::getDefault().getName();
+  base::ReplaceChars(locale, "_", "-", &locale);
+#else
   // Pass on the browser locale.
   const std::string locale =
       GetContentClient()->browser()->GetApplicationLocale();
+#endif
   command_line->AppendSwitchASCII(switches::kLang, locale);
 
   // A non-empty RendererCmdPrefix implies that Zygote is disabled.

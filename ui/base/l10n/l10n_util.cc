@@ -245,7 +245,7 @@ bool IsLocalePartiallyPopulated(const std::string& locale_name) {
 }
 
 #if !defined(OS_MACOSX)
-bool IsLocaleAvailable(const std::string& locale) {
+bool HasStringsForLocale(const std::string& locale) {
   // If locale has any illegal characters in it, we don't want to try to
   // load it because it may be pointing outside the locale data file directory.
   if (!base::i18n::IsFilenameLegal(base::ASCIIToUTF16(locale)))
@@ -256,8 +256,9 @@ bool IsLocaleAvailable(const std::string& locale) {
   // under a system locale Chrome is not localized to (e.g.Farsi on Linux),
   // but it'd slow down the start up time a little bit for locales Chrome is
   // localized to. So, we don't call it here.
-  if (!l10n_util::IsLocaleSupportedByOS(locale))
-    return false;
+
+  // TODO(jshin): Consider getting the list of UI/string locales at a build-time
+  // and build into the binary instead of checking their presence at run-time.
 
   // If the ResourceBundle is not yet initialized, return false to avoid the
   // CHECK failure in ResourceBundle::GetSharedInstance().
@@ -303,8 +304,6 @@ struct AvailableLocalesTraits
       // and to which Chrome is not localized.
       if (IsLocalePartiallyPopulated(locale_name))
         continue;
-      if (!l10n_util::IsLocaleSupportedByOS(locale_name))
-        continue;
       // Normalize underscores to hyphens because that's what our locale files
       // use.
       std::replace(locale_name.begin(), locale_name.end(), '_', '-');
@@ -337,13 +336,16 @@ std::string GetLanguage(const std::string& locale) {
 // TODO(jshin): revamp this function completely to use a more sytematic
 // and generic locale fallback based on ICU/CLDR.
 bool CheckAndResolveLocale(const std::string& locale,
-                           std::string* resolved_locale) {
+                           std::string* string_locale,
+                           std::string* format_locale) {
 #if defined(OS_MACOSX)
   NOTIMPLEMENTED();
   return false;
 #else
-  if (IsLocaleAvailable(locale)) {
-    *resolved_locale = locale;
+  if (HasStringsForLocale(locale)) {
+    *string_locale = locale;
+    if (format_locale)
+      *format_locale = locale;
     return true;
   }
 
@@ -395,8 +397,11 @@ bool CheckAndResolveLocale(const std::string& locale,
         tmp_locale.append("-US");
       }
     }
-    if (IsLocaleAvailable(tmp_locale)) {
-      resolved_locale->swap(tmp_locale);
+    if (HasStringsForLocale(tmp_locale)) {
+      string_locale->swap(tmp_locale);
+      DCHECK(!IsLocalePartiallyPopulated(locale));
+      if (format_locale)
+        *format_locale = locale;
       return true;
     }
   }
@@ -413,8 +418,10 @@ bool CheckAndResolveLocale(const std::string& locale,
   for (const auto& alias : alias_map) {
     if (base::LowerCaseEqualsASCII(lang, alias.source)) {
       std::string tmp_locale(alias.dest);
-      if (IsLocaleAvailable(tmp_locale)) {
-        resolved_locale->swap(tmp_locale);
+      if (HasStringsForLocale(tmp_locale)) {
+        string_locale->swap(tmp_locale);
+        if (format_locale)
+          *format_locale = *string_locale;
         return true;
       }
     }
@@ -424,25 +431,53 @@ bool CheckAndResolveLocale(const std::string& locale,
 #endif
 }
 
-std::string GetApplicationLocaleInternal(const std::string& pref_locale) {
-#if defined(OS_MACOSX)
+#if defined(OS_ANDROID) || defined(OS_WIN)
+void AddOSLocalesToCandidates(const std::vector<std::string>& languages,
+                              const std::string& default_lang,
+                              std::vector<std::string>* candidates) {
+  if (!languages.empty()) {
+    candidates->reserve(candidates->size() + languages.size());
+    std::transform(languages.begin(), languages.end(),
+                   std::back_inserter(*candidates),
+                   &base::i18n::GetCanonicalLocale);
+  } else {
+    candidates->push_back(default_lang);
+  }
+}
+#endif
 
+void GetApplicationLocaleInternal(const std::string& pref_locale,
+                                  std::string* string_locale,
+                                  std::string* format_locale) {
+#if defined(OS_MACOSX)
   // Use any override (Cocoa for the browser), otherwise use the preference
   // passed to the function.
-  std::string app_locale = l10n_util::GetLocaleOverride();
-  if (app_locale.empty())
-    app_locale = pref_locale;
+  *string_locale = l10n_util::GetLocaleOverride();
+  VLOG(4) << "string_locale from GetLocaleOverride is [" << *string_locale
+          << "]";
+  if (string_locale->empty()) {
+    VLOG(4) << "string_locale falls back to pref_locale, which is "
+            << pref_locale;
+    *string_locale = pref_locale;
+  }
 
   // The above should handle all of the cases Chrome normally hits, but for some
   // unit tests, we need something to fall back too.
-  if (app_locale.empty())
-    app_locale = "en-US";
+  if (string_locale->empty()) {
+    *string_locale = "en-US";
+    VLOG(4) << "string_locale falls back to en-US";
+  }
+  VLOG(4) << "string_locale is set to " << *string_locale;
 
-  return app_locale;
+  *format_locale = l10n_util::GetFormatLocaleOverride();
+  VLOG(4) << "format_locale from GetFormatLocaleOverride is [" << *format_locale
+          << "]";
+  if (format_locale->empty())
+    *format_locale = *string_locale;
+  VLOG(4) << "format_locale is set to " << *format_locale;
 
+  return;
 #else
-
-  std::string resolved_locale;
   std::vector<std::string> candidates;
 
   // We only use --lang and the app pref on Windows.  On Linux, we only
@@ -456,22 +491,16 @@ std::string GetApplicationLocaleInternal(const std::string& pref_locale) {
   if (!pref_locale.empty())
     candidates.push_back(base::i18n::GetCanonicalLocale(pref_locale));
 
-  // Next, try the overridden locale.
-  const std::vector<std::string>& languages = l10n_util::GetLocaleOverrides();
-  if (!languages.empty()) {
-    candidates.reserve(candidates.size() + languages.size());
-    std::transform(languages.begin(), languages.end(),
-                   std::back_inserter(candidates),
-                   &base::i18n::GetCanonicalLocale);
-  } else {
-    // If no override was set, defer to ICU
-    candidates.push_back(base::i18n::GetConfiguredLocale());
-  }
+  // Next, try the overridden locale and then the locale detected by ICU.
+  AddOSLocalesToCandidates(l10n_util::GetLocaleOverrides(),
+                           base::i18n::GetConfiguredLocale(), &candidates);
 
 #elif defined(OS_ANDROID)
 
-  // On Android, query java.util.Locale for the default locale.
-  candidates.push_back(base::android::GetDefaultLocaleString());
+  // Try the ordered list of preferred locales and the default OS locale.
+  AddOSLocalesToCandidates(base::android::GetPreferredLocaleList(),
+                           base::android::GetDefaultLocaleString(),
+                           &candidates);
 
 #elif defined(USE_GLIB) && !defined(OS_CHROMEOS)
 
@@ -490,6 +519,10 @@ std::string GetApplicationLocaleInternal(const std::string& pref_locale) {
 
 #else
 
+  // TODO(jshin): On Chrome OS, the list of locale preference should be
+  // taken into account. Alternatively, Chrome OS UI should be changed to
+  // allow users to set a variant of a locale with string translation (e.g.
+  // en-AU => en-GB ).
   // By default, use the application locale preference. This applies to ChromeOS
   // and linux systems without glib.
   if (!pref_locale.empty())
@@ -499,28 +532,29 @@ std::string GetApplicationLocaleInternal(const std::string& pref_locale) {
 
   std::vector<std::string>::const_iterator i = candidates.begin();
   for (; i != candidates.end(); ++i) {
-    if (CheckAndResolveLocale(*i, &resolved_locale)) {
-      return resolved_locale;
+    if (CheckAndResolveLocale(*i, string_locale, format_locale)) {
+      return;
     }
   }
 
   // Fallback on en-US.
-  const std::string fallback_locale("en-US");
-  if (IsLocaleAvailable(fallback_locale)) {
-    return fallback_locale;
-  }
-
-  return std::string();
+  *string_locale = "en-US";
+  *format_locale = "en-US";
+  return;
 
 #endif
 }
 
 std::string GetApplicationLocale(const std::string& pref_locale,
                                  bool set_icu_locale) {
-  const std::string locale = GetApplicationLocaleInternal(pref_locale);
-  if (set_icu_locale && !locale.empty())
-    base::i18n::SetICUDefaultLocale(locale);
-  return locale;
+  std::string string_locale;
+  std::string format_locale;
+  GetApplicationLocaleInternal(pref_locale, &string_locale, &format_locale);
+  if (set_icu_locale && !format_locale.empty()) {
+    VLOG(4) << "ICU locale is set to " << format_locale;
+    base::i18n::SetICUDefaultLocale(format_locale);
+  }
+  return string_locale;
 }
 
 std::string GetApplicationLocale(const std::string& pref_locale) {
