@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "62494045_71539788",
+        "filename": "chrome/browser/profiling_host/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-31T20:19:53Z",
+      "side": 1,
+      "message": "For future reference, needing to include random targets to make stuff compile means that an intermediate dependency is missing from this target, or the chain of intermediate dependencies between here and blink isn\u0027t marked public. In this case, it was both.",
+      "range": {
+        "startLine": 37,
+        "startChar": 19,
+        "endLine": 37,
+        "endChar": 25
+      },
+      "revId": "96f542d46ddff5db56ee13b48a4b2aff3b55b88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "809a8970_859ffce1",
         "filename": "chrome/browser/profiling_host/memlog_browsertest.cc",
         "patchSetId": 2
