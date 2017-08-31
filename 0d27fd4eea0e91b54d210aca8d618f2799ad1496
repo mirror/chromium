@@ -22,6 +22,30 @@
       "revId": "0d27fd4eea0e91b54d210aca8d618f2799ad1496",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "812fe559_656e2416",
+        "filename": "build/config/dcheck_always_on.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-31T00:37:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93030cf5_e9560305",
+      "range": {
+        "startLine": 8,
+        "startChar": 4,
+        "endLine": 8,
+        "endChar": 50
+      },
+      "revId": "0d27fd4eea0e91b54d210aca8d618f2799ad1496",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
