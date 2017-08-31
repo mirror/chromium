@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "4514601c_4f2a8189",
+        "filename": "chrome/installer/linux/debian/build.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-31T23:08:09Z",
+      "side": 1,
+      "message": "Well, also if the name changes, we don\u0027t have to keep updating it.",
+      "parentUuid": "87a9cbc0_4b63c17c",
+      "range": {
+        "startLine": 138,
+        "startChar": 15,
+        "endLine": 138,
+        "endChar": 23
+      },
+      "revId": "204dd2408d35404f5d78a4948b2d6f41d9ad74c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "47e41416_631f0ed4",
         "filename": "chrome/installer/linux/debian/build.sh",
         "patchSetId": 1
