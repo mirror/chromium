@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ab2d057_cbca2e58",
+        "filename": "chromeos/components/tether/fake_disconnect_tethering_request_sender.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-31T18:31:17Z",
+      "side": 1,
+      "message": "nit: Set this in the header file instead:\n\nbool has_pending_requests_ \u003d false;",
+      "range": {
+        "startLine": 12,
+        "startChar": 6,
+        "endLine": 12,
+        "endChar": 34
+      },
+      "revId": "2139e02c323e087d329513b180f58c3ff8fe2a02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
