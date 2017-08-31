@@ -961,16 +961,18 @@ void Predictor::OnLookupFinished(const GURL& url, int result) {
 
 void Predictor::LookupFinished(const GURL& url, bool found) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  UrlInfo* info = &results_[url];
+  auto info_it = results_.find(url);
+  UrlInfo* info = &info_it->second;
   DCHECK(info->HasUrl(url));
-  if (info->is_marked_to_delete()) {
-    results_.erase(url);
-  } else {
-    if (found)
-      info->SetFoundState();
-    else
-      info->SetNoSuchNameState();
-  }
+  bool is_marked_to_delete = info->is_marked_to_delete();
+
+  if (found)
+    info->SetFoundState();
+  else
+    info->SetNoSuchNameState();
+
+  if (is_marked_to_delete)
+    results_.erase(info_it);
 }
 
 bool Predictor::WouldLikelyProxyURL(const GURL& url) {
@@ -1040,13 +1042,13 @@ void Predictor::StartSomeQueuedResolutions() {
     UrlInfo* info = &results_[url];
     DCHECK(info->HasUrl(url));
     info->SetAssignedState();
-    info->SetPendingDeleteState();
 
     if (CongestionControlPerformed(info)) {
       DCHECK(work_queue_.IsEmpty());
       return;
     }
 
+    info->SetPendingDeleteState();
     int status =
         content::PreresolveUrl(url_request_context_getter_.get(), url,
                                base::Bind(&Predictor::OnLookupFinished,
