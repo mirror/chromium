@@ -22,6 +22,7 @@
 #include "core/layout/ng/ng_space_utils.h"
 #include "core/layout/ng/ng_unpositioned_float.h"
 #include "core/style/ComputedStyle.h"
+#include "platform/fonts/shaping/ShapeResultSpacing.h"
 
 namespace blink {
 namespace {
@@ -146,6 +147,12 @@ bool NGInlineLayoutAlgorithm::PlaceItems(
                                     ConstraintSpace().WritingMode());
   NGTextFragmentBuilder text_builder(Node(), ConstraintSpace().WritingMode());
 
+  LayoutUnit inline_size;
+  NGLogicalOffset line_box_offset;
+  std::tie(line_box_offset.inline_offset, inline_size) =
+      ComputeInlineOffsetAndSize(line_info);
+  line_box.SetInlineSize(inline_size);
+
   // Compute heights of all inline items by placing the dominant baseline at 0.
   // The baseline is adjusted after the height of the line box is computed.
   NGInlineBoxState* box =
@@ -174,6 +181,7 @@ bool NGInlineLayoutAlgorithm::PlaceItems(
         }
         text_builder.SetEndEffect(item_result.text_end_effect);
         text_builder.SetShapeResult(std::move(item_result.shape_result));
+        text_builder.SetExpansion(item_result.expansion);
       } else {
         DCHECK(!item.TextShapeResult());  // kControl or unit tests.
       }
@@ -253,22 +261,10 @@ bool NGInlineLayoutAlgorithm::PlaceItems(
   line_box.MoveChildrenInBlockDirection(baseline);
 
   // Compute the offset of the line box.
-  LayoutUnit inline_size = position;
-  NGLogicalOffset offset(line_info->LineLeft(),
-                         baseline - box_states_.LineBoxState().metrics.ascent);
-  LayoutUnit available_width = line_info->AvailableWidth();
-  if (LayoutUnit text_indent = line_info->TextIndent()) {
-    // Move the line box by indent. Negative indents are ink overflow, let the
-    // line box overflow from the container box.
-    if (IsLtr(Node().BaseDirection()))
-      offset.inline_offset += text_indent;
-    available_width -= text_indent;
-  }
-  ApplyTextAlign(line_style.GetTextAlign(line_info->IsLastLine()),
-                 &offset.inline_offset, inline_size, available_width);
-
-  line_box.SetInlineSize(inline_size);
-  container_builder_.AddChild(line_box.ToLineBoxFragment(), offset);
+  DCHECK_EQ(inline_size, position);
+  line_box_offset.block_offset =
+      baseline - box_states_.LineBoxState().metrics.ascent;
+  container_builder_.AddChild(line_box.ToLineBoxFragment(), line_box_offset);
 
   max_inline_size_ = std::max(max_inline_size_, inline_size);
   content_size_ = ComputeContentSize(*line_info, exclusion_space, line_bottom);
@@ -323,10 +319,62 @@ NGInlineBoxState* NGInlineLayoutAlgorithm::PlaceAtomicInline(
   return box_states_.OnCloseTag(item, line_box, box, baseline_type_);
 }
 
-void NGInlineLayoutAlgorithm::ApplyTextAlign(ETextAlign text_align,
+void NGInlineLayoutAlgorithm::ApplyJustify(NGLineInfo* line_info,
+                                           LayoutUnit* inline_size,
+                                           LayoutUnit available_width) {
+  LayoutUnit expansion = available_width - *inline_size;
+  LOG(INFO) << "ApplyJustify " << expansion << " av=" << available_width << ", lw=" << *inline_size;
+  if (expansion <= 0)
+    return;
+  const String line_text =
+      Node().Text(line_info->StartOffset(), line_info->EndOffset()).ToString();
+  LOG(INFO) << line_info->StartOffset() << "-" << line_info->EndOffset() << ": Text=" << line_text;
+  ShapeResultSpacing<String> spacing(line_text);
+  spacing.SetExpansion(expansion, Node().BaseDirection(),
+                       line_info->LineStyle().GetTextJustify());
+  for (NGInlineItemResult& item_result : line_info->Results()) {
+    LOG(INFO) << "item "
+              << std::distance(&line_info->Results()[0], &item_result) << " "
+              << item_result.start_offset << "-" << item_result.end_offset
+              << " "
+              << line_text.Substring(
+                     item_result.start_offset - line_info->StartOffset(),
+                     item_result.end_offset - item_result.start_offset);
+    if (!item_result.shape_result) {
+      LOG(INFO) << "No shape_reuslt";
+      continue;
+    }
+    LOG(INFO) << item_result.shape_result->RefCount() << " " << item_result.shape_result->StartIndexForResult() << "-" << item_result.shape_result->EndIndexForResult();
+    if (!item_result.shape_result->HasOneRef()) {
+      LOG(INFO) << "Cloning";
+      item_result.shape_result = item_result.shape_result->Clone();
+    }
+    ShapeResult* shape_result =
+        const_cast<ShapeResult*>(item_result.shape_result.Get());
+    DCHECK_GE(item_result.start_offset, line_info->StartOffset());
+    DCHECK_EQ(shape_result->NumCharacters(),
+              item_result.end_offset - item_result.start_offset);
+    LayoutUnit size_before_justify = shape_result->SnappedWidth();
+    DCHECK_EQ(item_result.inline_size, size_before_justify);
+    shape_result->ApplySpacing(
+        spacing, item_result.start_offset - line_info->StartOffset() - shape_result->StartIndexForResult());
+    item_result.expansion =
+        (shape_result->SnappedWidth() - size_before_justify).ToInt();
+    item_result.inline_size = shape_result->SnappedWidth();
+    LOG(INFO) << size_before_justify << " + " << item_result.expansion << " => "
+              << item_result.inline_size;
+  }
+  // TODO(kojii): Need to keep line_text alive up until here, or change not to
+  // use ref.
+  *inline_size = available_width;
+}
+
+void NGInlineLayoutAlgorithm::ApplyTextAlign(NGLineInfo* line_info,
                                              LayoutUnit* line_left,
-                                             LayoutUnit inline_size,
+                                             LayoutUnit* inline_size,
                                              LayoutUnit available_width) {
+  const ComputedStyle& line_style = line_info->LineStyle();
+  ETextAlign text_align = line_style.GetTextAlign(line_info->IsLastLine());
   bool is_base_ltr = IsLtr(Node().BaseDirection());
   // TODO(kojii): Investigate handling trailing spaces for 'white-space:
   // pre|pre-wrap'. Refer to LayoutBlockFlow::UpdateLogicalWidthForAlignment().
@@ -337,27 +385,27 @@ void NGInlineLayoutAlgorithm::ApplyTextAlign(ETextAlign text_align,
         // The direction of the block should determine what happens with wide
         // lines. In particular with RTL blocks, wide lines should still spill
         // out to the left.
-        if (!is_base_ltr && inline_size > available_width)
-          *line_left -= inline_size - available_width;
+        if (!is_base_ltr && *inline_size > available_width)
+          *line_left -= *inline_size - available_width;
         return;
       case ETextAlign::kRight:
       case ETextAlign::kWebkitRight:
         // Wide lines spill out of the block based off direction.
         // So even if text-align is right, if direction is LTR, wide lines
         // should overflow out of the right side of the block.
-        if (inline_size < available_width || !is_base_ltr)
-          *line_left += available_width - inline_size;
+        if (*inline_size < available_width || !is_base_ltr)
+          *line_left += available_width - *inline_size;
         return;
       case ETextAlign::kCenter:
       case ETextAlign::kWebkitCenter:
         if (is_base_ltr) {
           *line_left +=
-              std::max((available_width - inline_size) / 2, LayoutUnit());
-        } else if (inline_size <= available_width) {
-          *line_left += (available_width - inline_size) / 2;
+              std::max((available_width - *inline_size) / 2, LayoutUnit());
+        } else if (*inline_size <= available_width) {
+          *line_left += (available_width - *inline_size) / 2;
         } else {
           // In RTL, wide lines should spill out to the left, same as kRight.
-          *line_left += available_width - inline_size;
+          *line_left += available_width - *inline_size;
         }
         return;
       case ETextAlign::kStart:
@@ -367,12 +415,28 @@ void NGInlineLayoutAlgorithm::ApplyTextAlign(ETextAlign text_align,
         text_align = is_base_ltr ? ETextAlign::kRight : ETextAlign::kLeft;
         continue;
       case ETextAlign::kJustify:
-        // TODO(kojii): Implement.
+        ApplyJustify(line_info, inline_size, available_width);
         return;
     }
     NOTREACHED();
     return;
   }
+}
+
+std::pair<LayoutUnit, LayoutUnit> NGInlineLayoutAlgorithm::ComputeInlineOffsetAndSize(NGLineInfo* line_info) {
+  LayoutUnit line_offset = line_info->LineLeft();
+  LayoutUnit available_width = line_info->AvailableWidth();
+  if (LayoutUnit text_indent = line_info->TextIndent()) {
+    // Move the line box by indent. Negative indents are ink overflow, let the
+    // line box overflow from the container box.
+    if (IsLtr(Node().BaseDirection()))
+      line_offset += text_indent;
+    available_width -= text_indent;
+  }
+
+  LayoutUnit inline_size = line_info->LineWidth();
+  ApplyTextAlign(line_info, &line_offset, &inline_size, available_width);
+  return {line_offset, inline_size};
 }
 
 LayoutUnit NGInlineLayoutAlgorithm::ComputeContentSize(
