@@ -46,6 +46,30 @@
       "revId": "c25f1aa4f7c5c0598c679b9383122789cd45f2b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fa63e94_e250168d",
+        "filename": "chrome/browser/ui/views/external_protocol_dialog_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-31T08:07:17Z",
+      "side": 0,
+      "message": "Oh weird, I thought this dialog was overriding a generic dialog delegate with an OnCancel method, and overriding it, and you were just deleting the override. But it seems it\u0027s its own thing.\n\nOK, lgtm then.",
+      "parentUuid": "36d82185_c402673f",
+      "range": {
+        "startLine": 66,
+        "startChar": 7,
+        "endLine": 66,
+        "endChar": 15
+      },
+      "revId": "c25f1aa4f7c5c0598c679b9383122789cd45f2b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
