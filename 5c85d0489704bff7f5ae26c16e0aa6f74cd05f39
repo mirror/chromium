@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fcae4fe8_ae81a79f",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-08-31T18:51:03Z",
+      "side": 1,
+      "message": "Regarding why firing event here:\ncurrently the dialog element is part of manager.html, not part of sidebar. the sidebar is just the menu \"within\" the dialog, so currently sidebar receives no events when the dialog is opened. In other words, the \u003cextensions-sidebar\u003e element has no idea whether itself is shown or hidden. This is why I\u0027m firing the event to notify that it\u0027s being opened. \n\nHOWEVER, I think I can encapsulate this behavior a little better by making the \u003cdialog\u003e element part of \u003cextensions-sidebar\u003e. manager.html will just use \u003cextensions-sidebar\u003e without wrapping it in a dialog, and within sidebar.html it\u0027ll have...\n\n\u003ctemplate\u003e\n\u003cdialog\u003e\n   \u003cpaper-menu\u003e\n   ..\n\u003cdialog\u003e\n\u003c/template\u003e\n\nWDYT?\n\n\n\nRegarding having JUST a method within sidebar.js:\nSo I originally did this, and was trying to detect which page we\u0027re on by using extensions.navigation.getCurrentPage() within sidebar.js\u0027s function, but soon realized that IF we directly go to a detail_view, there\u0027s no way to know whether the current \"item\" is an extension or an app, therefore it will not be able to highlight the correct sidebar item. This is why I had manager.js pass it the information it needs to highlight the correct item.\n\nI think maybe a simpler thing to do is to just pass the item to the sidebar and have sidebar do the processing there.\n\nSomething like \u003cextensions-sidebar item\u003d\"[[currentItem]]\"\u003e.\n\nWDYT?",
+      "parentUuid": "2f1b94e1_41849b18",
+      "revId": "5c85d0489704bff7f5ae26c16e0aa6f74cd05f39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee68f4bf_1da85df4",
         "filename": "chrome/browser/resources/md_extensions/sidebar.js",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "5c85d0489704bff7f5ae26c16e0aa6f74cd05f39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66249457_b2bf2492",
+        "filename": "chrome/browser/resources/md_extensions/sidebar.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-08-31T18:51:03Z",
+      "side": 1,
+      "message": "the quotations is a js \"hack\" to get around having a hyphen in the key, since hyphen is technically not a valid  character for variable names. Same idea as, say, this.$[\u0027item-list\u0027] (since you can\u0027t do this.$.item-list).",
+      "parentUuid": "ee68f4bf_1da85df4",
+      "revId": "5c85d0489704bff7f5ae26c16e0aa6f74cd05f39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
