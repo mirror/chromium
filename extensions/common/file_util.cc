@@ -344,7 +344,7 @@ bool CheckForIllegalFilenames(const base::FilePath& extension_path,
                               std::string* error) {
   // Reserved underscore names.
   static const base::FilePath::CharType* reserved_names[] = {
-      kLocaleFolder, kPlatformSpecificFolder, FILE_PATH_LITERAL("__MACOSX"), };
+      kLocaleFolder, kPlatformSpecificFolder, FILE_PATH_LITERAL("__MACOSX")};
   CR_DEFINE_STATIC_LOCAL(
       std::set<base::FilePath::StringType>,
       reserved_underscore_names,
