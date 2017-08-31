@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1071eada_2b1ba4a1",
+        "filename": "components/payments/content/payment_request_converter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-31T19:09:49Z",
+      "side": 1,
+      "message": "No need to expose these functions, because they\u0027re not used outside of payment_request_converter.cc.",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 56
+      },
+      "revId": "fb30dbd7da11e175f76eb31fa97fda1dddd83b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4b55b18_2ffe83e5",
+        "filename": "components/payments/content/payment_request_converter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-31T19:09:49Z",
+      "side": 1,
+      "message": "Convert?",
+      "range": {
+        "startLine": 35,
+        "startChar": 14,
+        "endLine": 35,
+        "endChar": 21
+      },
+      "revId": "fb30dbd7da11e175f76eb31fa97fda1dddd83b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fcfae26_9b043884",
+        "filename": "components/payments/content/payment_request_spec.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-31T19:09:49Z",
+      "side": 1,
+      "message": "Not used?",
+      "range": {
+        "startLine": 12,
+        "startChar": 10,
+        "endLine": 12,
+        "endChar": 65
+      },
+      "revId": "fb30dbd7da11e175f76eb31fa97fda1dddd83b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
