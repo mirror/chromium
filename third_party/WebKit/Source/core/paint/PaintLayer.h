@@ -329,6 +329,11 @@ class CORE_EXPORT PaintLayer : public DisplayItemClient {
     return has_visible_descendant_;
   }
 
+  // Returns whether or not the layer's object is a descendant of a collapsed
+  // cell.
+  bool IsInCollapsedCell() const { return is_in_collapsed_cell_; }
+  void SetIsInCollapsedCell(bool b) { is_in_collapsed_cell_ = b; }
+
   void DirtyVisibleContentStatus();
 
   bool HasBoxDecorationsOrBackground() const;
@@ -1173,6 +1178,7 @@ class CORE_EXPORT PaintLayer : public DisplayItemClient {
   unsigned has_visible_content_ : 1;
   unsigned needs_descendant_dependent_flags_update_ : 1;
   unsigned has_visible_descendant_ : 1;
+  unsigned is_in_collapsed_cell_ : 1;
 
 #if DCHECK_IS_ON()
   unsigned needs_position_update_ : 1;
