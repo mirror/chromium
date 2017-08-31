@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f5a8d3b_5e89d20e",
+        "filename": "components/safe_browsing/password_protection/password_protection_request.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-31T20:59:28Z",
+      "side": 1,
+      "message": "Thanks for fixing this.",
+      "revId": "299c6636cd45339ac6b0063d989e6ee01f7fe3e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2bfe5394_1ae5143b",
+        "filename": "components/safe_browsing/password_protection/password_protection_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-31T20:59:28Z",
+      "side": 1,
+      "message": "nit: make it a const? Since it has been mentioned multiple times.\nAnd other PasswordProtection.Verdict.* metrics.",
+      "revId": "299c6636cd45339ac6b0063d989e6ee01f7fe3e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
