@@ -47,6 +47,7 @@ class ClientBase {
     std::string use_drm_value;
     int32_t drm_format = 0;
     int32_t bo_usage = 0;
+    zwp_linux_dmabuf_v1_listener dmabuf_listener;
   };
 
   struct Globals {
