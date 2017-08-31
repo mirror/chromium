@@ -1945,6 +1945,11 @@ void LayoutBlockFlow::LayoutInlineChildren(bool relayout_children,
       if (!layout_state.HasInlineChild() && o->IsInline())
         layout_state.SetHasInlineChild(true);
 
+      if (o->HasLayer() && o->IsBoxModelObject()) {
+        ToLayoutBoxModelObject(o)->Layer()->SetIsInCollapsedCell(
+            View()->GetLayoutState()->IsInCollapsedCell());
+      }
+
       if (o->IsAtomicInlineLevel() || o->IsFloating() ||
           o->IsOutOfFlowPositioned()) {
         LayoutBox* box = ToLayoutBox(o);
