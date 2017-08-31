@@ -118,7 +118,7 @@ class RequestCallbacks : public WebCredentialManagerClient::RequestCallbacks {
       : resolver_(resolver) {}
   ~RequestCallbacks() override {}
 
-  void OnSuccess(std::unique_ptr<WebCredential> web_credential) override {
+  void OnSuccess(std::unique_ptr<WebCredential> credential) override {
     ExecutionContext* context =
         ExecutionContext::From(resolver_->GetScriptState());
     if (!context)
@@ -126,8 +126,6 @@ class RequestCallbacks : public WebCredentialManagerClient::RequestCallbacks {
     Frame* frame = ToDocument(context)->GetFrame();
     SECURITY_CHECK(!frame || frame == frame->Tree().Top());
 
-    std::unique_ptr<WebCredential> credential =
-        WTF::WrapUnique(web_credential.release());
     if (!credential || !frame) {
       resolver_->Resolve();
       return;

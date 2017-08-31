@@ -153,9 +153,8 @@ void DesktopCapturerProxy::SetSharedMemoryFactory(
 
   capture_task_runner_->PostTask(
       FROM_HERE,
-      base::Bind(
-          &Core::SetSharedMemoryFactory, base::Unretained(core_.get()),
-          base::Passed(base::WrapUnique(shared_memory_factory.release()))));
+      base::Bind(&Core::SetSharedMemoryFactory, base::Unretained(core_.get()),
+                 base::Passed(&shared_memory_factory)));
 }
 
 void DesktopCapturerProxy::CaptureFrame() {

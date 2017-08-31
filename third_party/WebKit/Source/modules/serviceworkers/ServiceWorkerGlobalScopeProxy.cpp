@@ -268,9 +268,8 @@ void ServiceWorkerGlobalScopeProxy::DispatchExtendableMessageEvent(
   String origin;
   if (!source_origin.IsUnique())
     origin = source_origin.ToString();
-  ServiceWorker* source =
-      ServiceWorker::From(worker_global_scope_->GetExecutionContext(),
-                          WTF::WrapUnique(handle.release()));
+  ServiceWorker* source = ServiceWorker::From(
+      worker_global_scope_->GetExecutionContext(), std::move(handle));
   WaitUntilObserver* observer = WaitUntilObserver::Create(
       WorkerGlobalScope(), WaitUntilObserver::kMessage, event_id);
 

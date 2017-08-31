@@ -204,8 +204,8 @@ void ServiceWorkerGlobalScope::SetRegistration(
     std::unique_ptr<WebServiceWorkerRegistration::Handle> handle) {
   if (!GetExecutionContext())
     return;
-  registration_ = ServiceWorkerRegistration::GetOrCreate(
-      GetExecutionContext(), WTF::WrapUnique(handle.release()));
+  registration_ = ServiceWorkerRegistration::GetOrCreate(GetExecutionContext(),
+                                                         std::move(handle));
 }
 
 bool ServiceWorkerGlobalScope::AddEventListenerInternal(

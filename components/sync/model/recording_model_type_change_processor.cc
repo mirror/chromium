@@ -26,7 +26,7 @@ std::unique_ptr<ModelTypeChangeProcessor> CreateAndAssignProcessor(
     processor->ExpectError();
   // Not all compilers are smart enough to up cast during copy elision, so we
   // explicitly create a correctly typed unique_ptr.
-  return base::WrapUnique(processor.release());
+  return processor;
 }
 
 }  // namespace

@@ -81,10 +81,8 @@ void VEAEncoder::RequireBitstreamBuffers(unsigned int /*input_count*/,
   std::queue<std::unique_ptr<base::SharedMemory>>().swap(input_buffers_);
 
   for (int i = 0; i < kVEAEncoderOutputBufferCount; ++i) {
-    std::unique_ptr<base::SharedMemory> shm =
-        gpu_factories_->CreateSharedMemory(output_buffer_size);
-    if (shm)
-      output_buffers_.push_back(base::WrapUnique(shm.release()));
+    if (auto shm = gpu_factories_->CreateSharedMemory(output_buffer_size))
+      output_buffers_.push_back(std::move(shm));
   }
 
   for (size_t i = 0; i < output_buffers_.size(); ++i)

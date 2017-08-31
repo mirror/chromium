@@ -95,8 +95,8 @@ class CacheStorage::WithCacheCallbacks final
     if (!resolver_->GetExecutionContext() ||
         resolver_->GetExecutionContext()->IsContextDestroyed())
       return;
-    Cache* cache = Cache::Create(cache_storage_->scoped_fetcher_,
-                                 WTF::WrapUnique(web_cache.release()));
+    Cache* cache =
+        Cache::Create(cache_storage_->scoped_fetcher_, std::move(web_cache));
     resolver_->Resolve(cache);
     resolver_.Clear();
   }

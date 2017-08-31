@@ -74,10 +74,8 @@ class GetRegistrationCallback : public WebServiceWorkerProvider::
       : resolver_(resolver) {}
   ~GetRegistrationCallback() override {}
 
-  void OnSuccess(std::unique_ptr<WebServiceWorkerRegistration::Handle>
-                     web_pass_handle) override {
-    std::unique_ptr<WebServiceWorkerRegistration::Handle> handle =
-        WTF::WrapUnique(web_pass_handle.release());
+  void OnSuccess(
+      std::unique_ptr<WebServiceWorkerRegistration::Handle> handle) override {
     if (!resolver_->GetExecutionContext() ||
         resolver_->GetExecutionContext()->IsContextDestroyed())
       return;
@@ -117,7 +115,7 @@ class ServiceWorkerContainer::GetRegistrationForReadyCallback
     if (ready_->GetExecutionContext() &&
         !ready_->GetExecutionContext()->IsContextDestroyed()) {
       ready_->Resolve(ServiceWorkerRegistration::GetOrCreate(
-          ready_->GetExecutionContext(), WTF::WrapUnique(handle.release())));
+          ready_->GetExecutionContext(), std::move(handle)));
     }
   }
 
@@ -436,8 +434,7 @@ void ServiceWorkerContainer::SetController(
     bool should_notify_controller_change) {
   if (!GetExecutionContext())
     return;
-  controller_ = ServiceWorker::From(GetExecutionContext(),
-                                    WTF::WrapUnique(handle.release()));
+  controller_ = ServiceWorker::From(GetExecutionContext(), std::move(handle));
   if (controller_) {
     UseCounter::Count(GetExecutionContext(),
                       WebFeature::kServiceWorkerControlledPage);
@@ -456,8 +453,8 @@ void ServiceWorkerContainer::DispatchMessageEvent(
   MessagePortArray* ports = MessagePort::ToMessagePortArray(
       GetExecutionContext(), std::move(web_channels));
   RefPtr<SerializedScriptValue> value = SerializedScriptValue::Create(message);
-  ServiceWorker* source = ServiceWorker::From(
-      GetExecutionContext(), WTF::WrapUnique(handle.release()));
+  ServiceWorker* source =
+      ServiceWorker::From(GetExecutionContext(), std::move(handle));
   DispatchEvent(MessageEvent::Create(
       ports, value, GetExecutionContext()->GetSecurityOrigin()->ToString(),
       String() /* lastEventId */, source, String() /* suborigin */));

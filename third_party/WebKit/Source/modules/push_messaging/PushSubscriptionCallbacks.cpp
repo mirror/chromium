@@ -31,9 +31,9 @@ void PushSubscriptionCallbacks::OnSuccess(
       resolver_->GetExecutionContext()->IsContextDestroyed())
     return;
 
-  resolver_->Resolve(PushSubscription::Take(
-      resolver_.Get(), WTF::WrapUnique(web_push_subscription.release()),
-      service_worker_registration_));
+  resolver_->Resolve(PushSubscription::Take(resolver_.Get(),
+                                            std::move(web_push_subscription),
+                                            service_worker_registration_));
 }
 
 void PushSubscriptionCallbacks::OnError(const WebPushError& error) {

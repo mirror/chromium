@@ -6221,7 +6221,7 @@ TEST_F(URLRequestTestHTTP, TestPostChunkedDataJustAfterStart) {
         new ChunkedUploadDataStream(0));
     std::unique_ptr<ChunkedUploadDataStream::Writer> writer =
         upload_data_stream->CreateWriter();
-    r->set_upload(base::WrapUnique(upload_data_stream.release()));
+    r->set_upload(std::move(upload_data_stream));
     r->set_method("POST");
     r->Start();
     EXPECT_TRUE(r->is_pending());

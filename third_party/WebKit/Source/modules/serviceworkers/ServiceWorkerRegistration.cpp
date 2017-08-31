@@ -43,24 +43,21 @@ void ServiceWorkerRegistration::SetInstalling(
     std::unique_ptr<WebServiceWorker::Handle> handle) {
   if (!GetExecutionContext())
     return;
-  installing_ = ServiceWorker::From(GetExecutionContext(),
-                                    WTF::WrapUnique(handle.release()));
+  installing_ = ServiceWorker::From(GetExecutionContext(), std::move(handle));
 }
 
 void ServiceWorkerRegistration::SetWaiting(
     std::unique_ptr<WebServiceWorker::Handle> handle) {
   if (!GetExecutionContext())
     return;
-  waiting_ = ServiceWorker::From(GetExecutionContext(),
-                                 WTF::WrapUnique(handle.release()));
+  waiting_ = ServiceWorker::From(GetExecutionContext(), std::move(handle));
 }
 
 void ServiceWorkerRegistration::SetActive(
     std::unique_ptr<WebServiceWorker::Handle> handle) {
   if (!GetExecutionContext())
     return;
-  active_ = ServiceWorker::From(GetExecutionContext(),
-                                WTF::WrapUnique(handle.release()));
+  active_ = ServiceWorker::From(GetExecutionContext(), std::move(handle));
 }
 
 ServiceWorkerRegistration* ServiceWorkerRegistration::GetOrCreate(

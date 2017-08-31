@@ -143,8 +143,7 @@ std::unique_ptr<StreamContainer> MimeHandlerStreamManager::ReleaseStream(
   if (stream == streams_.end())
     return nullptr;
 
-  std::unique_ptr<StreamContainer> result =
-      base::WrapUnique(stream->second.release());
+  std::unique_ptr<StreamContainer> result = std::move(stream->second);
   streams_by_extension_id_[result->extension_id()].erase(view_id);
   streams_.erase(stream);
   embedder_observers_.erase(view_id);

@@ -162,7 +162,7 @@ std::unique_ptr<PlatformSharedBufferMapping> PlatformSharedBuffer::MapNoCheck(
   std::unique_ptr<PlatformSharedBufferMapping> mapping(
       new PlatformSharedBufferMapping(handle, read_only_, offset, length));
   if (mapping->Map())
-    return base::WrapUnique(mapping.release());
+    return mapping;
 
   return nullptr;
 }

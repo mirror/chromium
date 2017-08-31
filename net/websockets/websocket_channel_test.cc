@@ -972,7 +972,7 @@ class WebSocketChannelEventInterfaceTest : public WebSocketChannelTest {
   // CreateChannelAndConnectSuccessfully(). This will only work once per test
   // case, but once should be enough.
   std::unique_ptr<WebSocketEventInterface> CreateEventInterface() override {
-    return base::WrapUnique(event_interface_.release());
+    return std::move(event_interface_);
   }
 
   std::unique_ptr<MockWebSocketEventInterface> event_interface_;

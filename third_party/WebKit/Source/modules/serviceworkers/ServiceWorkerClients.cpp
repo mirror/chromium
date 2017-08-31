@@ -67,10 +67,7 @@ class GetCallback : public WebServiceWorkerClientCallbacks {
   explicit GetCallback(ScriptPromiseResolver* resolver) : resolver_(resolver) {}
   ~GetCallback() override {}
 
-  void OnSuccess(
-      std::unique_ptr<WebServiceWorkerClientInfo> web_client) override {
-    std::unique_ptr<WebServiceWorkerClientInfo> client =
-        WTF::WrapUnique(web_client.release());
+  void OnSuccess(std::unique_ptr<WebServiceWorkerClientInfo> client) override {
     if (!resolver_->GetExecutionContext() ||
         resolver_->GetExecutionContext()->IsContextDestroyed())
       return;

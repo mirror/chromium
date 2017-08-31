@@ -27,7 +27,7 @@ std::unique_ptr<PlatformAccelerator> PlatformAcceleratorCocoa::CreateCopy()
   std::unique_ptr<PlatformAcceleratorCocoa> copy(new PlatformAcceleratorCocoa);
   copy->characters_.reset([characters_ copy]);
   copy->modifier_mask_ = modifier_mask_;
-  return base::WrapUnique(copy.release());
+  return copy;
 }
 
 bool PlatformAcceleratorCocoa::Equals(const PlatformAccelerator& rhs) const {
