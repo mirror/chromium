@@ -238,6 +238,9 @@ void LegacyInputRouterImpl::SetDeviceScaleFactor(float device_scale_factor) {
   device_scale_factor_ = device_scale_factor;
 }
 
+void LegacyInputRouterImpl::BindHost(
+    mojom::WidgetInputHandlerHostRequest request) {}
+
 bool LegacyInputRouterImpl::OnMessageReceived(const IPC::Message& message) {
   bool handled = true;
   IPC_BEGIN_MESSAGE_MAP(LegacyInputRouterImpl, message)
