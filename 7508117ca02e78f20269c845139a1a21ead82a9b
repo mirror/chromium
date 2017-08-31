@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "09680baa_d954b3e8",
+        "filename": "android_webview/browser/aw_safe_browsing_resource_throttle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-31T18:10:32Z",
+      "side": 1,
+      "message": "Thanks! Done.",
+      "parentUuid": "52afa534_1a637908",
+      "range": {
+        "startLine": 34,
+        "startChar": 6,
+        "endLine": 34,
+        "endChar": 27
+      },
+      "revId": "7508117ca02e78f20269c845139a1a21ead82a9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8993dd8e_9109acc3",
         "filename": "android_webview/browser/aw_safe_browsing_resource_throttle.h",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-31T18:01:12Z",
       "side": 1,
       "message": "why declare it outside the class?",
+      "range": {
+        "startLine": 46,
+        "startChar": 1,
+        "endLine": 46,
+        "endChar": 68
+      },
+      "revId": "7508117ca02e78f20269c845139a1a21ead82a9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c4f5831_afd0bc4a",
+        "filename": "android_webview/browser/aw_safe_browsing_resource_throttle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-31T18:10:32Z",
+      "side": 1,
+      "message": "Both AwSafeBrowsing[Parallel]ResourceThrottle classes use this constant. Because ASBParallelRT is not a subclass of ASBRT, I think it makes sense to move it outside of the class. (But I don\u0027t have a strong opinion on this.)\n\nWDYT? Thanks!",
+      "parentUuid": "8993dd8e_9109acc3",
       "range": {
         "startLine": 46,
         "startChar": 1,
