@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f709bb8_6aa3b746",
+        "filename": "chrome/browser/ui/certificate_dialogs.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-31T18:27:03Z",
+      "side": 1,
+      "message": "Nit: auto?",
+      "range": {
+        "startLine": 199,
+        "startChar": 6,
+        "endLine": 199,
+        "endChar": 47
+      },
+      "revId": "25fb7669c794ac4f3fac950143e53b60e3dec4b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0543b0f_1d07964a",
+        "filename": "chrome/test/data/webui/certificate_viewer_ui_test-inl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-31T18:27:03Z",
+      "side": 1,
+      "message": "Probably could also write:\n\n net::ScopedCERTCertificateList \u003d {net::x509_util::DupCERTCertificate(google_cert.get())};",
+      "revId": "25fb7669c794ac4f3fac950143e53b60e3dec4b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5149af65_d8248bc1",
+        "filename": "chrome/test/data/webui/certificate_viewer_ui_test-inl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-31T18:27:03Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "25fb7669c794ac4f3fac950143e53b60e3dec4b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "550f81c1_57d95d59",
+        "filename": "net/cert/x509_util_nss_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-31T18:27:03Z",
+      "side": 1,
+      "message": "Optional/I like initializers too much:\n\nThis whole test could just be:\n\n  EXPECT_EQ(0U, x509_util::DupCERTCertificateList({}).size());",
+      "revId": "25fb7669c794ac4f3fac950143e53b60e3dec4b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
