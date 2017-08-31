@@ -24,43 +24,53 @@
  * along with this library; see the file COPYING.LIB.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
  * Boston, MA 02110-1301, USA.
- *
  */
 
-#ifndef ShadowTreeStyleSheetCollection_h
-#define ShadowTreeStyleSheetCollection_h
+#include "core/css/resolver/StyleSheetCollection.h"
 
-#include "core/dom/TreeScopeStyleSheetCollection.h"
+#include "core/css/CSSStyleSheet.h"
+#include "core/css/RuleSet.h"
 
 namespace blink {
 
-class ShadowRoot;
-class StyleEngine;
-class StyleSheetCollection;
+StyleSheetCollection::StyleSheetCollection() {}
 
-class ShadowTreeStyleSheetCollection final
-    : public TreeScopeStyleSheetCollection {
-  WTF_MAKE_NONCOPYABLE(ShadowTreeStyleSheetCollection);
+void StyleSheetCollection::Dispose() {
+  style_sheets_for_style_sheet_list_.clear();
+  active_author_style_sheets_.clear();
+}
 
- public:
-  explicit ShadowTreeStyleSheetCollection(ShadowRoot&);
-  void UpdateActiveStyleSheets(StyleEngine& master_engine);
-  bool IsShadowTreeStyleSheetCollection() const final { return true; }
+void StyleSheetCollection::Swap(StyleSheetCollection& other) {
+  ::blink::swap(style_sheets_for_style_sheet_list_,
+                other.style_sheets_for_style_sheet_list_);
+  active_author_style_sheets_.swap(other.active_author_style_sheets_);
+  sheet_list_dirty_ = false;
+}
 
-  DEFINE_INLINE_VIRTUAL_TRACE() {
-    TreeScopeStyleSheetCollection::Trace(visitor);
+void StyleSheetCollection::SwapSheetsForSheetList(
+    HeapVector<Member<StyleSheet>>& sheets) {
+  ::blink::swap(style_sheets_for_style_sheet_list_, sheets);
+  sheet_list_dirty_ = false;
+}
+
+void StyleSheetCollection::AppendActiveStyleSheet(
+    const ActiveStyleSheet& active_sheet) {
+  active_author_style_sheets_.push_back(active_sheet);
+}
+
+void StyleSheetCollection::AppendSheetForList(StyleSheet* sheet) {
+  style_sheets_for_style_sheet_list_.push_back(sheet);
+}
+
+DEFINE_TRACE(StyleSheetCollection) {
+  visitor->Trace(active_author_style_sheets_);
+  visitor->Trace(style_sheets_for_style_sheet_list_);
+}
+
+DEFINE_TRACE_WRAPPERS(StyleSheetCollection) {
+  for (auto sheet : style_sheets_for_style_sheet_list_) {
+    visitor->TraceWrappers(sheet);
   }
-
- private:
-  void CollectStyleSheets(StyleEngine& master_engine, StyleSheetCollection&);
-};
-
-DEFINE_TYPE_CASTS(ShadowTreeStyleSheetCollection,
-                  TreeScopeStyleSheetCollection,
-                  value,
-                  value->IsShadowTreeStyleSheetCollection(),
-                  value.IsShadowTreeStyleSheetCollection());
+}
 
 }  // namespace blink
-
-#endif

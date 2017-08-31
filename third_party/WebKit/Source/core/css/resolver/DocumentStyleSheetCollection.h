@@ -30,7 +30,7 @@
 #ifndef DocumentStyleSheetCollection_h
 #define DocumentStyleSheetCollection_h
 
-#include "core/dom/TreeScopeStyleSheetCollection.h"
+#include "core/css/resolver/TreeScopeStyleSheetCollection.h"
 
 namespace blink {
 

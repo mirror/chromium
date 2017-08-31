@@ -5,7 +5,7 @@
 #ifndef LayoutObjectInlines_h
 #define LayoutObjectInlines_h
 
-#include "core/dom/StyleEngine.h"
+#include "core/css/resolver/StyleEngine.h"
 #include "core/layout/LayoutObject.h"
 
 namespace blink {
