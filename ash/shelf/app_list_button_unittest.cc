@@ -185,8 +185,9 @@ TEST_F(VoiceInteractionAppListButtonTest,
   EXPECT_EQ(0u, test_app_list_presenter.voice_session_count());
 }
 
+// crbug/761165
 TEST_F(VoiceInteractionAppListButtonTest,
-       LongPressGestureBeforeSetupCompleted) {
+       DISABLED_LongPressGestureBeforeSetupCompleted) {
   app_list::test::TestAppListPresenter test_app_list_presenter;
   Shell::Get()->app_list()->SetAppListPresenter(
       test_app_list_presenter.CreateInterfacePtrAndBind());
@@ -195,7 +196,10 @@ TEST_F(VoiceInteractionAppListButtonTest,
       chromeos::switches::kEnableVoiceInteraction));
 
   // Simulate two user with primary user as active.
-  CreateUserSessions(2);
+  UpdateSession(1u, "user1@test.com");
+  UpdateSession(2u, "user2@test.com");
+  std::vector<uint32_t> order = {2u, 1u};
+  controller_->SetUserSessionOrder(order);
 
   // Disable voice interaction in system settings.
   Shell::Get()->NotifyVoiceInteractionEnabled(false);
