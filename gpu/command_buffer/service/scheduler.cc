@@ -15,6 +15,10 @@
 
 namespace gpu {
 
+namespace {
+const int32_t kPriorityAgingFactor = 5;
+}
+
 class Scheduler::Sequence {
  public:
   Sequence(SequenceId sequence_id,
@@ -116,6 +120,7 @@ class Scheduler::Sequence {
   const SequenceId sequence_id_;
 
   const SchedulingPriority priority_;
+  int32_t scheduled_count_ = 0;
 
   scoped_refptr<SyncPointOrderData> order_data_;
 
@@ -174,9 +179,17 @@ Scheduler::Sequence::~Sequence() {
 }
 
 SchedulingPriority Scheduler::Sequence::GetSchedulingPriority() const {
-  if (!release_fences_.empty())
-    return std::min(priority_, SchedulingPriority::kHigh);
-  return priority_;
+  using base::internal::as_signed;
+  int32_t aged_priority_as_int =
+      as_signed(priority_) - scheduled_count_ / kPriorityAgingFactor;
+  SchedulingPriority aged_priority = static_cast<SchedulingPriority>(
+      std::max(aged_priority_as_int, as_signed(SchedulingPriority::kHighest)));
+
+  if (!release_fences_.empty()) {
+    return std::min(aged_priority, SchedulingPriority::kHigh);
+  }
+
+  return aged_priority;
 }
 
 bool Scheduler::Sequence::NeedsRescheduling() const {
@@ -213,6 +226,7 @@ Scheduler::SchedulingState Scheduler::Sequence::SetScheduled() {
   scheduling_state_.priority = GetSchedulingPriority();
   scheduling_state_.order_num = tasks_.front().order_num;
 
+  scheduled_count_++;
   return scheduling_state_;
 }
 
@@ -240,6 +254,7 @@ uint32_t Scheduler::Sequence::BeginTask(base::OnceClosure* closure) {
   DCHECK_EQ(running_state_, SCHEDULED);
 
   running_state_ = RUNNING;
+  scheduled_count_ = 0;
 
   *closure = std::move(tasks_.front().closure);
   uint32_t order_num = tasks_.front().order_num;
