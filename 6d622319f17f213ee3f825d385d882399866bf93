@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "5fba3752_a1f14df9",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-31T17:37:01Z",
+      "side": 1,
+      "message": "That might be a bit tricky to express in an easy-to-understand way. You\u0027ll need at least variadic arguments, and differentiating between arc::mojom::AppInstance::LaunchApp() and arc::mojom::AppInstance::LaunchIntent() in templates is kinda hard (that\u0027s the reason why ARC_GET_INSTANCE_FOR_METHOD is a macro instead of a template).",
+      "parentUuid": "78dbe7e9_f35ba60b",
+      "range": {
+        "startLine": 124,
+        "startChar": 26,
+        "endLine": 124,
+        "endChar": 39
+      },
+      "revId": "6d622319f17f213ee3f825d385d882399866bf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc5e3dbb_ae015ed3",
         "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
         "patchSetId": 4
