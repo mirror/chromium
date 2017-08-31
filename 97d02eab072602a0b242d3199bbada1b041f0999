@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "6d88b2c6_e122eaf3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-31T10:44:36Z",
+      "side": 1,
+      "message": "If there\u0027s no bug report to associate this CL with, you can just remove this line.",
+      "revId": "97d02eab072602a0b242d3199bbada1b041f0999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d9a051d_2771dc31",
         "filename": "third_party/WebKit/Source/core/layout/LayoutBlockFlow.cpp",
         "patchSetId": 2
@@ -67,6 +84,64 @@
         "endLine": 443,
         "endChar": 34
       },
+      "revId": "97d02eab072602a0b242d3199bbada1b041f0999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41fc8808_14638d5b",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlockFlow.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-31T10:44:36Z",
+      "side": 1,
+      "message": "I don\u0027t think you can cancel collapsedness like that.\n\nSo I think this should be fine. Not sure if doing it here in LayoutBlockFlow is as pretty as it can get, though. I wonder if it would be better to put it in LayoutState(LayoutBox\u0026, bool).",
+      "parentUuid": "866d9abe_541f19eb",
+      "range": {
+        "startLine": 443,
+        "startChar": 14,
+        "endLine": 443,
+        "endChar": 34
+      },
+      "revId": "97d02eab072602a0b242d3199bbada1b041f0999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4294c69a_fbe67eca",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutState.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-31T10:44:36Z",
+      "side": 1,
+      "message": "is_in_collapsed_cell_ initialization missing.",
+      "revId": "97d02eab072602a0b242d3199bbada1b041f0999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bce326a0_2e682058",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1179,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-31T10:44:36Z",
+      "side": 1,
+      "message": "Any reason why we can\u0027t just use has_visible_content_?",
       "revId": "97d02eab072602a0b242d3199bbada1b041f0999",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
