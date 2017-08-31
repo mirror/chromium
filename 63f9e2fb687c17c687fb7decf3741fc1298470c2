@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7520bfa_27ad14fc",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-31T17:57:58Z",
+      "side": 1,
+      "message": "These probably could be even be static_assert.",
+      "range": {
+        "startLine": 194,
+        "startChar": 2,
+        "endLine": 194,
+        "endChar": 11
+      },
+      "revId": "63f9e2fb687c17c687fb7decf3741fc1298470c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a42dd334_7381a76a",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-31T17:57:58Z",
+      "side": 1,
+      "message": "I imagine it\u0027s always the same thing, but you want unsigned here since that\u0027s what the API uses. (Should have been a size_t, but hard to change that now.)",
+      "revId": "63f9e2fb687c17c687fb7decf3741fc1298470c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c44d3e2_b8b0b6fe",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-31T17:57:58Z",
+      "side": 1,
+      "message": "Ditto re unsigned.",
+      "range": {
+        "startLine": 340,
+        "startChar": 2,
+        "endLine": 340,
+        "endChar": 10
+      },
+      "revId": "63f9e2fb687c17c687fb7decf3741fc1298470c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
