@@ -154,9 +154,9 @@ LayoutUnit ComputeInlineSizeForUnpositionedFloat(
   // the cached value.
   if (unpositioned_float->layout_result) {
     DCHECK(!is_same_writing_mode);
-    return NGFragment(
-               parent_space.WritingMode(),
-               unpositioned_float->layout_result->PhysicalFragment().Get())
+    // DCHECK?
+    return NGFragment(parent_space.WritingMode(),
+                      *unpositioned_float->layout_result->PhysicalFragment())
         .InlineSize();
   }
 
@@ -183,12 +183,13 @@ LayoutUnit ComputeInlineSizeForUnpositionedFloat(
   // unpositioned_float at this stage.
   unpositioned_float->layout_result = unpositioned_float->node.Layout(*space);
 
+  // DCHECK?
   const NGPhysicalFragment* fragment =
       unpositioned_float->layout_result->PhysicalFragment().Get();
 
   DCHECK(fragment->BreakToken()->IsFinished());
 
-  return NGFragment(parent_space.WritingMode(), fragment).InlineSize();
+  return NGFragment(parent_space.WritingMode(), *fragment).InlineSize();
 }
 
 NGPositionedFloat PositionFloat(LayoutUnit origin_block_offset,
@@ -237,9 +238,9 @@ NGPositionedFloat PositionFloat(LayoutUnit origin_block_offset,
         *space, unpositioned_float->token.Get());
   }
 
-  NGBoxFragment float_fragment(
-      parent_space.WritingMode(),
-      ToNGPhysicalBoxFragment(layout_result.Get()->PhysicalFragment().Get()));
+  // DCHECK?
+  NGFragment float_fragment(parent_space.WritingMode(),
+                            *layout_result.Get()->PhysicalFragment());
 
   // TODO(glebl): This should check for infinite opportunity instead.
   if (opportunity.IsEmpty()) {
