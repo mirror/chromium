@@ -333,6 +333,30 @@
       "revId": "0fc1c91b61aba785476601552d49233921e30d8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f190eae_0169a16f",
+        "filename": "ash/shell.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-08-31T21:03:21Z",
+      "side": 1,
+      "message": "cool, thanks for looking into it.  Please add a comment for future us.",
+      "parentUuid": "c9b1acd6_2b2d9e73",
+      "range": {
+        "startLine": 842,
+        "startChar": 6,
+        "endLine": 842,
+        "endChar": 37
+      },
+      "revId": "0fc1c91b61aba785476601552d49233921e30d8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
