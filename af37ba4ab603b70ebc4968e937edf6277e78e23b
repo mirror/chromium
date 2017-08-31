@@ -22,6 +22,30 @@
       "revId": "af37ba4ab603b70ebc4968e937edf6277e78e23b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e20884c_080a80c6",
+        "filename": "components/password_manager/core/common/password_manager_features.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-08-31T16:00:01Z",
+      "side": 1,
+      "message": "I did some fixing, disabled by default,it passed. To make sure I\u0027ve submitted patchset with them disabled.",
+      "parentUuid": "bf8956b1_37b7efef",
+      "range": {
+        "startLine": 31,
+        "startChar": 52,
+        "endLine": 31,
+        "endChar": 78
+      },
+      "revId": "af37ba4ab603b70ebc4968e937edf6277e78e23b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
