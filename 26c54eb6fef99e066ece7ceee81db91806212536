@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e58f7f86_524a14c0",
+        "filename": "content/public/common/common_param_traits.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-31T04:30:50Z",
+      "side": 1,
+      "message": "Yeah- since we don\u0027t do this in mojom case either I removed this.",
+      "parentUuid": "d48f8d8f_38d40d1c",
+      "revId": "26c54eb6fef99e066ece7ceee81db91806212536",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4399ce4b_c7cc3c67",
         "filename": "services/network/public/cpp/http_request_headers_struct_traits.cc",
         "patchSetId": 15
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "131559bc_88da283b",
+        "filename": "services/network/public/cpp/http_request_headers_struct_traits.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-31T04:30:50Z",
+      "side": 1,
+      "message": "Could I try doing this in a follow-up patch?",
+      "parentUuid": "5952072d_e24ccef2",
+      "revId": "26c54eb6fef99e066ece7ceee81db91806212536",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5bc2439d_41b17f41",
         "filename": "services/network/public/cpp/network_struct_traits_unittest.cc",
         "patchSetId": 15
@@ -65,6 +101,24 @@
       "writtenOn": "2017-08-30T18:42:54Z",
       "side": 1,
       "message": "Shouldn\u0027t this be EXPECT_TRUE?",
+      "revId": "26c54eb6fef99e066ece7ceee81db91806212536",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c758d68a_0d5fb7e9",
+        "filename": "services/network/public/cpp/network_struct_traits_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-31T04:30:50Z",
+      "side": 1,
+      "message": "Oh yeah, fixed. (Also changed to make TraitsTestProxy each time, that was the reason making the test results incorrect)",
+      "parentUuid": "5bc2439d_41b17f41",
       "revId": "26c54eb6fef99e066ece7ceee81db91806212536",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
