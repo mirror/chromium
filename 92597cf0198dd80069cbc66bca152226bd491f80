@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "9283ab6e_8d4cd022",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 20
+      },
+      "lineNbr": 3588,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-08-31T15:34:26Z",
+      "side": 1,
+      "message": "Yes it is.",
+      "parentUuid": "9ff96e3f_6e3eeb4b",
+      "revId": "92597cf0198dd80069cbc66bca152226bd491f80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8a84f0f_ee70e69b",
         "filename": "third_party/WebKit/LayoutTests/media/controls/toggle-class-with-state-fullscreen.html",
         "patchSetId": 20
@@ -332,6 +350,24 @@
       "revId": "92597cf0198dd80069cbc66bca152226bd491f80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58e1fffa_bd809286",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlSegmentedTrackElement.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-08-31T15:34:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b43c92b6_975ba446",
+      "revId": "92597cf0198dd80069cbc66bca152226bd491f80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -627,6 +663,24 @@
       "side": 1,
       "message": "That sounds like a bug. Shouldn\u0027t we have images of the size we need? Maybe we should try to fix this for the new UI?",
       "parentUuid": "cd9213ed_30cd420c",
+      "revId": "92597cf0198dd80069cbc66bca152226bd491f80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "407a135d_3626008c",
+        "filename": "third_party/WebKit/Source/modules/media_controls/resources/mediaControls.css",
+        "patchSetId": 20
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-08-31T15:34:26Z",
+      "side": 1,
+      "message": "Yes we can definitely fix this in the new UI. For the meantime I have filed crbug.com/761006",
+      "parentUuid": "aea83580_b8316d84",
       "revId": "92597cf0198dd80069cbc66bca152226bd491f80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
