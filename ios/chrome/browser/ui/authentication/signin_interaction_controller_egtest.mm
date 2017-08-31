@@ -11,6 +11,7 @@
 #include "ios/chrome/browser/bookmarks/bookmark_new_generation_features.h"
 #include "ios/chrome/browser/experimental_flags.h"
 #include "ios/chrome/browser/signin/signin_manager_factory.h"
+#import "ios/chrome/browser/ui/authentication/signin_earlgrey_utils.h"
 #import "ios/chrome/browser/ui/authentication/signin_promo_view.h"
 #import "ios/chrome/browser/ui/commands/open_url_command.h"
 #import "ios/chrome/browser/ui/content_suggestions/ntp_home_constant.h"
@@ -34,26 +35,6 @@ using chrome_test_util::NavigationBarDoneButton;
 using chrome_test_util::SecondarySignInButton;
 
 namespace {
-
-// Returns a fake identity.
-ChromeIdentity* GetFakeIdentity1() {
-  return [FakeChromeIdentity identityWithEmail:@"foo@gmail.com"
-                                        gaiaID:@"fooID"
-                                          name:@"Fake Foo"];
-}
-
-// Returns a second fake identity.
-ChromeIdentity* GetFakeIdentity2() {
-  return [FakeChromeIdentity identityWithEmail:@"bar@gmail.com"
-                                        gaiaID:@"barID"
-                                          name:@"Fake Bar"];
-}
-
-ChromeIdentity* GetFakeManagedIdentity() {
-  return [FakeChromeIdentity identityWithEmail:@"managed@foo.com"
-                                        gaiaID:@"managedID"
-                                          name:@"Fake Managed"];
-}
 
 // Changes the EarlGrey synchronization status to |enabled|.
 void SetEarlGreySynchronizationEnabled(BOOL enabled) {
@@ -89,21 +70,6 @@ void WaitForMatcher(id<GREYMatcher> matcher) {
              @"Waiting for matcher %@ failed.", matcher);
 }
 
-// Asserts that |identity| is actually signed in to the active profile.
-void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
-  [[GREYUIThreadExecutor sharedInstance] drainUntilIdle];
-
-  ios::ChromeBrowserState* browser_state =
-      chrome_test_util::GetOriginalBrowserState();
-  AccountInfo info =
-      ios::SigninManagerFactory::GetForBrowserState(browser_state)
-          ->GetAuthenticatedAccountInfo();
-
-  GREYAssertEqual(base::SysNSStringToUTF8(identity.gaiaID), info.gaia,
-                  @"Gaia ID of signed in user isn't %@ but %s", identity.gaiaID,
-                  info.gaia.c_str());
-}
-
 }  // namespace
 
 @interface SigninInteractionControllerTestCase : ChromeTestCase
@@ -115,7 +81,7 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
 // correctly when there is already an identity on the device.
 - (void)testSignInOneUser {
   // Set up a fake identity.
-  ChromeIdentity* identity = GetFakeIdentity1();
+  ChromeIdentity* identity = [SigninEarlGreyUtils fakeIdentity1];
   ios::FakeChromeIdentityService::GetInstanceFromChromeProvider()->AddIdentity(
       identity);
 
@@ -127,7 +93,7 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
       performAction:grey_tap()];
 
   // Check |identity| is signed-in.
-  AssertAuthenticatedIdentityInActiveProfile(identity);
+  [SigninEarlGreyUtils assertActiveProfileWithIdentity:identity];
 }
 
 // Tests signing in with one account, switching sync account to a second and
@@ -136,8 +102,8 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
   // Set up the fake identities.
   ios::FakeChromeIdentityService* identity_service =
       ios::FakeChromeIdentityService::GetInstanceFromChromeProvider();
-  ChromeIdentity* identity1 = GetFakeIdentity1();
-  ChromeIdentity* identity2 = GetFakeIdentity2();
+  ChromeIdentity* identity1 = [SigninEarlGreyUtils fakeIdentity1];
+  ChromeIdentity* identity2 = [SigninEarlGreyUtils fakeIdentity2];
   identity_service->AddIdentity(identity1);
   identity_service->AddIdentity(identity2);
 
@@ -145,7 +111,7 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
   [ChromeEarlGreyUI tapSettingsMenuButton:SecondarySignInButton()];
   [ChromeEarlGreyUI signInToIdentityByEmail:identity1.userEmail];
   [ChromeEarlGreyUI confirmSigninConfirmationDialog];
-  AssertAuthenticatedIdentityInActiveProfile(identity1);
+  [SigninEarlGreyUtils assertActiveProfileWithIdentity:identity1];
 
   // Open accounts settings, then sync settings.
   [[EarlGrey selectElementWithMatcher:chrome_test_util::SettingsAccountButton()]
@@ -161,7 +127,7 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
   TapButtonWithLabelId(IDS_IOS_OPTIONS_IMPORT_DATA_CONTINUE_BUTTON);
 
   // Check the signed-in user did change.
-  AssertAuthenticatedIdentityInActiveProfile(identity2);
+  [SigninEarlGreyUtils assertActiveProfileWithIdentity:identity2];
 
   [[EarlGrey selectElementWithMatcher:NavigationBarDoneButton()]
       performAction:grey_tap()];
@@ -173,8 +139,8 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
   // Set up the fake identities.
   ios::FakeChromeIdentityService* identity_service =
       ios::FakeChromeIdentityService::GetInstanceFromChromeProvider();
-  ChromeIdentity* identity1 = GetFakeIdentity1();
-  ChromeIdentity* identity2 = GetFakeIdentity2();
+  ChromeIdentity* identity1 = [SigninEarlGreyUtils fakeIdentity1];
+  ChromeIdentity* identity2 = [SigninEarlGreyUtils fakeIdentity2];
   identity_service->AddIdentity(identity1);
   identity_service->AddIdentity(identity2);
 
@@ -183,7 +149,7 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
   [ChromeEarlGreyUI tapSettingsMenuButton:SecondarySignInButton()];
   [ChromeEarlGreyUI signInToIdentityByEmail:identity1.userEmail];
   [ChromeEarlGreyUI confirmSigninConfirmationDialog];
-  AssertAuthenticatedIdentityInActiveProfile(identity1);
+  [SigninEarlGreyUtils assertActiveProfileWithIdentity:identity1];
 
   // Open accounts settings, then sync settings.
   [[EarlGrey selectElementWithMatcher:chrome_test_util::SettingsAccountButton()]
@@ -199,7 +165,7 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
   TapButtonWithLabelId(IDS_IOS_OPTIONS_IMPORT_DATA_CONTINUE_BUTTON);
 
   // Check the signed-in user did change.
-  AssertAuthenticatedIdentityInActiveProfile(identity2);
+  [SigninEarlGreyUtils assertActiveProfileWithIdentity:identity2];
 
   [[EarlGrey selectElementWithMatcher:NavigationBarDoneButton()]
       performAction:grey_tap()];
@@ -211,8 +177,8 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
   // Set up the fake identities.
   ios::FakeChromeIdentityService* identity_service =
       ios::FakeChromeIdentityService::GetInstanceFromChromeProvider();
-  ChromeIdentity* managed_identity = GetFakeManagedIdentity();
-  ChromeIdentity* identity = GetFakeIdentity1();
+  ChromeIdentity* managed_identity = [SigninEarlGreyUtils fakeIdentity3];
+  ChromeIdentity* identity = [SigninEarlGreyUtils fakeIdentity1];
   identity_service->AddIdentity(managed_identity);
   identity_service->AddIdentity(identity);
 
@@ -229,7 +195,7 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
   SetEarlGreySynchronizationEnabled(YES);
 
   [ChromeEarlGreyUI confirmSigninConfirmationDialog];
-  AssertAuthenticatedIdentityInActiveProfile(managed_identity);
+  [SigninEarlGreyUtils assertActiveProfileWithIdentity:managed_identity];
 
   // Switch Sync account to |identity|.
   [[EarlGrey selectElementWithMatcher:chrome_test_util::SettingsAccountButton()]
@@ -245,7 +211,7 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
   TapButtonWithLabelId(IDS_IOS_MANAGED_SWITCH_ACCEPT_BUTTON);
   SetEarlGreySynchronizationEnabled(YES);
 
-  AssertAuthenticatedIdentityInActiveProfile(identity);
+  [SigninEarlGreyUtils assertActiveProfileWithIdentity:identity];
 
   [[EarlGrey selectElementWithMatcher:NavigationBarDoneButton()]
       performAction:grey_tap()];
@@ -253,7 +219,7 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
 
 // Tests that signing out from the Settings works correctly.
 - (void)testSignInDisconnectFromChrome {
-  ChromeIdentity* identity = GetFakeIdentity1();
+  ChromeIdentity* identity = [SigninEarlGreyUtils fakeIdentity1];
   ios::FakeChromeIdentityService::GetInstanceFromChromeProvider()->AddIdentity(
       identity);
 
@@ -262,7 +228,7 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
   [ChromeEarlGreyUI tapSettingsMenuButton:SecondarySignInButton()];
   [ChromeEarlGreyUI signInToIdentityByEmail:identity.userEmail];
   [ChromeEarlGreyUI confirmSigninConfirmationDialog];
-  AssertAuthenticatedIdentityInActiveProfile(identity);
+  [SigninEarlGreyUtils assertActiveProfileWithIdentity:identity];
 
   // Go to Accounts Settings and tap the sign out button.
   [[EarlGrey selectElementWithMatcher:chrome_test_util::SettingsAccountButton()]
@@ -282,13 +248,13 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
       performAction:grey_tap()];
 
   // Check that there is no signed in user.
-  AssertAuthenticatedIdentityInActiveProfile(nil);
+  [SigninEarlGreyUtils assertActiveProfileWithIdentity:nil];
 }
 
 // Tests that signing out of a managed account from the Settings works
 // correctly.
 - (void)testSignInDisconnectFromChromeManaged {
-  ChromeIdentity* identity = GetFakeManagedIdentity();
+  ChromeIdentity* identity = [SigninEarlGreyUtils fakeIdentity3];
   ios::FakeChromeIdentityService::GetInstanceFromChromeProvider()->AddIdentity(
       identity);
 
@@ -304,7 +270,7 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
   SetEarlGreySynchronizationEnabled(YES);
 
   [ChromeEarlGreyUI confirmSigninConfirmationDialog];
-  AssertAuthenticatedIdentityInActiveProfile(identity);
+  [SigninEarlGreyUtils assertActiveProfileWithIdentity:identity];
 
   // Go to Accounts Settings and tap the sign out button.
   [[EarlGrey selectElementWithMatcher:chrome_test_util::SettingsAccountButton()]
@@ -324,14 +290,14 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
       performAction:grey_tap()];
 
   // Check that there is no signed in user.
-  AssertAuthenticatedIdentityInActiveProfile(nil);
+  [SigninEarlGreyUtils assertActiveProfileWithIdentity:nil];
 }
 
 // Tests that signing in, tapping the Settings link on the confirmation screen
 // and closing the Settings correctly leaves the user signed in without any
 // Settings shown.
 - (void)testSignInOpenSettings {
-  ChromeIdentity* identity = GetFakeIdentity1();
+  ChromeIdentity* identity = [SigninEarlGreyUtils fakeIdentity1];
   ios::FakeChromeIdentityService::GetInstanceFromChromeProvider()->AddIdentity(
       identity);
 
@@ -354,7 +320,7 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
           IDS_IOS_SETTINGS_TITLE);
   [[EarlGrey selectElementWithMatcher:settings_matcher]
       assertWithMatcher:grey_notVisible()];
-  AssertAuthenticatedIdentityInActiveProfile(identity);
+  [SigninEarlGreyUtils assertActiveProfileWithIdentity:identity];
 }
 
 // Opens the sign in screen and then cancel it by opening a new tab. Ensures
@@ -362,7 +328,7 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
 - (void)testSignInCancelIdentityPicker {
   // Add an identity to avoid arriving on the Add Account screen when opening
   // sign-in.
-  ChromeIdentity* identity = GetFakeIdentity1();
+  ChromeIdentity* identity = [SigninEarlGreyUtils fakeIdentity1];
   ios::FakeChromeIdentityService::GetInstanceFromChromeProvider()->AddIdentity(
       identity);
 
@@ -395,7 +361,7 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
 - (void)testSignInCancelAddAccount {
   // Add an identity to avoid arriving on the Add Account screen when opening
   // sign-in.
-  ChromeIdentity* identity = GetFakeIdentity1();
+  ChromeIdentity* identity = [SigninEarlGreyUtils fakeIdentity1];
   ios::FakeChromeIdentityService::GetInstanceFromChromeProvider()->AddIdentity(
       identity);
 
@@ -438,8 +404,8 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
   // Set up the fake identities.
   ios::FakeChromeIdentityService* identity_service =
       ios::FakeChromeIdentityService::GetInstanceFromChromeProvider();
-  ChromeIdentity* identity1 = GetFakeIdentity1();
-  ChromeIdentity* identity2 = GetFakeIdentity2();
+  ChromeIdentity* identity1 = [SigninEarlGreyUtils fakeIdentity1];
+  ChromeIdentity* identity2 = [SigninEarlGreyUtils fakeIdentity2];
   identity_service->AddIdentity(identity1);
   identity_service->AddIdentity(identity2);
 
@@ -451,7 +417,7 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
   [ChromeEarlGreyUI tapSettingsMenuButton:SecondarySignInButton()];
   [ChromeEarlGreyUI signInToIdentityByEmail:identity2.userEmail];
   [ChromeEarlGreyUI confirmSigninConfirmationDialog];
-  AssertAuthenticatedIdentityInActiveProfile(identity2);
+  [SigninEarlGreyUtils assertActiveProfileWithIdentity:identity2];
 
   // Go to Accounts Settings and tap the sign out button.
   [[EarlGrey selectElementWithMatcher:chrome_test_util::SettingsAccountButton()]
@@ -467,7 +433,7 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
       onElementWithMatcher:chrome_test_util::SettingsAccountsCollectionView()]
       performAction:grey_tap()];
   TapButtonWithLabelId(IDS_IOS_DISCONNECT_DIALOG_CONTINUE_BUTTON_MOBILE);
-  AssertAuthenticatedIdentityInActiveProfile(nil);
+  [SigninEarlGreyUtils assertActiveProfileWithIdentity:nil];
   [[EarlGrey selectElementWithMatcher:SecondarySignInButton()]
       performAction:grey_tap()];
   [ChromeEarlGreyUI signInToIdentityByEmail:identity1.userEmail];
@@ -491,7 +457,7 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
   TapButtonWithLabelId(IDS_IOS_ACCOUNT_CONSISTENCY_SETUP_SKIP_BUTTON);
   [[EarlGrey selectElementWithMatcher:NavigationBarDoneButton()]
       performAction:grey_tap()];
-  AssertAuthenticatedIdentityInActiveProfile(nil);
+  [SigninEarlGreyUtils assertActiveProfileWithIdentity:nil];
 }
 
 // Opens the sign in screen from the bookmarks and then cancel it by opening a
@@ -502,7 +468,7 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
           bookmark_new_generation::features::kBookmarkNewGeneration)) {
     EARL_GREY_TEST_SKIPPED(@"Only enabled with old Bookmarks UI.");
   }
-  ChromeIdentity* identity = GetFakeIdentity1();
+  ChromeIdentity* identity = [SigninEarlGreyUtils fakeIdentity1];
   ios::FakeChromeIdentityService::GetInstanceFromChromeProvider()->AddIdentity(
       identity);
 
