@@ -40,27 +40,6 @@ class NET_EXPORT ExternalEstimateProvider {
   ExternalEstimateProvider() {}
   virtual ~ExternalEstimateProvider() {}
 
-  // Returns true if the estimated RTT duration is available, and sets |rtt|
-  // to the estimate.
-  virtual bool GetRTT(base::TimeDelta* rtt) const = 0;
-
-  // Returns true if the estimated downstream throughput (in Kbps -- Kilobits
-  // per second) is available, and sets |downstream_throughput_kbps| to the
-  // estimate.
-  virtual bool GetDownstreamThroughputKbps(
-      int32_t* downstream_throughput_kbps) const = 0;
-
-  // Returns true if the estimated upstream throughput (in Kbps -- Kilobits
-  // per second) is available, and sets |upstream_throughput_kbps| to the
-  // estimate.
-  virtual bool GetUpstreamThroughputKbps(
-      int32_t* upstream_throughput_kbps) const = 0;
-
-  // Returns true if the time since network quality was last updated is
-  // available, and sets |time_since_last_update| to that value.
-  virtual bool GetTimeSinceLastUpdate(
-      base::TimeDelta* time_since_last_update) const = 0;
-
   // Sets delegate that is notified when an updated estimate is available.
   // |delegate| should outlive |ExternalEstimateProvider|.
   virtual void SetUpdatedEstimateDelegate(
