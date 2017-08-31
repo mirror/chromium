@@ -52,6 +52,7 @@ URLRequestContext::URLRequestContext()
       network_error_logging_delegate_(nullptr),
       enable_brotli_(false),
       check_cleartext_permitted_(false),
+      use_resource_scheduler_(true),
       name_(nullptr),
       largest_outstanding_requests_count_seen_(0) {
   base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(

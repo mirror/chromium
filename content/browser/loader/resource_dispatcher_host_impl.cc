@@ -1638,10 +1638,13 @@ ResourceDispatcherHostImpl::AddStandardHandlers(
   if (clear_site_data_throttle)
     throttles.push_back(std::move(clear_site_data_throttle));
 
-  // TODO(ricea): Stop looking this up so much.
-  ResourceRequestInfoImpl* info = ResourceRequestInfoImpl::ForRequest(request);
-  throttles.push_back(scheduler_->ScheduleRequest(child_id, route_id,
-                                                  info->IsAsync(), request));
+  if (resource_context->GetRequestContext()->use_resource_scheduler()) {
+    // TODO(ricea): Stop looking this up so much.
+    ResourceRequestInfoImpl* info =
+        ResourceRequestInfoImpl::ForRequest(request);
+    throttles.push_back(scheduler_->ScheduleRequest(child_id, route_id,
+                                                    info->IsAsync(), request));
+  }
 
   // Split the handler in two groups: the ones that need to execute
   // WillProcessResponse before mime sniffing and the others.

@@ -34,6 +34,7 @@ HeadlessURLRequestContextGetter::HeadlessURLRequestContextGetter(
       accept_language_(options->accept_language()),
       user_agent_(options->user_agent()),
       host_resolver_rules_(options->host_resolver_rules()),
+      use_resource_scheduler_(options->use_resource_scheduler()),
       proxy_config_(options->proxy_config()),
       request_interceptors_(std::move(request_interceptors)),
       net_log_(net_log),
@@ -108,6 +109,7 @@ HeadlessURLRequestContextGetter::GetURLRequestContext() {
 
     url_request_context_ = builder.Build();
     url_request_context_->set_net_log(net_log_);
+    url_request_context_->set_use_resource_scheduler(use_resource_scheduler_);
   }
 
   return url_request_context_.get();

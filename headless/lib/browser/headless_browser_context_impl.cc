@@ -447,6 +447,13 @@ HeadlessBrowserContext::Builder::SetIncognitoMode(bool incognito_mode) {
 }
 
 HeadlessBrowserContext::Builder&
+HeadlessBrowserContext::Builder::SetUseResourceScheduler(
+    bool use_resource_scheduler) {
+  options_->use_resource_scheduler_ = use_resource_scheduler;
+  return *this;
+}
+
+HeadlessBrowserContext::Builder&
 HeadlessBrowserContext::Builder::AddTabSocketMojoBindings() {
   std::string js_bindings =
       ui::ResourceBundle::GetSharedInstance()
