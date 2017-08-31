@@ -113,11 +113,13 @@ stage_install_common() {
   #
   # app
   # We need to add the debug link so gdb knows to look for the symbols.
-  DEBUGFILE="${BUILDDIR}/${PROGNAME}.debug"
-  STRIPPEDFILE="${BUILDDIR}/${PROGNAME}.stripped"
+  local STRIPDIR="${BUILDDIR}/stripped-bin-${CHANNEL}"
+  mkdir -p "${STRIPDIR}"
+  DEBUGFILE="${STRIPDIR}/${PROGNAME}.debug"
+  STRIPPEDFILE="${STRIPDIR}/${PROGNAME}.stripped"
   "${BUILDDIR}/installer/common/eu-strip" -o "${STRIPPEDFILE}" -f "${DEBUGFILE}" "${BUILDDIR}/${PROGNAME}"
   install -m 755 "${STRIPPEDFILE}" "${STAGEDIR}/${INSTALLDIR}/${PROGNAME}"
-  rm "${DEBUGFILE}" "${STRIPPEDFILE}"
+  rm -rf "${STRIPDIR}"
 
   # resources
   install -m 644 "${BUILDDIR}/resources.pak" "${STAGEDIR}/${INSTALLDIR}/"
