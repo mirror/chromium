@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d56a3984_662537c1",
+        "filename": "third_party/WebKit/Source/core/css/CSSDefaultStyleSheets.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-08-31T10:56:08Z",
+      "side": 1,
+      "message": "Could we have this logic in modules/media_controls/ somehow? Maybe the MediaControls interface could have a \"GetStyleSheet()\" method?",
+      "revId": "19ec78422541668570a86664783998686270ac32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cfc7537_3994e7bb",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutThemeMobile.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-08-31T10:56:08Z",
+      "side": 1,
+      "message": "Same as above.",
+      "revId": "19ec78422541668570a86664783998686270ac32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
