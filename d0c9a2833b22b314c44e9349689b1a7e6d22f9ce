@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "054abceb_149d2d13",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-08-31T20:29:25Z",
+      "side": 1,
+      "message": "Actually, IsArcAllowedForProfile is the only caller of this -- I think this function should be called IsArcMigrationAllowedByPolicyForProfile.\nIt\u0027s an artefact of the weird definition of migration strategy policy value kAskForEcryptfsArcUsers that we check specific things here.\n\nIn detail, this policy is defined to migrate:\n- if the flag is set (if the device had arc before)\n- and if ARC is enabled, according to policy.\n\nOther than that, this function just checks the policy.\n\nI\u0027ve renamed the function in CL:645953 and added unit tests.",
+      "parentUuid": "22415ef0_9a41b51d",
+      "range": {
+        "startLine": 182,
+        "startChar": 11,
+        "endLine": 183,
+        "endChar": 62
+      },
+      "revId": "d0c9a2833b22b314c44e9349689b1a7e6d22f9ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8fc1c381_632cee67",
         "filename": "chrome/browser/chromeos/arc/arc_util.cc",
         "patchSetId": 7
@@ -254,6 +278,30 @@
         "startChar": 6,
         "endLine": 1070,
         "endChar": 8
+      },
+      "revId": "d0c9a2833b22b314c44e9349689b1a7e6d22f9ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "968077a0_9c444f99",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1070,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-08-31T20:29:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b73b0e36_5e077e46",
+      "range": {
+        "startLine": 1070,
+        "startChar": 10,
+        "endLine": 1070,
+        "endChar": 21
       },
       "revId": "d0c9a2833b22b314c44e9349689b1a7e6d22f9ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
