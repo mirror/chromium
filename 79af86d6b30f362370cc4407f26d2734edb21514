@@ -34,6 +34,24 @@
       "revId": "79af86d6b30f362370cc4407f26d2734edb21514",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b1495cc2_cb5ae50f",
+        "filename": "DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-31T20:50:50Z",
+      "side": 1,
+      "message": "Gack - Someday I\u0027ll learn to use this review system.",
+      "parentUuid": "700c8a2e_7ae5ccc6",
+      "revId": "79af86d6b30f362370cc4407f26d2734edb21514",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
