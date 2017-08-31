@@ -186,6 +186,16 @@ bool VisiblePositionTemplate<Strategy>::IsValid() const {
 #endif
 }
 
+template <typename Strategy>
+bool VisiblePositionTemplate<Strategy>::IsValidFor(
+    const Document& document) const {
+  if (dom_tree_version_ != document.DomTreeVersion())
+    return false;
+  if (style_version_ != document.StyleVersion())
+    return false;
+  return position_with_affinity_.IsValidFor(document);
+}
+
 template class CORE_TEMPLATE_EXPORT VisiblePositionTemplate<EditingStrategy>;
 template class CORE_TEMPLATE_EXPORT
     VisiblePositionTemplate<EditingInFlatTreeStrategy>;

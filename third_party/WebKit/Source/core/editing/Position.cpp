@@ -334,6 +334,15 @@ Node* PositionTemplate<Strategy>::CommonAncestorContainer(
                                   *other.ComputeContainerNode());
 }
 
+template <typename Strategy>
+bool PositionTemplate<Strategy>::IsValidFor(const Document& document) const {
+  if (IsNull())
+    return true;
+  if (IsOrphan())
+    return false;
+  return GetDocument() == document;
+}
+
 int ComparePositions(const PositionInFlatTree& position_a,
                      const PositionInFlatTree& position_b) {
   DCHECK(position_a.IsNotNull());
