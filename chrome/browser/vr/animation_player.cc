@@ -11,10 +11,10 @@
 #include "cc/animation/animation_player.h"
 #include "cc/animation/animation_target.h"
 #include "cc/animation/keyframed_animation_curve.h"
-#include "cc/base/math_util.h"
 #include "chrome/browser/vr/elements/ui_element.h"
+#include "ui/gfx/math_util.h"
 
-using cc::MathUtil;
+using gfx::MathUtil;
 
 namespace vr {
 
