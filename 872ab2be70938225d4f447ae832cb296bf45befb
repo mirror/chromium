@@ -22,6 +22,30 @@
       "revId": "872ab2be70938225d4f447ae832cb296bf45befb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72a73891_3272cf4e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1066,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-08-31T20:15:23Z",
+      "side": 1,
+      "message": "This would be the case for the first time the sheet is opened and if we decide to destroy suggestions while the sheet is closed.",
+      "parentUuid": "68af7d70_1c6df443",
+      "range": {
+        "startLine": 1066,
+        "startChar": 15,
+        "endLine": 1066,
+        "endChar": 17
+      },
+      "revId": "872ab2be70938225d4f447ae832cb296bf45befb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
