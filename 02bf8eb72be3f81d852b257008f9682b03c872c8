@@ -52,6 +52,24 @@
       "revId": "02bf8eb72be3f81d852b257008f9682b03c872c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59d37f2e_2bfd7766",
+        "filename": "ios/chrome/browser/ssl/ios_ssl_error_handler.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-08-31T00:44:49Z",
+      "side": 1,
+      "message": "+1 for commenting (at the very least). I triaged the bug and scratched my head for a long time. I don\u0027t know if there\u0027s something else that we should be testing for, but the use of CaptivePortalDetectorTabHelper is indeed misleading to the casual observer.",
+      "parentUuid": "3d8e0067_552d59b9",
+      "revId": "02bf8eb72be3f81d852b257008f9682b03c872c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
