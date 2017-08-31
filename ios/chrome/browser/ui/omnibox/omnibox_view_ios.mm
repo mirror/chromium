@@ -172,25 +172,25 @@ OmniboxViewIOS::OmniboxViewIOS(OmniboxTextFieldIOS* field,
       controller_(controller),
       ignore_popup_updates_(false),
       attributing_display_string_(nil) {
-  DCHECK(field_);
+  DCHECK(field_.get().textField);
   popup_view_ = base::MakeUnique<OmniboxPopupViewIOS>(
       this->browser_state(), model(), this, positioner);
   field_delegate_.reset(
       [[AutocompleteTextFieldDelegate alloc] initWithEditView:this]);
-  [field_ setDelegate:field_delegate_];
-  [field_ addTarget:field_delegate_
-                action:@selector(textFieldDidChange:)
-      forControlEvents:UIControlEventEditingChanged];
+  [field_.get().textField setDelegate:field_delegate_];
+  [field_.get().textField addTarget:field_delegate_
+                             action:@selector(textFieldDidChange:)
+                   forControlEvents:UIControlEventEditingChanged];
   use_strikethrough_workaround_ = base::ios::IsRunningOnOrLater(10, 3, 0);
 }
 
 OmniboxViewIOS::~OmniboxViewIOS() {
-  // |field_| outlives this object.
-  [field_ setDelegate:nil];
+  // |field_.get().textField| outlives this object.
+  [field_.get().textField setDelegate:nil];
 
-  [field_ removeTarget:field_delegate_
-                action:@selector(textFieldDidChange:)
-      forControlEvents:UIControlEventEditingChanged];
+  [field_.get().textField removeTarget:field_delegate_
+                                action:@selector(textFieldDidChange:)
+                      forControlEvents:UIControlEventEditingChanged];
 
   // Destroy the model, in case it tries to call back into us when destroyed.
   popup_view_.reset();
@@ -211,7 +211,7 @@ void OmniboxViewIOS::OpenMatch(const AutocompleteMatch& match,
 }
 
 base::string16 OmniboxViewIOS::GetText() const {
-  return [field_ displayedText];
+  return [field_.get().textField displayedText];
 }
 
 void OmniboxViewIOS::SetWindowTextAndCaretPos(const base::string16& text,
@@ -222,10 +222,10 @@ void OmniboxViewIOS::SetWindowTextAndCaretPos(const base::string16& text,
   // Instead, set the field's text directly.
   // TODO(justincohen): b/5244062 Temporary fix to set the text_field value
   // before model()->CurrentTextIsUrl(), since that pulls from text_field.value.
-  [field_ setText:base::SysUTF16ToNSString(text)];
+  [field_.get().textField setText:base::SysUTF16ToNSString(text)];
 
   NSAttributedString* as = ApplyTextAttributes(text);
-  [field_ setText:as userTextLength:[as length]];
+  [field_.get().textField setText:as userTextLength:[as length]];
 
   if (update_popup)
     UpdatePopup();
@@ -254,10 +254,10 @@ void OmniboxViewIOS::UpdatePopup() {
   // cursor is not at the end of the text.
   bool prevent_inline_autocomplete =
       IsImeComposing() ||
-      NSMaxRange(current_selection_) != [[field_ text] length];
+      NSMaxRange(current_selection_) != [[field_.get().textField text] length];
   model()->StartAutocomplete(current_selection_.length != 0,
                              prevent_inline_autocomplete);
-  popup_view_->SetTextAlignment([field_ bestTextAlignment]);
+  popup_view_->SetTextAlignment([field_.get().textField bestTextAlignment]);
 }
 
 void OmniboxViewIOS::OnTemporaryTextMaybeChanged(
@@ -275,14 +275,14 @@ bool OmniboxViewIOS::OnInlineAutocompleteTextMaybeChanged(
     return false;
 
   NSAttributedString* as = ApplyTextAttributes(display_text);
-  [field_ setText:as userTextLength:user_text_length];
+  [field_.get().textField setText:as userTextLength:user_text_length];
   model()->OnChanged();
   return true;
 }
 
 void OmniboxViewIOS::OnBeforePossibleChange() {
   GetState(&state_before_change_);
-  marked_text_before_change_.reset([[field_ markedText] copy]);
+  marked_text_before_change_.reset([[field_.get().textField markedText] copy]);
 }
 
 bool OmniboxViewIOS::OnAfterPossibleChange(bool allow_keyword_ui_change) {
@@ -303,12 +303,12 @@ bool OmniboxViewIOS::OnAfterPossibleChange(bool allow_keyword_ui_change) {
 
   // TODO(justincohen): Find a different place to call this. Give the omnibox
   // a chance to update the alignment for a text direction change.
-  [field_ updateTextDirection];
+  [field_.get().textField updateTextDirection];
   return something_changed;
 }
 
 bool OmniboxViewIOS::IsImeComposing() const {
-  return [field_ markedTextRange] != nil;
+  return [field_.get().textField markedTextRange] != nil;
 }
 
 bool OmniboxViewIOS::IsIndicatingQueryRefinement() const {
@@ -353,7 +353,7 @@ void OmniboxViewIOS::OnDidBeginEditing() {
 
   // Text attributes (e.g. text color) should not be shown while editing, so
   // strip them out by calling setText (as opposed to setAttributedText).
-  [field_ setText:[field_ text]];
+  [field_.get().textField setText:[field_.get().textField text]];
   [field_ enableLeftViewButton:NO];
   OnBeforePossibleChange();
   // In the case where the user taps the fakebox on the Google landing page,
@@ -374,7 +374,7 @@ void OmniboxViewIOS::OnDidBeginEditing() {
   // regaining focus after a popup scroll took focus away, so the pre-edit
   // behavior should not be invoked.
   if (!popup_was_open_before_editing_began)
-    [field_ enterPreEditState];
+    [field_.get().textField enterPreEditState];
 
   // The controller looks at the current pre-edit state, so the call to
   // OnSetFocus() must come after entering pre-edit.
@@ -386,8 +386,8 @@ void OmniboxViewIOS::OnDidEndEditing() {
   [field_ enableLeftViewButton:YES];
   model()->OnWillKillFocus();
   model()->OnKillFocus();
-  if ([field_ isPreEditing])
-    [field_ exitPreEditState];
+  if ([field_.get().textField isPreEditing])
+    [field_.get().textField exitPreEditState];
 
   // The controller looks at the current pre-edit state, so the call to
   // OnKillFocus() must come after exiting pre-edit.
@@ -395,7 +395,7 @@ void OmniboxViewIOS::OnDidEndEditing() {
 
   // Blow away any in-progress edits.
   RevertAll();
-  DCHECK(![field_ hasAutocompleteText]);
+  DCHECK(![field_.get().textField hasAutocompleteText]);
 }
 
 bool OmniboxViewIOS::OnWillChange(NSRange range, NSString* new_text) {
@@ -406,19 +406,19 @@ bool OmniboxViewIOS::OnWillChange(NSRange range, NSString* new_text) {
     return false;
   }
 
-  if ([field_ isPreEditing]) {
-    [field_ setClearingPreEditText:YES];
+  if ([field_.get().textField isPreEditing]) {
+    [field_.get().textField setClearingPreEditText:YES];
 
     // Exit the pre-editing state in OnWillChange() instead of OnDidChange(), as
     // that allows IME to continue working.  The following code clears the text
     // field but continues the normal text editing flow, so UIKit behaves as
     // though the user had typed into an empty field.
-    [field_ exitPreEditState];
+    [field_.get().textField exitPreEditState];
 
     // Clearing the text field will trigger a call to OnDidChange().  This is
     // ok, because the autocomplete system will process it as if the user had
     // deleted all the omnibox text.
-    [field_ setText:@""];
+    [field_.get().textField setText:@""];
 
     // Reset |range| to be of zero-length at location zero, as the field is now
     // cleared.
@@ -437,7 +437,7 @@ bool OmniboxViewIOS::OnWillChange(NSRange range, NSString* new_text) {
   // directly.  If there is autocomplete text AND a text field selection, or if
   // the user entered multiple characters, clear the autocomplete text and
   // pretend it never existed.
-  if ([field_ hasAutocompleteText]) {
+  if ([field_.get().textField hasAutocompleteText]) {
     bool adding_text = (range.length < [new_text length]);
     bool deleting_text = (range.length > [new_text length]);
 
@@ -447,13 +447,15 @@ bool OmniboxViewIOS::OnWillChange(NSRange range, NSString* new_text) {
       // or if the user pastes some text in.  Let's loosen this test to allow
       // multiple characters, as long as the "old range" ends at the end of the
       // permanent text.
-      if ([new_text length] == 1 && range.location == [[field_ text] length]) {
-        old_range = NSMakeRange([[field_ text] length],
-                                [field_ autocompleteText].length());
+      if ([new_text length] == 1 &&
+          range.location == [[field_.get().textField text] length]) {
+        old_range =
+            NSMakeRange([[field_.get().textField text] length],
+                        [field_.get().textField autocompleteText].length());
       }
     } else if (deleting_text) {
       if ([new_text length] == 0 &&
-          range.location == [[field_ text] length] - 1) {
+          range.location == [[field_.get().textField text] length] - 1) {
         ok_to_change = false;
       }
     }
@@ -485,10 +487,11 @@ bool OmniboxViewIOS::OnWillChange(NSRange range, NSString* new_text) {
 void OmniboxViewIOS::OnDidChange(bool processing_user_event) {
   // Sanitize pasted text.
   if (model()->is_pasting()) {
-    base::string16 pastedText = base::SysNSStringToUTF16([field_ text]);
+    base::string16 pastedText =
+        base::SysNSStringToUTF16([field_.get().textField text]);
     base::string16 newText = OmniboxView::SanitizeTextForPaste(pastedText);
     if (pastedText != newText) {
-      [field_ setText:base::SysUTF16ToNSString(newText)];
+      [field_.get().textField setText:base::SysUTF16ToNSString(newText)];
     }
   }
 
@@ -496,8 +499,8 @@ void OmniboxViewIOS::OnDidChange(bool processing_user_event) {
   // it in OnAfterPossibleChange().  Clearing the text here should not cause
   // flicker as the UI will not get a chance to redraw before the new
   // autocomplete text is set by the model.
-  [field_ clearAutocompleteText];
-  [field_ setClearingPreEditText:NO];
+  [field_.get().textField clearAutocompleteText];
+  [field_.get().textField setClearingPreEditText:NO];
 
   // Generally do not notify the autocomplete system of a text change unless the
   // change was a direct result of a user event.  One exception is if the marked
@@ -511,12 +514,13 @@ void OmniboxViewIOS::OnDidChange(bool processing_user_event) {
   // characters as you type.  Always proceed without user input on iOS7 if the
   // Korean keyboard is currently active.  (This Korean exception is not
   // possible on iOS6 due to crbug.com/285294.)
-  NSString* current_language = [[field_ textInputMode] primaryLanguage];
+  NSString* current_language =
+      [[field_.get().textField textInputMode] primaryLanguage];
 
   if ([current_language hasPrefix:@"ko-"]) {
     proceed_without_user_event = true;
   } else {
-    NSString* current_marked_text = [field_ markedText];
+    NSString* current_marked_text = [field_.get().textField markedText];
 
     // The IME exception kicks in if the current marked text is not equal to the
     // previous marked text.  Two nil strings should be considered equal, so
@@ -553,22 +557,23 @@ void OmniboxViewIOS::OnAccept() {
 }
 
 void OmniboxViewIOS::OnClear() {
-  [field_ clearAutocompleteText];
-  [field_ exitPreEditState];
+  [field_.get().textField clearAutocompleteText];
+  [field_.get().textField exitPreEditState];
 }
 
 bool OmniboxViewIOS::OnCopy() {
   UIPasteboard* board = [UIPasteboard generalPasteboard];
-  UITextRange* selected_range = [field_ selectedTextRange];
-  base::string16 text =
-      base::SysNSStringToUTF16([field_ textInRange:selected_range]);
+  UITextRange* selected_range = [field_.get().textField selectedTextRange];
+  base::string16 text = base::SysNSStringToUTF16(
+      [field_.get().textField textInRange:selected_range]);
 
-  UITextPosition* start = [field_ beginningOfDocument];
-  UITextPosition* end = [field_ endOfDocument];
-  BOOL is_select_all = ([field_ comparePosition:[selected_range start]
-                                     toPosition:start] == NSOrderedSame) &&
-                       ([field_ comparePosition:[selected_range end]
-                                     toPosition:end] == NSOrderedSame);
+  UITextPosition* start = [field_.get().textField beginningOfDocument];
+  UITextPosition* end = [field_.get().textField endOfDocument];
+  BOOL is_select_all =
+      ([field_.get().textField comparePosition:[selected_range start]
+                                    toPosition:start] == NSOrderedSame) &&
+      ([field_.get().textField comparePosition:[selected_range end]
+                                    toPosition:end] == NSOrderedSame);
 
   // The following call to |-offsetFromPosition:toPosition:| gives the offset in
   // terms of the number of "visible characters."  The documentation does not
@@ -576,7 +581,8 @@ bool OmniboxViewIOS::OnCopy() {
   // the current implementation of AdjustTextForCopy(), but it may become an
   // issue at some point.
   NSInteger start_location =
-      [field_ offsetFromPosition:start toPosition:[selected_range start]];
+      [field_.get().textField offsetFromPosition:start
+                                      toPosition:[selected_range start]];
 
   GURL url;
   bool write_url = false;
@@ -624,7 +630,8 @@ void OmniboxViewIOS::SetEmphasis(bool emphasize, const gfx::Range& range) {
 
   [attributing_display_string_
       addAttribute:NSForegroundColorAttributeName
-             value:(emphasize) ? [field_ displayedTextColor] : BaseTextColor()
+             value:(emphasize) ? [field_.get().textField displayedTextColor]
+                               : BaseTextColor()
              range:ns_range];
 }
 
@@ -672,7 +679,8 @@ void OmniboxViewIOS::UpdateSchemeStyle(const gfx::Range& range) {
                range:strikethroughRange];
   }
 
-  UIColor* color = GetSecureTextColor(security_level, [field_ incognito]);
+  UIColor* color =
+      GetSecureTextColor(security_level, [field_.get().textField incognito]);
   if (color) {
     [attributing_display_string_ addAttribute:NSForegroundColorAttributeName
                                         value:color
@@ -707,21 +715,21 @@ void OmniboxViewIOS::UpdateAppearance() {
     base::string16 text =
         controller_->GetToolbarModel()->GetFormattedURL(nullptr);
     NSAttributedString* as = ApplyTextAttributes(text);
-    [field_ setText:as userTextLength:[as length]];
+    [field_.get().textField setText:as userTextLength:[as length]];
   }
 }
 
 void OmniboxViewIOS::OnDeleteBackward() {
-  if ([field_ text].length == 0) {
+  if ([field_.get().textField text].length == 0) {
     // If the user taps backspace while the pre-edit text is showing,
     // OnWillChange is invoked before this method and sets the text to an empty
     // string, so use the |clearingPreEditText| to determine if the chip should
     // be cleared or not.
-    if ([field_ clearingPreEditText]) {
+    if ([field_.get().textField clearingPreEditText]) {
       // In the case where backspace is tapped while in pre-edit mode,
       // OnWillChange is called but OnDidChange is never called so ensure the
       // clearingPreEditText flag is set to false again.
-      [field_ setClearingPreEditText:NO];
+      [field_.get().textField setClearingPreEditText:NO];
       // Explicitly set the input-in-progress flag. Normally this is set via
       // in model()->OnAfterPossibleChange, but in this case the text has been
       // set to the empty string by OnWillChange so when OnAfterPossibleChange
@@ -742,22 +750,22 @@ void OmniboxViewIOS::ClearText() {
 
   // Ensure omnibox is first responder. This will bring up the keyboard so the
   // user can start typing a new query.
-  if (![field_ isFirstResponder])
-    [field_ becomeFirstResponder];
-  if ([field_ text].length == 0) {
-    // If |field_| is empty, remove the query refinement chip.
+  if (![field_.get().textField isFirstResponder])
+    [field_.get().textField becomeFirstResponder];
+  if ([field_.get().textField text].length == 0) {
+    // If |field_.get().textField| is empty, remove the query refinement chip.
     RemoveQueryRefinementChip();
   } else {
     // Otherwise, just remove the text in the omnibox.
     // Since iOS 6, calling |setText| does not trigger |textDidChange| so it
     // must be called explicitly.
     OnClear();
-    [field_ setText:@""];
+    [field_.get().textField setText:@""];
     OnDidChange(YES);
   }
   // Calling OnDidChange() can trigger a scroll event, which removes focus from
   // the omnibox.
-  [field_ becomeFirstResponder];
+  [field_.get().textField becomeFirstResponder];
 }
 
 void OmniboxViewIOS::RemoveQueryRefinementChip() {
@@ -771,7 +779,8 @@ bool OmniboxViewIOS::ShouldIgnoreUserInputDueToPendingVoiceSearch() {
   // http://www.fileformat.info/info/unicode/char/fffc/index.htm
   NSString* objectReplacementChar =
       [NSString stringWithFormat:@"%C", (unichar)0xFFFC];
-  return [[field_ text] rangeOfString:objectReplacementChar].length > 0;
+  return [[field_.get().textField text] rangeOfString:objectReplacementChar]
+             .length > 0;
 }
 
 void OmniboxViewIOS::SetLeftImage(int imageId) {
@@ -779,7 +788,7 @@ void OmniboxViewIOS::SetLeftImage(int imageId) {
 }
 
 void OmniboxViewIOS::HideKeyboardAndEndEditing() {
-  [field_ resignFirstResponder];
+  [field_.get().textField resignFirstResponder];
 
   // Handle the case where a phone-format ombniox has already resigned first
   // responder because the popup was scrolled.  If the model still has focus,
@@ -791,11 +800,11 @@ void OmniboxViewIOS::HideKeyboardAndEndEditing() {
 }
 
 void OmniboxViewIOS::HideKeyboard() {
-  [field_ resignFirstResponder];
+  [field_.get().textField resignFirstResponder];
 }
 
 void OmniboxViewIOS::FocusOmnibox() {
-  [field_ becomeFirstResponder];
+  [field_.get().textField becomeFirstResponder];
 }
 
 BOOL OmniboxViewIOS::IsPopupOpen() {
@@ -818,7 +827,7 @@ int OmniboxViewIOS::GetIcon(bool offlinePage) const {
 }
 
 int OmniboxViewIOS::GetOmniboxTextLength() const {
-  return [field_ displayedText].length();
+  return [field_.get().textField displayedText].length();
 }
 
 void OmniboxViewIOS::EmphasizeURLComponents() {

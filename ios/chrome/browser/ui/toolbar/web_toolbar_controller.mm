@@ -401,23 +401,25 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
     SEL setInteractionsSelector = NSSelectorFromString(@"setInteractions:");
-    if ([_omniBox respondsToSelector:setInteractionsSelector]) {
-      [_omniBox performSelector:setInteractionsSelector withObject:@[]];
+    if ([_omniBox.textField respondsToSelector:setInteractionsSelector]) {
+      [_omniBox.textField performSelector:setInteractionsSelector
+                               withObject:@[]];
     }
 #pragma clang diagnostic pop
   }
   if (_incognito) {
-    [_omniBox setIncognito:YES];
-    [_omniBox
+    [_omniBox.textField setIncognito:YES];
+    [_omniBox.textField
         setSelectedTextBackgroundColor:[UIColor colorWithWhite:1 alpha:0.1]];
-    [_omniBox setPlaceholderTextColor:[UIColor colorWithWhite:1 alpha:0.5]];
+    [_omniBox.textField
+        setPlaceholderTextColor:[UIColor colorWithWhite:1 alpha:0.5]];
   } else if (!IsIPadIdiom()) {
     // Set placeholder text color to match fakebox placeholder text color when
     // on iPhone and in regular mode.
     UIColor* placeholderTextColor =
         [UIColor colorWithWhite:kiPhoneOmniboxPlaceholderColorBrightness
                           alpha:1.0];
-    [_omniBox setPlaceholderTextColor:placeholderTextColor];
+    [_omniBox.textField setPlaceholderTextColor:placeholderTextColor];
   }
   _backButton = [[UIButton alloc]
       initWithFrame:LayoutRectGetRect(kBackButtonFrame[idiom])];
@@ -636,7 +638,7 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
     [self.view addSubview:_determinateProgressView];
   }
 
-  ConfigureAssistiveKeyboardViews(_omniBox, kDotComTLD, self);
+  ConfigureAssistiveKeyboardViews(_omniBox.textField, kDotComTLD, self);
 
   // Add the handler to preload voice search when the voice search button is
   // tapped, but only if voice search is enabled.
@@ -835,7 +837,7 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
 }
 
 - (BOOL)isOmniboxFirstResponder {
-  return [_omniBox isFirstResponder];
+  return [_omniBox.textField isFirstResponder];
 }
 
 - (BOOL)showingOmniboxPopup {
@@ -857,8 +859,8 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
     [_stopButton setHidden:isCompactTabletView];
     [self updateToolbarState];
 
-    if ([_omniBox isFirstResponder]) {
-      [_omniBox reloadInputViews];
+    if ([_omniBox.textField isFirstResponder]) {
+      [_omniBox.textField reloadInputViews];
     }
 
     // Re-layout toolbar and omnibox.
@@ -1086,7 +1088,7 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
   [self.transitionLayers addObject:[_omniBox layer]];
   [[_omniBox layer] addAnimation:frameAnimation
                           forKey:kToolbarTransitionAnimationKey];
-  [_omniBox
+  [_omniBox.textField
       animateFadeWithStyle:((style == TOOLBAR_TRANSITION_STYLE_TO_STACK_VIEW)
                                 ? OMNIBOX_TEXT_FIELD_FADE_STYLE_OUT
                                 : OMNIBOX_TEXT_FIELD_FADE_STYLE_IN)];
@@ -1165,7 +1167,7 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
 
 - (void)reverseTransitionAnimations {
   [super reverseTransitionAnimations];
-  [_omniBox reverseFadeAnimations];
+  [_omniBox.textField reverseFadeAnimations];
 }
 
 - (void)cleanUpTransitionAnimations {
@@ -1175,7 +1177,7 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
   self.view.backgroundColor =
       [UIColor colorWithWhite:backgroundColorBrightness alpha:1.0];
   [super cleanUpTransitionAnimations];
-  [_omniBox cleanUpFadeAnimations];
+  [_omniBox.textField cleanUpFadeAnimations];
 }
 
 - (void)hideViewsForNewTabPage:(BOOL)hide {
@@ -1264,7 +1266,7 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
 
 - (void)focusOmnibox {
   if (![_webToolbar isHidden])
-    [_omniBox becomeFirstResponder];
+    [_omniBox.textField becomeFirstResponder];
 }
 
 - (void)cancelOmniboxEdit {
@@ -1379,7 +1381,7 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
     [self loadURLForQuery:result];
   } else {
     [self focusOmnibox];
-    [_omniBox insertTextWhileEditing:result];
+    [_omniBox.textField insertTextWhileEditing:result];
     // Notify the accessibility system to start reading the new contents of the
     // Omnibox.
     UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification,
@@ -1415,7 +1417,7 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
 
 - (void)keyPressed:(NSString*)title {
   NSString* text = [self updateTextForDotCom:title];
-  [_omniBox insertTextWhileEditing:text];
+  [_omniBox.textField insertTextWhileEditing:text];
 }
 
 #pragma mark - TabHistory Requirements
@@ -1539,7 +1541,7 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
   CGRect newReloadButtonFrame = LayoutRectGetRect(reloadButtonLayout);
   CGRect newOmniboxFrame = [self newOmniboxFrame];
   BOOL isPad = IsIPadIdiom();
-  BOOL growOmnibox = [_omniBox isFirstResponder];
+  BOOL growOmnibox = [_omniBox.textField isFirstResponder];
 
   // Animate buttons. Hide most of the buttons (standard set, back, forward)
   // for extended omnibox layout. Also show an extra cancel button so the
@@ -1576,13 +1578,11 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
     return;
 
   // Hide the clear and voice search buttons during omniBox frame animations.
-  [_omniBox setRightViewMode:UITextFieldViewModeNever];
+  // TODO: [_omniBox.textField setRightView:UITextFieldViewModeNever];
 
   // Make sure the accessory images are in the correct positions so they do not
   // move during the animation.
-  [_omniBox rightView].frame =
-      [_omniBox rightViewRectForBounds:newOmniboxFrame];
-  [_omniBox leftView].frame = [_omniBox leftViewRectForBounds:newOmniboxFrame];
+  // TODO: what to do here?
 
   CGRect materialBackgroundFrame = RectShiftedDownForStatusBar(newOmniboxFrame);
 
@@ -1591,15 +1591,16 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
   // Duration set to 0.0 prevents the animation during initial layout.
   [UIView animateWithDuration:((_initialLayoutComplete && !_unitTesting) ? 0.2
                                                                          : 0.0)
-      delay:0.0
-      options:UIViewAnimationOptionAllowUserInteraction
-      animations:^{
-        [_omniBox setFrame:newOmniboxFrame];
-        [_omniboxBackground setFrame:materialBackgroundFrame];
-      }
-      completion:^(BOOL finished) {
-        [_omniBox setRightViewMode:UITextFieldViewModeAlways];
-      }];
+                        delay:0.0
+                      options:UIViewAnimationOptionAllowUserInteraction
+                   animations:^{
+                     [_omniBox setFrame:newOmniboxFrame];
+                     [_omniboxBackground setFrame:materialBackgroundFrame];
+                   }
+                   completion:^(BOOL finished){
+                       // TODO: [_omniBox.textField
+                       // setRightViewMode:UITextFieldViewModeAlways];
+                   }];
 }
 
 - (void)setBackButtonEnabled:(BOOL)enabled {
@@ -1683,7 +1684,7 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
           (([_forwardButton state] & kButtonStateMask) << 3) |
           (([_cancelButton state] & kButtonStateMask) << 6);
   // Omnibox size & text it contains.
-  hash ^= [[_omniBox text] hash];
+  hash ^= [[_omniBox.textField text] hash];
   hash ^= static_cast<uint32_t>([_omniBox frame].size.width) << 16;
   hash ^= static_cast<uint32_t>([_omniBox frame].size.height) << 24;
   // Also note progress bar state.
@@ -1782,7 +1783,7 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
           ? fmax((kIPadToolbarY - frame.origin.y) - kScrollFadeDistance, 0)
           : -1 * frame.origin.y;
   CGFloat fraction = 1 - fmin(distanceOffscreen / kScrollFadeDistance, 1);
-  if (![_omniBox isFirstResponder])
+  if (![_omniBox.textField isFirstResponder])
     [self setStandardControlsAlpha:fraction];
 
   [_backButton setAlpha:fraction];
@@ -1868,7 +1869,7 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
   InterfaceIdiom idiom = IsIPadIdiom() ? IPAD_IDIOM : IPHONE_IDIOM;
   LayoutRect newOmniboxLayout;
   // Grow the omnibox if focused.
-  BOOL growOmnibox = [_omniBox isFirstResponder];
+  BOOL growOmnibox = [_omniBox.textField isFirstResponder];
   if (idiom == IPAD_IDIOM) {
     // When the omnibox is focused, the star button is hidden.
     [_starButton setAlpha:(growOmnibox ? 0 : 1)];
@@ -1932,7 +1933,7 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
     return [self layoutOmnibox];
 
   CGRect newOmniboxFrame = [self newOmniboxFrame];
-  BOOL growOmnibox = [_omniBox isFirstResponder];
+  BOOL growOmnibox = [_omniBox.textField isFirstResponder];
 
   // Determine the starting and ending bounds and position for |_omniBox|.
   // Increasing the height of _omniBox results in the text inside it jumping
@@ -2300,7 +2301,7 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
 
 - (void)animationDidStop:(CAAnimation*)anim finished:(BOOL)flag {
   if ([[anim valueForKey:@"id"] isEqual:@"resizeOmnibox"] &&
-      ![_omniBox isFirstResponder]) {
+      ![_omniBox.textField isFirstResponder]) {
     [_omniBox setRightView:nil];
   }
 }
@@ -2363,10 +2364,11 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
 
 - (NSString*)updateTextForDotCom:(NSString*)text {
   if ([text isEqualToString:kDotComTLD]) {
-    UITextRange* textRange = [_omniBox selectedTextRange];
-    NSInteger pos = [_omniBox offsetFromPosition:[_omniBox beginningOfDocument]
-                                      toPosition:textRange.start];
-    if (pos > 0 && [[_omniBox text] characterAtIndex:pos - 1] == '.')
+    UITextRange* textRange = [_omniBox.textField selectedTextRange];
+    NSInteger pos = [_omniBox.textField
+        offsetFromPosition:[_omniBox.textField beginningOfDocument]
+                toPosition:textRange.start];
+    if (pos > 0 && [[_omniBox.textField text] characterAtIndex:pos - 1] == '.')
       return [kDotComTLD substringFromIndex:1];
   }
   return text;
@@ -2397,7 +2399,7 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
 }
 
 - (std::string)getLocationText {
-  return base::UTF16ToUTF8([_omniBox displayedText]);
+  return base::UTF16ToUTF8([_omniBox.textField displayedText]);
 }
 
 - (BOOL)isLoading {

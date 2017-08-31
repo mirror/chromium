@@ -18,7 +18,7 @@ typedef enum {
 } OmniboxTextFieldFadeStyle;
 
 // UITextField subclass to allow for adjusting borders.
-@interface OmniboxTextFieldIOS : UITextField
+@interface AutocompleteTextField : UITextField
 
 // Initialize the omnibox with the given frame, font, text color, and tint
 // color.
@@ -65,19 +65,6 @@ typedef enum {
 // on older version of iOS.
 - (NSString*)markedText;
 
-// Display a placeholder image. There is no iOS concept of placeholder images,
-// circumventing it by using leftView property of UITextField and controlling
-// its visibility programatically.
-- (void)showPlaceholderImage;
-
-// Hide a placeholder image. There is no iOS concept of placeholder images,
-// circumventing it by using leftView property of UITextField and controlling
-// its visibility programatically.
-- (void)hidePlaceholderImage;
-
-// Select which placeholder image to display.
-- (void)setPlaceholderImage:(int)imageId;
-
 // Initial touch on the Omnibox triggers a "pre-edit" state. The current
 // URL is shown without any insertion point. First character typed replaces
 // the URL. A second touch turns on the insertion point. |preEditStaticLabel|
@@ -86,9 +73,6 @@ typedef enum {
 - (void)enterPreEditState;
 - (void)exitPreEditState;
 - (BOOL)isPreEditing;
-
-// Enable or disable the padlock button.
-- (void)enableLeftViewButton:(BOOL)isEnabled;
 
 // Returns the current selected text range as an NSRange.
 - (NSRange)selectedNSRange;
@@ -122,6 +106,38 @@ typedef enum {
 @property(nonatomic, strong) UIColor* placeholderTextColor;
 @property(nonatomic, assign) BOOL incognito;
 
+@end
+
+@interface OmniboxTextFieldIOS : UIView
+// Initialize the omnibox with the given frame, font, text color, and tint
+// color.
+- (instancetype)initWithFrame:(CGRect)frame
+                         font:(UIFont*)font
+                    textColor:(UIColor*)textColor
+                    tintColor:(UIColor*)tintColor NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)initWithCoder:(NSCoder*)aDecoder NS_UNAVAILABLE;
+
+@property(nonatomic, strong) AutocompleteTextField* textField;
+
+@property(nonatomic, strong) UIView* leftView;
+@property(nonatomic) UITextFieldViewMode leftViewMode;
+@property(nonatomic, strong) UIView* rightView;
+@property(nonatomic) UITextFieldViewMode rightViewMode;
+
+- (void)enableLeftViewButton:(BOOL)isEnabled;
+// Display a placeholder image. There is no iOS concept of placeholder images,
+// circumventing it by using leftView property of UITextField and controlling
+// its visibility programatically.
+- (void)showPlaceholderImage;
+
+// Hide a placeholder image. There is no iOS concept of placeholder images,
+// circumventing it by using leftView property of UITextField and controlling
+// its visibility programatically.
+- (void)hidePlaceholderImage;
+
+// Select which placeholder image to display.
+- (void)setPlaceholderImage:(int)imageId;
 @end
 
 // A category for defining new methods that access private ivars.
