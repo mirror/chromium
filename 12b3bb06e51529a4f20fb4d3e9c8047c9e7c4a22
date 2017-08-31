@@ -213,6 +213,24 @@
     },
     {
       "key": {
+        "uuid": "c376c4c3_a71a9805",
+        "filename": "chrome/test/data/local_ntp/voice_text_browsertest.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-31T16:31:11Z",
+      "side": 1,
+      "message": "Sorry, yes, I removed the 300ms timeout completely and tested voice search with and without  microphone permissions enabled. Added comment.",
+      "parentUuid": "fcc60685_c911df3f",
+      "revId": "12b3bb06e51529a4f20fb4d3e9c8047c9e7c4a22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e931f0a_e1c26973",
         "filename": "chrome/test/data/local_ntp/voice_text_browsertest.js",
         "patchSetId": 5
@@ -298,6 +316,24 @@
       "revId": "12b3bb06e51529a4f20fb4d3e9c8047c9e7c4a22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "488386ac_e4c8cd03",
+        "filename": "chrome/test/data/local_ntp/voice_text_browsertest.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-31T16:31:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b261d724_de54bb27",
+      "revId": "12b3bb06e51529a4f20fb4d3e9c8047c9e7c4a22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -404,6 +440,30 @@
       "revId": "12b3bb06e51529a4f20fb4d3e9c8047c9e7c4a22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06a676f7_0ba2d95c",
+        "filename": "chrome/test/data/local_ntp/voice_text_browsertest.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-31T16:31:11Z",
+      "side": 1,
+      "message": "Added a TODO, you\u0027re right, we should get rid of the string comparison.",
+      "parentUuid": "f39178f8_56f6ce65",
+      "range": {
+        "startLine": 200,
+        "startChar": 42,
+        "endLine": 200,
+        "endChar": 0
+      },
+      "revId": "12b3bb06e51529a4f20fb4d3e9c8047c9e7c4a22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
