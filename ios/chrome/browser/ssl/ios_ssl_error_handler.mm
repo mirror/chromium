@@ -49,8 +49,8 @@ void IOSSSLErrorHandler::HandleSSLError(
     const GURL& request_url,
     bool overridable,
     const base::Callback<void(bool)>& callback) {
-  DCHECK(!web_state->IsShowingWebInterstitial());
-
+  // TODO(crbug.com/760873): Adapt the error handle for WebStates not attached
+  // to a tab (e.g. webStates used to save offline content for Reading List).
   if (!base::FeatureList::IsEnabled(kCaptivePortalFeature)) {
     IOSSSLErrorHandler::RecordCaptivePortalState(web_state);
     IOSSSLErrorHandler::ShowSSLInterstitial(web_state, cert_error, info,
@@ -66,22 +66,24 @@ void IOSSSLErrorHandler::HandleSSLError(
 
   CaptivePortalDetectorTabHelper* tab_helper =
       CaptivePortalDetectorTabHelper::FromWebState(web_state);
-  // TODO(crbug.com/754378): The captive portal detection may take a very long
-  // time. It should timeout and default to displaying the SSL error page.
-  tab_helper->detector()->DetectCaptivePortal(
-      GURL(CaptivePortalDetector::kDefaultURL),
-      base::BindBlockArc(^(const CaptivePortalDetector::Results& results) {
+  if (tab_helper) {
+    // TODO(crbug.com/754378): The captive portal detection may take a very long
+    // time. It should timeout and default to displaying the SSL error page.
+    tab_helper->detector()->DetectCaptivePortal(
+        GURL(CaptivePortalDetector::kDefaultURL),
+        base::BindBlockArc(^(const CaptivePortalDetector::Results& results) {
 
-        IOSSSLErrorHandler::LogCaptivePortalResult(results.result);
-        if (results.result == captive_portal::RESULT_BEHIND_CAPTIVE_PORTAL) {
-          IOSSSLErrorHandler::ShowCaptivePortalInterstitial(
-              web_state, url, results.landing_url, callback);
-        } else {
-          IOSSSLErrorHandler::ShowSSLInterstitial(
-              web_state, cert_error, ssl_info, url, overridable, callback);
-        }
-      }),
-      NO_TRAFFIC_ANNOTATION_YET);
+          IOSSSLErrorHandler::LogCaptivePortalResult(results.result);
+          if (results.result == captive_portal::RESULT_BEHIND_CAPTIVE_PORTAL) {
+            IOSSSLErrorHandler::ShowCaptivePortalInterstitial(
+                web_state, url, results.landing_url, callback);
+          } else {
+            IOSSSLErrorHandler::ShowSSLInterstitial(
+                web_state, cert_error, ssl_info, url, overridable, callback);
+          }
+        }),
+        NO_TRAFFIC_ANNOTATION_YET);
+  }
 }
 
 // static
@@ -127,6 +129,9 @@ void IOSSSLErrorHandler::ShowCaptivePortalInterstitial(
 void IOSSSLErrorHandler::RecordCaptivePortalState(web::WebState* web_state) {
   CaptivePortalDetectorTabHelper* tab_helper =
       CaptivePortalDetectorTabHelper::FromWebState(web_state);
+  if (!tab_helper) {
+    return;
+  }
   tab_helper->detector()->DetectCaptivePortal(
       GURL(CaptivePortalDetector::kDefaultURL),
       base::BindBlockArc(^(const CaptivePortalDetector::Results& results) {
