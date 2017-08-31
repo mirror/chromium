@@ -46,6 +46,30 @@
       "revId": "6498f7e81aea225605fea50c7203d9e7bd215787",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6a9445f7_b8e214a8",
+        "filename": "components/ntp_snippets/mock_content_suggestions_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-08-31T21:48:21Z",
+      "side": 1,
+      "message": "nit: can we make it a pointer instead? As in google3 C++ we typically don\u0027t use non-const references as parameters.",
+      "parentUuid": "6bb8dd7f_aa8c1470",
+      "range": {
+        "startLine": 60,
+        "startChar": 37,
+        "endLine": 60,
+        "endChar": 38
+      },
+      "revId": "6498f7e81aea225605fea50c7203d9e7bd215787",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
