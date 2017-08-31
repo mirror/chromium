@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "af971915_2733b6b4",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field_paste_delegate.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-08-31T17:56:01Z",
+      "side": 1,
+      "message": "git cl format output. I\u0027m adding a manual change for slightly less uglyness.",
+      "parentUuid": "157f96d7_ca84200d",
+      "revId": "bda76014f5195f537da1c8eb9b81355187fbbb30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a05520c_5f6b6b32",
         "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field_paste_delegate.mm",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2138488b_ce748bae",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field_paste_delegate.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-08-31T17:56:01Z",
+      "side": 1,
+      "message": "Not in this case, since I need UITextPasteConfigurationSupporting type to be defined in method signature (not body), and compiler complains.",
+      "parentUuid": "3a05520c_5f6b6b32",
+      "revId": "bda76014f5195f537da1c8eb9b81355187fbbb30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a663c6d_a67e902b",
         "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field_paste_delegate.mm",
         "patchSetId": 7
@@ -50,6 +86,24 @@
       "revId": "bda76014f5195f537da1c8eb9b81355187fbbb30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47a7466b_a311bf85",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field_paste_delegate.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-08-31T17:56:01Z",
+      "side": 1,
+      "message": "I\u0027m reasonably sure that there must be something there, but I agree and add code for safety.",
+      "parentUuid": "6a663c6d_a67e902b",
+      "revId": "bda76014f5195f537da1c8eb9b81355187fbbb30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
