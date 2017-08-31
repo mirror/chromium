@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5538d57_3f887251",
+        "filename": "components/safe_browsing/browser/BUILD.gn",
+        "patchSetId": 15
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-31T01:48:07Z",
+      "side": 1,
+      "message": "deps doesn\u0027t work? I wonder why.",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 13
+      },
+      "revId": "73b8ea4c6c8cdbe9f36fc33eb58e9331b25f4fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8353649c_a0d8d2d9",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-31T01:48:07Z",
+      "side": 1,
+      "message": "I\u0027m sorry but I think this is not going to work because of https://google.github.io/styleguide/cppguide.html#Static_and_Global_Variables\n\nYour CL might end up getting reverted. A safer approach might be to have a singleton object of class. Something like:\n\n// Add comments everywhere.\n\nclass WebUIInfoSingleton {\npublic:\n// static\nWebUIInfoSingleton* WebUIInfoSingleton::GetInstance() {\n  return base::Singleton\u003cWebUIInfoSingleton\u003e::get();\n}\n\nconst std::vector\u003cstd::unique_ptr\u003cClientSafeBrowsingReportRequest\u003e\u003e\u0026 reports_sent() const {\n  return reports_sent_;\n}\n\nvoid ClearReportsSent() {\n...\n}\n\nvoid AddToReportsSent(std::unique_ptr\u003cClientSafeBrowsingReportRequest\u003e report_request) {\n  reports_sent_.push_back(std::move(report_request));\n}\n\nconst std::vector\u003cconst SafeBrowsingUIHandler*\u003e\u0026 webui_instances() const {\n  return webui_instances_;\n}\n\nvoid RegisterWebUIInstance(const SafeBrowsingUIHandler* webui) {\n  webui_instances_.push_back(webui);\n}\n\nvoid UnregisterWebUIInstance(const SafeBrowsingUIHandler* webui) {\n  std::erase(...)\n\n  if (webui_instances_.empty()) {\n    ClearReportsSent();\n  }\n}\n\nprivate:\nWebUIInfoSingleton() \u003d default;\n~WebUIInfoSingleton() \u003d default;\n\n  friend struct base::DefaultSingletonTraits\u003cWebUISingleton\u003e;\n\n  std::vector\u003cstd::unique_ptr\u003cClientSafeBrowsingReportRequest\u003e\u003e reports_sent_;\n\n  std::vector\u003cconst SafeBrowsingUIHandler*\u003e webui_instances_;\n}\n\nSee: https://cs.chromium.org/chromium/src/components/autofill/core/browser/country_names.h for Singleton usage.\n\nAnd then, in SafeBrowsingUIHandler::SafeBrowsingUIHandler:\nWebUIInfoSingleton::GetInstance()-\u003eRegisterWebUIInstance(this);\n\nIn SafeBrowsingUIHandler::~SafeBrowsingUIHandler():\nWebUIInfoSingleton::GetInstance()-\u003eUnregisterWebUIInstance(this);\n\nIn SafeBrowsingUIHandler::AddNewThreatDetails():\nWebUIInfoSingleton::GetInstance()-\u003eAddToReportsSent(std::move())\n\n...\n\nand so on. WDYT?\n\nI apologize for leading you astray earlier.",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 70
+      },
+      "revId": "73b8ea4c6c8cdbe9f36fc33eb58e9331b25f4fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a8ada83_468f414c",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-31T01:48:07Z",
+      "side": 1,
+      "message": "const pointer.",
+      "range": {
+        "startLine": 241,
+        "startChar": 4,
+        "endLine": 241,
+        "endChar": 35
+      },
+      "revId": "73b8ea4c6c8cdbe9f36fc33eb58e9331b25f4fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9db5d0d_358340a7",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-31T01:48:07Z",
+      "side": 1,
+      "message": "nit: the following would reduce indentation:\n\nif (threat_details_list.empty()) {\n  return;\n}\nfor (...)",
+      "range": {
+        "startLine": 375,
+        "startChar": 2,
+        "endLine": 375,
+        "endChar": 37
+      },
+      "revId": "73b8ea4c6c8cdbe9f36fc33eb58e9331b25f4fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa0b6662_cd17c4d7",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-31T01:48:07Z",
+      "side": 1,
+      "message": "this pointer should also be marked const.\nCan the function itself be marked const?",
+      "range": {
+        "startLine": 388,
+        "startChar": 4,
+        "endLine": 388,
+        "endChar": 35
+      },
+      "revId": "73b8ea4c6c8cdbe9f36fc33eb58e9331b25f4fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68e53a00_809bf4d6",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-31T01:48:07Z",
+      "side": 1,
+      "message": "message (drop \u0027s\u0027)\n\nThis method is called when a new ping is sent. It parses a ClientSafeBrowsingReportRequest and notifies the JS of the new ping.",
+      "range": {
+        "startLine": 50,
+        "startChar": 31,
+        "endLine": 50,
+        "endChar": 39
+      },
+      "revId": "73b8ea4c6c8cdbe9f36fc33eb58e9331b25f4fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e464601e_0518db04",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-31T01:48:07Z",
+      "side": 1,
+      "message": "I think calling this method something like: NotifyThreatDetailsJsListener would make it much more understandable.",
+      "range": {
+        "startLine": 52,
+        "startChar": 7,
+        "endLine": 52,
+        "endChar": 29
+      },
+      "revId": "73b8ea4c6c8cdbe9f36fc33eb58e9331b25f4fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "780aab66_d82a3e78",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-31T01:48:07Z",
+      "side": 1,
+      "message": "|threat_detail| is incorrect. It should be called |report_request| or something like that.\nSame for other methods.",
+      "range": {
+        "startLine": 52,
+        "startChar": 63,
+        "endLine": 52,
+        "endChar": 76
+      },
+      "revId": "73b8ea4c6c8cdbe9f36fc33eb58e9331b25f4fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
