@@ -15,6 +15,7 @@
 #include "base/location.h"
 #include "base/logging.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/threading/thread_restrictions.h"
 #include "build/build_config.h"
 #include "chrome/common/chrome_constants.h"
 #include "content/public/browser/browser_thread.h"
@@ -29,7 +30,7 @@ namespace {
 
 #if defined(OS_WIN)
 base::File::Error ScanFile(const base::FilePath& dest_platform_path) {
-  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
+  base::ThreadRestrictions::AssertIOAllowed();
 
   base::win::ScopedComPtr<IAttachmentExecute> attachment_services;
   HRESULT hr = ::CoCreateInstance(CLSID_AttachmentServices, nullptr, CLSCTX_ALL,
@@ -65,11 +66,11 @@ void AVScanningFileValidator::StartPostWriteValidation(
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
 #if defined(OS_WIN)
-  BrowserThread::PostTaskAndReplyWithResult(
-      BrowserThread::FILE,
-      FROM_HERE,
-      base::Bind(&ScanFile, dest_platform_path),
-      result_callback);
+  scoped_refptr<SingleThreadTaskRunner> runner =
+      base::CreateCOMSTATaskRunnerWithTraits(
+          {base::MayBlock(), base::TaskPriority::USER_VISIBLE});
+  runner->PostTaskAndReplyWithResult(
+      FROM_HERE, base::Bind(&ScanFile, dest_platform_path), result_callback);
 #else
   result_callback.Run(base::File::FILE_OK);
 #endif
