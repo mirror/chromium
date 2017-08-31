@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c379a39_21b63292",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-31T17:35:52Z",
+      "side": 1,
+      "message": "I can\u0027t get rid of this yet because the OOBE code relies on an AccessibilityStatusSubscription to watch for updates. Eventually that code should just monitor prefs directly.",
+      "revId": "436e7865e143aa6b92c3aa0b357174ac15b9ec52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
