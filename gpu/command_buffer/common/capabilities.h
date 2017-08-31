@@ -6,6 +6,7 @@
 #define GPU_COMMAND_BUFFER_COMMON_CAPABILITIES_H_
 
 #include <stdint.h>
+#include <vector>
 
 #include "gpu/gpu_export.h"
 
@@ -183,6 +184,10 @@ struct GPU_EXPORT Capabilities {
 
   int major_version = 2;
   int minor_version = 0;
+
+#if defined(USE_OZONE)
+  std::vector<std::pair<int32_t, uint64_t>> buffer_formats_with_modifiers;
+#endif
 };
 
 }  // namespace gpu

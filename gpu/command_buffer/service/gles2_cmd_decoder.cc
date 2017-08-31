@@ -105,6 +105,11 @@
 #include <OpenGL/CGLIOSurface.h>
 #endif
 
+#if defined(USE_OZONE)
+#include "ui/ozone/public/ozone_platform.h"
+#include "ui/ozone/public/surface_factory_ozone.h"
+#endif
+
 namespace gpu {
 namespace gles2 {
 
@@ -3945,6 +3950,13 @@ Capabilities GLES2DecoderImpl::GetCapabilities() {
       group_->gpu_preferences().enable_threaded_texture_mailboxes) {
     caps.disable_2d_canvas_copy_on_write = true;
   }
+
+#if defined(USE_OZONE)
+  caps.buffer_formats_with_modifiers =
+      ui::OzonePlatform::GetInstance()
+          ->GetSurfaceFactoryOzone()
+          ->GetSupportedFormatsWithModifiers(gfx::kNullAcceleratedWidget);
+#endif
 
   return caps;
 }

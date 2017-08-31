@@ -14,6 +14,7 @@
 #include "third_party/khronos/EGL/egl.h"
 #include "ui/gfx/buffer_format_util.h"
 #include "ui/gfx/native_pixmap.h"
+#include "ui/gl/gl_image_native_pixmap.h"
 #include "ui/gl/gl_surface_egl.h"
 #include "ui/ozone/common/egl_util.h"
 #include "ui/ozone/common/gl_ozone_egl.h"
@@ -27,6 +28,10 @@
 #include "ui/ozone/platform/drm/gpu/proxy_helpers.h"
 #include "ui/ozone/platform/drm/gpu/screen_manager.h"
 #include "ui/ozone/public/surface_ozone_canvas.h"
+
+#ifndef DRM_FORMAT_MOD_INVALID
+#define DRM_FORMAT_MOD_INVALID ((1ULL << 56) - 1)
+#endif
 
 namespace ui {
 
@@ -138,6 +143,51 @@ std::vector<gfx::BufferFormat> GbmSurfaceFactory::GetScanoutFormats(
   std::vector<gfx::BufferFormat> scanout_formats;
   drm_thread_proxy_->GetScanoutFormats(widget, &scanout_formats);
   return scanout_formats;
+}
+
+std::vector<std::pair<int32_t, uint64_t>>
+GbmSurfaceFactory::GetSupportedFormatsWithModifiers(
+    gfx::AcceleratedWidget widget) {
+  if (!formats_with_modifiers_.empty())
+    return formats_with_modifiers_;
+
+  std::vector<std::pair<int32_t, uint64_t>> drm_combinations;
+  std::vector<std::pair<int32_t, uint64_t>> egl_combinations;
+
+  drm_thread_proxy_->GetSupportedFormatsWithModifiers(widget,
+                                                      &drm_combinations);
+  egl_combinations = gl::GLImageNativePixmap::QueryDmaBufFormatsWithModifiers();
+
+  std::sort(drm_combinations.begin(), drm_combinations.end());
+  std::sort(egl_combinations.begin(), egl_combinations.end());
+
+  // NOTE(varad): If either of the buffer consumers we've queried (DRM or
+  // EGL) returns the DRM_FORMAT_MOD_INVALID modifier with a common format,
+  // we must advertise only the invalid modifier since we cannot guarantee a
+  // modifier in that case. Perform a manual intersection.
+  size_t i = 0, j = 0;
+  while (i < egl_combinations.size() && j < drm_combinations.size()) {
+    if (egl_combinations[i].first == drm_combinations[j].first) {
+      bool has_invalid =
+          (egl_combinations[i].second == DRM_FORMAT_MOD_INVALID ||
+           drm_combinations[j].second == DRM_FORMAT_MOD_INVALID);
+      if (has_invalid ||
+          egl_combinations[i].second == drm_combinations[j].second) {
+        formats_with_modifiers_.push_back(std::pair<int32_t, uint64_t>(
+            egl_combinations[i].first,
+            has_invalid ? DRM_FORMAT_MOD_INVALID : egl_combinations[i].second));
+        i++;
+        j++;
+        continue;
+      }
+    }
+    if (egl_combinations[i] < drm_combinations[j])
+      i++;
+    else
+      j++;
+  }
+
+  return formats_with_modifiers_;
 }
 
 scoped_refptr<gfx::NativePixmap> GbmSurfaceFactory::CreateNativePixmap(

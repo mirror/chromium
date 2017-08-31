@@ -81,6 +81,13 @@ class OZONE_BASE_EXPORT SurfaceFactoryOzone {
   virtual std::vector<gfx::BufferFormat> GetScanoutFormats(
       gfx::AcceleratedWidget widget);
 
+  // Returns supported fourcc-modifier combinations for a particular display
+  // controller connected to |widget|, or for the default display controller
+  // in case |widget| == kNullAcceleratedWidget. The modifier code adheres
+  // to DRM_FORMAT_MOD_* tokens from drm_fourcc.h.
+  virtual std::vector<std::pair<int32_t, uint64_t>>
+  GetSupportedFormatsWithModifiers(gfx::AcceleratedWidget widget);
+
   // Create a single native buffer to be used for overlay planes or zero copy
   // for |widget| representing a particular display controller or default
   // display controller for kNullAcceleratedWidget.

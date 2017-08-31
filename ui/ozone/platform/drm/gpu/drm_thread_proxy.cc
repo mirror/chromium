@@ -67,6 +67,15 @@ void DrmThreadProxy::GetScanoutFormats(
                  widget, scanout_formats));
 }
 
+void DrmThreadProxy::GetSupportedFormatsWithModifiers(
+    gfx::AcceleratedWidget widget,
+    std::vector<std::pair<int32_t, uint64_t>>* combinations) {
+  PostSyncTask(
+      drm_thread_.task_runner(),
+      base::Bind(&DrmThread::GetSupportedFormatsWithModifiers,
+                 base::Unretained(&drm_thread_), widget, combinations));
+}
+
 void DrmThreadProxy::AddBindingCursorDevice(
     ozone::mojom::DeviceCursorRequest request) {
   drm_thread_.task_runner()->PostTask(

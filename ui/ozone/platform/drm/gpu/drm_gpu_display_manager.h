@@ -40,6 +40,13 @@ class DrmGpuDisplayManager {
   void GetScanoutFormats(gfx::AcceleratedWidget widget,
                          std::vector<gfx::BufferFormat>* scanout_formats);
 
+  // Returns supported fourcc-modifier combinations for a particular display
+  // controller connected to |widget|, or for the default display controller
+  // in case |widget| == kNullAcceleratedWidget.
+  void GetSupportedFormatsWithModifiers(
+      gfx::AcceleratedWidget widget,
+      std::vector<std::pair<int32_t, uint64_t>>* combinations);
+
   // Takes/releases the control of the DRM devices.
   bool TakeDisplayControl();
   void RelinquishDisplayControl();

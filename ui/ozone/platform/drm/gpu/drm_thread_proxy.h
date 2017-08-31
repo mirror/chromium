@@ -46,6 +46,9 @@ class DrmThreadProxy {
 
   void GetScanoutFormats(gfx::AcceleratedWidget widget,
                          std::vector<gfx::BufferFormat>* scanout_formats);
+  void GetSupportedFormatsWithModifiers(
+      gfx::AcceleratedWidget widget,
+      std::vector<std::pair<int32_t, uint64_t>>* combinations);
 
   void AddBindingCursorDevice(ozone::mojom::DeviceCursorRequest request);
   void AddBindingDrmDevice(ozone::mojom::DrmDeviceRequest request);

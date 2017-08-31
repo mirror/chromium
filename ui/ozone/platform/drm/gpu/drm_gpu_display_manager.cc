@@ -15,6 +15,10 @@
 #include "ui/ozone/platform/drm/gpu/drm_display.h"
 #include "ui/ozone/platform/drm/gpu/screen_manager.h"
 
+#ifndef DRM_FORMAT_MOD_INVALID
+#define DRM_FORMAT_MOD_INVALID ((1ULL << 56) - 1)
+#endif
+
 namespace ui {
 
 namespace {
@@ -110,6 +114,33 @@ void DrmGpuDisplayManager::GetScanoutFormats(
           ->GetSupportedFormats();
   for (auto& fourcc : fourcc_formats)
     scanout_formats->push_back(GetBufferFormatFromFourCCFormat(fourcc));
+}
+
+void DrmGpuDisplayManager::GetSupportedFormatsWithModifiers(
+    gfx::AcceleratedWidget widget,
+    std::vector<std::pair<int32_t, uint64_t>>* combinations) {
+  HardwareDisplayPlaneManager* plane_manager =
+      drm_device_manager_->GetDrmDevice(widget)->plane_manager();
+  const std::vector<uint32_t>& fourcc_formats =
+      plane_manager->GetSupportedFormats();
+
+  for (auto& format : fourcc_formats) {
+    const std::vector<std::unique_ptr<HardwareDisplayPlane>>& planes =
+        plane_manager->planes();
+    for (auto& plane : planes) {
+      if (plane->type() != HardwareDisplayPlane::kPrimary)
+        continue;
+
+      const std::vector<uint64_t>& drm_modifiers =
+          plane->ModifiersForFormat(format);
+      if (drm_modifiers.empty())
+        combinations->push_back(
+            std::pair<int32_t, uint64_t>(format, DRM_FORMAT_MOD_INVALID));
+      for (auto& modifier : drm_modifiers)
+        combinations->push_back(std::pair<int32_t, uint64_t>(format, modifier));
+      break;
+    }
+  }
 }
 
 bool DrmGpuDisplayManager::TakeDisplayControl() {
