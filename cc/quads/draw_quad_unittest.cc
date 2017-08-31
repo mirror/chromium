@@ -11,7 +11,6 @@
 #include "base/bind.h"
 #include "base/compiler_specific.h"
 #include "cc/base/filter_operations.h"
-#include "cc/base/math_util.h"
 #include "cc/quads/debug_border_draw_quad.h"
 #include "cc/quads/largest_draw_quad.h"
 #include "cc/quads/picture_draw_quad.h"
