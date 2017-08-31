@@ -769,7 +769,7 @@ void FrameFetchContext::AddClientHintsIfNecessary(
     return;
 
   if (ShouldSendClientHint(mojom::WebClientHintsType::kDeviceMemory,
-                           hints_preferences)) {
+                           hints_preferences, request.Url())) {
     request.AddHTTPHeaderField(
         "Device-Memory",
         AtomicString(
@@ -777,11 +777,13 @@ void FrameFetchContext::AddClientHintsIfNecessary(
   }
 
   float dpr = GetDevicePixelRatio();
-  if (ShouldSendClientHint(mojom::WebClientHintsType::kDpr, hints_preferences))
+  if (ShouldSendClientHint(mojom::WebClientHintsType::kDpr, hints_preferences,
+                           request.Url())) {
     request.AddHTTPHeaderField("DPR", AtomicString(String::Number(dpr)));
+  }
 
   if (ShouldSendClientHint(mojom::WebClientHintsType::kResourceWidth,
-                           hints_preferences)) {
+                           hints_preferences, request.Url())) {
     if (resource_width.is_set) {
       float physical_width = resource_width.width * dpr;
       request.AddHTTPHeaderField(
@@ -790,7 +792,7 @@ void FrameFetchContext::AddClientHintsIfNecessary(
   }
 
   if (ShouldSendClientHint(mojom::WebClientHintsType::kViewportWidth,
-                           hints_preferences) &&
+                           hints_preferences, request.Url()) &&
       !IsDetached() && GetFrame()->View()) {
     request.AddHTTPHeaderField(
         "Viewport-Width",
@@ -1083,9 +1085,13 @@ float FrameFetchContext::GetDevicePixelRatio() const {
 
 bool FrameFetchContext::ShouldSendClientHint(
     mojom::WebClientHintsType type,
-    const ClientHintsPreferences& hints_preferences) const {
+    const ClientHintsPreferences& hints_preferences,
+    const KURL& kurl) const {
+  LOG(WARNING) << "xxx ShouldSendClientHint type=" << static_cast<int>(type);
   return GetClientHintsPreferences().ShouldSend(type) ||
-         hints_preferences.ShouldSend(type);
+         hints_preferences.ShouldSend(type) ||
+         GetContentSettingsClient()->AllowClientHintFromSource(
+             false /* disabled by default */, type, kurl);
 }
 
 void FrameFetchContext::ParseAndPersistClientHints(

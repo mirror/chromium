@@ -95,6 +95,9 @@ class ContentSettingsObserver
       const blink::WebEnabledClientHints& enabled_client_hints,
       base::TimeDelta duration,
       const blink::WebURL& url) override;
+  bool AllowClientHintFromSource(bool enabled_per_settings,
+                                 blink::mojom::WebClientHintsType type,
+                                 const blink::WebURL& url) override;
 
   bool allow_running_insecure_content() const {
     return allow_running_insecure_content_;
