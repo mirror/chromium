@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a7354419_45703a4d",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1111,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-31T04:03:43Z",
+      "side": 1,
+      "message": "You could also link to the crbug and have the bug description link to the design doc. crbug tends to keep all the context in place.",
+      "parentUuid": "74877162_cba35d19",
+      "revId": "9ccbffeab36a3b56fe1bc15a7ff463a03c842b38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24de391d_1c98fe30",
         "filename": "content/renderer/service_worker/service_worker_context_client.cc",
         "patchSetId": 3
