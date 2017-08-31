@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "f2e7ad41_fd4e0984",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-31T15:51:07Z",
+      "side": 1,
+      "message": "missing dependency on https://chromium-review.googlesource.com/c/chromium/src/+/645979 ?",
+      "revId": "bf7c4472cfeebb262d4794a427b6dfe38fd652cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb48b1da_24b767ca",
         "filename": "components/ntp_snippets/contextual/contextual_content_suggestions_service.cc",
         "patchSetId": 1
