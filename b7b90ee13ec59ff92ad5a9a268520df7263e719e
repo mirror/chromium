@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57d55e3a_e9ed1d75",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1265,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-08-31T01:28:57Z",
+      "side": 1,
+      "message": "We should do this only if !MemoryDumpLevelOfDetail::BACKGROUND.",
+      "range": {
+        "startLine": 1265,
+        "startChar": 12,
+        "endLine": 1265,
+        "endChar": 21
+      },
+      "revId": "b7b90ee13ec59ff92ad5a9a268520df7263e719e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
