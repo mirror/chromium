@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82c56ae8_b8645425",
+        "filename": "ash/system/web_notification/web_notification_tray.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-31T14:16:59Z",
+      "side": 1,
+      "message": "nit: do you need to release() here? I think the erase() below will free the memory.",
+      "revId": "8867e4447d2aceb42a33d8903011cb0efe82d4da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e3f22f6_24650610",
+        "filename": "ash/system/web_notification/web_notification_tray_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-31T14:16:59Z",
+      "side": 1,
+      "message": "nit: use gfx::test::CreateImage() instead.",
+      "revId": "8867e4447d2aceb42a33d8903011cb0efe82d4da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fa29fb4_5a16fe49",
+        "filename": "ash/system/web_notification/web_notification_tray_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-31T14:16:59Z",
+      "side": 1,
+      "message": "nit: base::MakeUnique (or std::make_unique, I think we have that now)",
+      "revId": "8867e4447d2aceb42a33d8903011cb0efe82d4da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3eaa5468_0b18918c",
+        "filename": "ash/system/web_notification/web_notification_tray_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-31T14:16:59Z",
+      "side": 1,
+      "message": "Nice test. Easy to read.",
+      "revId": "8867e4447d2aceb42a33d8903011cb0efe82d4da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
