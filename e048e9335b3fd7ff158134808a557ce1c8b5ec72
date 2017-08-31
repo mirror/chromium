@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0e8be98_f531d736",
+        "filename": "base/location.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-31T17:09:01Z",
+      "side": 1,
+      "message": "Hm, the most common way is without http, just TODO(crbug.com/###)",
+      "range": {
+        "startLine": 28,
+        "startChar": 10,
+        "endLine": 28,
+        "endChar": 17
+      },
+      "revId": "e048e9335b3fd7ff158134808a557ce1c8b5ec72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
