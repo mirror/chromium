@@ -16,6 +16,24 @@
       "revId": "c57e7d680c7a7c39d8e4e03fb12175e15b999e82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfc8bd56_154fb630",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-31T17:20:58Z",
+      "side": 1,
+      "message": "Because when we pause vsync, the controls don\u0027t update to the correct state because the next pending tree isn\u0027t sent until we try to show the controls again. So if we let the controls update to the correct state when entering VR, the update when we exit VR works properly.\n\nThere may be some other way to fix this race, but the controls code is very confusing.",
+      "parentUuid": "c1baf0ba_8100c21f",
+      "revId": "c57e7d680c7a7c39d8e4e03fb12175e15b999e82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
