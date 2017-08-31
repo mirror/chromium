@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4784f4b_c3c347cd",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-08-31T18:01:57Z",
+      "side": 1,
+      "message": "I wonder if it\u0027s worth logging if we see the pref set to true and we get here.",
+      "revId": "e4e92b4f5d723f7f34ce4d1ca79e9eeae47b071d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
