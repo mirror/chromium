@@ -1,0 +1,326 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "108eb0b9_b7572c39",
+        "filename": "net/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 2660,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-31T16:11:18Z",
+      "side": 1,
+      "message": "Suggest adding an \"is_using_remote_test_server \u003d is_android || is_fuchsia\" up top, and using it here and for the tests.  Makes it a little clearer what\u0027s going on here.",
+      "range": {
+        "startLine": 2660,
+        "startChar": 18,
+        "endLine": 2660,
+        "endChar": 20
+      },
+      "revId": "4c03e9fdee5d2b54d25948e522745e56a5884945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a0d39c0_b8364b29",
+        "filename": "net/test/spawned_test_server/base_test_server.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-31T16:11:18Z",
+      "side": 1,
+      "message": "suggest server_data() -\u003e |server_data_| (Since server_data itself is also an argument, makes reading a bit weird)",
+      "range": {
+        "startLine": 374,
+        "startChar": 54,
+        "endLine": 374,
+        "endChar": 58
+      },
+      "revId": "4c03e9fdee5d2b54d25948e522745e56a5884945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d242d87f_2913f766",
+        "filename": "net/test/spawned_test_server/base_test_server.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-31T16:11:18Z",
+      "side": 1,
+      "message": "nit:  |host_port_pair_|",
+      "range": {
+        "startLine": 376,
+        "startChar": 29,
+        "endLine": 376,
+        "endChar": 30
+      },
+      "revId": "4c03e9fdee5d2b54d25948e522745e56a5884945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52801f79_75b92b80",
+        "filename": "net/test/spawned_test_server/remote_test_server_proxy.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-31T16:11:18Z",
+      "side": 1,
+      "message": "on_error_callback?  The caller binds this to OnError, so think it\u0027s cleaner to call this an error callback everywhere.",
+      "range": {
+        "startLine": 30,
+        "startChar": 35,
+        "endLine": 30,
+        "endChar": 51
+      },
+      "revId": "4c03e9fdee5d2b54d25948e522745e56a5884945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5f8e150_e41a5996",
+        "filename": "net/test/spawned_test_server/remote_test_server_proxy.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-31T16:11:18Z",
+      "side": 1,
+      "message": "optional:  May want to add a SequenceChecker to this class, and check it in all methods (May need a detach in the constructor, not sure)",
+      "range": {
+        "startLine": 104,
+        "startChar": 9,
+        "endLine": 104,
+        "endChar": 0
+      },
+      "revId": "4c03e9fdee5d2b54d25948e522745e56a5884945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67d4eeea_18969be0",
+        "filename": "net/test/spawned_test_server/remote_test_server_proxy.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-31T16:11:18Z",
+      "side": 1,
+      "message": "include weak_ptr",
+      "range": {
+        "startLine": 117,
+        "startChar": 8,
+        "endLine": 117,
+        "endChar": 22
+      },
+      "revId": "4c03e9fdee5d2b54d25948e522745e56a5884945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "152b087f_870703a5",
+        "filename": "net/test/spawned_test_server/remote_test_server_proxy.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-31T16:11:18Z",
+      "side": 1,
+      "message": "So...erm...we don\u0027t support socket 65535 (WebKit uses it to mean an error, so net also has checks around that, unfortunately.  See net/base/port_util.cc).  With the proxy, it should be fine if the remove server uses that port, however, if the proxy is using that, URLRequests to it will fail.\n\nSo I think we need to keep on listening on sockets until we get something that is not port 65535.  Could just use IsPortAllowedForScheme(port, \"http\") (This is used for other schemes as well, but http currently has the tightest requirements.  ftp allows a couple extra ports, but that\u0027s it, in terms off per-scheme differences, actually).",
+      "range": {
+        "startLine": 205,
+        "startChar": 42,
+        "endLine": 205,
+        "endChar": 51
+      },
+      "revId": "4c03e9fdee5d2b54d25948e522745e56a5884945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cec0045_e7e850b0",
+        "filename": "net/test/spawned_test_server/remote_test_server_proxy.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-31T16:11:18Z",
+      "side": 1,
+      "message": "Bug:  That return should be in the if block.",
+      "range": {
+        "startLine": 265,
+        "startChar": 11,
+        "endLine": 265,
+        "endChar": 0
+      },
+      "revId": "4c03e9fdee5d2b54d25948e522745e56a5884945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "616772a0_9f709166",
+        "filename": "net/test/spawned_test_server/remote_test_server_proxy.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-31T16:11:18Z",
+      "side": 1,
+      "message": "make_unique",
+      "range": {
+        "startLine": 273,
+        "startChar": 54,
+        "endLine": 273,
+        "endChar": 68
+      },
+      "revId": "4c03e9fdee5d2b54d25948e522745e56a5884945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "044c52fa_4a0cf46c",
+        "filename": "net/test/spawned_test_server/remote_test_server_proxy.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-31T16:11:18Z",
+      "side": 1,
+      "message": "include \u003cmemory\u003e",
+      "range": {
+        "startLine": 37,
+        "startChar": 22,
+        "endLine": 37,
+        "endChar": 24
+      },
+      "revId": "4c03e9fdee5d2b54d25948e522745e56a5884945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "755d43ee_059df6a0",
+        "filename": "net/test/spawned_test_server/remote_test_server_proxy_unittests.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-31T16:11:18Z",
+      "side": 1,
+      "message": "May want to add a method to get this to the proxy class itself, though I guess RemoteTestServer couldn\u0027t currently use it, anyways.",
+      "range": {
+        "startLine": 41,
+        "startChar": 30,
+        "endLine": 41,
+        "endChar": 43
+      },
+      "revId": "4c03e9fdee5d2b54d25948e522745e56a5884945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff0f548a_c9804fb7",
+        "filename": "net/test/spawned_test_server/remote_test_server_proxy_unittests.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-31T16:11:18Z",
+      "side": 1,
+      "message": "Not seeing how client_socket-\u003eget() could be nullptr here - we own it, and call make_unique on it, and I\u0027m not seeing anything that can delete it.",
+      "range": {
+        "startLine": 59,
+        "startChar": 34,
+        "endLine": 59,
+        "endChar": 35
+      },
+      "revId": "4c03e9fdee5d2b54d25948e522745e56a5884945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b458870_1334b8c6",
+        "filename": "net/test/spawned_test_server/remote_test_server_proxy_unittests.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-31T16:11:18Z",
+      "side": 1,
+      "message": "Maybe use an std::string / StringIOBuffer instead of IOBufferWithSize?",
+      "range": {
+        "startLine": 68,
+        "startChar": 47,
+        "endLine": 68,
+        "endChar": 59
+      },
+      "revId": "4c03e9fdee5d2b54d25948e522745e56a5884945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4b3311a_a4305019",
+        "filename": "net/test/spawned_test_server/remote_test_server_proxy_unittests.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-31T16:11:18Z",
+      "side": 1,
+      "message": "What guarantee is there that one write will write the entire response body?  Or one read will read it?",
+      "range": {
+        "startLine": 71,
+        "startChar": 38,
+        "endLine": 71,
+        "endChar": 52
+      },
+      "revId": "4c03e9fdee5d2b54d25948e522745e56a5884945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
