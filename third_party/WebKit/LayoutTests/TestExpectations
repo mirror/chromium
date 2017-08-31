@@ -3633,3 +3633,9 @@ crbug.com/760543 [ Linux Release ] virtual/mojo-loading/http/tests/devtools/trac
 crbug.com/760543 [ Linux Release ] virtual/mojo-loading/http/tests/devtools/tracing/timeline-style/timeline-style-recalc-with-invalidator-invalidations.html [ Pass Timeout ]
 crbug.com/760543 [ Linux Release ] virtual/mojo-loading/http/tests/devtools/tracing/timeline-misc/timeline-event-causes.html [ Pass Timeout ]
 crbug.com/760543 [ Linux Release ] virtual/mojo-loading/http/tests/devtools/tracing/timeline-paint/timeline-paint-with-layout-invalidations-on-deleted-node.html [ Pass Timeout ]
+
+# TODO(bsittler, pwnall): Move these tests with Python handlers to WPT or rewrite CGI in Perl or PHP
+Bug(none) [ Win ] http/tests/storage/cookie_store/cookie_store_tests.html [ Failure ]
+Bug(none) [ Win ] http/tests/storage/cookie_store/cookie_store_tests.https.html [ Failure ]
+Bug(none) [ Win ] virtual/mojo-loading/http/tests/storage/cookie_store/cookie_store_tests.html [ Failure ]
+Bug(none) [ Win ] virtual/mojo-loading/http/tests/storage/cookie_store/cookie_store_tests.https.html [ Failure ]
