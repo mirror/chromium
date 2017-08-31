@@ -41,10 +41,6 @@ class ExtensionsHandler : public UtilityMessageHandler {
 
  private:
   // IPC message handlers.
-#if defined(OS_WIN)
-  void OnParseITunesPrefXml(const std::string& itunes_xml_data);
-#endif  // defined(OS_WIN)
-
 #if defined(OS_WIN) || defined(OS_MACOSX)
   void OnParseITunesLibraryXmlFile(
       const IPC::PlatformFileForTransit& itunes_library_file);
