@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9707f54_00d63ac2",
+        "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
+        "patchSetId": 4
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-31T22:40:07Z",
+      "side": 1,
+      "message": "Let\u0027s use the organization name here: \"Cyberoam Certificate Authority\"\n\nIt\u0027s less likely to change than the common name.",
+      "revId": "5e70d4fad9f17f66b174bc41f329e318229a3879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82270a1a_13570386",
+        "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
+        "patchSetId": 4
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-31T22:40:07Z",
+      "side": 1,
+      "message": "Let\u0027s only use the org name here, common name seems more varied than this.",
+      "revId": "5e70d4fad9f17f66b174bc41f329e318229a3879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c295f3cb_c5b80456",
+        "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
+        "patchSetId": 4
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-31T22:40:07Z",
+      "side": 1,
+      "message": "Same here, let\u0027s just use the org name.",
+      "revId": "5e70d4fad9f17f66b174bc41f329e318229a3879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff57ccb9_47da1dcf",
+        "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
+        "patchSetId": 4
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-31T22:40:07Z",
+      "side": 1,
+      "message": "Let\u0027s use \"Blue Coat .*\" here.",
+      "revId": "5e70d4fad9f17f66b174bc41f329e318229a3879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38eb1651_804aaff6",
+        "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
+        "patchSetId": 4
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-31T22:40:07Z",
+      "side": 1,
+      "message": "This seems to be a root cert which won\u0027t be caught by the current code. I think we can leave it out for now.",
+      "revId": "5e70d4fad9f17f66b174bc41f329e318229a3879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b3791e3_ea2f084a",
+        "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
+        "patchSetId": 4
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-31T22:40:07Z",
+      "side": 1,
+      "message": "Also a root cert. Let\u0027s use organization regex here.",
+      "revId": "5e70d4fad9f17f66b174bc41f329e318229a3879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7eb31925_d0e6dac0",
+        "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
+        "patchSetId": 4
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-31T22:40:07Z",
+      "side": 1,
+      "message": "Did you mean to delete SonicWall?",
+      "revId": "5e70d4fad9f17f66b174bc41f329e318229a3879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

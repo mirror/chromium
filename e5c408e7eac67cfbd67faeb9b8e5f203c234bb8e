@@ -342,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "a3bc9bd9_01f551b8",
+        "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
+        "patchSetId": 3
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-31T22:40:07Z",
+      "side": 1,
+      "message": "Practically, it runs only on the leaf cert which is what we get in ssl_info.cert. You can get the intermediates and the root from that cert as well, but your code seems to be checking the leaf only, which is fine.\n\nThis is a good point though: Neither of these two patterns will match the leaf. Let\u0027s just use \"Cisco Umbrella.*\" for the common name regex which should match the leaf.",
+      "parentUuid": "4f895948_e5b4143b",
+      "range": {
+        "startLine": 207,
+        "startChar": 15,
+        "endLine": 207,
+        "endChar": 0
+      },
+      "revId": "e5c408e7eac67cfbd67faeb9b8e5f203c234bb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "16aec598_e87f3247",
         "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
         "patchSetId": 3
