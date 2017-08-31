@@ -46,6 +46,40 @@
       "revId": "7f79f6af805701b4d6aaa9a3e0454bf09aa5bbb9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "263c2273_934ef9bb",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutState.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-31T21:21:02Z",
+      "side": 1,
+      "message": "Add a comment here explaining more clearly what this means.",
+      "revId": "7f79f6af805701b4d6aaa9a3e0454bf09aa5bbb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0da98e4b_17871017",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-31T21:21:02Z",
+      "side": 1,
+      "message": "Same here - comment needed.",
+      "revId": "7f79f6af805701b4d6aaa9a3e0454bf09aa5bbb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
