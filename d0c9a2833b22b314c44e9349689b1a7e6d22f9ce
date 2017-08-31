@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "22415ef0_9a41b51d",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-31T16:29:14Z",
+      "side": 1,
+      "message": "I also just noticed that IsArcMigrationAllowedForProfile() is actually calling IsArcMigrationAllowedForProfile(), so it would be a potentially infinite recursion to call it :)\n\nHowever, I noticed that IsArcPlayStoreEnabledForProfile() function does a bunch of other checks - that is, prunes sign-in, lock-screen, incognito, secondary, supervised profiles, etc. Are you sure you don\u0027t need any of those?",
+      "parentUuid": "d750e60f_75dadfa7",
+      "range": {
+        "startLine": 182,
+        "startChar": 11,
+        "endLine": 183,
+        "endChar": 62
+      },
+      "revId": "d0c9a2833b22b314c44e9349689b1a7e6d22f9ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8fc1c381_632cee67",
         "filename": "chrome/browser/chromeos/arc/arc_util.cc",
         "patchSetId": 7

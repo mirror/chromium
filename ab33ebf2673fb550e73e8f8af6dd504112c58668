@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "586fbb99_b62f18a3",
+        "filename": "chromeos/chromeos_switches.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-31T16:29:14Z",
+      "side": 1,
+      "message": "nit: I\u0027m very sorry to having you misguided, but I was unaware that the actual command line flag name \"arc-transition-migration-required\" is already hardcoded in Chrome OS.\nAssuming then that we won\u0027t go into renaming the flag at this point, please rename the variable name to conform to its value - that is, kArcTransitionMigrationRequired.",
+      "range": {
+        "startLine": 89,
+        "startChar": 12,
+        "endLine": 89,
+        "endChar": 40
+      },
+      "revId": "ab33ebf2673fb550e73e8f8af6dd504112c58668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
