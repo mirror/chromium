@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a8c4410_57b3b804",
+        "filename": "chrome/browser/plugins/plugin_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-08-31T16:19:28Z",
+      "side": 1,
+      "message": "These lines are repeated/duplicated/violating-the-DRY-principle.  I think this is okay.\n\nBut... if we wanted to fix this, I guess we could add a Send to GlobalRoutingID:\n- Either: void GlobalRoutingID::Send(IPC::Message*) that drops the message if the process is gone\n- Or maybe even some kind of template magic that also propagates GlobalRoutingID::route_id into the message\u0027s constructor?\n\nMeh?",
+      "range": {
+        "startLine": 170,
+        "startChar": 0,
+        "endLine": 173,
+        "endChar": 13
+      },
+      "revId": "b58a676023eb9456ac72c572e6d0399ccc293473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
