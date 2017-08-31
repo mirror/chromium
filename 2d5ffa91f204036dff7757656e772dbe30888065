@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e71d305b_0db1625b",
+        "filename": "content/browser/isolated_origin_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-31T23:42:38Z",
+      "side": 1,
+      "message": "These are some log statements I forgot to remove. Sorry.",
+      "parentUuid": "59589931_3bad5287",
+      "revId": "2d5ffa91f204036dff7757656e772dbe30888065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "69e164f7_ca1fc98d",
         "filename": "content/browser/isolated_origin_browsertest.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-31T20:43:31Z",
       "side": 1,
       "message": "IIUC, the BindingSet doesn\u0027t have ownership of the returned value of SwapImplForTesting() in this case. So I expect the code to have double deletion issue. Have I misunderstood anything?",
+      "revId": "2d5ffa91f204036dff7757656e772dbe30888065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc215dd2_dcf2c42b",
+        "filename": "content/browser/isolated_origin_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-31T23:42:38Z",
+      "side": 1,
+      "message": "Reverted the change to owned pointers.",
+      "parentUuid": "69e164f7_ca1fc98d",
       "revId": "2d5ffa91f204036dff7757656e772dbe30888065",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "87c803dd_dbd2cf5f",
+        "filename": "content/browser/storage_partition_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-31T23:42:38Z",
+      "side": 1,
+      "message": "Just forgot to delete this one. Removed now.",
+      "parentUuid": "65831360_910ca844",
+      "revId": "2d5ffa91f204036dff7757656e772dbe30888065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cd1fa144_a626a070",
         "filename": "mojo/public/cpp/bindings/binding.h",
         "patchSetId": 4
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "38756f45_27c454af",
+        "filename": "mojo/public/cpp/bindings/binding.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-31T23:42:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd1fa144_a626a070",
+      "revId": "2d5ffa91f204036dff7757656e772dbe30888065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eed0b900_06ba57f4",
         "filename": "mojo/public/cpp/bindings/lib/binding_state.h",
         "patchSetId": 4
@@ -84,6 +156,24 @@
       "revId": "2d5ffa91f204036dff7757656e772dbe30888065",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5edb7b24_4fa9a312",
+        "filename": "mojo/public/cpp/bindings/lib/binding_state.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-31T23:42:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eed0b900_06ba57f4",
+      "revId": "2d5ffa91f204036dff7757656e772dbe30888065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +200,30 @@
     },
     {
       "key": {
+        "uuid": "48fab594_bad23f49",
+        "filename": "mojo/public/cpp/bindings/lib/binding_state.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-31T23:42:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eaa5d892_b972046c",
+      "range": {
+        "startLine": 126,
+        "startChar": 19,
+        "endLine": 126,
+        "endChar": 27
+      },
+      "revId": "2d5ffa91f204036dff7757656e772dbe30888065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ebc2de50_189b0ffc",
         "filename": "mojo/public/tools/bindings/generators/cpp_templates/interface_declaration.tmpl",
         "patchSetId": 4
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "cdca5bc0_10c12cdc",
+        "filename": "mojo/public/tools/bindings/generators/cpp_templates/interface_declaration.tmpl",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-31T23:42:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebc2de50_189b0ffc",
+      "revId": "2d5ffa91f204036dff7757656e772dbe30888065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ad13291_86b855da",
         "filename": "mojo/public/tools/bindings/generators/cpp_templates/interface_declaration.tmpl",
         "patchSetId": 4
@@ -138,6 +270,24 @@
       "writtenOn": "2017-08-31T20:43:31Z",
       "side": 1,
       "message": "This is less flexible than before, it assumes that the forwarding interface is owned by this class.",
+      "revId": "2d5ffa91f204036dff7757656e772dbe30888065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03e717bf_8be73cc8",
+        "filename": "mojo/public/tools/bindings/generators/cpp_templates/interface_declaration.tmpl",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-31T23:42:38Z",
+      "side": 1,
+      "message": "As discussed offline, I\u0027ve removed this piece of the patch.",
+      "parentUuid": "9ad13291_86b855da",
       "revId": "2d5ffa91f204036dff7757656e772dbe30888065",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
