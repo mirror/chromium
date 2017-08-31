@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48a924ef_16c57e1b",
+        "filename": "chrome/browser/first_run/first_run.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-31T10:25:37Z",
+      "side": 1,
+      "message": "unused?",
+      "revId": "33901143c12d7601eeea69a494f5a4e16ae711ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9633d88_c2fb7d3a",
+        "filename": "chrome/browser/first_run/first_run.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-31T10:25:37Z",
+      "side": 1,
+      "message": "unused?",
+      "revId": "33901143c12d7601eeea69a494f5a4e16ae711ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
