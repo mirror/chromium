@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b92f684b_6f9ec225",
+        "filename": "components/background_task_scheduler/android/java/src/org/chromium/components/background_task_scheduler/BackgroundTaskSchedulerGcmNetworkManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-08-31T22:51:58Z",
+      "side": 1,
+      "message": "Done.\nYes. gcm throws messages, like:\njava.lang.IllegalArgumentException: Window start must be shorter than window end.\ncatched in crash report in the crbug. The string can be found in cs/.",
+      "parentUuid": "534dec5b_4330590d",
+      "revId": "b8e9c1e37d4cd3a78a6b70aced7d63de282fc517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8591c54_2f1d7427",
         "filename": "components/download/internal/controller_impl.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-31T18:27:14Z",
       "side": 1,
       "message": "We should also update the completion_time etc here?",
+      "revId": "b8e9c1e37d4cd3a78a6b70aced7d63de282fc517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aba127f2_e5bdf285",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 694,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-08-31T22:51:58Z",
+      "side": 1,
+      "message": "case DriverEntry::State::COMPLETE: also fall through here, we should query completion time from db in that case.\n\n\ncase DriverEntry::State::CANCELLED will pass CompletionType::UNKNOWN to HandleCompleteDownload in the next switch block, and result the entry being deleted.\n\nBut because I don\u0027t have way to repro the scenario, so still unsure.",
+      "parentUuid": "a8591c54_2f1d7427",
       "revId": "b8e9c1e37d4cd3a78a6b70aced7d63de282fc517",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "aaa01a51_e1b4aa98",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-08-31T22:51:58Z",
+      "side": 1,
+      "message": "Done, Removed the parameter here. There is a TODO in stats.cc to rework the time stamps pipe.\nWill look into the stats later.",
+      "parentUuid": "3e4361f7_e8d84492",
+      "revId": "b8e9c1e37d4cd3a78a6b70aced7d63de282fc517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1d0196c4_054de19c",
         "filename": "components/download/internal/controller_impl.cc",
         "patchSetId": 2
@@ -64,6 +118,30 @@
       "writtenOn": "2017-08-31T18:27:14Z",
       "side": 1,
       "message": "It seems like we transited to Entry::State::COMPLETE but didn\u0027t update the completion_time and/or last_cleanup_check_time which leaves those values in year 1600!.\nThere is only one place where we transit to COMPLETE apart from HandleCompleteDownload(), which is ResolveInitialRequestStates(). We should definitely update the completion_time etc there too.\n\nHowever, since this kind of issues might resurface again, we can add this here to make it more robust.\ncleanup_time_for_entry \u003d std::max(cleanup_time_for_entry, base::Time::Now())\nThis should fix it I think.",
+      "range": {
+        "startLine": 917,
+        "startChar": 15,
+        "endLine": 917,
+        "endChar": 37
+      },
+      "revId": "b8e9c1e37d4cd3a78a6b70aced7d63de282fc517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eb30d2a_dd0b3434",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 917,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-08-31T22:51:58Z",
+      "side": 1,
+      "message": "Yeah, the root cause may be that, notice entry.completion_time only pipes correctly from content when the download is actually successfully finished. We should not crash even if the db gives us craps, like someone tries to modify db records.\n\n\nI  think \nstart_time \u003d base::TimeDelta::FromSeconds(0);\nhas already done this.",
+      "parentUuid": "1d0196c4_054de19c",
       "range": {
         "startLine": 917,
         "startChar": 15,
