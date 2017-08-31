@@ -5,6 +5,7 @@
 #include "media/gpu/vaapi_wrapper.h"
 
 #include <dlfcn.h>
+#include <stdio.h>
 #include <string.h>
 
 #include <va/va.h>
@@ -1118,16 +1119,30 @@ void VaapiWrapper::PreSandboxInitialization() {
 #endif
 }
 
+const std::string& VaapiWrapper::GetVaVersionString() {
+  static std::string version_string;
+
+  if (version_string.empty()) {
+    char buf[64];
+
+    snprintf(buf, sizeof(buf), "%02d%02d", VA_MINOR_VERSION, VA_MICRO_VERSION);
+    version_string = buf;
+  }
+
+  return version_string;
+}
+
 // static
 bool VaapiWrapper::PostSandboxInitialization() {
   StubPathMap paths;
+  const std::string& version_string = GetVaVersionString();
 
-  paths[kModuleVa].push_back("libva.so.1");
+  paths[kModuleVa].push_back("libva.so.1." + version_string + ".0");
 
 #if defined(USE_X11)
-  paths[kModuleVa_x11].push_back("libva-x11.so.1");
+  paths[kModuleVa_x11].push_back("libva-x11.so.1." + version_string + ".0");
 #elif defined(USE_OZONE)
-  paths[kModuleVa_drm].push_back("libva-drm.so.1");
+  paths[kModuleVa_drm].push_back("libva-drm.so.1." + version_string + ".0");
 #endif
 
   return InitializeStubs(paths);
