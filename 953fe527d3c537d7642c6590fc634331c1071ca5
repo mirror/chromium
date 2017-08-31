@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "db91cf93_3172309c",
+        "filename": "chrome/browser/chromeos/printing/synced_printers_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-31T17:01:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2bdc618b_7d26f72d",
+      "revId": "953fe527d3c537d7642c6590fc634331c1071ca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "192511ac_e827893a",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 13
@@ -39,6 +57,30 @@
       "revId": "953fe527d3c537d7642c6590fc634331c1071ca5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db65dc80_9a1f02e2",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 13
+      },
+      "lineNbr": 9421,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-31T17:01:34Z",
+      "side": 1,
+      "message": "My apologies.  I forgot to update the comment.  It IS going to be JSON.",
+      "parentUuid": "192511ac_e827893a",
+      "range": {
+        "startLine": 9421,
+        "startChar": 15,
+        "endLine": 9421,
+        "endChar": 21
+      },
+      "revId": "953fe527d3c537d7642c6590fc634331c1071ca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
