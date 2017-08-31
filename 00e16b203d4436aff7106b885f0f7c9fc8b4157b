@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de9124ca_83b73a5f",
+        "filename": "content/common/sandbox_linux/bpf_gpu_policy_linux.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1000985
+      },
+      "writtenOn": "2017-08-31T14:59:59Z",
+      "side": 1,
+      "message": "Can we turn this into a IfUseVAAPI() function()?",
+      "range": {
+        "startLine": 308,
+        "startChar": 0,
+        "endLine": 308,
+        "endChar": 24
+      },
+      "revId": "00e16b203d4436aff7106b885f0f7c9fc8b4157b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f04a94c7_61243cec",
+        "filename": "content/common/sandbox_linux/bpf_gpu_policy_linux.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1000985
+      },
+      "writtenOn": "2017-08-31T14:59:59Z",
+      "side": 1,
+      "message": "This is not very clear.\n\nthe libva (library?) will want to dlopen() \u003cwhat\u003e there (where\u0027s there?)",
+      "range": {
+        "startLine": 316,
+        "startChar": 32,
+        "endLine": 316,
+        "endChar": 67
+      },
+      "revId": "00e16b203d4436aff7106b885f0f7c9fc8b4157b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
