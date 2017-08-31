@@ -344,6 +344,14 @@ ui::TextEditCommand GetTextEditCommandForMenuAction(SEL action) {
     [self updateFullKeyboardAccess];
     [self registerForDraggedTypes:ui::OSExchangeDataProviderMac::
                                       SupportedPasteboardTypes()];
+
+    [self
+        setAppearance:[NSAppearance
+                          appearanceNamed:NSAppearanceNameVibrantLight]];
+    [self setMaterial:NSVisualEffectMaterialLight];
+    [self setBlendingMode:NSVisualEffectBlendingModeBehindWindow];
+    [self setState:NSVisualEffectStateFollowsWindowActiveState];
+
   }
   return self;
 }
@@ -673,6 +681,11 @@ ui::TextEditCommand GetTextEditCommandForMenuAction(SEL action) {
   NSWindow* window = [self window];
   if (window)
     [self setFrameSize:NSZeroSize];
+  [super viewDidMoveToWindow];
+}
+
+- (BOOL)allowsVibrancy {
+  return YES;
 }
 
 - (void)setFrameSize:(NSSize)newSize {

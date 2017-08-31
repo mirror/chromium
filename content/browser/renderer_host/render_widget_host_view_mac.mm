@@ -2782,6 +2782,7 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
                                name:NSWindowDidResignKeyNotification
                              object:newWindow];
   }
+  [super viewWillMoveToWindow:newWindow];
 }
 
 - (void)updateScreenProperties{
@@ -3460,6 +3461,7 @@ extern NSString *NSTextInputReplacementRangeAttributeName;
 
     hasOpenMouseDown_ = NO;
   }
+  [super viewDidMoveToWindow];
 }
 
 - (void)undo:(id)sender {

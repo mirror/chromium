@@ -139,7 +139,7 @@ void NativeWidgetMac::InitNativeWidget(const Widget::InitParams& params) {
 
   // "Infer" must be handled by ViewsDelegate::OnBeforeWidgetInit().
   DCHECK_NE(Widget::InitParams::INFER_OPACITY, params.opacity);
-  bool translucent = params.opacity == Widget::InitParams::TRANSLUCENT_WINDOW;
+  bool translucent = true; // params.opacity == Widget::InitParams::TRANSLUCENT_WINDOW;
   bridge_->CreateLayer(params.layer_type, translucent);
 }
 

@@ -43,7 +43,7 @@ class BrowserNonClientFrameViewMac : public BrowserNonClientFrameView {
 
  private:
   void PaintThemedFrame(gfx::Canvas* canvas);
-  void PaintToolbarBackground(gfx::Canvas* canvas);
+  void PaintToolbarBackground2(gfx::Canvas* canvas);
 
   DISALLOW_COPY_AND_ASSIGN(BrowserNonClientFrameViewMac);
 };

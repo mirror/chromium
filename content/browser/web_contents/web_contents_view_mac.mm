@@ -711,6 +711,7 @@ void WebContentsViewMac::CloseTab() {
                object:newWindow];
     }
   }
+  [super viewWillMoveToWindow:newWindow];
 }
 
 - (void)windowChangedOcclusionState:(NSNotification*)notification {
@@ -727,6 +728,7 @@ void WebContentsViewMac::CloseTab() {
 
 - (void)viewDidMoveToWindow {
   [self updateWebContentsVisibility];
+  [super viewDidMoveToWindow];
 }
 
 - (void)viewDidHide {

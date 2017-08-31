@@ -13,12 +13,14 @@
 #include "ui/base/ui_base_export.h"
 #include "ui/gfx/geometry/rect.h"
 
+#pragma clang diagnostic ignored "-Wunguarded-availability"
+
 // A view that provides common functionality that many views will need:
 // - Automatic registration for mouse-moved events.
 // - Funneling of mouse and key events to two methods
 // - Coordinate conversion utilities
 UI_BASE_EXPORT
-@interface BaseView : NSView {
+@interface BaseView : NSVisualEffectView {
  @public
   enum EventHandled {
     kEventNotHandled,

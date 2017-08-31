@@ -112,7 +112,7 @@ void BrowserNonClientFrameViewMac::OnPaint(gfx::Canvas* canvas) {
   if (!browser_view()->IsBrowserTypeNormal())
     return;
 
-  canvas->DrawColor(GetFrameColor());
+  canvas->DrawColor(SK_ColorTRANSPARENT /* GetFrameColor()*/);
 
   if (!GetThemeProvider()->UsingSystemTheme())
     PaintThemedFrame(canvas);
@@ -130,13 +130,14 @@ void BrowserNonClientFrameViewMac::UpdateProfileIcons() {
 // BrowserNonClientFrameViewMac, private:
 
 void BrowserNonClientFrameViewMac::PaintThemedFrame(gfx::Canvas* canvas) {
+  return;
   gfx::ImageSkia image = GetFrameImage();
   canvas->TileImageInt(image, 0, 0, width(), image.height());
   gfx::ImageSkia overlay = GetFrameOverlayImage();
   canvas->TileImageInt(overlay, 0, 0, width(), overlay.height());
 }
 
-void BrowserNonClientFrameViewMac::PaintToolbarBackground(gfx::Canvas* canvas) {
+void BrowserNonClientFrameViewMac::PaintToolbarBackground2(gfx::Canvas* canvas) {
   gfx::Rect bounds(browser_view()->GetToolbarBounds());
   if (bounds.IsEmpty())
     return;
