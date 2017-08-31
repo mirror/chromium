@@ -33,18 +33,7 @@ public class StubbedHistoryProvider implements HistoryProvider {
     }
 
     @Override
-    public void queryHistory(String query, long endQueryTime) {
-        // endQueryTime should be 0 if the query is changing.
-        if (!TextUtils.equals(query, mLastQuery)) assert endQueryTime == 0;
-
-        if (endQueryTime == 0) {
-            mLastQueryEndPosition = 0;
-        } else {
-            // If endQueryTime is not 0, more items are being paged in and endQueryTime should
-            // equal the timestamp of the last HistoryItem returned in the previous query.
-            assert endQueryTime == mItems.get(mLastQueryEndPosition - 1).getTimestamp();
-        }
-
+    public void queryHistory(String query) {
         // Simulate basic paging to facilitate testing loading more items.
         // TODO(twellington): support loading more items while searching.
         int queryStartPosition = mLastQueryEndPosition;
@@ -71,6 +60,11 @@ public class StubbedHistoryProvider implements HistoryProvider {
         }
 
         mObserver.onQueryHistoryComplete(items, hasMoreItems);
+    }
+
+    @Override
+    public void queryHistoryContinuation() {
+        queryHistory(mLastQuery);
     }
 
     @Override
