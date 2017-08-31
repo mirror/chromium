@@ -9,7 +9,6 @@
 #include "ash/mus/window_manager_application.h"
 #include "ash/test/ash_test_base.h"
 #include "ash/test/ash_test_helper.h"
-#include "cc/base/math_util.h"
 #include "cc/output/compositor_frame.h"
 #include "cc/quads/solid_color_draw_quad.h"
 #include "cc/trees/layer_tree_settings.h"
@@ -19,6 +18,7 @@
 #include "ui/compositor/compositor.h"
 #include "ui/compositor/test/draw_waiter_for_test.h"
 #include "ui/compositor/test/fake_context_factory.h"
+#include "ui/gfx/math_util.h"
 #include "ui/views/widget/widget.h"
 
 namespace ash {
@@ -27,7 +27,7 @@ namespace mus {
 namespace {
 
 gfx::Rect GetQuadBoundsInScreen(const cc::DrawQuad* quad) {
-  return cc::MathUtil::MapEnclosingClippedRect(
+  return gfx::MathUtil::MapEnclosingClippedRect(
       quad->shared_quad_state->quad_to_target_transform, quad->visible_rect);
 }
 
