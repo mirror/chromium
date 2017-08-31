@@ -40,8 +40,8 @@ void FindIAppsOnFileThread(storage_monitor::StorageInfo::Type type,
       base::BindOnce(task, base::Bind(PostResultToUIThread, type, callback)));
 }
 
-// iTunes is only support on OSX and Windows.
-#if !defined(OS_MACOSX) && !defined(OS_WIN)
+// iTunes is only supported on OSX.
+#if !defined(OS_MACOSX)
 void FindITunesLibrary(const IAppsFinderCallback& callback) {
   callback.Run(std::string());
 }
