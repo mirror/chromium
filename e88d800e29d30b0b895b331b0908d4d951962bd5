@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7fb7b57_20a5cce1",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionSample.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-31T23:18:45Z",
+      "side": 1,
+      "message": "Does the passed-in HTML have to contain some selection?",
+      "revId": "e88d800e29d30b0b895b331b0908d4d951962bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c306e03_6883bba4",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionSampleTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-31T23:18:45Z",
+      "side": 1,
+      "message": "The macro is confusing. Writing without the macro doesn\u0027t seem to increase too much verbosity:\n\nauto selection \u003d AsSelection(\"^ab|c\");\nEXPECT_EQ(..., selection);",
+      "revId": "e88d800e29d30b0b895b331b0908d4d951962bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5867e355_073fb549",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionSampleTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-31T23:18:45Z",
+      "side": 1,
+      "message": "This looks so hacky... Do we really want such \"feature\"?",
+      "range": {
+        "startLine": 104,
+        "startChar": 1,
+        "endLine": 112,
+        "endChar": 77
+      },
+      "revId": "e88d800e29d30b0b895b331b0908d4d951962bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
