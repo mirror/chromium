@@ -201,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "d56da55d_bc1edea5",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_features.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-08-31T09:33:28Z",
+      "side": 1,
+      "message": "This is not a convention that should be followed. I actually requested the namespace to be removed in your second example during review, and it didn\u0027t happen...\n\nThe rule in Chromium is that code in chrome is specific to chrome and doesn\u0027t need to be namespaced. Code in component/, or content/ or ios/web should be. Code in */chrome/ should not.",
+      "parentUuid": "adfaa674_b62123bc",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 20
+      },
+      "revId": "f0649b200faa089f8cdce7983f84716d9c7640ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b8b2e081_de1ca1e8",
         "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_view_controller.h",
         "patchSetId": 27
