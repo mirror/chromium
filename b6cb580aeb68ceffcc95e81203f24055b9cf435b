@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f68627fe_9e26a86a",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-08-31T05:56:49Z",
+      "side": 1,
+      "message": "If you use index, reverse iterator doesn\u0027t make much sense...\n\nI thought something like this:\nauto rtarget_it \u003d target_tree_scopes.rbegin();\nauto rthis_it \u003d target_tree_scopes.rbegin();\n\nwhile (true) {\n  if (*rtarget_it !\u003d *rthis_it)\n    return ...\n  ...\n  if (++rtarget_it \u003d\u003d target_tree_scopes.rend())\n     return (or break?)...\n}",
+      "revId": "b6cb580aeb68ceffcc95e81203f24055b9cf435b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37eb99c7_b571b53d",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-08-31T05:56:49Z",
+      "side": 1,
+      "message": "Please move this interface in the private section.",
+      "revId": "b6cb580aeb68ceffcc95e81203f24055b9cf435b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
