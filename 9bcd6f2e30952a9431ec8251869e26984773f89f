@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68162ed9_3fc77bc0",
+        "filename": "cc/layers/viewport.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-08-31T21:14:50Z",
+      "side": 1,
+      "message": "More concise to write: gfx::Vector2dF scaled_delta \u003d ScaleVector2d(delta, 1 / scale_factor);",
+      "revId": "9bcd6f2e30952a9431ec8251869e26984773f89f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a2aa2be_cf2fcd5b",
+        "filename": "cc/layers/viewport.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-08-31T21:14:50Z",
+      "side": 1,
+      "message": "Could you write a unit test for this, I suggest in LayerTreeHostImplBrowserControlsTest?",
+      "revId": "9bcd6f2e30952a9431ec8251869e26984773f89f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
