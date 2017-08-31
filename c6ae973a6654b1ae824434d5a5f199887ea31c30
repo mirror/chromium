@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "18b11c16_720e8a0f",
+        "filename": "chrome/browser/chromeos/login/screens/encryption_migration_screen_view.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-08-31T10:01:32Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c37c1bbc_87f58120",
+      "revId": "c6ae973a6654b1ae824434d5a5f199887ea31c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81c2cfb6_7f06f9b2",
         "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler.cc",
         "patchSetId": 13
