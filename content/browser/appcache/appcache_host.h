@@ -196,6 +196,11 @@ class CONTENT_EXPORT AppCacheHost
   // Returns a weak pointer reference to the host.
   base::WeakPtr<AppCacheHost> GetWeakPtr();
 
+  // In the network service world, we need to pass the URLLoaderFactory
+  // instance to the renderer which it can use to request subresources.
+  // This ensures that they can be served out of the AppCache.
+  void SetSubresourceFactory();
+
  private:
   friend class content::AppCacheHostTest;
   friend class content::AppCacheStorageImplTest;

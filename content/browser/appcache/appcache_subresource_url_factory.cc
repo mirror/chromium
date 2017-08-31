@@ -21,12 +21,21 @@
 
 namespace content {
 
+namespace {
+
+// Max number of http redirects to follow.  Same number as gecko.
+const int kMaxRedirects = 20;
+
+}  // namespace
+
 // Implements the URLLoaderFactory mojom for AppCache requests.
 AppCacheSubresourceURLFactory::AppCacheSubresourceURLFactory(
     URLLoaderFactoryGetter* default_url_loader_factory_getter,
     base::WeakPtr<AppCacheHost> host)
     : default_url_loader_factory_getter_(default_url_loader_factory_getter),
-      appcache_host_(host) {
+      appcache_host_(host),
+      redirect_limit_(kMaxRedirects),
+      weak_factory_(this) {
   bindings_.set_connection_error_handler(
       base::Bind(&AppCacheSubresourceURLFactory::OnConnectionError,
                  base::Unretained(this)));
@@ -85,13 +94,10 @@ void AppCacheSubresourceURLFactory::CreateLoaderAndStart(
   load_info->client = std::move(client);
   load_info->traffic_annotation = traffic_annotation;
 
-  // TODO(ananta/michaeln)
-  // We need to handle redirects correctly, i.e every subresource redirect
-  // could potentially be served out of the cache.
   if (handler->MaybeCreateSubresourceLoader(
-          std::move(load_info), default_url_loader_factory_getter_.get())) {
-    // The handler is owned by the job and will be destoryed when the job is
-    // destroyed.
+          std::move(load_info), default_url_loader_factory_getter_.get(),
+          this)) {
+    // The handler is owned by the job and will be destroyed with the job.
     handler.release();
   }
 }
@@ -99,6 +105,43 @@ void AppCacheSubresourceURLFactory::CreateLoaderAndStart(
 void AppCacheSubresourceURLFactory::Clone(
     mojom::URLLoaderFactoryRequest request) {
   bindings_.AddBinding(this, std::move(request));
+}
+
+base::WeakPtr<AppCacheSubresourceURLFactory>
+AppCacheSubresourceURLFactory::GetWeakPtr() {
+  return weak_factory_.GetWeakPtr();
+}
+
+void AppCacheSubresourceURLFactory::Restart(
+    const net::RedirectInfo& redirect_info,
+    std::unique_ptr<AppCacheRequestHandler> subresource_handler,
+    std::unique_ptr<SubresourceLoadInfo> subresource_load_info) {
+  if (!appcache_host_.get())
+    return;
+
+  if (last_subresource_redirect_info_.new_url != redirect_info.new_url)
+    redirect_limit_ = kMaxRedirects;
+
+  if (redirect_limit_ <= 0) {
+    DCHECK(false);
+    return;
+  }
+
+  last_subresource_redirect_info_ = redirect_info;
+
+  subresource_load_info->request.url = redirect_info.new_url;
+  subresource_load_info->request.method = redirect_info.new_method;
+  subresource_load_info->request.referrer = GURL(redirect_info.new_referrer);
+  subresource_load_info->request.site_for_cookies =
+      redirect_info.new_site_for_cookies;
+  if (subresource_handler->MaybeCreateSubresourceLoader(
+          std::move(subresource_load_info),
+          default_url_loader_factory_getter_.get(), this)) {
+    // The handler is owned by the job and will be destroyed with the job.
+    subresource_handler.release();
+  }
+
+  --redirect_limit_;
 }
 
 void AppCacheSubresourceURLFactory::OnConnectionError() {
