@@ -91,6 +91,8 @@ void DriverEGL::InitializeStaticBindings() {
       reinterpret_cast<eglQueryAPIProc>(GetGLProcAddress("eglQueryAPI"));
   fn.eglQueryContextFn = reinterpret_cast<eglQueryContextProc>(
       GetGLProcAddress("eglQueryContext"));
+  fn.eglQueryDmaBufFormatsEXTFn = 0;
+  fn.eglQueryDmaBufModifiersEXTFn = 0;
   fn.eglQueryStreamKHRFn = 0;
   fn.eglQueryStreamu64KHRFn = 0;
   fn.eglQueryStringFn =
@@ -161,6 +163,11 @@ void DriverEGL::InitializeExtensionBindings() {
       std::string::npos;
   ext.b_EGL_CHROMIUM_sync_control =
       extensions.find("EGL_CHROMIUM_sync_control ") != std::string::npos;
+  ext.b_EGL_EXT_image_dma_buf_import =
+      extensions.find("EGL_EXT_image_dma_buf_import ") != std::string::npos;
+  ext.b_EGL_EXT_image_dma_buf_import_modifiers =
+      extensions.find("EGL_EXT_image_dma_buf_import_modifiers ") !=
+      std::string::npos;
   ext.b_EGL_EXT_image_flush_external =
       extensions.find("EGL_EXT_image_flush_external ") != std::string::npos;
   ext.b_EGL_KHR_fence_sync =
@@ -254,6 +261,20 @@ void DriverEGL::InitializeExtensionBindings() {
     fn.eglProgramCacheResizeANGLEFn =
         reinterpret_cast<eglProgramCacheResizeANGLEProc>(
             GetGLProcAddress("eglProgramCacheResizeANGLE"));
+  }
+
+  if (ext.b_EGL_EXT_image_dma_buf_import_modifiers ||
+      ext.b_EGL_KHR_image_base || ext.b_EGL_EXT_image_dma_buf_import) {
+    fn.eglQueryDmaBufFormatsEXTFn =
+        reinterpret_cast<eglQueryDmaBufFormatsEXTProc>(
+            GetGLProcAddress("eglQueryDmaBufFormatsEXT"));
+  }
+
+  if (ext.b_EGL_EXT_image_dma_buf_import_modifiers ||
+      ext.b_EGL_KHR_image_base || ext.b_EGL_EXT_image_dma_buf_import) {
+    fn.eglQueryDmaBufModifiersEXTFn =
+        reinterpret_cast<eglQueryDmaBufModifiersEXTProc>(
+            GetGLProcAddress("eglQueryDmaBufModifiersEXT"));
   }
 
   if (ext.b_EGL_KHR_stream) {
@@ -570,6 +591,24 @@ EGLBoolean EGLApiBase::eglQueryContextFn(EGLDisplay dpy,
                                          EGLint attribute,
                                          EGLint* value) {
   return driver_->fn.eglQueryContextFn(dpy, ctx, attribute, value);
+}
+
+EGLBoolean EGLApiBase::eglQueryDmaBufFormatsEXTFn(EGLDisplay dpy,
+                                                  EGLint max_formats,
+                                                  EGLint* formats,
+                                                  EGLint* num_formats) {
+  return driver_->fn.eglQueryDmaBufFormatsEXTFn(dpy, max_formats, formats,
+                                                num_formats);
+}
+
+EGLBoolean EGLApiBase::eglQueryDmaBufModifiersEXTFn(EGLDisplay dpy,
+                                                    EGLint format,
+                                                    EGLint max_modifiers,
+                                                    EGLuint64KHR* modifiers,
+                                                    EGLBoolean* external_only,
+                                                    EGLint* num_modifiers) {
+  return driver_->fn.eglQueryDmaBufModifiersEXTFn(
+      dpy, format, max_modifiers, modifiers, external_only, num_modifiers);
 }
 
 EGLBoolean EGLApiBase::eglQueryStreamKHRFn(EGLDisplay dpy,
@@ -992,6 +1031,26 @@ EGLBoolean TraceEGLApi::eglQueryContextFn(EGLDisplay dpy,
                                           EGLint* value) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglQueryContext")
   return egl_api_->eglQueryContextFn(dpy, ctx, attribute, value);
+}
+
+EGLBoolean TraceEGLApi::eglQueryDmaBufFormatsEXTFn(EGLDisplay dpy,
+                                                   EGLint max_formats,
+                                                   EGLint* formats,
+                                                   EGLint* num_formats) {
+  TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglQueryDmaBufFormatsEXT")
+  return egl_api_->eglQueryDmaBufFormatsEXTFn(dpy, max_formats, formats,
+                                              num_formats);
+}
+
+EGLBoolean TraceEGLApi::eglQueryDmaBufModifiersEXTFn(EGLDisplay dpy,
+                                                     EGLint format,
+                                                     EGLint max_modifiers,
+                                                     EGLuint64KHR* modifiers,
+                                                     EGLBoolean* external_only,
+                                                     EGLint* num_modifiers) {
+  TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglQueryDmaBufModifiersEXT")
+  return egl_api_->eglQueryDmaBufModifiersEXTFn(
+      dpy, format, max_modifiers, modifiers, external_only, num_modifiers);
 }
 
 EGLBoolean TraceEGLApi::eglQueryStreamKHRFn(EGLDisplay dpy,
@@ -1603,6 +1662,37 @@ EGLBoolean DebugEGLApi::eglQueryContextFn(EGLDisplay dpy,
                  << "(" << dpy << ", " << ctx << ", " << attribute << ", "
                  << static_cast<const void*>(value) << ")");
   EGLBoolean result = egl_api_->eglQueryContextFn(dpy, ctx, attribute, value);
+  GL_SERVICE_LOG("GL_RESULT: " << result);
+  return result;
+}
+
+EGLBoolean DebugEGLApi::eglQueryDmaBufFormatsEXTFn(EGLDisplay dpy,
+                                                   EGLint max_formats,
+                                                   EGLint* formats,
+                                                   EGLint* num_formats) {
+  GL_SERVICE_LOG("eglQueryDmaBufFormatsEXT"
+                 << "(" << dpy << ", " << max_formats << ", "
+                 << static_cast<const void*>(formats) << ", "
+                 << static_cast<const void*>(num_formats) << ")");
+  EGLBoolean result = egl_api_->eglQueryDmaBufFormatsEXTFn(
+      dpy, max_formats, formats, num_formats);
+  GL_SERVICE_LOG("GL_RESULT: " << result);
+  return result;
+}
+
+EGLBoolean DebugEGLApi::eglQueryDmaBufModifiersEXTFn(EGLDisplay dpy,
+                                                     EGLint format,
+                                                     EGLint max_modifiers,
+                                                     EGLuint64KHR* modifiers,
+                                                     EGLBoolean* external_only,
+                                                     EGLint* num_modifiers) {
+  GL_SERVICE_LOG("eglQueryDmaBufModifiersEXT"
+                 << "(" << dpy << ", " << format << ", " << max_modifiers
+                 << ", " << static_cast<const void*>(modifiers) << ", "
+                 << static_cast<const void*>(external_only) << ", "
+                 << static_cast<const void*>(num_modifiers) << ")");
+  EGLBoolean result = egl_api_->eglQueryDmaBufModifiersEXTFn(
+      dpy, format, max_modifiers, modifiers, external_only, num_modifiers);
   GL_SERVICE_LOG("GL_RESULT: " << result);
   return result;
 }
