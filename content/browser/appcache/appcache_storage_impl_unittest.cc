@@ -1663,6 +1663,9 @@ class AppCacheStorageImplTest : public testing::Test {
                       AppCacheLogLevel log_level,
                       const std::string& message) override {}
     void OnContentBlocked(int host_id, const GURL& manifest_url) override {}
+    void OnSetSubresourceFactory(
+        int host_id,
+        mojo::MessagePipeHandle loader_factory_pipe_handle) override {}
 
     bool error_event_was_raised_;
   };
