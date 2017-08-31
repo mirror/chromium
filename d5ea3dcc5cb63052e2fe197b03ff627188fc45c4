@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e53eb339_1b081e22",
+        "filename": "components/ntp_tiles/popular_sites_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-31T16:37:02Z",
+      "side": 1,
+      "message": "nit: I find \"always converts the given string\" a bit confusing. Maybe just say it results in 0 if it couldn\u0027t parse a number?",
+      "revId": "d5ea3dcc5cb63052e2fe197b03ff627188fc45c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be34f999_0c4455e1",
+        "filename": "components/ntp_tiles/popular_sites_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-31T16:37:02Z",
+      "side": 1,
+      "message": "DCHECK that this succeeds? Like\nbool success \u003d ...;\nDCHECK(success);\n(Don\u0027t put the actual StringToInt call into the DCHECK. Been there, not fun! :D)",
+      "revId": "d5ea3dcc5cb63052e2fe197b03ff627188fc45c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "334c759f_ed907832",
+        "filename": "components/ntp_tiles/popular_sites_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-31T16:37:02Z",
+      "side": 1,
+      "message": "DLOG? Or do we actually need this in release builds?",
+      "revId": "d5ea3dcc5cb63052e2fe197b03ff627188fc45c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
