@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9073aff4_d7a39c08",
+        "filename": "ash/shell_test_api.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-31T17:38:20Z",
+      "side": 1,
+      "message": "seems std::make_unique is preferred since m62: https://chromium-review.googlesource.com/c/chromium/src/+/646229",
+      "revId": "20d286be91cf5d6fe3ba66471ef6229bdb2854ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

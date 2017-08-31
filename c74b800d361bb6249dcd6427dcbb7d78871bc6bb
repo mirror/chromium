@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "f1676e56_342638ea",
+        "filename": "ash/test_shell_delegate.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-31T17:38:20Z",
+      "side": 1,
+      "message": "Looks like we can. Done.",
+      "parentUuid": "cd910d9a_0cc9b56d",
+      "revId": "c74b800d361bb6249dcd6427dcbb7d78871bc6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4a7d8b8e_281b4a8e",
         "filename": "chrome/browser/chromeos/system/input_device_settings.cc",
         "patchSetId": 13
@@ -48,6 +66,30 @@
       "writtenOn": "2017-08-31T07:47:35Z",
       "side": 1,
       "message": "nit: I think this should be pref_service or prefs. The pref service consists of several layers of pref stores, the bottom contains the default values, above that you have user preferences (configured by the user), extension preferences and policy preferences. The name \"user_prefs\" is already used in another context.",
+      "range": {
+        "startLine": 296,
+        "startChar": 15,
+        "endLine": 296,
+        "endChar": 25
+      },
+      "revId": "c74b800d361bb6249dcd6427dcbb7d78871bc6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5cdc72e_e3a319ca",
+        "filename": "chrome/browser/chromeos/system/input_device_settings.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-31T17:38:20Z",
+      "side": 1,
+      "message": "Done. Thanks for the info.",
+      "parentUuid": "4a7d8b8e_281b4a8e",
       "range": {
         "startLine": 296,
         "startChar": 15,
@@ -77,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "975adff1_65c29540",
+        "filename": "chrome/browser/chromeos/system/input_device_settings.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-31T17:38:20Z",
+      "side": 1,
+      "message": "Right. We could call this method before preferences applied. Ash::Init is called here: https://cs.chromium.org/chromium/src/chrome/browser/ui/views/ash/chrome_browser_main_extra_parts_ash.cc?dr\u003dCSs\u0026l\u003d89",
+      "parentUuid": "767a880a_4a4215af",
+      "revId": "c74b800d361bb6249dcd6427dcbb7d78871bc6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aabfbe48_b9f39044",
         "filename": "chrome/browser/chromeos/system/input_device_settings.cc",
         "patchSetId": 13
@@ -88,6 +148,24 @@
       "writtenOn": "2017-08-31T07:47:35Z",
       "side": 1,
       "message": "I think it would be useful to document this relationship (both need to be true) in the declaration of global_touchscreen_enabled_ or InputDeviceSettings.",
+      "revId": "c74b800d361bb6249dcd6427dcbb7d78871bc6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "938f2f90_cbcab2a7",
+        "filename": "chrome/browser/chromeos/system/input_device_settings.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-31T17:38:20Z",
+      "side": 1,
+      "message": "Done. Document on UpdateTouchscreenEnabled()\u0027s declaration.",
+      "parentUuid": "aabfbe48_b9f39044",
       "revId": "c74b800d361bb6249dcd6427dcbb7d78871bc6bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
