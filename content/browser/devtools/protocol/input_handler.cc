@@ -710,6 +710,88 @@ Response InputHandler::SetIgnoreInputEvents(bool ignore) {
   return Response::OK();
 }
 
+// void InputHandler::NoneActionSequence(std::unique_ptr<protocol::Array<protocol::Input::NoneAction>> none_actions, std::unique_ptr<NoneActionSequenceCallback> callback) {
+//   callback->sendFailure(Response::InvalidParams("Not implmented!"));
+//   return;
+// }
+
+// void InputHandler::DispatchPointerMove(double offset_x, double offset_y, double start_x, double start_y, std::string origin, int duration, std::string subtype, int buttons) {
+//   if (!host_ || !host_->GetRenderWidgetHost()) {
+//     callback->sendFailure(Response::InternalError());
+//     return;
+//   }
+//
+//   double x = offset_x;
+//   double y = offset_y;
+//   if (origin == "pointer") {
+//     x = x + start_x;
+//     y = y + start_y;
+//   }
+//
+//   // TODO: An object that represents a web element for origin
+//   SyntheticPinchGestureParams gesture_params;
+//   const int kDefaultRelativeSpeed = 800;
+//
+//   gesture_params.anchor = CssPixelsToPointF(x, y, page_scale_factor_);
+//   if (!PointIsWithinContents(gesture_params.anchor)) {
+//     callback->sendFailure(Response::InvalidParams("Position out of bounds"));
+//     return;
+//   }
+//
+//   // TODO: wait on the duration tho
+//
+//   // perform pointer move
+//   // get the seconds since the tick?
+//
+//   bool last;
+//   int x_dispatch = x;
+//   int y_dispatch = y;
+//   // handle last
+//   if (!last) {
+//     x_dispatch = duration_ratio * (x - start_x) + start_x;
+//     y_dispatch = duration_ratio * (y - start_y) + start_y;
+//   }
+//
+//   // TESTING
+//   blink::WebMouseEvent* mouse_event = nullptr;
+//   if (x_dispatch != start_x || y_dispatch != start_y) {
+//
+//     mouse_event = new blink::WebMouseEvent(
+//         blink::WebInputEvent::kMouseMove,
+//         GetEventModifiers(
+//             modifiers.fromMaybe(blink::WebInputEvent::kNoModifiers), false,
+//             false) |
+//             button_modifiers,
+//         GetEventTimestamp(timestamp));
+//     // event.reset(mouse_event);
+//
+//     mouse_event->SetPositionInWidget(x, y);
+//     mouse_event->button = event_button;
+//     mouse_event->SetPositionInScreen(x, y);
+//     mouse_event->click_count = click_count.fromMaybe(0);
+//     mouse_event->pointer_type = blink::WebPointerProperties::PointerType::kTouch;
+//     host_->GetRenderWidgetHost()->ForwardMouseEvent(*mouse_event);
+//   }
+//
+// }
+
+void InputHandler::PointerActionSequence(
+    double source_id,
+    std::unique_ptr<Input::PointerActionObject> action_object,
+    std::unique_ptr<Input::PointerInputState> input_state,
+    double tick_duration,
+    std::unique_ptr<PointerActionSequenceCallback> callback) {
+  if (!host_ || !host_->GetRenderWidgetHost()) {
+    callback->sendFailure(Response::InternalError());
+    return;
+  }
+
+
+
+
+
+}
+
 void InputHandler::SynthesizePinchGesture(
     double x,
     double y,

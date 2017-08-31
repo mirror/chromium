@@ -88,6 +88,13 @@ class InputHandler : public DevToolsDomainHandler,
 
   Response SetIgnoreInputEvents(bool ignore) override;
 
+  void PointerActionSequence(
+    double source_id,
+    std::unique_ptr<Input::PointerActionObject> action_object,
+    std::unique_ptr<Input::PointerInputState> input_state,
+    double tick_duration,
+    std::unique_ptr<PointerActionSequenceCallback> callback) override;
+
   void SynthesizePinchGesture(
       double x,
       double y,
