@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "9151b9f5_4f3b622c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/LogoDelegateImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-31T07:12:48Z",
+      "side": 1,
+      "message": "Resolved then, thanks!",
+      "parentUuid": "1117da7a_3023825b",
+      "range": {
+        "startLine": 103,
+        "startChar": 77,
+        "endLine": 103,
+        "endChar": 0
+      },
+      "revId": "dbc9c29a86ca924ea45c0762e25f7bd7fae25d62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97d3e92d_f472c76e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/LogoDelegateImpl.java",
         "patchSetId": 1
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "d2df215c_fddd483b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/LogoDelegateImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-31T07:12:48Z",
+      "side": 1,
+      "message": "Resolved.",
+      "parentUuid": "97d3e92d_f472c76e",
+      "range": {
+        "startLine": 122,
+        "startChar": 50,
+        "endLine": 122,
+        "endChar": 0
+      },
+      "revId": "dbc9c29a86ca924ea45c0762e25f7bd7fae25d62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9495df6_6b13d48b",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
@@ -92,6 +140,30 @@
       "revId": "dbc9c29a86ca924ea45c0762e25f7bd7fae25d62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bab503b7_9d85bd82",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 47700,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-31T07:12:48Z",
+      "side": 1,
+      "message": "The semantics of LogoShown haven\u0027t actually changed, I\u0027ve just expanded the description to make clear what those semantics are.\nI\u0027d like to keep the cumulative version for now, for easier comparison between Chrome versions and for consistency with iOS which for now only records the cumulative one.\n\nThe semantics of LogoShownTime were changed however, so I\u0027ve renamed that to LogoShownTime2.",
+      "parentUuid": "c9495df6_6b13d48b",
+      "range": {
+        "startLine": 47700,
+        "startChar": 66,
+        "endLine": 47700,
+        "endChar": 0
+      },
+      "revId": "dbc9c29a86ca924ea45c0762e25f7bd7fae25d62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
