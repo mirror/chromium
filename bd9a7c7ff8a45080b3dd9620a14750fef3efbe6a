@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "a762263b_9aa16caf",
+        "filename": "mojo/public/cpp/bindings/binding.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-31T16:56:42Z",
+      "side": 1,
+      "message": "The impl may not be a raw pointer, you would need:\nImplPointerType exchange_impl(ImplPointerType new_impl);",
+      "revId": "bd9a7c7ff8a45080b3dd9620a14750fef3efbe6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "84d4533b_012d1b38",
         "filename": "mojo/public/cpp/bindings/lib/binding_state.h",
         "patchSetId": 1
