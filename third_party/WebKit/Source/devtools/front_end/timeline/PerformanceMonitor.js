@@ -96,15 +96,15 @@ Timeline.PerformanceMonitor = class extends UI.HBox {
   }
 
   _draw() {
-    /** @type {!Map<symbol, !Array<string>>} */
+    /** @type {!Map<symbol, ?Array<string>>} */
     var charts = new Map();
     for (var metricName of this._controlPane.metrics()) {
-      if (!this._controlPane.isActive(metricName))
-        continue;
       var chartId = this._controlPane.metricInfo(metricName).chartId || Symbol('Chart');
       if (!charts.has(chartId))
-        charts.set(chartId, []);
-      charts.get(chartId).push(metricName);
+        charts.set(chartId, this._controlPane.isActive(metricName) ? [] : null);
+      var metrics = charts.get(chartId);
+      if (metrics)
+        metrics.push(metricName);
     }
 
     var graphHeight = 90;
@@ -115,6 +115,8 @@ Timeline.PerformanceMonitor = class extends UI.HBox {
     this._drawHorizontalGrid(ctx);
     ctx.translate(0, 16);  // Reserve space for the scale bar.
     for (var metrics of charts.values()) {
+      if (!metrics)
+        continue;
       this._drawChart(ctx, metrics, graphHeight);
       ctx.translate(0, graphHeight);
     }
@@ -157,11 +159,8 @@ Timeline.PerformanceMonitor = class extends UI.HBox {
     var max = this._calcMax(metrics) * extraSpace;
     var info = this._controlPane.metricInfo(metrics[0]);
     this._drawVerticalGrid(ctx, height - bottomPadding, max, info);
-    for (var metricName of metrics) {
-      if (!this._controlPane.isActive(metricName))
-        continue;
+    for (var metricName of metrics)
       this._drawMetric(ctx, metricName, height - bottomPadding, max);
-    }
     ctx.restore();
   }
 
@@ -367,7 +366,7 @@ Timeline.PerformanceMonitor.ControlPane = class {
     this._metricsInfo = new Map([
       [
         'TaskDuration', {
-          title: Common.UIString('CPU utilization'),
+          title: Common.UIString('CPU usage'),
           color: 'red',
           mode: mode.CumulativeTime,
           format: format.Percent,
@@ -376,19 +375,13 @@ Timeline.PerformanceMonitor.ControlPane = class {
         }
       ],
       [
-        'ScriptDuration', {
-          title: Common.UIString('Script duration'),
-          color: 'orange',
-          mode: mode.CumulativeTime,
-          format: format.Percent,
-          chartId: chartId.CPU,
-          max: 1
-        }
+        'ScriptDuration',
+        {title: '', color: 'orange', mode: mode.CumulativeTime, format: format.Percent, chartId: chartId.CPU, max: 1}
       ],
       [
         'LayoutDuration', {
-          title: Common.UIString('Layout duration'),
-          color: 'magenta',
+          title: '',
+          color: 'blueviolet',
           mode: mode.CumulativeTime,
           format: format.Percent,
           chartId: chartId.CPU,
@@ -396,27 +389,14 @@ Timeline.PerformanceMonitor.ControlPane = class {
         }
       ],
       [
-        'RecalcStyleDuration', {
-          title: Common.UIString('Style recalc duration'),
-          color: 'violet',
-          mode: mode.CumulativeTime,
-          format: format.Percent,
-          chartId: chartId.CPU,
-          max: 1
-        }
-      ],
-      [
-        'JSHeapTotalSize', {
-          title: Common.UIString('Total JS heap size'),
-          format: format.Bytes,
-          chartId: chartId.Memory,
-          color: 'royalblue'
-        }
+        'RecalcStyleDuration',
+        {title: '', color: 'violet', mode: mode.CumulativeTime, format: format.Percent, chartId: chartId.CPU, max: 1}
       ],
       [
         'JSHeapUsedSize',
-        {title: Common.UIString('Used JS heap size'), format: format.Bytes, chartId: chartId.Memory, color: 'blue'}
+        {title: Common.UIString('JS heap size'), format: format.Bytes, chartId: chartId.Memory, color: 'blue'}
       ],
+      ['JSHeapTotalSize', {title: '', format: format.Bytes, chartId: chartId.Memory, color: '#99f'}],
       ['NodeCount', {title: Common.UIString('DOM Nodes'), color: 'green'}],
       ['JSEventListenerCount', {title: Common.UIString('JS event listeners'), color: 'yellowgreen'}],
       ['DocumentCount', {title: Common.UIString('Documents'), color: 'darkblue'}],
@@ -430,9 +410,15 @@ Timeline.PerformanceMonitor.ControlPane = class {
     for (var info of this._metricsInfo.values())
       info.color = UI.themeSupport.patchColorText(info.color, UI.ThemeSupport.ColorUsage.Foreground);
 
+    /** @type {!Map<string, !Timeline.PerformanceMonitor.MetricIndicator>} */
     this._indicators = new Map();
+    /** @type {!Map<symbol, string>} */
+    this._charts = new Map();
     for (var metricName of this._metricsInfo.keys()) {
       var info = this._metricsInfo.get(metricName);
+      if (this._charts.has(info.chartId))
+        continue;
+      this._charts.set(info.chartId || Symbol('Chart'), metricName);
       var active = this._enabledMetrics.has(metricName);
       var indicator = new Timeline.PerformanceMonitor.MetricIndicator(
           this.element, info, active, this._onToggle.bind(this, metricName));
@@ -479,9 +465,9 @@ Timeline.PerformanceMonitor.ControlPane = class {
    * @param {!Map<string, number>} metrics
    */
   updateMetrics(metrics) {
-    for (const [name, indicator] of this._indicators) {
+    for (var name of this._indicators.keys()) {
       if (metrics.has(name))
-        indicator.setValue(metrics.get(name));
+        this._indicators.get(name).setValue(metrics.get(name));
     }
   }
 };
