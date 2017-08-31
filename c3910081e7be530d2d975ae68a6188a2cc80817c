@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01492a2c_8b569f71",
+        "filename": "third_party/WebKit/Source/platform/mediastream/MediaStreamComponent.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-08-31T08:19:29Z",
+      "side": 1,
+      "message": "Could use a static int that\u0027s incremented or something that takes less memory, but this is OK if you like it.",
+      "range": {
+        "startLine": 68,
+        "startChar": 6,
+        "endLine": 68,
+        "endChar": 16
+      },
+      "revId": "c3910081e7be530d2d975ae68a6188a2cc80817c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
