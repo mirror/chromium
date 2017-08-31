@@ -330,7 +330,7 @@ void ArcSessionManager::OnProvisioningFinished(ProvisioningResult result) {
           profile_, kPlayStoreAppId,
           GetLaunchIntent(kPlayStorePackage, kPlayStoreActivity,
                           {kInitialStartParam}),
-          true, false);
+          false);
     }
 
     for (auto& observer : observer_list_)
