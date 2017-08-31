@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2bdc618b_7d26f72d",
+        "filename": "chrome/browser/chromeos/printing/synced_printers_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-08-31T09:52:50Z",
+      "side": 1,
+      "message": "Link to the bug associated with this TODO.",
+      "revId": "953fe527d3c537d7642c6590fc634331c1071ca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "192511ac_e827893a",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 13
+      },
+      "lineNbr": 9421,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-08-31T09:52:50Z",
+      "side": 1,
+      "message": "I thought we agreed on json here? What changed?",
+      "range": {
+        "startLine": 9421,
+        "startChar": 15,
+        "endLine": 9421,
+        "endChar": 21
+      },
+      "revId": "953fe527d3c537d7642c6590fc634331c1071ca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
