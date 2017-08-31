@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "5dc7e11a_39a36d19",
+        "filename": "cc/ipc/copy_output_request.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-31T21:20:08Z",
+      "side": 1,
+      "message": "Thanks for the heads-up. I\u0027ve rebased.\n\nBTW--This really ate up a lot of time on my end. Could we hold off on moving the CopyOutputResult mojo/traits until this change lands?",
+      "parentUuid": "d264c6df_d29d5c19",
+      "revId": "f44a879a6388c0baa918444f4dddb44656bf7035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "36c529c2_0ed26554",
         "filename": "ui/snapshot/snapshot_async.cc",
         "patchSetId": 10
