@@ -34,6 +34,24 @@
       "revId": "a2d91f7abd56e979225f2a29f35e7023e7bf73c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6f042b6_62b19b82",
+        "filename": "chrome/installer/linux/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-08-31T00:07:49Z",
+      "side": 1,
+      "message": "Huh, wait I think the bots actually *don\u0027t* build \"all\".  I\u0027ll test removing the is_chrome_branded check and see if the bots are still green in this cl:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/636769",
+      "parentUuid": "27281cbd_e39ec4a2",
+      "revId": "a2d91f7abd56e979225f2a29f35e7023e7bf73c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
