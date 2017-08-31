@@ -457,7 +457,8 @@ void PaintLayerScrollableArea::UpdateScrollOffset(
       page->GetChromeClient().ClearToolTip(*frame);
   }
 
-  bool requires_paint_invalidation = true;
+  bool requires_paint_invalidation =
+      !RuntimeEnabledFeatures::SlimmingPaintV2Enabled();
 
   if (Box().View()->Compositor()->InCompositingMode()) {
     bool only_scrolled_composited_layers =
@@ -471,6 +472,8 @@ void PaintLayerScrollableArea::UpdateScrollOffset(
 
   if (!requires_paint_invalidation && is_root_layer) {
     // Some special invalidations for the root layer.
+    // TODO(pdr): We should be able to skip these checks with slimming paint v2
+    // which can composite viewport constrained objects.
     frame_view->InvalidateBackgroundAttachmentFixedObjects();
     if (frame_view->HasViewportConstrainedObjects()) {
       if (!frame_view->InvalidateViewportConstrainedObjects())
@@ -479,10 +482,8 @@ void PaintLayerScrollableArea::UpdateScrollOffset(
   }
 
   // Just schedule a full paint invalidation of our object.
-  // FIXME: This invalidation will be unnecessary in slimming paint phase 2.
-  if (requires_paint_invalidation) {
+  if (requires_paint_invalidation)
     Box().SetShouldDoFullPaintInvalidationIncludingNonCompositingDescendants();
-  }
 
   // The scrollOffsetTranslation paint property depends on the scroll offset.
   // (see: PaintPropertyTreeBuilder.updateProperties(LocalFrameView&,...) and
