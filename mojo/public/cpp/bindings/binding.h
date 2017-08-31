@@ -187,6 +187,11 @@ class Binding {
   // does not take ownership.
   Interface* impl() { return internal_state_.impl(); }
 
+  // Allows test code to swap the interface implementation.
+  ImplPointerType SwapImplForTesting(ImplPointerType new_impl) {
+    return internal_state_.SwapImplForTesting(new_impl);
+  }
+
   // Indicates whether the binding has been completed (i.e., whether a message
   // pipe has been bound to the implementation).
   bool is_bound() const { return internal_state_.is_bound(); }
