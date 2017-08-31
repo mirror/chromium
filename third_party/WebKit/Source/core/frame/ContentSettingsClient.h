@@ -18,6 +18,7 @@ namespace blink {
 class ContentSettingCallbacks;
 class KURL;
 class SecurityOrigin;
+struct WebEnabledClientHints;
 class WebContentSettingsClient;
 
 // This class provides the content settings information which tells
@@ -50,6 +51,9 @@ class CORE_EXPORT ContentSettingsClient {
   // Controls whether scripts loaded from the given URL are allowed to execute.
   bool AllowScriptFromSource(bool enabled_per_settings, const KURL&);
 
+  // Controls whether the request header corresponding to the given client hint
+  // should be attached to the request for the given URL.
+  void GetAllowedClientHintsFromSource(const KURL&, WebEnabledClientHints*);
   // Controls whether images are allowed.
   bool AllowImage(bool enabled_per_settings, const KURL&);
 
