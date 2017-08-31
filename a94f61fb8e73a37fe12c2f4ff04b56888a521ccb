@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2513445f_23c74ed0",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-08-31T13:30:22Z",
+      "side": 1,
+      "message": "We don\u0027t need to check if(!node) here because in before the line it called ShouldShowResizeForNode, the (!node) is handled and returned. \nBut we can have an if(!node) here to extra secure. Do you think we should add one in case anyone move it before the check?",
+      "parentUuid": "0316e74b_14715614",
+      "revId": "a94f61fb8e73a37fe12c2f4ff04b56888a521ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce74875d_6664c79d",
         "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "a94f61fb8e73a37fe12c2f4ff04b56888a521ccb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3109091_7ac510e4",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-08-31T13:30:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce74875d_6664c79d",
+      "revId": "a94f61fb8e73a37fe12c2f4ff04b56888a521ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
