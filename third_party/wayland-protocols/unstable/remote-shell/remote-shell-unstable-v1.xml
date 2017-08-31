@@ -38,7 +38,7 @@
     reset.
   </description>
 
-  <interface name="zcr_remote_shell_v1" version="7">
+  <interface name="zcr_remote_shell_v1" version="8">
     <description summary="remote_shell">
       The global interface that allows clients to turn a wl_surface into a
       "real window" which is remotely managed but can be stacked, activated
@@ -169,6 +169,15 @@
       </description>
       <arg name="layout_mode" type="uint"/>
     </event>
+
+    <!-- Version 8 additions -->
+
+    <event name="default_device_pixel_ratio" since="8">
+      <description summary="initialize scale configuration">
+	Sends the default device pixel ratio.
+      </description>
+      <arg name="scale" type="int" summary="DP to pixels ratio"/>
+    </event>
   </interface>
 
   <interface name="zcr_remote_surface_v1" version="7">
@@ -198,7 +207,7 @@
 
     <enum name="orientation">
       <description summary="window orientation">
-         The orientation of the window.
+         The orientation ofpppp the window.
       </description>
       <entry name="portrait" value="1" summary="portrait"/>
       <entry name="landscape" value="2" summary="landscape"/>
