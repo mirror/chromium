@@ -297,7 +297,7 @@ IN_PROC_BROWSER_TEST_P(NetworkContextConfigurationBrowserTest, PRE_DiskCache) {
   content::TestURLLoaderClient client;
   request.url = test_url;
   request.method = "GET";
-  request.headers = "foo: foopity foo\r\n\r\n";
+  request.headers.SetHeader("foo", "foopity foo");
   loader_factory()->CreateLoaderAndStart(
       mojo::MakeRequest(&loader), 2, 1, content::mojom::kURLLoadOptionNone,
       request, client.CreateInterfacePtr(),

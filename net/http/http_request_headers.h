@@ -111,6 +111,13 @@ class NET_EXPORT HttpRequestHeaders {
   // The caller must ensure that |key| passes HttpUtil::IsValidHeaderName() and
   // |value| passes HttpUtil::IsValidHeaderValue().
   void SetHeader(const base::StringPiece& key, const base::StringPiece& value);
+  void SetHeader(base::StringPiece&& key, base::StringPiece&& value);
+
+  // Does the same as above but without internal DCHECKs for validations.
+  void SetHeaderWithoutCheckForTesting(const base::StringPiece& key,
+                                       const base::StringPiece& value) {
+    SetHeaderInternal(key, value);
+  }
 
   // Sets the header value pair for |key| and |value|, if |key| does not exist.
   // If |key| already exists, the call is a no-op.
@@ -167,9 +174,14 @@ class NET_EXPORT HttpRequestHeaders {
       const std::string* request_line,
       NetLogCaptureMode capture_mode) const;
 
+  const HeaderVector& GetHeaderVector() const { return headers_; }
+
  private:
   HeaderVector::iterator FindHeader(const base::StringPiece& key);
   HeaderVector::const_iterator FindHeader(const base::StringPiece& key) const;
+
+  void SetHeaderInternal(const base::StringPiece& key,
+                         const base::StringPiece& value);
 
   HeaderVector headers_;
 
