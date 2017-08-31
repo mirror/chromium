@@ -168,7 +168,7 @@ TEST_F(VoiceInteractionAppListButtonTest,
   // Simulate two user with primary user as active.
   UpdateSession(1u, "user1@test.com");
   UpdateSession(2u, "user2@test.com");
-  std::vector<uint32_t> order = {2u, 1u};
+  std::vector<uint32_t> order = {1u, 2u};
   controller_->SetUserSessionOrder(order);
 
   // Simulate a user who has already completed setup flow, but disabled voice
@@ -185,6 +185,7 @@ TEST_F(VoiceInteractionAppListButtonTest,
   EXPECT_EQ(0u, test_app_list_presenter.voice_session_count());
 }
 
+// crbug/761165
 TEST_F(VoiceInteractionAppListButtonTest,
        LongPressGestureBeforeSetupCompleted) {
   app_list::test::TestAppListPresenter test_app_list_presenter;
@@ -195,7 +196,10 @@ TEST_F(VoiceInteractionAppListButtonTest,
       chromeos::switches::kEnableVoiceInteraction));
 
   // Simulate two user with primary user as active.
-  CreateUserSessions(2);
+  UpdateSession(1u, "user1@test.com");
+  UpdateSession(2u, "user2@test.com");
+  std::vector<uint32_t> order = {1u, 2u};
+  controller_->SetUserSessionOrder(order);
 
   // Disable voice interaction in system settings.
   Shell::Get()->NotifyVoiceInteractionEnabled(false);
