@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<script src='../resources/testharness.js'></script>
+<script src='../resources/testharnessreport.js'></script>
+<script src='resources/shadow-dom.js'></script>
+<html>
+<body>
+<p>Tests for moving focus by pressing tab key across shadow boundaries.<br>
+To manually test, press tab key sixteen times then shift+tab sixteen times.<br>
+It should traverse focusable elements in the increasing numerical order and then in the reverse order.</p>
+<style>
+
+#test-content > * {
+    display: block;
+    width: 400px;
+    height: 150px;Slot shouldn't be focused.
+    border: solid 1px black;
+    margin: 10px;
+    float: left;
+}
+
+pre {
+    padding-top: 1rem;
+    clear: both;
+}
+
+</style>
+<div id="test-content">
+<div id="host">
+  <template data-mode='open'>
+    <slot name="slot1" onfocus="log(this)">Slot shouldn't be focused.
+      <slot name="slot2" onfocus="log(this)">Slot shouldn't be focused.
+        <div tabindex="0" onfocus="log(this)">This text shouldn't appear.</div>
+      </slot>
+      <slot name="slot3" onfocus="log(this)">Slot shouldn't be focused.
+        <div tabindex="0" onfocus="log(this)">2. No host child is assigned to slot3.</div>
+      </slot>
+    </slot>
+
+    <div tabindex="0" onfocus="log(this)">3. Inner Shadow Host.
+      <template data-mode='open'>
+        <slot name="slot4" onfocus="log(this)">Slot shouldn't be focused.
+          <slot name="slot5" onfocus="log(this)">Slot shouldn't be focused.
+            <div tabindex="0" onfocus="log(this)">This text shouldn't appear.</div>
+          </slot>
+        </slot>
+      </template>
+      <div slot="slot4" tabindex="0" onfocus="log(this)">4. Assigned to slot4.</div>
+      <div slot="slot5" tabindex="0" onfocus="log(this)">This text shouldn't appear. slot5 node is the ignored fallback content.</div>
+  </div>
+
+    <div tabindex="0" onfocus="log(this)">5. Inner Shadow Host.
+      <template data-mode='open'>
+        <slot name="slot6" onfocus="log(this)">Slot shouldn't be focused.
+          <div tabindex="0" onfocus="log(this)">This tetx shouldn't appear.</div>
+        </slot>
+      </template>
+      <slot name="slot7" slot="slot6" onfocus="log(this)">Slot shouldn't be focused. Assigned to slot6.
+        <div tabindex="0" onfocus="log(this)">This text shouldn't appear.</div>
+      </slot>
+    </div>
+  </template>Slot shouldn't be focused.
+  <div slot="slot2" tabindex="0" onfocus="log(this)">1. Assigned to slot2.</div>
+  <div slot="slot7" tabindex="0" onfocus="log(this)">6. Assigned to slot7 which is assigned to slot6.</div>
+</div>
+</div>
+<pre></pre>
+<script>
+
+var oldActiveElement = null;
+function log()
+{
+    setTimeout(function () {
+        var newActiveElement = document.activeElement;
+
+        var shadowRoot = newActiveElement.shadowRoot || newActiveElement.closedShadowRoot;
+        if (shadowRoot) {
+            var activeElementInShadow = shadowRoot.activeElement;
+            if (activeElementInShadow)
+                newActiveElement = activeElementInShadow;
+        }
+
+        if (oldActiveElement == newActiveElement || newActiveElement == document.body)
+            return;
+        oldActiveElement = newActiveElement;
+        document.querySelector('pre').textContent += newActiveElement.firstChild.textContent.trim() + '\n';
+    }, 0);
+}
+
+if (window.testRunner) {
+    testRunner.dumpAsText();
+    testRunner.waitUntilDone();
+}
+
+window.onload = function () {
+    convertTemplatesToShadowRootsWithin(host);
+    document.onkeydown = log;
+
+    for (var element of document.querySelectorAll('#test-content *')) {
+        if (element instanceof HTMLIFrameElement)
+            element.contentDocument.onkeydown = log;
+        else
+            element.onfocus = log;
+    }
+
+    host.focus();
+    document.onkeydown();
+
+    if (window.eventSender)
+        moveFocusForward(6);
+}
+
+function moveFocusForward(focusCount)
+{
+    setTimeout(function () {
+        if (!focusCount)
+            return moveFocusBackward(5);
+        eventSender.keyDown('\t');
+        setTimeout(function () {
+            moveFocusForward(focusCount - 1);
+        }, 1);
+    }, 1);
+}
+
+function moveFocusBackward(focusCount)
+{
+    setTimeout(function () {
+        if (!focusCount) {
+            document.getElementById('test-content').style.display = 'none';
+            testRunner.notifyDone();
+            return;
+        }
+        eventSender.keyDown('\t', ['shiftKey']);
+        setTimeout(function () {
+            moveFocusBackward(focusCount - 1);
+        }, 1);
+    }, 1);
+}
+
+</script>
+</body>
+</html>
