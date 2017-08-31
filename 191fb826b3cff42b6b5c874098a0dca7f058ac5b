@@ -16,6 +16,24 @@
       "revId": "191fb826b3cff42b6b5c874098a0dca7f058ac5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8351f80d_c3f4d7ba",
+        "filename": "content/renderer/browser_plugin/browser_plugin.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-08-31T23:58:57Z",
+      "side": 0,
+      "message": "Good catch! Fixed! There were a couple of silly mistakes that tests caught.",
+      "parentUuid": "2ed39ef7_994c620b",
+      "revId": "191fb826b3cff42b6b5c874098a0dca7f058ac5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
