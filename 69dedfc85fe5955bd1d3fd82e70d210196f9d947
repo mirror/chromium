@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a571fc3_ab4db959",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-08-31T20:20:56Z",
+      "side": 1,
+      "message": "I\u0027d say let\u0027s just get rid of the \"success\" case since we\u0027d never make use of this when successful (for the other metric it was still useful).",
+      "range": {
+        "startLine": 269,
+        "startChar": 16,
+        "endLine": 269,
+        "endChar": 33
+      },
+      "revId": "69dedfc85fe5955bd1d3fd82e70d210196f9d947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
