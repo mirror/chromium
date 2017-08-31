@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c3b5c0e0_6a3109c7",
+        "filename": "ash/system/tray/system_tray_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 952,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-08-31T11:04:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "caecc788_9ab5402f",
+      "range": {
+        "startLine": 951,
+        "startChar": 3,
+        "endLine": 952,
+        "endChar": 19
+      },
+      "revId": "23b08e3e73accb410a33da3f31f386e2fb23bbfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d69e913_1db693de",
         "filename": "ash/test/ash_test_views_delegate.h",
         "patchSetId": 26
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "ca1ba30b_c29d0002",
+        "filename": "ash/test/ash_test_views_delegate.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-08-31T11:04:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d69e913_1db693de",
+      "range": {
+        "startLine": 50,
+        "startChar": 2,
+        "endLine": 50,
+        "endChar": 41
+      },
+      "revId": "23b08e3e73accb410a33da3f31f386e2fb23bbfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f254fd0d_a531132a",
         "filename": "ui/views/bubble/tray_bubble_view.cc",
         "patchSetId": 26
@@ -68,6 +116,30 @@
       "revId": "23b08e3e73accb410a33da3f31f386e2fb23bbfc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0502fd75_b40d6c95",
+        "filename": "ui/views/bubble/tray_bubble_view.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-08-31T11:04:05Z",
+      "side": 1,
+      "message": "This was modified to \"Add\" mistakenly. Fixed.",
+      "parentUuid": "f254fd0d_a531132a",
+      "range": {
+        "startLine": 152,
+        "startChar": 28,
+        "endLine": 152,
+        "endChar": 31
+      },
+      "revId": "23b08e3e73accb410a33da3f31f386e2fb23bbfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -118,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "c286771d_eb2234bd",
+        "filename": "ui/views/bubble/tray_bubble_view.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-08-31T11:04:05Z",
+      "side": 1,
+      "message": "Changed to return if the event is handled by the widget.\n\nAlso changed to only pass Tab, Shift+Tab, Esc to the widget. Widget consumes more key events than expected. e.g. If you press Alt+Tab, expected behavior is that app switcher is opened. But, without this filter, widget consumes it as a focus traversal key event.",
+      "parentUuid": "016c3c58_7de95c2b",
+      "range": {
+        "startLine": 160,
+        "startChar": 2,
+        "endLine": 160,
+        "endChar": 52
+      },
+      "revId": "23b08e3e73accb410a33da3f31f386e2fb23bbfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1e9c99a7_8c02c43c",
         "filename": "ui/views/bubble/tray_bubble_view.h",
         "patchSetId": 26
@@ -141,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "76a12e51_319394a7",
+        "filename": "ui/views/bubble/tray_bubble_view.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-08-31T11:04:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e9c99a7_8c02c43c",
+      "range": {
+        "startLine": 157,
+        "startChar": 21,
+        "endLine": 157,
+        "endChar": 41
+      },
+      "revId": "23b08e3e73accb410a33da3f31f386e2fb23bbfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5d17a9a_80356372",
         "filename": "ui/views/bubble/tray_bubble_view.h",
         "patchSetId": 26
@@ -161,6 +281,30 @@
       "revId": "23b08e3e73accb410a33da3f31f386e2fb23bbfc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76c278c4_d7a21786",
+        "filename": "ui/views/bubble/tray_bubble_view.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-08-31T11:04:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5d17a9a_80356372",
+      "range": {
+        "startLine": 179,
+        "startChar": 49,
+        "endLine": 179,
+        "endChar": 55
+      },
+      "revId": "23b08e3e73accb410a33da3f31f386e2fb23bbfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
