@@ -22,6 +22,46 @@
       "revId": "02c7bc7e25707f2cc280f92b12886e9228a304d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f140aa05_5a238ce4",
+        "filename": "base/strings/string_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 728,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-31T06:36:56Z",
+      "side": 1,
+      "message": "I feel like it\u0027s not too bad to pull this out into a traits class though? Ultimately, it means the callsites will trade writing std::string::find for StringReplaceTraits, but that doesn\u0027t seem too bad, and we won\u0027t need to DCHECK() that a find_fn that\u0027s not find_first_of or find gets passed here. The boilerplate will be a bit longer:\n\ntemplate\u003cclass StringType\u003e\nstruct StringReplaceTraits {\n  static size_t Find(const BasicString\u0026 input, BasicStringPiece\u003cStringType\u003e find_this,\n                     size_t pos, size_t count) {\n    return input.find(find_this.data(), pos, count);\n  }\n  static size_t MatchSize(BasicStringPiece\u003cStringType\u003e find_this) {\n    return find_this.size();\n  }\n};\n\ntemplate\u003cclass StringType\u003e\nstruct CharsReplaceTraits {\n  static size_t Find(const BasicString\u0026 input, BasicStringPiece\u003cStringType\u003e find_this,\n                     size_t pos, size_t count) {\n    return input.find_first_of(find_this.data(), pos, count);\n  }\n  static constexpr size_t MatchSize(BasicStringPiece\u003cStringType\u003e find_this) {\n    return 1;\n  }\n};\n\nBut the tradeoff for not having to do function pointer equality checks seems worth it to me.",
+      "revId": "02c7bc7e25707f2cc280f92b12886e9228a304d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d12c16c5_830a9c5d",
+        "filename": "base/strings/string_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-31T06:36:56Z",
+      "side": 1,
+      "message": "Nit: omit this here and below to match line 882",
+      "range": {
+        "startLine": 891,
+        "startChar": 29,
+        "endLine": 891,
+        "endChar": 39
+      },
+      "revId": "02c7bc7e25707f2cc280f92b12886e9228a304d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
