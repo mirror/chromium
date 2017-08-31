@@ -126,7 +126,8 @@ class VIZ_SERVICE_EXPORT SurfaceManager {
   // a surface depends on are satisfied, the surface can be destroyed.
   void SatisfySequence(const SurfaceSequence& sequence);
 
-  void RegisterFrameSinkId(const FrameSinkId& frame_sink_id);
+  void RegisterFrameSinkId(const FrameSinkId& frame_sink_id,
+                           const std::string& label);
 
   // Invalidate a frame_sink_id that might still have associated sequences,
   // possibly because a renderer process has crashed.
@@ -284,6 +285,8 @@ class VIZ_SERVICE_EXPORT SurfaceManager {
   // this set, any remaining (surface) sequences with that FrameSinkId are
   // considered satisfied.
   base::flat_set<FrameSinkId> valid_frame_sink_ids_;
+
+  base::flat_map<FrameSinkId, std::string> frame_sink_labels_;
 
   // Root SurfaceId that references display root surfaces. There is no Surface
   // with this id, it's for bookkeeping purposes only.

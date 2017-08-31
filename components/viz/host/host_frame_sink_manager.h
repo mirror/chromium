@@ -69,7 +69,8 @@ class VIZ_HOST_EXPORT HostFrameSinkManager
   // Registers |frame_sink_id| will be used. This must be called before
   // CreateCompositorFrameSink(Support) is called.
   void RegisterFrameSinkId(const FrameSinkId& frame_sink_id,
-                           HostFrameSinkClient* client);
+                           HostFrameSinkClient* client,
+                           const std::string& label = "");
 
   // Invalidates |frame_sink_id| which cleans up any unsatisified surface
   // sequences or dangling temporary references assigned to it. If there is a
