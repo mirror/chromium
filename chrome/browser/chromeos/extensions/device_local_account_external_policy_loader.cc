@@ -58,8 +58,7 @@ void DeviceLocalAccountExternalPolicyLoader::StopCache(
 }
 
 void DeviceLocalAccountExternalPolicyLoader::StartLoading() {
-  if (prefs_)
-    LoadFinished();
+  // OnExtensionListsUpdated() is responsible for loading the prefs.
 }
 
 void DeviceLocalAccountExternalPolicyLoader::OnStoreLoaded(
@@ -78,8 +77,7 @@ void DeviceLocalAccountExternalPolicyLoader::OnStoreError(
 void DeviceLocalAccountExternalPolicyLoader::OnExtensionListsUpdated(
     const base::DictionaryValue* prefs) {
   DCHECK(external_cache_ || prefs->empty());
-  prefs_.reset(prefs->DeepCopy());
-  LoadFinished();
+  LoadFinished(prefs->CreateDeepCopy());
 }
 
 ExternalCache*
