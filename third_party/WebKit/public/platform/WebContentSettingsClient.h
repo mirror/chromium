@@ -58,6 +58,11 @@ class WebContentSettingsClient {
     return enabled_per_settings;
   }
 
+  // Controls whether the request header corresponding to the given client hint
+  // should be attached to the request for the given URL.
+  virtual void GetAllowedClientHintsFromSource(const blink::WebURL& url,
+                                               WebEnabledClientHints*) {}
+
   // Controls whether insecure scripts are allowed to execute for this frame.
   virtual bool AllowRunningInsecureContent(bool enabled_per_settings,
                                            const WebSecurityOrigin&,
