@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1dc379a_c27440ce",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-31T21:54:27Z",
+      "side": 0,
+      "message": "Just some background about this change: This fixes WebContentsImplBrowserTest.GetSizeForNewRenderView and BrowserTest.GetSizeForNewRenderView which were previously failing only on Mac with some wrong sizes.  This check is problematic when we create a pending RFH/RVH for a main frame; it means that the new RWHV won\u0027t get correct size set (this is called from SetSize() in CreateRenderWidgetHostViewForRenderManager(), with size from GetSizeForNewRenderView).\n\nThe other platforms don\u0027t have this check on their SetSize() paths, and it doesn\u0027t seem like it\u0027s needed here.  The comment/bug have nothing to do with it either.  It\u0027s been there for a long time, at least since Avi\u0027s https://codereview.chromium.org/20124 in 2009.\n\nI ran this by both Ken and Avi, and they both don\u0027t know why it\u0027s there.  I think we can try removing it - nothing seems to explode on the Mac trybots.  I might do it in a separate CL though, just to make it easier to blame if it does end up breaking something.",
+      "range": {
+        "startLine": 797,
+        "startChar": 39,
+        "endLine": 797,
+        "endChar": 0
+      },
+      "revId": "aaf267fe64784874d3a010fa407a67123192fcd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
