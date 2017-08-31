@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89b3133b_e18a21cd",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-31T23:12:41Z",
+      "side": 1,
+      "message": "nit: To reiterate on my point from the previous CL: I suggested checking whether IsArcPlayStoreEnabledForProfile() would be suitable here instead of reading the pref value directly.\nBecause reading the pref is low-level, and because just having the pref set to true doesn\u0027t mean that ARC was actually enabled - there are many other things checked in that helper. (I also had a feeling that owners of the /arc/ code prefer to use those function helpers instead of direct reading of prefs - but maybe I\u0027m wrong here.)",
+      "range": {
+        "startLine": 182,
+        "startChar": 11,
+        "endLine": 182,
+        "endChar": 62
+      },
+      "revId": "45f8fb5a85fe079b67b74b719f1ad4f02ab7d9c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9b7e9a8_a3318770",
+        "filename": "chrome/browser/chromeos/arc/arc_util_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-31T23:12:41Z",
+      "side": 1,
+      "message": "nit: No underscores for struct\u0027s data fields:\nhttps://google.github.io/styleguide/cppguide.html#Variable_Names",
+      "range": {
+        "startLine": 620,
+        "startChar": 7,
+        "endLine": 620,
+        "endChar": 28
+      },
+      "revId": "45f8fb5a85fe079b67b74b719f1ad4f02ab7d9c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a30a983_c76d53fc",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1070,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-31T23:12:41Z",
+      "side": 1,
+      "message": "nit: s/transtitioning/transitioning/",
+      "range": {
+        "startLine": 1070,
+        "startChar": 26,
+        "endLine": 1070,
+        "endChar": 40
+      },
+      "revId": "45f8fb5a85fe079b67b74b719f1ad4f02ab7d9c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "476359c6_c849f37b",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1074,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-31T23:12:41Z",
+      "side": 1,
+      "message": "nit: Probably, \"chromeos::\" can be omitted?",
+      "range": {
+        "startLine": 1074,
+        "startChar": 14,
+        "endLine": 1074,
+        "endChar": 24
+      },
+      "revId": "45f8fb5a85fe079b67b74b719f1ad4f02ab7d9c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
