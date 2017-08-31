@@ -16,6 +16,8 @@ class CORE_EXPORT ReportBody : public GarbageCollectedFinalized<ReportBody>,
  public:
   virtual ~ReportBody() {}
 
+  virtual std::unique_ptr<base::Value> ToValue() = 0;
+
   DEFINE_INLINE_VIRTUAL_TRACE() {}
 };
 

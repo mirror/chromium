@@ -29,6 +29,7 @@ blink_core_sources("frame") {
     "DeprecatedScheduleStyleRecalcDuringLayout.h",
     "Deprecation.cpp",
     "Deprecation.h",
+    "DeprecationReport.cpp",
     "DeprecationReport.h",
     "DeviceSingleWindowEventController.cpp",
     "DeviceSingleWindowEventController.h",
