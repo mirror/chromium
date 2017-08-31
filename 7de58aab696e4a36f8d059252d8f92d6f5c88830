@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8fbfcae5_02d9930d",
+        "filename": "chrome/browser/predictors/loading_stats_collector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-08-31T09:53:18Z",
+      "side": 0,
+      "message": "I suppose that we don\u0027t have duplicates in the prediction vector.",
+      "range": {
+        "startLine": 26,
+        "startChar": 17,
+        "endLine": 26,
+        "endChar": 35
+      },
+      "revId": "7de58aab696e4a36f8d059252d8f92d6f5c88830",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
