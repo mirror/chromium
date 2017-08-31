@@ -271,6 +271,7 @@ def main():
       default_version = IOS_TOOLCHAIN_VERSION
       toolchain_filename = 'ios-toolchain-%s.tgz'
     else:
+      target_os = 'mac'
       default_version = MAC_TOOLCHAIN_VERSION
       toolchain_filename = 'toolchain-%s.tgz'
 
