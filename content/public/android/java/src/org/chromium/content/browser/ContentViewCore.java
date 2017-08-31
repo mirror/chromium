@@ -213,7 +213,6 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
     private final ObserverList<GestureStateListener> mGestureStateListeners;
     private final RewindableIterator<GestureStateListener> mGestureStateListenersIterator;
 
-    private PopupZoomer mPopupZoomer;
     private SelectPopup mSelectPopup;
     private long mNativeSelectPopupSourceFrame;
 
@@ -473,7 +472,6 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
 
         setContainerViewInternals(internalDispatcher);
 
-        mPopupZoomer = new PopupZoomer(mContext, mWebContents, mContainerView);
         mImeAdapter = new ImeAdapter(
                 mWebContents, mContainerView, new InputMethodManagerWrapper(mContext));
         mImeAdapter.addEventObserver(this);
@@ -574,7 +572,6 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
             TraceEvent.begin("ContentViewCore.setContainerView");
             if (mContainerView != null) {
                 hideSelectPopupWithCancelMessage();
-                mPopupZoomer.hide(false);
                 mImeAdapter.setContainerView(containerView);
             }
 
@@ -601,11 +598,6 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
      */
     public void setContainerViewInternals(InternalAccessDelegate internalDispatcher) {
         mContainerViewInternals = internalDispatcher;
-    }
-
-    @VisibleForTesting
-    public void setPopupZoomerForTest(PopupZoomer popupZoomer) {
-        mPopupZoomer = popupZoomer;
     }
 
     /**
@@ -833,8 +825,6 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
             return true;
         }
 
-        if (!mPopupZoomer.isShowing()) mPopupZoomer.setLastTouch(x, y);
-
         return false;
     }
 
@@ -949,7 +939,6 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
         mSelectionPopupController.destroyActionModeAndUnselect();
         destroyPastePopup();
         hideSelectPopupWithCancelMessage();
-        mPopupZoomer.hide(false);
         mTextSuggestionHost.hidePopups();
         if (mWebContents != null) mWebContents.dismissTextHandles();
     }
@@ -959,7 +948,6 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
         mSelectionPopupController.destroyActionModeAndKeepSelection();
         destroyPastePopup();
         hideSelectPopupWithCancelMessage();
-        mPopupZoomer.hide(false);
         mTextSuggestionHost.hidePopups();
     }
 
@@ -1101,8 +1089,6 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
     }
 
     private void updateAfterSizeChanged() {
-        mPopupZoomer.hide(false);
-
         // Execute a delayed form focus operation because the OSK was brought
         // up earlier.
         Rect focusPreOSKViewportRect = mImeAdapter.getFocusPreOSKViewportRect();
@@ -1185,10 +1171,6 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
      * @see View#onKeyUp(int, KeyEvent)
      */
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if (mPopupZoomer.isShowing() && keyCode == KeyEvent.KEYCODE_BACK) {
-            mPopupZoomer.backButtonPressed();
-            return true;
-        }
         return mContainerViewInternals.super_onKeyUp(keyCode, event);
     }
 
@@ -1481,10 +1463,6 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
                 || scrollOffsetX != mRenderCoordinates.getScrollX()
                 || scrollOffsetY != mRenderCoordinates.getScrollY();
 
-        final boolean needHidePopupZoomer = contentSizeChanged || scrollChanged;
-
-        if (needHidePopupZoomer) mPopupZoomer.hide(true);
-
         if (scrollChanged) {
             mContainerViewInternals.onScrollChanged(
                     (int) mRenderCoordinates.fromLocalCssToPix(scrollOffsetX),
@@ -1521,7 +1499,6 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
 
     @Override
     public void onImeEvent() {
-        mPopupZoomer.hide(true);
     }
 
     @Override

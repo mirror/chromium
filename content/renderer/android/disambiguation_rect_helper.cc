@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/renderer/android/disambiguation_popup_helper.h"
+#include "content/renderer/android/disambiguation_rect_helper.h"
 
 #include <stddef.h>
 
@@ -18,18 +18,18 @@ namespace {
 
 // The amount of padding to add to the disambiguation popup to show
 // content around the possible elements, adding some context.
-const int kDisambiguationPopupPadding = 8;
+const int kDisambiguationRectPadding = 8;
 
 // Constants used for fitting the disambiguation popup inside the bounds of
 // the view. Note that there are mirror constants in PopupZoomer.java.
-const int kDisambiguationPopupBoundsMargin = 25;
+const int kDisambiguationRectBoundsMargin = 25;
 
-// The smallest allowable touch target used for disambiguation popup.
+// The smallest allowable touch target used for disambiguation rect.
 // This value is used to determine the minimum amount we need to scale to
 // make all targets touchable.
-const int kDisambiguationPopupMinimumTouchSize = 40;
-const float kDisambiguationPopupMaxScale = 5.0;
-const float kDisambiguationPopupMinScale = 2.0;
+const int kDisambiguationRectMinimumTouchSize = 40;
+const float kDisambiguationRectMaxScale = 5.0;
+const float kDisambiguationRectMinScale = 2.0;
 
 // Compute the scaling factor to ensure the smallest touch candidate reaches
 // a certain clickable size after zooming
@@ -38,7 +38,7 @@ float FindOptimalScaleFactor(const WebVector<WebRect>& target_rects,
   DCHECK_GT(total_scale, 0.0f);
   if (!target_rects.size()) {
     NOTREACHED();
-    return kDisambiguationPopupMinScale;
+    return kDisambiguationRectMinScale;
   }
   int smallest_target = std::min(target_rects[0].width, target_rects[0].height);
   for (size_t i = 1; i < target_rects.size(); i++) {
@@ -46,9 +46,9 @@ float FindOptimalScaleFactor(const WebVector<WebRect>& target_rects,
         {smallest_target, target_rects[i].width, target_rects[i].height});
   }
   const float smallest_target_f = std::max(smallest_target * total_scale, 1.0f);
-  return std::min(kDisambiguationPopupMaxScale,
-                  std::max(kDisambiguationPopupMinScale,
-                           kDisambiguationPopupMinimumTouchSize /
+  return std::min(kDisambiguationRectMaxScale,
+                  std::max(kDisambiguationRectMinScale,
+                           kDisambiguationRectMinimumTouchSize /
                                smallest_target_f)) *
          total_scale;
 }
@@ -72,8 +72,8 @@ gfx::Rect CropZoomArea(const gfx::Rect& zoom_rect,
                        const gfx::Point& touch_point,
                        float scale) {
   gfx::Size max_size = viewport_size;
-  max_size.Enlarge(-2 * kDisambiguationPopupBoundsMargin,
-                   -2 * kDisambiguationPopupBoundsMargin);
+  max_size.Enlarge(-2 * kDisambiguationRectBoundsMargin,
+                   -2 * kDisambiguationRectBoundsMargin);
   max_size = gfx::ScaleToCeiledSize(max_size, 1.0 / scale);
 
   int left = touch_point.x() - zoom_rect.x();
@@ -83,9 +83,7 @@ gfx::Rect CropZoomArea(const gfx::Rect& zoom_rect,
   TrimEdges(&left, &right, max_size.width());
   TrimEdges(&top, &bottom, max_size.height());
 
-  return gfx::Rect(touch_point.x() - left,
-                   touch_point.y() - top,
-                   left + right,
+  return gfx::Rect(touch_point.x() - left, touch_point.y() - top, left + right,
                    top + bottom);
 }
 
@@ -94,7 +92,7 @@ gfx::Rect CropZoomArea(const gfx::Rect& zoom_rect,
 namespace content {
 
 // static
-float DisambiguationPopupHelper::ComputeZoomAreaAndScaleFactor(
+float DisambiguationRectHelper::ComputeZoomArea(
     const gfx::Rect& tap_rect,
     const WebVector<WebRect>& target_rects,
     const gfx::Size& screen_size,
@@ -104,15 +102,13 @@ float DisambiguationPopupHelper::ComputeZoomAreaAndScaleFactor(
   *zoom_rect = tap_rect;
   for (size_t i = 0; i < target_rects.size(); i++)
     zoom_rect->Union(gfx::Rect(target_rects[i]));
-  zoom_rect->Inset(-kDisambiguationPopupPadding, -kDisambiguationPopupPadding);
+  zoom_rect->Inset(-kDisambiguationRectPadding, -kDisambiguationRectPadding);
 
   zoom_rect->Intersect(gfx::Rect(visible_content_size));
 
-  float new_total_scale =
-      FindOptimalScaleFactor(target_rects, total_scale);
-  *zoom_rect = CropZoomArea(
-      *zoom_rect, screen_size, tap_rect.CenterPoint(), new_total_scale);
-
+  float new_total_scale = FindOptimalScaleFactor(target_rects, total_scale);
+  *zoom_rect = CropZoomArea(*zoom_rect, screen_size, tap_rect.CenterPoint(),
+                            new_total_scale);
   return new_total_scale;
 }
 

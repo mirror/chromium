@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CONTENT_RENDERER_ANDROID_DISAMBIGUATION_POPUP_HELPER_H_
-#define CONTENT_RENDERER_ANDROID_DISAMBIGUATION_POPUP_HELPER_H_
+#ifndef CONTENT_RENDERER_ANDROID_DISAMBIGUATION_RECT_HELPER_H_
+#define CONTENT_RENDERER_ANDROID_DISAMBIGUATION_RECT_HELPER_H_
 
 #include "content/common/content_export.h"
 #include "third_party/WebKit/public/platform/WebVector.h"
@@ -11,7 +11,7 @@
 namespace gfx {
 class Rect;
 class Size;
-}
+}  // namespace gfx
 
 namespace blink {
 struct WebRect;
@@ -19,10 +19,10 @@ struct WebRect;
 
 namespace content {
 
-// Contains functions to calculate proper scaling factor and popup size
-class DisambiguationPopupHelper {
+// Contains functions to calculate proper disambiguation zoom rect size
+class DisambiguationRectHelper {
  public:
-  CONTENT_EXPORT static float ComputeZoomAreaAndScaleFactor(
+  CONTENT_EXPORT static float ComputeZoomArea(
       const gfx::Rect& tap_rect,
       const blink::WebVector<blink::WebRect>& target_rects,
       const gfx::Size& screen_size,
@@ -33,4 +33,4 @@ class DisambiguationPopupHelper {
 
 }  // namespace content
 
-#endif  // CONTENT_RENDERER_ANDROID_DISAMBIGUATION_POPUP_HELPER_H_
+#endif  // CONTENT_RENDERER_ANDROID_DISAMBIGUATION_RECT_HELPER_H_

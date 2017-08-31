@@ -520,10 +520,6 @@ class CONTENT_EXPORT RenderViewImpl : public RenderWidget,
   void OnPluginActionAt(const gfx::Point& location,
                         const blink::WebPluginAction& action);
   void OnMoveOrResizeStarted();
-  void OnReleaseDisambiguationPopupBitmap(const viz::SharedBitmapId& id);
-  void OnResolveTapDisambiguation(double timestamp_seconds,
-                                  gfx::Point tap_viewport_offset,
-                                  bool is_long_press);
   void OnSetActive(bool active);
   void OnSetBackgroundOpaque(bool opaque);
   void OnExitFullscreen();
@@ -797,7 +793,6 @@ class CONTENT_EXPORT RenderViewImpl : public RenderWidget,
   std::unique_ptr<StatsCollectionObserver> stats_collection_observer_;
 
   typedef std::map<viz::SharedBitmapId, viz::SharedBitmap*> BitmapMap;
-  BitmapMap disambiguation_bitmaps_;
 
   std::unique_ptr<IdleUserDetector> idle_user_detector_;
 
