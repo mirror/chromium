@@ -4812,6 +4812,8 @@ interface PaymentAddress
 interface PaymentManager
     attribute @@toStringTag
     getter instruments
+    getter userHint
+    setter userHint
     method constructor
 interface PaymentRequest : EventTarget
     attribute @@toStringTag
