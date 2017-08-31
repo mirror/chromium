@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d599548e_6a76e7a4",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-08-31T05:10:40Z",
+      "side": 1,
+      "message": "Is this a right place to take a uma for your purpose?\n\nThis is also called when users want to add a language to the blacklist for suggesting translation, if I remember correctly.\nhttps://cs.chromium.org/chromium/src/components/translate/core/browser/translate_prefs.cc?l\u003d220\n\nProbably, you want to count this at somewhere in chrome/browser/extensions/api/language_settings_private/language_settings_private_api.cc.",
+      "revId": "f9e0893df7780885c11d17a429977ddfd97e93c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
