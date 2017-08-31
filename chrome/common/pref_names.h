@@ -908,6 +908,8 @@ extern const char kOfflineUsageOnlineCount[];
 extern const char kOfflineUsageMixedCount[];
 #endif
 
+extern const char kMediaEngagementSchemaVersion[];
+
 }  // namespace prefs
 
 #endif  // CHROME_COMMON_PREF_NAMES_H_
