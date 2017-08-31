@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49601952_bb82e38a",
+        "filename": "chromecast/graphics/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1176174
+      },
+      "writtenOn": "2017-08-31T16:17:04Z",
+      "side": 1,
+      "message": "nit: just //chromecast/base",
+      "range": {
+        "startLine": 48,
+        "startChar": 20,
+        "endLine": 48,
+        "endChar": 29
+      },
+      "revId": "dac6d49482fd29965f9ac588835b29b3a7c2ffee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
