@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ad005de_b86a4800",
+        "filename": "chrome/browser/certificate_manager_model.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-31T21:29:02Z",
+      "side": 1,
+      "message": "Can\u0027t this (and other similar conversions) be kept const?",
+      "range": {
+        "startLine": 84,
+        "startChar": 31,
+        "endLine": 84,
+        "endChar": 52
+      },
+      "revId": "584491d60340ee59a3f9d8ee954fb363f71c89ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
