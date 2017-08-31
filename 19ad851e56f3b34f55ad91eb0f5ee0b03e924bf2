@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e51ec38e_abade695",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-31T22:18:15Z",
+      "side": 1,
+      "message": "Do you need to tell gcm_manager_ to stop listening here?",
+      "range": {
+        "startLine": 43,
+        "startChar": 17,
+        "endLine": 43,
+        "endChar": 31
+      },
+      "revId": "19ad851e56f3b34f55ad91eb0f5ee0b03e924bf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecaf7eb9_6cb996d2",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-31T22:18:15Z",
+      "side": 1,
+      "message": "Instead, how about you only call AddObserver() once you\u0027re in the READY state? Then you\u0027ll guarantee that this happens.",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 48
+      },
+      "revId": "19ad851e56f3b34f55ad91eb0f5ee0b03e924bf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57fddd87_e2b482a5",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-31T22:18:15Z",
+      "side": 1,
+      "message": "nit: Newline before and after this call.",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 52
+      },
+      "revId": "19ad851e56f3b34f55ad91eb0f5ee0b03e924bf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65552e0a_a2e5bb7b",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-31T22:18:15Z",
+      "side": 1,
+      "message": "nit: No curlies.",
+      "range": {
+        "startLine": 75,
+        "startChar": 15,
+        "endLine": 75,
+        "endChar": 16
+      },
+      "revId": "19ad851e56f3b34f55ad91eb0f5ee0b03e924bf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21d394dd_0029ad87",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-31T22:18:15Z",
+      "side": 1,
+      "message": "Newline before this.",
+      "range": {
+        "startLine": 106,
+        "startChar": 0,
+        "endLine": 106,
+        "endChar": 1
+      },
+      "revId": "19ad851e56f3b34f55ad91eb0f5ee0b03e924bf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b6272f8_efd18a39",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-31T22:18:15Z",
+      "side": 1,
+      "message": "Return at the end of the if(), then have your else part non-indented.",
+      "range": {
+        "startLine": 112,
+        "startChar": 2,
+        "endLine": 112,
+        "endChar": 3
+      },
+      "revId": "19ad851e56f3b34f55ad91eb0f5ee0b03e924bf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec09e1cd_25bf7f72",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-31T22:18:15Z",
+      "side": 1,
+      "message": "Newline before and after.",
+      "range": {
+        "startLine": 121,
+        "startChar": 0,
+        "endLine": 121,
+        "endChar": 27
+      },
+      "revId": "19ad851e56f3b34f55ad91eb0f5ee0b03e924bf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a7c28f6_7987c8e2",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-31T22:18:15Z",
+      "side": 1,
+      "message": "if (!primary_account_info_.has_value())\n  return;",
+      "range": {
+        "startLine": 123,
+        "startChar": 0,
+        "endLine": 123,
+        "endChar": 42
+      },
+      "revId": "19ad851e56f3b34f55ad91eb0f5ee0b03e924bf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6fbc900_46ba49c8",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-31T22:18:15Z",
+      "side": 1,
+      "message": "Let\u0027s use INVOCATION_REASON_MANUAL instead of UNKNOWN. Same below.",
+      "range": {
+        "startLine": 138,
+        "startChar": 41,
+        "endLine": 138,
+        "endChar": 66
+      },
+      "revId": "19ad851e56f3b34f55ad91eb0f5ee0b03e924bf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55f4e571_49350241",
+        "filename": "components/multidevice/service/device_sync_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-31T22:18:15Z",
+      "side": 1,
+      "message": "In the long run, we want DeviceSyncImpl to create the enrollment/device managers internally. So, can you add an alternate constructor which only takes the first 3 and the last argument and omits the managers?\n\nThen, in that constructor, you\u0027d create those objects.\n\nIn the short-term, we\u0027re going to piggyback on existing code to pass the managers in, but in the long-term, we will move away from the existing code and create everything here.",
+      "range": {
+        "startLine": 34,
+        "startChar": 2,
+        "endLine": 34,
+        "endChar": 16
+      },
+      "revId": "19ad851e56f3b34f55ad91eb0f5ee0b03e924bf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90784a4d_95311cc0",
+        "filename": "components/multidevice/service/device_sync_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-31T22:18:15Z",
+      "side": 1,
+      "message": "Sorry about changing things up, but we will need to be able to pass a fake IdentityManagerPtr in for testing purposes. Can you have your class take an IdentityManagerPtr as a parameter instead?",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 56
+      },
+      "revId": "19ad851e56f3b34f55ad91eb0f5ee0b03e924bf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
