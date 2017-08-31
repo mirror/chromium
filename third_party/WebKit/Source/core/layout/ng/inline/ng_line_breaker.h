@@ -152,6 +152,8 @@ class CORE_EXPORT NGLineBreaker {
 
   // True when current box has 'word-break/word-wrap: break-word'.
   bool break_if_overflow_ = false;
+
+  bool disable_soft_hyphen_ = false;
 };
 
 }  // namespace blink
