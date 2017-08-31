@@ -7,6 +7,7 @@
 
 #include <deque>
 
+#include "base/containers/circular_deque.h"
 #include "base/macros.h"
 #include "base/synchronization/lock.h"
 #include "chrome/profiling/memlog_receiver.h"
@@ -36,6 +37,7 @@ class MemlogStreamParser : public MemlogStreamReceiver {
  private:
   struct Block {
     Block(std::unique_ptr<char[]> d, size_t s);
+    Block(Block&& other) noexcept;
     ~Block();
 
     std::unique_ptr<char[]> data;
@@ -68,7 +70,7 @@ class MemlogStreamParser : public MemlogStreamReceiver {
   // Not owned by this class.
   MemlogReceiver* receiver_;
 
-  std::deque<Block> blocks_;
+  base::circular_deque<Block> blocks_;
 
   bool received_header_ = false;
   bool error_ = false;
