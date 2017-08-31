@@ -240,7 +240,9 @@ class FramesExtensionBindingsApiTest : public ExtensionBindingsApiTest {
 // messages ("receiver") and one which we'll try first faking messages from in
 // the web page's iframe, as well as actually send a message from later
 // ("sender").
-IN_PROC_BROWSER_TEST_P(FramesExtensionBindingsApiTest, FramesBeforeNavigation) {
+// Flaky on all platforms. crbug.com/761194.
+IN_PROC_BROWSER_TEST_P(FramesExtensionBindingsApiTest,
+                       DISABLED_FramesBeforeNavigation) {
   // Load the sender and receiver extensions, and make sure they are ready.
   ExtensionTestMessageListener sender_ready("sender_ready", true);
   const Extension* sender = LoadExtension(
