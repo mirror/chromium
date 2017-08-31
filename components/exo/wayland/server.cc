@@ -27,6 +27,7 @@
 #include <xdg-shell-unstable-v6-server-protocol.h>
 
 #include <algorithm>
+#include <cmath>
 #include <cstdlib>
 #include <iterator>
 #include <string>
@@ -115,6 +116,10 @@ namespace {
 // We don't send configure immediately after tablet mode switch
 // because layout can change due to orientation lock state or accelerometer.
 const int kConfigureDelayAfterLayoutSwitchMs = 300;
+
+// Chrome scale factor to client's scale ratio.
+const float kChromeScaleToAndroidScaleRatio = 0.75f;
+const float kChromeScaleToAndroidNotificationScaleRatio = 0.875f;
 
 // Default wayland socket name.
 const base::FilePath::CharType kSocketName[] = FILE_PATH_LITERAL("wayland-0");
@@ -2085,11 +2090,9 @@ void remote_surface_set_orientation(wl_client* client,
           : Orientation::LANDSCAPE);
 }
 
-void remote_surface_set_scale(wl_client* client,
-                              wl_resource* resource,
-                              wl_fixed_t scale) {
-  GetUserDataAs<ShellSurface>(resource)->SetScale(wl_fixed_to_double(scale));
-}
+void remote_surface_set_scale_DEPRECATED(wl_client* client,
+                                         wl_resource* resource,
+                                         wl_fixed_t scale) {}
 
 void remote_surface_set_rectangular_shadow_DEPRECATED(wl_client* client,
                                                       wl_resource* resource,
@@ -2224,7 +2227,7 @@ const struct zcr_remote_surface_v1_interface remote_surface_implementation = {
     remote_surface_destroy,
     remote_surface_set_app_id,
     remote_surface_set_window_geometry,
-    remote_surface_set_scale,
+    remote_surface_set_scale_DEPRECATED,
     remote_surface_set_rectangular_shadow_DEPRECATED,
     remote_surface_set_rectangular_shadow_background_opacity,
     remote_surface_set_title,
@@ -2280,9 +2283,27 @@ class WaylandRemoteShell : public WMHelper::TabletModeObserver,
                        ? ZCR_REMOTE_SHELL_V1_LAYOUT_MODE_TABLET
                        : ZCR_REMOTE_SHELL_V1_LAYOUT_MODE_WINDOWED;
 
+    if (wl_resource_get_version(remote_shell_resource_) >= 8) {
+      const int kDefaultDensityDpi = 160;
+      float scale_factor =
+          WMHelper::GetInstance()->GetDefaultDeviceScaleFactor();
+      // Use int instead of fixed point to avoid conversion error.
+      int32_t scaled_dpr = static_cast<int32_t>(scale_factor * 1000);
+      int32_t density_dpi = static_cast<int32_t>(
+          std::max(1.0f, scale_factor * kChromeScaleToAndroidScaleRatio) *
+          kDefaultDensityDpi);
+      int32_t notification_density_dpi = static_cast<int32_t>(
+          std::max(1.0f,
+                   scale_factor * kChromeScaleToAndroidNotificationScaleRatio) *
+          kDefaultDensityDpi);
+      zcr_remote_shell_v1_send_scale_configuration(remote_shell_resource_,
+                                                   scaled_dpr, density_dpi,
+                                                   notification_density_dpi);
+    }
     SendDisplayMetrics();
     SendActivated(helper->GetActiveWindow(), nullptr);
   }
+
   ~WaylandRemoteShell() override {
     auto* helper = WMHelper::GetInstance();
     helper->RemoveTabletModeObserver(this);
@@ -2602,7 +2623,7 @@ const struct zcr_remote_shell_v1_interface remote_shell_implementation = {
     remote_shell_destroy, remote_shell_get_remote_surface,
     remote_shell_get_notification_surface};
 
-const uint32_t remote_shell_version = 7;
+const uint32_t remote_shell_version = 8;
 
 void bind_remote_shell(wl_client* client,
                        void* data,
