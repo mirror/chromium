@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e65ed69_6c52d0f0",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1933,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-31T07:05:10Z",
+      "side": 0,
+      "message": "Turns out to be less work.",
+      "revId": "b00c908942ccaa8a10f520887f4b92682616bf7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
