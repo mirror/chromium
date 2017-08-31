@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1435bf59_de91784e",
+        "filename": "extensions/common/file_util.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-31T20:32:48Z",
+      "side": 0,
+      "message": "Do we actually know this to be the case? I asked Catherine but she wasn\u0027t sure. I tried uploading an extension with an empty _metadata folder, and it got published. An extension with a non-empty _metadata folder was uploaded but rejected for publishing Though I am not sure if it was due to presence of _metadata folder, the email said - \n\n\"Your item did not comply with the following section of our policy:\n\nIf your app has a blank description field and appears to be suspicious, we may remove it.\"\n\nAlso, we would eventually want the CWS to delete any _metadata folder on upload, see https://bugs.chromium.org/p/chromium/issues/detail?id\u003d760850",
+      "revId": "8b28c21d5b73f0007265b3d71df8003aa25f16d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
