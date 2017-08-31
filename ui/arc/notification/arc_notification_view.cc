@@ -106,6 +106,17 @@ ArcNotificationView::GetControlButtonsView() const {
   return contents_view_delegate_->GetControlButtonsView();
 }
 
+bool ArcNotificationView::GetExpanded() const {
+  if (contents_view_delegate_)
+    return contents_view_delegate_->GetExpanded();
+  return false;
+}
+
+void ArcNotificationView::SetExpanded(bool expanded) {
+  if (contents_view_delegate_)
+    contents_view_delegate_->SetExpanded(expanded);
+}
+
 void ArcNotificationView::OnSlideChanged() {
   if (contents_view_delegate_)
     contents_view_delegate_->OnSlideChanged();
