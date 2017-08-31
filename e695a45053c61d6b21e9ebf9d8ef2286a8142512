@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97999412_83207e5c",
+        "filename": "ash/system/web_notification/fullscreen_notification_blocker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-31T23:39:54Z",
+      "side": 1,
+      "message": "nit: is the ash:: needed?",
+      "revId": "e695a45053c61d6b21e9ebf9d8ef2286a8142512",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c634ca6d_23ff960f",
+        "filename": "ash/system/web_notification/fullscreen_notification_blocker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-31T23:39:54Z",
+      "side": 1,
+      "message": "optional: Is the code in this class exercised by any existing tests? If not, it would be nice to have a simple unit test for the public method. I won\u0027t block the CL on it, though.",
+      "revId": "e695a45053c61d6b21e9ebf9d8ef2286a8142512",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc06a538_d6c4604a",
+        "filename": "ash/system/web_notification/fullscreen_notification_blocker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-31T23:39:54Z",
+      "side": 1,
+      "message": "nit: \"ShellObserver:\" or \"ShellObserver overrides:\" and fix above to be consistent",
+      "revId": "e695a45053c61d6b21e9ebf9d8ef2286a8142512",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ea1b1d4_318943b2",
+        "filename": "chrome/browser/notifications/fullscreen_notification_blocker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-31T23:39:54Z",
+      "side": 1,
+      "message": "compile error",
+      "revId": "e695a45053c61d6b21e9ebf9d8ef2286a8142512",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f405b75_33d4cb5a",
+        "filename": "chrome/browser/notifications/fullscreen_notification_blocker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-31T23:39:54Z",
+      "side": 1,
+      "message": "Thanks for documenting this.",
+      "revId": "e695a45053c61d6b21e9ebf9d8ef2286a8142512",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
