@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "961e4f6b_27ff87db",
+        "filename": "chrome/browser/ui/views/harmony/chrome_layout_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-08-31T22:18:04Z",
+      "side": 1,
+      "message": "Hmm... I wanted to allow the possibility for a newer layout provider to override the old one (a la TestLayoutProvider) but if someone does that they\u0027ll hit the DHCECK I just added in Get(). So if we really need that capability we\u0027ll figure it out then. This is done.",
+      "parentUuid": "4c0f9214_6de2028e",
+      "range": {
+        "startLine": 22,
+        "startChar": 2,
+        "endLine": 22,
+        "endChar": 33
+      },
+      "revId": "c37fbe00508c65f0910be478e17ddb1e99140a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86c67dce_7747aee3",
         "filename": "chrome/browser/ui/views/harmony/chrome_layout_provider.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "c37fbe00508c65f0910be478e17ddb1e99140a6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c329fe35_c3bbb5cb",
+        "filename": "chrome/browser/ui/views/harmony/chrome_layout_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-08-31T22:18:04Z",
+      "side": 1,
+      "message": "Done. Also added a short comment so you don\u0027t have to read more of the class to understand the DCHECK.",
+      "parentUuid": "86c67dce_7747aee3",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 8
+      },
+      "revId": "c37fbe00508c65f0910be478e17ddb1e99140a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ea71706f_aef307f9",
+        "filename": "chrome/test/views/chrome_views_test_base.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-08-31T22:18:04Z",
+      "side": 1,
+      "message": "Doesn\u0027t compile; unique_ptr needs a fully-specified class.",
+      "parentUuid": "ce48a95e_21cf0b2b",
+      "range": {
+        "startLine": 11,
+        "startChar": 42,
+        "endLine": 11,
+        "endChar": 64
+      },
+      "revId": "c37fbe00508c65f0910be478e17ddb1e99140a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06fa5200_4e9ed262",
         "filename": "chrome/test/views/chrome_views_test_base.h",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "c37fbe00508c65f0910be478e17ddb1e99140a6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "146d92c4_e1908e8a",
+        "filename": "chrome/test/views/chrome_views_test_base.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-08-31T22:18:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06fa5200_4e9ed262",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 25
+      },
+      "revId": "c37fbe00508c65f0910be478e17ddb1e99140a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
