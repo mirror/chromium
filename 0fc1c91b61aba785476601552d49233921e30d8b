@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "1ed7196b_2487822d",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-08-31T18:26:59Z",
+      "side": 1,
+      "message": "+1, no need to cache the state again.",
+      "parentUuid": "207896ff_c6738671",
+      "revId": "0fc1c91b61aba785476601552d49233921e30d8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b3cb2689_9ddbcf13",
         "filename": "ash/shelf/app_list_button.cc",
         "patchSetId": 1
@@ -244,6 +262,29 @@
       "revId": "0fc1c91b61aba785476601552d49233921e30d8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8c66a78d_bcc85a50",
+        "filename": "ash/shell.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-08-31T18:26:59Z",
+      "side": 1,
+      "message": "why initial value STOPPED instead of NOT_READY?",
+      "range": {
+        "startLine": 842,
+        "startChar": 6,
+        "endLine": 842,
+        "endChar": 37
+      },
+      "revId": "0fc1c91b61aba785476601552d49233921e30d8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
