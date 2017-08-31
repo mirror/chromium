@@ -85,6 +85,7 @@ GeolocationPermissionContextAndroid::GeolocationPermissionContextAndroid(
     : GeolocationPermissionContext(profile),
       location_settings_(new LocationSettingsImpl()),
       permission_update_infobar_(nullptr),
+      location_settings_dialog_request_id_(0, 0, 0),
       weak_factory_(this) {}
 
 GeolocationPermissionContextAndroid::~GeolocationPermissionContextAndroid() {
@@ -184,9 +185,15 @@ void GeolocationPermissionContextAndroid::RequestPermission(
 void GeolocationPermissionContextAndroid::CancelPermissionRequest(
     content::WebContents* web_contents,
     const PermissionRequestID& id) {
+  // TODO(timloh): This could cancel a infobar from an unrelated request.
   if (permission_update_infobar_) {
     permission_update_infobar_->RemoveSelf();
     permission_update_infobar_ = nullptr;
+  }
+
+  if (id == location_settings_dialog_request_id_) {
+    location_settings_dialog_request_id_ = PermissionRequestID(0, 0, 0);
+    location_settings_dialog_callback_.Reset();
   }
 
   GeolocationPermissionContext::CancelPermissionRequest(web_contents, id);
@@ -253,12 +260,14 @@ void GeolocationPermissionContextAndroid::NotifyPermissionSet(
       return;
     }
 
+    location_settings_dialog_request_id_ = id;
+    location_settings_dialog_callback_ = callback;
     location_settings_->PromptToEnableSystemLocationSetting(
         is_default_search ? SEARCH : DEFAULT, web_contents,
         base::BindOnce(
             &GeolocationPermissionContextAndroid::OnLocationSettingsDialogShown,
-            weak_factory_.GetWeakPtr(), id, requesting_origin, embedding_origin,
-            callback, persist, content_setting));
+            weak_factory_.GetWeakPtr(), requesting_origin, embedding_origin,
+            persist, content_setting));
     return;
   }
 
@@ -448,10 +457,8 @@ bool GeolocationPermissionContextAndroid::CanShowLocationSettingsDialog(
 }
 
 void GeolocationPermissionContextAndroid::OnLocationSettingsDialogShown(
-    const PermissionRequestID& id,
     const GURL& requesting_origin,
     const GURL& embedding_origin,
-    const BrowserPermissionCallback& callback,
     bool persist,
     ContentSetting content_setting,
     LocationSettingsDialogOutcome prompt_outcome) {
@@ -470,8 +477,17 @@ void GeolocationPermissionContextAndroid::OnLocationSettingsDialogShown(
     persist = false;
   }
 
-  FinishNotifyPermissionSet(id, requesting_origin, embedding_origin, callback,
-                            persist, content_setting);
+  // If the permission was cancelled while the LSD was up, the callback has
+  // already been called.
+  if (location_settings_dialog_callback_.is_null())
+    return;
+
+  FinishNotifyPermissionSet(
+      location_settings_dialog_request_id_, requesting_origin, embedding_origin,
+      location_settings_dialog_callback_, persist, content_setting);
+
+  location_settings_dialog_request_id_ = PermissionRequestID(0, 0, 0);
+  location_settings_dialog_callback_.Reset();
 }
 
 void GeolocationPermissionContextAndroid::FinishNotifyPermissionSet(
