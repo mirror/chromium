@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "684dc807_2e93a18a",
+        "filename": "chromecast/browser/cast_content_browser_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1129958
+      },
+      "writtenOn": "2017-08-31T16:50:01Z",
+      "side": 1,
+      "message": "I don\u0027t see where this new switch is queried. Must be internal code? Does it make more sense to also use base::Featurelist at that callsite too?",
+      "range": {
+        "startLine": 139,
+        "startChar": 0,
+        "endLine": 139,
+        "endChar": 75
+      },
+      "revId": "baf81303697bc26e99dd7e069941b5edea3e50b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
