@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "47759806_e4b18d51",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-31T16:38:15Z",
+      "side": 1,
+      "message": "Old comment. Reliance on IDC has been completely removed from whats new promo now that both bookmarks and ratethisapp has been converted.",
+      "parentUuid": "a8bae7e7_ddefc274",
+      "range": {
+        "startLine": 10,
+        "startChar": 20,
+        "endLine": 11,
+        "endChar": 47
+      },
+      "revId": "7d524111f218a7fd5766c6f17162b47e01e74caa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7f1d182_a78d5cd4",
         "filename": "ios/chrome/browser/content_suggestions/content_suggestions_coordinator.mm",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "7d524111f218a7fd5766c6f17162b47e01e74caa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1550175_0b86622f",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-31T16:38:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7f1d182_a78d5cd4",
+      "range": {
+        "startLine": 333,
+        "startChar": 20,
+        "endLine": 333,
+        "endChar": 28
+      },
+      "revId": "7d524111f218a7fd5766c6f17162b47e01e74caa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
