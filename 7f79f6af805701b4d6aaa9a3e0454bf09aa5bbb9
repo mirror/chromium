@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "c61ef4cb_3dde2802",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-col-006.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-31T21:23:58Z",
+      "side": 1,
+      "message": "Please add tests where you change the visibility:collapse state to both on and off and\nverify that content below the cell is not shown.",
+      "revId": "7f79f6af805701b4d6aaa9a3e0454bf09aa5bbb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce4f307f_54d06892",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-col-007.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-31T21:23:58Z",
+      "side": 1,
+      "message": "Is a position: absolute child supposed to be painted or not?",
+      "revId": "7f79f6af805701b4d6aaa9a3e0454bf09aa5bbb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b74dc216_e6e7c80d",
         "filename": "third_party/WebKit/Source/core/layout/LayoutBlockFlowLine.cpp",
         "patchSetId": 6
