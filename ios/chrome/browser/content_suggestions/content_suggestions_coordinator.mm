@@ -32,10 +32,7 @@
 #include "ios/chrome/browser/reading_list/reading_list_model_factory.h"
 #include "ios/chrome/browser/tabs/tab_constants.h"
 #import "ios/chrome/browser/ui/alert_coordinator/alert_coordinator.h"
-#import "ios/chrome/browser/ui/commands/UIKit+ChromeExecuteCommand.h"
 #import "ios/chrome/browser/ui/commands/browser_commands.h"
-#import "ios/chrome/browser/ui/commands/generic_chrome_command.h"
-#include "ios/chrome/browser/ui/commands/ios_command_ids.h"
 #import "ios/chrome/browser/ui/commands/open_new_tab_command.h"
 #import "ios/chrome/browser/ui/commands/reading_list_add_command.h"
 #import "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_gesture_commands.h"
@@ -331,13 +328,18 @@ const char kNTPHelpURL[] = "https://support.google.com/chrome/?p=ios_new_tab";
     return;
   }
 
-  if (notificationPromo->IsChromeCommand()) {
-    GenericChromeCommand* command = [[GenericChromeCommand alloc]
-        initWithTag:notificationPromo->command_id()];
-    [self.suggestionsViewController chromeExecuteCommand:command];
+  if (notificationPromo->IsCommandPromo()) {
+    std::string command = notificationPromo->command();
+    if (command == "bookmark") {
+      [self.dispatcher showBookmarksManager];
+    } else if (command == "ratethisapp") {
+      [self.dispatcher showRateThisAppDialog];
+    } else {
+      NOTREACHED() << "Promo does not handle given command.";
+    }
     return;
   }
-  NOTREACHED();
+  NOTREACHED() << "Promo type is neither URL or command.";
 }
 
 - (void)handleLearnMoreTapped {
