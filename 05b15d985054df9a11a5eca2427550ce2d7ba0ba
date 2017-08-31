@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d23bb6c_d2627d32",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/DeviceConditions.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-31T18:58:42Z",
+      "side": 1,
+      "message": "nit: getInPowerSaveMode",
+      "revId": "05b15d985054df9a11a5eca2427550ce2d7ba0ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5190f55_48d973b1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/DeviceConditions.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-31T18:58:42Z",
+      "side": 1,
+      "message": "inPowerSaveMode()",
+      "revId": "05b15d985054df9a11a5eca2427550ce2d7ba0ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bcc0007_212f83f9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/DeviceConditions.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-31T18:58:42Z",
+      "side": 1,
+      "message": "nit: merge this with getInPowerSaveMode",
+      "revId": "05b15d985054df9a11a5eca2427550ce2d7ba0ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8aa8a315_98369888",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchBackgroundTaskUnitTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-31T18:58:42Z",
+      "side": 1,
+      "message": "Why in power save mode here? This defeats the purpose of the test.",
+      "revId": "05b15d985054df9a11a5eca2427550ce2d7ba0ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b194d07d_de5b1131",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchBackgroundTaskUnitTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-31T18:58:42Z",
+      "side": 1,
+      "message": "Why power save mode? This defeats the purpose of the test.",
+      "revId": "05b15d985054df9a11a5eca2427550ce2d7ba0ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
