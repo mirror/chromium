@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abfc819a_331123fb",
+        "filename": "media/mojo/services/cdm_manifest.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-08-31T20:29:04Z",
+      "side": 1,
+      "message": "This unsandboxness was originally added in https://codereview.chromium.org/2900773004\n\nxhwang - can you confirm this is not enabled anywhere in official builds? Can we add an assert to make sure of this?",
+      "range": {
+        "startLine": 4,
+        "startChar": 19,
+        "endLine": 4,
+        "endChar": 23
+      },
+      "revId": "399bfa6e52e9f407a95015fe2ddbe68d12071770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
