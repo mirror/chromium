@@ -16,6 +16,24 @@
       "revId": "74080109ea1bf70a88e038a9edde4b745f2782e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51898353_c2477d53",
+        "filename": "ios/chrome/browser/ui/settings/reauthentication_module.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-31T15:43:24Z",
+      "side": 1,
+      "message": "It\u0027s not an error that should generate a crash report. I want to print this for QA team so they can give me this log line on request. Does it work?",
+      "parentUuid": "b9f71c37_7faf63cb",
+      "revId": "74080109ea1bf70a88e038a9edde4b745f2782e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
