@@ -285,6 +285,30 @@
       "revId": "0fc1c91b61aba785476601552d49233921e30d8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf9a6bbd_bf58c9ac",
+        "filename": "ash/shell.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-08-31T18:33:28Z",
+      "side": 1,
+      "message": "I just use the initial value that was used in app_list_button.h\nIf you think using NOT_READY make more sense we can update it here.",
+      "parentUuid": "8c66a78d_bcc85a50",
+      "range": {
+        "startLine": 842,
+        "startChar": 6,
+        "endLine": 842,
+        "endChar": 37
+      },
+      "revId": "0fc1c91b61aba785476601552d49233921e30d8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
