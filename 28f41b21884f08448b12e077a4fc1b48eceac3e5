@@ -22,6 +22,30 @@
       "revId": "28f41b21884f08448b12e077a4fc1b48eceac3e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e973981_8e20a9cb",
+        "filename": "chrome/android/java/res/layout/content_suggestions_action_card_modern.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-08-31T14:03:40Z",
+      "side": 1,
+      "message": "I think it makes sense, that way if other elements are added to the style in the future the layout for the action card will get updated as well.\n\nAlso semantically I think \"It\u0027s a suggestion card without a foreground or background\" carries the intent better than \"It\u0027s a normal layout with the same bottom margin as suggestions cards\".",
+      "parentUuid": "ee44a0a1_c113f510",
+      "range": {
+        "startLine": 7,
+        "startChar": 28,
+        "endLine": 7,
+        "endChar": 48
+      },
+      "revId": "28f41b21884f08448b12e077a4fc1b48eceac3e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
