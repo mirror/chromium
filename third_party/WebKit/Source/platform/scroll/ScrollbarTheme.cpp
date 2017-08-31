@@ -52,6 +52,7 @@
 namespace blink {
 
 bool ScrollbarTheme::g_mock_scrollbars_enabled_ = false;
+bool ScrollbarTheme::g_mobile_emulator_enabled_ = false;
 
 static inline bool ShouldPaintScrollbarPart(const IntRect& part_rect,
                                             const CullRect& cull_rect) {
@@ -413,6 +414,14 @@ void ScrollbarTheme::SetMockScrollbarsEnabled(bool flag) {
 
 bool ScrollbarTheme::MockScrollbarsEnabled() {
   return g_mock_scrollbars_enabled_;
+}
+
+void ScrollbarTheme::SetMobileEmulatorEnabled(bool flag) {
+  g_mobile_emulator_enabled_ = flag;
+}
+
+bool ScrollbarTheme::MobileEmulatorEnabled() {
+  return g_mobile_emulator_enabled_;
 }
 
 DisplayItem::Type ScrollbarTheme::ButtonPartToDisplayItemType(

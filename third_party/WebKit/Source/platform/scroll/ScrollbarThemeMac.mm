@@ -128,6 +128,9 @@ static bool SupportsExpandedScrollbars() {
 }
 
 ScrollbarTheme& ScrollbarTheme::NativeTheme() {
+  if (ScrollbarTheme::MobileEmulatorEnabled())
+    return ScrollbarThemeOverlay::MobileTheme();
+
   DEFINE_STATIC_LOCAL(ScrollbarThemeMac, overlay_theme, ());
   return overlay_theme;
 }

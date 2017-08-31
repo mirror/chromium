@@ -204,6 +204,9 @@ class PLATFORM_EXPORT ScrollbarTheme {
   static void SetMockScrollbarsEnabled(bool flag);
   static bool MockScrollbarsEnabled();
 
+  static void SetMobileEmulatorEnabled(bool flag);
+  static bool MobileEmulatorEnabled();
+
  protected:
   virtual int TickmarkBorderWidth() { return 0; }
   static DisplayItem::Type ButtonPartToDisplayItemType(ScrollbarPart);
@@ -213,6 +216,7 @@ class PLATFORM_EXPORT ScrollbarTheme {
   static ScrollbarTheme&
   NativeTheme();  // Must be implemented to return the correct theme subclass.
   static bool g_mock_scrollbars_enabled_;
+  static bool g_mobile_emulator_enabled_;
 };
 
 }  // namespace blink

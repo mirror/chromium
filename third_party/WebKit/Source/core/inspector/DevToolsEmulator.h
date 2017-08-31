@@ -92,6 +92,7 @@ class CORE_EXPORT DevToolsEmulator final
   WTF::Optional<ViewportOverride> viewport_override_;
 
   bool is_overlay_scrollbars_enabled_;
+  bool use_solid_color_scrollbar_;
   bool is_orientation_event_enabled_;
   bool is_mobile_layout_theme_enabled_;
   float original_default_minimum_page_scale_factor_;
