@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7320878c_70a8b2b6",
+        "filename": "ash/system/power/power_event_observer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-31T22:54:09Z",
+      "side": 1,
+      "message": "i think that this just returns a zero-duration base::TimeDelta. does passing that to Advance() still have some sort of effect? might be worth adding a comment.",
+      "revId": "3cf02149834dd8511bb8f52e142e33373b552aab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
