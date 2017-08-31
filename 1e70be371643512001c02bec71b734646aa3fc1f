@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b790032_9e9cef6e",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-31T08:38:28Z",
+      "side": 1,
+      "message": "Looks like we don\u0027t need to set status_ here since it gets set in line 144 anyway.\n\nline 142 can call CommitCompleted() directly and we don\u0027t need line 144.\n\n(I\u0027m tempted to just remove the sending of 500 altogether, but since this is just refactorign let\u0027s keep it for now)",
+      "revId": "1e70be371643512001c02bec71b734646aa3fc1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62c20b89_4e6aa667",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-31T08:38:28Z",
+      "side": 1,
+      "message": "can just be CommitCompleted()",
+      "revId": "1e70be371643512001c02bec71b734646aa3fc1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2392f3a8_4cf20a60",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-31T08:38:28Z",
+      "side": 1,
+      "message": "typo",
+      "revId": "1e70be371643512001c02bec71b734646aa3fc1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46bb674f_7c532739",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-31T08:38:28Z",
+      "side": 1,
+      "message": "We could delete line 151 since the caller shouldn\u0027t have to worry about what the other functions mean.\n\nI agree MakeHeader() needs some clarification. It sounds like it\u0027s making an HTTP header, but it\u0027s really populating ResourceResponseHead which has both \"info\" and headers. Since we\u0027re naming the member |response_head|, how about PopulateResponseHead()?",
+      "revId": "1e70be371643512001c02bec71b734646aa3fc1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7893426_4289f333",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-31T08:38:28Z",
+      "side": 1,
+      "message": "We could call still CommitCompleted() here and don\u0027t need to set status_ directly.",
+      "revId": "1e70be371643512001c02bec71b734646aa3fc1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "add82a3d_1f365208",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-31T08:38:28Z",
+      "side": 1,
+      "message": "If we never set ssl_info_, it\u0027d be clearer to just use base::nullopt directly everywhere",
+      "revId": "1e70be371643512001c02bec71b734646aa3fc1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7daf3045_e7434ddf",
+        "filename": "content/common/service_worker/service_worker_url_loader_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-31T08:38:28Z",
+      "side": 1,
+      "message": "We don\u0027t modify out_head here, so it should be const ResourceResponseHead\u0026 head",
+      "revId": "1e70be371643512001c02bec71b734646aa3fc1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64bb7b58_e69d3ba0",
+        "filename": "content/common/service_worker/service_worker_url_loader_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-31T08:38:28Z",
+      "side": 1,
+      "message": "put the output parameters last\n\nhttps://google.github.io/styleguide/cppguide.html#Function_Parameter_Ordering",
+      "revId": "1e70be371643512001c02bec71b734646aa3fc1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4567473d_5cf6cb9f",
+        "filename": "content/common/service_worker/service_worker_url_loader_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-31T08:38:28Z",
+      "side": 1,
+      "message": "I think removing lines 141-143 from this function and duplicating it in the files would make some things cleaner. This function really is supposed to just HandleStreamResponseBody, and the TODO part is a bug that we don\u0027t need to keep here.",
+      "revId": "1e70be371643512001c02bec71b734646aa3fc1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "918bef38_7924938a",
+        "filename": "content/common/service_worker/service_worker_url_loader_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-31T08:38:28Z",
+      "side": 1,
+      "message": "Since this is only for Blob, we should put \"Blob\" in the name. The original OnReceiveReponse couldn\u0027t do that since it\u0027s an override of a base class.\n\nWe should have symmetry with HandleStreamResponseBody too. Let\u0027s choose one of Handle*ResponseBody or OnReceive*Response.\n\nI kinda prefer verbs over the On* stuff for things that aren\u0027t purely event handlers/listeners so for these helper functions Handle* seems nicer.",
+      "revId": "1e70be371643512001c02bec71b734646aa3fc1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
