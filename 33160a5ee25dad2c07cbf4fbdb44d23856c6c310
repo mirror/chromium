@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "334a1d7a_2cdb1c9a",
+        "filename": "chrome/browser/chromeos/file_system_provider/operations/read_directory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-08-31T07:37:46Z",
+      "side": 1,
+      "message": "As we chatted locally, DirectoryEntry ctor does something nontrivial. And, emplace() here will modify the behavior. Let me revert emplace() part of changes, and split it to a follow up CL.",
+      "parentUuid": "1c77096e_585b4b1b",
+      "revId": "33160a5ee25dad2c07cbf4fbdb44d23856c6c310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0f7695c_a46ffdbd",
         "filename": "chrome/browser/media_galleries/chromeos/mtp_device_delegate_impl_chromeos.cc",
         "patchSetId": 3

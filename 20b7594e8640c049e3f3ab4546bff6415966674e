@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "53600c31_70502aa3",
+        "filename": "chrome/browser/media_galleries/fileapi/itunes_file_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-08-31T07:37:46Z",
+      "side": 1,
+      "message": "It\u0027s true for non-template code, but isn\u0027t here, since there\u0027s no clue to infer this parameter to be an std::vector, base::BindOnce cannot handle that.",
+      "parentUuid": "5c5eab48_9ac07575",
+      "range": {
+        "startLine": 381,
+        "startChar": 62,
+        "endLine": 381,
+        "endChar": 73
+      },
+      "revId": "20b7594e8640c049e3f3ab4546bff6415966674e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "75da7005_0d70060f",
         "filename": "chrome/browser/media_galleries/fileapi/native_media_file_util.cc",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-29T18:09:53Z",
       "side": 1,
       "message": "It seems odd that the DirectoryEntry constructor takes an enum but only uses it to set |is_directory|. Any objection to changing the constructor instead of adding this logic all over the code?",
+      "range": {
+        "startLine": 565,
+        "startChar": 4,
+        "endLine": 567,
+        "endChar": 59
+      },
+      "revId": "20b7594e8640c049e3f3ab4546bff6415966674e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "999aacfd_468c305b",
+        "filename": "chrome/browser/media_galleries/fileapi/native_media_file_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-08-31T07:37:46Z",
+      "side": 1,
+      "message": "IIUC, enum parameters are preferred over bool in //storage, as bool is unnamed and has unclear role for the caller.",
+      "parentUuid": "75da7005_0d70060f",
       "range": {
         "startLine": 565,
         "startChar": 4,
