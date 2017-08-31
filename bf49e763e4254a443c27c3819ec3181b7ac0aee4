@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d0a017f_936c8846",
+        "filename": "ash/shelf/app_list_button_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-08-31T21:58:33Z",
+      "side": 1,
+      "message": "The order here should be {1u, 2u} since we want the primary user to be active.",
+      "range": {
+        "startLine": 171,
+        "startChar": 32,
+        "endLine": 171,
+        "endChar": 40
+      },
+      "revId": "bf49e763e4254a443c27c3819ec3181b7ac0aee4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61200680_7c0bd430",
+        "filename": "ash/shelf/app_list_button_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-08-31T21:58:33Z",
+      "side": 1,
+      "message": "lgtm",
+      "range": {
+        "startLine": 198,
+        "startChar": 2,
+        "endLine": 201,
+        "endChar": 42
+      },
+      "revId": "bf49e763e4254a443c27c3819ec3181b7ac0aee4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
