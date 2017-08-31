@@ -7,6 +7,7 @@
 module shape_detection.mojom;
 
 import "skia/public/interfaces/bitmap.mojom";
+import "status.mojom";
 import "ui/gfx/geometry/mojo/geometry.mojom";
 
 struct BarcodeDetectionResult {
@@ -19,6 +20,7 @@ struct BarcodeDetectionResult {
 
 interface BarcodeDetection {
   // |bitmap_data| contains tightly packed image pixels in row-major order.
+  // |results| is null if the |status| is not SUCCESS.
   Detect(skia.mojom.Bitmap bitmap_data)
-    => (array<BarcodeDetectionResult> results);
+    => (DetectionStatus status, array<BarcodeDetectionResult>? results);
 };

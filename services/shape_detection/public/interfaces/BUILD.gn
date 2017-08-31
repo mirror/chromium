@@ -10,6 +10,7 @@ mojom("interfaces") {
     "constants.mojom",
     "facedetection.mojom",
     "facedetection_provider.mojom",
+    "status.mojom",
     "textdetection.mojom",
   ]
 

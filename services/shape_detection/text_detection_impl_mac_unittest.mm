@@ -26,7 +26,11 @@ class TextDetectionImplMacTest : public ::testing::Test {
  public:
   ~TextDetectionImplMacTest() override = default;
 
-  void DetectCallback(std::vector<mojom::TextDetectionResultPtr> results) {
+  void DetectCallback(mojom::DetectionStatus status,
+                      base::Optional<std::vector<mojom::TextDetectionResultPtr>>
+                          maybe_results) {
+    std::vector<mojom::TextDetectionResultPtr> results =
+        std::move(maybe_results.value());
     // CIDetectorTypeText doesn't return the decoded text, juts bounding boxes.
     Detection(results.size());
   }

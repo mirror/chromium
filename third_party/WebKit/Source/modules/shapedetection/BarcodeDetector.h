@@ -34,7 +34,9 @@ class MODULES_EXPORT BarcodeDetector final : public ShapeDetector,
                          skia::mojom::blink::BitmapPtr) override;
   void OnDetectBarcodes(
       ScriptPromiseResolver*,
-      Vector<shape_detection::mojom::blink::BarcodeDetectionResultPtr>);
+      shape_detection::mojom::blink::DetectionStatus,
+      Optional<
+          Vector<shape_detection::mojom::blink::BarcodeDetectionResultPtr>>);
   void OnBarcodeServiceConnectionError();
 
   shape_detection::mojom::blink::BarcodeDetectionPtr barcode_service_;

@@ -22,6 +22,17 @@
 namespace blink {
 
 namespace {
+const struct DetectionStatus {
+  shape_detection::mojom::DetectionStatus status;
+  const int code;
+  const char* const message;
+} KDetectionStatus[] = {
+    {shape_detection::mojom::blink::DetectionStatus::GOOGLE_PLAY_UNAVAILABLE,
+     kNotFoundError, "Google Play Services is not available."},
+    {shape_detection::mojom::blink::DetectionStatus::API_UNAVAILABLE,
+     kOperationError, "GMS Detector is not operational."},
+    {shape_detection::mojom::blink::DetectionStatus::BITMAP_INVAILD,
+     kInvalidStateError, "Bitmap invaild."}};
 
 skia::mojom::blink::BitmapPtr createBitmapFromData(int width,
                                                    int height,
@@ -42,6 +53,16 @@ skia::mojom::blink::BitmapPtr createBitmapFromData(int width,
 }
 
 }  // anonymous namespace
+
+DOMException* ShapeDetector::createDOMException(
+    shape_detection::mojom::blink::DetectionStatus status) {
+  for (const DetectionStatus& entry : KDetectionStatus) {
+    if (entry.status == status)
+      return DOMException::Create(entry.code, entry.message);
+  }
+  return DOMException::Create(kUnknownError, "Unknown Error.");
+  ;
+}
 
 ScriptPromise ShapeDetector::detect(
     ScriptState* script_state,

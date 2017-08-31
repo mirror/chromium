@@ -58,7 +58,7 @@ public class FaceDetectionImplTest {
 
         final ArrayBlockingQueue<FaceDetectionResult[]> queue = new ArrayBlockingQueue<>(1);
         detector.detect(mojoBitmap, new FaceDetection.DetectResponse() {
-            public void call(FaceDetectionResult[] results) {
+            public void call(Integer status, FaceDetectionResult[] results) {
                 queue.add(results);
             }
         });

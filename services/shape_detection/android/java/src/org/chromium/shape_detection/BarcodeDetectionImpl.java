@@ -22,6 +22,7 @@ import org.chromium.mojo.system.MojoException;
 import org.chromium.services.service_manager.InterfaceFactory;
 import org.chromium.shape_detection.mojom.BarcodeDetection;
 import org.chromium.shape_detection.mojom.BarcodeDetectionResult;
+import org.chromium.shape_detection.mojom.DetectionStatus;
 
 /**
  * Implementation of mojo BarcodeDetection, using Google Play Services vision package.
@@ -42,7 +43,7 @@ public class BarcodeDetectionImpl implements BarcodeDetection {
                     ContextUtils.getApplicationContext())
                 != ConnectionResult.SUCCESS) {
             Log.e(TAG, "Google Play Services not available");
-            callback.call(new BarcodeDetectionResult[0]);
+            callback.call(DetectionStatus.GOOGLE_PLAY_UNAVAILABLE, null);
             return;
         }
         // The vision library will be downloaded the first time the API is used
@@ -51,14 +52,14 @@ public class BarcodeDetectionImpl implements BarcodeDetection {
         // v.9.2, see https://developers.google.com/android/guides/releases.
         if (!mBarcodeDetector.isOperational()) {
             Log.e(TAG, "BarcodeDetector is not operational");
-            callback.call(new BarcodeDetectionResult[0]);
+            callback.call(DetectionStatus.API_UNAVAILABLE, null);
             return;
         }
 
         Frame frame = BitmapUtils.convertToFrame(bitmapData);
         if (frame == null) {
             Log.e(TAG, "Error converting Mojom Bitmap to Frame");
-            callback.call(new BarcodeDetectionResult[0]);
+            callback.call(DetectionStatus.BITMAP_INVAILD, null);
             return;
         }
 
@@ -83,7 +84,7 @@ public class BarcodeDetectionImpl implements BarcodeDetection {
                 barcodeArray[i].cornerPoints[j].y = corners[j].y;
             }
         }
-        callback.call(barcodeArray);
+        callback.call(DetectionStatus.SUCCESS, barcodeArray);
     }
 
     @Override

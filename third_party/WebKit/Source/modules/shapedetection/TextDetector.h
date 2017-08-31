@@ -34,7 +34,8 @@ class MODULES_EXPORT TextDetector final : public ShapeDetector,
                          skia::mojom::blink::BitmapPtr) override;
   void OnDetectText(
       ScriptPromiseResolver*,
-      Vector<shape_detection::mojom::blink::TextDetectionResultPtr>);
+      shape_detection::mojom::blink::DetectionStatus,
+      Optional<Vector<shape_detection::mojom::blink::TextDetectionResultPtr>>);
   void OnTextServiceConnectionError();
 
   shape_detection::mojom::blink::TextDetectionPtr text_service_;

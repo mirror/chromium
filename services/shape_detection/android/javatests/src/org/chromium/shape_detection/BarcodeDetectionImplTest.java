@@ -28,7 +28,7 @@ public class BarcodeDetectionImplTest extends InstrumentationTestCase {
 
         final ArrayBlockingQueue<BarcodeDetectionResult[]> queue = new ArrayBlockingQueue<>(1);
         detector.detect(mojoBitmap, new BarcodeDetection.DetectResponse() {
-            public void call(BarcodeDetectionResult[] results) {
+            public void call(Integer status, BarcodeDetectionResult[] results) {
                 queue.add(results);
             }
         });

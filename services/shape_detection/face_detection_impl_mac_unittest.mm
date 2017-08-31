@@ -39,7 +39,11 @@ class FaceDetectionImplMacTest : public TestWithParam<bool> {
  public:
   ~FaceDetectionImplMacTest() override {}
 
-  void DetectCallback(std::vector<mojom::FaceDetectionResultPtr> results) {
+  void DetectCallback(mojom::DetectionStatus status,
+                      base::Optional<std::vector<mojom::FaceDetectionResultPtr>>
+                          maybe_results) {
+    std::vector<mojom::FaceDetectionResultPtr> results =
+        std::move(maybe_results.value());
     ASSERT_EQ(1u, results.size());
     ASSERT_EQ(3u, results[0]->landmarks.size());
     EXPECT_EQ(mojom::LandmarkType::EYE, results[0]->landmarks[0]->type);

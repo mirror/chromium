@@ -16,6 +16,7 @@ class MockTextDetection {
     let receivedStruct = new Uint8Array(bitmap_data.pixel_data);
     this.buffer_data_ = new Uint32Array(receivedStruct.buffer);
     return Promise.resolve({
+      status: shapeDetection.mojom.DetectionStatus.SUCCESS,
       results: [
         {
           rawValue : "cats",
@@ -25,7 +26,7 @@ class MockTextDetection {
           rawValue : "dogs",
           boundingBox: { x: 2.0, y: 2.0, width: 50.0, height: 50.0 }
         },
-      ],
+      ]
     });
   }
 

@@ -7,9 +7,11 @@
 
 #include "bindings/core/v8/ScriptPromise.h"
 #include "bindings/core/v8/ScriptPromiseResolver.h"
+#include "core/dom/DOMException.h"
 #include "core/imagebitmap/ImageBitmapFactories.h"
 #include "modules/ModulesExport.h"
 #include "modules/canvas2d/CanvasRenderingContext2D.h"
+#include "services/shape_detection/public/interfaces/status.mojom-blink.h"
 #include "skia/public/interfaces/bitmap.mojom-blink.h"
 
 namespace blink {
@@ -21,6 +23,9 @@ class MODULES_EXPORT ShapeDetector
 
   ScriptPromise detect(ScriptState*, const ImageBitmapSourceUnion&);
   DEFINE_INLINE_VIRTUAL_TRACE() {}
+
+  static DOMException* createDOMException(
+      shape_detection::mojom::blink::DetectionStatus);
 
  private:
   ScriptPromise DetectShapesOnImageData(ScriptPromiseResolver*, ImageData*);

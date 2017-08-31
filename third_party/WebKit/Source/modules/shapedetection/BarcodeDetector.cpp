@@ -53,13 +53,19 @@ ScriptPromise BarcodeDetector::DoDetect(ScriptPromiseResolver* resolver,
 
 void BarcodeDetector::OnDetectBarcodes(
     ScriptPromiseResolver* resolver,
-    Vector<shape_detection::mojom::blink::BarcodeDetectionResultPtr>
+    shape_detection::mojom::blink::DetectionStatus status,
+    Optional<Vector<shape_detection::mojom::blink::BarcodeDetectionResultPtr>>
         barcode_detection_results) {
   DCHECK(barcode_service_requests_.Contains(resolver));
   barcode_service_requests_.erase(resolver);
 
+  if (status != shape_detection::mojom::blink::DetectionStatus::SUCCESS) {
+    resolver->Reject(ShapeDetector::createDOMException(status));
+    return;
+  }
+
   HeapVector<Member<DetectedBarcode>> detected_barcodes;
-  for (const auto& barcode : barcode_detection_results) {
+  for (const auto& barcode : barcode_detection_results.value()) {
     HeapVector<Point2D> corner_points;
     for (const auto& corner_point : barcode->corner_points) {
       Point2D point;

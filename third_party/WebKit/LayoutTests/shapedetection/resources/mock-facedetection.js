@@ -41,6 +41,7 @@ class MockFaceDetection {
     let receivedStruct = new Uint8Array(bitmap_data.pixelData);
     this.bufferData_ = new Uint32Array(receivedStruct.buffer);
     return Promise.resolve({
+      status: shapeDetection.mojom.DetectionStatus.SUCCESS,
       results: [
         {
           boundingBox: {x: 1.0, y: 1.0, width: 100.0, height: 100.0},

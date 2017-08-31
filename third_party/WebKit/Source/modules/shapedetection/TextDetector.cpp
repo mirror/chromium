@@ -51,13 +51,19 @@ ScriptPromise TextDetector::DoDetect(ScriptPromiseResolver* resolver,
 
 void TextDetector::OnDetectText(
     ScriptPromiseResolver* resolver,
-    Vector<shape_detection::mojom::blink::TextDetectionResultPtr>
+    shape_detection::mojom::blink::DetectionStatus status,
+    Optional<Vector<shape_detection::mojom::blink::TextDetectionResultPtr>>
         text_detection_results) {
   DCHECK(text_service_requests_.Contains(resolver));
   text_service_requests_.erase(resolver);
 
+  if (status != shape_detection::mojom::blink::DetectionStatus::SUCCESS) {
+    resolver->Reject(ShapeDetector::createDOMException(status));
+    return;
+  }
+
   HeapVector<Member<DetectedText>> detected_text;
-  for (const auto& text : text_detection_results) {
+  for (const auto& text : text_detection_results.value()) {
     detected_text.push_back(DetectedText::Create(
         text->raw_value,
         DOMRect::Create(text->bounding_box.x, text->bounding_box.y,

@@ -16,6 +16,7 @@ class MockBarcodeDetection {
     let receivedStruct = new Uint8Array(bitmap_data.pixel_data);
     this.buffer_data_ = new Uint32Array(receivedStruct.buffer);
     return Promise.resolve({
+      status: shapeDetection.mojom.DetectionStatus.SUCCESS,
       results: [
         {
           rawValue : "cats",
@@ -37,7 +38,7 @@ class MockBarcodeDetection {
             { x: 2.0, y: 52.0 }
           ],
         },
-      ],
+      ]
     });
   }
 

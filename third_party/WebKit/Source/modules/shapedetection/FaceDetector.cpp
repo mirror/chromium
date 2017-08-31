@@ -67,13 +67,19 @@ ScriptPromise FaceDetector::DoDetect(ScriptPromiseResolver* resolver,
 
 void FaceDetector::OnDetectFaces(
     ScriptPromiseResolver* resolver,
-    Vector<shape_detection::mojom::blink::FaceDetectionResultPtr>
+    shape_detection::mojom::blink::DetectionStatus status,
+    Optional<Vector<shape_detection::mojom::blink::FaceDetectionResultPtr>>
         face_detection_results) {
   DCHECK(face_service_requests_.Contains(resolver));
   face_service_requests_.erase(resolver);
 
+  if (status != shape_detection::mojom::blink::DetectionStatus::SUCCESS) {
+    resolver->Reject(ShapeDetector::createDOMException(status));
+    return;
+  }
+
   HeapVector<Member<DetectedFace>> detected_faces;
-  for (const auto& face : face_detection_results) {
+  for (const auto& face : face_detection_results.value()) {
     HeapVector<Landmark> landmarks;
     for (const auto& landmark : face->landmarks) {
       Point2D location;

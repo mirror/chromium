@@ -34,12 +34,12 @@ FaceDetectionImplMac::~FaceDetectionImplMac() {}
 
 void FaceDetectionImplMac::Detect(const SkBitmap& bitmap,
                                   DetectCallback callback) {
-  DetectCallback scoped_callback = media::ScopedCallbackRunner(
-      std::move(callback), std::vector<mojom::FaceDetectionResultPtr>());
-
   base::scoped_nsobject<CIImage> ci_image = CreateCIImageFromSkBitmap(bitmap);
-  if (!ci_image)
+  if (!ci_image) {
+    std::move(callback).Run(mojom::DetectionStatus::BITMAP_INVAILD,
+                            base::nullopt);
     return;
+  }
 
   NSArray* const features = [detector_ featuresInImage:ci_image];
   const int height = bitmap.height();
@@ -80,7 +80,7 @@ void FaceDetectionImplMac::Detect(const SkBitmap& bitmap,
 
     results.push_back(std::move(face));
   }
-  std::move(scoped_callback).Run(std::move(results));
+  std::move(callback).Run(mojom::DetectionStatus::SUCCESS, std::move(results));
 }
 
 }  // namespace shape_detection
