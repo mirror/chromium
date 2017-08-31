@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05299efd_e76abb61",
+        "filename": "build/run_swarming_xcode_install.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-08-31T15:29:51Z",
+      "side": 1,
+      "message": "build23-m7 for testing.",
+      "revId": "c830b18f8ce92bcba4d865eea6f03438a054e744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
