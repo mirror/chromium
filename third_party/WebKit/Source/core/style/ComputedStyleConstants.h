@@ -168,16 +168,16 @@ inline TextDecorationSkip& operator|=(TextDecorationSkip& a,
 
 enum OffsetRotationType { kOffsetRotationAuto, kOffsetRotationFixed };
 
-enum class TextEmphasisMark {
-  kNone,
-  kAuto,
-  kDot,
-  kCircle,
-  kDoubleCircle,
-  kTriangle,
-  kSesame,
-  kCustom
-};
+// enum class TextEmphasisMark {
+//   kNone,
+//   kAuto,
+//   kDot,
+//   kCircle,
+//   kDoubleCircle,
+//   kTriangle,
+//   kSesame,
+//   kCustom
+// };
 
 static const size_t kGridAutoFlowBits = 4;
 enum InternalGridAutoFlowAlgorithm {
