@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63bac1f2_673b1ef0",
+        "filename": "net/cert/test_root_certs_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-08-31T21:13:14Z",
+      "side": 1,
+      "message": "some changes snuck in here",
+      "revId": "eb96a3754c625fdcc0e5e05f4e0582f962874eff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
