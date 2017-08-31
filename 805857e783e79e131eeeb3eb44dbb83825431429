@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "779f265f_07eac874",
+        "filename": "chrome/browser/chromeos/extensions/device_local_account_external_policy_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-31T23:56:27Z",
+      "side": 1,
+      "message": "Since xiyuan@ explained what happens here in the mentioned bug, this can be fixed now:\n\nprefs_ will always be null here. I\u0027ve removed prefs_ and added a note here about how loader loads its data.",
+      "parentUuid": "8a4fc1b5_3486f085",
+      "revId": "805857e783e79e131eeeb3eb44dbb83825431429",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "32482169_41e65cf6",
         "filename": "chrome/browser/extensions/extension_migrator.cc",
         "patchSetId": 4

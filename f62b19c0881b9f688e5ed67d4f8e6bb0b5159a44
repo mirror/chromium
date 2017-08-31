@@ -16,6 +16,24 @@
       "revId": "f62b19c0881b9f688e5ed67d4f8e6bb0b5159a44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce28d61d_18b7ca1c",
+        "filename": "chrome/browser/chromeos/extensions/device_local_account_external_policy_loader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-31T23:56:27Z",
+      "side": 1,
+      "message": "Thanks for the response, closed the bug and updated the code for prefs here. Can you take a quick look?",
+      "parentUuid": "dd059e93_2af368bf",
+      "revId": "f62b19c0881b9f688e5ed67d4f8e6bb0b5159a44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
