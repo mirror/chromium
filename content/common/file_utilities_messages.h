@@ -2,6 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#ifndef CONTENT_COMMON_FILE_UTILITIES_MESSAGES_H_
+#define CONTENT_COMMON_FILE_UTILITIES_MESSAGES_H_
+
 // Multiply-included message file, so no include guard.
 
 #include "content/public/common/common_param_traits.h"
@@ -17,3 +20,5 @@ IPC_SYNC_MESSAGE_CONTROL1_2(FileUtilitiesMsg_GetFileInfo,
                             base::FilePath /* path */,
                             base::File::Info /* result */,
                             base::File::Error /* status */)
+
+#endif  // CONTENT_COMMON_FILE_UTILITIES_MESSAGES_H_

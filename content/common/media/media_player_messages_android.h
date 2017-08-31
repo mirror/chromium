@@ -3,7 +3,6 @@
 // found in the LICENSE file.
 
 // IPC messages for android media player.
-// Multiply-included message file, hence no include guard.
 
 #include "base/time/time.h"
 #include "content/common/content_export.h"
