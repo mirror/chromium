@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0c8089f_c1823751",
+        "filename": "third_party/WebKit/Source/core/svg/animation/SVGSMILElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1035,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-08-31T14:52:33Z",
+      "side": 1,
+      "message": "Please add a comment here indicating that the interval_ state may be invalid if the elapsed time has passed the end, or otherwise indicating why the two cases are necessary.",
+      "range": {
+        "startLine": 1035,
+        "startChar": 11,
+        "endLine": 1035,
+        "endChar": 31
+      },
+      "revId": "6f3faf9c808916a620cbeb6d897f7ce59b759204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
