@@ -34,6 +34,24 @@
       "revId": "c57e7d680c7a7c39d8e4e03fb12175e15b999e82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1e6b52d_38e188f5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-08-31T20:44:51Z",
+      "side": 1,
+      "message": "+1 on \"controls code is confusing\".  :)\n\ni\u0027m not sure how VR sets this value.  assuming that it\u0027s setting the value to the main tree, then i\u0027d expect that setting it to zero on exit would make it (mostly) independent of what happened before, and it would just catch up properly later.  that\u0027s why i\u0027m confused.\n\nif it\u0027s animating (impl thread) and you\u0027re turning off vsync, then the animation wouldn\u0027t do anything while vsync is off (i guess), but i\u0027d still expect it to catch up once vsync was on.  seems like setting an animation before the last one completes just replaces the old one (BrowserControlsOffsetManager).\n\ni mention this because the bug i originally found was that the impl thread and the main thread both decided to set the top controls shown ratio to zero (hidden), and the conflict resolution code ended up with one (shown).  sounds somewhat similar, in that it\u0027s \"final value converges to something different than the last value that was set\".\n\nanyway, i\u0027m not saying that the code as written is wrong.  it\u0027s just that, in my very limited understanding, i\u0027m worried that something weird is still happening here.",
+      "parentUuid": "dfc8bd56_154fb630",
+      "revId": "c57e7d680c7a7c39d8e4e03fb12175e15b999e82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
