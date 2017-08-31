@@ -6,6 +6,7 @@
       "provides": {
         // Interfaces needed by a generic client of content browser.
         "app": [
+          "discardable_memory::mojom::DiscardableSharedMemoryManager",
           "memory_instrumentation::mojom::Coordinator"
         ],
         "gpu": [
@@ -55,6 +56,10 @@
         ],
         "service_manager:service_factory": [
           "service_manager::mojom::ServiceFactory"
+        ],
+        "utility": [
+          "discardable_memory::mojom::DiscardableSharedMemoryManager",
+          "memory_instrumentation::mojom::Coordinator"
         ]
       },
       "requires": {
