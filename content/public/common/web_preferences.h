@@ -256,6 +256,9 @@ struct CONTENT_EXPORT WebPreferences {
   // WebView quirk (http://crbug.com/618472).
   bool css_hex_alpha_color_enabled;
   bool enable_media_download_in_product_help;
+  // Enable support for document.scrollingElement
+  // WebView quirk (XXX).
+  bool scroll_top_left_interop_enabled;
 #else  // defined(OS_ANDROID)
 #endif  // defined(OS_ANDROID)
 
