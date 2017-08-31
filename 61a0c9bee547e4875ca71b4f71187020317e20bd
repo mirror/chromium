@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "406f9345_65be5b4e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-08-31T17:49:51Z",
+      "side": 1,
+      "message": "nit: we prefer use of imperative in commit messages e.g.\n\n\"Correct two bugs in ...\"",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 9
+      },
+      "revId": "61a0c9bee547e4875ca71b4f71187020317e20bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ee287f8_310d8844",
+        "filename": "sandbox/win/src/sandbox_policy_base.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-08-31T17:49:51Z",
+      "side": 1,
+      "message": "not sure I like this pointer-fu - we rarely use raw pointers in Chromium unless there is a compelling reason to.\n\nI\u0027d prefer you just set alternate_desktop_integrity_level_label_ or alternate_desktop_local_winstation_integrity_level_label_ directly rather than use a pointer...",
+      "range": {
+        "startLine": 458,
+        "startChar": 4,
+        "endLine": 458,
+        "endChar": 19
+      },
+      "revId": "61a0c9bee547e4875ca71b4f71187020317e20bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
