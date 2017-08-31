@@ -22,6 +22,64 @@
       "revId": "b58a676023eb9456ac72c572e6d0399ccc293473",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ae8d9e80_5dee522e",
+        "filename": "chrome/browser/plugins/plugin_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-31T21:20:29Z",
+      "side": 1,
+      "message": "I concur with \u0027meh.\u0027, it\u0027s fine.\n\nNo need to make legacy IPC prettier or more convenient -- that is what mojo is for.",
+      "parentUuid": "0a8c4410_57b3b804",
+      "range": {
+        "startLine": 170,
+        "startChar": 0,
+        "endLine": 173,
+        "endChar": 13
+      },
+      "revId": "b58a676023eb9456ac72c572e6d0399ccc293473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "17ef282c_206b85db",
+        "filename": "chrome/browser/plugins/plugin_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-31T21:20:29Z",
+      "side": 1,
+      "message": "It loses information, but we could consider having the message param be sender-\u003eGetProcess() or sender-\u003eGetProcess()-\u003eGetID(), since that\u0027s the only way it\u0027s used.",
+      "revId": "b58a676023eb9456ac72c572e6d0399ccc293473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38e9f88e_e4dec3f7",
+        "filename": "chrome/browser/plugins/plugin_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-31T21:20:29Z",
+      "side": 1,
+      "message": "whoah. I didn\u0027t realize we ever did this, but cool.",
+      "revId": "b58a676023eb9456ac72c572e6d0399ccc293473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
