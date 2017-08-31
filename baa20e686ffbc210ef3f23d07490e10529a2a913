@@ -46,6 +46,30 @@
       "revId": "baa20e686ffbc210ef3f23d07490e10529a2a913",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c51e8cf_344f2564",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwSettings.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1276,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-08-31T16:45:00Z",
+      "side": 1,
+      "message": "leaving it to you. I am assuming the whole thing will be deleted soon ~62 anyway.",
+      "parentUuid": "04e8dad9_6f4d5e5f",
+      "range": {
+        "startLine": 1276,
+        "startChar": 15,
+        "endLine": 1276,
+        "endChar": 16
+      },
+      "revId": "baa20e686ffbc210ef3f23d07490e10529a2a913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
