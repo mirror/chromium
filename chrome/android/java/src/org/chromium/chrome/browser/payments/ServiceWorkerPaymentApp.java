@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.text.TextUtils;
 
+import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.payments.mojom.PaymentDetailsModifier;
 import org.chromium.payments.mojom.PaymentItem;
@@ -38,6 +39,7 @@ public class ServiceWorkerPaymentApp extends PaymentInstrument implements Paymen
     private final Set<String> mMethodNames;
     private final boolean mCanPreselect;
     private final Set<String> mPreferredRelatedApplicationIds;
+    private final boolean mIsIncognito;
 
     /**
      * Build a service worker payment app instance per origin.
@@ -75,17 +77,34 @@ public class ServiceWorkerPaymentApp extends PaymentInstrument implements Paymen
 
         mPreferredRelatedApplicationIds = new HashSet<>();
         Collections.addAll(mPreferredRelatedApplicationIds, preferredRelatedApplicationIds);
+
+        ChromeActivity activity = ChromeActivity.fromWebContents(mWebContents);
+        mIsIncognito = activity != null && activity.getCurrentTabModel() != null
+                && activity.getCurrentTabModel().isIncognito();
     }
 
     @Override
-    public void getInstruments(Map<String, PaymentMethodData> unusedMethodDataMap,
-            String unusedOrigin, String unusedIFrameOrigin, byte[][] unusedCertificateChain,
-            final InstrumentsCallback callback) {
-        new Handler().post(() -> {
-            List<PaymentInstrument> instruments = new ArrayList();
-            instruments.add(ServiceWorkerPaymentApp.this);
-            callback.onInstrumentsReady(ServiceWorkerPaymentApp.this, instruments);
-        });
+    public void getInstruments(Map<String, PaymentMethodData> methodDataMap, String origin,
+            String iframeOrigin, byte[][] unusedCertificateChain,
+            Map<String, PaymentDetailsModifier> modifiers, final InstrumentsCallback callback) {
+        if (mIsIncognito) {
+            new Handler().post(() -> {
+                List<PaymentInstrument> instruments = new ArrayList();
+                instruments.add(ServiceWorkerPaymentApp.this);
+                callback.onInstrumentsReady(ServiceWorkerPaymentApp.this, instruments);
+            });
+            return;
+        }
+
+        ServiceWorkerPaymentAppBridge.canMakePayment(mWebContents, mRegistrationId, origin,
+                iframeOrigin, new HashSet<>(methodDataMap.values()),
+                new HashSet<>(modifiers.values()), (boolean canMakePayment) -> {
+                    List<PaymentInstrument> instruments = new ArrayList();
+                    if (canMakePayment) {
+                        instruments.add(ServiceWorkerPaymentApp.this);
+                    }
+                    callback.onInstrumentsReady(ServiceWorkerPaymentApp.this, instruments);
+                });
     }
 
     @Override
