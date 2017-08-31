@@ -70,6 +70,30 @@ void LayoutTableCol::StyleDidChange(StyleDifference diff,
     table->MarkAllCellsWidthsDirtyAndOrNeedsLayout(
         LayoutTable::kMarkDirtyAndNeedsLayout);
   }
+
+  if ((old_style->Visibility() == EVisibility::kCollapse) !=
+      (Style()->Visibility() == EVisibility::kCollapse)) {
+    unsigned absolute_column_index =
+        table->ColElementToAbsoluteColumnIndex(this);
+    for (LayoutObject* section = table->FirstChild(); section;
+         section = section->NextSibling()) {
+      if (!section->IsTableSection())
+        continue;
+      for (LayoutTableRow* row = ToLayoutTableSection(section)->FirstRow(); row;
+           row = row->NextRow()) {
+        unsigned col_index = 0;
+        for (LayoutTableCell* cell = row->FirstCell(); cell;
+             cell = cell->NextCell()) {
+          if (col_index == absolute_column_index) {
+            cell->SetCellChildrenNeedLayout();
+            cell->SetNeedsLayoutAndFullPaintInvalidation(
+                LayoutInvalidationReason::kStyleChange);
+          }
+          col_index++;
+        }
+      }
+    }
+  }
 }
 
 void LayoutTableCol::UpdateFromElement() {

@@ -1,0 +1,65 @@
+<!doctype html>
+<meta charset="utf-8">
+<script src='/resources/testharness.js'></script>
+<script src='/resources/testharnessreport.js'></script>
+<link rel="author" title="Joy Yu" href="mailto:joysyu@mit.edu">
+<link rel="help" href="https://drafts.csswg.org/css-tables-3/#computing-the-table-width">
+<h1>Dynamic Visibility collapse</h1>
+<a href="https://drafts.csswg.org/css-tables-3/#computing-the-table-width">Spec</a>
+<p>
+Setting a column with relatively positioned divs to visibility:collapse changes table
+width but not height.
+<table id="test" style="border-collapse: collapse;">
+    <col style="background:#00F"/>
+    <col span="2" id="toChange" style="background:#F00;"/>
+    <tr>
+        <td><div style="width: 50px; height: 50px"></div></td>
+        <td><div style="width: 50px; height: 50px; position: relative;"></div></td>
+        <td><div style="width: 50px; height: 50px"></div></td>
+    </tr>
+    <tr>
+        <td><div style="width: 50px; height: 50px"></div></td>
+        <td><div style="width: 50px; height: 50px"></div></td>
+        <td><div style="width: 50px; height: 50px; position: relative;"></div></td>
+    </tr>
+</table>
+<script>
+    col = document.getElementById("toChange");
+    col.style.visibility = "collapse";
+
+    tests = [
+        [
+            document.getElementById('test').offsetWidth,
+            52,
+            "col visibility:collapse changes table width"
+        ]];
+    for (i = 0; i< tests.length; i++) {
+        test(function()
+            {
+                assert_equals.apply(this, tests[i]);
+            },
+            tests[i][2]);
+    };
+
+    col.style.visibility = "visible";
+
+    tests = [
+        [
+            document.getElementById('test').offsetHeight,
+            104,
+            "col visibility:collapse doesn't change table height",
+        ],
+        [
+            document.getElementById('test').offsetWidth,
+            156,
+            "table width goes back to original width"
+        ]];
+    for (i = 0; i< tests.length; i++) {
+        test(function()
+            {
+                assert_equals.apply(this, tests[i]);
+            },
+            tests[i][2]);
+    };
+</script>
+</html>
