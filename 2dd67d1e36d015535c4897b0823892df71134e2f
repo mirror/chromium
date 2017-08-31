@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "5469f323_dba50c69",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-08-31T03:27:19Z",
+      "side": 1,
+      "message": "Can this entire thing be bulleted? And can you add examples?",
+      "revId": "2dd67d1e36d015535c4897b0823892df71134e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "139f0972_a541c357",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-08-31T03:27:19Z",
+      "side": 1,
+      "message": "gymnastics? Didn\u0027t realize we were programming for the Olympics :P",
+      "revId": "2dd67d1e36d015535c4897b0823892df71134e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "92eee202_01da63c1",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-08-31T03:27:19Z",
+      "side": 1,
+      "message": "Mention inline to highlight where it is consuming tokens so that we know what the failure conditions are.",
+      "revId": "2dd67d1e36d015535c4897b0823892df71134e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a918a5d7_d4daba3c",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSParserImpl.cpp",
         "patchSetId": 7
@@ -36,6 +87,24 @@
     },
     {
       "key": {
+        "uuid": "67cc1e8f_e9507b51",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-08-31T03:27:19Z",
+      "side": 1,
+      "message": "No, see comment above.",
+      "parentUuid": "f33403df_b9ff399b",
+      "revId": "2dd67d1e36d015535c4897b0823892df71134e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "66ea6254_167948b2",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSParserImpl.cpp",
         "patchSetId": 7
@@ -53,6 +122,24 @@
     },
     {
       "key": {
+        "uuid": "ced5f0d1_77daf5d7",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-08-31T03:27:19Z",
+      "side": 1,
+      "message": "Just the clearing of the wrapper makes no sense. The rest does",
+      "parentUuid": "66ea6254_167948b2",
+      "revId": "2dd67d1e36d015535c4897b0823892df71134e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a0823901_be199612",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSParserImpl.cpp",
         "patchSetId": 7
@@ -64,6 +151,24 @@
       "writtenOn": "2017-08-31T01:43:23Z",
       "side": 1,
       "message": "Does this need an explanation?",
+      "revId": "2dd67d1e36d015535c4897b0823892df71134e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e453fa2_7aa3e5f3",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 940,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-08-31T03:27:19Z",
+      "side": 1,
+      "message": "You are doing math magic. Yes. I understood what is going on. But thats cause you had explained it IRL",
+      "parentUuid": "a0823901_be199612",
       "revId": "2dd67d1e36d015535c4897b0823892df71134e2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +226,41 @@
     },
     {
       "key": {
+        "uuid": "a83b103b_2c3beb54",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserImpl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-08-31T03:27:19Z",
+      "side": 1,
+      "message": "I definitely like the encapsulation this has to offer.\n\nAdd a comment about what this struct does?",
+      "parentUuid": "77fad804_f5ce4d22",
+      "revId": "2dd67d1e36d015535c4897b0823892df71134e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b1b24a4_3d6d020a",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserImpl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-08-31T03:27:19Z",
+      "side": 1,
+      "message": "What does this do?",
+      "revId": "2dd67d1e36d015535c4897b0823892df71134e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a62b680c_ef8e1294",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSParserImpl.h",
         "patchSetId": 7
@@ -155,6 +295,41 @@
     },
     {
       "key": {
+        "uuid": "5e6beb38_0ed413d2",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserTokenStream.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-08-31T03:27:19Z",
+      "side": 1,
+      "message": "I dont think the compiler will understand that. I would prefer merging with ConsumeComponentValue",
+      "parentUuid": "69570476_ec12d012",
+      "revId": "2dd67d1e36d015535c4897b0823892df71134e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db2d7831_09d40be3",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserTokenStream.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-08-31T03:27:19Z",
+      "side": 1,
+      "message": "Explain again here.",
+      "revId": "2dd67d1e36d015535c4897b0823892df71134e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b371bef_0ce9eb8e",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSTokenizer.h",
         "patchSetId": 7
@@ -166,6 +341,41 @@
       "writtenOn": "2017-08-31T01:43:23Z",
       "side": 1,
       "message": "For symmetry, I could add Offset() { return input_.Offset(); } as well?\nAlso, this name is probably not self-explanatory.",
+      "revId": "2dd67d1e36d015535c4897b0823892df71134e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4c3255a_b2a6e59a",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSTokenizer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-08-31T03:27:19Z",
+      "side": 1,
+      "message": "\u003e For symmetry, I could add Offset() { return input_.Offset(); } as well?\nEh? I\u0027m confused. \n\u003e Also, this name is probably not self-explanatory.\n\nThe name looks ovbvious to me.",
+      "parentUuid": "6b371bef_0ce9eb8e",
+      "revId": "2dd67d1e36d015535c4897b0823892df71134e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4087a01a_c67fb1ec",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorStyleSheet.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-08-31T03:27:19Z",
+      "side": 1,
+      "message": "What black magic is this?",
       "revId": "2dd67d1e36d015535c4897b0823892df71134e2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
