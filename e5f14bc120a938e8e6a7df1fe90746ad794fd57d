@@ -34,6 +34,24 @@
       "revId": "e5f14bc120a938e8e6a7df1fe90746ad794fd57d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c39b95c0_b41a84ce",
+        "filename": "third_party/WebKit/Source/core/css/resolver/ScopedStyleResolver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-08-31T00:13:45Z",
+      "side": 1,
+      "message": "Hmm yeah you are right. I didn\u0027t realize that while writing the design document.",
+      "parentUuid": "a30bfe7b_a9f0e515",
+      "revId": "e5f14bc120a938e8e6a7df1fe90746ad794fd57d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
