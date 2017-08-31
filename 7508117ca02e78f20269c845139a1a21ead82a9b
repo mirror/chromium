@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52afa534_1a637908",
+        "filename": "android_webview/browser/aw_safe_browsing_resource_throttle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-08-31T18:01:12Z",
+      "side": 1,
+      "message": "nit: drop could, sounds as if the behavior is indeterminate if safebrowsing not supported.",
+      "range": {
+        "startLine": 34,
+        "startChar": 6,
+        "endLine": 34,
+        "endChar": 27
+      },
+      "revId": "7508117ca02e78f20269c845139a1a21ead82a9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8993dd8e_9109acc3",
+        "filename": "android_webview/browser/aw_safe_browsing_resource_throttle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-08-31T18:01:12Z",
+      "side": 1,
+      "message": "why declare it outside the class?",
+      "range": {
+        "startLine": 46,
+        "startChar": 1,
+        "endLine": 46,
+        "endChar": 68
+      },
+      "revId": "7508117ca02e78f20269c845139a1a21ead82a9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
