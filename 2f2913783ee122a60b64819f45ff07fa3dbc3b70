@@ -22,6 +22,30 @@
       "revId": "2f2913783ee122a60b64819f45ff07fa3dbc3b70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eadb5bdc_24bbe095",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapingLineBreaker.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-08-31T09:47:59Z",
+      "side": 1,
+      "message": "Done, yeah, sorry, I was too maniac that night.",
+      "parentUuid": "70ff2cc5_270e69b4",
+      "range": {
+        "startLine": 72,
+        "startChar": 27,
+        "endLine": 72,
+        "endChar": 28
+      },
+      "revId": "2f2913783ee122a60b64819f45ff07fa3dbc3b70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
