@@ -207,6 +207,9 @@ class MEDIA_GPU_EXPORT VaapiWrapper
   bool BlitSurface(const scoped_refptr<VASurface>& va_surface_src,
                    const scoped_refptr<VASurface>& va_surface_dest);
 
+  // Return the version string to append to libva library
+  static const std::string& GetVaVersionString();
+
   // Initialize static data before sandbox is enabled.
   static void PreSandboxInitialization();
 
