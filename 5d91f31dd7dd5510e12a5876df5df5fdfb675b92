@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "add64398_405c4257",
+        "filename": "content/browser/media/media_web_contents_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-08-31T10:47:03Z",
+      "side": 1,
+      "message": "style: instead of else return, inverse the check and early return in it.",
+      "revId": "5d91f31dd7dd5510e12a5876df5df5fdfb675b92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1eb7312e_a4f03eaf",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/WebContentsObserver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-08-31T10:47:03Z",
+      "side": 1,
+      "message": "I would call this `hasEffectivelyFullscreenMediaChange` or something closer to the WebContents API name.",
+      "revId": "5d91f31dd7dd5510e12a5876df5df5fdfb675b92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
