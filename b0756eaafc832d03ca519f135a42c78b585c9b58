@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18179c13_fac221d4",
+        "filename": "chrome/android/java/res/layout/content_suggestions_card_modern.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-31T14:53:04Z",
+      "side": 1,
+      "message": "tinting the existing icon did not work because I would have needed to put a background drawable for the color of the tickmark. (it is transparent otherwise) Simply using a color fills the view drawing a square corners outside of the round icon. So I added a new drawable icon rather than using a new circle. Alternative options are welcome.",
+      "range": {
+        "startLine": 35,
+        "startChar": 33,
+        "endLine": 35,
+        "endChar": 53
+      },
+      "revId": "b0756eaafc832d03ca519f135a42c78b585c9b58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
