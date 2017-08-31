@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ea758364_918737e4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-31T20:16:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "002d0b74_4a917793",
+      "revId": "cb07228fb06fb946380849973bf6742df9dd465a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5f5a875_764b8b13",
         "filename": "content/common/widget.mojom",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "cb07228fb06fb946380849973bf6742df9dd465a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c02c1bf4_506b5641",
+        "filename": "content/common/widget.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-31T20:16:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5f5a875_764b8b13",
+      "revId": "cb07228fb06fb946380849973bf6742df9dd465a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "295ebe4a_2f297fa6",
+        "filename": "content/common/widget.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-31T20:16:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5dc25f03_badc9e9f",
+      "revId": "cb07228fb06fb946380849973bf6742df9dd465a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f994c7e3_3d07f0d1",
         "filename": "content/renderer/input/widget_input_handler_manager.h",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-31T09:05:15Z",
       "side": 1,
       "message": "Sorry for the silly question, but what\u0027s touch-action: none? Is this a CSS property or something else?",
+      "revId": "cb07228fb06fb946380849973bf6742df9dd465a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35c33d21_93b4fed2",
+        "filename": "content/renderer/input/widget_input_handler_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-31T20:16:20Z",
+      "side": 1,
+      "message": "Yes cc::TouchAction is a computed css property that indicates whether the user agent can go ahead and process scrolling. touch-action: none indicates scrolling is prevented.",
+      "parentUuid": "f994c7e3_3d07f0d1",
       "revId": "cb07228fb06fb946380849973bf6742df9dd465a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "047f2452_71e84cd2",
+        "filename": "content/renderer/input/widget_input_handler_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-31T20:16:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3606b62d_1fc82357",
+      "revId": "cb07228fb06fb946380849973bf6742df9dd465a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "881903ff_cd9237a8",
         "filename": "content/renderer/input/widget_input_handler_manager.h",
         "patchSetId": 3
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "0adc3de6_a82ae272",
+        "filename": "content/renderer/input/widget_input_handler_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-31T20:16:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "881903ff_cd9237a8",
+      "revId": "cb07228fb06fb946380849973bf6742df9dd465a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6565bf7b_b934f892",
         "filename": "content/renderer/render_widget.cc",
         "patchSetId": 3
@@ -115,6 +223,24 @@
       "writtenOn": "2017-08-31T09:05:15Z",
       "side": 1,
       "message": "Why would host be unset here? Doesn\u0027t that mean we would just drop this message completely if host somehow wasn\u0027t set?",
+      "revId": "cb07228fb06fb946380849973bf6742df9dd465a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b01e4ae_f2ba1d73",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1103,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-31T20:16:20Z",
+      "side": 1,
+      "message": "Removed. Added a DCHECK to the Getter.",
+      "parentUuid": "6565bf7b_b934f892",
       "revId": "cb07228fb06fb946380849973bf6742df9dd465a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
