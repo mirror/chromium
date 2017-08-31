@@ -46,6 +46,30 @@
       "revId": "486a1f16ac616129842ef7e7725b5ec5676a7394",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "397b9022_1c07f26a",
+        "filename": "cc/input/browser_controls_offset_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-31T17:00:00Z",
+      "side": 1,
+      "message": "See proposed fix in https://chromium-review.googlesource.com/c/chromium/src/+/645828\n\nWe\u0027ve got recurring issues around the omnibox and VR because we pause the compositor when entering VR, so the next time the tree is sent might easily be after we exit VR and try to show the top controls.",
+      "parentUuid": "e406922a_8c115c2f",
+      "range": {
+        "startLine": 112,
+        "startChar": 4,
+        "endLine": 112,
+        "endChar": 78
+      },
+      "revId": "486a1f16ac616129842ef7e7725b5ec5676a7394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
