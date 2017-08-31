@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2dc92947_0a9e67a4",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-31T22:40:33Z",
+      "side": 1,
+      "message": "Sorry, I don\u0027t understand. In general, any usage of VP eventually boils down to using the (canonicalized) Position or PwA inside it.\n\nIn my understanding, whether to use VP depends on whether canonicalization is needed. For HandleSingleClick(), it seems that canonicalization is indeed needed, probably other than the last use site where TextSuggestionController is invoked? Besides, other than the last one, all usages of VP are valid (without being store across DOM/style changes).\n\nSo maybe the correct fix is not about VP, but rather, TextSuggestionController should get the position from FrameSelection instead of the stored VP?",
+      "parentUuid": "3bc83863_7ecd391c",
+      "revId": "f237f4da04da1e448e373944fc43e0ca566064f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9866cd7f_5a4d310b",
         "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
         "patchSetId": 5
