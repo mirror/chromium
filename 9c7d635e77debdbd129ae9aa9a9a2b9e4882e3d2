@@ -1,0 +1,254 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5914133_e441f01a",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-31T16:42:23Z",
+      "side": 1,
+      "message": "Add a comment, move down with RunProgressiveElisionTest",
+      "revId": "9c7d635e77debdbd129ae9aa9a9a2b9e4882e3d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6397098a_23cbee10",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-31T16:42:23Z",
+      "side": 1,
+      "message": "nit: s/truncated/elided/",
+      "revId": "9c7d635e77debdbd129ae9aa9a9a2b9e4882e3d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffe3e7f9_0bf2c6e5",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-31T16:42:23Z",
+      "side": 1,
+      "message": "optional nit: ASSERT_EQ above would alleviate a need for this break",
+      "revId": "9c7d635e77debdbd129ae9aa9a9a2b9e4882e3d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05c7c5e4_fd79de23",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-31T16:42:23Z",
+      "side": 1,
+      "message": "nit: also mention the use of a non-\u0027www\u0027 domain? (\u0027www\u0027 seems to be truncated without ellipses  like \u0027http://\u0027, whereas \u0027xyz\u0027 is given ellipses)",
+      "revId": "9c7d635e77debdbd129ae9aa9a9a2b9e4882e3d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bfb7fe3_1099a789",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-31T16:42:23Z",
+      "side": 1,
+      "message": "neat! I never knew about this, maybe surround the whole progressive_testcases definition, instead of each case?",
+      "revId": "9c7d635e77debdbd129ae9aa9a9a2b9e4882e3d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab01802e_f8357c8a",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-31T16:42:23Z",
+      "side": 1,
+      "message": "Hmmm, I wonder if we care about hiding http vs https? (tangential to this CL)",
+      "revId": "9c7d635e77debdbd129ae9aa9a9a2b9e4882e3d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a799f769_8edd95fc",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-31T16:42:23Z",
+      "side": 1,
+      "message": "Ha! Not sure if this is ideal behavior, but w/e",
+      "revId": "9c7d635e77debdbd129ae9aa9a9a2b9e4882e3d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3db3f552_0f30c07e",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-31T16:42:23Z",
+      "side": 1,
+      "message": "optional nit, separate line for \"\"?",
+      "revId": "9c7d635e77debdbd129ae9aa9a9a2b9e4882e3d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c77aefaa_c7334779",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-31T16:42:23Z",
+      "side": 1,
+      "message": "What does this test beyond the more comprehensive cases above and below? (comment)",
+      "range": {
+        "startLine": 109,
+        "startChar": 11,
+        "endLine": 109,
+        "endChar": 43
+      },
+      "revId": "9c7d635e77debdbd129ae9aa9a9a2b9e4882e3d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f97da66_365c7fc6",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-31T16:42:23Z",
+      "side": 1,
+      "message": "Weird that we\u0027d restore the leading directory name after it was ellipsized with a larger width, and instead remove the trailing directory name... but I guess that alleviates the need to do something like |\"google.com/intl\" + kEllipsisStr + \"/ads/\"|. Oh well, I don\u0027t have a serious concern and you haven\u0027t changed any behavior.",
+      "revId": "9c7d635e77debdbd129ae9aa9a9a2b9e4882e3d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b396be3c_ad0ac233",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-31T16:42:23Z",
+      "side": 1,
+      "message": "nit: comment on this case and the one below",
+      "revId": "9c7d635e77debdbd129ae9aa9a9a2b9e4882e3d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81bda8fd_1985a4ca",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-31T16:42:23Z",
+      "side": 1,
+      "message": "Weird that we don\u0027t first strip the \u0027www\u0027 here...",
+      "range": {
+        "startLine": 146,
+        "startChar": 16,
+        "endLine": 146,
+        "endChar": 46
+      },
+      "revId": "9c7d635e77debdbd129ae9aa9a9a2b9e4882e3d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c1f4e1e_d0e10421",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-31T16:42:23Z",
+      "side": 1,
+      "message": "I doubt you\u0027d need these nested inside line 242",
+      "revId": "9c7d635e77debdbd129ae9aa9a9a2b9e4882e3d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e4065a1_f139ad25",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-31T16:42:23Z",
+      "side": 1,
+      "message": "nit: split onto two lines",
+      "revId": "9c7d635e77debdbd129ae9aa9a9a2b9e4882e3d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
