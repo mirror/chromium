@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15a1e3a2_97203cff",
+        "filename": "chrome/browser/browsing_data/media_licenses_counter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-08-31T21:47:04Z",
+      "side": 1,
+      "message": "I think this should be ENABLE_LIBRARY_CDMS. Ditto for other uses.",
+      "range": {
+        "startLine": 29,
+        "startChar": 14,
+        "endLine": 29,
+        "endChar": 28
+      },
+      "revId": "ee03134c4abd4711973edca05619ef9bff332493",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
