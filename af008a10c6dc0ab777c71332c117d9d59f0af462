@@ -22,6 +22,30 @@
       "revId": "af008a10c6dc0ab777c71332c117d9d59f0af462",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c53396db_dae6e560",
+        "filename": "content/public/common/web_preferences.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1133706
+      },
+      "writtenOn": "2017-08-31T19:59:46Z",
+      "side": 1,
+      "message": "Amended this comment.",
+      "parentUuid": "50da377f_6df530e2",
+      "range": {
+        "startLine": 260,
+        "startChar": 13,
+        "endLine": 260,
+        "endChar": 18
+      },
+      "revId": "af008a10c6dc0ab777c71332c117d9d59f0af462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
