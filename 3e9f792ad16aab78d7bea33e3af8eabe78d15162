@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "408e4a28_0506d413",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-31T17:31:07Z",
+      "side": 1,
+      "message": "Why have you added all of these DCHECKS?",
+      "range": {
+        "startLine": 173,
+        "startChar": 2,
+        "endLine": 173,
+        "endChar": 50
+      },
+      "revId": "3e9f792ad16aab78d7bea33e3af8eabe78d15162",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
