@@ -156,7 +156,8 @@ void ForceSigninVerifier::CloseAllBrowserWindows() {
     return;
   signin_manager_->SignOut(
       signin_metrics::AUTHENTICATION_FAILED_WITH_FORCE_SIGNIN,
-      signin_metrics::SignoutDelete::IGNORE_METRIC);
+      signin_metrics::SignoutDelete::IGNORE_METRIC,
+      true /* revoke_all_tokens */);
 }
 
 OAuth2TokenService::Request* ForceSigninVerifier::GetRequestForTesting() {

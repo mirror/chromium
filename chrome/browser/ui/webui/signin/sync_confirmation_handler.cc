@@ -81,7 +81,8 @@ void SyncConfirmationHandler::HandleUndo(const base::ListValue* args) {
       LoginUIService::ABORT_SIGNIN);
   SigninManagerFactory::GetForProfile(profile_)->SignOut(
       signin_metrics::ABORT_SIGNIN,
-      signin_metrics::SignoutDelete::IGNORE_METRIC);
+      signin_metrics::SignoutDelete::IGNORE_METRIC,
+      true /* revoke_all_tokens */);
 
   if (browser_)
     browser_->signin_view_controller()->CloseModalSignin();
