@@ -16,6 +16,24 @@
       "revId": "ec031107205bf386e6bce15d9f8fdf679d26b830",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef40738b_ff956424",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-08-31T15:24:48Z",
+      "side": 1,
+      "message": "I put it here because I didn\u0027t want to put it into the middle of a block of override methods.\n\nI think I\u0027ll just make it private.",
+      "parentUuid": "23c765da_982a446e",
+      "revId": "ec031107205bf386e6bce15d9f8fdf679d26b830",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
