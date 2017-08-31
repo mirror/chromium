@@ -34,6 +34,24 @@
       "revId": "9859174336713de9436bc4a390ff7baef7eb07cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c43b9a12_732c756c",
+        "filename": "net/cert/internal/system_trust_store.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-08-31T23:51:00Z",
+      "side": 1,
+      "message": "Is Fuschia considering X509_get_default_cert_file() to be a \u0027supported\u0027 thing?\n\nDid the conversation with Andrew following the March thread get resolved? There\u0027s a number of concerns here (particularly if other Fuschia services end up consuming //net) that we may want to chat about before turning this on. That is, past experience is that once we flip such code into place, the technical debt and inertia pile up that make it considerably more difficult to respond to CA issues.\n\nMy short-term recommendation is to explicitly not rely on anything provided by the \"Fuschia\" system (as long term, we may not want Chrome or //net to rely on the Fuschia roots, much as we don\u0027t want it to rely on other platforms\u0027 roots - including Android).\n\nApologies if these comments seem to conflate two things:\n- Turning up Chrome on a new platform (where I would generally recommend new Chrome platforms _don\u0027t_ use the OS store)\n- Google turning up a new platform (where I wouldn\u0027t recommend providing a root set for applications, for reasons I\u0027m happy to discuss, so much as an API for validating certs)\n\nI think if we\u0027re looking at what\u0027s right for Chrome, I\u0027d be curious for Matt\u0027s take, but I\u0027d be more inclined to have a trust store that directly baked the roots in to Chrome (e.g. ignoring the OS entirely) as part of turning up Fuschia, which we would then own and iterate for other platforms, rather than take a dependency on a SystemTrustStore (which for various reasons is good to move away from), especially a PEM bundle :)",
+      "parentUuid": "4326bee1_21dfb459",
+      "revId": "9859174336713de9436bc4a390ff7baef7eb07cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
