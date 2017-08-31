@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "f24f9f94_c3620781",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceObserver.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-31T18:23:16Z",
+      "side": 1,
+      "message": "\"But this may have the out-of-sync issue too. The way it\u0027s iterating depends on the fact that the enums is defined as the bits in an integer, but this may change in the future.\"\n\nYeah, this is a good point, but it\u0027s definitely more likely that someone will add something to the enum than change its format. I\u0027d probably just go with this approach, but add a comment on the enum stating that we need to keep the format the same.\n\nThe AllValidEntryTypes approach involves constructing an extra vector, which is a bit annoying. However, if you prefer the test approach, it SGTM.",
+      "parentUuid": "9b24b96c_6db3c062",
+      "range": {
+        "startLine": 121,
+        "startChar": 9,
+        "endLine": 121,
+        "endChar": 66
+      },
+      "revId": "a3c889d4abf33ac713cf396a13a8288d1861e259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a9d7bcd9_0f387c5f",
         "filename": "third_party/WebKit/Source/core/timing/PerformanceObserver.h",
         "patchSetId": 6
