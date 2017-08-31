@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0215f63a_bddcfc48",
+        "filename": "chrome/test/data/local_ntp/voice_text_browsertest.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-31T13:44:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a126204_10c27982",
+      "revId": "12b3bb06e51529a4f20fb4d3e9c8047c9e7c4a22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43dedd6f_cdc40548",
         "filename": "chrome/test/data/local_ntp/voice_text_browsertest.js",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "12b3bb06e51529a4f20fb4d3e9c8047c9e7c4a22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1db71e9a_6ae4977e",
+        "filename": "chrome/test/data/local_ntp/voice_text_browsertest.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-31T13:44:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43dedd6f_cdc40548",
+      "revId": "12b3bb06e51529a4f20fb4d3e9c8047c9e7c4a22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "139c046c_a351edb2",
+        "filename": "chrome/test/data/local_ntp/voice_text_browsertest.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-31T13:44:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64e49453_d3868edc",
+      "revId": "12b3bb06e51529a4f20fb4d3e9c8047c9e7c4a22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4344b45b_5a6a8508",
         "filename": "chrome/test/data/local_ntp/voice_text_browsertest.js",
         "patchSetId": 5
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-29T14:34:36Z",
       "side": 1,
       "message": "Is this correct? What does the \"empty\" \u003ca\u003e tag do when clicked?",
+      "revId": "12b3bb06e51529a4f20fb4d3e9c8047c9e7c4a22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27fcf6b1_c5f357b0",
+        "filename": "chrome/test/data/local_ntp/voice_text_browsertest.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-31T13:44:43Z",
+      "side": 1,
+      "message": "Hopefully this test makes more sense now. It is correct, it displays as a link even though it is not really and just calls |speech.restart()|, from |text.getErrorLink_()|. Do you think we should use a different html tag?",
+      "parentUuid": "4344b45b_5a6a8508",
       "revId": "12b3bb06e51529a4f20fb4d3e9c8047c9e7c4a22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "6b8bd924_5a179ff4",
+        "filename": "chrome/test/data/local_ntp/voice_text_browsertest.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-31T13:44:43Z",
+      "side": 1,
+      "message": "It isn\u0027t mentioned in the original design doc or the code. I assume it is simply to not show \"Waiting...\" for a very short time when mic permission is already enabled by the user.\n\nI tested it, and it indeed looks weird because \"Waiting...\" just blinks on the screen (very very fast, but noticeable) and changes to \"Speak now\" directly after that.",
+      "parentUuid": "07ad8c2c_529153a9",
+      "revId": "12b3bb06e51529a4f20fb4d3e9c8047c9e7c4a22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e931f0a_e1c26973",
         "filename": "chrome/test/data/local_ntp/voice_text_browsertest.js",
         "patchSetId": 5
@@ -101,6 +191,24 @@
       "revId": "12b3bb06e51529a4f20fb4d3e9c8047c9e7c4a22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da0d2c7b_b4123a61",
+        "filename": "chrome/test/data/local_ntp/voice_text_browsertest.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-31T13:44:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e931f0a_e1c26973",
+      "revId": "12b3bb06e51529a4f20fb4d3e9c8047c9e7c4a22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "054adf15_6e35a63a",
+        "filename": "chrome/test/data/local_ntp/voice_text_browsertest.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-31T13:44:43Z",
+      "side": 1,
+      "message": "The ready message does get set, see line 168. The |showReadyMessage()| function sets a timeout to show the \"Listening...\" message, which is what the last two asserts test. Asserts for the \"Listening...\" message are in the test just below.",
+      "parentUuid": "23f64cd0_0e7bc169",
+      "revId": "12b3bb06e51529a4f20fb4d3e9c8047c9e7c4a22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44eee478_a64f14bc",
         "filename": "chrome/test/data/local_ntp/voice_text_browsertest.js",
         "patchSetId": 5
@@ -135,6 +261,24 @@
       "revId": "12b3bb06e51529a4f20fb4d3e9c8047c9e7c4a22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e57ae0a_c5798a76",
+        "filename": "chrome/test/data/local_ntp/voice_text_browsertest.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-31T13:44:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44eee478_a64f14bc",
+      "revId": "12b3bb06e51529a4f20fb4d3e9c8047c9e7c4a22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -161,6 +305,30 @@
     },
     {
       "key": {
+        "uuid": "b9851f18_01ef8a2a",
+        "filename": "chrome/test/data/local_ntp/voice_text_browsertest.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-31T13:44:43Z",
+      "side": 1,
+      "message": "Yeah, comparing strings is very weird, but I don\u0027t think it is possible for someone to say \"Speak now\" and the UI then displaying the listening animation, because the |listeningTimeout| (that upon executing sets the \"Listening...\" text + animation) is cleared when the text areas are updated (f.e. with speech recognition intermediate results).\n\nIt might be worth a comment or a more defensive check in the listening animation callback, but I\u0027d argue that this actually works correctly even if someone says \"Speak now\". WDYT? (Also, I added a test that tries to simulate this.)",
+      "parentUuid": "3ad8135c_313558c3",
+      "range": {
+        "startLine": 200,
+        "startChar": 42,
+        "endLine": 200,
+        "endChar": 0
+      },
+      "revId": "12b3bb06e51529a4f20fb4d3e9c8047c9e7c4a22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "73950522_fff80054",
         "filename": "chrome/test/data/local_ntp/voice_text_browsertest.js",
         "patchSetId": 5
@@ -175,6 +343,24 @@
       "revId": "12b3bb06e51529a4f20fb4d3e9c8047c9e7c4a22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae88caf3_addb722b",
+        "filename": "chrome/test/data/local_ntp/voice_text_browsertest.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-31T13:44:43Z",
+      "side": 1,
+      "message": "I agree, this test is pointless.",
+      "parentUuid": "73950522_fff80054",
+      "revId": "12b3bb06e51529a4f20fb4d3e9c8047c9e7c4a22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
