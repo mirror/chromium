@@ -78,18 +78,32 @@ void DestroyConnectorOnIOThread() { g_io_thread_connector.Get().reset(); }
 void StartServiceInUtilityProcess(
     const std::string& service_name,
     const base::string16& process_name,
-    SandboxType sandbox_type,
-    service_manager::mojom::ServiceRequest request) {
+    service_manager::mojom::ServiceRequest request,
+    service_manager::mojom::ConnectResult query_result,
+    const std::string& sandbox_string) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  DLOG(ERROR) << "Hey!!! starting service " << service_name
+              << " with sandbox name " << sandbox_string;
   UtilityProcessHost* process_host =
       UtilityProcessHost::Create(nullptr, nullptr);
   process_host->SetName(process_name);
-  process_host->SetSandboxType(sandbox_type);
+  process_host->SetSandboxType(SandboxTypeFromString(sandbox_string));
   process_host->Start();
 
   service_manager::mojom::ServiceFactoryPtr service_factory;
   BindInterface(process_host, mojo::MakeRequest(&service_factory));
   service_factory->CreateService(std::move(request), service_name);
+}
+
+void QueryAndStartServiceInUtilityProcess(
+    const std::string& service_name,
+    const base::string16& process_name,
+    service_manager::mojom::ServiceRequest request) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  ServiceManagerContext::GetConnectorForIOThread()->QueryService(
+      service_manager::Identity(service_name),
+      base::BindOnce(&StartServiceInUtilityProcess, service_name, process_name,
+                     std::move(request)));
 }
 
 // Request service_manager::mojom::ServiceFactory from GPU process host. Must be
@@ -379,8 +393,8 @@ ServiceManagerContext::ServiceManagerContext() {
 
   for (const auto& service : out_of_process_services) {
     packaged_services_connection_->AddServiceRequestHandler(
-        service.first, base::Bind(&StartServiceInUtilityProcess, service.first,
-                                  service.second.first, service.second.second));
+        service.first, base::Bind(&QueryAndStartServiceInUtilityProcess,
+                                  service.first, service.second.first));
   }
 
 #if BUILDFLAG(ENABLE_MOJO_MEDIA_IN_GPU_PROCESS)
