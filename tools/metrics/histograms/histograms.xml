@@ -42500,6 +42500,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Net.RequestTime2">
+  <obsolete>
+    Unused, so removed from Chromium as of 2017/8/31.
+  </obsolete>
   <owner>rdsmith@chromium.org</owner>
   <summary>
     The amount of time between request initiation and request completion for
@@ -42508,6 +42511,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Net.RequestTime2.ErrAborted.HttpScheme" units="ms">
+  <obsolete>
+    Unused, so removed from Chromium as of 2017/8/31.
+  </obsolete>
   <owner>csharrison@chromium.org</owner>
   <summary>
     The amount of time between request initiation and request completion for
@@ -42516,6 +42522,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Net.RequestTime2.ErrAborted.NetworkContent" units="ms">
+  <obsolete>
+    Unused, so removed from Chromium as of 2017/8/31.
+  </obsolete>
   <owner>csharrison@chromium.org</owner>
   <summary>
     The amount of time between request initiation and request completion for
@@ -42524,6 +42533,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Net.RequestTime2.ErrAborted.NoBytesRead" units="ms">
+  <obsolete>
+    Unused, so removed from Chromium as of 2017/8/31.
+  </obsolete>
   <owner>csharrison@chromium.org</owner>
   <summary>
     The amount of time between request initiation and request completion for
@@ -42534,6 +42546,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="Net.RequestTime2.ErrAborted.NoNetworkContent.CachedContent"
     units="ms">
+  <obsolete>
+    Unused, so removed from Chromium as of 2017/8/31.
+  </obsolete>
   <owner>csharrison@chromium.org</owner>
   <summary>
     The amount of time between request initiation and request completion for
@@ -42543,6 +42558,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Net.RequestTime2.ErrAborted.NonHttpScheme" units="ms">
+  <obsolete>
+    Unused, so removed from Chromium as of 2017/8/31.
+  </obsolete>
   <owner>csharrison@chromium.org</owner>
   <summary>
     The amount of time between request initiation and request completion for
