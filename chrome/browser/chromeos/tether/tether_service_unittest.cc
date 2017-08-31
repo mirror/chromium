@@ -395,6 +395,38 @@ TEST_F(TetherServiceTest, TestAsyncTetherShutdown) {
   VerifyTetherActiveStatus(false /* expected_active */);
 }
 
+TEST_F(TetherServiceTest, TestShutdownTetherWithAsyncShutdownTask) {
+  CreateTetherService();
+  EXPECT_TRUE(test_initializer_delegate_->is_tether_running());
+
+  // Tether should be ENABLED, and there should be no AsyncShutdownTask.
+  EXPECT_EQ(chromeos::NetworkStateHandler::TechnologyState::TECHNOLOGY_ENABLED,
+            network_state_handler()->GetTechnologyState(
+                chromeos::NetworkTypePattern::Tether()));
+  EXPECT_FALSE(tether_service_->async_shutdown_task_);
+
+  chromeos::tether::FakeAsyncShutdownTask* fake_task =
+      new chromeos::tether::FakeAsyncShutdownTask();
+  test_initializer_delegate_->set_async_shutdown_task(
+      base::WrapUnique(fake_task));
+
+  // Disable the Tether preference. This should cause the Tether component to
+  // shut down and return an AsyncShutdownTask to TetherService.
+  SetTetherTechnologyStateEnabled(false);
+  EXPECT_FALSE(test_initializer_delegate_->is_tether_running());
+
+  // Tether should be AVAILABLE, and there should now be an AsyncShutdownTask.
+  EXPECT_EQ(
+      chromeos::NetworkStateHandler::TechnologyState::TECHNOLOGY_AVAILABLE,
+      network_state_handler()->GetTechnologyState(
+          chromeos::NetworkTypePattern::Tether()));
+  EXPECT_TRUE(tether_service_->async_shutdown_task_);
+
+  // Complete the task; TetherService should delete it.
+  fake_task->NotifyAsyncShutdownComplete();
+  EXPECT_FALSE(tether_service_->async_shutdown_task_);
+}
+
 TEST_F(TetherServiceTest, TestSuspend) {
   CreateTetherService();
   VerifyTetherActiveStatus(true /* expected_active */);

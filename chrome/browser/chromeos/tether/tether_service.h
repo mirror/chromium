@@ -113,6 +113,8 @@ class TetherService : public KeyedService,
   friend class TetherServiceTest;
   FRIEND_TEST_ALL_PREFIXES(TetherServiceTest, TestSuspend);
   FRIEND_TEST_ALL_PREFIXES(TetherServiceTest, TestBleAdvertisingNotSupported);
+  FRIEND_TEST_ALL_PREFIXES(TetherServiceTest,
+                           TestShutdownTetherWithAsyncShutdownTask);
   FRIEND_TEST_ALL_PREFIXES(
       TetherServiceTest,
       TestBleAdvertisingNotSupported_BluetoothIsInitiallyNotPowered);

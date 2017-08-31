@@ -28,7 +28,6 @@ void Initializer::TransitionToStatus(Status new_status) {
 
   if (status_ != Status::SHUT_DOWN)
     return;
-
   for (auto& observer : observer_list_)
     observer.OnShutdownComplete();
 }
