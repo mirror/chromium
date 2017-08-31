@@ -965,6 +965,8 @@ split_static_library("browser") {
     "permissions/permission_uma_util.h",
     "permissions/permission_util.cc",
     "permissions/permission_util.h",
+    "picture_in_picture/picture_in_picture_window_controller.cc",
+    "picture_in_picture/picture_in_picture_window_controller.h",
     "platform_util.h",
     "platform_util_chromeos.cc",
     "platform_util_internal.h",
