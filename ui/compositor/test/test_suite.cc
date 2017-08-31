@@ -45,7 +45,7 @@ void CompositorTestSuite::Initialize() {
 #endif
 
   scoped_task_environment_ =
-      base::MakeUnique<base::test::ScopedTaskEnvironment>(
+      std::make_unique<base::test::ScopedTaskEnvironment>(
           base::test::ScopedTaskEnvironment::MainThreadType::UI);
 }
 

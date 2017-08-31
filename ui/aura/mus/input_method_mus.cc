@@ -151,7 +151,7 @@ void InputMethodMus::OnDidChangeFocusedClient(
   if (!focused)
     return;
 
-  text_input_client_ = base::MakeUnique<TextInputClientImpl>(focused);
+  text_input_client_ = std::make_unique<TextInputClientImpl>(focused);
 
   // We are about to close the pipe with pending callbacks. Closing the pipe
   // results in none of the callbacks being run. We have to run the callbacks

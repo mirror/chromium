@@ -338,14 +338,14 @@ Image::Image(const std::vector<ImagePNGRep>& image_reps) {
     return;
 
   storage_ = new internal::ImageStorage(Image::kImageRepPNG);
-  AddRepresentation(base::MakeUnique<internal::ImageRepPNG>(filtered));
+  AddRepresentation(std::make_unique<internal::ImageRepPNG>(filtered));
 }
 
 Image::Image(const ImageSkia& image) {
   if (!image.isNull()) {
     storage_ = new internal::ImageStorage(Image::kImageRepSkia);
     AddRepresentation(
-        base::MakeUnique<internal::ImageRepSkia>(new ImageSkia(image)));
+        std::make_unique<internal::ImageRepSkia>(new ImageSkia(image)));
   }
 }
 
@@ -357,14 +357,14 @@ Image::Image(UIImage* image, base::scoped_policy::OwnershipPolicy policy)
   if (image) {
     if (policy == base::scoped_policy::RETAIN)
       base::mac::NSObjectRetain(image);
-    AddRepresentation(base::MakeUnique<internal::ImageRepCocoaTouch>(image));
+    AddRepresentation(std::make_unique<internal::ImageRepCocoaTouch>(image));
   }
 }
 #elif defined(OS_MACOSX)
 Image::Image(NSImage* image) {
   if (image) {
     storage_ = new internal::ImageStorage(Image::kImageRepCocoa);
-    AddRepresentation(base::MakeUnique<internal::ImageRepCocoa>(image));
+    AddRepresentation(std::make_unique<internal::ImageRepCocoa>(image));
   }
 }
 #endif

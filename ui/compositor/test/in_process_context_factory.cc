@@ -229,26 +229,26 @@ void InProcessContextFactory::CreateLayerTreeFrameSink(
   std::unique_ptr<cc::OutputSurface> display_output_surface;
   if (use_test_surface_) {
     bool flipped_output_surface = false;
-    display_output_surface = base::MakeUnique<cc::PixelTestOutputSurface>(
+    display_output_surface = std::make_unique<cc::PixelTestOutputSurface>(
         context_provider, flipped_output_surface);
   } else {
     display_output_surface =
-        base::MakeUnique<DirectOutputSurface>(context_provider);
+        std::make_unique<DirectOutputSurface>(context_provider);
   }
 
   std::unique_ptr<viz::DelayBasedBeginFrameSource> begin_frame_source(
       new viz::DelayBasedBeginFrameSource(
-          base::MakeUnique<viz::DelayBasedTimeSource>(
+          std::make_unique<viz::DelayBasedTimeSource>(
               compositor->task_runner().get())));
-  auto scheduler = base::MakeUnique<viz::DisplayScheduler>(
+  auto scheduler = std::make_unique<viz::DisplayScheduler>(
       begin_frame_source.get(), compositor->task_runner().get(),
       display_output_surface->capabilities().max_frames_pending);
 
-  data->display = base::MakeUnique<viz::Display>(
+  data->display = std::make_unique<viz::Display>(
       &shared_bitmap_manager_, &gpu_memory_buffer_manager_, renderer_settings_,
       compositor->frame_sink_id(), std::move(display_output_surface),
       std::move(scheduler),
-      base::MakeUnique<cc::TextureMailboxDeleter>(
+      std::make_unique<cc::TextureMailboxDeleter>(
           compositor->task_runner().get()));
   GetFrameSinkManager()->RegisterBeginFrameSource(begin_frame_source.get(),
                                                   compositor->frame_sink_id());
@@ -257,7 +257,7 @@ void InProcessContextFactory::CreateLayerTreeFrameSink(
   data->begin_frame_source = std::move(begin_frame_source);
 
   auto* display = per_compositor_data_[compositor.get()]->display.get();
-  auto layer_tree_frame_sink = base::MakeUnique<viz::DirectLayerTreeFrameSink>(
+  auto layer_tree_frame_sink = std::make_unique<viz::DirectLayerTreeFrameSink>(
       compositor->frame_sink_id(), GetHostFrameSinkManager(),
       GetFrameSinkManager(), display, context_provider,
       shared_worker_context_provider_, &gpu_memory_buffer_manager_,
@@ -365,7 +365,7 @@ InProcessContextFactory::CreatePerCompositorData(ui::Compositor* compositor) {
 
   gfx::AcceleratedWidget widget = compositor->widget();
 
-  auto data = base::MakeUnique<PerCompositorData>();
+  auto data = std::make_unique<PerCompositorData>();
   if (widget == gfx::kNullAcceleratedWidget) {
     data->surface_handle = gpu::kNullSurfaceHandle;
   } else {

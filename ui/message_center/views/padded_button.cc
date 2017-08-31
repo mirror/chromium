@@ -41,7 +41,7 @@ std::unique_ptr<views::InkDrop> PaddedButton::CreateInkDrop() {
 
 std::unique_ptr<views::InkDropRipple> PaddedButton::CreateInkDropRipple()
     const {
-  return base::MakeUnique<views::FloodFillInkDropRipple>(
+  return std::make_unique<views::FloodFillInkDropRipple>(
       size(), GetInkDropCenterBasedOnLastEvent(),
       SkColorSetA(SK_ColorBLACK, 0.6 * 255), ink_drop_visible_opacity());
 }

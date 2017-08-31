@@ -38,7 +38,7 @@ class TestKeyboardUIContent : public KeyboardUIContent {
 class KeyboardUIContentTest : public content::RenderViewHostTestHarness {
  public:
   void SetUp() override {
-    initializer_ = base::MakeUnique<content::TestContentClientInitializer>();
+    initializer_ = std::make_unique<content::TestContentClientInitializer>();
     content::RenderViewHostTestHarness::SetUp();
   }
 
