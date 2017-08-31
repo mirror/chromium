@@ -10,6 +10,7 @@
 #include "ash/mus/property_util.h"
 #include "ash/mus/window_manager.h"
 #include "ash/public/cpp/shell_window_ids.h"
+#include "ash/public/cpp/window_properties.h"
 #include "ash/root_window_controller.h"
 #include "ash/root_window_settings.h"
 #include "ash/shell.h"
@@ -146,6 +147,9 @@ aura::Window* CreateAndParentTopLevelWindowInRoot(
       window_type == ui::mojom::WindowType::PANEL;
   if (provide_non_client_frame) {
     // See NonClientFrameController for details on lifetime.
+    auto iter = properties->find(ui::mojom::WindowManager::kShelfItemType_Property);
+    LOG(ERROR) << "MSW CreateAndParentTopLevelWindowInRoot A... found shelf item type: "
+               << (iter == properties->end() ? -1 : mojo::ConvertTo<int64_t>(iter->second));
     NonClientFrameController* non_client_frame_controller =
         new NonClientFrameController(container_window, context, bounds,
                                      window_type, properties, window_manager);
@@ -166,9 +170,11 @@ aura::Window* CreateAndParentTopLevelWindowInRoot(
     DetachedTitleAreaRendererForClient* renderer =
         new DetachedTitleAreaRendererForClient(unparented_control_container,
                                                properties, window_manager);
+    LOG(ERROR) << "MSW CreateAndParentTopLevelWindowInRoot B...";
     return renderer->widget()->GetNativeView();
   }
 
+  LOG(ERROR) << "MSW CreateAndParentTopLevelWindowInRoot C...";
   aura::Window* window = new aura::Window(nullptr);
   aura::SetWindowType(window, window_type);
   window->SetProperty(aura::client::kEmbedType,
@@ -213,6 +219,20 @@ aura::Window* CreateAndParentTopLevelWindow(
         mojo::ConvertTo<bool>(ignored_by_shelf_iter->second));
     // No need to persist this value.
     properties->erase(ignored_by_shelf_iter);
+  }
+  
+  // TODO(msw): Not neessary if ApplyProperties (and similar NonClientFrameController application ocurrs before parenting...)
+  auto shelf_item_type_iter = properties->find(
+      ui::mojom::WindowManager::kShelfItemType_Property);
+  LOG(ERROR) << "MSW CreateAndParentTopLevelWindow found shelf item type: "
+             << (shelf_item_type_iter != properties->end());
+  if (shelf_item_type_iter != properties->end()) {
+    LOG(ERROR) << "MSW found shelf item type on init!!!!! "
+               << mojo::ConvertTo<int32_t>(shelf_item_type_iter->second); 
+    // window->SetProperty(kShelfItemTypeKey,
+    //                     mojo::ConvertTo<int32_t>(shelf_item_type_iter->second));
+    // // No need to persist this value.
+    // properties->erase(shelf_item_type_iter);
   }
 
   auto focusable_iter =

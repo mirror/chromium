@@ -46,9 +46,9 @@
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/path.h"
 #include "ui/gfx/scoped_canvas.h"
-
+#include "base/debug/stack_trace.h" 
 namespace aura {
-
+bool Window::msw_ = false;
 Window::Window(WindowDelegate* delegate, client::WindowType type)
     : Window(delegate, nullptr, type) {}
 
@@ -71,6 +71,11 @@ Window::Window(WindowDelegate* delegate,
       // problems for code that adds an observer as part of an observer
       // notification (such as the workspace code).
       observers_(base::ObserverList<WindowObserver>::NOTIFY_EXISTING_ONLY) {
+  if (msw_) { 
+    LOG(ERROR) << "MSW aura::Window ctor!!!!";
+    base::debug::StackTrace().Print(); 
+  }
+
   SetTargetHandler(delegate_);
 }
 

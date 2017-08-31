@@ -190,21 +190,33 @@ void PropertyConverter::SetPropertyFromTransportValue(
     Window* window,
     const std::string& transport_name,
     const std::vector<uint8_t>* data) {
+  //bool msw = transport_name == "prop:shelf-item-type";
+      if (transport_name == "prop:shelf-item-type") {
+        LOG(ERROR) << "MSW TRYING TO APPLY SHELF ITEM TYPE!!!!!! ";
+         for (const auto& primitive_property : primitive_properties_) {
+           if (strcmp(primitive_property.second.transport_name, "prop:shelf-item-type") == 0)
+             LOG(ERROR) << "MSW FOUND " << primitive_property.second.transport_name;
+         }
+      }
+        
   for (const auto& primitive_property : primitive_properties_) {
     if (primitive_property.second.transport_name == transport_name) {
       // aura::Window only supports property types that fit in PrimitiveType.
       if (data->size() != 8u) {
-        DVLOG(2) << "Property size mismatch (PrimitiveType): "
-                 << transport_name;
+        LOG(ERROR) << "Property size mismatch (PrimitiveType): "
+                   << transport_name << ", (Expected 8u, Actual: "
+                   << data->size() << ")";
         return;
       }
       const PrimitiveType value = mojo::ConvertTo<PrimitiveType>(*data);
       if (!primitive_property.second.validator.Run(value)) {
-        DVLOG(2) << "Property value rejected (PrimitiveType): "
+        LOG(ERROR) << "Property value rejected (PrimitiveType): "
                  << transport_name;
         return;
       }
       // TODO(msw): Should aura::Window just store all properties by name?
+      LOG(ERROR) << " MSW SetPropertyFromTransportValue " << transport_name
+                << " " << primitive_property.second.property_name << " " << value << " " << primitive_property.second.default_value;
       window->SetPropertyInternal(
           primitive_property.first, primitive_property.second.property_name,
           nullptr, value, primitive_property.second.default_value);

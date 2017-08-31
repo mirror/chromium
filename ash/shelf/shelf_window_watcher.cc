@@ -209,6 +209,8 @@ void ShelfWindowWatcher::OnUserWindowAdded(aura::Window* window) {
 
   observed_user_windows_.Add(window);
 
+  LOG(ERROR) << "MSW OnUserWindowAdded " << window << " " << window->GetProperty(kShelfItemTypeKey) << " / " << GetShelfItemType(window) << "!!!!!!!!!!!!!";
+  
   // Add, update, or remove a ShelfItem for |window|, as needed.
   OnUserWindowPropertyChanged(window);
 }

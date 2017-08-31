@@ -83,6 +83,8 @@ class AURA_EXPORT PropertyConverter {
       const WindowProperty<T>* property,
       const char* transport_name,
       const base::RepeatingCallback<bool(int64_t)>& validator) {
+    // if (strcmp(transport_name, "prop:shelf-item-type") == 0)
+    //   LOG(ERROR) << " MSW REGISTERING prop:shelf-item-type...";
     PrimitiveProperty primitive_property;
     primitive_property.property_name = property->name;
     primitive_property.transport_name = transport_name;

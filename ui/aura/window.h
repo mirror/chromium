@@ -79,6 +79,8 @@ class AURA_EXPORT Window : public ui::LayerDelegate,
   // Initial value of id() for newly created windows.
   static constexpr int kInitialId = -1;
 
+  static bool msw_;
+  
   // Used when stacking windows.
   enum StackDirection {
     STACK_ABOVE,

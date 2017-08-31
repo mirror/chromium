@@ -27,6 +27,13 @@
 #include "ui/views/controls/webview/webview.h"
 #include "ui/views/widget/widget.h"
 
+#if defined(OS_CHROMEOS)
+#include "ash/public/cpp/shelf_types.h"
+#include "services/ui/public/cpp/property_type_converters.h"
+#include "services/ui/public/interfaces/window_manager.mojom.h"
+#include "ui/aura/window.h" 
+#endif
+
 using extensions::AppWindow;
 
 namespace {
@@ -140,9 +147,16 @@ void ChromeNativeAppWindowViews::InitializeDefaultWindow(
   init_params.keep_on_top = create_params.always_on_top;
   init_params.visible_on_all_workspaces =
       create_params.visible_on_all_workspaces;
-
+  LOG(ERROR) << "MSW creating app window A!!!!!!!!";
+#if defined(OS_CHROMEOS)
+  // TODO(msw): Use/remove kWindowIgnoredByShelf_InitProperty? 
+  init_params.mus_properties[ui::mojom::WindowManager::kShelfItemType_Property] =
+        mojo::ConvertTo<std::vector<uint8_t>>(static_cast<int64_t>(ash::TYPE_APP));
+#endif  // OS_CHROMEOS
+  aura::Window::msw_ = true; 
   OnBeforeWidgetInit(create_params, &init_params, widget());
   widget()->Init(init_params);
+  LOG(ERROR) << "MSW creating app window B!!!!!!!!";
 
   // The frame insets are required to resolve the bounds specifications
   // correctly. So we set the window bounds and constraints now.
@@ -198,6 +212,7 @@ void ChromeNativeAppWindowViews::InitializeDefaultWindow(
     focus_manager->RegisterAccelerator(
         iter->first, ui::AcceleratorManager::kNormalPriority, this);
   }
+  aura::Window::msw_ = false; 
 }
 
 void ChromeNativeAppWindowViews::InitializePanelWindow(

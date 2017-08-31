@@ -402,6 +402,7 @@ void ChromeLauncherController::LaunchApp(const ash::ShelfID& id,
                                          ash::ShelfLaunchSource source,
                                          int event_flags,
                                          int64_t display_id) {
+  // aura::Window::msw_ = true; 
   launcher_controller_helper_->LaunchApp(id, source, event_flags, display_id);
 }
 

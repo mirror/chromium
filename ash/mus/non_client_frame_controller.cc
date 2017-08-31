@@ -40,7 +40,8 @@
 #include "ui/views/widget/native_widget_aura.h"
 #include "ui/views/widget/widget.h"
 #include "ui/wm/core/coordinate_conversion.h"
-
+#include "ash/public/cpp/window_properties.h" 
+#include "services/ui/public/cpp/property_type_converters.h" 
 DECLARE_UI_CLASS_PROPERTY_TYPE(ash::mus::NonClientFrameController*);
 
 namespace ash {
@@ -293,9 +294,11 @@ NonClientFrameController::NonClientFrameController(
   params.bounds = bounds;
   params.opacity = views::Widget::InitParams::OPAQUE_WINDOW;
   params.layer_type = ui::LAYER_SOLID_COLOR;
+  LOG(ERROR) << "MSW NonClientFrameController ctor A"; 
   WmNativeWidgetAura* native_widget = new WmNativeWidgetAura(
       widget_, window_manager_client_, ShouldRemoveStandardFrame(*properties),
       ShouldEnableImmersive(*properties), GetWindowStyle(*properties));
+  LOG(ERROR) << "MSW NonClientFrameController ctor B"; 
   window_ = native_widget->GetNativeView();
   window_->SetProperty(aura::client::kEmbedType,
                        aura::client::WindowEmbedType::TOP_LEVEL_IN_WM);
@@ -306,10 +309,17 @@ NonClientFrameController::NonClientFrameController(
   aura::SetWindowType(window_, window_type);
   aura::PropertyConverter* property_converter =
       window_manager->property_converter();
+  LOG(ERROR) << "MSW NonClientFrameController ctor C APPLYING PROPERTIES"; 
+  auto iter = properties->find(ui::mojom::WindowManager::kShelfItemType_Property);
+  LOG(ERROR) << "MSW NonClientFrameController A... found shelf item type: "
+             << (iter == properties->end() ? -1 : mojo::ConvertTo<int64_t>(iter->second));
+
   for (auto& property_pair : *properties) {
     property_converter->SetPropertyFromTransportValue(
         window_, property_pair.first, &property_pair.second);
   }
+  LOG(ERROR) << "MSW NonClientFrameController ctor D DONE APPLYING PROPERTIES "
+            << window_ << " " << window_->GetProperty(kShelfItemTypeKey); 
   // Applying properties will have set the show state if specified.
   // NativeWidgetAura resets the show state from |params|, so we need to update
   // |params|.
