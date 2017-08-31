@@ -1,0 +1,228 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb49b8a6_9144fd2c",
+        "filename": "chrome/android/java/res/values/colors.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-31T18:44:26Z",
+      "side": 1,
+      "message": "This color already exists in ui/android/java/res/values/colors.xml so we shouldn\u0027t have to redefine it here.",
+      "range": {
+        "startLine": 31,
+        "startChar": 4,
+        "endLine": 31,
+        "endChar": 50
+      },
+      "revId": "344dcc925ec429ca1ad5202362881834fa9d9170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5acf987d_475d3540",
+        "filename": "chrome/android/java/res/values/dimens.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-31T18:44:26Z",
+      "side": 1,
+      "message": "If we\u0027re always hiding the text, are these needed?",
+      "range": {
+        "startLine": 481,
+        "startChar": 3,
+        "endLine": 482,
+        "endChar": 72
+      },
+      "revId": "344dcc925ec429ca1ad5202362881834fa9d9170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e667e320_5d0311a2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-31T18:44:26Z",
+      "side": 1,
+      "message": "nit: inline this on #onGlobalLayout?\n\nIt\u0027d be nice if we didn\u0027t have to recalculate this every time there\u0027s a global layout. For M63, maybe we can look into setting the width at wrap_content and including a maxWidth w/ center_horizontal gravity. We\u0027d likely need to modify the XML structure a bit to get this right, but it should work.",
+      "range": {
+        "startLine": 250,
+        "startChar": 7,
+        "endLine": 250,
+        "endChar": 95
+      },
+      "revId": "344dcc925ec429ca1ad5202362881834fa9d9170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5a69229_8f219bbc",
+        "filename": "chrome/android/third_party/widget_bottomsheet_base/java/src/org/chromium/chrome/browser/widget/bottomsheet/base/BottomNavigationItemView.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-31T18:44:26Z",
+      "side": 1,
+      "message": "I think we don\u0027t want the icons to shift when they\u0027re selected. Will mShiftAmount be 0 for the chrome home bottom nav?\n\nShould we remove mShiftAmount entirely since we removed shifting mode from the other third party class?",
+      "range": {
+        "startLine": 132,
+        "startChar": 49,
+        "endLine": 132,
+        "endChar": 71
+      },
+      "revId": "344dcc925ec429ca1ad5202362881834fa9d9170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "605fa3fb_973eee5c",
+        "filename": "chrome/android/third_party/widget_bottomsheet_base/java/src/org/chromium/chrome/browser/widget/bottomsheet/base/BottomNavigationItemView.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-31T18:44:26Z",
+      "side": 1,
+      "message": "nit: this public method should have a JavaDoc",
+      "revId": "344dcc925ec429ca1ad5202362881834fa9d9170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60d869c9_2b8f0b10",
+        "filename": "chrome/android/third_party/widget_bottomsheet_base/java/src/org/chromium/chrome/browser/widget/bottomsheet/base/BottomNavigationMenuView.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-31T18:44:26Z",
+      "side": 1,
+      "message": "nit: @params in JavaDocs for parameters. Also, can we call this something like udpateMenuItemSpacingForMinWidth() or something that incorporates the minimum width aspect.",
+      "range": {
+        "startLine": 243,
+        "startChar": 16,
+        "endLine": 243,
+        "endChar": 37
+      },
+      "revId": "344dcc925ec429ca1ad5202362881834fa9d9170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "551da907_b537af3f",
+        "filename": "chrome/android/third_party/widget_bottomsheet_base/java/src/org/chromium/chrome/browser/widget/bottomsheet/base/BottomNavigationMenuView.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-31T18:44:26Z",
+      "side": 1,
+      "message": "nit: put this on the line above",
+      "range": {
+        "startLine": 245,
+        "startChar": 12,
+        "endLine": 245,
+        "endChar": 18
+      },
+      "revId": "344dcc925ec429ca1ad5202362881834fa9d9170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f01a00f3_72e7a943",
+        "filename": "chrome/android/third_party/widget_bottomsheet_base/java/src/org/chromium/chrome/browser/widget/bottomsheet/base/BottomNavigationPresenter.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-31T18:44:26Z",
+      "side": 1,
+      "message": "Is this import needed since the @RestrictTo annotation was removed?",
+      "range": {
+        "startLine": 19,
+        "startChar": 58,
+        "endLine": 19,
+        "endChar": 66
+      },
+      "revId": "344dcc925ec429ca1ad5202362881834fa9d9170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a314d50_d434e09e",
+        "filename": "chrome/android/third_party/widget_bottomsheet_base/java/src/org/chromium/chrome/browser/widget/bottomsheet/base/BottomNavigationPresenter.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-31T18:44:26Z",
+      "side": 1,
+      "message": "typo?",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 2
+      },
+      "revId": "344dcc925ec429ca1ad5202362881834fa9d9170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90c86f6c_1e25ba41",
+        "filename": "chrome/android/third_party/widget_bottomsheet_base/java/src/org/chromium/chrome/browser/widget/bottomsheet/base/BottomNavigationView.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-31T18:44:26Z",
+      "side": 1,
+      "message": "Should we remove the @hide and @RestrictTo annotations from BottomNavigationMenuView since we\u0027re exposing it here?",
+      "range": {
+        "startLine": 195,
+        "startChar": 11,
+        "endLine": 195,
+        "endChar": 49
+      },
+      "revId": "344dcc925ec429ca1ad5202362881834fa9d9170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
