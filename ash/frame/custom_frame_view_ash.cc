@@ -306,7 +306,7 @@ CustomFrameViewAsh::CustomFrameViewAsh(
       overlay_view_(new OverlayView(header_view_)),
       immersive_delegate_(immersive_delegate ? immersive_delegate
                                              : header_view_),
-      avatar_observer_(base::MakeUnique<AvatarObserver>(frame_, header_view_)) {
+      avatar_observer_(std::make_unique<AvatarObserver>(frame_, header_view_)) {
   aura::Window* frame_window = frame->GetNativeWindow();
   wm::InstallResizeHandleWindowTargeterForWindow(frame_window, nullptr);
   // |header_view_| is set as the non client view's overlay view so that it can

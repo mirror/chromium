@@ -186,7 +186,7 @@ void AshTouchExplorationManager::UpdateTouchExplorationState() {
   if (spoken_feedback_enabled) {
     if (!touch_exploration_controller_.get()) {
       touch_exploration_controller_ =
-          base::MakeUnique<ui::TouchExplorationController>(
+          std::make_unique<ui::TouchExplorationController>(
               root_window_controller_->GetRootWindow(), this,
               touch_accessibility_enabler_->GetWeakPtr());
     }

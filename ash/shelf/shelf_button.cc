@@ -467,7 +467,7 @@ void ShelfButton::OnGestureEvent(ui::GestureEvent* event) {
 }
 
 std::unique_ptr<views::InkDropRipple> ShelfButton::CreateInkDropRipple() const {
-  return base::MakeUnique<views::SquareInkDropRipple>(
+  return std::make_unique<views::SquareInkDropRipple>(
       gfx::Size(kInkDropLargeSize, kInkDropLargeSize),
       kInkDropLargeCornerRadius,
       gfx::Size(kInkDropSmallSize, kInkDropSmallSize),

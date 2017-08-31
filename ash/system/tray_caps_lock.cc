@@ -90,7 +90,7 @@ std::unique_ptr<Notification> CreateNotification() {
         kNotificationCapslockIcon,
         message_center::SystemNotificationWarningLevel::NORMAL);
   } else {
-    notification = base::MakeUnique<Notification>(
+    notification = std::make_unique<Notification>(
         message_center::NOTIFICATION_TYPE_SIMPLE, kCapsLockNotificationId,
         l10n_util::GetStringUTF16(IDS_ASH_STATUS_TRAY_CAPS_LOCK_ENABLED),
         l10n_util::GetStringUTF16(string_id),

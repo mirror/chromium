@@ -86,7 +86,7 @@ void TestShellDelegate::Exit() {
 }
 
 std::unique_ptr<keyboard::KeyboardUI> TestShellDelegate::CreateKeyboardUI() {
-  return base::MakeUnique<TestKeyboardUI>();
+  return std::make_unique<TestKeyboardUI>();
 }
 
 void TestShellDelegate::OpenUrlFromArc(const GURL& url) {}
@@ -94,7 +94,7 @@ void TestShellDelegate::OpenUrlFromArc(const GURL& url) {}
 void TestShellDelegate::ShelfInit() {
   // Create a separate shelf initializer that mimics ChromeLauncherController.
   if (!shelf_initializer_)
-    shelf_initializer_ = base::MakeUnique<ShelfInitializer>();
+    shelf_initializer_ = std::make_unique<ShelfInitializer>();
 }
 
 void TestShellDelegate::ShelfShutdown() {}
@@ -105,7 +105,7 @@ NetworkingConfigDelegate* TestShellDelegate::GetNetworkingConfigDelegate() {
 
 std::unique_ptr<WallpaperDelegate>
 TestShellDelegate::CreateWallpaperDelegate() {
-  return base::MakeUnique<TestWallpaperDelegate>();
+  return std::make_unique<TestWallpaperDelegate>();
 }
 
 AccessibilityDelegate* TestShellDelegate::CreateAccessibilityDelegate() {

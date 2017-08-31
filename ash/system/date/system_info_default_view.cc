@@ -39,7 +39,7 @@ SystemInfoDefaultView::SystemInfoDefaultView(SystemTrayItem* owner)
   if (PowerStatus::Get()->IsBatteryPresent()) {
     power_status_view_ = new ash::PowerStatusView();
     std::unique_ptr<views::BoxLayout> box_layout =
-        base::MakeUnique<views::BoxLayout>(views::BoxLayout::kHorizontal);
+        std::make_unique<views::BoxLayout>(views::BoxLayout::kHorizontal);
     box_layout->set_cross_axis_alignment(
         views::BoxLayout::CROSS_AXIS_ALIGNMENT_CENTER);
     box_layout->set_inside_border_insets(

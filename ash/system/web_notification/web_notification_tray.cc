@@ -296,7 +296,7 @@ WebNotificationTray::WebNotificationTray(Shelf* shelf,
   tray_container()->SetMargin(kTrayMainAxisInset, kTrayCrossAxisInset);
 
   if (!drag_controller())
-    set_drag_controller(base::MakeUnique<TrayDragController>(shelf));
+    set_drag_controller(std::make_unique<TrayDragController>(shelf));
 }
 
 WebNotificationTray::~WebNotificationTray() {

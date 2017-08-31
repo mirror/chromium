@@ -17,8 +17,8 @@ AshFocusManagerFactory::~AshFocusManagerFactory() {}
 std::unique_ptr<views::FocusManager> AshFocusManagerFactory::CreateFocusManager(
     views::Widget* widget,
     bool desktop_widget) {
-  return base::MakeUnique<views::FocusManager>(
-      widget, desktop_widget ? nullptr : base::MakeUnique<Delegate>());
+  return std::make_unique<views::FocusManager>(
+      widget, desktop_widget ? nullptr : std::make_unique<Delegate>());
 }
 
 AshFocusManagerFactory::Delegate::Delegate() {}

@@ -96,7 +96,7 @@ DesktopCleaner::DesktopCleaner() {
   for (size_t i = 0; i < arraysize(kContainerIdsToHide); ++i) {
     aura::Window* container =
         Shell::GetContainer(root_window, kContainerIdsToHide[i]);
-    container_hiders_.push_back(base::MakeUnique<ContainerHider>(container));
+    container_hiders_.push_back(std::make_unique<ContainerHider>(container));
   }
   notification_blocker_.reset(new NotificationBlocker());
 }

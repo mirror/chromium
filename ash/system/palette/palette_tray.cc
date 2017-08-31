@@ -199,7 +199,7 @@ PaletteTray::PaletteTray(Shelf* shelf)
   ui::InputDeviceManager::GetInstance()->AddObserver(this);
 
   if (!drag_controller())
-    set_drag_controller(base::MakeUnique<TrayDragController>(shelf));
+    set_drag_controller(std::make_unique<TrayDragController>(shelf));
 }
 
 PaletteTray::~PaletteTray() {
@@ -249,7 +249,7 @@ void PaletteTray::OnLocalStatePrefServiceInitialized(
     local_state_pref_service_->SetBoolean(prefs::kHasSeenStylus, true);
   }
 
-  pref_change_registrar_ = base::MakeUnique<PrefChangeRegistrar>();
+  pref_change_registrar_ = std::make_unique<PrefChangeRegistrar>();
   pref_change_registrar_->Init(local_state_pref_service_);
   pref_change_registrar_->Add(
       prefs::kHasSeenStylus,
@@ -496,7 +496,7 @@ void PaletteTray::ShowBubble() {
     bubble_view->AddChildView(view.view);
 
   // Show the bubble.
-  bubble_ = base::MakeUnique<ash::TrayBubbleWrapper>(this, bubble_view);
+  bubble_ = std::make_unique<ash::TrayBubbleWrapper>(this, bubble_view);
   SetIsActive(true);
 }
 
@@ -536,7 +536,7 @@ void PaletteTray::OnHasSeenStylusPrefChanged() {
   if (has_seen_stylus_)
     watcher_.reset();
   else
-    watcher_ = base::MakeUnique<StylusWatcher>(local_state_pref_service_);
+    watcher_ = std::make_unique<StylusWatcher>(local_state_pref_service_);
 
   UpdateIconVisibility();
 }

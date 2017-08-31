@@ -80,7 +80,7 @@ class ScreenshotController::ScreenshotLayer : public ui::LayerOwner,
  public:
   ScreenshotLayer(ui::Layer* parent, bool immediate_overlay)
       : draw_inactive_overlay_(immediate_overlay) {
-    SetLayer(base::MakeUnique<ui::Layer>(ui::LAYER_TEXTURED));
+    SetLayer(std::make_unique<ui::Layer>(ui::LAYER_TEXTURED));
     layer()->SetFillsBoundsOpaquely(false);
     layer()->SetBounds(parent->bounds());
     parent->Add(layer());
@@ -284,7 +284,7 @@ void ScreenshotController::StartWindowScreenshotSession(
 
   display::Screen::GetScreen()->AddObserver(this);
   for (aura::Window* root : Shell::GetAllRootWindows()) {
-    layers_[root] = base::MakeUnique<ScreenshotLayer>(
+    layers_[root] = std::make_unique<ScreenshotLayer>(
         Shell::GetContainer(root, kShellWindowId_OverlayContainer)->layer(),
         true);
   }
@@ -309,7 +309,7 @@ void ScreenshotController::StartPartialScreenshotSession(
   mode_ = PARTIAL;
   display::Screen::GetScreen()->AddObserver(this);
   for (aura::Window* root : Shell::GetAllRootWindows()) {
-    layers_[root] = base::MakeUnique<ScreenshotLayer>(
+    layers_[root] = std::make_unique<ScreenshotLayer>(
         Shell::GetContainer(root, kShellWindowId_OverlayContainer)->layer(),
         draw_overlay_immediately);
   }

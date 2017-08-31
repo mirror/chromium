@@ -88,7 +88,7 @@ void SetShelfBehaviorsFromPrefs() {
 ShelfController::ShelfController() {
   // Set the delegate and title string for the app list item.
   model_.SetShelfItemDelegate(ShelfID(kAppListId),
-                              base::MakeUnique<AppListShelfItemDelegate>());
+                              std::make_unique<AppListShelfItemDelegate>());
   DCHECK_EQ(0, model_.ItemIndexByID(ShelfID(kAppListId)));
   ShelfItem item = model_.items()[0];
   item.title = l10n_util::GetStringUTF16(IDS_ASH_SHELF_APP_LIST_LAUNCHER_TITLE);
@@ -216,7 +216,7 @@ void ShelfController::SetShelfItemDelegate(
   base::AutoReset<bool> reset(&applying_remote_shelf_model_changes_, true);
   if (delegate.is_bound())
     model_.SetShelfItemDelegate(
-        id, base::MakeUnique<RemoteShelfItemDelegate>(id, std::move(delegate)));
+        id, std::make_unique<RemoteShelfItemDelegate>(id, std::move(delegate)));
   else
     model_.SetShelfItemDelegate(id, nullptr);
 }
@@ -285,7 +285,7 @@ void ShelfController::ShelfItemDelegateChanged(const ShelfID& id,
 void ShelfController::OnActiveUserPrefServiceChanged(
     PrefService* pref_service) {
   SetShelfBehaviorsFromPrefs();
-  pref_change_registrar_ = base::MakeUnique<PrefChangeRegistrar>();
+  pref_change_registrar_ = std::make_unique<PrefChangeRegistrar>();
   pref_change_registrar_->Init(pref_service);
   pref_change_registrar_->Add(prefs::kShelfAlignmentLocal,
                               base::Bind(&SetShelfAlignmentFromPrefs));

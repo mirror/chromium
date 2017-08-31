@@ -21,7 +21,7 @@ KeyboardUIMus::~KeyboardUIMus() {}
 // static
 std::unique_ptr<KeyboardUI> KeyboardUIMus::Create(
     service_manager::Connector* connector) {
-  return base::MakeUnique<KeyboardUIMus>(connector);
+  return std::make_unique<KeyboardUIMus>(connector);
 }
 
 void KeyboardUIMus::Hide() {

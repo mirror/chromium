@@ -239,7 +239,7 @@ views::Widget* CreateBackgroundWidget(aura::Window* root_window,
   } else {
     views::View* content_view =
         new RoundedRectView(border_radius, SK_ColorTRANSPARENT);
-    content_view->SetBackground(base::MakeUnique<BackgroundWith1PxBorder>(
+    content_view->SetBackground(std::make_unique<BackgroundWith1PxBorder>(
         background_color, border_color, border_thickness, border_radius));
     widget->SetContentsView(content_view);
   }
@@ -277,7 +277,7 @@ WindowGrid::WindowGrid(aura::Window* root_window,
     window_observer_.Add(window);
     window_state_observer_.Add(wm::GetWindowState(window));
     window_list_.push_back(
-        base::MakeUnique<WindowSelectorItem>(window, window_selector_, this));
+        std::make_unique<WindowSelectorItem>(window, window_selector_, this));
   }
 }
 

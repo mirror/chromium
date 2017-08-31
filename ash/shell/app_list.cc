@@ -260,7 +260,7 @@ class ExampleAppListViewDelegate : public app_list::AppListViewDelegate {
       if (base::i18n::StringSearchIgnoringCaseAndAccents(query, title, NULL,
                                                          NULL)) {
         model_->results()->Add(
-            base::MakeUnique<ExampleSearchResult>(type, query));
+            std::make_unique<ExampleSearchResult>(type, query));
       }
     }
   }

@@ -188,9 +188,9 @@ class VoiceInteractionIcon : public ui::Layer {
    */
   void InitMoleculeShape() {
     for (int i = 0; i < DOT_COUNT; ++i) {
-      dot_layer_delegates_[i] = base::MakeUnique<views::CircleLayerDelegate>(
+      dot_layer_delegates_[i] = std::make_unique<views::CircleLayerDelegate>(
           kMoleculeColors[i], kMoleculeRadiusDip[i]);
-      dot_layers_[i] = base::MakeUnique<ui::Layer>();
+      dot_layers_[i] = std::make_unique<ui::Layer>();
 
       dot_layers_[i]->SetBounds(gfx::Rect(
           kIconInitSizeDip / 2 + kMoleculeOffsetXDip[i] - kMoleculeRadiusDip[i],
@@ -225,10 +225,10 @@ class VoiceInteractionIconBackground : public ui::Layer,
         small_size_(gfx::Size(kBackgroundSizeDip, kBackgroundSizeDip)),
         center_point_(
             gfx::PointF(kBackgroundSizeDip / 2, kBackgroundSizeDip / 2)),
-        circle_layer_delegate_(base::MakeUnique<views::CircleLayerDelegate>(
+        circle_layer_delegate_(std::make_unique<views::CircleLayerDelegate>(
             SK_ColorWHITE,
             kBackgroundSizeDip / 2)),
-        rect_layer_delegate_(base::MakeUnique<views::RectangleLayerDelegate>(
+        rect_layer_delegate_(std::make_unique<views::RectangleLayerDelegate>(
             SK_ColorWHITE,
             gfx::SizeF(small_size_))) {
     set_name("VoiceInteractionOverlay:BACKGROUND_LAYER");
@@ -538,9 +538,9 @@ class VoiceInteractionIconBackground : public ui::Layer,
 };
 
 VoiceInteractionOverlay::VoiceInteractionOverlay(AppListButton* host_view)
-    : ripple_layer_(base::MakeUnique<ui::Layer>()),
-      icon_layer_(base::MakeUnique<VoiceInteractionIcon>()),
-      background_layer_(base::MakeUnique<VoiceInteractionIconBackground>()),
+    : ripple_layer_(std::make_unique<ui::Layer>()),
+      icon_layer_(std::make_unique<VoiceInteractionIcon>()),
+      background_layer_(std::make_unique<VoiceInteractionIconBackground>()),
       host_view_(host_view),
       circle_layer_delegate_(kRippleColor, kRippleCircleInitRadiusDip) {
   SetPaintToLayer(ui::LAYER_NOT_DRAWN);

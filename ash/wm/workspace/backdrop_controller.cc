@@ -204,7 +204,7 @@ void BackdropController::UpdateAccessibilityMode() {
       Shell::Get()->accessibility_delegate()->IsSpokenFeedbackEnabled();
   if (enabled) {
     if (!backdrop_event_handler_) {
-      backdrop_event_handler_ = base::MakeUnique<BackdropEventHandler>();
+      backdrop_event_handler_ = std::make_unique<BackdropEventHandler>();
       original_event_handler_ =
           backdrop_window_->SetTargetHandler(backdrop_event_handler_.get());
     }

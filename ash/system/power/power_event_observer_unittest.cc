@@ -179,7 +179,7 @@ TEST_F(PowerEventObserverTest, NonLockScreenContainersHideAnimation) {
       Shell::Get()->lock_state_controller();
   lock_state_controller->set_animator_for_test(test_animator);
   std::unique_ptr<LockStateControllerTestApi> lock_state_test_api =
-      base::MakeUnique<LockStateControllerTestApi>(lock_state_controller);
+      std::make_unique<LockStateControllerTestApi>(lock_state_controller);
   SetCanLockScreen(true);
   SetShouldLockScreenAutomatically(true);
   ASSERT_FALSE(GetLockedState());

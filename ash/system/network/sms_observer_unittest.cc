@@ -26,7 +26,7 @@ std::unique_ptr<base::DictionaryValue> CreateMessage(
     const char* kDefaultNumber = "000-000-0000",
     const char* kDefaultTimestamp = "Fri Jun  8 13:26:04 EDT 2016") {
   std::unique_ptr<base::DictionaryValue> sms =
-      base::MakeUnique<base::DictionaryValue>();
+      std::make_unique<base::DictionaryValue>();
   if (kDefaultNumber)
     sms->SetString("number", kDefaultNumber);
   if (kDefaultMessage)

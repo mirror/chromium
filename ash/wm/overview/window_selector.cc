@@ -269,7 +269,7 @@ WindowSelector::~WindowSelector() {
 void WindowSelector::Init(const WindowList& windows,
                           const WindowList& hide_windows) {
   hide_overview_windows_ =
-      base::MakeUnique<ScopedHideOverviewWindows>(std::move(hide_windows));
+      std::make_unique<ScopedHideOverviewWindows>(std::move(hide_windows));
   if (restore_focus_window_)
     restore_focus_window_->AddObserver(this);
 

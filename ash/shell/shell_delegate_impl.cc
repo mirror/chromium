@@ -96,7 +96,7 @@ void ShellDelegateImpl::Exit() {
 }
 
 std::unique_ptr<keyboard::KeyboardUI> ShellDelegateImpl::CreateKeyboardUI() {
-  return base::MakeUnique<TestKeyboardUI>();
+  return std::make_unique<TestKeyboardUI>();
 }
 
 void ShellDelegateImpl::OpenUrlFromArc(const GURL& url) {}
@@ -115,7 +115,7 @@ NetworkingConfigDelegate* ShellDelegateImpl::GetNetworkingConfigDelegate() {
 
 std::unique_ptr<WallpaperDelegate>
 ShellDelegateImpl::CreateWallpaperDelegate() {
-  return base::MakeUnique<DefaultWallpaperDelegate>();
+  return std::make_unique<DefaultWallpaperDelegate>();
 }
 
 AccessibilityDelegate* ShellDelegateImpl::CreateAccessibilityDelegate() {
@@ -123,7 +123,7 @@ AccessibilityDelegate* ShellDelegateImpl::CreateAccessibilityDelegate() {
 }
 
 std::unique_ptr<PaletteDelegate> ShellDelegateImpl::CreatePaletteDelegate() {
-  return base::MakeUnique<PaletteDelegateImpl>();
+  return std::make_unique<PaletteDelegateImpl>();
 }
 
 GPUSupport* ShellDelegateImpl::CreateGPUSupport() {

@@ -206,7 +206,7 @@ int DragDropController::StartDragAndDrop(
       gfx::Rect(start_location - provider->GetDragImageOffset(),
                 provider->GetDragImage().size());
   drag_image_ =
-      base::MakeUnique<DragImageView>(source_window->GetRootWindow(), source);
+      std::make_unique<DragImageView>(source_window->GetRootWindow(), source);
   drag_image_->SetImage(provider->GetDragImage());
   drag_image_offset_ = provider->GetDragImageOffset();
   gfx::Rect drag_image_bounds(start_location, drag_image_->GetPreferredSize());
