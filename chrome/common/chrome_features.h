@@ -214,6 +214,10 @@ extern const base::Feature kStaggeredBackgroundTabOpeningExperiment;
 
 extern const base::Feature kSupervisedUserCreation;
 
+#if defined(OS_CHROMEOS)
+extern const base::Feature kSysInternals;
+#endif
+
 #if defined(SYZYASAN)
 extern const base::Feature kSyzyasanDeferredFree;
 #endif
