@@ -143,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "6d4afb28_83a6f1ff",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-31T19:15:07Z",
+      "side": 1,
+      "message": "Use max# of retries to be consistent with retry strategy in extension.\n\nUsing max delay causes infinite retry attempts. It seems that max_delay and entry_life_time below are for single retry, instead of whole retries. BackoffEntry::ShouldRejectRequest() (or CanDiscard()) always return false if current time \u003c next retry time.\n\nWill add a TODO here and look into this shortly.",
+      "parentUuid": "eb3c2d2d_1d201cf8",
+      "revId": "83e8b49a4df2166aa466a699679d210ee335d7d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a80aedd8_304f522d",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
         "patchSetId": 2
@@ -418,6 +436,24 @@
       "side": 1,
       "message": "Okay, maybe leave a TODO() to be done with the map cleanup?",
       "parentUuid": "34762603_ad8f149b",
+      "revId": "83e8b49a4df2166aa466a699679d210ee335d7d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7fa9d471_159f5fc4",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-31T19:15:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "831082f0_9941df25",
       "revId": "83e8b49a4df2166aa466a699679d210ee335d7d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
