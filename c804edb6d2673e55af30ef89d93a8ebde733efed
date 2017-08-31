@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9f51fe4_1fc96660",
+        "filename": "chromeos/components/tether/message_transfer_operation.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-31T21:48:23Z",
+      "side": 1,
+      "message": "This is a bit fragile, as you noted below. I would add a comment in UnregisterDevice, \u0027NOTE: This may be called from the destructor! Check |shutting_down_| before calling any virtual methods here. (Ideally I would require an explicit Shutdown() call before this gets destroyed and CHECK that remote_devices_ is empty, but I don\u0027t know how much more complicated that would be).",
+      "revId": "c804edb6d2673e55af30ef89d93a8ebde733efed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
