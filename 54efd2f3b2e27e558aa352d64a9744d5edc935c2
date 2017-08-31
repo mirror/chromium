@@ -16,6 +16,24 @@
       "revId": "54efd2f3b2e27e558aa352d64a9744d5edc935c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58762fbf_07debd79",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserImpl.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-31T21:58:07Z",
+      "side": 1,
+      "message": "Lol I actually don\u0027t know why the code works. This is what the original patch had, and all the tests seem to pass (._.)",
+      "parentUuid": "6f67e681_8e6b5c2a",
+      "revId": "54efd2f3b2e27e558aa352d64a9744d5edc935c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
