@@ -698,8 +698,7 @@ class CONTENT_EXPORT ContentBrowserClient {
   // Manager.
   virtual void RegisterInProcessServices(StaticServiceMap* services) {}
 
-  using OutOfProcessServiceMap =
-      std::map<std::string, std::pair<base::string16, SandboxType>>;
+  using OutOfProcessServiceMap = std::map<std::string, base::string16>;
 
   // Registers services to be loaded out of the browser process, in an
   // utility process. The value of each map entry should be a { process name,
