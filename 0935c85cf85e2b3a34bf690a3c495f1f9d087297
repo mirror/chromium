@@ -250,6 +250,24 @@
     },
     {
       "key": {
+        "uuid": "3ba2a36a_a2779012",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 946,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-31T03:51:42Z",
+      "side": 1,
+      "message": "Based on the knowledge we got at https://groups.google.com/a/chromium.org/forum/#!topic/chromium-mojo/NNsogKNurlA, we need to consider whether we adopt mojo::ReportBadMessage() or not.\nPros:\n  In mojo world bad_message::ReceivedBadMessage() should be considered as deprecated eventually.\n  No need to add new enum values into low level bad_message.h file.\n  We are able to adapt our unit test to check output of mojo::ReportBadMessage by using mojo::edk::SetDefaultProcessErrorCallback.\nCons:\n  Hard to filter crash reports for now, according from the discussion at http://crbug.com/756115.\n\nI\u0027d prefer to use mojo::ReportBadMessage right now. Another option is to apply it later after above Cons be addressed by Mojo team. WDYT? Thanks.",
+      "parentUuid": "89059e71_ada467fa",
+      "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72f9d186_5e946b45",
         "filename": "content/browser/service_worker/service_worker_provider_host.cc",
         "patchSetId": 4
