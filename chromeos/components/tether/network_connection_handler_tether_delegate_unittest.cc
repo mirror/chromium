@@ -6,14 +6,12 @@
 
 #include <memory>
 
-#include "chromeos/components/tether/tether_connector.h"
+#include "chromeos/components/tether/fake_active_host.h"
+#include "chromeos/components/tether/fake_tether_connector.h"
+#include "chromeos/components/tether/fake_tether_disconnector.h"
 #include "chromeos/components/tether/tether_disconnector.h"
 #include "chromeos/network/network_connection_handler.h"
-#include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
-
-using testing::_;
-using testing::NiceMock;
 
 namespace chromeos {
 
@@ -64,40 +62,6 @@ class TestNetworkConnectionHandler : public NetworkConnectionHandler {
                 managed_network_configuration_handler) override {}
 };
 
-class MockTetherConnector : public TetherConnector {
- public:
-  MockTetherConnector()
-      : TetherConnector(nullptr /* network_state_handler */,
-                        nullptr /* wifi_hotspot_connector */,
-                        nullptr /* active_host */,
-                        nullptr /* tether_host_fetcher */,
-                        nullptr /* connection_manager */,
-                        nullptr /* tether_host_response_recorder */,
-                        nullptr /* device_id_tether_network_guid_map */,
-                        nullptr /* host_scan_cache */,
-                        nullptr /* notification_presenter */,
-                        nullptr /* host_connection_metrics_logger */) {}
-  ~MockTetherConnector() override {}
-
-  MOCK_METHOD3(
-      ConnectToNetwork,
-      void(const std::string& tether_network_guid,
-           const base::Closure& success_callback,
-           const network_handler::StringResultCallback& error_callback));
-};
-
-class MockTetherDisconnector : public TetherDisconnector {
- public:
-  MockTetherDisconnector() : TetherDisconnector() {}
-  ~MockTetherDisconnector() override {}
-
-  MOCK_METHOD3(
-      DisconnectFromNetwork,
-      void(const std::string& tether_network_guid,
-           const base::Closure& success_callback,
-           const network_handler::StringResultCallback& error_callback));
-};
-
 }  // namespace
 
 class NetworkConnectionHandlerTetherDelegateTest : public testing::Test {
@@ -107,20 +71,21 @@ class NetworkConnectionHandlerTetherDelegateTest : public testing::Test {
   void SetUp() override {
     test_network_connection_handler_ =
         base::WrapUnique(new TestNetworkConnectionHandler());
-    mock_tether_connector_ =
-        base::WrapUnique(new NiceMock<MockTetherConnector>());
-    mock_tether_disconnector_ =
-        base::WrapUnique(new NiceMock<MockTetherDisconnector>());
+
+    fake_active_host_ = base::MakeUnique<FakeActiveHost>();
+    fake_tether_connector_ = base::MakeUnique<FakeTetherConnector>();
+    fake_tether_disconnector_ = base::MakeUnique<FakeTetherDisconnector>();
 
     delegate_ = base::MakeUnique<NetworkConnectionHandlerTetherDelegate>(
-        test_network_connection_handler_.get(), mock_tether_connector_.get(),
-        mock_tether_disconnector_.get());
+        test_network_connection_handler_.get(), fake_active_host_.get(),
+        fake_tether_connector_.get(), fake_tether_disconnector_.get());
   }
 
   std::unique_ptr<TestNetworkConnectionHandler>
       test_network_connection_handler_;
-  std::unique_ptr<NiceMock<MockTetherConnector>> mock_tether_connector_;
-  std::unique_ptr<NiceMock<MockTetherDisconnector>> mock_tether_disconnector_;
+  std::unique_ptr<FakeActiveHost> fake_active_host_;
+  std::unique_ptr<FakeTetherConnector> fake_tether_connector_;
+  std::unique_ptr<FakeTetherDisconnector> fake_tether_disconnector_;
 
   std::unique_ptr<NetworkConnectionHandlerTetherDelegate> delegate_;
 
@@ -128,18 +93,32 @@ class NetworkConnectionHandlerTetherDelegateTest : public testing::Test {
   DISALLOW_COPY_AND_ASSIGN(NetworkConnectionHandlerTetherDelegateTest);
 };
 
-TEST_F(NetworkConnectionHandlerTetherDelegateTest, TestConnect) {
-  EXPECT_CALL(*mock_tether_connector_, ConnectToNetwork(_, _, _));
-
+TEST_F(NetworkConnectionHandlerTetherDelegateTest,
+       TestConnect_NotAlreadyConnected) {
   test_network_connection_handler_->CallTetherConnect(
       "tetherNetworkGuid", base::Closure(), network_handler::ErrorCallback());
+  EXPECT_EQ("tetherNetworkGuid",
+            fake_tether_connector_->last_connected_tether_network_guid());
+}
+
+TEST_F(NetworkConnectionHandlerTetherDelegateTest,
+       TestConnect_AlreadyConnected) {
+  fake_active_host_->SetActiveHostConnected("activeHostId", "tetherNetworkGuid",
+                                            "wifiNetworkGuid");
+
+  test_network_connection_handler_->CallTetherConnect(
+      "newTetherGuid", base::Closure(), network_handler::ErrorCallback());
+  EXPECT_EQ("tetherNetworkGuid",
+            fake_tether_disconnector_->last_disconnected_tether_network_guid());
+  EXPECT_EQ("newTetherGuid",
+            fake_tether_connector_->last_connected_tether_network_guid());
 }
 
 TEST_F(NetworkConnectionHandlerTetherDelegateTest, TestDisconnect) {
-  EXPECT_CALL(*mock_tether_disconnector_, DisconnectFromNetwork(_, _, _));
-
   test_network_connection_handler_->CallTetherDisconnect(
       "tetherNetworkGuid", base::Closure(), network_handler::ErrorCallback());
+  EXPECT_EQ("tetherNetworkGuid",
+            fake_tether_disconnector_->last_disconnected_tether_network_guid());
 }
 
 }  // namespace tether
