@@ -22,6 +22,30 @@
       "revId": "957d722f8c8216f619539af66801cb23d4267063",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaa02977_141a20ab",
+        "filename": "chrome/android/third_party/widget_bottomsheet_base/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-08-31T20:08:09Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "aeaae1ef_b045db2a",
+      "range": {
+        "startLine": 23,
+        "startChar": 4,
+        "endLine": 23,
+        "endChar": 66
+      },
+      "revId": "957d722f8c8216f619539af66801cb23d4267063",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

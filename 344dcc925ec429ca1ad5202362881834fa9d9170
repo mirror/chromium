@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "80b1deae_c9b608f5",
+        "filename": "chrome/android/java/res/values/colors.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-08-31T20:08:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb49b8a6_9144fd2c",
+      "range": {
+        "startLine": 31,
+        "startChar": 4,
+        "endLine": 31,
+        "endChar": 50
+      },
+      "revId": "344dcc925ec429ca1ad5202362881834fa9d9170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5acf987d_475d3540",
         "filename": "chrome/android/java/res/values/dimens.xml",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "211aa118_1500cc24",
+        "filename": "chrome/android/java/res/values/dimens.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-08-31T20:08:09Z",
+      "side": 1,
+      "message": "Good point, removed.",
+      "parentUuid": "5acf987d_475d3540",
+      "range": {
+        "startLine": 481,
+        "startChar": 3,
+        "endLine": 482,
+        "endChar": 72
+      },
+      "revId": "344dcc925ec429ca1ad5202362881834fa9d9170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e667e320_5d0311a2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
         "patchSetId": 8
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-31T18:44:26Z",
       "side": 1,
       "message": "nit: inline this on #onGlobalLayout?\n\nIt\u0027d be nice if we didn\u0027t have to recalculate this every time there\u0027s a global layout. For M63, maybe we can look into setting the width at wrap_content and including a maxWidth w/ center_horizontal gravity. We\u0027d likely need to modify the XML structure a bit to get this right, but it should work.",
+      "range": {
+        "startLine": 250,
+        "startChar": 7,
+        "endLine": 250,
+        "endChar": 95
+      },
+      "revId": "344dcc925ec429ca1ad5202362881834fa9d9170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bd00259_e3309c8d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-08-31T20:08:09Z",
+      "side": 1,
+      "message": "So this would require having a local variable such as mMenuView \u003d getMenuView() so onGlobalLayout() can get to it. I can do it that way if that\u0027s preferable.",
+      "parentUuid": "e667e320_5d0311a2",
       "range": {
         "startLine": 250,
         "startChar": 7,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "f4fd279f_f79ff684",
+        "filename": "chrome/android/third_party/widget_bottomsheet_base/java/src/org/chromium/chrome/browser/widget/bottomsheet/base/BottomNavigationItemView.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-08-31T20:08:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5a69229_8f219bbc",
+      "range": {
+        "startLine": 132,
+        "startChar": 49,
+        "endLine": 132,
+        "endChar": 71
+      },
+      "revId": "344dcc925ec429ca1ad5202362881834fa9d9170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "605fa3fb_973eee5c",
         "filename": "chrome/android/third_party/widget_bottomsheet_base/java/src/org/chromium/chrome/browser/widget/bottomsheet/base/BottomNavigationItemView.java",
         "patchSetId": 8
@@ -108,6 +204,24 @@
       "revId": "344dcc925ec429ca1ad5202362881834fa9d9170",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4910df9_a19e49aa",
+        "filename": "chrome/android/third_party/widget_bottomsheet_base/java/src/org/chromium/chrome/browser/widget/bottomsheet/base/BottomNavigationItemView.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-08-31T20:08:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "605fa3fb_973eee5c",
+      "revId": "344dcc925ec429ca1ad5202362881834fa9d9170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "15d3ebb5_6508417d",
+        "filename": "chrome/android/third_party/widget_bottomsheet_base/java/src/org/chromium/chrome/browser/widget/bottomsheet/base/BottomNavigationMenuView.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-08-31T20:08:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60d869c9_2b8f0b10",
+      "range": {
+        "startLine": 243,
+        "startChar": 16,
+        "endLine": 243,
+        "endChar": 37
+      },
+      "revId": "344dcc925ec429ca1ad5202362881834fa9d9170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "551da907_b537af3f",
         "filename": "chrome/android/third_party/widget_bottomsheet_base/java/src/org/chromium/chrome/browser/widget/bottomsheet/base/BottomNavigationMenuView.java",
         "patchSetId": 8
@@ -154,6 +292,30 @@
       "revId": "344dcc925ec429ca1ad5202362881834fa9d9170",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d0499d8_6fc5545e",
+        "filename": "chrome/android/third_party/widget_bottomsheet_base/java/src/org/chromium/chrome/browser/widget/bottomsheet/base/BottomNavigationMenuView.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-08-31T20:08:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "551da907_b537af3f",
+      "range": {
+        "startLine": 245,
+        "startChar": 12,
+        "endLine": 245,
+        "endChar": 18
+      },
+      "revId": "344dcc925ec429ca1ad5202362881834fa9d9170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "1a770712_922329c2",
+        "filename": "chrome/android/third_party/widget_bottomsheet_base/java/src/org/chromium/chrome/browser/widget/bottomsheet/base/BottomNavigationPresenter.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-08-31T20:08:09Z",
+      "side": 1,
+      "message": "RestrictTo was accidentally removed.",
+      "parentUuid": "f01a00f3_72e7a943",
+      "range": {
+        "startLine": 19,
+        "startChar": 58,
+        "endLine": 19,
+        "endChar": 66
+      },
+      "revId": "344dcc925ec429ca1ad5202362881834fa9d9170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a314d50_d434e09e",
         "filename": "chrome/android/third_party/widget_bottomsheet_base/java/src/org/chromium/chrome/browser/widget/bottomsheet/base/BottomNavigationPresenter.java",
         "patchSetId": 8
@@ -203,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "6a87b86f_17c3ccfb",
+        "filename": "chrome/android/third_party/widget_bottomsheet_base/java/src/org/chromium/chrome/browser/widget/bottomsheet/base/BottomNavigationPresenter.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-08-31T20:08:09Z",
+      "side": 1,
+      "message": "Definitely typo, I managed to mess this file up before uploading, which is why the RestrictTo stuff is gone.",
+      "parentUuid": "5a314d50_d434e09e",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 2
+      },
+      "revId": "344dcc925ec429ca1ad5202362881834fa9d9170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90c86f6c_1e25ba41",
         "filename": "chrome/android/third_party/widget_bottomsheet_base/java/src/org/chromium/chrome/browser/widget/bottomsheet/base/BottomNavigationView.java",
         "patchSetId": 8
@@ -223,6 +433,30 @@
       "revId": "344dcc925ec429ca1ad5202362881834fa9d9170",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86607cec_4e18bd46",
+        "filename": "chrome/android/third_party/widget_bottomsheet_base/java/src/org/chromium/chrome/browser/widget/bottomsheet/base/BottomNavigationView.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-08-31T20:08:09Z",
+      "side": 1,
+      "message": "Yes we should, good point. Done.",
+      "parentUuid": "90c86f6c_1e25ba41",
+      "range": {
+        "startLine": 195,
+        "startChar": 11,
+        "endLine": 195,
+        "endChar": 49
+      },
+      "revId": "344dcc925ec429ca1ad5202362881834fa9d9170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
