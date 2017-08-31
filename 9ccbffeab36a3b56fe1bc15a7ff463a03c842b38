@@ -16,6 +16,40 @@
       "revId": "9ccbffeab36a3b56fe1bc15a7ff463a03c842b38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24de391d_1c98fe30",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1114,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-31T03:35:01Z",
+      "side": 1,
+      "message": "Feels a bit better to put this at the beginning of the function, as TRACE is supposed to time the function.",
+      "revId": "9ccbffeab36a3b56fe1bc15a7ff463a03c842b38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea27da0b_4cf35653",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1577,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-31T03:35:01Z",
+      "side": 1,
+      "message": "This place seems a little random. Move this to the very beginning of the function?",
+      "revId": "9ccbffeab36a3b56fe1bc15a7ff463a03c842b38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
