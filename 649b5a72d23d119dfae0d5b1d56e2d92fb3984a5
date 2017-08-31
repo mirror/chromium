@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5a76cbd_292f9413",
+        "filename": "chrome/browser/resources/pdf/pdf.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-31T22:16:07Z",
+      "side": 1,
+      "message": "Should this be ?boolean if it\u0027s optional?",
+      "revId": "649b5a72d23d119dfae0d5b1d56e2d92fb3984a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3733c291_e9fb7f4b",
+        "filename": "chrome/browser/resources/pdf/viewport.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-31T22:16:07Z",
+      "side": 1,
+      "message": "What do you think of passing true/false into mightZoom_() instead?",
+      "revId": "649b5a72d23d119dfae0d5b1d56e2d92fb3984a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64767f8d_b0fca583",
+        "filename": "chrome/browser/resources/pdf/viewport.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-31T22:16:07Z",
+      "side": 1,
+      "message": "@private?",
+      "revId": "649b5a72d23d119dfae0d5b1d56e2d92fb3984a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbf48366_439dc728",
+        "filename": "chrome/browser/resources/pdf/viewport.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-31T22:16:07Z",
+      "side": 1,
+      "message": "Should this default to true like fitToWidth?",
+      "revId": "649b5a72d23d119dfae0d5b1d56e2d92fb3984a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06456814_172f627f",
+        "filename": "pdf/out_of_process_instance.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-31T22:16:07Z",
+      "side": 1,
+      "message": "Maybe use the same comment as line 180?",
+      "revId": "649b5a72d23d119dfae0d5b1d56e2d92fb3984a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "750e1069_d3ab9fdf",
+        "filename": "pdf/out_of_process_instance.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-31T22:16:07Z",
+      "side": 1,
+      "message": "Maybe DCHECK it is_bool() ?",
+      "revId": "649b5a72d23d119dfae0d5b1d56e2d92fb3984a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cc91604_ee8ce80c",
+        "filename": "pdf/out_of_process_instance.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1832,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-31T22:16:07Z",
+      "side": 1,
+      "message": "Move this below HistogramEnumeration() to keep it in order with the header definitions.",
+      "revId": "649b5a72d23d119dfae0d5b1d56e2d92fb3984a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a620b752_6583234c",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 31161,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-31T22:16:07Z",
+      "side": 1,
+      "message": "Maybe just 1 value for rotate? Do we really care if users rotate more clockwise?",
+      "revId": "649b5a72d23d119dfae0d5b1d56e2d92fb3984a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
