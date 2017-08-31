@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "00b037e8_4663c95b",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-08-31T14:40:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a2b8893_d8c85ad0",
+      "range": {
+        "startLine": 469,
+        "startChar": 17,
+        "endLine": 469,
+        "endChar": 39
+      },
+      "revId": "f23da9780205eddc37a1650cb66c83f69a232b8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82cc96c8_8cb1d8d0",
         "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "f23da9780205eddc37a1650cb66c83f69a232b8f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df324118_76ff30ef",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-08-31T14:40:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82cc96c8_8cb1d8d0",
+      "revId": "f23da9780205eddc37a1650cb66c83f69a232b8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
