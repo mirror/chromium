@@ -8,7 +8,9 @@
 
 #include "ash/public/cpp/shelf_model.h"
 #include "ash/shell.h"
+#include "base/metrics/histogram_macros.h"
 #include "ui/app_list/app_list_constants.h"
+#include "ui/app_list/presenter/app_list.h"
 
 namespace ash {
 
@@ -21,7 +23,15 @@ void AppListShelfItemDelegate::ItemSelected(std::unique_ptr<ui::Event> event,
                                             int64_t display_id,
                                             ShelfLaunchSource source,
                                             ItemSelectedCallback callback) {
-  Shell::Get()->ToggleAppList(app_list::kShelfButton);
+  if (Shell::Get()->app_list()->IsVisible()) {
+    UMA_HISTOGRAM_ENUMERATION(app_list::kAppListToggleMethodHistogram,
+                              app_list::kShelfButton,
+                              app_list::kMaxAppListToggleMethod);
+  }
+  Shell::Get()->app_list()->ToggleAppList(
+      display::Screen::GetScreen()
+          ->GetDisplayNearestWindow(Shell::GetRootWindowForNewWindows())
+          .id());
   std::move(callback).Run(SHELF_ACTION_APP_LIST_SHOWN, base::nullopt);
 }
 
