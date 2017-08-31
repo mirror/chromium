@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ad900d87_6e7ec280",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_network_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-08-31T01:02:00Z",
+      "side": 1,
+      "message": "Hmm - I\u0027m not sure the behavior here is complicated enough to justify adding a whole new method to HttpUtil. Plus, this behavior is just a stop-gap until I finally get back to https://codereview.chromium.org/2928223002/, so I\u0027ll hold off on adding a shared method to HttpUtil for now.",
+      "parentUuid": "4fe2bd4e_2e20a404",
+      "range": {
+        "startLine": 275,
+        "startChar": 50,
+        "endLine": 275,
+        "endChar": 70
+      },
+      "revId": "557c1d7bc97429a80a773e294fbeec22cbc935f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e74e8be_8409ef96",
         "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_network_delegate.cc",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "557c1d7bc97429a80a773e294fbeec22cbc935f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50791bd2_93da2926",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_network_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-08-31T01:02:00Z",
+      "side": 1,
+      "message": "Renamed to will_show_client_lofi_placeholder.",
+      "parentUuid": "3e74e8be_8409ef96",
+      "revId": "557c1d7bc97429a80a773e294fbeec22cbc935f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
