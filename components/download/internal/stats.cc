@@ -226,6 +226,25 @@ void LogDownloadCompletion(CompletionType type,
   base::UmaHistogramCustomCounts(name, file_size_kb, 1, kMaxFileSizeKB, 50);
 }
 
+void LogNavigationEffect(bool should_block_on_navigation,
+                         bool is_paused,
+                         bool new_entry) {
+  base::UmaHistogramBoolean("Download.Service.Navigation.ShouldBlock",
+                            should_block_on_navigation);
+
+  NavigationEffect action = NavigationEffect::NONE;
+  if (new_entry) {
+    if (should_block_on_navigation)
+      action = NavigationEffect::DEFER;
+  } else if (!is_paused && should_block_on_navigation) {
+    action = NavigationEffect::PAUSE;
+  } else if (is_paused && !should_block_on_navigation) {
+    action = NavigationEffect::RESUME;
+  }
+  base::UmaHistogramEnumeration("Download.Service.Navigation.Effect", action,
+                                NavigationEffect::COUNT);
+}
+
 void LogModelOperationResult(ModelAction action, bool success) {
   if (success) {
     UMA_HISTOGRAM_ENUMERATION("Download.Service.Db.Operation.Success", action,

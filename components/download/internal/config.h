@@ -45,6 +45,11 @@ constexpr char kWindowEndTimeSecondsConfig[] = "window_end_time_seconds";
 // milliseconds.
 constexpr char kNetworkChangeDelayMsConfig[] = "network_change_delay_ms";
 
+// Configuration name for the download resumption delay after a navigation
+// completes, measured in seconds.
+constexpr char kNavigationCompletionDelaySecondsConfig[] =
+    "navigation_completion_delay_seconds";
+
 // Configuration name for the retry delay when the download is failed, measured
 // in milliseconds.
 constexpr char kDownloadRetryDelayMsConfig[] = "retry_delay_ms";
@@ -96,6 +101,9 @@ struct Configuration {
 
   // The delay to notify network status changes.
   base::TimeDelta network_change_delay;
+
+  // The delay to notify about the navigation completion.
+  base::TimeDelta navigation_completion_delay;
 
   // The delay to retry a download when the download is failed.
   base::TimeDelta download_retry_delay;

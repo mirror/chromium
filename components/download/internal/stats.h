@@ -123,6 +123,25 @@ enum class FileCleanupReason {
   COUNT = 4,
 };
 
+// Enum used by UMA metrics to track various effects of external navigation on
+// individual downloads.
+enum class NavigationEffect {
+  // The download state was not affected by the navigation.
+  NONE = 0,
+
+  // Download couldn't be started due to active navigation.
+  DEFER = 1,
+
+  // An in-progress download was paused due to navigation.
+  PAUSE = 2,
+
+  // A paused download was resumed after navigation completion.
+  RESUME = 3,
+
+  // The count of entries for the enum.
+  COUNT = 4,
+};
+
 // Logs the results of starting up the Controller.  Will log each failure reason
 // if |status| contains more than one initialization failure.
 void LogControllerStartupStatus(bool in_recovery, const StartupStatus& status);
@@ -149,6 +168,11 @@ void LogRecoveryOperation(Entry::State to_state);
 void LogDownloadCompletion(CompletionType type,
                            const base::TimeDelta& time_span,
                            uint64_t file_size_bytes);
+
+// Logs the effect of navigation on active download.
+void LogNavigationEffect(bool should_block_on_navigation,
+                         bool is_paused,
+                         bool new_entry);
 
 // Logs statistics about the result of a model operation.  Used to track failure
 // cases.

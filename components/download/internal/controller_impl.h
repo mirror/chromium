@@ -17,6 +17,7 @@
 #include "components/download/internal/download_driver.h"
 #include "components/download/internal/entry.h"
 #include "components/download/internal/model.h"
+#include "components/download/internal/navigation_monitor_impl.h"
 #include "components/download/internal/scheduler/device_status_listener.h"
 #include "components/download/internal/startup_status.h"
 #include "components/download/internal/stats.h"
@@ -42,7 +43,8 @@ struct SchedulingParams;
 class ControllerImpl : public Controller,
                        public DownloadDriver::Client,
                        public Model::Client,
-                       public DeviceStatusListener::Observer {
+                       public DeviceStatusListener::Observer,
+                       public NavigationMonitor::Observer {
  public:
   // |config| is externally owned and must be guaranteed to outlive this class.
   ControllerImpl(Configuration* config,
@@ -50,7 +52,7 @@ class ControllerImpl : public Controller,
                  std::unique_ptr<DownloadDriver> driver,
                  std::unique_ptr<Model> model,
                  std::unique_ptr<DeviceStatusListener> device_status_listener,
-                 NavigationMonitor* navigation_monitor,
+                 NavigationMonitorImpl* navigation_monitor,
                  std::unique_ptr<Scheduler> scheduler,
                  std::unique_ptr<TaskScheduler> task_scheduler,
                  std::unique_ptr<FileMonitor> file_monitor,
@@ -102,6 +104,9 @@ class ControllerImpl : public Controller,
 
   // DeviceStatusListener::Observer implementation.
   void OnDeviceStatusChanged(const DeviceStatus& device_status) override;
+
+  // NavigationMonitor::Observer implementation.
+  void OnNavigationEvent(NavigationEvent event) override;
 
   // Checks if initialization is complete and successful.  If so, completes the
   // internal state initialization.
@@ -171,6 +176,10 @@ class ControllerImpl : public Controller,
   // reached maximum.
   void ActivateMoreDownloads();
 
+  // Whether the download should be paused in case of an active navigation is in
+  // progress.
+  bool ShouldBlockDownloadOnNavigation(Entry* entry);
+
   void RemoveCleanupEligibleDownloads();
 
   void HandleExternalDownload(const std::string& guid, bool active);
@@ -212,6 +221,7 @@ class ControllerImpl : public Controller,
   std::unique_ptr<DownloadDriver> driver_;
   std::unique_ptr<Model> model_;
   std::unique_ptr<DeviceStatusListener> device_status_listener_;
+  NavigationMonitorImpl* navigation_monitor_;
   std::unique_ptr<Scheduler> scheduler_;
   std::unique_ptr<TaskScheduler> task_scheduler_;
   std::unique_ptr<FileMonitor> file_monitor_;
