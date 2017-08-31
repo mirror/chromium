@@ -1127,8 +1127,10 @@ void ResourceProvider::ScopedWriteLockGL::LazyAllocate(
     return;
   allocated_ = true;
   if (type_ == RESOURCE_TYPE_GPU_MEMORY_BUFFER) {
+    //DLOG(INFO) << "AllocateGpuMemoryBuffer";
     AllocateGpuMemoryBuffer(gl, texture_id);
   } else {
+    //DLOG(INFO) << "AllocateTexture";
     AllocateTexture(gl, texture_id);
   }
 }

@@ -150,7 +150,7 @@ Compositor::Compositor(const viz::FrameSinkId& frame_sink_id,
       command_line->HasSwitch(cc::switches::kEnableGpuBenchmarking));
   settings.enable_surface_synchronization = enable_surface_synchronization;
 
-  settings.use_zero_copy = IsUIZeroCopyEnabled();
+  settings.use_zero_copy = /*true ; //*/IsUIZeroCopyEnabled();
 
   settings.use_layer_lists =
       command_line->HasSwitch(cc::switches::kUIEnableLayerLists);
@@ -165,6 +165,11 @@ Compositor::Compositor(const viz::FrameSinkId& frame_sink_id,
   if (command_line->HasSwitch(switches::kUIEnableRGBA4444Textures))
     settings.preferred_tile_format = viz::RGBA_4444;
   settings.resource_settings = context_factory_->GetResourceSettings();
+
+#if defined(OS_MACOSX)
+  // Use gpu memory buffer resources. They're better.
+  settings.resource_settings.use_gpu_memory_buffer_resources = settings.use_zero_copy;
+#endif
 
   settings.gpu_memory_policy.bytes_limit_when_visible = 512 * 1024 * 1024;
   settings.gpu_memory_policy.priority_cutoff_when_visible =

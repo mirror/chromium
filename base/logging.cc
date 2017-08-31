@@ -781,7 +781,7 @@ LogMessage::~LogMessage() {
       }
 #endif
       // Crash the process to generate a dump.
-      base::debug::BreakDebugger();
+      //base::debug::BreakDebugger();
     }
   }
 }
