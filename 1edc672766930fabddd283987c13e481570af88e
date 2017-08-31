@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0db533a6_a281688c",
+        "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-08-31T08:19:00Z",
+      "side": 1,
+      "message": "Good point. This is just always slightly weird for me because having a set callback that does different things depending on state set elsewhere gives me some anxiety (having to think \u0027ok, where could this have changed\u0027).",
+      "parentUuid": "32c29758_6d3a2bb8",
+      "revId": "1edc672766930fabddd283987c13e481570af88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "82c18dbf_40121adc",
         "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f271e316_cdb171da",
+        "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-08-31T08:19:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82c18dbf_40121adc",
+      "revId": "1edc672766930fabddd283987c13e481570af88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89e85468_59bfbdee",
         "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "1edc672766930fabddd283987c13e481570af88e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae8156ea_d2ef6706",
+        "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-08-31T08:19:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89e85468_59bfbdee",
+      "revId": "1edc672766930fabddd283987c13e481570af88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -73,6 +127,30 @@
       "revId": "1edc672766930fabddd283987c13e481570af88e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c10defbf_98e75a1e",
+        "filename": "chrome/browser/resources/md_bookmarks/timer_proxy.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-08-31T08:19:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0eecef5e_fd1c7819",
+      "range": {
+        "startLine": 58,
+        "startChar": 4,
+        "endLine": 58,
+        "endChar": 16
+      },
+      "revId": "1edc672766930fabddd283987c13e481570af88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
