@@ -7,6 +7,7 @@
 #include "core/dom/Document.h"
 #include "core/dom/Range.h"
 #include "core/dom/Text.h"
+#include "core/editing/SelectionSample.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/html/HTMLElement.h"
 #include "core/testing/DummyPageHolder.h"
@@ -27,6 +28,35 @@ LocalFrame& EditingTestBase::GetFrame() const {
 
 FrameSelection& EditingTestBase::Selection() const {
   return GetFrame().Selection();
+}
+
+Position EditingTestBase::AsPosition(const std::string& sample_text) {
+  const SelectionInDOMTree selection = AsSelection(sample_text);
+  DCHECK(selection.IsCaret());
+  return selection.Base();
+}
+
+SelectionInDOMTree EditingTestBase::AsSelection(
+    const std::string& sample_text) {
+  SetBodyContent(sample_text);
+  const SelectionInDOMTree selection =
+      SelectionSample::Parse(GetDocument().body());
+  // We update layout here as preparation of creating visible position and
+  // selection since |SelectionSample::Parse()| modifies DOM tree for removing
+  // selection markers.
+  UpdateAllLifecyclePhases();
+  return selection;
+}
+
+std::string EditingTestBase::ToSelectionText(
+    const ContainerNode& root,
+    const SelectionInDOMTree& selection) const {
+  return SelectionSample::SerializeToString(root, selection);
+}
+
+std::string EditingTestBase::ToSelectionText(
+    const SelectionInDOMTree& selection) const {
+  return ToSelectionText(*GetDocument().body(), selection);
 }
 
 void EditingTestBase::SetUp() {

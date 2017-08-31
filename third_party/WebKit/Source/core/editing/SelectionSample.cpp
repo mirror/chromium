@@ -1,0 +1,305 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#include "core/editing/SelectionSample.h"
+
+#include <algorithm>
+#include <vector>
+
+#include "core/dom/Attribute.h"
+#include "core/dom/CharacterData.h"
+#include "core/dom/Element.h"
+#include "platform/wtf/text/StringBuilder.h"
+
+namespace blink {
+
+namespace {
+
+// Parse selection text notation into Selection object.
+template <typename Strategy>
+class Parser final {
+  STACK_ALLOCATED();
+
+ public:
+  Parser() = default;
+  ~Parser() = default;
+
+  SelectionTemplate<Strategy> Parse(Node* node) {
+    Traverse(node);
+    if (anchor_node_ && focus_node_) {
+      return typename SelectionTemplate<Strategy>::Builder()
+          .Collapse(PositionTemplate<Strategy>(anchor_node_, anchor_offset_))
+          .Extend(PositionTemplate<Strategy>(focus_node_, focus_offset_))
+          .Build();
+    }
+    DCHECK(focus_node_) << "Need just '|', or '^' and '|'";
+    return typename SelectionTemplate<Strategy>::Builder()
+        .Collapse(PositionTemplate<Strategy>(focus_node_, focus_offset_))
+        .Build();
+  }
+
+ private:
+  // Removes selection markers from |node| and records selection markers as
+  // |Node| and |offset|. The |node| is removed from container when |node|
+  // contains only selection markers.
+  void HandleCharacterData(CharacterData* node) {
+    int anchor_offset = -1;
+    int focus_offset = -1;
+    StringBuilder builder;
+    for (unsigned i = 0; i < node->length(); ++i) {
+      const UChar char_code = node->data()[i];
+      if (char_code == '^') {
+        DCHECK_EQ(anchor_offset, -1) << node->data();
+        anchor_offset = static_cast<int>(builder.length());
+        continue;
+      }
+      if (char_code == '|') {
+        DCHECK_EQ(focus_offset, -1) << node->data();
+        focus_offset = static_cast<int>(builder.length());
+        continue;
+      }
+      builder.Append(char_code);
+    }
+    if (anchor_offset == -1 && focus_offset == -1)
+      return;
+    node->setData(builder.ToString());
+    if (node->length() == 0) {
+      // Remove |node| if it contains only selection markers.
+      ContainerNode* const parent_node = node->parentNode();
+      DCHECK(parent_node) << node;
+      const int offset_in_parent = node->NodeIndex();
+      if (anchor_offset >= 0)
+        RecordSelectionAnchor(parent_node, offset_in_parent);
+      if (focus_offset >= 0)
+        RecordSelectionFocus(parent_node, offset_in_parent);
+      parent_node->removeChild(node);
+      return;
+    }
+    if (anchor_offset >= 0)
+      RecordSelectionAnchor(node, anchor_offset);
+    if (focus_offset >= 0)
+      RecordSelectionFocus(node, focus_offset);
+  }
+
+  void HandleElementNode(Element* element) {
+    Node* runner = element->firstChild();
+    while (runner) {
+      Node* const next_sibling = runner->nextSibling();
+      Traverse(runner);
+      runner = next_sibling;
+    }
+  }
+
+  void RecordSelectionAnchor(Node* node, int offset) {
+    DCHECK(!anchor_node_) << "Found more than one '^' in " << *anchor_node_
+                          << " and " << *node;
+    anchor_node_ = node;
+    anchor_offset_ = offset;
+  }
+
+  void RecordSelectionFocus(Node* node, int offset) {
+    DCHECK(!focus_node_) << "Found more than one '|' in " << *focus_node_
+                         << " and " << *node;
+    focus_node_ = node;
+    focus_offset_ = offset;
+  }
+
+  void Traverse(Node* node) {
+    if (node->IsElementNode()) {
+      HandleElementNode(ToElement(node));
+      return;
+    }
+    if (node->IsCharacterDataNode()) {
+      HandleCharacterData(ToCharacterData(node));
+      return;
+    }
+    NOTREACHED() << node;
+  }
+
+  Node* anchor_node_ = nullptr;
+  Node* focus_node_ = nullptr;
+  int anchor_offset_ = 0;
+  int focus_offset_ = 0;
+};
+
+// Serialize DOM/Flat tree to selection text.
+template <typename Strategy>
+class Serializer final {
+  STACK_ALLOCATED();
+
+ public:
+  explicit Serializer(const SelectionTemplate<Strategy>& selection)
+      : selection_(selection) {}
+
+  std::string Serialize(const ContainerNode& root) {
+    SerializeChildren(root);
+    return builder_.ToString().Utf8().data();
+  }
+
+ private:
+  void HandleCharacterData(const CharacterData& node) {
+    const String text = node.data();
+    if (selection_.IsNone()) {
+      builder_.Append(text);
+      return;
+    }
+    const Node& base_node = *selection_.Base().ComputeContainerNode();
+    const Node& extent_node = *selection_.Extent().ComputeContainerNode();
+    const int base_offset = selection_.Base().ComputeOffsetInContainerNode();
+    const int extent_offset =
+        selection_.Extent().ComputeOffsetInContainerNode();
+    if (base_node == node && extent_node == node) {
+      if (base_offset == extent_offset) {
+        builder_.Append(text.Left(base_offset));
+        builder_.Append('|');
+        builder_.Append(text.Substring(base_offset));
+        return;
+      }
+      if (base_offset < extent_offset) {
+        builder_.Append(text.Left(base_offset));
+        builder_.Append('^');
+        builder_.Append(
+            text.Substring(base_offset, extent_offset - base_offset));
+        builder_.Append('|');
+        builder_.Append(text.Substring(extent_offset));
+        return;
+      }
+      builder_.Append(text.Left(extent_offset));
+      builder_.Append('|');
+      builder_.Append(
+          text.Substring(extent_offset, base_offset - extent_offset));
+      builder_.Append('^');
+      builder_.Append(text.Substring(base_offset));
+      return;
+    }
+    if (base_node == node) {
+      builder_.Append(text.Left(base_offset));
+      builder_.Append('^');
+      builder_.Append(text.Substring(base_offset));
+      return;
+    }
+    if (extent_node == node) {
+      builder_.Append(text.Left(extent_offset));
+      builder_.Append('|');
+      builder_.Append(text.Substring(extent_offset));
+      return;
+    }
+    builder_.Append(text);
+  }
+
+  void HandleAttribute(const Attribute& attribute) {
+    builder_.Append(attribute.LocalName());
+    if (attribute.Value().IsEmpty())
+      return;
+    builder_.Append("=\"");
+    for (size_t i = 0; i < attribute.Value().length(); ++i) {
+      const UChar char_code = attribute.Value()[i];
+      if (char_code == '"') {
+        builder_.Append("&quot;");
+        continue;
+      }
+      if (char_code == '&') {
+        builder_.Append("&amp;");
+        continue;
+      }
+      builder_.Append(char_code);
+    }
+    builder_.Append('"');
+  }
+
+  void HandleAttributes(const Element& element) {
+    Vector<const Attribute*> attributes;
+    for (const Attribute& attribute : element.Attributes())
+      attributes.push_back(&attribute);
+    std::sort(attributes.begin(), attributes.end(),
+              [](const Attribute* attribute1, const Attribute* attribute2) {
+                return CodePointCompare(attribute1->LocalName(),
+                                        attribute2->LocalName()) < 0;
+              });
+    for (const Attribute* attribute : attributes) {
+      builder_.Append(' ');
+      HandleAttribute(*attribute);
+    }
+  }
+
+  void HandleElementNode(const Element& element) {
+    const String tag_name = element.tagName().LowerASCII();
+    builder_.Append('<');
+    builder_.Append(tag_name);
+    HandleAttributes(element);
+    builder_.Append('>');
+    if (IsVoidElement(element))
+      return;
+    SerializeChildren(element);
+    builder_.Append("</");
+    builder_.Append(tag_name);
+    builder_.Append('>');
+  }
+
+  void HandleNode(const Node& node) {
+    if (node.IsElementNode()) {
+      HandleElementNode(ToElement(node));
+      return;
+    }
+    if (node.IsCharacterDataNode()) {
+      HandleCharacterData(ToCharacterData(node));
+      return;
+    }
+    NOTREACHED() << node;
+  }
+
+  void HandleSelection(const ContainerNode& node, int offset) {
+    if (selection_.IsNone())
+      return;
+    const PositionTemplate<Strategy> position(node, offset);
+    if (selection_.Extent().ToOffsetInAnchor() == position) {
+      builder_.Append('|');
+      return;
+    }
+    if (selection_.Base().ToOffsetInAnchor() != position)
+      return;
+    builder_.Append('^');
+  }
+
+  static bool IsVoidElement(const Element& element) {
+    if (Strategy::FirstChild(element))
+      return false;
+    const QualifiedName& tag_name = element.TagQName();
+    return tag_name == HTMLNames::areaTag || tag_name == HTMLNames::baseTag ||
+           tag_name == HTMLNames::brTag || tag_name == HTMLNames::commandTag ||
+           tag_name == HTMLNames::embedTag || tag_name == HTMLNames::hrTag ||
+           tag_name == HTMLNames::imgTag || tag_name == HTMLNames::inputTag ||
+           tag_name == HTMLNames::linkTag || tag_name == HTMLNames::metaTag ||
+           tag_name == HTMLNames::paramTag ||
+           tag_name == HTMLNames::sourceTag ||
+           tag_name == HTMLNames::trackTag || tag_name == HTMLNames::wbrTag;
+  }
+
+  void SerializeChildren(const ContainerNode& container) {
+    int offset_in_container = 0;
+    for (const Node& child : Strategy::ChildrenOf(container)) {
+      HandleSelection(container, offset_in_container);
+      HandleNode(child);
+      ++offset_in_container;
+    }
+    HandleSelection(container, offset_in_container);
+  }
+
+  StringBuilder builder_;
+  SelectionTemplate<Strategy> selection_;
+};
+
+}  // namespace
+
+SelectionInDOMTree SelectionSample::Parse(Node* root) {
+  return Parser<EditingStrategy>().Parse(root);
+}
+
+std::string SelectionSample::SerializeToString(
+    const ContainerNode& root,
+    const SelectionInDOMTree& selection) {
+  return Serializer<EditingStrategy>(selection).Serialize(root);
+}
+
+}  // namespace blink
