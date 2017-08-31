@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f67e681_8e6b5c2a",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserImpl.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-08-31T06:56:45Z",
+      "side": 1,
+      "message": "Do you intend to land it with this confusion or is this just for my better understanding?",
+      "revId": "54efd2f3b2e27e558aa352d64a9744d5edc935c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
