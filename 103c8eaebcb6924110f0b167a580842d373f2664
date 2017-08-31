@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f98a8029_88f1b96e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/background-fetch/mixed-content-and-allowed-schemes.https.window-expected.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-31T17:21:08Z",
+      "side": 1,
+      "message": "Because web platform tests run on custom domain names like web-platform.test, so the RFC1918 check sees this as a request from non-localhost to localhost (even though web-platform.test resolves to 127.0.0.1 - Blink isn\u0027t yet smart enough to detect that).",
+      "parentUuid": "078e507b_ba9ad362",
+      "revId": "103c8eaebcb6924110f0b167a580842d373f2664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2003f491_f7553f04",
         "filename": "third_party/WebKit/LayoutTests/http/tests/background_fetch/block-cors-preflights.https.html",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "103c8eaebcb6924110f0b167a580842d373f2664",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "682c6c87_aabc2c8c",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/background_fetch/block-cors-preflights.https.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-31T17:21:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2003f491_f7553f04",
+      "revId": "103c8eaebcb6924110f0b167a580842d373f2664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a2b52869_3a719043",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/background_fetch/block-cors-preflights.https.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-31T17:21:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c53855ef_b70ea2a5",
+      "revId": "103c8eaebcb6924110f0b167a580842d373f2664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d23130d8_1d402205",
         "filename": "third_party/WebKit/Source/modules/background_fetch/BackgroundFetchManager.cpp",
         "patchSetId": 9
@@ -67,6 +121,24 @@
       "revId": "103c8eaebcb6924110f0b167a580842d373f2664",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69ac0032_26f4470b",
+        "filename": "third_party/WebKit/Source/modules/background_fetch/BackgroundFetchManager.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-31T17:21:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d23130d8_1d402205",
+      "revId": "103c8eaebcb6924110f0b167a580842d373f2664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
