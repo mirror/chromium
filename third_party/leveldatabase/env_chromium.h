@@ -307,6 +307,10 @@ leveldb::Status OpenDB(const leveldb_env::Options& options,
                        const std::string& name,
                        std::unique_ptr<leveldb::DB>* dbptr);
 
+// Creates an in-memory Env for which all files are stored in the heap.
+// This wraps leveldb::NewMemEnv to add memory-infra logging.
+leveldb::Env* NewMemEnv(leveldb::Env* base_env, const std::string& name);
+
 }  // namespace leveldb_env
 
 #endif  // THIRD_PARTY_LEVELDATABASE_ENV_CHROMIUM_H_

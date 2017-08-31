@@ -13,9 +13,7 @@
 #include "base/synchronization/lock.h"
 #include "components/sync/protocol/model_type_store_schema_descriptor.pb.h"
 #include "third_party/leveldatabase/env_chromium.h"
-#include "third_party/leveldatabase/src/helpers/memenv/memenv.h"
 #include "third_party/leveldatabase/src/include/leveldb/db.h"
-#include "third_party/leveldatabase/src/include/leveldb/env.h"
 #include "third_party/leveldatabase/src/include/leveldb/iterator.h"
 #include "third_party/leveldatabase/src/include/leveldb/options.h"
 #include "third_party/leveldatabase/src/include/leveldb/slice.h"
@@ -107,7 +105,8 @@ ModelTypeStoreBackend::~ModelTypeStoreBackend() {
 }
 
 std::unique_ptr<leveldb::Env> ModelTypeStoreBackend::CreateInMemoryEnv() {
-  return base::WrapUnique(leveldb::NewMemEnv(leveldb::Env::Default()));
+  return base::WrapUnique(
+      leveldb_env::NewMemEnv(leveldb::Env::Default(), "ModelTypeStore"));
 }
 
 // static

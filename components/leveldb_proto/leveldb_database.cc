@@ -13,10 +13,8 @@
 #include "base/strings/string_split.h"
 #include "base/threading/thread_checker.h"
 #include "third_party/leveldatabase/env_chromium.h"
-#include "third_party/leveldatabase/src/helpers/memenv/memenv.h"
 #include "third_party/leveldatabase/src/include/leveldb/cache.h"
 #include "third_party/leveldatabase/src/include/leveldb/db.h"
-#include "third_party/leveldatabase/src/include/leveldb/env.h"
 #include "third_party/leveldatabase/src/include/leveldb/iterator.h"
 #include "third_party/leveldatabase/src/include/leveldb/options.h"
 #include "third_party/leveldatabase/src/include/leveldb/slice.h"
@@ -83,7 +81,8 @@ bool LevelDB::Init(const leveldb_proto::Options& options) {
       break;
   }
   if (options.database_dir.empty()) {
-    env_.reset(leveldb::NewMemEnv(leveldb::Env::Default()));
+    env_.reset(
+        leveldb_env::NewMemEnv(leveldb::Env::Default(), "leveldb-proto"));
     leveldb_options.env = env_.get();
   }
 

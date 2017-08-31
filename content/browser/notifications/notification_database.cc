@@ -15,9 +15,7 @@
 #include "content/public/browser/notification_database_data.h"
 #include "storage/common/database/database_identifier.h"
 #include "third_party/leveldatabase/env_chromium.h"
-#include "third_party/leveldatabase/src/helpers/memenv/memenv.h"
 #include "third_party/leveldatabase/src/include/leveldb/db.h"
-#include "third_party/leveldatabase/src/include/leveldb/env.h"
 #include "third_party/leveldatabase/src/include/leveldb/filter_policy.h"
 #include "third_party/leveldatabase/src/include/leveldb/write_batch.h"
 #include "url/gurl.h"
@@ -128,7 +126,8 @@ NotificationDatabase::Status NotificationDatabase::Open(
   options.filter_policy = filter_policy_.get();
   options.block_cache = leveldb_env::SharedWebBlockCache();
   if (IsInMemoryDatabase()) {
-    env_.reset(leveldb::NewMemEnv(leveldb::Env::Default()));
+    env_.reset(
+        leveldb_env::NewMemEnv(leveldb::Env::Default(), "notifications"));
     options.env = env_.get();
   }
 

@@ -26,6 +26,7 @@
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/sys_info.h"
+#include "base/threading/sequenced_task_runner_handle.h"
 #include "base/threading/thread_restrictions.h"
 #include "base/trace_event/memory_dump_manager.h"
 #include "base/trace_event/memory_dump_provider.h"
@@ -33,6 +34,7 @@
 #include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
 #include "third_party/leveldatabase/chromium_logger.h"
+#include "third_party/leveldatabase/src/helpers/memenv/memenv.h"
 #include "third_party/leveldatabase/src/include/leveldb/cache.h"
 #include "third_party/leveldatabase/src/include/leveldb/options.h"
 #include "third_party/re2/src/re2/re2.h"
@@ -361,6 +363,118 @@ Status ChromiumWritableFile::Sync() {
 
   return Status::OK();
 }
+
+class TrackedInMemoryEnv : public leveldb::EnvWrapper,
+                           public base::trace_event::MemoryDumpProvider {
+ public:
+  TrackedInMemoryEnv(leveldb::Env* base_env, const std::string& name)
+      : EnvWrapper(base_env), name_(name) {
+    base::trace_event::MemoryDumpManager::GetInstance()
+        ->RegisterDumpProviderWithSequencedTaskRunner(
+            this, "MemEnv", base::SequencedTaskRunnerHandle::Get(),
+            MemoryDumpProvider::Options());
+  }
+
+  ~TrackedInMemoryEnv() override {
+    base::trace_event::MemoryDumpManager::GetInstance()->UnregisterDumpProvider(
+        this);
+  }
+
+  leveldb::Status NewWritableFile(const std::string& f,
+                                  leveldb::WritableFile** r) override {
+    leveldb::Status s = leveldb::EnvWrapper::NewWritableFile(f, r);
+    if (s.ok()) {
+      base::AutoLock lock(files_lock_);
+      file_names_.insert(f);
+    }
+    return s;
+  }
+
+  leveldb::Status NewAppendableFile(const std::string& f,
+                                    leveldb::WritableFile** r) override {
+    leveldb::Status s = leveldb::EnvWrapper::NewAppendableFile(f, r);
+    if (s.ok()) {
+      base::AutoLock lock(files_lock_);
+      file_names_.insert(f);
+    }
+    return s;
+  }
+
+  leveldb::Status DeleteFile(const std::string& fname) override {
+    leveldb::Status s = leveldb::EnvWrapper::DeleteFile(fname);
+    if (s.ok()) {
+      base::AutoLock lock(files_lock_);
+      DCHECK(base::ContainsKey(file_names_, fname));
+      file_names_.erase(fname);
+    }
+    return s;
+  }
+
+  leveldb::Status RenameFile(const std::string& src,
+                             const std::string& target) override {
+    leveldb::Status s = leveldb::EnvWrapper::RenameFile(src, target);
+    if (s.ok()) {
+      base::AutoLock lock(files_lock_);
+      file_names_.erase(src);
+      file_names_.insert(target);
+    }
+    return s;
+  }
+
+  uint64_t size() {
+    base::AutoLock lock(files_lock_);
+    uint64_t total_size = 0;
+    for (const std::string& fname : file_names_) {
+      uint64_t file_size;
+      leveldb::Status s = GetFileSize(fname, &file_size);
+      DCHECK(s.ok());
+      if (s.ok()) {
+        // Roughly approximating the size of leveldb::FileState in memenv.cc
+        total_size += file_size + fname.size() * sizeof(char) + sizeof(int) +
+                      sizeof(uint64_t) + sizeof(leveldb::port::Mutex);
+      }
+    }
+    return total_size;
+  }
+
+  // base::trace_event::MemoryDumpProvider:
+  bool OnMemoryDump(const base::trace_event::MemoryDumpArgs& dump_args,
+                    base::trace_event::ProcessMemoryDump* pmd) override {
+    // Don't dump in background mode ("from the field") until whitelisted.
+    if (dump_args.level_of_detail ==
+        base::trace_event::MemoryDumpLevelOfDetail::BACKGROUND) {
+      return true;
+    }
+
+    const std::string env_dump_name = base::StringPrintf(
+        "memenv/0x%" PRIXPTR, reinterpret_cast<uintptr_t>(this));
+
+    auto* env_dump = pmd->CreateAllocatorDump(env_dump_name.c_str());
+
+    env_dump->AddScalar(base::trace_event::MemoryAllocatorDump::kNameSize,
+                        base::trace_event::MemoryAllocatorDump::kUnitsBytes,
+                        size());
+
+    if (dump_args.level_of_detail !=
+        base::trace_event::MemoryDumpLevelOfDetail::BACKGROUND) {
+      env_dump->AddString("name", "", name_);
+    }
+
+    const char* system_allocator_name =
+        base::trace_event::MemoryDumpManager::GetInstance()
+            ->system_allocator_pool_name();
+    if (system_allocator_name) {
+      pmd->AddSuballocation(env_dump->guid(), system_allocator_name);
+    }
+
+    return true;
+  }
+
+ private:
+  const std::string name_;
+  base::Lock files_lock_;  // Synchronize access to files_lock_.
+  std::set<std::string> file_names_;
+};
 
 base::LazyInstance<ChromiumEnv>::Leaky default_env = LAZY_INSTANCE_INITIALIZER;
 
@@ -1355,6 +1469,10 @@ leveldb::Status OpenDB(const leveldb_env::Options& options,
     dbptr->reset(tracked_db);
   }
   return status;
+}
+
+leveldb::Env* NewMemEnv(leveldb::Env* base_env, const std::string& name) {
+  return new TrackedInMemoryEnv(leveldb::NewMemEnv(base_env), name);
 }
 
 }  // namespace leveldb_env

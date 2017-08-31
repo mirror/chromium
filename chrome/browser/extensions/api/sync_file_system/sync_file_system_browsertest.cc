@@ -25,8 +25,7 @@
 #include "extensions/test/extension_test_message_listener.h"
 #include "extensions/test/result_catcher.h"
 #include "storage/browser/quota/quota_manager.h"
-#include "third_party/leveldatabase/src/helpers/memenv/memenv.h"
-#include "third_party/leveldatabase/src/include/leveldb/env.h"
+#include "third_party/leveldatabase/env_chromium.h"
 
 namespace sync_file_system {
 
@@ -71,8 +70,9 @@ class SyncFileSystemTest : public extensions::PlatformAppBrowserTest,
   }
 
   void SetUpOnMainThread() override {
-    in_memory_env_.reset(leveldb::NewMemEnv(leveldb::Env::Default()));
     extensions::PlatformAppBrowserTest::SetUpOnMainThread();
+    in_memory_env_.reset(
+        leveldb_env::NewMemEnv(leveldb::Env::Default(), "SyncFileSystemTest"));
     ASSERT_TRUE(base_dir_.CreateUniqueTempDir());
 
     SyncFileSystemServiceFactory* factory =
