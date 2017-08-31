@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7bf9d93_2a6a9050",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-31T21:04:27Z",
+      "side": 1,
+      "message": "I think we should actually replace such checks for element_animation() not being null\nbehind a more appropriately named method e.g., animation_ticker-\u003eIsRegistered() or animation_ticker_-\u003eIsBound().\n\nThe existence of element_animations() is really being used a proxy for that so I think\nthis will be more readable.",
+      "range": {
+        "startLine": 133,
+        "startChar": 25,
+        "endLine": 133,
+        "endChar": 43
+      },
+      "revId": "c4439dfe53a9e7c9a1c9cfcd149e43d9d37759b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9134343e_cd61433f",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-31T21:04:27Z",
+      "side": 1,
+      "message": "I think so and it will be much nicer once you move UpdatetickingState() to ticker.\nThis will actually make AnimationTicker::PushPropertiesToImpl saner as well.\n\nI imagine it looking something like below: \n\nAnimationTicker::AddAnimation() {\n  ... add animation...\n  \n  UpdateTickingState();\n  AnimationAdded();\n  \n  player_-\u003eSetNeedsCommit();\n  player_-\u003eSetNeedsPushProperties();\n}",
+      "revId": "c4439dfe53a9e7c9a1c9cfcd149e43d9d37759b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aab7092d_7eeafd0d",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-31T21:04:27Z",
+      "side": 1,
+      "message": "It seems this is better be moved to ticker.\n\nIt is updated as we remove/add animations and when we push properties which \nare handled by ticker. Also called by ElementAnimations which will eventually \ncall it on ticker directly.\n\nAnimationPlayer should implement it but simply forward to its ticker(s) so\nthat it can be called from AnimationHost.",
+      "range": {
+        "startLine": 214,
+        "startChar": 22,
+        "endLine": 214,
+        "endChar": 40
+      },
+      "revId": "c4439dfe53a9e7c9a1c9cfcd149e43d9d37759b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb332b77_d3e7a273",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-31T21:04:27Z",
+      "side": 1,
+      "message": "Eventually the notification call order will be the reverse i.e.,\nElementAnimations-\u003eAnimationTicker-\u003eAnimationPlayer",
+      "range": {
+        "startLine": 243,
+        "startChar": 25,
+        "endLine": 243,
+        "endChar": 47
+      },
+      "revId": "c4439dfe53a9e7c9a1c9cfcd149e43d9d37759b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dae80bfc_02865b22",
+        "filename": "cc/animation/animation_player.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-31T21:04:27Z",
+      "side": 1,
+      "message": "This property should move to AnimationTicker. This method is only\never used by ElementAnimations so once that is updated to use Tickers we\ncan just get rid of it here.",
+      "range": {
+        "startLine": 154,
+        "startChar": 11,
+        "endLine": 154,
+        "endChar": 51
+      },
+      "revId": "c4439dfe53a9e7c9a1c9cfcd149e43d9d37759b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87264e1a_e57d7878",
+        "filename": "cc/animation/animation_player.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-31T21:04:27Z",
+      "side": 1,
+      "message": "Actually, it seems there are simply the same interface as AnimationDelegate\nand  implementation is also identical between the two implementation with\nThen only difference being the call SetNeedsCommit which\ndepends on AnimationEvent.is_impl_only. \n\n\nShould we just fold these two sets into one and have ticker depend on AnimationDelegate interface instead.",
+      "range": {
+        "startLine": 165,
+        "startChar": 7,
+        "endLine": 165,
+        "endChar": 36
+      },
+      "revId": "c4439dfe53a9e7c9a1c9cfcd149e43d9d37759b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90f95601_0684b7d3",
+        "filename": "cc/animation/animation_ticker.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-31T21:04:27Z",
+      "side": 1,
+      "message": "I think the better way will be to not go through player at all.\nSee my comment earlier on how we should actually fold Player::AddAnimation\ninto Ticker::AddAnimation.",
+      "revId": "c4439dfe53a9e7c9a1c9cfcd149e43d9d37759b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
