@@ -73,7 +73,9 @@ ArcIntentHelperBridge::~ArcIntentHelperBridge() {
 
 void ArcIntentHelperBridge::OnInstanceReady() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  ash::Shell::Get()->set_link_handler_model_factory(this);
+  // TODO(mash): Support this functionality without ash::Shell access in Chrome.
+  if (ash::Shell::HasInstance())
+    ash::Shell::Get()->set_link_handler_model_factory(this);
   auto* instance =
       ARC_GET_INSTANCE_FOR_METHOD(arc_bridge_service_->intent_helper(), Init);
   DCHECK(instance);
@@ -84,7 +86,9 @@ void ArcIntentHelperBridge::OnInstanceReady() {
 
 void ArcIntentHelperBridge::OnInstanceClosed() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  ash::Shell::Get()->set_link_handler_model_factory(nullptr);
+  // TODO(mash): Support this functionality without ash::Shell access in Chrome.
+  if (ash::Shell::HasInstance())
+    ash::Shell::Get()->set_link_handler_model_factory(nullptr);
 }
 
 void ArcIntentHelperBridge::OnIconInvalidated(const std::string& package_name) {
@@ -98,17 +102,23 @@ void ArcIntentHelperBridge::OnOpenDownloads() {
   // downloads by default, which is what we want.  However if it is open it will
   // simply be brought to the forgeground without forcibly being navigated to
   // downloads, which is probably not ideal.
-  ash::Shell::Get()->new_window_controller()->OpenFileManager();
+  // TODO(mash): Support this functionality without ash::Shell access in Chrome.
+  if (ash::Shell::HasInstance())
+    ash::Shell::Get()->new_window_controller()->OpenFileManager();
 }
 
 void ArcIntentHelperBridge::OnOpenUrl(const std::string& url) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  ash::Shell::Get()->shell_delegate()->OpenUrlFromArc(GURL(url));
+  // TODO(mash): Support this functionality without ash::Shell access in Chrome.
+  if (ash::Shell::HasInstance())
+    ash::Shell::Get()->shell_delegate()->OpenUrlFromArc(GURL(url));
 }
 
 void ArcIntentHelperBridge::OpenWallpaperPicker() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  ash::Shell::Get()->wallpaper_controller()->OpenSetWallpaperPage();
+  // TODO(mash): Support this functionality without ash::Shell access in Chrome.
+  if (ash::Shell::HasInstance())
+    ash::Shell::Get()->wallpaper_controller()->OpenSetWallpaperPage();
 }
 
 void ArcIntentHelperBridge::SetWallpaperDeprecated(
