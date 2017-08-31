@@ -418,6 +418,10 @@ public class ChromeFullscreenManager
         mControlOffsetRatio = topOffsetRatio;
     }
 
+    public boolean isContentOffset() {
+        return getTopControlOffset() > 0 || getBottomControlOffset() > 0;
+    }
+
     @Override
     public void setOverlayVideoMode(boolean enabled) {
         super.setOverlayVideoMode(enabled);

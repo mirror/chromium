@@ -290,4 +290,10 @@ public interface TabObserver {
      * @param tab The notifying {@link Tab}.
      */
     public void onReparentingFinished(Tab tab);
+
+    /**
+     * Called when the tab offsets have changed.
+     * @param tab The notifying {@link Tab}.
+     */
+    public void onOffsetsChanged(Tab tab);
 }

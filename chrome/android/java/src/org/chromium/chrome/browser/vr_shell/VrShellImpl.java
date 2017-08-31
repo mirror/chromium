@@ -95,6 +95,7 @@ public class VrShellImpl extends GvrLayout implements VrShell, SurfaceHolder.Cal
     private float mLastContentHeight;
     private float mLastContentDpr;
     private Boolean mPaused;
+    private boolean mPendingVSyncPause;
 
     private AndroidUiGestureTarget mAndroidUiGestureTarget;
 
@@ -234,6 +235,11 @@ public class VrShellImpl extends GvrLayout implements VrShell, SurfaceHolder.Cal
             @Override
             public void onUrlUpdated(Tab tab) {
                 updateHistoryButtonsVisibility();
+            }
+
+            @Override
+            public void onOffsetsChanged(Tab tab) {
+                onTabOffsetsChanged();
             }
         };
 
@@ -525,6 +531,7 @@ public class VrShellImpl extends GvrLayout implements VrShell, SurfaceHolder.Cal
 
         if (mTab != null) {
             mTab.updateBrowserControlsState(BrowserControlsState.SHOWN, true);
+            mTab.updateFullscreenEnabledState();
         }
 
         mContentVirtualDisplay.destroy();
@@ -548,8 +555,16 @@ public class VrShellImpl extends GvrLayout implements VrShell, SurfaceHolder.Cal
 
     @Override
     public void setWebVrModeEnabled(boolean enabled, boolean showToast) {
-        mContentVrWindowAndroid.setVSyncPaused(enabled);
+        if (!enabled && !mPendingVSyncPause) mContentVrWindowAndroid.setVSyncPaused(false);
+        mPendingVSyncPause = enabled;
         nativeSetWebVrMode(mNativeVrShell, enabled, showToast);
+    }
+
+    private void onTabOffsetsChanged() {
+        if (!mPendingVSyncPause) return;
+        if (mActivity.getFullscreenManager().isContentOffset()) return;
+        mPendingVSyncPause = false;
+        mContentVrWindowAndroid.setVSyncPaused(true);
     }
 
     @Override

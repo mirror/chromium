@@ -2566,6 +2566,7 @@ public class Tab
                     mPreviousBottomControlsOffsetY, mPreviousContentOffsetY);
         }
         TabModelImpl.setActualTabSwitchLatencyMetricRequired();
+        for (TabObserver observer : mObservers) observer.onOffsetsChanged(this);
     }
 
     /**
