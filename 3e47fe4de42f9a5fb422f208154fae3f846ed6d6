@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4a5f535_313c3f4a",
+        "filename": "chrome/test/data/local_ntp/voice_text_browsertest.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-31T14:15:08Z",
+      "side": 1,
+      "message": "Semi-related: \"voice-text-area\" is a mighty weird name for the link/button...",
+      "range": {
+        "startLine": 111,
+        "startChar": 61,
+        "endLine": 111,
+        "endChar": 0
+      },
+      "revId": "3e47fe4de42f9a5fb422f208154fae3f846ed6d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

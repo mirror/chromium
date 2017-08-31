@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "a8ae6ef9_33c6116f",
+        "filename": "chrome/test/data/local_ntp/voice_text_browsertest.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-31T14:15:08Z",
+      "side": 1,
+      "message": "Ah, no target but an onclick handler.. sure, I guess that\u0027s fine.",
+      "parentUuid": "27fcf6b1_c5f357b0",
+      "revId": "12b3bb06e51529a4f20fb4d3e9c8047c9e7c4a22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07ad8c2c_529153a9",
         "filename": "chrome/test/data/local_ntp/voice_text_browsertest.js",
         "patchSetId": 5
@@ -174,6 +192,24 @@
       "revId": "12b3bb06e51529a4f20fb4d3e9c8047c9e7c4a22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fcc60685_c911df3f",
+        "filename": "chrome/test/data/local_ntp/voice_text_browsertest.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-31T14:15:08Z",
+      "side": 1,
+      "message": "By \"I tested it\" you mean removing the timeout? Alright. Maybe add a comment somewhere explaining this, so the next reader doesn\u0027t have to wonder about the same thing?",
+      "parentUuid": "6b8bd924_5a179ff4",
+      "revId": "12b3bb06e51529a4f20fb4d3e9c8047c9e7c4a22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -247,6 +283,24 @@
     },
     {
       "key": {
+        "uuid": "b261d724_de54bb27",
+        "filename": "chrome/test/data/local_ntp/voice_text_browsertest.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-31T14:15:08Z",
+      "side": 1,
+      "message": "Ah, I see. Please add a comment explaining the last two asserts, since otherwise it\u0027s not clear why they\u0027re here.",
+      "parentUuid": "054adf15_6e35a63a",
+      "revId": "12b3bb06e51529a4f20fb4d3e9c8047c9e7c4a22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "44eee478_a64f14bc",
         "filename": "chrome/test/data/local_ntp/voice_text_browsertest.js",
         "patchSetId": 5
@@ -317,6 +371,30 @@
       "side": 1,
       "message": "Yeah, comparing strings is very weird, but I don\u0027t think it is possible for someone to say \"Speak now\" and the UI then displaying the listening animation, because the |listeningTimeout| (that upon executing sets the \"Listening...\" text + animation) is cleared when the text areas are updated (f.e. with speech recognition intermediate results).\n\nIt might be worth a comment or a more defensive check in the listening animation callback, but I\u0027d argue that this actually works correctly even if someone says \"Speak now\". WDYT? (Also, I added a test that tries to simulate this.)",
       "parentUuid": "3ad8135c_313558c3",
+      "range": {
+        "startLine": 200,
+        "startChar": 42,
+        "endLine": 200,
+        "endChar": 0
+      },
+      "revId": "12b3bb06e51529a4f20fb4d3e9c8047c9e7c4a22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f39178f8_56f6ce65",
+        "filename": "chrome/test/data/local_ntp/voice_text_browsertest.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-31T14:15:08Z",
+      "side": 1,
+      "message": "I\u0027ll believe you that it works correctly, but it still feels messy and fragile... oh well. A comment will do.\n\nThanks for the extra test!",
+      "parentUuid": "b9851f18_01ef8a2a",
       "range": {
         "startLine": 200,
         "startChar": 42,
