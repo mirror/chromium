@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "013b8e73_4717c6bf",
+        "filename": "net/cert/test_root_certs_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-31T01:31:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ae82c67_96a0db74",
+      "revId": "f5040ecaaaa1eb9241166b91daa0be8f153a5cf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32aaae5a_6cb4cae9",
         "filename": "net/cert/test_root_certs_fuchsia.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "f5040ecaaaa1eb9241166b91daa0be8f153a5cf3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63b293a8_43b1ca66",
+        "filename": "net/cert/test_root_certs_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-31T01:31:42Z",
+      "side": 1,
+      "message": "Replaced with \"third_party/boringssl/src/include/openssl/pool.h\" for UniquePtr\u003cCRYPTO_BUFFER\u003e",
+      "parentUuid": "32aaae5a_6cb4cae9",
+      "revId": "f5040ecaaaa1eb9241166b91daa0be8f153a5cf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
