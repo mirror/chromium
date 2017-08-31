@@ -876,6 +876,26 @@ IN_PROC_BROWSER_TEST_F(NetworkingPrivateChromeOSApiTest, SetCellularSimState) {
   EXPECT_TRUE(RunNetworkingSubtest("setCellularSimState")) << message_;
 }
 
+IN_PROC_BROWSER_TEST_F(NetworkingPrivateChromeOSApiTest,
+                       SelectCellularMobileNetwork) {
+  SetupCellular();
+  // Create fake list of found networks.
+  base::ListValue found_networks;
+  base::DictionaryValue network1;
+  network1.SetKey(shill::kNetworkIdProperty, base::Value("network1"));
+  network1.SetKey(shill::kTechnologyProperty, base::Value("GSM"));
+  network1.SetKey(shill::kStatusProperty, base::Value("current"));
+  found_networks.GetList().push_back(std::move(network1));
+  base::DictionaryValue network2;
+  network2.SetKey(shill::kNetworkIdProperty, base::Value("network2"));
+  network2.SetKey(shill::kTechnologyProperty, base::Value("GSM"));
+  network2.SetKey(shill::kStatusProperty, base::Value("available"));
+  found_networks.GetList().push_back(std::move(network2));
+  device_test_->SetDeviceProperty(
+      kCellularDevicePath, shill::kFoundNetworksProperty, found_networks);
+  EXPECT_TRUE(RunNetworkingSubtest("selectCellularMobileNetwork")) << message_;
+}
+
 IN_PROC_BROWSER_TEST_F(NetworkingPrivateChromeOSApiTest, CellularSimPuk) {
   SetupCellular();
   // Lock the SIM

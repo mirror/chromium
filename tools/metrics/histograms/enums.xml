@@ -11688,7 +11688,7 @@ uploading your change for review.  These are checked by presubmit scripts.
 </enum>
 
 <enum name="ExtensionEvents">
-<!-- Generated from extensions/browser/extension_event_histogram_value.h -->
+<!-- Generated from extensions/browser/extension_event_histogram_value.h.-->
 
   <int value="0" label="UNKNOWN"/>
   <int value="1" label="FOR_TEST"/>
@@ -12128,7 +12128,7 @@ uploading your change for review.  These are checked by presubmit scripts.
 </enum>
 
 <enum name="ExtensionFunctions">
-<!-- Generated from extensions/browser/extension_function_histogram_value.h -->
+<!-- Generated from extensions/browser/extension_function_histogram_value.h.-->
 
   <int value="0" label="UNKNOWN"/>
   <int value="1" label="WEBNAVIGATION_GETALLFRAMES"/>
@@ -13351,6 +13351,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="1189" label="FILEMANAGERPRIVATE_GETRECENTFILES"/>
   <int value="1190" label="FILEMANAGERPRIVATE_RENAMEVOLUME"/>
   <int value="1191" label="AUTOTESTPRIVATE_SETMOUSEREVERSESCROLL"/>
+  <int value="1192" label="NETWORKINGPRIVATE_SELECTCELLULARMOBILENETWORK"/>
 </enum>
 
 <enum name="ExtensionIconState">
