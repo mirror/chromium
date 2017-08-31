@@ -4,6 +4,7 @@
 
 source_set("commands") {
   sources = [
+    "activity_services_commands.h",
     "context_menu_commands.h",
     "dialog_commands.h",
     "find_in_page_search_commands.h",

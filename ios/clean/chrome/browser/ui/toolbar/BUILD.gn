@@ -23,6 +23,7 @@ source_set("toolbar") {
     "//ios/chrome/browser/ui/history_popup/requirements",
     "//ios/chrome/browser/ui/tools_menu:configuration",
     "//ios/chrome/browser/web_state_list",
+    "//ios/clean/chrome/browser/ui/activity_services",
     "//ios/clean/chrome/browser/ui/commands",
     "//ios/clean/chrome/browser/ui/history_popup",
     "//ios/clean/chrome/browser/ui/omnibox",

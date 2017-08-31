@@ -11,6 +11,7 @@
 #import "ios/chrome/browser/ui/coordinators/browser_coordinator+internal.h"
 #import "ios/chrome/browser/ui/history_popup/requirements/tab_history_constants.h"
 #import "ios/chrome/browser/ui/tools_menu/tools_menu_configuration.h"
+#import "ios/clean/chrome/browser/ui/activity_services/activity_service_coordinator.h"
 #import "ios/clean/chrome/browser/ui/commands/tools_menu_commands.h"
 #import "ios/clean/chrome/browser/ui/history_popup/history_popup_coordinator.h"
 #import "ios/clean/chrome/browser/ui/omnibox/location_bar_coordinator.h"
@@ -36,9 +37,13 @@
 @property(nonatomic, strong) ToolbarViewController* viewController;
 // The mediator owned by this coordinator.
 @property(nonatomic, strong) ToolbarMediator* mediator;
+
+@property(nonatomic, strong)
+    ActivityServiceCleanCoordinator* activityServiceCoordinator;
 @end
 
 @implementation ToolbarCoordinator
+@synthesize activityServiceCoordinator = _activityServiceCoordinator;
 @synthesize locationBarCoordinator = _locationBarCoordinator;
 @synthesize historyPopupCoordinator = _historyPopupCoordinator;
 @synthesize toolsMenuCoordinator = _toolsMenuCoordinator;
@@ -85,6 +90,11 @@
   [self addChildCoordinator:locationBarCoordinator];
   [locationBarCoordinator start];
 
+  ActivityServiceCleanCoordinator* activityServiceCoordinator =
+      [[ActivityServiceCleanCoordinator alloc] init];
+  self.activityServiceCoordinator = activityServiceCoordinator;
+  [self addChildCoordinator:activityServiceCoordinator];
+
   [super start];
 }
 
@@ -104,6 +114,11 @@
     [self.viewController presentViewController:childCoordinator.viewController
                                       animated:YES
                                     completion:nil];
+  } else if ([childCoordinator
+                 isKindOfClass:[ActivityServiceCleanCoordinator class]]) {
+    [self.viewController presentViewController:childCoordinator.viewController
+                                      animated:YES
+                                    completion:nil];
   }
 }
 
@@ -112,6 +127,10 @@
     [childCoordinator.viewController.presentingViewController
         dismissViewControllerAnimated:YES
                            completion:nil];
+  } else if ([childCoordinator
+                 isKindOfClass:[ActivityServiceCleanCoordinator class]]) {
+    // This child VC dismisses itself, so nothing needs to be done here.
+    DCHECK(!childCoordinator.viewController);
   }
 }
 
