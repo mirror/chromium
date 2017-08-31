@@ -46,6 +46,30 @@
       "revId": "95cfa8712eea88acdae5cb3a5d4a3bf4bad79232",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "737cd53d_f213950e",
+        "filename": "chrome/browser/ui/ash/launcher/app_shortcut_launcher_item_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001410
+      },
+      "writtenOn": "2017-08-31T16:39:09Z",
+      "side": 0,
+      "message": "Basically the multi profile mode is turned on by default since ... years. So if anything you could check if there are more users logged on.",
+      "parentUuid": "52e0101b_2ae19f25",
+      "range": {
+        "startLine": 55,
+        "startChar": 6,
+        "endLine": 56,
+        "endChar": 64
+      },
+      "revId": "95cfa8712eea88acdae5cb3a5d4a3bf4bad79232",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

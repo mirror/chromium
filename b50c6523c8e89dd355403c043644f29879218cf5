@@ -49,6 +49,29 @@
     },
     {
       "key": {
+        "uuid": "c7987685_4c202bd9",
+        "filename": "chrome/browser/ui/ash/multi_user/multi_user_window_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001410
+      },
+      "writtenOn": "2017-08-31T16:39:09Z",
+      "side": 1,
+      "message": "This is basically not needed anymore as the original use was to turn the experiment off. Now the mode is turned always on (or is not yet initialized).",
+      "range": {
+        "startLine": 78,
+        "startChar": 2,
+        "endLine": 78,
+        "endChar": 48
+      },
+      "revId": "b50c6523c8e89dd355403c043644f29879218cf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "92fafff7_0c489a67",
         "filename": "chrome/browser/ui/ash/multi_user/multi_user_window_manager.h",
         "patchSetId": 2
