@@ -22,6 +22,30 @@
       "revId": "d8f7e9c880e282833b815fa71ff07ac04835527b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62a7ded7_f8dca277",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 1681,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-31T00:03:03Z",
+      "side": 1,
+      "message": "Done. I\u0027ve updated them to match what the server-side config will look like in the near future.",
+      "parentUuid": "039880c2_719b87a6",
+      "range": {
+        "startLine": 1681,
+        "startChar": 55,
+        "endLine": 1681,
+        "endChar": 0
+      },
+      "revId": "d8f7e9c880e282833b815fa71ff07ac04835527b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
