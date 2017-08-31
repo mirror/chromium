@@ -291,6 +291,10 @@ bool PepperWebPluginImpl::CanEditText() const {
   return instance_ && instance_->CanEditText();
 }
 
+bool PepperWebPluginImpl::HasEditableText() const {
+  return instance_ && instance_->HasEditableText();
+}
+
 bool PepperWebPluginImpl::ExecuteEditCommand(const blink::WebString& name) {
   return ExecuteEditCommand(name, WebString());
 }
@@ -310,6 +314,7 @@ bool PepperWebPluginImpl::ExecuteEditCommand(const blink::WebString& name,
     instance_->ReplaceSelection("");
     return true;
   }
+
   // If the clipboard contains something other than text (e.g. an image),
   // WebClipboard::ReadPlainText() returns an empty string. The empty string is
   // then pasted, replacing any selected text. This behavior is consistent with
@@ -325,6 +330,15 @@ bool PepperWebPluginImpl::ExecuteEditCommand(const blink::WebString& name,
     instance_->ReplaceSelection(text.Utf8());
     return true;
   }
+
+  if (name == "SelectAll") {
+    if (!CanEditText())
+      return false;
+
+    instance_->SelectAll();
+    return true;
+  }
+
   return false;
 }
 

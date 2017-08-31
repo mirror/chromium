@@ -2555,6 +2555,14 @@ bool PDFiumEngine::CanEditText() {
   return editable_form_text_area_;
 }
 
+bool PDFiumEngine::HasEditableText() {
+  DCHECK(CanEditText());
+  if (last_page_mouse_down_ == -1)
+    return false;
+  FPDF_PAGE page = pages_[last_page_mouse_down_]->GetPage();
+  return FORM_GetFocusedText(form_, page, nullptr, 0) > 2;
+}
+
 void PDFiumEngine::ReplaceSelection(const std::string& text) {
   DCHECK(CanEditText());
   if (last_page_mouse_down_ != -1) {

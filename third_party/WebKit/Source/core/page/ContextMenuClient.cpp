@@ -316,9 +316,11 @@ bool ContextMenuClient::ShowContextMenu(const ContextMenu* default_menu,
           if (!!(data.edit_flags & WebContextMenuData::kCanCopy))
             data.edit_flags |= WebContextMenuData::kCanCut;
           data.edit_flags |= WebContextMenuData::kCanPaste;
-          // TODO(bug 753216): Implement "SelectAll" command and enable when
-          // focus is within an editable text area.
-          data.edit_flags &= ~WebContextMenuData::kCanSelectAll;
+
+          if (plugin->HasEditableText())
+            data.edit_flags |= WebContextMenuData::kCanSelectAll;
+          else
+            data.edit_flags &= ~WebContextMenuData::kCanSelectAll;
         }
         // Disable translation for plugins.
         data.edit_flags &= ~WebContextMenuData::kCanTranslate;
