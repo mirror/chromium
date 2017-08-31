@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "def0cfb3_f5d5080f",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-31T02:27:28Z",
+      "side": 1,
+      "message": "Good catch.  At one point, I initialized width to the first output instead of input, so we could optionally skip boring initial cases.  But this was a step backwards so I turfed it.",
+      "parentUuid": "87acdc1f_52e6f2a4",
+      "revId": "7ca4bbd80257b49bc5808d7fda48c354ec88c6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8bf3a409_f5559039",
         "filename": "components/url_formatter/elide_url_unittest.cc",
         "patchSetId": 1
@@ -88,6 +106,47 @@
       "writtenOn": "2017-08-31T01:35:13Z",
       "side": 1,
       "message": "Can this just be EXPECT?",
+      "range": {
+        "startLine": 70,
+        "startChar": 6,
+        "endLine": 70,
+        "endChar": 12
+      },
+      "revId": "7ca4bbd80257b49bc5808d7fda48c354ec88c6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52a8c8b7_0e1036bc",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-31T02:27:28Z",
+      "side": 1,
+      "message": "I asserted here to stop eliding this URL if elision is broken, but it also skips all the other URLs passed in. I\u0027ll change that.",
+      "revId": "7ca4bbd80257b49bc5808d7fda48c354ec88c6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d36d9f2a_79d4a690",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-31T02:27:28Z",
+      "side": 1,
+      "message": "It can, but with a break out of the loop.  We want to proceed to the next URL, but not crank through every remaining failing case for the current URL.",
+      "parentUuid": "dd871341_f07a8ae1",
       "range": {
         "startLine": 70,
         "startChar": 6,
@@ -205,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "fd0f58c1_13e4e46c",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-31T02:27:28Z",
+      "side": 1,
+      "message": "Agreed, and it is fixed with the new algo.",
+      "parentUuid": "4c4426ea_996effd2",
+      "revId": "7ca4bbd80257b49bc5808d7fda48c354ec88c6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b1db7d8_461c445f",
         "filename": "components/url_formatter/elide_url_unittest.cc",
         "patchSetId": 1
@@ -269,6 +346,24 @@
       "side": 1,
       "message": "Doesn\u0027t seem worth having a separate test.\n\nNote: I like to write DO NOT SUBMIT in comments that I intend to resolve before landing; the CQ will prevent it.",
       "parentUuid": "23ce80e8_b91f53b2",
+      "revId": "7ca4bbd80257b49bc5808d7fda48c354ec88c6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51aefddf_22b7e6cb",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-31T02:27:28Z",
+      "side": 1,
+      "message": "Good call on DO NOT SUBMIT. That\u0027s neat.",
+      "parentUuid": "00fe24ae_612f3351",
       "revId": "7ca4bbd80257b49bc5808d7fda48c354ec88c6d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
