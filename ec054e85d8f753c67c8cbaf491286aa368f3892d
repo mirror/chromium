@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "f6647719_446c98b0",
+        "filename": "third_party/WebKit/Source/platform/wtf/experimental/ContainerTypeOperations.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-08-31T11:40:42Z",
+      "side": 1,
+      "message": "IMO, copy assignment can be used as move assignment, though it may be less efficient.\nSo, the minimal complete definition here is the copy version of Assign()?",
+      "range": {
+        "startLine": 122,
+        "startChar": 45,
+        "endLine": 122,
+        "endChar": 60
+      },
+      "revId": "ec054e85d8f753c67c8cbaf491286aa368f3892d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c5dba11d_b525c4fc",
         "filename": "third_party/WebKit/Source/platform/wtf/experimental/ContainerTypeOperations.h",
         "patchSetId": 3
@@ -18,6 +41,75 @@
         "startChar": 9,
         "endLine": 307,
         "endChar": 25
+      },
+      "revId": "ec054e85d8f753c67c8cbaf491286aa368f3892d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d5248ce_151fa154",
+        "filename": "third_party/WebKit/Source/platform/wtf/experimental/ContainerTypeOperations.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-08-31T11:40:42Z",
+      "side": 1,
+      "message": "Can we use `while () {}` for value_begin \u003d\u003d value_end case?",
+      "range": {
+        "startLine": 377,
+        "startChar": 6,
+        "endLine": 377,
+        "endChar": 8
+      },
+      "revId": "ec054e85d8f753c67c8cbaf491286aa368f3892d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de2cabbd_c26d47e2",
+        "filename": "third_party/WebKit/Source/platform/wtf/experimental/ContainerTypeOperations.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-08-31T11:40:42Z",
+      "side": 1,
+      "message": "Though that may be a UB, I think we sometimes assign char to unsigned char. Can we care size(InT) \u003d\u003d size(T) case as overlapping case?",
+      "range": {
+        "startLine": 389,
+        "startChar": 35,
+        "endLine": 389,
+        "endChar": 76
+      },
+      "revId": "ec054e85d8f753c67c8cbaf491286aa368f3892d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f989d63_074e1c68",
+        "filename": "third_party/WebKit/Source/platform/wtf/experimental/ContainerTypeOperations.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-08-31T11:40:42Z",
+      "side": 1,
+      "message": "ditto for value_begin \u003d\u003d value_end case.",
+      "range": {
+        "startLine": 426,
+        "startChar": 6,
+        "endLine": 426,
+        "endChar": 10
       },
       "revId": "ec054e85d8f753c67c8cbaf491286aa368f3892d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
