@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b348dcb1_5b69049e",
+        "filename": "chrome/browser/media/media_engagement_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-08-31T13:37:19Z",
+      "side": 1,
+      "message": "Keep it in one line if you don\u0027t null check.",
+      "revId": "f666b08f3a92509690e9881b9bb39c666ce0c98d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5845f12c_260c74f7",
+        "filename": "chrome/browser/media/media_engagement_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-08-31T13:37:19Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "f666b08f3a92509690e9881b9bb39c666ce0c98d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
