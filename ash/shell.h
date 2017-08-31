@@ -118,6 +118,7 @@ class LogoutConfirmationController;
 class LockScreenController;
 class MagnificationController;
 class TabletModeController;
+class TabletModeScreenshotController;
 class MediaController;
 class MouseCursorEventFilter;
 class MruWindowTracker;
@@ -345,6 +346,9 @@ class ASH_EXPORT Shell : public SessionObserver,
   }
   TabletModeController* tablet_mode_controller() {
     return tablet_mode_controller_.get();
+  }
+  TabletModeScreenshotController* tablet_mode_screenshot_controller() {
+    return tablet_mode_screenshot_controller_.get();
   }
   views::corewm::TooltipController* tooltip_controller() {
     return tooltip_controller_.get();
@@ -696,6 +700,8 @@ class ASH_EXPORT Shell : public SessionObserver,
   std::unique_ptr<LockScreenController> lock_screen_controller_;
   std::unique_ptr<LogoutConfirmationController> logout_confirmation_controller_;
   std::unique_ptr<TabletModeController> tablet_mode_controller_;
+  std::unique_ptr<TabletModeScreenshotController>
+      tablet_mode_screenshot_controller_;
   std::unique_ptr<MediaController> media_controller_;
   std::unique_ptr<MruWindowTracker> mru_window_tracker_;
   std::unique_ptr<NewWindowController> new_window_controller_;

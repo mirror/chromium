@@ -13,7 +13,6 @@
 #include "chromeos/accelerometer/accelerometer_reader.h"
 #include "chromeos/dbus/power_manager_client.h"
 #include "ui/display/manager/chromeos/display_configurator.h"
-#include "ui/events/event_handler.h"
 
 namespace ash {
 
@@ -24,8 +23,7 @@ class TabletPowerButtonController;
 // shutting down of the system as well as taking screen shots while in maximize
 // mode.
 class ASH_EXPORT PowerButtonController
-    : public ui::EventHandler,
-      public display::DisplayConfigurator::Observer,
+    : public display::DisplayConfigurator::Observer,
       public chromeos::PowerManagerClient::Observer,
       public chromeos::AccelerometerReader::Observer {
  public:
@@ -42,9 +40,6 @@ class ASH_EXPORT PowerButtonController
   // Called when the power or lock buttons are pressed or released.
   void OnPowerButtonEvent(bool down, const base::TimeTicks& timestamp);
   void OnLockButtonEvent(bool down, const base::TimeTicks& timestamp);
-
-  // ui::EventHandler:
-  void OnKeyEvent(ui::KeyEvent* event) override;
 
   // Overridden from display::DisplayConfigurator::Observer:
   void OnDisplayModeChanged(
@@ -74,13 +69,6 @@ class ASH_EXPORT PowerButtonController
   // Are the power or lock buttons currently held?
   bool power_button_down_ = false;
   bool lock_button_down_ = false;
-
-  // True when the volume down button is being held down.
-  bool volume_down_pressed_ = false;
-
-  // Volume to be restored after a screenshot is taken by pressing the power
-  // button while holding VKEY_VOLUME_DOWN.
-  int volume_percent_before_screenshot_ = 0;
 
   // Has the screen brightness been reduced to 0%?
   bool brightness_is_zero_ = false;

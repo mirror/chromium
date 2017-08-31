@@ -4,7 +4,6 @@
 
 #include "ash/wm/power_button_controller.h"
 
-#include "ash/accelerators/accelerator_controller.h"
 #include "ash/ash_switches.h"
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/session/session_controller.h"
@@ -33,11 +32,9 @@ PowerButtonController::PowerButtonController(LockStateController* controller)
       this);
   chromeos::AccelerometerReader::GetInstance()->AddObserver(this);
   Shell::Get()->display_configurator()->AddObserver(this);
-  Shell::Get()->PrependPreTargetHandler(this);
 }
 
 PowerButtonController::~PowerButtonController() {
-  Shell::Get()->RemovePreTargetHandler(this);
   Shell::Get()->display_configurator()->RemoveObserver(this);
   chromeos::AccelerometerReader::GetInstance()->RemoveObserver(this);
   chromeos::DBusThreadManager::Get()->GetPowerManagerClient()->RemoveObserver(
@@ -152,18 +149,6 @@ void PowerButtonController::OnLockButtonEvent(
     lock_state_controller_->StartLockAnimation();
   else
     lock_state_controller_->CancelLockAnimation();
-}
-
-void PowerButtonController::OnKeyEvent(ui::KeyEvent* event) {
-  if (event->key_code() == ui::VKEY_VOLUME_DOWN) {
-    volume_down_pressed_ = event->type() == ui::ET_KEY_PRESSED;
-    if (!event->is_repeat()) {
-      chromeos::CrasAudioHandler* audio_handler =
-          chromeos::CrasAudioHandler::Get();
-      volume_percent_before_screenshot_ =
-          audio_handler->GetOutputVolumePercent();
-    }
-  }
 }
 
 void PowerButtonController::OnDisplayModeChanged(

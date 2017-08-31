@@ -115,6 +115,7 @@
 #include "ash/wm/system_modal_container_event_filter.h"
 #include "ash/wm/system_modal_container_layout_manager.h"
 #include "ash/wm/tablet_mode/tablet_mode_controller.h"
+#include "ash/wm/tablet_mode/tablet_mode_screenshot_controller.h"
 #include "ash/wm/tablet_mode/tablet_mode_window_manager.h"
 #include "ash/wm/toplevel_window_event_handler.h"
 #include "ash/wm/video_detector.h"
@@ -774,6 +775,8 @@ Shell::~Shell() {
   power_button_controller_.reset();
   lock_state_controller_.reset();
 
+  tablet_mode_screenshot_controller_.reset();
+
   screen_pinning_controller_.reset();
 
   resolution_notification_controller_.reset();
@@ -1044,6 +1047,9 @@ void Shell::Init(const ShellInitParams& init_params) {
 
   sticky_keys_controller_.reset(new StickyKeysController);
   screen_pinning_controller_ = base::MakeUnique<ScreenPinningController>();
+
+  tablet_mode_screenshot_controller_ =
+      std::make_unique<TabletModeScreenshotController>();
 
   lock_state_controller_ =
       base::MakeUnique<LockStateController>(shutdown_controller_.get());
