@@ -22,6 +22,30 @@
       "revId": "584491d60340ee59a3f9d8ee954fb363f71c89ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "773e118d_5bcb2ebe",
+        "filename": "chrome/browser/certificate_manager_model.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-08-31T22:36:07Z",
+      "side": 1,
+      "message": "NSS is a bit.. inconsistent in its use of const.\n\nI guess the options would be:\n1) make as many of them const as happens to work\n2) make them all const and add const_casts internally where NSS neglected a const\n3) leave them all non-const\n\nWDYT?",
+      "parentUuid": "7ad005de_b86a4800",
+      "range": {
+        "startLine": 84,
+        "startChar": 31,
+        "endLine": 84,
+        "endChar": 52
+      },
+      "revId": "584491d60340ee59a3f9d8ee954fb363f71c89ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
