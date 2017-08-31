@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "19f5cee7_be06f3c7",
+        "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-31T20:36:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4fd1072e_9c8c27b0",
+      "revId": "e5c408e7eac67cfbd67faeb9b8e5f203c234bb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "952a38a0_57b6d7f3",
         "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
         "patchSetId": 3
@@ -66,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "6e1b5c5a_ee699936",
+        "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-31T20:36:58Z",
+      "side": 1,
+      "message": "Thanks for this Emily! I didn\u0027t realize that. Mustafa and I had a conversation earlier this summer about how confused we were as to why Bitdefender would name their own cert \"Untrusted\"!",
+      "parentUuid": "4c48bdd7_e40731af",
+      "range": {
+        "startLine": 161,
+        "startChar": 29,
+        "endLine": 161,
+        "endChar": 38
+      },
+      "revId": "e5c408e7eac67cfbd67faeb9b8e5f203c234bb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6dd33f3f_0ff466dd",
         "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
         "patchSetId": 3
@@ -106,6 +148,48 @@
     },
     {
       "key": {
+        "uuid": "ee1077a1_c82f3720",
+        "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-31T20:36:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6dd33f3f_0ff466dd",
+      "range": {
+        "startLine": 166,
+        "startChar": 13,
+        "endLine": 166,
+        "endChar": 14
+      },
+      "revId": "e5c408e7eac67cfbd67faeb9b8e5f203c234bb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c8f357dd_f19e77ef",
+        "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-31T20:36:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb9c1068_adc1d21d",
+      "revId": "e5c408e7eac67cfbd67faeb9b8e5f203c234bb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b9ae803_5736fe35",
         "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
         "patchSetId": 3
@@ -120,6 +204,24 @@
       "revId": "e5c408e7eac67cfbd67faeb9b8e5f203c234bb8e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d8f4b42_b4522133",
+        "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
+        "patchSetId": 3
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-31T20:36:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b9ae803_5736fe35",
+      "revId": "e5c408e7eac67cfbd67faeb9b8e5f203c234bb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +242,24 @@
     },
     {
       "key": {
+        "uuid": "85e71e32_7efabf8e",
+        "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
+        "patchSetId": 3
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-31T20:36:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4e96f7e_e8676569",
+      "revId": "e5c408e7eac67cfbd67faeb9b8e5f203c234bb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7fbb4c7_8938f212",
         "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
         "patchSetId": 3
@@ -157,6 +277,24 @@
     },
     {
       "key": {
+        "uuid": "f35b7296_c5bcf859",
+        "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
+        "patchSetId": 3
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-31T20:36:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7fbb4c7_8938f212",
+      "revId": "e5c408e7eac67cfbd67faeb9b8e5f203c234bb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cf40f83_75753b93",
         "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
         "patchSetId": 3
@@ -168,6 +306,30 @@
       "writtenOn": "2017-08-31T18:47:20Z",
       "side": 1,
       "message": "nit: This pattern might be redundant since we already look for the root.",
+      "range": {
+        "startLine": 207,
+        "startChar": 15,
+        "endLine": 207,
+        "endChar": 0
+      },
+      "revId": "e5c408e7eac67cfbd67faeb9b8e5f203c234bb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f895948_e5b4143b",
+        "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
+        "patchSetId": 3
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-31T20:36:58Z",
+      "side": 1,
+      "message": "Will the ssl_error_handler be run on every certificate in the chain? Or just one of them? And if so, is the one that it is run on always constant? (To rephrase, do we know that it\u0027s always run on the leaf or is it sometimes run on the leaf and sometimes run on the root?)",
+      "parentUuid": "7cf40f83_75753b93",
       "range": {
         "startLine": 207,
         "startChar": 15,
@@ -215,6 +377,24 @@
     },
     {
       "key": {
+        "uuid": "06c7e77c_06ba5eb2",
+        "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
+        "patchSetId": 3
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-31T20:36:58Z",
+      "side": 1,
+      "message": "Lucas, the way the matching logic works is if there is both a common name and an organization regex specified, the certificate has issuer common name and organization names have to be full matches for *both*.\n\nI went ahead and removed the org regex like Mustafa suggested, but to clarify, that makes this entry less specific.",
+      "parentUuid": "5dfea37d_6f6d612c",
+      "revId": "e5c408e7eac67cfbd67faeb9b8e5f203c234bb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f652c678_dd22b069",
         "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
         "patchSetId": 3
@@ -255,6 +435,48 @@
     },
     {
       "key": {
+        "uuid": "de204c1c_a1533c6a",
+        "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
+        "patchSetId": 3
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-31T20:36:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f652c678_dd22b069",
+      "range": {
+        "startLine": 271,
+        "startChar": 20,
+        "endLine": 271,
+        "endChar": 21
+      },
+      "revId": "e5c408e7eac67cfbd67faeb9b8e5f203c234bb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a69faa2b_8047abe5",
+        "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
+        "patchSetId": 3
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-31T20:36:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77602a99_2df0f22a",
+      "revId": "e5c408e7eac67cfbd67faeb9b8e5f203c234bb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd9cdab2_fe1637c1",
         "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
         "patchSetId": 3
@@ -269,6 +491,24 @@
       "revId": "e5c408e7eac67cfbd67faeb9b8e5f203c234bb8e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cde62923_b88043e5",
+        "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
+        "patchSetId": 3
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-31T20:36:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd9cdab2_fe1637c1",
+      "revId": "e5c408e7eac67cfbd67faeb9b8e5f203c234bb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
