@@ -375,6 +375,7 @@ void DelegatedFrameHost::AttemptFrameSubscriberCapture(
 
 void DelegatedFrameHost::DidCreateNewRendererCompositorFrameSink(
     viz::mojom::CompositorFrameSinkClient* renderer_compositor_frame_sink) {
+  EvictDelegatedFrame();
   ResetCompositorFrameSinkSupport();
   renderer_compositor_frame_sink_ = renderer_compositor_frame_sink;
   CreateCompositorFrameSinkSupport();
