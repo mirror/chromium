@@ -54,16 +54,17 @@
   NSButton* allowButton = [alert_
       addButtonWithTitle:l10n_util::GetNSStringFWithFixup(
                    IDS_EXTERNAL_PROTOCOL_OK_BUTTON_TEXT, appName)];
-  [allowButton setKeyEquivalent:@""];  // disallow as default
+  [allowButton setKeyEquivalent:@"\r"];  // set as default
   [alert_ addButtonWithTitle:
       l10n_util::GetNSStringWithFixup(
                    IDS_EXTERNAL_PROTOCOL_CANCEL_BUTTON_TEXT)];
 
   [alert_ setShowsSuppressionButton:YES];
   [[alert_ suppressionButton]
-      setTitle:l10n_util::GetNSStringFWithFixup(
-                   IDS_EXTERNAL_PROTOCOL_CHECKBOX_TEXT, appName)];
+      setTitle:l10n_util::GetNSStringWithFixup(
+                   IDS_EXTERNAL_PROTOCOL_CHECKBOX_TEXT)];
 
+  [[alert_ window] setInitialFirstResponder:allowButton];
   [alert_ beginSheetModalForWindow:nil  // nil here makes it app-modal
                      modalDelegate:self
                     didEndSelector:@selector(alertEnded:returnCode:contextInfo:)
@@ -102,7 +103,7 @@
         Profile::FromBrowserContext(web_contents->GetBrowserContext());
     bool isChecked = [[alert_ suppressionButton] state] == NSOnState;
     // Set the "don't warn me again" info.
-    if (isChecked)
+    if (isChecked && blockState == ExternalProtocolHandler::DONT_BLOCK)
       ExternalProtocolHandler::SetBlockState(url_.scheme(), blockState,
                                              profile);
 
