@@ -33,6 +33,24 @@
       "revId": "4ceba011acf466a2004cbb5db192807a29af6afd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e17e6c22_8cdd843d",
+        "filename": "base/memory/discardable_shared_memory_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-31T00:19:09Z",
+      "side": 1,
+      "message": "Added a comment to clarify what we\u0027re doing here.",
+      "parentUuid": "b4d86f5e_d68f7f46",
+      "revId": "4ceba011acf466a2004cbb5db192807a29af6afd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
