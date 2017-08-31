@@ -78,7 +78,7 @@ class HostNotifier {
 
   // Caller is responsible for ensuring there will be no duplicate hosts.
   void AddHost(AppCacheHost* host) {
-    std::pair<NotifyHostMap::iterator , bool> ret = hosts_to_notify.insert(
+    std::pair<NotifyHostMap::iterator, bool> ret = hosts_to_notify.insert(
         NotifyHostMap::value_type(host->frontend(), HostIds()));
     ret.first->second.push_back(host->host_id());
   }
@@ -98,13 +98,13 @@ class HostNotifier {
     }
   }
 
-  void SendProgressNotifications(
-      const GURL& url, int num_total, int num_complete) {
+  void SendProgressNotifications(const GURL& url,
+                                 int num_total,
+                                 int num_complete) {
     for (NotifyHostMap::iterator it = hosts_to_notify.begin();
          it != hosts_to_notify.end(); ++it) {
       AppCacheFrontend* frontend = it->first;
-      frontend->OnProgressEventRaised(it->second, url,
-                                      num_total, num_complete);
+      frontend->OnProgressEventRaised(it->second, url, num_total, num_complete);
     }
   }
 
@@ -121,8 +121,8 @@ class HostNotifier {
     for (NotifyHostMap::iterator it = hosts_to_notify.begin();
          it != hosts_to_notify.end(); ++it) {
       AppCacheFrontend* frontend = it->first;
-      for (HostIds::iterator id = it->second.begin();
-           id != it->second.end(); ++id) {
+      for (HostIds::iterator id = it->second.begin(); id != it->second.end();
+           ++id) {
         frontend->OnLogMessage(*id, APPCACHE_LOG_WARNING, message);
       }
     }
@@ -131,7 +131,6 @@ class HostNotifier {
  private:
   NotifyHostMap hosts_to_notify;
 };
-
 AppCacheUpdateJob::UrlToFetch::UrlToFetch(const GURL& url,
                                           bool checked,
                                           AppCacheResponseInfo* info)
@@ -1312,6 +1311,7 @@ void AppCacheUpdateJob::MaybeCompleteUpdate() {
     case REFETCH_MANIFEST:
       DCHECK(stored_state_ == STORED);
       NotifyAllFinalProgress();
+      group_->SetUpdateAppCacheStatus(AppCacheGroup::IDLE);
       if (update_type_ == CACHE_ATTEMPT)
         NotifyAllAssociatedHosts(APPCACHE_CACHED_EVENT);
       else
