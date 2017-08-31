@@ -463,8 +463,8 @@ void PermissionManager::CancelPermissionRequest(int request_id) {
       continue;
     context->CancelPermissionRequest(web_contents, request);
   }
-  // The request should be automatically removed from |pending_requests_| as a
-  // result of it being cancelled but not necessarily immediately.
+
+  CHECK(!pending_requests_.Lookup(request_id));
 }
 
 void PermissionManager::ResetPermission(PermissionType permission,
