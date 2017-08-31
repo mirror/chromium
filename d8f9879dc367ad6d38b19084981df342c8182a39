@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e7f2041_cacc6327",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 1211,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-08-31T10:54:05Z",
+      "side": 1,
+      "message": "nit: \"media-controls-not-loaded\" doesn\u0027t sound right. Sorry if I\u0027m the one who proposed this. The controls are loaded (it\u0027s the data that isn\u0027t). Maybe just \"not-loaded\"?",
+      "revId": "d8f9879dc367ad6d38b19084981df342c8182a39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22782650_7bd2640b",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlInputElement.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-08-31T10:54:05Z",
+      "side": 1,
+      "message": "The API would be easier to read if you swap the `class_name` and `should_have_class`.",
+      "revId": "d8f9879dc367ad6d38b19084981df342c8182a39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "9ff96e3f_6e3eeb4b",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 20
+      },
+      "lineNbr": 3588,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-08-31T10:54:05Z",
+      "side": 1,
+      "message": "Did you miss this comment?",
+      "parentUuid": "06ff402a_3966a427",
+      "revId": "92597cf0198dd80069cbc66bca152226bd491f80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a8a84f0f_ee70e69b",
         "filename": "third_party/WebKit/LayoutTests/media/controls/toggle-class-with-state-fullscreen.html",
         "patchSetId": 20
@@ -293,6 +311,24 @@
       "side": 1,
       "message": "There are two range types though kMediaSlider and kMediaVolumeSlider?",
       "parentUuid": "e766826f_3f708181",
+      "revId": "92597cf0198dd80069cbc66bca152226bd491f80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b43c92b6_975ba446",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlSegmentedTrackElement.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-08-31T10:54:05Z",
+      "side": 1,
+      "message": "I meant to move `setType(InputTypeNames::range);` here instead of having it in the child classes. It\u0027s not important as there are other initialisations anyway.",
+      "parentUuid": "b6db7356_658e7236",
       "revId": "92597cf0198dd80069cbc66bca152226bd491f80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -579,6 +615,24 @@
     },
     {
       "key": {
+        "uuid": "aea83580_b8316d84",
+        "filename": "third_party/WebKit/Source/modules/media_controls/resources/mediaControls.css",
+        "patchSetId": 20
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-08-31T10:54:05Z",
+      "side": 1,
+      "message": "That sounds like a bug. Shouldn\u0027t we have images of the size we need? Maybe we should try to fix this for the new UI?",
+      "parentUuid": "cd9213ed_30cd420c",
+      "revId": "92597cf0198dd80069cbc66bca152226bd491f80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a6ea73b_25903b3c",
         "filename": "third_party/WebKit/Source/modules/media_controls/resources/media_controls_resources.grd",
         "patchSetId": 20
@@ -608,6 +662,24 @@
       "side": 1,
       "message": "Grit doesn\u0027t support gzipping \"structures\" (which it needs to be to use \"chrome_html\" to insert images). My plan is to come back and add this in a separate CL.",
       "parentUuid": "0a6ea73b_25903b3c",
+      "revId": "92597cf0198dd80069cbc66bca152226bd491f80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b1a78ea_a3b82e31",
+        "filename": "third_party/WebKit/Source/modules/media_controls/resources/media_controls_resources.grd",
+        "patchSetId": 20
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-08-31T10:54:05Z",
+      "side": 1,
+      "message": "sounds good",
+      "parentUuid": "a48d798e_cafdca70",
       "revId": "92597cf0198dd80069cbc66bca152226bd491f80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
