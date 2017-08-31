@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "1f1b2f75_17dd6852",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-31T14:59:42Z",
+      "side": 1,
+      "message": "nit: Won\u0027t IsArcPlayStoreEnabledForProfile() achieve the same? (and combined with many other sanity checks)",
+      "range": {
+        "startLine": 182,
+        "startChar": 11,
+        "endLine": 183,
+        "endChar": 62
+      },
+      "revId": "d0c9a2833b22b314c44e9349689b1a7e6d22f9ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fc1c381_632cee67",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-31T14:59:42Z",
+      "side": 1,
+      "message": "nit: It seems a bit odd that the necessity to perform the migration is checked only in this particular \"AskForEcryptfsArcUsers\" case.\nShouldn\u0027t the whole function IsArcMigrationAllowedForProfile() return false if the command line is not present?",
+      "range": {
+        "startLine": 184,
+        "startChar": 11,
+        "endLine": 185,
+        "endChar": 62
+      },
+      "revId": "d0c9a2833b22b314c44e9349689b1a7e6d22f9ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f845bd84_9dde4701",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-31T14:59:42Z",
+      "side": 1,
+      "message": "nit: Why do this in the same function? The ArcEnabled policy is a completely separate policy, therefore I think it\u0027s better to dedicate a separate function for reading it.",
+      "range": {
+        "startLine": 224,
+        "startChar": 36,
+        "endLine": 225,
+        "endChar": 32
+      },
+      "revId": "d0c9a2833b22b314c44e9349689b1a7e6d22f9ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "44e2dd3a_563961fa",
         "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
         "patchSetId": 7
@@ -18,6 +87,52 @@
         "startChar": 10,
         "endLine": 1070,
         "endChar": 21
+      },
+      "revId": "d0c9a2833b22b314c44e9349689b1a7e6d22f9ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "724d7803_bee2f43c",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1070,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-31T14:59:42Z",
+      "side": 1,
+      "message": "nit: Add {} brackets around the if and else bodies (omitting them is only allowed for single-line bodies).",
+      "range": {
+        "startLine": 1070,
+        "startChar": 6,
+        "endLine": 1070,
+        "endChar": 8
+      },
+      "revId": "d0c9a2833b22b314c44e9349689b1a7e6d22f9ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f62e766a_16310c77",
+        "filename": "chromeos/chromeos_switches.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-31T14:59:42Z",
+      "side": 1,
+      "message": "nit: This name looks a bit cryptic.\nMaybe name it something like \"kArcEcryptfsMigrationRequired\"? This would also correspond to the policy enum\u0027s name.",
+      "range": {
+        "startLine": 89,
+        "startChar": 11,
+        "endLine": 89,
+        "endChar": 37
       },
       "revId": "d0c9a2833b22b314c44e9349689b1a7e6d22f9ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
