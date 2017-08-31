@@ -52,6 +52,24 @@
       "revId": "a2d91f7abd56e979225f2a29f35e7023e7bf73c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e43ddf5_85b3500e",
+        "filename": "chrome/installer/linux/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-08-31T01:11:28Z",
+      "side": 1,
+      "message": "Ok, turns out the bots do build \"all\", but analyze pruned it down to just a few targets on the CL that I was testing on.\n\nAaaand, when I remove the is_chrome_branded check, the deb packages get built on linux_chromium_rel_ng which complains about DEPS changes.\n\nI have a plan to fix all the things:\n* I spoke with dpranke@ offline and we decided it would be good to have the linux packages get built on the bots.  However, the problem is they take too long to build.  I found out that this was because we were always passing -z9 to dpkg-deb.  When using -z0, the packages get built in a few seconds.  We should use -z0 when is_official_build\u003dfalse.  The is_official_build flag has nothing to do with branding, but is just an added level of optimization on top of Release: https://cs.chromium.org/chromium/src/build/config/BUILDCONFIG.gn?rcl\u003dd96af20ab51519c4b335c1486f4d73eb36472361\u0026l\u003d126\n* Find out why the packages never get built in parallel and fix it.. This will make the package builds even faster on Debug and Release (non-official) builds\n* Finish implementing the RPM dep checker\n* Remove the current package dep checks for deb and rpm, and make the linux packages depend on \"check_package_dependencies\".  Add //chrome/installer/linux to gn_all.  This will all need to be done in the same CL to avoid the \"ERROR: Shared library dependencies changed!\" failure if it wasn\u0027t.\n\nBut for now, I think it\u0027s safe to land this CL as-is.",
+      "parentUuid": "c6f042b6_62b19b82",
+      "revId": "a2d91f7abd56e979225f2a29f35e7023e7bf73c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
