@@ -28,11 +28,11 @@ struct GFX_EXPORT IconDescription {
 
   ~IconDescription();
 
-  const VectorIcon& icon;
+  const VectorIcon icon;
   int dip_size;
   SkColor color;
   const base::TimeDelta elapsed_time;
-  const VectorIcon& badge_icon;
+  const VectorIcon badge_icon;
 };
 
 GFX_EXPORT extern const VectorIcon kNoneIcon;
