@@ -33,6 +33,29 @@
       "revId": "f44a879a6388c0baa918444f4dddb44656bf7035",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36c529c2_0ed26554",
+        "filename": "ui/snapshot/snapshot_async.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-31T17:37:32Z",
+      "side": 1,
+      "message": "Wow, SkBitmap sure has a lot of functions that sound awfully similar!",
+      "range": {
+        "startLine": 41,
+        "startChar": 14,
+        "endLine": 41,
+        "endChar": 25
+      },
+      "revId": "f44a879a6388c0baa918444f4dddb44656bf7035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
