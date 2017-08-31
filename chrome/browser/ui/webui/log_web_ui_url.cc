@@ -21,6 +21,7 @@
 
 namespace webui {
 
+const char kWebUICreatedForPath[] = "WebUI.CreatedForPath";
 const char kWebUICreatedForUrl[] = "WebUI.CreatedForUrl";
 
 bool LogWebUIUrl(const GURL& web_ui_url) {
@@ -33,9 +34,23 @@ bool LogWebUIUrl(const GURL& web_ui_url) {
 #endif
 
   if (should_log) {
+    // Record the origin.
+    // TODO(dschuyler): If the origin and path (below) is sufficient, look into
+    // removing this origin only histogram.
     uint32_t hash = base::Hash(web_ui_url.GetOrigin().spec());
     UMA_HISTOGRAM_SPARSE_SLOWLY(kWebUICreatedForUrl,
                                 static_cast<base::HistogramBase::Sample>(hash));
+    // Record the origin and path.
+    GURL::Replacements remove_params;
+    remove_params.ClearUsername();
+    remove_params.ClearPassword();
+    remove_params.ClearQuery();
+    remove_params.ClearRef();
+    uint32_t path_hash =
+        base::Hash(web_ui_url.ReplaceComponents(remove_params).spec());
+    UMA_HISTOGRAM_SPARSE_SLOWLY(
+        kWebUICreatedForPath,
+        static_cast<base::HistogramBase::Sample>(path_hash));
   }
 
   return should_log;

@@ -41,9 +41,20 @@ class LogWebUIUrlTest : public InProcessBrowserTest {
     content::TitleWatcher title_watcher(tab, title);
     ui_test_utils::NavigateToURL(browser(), url);
     ASSERT_EQ(title, title_watcher.WaitAndGetTitle());
+    // Check origin metric.
     uint32_t origin_hash = base::Hash(url.GetOrigin().spec());
     EXPECT_THAT(histogram_tester_.GetAllSamples(webui::kWebUICreatedForUrl),
                 ElementsAre(Bucket(origin_hash, 1)));
+    // Check path metric.
+    GURL::Replacements remove_params;
+    remove_params.ClearUsername();
+    remove_params.ClearPassword();
+    remove_params.ClearQuery();
+    remove_params.ClearRef();
+    uint32_t path_hash =
+        base::Hash(url.ReplaceComponents(remove_params).spec());
+    EXPECT_THAT(histogram_tester_.GetAllSamples(webui::kWebUICreatedForPath),
+                ElementsAre(Bucket(path_hash, 1)));
   }
 
  private:
