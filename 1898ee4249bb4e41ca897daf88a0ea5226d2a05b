@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f5f69b9_d707f668",
+        "filename": "chrome/browser/translate/translate_language_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-08-31T07:56:11Z",
+      "side": 1,
+      "message": "Everything related to the translate model isn\u0027t necessary in this CL, right?",
+      "range": {
+        "startLine": 49,
+        "startChar": 55,
+        "endLine": 49,
+        "endChar": 0
+      },
+      "revId": "1898ee4249bb4e41ca897daf88a0ea5226d2a05b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41a9ef31_dfbbd109",
+        "filename": "chrome/browser/translate/translate_language_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-08-31T07:56:11Z",
+      "side": 1,
+      "message": "This is related to my previous comment (r.e. \"stateful\"ness):\n\nIf you don\u0027t want to have a Browser* arg here, would you consider having browser_(browser()) in the initializer list for this class instead of assigning it in this method? That way this method takes browser_ as input only (i.e. doesn\u0027t modify it) and produces translate_model_ as \"output\" (which could be could be explained in a comment).",
+      "range": {
+        "startLine": 63,
+        "startChar": 20,
+        "endLine": 63,
+        "endChar": 0
+      },
+      "revId": "1898ee4249bb4e41ca897daf88a0ea5226d2a05b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a375a59_a1797a0a",
+        "filename": "chrome/browser/translate/translate_language_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-08-31T07:56:11Z",
+      "side": 1,
+      "message": "Just following up: you\u0027re confident you understand how this interacts with browser() vs. CreateIncognitoBrowser()? (Because I don\u0027t understand it personally)\n\ni.e. the bubble object you\u0027re fetching is definitely the one for the incognito window (not the original window)?",
+      "range": {
+        "startLine": 77,
+        "startChar": 80,
+        "endLine": 77,
+        "endChar": 0
+      },
+      "revId": "1898ee4249bb4e41ca897daf88a0ea5226d2a05b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7487bc6_735ab28e",
+        "filename": "chrome/browser/translate/translate_language_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-08-31T07:56:11Z",
+      "side": 1,
+      "message": "Failing this pointer check (and the ones in GetUrlLanguageHistogram) should be fatal, right? i.e. they should be ASSERT_TRUEs.",
+      "range": {
+        "startLine": 79,
+        "startChar": 26,
+        "endLine": 79,
+        "endChar": 0
+      },
+      "revId": "1898ee4249bb4e41ca897daf88a0ea5226d2a05b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9129e7fb_f4ef8e5a",
+        "filename": "chrome/browser/translate/translate_language_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-08-31T07:56:11Z",
+      "side": 1,
+      "message": "Nitpick: why do you use content::WebContents explicitly above, and auto (instead of content::BrowserContext) here?",
+      "range": {
+        "startLine": 90,
+        "startChar": 68,
+        "endLine": 90,
+        "endChar": 0
+      },
+      "revId": "1898ee4249bb4e41ca897daf88a0ea5226d2a05b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
