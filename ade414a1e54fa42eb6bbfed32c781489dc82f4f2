@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9fcdf162_e293eae0",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_metrics.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-31T06:47:16Z",
+      "side": 1,
+      "message": "Right - this used to be an EXACT_LINEAR histogram, which I argued against :)  Now the number of buckets doesn\u0027t make sense anymore. Changed to 50.",
+      "parentUuid": "76a64d28_4db03b60",
+      "range": {
+        "startLine": 62,
+        "startChar": 48,
+        "endLine": 62,
+        "endChar": 58
+      },
+      "revId": "ade414a1e54fa42eb6bbfed32c781489dc82f4f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01c35b94_9b680911",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 10
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "518992cf_58b298a4",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 5950,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-31T06:47:16Z",
+      "side": 1,
+      "message": "Made them \"Token invalid\" and \"Token revalidated\", and also shortened the above ones a bit.",
+      "parentUuid": "01c35b94_9b680911",
+      "range": {
+        "startLine": 5950,
+        "startChar": 55,
+        "endLine": 5950,
+        "endChar": 0
+      },
+      "revId": "ade414a1e54fa42eb6bbfed32c781489dc82f4f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41b2bd38_e0c49ac9",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 10
@@ -68,6 +116,30 @@
       "revId": "ade414a1e54fa42eb6bbfed32c781489dc82f4f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54e1d955_03fbfc88",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 46955,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-31T06:47:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41b2bd38_e0c49ac9",
+      "range": {
+        "startLine": 46955,
+        "startChar": 27,
+        "endLine": 46955,
+        "endChar": 28
+      },
+      "revId": "ade414a1e54fa42eb6bbfed32c781489dc82f4f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
