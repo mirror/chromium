@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e829f2a9_c4ef5f3b",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-08-31T20:12:12Z",
+      "side": 1,
+      "message": "nit: maybe remove all the caps?",
+      "range": {
+        "startLine": 394,
+        "startChar": 19,
+        "endLine": 394,
+        "endChar": 57
+      },
+      "revId": "97cd3b87217cbc9aa1a4fd7342eda345f251981d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f579d26f_68d96675",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-08-31T20:12:12Z",
+      "side": 1,
+      "message": "nit: DCHECK(errorMessage) atop this method",
+      "range": {
+        "startLine": 465,
+        "startChar": 5,
+        "endLine": 465,
+        "endChar": 17
+      },
+      "revId": "97cd3b87217cbc9aa1a4fd7342eda345f251981d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
