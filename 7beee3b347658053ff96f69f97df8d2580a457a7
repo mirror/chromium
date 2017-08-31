@@ -65,6 +65,23 @@
     },
     {
       "key": {
+        "uuid": "de609eac_8f79ba01",
+        "filename": "content/common/origin_trials/trial_policy_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-31T03:38:26Z",
+      "side": 1,
+      "message": "Btw I believe that we can definitely remove this code at least in a few follow-up patches. Could we maybe have a TODO about that?  I can probably sketch out necessary plumbing.",
+      "revId": "7beee3b347658053ff96f69f97df8d2580a457a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c8acd205_ac4cb4fe",
         "filename": "content/renderer/renderer_blink_platform_impl.h",
         "patchSetId": 10
