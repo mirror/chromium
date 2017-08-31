@@ -989,6 +989,10 @@ ImageDecodeCacheKey ImageDecodeCacheKey::FromDrawImage(const DrawImage& image,
   } else {
     quality = kMedium_SkFilterQuality;
     // Update the target size to be a mip level size.
+    // TODO(vmpstr): MipMapUtil and JPEG decoders disagree on what to do with
+    // odd sizes. If width = 2k + 1, and the mip level is 1, then this will
+    // return width = k; JPEG decoder, however, will support decoding to width =
+    // k + 1. We need to figure out what to do in this case.
     SkSize mip_scale_adjustment =
         MipMapUtil::GetScaleAdjustmentForLevel(src_rect.size(), mip_level);
     target_size.set_width(src_rect.width() * mip_scale_adjustment.width());
