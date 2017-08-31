@@ -331,7 +331,11 @@ ShellSurface::ShellSurface(Surface* surface,
       origin_(origin),
       activatable_(activatable),
       can_minimize_(can_minimize),
-      container_(container) {
+      container_(container),
+      scale_(bounds_mode_ == BoundsMode::CLIENT
+             ? WMHelper::GetInstance()->GetDefaultDeviceScaleFactor()
+             : 1.0)
+{
   WMHelper::GetInstance()->AddActivationObserver(this);
   WMHelper::GetInstance()->AddDisplayConfigurationObserver(this);
   display::Screen::GetScreen()->AddObserver(this);
@@ -341,6 +345,13 @@ ShellSurface::ShellSurface(Surface* surface,
   set_owned_by_client();
   if (parent_)
     parent_->AddObserver(this);
+
+  if (scale_ != 1.0) {
+    gfx::Transform transform;
+    DCHECK_NE(scale_, 0.0);
+    transform.Scale(1.0 / scale_, 1.0 / scale_);
+    host_window()->SetTransform(transform);
+  }
 }
 
 ShellSurface::ShellSurface(Surface* surface)
@@ -683,16 +694,7 @@ void ShellSurface::SetFrame(bool enabled) {
   frame_enabled_ = enabled;
 }
 
-void ShellSurface::SetScale(double scale) {
-  TRACE_EVENT1("exo", "ShellSurface::SetScale", "scale", scale);
-
-  if (scale <= 0.0) {
-    DLOG(WARNING) << "Surface scale must be greater than 0";
-    return;
-  }
-
-  pending_scale_ = scale;
-}
+void ShellSurface::SetScale_DEPRECATED(double scale) {}
 
 void ShellSurface::SetTopInset(int height) {
   TRACE_EVENT1("exo", "ShellSurface::SetTopInset", "height", height);
@@ -799,15 +801,6 @@ void ShellSurface::OnSurfaceCommit() {
     }
 
     UpdateSurfaceBounds();
-
-    // Update surface scale.
-    if (pending_scale_ != scale_) {
-      gfx::Transform transform;
-      DCHECK_NE(pending_scale_, 0.0);
-      transform.Scale(1.0 / pending_scale_, 1.0 / pending_scale_);
-      host_window()->SetTransform(transform);
-      scale_ = pending_scale_;
-    }
 
     // Show widget if needed.
     if (pending_show_widget_) {
