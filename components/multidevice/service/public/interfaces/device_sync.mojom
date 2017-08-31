@@ -31,6 +31,9 @@ struct RemoteDevice {
   // model, but this value is editable.
   string device_name;
 
+  // Long-term symmetric key that is shared by the initiator and the responder.
+  string persistent_symmetric_key;
+
   // True if this device has the capability of unlocking another device via
   // EasyUnlock.
   bool unlock_key;
@@ -100,7 +103,7 @@ interface DeviceSyncObserver {
   OnEnrollmentFinished(bool success);
 
   // Invoked when new devices have been synced from the server.
-  OnDevicesSynced(bool success);
+  OnDevicesSynced(bool success, bool device_change_result);
 };
 
 interface DeviceSync {
@@ -111,6 +114,10 @@ interface DeviceSync {
   // Triggers a device sync. Result of the sync will be relayed via the
   // OnDevicesSynced() observer function.
   ForceSyncNow();
+
+  // Returns devices which have been synced from the server.
+  [Sync]
+  GetSyncedDevices() => (array<RemoteDevice> devices);
 
   // Adds an Observer of this API.
   AddObserver(DeviceSyncObserver observer);

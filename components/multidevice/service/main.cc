@@ -7,6 +7,8 @@
 #include "services/service_manager/public/cpp/service_runner.h"
 
 MojoResult ServiceMain(MojoHandle service_request_handle) {
+  // TODO(hsuregan): Discuess how to pass in gcm_manager_, enrollment_manager_,
+  // and device_manager_
   service_manager::ServiceRunner runner(new multidevice::MultiDeviceService());
   return runner.Run(service_request_handle);
 }

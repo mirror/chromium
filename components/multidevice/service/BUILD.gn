@@ -9,6 +9,8 @@ import("//services/service_manager/public/tools/test/service_test.gni")
 
 static_library("service") {
   sources = [
+    "//chrome/browser/chromeos/login/easy_unlock/secure_message_delegate_chromeos.cc",
+    "//chrome/browser/chromeos/login/easy_unlock/secure_message_delegate_chromeos.h",
     "device_sync_impl.cc",
     "device_sync_impl.h",
     "multidevice_service.cc",
@@ -17,10 +19,16 @@ static_library("service") {
 
   deps = [
     "//base",
+    "//components/signin/core/browser",
+    "//components/signin/core/browser:account_info",
+    "//content/public/renderer:renderer",
   ]
 
   public_deps = [
+    "//components/cryptauth",
     "//components/multidevice/service/public/interfaces",
+    "//components/signin/core/browser",
+    "//services/identity/public/interfaces",
     "//services/service_manager/public/cpp",
   ]
 }
@@ -38,6 +46,7 @@ service("multidevice") {
   deps = [
     ":service",
     "//base",
+    "//components/cryptauth",
   ]
 }
 
