@@ -431,6 +431,8 @@ cr.define('settings', function() {
      * @param {boolean} isPopstate
      */
     setCurrentRoute(route, queryParameters, isPopstate) {
+      recordMetrics('chrome:/' + route.path);
+
       var oldRoute = this.currentRoute;
       this.currentRoute = route;
       this.currentQueryParameters_ = queryParameters;
@@ -528,6 +530,10 @@ cr.define('settings', function() {
      * Initialize the route and query params from the URL.
      */
     initializeRouteFromUrl() {
+      // |window.location.href| will often look correct, but we don't
+      // want password, username or query strings (avoid using .href here).
+      recordMetrics(window.location.origin + window.location.pathname);
+
       assert(!this.initializeRouteFromUrlCalled_);
       this.initializeRouteFromUrlCalled_ = true;
 
@@ -540,6 +546,19 @@ cr.define('settings', function() {
       } else {
         window.history.replaceState(undefined, '', this.routes_.BASIC.path);
       }
+    }
+
+    /**
+     * Make a UMA note about visiting this URL path.
+     * @param {string} location The url without password, username or query. The
+     *     |location| should start with "chrome://".
+     */
+    recordMetrics(location) {
+      // The |location| pattern is intended to match the hashes used for
+      // 'WebUI.CreatedForUrl'.
+      assert(location.startsWith('chrome://'));
+      chrome.metricsPrivate.recordSparseHashable(
+          'WebUI.CreatedForPath', location);
     }
 
     resetRouteForTesting() {
