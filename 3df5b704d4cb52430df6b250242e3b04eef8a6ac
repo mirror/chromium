@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1535a67_aaf57195",
+        "filename": "ui/base/test/ui_controls_internal_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-31T17:24:49Z",
+      "side": 1,
+      "message": "Don\u0027t use auto here. It hurts readability.",
+      "range": {
+        "startLine": 143,
+        "startChar": 2,
+        "endLine": 143,
+        "endChar": 7
+      },
+      "revId": "3df5b704d4cb52430df6b250242e3b04eef8a6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5ed90d0_1c34d055",
+        "filename": "ui/base/test/ui_controls_internal_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-31T17:24:49Z",
+      "side": 1,
+      "message": "I don\u0027t understand your comment. Also, it seems to me as though there should be a better way to determine this rather than assuming KF_EXTENDED.",
+      "range": {
+        "startLine": 144,
+        "startChar": 5,
+        "endLine": 145,
+        "endChar": 53
+      },
+      "revId": "3df5b704d4cb52430df6b250242e3b04eef8a6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "383728e6_a1b39f40",
+        "filename": "ui/base/test/ui_controls_internal_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-31T17:24:49Z",
+      "side": 1,
+      "message": "Why the \u0027::\u0027?",
+      "range": {
+        "startLine": 178,
+        "startChar": 24,
+        "endLine": 178,
+        "endChar": 26
+      },
+      "revId": "3df5b704d4cb52430df6b250242e3b04eef8a6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
