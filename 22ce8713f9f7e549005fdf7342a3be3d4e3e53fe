@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "79ac2941_a7082ada",
+        "filename": "build/run_swarming_xcode_install.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-08-31T15:28:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2809c8d1_bfa267e1",
+      "revId": "22ce8713f9f7e549005fdf7342a3be3d4e3e53fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66f9c876_16ea2d8f",
         "filename": "build/run_swarming_xcode_install.py",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "22ce8713f9f7e549005fdf7342a3be3d4e3e53fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cef1bbd_f4ce8022",
+        "filename": "build/run_swarming_xcode_install.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-08-31T15:28:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66f9c876_16ea2d8f",
+      "revId": "22ce8713f9f7e549005fdf7342a3be3d4e3e53fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "56b9efb0_dbc077d0",
+        "filename": "build/run_swarming_xcode_install.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-08-31T15:28:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07f28686_34ed26c3",
+      "revId": "22ce8713f9f7e549005fdf7342a3be3d4e3e53fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9eddf64_7ef46447",
         "filename": "build/run_swarming_xcode_install.py",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "22ce8713f9f7e549005fdf7342a3be3d4e3e53fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab948ba1_dcddf844",
+        "filename": "build/run_swarming_xcode_install.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-08-31T15:28:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9eddf64_7ef46447",
+      "revId": "22ce8713f9f7e549005fdf7342a3be3d4e3e53fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
