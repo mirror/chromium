@@ -155,11 +155,11 @@ float ScaleFactorForDisplay(Window* window) {
 std::unique_ptr<ui::Event> MapEvent(const ui::Event& event) {
   if (event.IsMousePointerEvent()) {
     if (event.type() == ui::ET_POINTER_WHEEL_CHANGED)
-      return base::MakeUnique<ui::MouseWheelEvent>(*event.AsPointerEvent());
-    return base::MakeUnique<ui::MouseEvent>(*event.AsPointerEvent());
+      return std::make_unique<ui::MouseWheelEvent>(*event.AsPointerEvent());
+    return std::make_unique<ui::MouseEvent>(*event.AsPointerEvent());
   }
   if (event.IsTouchPointerEvent())
-    return base::MakeUnique<ui::TouchEvent>(*event.AsPointerEvent());
+    return std::make_unique<ui::TouchEvent>(*event.AsPointerEvent());
   return ui::Event::Clone(event);
 }
 
@@ -210,7 +210,7 @@ WindowTreeClient::WindowTreeClient(
     if (!io_task_runner) {
       // |io_task_runner| is null in most case. But for the browser process,
       // the |io_task_runner| is the browser's IO thread.
-      io_thread_ = base::MakeUnique<base::Thread>("IOThread");
+      io_thread_ = std::make_unique<base::Thread>("IOThread");
       base::Thread::Options thread_options(base::MessageLoop::TYPE_IO, 0);
       thread_options.priority = base::ThreadPriority::NORMAL;
       CHECK(io_thread_->StartWithOptions(thread_options));
@@ -219,7 +219,7 @@ WindowTreeClient::WindowTreeClient(
 
     gpu_ = ui::Gpu::Create(connector, ui::mojom::kServiceName, io_task_runner);
     compositor_context_factory_ =
-        base::MakeUnique<MusContextFactory>(gpu_.get());
+        std::make_unique<MusContextFactory>(gpu_.get());
     initial_context_factory_ = Env::GetInstance()->context_factory();
     Env::GetInstance()->set_context_factory(compositor_context_factory_.get());
 
@@ -228,7 +228,7 @@ WindowTreeClient::WindowTreeClient(
     if (create_discardable_memory) {
       discardable_memory::mojom::DiscardableSharedMemoryManagerPtr manager_ptr;
       connector->BindInterface(ui::mojom::kServiceName, &manager_ptr);
-      discardable_shared_memory_manager_ = base::MakeUnique<
+      discardable_shared_memory_manager_ = std::make_unique<
           discardable_memory::ClientDiscardableSharedMemoryManager>(
           std::move(manager_ptr), std::move(io_task_runner));
       base::DiscardableMemoryAllocator::SetInstance(
@@ -305,7 +305,7 @@ void WindowTreeClient::SetCursor(WindowMus* window,
   DCHECK(tree_);
 
   const uint32_t change_id = ScheduleInFlightChange(
-      base::MakeUnique<InFlightCursorChange>(window, old_cursor));
+      std::make_unique<InFlightCursorChange>(window, old_cursor));
   tree_->SetCursor(change_id, window->server_id(), new_cursor);
 }
 
@@ -502,7 +502,7 @@ std::unique_ptr<WindowPortMus> WindowTreeClient::CreateWindowPortMus(
     const ui::mojom::WindowData& window_data,
     WindowMusType window_mus_type) {
   std::unique_ptr<WindowPortMus> window_port_mus(
-      base::MakeUnique<WindowPortMus>(this, window_mus_type));
+      std::make_unique<WindowPortMus>(this, window_mus_type));
   window_port_mus->set_server_id(window_data.window_id);
   RegisterWindowMus(window_port_mus.get());
   return window_port_mus;
@@ -542,7 +542,7 @@ std::unique_ptr<WindowTreeHostMus> WindowTreeClient::CreateWindowTreeHost(
   init_params.window_tree_client = this;
   init_params.display_id = display_id;
   std::unique_ptr<WindowTreeHostMus> window_tree_host =
-      base::MakeUnique<WindowTreeHostMus>(std::move(init_params));
+      std::make_unique<WindowTreeHostMus>(std::move(init_params));
   window_tree_host->InitHost();
   SetLocalPropertiesFromServerProperties(
       WindowMus::Get(window_tree_host->window()), window_data);
@@ -603,9 +603,9 @@ void WindowTreeClient::WindowTreeConnectionEstablished(
     ui::mojom::WindowTree* window_tree) {
   tree_ = window_tree;
 
-  drag_drop_controller_ = base::MakeUnique<DragDropControllerMus>(this, tree_);
-  capture_synchronizer_ = base::MakeUnique<CaptureSynchronizer>(this, tree_);
-  focus_synchronizer_ = base::MakeUnique<FocusSynchronizer>(this, tree_);
+  drag_drop_controller_ = std::make_unique<DragDropControllerMus>(this, tree_);
+  capture_synchronizer_ = std::make_unique<CaptureSynchronizer>(this, tree_);
+  focus_synchronizer_ = std::make_unique<FocusSynchronizer>(this, tree_);
 }
 
 void WindowTreeClient::OnConnectionLost() {
@@ -617,7 +617,7 @@ bool WindowTreeClient::HandleInternalPropertyChanged(WindowMus* window,
                                                      int64_t old_value) {
   if (key == client::kModalKey) {
     const uint32_t change_id =
-        ScheduleInFlightChange(base::MakeUnique<InFlightSetModalTypeChange>(
+        ScheduleInFlightChange(std::make_unique<InFlightSetModalTypeChange>(
             window, static_cast<ui::ModalType>(old_value)));
     tree_->SetModalType(change_id, window->server_id(),
                         window->GetWindow()->GetProperty(client::kModalKey));
@@ -625,7 +625,7 @@ bool WindowTreeClient::HandleInternalPropertyChanged(WindowMus* window,
   }
   if (key == client::kChildModalParentKey) {
     const uint32_t change_id =
-        ScheduleInFlightChange(base::MakeUnique<CrashInFlightChange>(
+        ScheduleInFlightChange(std::make_unique<CrashInFlightChange>(
             window, ChangeType::CHILD_MODAL_PARENT));
     Window* child_modal_parent =
         window->GetWindow()->GetProperty(client::kChildModalParentKey);
@@ -680,7 +680,7 @@ WindowTreeHostMus* WindowTreeClient::WmNewDisplayAddedImpl(
 
 std::unique_ptr<EventResultCallback>
 WindowTreeClient::CreateEventResultCallback(int32_t event_id) {
-  return base::MakeUnique<EventResultCallback>(
+  return std::make_unique<EventResultCallback>(
       base::Bind(&ui::mojom::WindowTree::OnWindowInputEventAck,
                  base::Unretained(tree_), event_id));
 }
@@ -738,7 +738,7 @@ void WindowTreeClient::ScheduleInFlightBoundsChange(
     const gfx::Rect& old_bounds,
     const gfx::Rect& new_bounds) {
   const uint32_t change_id =
-      ScheduleInFlightChange(base::MakeUnique<InFlightBoundsChange>(
+      ScheduleInFlightChange(std::make_unique<InFlightBoundsChange>(
           this, window, old_bounds, window->GetLocalSurfaceId()));
   base::Optional<viz::LocalSurfaceId> local_surface_id;
   if (window->window_mus_type() == WindowMusType::TOP_LEVEL_IN_WM ||
@@ -777,7 +777,7 @@ void WindowTreeClient::OnWindowMusCreated(WindowMus* window) {
   }
 
   const uint32_t change_id = ScheduleInFlightChange(
-      base::MakeUnique<CrashInFlightChange>(window, ChangeType::NEW_WINDOW));
+      std::make_unique<CrashInFlightChange>(window, ChangeType::NEW_WINDOW));
   tree_->NewWindow(change_id, window->server_id(),
                    std::move(transport_properties));
   if (window->GetWindow()->event_targeting_policy() !=
@@ -828,7 +828,7 @@ void WindowTreeClient::OnWindowMusDestroyed(WindowMus* window, Origin origin) {
   if (!in_shutdown_ && origin == Origin::CLIENT &&
       (WasCreatedByThisClient(window) || IsRoot(window))) {
     const uint32_t change_id =
-        ScheduleInFlightChange(base::MakeUnique<CrashInFlightChange>(
+        ScheduleInFlightChange(std::make_unique<CrashInFlightChange>(
             window, ChangeType::DELETE_WINDOW));
     tree_->DeleteWindow(change_id, window->server_id());
   }
@@ -891,7 +891,7 @@ void WindowTreeClient::OnWindowMusTransformChanged(
     const gfx::Transform& old_transform,
     const gfx::Transform& new_transform) {
   const uint32_t change_id = ScheduleInFlightChange(
-      base::MakeUnique<InFlightTransformChange>(this, window, old_transform));
+      std::make_unique<InFlightTransformChange>(this, window, old_transform));
   tree_->SetWindowTransform(change_id, window->server_id(), new_transform);
 }
 
@@ -899,7 +899,7 @@ void WindowTreeClient::OnWindowMusAddChild(WindowMus* parent,
                                            WindowMus* child) {
   // TODO: add checks to ensure this can work.
   const uint32_t change_id = ScheduleInFlightChange(
-      base::MakeUnique<CrashInFlightChange>(parent, ChangeType::ADD_CHILD));
+      std::make_unique<CrashInFlightChange>(parent, ChangeType::ADD_CHILD));
   tree_->AddWindow(change_id, parent->server_id(), child->server_id());
 }
 
@@ -907,7 +907,7 @@ void WindowTreeClient::OnWindowMusRemoveChild(WindowMus* parent,
                                               WindowMus* child) {
   // TODO: add checks to ensure this can work.
   const uint32_t change_id = ScheduleInFlightChange(
-      base::MakeUnique<CrashInFlightChange>(parent, ChangeType::REMOVE_CHILD));
+      std::make_unique<CrashInFlightChange>(parent, ChangeType::REMOVE_CHILD));
   tree_->RemoveWindowFromParent(change_id, child->server_id());
 }
 
@@ -916,7 +916,7 @@ void WindowTreeClient::OnWindowMusMoveChild(WindowMus* parent,
                                             size_t dest_index) {
   // TODO: add checks to ensure this can work, e.g. we own the parent.
   const uint32_t change_id = ScheduleInFlightChange(
-      base::MakeUnique<CrashInFlightChange>(parent, ChangeType::REORDER));
+      std::make_unique<CrashInFlightChange>(parent, ChangeType::REORDER));
   WindowMus* window =
       WindowMus::Get(parent->GetWindow()->children()[current_index]);
   WindowMus* relative_window = nullptr;
@@ -938,7 +938,7 @@ void WindowTreeClient::OnWindowMusSetVisible(WindowMus* window, bool visible) {
   // TODO: add checks to ensure this can work.
   DCHECK(tree_);
   const uint32_t change_id = ScheduleInFlightChange(
-      base::MakeUnique<InFlightVisibleChange>(this, window, !visible));
+      std::make_unique<InFlightVisibleChange>(this, window, !visible));
   tree_->SetWindowVisibility(change_id, window->server_id(), visible);
 }
 
@@ -949,7 +949,7 @@ WindowTreeClient::OnWindowMusWillChangeProperty(WindowMus* window,
     return nullptr;
 
   std::unique_ptr<WindowPortPropertyDataMus> data(
-      base::MakeUnique<WindowPortPropertyDataMus>());
+      std::make_unique<WindowPortPropertyDataMus>());
   if (!delegate_->GetPropertyConverter()->ConvertPropertyForTransport(
           window->GetWindow(), key, &data->transport_name,
           &data->transport_value)) {
@@ -982,7 +982,7 @@ void WindowTreeClient::OnWindowMusPropertyChanged(
     transport_value_mojo.emplace(std::move(*transport_value));
 
   const uint32_t change_id =
-      ScheduleInFlightChange(base::MakeUnique<InFlightPropertyChange>(
+      ScheduleInFlightChange(std::make_unique<InFlightPropertyChange>(
           window, transport_name, std::move(data_mus->transport_value)));
   tree_->SetWindowProperty(change_id, window->server_id(), transport_name,
                            transport_value_mojo);
@@ -1184,7 +1184,7 @@ void WindowTreeClient::OnTopLevelCreated(
   // property individually.
   for (const auto& pair : data->properties) {
     std::unique_ptr<std::vector<uint8_t>> revert_value(
-        base::MakeUnique<std::vector<uint8_t>>(pair.second));
+        std::make_unique<std::vector<uint8_t>>(pair.second));
     InFlightPropertyChange property_change(window, pair.first,
                                            std::move(revert_value));
     InFlightChange* current_change =
@@ -1370,7 +1370,7 @@ void WindowTreeClient::OnWindowSharedPropertyChanged(
 
   std::unique_ptr<std::vector<uint8_t>> data;
   if (transport_data.has_value())
-    data = base::MakeUnique<std::vector<uint8_t>>(transport_data.value());
+    data = std::make_unique<std::vector<uint8_t>>(transport_data.value());
 
   InFlightPropertyChange new_change(window, name, std::move(data));
   if (ApplyServerChangeToExistingInFlightChange(new_change))
@@ -1438,7 +1438,7 @@ void WindowTreeClient::OnWindowInputEvent(uint32_t event_id,
   std::unique_ptr<ui::MouseEvent> mapped_event_with_native;
   if (mapped_event->type() == ui::ET_MOUSE_MOVED ||
       mapped_event->type() == ui::ET_MOUSE_DRAGGED) {
-    mapped_event_with_native = base::MakeUnique<ui::MouseEvent>(
+    mapped_event_with_native = std::make_unique<ui::MouseEvent>(
         static_cast<const base::NativeEvent&>(mapped_event.get()));
     // MouseEvent(NativeEvent) sets the root_location to location.
     mapped_event_with_native->set_root_location_f(
@@ -1636,7 +1636,7 @@ bool WindowTreeClient::WaitForInitialDisplays() {
 
 WindowTreeHostMusInitParams WindowTreeClient::CreateInitParamsForNewDisplay() {
   WindowTreeHostMusInitParams init_params;
-  init_params.window_port = base::MakeUnique<WindowPortMus>(
+  init_params.window_port = std::make_unique<WindowPortMus>(
       this, WindowMusType::DISPLAY_MANUALLY_CREATED);
   roots_.insert(init_params.window_port.get());
   init_params.window_tree_client = this;
@@ -2136,7 +2136,7 @@ void WindowTreeClient::OnWindowTreeHostSetOpacity(
     float opacity) {
   WindowMus* window = WindowMus::Get(window_tree_host->window());
   const uint32_t change_id = ScheduleInFlightChange(
-      base::MakeUnique<CrashInFlightChange>(window, ChangeType::OPACITY));
+      std::make_unique<CrashInFlightChange>(window, ChangeType::OPACITY));
   tree_->SetWindowOpacity(change_id, window->server_id(), opacity);
 }
 
@@ -2152,7 +2152,7 @@ void WindowTreeClient::OnWindowTreeHostStackAbove(
   WindowMus* above = WindowMus::Get(window_tree_host->window());
   WindowMus* below = WindowMus::Get(window);
   const uint32_t change_id = ScheduleInFlightChange(
-      base::MakeUnique<CrashInFlightChange>(above, ChangeType::REORDER));
+      std::make_unique<CrashInFlightChange>(above, ChangeType::REORDER));
   tree_->StackAbove(change_id, above->server_id(), below->server_id());
 }
 
@@ -2160,7 +2160,7 @@ void WindowTreeClient::OnWindowTreeHostStackAtTop(
     WindowTreeHostMus* window_tree_host) {
   WindowMus* window = WindowMus::Get(window_tree_host->window());
   const uint32_t change_id = ScheduleInFlightChange(
-      base::MakeUnique<CrashInFlightChange>(window, ChangeType::REORDER));
+      std::make_unique<CrashInFlightChange>(window, ChangeType::REORDER));
   tree_->StackAtTop(change_id, window->server_id());
 }
 
@@ -2174,7 +2174,7 @@ void WindowTreeClient::OnWindowTreeHostPerformWindowMove(
 
   WindowMus* window_mus = WindowMus::Get(window_tree_host->window());
   current_move_loop_change_ = ScheduleInFlightChange(
-      base::MakeUnique<InFlightDragChange>(window_mus, ChangeType::MOVE_LOOP));
+      std::make_unique<InFlightDragChange>(window_mus, ChangeType::MOVE_LOOP));
   // Tell the window manager to take over moving us.
   tree_->PerformWindowMove(current_move_loop_change_, window_mus->server_id(),
                            source, cursor_location);
@@ -2209,7 +2209,7 @@ void WindowTreeClient::OnWindowTreeHostConfineCursorToBounds(
 std::unique_ptr<WindowPortMus> WindowTreeClient::CreateWindowPortForTopLevel(
     const std::map<std::string, std::vector<uint8_t>>* properties) {
   std::unique_ptr<WindowPortMus> window_port =
-      base::MakeUnique<WindowPortMus>(this, WindowMusType::TOP_LEVEL);
+      std::make_unique<WindowPortMus>(this, WindowMusType::TOP_LEVEL);
   roots_.insert(window_port.get());
 
   window_port->set_server_id(next_window_id_++);
@@ -2222,7 +2222,7 @@ std::unique_ptr<WindowPortMus> WindowTreeClient::CreateWindowPortForTopLevel(
   }
 
   const uint32_t change_id =
-      ScheduleInFlightChange(base::MakeUnique<CrashInFlightChange>(
+      ScheduleInFlightChange(std::make_unique<CrashInFlightChange>(
           window_port.get(), ChangeType::NEW_TOP_LEVEL_WINDOW));
   tree_->NewTopLevelWindow(change_id, window_port->server_id(),
                            transport_properties);
@@ -2256,7 +2256,7 @@ void WindowTreeClient::OnTransientChildWindowAdded(Window* parent,
   DCHECK(tree_);
   WindowMus* parent_mus = WindowMus::Get(parent);
   const uint32_t change_id =
-      ScheduleInFlightChange(base::MakeUnique<CrashInFlightChange>(
+      ScheduleInFlightChange(std::make_unique<CrashInFlightChange>(
           parent_mus, ChangeType::ADD_TRANSIENT_WINDOW));
   tree_->AddTransientWindow(change_id, parent_mus->server_id(),
                             WindowMus::Get(transient_child)->server_id());
@@ -2276,7 +2276,7 @@ void WindowTreeClient::OnTransientChildWindowRemoved(Window* parent,
   DCHECK(tree_);
   WindowMus* child_mus = WindowMus::Get(transient_child);
   const uint32_t change_id =
-      ScheduleInFlightChange(base::MakeUnique<CrashInFlightChange>(
+      ScheduleInFlightChange(std::make_unique<CrashInFlightChange>(
           child_mus, ChangeType::REMOVE_TRANSIENT_WINDOW_FROM_PARENT));
   tree_->RemoveTransientWindowFromParent(change_id, child_mus->server_id());
 }
@@ -2308,16 +2308,16 @@ void WindowTreeClient::OnDidRestackTransientChildAbove(
 
 uint32_t WindowTreeClient::CreateChangeIdForDrag(WindowMus* window) {
   return ScheduleInFlightChange(
-      base::MakeUnique<InFlightDragChange>(window, ChangeType::DRAG_LOOP));
+      std::make_unique<InFlightDragChange>(window, ChangeType::DRAG_LOOP));
 }
 
 uint32_t WindowTreeClient::CreateChangeIdForCapture(WindowMus* window) {
-  return ScheduleInFlightChange(base::MakeUnique<InFlightCaptureChange>(
+  return ScheduleInFlightChange(std::make_unique<InFlightCaptureChange>(
       this, capture_synchronizer_.get(), window));
 }
 
 uint32_t WindowTreeClient::CreateChangeIdForFocus(WindowMus* window) {
-  return ScheduleInFlightChange(base::MakeUnique<InFlightFocusChange>(
+  return ScheduleInFlightChange(std::make_unique<InFlightFocusChange>(
       this, focus_synchronizer_.get(), window));
 }
 

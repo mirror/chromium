@@ -231,7 +231,7 @@ bool WillUseGLGetStringForExtensions(GLApi* api) {
 
 std::unique_ptr<GLVersionInfo> GetVersionInfoFromContext(GLApi* api) {
   std::string extensions = GetGLExtensionsFromCurrentContext(api);
-  return base::MakeUnique<GLVersionInfo>(
+  return std::make_unique<GLVersionInfo>(
       reinterpret_cast<const char*>(api->glGetStringFn(GL_VERSION)),
       reinterpret_cast<const char*>(api->glGetStringFn(GL_RENDERER)),
       extensions.c_str());

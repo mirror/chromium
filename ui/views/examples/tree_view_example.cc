@@ -19,7 +19,7 @@ namespace examples {
 
 TreeViewExample::TreeViewExample()
     : ExampleBase("Tree View"),
-      model_(base::MakeUnique<NodeType>(ASCIIToUTF16("root"), 1)) {}
+      model_(std::make_unique<NodeType>(ASCIIToUTF16("root"), 1)) {}
 
 TreeViewExample::~TreeViewExample() {
   // Delete the view before the model.
@@ -29,17 +29,17 @@ TreeViewExample::~TreeViewExample() {
 void TreeViewExample::CreateExampleView(View* container) {
   // Add some sample data.
   NodeType* colors_node = model_.GetRoot()->Add(
-      base::MakeUnique<NodeType>(ASCIIToUTF16("colors"), 1), 0);
-  colors_node->Add(base::MakeUnique<NodeType>(ASCIIToUTF16("red"), 1), 0);
-  colors_node->Add(base::MakeUnique<NodeType>(ASCIIToUTF16("green"), 1), 1);
-  colors_node->Add(base::MakeUnique<NodeType>(ASCIIToUTF16("blue"), 1), 2);
+      std::make_unique<NodeType>(ASCIIToUTF16("colors"), 1), 0);
+  colors_node->Add(std::make_unique<NodeType>(ASCIIToUTF16("red"), 1), 0);
+  colors_node->Add(std::make_unique<NodeType>(ASCIIToUTF16("green"), 1), 1);
+  colors_node->Add(std::make_unique<NodeType>(ASCIIToUTF16("blue"), 1), 2);
 
   NodeType* sheep_node = model_.GetRoot()->Add(
-      base::MakeUnique<NodeType>(ASCIIToUTF16("sheep"), 1), 0);
-  sheep_node->Add(base::MakeUnique<NodeType>(ASCIIToUTF16("Sheep 1"), 1), 0);
-  sheep_node->Add(base::MakeUnique<NodeType>(ASCIIToUTF16("Sheep 2"), 1), 1);
+      std::make_unique<NodeType>(ASCIIToUTF16("sheep"), 1), 0);
+  sheep_node->Add(std::make_unique<NodeType>(ASCIIToUTF16("Sheep 1"), 1), 0);
+  sheep_node->Add(std::make_unique<NodeType>(ASCIIToUTF16("Sheep 2"), 1), 1);
 
-  tree_view_ = base::MakeUnique<TreeView>();
+  tree_view_ = std::make_unique<TreeView>();
   tree_view_->set_context_menu_controller(this);
   tree_view_->SetRootShown(false);
   tree_view_->SetModel(&model_);
@@ -84,7 +84,7 @@ void TreeViewExample::AddNewNode() {
   if (!selected_node)
     selected_node = model_.GetRoot();
   NodeType* new_node = model_.Add(
-      selected_node, base::MakeUnique<NodeType>(selected_node->GetTitle(), 1),
+      selected_node, std::make_unique<NodeType>(selected_node->GetTitle(), 1),
       selected_node->child_count());
   tree_view_->SetSelectedNode(new_node);
 }

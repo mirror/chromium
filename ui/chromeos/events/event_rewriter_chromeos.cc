@@ -625,7 +625,7 @@ ui::EventRewriteStatus EventRewriterChromeOS::RewriteMouseWheelEvent(
       break;
     case ui::EVENT_REWRITE_CONTINUE:
       if (flags != wheel_event.flags()) {
-        *rewritten_event = base::MakeUnique<ui::MouseWheelEvent>(wheel_event);
+        *rewritten_event = std::make_unique<ui::MouseWheelEvent>(wheel_event);
         (*rewritten_event)->set_flags(flags);
         status = ui::EVENT_REWRITE_REWRITTEN;
 #if defined(USE_X11)

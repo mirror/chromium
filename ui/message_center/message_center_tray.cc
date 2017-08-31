@@ -202,7 +202,7 @@ std::unique_ptr<ui::MenuModel> MessageCenterTray::CreateNotificationMenuModel(
   }
 #endif
 
-  return base::MakeUnique<NotificationMenuModel>(this, notifier_id,
+  return std::make_unique<NotificationMenuModel>(this, notifier_id,
                                                  display_source);
 }
 

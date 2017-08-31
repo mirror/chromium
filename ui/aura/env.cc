@@ -83,10 +83,10 @@ Env* Env::GetInstanceDontCreate() {
 
 std::unique_ptr<WindowPort> Env::CreateWindowPort(Window* window) {
   if (mode_ == Mode::LOCAL)
-    return base::MakeUnique<WindowPortLocal>(window);
+    return std::make_unique<WindowPortLocal>(window);
 
   if (in_mus_shutdown_)
-    return base::MakeUnique<WindowPortForShutdown>();
+    return std::make_unique<WindowPortForShutdown>();
 
   DCHECK(window_tree_client_);
   WindowMusType window_mus_type;
@@ -104,7 +104,7 @@ std::unique_ptr<WindowPort> Env::CreateWindowPort(Window* window) {
       NOTREACHED();
   }
   // Use LOCAL as all other cases are created by WindowTreeClient explicitly.
-  return base::MakeUnique<WindowPortMus>(window_tree_client_, window_mus_type);
+  return std::make_unique<WindowPortMus>(window_tree_client_, window_mus_type);
 }
 
 void Env::AddObserver(EnvObserver* observer) {
@@ -240,7 +240,7 @@ ui::EventTargeter* Env::GetEventTargeter() {
 }
 
 std::unique_ptr<ui::OSExchangeData::Provider> Env::BuildProvider() {
-  return base::MakeUnique<aura::OSExchangeDataProviderMus>();
+  return std::make_unique<aura::OSExchangeDataProviderMus>();
 }
 
 }  // namespace aura
