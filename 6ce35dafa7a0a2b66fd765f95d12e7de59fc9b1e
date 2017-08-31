@@ -284,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "d5e72dcc_c30fd681",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-31T17:03:41Z",
+      "side": 1,
+      "message": "Yep, we should probably change this at some point in time. File a bug to note this model difference and add a TODO here to move this to a RoInitialized thread.\n\nGetting the activation factory below will spin up the MTA marshaling machinery (COM on my machine decides 5 threads are needed), and all outgoing calls here marshal to those MTA threads through the magic of COM.\n\nWith an MTA, no threads spin up until we actually show to toast (3, for IWpnPlatform, 2 to perform some other servicing I haven\u0027t yet identified).",
+      "parentUuid": "9854266e_42fc0875",
+      "range": {
+        "startLine": 261,
+        "startChar": 1,
+        "endLine": 261,
+        "endChar": 50
+      },
+      "revId": "6ce35dafa7a0a2b66fd765f95d12e7de59fc9b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6ce3f80_f82b25cf",
         "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
         "patchSetId": 9

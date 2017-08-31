@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b812120_e6ccc3ba",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-31T17:03:41Z",
+      "side": 1,
+      "message": "Nit: Make these private",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 32
+      },
+      "revId": "bf99ce04dae8fe21484c23d0f4a4773e9f8a9fd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6af8de7f_406619b6",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-31T17:03:41Z",
+      "side": 1,
+      "message": "Nit: Move this a few lines down to right before the inspectable.As\u003cIXmlDocumentIO\u003e line for minimal scoping.",
+      "range": {
+        "startLine": 193,
+        "startChar": 2,
+        "endLine": 193,
+        "endChar": 56
+      },
+      "revId": "bf99ce04dae8fe21484c23d0f4a4773e9f8a9fd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b816d4e9_24194d0b",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-31T17:03:41Z",
+      "side": 1,
+      "message": "Nit: Remove linebreak here.",
+      "range": {
+        "startLine": 194,
+        "startChar": 15,
+        "endLine": 196,
+        "endChar": 14
+      },
+      "revId": "bf99ce04dae8fe21484c23d0f4a4773e9f8a9fd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2f3e12e_d97ee917",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-31T17:03:41Z",
+      "side": 1,
+      "message": "Nit: Remove this linebreak.",
+      "range": {
+        "startLine": 268,
+        "startChar": 13,
+        "endLine": 270,
+        "endChar": 14
+      },
+      "revId": "bf99ce04dae8fe21484c23d0f4a4773e9f8a9fd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "991a8129_94db8950",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-31T17:03:41Z",
+      "side": 1,
+      "message": "Nit: Remove this linebreak.",
+      "range": {
+        "startLine": 279,
+        "startChar": 9,
+        "endLine": 281,
+        "endChar": 8
+      },
+      "revId": "bf99ce04dae8fe21484c23d0f4a4773e9f8a9fd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
