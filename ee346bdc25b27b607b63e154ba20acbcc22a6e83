@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1ae0425_01c827c3",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-31T13:09:02Z",
+      "side": 1,
+      "message": "nit:\n// An exception filter for handling Access Violation exceptions within the memory range [module_load_address, module_load_address + size_of_image).\nor something like that.",
+      "revId": "ee346bdc25b27b607b63e154ba20acbcc22a6e83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
