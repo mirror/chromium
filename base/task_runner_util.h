@@ -5,6 +5,7 @@
 #ifndef BASE_TASK_RUNNER_UTIL_H_
 #define BASE_TASK_RUNNER_UTIL_H_
 
+#include <tuple>
 #include <utility>
 
 #include "base/bind.h"
@@ -60,6 +61,36 @@ bool PostTaskAndReplyWithResult(TaskRunner* task_runner,
   return PostTaskAndReplyWithResult(
       task_runner, from_here, OnceCallback<TaskReturnType()>(std::move(task)),
       OnceCallback<void(ReplyArgType)>(std::move(reply)));
+}
+
+// Similar to PostTaskAndReplyWithResult, this implements result passing
+// from |task| to |reply|. |task| and |reply| should be:
+//
+//   void DoAsyncWork(..., OnceCallback<R1, R2, ..> on_completed);
+//   void Reply(R1 r1, R2 r2, ...);
+//
+// On complete of |task|, |on_completed| callback should be called with
+// args that should be passed to |reply|. The invocation example is,
+//
+// PostAsyncTaskAndReply(
+//     target_thread_.task_runner(),
+//     FROM_HERE,
+//     BindOnce(&DoAsyncWork),
+//     BindOnce(&Reply));
+template <typename... ReturnArgTypes, typename... ReplyArgTypes>
+bool PostAsyncTaskAndReply(
+    TaskRunner* task_runner,
+    const tracked_objects::Location& from_here,
+    OnceCallback<void(OnceCallback<void(ReturnArgTypes...)>)> task,
+    OnceCallback<void(ReplyArgTypes...)> reply) {
+  using ReturnTuple = std::tuple<std::decay_t<ReturnArgTypes>...>;
+  auto* result = new base::Optional<ReturnTuple>();
+  return task_runner->PostAsyncTaskAndReply(
+      from_here,
+      BindOnce(&internal::AsyncTaskAdaptor<ReturnTuple, ReturnArgTypes...>,
+               std::move(task), Unretained(result)),
+      BindOnce(&internal::ReplyAsyncAdaptor<ReturnTuple, ReplyArgTypes...>,
+               std::move(reply), Owned(result)));
 }
 
 }  // namespace base

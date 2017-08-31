@@ -133,6 +133,16 @@ class BASE_EXPORT TaskRunner
                         OnceClosure task,
                         OnceClosure reply);
 
+  // Similar to PostTaskAndReply, posts a |task| on the current TaskRunner,
+  // and on completion, |reply| is posted to the thread that called
+  // PostAsyncTaskAndReply().
+  // The difference is that |task| needs to take a callback, which should be
+  // called on completion. So, |task| can be asynchronous, and be completed
+  // on next message loop run.
+  bool PostAsyncTaskAndReply(const tracked_objects::Location& from_here,
+                             OnceCallback<void(OnceClosure)> task,
+                             OnceClosure reply);
+
  protected:
   friend struct TaskRunnerTraits;
 
