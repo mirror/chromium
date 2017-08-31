@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "29c21ff3_6cddd05a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-31T20:33:28Z",
+      "side": 1,
+      "message": "This is okay. We can revisit if we redo the XML.",
+      "parentUuid": "9bd00259_e3309c8d",
+      "range": {
+        "startLine": 250,
+        "startChar": 7,
+        "endLine": 250,
+        "endChar": 95
+      },
+      "revId": "344dcc925ec429ca1ad5202362881834fa9d9170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a5a69229_8f219bbc",
         "filename": "chrome/android/third_party/widget_bottomsheet_base/java/src/org/chromium/chrome/browser/widget/bottomsheet/base/BottomNavigationItemView.java",
         "patchSetId": 8
@@ -178,6 +202,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "a5a69229_8f219bbc",
+      "range": {
+        "startLine": 132,
+        "startChar": 49,
+        "endLine": 132,
+        "endChar": 71
+      },
+      "revId": "344dcc925ec429ca1ad5202362881834fa9d9170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a43c673_f8fbb3e9",
+        "filename": "chrome/android/third_party/widget_bottomsheet_base/java/src/org/chromium/chrome/browser/widget/bottomsheet/base/BottomNavigationItemView.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-31T20:33:28Z",
+      "side": 1,
+      "message": "Looking at this again, I suspect that if future clients have different sizes for active and inactive labels, we may see some issues.. we can add it back if so.",
+      "parentUuid": "f4fd279f_f79ff684",
       "range": {
         "startLine": 132,
         "startChar": 49,
