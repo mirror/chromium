@@ -14,7 +14,7 @@
 
 namespace {
 
-base::LazyInstance<std::string>::DestructorAtExit g_overridden_locale =
+base::LazyInstance<std::string>::Leaky g_overridden_locale =
     LAZY_INSTANCE_INITIALIZER;
 base::LazyInstance<base::scoped_nsobject<NSLocale>>::DestructorAtExit
     mac_locale = LAZY_INSTANCE_INITIALIZER;

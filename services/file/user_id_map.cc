@@ -11,7 +11,7 @@
 namespace file {
 
 namespace {
-base::LazyInstance<std::map<std::string, base::FilePath>>::DestructorAtExit
+base::LazyInstance<std::map<std::string, base::FilePath>>::Leaky
     g_user_id_to_data_dir = LAZY_INSTANCE_INITIALIZER;
 }  // namespace
 

@@ -36,8 +36,8 @@ constexpr char kLsbReleaseArcVersionKey[] = "CHROMEOS_ARC_ANDROID_SDK_VERSION";
 constexpr char kAndroidMSdkVersion[] = "23";
 
 // Contains set of profiles for which decline reson was already reported.
-base::LazyInstance<std::set<base::FilePath>>::DestructorAtExit
-    g_profile_declined_set = LAZY_INSTANCE_INITIALIZER;
+base::LazyInstance<std::set<base::FilePath>>::Leaky g_profile_declined_set =
+    LAZY_INSTANCE_INITIALIZER;
 
 // Let IsAllowedForProfile() return "false" for any profile.
 bool g_disallow_for_testing = false;
@@ -56,8 +56,8 @@ bool g_arc_blocked_due_to_incomaptible_filesystem_for_testing = false;
 // implemented. After it's done such types of accounts cannot even sign-in
 // with incompatible filesystem. Hence it'll be safe to always regard compatible
 // for them then.
-base::LazyInstance<std::set<AccountId>>::DestructorAtExit
-    g_known_compatible_users = LAZY_INSTANCE_INITIALIZER;
+base::LazyInstance<std::set<AccountId>>::Leaky g_known_compatible_users =
+    LAZY_INSTANCE_INITIALIZER;
 
 // Returns whether ARC can run on the filesystem mounted at |path|.
 // This function should run only on threads where IO operations are allowed.
