@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "d43bfbc8_533644f8",
+        "filename": "extensions/browser/api/bluetooth/bluetooth_private_api.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2017-08-31T23:04:50Z",
+      "side": 1,
+      "message": "//extensions/browser/DEPS already has +chromeos, so that isn\u0027t a concern. The issue would be that //ash doesn\u0027t depend on //chromeos/* (only on individual services and D-Bus clients), so we\u0027d have to add it there too.\n\nIt would seem simpler to do option 2. Whenever we change the actual toggle button (after receiving the adapter state changed), we could save the pref there.",
+      "parentUuid": "eef7c263_8eee9028",
+      "revId": "e7d2a7d3fc9a270550e97050b6c20f013e911f46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "609b4c75_4a6e6954",
         "filename": "extensions/common/api/bluetooth_private.idl",
         "patchSetId": 5
