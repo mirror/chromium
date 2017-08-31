@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "969d14fb_f672e7af",
+        "filename": "net/cert/internal/system_trust_store.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-31T01:33:32Z",
+      "side": 1,
+      "message": "Please let me know if you prefer to put this in a separate file.",
+      "range": {
+        "startLine": 151,
+        "startChar": 0,
+        "endLine": 151,
+        "endChar": 24
+      },
+      "revId": "2b37708a209705630523f0d1690d10ec26c4dcda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
