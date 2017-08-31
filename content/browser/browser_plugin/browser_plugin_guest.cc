@@ -712,8 +712,10 @@ void BrowserPluginGuest::RenderViewReady() {
   // associated BrowserPlugin know. We only need to send this if we're attached,
   // as guest_crashed_ is cleared automatically on attach anyways.
   if (attached()) {
+    RenderWidgetHostViewGuest* rwhv = static_cast<RenderWidgetHostViewGuest*>(
+        web_contents()->GetRenderWidgetHostView());
     SendMessageToEmbedder(base::MakeUnique<BrowserPluginMsg_GuestReady>(
-        browser_plugin_instance_id()));
+        browser_plugin_instance_id(), rwhv->GetFrameSinkId()));
   }
 
   RenderWidgetHostImpl::From(rvh->GetWidget())
@@ -1066,10 +1068,14 @@ void BrowserPluginGuest::OnUnlockMouseAck(int browser_plugin_instance_id) {
   mouse_locked_ = false;
 }
 
-void BrowserPluginGuest::OnUpdateGeometry(int browser_plugin_instance_id,
-                                          const gfx::Rect& view_rect) {
+void BrowserPluginGuest::OnUpdateGeometry(
+    int browser_plugin_instance_id,
+    const gfx::Rect& view_rect,
+    const viz::LocalSurfaceId& local_surface_id) {
   // The plugin has moved within the embedder without resizing or the
   // embedder/container's view rect changing.
+  local_surface_id_ = local_surface_id;
+  fprintf(stderr, ">>>>%s\n", local_surface_id.ToString().c_str());
   guest_window_rect_ = view_rect;
   GetWebContents()->SendScreenRects();
 }
