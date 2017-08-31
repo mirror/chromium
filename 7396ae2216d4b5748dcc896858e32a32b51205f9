@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "becabe37_371257bd",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-31T23:18:31Z",
+      "side": 1,
+      "message": "Done. Went with a stronger comment and changed Should -\u003e Must in the method name.",
+      "parentUuid": "442fda56_9fe001ad",
+      "range": {
+        "startLine": 94,
+        "startChar": 2,
+        "endLine": 96,
+        "endChar": 20
+      },
+      "revId": "7396ae2216d4b5748dcc896858e32a32b51205f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "583df4d2_458a00c5",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "7396ae2216d4b5748dcc896858e32a32b51205f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b57f31f9_3ea2dde7",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-31T23:18:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "583df4d2_458a00c5",
+      "range": {
+        "startLine": 190,
+        "startChar": 2,
+        "endLine": 190,
+        "endChar": 36
+      },
+      "revId": "7396ae2216d4b5748dcc896858e32a32b51205f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c576aa18_1b681181",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 900,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-31T23:18:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85e2e02b_d2df00ca",
+      "range": {
+        "startLine": 900,
+        "startChar": 54,
+        "endLine": 900,
+        "endChar": 78
+      },
+      "revId": "7396ae2216d4b5748dcc896858e32a32b51205f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9442c492_0c5b967e",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "7396ae2216d4b5748dcc896858e32a32b51205f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "817a6b3f_8f833af2",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1046,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-31T23:18:31Z",
+      "side": 1,
+      "message": "Done. Removed since not needed.",
+      "parentUuid": "9442c492_0c5b967e",
+      "range": {
+        "startLine": 1038,
+        "startChar": 0,
+        "endLine": 1046,
+        "endChar": 2
+      },
+      "revId": "7396ae2216d4b5748dcc896858e32a32b51205f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
