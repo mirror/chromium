@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20555dcc_427d7afe",
+        "filename": "chrome/browser/win/jumplist.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-31T13:05:34Z",
+      "side": 1,
+      "message": "should this be up on line 344 (more-or-less where it once was) so that skipping the notification is truly pretending it never happened? otherwise, is it possible that a top sites change could lead to ProcessNotifications being called and this block being entered. or is that really what you want?",
+      "revId": "463f84dd14b1f13a25b98c05a63b8c1a1f603101",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
