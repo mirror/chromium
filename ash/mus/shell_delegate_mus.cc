@@ -91,7 +91,7 @@ NetworkingConfigDelegate* ShellDelegateMus::GetNetworkingConfigDelegate() {
 }
 
 std::unique_ptr<WallpaperDelegate> ShellDelegateMus::CreateWallpaperDelegate() {
-  return base::MakeUnique<WallpaperDelegateMus>();
+  return std::make_unique<WallpaperDelegateMus>();
 }
 
 AccessibilityDelegate* ShellDelegateMus::CreateAccessibilityDelegate() {
@@ -141,7 +141,7 @@ ShellDelegateMus::GetInputDeviceControllerClient() {
 
   if (!input_device_controller_client_) {
     input_device_controller_client_ =
-        base::MakeUnique<ui::InputDeviceControllerClient>(connector_);
+        std::make_unique<ui::InputDeviceControllerClient>(connector_);
   }
   return input_device_controller_client_.get();
 }

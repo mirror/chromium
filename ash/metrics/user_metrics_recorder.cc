@@ -421,7 +421,7 @@ void UserMetricsRecorder::OnShellInitialized() {
     desktop_task_switch_metric_recorder_.reset(
         new DesktopTaskSwitchMetricRecorder());
   }
-  pointer_metrics_recorder_ = base::MakeUnique<PointerMetricsRecorder>();
+  pointer_metrics_recorder_ = std::make_unique<PointerMetricsRecorder>();
 }
 
 void UserMetricsRecorder::OnShellShuttingDown() {

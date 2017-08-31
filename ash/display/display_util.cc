@@ -80,12 +80,12 @@ std::unique_ptr<MouseWarpController> CreateMouseWarpController(
     display::DisplayManager* manager,
     aura::Window* drag_source) {
   if (manager->IsInUnifiedMode() && manager->num_connected_displays() >= 2)
-    return base::MakeUnique<UnifiedMouseWarpController>();
+    return std::make_unique<UnifiedMouseWarpController>();
   // Extra check for |num_connected_displays()| is for SystemDisplayApiTest
   // that injects MockScreen.
   if (manager->GetNumDisplays() < 2 || manager->num_connected_displays() < 2)
-    return base::MakeUnique<NullMouseWarpController>();
-  return base::MakeUnique<ExtendedMouseWarpController>(drag_source);
+    return std::make_unique<NullMouseWarpController>();
+  return std::make_unique<ExtendedMouseWarpController>(drag_source);
 }
 
 gfx::Rect GetNativeEdgeBounds(AshWindowTreeHost* ash_host,

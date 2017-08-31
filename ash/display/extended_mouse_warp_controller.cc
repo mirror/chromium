@@ -212,7 +212,7 @@ ExtendedMouseWarpController::CreateWarpRegion(const display::Display& a,
       AdjustSourceEdgeBounds(b.bounds(), snap_barrier, &b_edge);
   }
 
-  return base::MakeUnique<WarpRegion>(a.id(), b.id(), a_edge, b_edge);
+  return std::make_unique<WarpRegion>(a.id(), b.id(), a_edge, b_edge);
 }
 
 }  // namespace ash

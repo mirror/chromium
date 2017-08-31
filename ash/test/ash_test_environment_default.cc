@@ -24,7 +24,7 @@ class AshTestEnvironmentDefault : public AshTestEnvironment {
 
   // AshTestEnvironment:
   std::unique_ptr<AshTestViewsDelegate> CreateViewsDelegate() override {
-    return base::MakeUnique<AshTestViewsDelegate>();
+    return std::make_unique<AshTestViewsDelegate>();
   }
 
  private:
@@ -37,7 +37,7 @@ class AshTestEnvironmentDefault : public AshTestEnvironment {
 
 // static
 std::unique_ptr<AshTestEnvironment> AshTestEnvironment::Create() {
-  return base::MakeUnique<AshTestEnvironmentDefault>();
+  return std::make_unique<AshTestEnvironmentDefault>();
 }
 
 // static

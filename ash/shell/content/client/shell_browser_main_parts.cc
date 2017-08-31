@@ -95,11 +95,11 @@ void ShellBrowserMainParts::PreMainMessageLoopRun() {
   // Initialize session controller client and create fake user sessions. The
   // fake user sessions makes ash into the logged in state.
   example_session_controller_client_ =
-      base::MakeUnique<ExampleSessionControllerClient>(
+      std::make_unique<ExampleSessionControllerClient>(
           Shell::Get()->session_controller());
   example_session_controller_client_->Initialize();
 
-  window_watcher_ = base::MakeUnique<WindowWatcher>();
+  window_watcher_ = std::make_unique<WindowWatcher>();
 
   ash::shell::InitWindowTypeLauncher(base::Bind(
       &views::examples::ShowExamplesWindowWithContent,
@@ -107,7 +107,7 @@ void ShellBrowserMainParts::PreMainMessageLoopRun() {
       ShellContentState::GetInstance()->GetActiveBrowserContext(), nullptr));
 
   // Initialize the example app list presenter.
-  example_app_list_presenter_ = base::MakeUnique<ExampleAppListPresenter>();
+  example_app_list_presenter_ = std::make_unique<ExampleAppListPresenter>();
   Shell::Get()->app_list()->SetAppListPresenter(
       example_app_list_presenter_->CreateInterfacePtrAndBind());
 

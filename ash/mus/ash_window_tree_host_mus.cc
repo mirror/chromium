@@ -20,7 +20,7 @@ namespace ash {
 AshWindowTreeHostMus::AshWindowTreeHostMus(
     aura::WindowTreeHostMusInitParams init_params)
     : aura::WindowTreeHostMus(std::move(init_params)),
-      transformer_helper_(base::MakeUnique<TransformerHelper>(this)) {
+      transformer_helper_(std::make_unique<TransformerHelper>(this)) {
   transformer_helper_->Init();
 }
 
@@ -54,7 +54,7 @@ void AshWindowTreeHostMus::PrepareForShutdown() {
   // doesn't attempt to process events while in this state, which would likely
   // crash.
   std::unique_ptr<ui::NullEventTargeter> null_event_targeter =
-      base::MakeUnique<ui::NullEventTargeter>();
+      std::make_unique<ui::NullEventTargeter>();
   window()->SetEventTargeter(std::move(null_event_targeter));
 }
 

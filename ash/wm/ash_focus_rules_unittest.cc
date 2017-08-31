@@ -90,7 +90,7 @@ class LockScreenAshFocusRulesTest : public AshTestBase {
   void SetUp() override {
     AshTestBase::SetUp();
     ash_test_helper()->set_test_session_controller_client(
-        base::MakeUnique<LockScreenSessionControllerClient>(
+        std::make_unique<LockScreenSessionControllerClient>(
             Shell::Get()->session_controller()));
   }
 

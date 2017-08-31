@@ -382,7 +382,7 @@ class DontClobberRestoreBoundsWindowObserver : public aura::WindowObserver {
 // doesn't effect the restore bounds.
 TEST_F(WorkspaceLayoutManagerTest, DontClobberRestoreBounds) {
   DontClobberRestoreBoundsWindowObserver window_observer;
-  std::unique_ptr<aura::Window> window(base::MakeUnique<aura::Window>(
+  std::unique_ptr<aura::Window> window(std::make_unique<aura::Window>(
       nullptr, aura::client::WINDOW_TYPE_NORMAL));
   window->Init(ui::LAYER_TEXTURED);
   window->SetBounds(gfx::Rect(10, 20, 30, 40));
@@ -422,7 +422,7 @@ TEST_F(WorkspaceLayoutManagerTest, ChildBoundsResetOnMaximize) {
 // Verifies a window created with maximized state has the maximized
 // bounds.
 TEST_F(WorkspaceLayoutManagerTest, MaximizeWithEmptySize) {
-  std::unique_ptr<aura::Window> window(base::MakeUnique<aura::Window>(
+  std::unique_ptr<aura::Window> window(std::make_unique<aura::Window>(
       nullptr, aura::client::WINDOW_TYPE_NORMAL));
   window->Init(ui::LAYER_TEXTURED);
   wm::GetWindowState(window.get())->Maximize();
@@ -605,7 +605,7 @@ TEST_F(WorkspaceLayoutManagerTest,
 TEST_F(WorkspaceLayoutManagerTest,
        DoNotAdjustTransientWindowBoundsToEnsureMinimumVisibility) {
   UpdateDisplay("300x400");
-  std::unique_ptr<aura::Window> window(base::MakeUnique<aura::Window>(
+  std::unique_ptr<aura::Window> window(std::make_unique<aura::Window>(
       nullptr, aura::client::WINDOW_TYPE_NORMAL));
   window->Init(ui::LAYER_TEXTURED);
   window->SetBounds(gfx::Rect(10, 0, 100, 200));
@@ -979,7 +979,7 @@ class WorkspaceLayoutManagerBackdropTest : public AshTestBase {
   void ShowTopWindowBackdropForContainer(aura::Window* container, bool show) {
     std::unique_ptr<BackdropDelegate> backdrop;
     if (show) {
-      backdrop = base::MakeUnique<TabletModeBackdropDelegateImpl>();
+      backdrop = std::make_unique<TabletModeBackdropDelegateImpl>();
     }
     GetWorkspaceLayoutManager(container)->SetBackdropDelegate(
         std::move(backdrop));

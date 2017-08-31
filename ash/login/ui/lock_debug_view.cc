@@ -145,7 +145,7 @@ class LockDebugView::DebugDataDispatcherTransformer
 
 LockDebugView::LockDebugView(LoginDataDispatcher* data_dispatcher)
     : debug_data_dispatcher_(
-          base::MakeUnique<DebugDataDispatcherTransformer>(data_dispatcher)) {
+          std::make_unique<DebugDataDispatcherTransformer>(data_dispatcher)) {
   SetLayoutManager(new views::BoxLayout(views::BoxLayout::kHorizontal));
 
   lock_ = new LockContentsView(debug_data_dispatcher_->debug_dispatcher());

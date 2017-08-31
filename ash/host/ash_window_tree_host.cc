@@ -54,10 +54,10 @@ std::unique_ptr<AshWindowTreeHost> AshWindowTreeHost::Create(
     return ash_window_tree_host;
 
   if (init_params.offscreen) {
-    return base::MakeUnique<AshWindowTreeHostUnified>(
+    return std::make_unique<AshWindowTreeHostUnified>(
         init_params.initial_bounds);
   }
-  return base::MakeUnique<AshWindowTreeHostPlatform>(
+  return std::make_unique<AshWindowTreeHostPlatform>(
       init_params.initial_bounds);
 }
 

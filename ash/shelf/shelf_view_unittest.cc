@@ -286,7 +286,7 @@ class ShelfViewTest : public AshTestBase {
     model_->Add(item);
     // Set a delegate; some tests require one to select the item.
     model_->SetShelfItemDelegate(item.id,
-                                 base::MakeUnique<ShelfItemSelectionTracker>());
+                                 std::make_unique<ShelfItemSelectionTracker>());
     if (wait_for_animations)
       test_api_->RunMessageLoopUntilAnimationsDone();
     return item.id;
@@ -2185,7 +2185,7 @@ class ShelfViewInkDropTest : public ShelfViewTest {
     app_list_button_ = shelf_view_->GetAppListButton();
 
     auto app_list_button_ink_drop =
-        base::MakeUnique<InkDropSpy>(base::MakeUnique<views::InkDropImpl>(
+        std::make_unique<InkDropSpy>(std::make_unique<views::InkDropImpl>(
             app_list_button_, app_list_button_->size()));
     app_list_button_ink_drop_ = app_list_button_ink_drop.get();
     views::test::InkDropHostViewTestApi(app_list_button_)
@@ -2196,7 +2196,7 @@ class ShelfViewInkDropTest : public ShelfViewTest {
     browser_button_ = test_api_->GetButton(1);
 
     auto browser_button_ink_drop =
-        base::MakeUnique<InkDropSpy>(base::MakeUnique<views::InkDropImpl>(
+        std::make_unique<InkDropSpy>(std::make_unique<views::InkDropImpl>(
             browser_button_, browser_button_->size()));
     browser_button_ink_drop_ = browser_button_ink_drop.get();
     views::test::InkDropHostViewTestApi(browser_button_)
@@ -2541,7 +2541,7 @@ TEST_F(ShelfViewInkDropTest, ShelfButtonWithMenuPressRelease) {
 
   // Set a delegate for the shelf item that returns an app list menu.
   model_->SetShelfItemDelegate(model_->items()[1].id,
-                               base::MakeUnique<ListMenuShelfItemDelegate>());
+                               std::make_unique<ListMenuShelfItemDelegate>());
 
   views::Button* button = browser_button_;
   gfx::Point mouse_location = button->GetLocalBounds().CenterPoint();
@@ -2755,7 +2755,7 @@ class OverflowButtonInkDropTest : public ShelfViewInkDropTest {
     overflow_button_ = test_api_->overflow_button();
 
     auto overflow_button_ink_drop =
-        base::MakeUnique<InkDropSpy>(base::MakeUnique<views::InkDropImpl>(
+        std::make_unique<InkDropSpy>(std::make_unique<views::InkDropImpl>(
             overflow_button_, overflow_button_->size()));
     overflow_button_ink_drop_ = overflow_button_ink_drop.get();
     views::test::InkDropHostViewTestApi(overflow_button_)
@@ -3028,7 +3028,7 @@ class OverflowButtonTextDirectionTest
     OverflowButtonInkDropTest::SetUp();
 
     overflow_button_test_api_ =
-        base::MakeUnique<OverflowButtonTestApi>(overflow_button_);
+        std::make_unique<OverflowButtonTestApi>(overflow_button_);
   }
 
  protected:

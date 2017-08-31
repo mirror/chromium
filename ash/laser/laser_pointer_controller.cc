@@ -39,7 +39,7 @@ views::View* LaserPointerController::GetPointerView() const {
 void LaserPointerController::CreatePointerView(
     base::TimeDelta presentation_delay,
     aura::Window* root_window) {
-  laser_pointer_view_ = base::MakeUnique<LaserPointerView>(
+  laser_pointer_view_ = std::make_unique<LaserPointerView>(
       base::TimeDelta::FromMilliseconds(kPointLifeDurationMs),
       presentation_delay,
       base::TimeDelta::FromMilliseconds(kAddStationaryPointsDelayMs),

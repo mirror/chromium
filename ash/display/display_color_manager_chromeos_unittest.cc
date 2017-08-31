@@ -114,7 +114,7 @@ class DisplayColorManagerTest : public testing::Test {
             native_display_delegate_));
 
     color_manager_ =
-        base::MakeUnique<DisplayColorManagerForTest>(&configurator_);
+        std::make_unique<DisplayColorManagerForTest>(&configurator_);
 
     EXPECT_TRUE(PathService::Get(base::DIR_SOURCE_ROOT, &color_path_));
 

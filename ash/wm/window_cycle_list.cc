@@ -247,7 +247,7 @@ class WindowCycleView : public views::WidgetDelegateView {
     // The background needs to be painted to fill the layer, not the View,
     // because the layer animates bounds changes but the View's bounds change
     // immediately.
-    highlight_view_->SetBackground(base::MakeUnique<LayerFillBackgroundPainter>(
+    highlight_view_->SetBackground(std::make_unique<LayerFillBackgroundPainter>(
         views::Painter::CreateRoundRectWith1PxBorderPainter(
             SkColorSetA(SK_ColorWHITE, 0x4D), SkColorSetA(SK_ColorWHITE, 0x33),
             kBackgroundCornerRadius)));

@@ -158,7 +158,7 @@ bool SystemModalContainerLayoutManager::ActivateNextModalWindow() {
 
 void SystemModalContainerLayoutManager::CreateModalBackground() {
   if (!window_dimmer_) {
-    window_dimmer_ = base::MakeUnique<WindowDimmer>(container_);
+    window_dimmer_ = std::make_unique<WindowDimmer>(container_);
     window_dimmer_->window()->SetName(
         "SystemModalContainerLayoutManager.ModalBackground");
     // There isn't always a keyboard controller.

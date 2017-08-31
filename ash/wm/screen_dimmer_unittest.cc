@@ -24,7 +24,7 @@ class ScreenDimmerTest : public AshTestBase {
 
   void SetUp() override {
     AshTestBase::SetUp();
-    dimmer_ = base::MakeUnique<ScreenDimmer>(ScreenDimmer::Container::ROOT);
+    dimmer_ = std::make_unique<ScreenDimmer>(ScreenDimmer::Container::ROOT);
   }
 
   void TearDown() override {

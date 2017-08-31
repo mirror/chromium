@@ -32,7 +32,7 @@ class AppListButtonTest : public AshTestBase {
 
   // AshTestBase:
   void SetUp() override {
-    command_line_ = base::MakeUnique<base::test::ScopedCommandLine>();
+    command_line_ = std::make_unique<base::test::ScopedCommandLine>();
     SetupCommandLine(command_line_->GetProcessCommandLine());
     AshTestBase::SetUp();
     app_list_button_ =

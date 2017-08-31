@@ -315,7 +315,7 @@ void TabletModeWindowManager::EnableBackdropBehindTopWindowOnEachDisplay(
   // the topmost window of its container.
   for (auto* controller : Shell::GetAllRootWindowControllers()) {
     controller->workspace_controller()->SetBackdropDelegate(
-        enable ? base::MakeUnique<TabletModeBackdropDelegateImpl>() : nullptr);
+        enable ? std::make_unique<TabletModeBackdropDelegateImpl>() : nullptr);
   }
 }
 
