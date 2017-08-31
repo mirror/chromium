@@ -38,7 +38,8 @@ class NavigationContextImplTest : public PlatformTest {
 TEST_F(NavigationContextImplTest, NavigationContext) {
   std::unique_ptr<NavigationContext> context =
       NavigationContextImpl::CreateNavigationContext(
-          &web_state_, url_, ui::PageTransition::PAGE_TRANSITION_FORWARD_BACK);
+          &web_state_, url_, ui::PageTransition::PAGE_TRANSITION_FORWARD_BACK,
+          true);
   ASSERT_TRUE(context);
 
   EXPECT_EQ(&web_state_, context->GetWebState());
@@ -49,18 +50,21 @@ TEST_F(NavigationContextImplTest, NavigationContext) {
   EXPECT_FALSE(context->IsSameDocument());
   EXPECT_FALSE(context->GetError());
   EXPECT_FALSE(context->GetResponseHeaders());
+  EXPECT_TRUE(context->IsRendererInitiated());
 }
 
 // Tests NavigationContextImpl Setters.
 TEST_F(NavigationContextImplTest, Setters) {
   std::unique_ptr<NavigationContextImpl> context =
       NavigationContextImpl::CreateNavigationContext(
-          &web_state_, url_, ui::PageTransition::PAGE_TRANSITION_FORWARD_BACK);
+          &web_state_, url_, ui::PageTransition::PAGE_TRANSITION_FORWARD_BACK,
+          false);
   ASSERT_TRUE(context);
 
   ASSERT_FALSE(context->IsSameDocument());
   ASSERT_FALSE(context->IsPost());
   ASSERT_FALSE(context->GetError());
+  ASSERT_FALSE(context->IsRendererInitiated());
   ASSERT_NE(response_headers_.get(), context->GetResponseHeaders());
 
   // SetSameDocument

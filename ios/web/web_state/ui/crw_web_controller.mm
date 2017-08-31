@@ -1279,8 +1279,9 @@ const NSTimeInterval kSnapshotOverlayTransition = 0.5;
                  stateObject:(NSString*)stateObject
                   transition:(ui::PageTransition)transition {
   std::unique_ptr<web::NavigationContextImpl> context =
-      web::NavigationContextImpl::CreateNavigationContext(_webStateImpl,
-                                                          pageURL, transition);
+      web::NavigationContextImpl::CreateNavigationContext(
+          _webStateImpl, pageURL, transition,
+          self.userInteractionRegistered ? false : true);
   context->SetIsSameDocument(true);
   _webStateImpl->OnNavigationStarted(context.get());
   [[self sessionController] pushNewItemWithURL:pageURL
@@ -1295,7 +1296,7 @@ const NSTimeInterval kSnapshotOverlayTransition = 0.5;
   std::unique_ptr<web::NavigationContextImpl> context =
       web::NavigationContextImpl::CreateNavigationContext(
           _webStateImpl, pageURL,
-          ui::PageTransition::PAGE_TRANSITION_CLIENT_REDIRECT);
+          ui::PageTransition::PAGE_TRANSITION_CLIENT_REDIRECT, true);
   context->SetIsSameDocument(true);
   _webStateImpl->OnNavigationStarted(context.get());
   [[self sessionController] updateCurrentItemWithURL:pageURL
@@ -1451,7 +1452,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
   }
   std::unique_ptr<web::NavigationContextImpl> context =
       web::NavigationContextImpl::CreateNavigationContext(
-          _webStateImpl, requestURL, transition);
+          _webStateImpl, requestURL, transition, true);
 
   web::NavigationItem* item = self.navigationManagerImpl->GetPendingItem();
   // TODO(crbug.com/676129): AddPendingItem does not always create a pending
@@ -4018,7 +4019,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
     // should not be treated as a navigation, but WKNavigationDelegate callbacks
     // still expect a valid context.
     context = web::NavigationContextImpl::CreateNavigationContext(
-        _webStateImpl, URL, loadHTMLTransition);
+        _webStateImpl, URL, loadHTMLTransition, false);
   } else {
     context = [self registerLoadRequestForURL:URL
                                      referrer:web::Referrer()
