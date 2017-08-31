@@ -536,7 +536,8 @@ public class AccountSigninView extends FrameLayout {
         setUpConfirmButton();
         setUpUndoButton();
 
-        NoUnderlineClickableSpan settingsSpan = new NoUnderlineClickableSpan() {
+        NoUnderlineClickableSpan settingsSpan = new NoUnderlineClickableSpan(
+                R.color.google_blue_700) {
             @Override
             public void onClick(View widget) {
                 mListener.onAccountSelected(mSelectedAccountName, mIsDefaultAccountSelected, true);

@@ -76,7 +76,8 @@ public class ToSAndUMAFirstRunFragment extends FirstRunPage {
 
         mTosAndPrivacy.setMovementMethod(LinkMovementMethod.getInstance());
 
-        NoUnderlineClickableSpan clickableTermsSpan = new NoUnderlineClickableSpan() {
+        NoUnderlineClickableSpan clickableTermsSpan = new NoUnderlineClickableSpan(
+                R.color.google_blue_700) {
             @Override
             public void onClick(View widget) {
                 if (!isAdded()) return;
@@ -84,7 +85,8 @@ public class ToSAndUMAFirstRunFragment extends FirstRunPage {
             }
         };
 
-        NoUnderlineClickableSpan clickablePrivacySpan = new NoUnderlineClickableSpan() {
+        NoUnderlineClickableSpan clickablePrivacySpan = new NoUnderlineClickableSpan(
+                R.color.google_blue_700) {
             @Override
             public void onClick(View widget) {
                 if (!isAdded()) return;
@@ -92,7 +94,8 @@ public class ToSAndUMAFirstRunFragment extends FirstRunPage {
             }
         };
 
-        NoUnderlineClickableSpan clickableFamilyLinkPrivacySpan = new NoUnderlineClickableSpan() {
+        NoUnderlineClickableSpan clickableFamilyLinkPrivacySpan = new NoUnderlineClickableSpan(
+                R.color.google_blue_700) {
             @Override
             public void onClick(View widget) {
                 if (!isAdded()) return;

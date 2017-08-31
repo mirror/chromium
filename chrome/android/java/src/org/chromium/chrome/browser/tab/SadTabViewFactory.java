@@ -82,7 +82,7 @@ public class SadTabViewFactory {
      */
     private static CharSequence getHelpMessage(
             Context context, final Runnable suggestionAction, final boolean showSendFeedback) {
-        NoUnderlineClickableSpan linkSpan = new NoUnderlineClickableSpan() {
+        NoUnderlineClickableSpan linkSpan = new NoUnderlineClickableSpan(R.color.google_blue_700) {
             @Override
             public void onClick(View view) {
                 SadTabViewFactory.recordEvent(showSendFeedback, SadTabEvent.HELP_LINK_CLICKED);

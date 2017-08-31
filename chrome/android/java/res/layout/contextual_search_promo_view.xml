@@ -18,7 +18,7 @@
          we only should set the remaining margin top, which is 7dp -->
     <org.chromium.ui.widget.TextViewWithClickableSpans
         android:id="@+id/contextual_search_promo_text"
-        android:color="@color/contextual_search_promo_text_color"
+        android:color="@color/black_alpha_87"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"

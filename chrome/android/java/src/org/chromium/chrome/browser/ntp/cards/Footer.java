@@ -49,7 +49,7 @@ public class Footer extends OptionalLeaf {
             super(LayoutInflater.from(root.getContext())
                             .inflate(R.layout.new_tab_page_footer, root, false));
 
-            NoUnderlineClickableSpan link = new NoUnderlineClickableSpan() {
+            NoUnderlineClickableSpan link = new NoUnderlineClickableSpan(R.color.google_blue_700) {
                 @Override
                 public void onClick(View view) {
                     // TODO(mvanouwerkerk): Ensure this can be activated when using TalkBack.

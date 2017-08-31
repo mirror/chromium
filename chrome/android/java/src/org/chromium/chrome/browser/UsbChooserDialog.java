@@ -67,10 +67,10 @@ public class UsbChooserDialog implements ItemChooserDialog.ItemSelectedCallback 
 
         String searching = "";
         String noneFound = activity.getString(R.string.usb_chooser_dialog_no_devices_found_prompt);
-        SpannableString statusActive =
-                SpanApplier.applySpans(
-                        activity.getString(R.string.usb_chooser_dialog_footnote_text),
-                        new SpanInfo("<link>", "</link>", new NoUnderlineClickableSpan() {
+        SpannableString statusActive = SpanApplier.applySpans(
+                activity.getString(R.string.usb_chooser_dialog_footnote_text),
+                new SpanInfo(
+                        "<link>", "</link>", new NoUnderlineClickableSpan(R.color.google_blue_700) {
                             @Override
                             public void onClick(View view) {
                                 if (mNativeUsbChooserDialogPtr == 0) {

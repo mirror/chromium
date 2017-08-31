@@ -38,7 +38,8 @@ public class LightweightFirstRunActivity extends FirstRunActivity {
         setContentView(LayoutInflater.from(LightweightFirstRunActivity.this)
                                .inflate(R.layout.lightweight_fre_tos, null));
 
-        NoUnderlineClickableSpan clickableTermsSpan = new NoUnderlineClickableSpan() {
+        NoUnderlineClickableSpan clickableTermsSpan = new NoUnderlineClickableSpan(
+                R.color.google_blue_700) {
             @Override
             public void onClick(View widget) {
                 CustomTabActivity.showInfoPage(LightweightFirstRunActivity.this,
@@ -46,7 +47,8 @@ public class LightweightFirstRunActivity extends FirstRunActivity {
                                 getString(R.string.chrome_terms_of_service_url)));
             }
         };
-        NoUnderlineClickableSpan clickablePrivacySpan = new NoUnderlineClickableSpan() {
+        NoUnderlineClickableSpan clickablePrivacySpan = new NoUnderlineClickableSpan(
+                R.color.google_blue_700) {
             @Override
             public void onClick(View widget) {
                 CustomTabActivity.showInfoPage(LightweightFirstRunActivity.this,
