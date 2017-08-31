@@ -48,26 +48,30 @@ class MODULES_EXPORT AXTableCell : public AXLayoutObject {
   bool IsTableCell() const final;
 
   // fills in the start location and row span of cell
-  virtual void RowIndexRange(std::pair<unsigned, unsigned>& row_range);
+  virtual bool RowIndexRange(std::pair<unsigned, unsigned>& row_range) const;
   // fills in the start location and column span of cell
-  virtual void ColumnIndexRange(std::pair<unsigned, unsigned>& column_range);
+  virtual bool ColumnIndexRange(
+      std::pair<unsigned, unsigned>& column_range) const;
   // In the case of cells that act as row or column headers.
   SortDirection GetSortDirection() const final;
   virtual AccessibilityRole ScanToDecideHeaderRole();
 
   unsigned AriaColumnIndex() const;
   unsigned AriaRowIndex() const;
+  unsigned AriaColumnSpan() const;
+  unsigned AriaRowSpan() const;
+
   void SetARIAColIndexFromRow(int index) { aria_col_index_from_row_ = index; }
   virtual bool CanSetSelectedAttribute() const { return false; }
 
  protected:
   virtual AXObject* ParentTable() const;
   AccessibilityRole DetermineAccessibilityRole() final;
+  bool IsRowHeaderCell() const;
+  bool IsColumnHeaderCell() const;
 
  private:
   bool IsTableHeaderCell() const;
-  bool IsRowHeaderCell() const;
-  bool IsColumnHeaderCell() const;
 
   bool ComputeAccessibilityIsIgnored(IgnoredReasons* = nullptr) const final;
 

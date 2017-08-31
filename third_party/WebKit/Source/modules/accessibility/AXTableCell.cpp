@@ -53,15 +53,34 @@ bool AXTableCell::IsTableHeaderCell() const {
 }
 
 bool AXTableCell::IsRowHeaderCell() const {
+  if (!IsTableHeaderCell())
+    return false;
+
   const AtomicString& scope = GetAttribute(scopeAttr);
-  return EqualIgnoringASCIICase(scope, "row") ||
-         EqualIgnoringASCIICase(scope, "rowgroup");
+  if (!scope.IsEmpty()) {
+    // The scope attribute specifies what kind of <th> this is.
+    return EqualIgnoringASCIICase(scope, "row") ||
+           EqualIgnoringASCIICase(scope, "rowgroup");
+  }
+
+  // No scope attribute for th: consider it a row header if not a column header.
+  return !IsColumnHeaderCell();
 }
 
 bool AXTableCell::IsColumnHeaderCell() const {
+  if (!IsTableHeaderCell())
+    return false;
+
   const AtomicString& scope = GetAttribute(scopeAttr);
-  return EqualIgnoringASCIICase(scope, "col") ||
-         EqualIgnoringASCIICase(scope, "colgroup");
+  if (!scope.IsEmpty()) {
+    return EqualIgnoringASCIICase(scope, "col") ||
+           EqualIgnoringASCIICase(scope, "colgroup");
+  }
+
+  // No scope attribute for th: consider row #0 items to be column headers.
+  std::pair<unsigned, unsigned> row_range;
+  RowIndexRange(row_range);
+  return row_range.first == 0;
 }
 
 bool AXTableCell::ComputeAccessibilityIsIgnored(
@@ -131,6 +150,26 @@ unsigned AXTableCell::AriaRowIndex() const {
   return ToAXTableRow(parent)->AriaRowIndex();
 }
 
+unsigned AXTableCell::AriaColumnSpan() const {
+  uint32_t col_span;
+  if (HasAOMPropertyOrARIAAttribute(AOMUIntProperty::kColSpan, col_span) &&
+      col_span >= 1) {
+    return col_span;
+  }
+
+  return 0;  // Not found
+}
+
+unsigned AXTableCell::AriaRowSpan() const {
+  uint32_t row_span;
+  if (HasAOMPropertyOrARIAAttribute(AOMUIntProperty::kRowSpan, row_span) &&
+      row_span >= 1) {
+    return row_span;
+  }
+
+  return 0;  // Not found
+}
+
 static AccessibilityRole DecideRoleFromSibling(LayoutTableCell* sibling_cell) {
   if (!sibling_cell)
     return kCellRole;
@@ -183,20 +222,23 @@ AccessibilityRole AXTableCell::DetermineAccessibilityRole() {
   return ScanToDecideHeaderRole();
 }
 
-void AXTableCell::RowIndexRange(std::pair<unsigned, unsigned>& row_range) {
+bool AXTableCell::RowIndexRange(
+    std::pair<unsigned, unsigned>& row_range) const {
   if (!layout_object_ || !layout_object_->IsTableCell())
-    return;
+    return false;
 
   LayoutTableCell* layout_cell = ToLayoutTableCell(layout_object_);
   row_range.first = layout_cell->RowIndex();
-  row_range.second = layout_cell->RowSpan();
+  row_range.second = AriaRowSpan();
+  if (row_range.second == 0)
+    row_range.second = layout_cell->RowSpan();
 
   // Since our table might have multiple sections, we have to offset our row
   // appropriately.
   LayoutTableSection* section = layout_cell->Section();
   LayoutTable* table = layout_cell->Table();
   if (!table || !section)
-    return;
+    return false;
 
   LayoutTableSection* table_section = table->TopSection();
   unsigned row_offset = 0;
@@ -208,19 +250,26 @@ void AXTableCell::RowIndexRange(std::pair<unsigned, unsigned>& row_range) {
   }
 
   row_range.first += row_offset;
+  return true;
 }
 
-void AXTableCell::ColumnIndexRange(
-    std::pair<unsigned, unsigned>& column_range) {
+bool AXTableCell::ColumnIndexRange(
+    std::pair<unsigned, unsigned>& column_range) const {
   if (!layout_object_ || !layout_object_->IsTableCell())
-    return;
+    return false;
 
   LayoutTableCell* cell = ToLayoutTableCell(layout_object_);
   column_range.first = cell->Table()->AbsoluteColumnToEffectiveColumn(
       cell->AbsoluteColumnIndex());
-  column_range.second = cell->Table()->AbsoluteColumnToEffectiveColumn(
-                            cell->AbsoluteColumnIndex() + cell->ColSpan()) -
-                        column_range.first;
+
+  column_range.second = AriaColumnSpan();
+  if (column_range.second == 0) {
+    column_range.second = cell->Table()->AbsoluteColumnToEffectiveColumn(
+                              cell->AbsoluteColumnIndex() + cell->ColSpan()) -
+                          column_range.first;
+  }
+
+  return true;
 }
 
 SortDirection AXTableCell::GetSortDirection() const {
