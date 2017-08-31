@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "532b58aa_235fcdd4",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_context_menu.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-08-31T01:23:49Z",
+      "side": 1,
+      "message": "nit: multi-line, wrap with {}?",
+      "range": {
+        "startLine": 105,
+        "startChar": 10,
+        "endLine": 105,
+        "endChar": 11
+      },
+      "revId": "2019fafc1fc0872354627a08e48e1475d3019540",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2da3ac2_6af7e218",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-08-31T01:23:49Z",
+      "side": 1,
+      "message": "I remember we have to call this first, before launching apps. Luis might know more.",
+      "range": {
+        "startLine": 165,
+        "startChar": 0,
+        "endLine": 165,
+        "endChar": 80
+      },
+      "revId": "2019fafc1fc0872354627a08e48e1475d3019540",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
