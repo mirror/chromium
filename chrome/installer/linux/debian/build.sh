@@ -132,7 +132,7 @@ cleanup() {
 usage() {
   echo "usage: $(basename $0) [-c channel] [-a target_arch] [-o 'dir'] "
   echo "                      [-b 'dir'] -d branding"
-  echo "-c channel the package channel (trunk, asan, unstable, beta, stable)"
+  echo "-c channel the package channel (unstable, beta, stable)"
   echo "-a arch    package architecture (ia32 or x64)"
   echo "-o dir     package output directory [${OUTPUTDIR}]"
   echo "-b dir     build input directory    [${BUILDDIR}]"
@@ -155,12 +155,6 @@ verify_channel() {
     testing|beta )
       CHANNEL=beta
       RELEASENOTES="http://googlechromereleases.blogspot.com/search/label/Beta%20updates"
-      ;;
-    trunk|asan )
-      # Setting this to empty will prevent it from updating any existing configs
-      # from release packages.
-      REPOCONFIG=""
-      RELEASENOTES="http://googlechromereleases.blogspot.com/"
       ;;
     * )
       echo
@@ -223,7 +217,6 @@ TMPFILEDIR=$(mktemp -d -t deb.tmp.XXXXXX) || exit 1
 DEB_CHANGELOG="${TMPFILEDIR}/changelog"
 DEB_FILES="${TMPFILEDIR}/files"
 DEB_CONTROL="${TMPFILEDIR}/control"
-CHANNEL="trunk"
 # Default target architecture to same as build host.
 if [ "$(uname -m)" = "x86_64" ]; then
   TARGETARCH="x64"

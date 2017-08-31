@@ -15,8 +15,8 @@ set -u
 
 gen_spec() {
   rm -f "${SPEC}"
-  # Trunk packages need to install to a custom path so they don't conflict with
-  # release channel packages.
+  # Different channels need to install to different locations so they
+  # don't conflict with each other.
   local PACKAGE_FILENAME="${PACKAGE}-${CHANNEL}"
   if [ "$CHANNEL" != "stable" ]; then
     local INSTALLDIR="${INSTALLDIR}-${CHANNEL}"
@@ -212,7 +212,7 @@ cleanup() {
 usage() {
   echo "usage: $(basename $0) [-c channel] [-a target_arch] [-o 'dir']"
   echo "                      [-b 'dir'] -d branding"
-  echo "-c channel the package channel (trunk, asan, unstable, beta, stable)"
+  echo "-c channel the package channel (unstable, beta, stable)"
   echo "-a arch    package architecture (ia32 or x64)"
   echo "-o dir     package output directory [${OUTPUTDIR}]"
   echo "-b dir     build input directory    [${BUILDDIR}]"
@@ -237,15 +237,6 @@ verify_channel() {
       CHANNEL=beta
       # TODO(phajdan.jr): Remove REPLACES completely.
       REPLACES="dummy"
-      ;;
-    trunk|asan )
-      # This is a special package, mostly for development testing, so don't make
-      # it replace any installed release packages.
-      # TODO(phajdan.jr): Remove REPLACES completely.
-      REPLACES="dummy"
-      # Setting this to empty will prevent it from updating any existing configs
-      # from release packages.
-      REPOCONFIG=""
       ;;
     * )
       echo
@@ -303,7 +294,6 @@ SCRIPTDIR=$(readlink -f "$(dirname "$0")")
 OUTPUTDIR="${PWD}"
 STAGEDIR=$(mktemp -d -t rpm.build.XXXXXX) || exit 1
 TMPFILEDIR=$(mktemp -d -t rpm.tmp.XXXXXX) || exit 1
-CHANNEL="trunk"
 # Default target architecture to same as build host.
 if [ "$(uname -m)" = "x86_64" ]; then
   TARGETARCH="x64"
