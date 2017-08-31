@@ -402,6 +402,30 @@
     },
     {
       "key": {
+        "uuid": "97bfc0cb_1abeadce",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-08-31T21:40:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd7f6faa_c89c2336",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 52
+      },
+      "revId": "408f0f2791b65ce914b7ed420e12ac22cb7dabac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1422ca3_94d35dd8",
         "filename": "components/multidevice/service/device_sync_impl.cc",
         "patchSetId": 2
