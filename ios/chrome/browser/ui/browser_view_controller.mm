@@ -4413,6 +4413,15 @@ bubblePresenterForFeature:(const base::Feature&)feature
   [self hidePageInfo];
 }
 
+- (void)showBookmarksManager {
+  if (IsIPadIdiom()) {
+    [self showAllBookmarks];
+  } else {
+    [self initializeBookmarkInteractionController];
+    [_bookmarkInteractionController presentBookmarks];
+  }
+}
+
 #pragma mark - Command Handling
 
 - (IBAction)chromeExecuteCommand:(id)sender {
@@ -4434,15 +4443,6 @@ bubblePresenterForFeature:(const base::Feature&)feature
     case IDC_REQUEST_MOBILE_SITE:
       [[_model currentTab] reloadWithUserAgentType:web::UserAgentType::MOBILE];
       break;
-    case IDC_SHOW_BOOKMARK_MANAGER: {
-      if (IsIPadIdiom()) {
-        [self showAllBookmarks];
-      } else {
-        [self initializeBookmarkInteractionController];
-        [_bookmarkInteractionController presentBookmarks];
-      }
-      break;
-    }
     case IDC_SHOW_OTHER_DEVICES: {
       if (IsIPadIdiom()) {
         [self showNTPPanel:ntp_home::RECENT_TABS_PANEL];
