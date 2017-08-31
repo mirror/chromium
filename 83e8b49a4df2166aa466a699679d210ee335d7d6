@@ -161,6 +161,24 @@
     },
     {
       "key": {
+        "uuid": "3e517868_0ad263df",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-08-31T23:14:43Z",
+      "side": 1,
+      "message": "I had forgotten about the parity with the extension.\n\nLooking into this later is fine since it sounds like it doesn\u0027t match exactly with what we had before.  A TODO sounds good.",
+      "parentUuid": "6d4afb28_83a6f1ff",
+      "revId": "83e8b49a4df2166aa466a699679d210ee335d7d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a80aedd8_304f522d",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
         "patchSetId": 2
