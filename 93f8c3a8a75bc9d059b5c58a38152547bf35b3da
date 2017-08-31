@@ -57,6 +57,24 @@
       "revId": "93f8c3a8a75bc9d059b5c58a38152547bf35b3da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fe5c1da_d5034950",
+        "filename": "ios/clean/chrome/browser/ui/recent_tabs/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-31T13:00:46Z",
+      "side": 1,
+      "message": "Ah, I found what is happening, there is this path:\n\n  //ios/clean/chrome/browser/ui/recent_tabs:recent_tabs --[private]--\u003e\n  //ios/chrome/browser/ui/ntp/recent_tabs:recent_tabs --[public]--\u003e\n  //components/sync_sessions:sync_sessions --[public]--\u003e\n  //components/sessions:sessions\n\nSo, //ios/chrome/browser/ui/ntp/recent_tabs has //components/sync_sessions as a public_deps, which also has //components/sessions as public_deps. Unhelpfully, \"gn path\" consider this a private deps between //ios/clean/chrome/browser/ui/recent_tabs and //components/sessions but \"gn check\" consider it as allowed (as only the first dependency is private).",
+      "parentUuid": "2d6141d4_451769b3",
+      "revId": "93f8c3a8a75bc9d059b5c58a38152547bf35b3da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
