@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8c2ad506_e12e53b4",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/http_auth_dialogs/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-31T22:41:27Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "19c4a6a0_9cd290ec",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "678e5f82887abe9562445ac3cf70a5d96c6105f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d997a70_fa03441b",
         "filename": "ios/clean/chrome/browser/ui/dialogs/http_auth_dialogs/http_auth_dialog_mediator.h",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "678e5f82887abe9562445ac3cf70a5d96c6105f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ac12cfe_a34d580d",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/http_auth_dialogs/http_auth_dialog_mediator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-31T22:41:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d997a70_fa03441b",
+      "range": {
+        "startLine": 18,
+        "startChar": 27,
+        "endLine": 18,
+        "endChar": 34
+      },
+      "revId": "678e5f82887abe9562445ac3cf70a5d96c6105f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
