@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "279c6628_b0292b68",
+        "filename": "ui/app_list/views/search_result_page_view_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-31T16:50:34Z",
+      "side": 1,
+      "message": "This test is somewhat not expected for new launcher. Maybe we don\u0027t have correct setup. Will investigate separately.",
+      "revId": "e1d55996b0099027b1c6501d60297f5638b8a1c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
