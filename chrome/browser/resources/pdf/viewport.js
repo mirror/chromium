@@ -78,6 +78,7 @@ function Viewport(
   this.pinchPanVector_ = null;
   this.pinchCenter_ = null;
   this.firstPinchCenterInFrame_ = null;
+  this.userAction_ = false;
 
   window.addEventListener('scroll', this.updateViewport_.bind(this));
   window.addEventListener('resize', this.resize_.bind(this));
@@ -229,7 +230,7 @@ Viewport.prototype = {
     if (this.fittingType_ == Viewport.FittingType.FIT_TO_PAGE)
       this.fitToPageInternal_(false);
     else if (this.fittingType_ == Viewport.FittingType.FIT_TO_WIDTH)
-      this.fitToWidth();
+      this.fitToWidthInternal_();
     else
       this.updateViewport_();
   },
@@ -315,7 +316,8 @@ Viewport.prototype = {
     this.allowedToChangeZoom_ = true;
     f();
     this.allowedToChangeZoom_ = false;
-    this.afterZoomCallback_();
+    this.afterZoomCallback_(this.userAction_);
+    this.userAction_ = false;
   },
 
   /**
@@ -564,7 +566,7 @@ Viewport.prototype = {
   /**
    * Zoom the viewport so that the page-width consumes the entire viewport.
    */
-  fitToWidth: function() {
+  fitToWidthInternal_: function() {
     this.mightZoom_(() => {
       this.fittingType_ = Viewport.FittingType.FIT_TO_WIDTH;
       if (!this.documentDimensions_)
@@ -576,6 +578,14 @@ Viewport.prototype = {
       var page = this.getMostVisiblePage();
       this.updateViewport_();
     });
+  },
+
+  /**
+   * Zoom the viewport so that the page-width consumes the entire viewport.
+   */
+  fitToWidth: function() {
+    this.userAction_ = true;
+    this.fitToWidthInternal_();
   },
 
   /**
@@ -607,15 +617,19 @@ Viewport.prototype = {
   /**
    * Zoom the viewport so that a page consumes the entire viewport. Also scrolls
    * the viewport to the top of the current page.
+   * @param {boolean} opt_userInitiated Whether this fit to page was initiated
+   *     by the user. Defaults to false.
    */
-  fitToPage: function() {
-    this.fitToPageInternal_(true);
+  fitToPage: function(opt_userInitiated) {
+    this.userAction_ = opt_userInitiated || false;
+    this.fitToPageInternal_();
   },
 
   /**
    * Zoom out to the next predefined zoom level.
    */
   zoomOut: function() {
+    this.userAction_ = true;
     this.mightZoom_(() => {
       this.fittingType_ = Viewport.FittingType.NONE;
       var nextZoom = Viewport.ZOOM_FACTORS[0];
@@ -632,6 +646,7 @@ Viewport.prototype = {
    * Zoom in to the next predefined zoom level.
    */
   zoomIn: function() {
+    this.userAction_ = true;
     this.mightZoom_(() => {
       this.fittingType_ = Viewport.FittingType.NONE;
       var nextZoom = Viewport.ZOOM_FACTORS[Viewport.ZOOM_FACTORS.length - 1];
@@ -649,6 +664,7 @@ Viewport.prototype = {
    * @param {!Object} e The pinch event.
    */
   pinchZoom: function(e) {
+    this.userAction_ = true;
     this.mightZoom_(() => {
       this.pinchPhase_ = e.direction == 'out' ?
           Viewport.PinchPhase.PINCH_UPDATE_ZOOM_OUT :
