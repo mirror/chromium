@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee44a0a1_c113f510",
+        "filename": "chrome/android/java/res/layout/content_suggestions_action_card_modern.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-08-31T13:57:25Z",
+      "side": 1,
+      "message": "Should we use this style at all if we then proceed to null out two thirds of what it defines?",
+      "range": {
+        "startLine": 7,
+        "startChar": 28,
+        "endLine": 7,
+        "endChar": 48
+      },
+      "revId": "28f41b21884f08448b12e077a4fc1b48eceac3e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
