@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "baaef711_a29615f8",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-08-31T23:07:48Z",
+      "side": 1,
+      "message": "I realized there is a slight problem with the RecommitSystemPages API.\n\nSince we don\u0027t track memory permissions, we need the page_accessibility parameter on Windows, which could be different than the original permissions. No problem there.\n\nOn POSIX, we don\u0027t use page_accessibility, which forces the API to require that it\u0027s the same as before decommitting. Since the client is must already track the address range, this doesn\u0027t seem too much of a pain point.\n\nSince it\u0027s the safest change in my opinion, I chose this approach, and changed the docs to reflect this new requirement. WDYT?",
+      "range": {
+        "startLine": 314,
+        "startChar": 0,
+        "endLine": 314,
+        "endChar": 77
+      },
+      "revId": "f5896aca14745e5a80fc03c633a1fee3b2c0d5e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e91dd625_86ce2c4a",
+        "filename": "third_party/WebKit/Source/platform/heap/PageMemory.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-08-31T23:07:48Z",
+      "side": 1,
+      "message": "Note, on Windows, this just calls SetSystemPagesAccess twice.",
+      "range": {
+        "startLine": 21,
+        "startChar": 14,
+        "endLine": 21,
+        "endChar": 34
+      },
+      "revId": "f5896aca14745e5a80fc03c633a1fee3b2c0d5e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b6b1266_921db4ce",
+        "filename": "third_party/WebKit/Source/platform/heap/PageMemory.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-08-31T23:07:48Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 27,
+        "startChar": 13,
+        "endLine": 27,
+        "endChar": 33
+      },
+      "revId": "f5896aca14745e5a80fc03c633a1fee3b2c0d5e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
