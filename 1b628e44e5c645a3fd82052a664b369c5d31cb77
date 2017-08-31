@@ -52,6 +52,24 @@
       "revId": "1b628e44e5c645a3fd82052a664b369c5d31cb77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c598fac8_7de7282e",
+        "filename": "chromeos/network/onc/onc_certificate_importer_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-08-31T20:19:58Z",
+      "side": 1,
+      "message": "Oh yeah. I had forgotten that used to be the case.\n\nhttps://codereview.chromium.org/2000503002/diff/320001/chromeos/network/onc/onc_certificate_importer_impl_unittest.cc",
+      "parentUuid": "8b4e2b9c_30e55e36",
+      "revId": "1b628e44e5c645a3fd82052a664b369c5d31cb77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
