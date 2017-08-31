@@ -17,10 +17,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.webkit.ConsoleMessage;
 import android.webkit.URLUtil;
-import android.webkit.ValueCallback;
-import android.webkit.WebChromeClient;
 import android.widget.FrameLayout;
 
 import org.chromium.base.ContentUriUtils;
@@ -138,19 +135,19 @@ class AwWebContentsDelegateAdapter extends AwWebContentsDelegate {
     @Override
     public boolean addMessageToConsole(int level, String message, int lineNumber,
             String sourceId) {
-        ConsoleMessage.MessageLevel messageLevel = ConsoleMessage.MessageLevel.DEBUG;
+        AwConsoleMessage.MessageLevel messageLevel = AwConsoleMessage.MessageLevel.DEBUG;
         switch(level) {
             case LOG_LEVEL_TIP:
-                messageLevel = ConsoleMessage.MessageLevel.TIP;
+                messageLevel = AwConsoleMessage.MessageLevel.TIP;
                 break;
             case LOG_LEVEL_LOG:
-                messageLevel = ConsoleMessage.MessageLevel.LOG;
+                messageLevel = AwConsoleMessage.MessageLevel.LOG;
                 break;
             case LOG_LEVEL_WARNING:
-                messageLevel = ConsoleMessage.MessageLevel.WARNING;
+                messageLevel = AwConsoleMessage.MessageLevel.WARNING;
                 break;
             case LOG_LEVEL_ERROR:
-                messageLevel = ConsoleMessage.MessageLevel.ERROR;
+                messageLevel = AwConsoleMessage.MessageLevel.ERROR;
                 break;
             default:
                 Log.w(TAG, "Unknown message level, defaulting to DEBUG");
@@ -158,7 +155,7 @@ class AwWebContentsDelegateAdapter extends AwWebContentsDelegate {
         }
 
         boolean result = mContentsClient.onConsoleMessage(
-                new ConsoleMessage(message, sourceId, lineNumber, messageLevel));
+                new AwConsoleMessage(message, sourceId, lineNumber, messageLevel));
         if (result && message != null && message.startsWith("[blocked]")) {
             Log.e(TAG, "Blocked URL: " + message);
         }
@@ -224,7 +221,7 @@ class AwWebContentsDelegateAdapter extends AwWebContentsDelegate {
         AwContentsClient.FileChooserParamsImpl params = new AwContentsClient.FileChooserParamsImpl(
                 modeFlags, acceptTypes, title, defaultFilename, capture);
 
-        mContentsClient.showFileChooser(new ValueCallback<String[]>() {
+        mContentsClient.showFileChooser(new AwValueCallback<String[]>() {
             boolean mCompleted;
             @Override
             public void onReceiveValue(String[] results) {
@@ -297,7 +294,7 @@ class AwWebContentsDelegateAdapter extends AwWebContentsDelegate {
         if (fullscreenView == null) {
             return;
         }
-        WebChromeClient.CustomViewCallback cb = () -> {
+        AwContentsClient.CustomViewCallback cb = () -> {
             if (mCustomView != null) {
                 mAwContents.requestExitFullscreen();
             }
