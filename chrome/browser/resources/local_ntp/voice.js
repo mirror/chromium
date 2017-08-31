@@ -979,14 +979,12 @@ text.init = function() {
  * @param {string} opt_finalText High confidence speech recognition result text,
  *    defaults to an empty string.
  */
-text.updateTextArea = function(interimText, opt_finalText) {
-  const finalText = opt_finalText || '';
-
+text.updateTextArea = function(interimText, opt_finalText = '') {
   window.clearTimeout(text.initializingTimer_);
   text.cancelListeningTimeout();
 
   text.interim_.textContent = interimText;
-  text.final_.textContent = finalText;
+  text.final_.textContent = opt_finalText;
 
   text.interim_.className = text.final_.className = text.getTextClassName_();
 };
@@ -1260,7 +1258,7 @@ microphone.init = function() {
 
 
 /**
- * Starts the volume circles animations.
+ * Starts the volume circles animations, if it has not started yet.
  */
 microphone.startInputAnimation = function() {
   if (!microphone.isLevelAnimating_) {
@@ -1453,7 +1451,9 @@ view.setReceivingSpeech = function() {
  */
 view.updateSpeechResult = function(interimResultText, finalResultText) {
   if (view.isVisible_) {
-    view.container_.className = view.RECEIVING_SPEECH_CLASS_;
+    if (view.container_.className != view.RECEIVING_SPEECH_CLASS_) {
+      view.setReceivingSpeech();
+    }
     text.updateTextArea(interimResultText, finalResultText);
   }
 };
