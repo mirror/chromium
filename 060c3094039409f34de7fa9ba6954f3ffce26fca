@@ -55,6 +55,23 @@
     },
     {
       "key": {
+        "uuid": "72f10a40_64744361",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/input-events/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-08-31T22:19:25Z",
+      "side": 1,
+      "message": "Add yosin@chromium.org as well?",
+      "revId": "060c3094039409f34de7fa9ba6954f3ffce26fca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "30cf215e_0001f521",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/intersection-observer/OWNERS",
         "patchSetId": 2
@@ -66,6 +83,23 @@
       "writtenOn": "2017-08-31T16:51:31Z",
       "side": 1,
       "message": "I don\u0027t like OWNERS files with only one name in them.  Let\u0027s add eae@chromium.org",
+      "revId": "060c3094039409f34de7fa9ba6954f3ffce26fca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72be62b2_80c34c2b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/staticrange/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-08-31T22:19:25Z",
+      "side": 1,
+      "message": "Add garykac@chromium.org as well?",
       "revId": "060c3094039409f34de7fa9ba6954f3ffce26fca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
