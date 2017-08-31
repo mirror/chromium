@@ -22,6 +22,30 @@
       "revId": "038e8736779d78f35ba67d508848224048d38d9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17b174c6_e10c3337",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-31T09:43:52Z",
+      "side": 1,
+      "message": "No, this is because the toolbar is pinned at the top of the collection. To do that, the header is overlapping the next items, reducing the height of the content of the collection by the height of the toolbar.",
+      "parentUuid": "6fed01ee_ffa83db8",
+      "range": {
+        "startLine": 233,
+        "startChar": 66,
+        "endLine": 233,
+        "endChar": 67
+      },
+      "revId": "038e8736779d78f35ba67d508848224048d38d9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
