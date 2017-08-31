@@ -24,6 +24,7 @@ class OmniboxPopupContentsView;
 
 namespace gfx {
 class Canvas;
+class Image;
 class RenderText;
 }
 
@@ -83,8 +84,8 @@ class OmniboxResultView : public views::View,
   // Returns the display width required for the match contents.
   int GetMatchContentsWidth() const;
 
-  // Stores a custom icon as a local data member and schedules a repaint.
-  void SetCustomIcon(const gfx::ImageSkia& icon);
+  // Notification that the match icon has changed and schedules a repaint.
+  void OnMatchIconUpdated();
 
   // Stores the image in a local data member and schedules a repaint.
   void SetAnswerImage(const gfx::ImageSkia& image);
@@ -136,10 +137,9 @@ class OmniboxResultView : public views::View,
   // views::View:
   const char* GetClassName() const override;
 
-  gfx::ImageSkia GetIcon() const;
+  gfx::Image GetIcon() const;
 
-  // Utility function for creating vector icons.
-  gfx::ImageSkia GetVectorIcon(const gfx::VectorIcon& icon_id) const;
+  SkColor GetVectorIconColor() const;
 
   // Whether to render only the keyword match.  Returns true if |match_| has an
   // associated keyword match that has been animated so close to the start that
@@ -213,8 +213,6 @@ class OmniboxResultView : public views::View,
   std::unique_ptr<views::ImageView> keyword_icon_;
 
   std::unique_ptr<gfx::SlideAnimation> animation_;
-
-  gfx::ImageSkia custom_icon_;
 
   // If the answer has an icon, cache the image.
   gfx::ImageSkia answer_image_;
