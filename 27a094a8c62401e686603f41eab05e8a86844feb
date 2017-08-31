@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43ac823d_ff252645",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkersView.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-31T21:42:08Z",
+      "side": 1,
+      "message": "this._reportView.children()",
+      "range": {
+        "startLine": 123,
+        "startChar": 24,
+        "endLine": 123,
+        "endChar": 51
+      },
+      "revId": "27a094a8c62401e686603f41eab05e8a86844feb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "358fda94_bc653010",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/ReportView.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-31T21:42:08Z",
+      "side": 1,
+      "message": "add optional insertBefore as a last parameter instead.",
+      "revId": "27a094a8c62401e686603f41eab05e8a86844feb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cf4b578_a42e9ea6",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/ReportView.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-31T21:42:08Z",
+      "side": 1,
+      "message": "remove this method.",
+      "revId": "27a094a8c62401e686603f41eab05e8a86844feb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66ec83a5_9a4d056a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/ReportView.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-31T21:42:08Z",
+      "side": 1,
+      "message": "remove this.",
+      "revId": "27a094a8c62401e686603f41eab05e8a86844feb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8065638c_480a285b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/Widget.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-31T21:42:08Z",
+      "side": 1,
+      "message": "revert this.",
+      "revId": "27a094a8c62401e686603f41eab05e8a86844feb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29bce351_42227c1b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/Widget.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-31T21:42:08Z",
+      "side": 1,
+      "message": "revert this.",
+      "revId": "27a094a8c62401e686603f41eab05e8a86844feb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
