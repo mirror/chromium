@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "64732b29_c59b88d7",
+        "filename": "chrome/browser/subresource_filter/chrome_subresource_filter_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-31T18:14:35Z",
+      "side": 1,
+      "message": "As discussed on chat, let\u0027s leave activated_via_devtools_ as is since its lifetime is disjoint with computing subresource_filter::ContentSubresourceFilterDriverFactory::\n                FromWebContents(web_contents_)\n                    -\u003eGetMatchedConfigurationForLastCommittedPageLoad()",
+      "parentUuid": "2f2aa732_d9e8e88a",
+      "revId": "18dcb4fd62f6731f19672cb75fd0ee0d28a78b8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "74125400_cac2ed16",
         "filename": "chrome/browser/subresource_filter/subresource_filter_unittest.cc",
         "patchSetId": 8
