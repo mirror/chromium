@@ -250,23 +250,24 @@ class PLATFORM_EXPORT ThreadState {
 
   // A GC runs in the following sequence.
   //
-  // 1) preGC() is called.
-  // 2) ThreadHeap::collectGarbage() is called. This marks live objects.
-  // 3) postGC() is called. This does thread-local weak processing.
-  // 4) preSweep() is called. This does pre-finalization, eager sweeping and
+  // 1) Mark() is called.
+  //   1.1) PreMark() is called.
+  //   1.2) Trace and mark live objects.
+  //   1.3) PostMark() is called. This does weak processing.
+  // 2) PreSweep() is called. This does pre-finalization, eager sweeping and
   //    heap compaction.
-  // 4) Lazy sweeping sweeps heaps incrementally. completeSweep() may be called
+  // 3) Lazy sweeping sweeps heaps incrementally. completeSweep() may be called
   //    to complete the sweeping.
-  // 5) postSweep() is called.
+  // 4) PostSweep() is called.
   //
   // Notes:
-  // - The world is stopped between 1) and 3).
-  // - isInGC() returns true between 1) and 3).
-  // - isSweepingInProgress() returns true while any sweeping operation is
+  // - IsInGC() returns true between 1) and 2).
+  // - IsSweepingInProgress() returns true while any sweeping operation is
   //   running.
   void MakeConsistentForGC();
-  void PreGC();
-  void PostGC(BlinkGC::GCType);
+  void Mark(BlinkGC::StackState, BlinkGC::GCType, BlinkGC::GCReason);
+  void PreMark();
+  void PostMark(BlinkGC::GCType);
   void CompleteSweep();
   void PreSweep(BlinkGC::GCType);
   void PostSweep();
