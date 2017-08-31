@@ -309,6 +309,30 @@
       "revId": "0fc1c91b61aba785476601552d49233921e30d8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9b1acd6_2b2d9e73",
+        "filename": "ash/shell.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-08-31T20:34:39Z",
+      "side": 1,
+      "message": "I looked into the code and it seems the initial value should be set to STOPPED here to make sure the burst animation could be correctly shown.",
+      "parentUuid": "bf9a6bbd_bf58c9ac",
+      "range": {
+        "startLine": 842,
+        "startChar": 6,
+        "endLine": 842,
+        "endChar": 37
+      },
+      "revId": "0fc1c91b61aba785476601552d49233921e30d8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
