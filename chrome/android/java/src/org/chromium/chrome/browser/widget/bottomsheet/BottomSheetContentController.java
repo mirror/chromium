@@ -15,9 +15,15 @@ import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.BottomNavigationView.OnNavigationItemSelectedListener;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.google.android.libraries.hats20.HatsClient;
+import com.google.android.libraries.hats20.HatsDownloadRequest;
+import com.google.android.libraries.hats20.HatsShowRequest;
+import com.google.android.libraries.hats20.storage.HatsDataStore;
 
 import org.chromium.base.ActivityState;
 import org.chromium.base.ApiCompatibilityUtils;
@@ -66,6 +72,9 @@ public class BottomSheetContentController extends BottomNavigationView
     public static final int TYPE_HISTORY = 3;
     public static final int TYPE_INCOGNITO_HOME = 4;
     public static final int TYPE_PLACEHOLDER = 5;
+
+    private final String mSiteId = "aboeisx6fh3soziz6fkdbi3o2u";
+    private final HatsDataStore mHatsDataStore = HatsDataStore.buildFromContext(getContext());
 
     // R.id.action_home is overloaded, so an invalid ID is used to reference the incognito version
     // of the home content.
@@ -138,6 +147,25 @@ public class BottomSheetContentController extends BottomNavigationView
             if (mBottomSheet.getSheetState() == BottomSheet.SHEET_STATE_PEEK) {
                 clearBottomSheetContents(false);
             }
+            if (!HatsClient.showSurveyIfAvailable(mRequest)) {
+                Log.e("HatsLibClient",
+                        "expiration date: " + mHatsDataStore.getSurveyExpirationDate(mSiteId, 0));
+                Log.w("HatsLibClient",
+                        "does a valid survey exist? " + mHatsDataStore.validSurveyExists(mSiteId));
+                Log.d("HatsLibClient", "removing survey if expired.");
+                mHatsDataStore.removeSurveyIfExpired(mSiteId);
+                Log.d("HatsLibClient",
+                        "expiration date: " + mHatsDataStore.getSurveyExpirationDate(mSiteId, 0));
+                Log.d("HatsLibClient",
+                        "does a valid survey exist? " + mHatsDataStore.validSurveyExists(mSiteId));
+                mHatsDataStore.removeSurvey(mSiteId);
+                Log.d("HatsLibClient",
+                        "expiration date: " + mHatsDataStore.getSurveyExpirationDate(mSiteId, 0));
+                Log.d("HatsLibClient",
+                        "does a valid survey exist? " + mHatsDataStore.validSurveyExists(mSiteId));
+                HatsClient.downloadSurvey(mDownloadRequest);
+                Log.d("HatsLibClient", "" + HatsClient.showSurveyIfAvailable(mRequest));
+            }
         }
 
         @Override
@@ -159,6 +187,8 @@ public class BottomSheetContentController extends BottomNavigationView
     private TabModelSelectorObserver mTabModelSelectorObserver;
     private Integer mHighlightItemId;
     private View mHighlightedView;
+    private HatsShowRequest mRequest;
+    private HatsDownloadRequest mDownloadRequest;
 
     public BottomSheetContentController(Context context, AttributeSet atts) {
         super(context, atts);
@@ -231,6 +261,16 @@ public class BottomSheetContentController extends BottomNavigationView
                 if (newState == ActivityState.STOPPED) mSnackbarManager.onStop();
             }
         }, mActivity);
+
+        mRequest = HatsShowRequest.builder((Activity) getContext())
+                          .forSiteId("7ukwh6npnmfm4ifb7ebubwyipe")
+                          .build();
+        mDownloadRequest = HatsDownloadRequest.builder(getContext())
+                                  .forSiteId(mSiteId)
+                                  .withAdvertisingId("")
+                                  .build();
+        HatsClient.downloadSurvey(mDownloadRequest);
+        Log.d("HatsLibClient", "downloaded");
     }
 
     /**
