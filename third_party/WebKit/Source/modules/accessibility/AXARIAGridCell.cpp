@@ -47,12 +47,20 @@ AXARIAGridCell* AXARIAGridCell::Create(LayoutObject* layout_object,
 
 bool AXARIAGridCell::IsAriaColumnHeader() const {
   const AtomicString& role = GetAttribute(HTMLNames::roleAttr);
-  return EqualIgnoringASCIICase(role, "columnheader");
+  if (EqualIgnoringASCIICase(role, "columnheader"))
+    return true;
+
+  // Consider it a column header if it looks like one in HTML.
+  return role.IsEmpty() && IsColumnHeaderCell();
 }
 
 bool AXARIAGridCell::IsAriaRowHeader() const {
   const AtomicString& role = GetAttribute(HTMLNames::roleAttr);
-  return EqualIgnoringASCIICase(role, "rowheader");
+  if (EqualIgnoringASCIICase(role, "rowheader"))
+    return true;
+
+  // Consider it a row header if it looks like one in HTML.
+  return role.IsEmpty() && IsRowHeaderCell();
 }
 
 AXObject* AXARIAGridCell::ParentTable() const {
@@ -73,10 +81,15 @@ AXObject* AXARIAGridCell::ParentTable() const {
   return parent;
 }
 
-void AXARIAGridCell::RowIndexRange(std::pair<unsigned, unsigned>& row_range) {
+bool AXARIAGridCell::RowIndexRange(
+    std::pair<unsigned, unsigned>& row_range) const {
   AXObject* parent = ParentObjectUnignored();
   if (!parent)
-    return;
+    return false;
+
+  // Use native table semantics if this is ARIA overlayed on an HTML table.
+  if (AXTableCell::RowIndexRange(row_range))
+    return true;
 
   if (parent->IsTableRow()) {
     // We already got a table row, use its API.
@@ -86,7 +99,7 @@ void AXARIAGridCell::RowIndexRange(std::pair<unsigned, unsigned>& row_range) {
     // children to determine the row index for the cell in it.
     unsigned column_count = ToAXTable(parent)->ColumnCount();
     if (!column_count)
-      return;
+      return false;
 
     const auto& siblings = parent->Children();
     unsigned children_size = siblings.size();
@@ -98,18 +111,23 @@ void AXARIAGridCell::RowIndexRange(std::pair<unsigned, unsigned>& row_range) {
     }
   }
 
-  // as far as I can tell, grid cells cannot span rows
+  // TODO should aria-rowspan be checked here? We also support it another way.
   row_range.second = 1;
+  return true;
 }
 
-void AXARIAGridCell::ColumnIndexRange(
-    std::pair<unsigned, unsigned>& column_range) {
+bool AXARIAGridCell::ColumnIndexRange(
+    std::pair<unsigned, unsigned>& column_range) const {
   AXObject* parent = ParentObjectUnignored();
   if (!parent)
-    return;
+    return false;
+
+  // Use native table semantics if this is ARIA overlayed on an HTML table.
+  if (AXTableCell::ColumnIndexRange(column_range))
+    return true;
 
   if (!parent->IsTableRow() && !parent->IsAXTable())
-    return;
+    return false;
 
   const auto& siblings = parent->Children();
   unsigned children_size = siblings.size();
@@ -120,8 +138,9 @@ void AXARIAGridCell::ColumnIndexRange(
     }
   }
 
-  // as far as I can tell, grid cells cannot span columns
+  // TODO should aria-colspan be checked here? We also support it another way.
   column_range.second = 1;
+  return true;
 }
 
 AccessibilityRole AXARIAGridCell::ScanToDecideHeaderRole() {
