@@ -38,3 +38,35 @@ source_set("history") {
     "//url",
   ]
 }
+
+source_set("tab_helper") {
+  sources = [
+    "history_tab_helper.h",
+    "history_tab_helper.mm",
+  ]
+  deps = [
+    ":history",
+    "//base",
+    "//components/history/core/browser",
+    "//components/keyed_service/core",
+    "//components/strings",
+    "//ios/chrome/browser/browser_state",
+    "//ios/web",
+    "//ui/base",
+    "//url",
+  ]
+  configs += [ "//build/config/compiler:enable_arc" ]
+}
+
+source_set("unit_tests") {
+  testonly = true
+  sources = [
+    "history_tab_helper_unittest.mm",
+  ]
+  deps = [
+    ":tab_helper",
+    "//ios/chrome/browser/browser_state:test_support",
+    "//testing/gtest",
+  ]
+  configs += [ "//build/config/compiler:enable_arc" ]
+}
