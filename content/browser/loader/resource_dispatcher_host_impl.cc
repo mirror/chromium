@@ -735,11 +735,6 @@ void ResourceDispatcherHostImpl::DidFinishLoading(ResourceLoader* loader) {
               "Net.RequestTime2.ErrAborted.NoBytesRead",
               request_loading_time);
         }
-
-        if (delegate_) {
-          delegate_->OnAbortedFrameLoad(loader->request()->url(),
-                                        request_loading_time);
-        }
         break;
       case net::ERR_CONNECTION_RESET:
         UMA_HISTOGRAM_LONG_TIMES(
