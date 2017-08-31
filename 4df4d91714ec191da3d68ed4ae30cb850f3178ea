@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3cb77e4_e28f48ff",
+        "filename": "third_party/win_build_output/mc/base/trace_event/etw_manifest/chrome_events_winTEMP.BIN",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-31T01:20:22Z",
+      "side": 1,
+      "message": "Ah, good ol\u0027 chrome_events_winTEMP.BIN.",
+      "revId": "4df4d91714ec191da3d68ed4ae30cb850f3178ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
