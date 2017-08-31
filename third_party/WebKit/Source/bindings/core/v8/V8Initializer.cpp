@@ -435,10 +435,10 @@ class ArrayBufferAllocator : public v8::ArrayBuffer::Allocator {
                      Protection protection) override {
     switch (protection) {
       case Protection::kNoAccess:
-        WTF::SetSystemPagesInaccessible(data, length);
+        WTF::SetSystemPagesAccess(data, length, WTF::PageInaccessible);
         return;
       case Protection::kReadWrite:
-        (void)WTF::SetSystemPagesAccessible(data, length);
+        (void)WTF::SetSystemPagesAccess(data, length, WTF::PageReadWrite);
         return;
       default:
         NOTREACHED();
