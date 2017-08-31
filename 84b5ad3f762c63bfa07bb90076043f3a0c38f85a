@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e4c56f1_9fdc2df4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninAndSyncView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-31T12:50:16Z",
+      "side": 1,
+      "message": "Sorry, but such a change probably requires a comment for the reader and some kind of explanation for the reviewer. Right now it is not clear what causes the bug and why your CL should fix it.",
+      "range": {
+        "startLine": 304,
+        "startChar": 20,
+        "endLine": 304,
+        "endChar": 34
+      },
+      "revId": "84b5ad3f762c63bfa07bb90076043f3a0c38f85a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
