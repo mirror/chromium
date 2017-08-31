@@ -325,10 +325,12 @@ MediaTrackCapabilities& ImageCapture::GetMediaTrackCapabilities() {
 void ImageCapture::SetMediaTrackConstraints(
     ScriptPromiseResolver* resolver,
     const HeapVector<MediaTrackConstraintSet>& constraints_vector) {
+  DCHECK_GT(constraints_vector.size(), 0u);
   if (!service_) {
     resolver->Reject(DOMException::Create(kNotFoundError, kNoServiceError));
     return;
   }
+
   // TODO(mcasas): add support more than one single advanced constraint.
   auto constraints = constraints_vector[0];
 
