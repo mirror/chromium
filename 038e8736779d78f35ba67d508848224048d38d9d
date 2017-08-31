@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6fed01ee_ffa83db8",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-31T09:34:50Z",
+      "side": 1,
+      "message": "Really not sure, but I think this should be + ntp_header::kToolbarHeight\nor (ntp_header::kToolbarHeight - ntp_header::kToolbarHeight)\n\nPlease check and if this is correct, ignore the comment.",
+      "range": {
+        "startLine": 233,
+        "startChar": 66,
+        "endLine": 233,
+        "endChar": 67
+      },
+      "revId": "038e8736779d78f35ba67d508848224048d38d9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
