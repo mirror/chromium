@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37f7502f_a50f95fe",
+        "filename": "chrome/browser/media/media_engagement_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-31T20:54:35Z",
+      "side": 1,
+      "message": "Actually, this doesn\u0027t need to be in a header at all. You can put it into an anonymous namespace in the .cc file (and even the anonymous namespace isn\u0027t strictly necessary, because constants get internal linkage by default, but it\u0027s easier to just put everything into the anonymous namespace). Sorry, I should have mentioned that from the beginning.",
+      "range": {
+        "startLine": 125,
+        "startChar": 19,
+        "endLine": 125,
+        "endChar": 33
+      },
+      "revId": "ac0620164fa5df8007a3b56949a6167a2052fda5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
