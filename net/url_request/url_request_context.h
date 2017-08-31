@@ -284,6 +284,14 @@ class NET_EXPORT URLRequestContext
   // Returns current value of the |check_cleartext_permitted| flag.
   bool check_cleartext_permitted() const { return check_cleartext_permitted_; }
 
+  // Whether or not the ResourceScheduler should be used. Only C++ Headless
+  // embedders are likely to want to turn this off.
+  void set_use_resource_scheduler(bool use_resource_scheduler) {
+    use_resource_scheduler_ = use_resource_scheduler;
+  }
+
+  bool use_resource_scheduler() const { return use_resource_scheduler_; }
+
   // Sets a name for this URLRequestContext. Currently the name is used in
   // MemoryDumpProvier to annotate memory usage. The name does not need to be
   // unique.
@@ -342,6 +350,10 @@ class NET_EXPORT URLRequestContext
   // Enables checking system policy before allowing a cleartext http or ws
   // request. Only used on Android.
   bool check_cleartext_permitted_;
+  // Whether or not the resource scheduler should be used. Normally this will be
+  // on except for some C++ Headless embedders who may turn it off in favor of
+  // custom scheduling logic.
+  bool use_resource_scheduler_;
 
   // An optional name which can be set to describe this URLRequestContext.
   // Used in MemoryDumpProvier to annotate memory usage. The name does not need
