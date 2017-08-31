@@ -22,6 +22,52 @@
       "revId": "196a2d2a11f4a7d1e6bfb16650d6cc6ec6549bdc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c73f447_dbccd953",
+        "filename": "chrome/test/data/extensions/api_test/networking_private/test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000212
+      },
+      "writtenOn": "2017-08-31T23:32:13Z",
+      "side": 1,
+      "message": "what\u0027s the expectation if no technology type is specified",
+      "range": {
+        "startLine": 82,
+        "startChar": 29,
+        "endLine": 82,
+        "endChar": 50
+      },
+      "revId": "196a2d2a11f4a7d1e6bfb16650d6cc6ec6549bdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69bac395_6ba0a199",
+        "filename": "chromeos/network/network_state_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 870,
+      "author": {
+        "id": 1000212
+      },
+      "writtenOn": "2017-08-31T23:32:13Z",
+      "side": 1,
+      "message": "else if ?",
+      "range": {
+        "startLine": 870,
+        "startChar": 2,
+        "endLine": 870,
+        "endChar": 4
+      },
+      "revId": "196a2d2a11f4a7d1e6bfb16650d6cc6ec6549bdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
