@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "30625699_04454341",
+        "filename": "chrome/test/views/chrome_views_test_base.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-31T22:22:05Z",
+      "side": 1,
+      "message": "That shouldn\u0027t the case. We forward declare things like this all the time. Did you maybe forget to add the include to the .cc when you removed it from here?",
+      "parentUuid": "ea71706f_aef307f9",
+      "range": {
+        "startLine": 11,
+        "startChar": 42,
+        "endLine": 11,
+        "endChar": 64
+      },
+      "revId": "c37fbe00508c65f0910be478e17ddb1e99140a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06fa5200_4e9ed262",
         "filename": "chrome/test/views/chrome_views_test_base.h",
         "patchSetId": 2
@@ -187,6 +211,29 @@
       "revId": "c37fbe00508c65f0910be478e17ddb1e99140a6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "935b43c6_471e76a9",
+        "filename": "chrome/test/views/chrome_views_test_base.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-31T22:22:05Z",
+      "side": 1,
+      "message": "Prefix where override comes from.",
+      "range": {
+        "startLine": 19,
+        "startChar": 3,
+        "endLine": 19,
+        "endChar": 23
+      },
+      "revId": "c37fbe00508c65f0910be478e17ddb1e99140a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
