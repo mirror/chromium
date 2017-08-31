@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1b31d66_23e32476",
+        "filename": "ios/chrome/browser/browser_state/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-31T13:24:01Z",
+      "side": 1,
+      "message": "All this code looks like model code, thus it should go to ios/chrome/browser (AFAICT we decided that only ui code should go to ios/clean/chrome/browser and the model code should go in ios/chrome/browser and be shared by both app).",
+      "revId": "3c8aba17106f2a0bae4bfcef0f9a39989dcc8ed5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2fb1d3a_07166b88",
+        "filename": "ios/clean/chrome/browser/web/web_state_delegate/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-31T13:24:01Z",
+      "side": 1,
+      "message": "Instead of splitting the target in two, it is better to use the \"public\" field in addition to \"sources\". From \"gn help public\":\n\n  public: Declare public header files for a target.\n\n    A list of files that other targets can include. These permissions are checked\n    via the \"check\" command (see \"gn help check\").\n\n    If no public files are declared, other targets (assuming they have visibility\n    to depend on this target) can include any file in the sources list. If this\n    variable is defined on a target, dependent targets may only include files on\n    this whitelist.\n\nSo, you should instead write this target like this:\n\n  source_set(\"web_state_delegate\") {\n    public \u003d [\n      \"web_state_delegate_service.h\",\n      \"web_state_delegate_service_factory.h\",\n    ]\n    sources \u003d [\n      \"web_state_delegate_impl.h\",\n      \"web_state_delegate_impl.mm\",\n      \"web_state_delegate_service_factory.mm\",\n      \"web_state_delegate_service_impl.h\",\n      \"web_state_delegate_service_impl.mm\",\n    ]\n    deps \u003d [\n      \"//base\",\n      \"//components/keyed_service/core\",\n      \"//components/keyed_service/ios\",\n      \"//ios/chrome/browser/browser_state\",\n      \"//ios/chrome/browser/ui/browser_list\",\n      \"//ios/chrome/browser/web_state_list\",\n      \"//ios/clean/chrome/browser/ui/dialogs/context_menu\",\n      \"//ios/clean/chrome/browser/ui/dialogs/java_script_dialogs\",\n      \"//ios/clean/chrome/browser/ui/overlays\",\n      \"//ios/web\",\n    ]\n    configs +\u003d [ \"//build/config/compiler:enable_arc\" ]\n  }",
+      "revId": "3c8aba17106f2a0bae4bfcef0f9a39989dcc8ed5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
