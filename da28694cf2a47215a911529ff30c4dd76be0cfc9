@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "286334db_a78226b6",
+        "filename": "third_party/WebKit/Source/core/html/HTMLIFrameElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-08-31T14:46:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1716cdd0_24f8a83f",
+      "revId": "da28694cf2a47215a911529ff30c4dd76be0cfc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa4fdf1d_fa94005b",
         "filename": "third_party/WebKit/Source/core/html/HTMLIFrameElement.cpp",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "da28694cf2a47215a911529ff30c4dd76be0cfc9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77ed8c02_7dbb3df5",
+        "filename": "third_party/WebKit/Source/core/html/HTMLIFrameElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-08-31T14:46:26Z",
+      "side": 1,
+      "message": "\"Adding a deprecation message generally requires an approved \"intent to deprecate and remove\" (people are very optimistic in general about breaking changes which we really can\u0027t get away with, though I strongly suspect this is not such a case).  So you can either land just the usecounter now without a deprecation message, or do a I2D\u0026R thread now with some data indicating why removal is likely safe and get provisional approval based on what you guess the UseCounter will tell us (eg. based on the existing allow UseCounter as an upper bound).  Given how close branch is, I\u0027d suggest the former is probably best...\" Quote Rick from his email.",
+      "parentUuid": "fa4fdf1d_fa94005b",
+      "revId": "da28694cf2a47215a911529ff30c4dd76be0cfc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
