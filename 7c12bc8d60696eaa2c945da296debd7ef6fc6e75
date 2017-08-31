@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4f49810b_19004cfe",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-08-31T12:53:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abc2932e_ac2c1ed7",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 43
+      },
+      "revId": "7c12bc8d60696eaa2c945da296debd7ef6fc6e75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31e579fa_366867d9",
         "filename": "chrome/android/java/res/layout/tile_view_modern_condensed.xml",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-31T11:08:21Z",
       "side": 1,
       "message": "nit: Define a style? :D",
+      "range": {
+        "startLine": 43,
+        "startChar": 8,
+        "endLine": 43,
+        "endChar": 28
+      },
+      "revId": "7c12bc8d60696eaa2c945da296debd7ef6fc6e75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b59f7420_a7cd8fbc",
+        "filename": "chrome/android/java/res/layout/tile_view_modern_condensed.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-08-31T12:53:22Z",
+      "side": 1,
+      "message": "Styles pay off more the more things are duplicated but here it\u0027s just two copies of the same stuff. They also add a layer of indirection. So, maybe next time, I don\u0027t feel they add much here.",
+      "parentUuid": "31e579fa_366867d9",
       "range": {
         "startLine": 43,
         "startChar": 8,
