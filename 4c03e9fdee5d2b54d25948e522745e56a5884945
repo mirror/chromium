@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3a38425f_3fe8713c",
+        "filename": "net/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 2660,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-31T19:00:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "108eb0b9_b7572c39",
+      "range": {
+        "startLine": 2660,
+        "startChar": 18,
+        "endLine": 2660,
+        "endChar": 20
+      },
+      "revId": "4c03e9fdee5d2b54d25948e522745e56a5884945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a0d39c0_b8364b29",
         "filename": "net/test/spawned_test_server/base_test_server.h",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "4c03e9fdee5d2b54d25948e522745e56a5884945",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cebc755f_1bc3f20f",
+        "filename": "net/test/spawned_test_server/base_test_server.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-31T19:00:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a0d39c0_b8364b29",
+      "range": {
+        "startLine": 374,
+        "startChar": 54,
+        "endLine": 374,
+        "endChar": 58
+      },
+      "revId": "4c03e9fdee5d2b54d25948e522745e56a5884945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ab99d2ed_a0997b96",
+        "filename": "net/test/spawned_test_server/base_test_server.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-31T19:00:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d242d87f_2913f766",
+      "range": {
+        "startLine": 376,
+        "startChar": 29,
+        "endLine": 376,
+        "endChar": 30
+      },
+      "revId": "4c03e9fdee5d2b54d25948e522745e56a5884945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52801f79_75b92b80",
         "filename": "net/test/spawned_test_server/remote_test_server_proxy.cc",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "4c03e9fdee5d2b54d25948e522745e56a5884945",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3acd4c74_c9ed17a9",
+        "filename": "net/test/spawned_test_server/remote_test_server_proxy.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-31T19:00:33Z",
+      "side": 1,
+      "message": "This callback is also invoked when the socket is closed cleanly (Read() returns 0), so it\u0027s not only on error. Renamed OnError()-\u003eClose().",
+      "parentUuid": "52801f79_75b92b80",
+      "range": {
+        "startLine": 30,
+        "startChar": 35,
+        "endLine": 30,
+        "endChar": 51
+      },
+      "revId": "4c03e9fdee5d2b54d25948e522745e56a5884945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "309ca459_33c43331",
+        "filename": "net/test/spawned_test_server/remote_test_server_proxy.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-31T19:00:33Z",
+      "side": 1,
+      "message": "Done. Also in SocketDataPump",
+      "parentUuid": "a5f8e150_e41a5996",
+      "range": {
+        "startLine": 104,
+        "startChar": 9,
+        "endLine": 104,
+        "endChar": 0
+      },
+      "revId": "4c03e9fdee5d2b54d25948e522745e56a5884945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67d4eeea_18969be0",
         "filename": "net/test/spawned_test_server/remote_test_server_proxy.cc",
         "patchSetId": 6
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "5ce7218c_9eb0eedf",
+        "filename": "net/test/spawned_test_server/remote_test_server_proxy.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-31T19:00:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67d4eeea_18969be0",
+      "range": {
+        "startLine": 117,
+        "startChar": 8,
+        "endLine": 117,
+        "endChar": 22
+      },
+      "revId": "4c03e9fdee5d2b54d25948e522745e56a5884945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "152b087f_870703a5",
         "filename": "net/test/spawned_test_server/remote_test_server_proxy.cc",
         "patchSetId": 6
@@ -151,6 +295,30 @@
       "writtenOn": "2017-08-31T16:11:18Z",
       "side": 1,
       "message": "So...erm...we don\u0027t support socket 65535 (WebKit uses it to mean an error, so net also has checks around that, unfortunately.  See net/base/port_util.cc).  With the proxy, it should be fine if the remove server uses that port, however, if the proxy is using that, URLRequests to it will fail.\n\nSo I think we need to keep on listening on sockets until we get something that is not port 65535.  Could just use IsPortAllowedForScheme(port, \"http\") (This is used for other schemes as well, but http currently has the tightest requirements.  ftp allows a couple extra ports, but that\u0027s it, in terms off per-scheme differences, actually).",
+      "range": {
+        "startLine": 205,
+        "startChar": 42,
+        "endLine": 205,
+        "endChar": 51
+      },
+      "revId": "4c03e9fdee5d2b54d25948e522745e56a5884945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7dcf3eb_9924c84e",
+        "filename": "net/test/spawned_test_server/remote_test_server_proxy.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-31T19:00:33Z",
+      "side": 1,
+      "message": "I don\u0027t think we need this. BaseTestServer will add port exclusion for the port that gets allocated here, see:\nhttps://codesearch.chromium.org/chromium/src/net/test/spawned_test_server/base_test_server.cc?rcl\u003d191bc9d35eccd1e57861a85e3720c1f6883decac\u0026l\u003d472\n\nOtherwise the tests would be flaky on android where the device-side port is assigned by ADB (and so it may be 65535 as far as I can tell).",
+      "parentUuid": "152b087f_870703a5",
       "range": {
         "startLine": 205,
         "startChar": 42,
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "58d2038e_1a4d8333",
+        "filename": "net/test/spawned_test_server/remote_test_server_proxy.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-31T19:00:33Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "5cec0045_e7e850b0",
+      "range": {
+        "startLine": 265,
+        "startChar": 11,
+        "endLine": 265,
+        "endChar": 0
+      },
+      "revId": "4c03e9fdee5d2b54d25948e522745e56a5884945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "616772a0_9f709166",
         "filename": "net/test/spawned_test_server/remote_test_server_proxy.cc",
         "patchSetId": 6
@@ -206,6 +398,30 @@
       "revId": "4c03e9fdee5d2b54d25948e522745e56a5884945",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16837ad3_6c8c1374",
+        "filename": "net/test/spawned_test_server/remote_test_server_proxy.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-31T19:00:33Z",
+      "side": 1,
+      "message": "Done, but IMO it hurts readability in this case.",
+      "parentUuid": "616772a0_9f709166",
+      "range": {
+        "startLine": 273,
+        "startChar": 54,
+        "endLine": 273,
+        "endChar": 68
+      },
+      "revId": "4c03e9fdee5d2b54d25948e522745e56a5884945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "156f7203_015a54ac",
+        "filename": "net/test/spawned_test_server/remote_test_server_proxy.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-31T19:00:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "044c52fa_4a0cf46c",
+      "range": {
+        "startLine": 37,
+        "startChar": 22,
+        "endLine": 37,
+        "endChar": 24
+      },
+      "revId": "4c03e9fdee5d2b54d25948e522745e56a5884945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "755d43ee_059df6a0",
         "filename": "net/test/spawned_test_server/remote_test_server_proxy_unittests.cc",
         "patchSetId": 6
@@ -252,6 +492,30 @@
       "revId": "4c03e9fdee5d2b54d25948e522745e56a5884945",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d16f6c4b_5d171096",
+        "filename": "net/test/spawned_test_server/remote_test_server_proxy_unittests.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-31T19:00:33Z",
+      "side": 1,
+      "message": "RemoteTestServe needs only the port number, so I\u0027d prefer to keep it as is.",
+      "parentUuid": "755d43ee_059df6a0",
+      "range": {
+        "startLine": 41,
+        "startChar": 30,
+        "endLine": 41,
+        "endChar": 43
+      },
+      "revId": "4c03e9fdee5d2b54d25948e522745e56a5884945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -278,6 +542,30 @@
     },
     {
       "key": {
+        "uuid": "9eaa56a1_8c08c111",
+        "filename": "net/test/spawned_test_server/remote_test_server_proxy_unittests.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-31T19:00:33Z",
+      "side": 1,
+      "message": "Actually I meant to check IsConnected() here. Fixed now.",
+      "parentUuid": "ff0f548a_c9804fb7",
+      "range": {
+        "startLine": 59,
+        "startChar": 34,
+        "endLine": 59,
+        "endChar": 35
+      },
+      "revId": "4c03e9fdee5d2b54d25948e522745e56a5884945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b458870_1334b8c6",
         "filename": "net/test/spawned_test_server/remote_test_server_proxy_unittests.cc",
         "patchSetId": 6
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "6fee6b36_83eae2f5",
+        "filename": "net/test/spawned_test_server/remote_test_server_proxy_unittests.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-31T19:00:33Z",
+      "side": 1,
+      "message": "Updated the test to send just one byte, so this is simple assignment now.",
+      "parentUuid": "5b458870_1334b8c6",
+      "range": {
+        "startLine": 68,
+        "startChar": 47,
+        "endLine": 68,
+        "endChar": 59
+      },
+      "revId": "4c03e9fdee5d2b54d25948e522745e56a5884945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4b3311a_a4305019",
         "filename": "net/test/spawned_test_server/remote_test_server_proxy_unittests.cc",
         "patchSetId": 6
@@ -321,6 +633,30 @@
       "revId": "4c03e9fdee5d2b54d25948e522745e56a5884945",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a6b93ac_2a56ab11",
+        "filename": "net/test/spawned_test_server/remote_test_server_proxy_unittests.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-31T19:00:33Z",
+      "side": 1,
+      "message": "5-chars message will never be fragmented when sent over TCP as long as we can assume that buffers are empty on both ends (which is the case here). But strictly-speaking you are right, there is no guarantee that it will not be fragmented. Updated this test to send just one byte.",
+      "parentUuid": "c4b3311a_a4305019",
+      "range": {
+        "startLine": 71,
+        "startChar": 38,
+        "endLine": 71,
+        "endChar": 52
+      },
+      "revId": "4c03e9fdee5d2b54d25948e522745e56a5884945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
