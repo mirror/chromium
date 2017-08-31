@@ -16,6 +16,24 @@
       "revId": "1b628e44e5c645a3fd82052a664b369c5d31cb77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "58ced594_d1b8b8d5",
+        "filename": "chromeos/network/onc/onc_certificate_importer_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-08-31T20:11:09Z",
+      "side": 1,
+      "message": "Yeah, it\u0027s just to get a consistent ordering for the tests. It could just as well sort on the DER itself.. don\u0027t remember if there was any real reason for using the sha256, maybe just that GetDEREncoded has a more annoying convention of returning by parameter :)",
+      "parentUuid": "794fc14e_a9f373a5",
+      "revId": "1b628e44e5c645a3fd82052a664b369c5d31cb77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
