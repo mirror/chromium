@@ -886,11 +886,7 @@ bool NotificationViewMD::IsExpandable() {
 }
 
 void NotificationViewMD::ToggleExpanded() {
-  expanded_ = !expanded_;
-  UpdateViewForExpandedState(expanded_);
-  content_row_->InvalidateLayout();
-  if (controller())
-    controller()->UpdateNotificationSize(notification_id());
+  SetExpanded(!expanded_);
 }
 
 void NotificationViewMD::UpdateViewForExpandedState(bool expanded) {
@@ -935,6 +931,21 @@ void NotificationViewMD::UpdateControlButtonsVisibility() {
 NotificationControlButtonsView* NotificationViewMD::GetControlButtonsView()
     const {
   return control_buttons_view_.get();
+}
+
+bool NotificationViewMD::IsExpanded() const {
+  return expanded_;
+}
+
+void NotificationViewMD::SetExpanded(bool expanded) {
+  if (expanded_ == expanded)
+    return;
+  expanded_ = expanded;
+
+  UpdateViewForExpandedState(expanded_);
+  content_row_->InvalidateLayout();
+  if (controller())
+    controller()->UpdateNotificationSize(notification_id());
 }
 
 }  // namespace message_center
