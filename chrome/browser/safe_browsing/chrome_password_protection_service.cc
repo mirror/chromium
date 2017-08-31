@@ -7,6 +7,7 @@
 #include "base/feature_list.h"
 #include "base/metrics/field_trial_params.h"
 #include "base/metrics/histogram_macros.h"
+#include "chrome/browser/browser_process.h"
 #include "chrome/browser/content_settings/host_content_settings_map_factory.h"
 #include "chrome/browser/history/history_service_factory.h"
 #include "chrome/browser/profiles/profile.h"
@@ -18,8 +19,10 @@
 #include "chrome/browser/sync/profile_sync_service_factory.h"
 #include "chrome/browser/sync/user_event_service_factory.h"
 #include "chrome/common/pref_names.h"
+#include "chrome/common/url_constants.h"
 #include "components/browser_sync/profile_sync_service.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
+#include "components/google/core/browser/google_util.h"
 #include "components/prefs/pref_service.h"
 #include "components/safe_browsing/common/safe_browsing_prefs.h"
 #include "components/safe_browsing/features.h"
@@ -57,6 +60,23 @@ int64_t GetMicrosecondsSinceWindowsEpoch(base::Time time) {
   return (time - base::Time()).InMicroseconds();
 }
 
+int64_t GetNavigationID(content::WebContents* web_contents) {
+  content::NavigationEntry* navigation =
+      web_contents->GetController().GetLastCommittedEntry();
+  return navigation
+             ? GetMicrosecondsSinceWindowsEpoch(navigation->GetTimestamp())
+             : 0;
+}
+
+// Opens a URL in a new foreground tab.
+void OpenUrlInNewTab(const GURL& url, content::WebContents* web_contents) {
+  content::OpenURLParams params(url, content::Referrer(),
+                                WindowOpenDisposition::NEW_FOREGROUND_TAB,
+                                ui::PAGE_TRANSITION_LINK,
+                                /*is_renderer_initiated=*/false);
+  web_contents->OpenURL(params);
+}
+
 PasswordReuseLookup::ReputationVerdict GetVerdictToLogFromResponse(
     LoginReputationClientResponse::VerdictType response_verdict) {
   switch (response_verdict) {
@@ -72,6 +92,22 @@ PasswordReuseLookup::ReputationVerdict GetVerdictToLogFromResponse(
   }
   NOTREACHED() << "Unexpected response_verdict: " << response_verdict;
   return PasswordReuseLookup::VERDICT_UNSPECIFIED;
+}
+
+GURL GetChangePasswordURL(AccountInfo* account_info) {
+  std::string account_email =
+      account_info ? account_info->email : std::string();
+  std::string account_url =
+      " https://myaccount.google.com/signinoptions/"
+      "password?utm_source=Google&utm_campaign=PhishGuard";
+  GURL change_password_url =
+      account_email.empty() ? GURL(account_url)
+                            : GURL(base::StringPrintf(
+                                  "https://accounts.google.com/"
+                                  "AccountChooser?Email=%s&continue=%s",
+                                  account_email.c_str(), account_url.c_str()));
+  return google_util::AppendGoogleLocaleParam(
+      change_password_url, g_browser_process->GetApplicationLocale());
 }
 
 }  // namespace
@@ -90,6 +126,14 @@ ChromePasswordProtectionService::ChromePasswordProtectionService(
       profile_(profile),
       navigation_observer_manager_(sb_service->navigation_observer_manager()) {
   DCHECK(profile_);
+
+  SigninManagerBase* signin_manager =
+      SigninManagerFactory::GetForProfileIfExists(profile_);
+
+  if (signin_manager) {
+    account_info_ = base::MakeUnique<AccountInfo>(
+        signin_manager->GetAuthenticatedAccountInfo());
+  }
 }
 
 ChromePasswordProtectionService::~ChromePasswordProtectionService() {
@@ -111,8 +155,8 @@ ChromePasswordProtectionService::~ChromePasswordProtectionService() {
 // static
 bool ChromePasswordProtectionService::ShouldShowChangePasswordSettingUI(
     Profile* profile) {
-  return profile->GetPrefs()->GetBoolean(
-      prefs::kSafeBrowsingChangePasswordInSettingsEnabled);
+  return profile->GetPrefs()->GetInt64(
+             prefs::kSafeBrowsingProtectedPasswordEntryNavigationID) > 0;
 }
 
 void ChromePasswordProtectionService::FillReferrerChain(
@@ -134,19 +178,7 @@ void ChromePasswordProtectionService::FillReferrerChain(
 
 void ChromePasswordProtectionService::ShowModalWarning(
     content::WebContents* web_contents,
-    const LoginReputationClientRequest* request_proto,
-    const LoginReputationClientResponse* response_proto) {
-  // Do nothing if there is already a modal warning showing for this
-  // WebContents.
-  if (web_contents_to_proto_map().find(web_contents) !=
-      web_contents_to_proto_map().end())
-    return;
-
-  web_contents_to_proto_map().insert(std::make_pair(
-      web_contents,
-      std::make_pair(LoginReputationClientRequest(*request_proto),
-                     LoginReputationClientResponse(*response_proto))));
-
+    const std::string& verdict_token) {
   UpdateSecurityState(SB_THREAT_TYPE_PASSWORD_REUSE, web_contents);
 #if !defined(OS_MACOSX) || BUILDFLAG(MAC_VIEWS_BROWSER)
   // TODO(jialiul): Remove the restriction on Mac when this dialog has a Cocoa
@@ -154,10 +186,71 @@ void ChromePasswordProtectionService::ShowModalWarning(
   ShowPasswordReuseModalWarningDialog(
       web_contents,
       base::BindOnce(&ChromePasswordProtectionService::OnWarningDone,
-                     GetWeakPtr(), web_contents,
-                     PasswordProtectionService::MODAL_DIALOG));
+                     base::Unretained(this), web_contents, verdict_token,
+                     MODAL_DIALOG));
 #endif  // !OS_MACOSX || MAC_VIEWS_BROWSER
+  // Persist navigation id to profile preference.
+  profile_->GetPrefs()->SetInt64(
+      prefs::kSafeBrowsingProtectedPasswordEntryNavigationID,
+      GetNavigationID(web_contents));
   OnWarningShown(web_contents, PasswordProtectionService::MODAL_DIALOG);
+}
+
+void ChromePasswordProtectionService::OnWarningDone(
+    content::WebContents* web_contents,
+    const std::string& verdict_token,
+    WarningUIType ui_type,
+    WarningAction action) {
+  RecordWarningAction(ui_type, action);
+  LOG(ERROR) << "ui_type: " << ui_type;
+  switch (ui_type) {
+    case PAGE_INFO:
+      switch (action) {
+        case CHANGE_PASSWORD:
+          // Opens chrome://settings page in a new tab.
+          OpenUrlInNewTab(GURL(chrome::kChromeUISettingsURL), web_contents);
+          break;
+        case MARK_AS_LEGITIMATE:
+          UpdateSecurityState(SB_THREAT_TYPE_SAFE, web_contents);
+          break;
+        default:
+          NOTREACHED();
+          break;
+      }
+      break;
+    case MODAL_DIALOG:
+      switch (action) {
+        case CHANGE_PASSWORD:
+          // Opens chrome://settings page in a new tab.
+          OpenUrlInNewTab(GURL(chrome::kChromeUISettingsURL), web_contents);
+          break;
+        case IGNORE_WARNING:
+        case CLOSE:
+          // No need to change state.
+          break;
+        default:
+          NOTREACHED();
+          break;
+      }
+      // TODO(jialiul): Finish post warning reporting.
+      break;
+    case CHROME_SETTINGS:
+      // Note that chrome://settings page's WebContents is different from
+      switch (action) {
+        case CHANGE_PASSWORD:
+          // Opens https://account.google.com for user to change password.
+          OpenUrlInNewTab(GetChangePasswordURL(account_info_.get()),
+                          web_contents);
+          break;
+        default:
+          NOTREACHED();
+          break;
+      }
+      break;
+    default:
+      NOTREACHED();
+      break;
+  }
 }
 
 PrefService* ChromePasswordProtectionService::GetPrefs() {
@@ -253,22 +346,13 @@ void ChromePasswordProtectionService::MaybeLogPasswordReuseDetectedEvent(
 
 PasswordProtectionService::SyncAccountType
 ChromePasswordProtectionService::GetSyncAccountType() {
-  DCHECK(profile_);
-  SigninManagerBase* signin_manager =
-      SigninManagerFactory::GetForProfileIfExists(profile_);
-
-  if (!signin_manager)
+  if (!account_info_ || account_info_->account_id.empty() ||
+      account_info_->hosted_domain.empty())
     return LoginReputationClientRequest::PasswordReuseEvent::NOT_SIGNED_IN;
-
-  AccountInfo account_info = signin_manager->GetAuthenticatedAccountInfo();
-
-  if (account_info.account_id.empty() || account_info.hosted_domain.empty()) {
-    return LoginReputationClientRequest::PasswordReuseEvent::NOT_SIGNED_IN;
-  }
 
   // For gmail or googlemail account, the hosted_domain will always be
   // kNoHostedDomainFound.
-  return account_info.hosted_domain ==
+  return account_info_->hosted_domain ==
                  std::string(AccountTrackerService::kNoHostedDomainFound)
              ? LoginReputationClientRequest::PasswordReuseEvent::GMAIL
              : LoginReputationClientRequest::PasswordReuseEvent::GSUITE;
@@ -277,16 +361,14 @@ ChromePasswordProtectionService::GetSyncAccountType() {
 std::unique_ptr<UserEventSpecifics>
 ChromePasswordProtectionService::GetUserEventSpecifics(
     content::WebContents* web_contents) {
-  content::NavigationEntry* navigation =
-      web_contents->GetController().GetLastCommittedEntry();
-  if (!navigation)
+  int64_t navigation_id = GetNavigationID(web_contents);
+  if (navigation_id <= 0)
     return nullptr;
 
   auto specifics = base::MakeUnique<UserEventSpecifics>();
   specifics->set_event_time_usec(
       GetMicrosecondsSinceWindowsEpoch(base::Time::Now()));
-  specifics->set_navigation_id(
-      GetMicrosecondsSinceWindowsEpoch(navigation->GetTimestamp()));
+  specifics->set_navigation_id(navigation_id);
   return specifics;
 }
 
@@ -450,6 +532,8 @@ void ChromePasswordProtectionService::UpdateSecurityState(
   ui_manager_->AddToWhitelistUrlSet(url_with_empty_path, web_contents, true,
                                     threat_type);
 }
+
+void ChromePasswordProtectionService::OpenChromeSettingsPage() {}
 
 ChromePasswordProtectionService::ChromePasswordProtectionService(
     Profile* profile,

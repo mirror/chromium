@@ -10,6 +10,7 @@
 #include "components/sync/protocol/user_event_specifics.pb.h"
 #include "ui/base/ui_features.h"
 
+struct AccountInfo;
 class PrefService;
 class Profile;
 
@@ -43,10 +44,13 @@ class ChromePasswordProtectionService : public PasswordProtectionService {
 
   static bool ShouldShowChangePasswordSettingUI(Profile* profile);
 
-  void ShowModalWarning(
-      content::WebContents* web_contents,
-      const LoginReputationClientRequest* request_proto,
-      const LoginReputationClientResponse* response_proto) override;
+  void OnWarningDone(content::WebContents* web_contents,
+                     const std::string& verdict_token,
+                     WarningUIType ui_type,
+                     WarningAction action) override;
+
+  void ShowModalWarning(content::WebContents* web_contents,
+                        const std::string& verdict_token) override;
 
  protected:
   // PasswordProtectionService overrides.
@@ -89,6 +93,8 @@ class ChromePasswordProtectionService : public PasswordProtectionService {
   // when user clicks on the security chip.
   void UpdateSecurityState(SBThreatType threat_type,
                            content::WebContents* web_contents) override;
+
+  void OpenChromeSettingsPage();
 
   FRIEND_TEST_ALL_PREFIXES(ChromePasswordProtectionServiceTest,
                            VerifyUserPopulationForPasswordOnFocusPing);
@@ -140,6 +146,8 @@ class ChromePasswordProtectionService : public PasswordProtectionService {
   Profile* profile_;
   scoped_refptr<SafeBrowsingNavigationObserverManager>
       navigation_observer_manager_;
+  // AccountInfo associated with this |profile_|.
+  std::unique_ptr<AccountInfo> account_info_;
   DISALLOW_COPY_AND_ASSIGN(ChromePasswordProtectionService);
 };
 

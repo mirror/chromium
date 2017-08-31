@@ -14,10 +14,6 @@ class PrefRegistrySimple;
 class PrefService;
 
 namespace prefs {
-// Boolean that is true when Chrome settings page should show change password
-// warning.
-extern const char kSafeBrowsingChangePasswordInSettingsEnabled[];
-
 // Boolean that is true when SafeBrowsing is enabled.
 extern const char kSafeBrowsingEnabled[];
 
@@ -31,6 +27,9 @@ extern const char kSafeBrowsingExtendedReportingOptInAllowed[];
 
 // A dictionary mapping incident types to a dict of incident key:digest pairs.
 extern const char kSafeBrowsingIncidentsSent[];
+
+// Integer that tells us the ID of the navigation where password reuse happened.
+extern const char kSafeBrowsingProtectedPasswordEntryNavigationID[];
 
 // Boolean that is true when the SafeBrowsing interstitial should not allow
 // users to proceed anyway.

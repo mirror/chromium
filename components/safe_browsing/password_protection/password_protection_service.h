@@ -185,16 +185,21 @@ class PasswordProtectionService : public history::HistoryServiceObserver {
   void RecordWarningAction(WarningUIType ui_type, WarningAction action);
 
   // Called when user close warning UI or navigate away.
+  // |verdict_token| will only be set if it is a |ui_type| is MODAL_DIALOG.
+  virtual void OnWarningDone(content::WebContents* web_contents,
+                             const std::string& verdict_token,
+                             WarningUIType ui_type,
+                             WarningAction action) {}
+
+  // Wrapper of previous function without |verdict_token|.
   void OnWarningDone(content::WebContents* web_contents,
                      WarningUIType ui_type,
                      WarningAction action);
 
-  // Shows modal warning dialog on the current |web_contents| and store request
-  // and response protos in |web_contents_to_proto_map_|.
-  virtual void ShowModalWarning(
-      content::WebContents* web_contents,
-      const LoginReputationClientRequest* request_proto,
-      const LoginReputationClientResponse* response_proto) {}
+  // Shows modal warning dialog on the current |web_contents| and pass the
+  // |verdict_token| to callback of this dialog.
+  virtual void ShowModalWarning(content::WebContents* web_contents,
+                                const std::string& verdict_token) {}
 
   // Record UMA stats and trigger event logger when warning UI is shown.
   virtual void OnWarningShown(content::WebContents* web_contents,
@@ -281,10 +286,6 @@ class PasswordProtectionService : public history::HistoryServiceObserver {
 
   HostContentSettingsMap* content_settings() const { return content_settings_; }
 
-  WebContentsToProtoMap web_contents_to_proto_map() const {
-    return web_contents_to_proto_map_;
-  }
-
  private:
   friend class PasswordProtectionServiceTest;
   friend class TestPasswordProtectionService;
@@ -369,11 +370,11 @@ class PasswordProtectionService : public history::HistoryServiceObserver {
   // Content settings map associated with this instance.
   HostContentSettingsMap* content_settings_;
 
+  WebContentsToProtoMap web_contents_to_proto_map_;
+
   // Weakptr can only cancel task if it is posted to the same thread. Therefore,
   // we need CancelableTaskTracker to cancel tasks posted to IO thread.
   base::CancelableTaskTracker tracker_;
-
-  WebContentsToProtoMap web_contents_to_proto_map_;
 
   base::WeakPtrFactory<PasswordProtectionService> weak_factory_;
   DISALLOW_COPY_AND_ASSIGN(PasswordProtectionService);

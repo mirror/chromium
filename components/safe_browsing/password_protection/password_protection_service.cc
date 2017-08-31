@@ -148,17 +148,7 @@ void PasswordProtectionService::OnWarningDone(
     content::WebContents* web_contents,
     WarningUIType ui_type,
     WarningAction action) {
-  RecordWarningAction(ui_type, action);
-  // TODO(jialiul): Need to send post-warning report, trigger event logger and
-  // other tasks.
-  if (ui_type == MODAL_DIALOG)
-    web_contents_to_proto_map_.erase(web_contents);
-
-  if (action == MARK_AS_LEGITIMATE) {
-    DCHECK_EQ(PAGE_INFO, ui_type);
-    UpdateSecurityState(SB_THREAT_TYPE_SAFE, web_contents);
-    // TODO(jialiul): Close page info bubble.
-  }
+  OnWarningDone(web_contents, std::string(), ui_type, action);
 }
 
 void PasswordProtectionService::OnWarningShown(
@@ -403,6 +393,7 @@ void PasswordProtectionService::MaybeStartProtectedPasswordEntryRequest(
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   if (CanSendPing(kProtectedPasswordEntryPinging, main_frame_url,
                   matches_sync_password)) {
+    LOG(ERROR) << "MaybeStartPasswordFieldOnFocusRequest";
     StartRequest(web_contents, main_frame_url, GURL(), GURL(),
                  matches_sync_password, matching_domains,
                  LoginReputationClientRequest::PASSWORD_REUSE_EVENT,
@@ -428,7 +419,7 @@ void PasswordProtectionService::RequestFinished(
     std::unique_ptr<LoginReputationClientResponse> response) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   DCHECK(request);
-
+  LOG(ERROR) << "Request Finished";
   if (response) {
     if (!already_cached) {
       CacheVerdict(request->main_frame_url(), request->trigger_type(),
@@ -443,8 +434,15 @@ void PasswordProtectionService::RequestFinished(
                                response->verdict_token(),
                                request->web_contents());
     }
+
+    /* LOG(ERROR)<<"verdict type "<<response->verdict_type();
+     if (response->verdict_type() != LoginReputationClientResponse::SAFE &&
+         base::FeatureList::IsEnabled(kGoogleBrandedPhishingWarning)) {
+       ShowModalWarning(request->web_contents(), response->verdict_token());
+     }*/
   }
 
+  ShowModalWarning(request->web_contents(), "token");
   // Finished processing this request. Remove it from pending list.
   for (auto it = requests_.begin(); it != requests_.end(); it++) {
     if (it->get() == request) {
