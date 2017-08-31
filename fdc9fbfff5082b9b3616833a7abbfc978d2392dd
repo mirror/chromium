@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f8c9326_985a3c30",
+        "filename": "chromeos/network/certificate_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-31T19:17:57Z",
+      "side": 1,
+      "message": "Seems unused?",
+      "revId": "fdc9fbfff5082b9b3616833a7abbfc978d2392dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
