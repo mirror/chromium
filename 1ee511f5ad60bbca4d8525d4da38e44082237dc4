@@ -16,6 +16,24 @@
       "revId": "1ee511f5ad60bbca4d8525d4da38e44082237dc4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9365d3c_be7cc076",
+        "filename": "net/cert/test_root_certs.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-31T00:25:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45e4d453_3a6786ad",
+      "revId": "1ee511f5ad60bbca4d8525d4da38e44082237dc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
