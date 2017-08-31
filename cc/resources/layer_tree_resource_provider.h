@@ -72,6 +72,8 @@ class CC_EXPORT LayerTreeResourceProvider : public ResourceProvider {
   };
 
  private:
+  void UnlockForRead(viz::ResourceId id) override;
+
   void TransferResource(Resource* source,
                         viz::ResourceId id,
                         viz::TransferableResource* resource);
