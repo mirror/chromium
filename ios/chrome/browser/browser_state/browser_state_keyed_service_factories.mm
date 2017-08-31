@@ -51,6 +51,7 @@
 #include "ios/chrome/browser/undo/bookmark_undo_service_factory.h"
 #include "ios/chrome/browser/web_data_service_factory.h"
 #import "ios/clean/chrome/browser/ui/overlays/overlay_service_factory.h"
+#import "ios/clean/chrome/browser/web/web_state_delegate/web_state_delegate_service_factory.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -113,4 +114,5 @@ void EnsureBrowserStateKeyedServiceFactoriesBuilt() {
   SyncSetupServiceFactory::GetInstance();
   TabRestoreServiceDelegateImplIOSFactory::GetInstance();
   TranslateAcceptLanguagesFactory::GetInstance();
+  WebStateDelegateServiceFactory::GetInstance();
 }

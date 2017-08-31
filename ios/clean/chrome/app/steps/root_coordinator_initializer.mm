@@ -16,6 +16,8 @@
 #import "ios/clean/chrome/app/steps/step_context.h"
 #import "ios/clean/chrome/app/steps/step_features.h"
 #import "ios/clean/chrome/browser/ui/root/root_coordinator.h"
+#import "ios/clean/chrome/browser/web/web_state_delegate/web_state_delegate_service.h"
+#import "ios/clean/chrome/browser/web/web_state_delegate/web_state_delegate_service_factory.h"
 #include "ios/web/public/web_state/web_state.h"
 
 @protocol StepContext;
@@ -40,6 +42,10 @@
   [_rootCoordinator
       setBrowser:BrowserList::FromBrowserState(context.browserState)
                      ->CreateNewBrowser()];
+
+  WebStateDelegateServiceFactory::GetInstance()
+      ->GetForBrowserState(context.browserState)
+      ->AttachWebStateDelegates();
 
   BrowserListSessionService* service =
       BrowserListSessionServiceFactory::GetForBrowserState(

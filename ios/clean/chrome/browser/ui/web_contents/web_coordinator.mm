@@ -19,15 +19,12 @@
 #import "ios/clean/chrome/browser/ui/web_contents/web_contents_view_controller.h"
 #include "ios/web/public/navigation_manager.h"
 #include "ios/web/public/web_state/web_state.h"
-#import "ios/web/public/web_state/web_state_delegate_bridge.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
 #endif
 
-@interface WebCoordinator ()<ContextMenuCommands, CRWWebStateDelegate> {
-  std::unique_ptr<web::WebStateDelegateBridge> _webStateDelegate;
-}
+@interface WebCoordinator ()<ContextMenuCommands>
 @property(nonatomic, strong) WebContentsViewController* viewController;
 @property(nonatomic, strong) WebContentsMediator* mediator;
 
@@ -47,7 +44,6 @@
 - (instancetype)init {
   if ((self = [super init])) {
     _mediator = [[WebContentsMediator alloc] init];
-    _webStateDelegate = base::MakeUnique<web::WebStateDelegateBridge>(self);
   }
   return self;
 }
@@ -55,7 +51,6 @@
 - (void)setWebState:(web::WebState*)webState {
   [self resetWebStateOverlayParent];
   _webState = webState;
-  self.webState->SetDelegate(_webStateDelegate.get());
   self.mediator.webState = self.webState;
   [self setWebStateOverlayParent];
 }
@@ -108,27 +103,6 @@
 - (void)openContextMenuImage:(ContextMenuDialogRequest*)request {
   web::NavigationManager::WebLoadParams loadParams(request.imageURL);
   self.webState->GetNavigationManager()->LoadURLWithParams(loadParams);
-}
-
-#pragma mark - CRWWebStateDelegate
-
-- (web::JavaScriptDialogPresenter*)javaScriptDialogPresenterForWebState:
-    (web::WebState*)webState {
-  DCHECK_EQ(self.webState, webState);
-  JavaScriptDialogOverlayPresenter::CreateForBrowser(self.browser);
-  return JavaScriptDialogOverlayPresenter::FromBrowser(self.browser);
-}
-
-- (void)webState:(web::WebState*)webState
-    handleContextMenu:(const web::ContextMenuParams&)params {
-  DCHECK_EQ(self.webState, webState);
-  ContextMenuDialogRequest* request =
-      [ContextMenuDialogRequest requestWithParams:params];
-  ContextMenuDialogCoordinator* contextMenu =
-      [[ContextMenuDialogCoordinator alloc] initWithRequest:request];
-  OverlayServiceFactory::GetInstance()
-      ->GetForBrowserState(self.browser->browser_state())
-      ->ShowOverlayForWebState(contextMenu, self.webState);
 }
 
 #pragma mark -
