@@ -4,6 +4,7 @@
 
 #include "cc/resources/layer_tree_resource_provider.h"
 
+#include "base/trace_event/memory_dump_manager.h"
 #include "build/build_config.h"
 #include "components/viz/common/resources/resource_format_utils.h"
 #include "gpu/command_buffer/client/context_support.h"
@@ -30,7 +31,10 @@ LayerTreeResourceProvider::LayerTreeResourceProvider(
                        enable_color_correct_rasterization,
                        resource_settings) {}
 
-LayerTreeResourceProvider::~LayerTreeResourceProvider() {}
+LayerTreeResourceProvider::~LayerTreeResourceProvider() {
+  base::trace_event::MemoryDumpManager::GetInstance()->UnregisterDumpProvider(
+      this);
+}
 
 gpu::SyncToken LayerTreeResourceProvider::GetSyncTokenForResources(
     const ResourceIdArray& resource_ids) {
@@ -157,6 +161,22 @@ void LayerTreeResourceProvider::ReceiveReturnsFromParent(
     // The resource belongs to this LayerTreeResourceProvider, so it can be
     // destroyed.
     DeleteResourceInternal(map_iterator, NORMAL);
+  }
+}
+
+void LayerTreeResourceProvider::UnlockForRead(viz::ResourceId id) {
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  ResourceMap::iterator it = resources_.find(id);
+  CHECK(it != resources_.end());
+
+  Resource* resource = &it->second;
+  DCHECK_GT(resource->lock_for_read_count, 0);
+  DCHECK_EQ(resource->exported_count, 0);
+  resource->lock_for_read_count--;
+  if (resource->marked_for_deletion && !resource->lock_for_read_count) {
+    // The resource belongs to this LayerTreeResourceProvider, so it can be
+    // destroyed.
+    DeleteResourceInternal(it, NORMAL);
   }
 }
 
