@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "372e6aa7_7b8acc6a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-31T15:21:21Z",
+      "side": 1,
+      "message": "mojom.h file provides poor description of intent, because it\u0027s auto-generated. Use the spec link  instead: https://w3c.github.io/payment-request/#paymentdetailsmodifier-dictionary.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 75
+      },
+      "revId": "686e5331cae62fd80aab4c77443984d93d1f16b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
