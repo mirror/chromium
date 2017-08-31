@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7c1d0a1_06d72980",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 83336,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-08-31T18:29:07Z",
+      "side": 1,
+      "message": "Please add an enum specification, you can use the existing BooleanShown enum.",
+      "range": {
+        "startLine": 83336,
+        "startChar": 50,
+        "endLine": 83336,
+        "endChar": 51
+      },
+      "revId": "993c2440850f918d7038bda9ccac7e4e4e067587",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
