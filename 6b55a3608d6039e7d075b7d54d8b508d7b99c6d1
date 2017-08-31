@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e696b143_07869a6c",
+        "filename": "net/quic/platform/impl/quic_mem_slice_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-31T21:22:23Z",
+      "side": 1,
+      "message": "fwiw, you can just say other.length_ \u003d 0; (here and below)\n\nBut feel free to use the getters/setters if you prefer.",
+      "range": {
+        "startLine": 25,
+        "startChar": 22,
+        "endLine": 25,
+        "endChar": 0
+      },
+      "revId": "6b55a3608d6039e7d075b7d54d8b508d7b99c6d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cf0ad74_683ef9ec",
+        "filename": "net/quic/platform/impl/quic_mem_slice_span_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-31T21:22:23Z",
+      "side": 1,
+      "message": "I though you were planning to avoid making a copy of the vectors here by storing a vector* instead of a vector in the MemSliceSpanImpl. Did that not work for some reason?",
+      "range": {
+        "startLine": 17,
+        "startChar": 3,
+        "endLine": 17,
+        "endChar": 0
+      },
+      "revId": "6b55a3608d6039e7d075b7d54d8b508d7b99c6d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b087a6ad_ff1cbf18",
+        "filename": "net/quic/platform/impl/quic_mem_slice_span_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-31T21:22:23Z",
+      "side": 1,
+      "message": "We should probably have a QUIC_BUG (or something) if lengths.size() !\u003d buffers.size()",
+      "range": {
+        "startLine": 20,
+        "startChar": 3,
+        "endLine": 20,
+        "endChar": 0
+      },
+      "revId": "6b55a3608d6039e7d075b7d54d8b508d7b99c6d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
