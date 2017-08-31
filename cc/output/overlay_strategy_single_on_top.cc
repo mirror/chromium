@@ -4,7 +4,6 @@
 
 #include "cc/output/overlay_strategy_single_on_top.h"
 
-#include "cc/base/math_util.h"
 #include "cc/output/overlay_candidate_validator.h"
 #include "cc/quads/draw_quad.h"
 #include "ui/gfx/buffer_types.h"

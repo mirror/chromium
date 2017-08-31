@@ -2,10 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "cc/base/math_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/gfx/geometry/quad_f.h"
 #include "ui/gfx/geometry/rect_f.h"
+#include "ui/gfx/math_util.h"
 #include "ui/gfx/transform.h"
 
 namespace cc {
@@ -31,7 +31,7 @@ TEST(FloatQuadTest, IsRectilinearTest) {
   for (int i = 0; i < kNumRectilinear; ++i) {
     bool clipped = false;
     gfx::QuadF quad =
-        MathUtil::MapQuad(rectilinear_trans[i], original, &clipped);
+        gfx::MathUtil::MapQuad(rectilinear_trans[i], original, &clipped);
     ASSERT_TRUE(!clipped) << "case " << i;
     EXPECT_TRUE(quad.IsRectilinear()) << "case " << i;
   }
@@ -52,7 +52,7 @@ TEST(FloatQuadTest, IsRectilinearTest) {
   for (int i = 0; i < kNumNonRectilinear; ++i) {
     bool clipped = false;
     gfx::QuadF quad =
-        MathUtil::MapQuad(non_rectilinear_trans[i], original, &clipped);
+        gfx::MathUtil::MapQuad(non_rectilinear_trans[i], original, &clipped);
     ASSERT_TRUE(!clipped) << "case " << i;
     EXPECT_FALSE(quad.IsRectilinear()) << "case " << i;
   }

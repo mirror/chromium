@@ -13,7 +13,6 @@
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/sync_socket.h"
-#include "cc/base/math_util.h"
 #include "content/browser/renderer_host/media/media_stream_manager.h"
 #include "content/common/media/renderer_audio_output_stream_factory.mojom.h"
 #include "content/public/browser/browser_thread.h"
@@ -34,6 +33,7 @@
 #include "mojo/public/cpp/system/platform_handle.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "ui/gfx//math_util.h"
 #include "url/origin.h"
 
 namespace content {
@@ -176,7 +176,7 @@ class MockAudioOutputStream : public media::AudioOutputStream,
       for (int frame = 0; frame < params.frames_per_buffer(); ++frame) {
         // Using EXPECT here causes massive log spam in case of a broken test,
         // and ASSERT causes it to hang, so we use CHECK.
-        CHECK(cc::MathUtil::IsFloatNearlyTheSame(
+        CHECK(gfx::MathUtil::IsFloatNearlyTheSame(
             expected_buffer->channel(0)[frame], dest->channel(0)[frame]))
             << "Got " << dest->channel(0)[frame] << ", expected "
             << expected_buffer->channel(0)[frame];
