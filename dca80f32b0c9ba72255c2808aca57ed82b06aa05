@@ -87,6 +87,24 @@
       "revId": "dca80f32b0c9ba72255c2808aca57ed82b06aa05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2df36823_46172e48",
+        "filename": "ui/events/platform/key_event_filter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-31T22:31:52Z",
+      "side": 1,
+      "message": "I think it\u0027d be useful to write down the flow of an input event, all the way from the platform into RenderWidgetHostViewAura (for example: win32 -\u003e gfx::WindowImpl -\u003e .... KeyEventFilter -\u003e ... -\u003e RenderWidgetHostViewAura), because I am afraid I don\u0027t follow what you are suggesting.",
+      "parentUuid": "752f9cca_7430ea92",
+      "revId": "dca80f32b0c9ba72255c2808aca57ed82b06aa05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
