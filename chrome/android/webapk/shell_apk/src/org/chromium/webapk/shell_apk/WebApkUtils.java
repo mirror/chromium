@@ -11,12 +11,14 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.ResolveInfo;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.View;
+import android.widget.TextView;
 
 import org.chromium.webapk.lib.common.WebApkConstants;
 import org.chromium.webapk.lib.common.WebApkMetaDataKeys;
@@ -32,7 +34,13 @@ import java.util.Set;
  */
 public class WebApkUtils {
     public static final String SHARED_PREF_RUNTIME_HOST = "runtime_host";
-    public static final int PADDING_DP = 20;
+
+    public static final int DIALOG_TEXT_PADDING = 24;
+    public static final int LIST_ITEM_PADDING = 16;
+    public static final int LIST_TOP_PADDING = 4;
+
+    public static final int COLOR_BLACK_ALPHA_87 = Color.parseColor("#DE000000");
+    public static final int COLOR_BLACK_ALPHA_38 = Color.parseColor("#61000000");
 
     /**
      * The package names of the channels of Chrome that support WebAPKs. The most preferred one
@@ -294,12 +302,33 @@ public class WebApkUtils {
     @SuppressWarnings("deprecation")
     public static void setPadding(
             View view, Context context, int start, int top, int end, int bottom) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             view.setPaddingRelative(dpToPx(context, start), dpToPx(context, top),
                     dpToPx(context, end), dpToPx(context, bottom));
         } else {
             view.setPadding(dpToPx(context, start), dpToPx(context, top), dpToPx(context, end),
                     dpToPx(context, bottom));
         }
+    }
+
+    /**
+     * Imitates Chrome's @style/AlertDialogContent. We set the style via Java instead of via
+     * specifying the style in the XML to avoid having layout files in both layout-v17/ and in
+     * layout/.
+     */
+    public static void applyAlertDialogContentStyle(
+            Context context, View contentView, TextView titleView) {
+        titleView.setTextColor(COLOR_BLACK_ALPHA_87);
+        titleView.setTextSize(20);
+        setPadding(titleView, context, DIALOG_TEXT_PADDING, DIALOG_TEXT_PADDING,
+                DIALOG_TEXT_PADDING, 0);
+
+        setPadding(contentView, context, DIALOG_TEXT_PADDING, DIALOG_TEXT_PADDING / 2,
+                DIALOG_TEXT_PADDING, DIALOG_TEXT_PADDING);
+    }
+
+    /** Adds padding between the icon and the text. */
+    public static void addListItemPadding(Context context, TextView text) {
+        text.setPadding(dpToPx(context, WebApkUtils.LIST_ITEM_PADDING), 0, 0, 0);
     }
 }
