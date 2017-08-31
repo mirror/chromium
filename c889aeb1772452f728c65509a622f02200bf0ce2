@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7bbad5dc_2347933f",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPISubclass.h.tmpl",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-31T02:37:29Z",
+      "side": 1,
+      "message": "nit: comment exceeds 80 char limit (presubmit doesn\u0027t seem to check templated files)",
+      "revId": "c889aeb1772452f728c65509a622f02200bf0ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
