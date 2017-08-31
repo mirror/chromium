@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a3efb9a_dc9e6a8d",
+        "filename": "content/browser/renderer_host/database_message_filter.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-31T06:55:11Z",
+      "side": 1,
+      "message": "Is it possible to restructure this so we only need one cleanup task? It means that we\u0027d need to only set observer_added_ on the db tracker task runner, but I think that shouldn\u0027t be too hard to do: the DatabaseHostMsg_Opened message is handled on the db tracker task runner anyway, so instead of calling AddObserver in OverrideTaskRunnerForMessage, we can just call AddObserver (if needed) in OnDatabaseOpened, right?",
+      "revId": "c4d499b4798a8dcb9a962fb906335ad4d078b293",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bfeac8a_3c9355ea",
+        "filename": "content/child/web_database_impl.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-31T06:55:11Z",
+      "side": 1,
+      "message": "Does it still compile if you omit this parameter? It\u0027s not needed, and I think most Mojo interface impls don\u0027t specify it in their binding callback.",
+      "range": {
+        "startLine": 31,
+        "startChar": 21,
+        "endLine": 31,
+        "endChar": 59
+      },
+      "revId": "c4d499b4798a8dcb9a962fb906335ad4d078b293",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
