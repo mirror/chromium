@@ -16,6 +16,24 @@
       "revId": "c4f2a7f7679c6cf6b7406b4d3c0da31f01bfe928",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16a7e389_4deb0ce0",
+        "filename": "chrome/browser/ui/android/usb_chooser_dialog_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2017-08-31T19:01:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "249c6e57_4d44b20e",
+      "revId": "c4f2a7f7679c6cf6b7406b4d3c0da31f01bfe928",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
