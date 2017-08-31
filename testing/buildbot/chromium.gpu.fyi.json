@@ -2537,6 +2537,19 @@
             }
           ]
         },
+        "test": "gpu_unittests",
+        "use_xvfb": false
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "gpu": "10de:104a",
+              "os": "Ubuntu"
+            }
+          ]
+        },
         "test": "swiftshader_unittests",
         "use_xvfb": false
       }
@@ -2944,6 +2957,19 @@
             }
           ]
         },
+        "test": "gpu_unittests",
+        "use_xvfb": false
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "gpu": "10de:104a",
+              "os": "Ubuntu"
+            }
+          ]
+        },
         "test": "swiftshader_unittests",
         "use_xvfb": false
       }
@@ -3081,6 +3107,19 @@
           ]
         },
         "test": "gles2_conform_test",
+        "use_xvfb": false
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": false,
+          "dimension_sets": [
+            {
+              "gpu": "1002:6613",
+              "os": "Ubuntu"
+            }
+          ]
+        },
+        "test": "gpu_unittests",
         "use_xvfb": false
       },
       {
@@ -3541,6 +3580,19 @@
             }
           ]
         },
+        "test": "gpu_unittests",
+        "use_xvfb": false
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": false,
+          "dimension_sets": [
+            {
+              "gpu": "8086:5912",
+              "os": "Ubuntu"
+            }
+          ]
+        },
         "test": "swiftshader_unittests",
         "use_xvfb": false
       }
@@ -3977,6 +4029,19 @@
           ]
         },
         "test": "gles2_conform_test",
+        "use_xvfb": false
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": false,
+          "dimension_sets": [
+            {
+              "gpu": "10de:1cb3",
+              "os": "Ubuntu"
+            }
+          ]
+        },
+        "test": "gpu_unittests",
         "use_xvfb": false
       },
       {
@@ -4432,6 +4497,19 @@
           ]
         },
         "test": "gles2_conform_test",
+        "use_xvfb": false
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "gpu": "10de:104a",
+              "os": "Ubuntu"
+            }
+          ]
+        },
+        "test": "gpu_unittests",
         "use_xvfb": false
       },
       {
@@ -4972,6 +5050,19 @@
         "use_xvfb": false
       },
       {
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "gpu": "8086:0a2e",
+              "os": "Mac-10.12"
+            }
+          ]
+        },
+        "test": "gpu_unittests",
+        "use_xvfb": false
+      },
+      {
         "args": [
           "--gtest_filter=*Detection*",
           "--use-gpu-in-tests"
@@ -5381,6 +5472,19 @@
           ]
         },
         "test": "gles2_conform_test",
+        "use_xvfb": false
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": false,
+          "dimension_sets": [
+            {
+              "gpu": "8086:0a2e",
+              "os": "Mac"
+            }
+          ]
+        },
+        "test": "gpu_unittests",
         "use_xvfb": false
       },
       {
@@ -5813,6 +5917,20 @@
           ]
         },
         "test": "gles2_conform_test",
+        "use_xvfb": false
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": false,
+          "dimension_sets": [
+            {
+              "gpu": "1002:6821",
+              "hidpi": "1",
+              "os": "Mac"
+            }
+          ]
+        },
+        "test": "gpu_unittests",
         "use_xvfb": false
       },
       {
@@ -6257,6 +6375,20 @@
           ]
         },
         "test": "gles2_conform_test",
+        "use_xvfb": false
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": false,
+          "dimension_sets": [
+            {
+              "gpu": "10de:0fe9",
+              "hidpi": "1",
+              "os": "Mac"
+            }
+          ]
+        },
+        "test": "gpu_unittests",
         "use_xvfb": false
       },
       {
@@ -6739,6 +6871,24 @@
         "use_xvfb": false
       },
       {
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "gpu": "8086:0a2e",
+              "os": "Mac-10.12"
+            },
+            {
+              "gpu": "1002:6821",
+              "hidpi": "1",
+              "os": "Mac"
+            }
+          ]
+        },
+        "test": "gpu_unittests",
+        "use_xvfb": false
+      },
+      {
         "args": [
           "--gtest_filter=*Detection*",
           "--use-gpu-in-tests"
@@ -7207,6 +7357,19 @@
             }
           ]
         },
+        "test": "gpu_unittests",
+        "use_xvfb": false
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": false,
+          "dimension_sets": [
+            {
+              "gpu": "1002:679e",
+              "os": "Mac-10.10"
+            }
+          ]
+        },
         "test": "swiftshader_unittests",
         "use_xvfb": false
       }
@@ -7590,6 +7753,19 @@
           ]
         },
         "test": "gles2_conform_test",
+        "use_xvfb": false
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": false,
+          "dimension_sets": [
+            {
+              "gpu": "1002:679e",
+              "os": "Mac-10.10"
+            }
+          ]
+        },
+        "test": "gpu_unittests",
         "use_xvfb": false
       }
     ],
@@ -8005,6 +8181,19 @@
           ]
         },
         "test": "gles2_conform_test",
+        "use_xvfb": false
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "gpu": "8086:0a2e",
+              "os": "Mac-10.12"
+            }
+          ]
+        },
+        "test": "gpu_unittests",
         "use_xvfb": false
       },
       {
@@ -8439,6 +8628,20 @@
         "use_xvfb": false
       },
       {
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "gpu": "1002:6821",
+              "hidpi": "1",
+              "os": "Mac"
+            }
+          ]
+        },
+        "test": "gpu_unittests",
+        "use_xvfb": false
+      },
+      {
         "args": [
           "--gtest_filter=*Detection*",
           "--use-gpu-in-tests"
@@ -8852,6 +9055,20 @@
           ]
         },
         "test": "gles2_conform_test",
+        "use_xvfb": false
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "gpu": "10de:0fe9",
+              "hidpi": "1",
+              "os": "Mac"
+            }
+          ]
+        },
+        "test": "gpu_unittests",
         "use_xvfb": false
       },
       {
@@ -9289,6 +9506,20 @@
           ]
         },
         "test": "gles2_conform_test",
+        "use_xvfb": false
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "gpu": "1002:6821",
+              "hidpi": "1",
+              "os": "Mac"
+            }
+          ]
+        },
+        "test": "gpu_unittests",
         "use_xvfb": false
       },
       {
@@ -9757,6 +9988,20 @@
         "use_xvfb": false
       },
       {
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "gpu": "10de:0fe9",
+              "hidpi": "1",
+              "os": "Mac"
+            }
+          ]
+        },
+        "test": "gpu_unittests",
+        "use_xvfb": false
+      },
+      {
         "args": [
           "--gtest_filter=*Detection*",
           "--use-gpu-in-tests"
@@ -10155,6 +10400,19 @@
             }
           ]
         },
+        "test": "gpu_unittests",
+        "use_xvfb": false
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "gpu": "10de:104a",
+              "os": "Ubuntu"
+            }
+          ]
+        },
         "test": "swiftshader_unittests",
         "use_xvfb": false
       }
@@ -10309,6 +10567,19 @@
         "use_xvfb": false
       },
       {
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "gpu": "8086:0a2e",
+              "os": "Mac-10.12"
+            }
+          ]
+        },
+        "test": "gpu_unittests",
+        "use_xvfb": false
+      },
+      {
         "args": [
           "--gtest_filter=*Detection*",
           "--use-gpu-in-tests"
@@ -10449,6 +10720,20 @@
           ]
         },
         "test": "gles2_conform_test",
+        "use_xvfb": false
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "gpu": "1002:6821",
+              "hidpi": "1",
+              "os": "Mac"
+            }
+          ]
+        },
+        "test": "gpu_unittests",
         "use_xvfb": false
       },
       {
@@ -10596,6 +10881,20 @@
           ]
         },
         "test": "gles2_conform_test",
+        "use_xvfb": false
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "gpu": "10de:0fe9",
+              "hidpi": "1",
+              "os": "Mac"
+            }
+          ]
+        },
+        "test": "gpu_unittests",
         "use_xvfb": false
       },
       {
@@ -10765,6 +11064,19 @@
           ]
         },
         "test": "gles2_conform_test",
+        "use_xvfb": false
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "gpu": "10de:104a",
+              "os": "Windows-2008ServerR2-SP1"
+            }
+          ]
+        },
+        "test": "gpu_unittests",
         "use_xvfb": false
       },
       {
@@ -11096,6 +11408,19 @@
           ]
         },
         "test": "gles2_conform_test",
+        "use_xvfb": false
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "gpu": "10de:104a",
+              "os": "Windows-10"
+            }
+          ]
+        },
+        "test": "gpu_unittests",
         "use_xvfb": false
       },
       {
@@ -11703,6 +12028,19 @@
             }
           ]
         },
+        "test": "gpu_unittests",
+        "use_xvfb": false
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": false,
+          "dimension_sets": [
+            {
+              "gpu": "8086:5912",
+              "os": "Windows-10"
+            }
+          ]
+        },
         "test": "swiftshader_unittests",
         "use_xvfb": false
       },
@@ -12294,6 +12632,19 @@
           ]
         },
         "test": "gles2_conform_test",
+        "use_xvfb": false
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": false,
+          "dimension_sets": [
+            {
+              "gpu": "10de:1cb3",
+              "os": "Windows-10"
+            }
+          ]
+        },
+        "test": "gpu_unittests",
         "use_xvfb": false
       },
       {
@@ -12922,6 +13273,19 @@
           ]
         },
         "test": "gles2_conform_test",
+        "use_xvfb": false
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "gpu": "10de:104a",
+              "os": "Windows-10"
+            }
+          ]
+        },
+        "test": "gpu_unittests",
         "use_xvfb": false
       },
       {
@@ -13632,6 +13996,19 @@
             }
           ]
         },
+        "test": "gpu_unittests",
+        "use_xvfb": false
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "gpu": "1002:6613",
+              "os": "Windows-2008ServerR2-SP1"
+            }
+          ]
+        },
         "test": "swiftshader_unittests",
         "use_xvfb": false
       },
@@ -14177,6 +14554,19 @@
           ]
         },
         "test": "gles2_conform_test",
+        "use_xvfb": false
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "gpu": "10de:104a",
+              "os": "Windows-2008ServerR2-SP1"
+            }
+          ]
+        },
+        "test": "gpu_unittests",
         "use_xvfb": false
       },
       {
@@ -14772,6 +15162,19 @@
           ]
         },
         "test": "gles2_conform_test",
+        "use_xvfb": false
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": false,
+          "dimension_sets": [
+            {
+              "gpu": "1002:6613",
+              "os": "Windows-2008ServerR2-SP1"
+            }
+          ]
+        },
+        "test": "gpu_unittests",
         "use_xvfb": false
       },
       {
@@ -15388,6 +15791,19 @@
             }
           ]
         },
+        "test": "gpu_unittests",
+        "use_xvfb": false
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "gpu": "1002:6613",
+              "os": "Windows-2008ServerR2-SP1"
+            }
+          ]
+        },
         "test": "swiftshader_unittests",
         "use_xvfb": false
       },
@@ -15980,6 +16396,19 @@
           ]
         },
         "test": "gles2_conform_test",
+        "use_xvfb": false
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "gpu": "10de:104a",
+              "os": "Windows-2008ServerR2-SP1"
+            }
+          ]
+        },
+        "test": "gpu_unittests",
         "use_xvfb": false
       },
       {
@@ -16788,6 +17217,19 @@
             }
           ]
         },
+        "test": "gpu_unittests",
+        "use_xvfb": false
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "gpu": "10de:104a",
+              "os": "Windows-2008ServerR2-SP1"
+            }
+          ]
+        },
         "test": "swiftshader_unittests",
         "use_xvfb": false
       },
@@ -17377,6 +17819,19 @@
           ]
         },
         "test": "gles2_conform_test",
+        "use_xvfb": false
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "gpu": "10de:104a",
+              "os": "Windows-2008ServerR2-SP1"
+            }
+          ]
+        },
+        "test": "gpu_unittests",
         "use_xvfb": false
       },
       {
