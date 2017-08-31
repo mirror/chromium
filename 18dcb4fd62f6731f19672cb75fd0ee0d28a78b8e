@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "2f2aa732_d9e8e88a",
+        "filename": "chrome/browser/subresource_filter/chrome_subresource_filter_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-31T16:17:59Z",
+      "side": 1,
+      "message": "Yep that\u0027s true in the current code. I\u0027m still not sure how we can get rid of |activated_via_devtools_| though.",
+      "parentUuid": "dc5239bf_17abe98a",
+      "revId": "18dcb4fd62f6731f19672cb75fd0ee0d28a78b8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "74125400_cac2ed16",
         "filename": "chrome/browser/subresource_filter/subresource_filter_unittest.cc",
         "patchSetId": 8
