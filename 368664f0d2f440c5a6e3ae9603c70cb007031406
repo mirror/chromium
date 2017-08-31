@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e791d0c4_7834bcdc",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-08-31T07:38:35Z",
+      "side": 1,
+      "message": "I think we can simplify the code by queue just the closure.\n\nTake Reset() as an example,\n\nvoid Reset(ResetCallback callback) {\n  if (state \u003d\u003d Error) {\n     callback.Run(PlatformError);\n     return;\n  }\n  if (state_ \u003d\u003d Busy) {\n    pending_requests.queue(base::Bind(GAVDA::Reset, this, callback);\n    return;\n  }\n  reset_callback_ \u003d callback;\n  vda_-\u003eReset();\n}\n\nvoid NotifyResetDone() {\n  CHECK(reset_callback_);\n  ResetAndReturn(reset_callback_).Run(OK);\n  state_ \u003d Decoding;\n  RunNextPendingRequest();\n}\n\nvoid NotifyError() {\n  if (reset_callback_)\n     ResetAndReturn(reset_callback_).Run(Error);\n  if (flush_callback_)\n     ResetAndReturn(flush_callback_).Run(Error);\n  state_ \u003d Error;\n  RunAllThePendingRequest();\n}",
+      "range": {
+        "startLine": 82,
+        "startChar": 35,
+        "endLine": 82,
+        "endChar": 50
+      },
+      "revId": "368664f0d2f440c5a6e3ae9603c70cb007031406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
