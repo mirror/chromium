@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5c4d0d8_7dfc6c67",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-31T13:39:12Z",
+      "side": 1,
+      "message": "const WebInputElement\u0026",
+      "range": {
+        "startLine": 527,
+        "startChar": 7,
+        "endLine": 527,
+        "endChar": 11
+      },
+      "revId": "86c2acfb38a3ece0125301b5fbb5b2bbf2ca334f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd63dadd_39272a05",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-31T13:39:12Z",
+      "side": 1,
+      "message": "use std::move",
+      "range": {
+        "startLine": 547,
+        "startChar": 11,
+        "endLine": 547,
+        "endChar": 15
+      },
+      "revId": "86c2acfb38a3ece0125301b5fbb5b2bbf2ca334f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4eb95944_06ec9bae",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1154,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-31T13:39:12Z",
+      "side": 1,
+      "message": "I don\u0027t see a reason for this. You should check password_form-\u003epassword_value explicitly.",
+      "range": {
+        "startLine": 1154,
+        "startChar": 2,
+        "endLine": 1154,
+        "endChar": 15
+      },
+      "revId": "86c2acfb38a3ece0125301b5fbb5b2bbf2ca334f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b16e4aff_ac554b1a",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1162,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-31T13:39:12Z",
+      "side": 1,
+      "message": "use UnorderedElementsAre()",
+      "range": {
+        "startLine": 1162,
+        "startChar": 20,
+        "endLine": 1162,
+        "endChar": 33
+      },
+      "revId": "86c2acfb38a3ece0125301b5fbb5b2bbf2ca334f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
