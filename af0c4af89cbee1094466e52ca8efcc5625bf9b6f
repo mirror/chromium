@@ -34,6 +34,24 @@
       "revId": "af0c4af89cbee1094466e52ca8efcc5625bf9b6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b7e0e670_d7e1d5a6",
+        "filename": "chrome/browser/android/ntp/content_suggestions_notifier_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-08-31T09:41:56Z",
+      "side": 1,
+      "message": "Thanks for clarifying. A separate CL sgtm if you decide to do this.",
+      "parentUuid": "f22c9e10_097a3b05",
+      "revId": "af0c4af89cbee1094466e52ca8efcc5625bf9b6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
