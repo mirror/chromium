@@ -16,6 +16,24 @@
       "revId": "6cb96005325bb5e07d086c850f82a079a47ab2a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2744f45_d0bf6dc0",
+        "filename": "third_party/WebKit/Source/bindings/tests/results/core/V8TestInterfaceNamedConstructor.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-31T19:21:23Z",
+      "side": 1,
+      "message": "Indeed, thanks! Thankfully the fix here is quite small.",
+      "parentUuid": "53fc90fb_f79c859e",
+      "revId": "6cb96005325bb5e07d086c850f82a079a47ab2a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
