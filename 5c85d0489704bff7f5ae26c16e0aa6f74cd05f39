@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f1b94e1_41849b18",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-31T17:01:54Z",
+      "side": 1,
+      "message": "This seems weird... I don\u0027t think we should be firing events on another object.\n\nAdditionally, I don\u0027t think this has any benefit over a method on the sidebar called \"onOpened\" or \"updateSelection\" - we still need all the knowledge of the sidebar, and that way we\u0027d also get better errors (exceptions or closure compilation failures) if something\u0027s wrong.",
+      "revId": "5c85d0489704bff7f5ae26c16e0aa6f74cd05f39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee68f4bf_1da85df4",
+        "filename": "chrome/browser/resources/md_extensions/sidebar.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-31T17:01:54Z",
+      "side": 1,
+      "message": "nit: no need for \u0027\u0027 around Object keys (but moot with other comment re events vs just having a function here).",
+      "revId": "5c85d0489704bff7f5ae26c16e0aa6f74cd05f39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
