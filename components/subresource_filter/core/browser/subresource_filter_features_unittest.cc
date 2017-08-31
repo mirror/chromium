@@ -582,6 +582,45 @@ TEST(SubresourceFilterFeaturesTest,
        {kPerformanceMeasurementRateParameterName, "1.0"}});
 }
 
+TEST(SubresourceFilterFeaturesTest, PresetForLiveRunOnAbusiveAdsSites) {
+  ExpectPresetCanBeEnabledByName(
+      Configuration::MakePresetForLiveRunForAbusiveAds(),
+      kPresetLiveRunForAbusiveAds);
+  ExpectPresetIsEquivalentToVariationParams(
+      Configuration::MakePresetForLiveRunForAbusiveAds(),
+      {{kActivationLevelParameterName, kActivationLevelEnabled},
+       {kActivationScopeParameterName, kActivationScopeActivationList},
+       {kActivationListsParameterName, kActivationListAbusiveAds},
+       {kActivationPriorityParameterName, "750"},
+       {kSuppressNotificationsParameterName, "true"},
+       {kDisableRulesetRules, "true"},
+       {kStrengthenPopupBlockerParameterName, "true"}});
+}
+
+TEST(SubresourceFilterFeaturesTest, PresetForLiveRunOnBetterAdsSites) {
+  ExpectPresetCanBeEnabledByName(
+      Configuration::MakePresetForLiveRunForBetterAds(),
+      kPresetLiveRunForBetterAds);
+  ExpectPresetIsEquivalentToVariationParams(
+      Configuration::MakePresetForLiveRunForBetterAds(),
+      {{kActivationLevelParameterName, kActivationLevelEnabled},
+       {kActivationScopeParameterName, kActivationScopeActivationList},
+       {kActivationListsParameterName, kActivationListBetterAds},
+       {kActivationPriorityParameterName, "800"}});
+}
+
+TEST(SubresourceFilterFeaturesTest, PresetForLiveRunOnAllAdsSites) {
+  ExpectPresetCanBeEnabledByName(Configuration::MakePresetForLiveRunForAllAds(),
+                                 kPresetLiveRunForAllAds);
+  ExpectPresetIsEquivalentToVariationParams(
+      Configuration::MakePresetForLiveRunForAllAds(),
+      {{kActivationLevelParameterName, kActivationLevelEnabled},
+       {kActivationScopeParameterName, kActivationScopeActivationList},
+       {kActivationListsParameterName, kActivationListAllAds},
+       {kActivationPriorityParameterName, "850"},
+       {kStrengthenPopupBlockerParameterName, "true"}});
+}
+
 TEST(SubresourceFilterFeaturesTest, ConfigurationPriorities) {
   const std::vector<Configuration> expected_order_by_decreasing_priority = {
       Configuration::MakePresetForLiveRunOnPhishingSites(),
