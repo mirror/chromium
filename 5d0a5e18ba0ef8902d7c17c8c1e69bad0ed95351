@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9be9513a_60230bf4",
+        "filename": "chrome/test/data/webui/extensions/extension_item_test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-31T17:06:03Z",
+      "side": 1,
+      "message": "nitty-nit: I don\u0027t think this comment (or the one on line 142) add any extra information beyond the code itself.  Let\u0027s just remove them.",
+      "revId": "5d0a5e18ba0ef8902d7c17c8c1e69bad0ed95351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
