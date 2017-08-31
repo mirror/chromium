@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "3afe535e_e2d91161",
+        "filename": "content/browser/frame_host/frame_tree.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-31T22:00:34Z",
+      "side": 1,
+      "message": "I still haven\u0027t quite wrapped my head around the recovering-from-crash case, but I haven\u0027t thought of a place it\u0027s broken yet.  :)  The first navigation in the recreated process may be slow or not succeed, but I can\u0027t seem to think of a way for another frame to commit first *and* expect a proxy here.  I guess we\u0027re ok with skipping the proxy, if you think it\u0027s just unnecessary work.",
+      "revId": "fd2b0dae3b52a87eefa501a06acfbe062de8e1fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ab3c6f7_4e0e9f75",
+        "filename": "content/browser/frame_host/frame_tree.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-31T22:00:34Z",
+      "side": 1,
+      "message": "I can see the reasoning for this, but I think I found a case where it\u0027s wrong.  :)\n\nWhen going to a new BrowsingInstance, we won\u0027t need any proxies.  But you can go back into an existing BrowsingInstance as well, and then you might.  Repro steps:\n1) Visit http://csreis.github.io/tests/window-open.html\n2) Click \"Open simple window\".  Check that there\u0027s a window.opener in DevTools.\n3) Navigate the second window to chrome://chrome-urls.\n4) Verify it has no window.opener anymore in DevTools.\n5) Run \"w \u003d window.open();\" in the second window, which itself will have a window.opener.\n6) Go back in the second window.  It now has a window.opener again, after the cross-BrowsingInstance navigation.\n\nThus, proxies may be needed in some of these cases.  Maybe we should try to fix the WebUI crashes a different way?\n\n(For some real fun, look what happens when you check the opener of the about:blank popup after going back in step 6.  The opener is kind of half there, being shown as a structured object but of type \"undefined\" instead of \"Window.\")",
+      "revId": "fd2b0dae3b52a87eefa501a06acfbe062de8e1fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af85024e_6c652b70",
         "filename": "third_party/WebKit/Source/core/dom/DocumentInit.cpp",
         "patchSetId": 13
