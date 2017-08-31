@@ -34,6 +34,24 @@
       "revId": "3f21feae072d5790eeb27cd4150c703307e8576b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e427f046_79e18034",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field_paste_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-08-31T17:56:41Z",
+      "side": 1,
+      "message": "marking resolved.",
+      "parentUuid": "77e1bbe6_1d866970",
+      "revId": "3f21feae072d5790eeb27cd4150c703307e8576b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
