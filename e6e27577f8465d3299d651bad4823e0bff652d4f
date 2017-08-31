@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3230eb79_84aebd83",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 10421,
+      "author": {
+        "id": 1111798
+      },
+      "writtenOn": "2017-08-31T10:45:57Z",
+      "side": 1,
+      "message": "This is not necessarily correct. Could also be a school, university, NGO, etc.",
+      "range": {
+        "startLine": 10421,
+        "startChar": 65,
+        "endLine": 10421,
+        "endChar": 74
+      },
+      "revId": "e6e27577f8465d3299d651bad4823e0bff652d4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
