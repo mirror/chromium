@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bcd87cc7_36439fa8",
+        "filename": "components/viz/common/quads/copy_output_result.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-31T00:35:27Z",
+      "side": 1,
+      "message": "Done. Removed this, and just doing lazy-init in CopyOutputSkBitmapResult::AsSkBitmap() now. Much simpler! :)",
+      "parentUuid": "6a454cb0_dd9be6be",
+      "revId": "d43232d550094c375455aced87f4ac79cea0317b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93af54a8_dacdabae",
         "filename": "components/viz/common/quads/copy_output_result.h",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-30T00:57:39Z",
       "side": 1,
       "message": "Maybe optional instead of unique_ptr? No need for additional mallocs here.  Or even just store the bitmap directly and assume uninitialized if SkBitmap::isNull/empty or something like that?",
+      "revId": "d43232d550094c375455aced87f4ac79cea0317b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb8d8f5c_e42e724c",
+        "filename": "components/viz/common/quads/copy_output_result.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-31T00:35:27Z",
+      "side": 1,
+      "message": "I went with \"just store the bitmap directly,\" and added a protected accessor method for subclasses to populate the bitmap if they want.",
+      "parentUuid": "93af54a8_dacdabae",
       "revId": "d43232d550094c375455aced87f4ac79cea0317b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
