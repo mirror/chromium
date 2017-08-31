@@ -181,9 +181,6 @@ class MultiUserWindowManagerChromeOS
   void NotifyAfterUserSwitchAnimationFinished();
 
   const WindowToEntryMap& window_to_entry() { return window_to_entry_; }
-  MultiUserNotificationBlockerChromeOS* notification_blocker() {
-    return notification_blocker_.get();
-  }
 
  private:
   friend class ::MultiUserNotificationBlockerChromeOSTest;
@@ -241,10 +238,6 @@ class MultiUserWindowManagerChromeOS
   // visibility state in various cases. The state is stored here instead of
   // being read from the user manager to be in sync while a switch occurs.
   AccountId current_account_id_;
-
-  // The blocker which controls the desktop notification visibility based on the
-  // current multi-user status.
-  std::unique_ptr<MultiUserNotificationBlockerChromeOS> notification_blocker_;
 
   // The notification registrar to track the creation of browser windows.
   content::NotificationRegistrar registrar_;
