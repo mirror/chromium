@@ -16,6 +16,24 @@
       "revId": "fc62fc3ea1d507b1d5495316fcfa59150f0aa097",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54de2c7d_a61432bf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-31T03:19:10Z",
+      "side": 1,
+      "message": "SGTM! Thank you for the input!",
+      "parentUuid": "6583bf37_80dee509",
+      "revId": "fc62fc3ea1d507b1d5495316fcfa59150f0aa097",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
