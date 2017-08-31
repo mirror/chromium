@@ -28,7 +28,8 @@ class CC_EXPORT ContentDrawQuadBase : public DrawQuad {
               const gfx::RectF& tex_coord_rect,
               const gfx::Size& texture_size,
               bool swizzle_contents,
-              bool nearest_neighbor);
+              bool nearest_neighbor,
+              bool force_anti_aliasing_off);
 
   void SetAll(const viz::SharedQuadState* shared_quad_state,
               DrawQuad::Material material,
@@ -38,12 +39,14 @@ class CC_EXPORT ContentDrawQuadBase : public DrawQuad {
               const gfx::RectF& tex_coord_rect,
               const gfx::Size& texture_size,
               bool swizzle_contents,
-              bool nearest_neighbor);
+              bool nearest_neighbor,
+              bool force_anti_aliasing_off);
 
   gfx::RectF tex_coord_rect;
   gfx::Size texture_size;
   bool swizzle_contents;
   bool nearest_neighbor;
+  bool force_anti_aliasing_off;
 
  protected:
   ContentDrawQuadBase();

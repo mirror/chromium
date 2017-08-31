@@ -1149,7 +1149,8 @@ bool GLRenderer::InitializeRPDQParameters(
   // TODO(sunxd): unify the anti-aliasing logic of RPDQ and cc::TileDrawQuad.
   params->surface_quad = SharedGeometryQuad();
   gfx::QuadF device_layer_quad;
-  if (settings_->allow_antialiasing && quad->IsEdge()) {
+  if (settings_->allow_antialiasing && !quad->force_anti_aliasing_off &&
+      quad->IsEdge()) {
     bool clipped = false;
     device_layer_quad = cc::MathUtil::MapQuad(params->contents_device_transform,
                                               params->surface_quad, &clipped);
@@ -1881,7 +1882,8 @@ void GLRenderer::DrawContentQuad(const cc::ContentDrawQuadBase* quad,
 
   gfx::QuadF device_layer_quad;
   bool use_aa = false;
-  bool allow_aa = settings_->allow_antialiasing && quad->IsEdge();
+  bool allow_aa = settings_->allow_antialiasing &&
+                  !quad->force_anti_aliasing_off && quad->IsEdge();
   if (allow_aa) {
     bool clipped = false;
     bool force_aa = false;

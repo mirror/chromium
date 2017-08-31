@@ -215,7 +215,9 @@ void PictureLayerImpl::AppendQuads(RenderPass* render_pass,
     SolidColorLayerImpl::AppendSolidQuads(
         render_pass, draw_properties().occlusion_in_content_space,
         shared_quad_state, visible_layer_rect(),
-        raster_source_->GetSolidColor(), append_quads_data);
+        raster_source_->GetSolidColor(),
+        layer_tree_impl()->settings().force_anti_aliasing_off,
+        append_quads_data);
     return;
   }
 
@@ -375,7 +377,8 @@ void PictureLayerImpl::AppendQuads(RenderPass* render_pass,
           quad->SetNew(shared_quad_state, geometry_rect, visible_geometry_rect,
                        needs_blending, draw_info.resource_id(), texture_rect,
                        draw_info.resource_size(), draw_info.contents_swizzled(),
-                       nearest_neighbor_);
+                       nearest_neighbor_,
+                       layer_tree_impl()->settings().force_anti_aliasing_off);
           ValidateQuadResources(quad);
           has_draw_quad = true;
           break;
@@ -389,7 +392,8 @@ void PictureLayerImpl::AppendQuads(RenderPass* render_pass,
             SolidColorDrawQuad* quad =
                 render_pass->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
             quad->SetNew(shared_quad_state, geometry_rect,
-                         visible_geometry_rect, draw_info.solid_color(), false);
+                         visible_geometry_rect, draw_info.solid_color(),
+                         layer_tree_impl()->settings().force_anti_aliasing_off);
             ValidateQuadResources(quad);
           }
           has_draw_quad = true;
