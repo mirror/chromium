@@ -137,6 +137,24 @@
     },
     {
       "key": {
+        "uuid": "1041adfc_55a688b6",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 3460,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-08-31T13:00:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "738a229a_7a85fdfb",
+      "revId": "6116dc3783448ca91d9e9f9ac4e463b3b1abc4c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1abf69d2_2a401a2c",
         "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetBase.cpp",
         "patchSetId": 6
@@ -550,6 +568,24 @@
       "revId": "6116dc3783448ca91d9e9f9ac4e463b3b1abc4c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c83dba84_2bcfc6c1",
+        "filename": "third_party/WebKit/public/web/WebView.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-08-31T13:00:59Z",
+      "side": 1,
+      "message": "I removed it by getting EventSender to call the Widget version instead.",
+      "parentUuid": "a79f00f8_0efb4f9c",
+      "revId": "6116dc3783448ca91d9e9f9ac4e463b3b1abc4c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
