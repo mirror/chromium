@@ -221,8 +221,9 @@ cr.define('cr.ui', function() {
     /**
      * Call this after changes are done and it will dispatch a change event if
      * any changes were actually done.
+     * @param {string=} cause The optional cause to pass onto the change event.
      */
-    endChange: function() {
+    endChange: function(cause = '') {
       this.changeCount_--;
       if (!this.changeCount_) {
         // Calls delayed |dispatchPropertyChange|s, only when |leadIndex| or
@@ -250,6 +251,7 @@ cr.define('cr.ui', function() {
               selected: this.changedIndexes_[index]
             };
           }, this);
+          e.cause = cause;
           this.dispatchEvent(e);
         }
         this.changedIndexes_ = {};
@@ -324,8 +326,9 @@ cr.define('cr.ui', function() {
     /**
      * Adjusts the selection after reordering of items in the table.
      * @param {!Array<number>} permutation The reordering permutation.
+     * @param {string=} optional cause to pass on concerning the change.
      */
-    adjustToReordering: function(permutation) {
+    adjustToReordering: function(permutation, cause = '') {
       this.beginChange();
       var oldLeadIndex = this.leadIndex;
       var oldAnchorIndex = this.anchorIndex;
@@ -352,7 +355,7 @@ cr.define('cr.ui', function() {
         this.selectedIndexes = [Math.min(oldLeadIndex, this.length_ - 1)];
       }
 
-      this.endChange();
+      this.endChange(cause);
     },
 
     /**
