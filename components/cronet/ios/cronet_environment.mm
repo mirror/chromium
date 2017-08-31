@@ -52,6 +52,8 @@
 #include "url/scheme_host_port.h"
 #include "url/url_util.h"
 
+#include "components/cronet/interfaces/cronet.mojom_c.h"
+
 namespace {
 
 // Request context getter for Cronet.
@@ -132,6 +134,8 @@ void CronetEnvironment::Initialize() {
 
   ios_global_state::BuildMessageLoop();
   ios_global_state::CreateNetworkChangeNotifier();
+
+  // mojo::edk::Init();
 }
 
 bool CronetEnvironment::StartNetLog(base::FilePath::StringType file_name,
@@ -239,6 +243,7 @@ void CronetEnvironment::Start() {
 
   main_context_getter_ = new CronetURLRequestContextGetter(
       this, network_io_thread_->task_runner());
+
   base::subtle::MemoryBarrier();
   PostToNetworkThread(FROM_HERE,
                       base::Bind(&CronetEnvironment::InitializeOnNetworkThread,

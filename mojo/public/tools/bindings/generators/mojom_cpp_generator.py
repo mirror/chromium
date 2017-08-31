@@ -312,6 +312,7 @@ class Generator(generator.Generator):
   def GetFilters(self):
     cpp_filters = {
       "all_enum_values": AllEnumValues,
+      "c_wrapper_type": self._GetCWrapperType,
       "constant_value": self._ConstantValue,
       "contains_handles_or_interfaces": mojom.ContainsHandlesOrInterfaces,
       "contains_move_only_members": self._ContainsMoveOnlyMembers,
@@ -588,6 +589,11 @@ class Generator(generator.Generator):
   def _ShouldPassParamByValue(self, kind):
     return ((not mojom.IsReferenceKind(kind)) or self._IsMoveOnlyKind(kind) or
         self._IsCopyablePassByValue(kind))
+
+  def _GetCWrapperType(self, kind):
+    if mojom.IsStringKind(kind):
+      return "CharString"
+    return self._GetCppWrapperType(kind)
 
   def _GetCppWrapperParamType(self, kind):
     cpp_wrapper_type = self._GetCppWrapperType(kind)

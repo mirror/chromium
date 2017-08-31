@@ -46,9 +46,11 @@ from mojom.parse.parser import Parse
 
 
 _BUILTIN_GENERATORS = {
+  "c": "cronet_c_generator.py",
+  "java": "cronet_c_generator.py",
   "c++": "mojom_cpp_generator.py",
   "javascript": "mojom_js_generator.py",
-  "java": "mojom_java_generator.py",
+  # "java": "mojom_java_generator.py",
 }
 
 
@@ -312,7 +314,7 @@ def main():
   generate_parser.add_argument("-g", "--generators",
                                dest="generators_string",
                                metavar="GENERATORS",
-                               default="c++,javascript,java",
+                               default="c++,javascript,java,c",
                                help="comma-separated list of generators")
   generate_parser.add_argument(
       "-I", dest="import_directories", action="append", metavar="directory",

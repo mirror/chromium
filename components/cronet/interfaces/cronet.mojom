@@ -1,0 +1,192 @@
+module cronet.mojom;
+
+interface CronetEngine {
+
+  CreateWithParams(CronetEngineParams params) => (CronetEngine engine);
+
+  StartNetLogToFile(string file);
+
+  [Sync]
+  GetDefaultUserAgent() => (string default_user_agent);
+};
+
+struct QuicHint {
+  string host;
+  int32 port;
+  int32 alternatePort;
+};
+
+struct PublicKeyPins {
+  string host;
+  array<array<int8>> pinsSha256;
+  bool includeSubdomains;
+};
+
+
+enum HTTP_CACHE_MODE { DISABLED, IN_MEMORY, DISK };
+
+struct CronetEngineParams {
+
+  string userAgent;
+  string storagePath;
+
+  bool enableQuic;
+  bool enableHttp2;
+  bool enableBrotli;
+
+  HTTP_CACHE_MODE httpCacheMode;
+  int32 httpCacheMaxSize;
+
+  array<QuicHint> quicHints;
+
+  array<PublicKeyPins> publicKeyPins;
+  bool enablePublicKeyPinningBypassForLocalTrustAnchors;
+};
+
+struct Annotation {
+  uint64 value;
+};
+
+interface Buffer {
+  [Sync]
+  capacity() => (int32 capacity);
+
+  [Sync]
+  clear() => (Buffer thisBuffer);
+
+  [Sync]
+  flip() => (Buffer thisBuffer);
+
+  [Sync]
+  limit() => (int32 limit);
+
+  [Sync]
+  setLimit(int32 newLimit) => (Buffer thisBuffer);
+
+  [Sync]
+  position() => (int32 position);
+
+  [Sync]
+  setPosition(int32 newPosition) => (Buffer thisBuffer);
+};
+
+interface CronetException {
+};
+
+interface Runnable {
+  run();
+};
+
+interface Executor {
+  execute(Runnable command);
+};
+
+struct UrlResponseInfo {
+  string url;
+  array<string> urlChain;
+  int32 httpStatusCode;
+  string httpStatusText;
+  map<string, array<string>> allHeaders;
+  bool wasCached;
+  string negotiatedProtocol;
+  string proxyServer;
+  int64 receivedByteCount;
+};
+
+  // TODO(mef): Move into UrlStatusListener.
+  enum Status {
+    INVALID = -1,
+    IDLE = 0,
+    WAITING_FOR_STALLED_SOCKET_POOL = 1,
+    WAITING_FOR_AVAILABLE_SOCKET = 2,
+    WAITING_FOR_DELEGATE = 3,
+  };
+
+interface UrlStatusListener {
+
+  OnStatus(Status status);
+};
+
+interface UrlRequestCallback {
+  onRedirectReceived(UrlRequest request, UrlResponseInfo info, string? newLocationUrl);
+
+  onResponseStarted(UrlRequest request, UrlResponseInfo info);
+
+  onReadCompleted(UrlRequest request, UrlResponseInfo info, Buffer buffer);
+
+  onSucceeded(UrlRequest request, UrlResponseInfo info);
+
+  onFailed(UrlRequest request, UrlResponseInfo info, CronetException error);
+
+  onCanceled(UrlRequest request, UrlResponseInfo info);
+};
+
+interface UploadDataSink {
+  onReadSucceeded(bool finalChunk);
+
+  onReadError(CronetException error);
+
+  onRewindSucceded();
+
+  onRewindError(CronetException error);
+};
+
+interface UploadDataProvider {
+  [Sync]
+  getLength() => (int64 length);
+
+  read(UploadDataSink uploadDataSink, Buffer buffer);
+
+  rewind(UploadDataSink uploadDataSink);
+
+  close();
+};
+
+interface UrlRequest {
+  start();
+
+  followRedirect();
+
+  read(Buffer buffer);
+
+  cancel();
+
+  [Sync]
+  isDone() => (bool done);
+
+  getStatus(UrlStatusListener listener);
+
+  Destroy();
+};
+
+  // TODO(mef): Move into UrlRequestParams.
+  enum REQUEST_PRIORITY {
+    REQUEST_PRIORITY_IDLE = 0,
+    REQUEST_PRIORITY_LOWEST = 1,
+    REQUEST_PRIORITY_LOW = 2,
+    REQUEST_PRIORITY_MEDIUM = 3,
+    REQUEST_PRIORITY_HIGHEST = 4,
+  };
+
+interface UrlRequestParams {
+  setHttpMethod(string method);
+
+  addHeader(string key, string value);
+
+  disableCache();
+
+  setPriority(REQUEST_PRIORITY priority);
+
+  setUploadDataProvider(UploadDataProvider uploadDataProvider, Executor executor);
+
+  allowDirectExecutor();
+
+  build() => (UrlRequest request);
+
+  CreateWithUrl(CronetEngine engine, string url, UrlRequestCallback callback, Executor executor);
+
+  SetAnnotation(Annotation annotation);
+
+  Destroy();
+
+};
