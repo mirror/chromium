@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2e5ab6dc_306f5aef",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-31T20:58:21Z",
+      "side": 1,
+      "message": "To clarify:\ntextBox didn\u0027t exist, so I deleted that.\nsearchBox has existed for a while\ntextFieldWithComboBox replaces combo box, when you get this role\n  you know for sure it\u0027s a text field - previously it could have\n  been used on anything\n\nI think that both textFieldWithComboBox and\ncomboBoxMenuButton should allow activeDescendant",
+      "parentUuid": "23372718_647a0d29",
+      "range": {
+        "startLine": 196,
+        "startChar": 2,
+        "endLine": 196,
+        "endChar": 67
+      },
+      "revId": "7ef8f7e0287c1861232cb47c6fc59ec2b57951ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5767946e_ae87d590",
         "filename": "content/browser/accessibility/one_shot_accessibility_tree_search.cc",
         "patchSetId": 7
@@ -36,6 +60,24 @@
       "writtenOn": "2017-08-31T15:18:26Z",
       "side": 1,
       "message": "What\u0027s the difference between AX_ROLE_COMBO_BOX_MENU_BUTTON and AX_ROLE_POP_UP_BUTTON ?",
+      "revId": "7ef8f7e0287c1861232cb47c6fc59ec2b57951ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3360d0a_0dada008",
+        "filename": "content/browser/accessibility/one_shot_accessibility_tree_search.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-31T20:58:21Z",
+      "side": 1,
+      "message": "Probably a semantic difference only. If the author decided to\ncall it a combo box then we should respect that on Windows.\nOn all pother platforms they should be mapped to the same thing.",
+      "parentUuid": "5767946e_ae87d590",
       "revId": "7ef8f7e0287c1861232cb47c6fc59ec2b57951ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "dbb025ba_1f6e2705",
+        "filename": "content/test/data/accessibility/aria/aria-orientation-expected-blink.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-31T20:58:21Z",
+      "side": 1,
+      "message": "Good call.\n\nI made it so that a \"combobox grouping\" can have orientation\n(why not) and also added a focusable combobox to the test.",
+      "parentUuid": "16bc12f2_a9b7e93f",
+      "range": {
+        "startLine": 4,
+        "startChar": 2,
+        "endLine": 4,
+        "endChar": 18
+      },
+      "revId": "7ef8f7e0287c1861232cb47c6fc59ec2b57951ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59e072c0_2cb4905a",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
         "patchSetId": 7
@@ -76,6 +142,24 @@
       "writtenOn": "2017-08-31T15:18:26Z",
       "side": 1,
       "message": "Wow, I did not know about \u003cinput list\u003e. Very cool.\n\nNeeds test. Should be exposed with autocomplete properties as well as correct role, right?",
+      "revId": "7ef8f7e0287c1861232cb47c6fc59ec2b57951ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a1d96f2_08f2ef4e",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-31T20:58:21Z",
+      "side": 1,
+      "message": "Done. Added support for autocomplete and added a test.",
+      "parentUuid": "59e072c0_2cb4905a",
       "revId": "7ef8f7e0287c1861232cb47c6fc59ec2b57951ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -116,6 +200,24 @@
     },
     {
       "key": {
+        "uuid": "483812ba_e6420e7d",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1356,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-31T20:58:21Z",
+      "side": 1,
+      "message": "I like the idea, but it\u0027s not in the spec so I want to\ndefer it for now.",
+      "parentUuid": "bf1aba74_cf3e8c8b",
+      "revId": "7ef8f7e0287c1861232cb47c6fc59ec2b57951ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "854484fa_cb982a11",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
         "patchSetId": 7
@@ -133,6 +235,24 @@
     },
     {
       "key": {
+        "uuid": "79410cdd_acf7ab70",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-31T20:58:21Z",
+      "side": 1,
+      "message": "These are currently displayed in developer tools and I think\nwe should expose less internal details, not more. No strong\npreference, but this won\u0027t affect any real sites, just tools.",
+      "parentUuid": "854484fa_cb982a11",
+      "revId": "7ef8f7e0287c1861232cb47c6fc59ec2b57951ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4f98dbb6_c62de39e",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
         "patchSetId": 7
@@ -144,6 +264,24 @@
       "writtenOn": "2017-08-31T15:18:26Z",
       "side": 1,
       "message": "Do we want listbox role here?",
+      "revId": "7ef8f7e0287c1861232cb47c6fc59ec2b57951ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98bbba77_3a0354f9",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 941,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-31T20:58:21Z",
+      "side": 1,
+      "message": "No, probably not. Removed.",
+      "parentUuid": "4f98dbb6_c62de39e",
       "revId": "7ef8f7e0287c1861232cb47c6fc59ec2b57951ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -173,6 +311,30 @@
     },
     {
       "key": {
+        "uuid": "4baa42e6_70c46102",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2545,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-31T20:58:21Z",
+      "side": 1,
+      "message": "Done, fixed it in Blink to set the has_popup state.\nThis matches the spec.",
+      "parentUuid": "34ad543d_2527df3b",
+      "range": {
+        "startLine": 2545,
+        "startChar": 9,
+        "endLine": 2545,
+        "endChar": 38
+      },
+      "revId": "7ef8f7e0287c1861232cb47c6fc59ec2b57951ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1daee0c9_79581f52",
         "filename": "ui/accessibility/platform/ax_platform_node_win.cc",
         "patchSetId": 7
@@ -184,6 +346,30 @@
       "writtenOn": "2017-08-31T15:18:26Z",
       "side": 1,
       "message": "Perhaps also needs autocomplete semantics and haspopup state?",
+      "range": {
+        "startLine": 2776,
+        "startChar": 13,
+        "endLine": 2776,
+        "endChar": 33
+      },
+      "revId": "7ef8f7e0287c1861232cb47c6fc59ec2b57951ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "979a6e23_0bbc9f3f",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2776,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-31T20:58:21Z",
+      "side": 1,
+      "message": "haspopup is done.\n\nautocomplete for a combobox is not in the spec, i\u0027ll defer that for now",
+      "parentUuid": "1daee0c9_79581f52",
       "range": {
         "startLine": 2776,
         "startChar": 13,
