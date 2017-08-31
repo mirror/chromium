@@ -22,6 +22,30 @@
       "revId": "849c491a402f3480e39eebd1b4ba8784975f7883",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d3d7be4_a25a3367",
+        "filename": "base/values.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-08-31T08:25:32Z",
+      "side": 1,
+      "message": "I took the wording from |SetPath|, where a similar situation applies. |SetPath| (and |FindPath|) simply return nullptr if !this-\u003eis_dict(). We could definitely add CHECKs in all places, though.\n\nIn the case of |RemovePath| this would lead to |path.size()| CHECKs, given its current recursive nature. For |SetPath| and |FindPath| we\u0027d only have one CHECK at the root. Would it make sense to move the recursion into a private RemovePathImpl that doesn\u0027t CHECK? RemovePath then could CHECK once, before it delegates to RemovePathImpl.",
+      "parentUuid": "8e558684_7b698d5c",
+      "range": {
+        "startLine": 235,
+        "startChar": 23,
+        "endLine": 235,
+        "endChar": 28
+      },
+      "revId": "849c491a402f3480e39eebd1b4ba8784975f7883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
