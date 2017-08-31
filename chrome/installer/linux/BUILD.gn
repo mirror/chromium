@@ -350,14 +350,3 @@ linux_package("beta") {
 linux_package("unstable") {
   channel = "unstable"
 }
-
-# Other packages that we support that aren't included in the default "linux"
-# target.
-linux_package("trunk") {
-  channel = "trunk"
-}
-if (is_asan) {
-  linux_package("asan") {
-    channel = "asan"
-  }
-}
