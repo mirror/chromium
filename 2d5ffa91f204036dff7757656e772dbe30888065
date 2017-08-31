@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59589931_3bad5287",
+        "filename": "content/browser/isolated_origin_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-31T20:43:31Z",
+      "side": 1,
+      "message": "Although this is in test, I think it is better to use a DLOG or VLOG, because it doesn\u0027t really indicate an error situation here.",
+      "revId": "2d5ffa91f204036dff7757656e772dbe30888065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69e164f7_ca1fc98d",
+        "filename": "content/browser/isolated_origin_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-31T20:43:31Z",
+      "side": 1,
+      "message": "IIUC, the BindingSet doesn\u0027t have ownership of the returned value of SwapImplForTesting() in this case. So I expect the code to have double deletion issue. Have I misunderstood anything?",
+      "revId": "2d5ffa91f204036dff7757656e772dbe30888065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65831360_910ca844",
+        "filename": "content/browser/storage_partition_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-31T20:43:31Z",
+      "side": 1,
+      "message": "Please remove LOG(ERROR) or change to use less spammy ones.",
+      "revId": "2d5ffa91f204036dff7757656e772dbe30888065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd1fa144_a626a070",
+        "filename": "mojo/public/cpp/bindings/binding.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-31T20:43:31Z",
+      "side": 1,
+      "message": "Please move it downward to where those testing methods are.",
+      "revId": "2d5ffa91f204036dff7757656e772dbe30888065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eed0b900_06ba57f4",
+        "filename": "mojo/public/cpp/bindings/lib/binding_state.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-31T20:43:31Z",
+      "side": 1,
+      "message": "ImplPointerType please.",
+      "revId": "2d5ffa91f204036dff7757656e772dbe30888065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaa5d892_b972046c",
+        "filename": "mojo/public/cpp/bindings/lib/binding_state.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-31T20:43:31Z",
+      "side": 1,
+      "message": "std::move(new_impl)",
+      "range": {
+        "startLine": 126,
+        "startChar": 19,
+        "endLine": 126,
+        "endChar": 27
+      },
+      "revId": "2d5ffa91f204036dff7757656e772dbe30888065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebc2de50_189b0ffc",
+        "filename": "mojo/public/tools/bindings/generators/cpp_templates/interface_declaration.tmpl",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-31T20:43:31Z",
+      "side": 1,
+      "message": "Do these need \"override\"?",
+      "revId": "2d5ffa91f204036dff7757656e772dbe30888065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ad13291_86b855da",
+        "filename": "mojo/public/tools/bindings/generators/cpp_templates/interface_declaration.tmpl",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-31T20:43:31Z",
+      "side": 1,
+      "message": "This is less flexible than before, it assumes that the forwarding interface is owned by this class.",
+      "revId": "2d5ffa91f204036dff7757656e772dbe30888065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
