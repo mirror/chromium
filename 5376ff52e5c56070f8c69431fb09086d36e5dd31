@@ -93,6 +93,30 @@
       "revId": "5376ff52e5c56070f8c69431fb09086d36e5dd31",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98c0a8cb_cf1ea0a5",
+        "filename": "android_webview/browser/aw_safe_browsing_resource_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-31T02:50:04Z",
+      "side": 1,
+      "message": "Thanks!\n\nI added a comment about the purpose of the user data key. Besides, I removed the error_code parameter of this method and changes CancelWithError to Cancel.\nThat should avoid any confusion.",
+      "parentUuid": "ca63a722_bd890dbb",
+      "range": {
+        "startLine": 116,
+        "startChar": 2,
+        "endLine": 118,
+        "endChar": 30
+      },
+      "revId": "5376ff52e5c56070f8c69431fb09086d36e5dd31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
