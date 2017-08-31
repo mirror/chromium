@@ -10,6 +10,7 @@
 #include "content/common/content_export.h"
 #include "content/common/service_worker/service_worker_event_dispatcher.mojom.h"
 #include "content/common/service_worker/service_worker_status_code.h"
+#include "content/common/service_worker/service_worker_url_loader_helper.h"
 #include "content/public/common/url_loader_factory.mojom.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
@@ -111,6 +112,7 @@ class CONTENT_EXPORT ServiceWorkerSubresourceLoader
   void OnComplete(const ResourceRequestCompletionStatus& status) override;
 
   ResourceResponseHead response_head_;
+  base::Optional<net::SSLInfo> ssl_info_ = base::nullopt;
 
   mojom::URLLoaderClientPtr url_loader_client_;
   mojo::Binding<mojom::URLLoader> url_loader_binding_;
@@ -144,6 +146,7 @@ class CONTENT_EXPORT ServiceWorkerSubresourceLoader
     kCompleted,
     kCancelled
   };
+
   Status status_ = Status::kNotStarted;
 
   base::WeakPtrFactory<ServiceWorkerSubresourceLoader> weak_factory_;
