@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9089a69a_9056eed9",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-08-31T20:24:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2f3d9ca_7619edd4",
+      "range": {
+        "startLine": 86,
+        "startChar": 38,
+        "endLine": 86,
+        "endChar": 39
+      },
+      "revId": "b84048bacf16b7996a3384593425ca2c7ffb1e96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "729646de_cba41c79",
         "filename": "ios/tools/coverage/coverage.py",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2017-08-29T18:04:18Z",
       "side": 1,
       "message": "This is a bit noisy being in two different places. It would also make it a maintenance burden. Do you know if this is documented externally by the tool, and we could just link to it?\n\nOr do you know of any ways we could reference this somewhere in the doc so it is only written once?",
+      "revId": "b84048bacf16b7996a3384593425ca2c7ffb1e96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "667b48a5_15fa3901",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-08-31T20:24:58Z",
+      "side": 1,
+      "message": "Great point! There is no official documentation on the format, but it can be found in one of the source files of llvm on github.\n\nhttps://github.com/llvm-mirror/llvm/blob/master/tools/llvm-cov/CoverageExporterJson.cpp",
+      "parentUuid": "729646de_cba41c79",
       "revId": "b84048bacf16b7996a3384593425ca2c7ffb1e96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "d55d3715_e5fee983",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-08-31T20:24:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63fd17f6_69fb1c09",
+      "range": {
+        "startLine": 207,
+        "startChar": 16,
+        "endLine": 207,
+        "endChar": 25
+      },
+      "revId": "b84048bacf16b7996a3384593425ca2c7ffb1e96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19a713f6_6d870bd3",
         "filename": "ios/tools/coverage/coverage.py",
         "patchSetId": 1
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "1fdf3927_17efd09f",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-08-31T20:24:58Z",
+      "side": 1,
+      "message": "Yes, I think that\u0027s better.",
+      "parentUuid": "19a713f6_6d870bd3",
+      "revId": "b84048bacf16b7996a3384593425ca2c7ffb1e96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1ca818b4_52be0e99",
         "filename": "ios/tools/coverage/coverage.py",
         "patchSetId": 1
@@ -93,6 +177,30 @@
       "writtenOn": "2017-08-29T18:04:18Z",
       "side": 1,
       "message": "Dumb question... Where is the schema containing the actual keys? The info in the function comments lists \"LineCoverage\" and \"Summary\", rather than \"lines\" and \"summary\"",
+      "range": {
+        "startLine": 227,
+        "startChar": 46,
+        "endLine": 227,
+        "endChar": 51
+      },
+      "revId": "b84048bacf16b7996a3384593425ca2c7ffb1e96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b1be557_2f788587",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-08-31T20:24:58Z",
+      "side": 1,
+      "message": "Not dumb at all! Their documentation really sucks! I couldn\u0027t even find the format of the json object anywhere except for in one of their source files, and as regarding the keys, I have to generate the object and print it out to understand how it\u0027s structured.",
+      "parentUuid": "1ca818b4_52be0e99",
       "range": {
         "startLine": 227,
         "startChar": 46,
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "4e6e1bb9_0bf6d076",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-08-31T20:24:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2db24401_9894ab1d",
+      "range": {
+        "startLine": 238,
+        "startChar": 33,
+        "endLine": 238,
+        "endChar": 47
+      },
+      "revId": "b84048bacf16b7996a3384593425ca2c7ffb1e96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2bb8b40_2df64e1b",
         "filename": "ios/tools/coverage/coverage.py",
         "patchSetId": 1
@@ -145,6 +277,24 @@
     },
     {
       "key": {
+        "uuid": "dcac4677_3cfdff20",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-08-31T20:24:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2bb8b40_2df64e1b",
+      "revId": "b84048bacf16b7996a3384593425ca2c7ffb1e96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e5171a0_6ee19137",
         "filename": "ios/tools/coverage/coverage.py",
         "patchSetId": 1
@@ -156,6 +306,30 @@
       "writtenOn": "2017-08-29T18:04:18Z",
       "side": 1,
       "message": "Is there a case where we would want a file to be matched more than once? If the user configured filter_paths to have duplicates, would that be an error?",
+      "range": {
+        "startLine": 256,
+        "startChar": 62,
+        "endLine": 256,
+        "endChar": 0
+      },
+      "revId": "b84048bacf16b7996a3384593425ca2c7ffb1e96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28e0152d_533c03e5",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-08-31T20:24:58Z",
+      "side": 1,
+      "message": "Yes, for example, users may want o understand the coverage of ios/ and ios/clean at the same time, and I think that\u0027s a reasonable request.",
+      "parentUuid": "8e5171a0_6ee19137",
       "range": {
         "startLine": 256,
         "startChar": 62,
@@ -188,6 +362,30 @@
       "revId": "b84048bacf16b7996a3384593425ca2c7ffb1e96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e550718_6c02b5ad",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-08-31T20:24:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf27ba58_e5c8825c",
+      "range": {
+        "startLine": 533,
+        "startChar": 40,
+        "endLine": 533,
+        "endChar": 78
+      },
+      "revId": "b84048bacf16b7996a3384593425ca2c7ffb1e96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
