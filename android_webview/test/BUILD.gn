@@ -20,6 +20,7 @@ android_apk("webview_instrumentation_apk") {
   deps = [
     ":android_webview_apk_assets",
     ":android_webview_apk_resources",
+    "//android_webview:android_webview_common_java",
     "//android_webview:android_webview_java",
     "//android_webview:locale_pak_assets",
     "//base:base_java",
@@ -110,6 +111,7 @@ instrumentation_test_apk("webview_instrumentation_test_apk") {
   apk_under_test = ":webview_instrumentation_apk"
   android_manifest = "../javatests/AndroidManifest.xml"
   deps = [
+    "//android_webview:android_webview_common_java",
     "//android_webview:android_webview_crash_services_java",
     "//android_webview:android_webview_java",
     "//android_webview:android_webview_platform_services_java",
