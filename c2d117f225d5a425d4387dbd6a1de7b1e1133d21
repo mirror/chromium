@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7bc14b64_9bbe6c6d",
+        "filename": "net/quic/chromium/quic_chromium_client_session_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1190,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-31T21:25:45Z",
+      "side": 1,
+      "message": "I\u0027m a bit surprised to see that a test is changing, but this is probably expected. Can you explain why this needs to change? I just want to make sure that we\u0027re not forgetting to implement something in the chromium stream/session.",
+      "range": {
+        "startLine": 1190,
+        "startChar": 3,
+        "endLine": 1190,
+        "endChar": 0
+      },
+      "revId": "c2d117f225d5a425d4387dbd6a1de7b1e1133d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
