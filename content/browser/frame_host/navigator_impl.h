@@ -60,6 +60,7 @@ class CONTENT_EXPORT NavigatorImpl : public Navigator {
   bool NavigateToPendingEntry(FrameTreeNode* frame_tree_node,
                               const FrameNavigationEntry& frame_entry,
                               ReloadType reload_type,
+                              WindowOpenDisposition disposition,
                               bool is_same_document_history_load) override;
   bool NavigateNewChildFrame(RenderFrameHostImpl* render_frame_host,
                              const GURL& default_url) override;
@@ -116,6 +117,7 @@ class CONTENT_EXPORT NavigatorImpl : public Navigator {
                        const FrameNavigationEntry& frame_entry,
                        const NavigationEntryImpl& entry,
                        ReloadType reload_type,
+                       WindowOpenDisposition disposition,
                        bool is_same_document_history_load,
                        bool is_history_navigation_in_new_child,
                        bool is_pending_entry,
@@ -132,6 +134,7 @@ class CONTENT_EXPORT NavigatorImpl : public Navigator {
                          const FrameNavigationEntry& frame_entry,
                          const NavigationEntryImpl& entry,
                          ReloadType reload_type,
+                         WindowOpenDisposition disposition,
                          PreviewsState previews_state,
                          bool is_same_document_history_load,
                          bool is_history_navigation_in_new_child,

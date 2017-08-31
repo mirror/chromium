@@ -196,6 +196,7 @@ std::unique_ptr<NavigationRequest> NavigationRequest::CreateBrowserInitiated(
     const NavigationEntryImpl& entry,
     FrameMsg_Navigate_Type::Value navigation_type,
     PreviewsState previews_state,
+    WindowOpenDisposition disposition,
     bool is_same_document_history_load,
     bool is_history_navigation_in_new_child,
     const scoped_refptr<ResourceRequestBody>& post_body,
@@ -255,7 +256,7 @@ std::unique_ptr<NavigationRequest> NavigationRequest::CreateBrowserInitiated(
                             REQUEST_CONTEXT_TYPE_LOCATION,
                             blink::WebMixedContentContextType::kBlockable,
                             is_form_submission, initiator),
-      request_params, browser_initiated,
+      request_params, browser_initiated, disposition,
       true,  // may_transfer
       &frame_entry, &entry));
   return navigation_request;
@@ -303,6 +304,8 @@ std::unique_ptr<NavigationRequest> NavigationRequest::CreateRendererInitiated(
   std::unique_ptr<NavigationRequest> navigation_request(new NavigationRequest(
       frame_tree_node, common_params, begin_params, request_params,
       false,  // browser_initiated
+      // See comment at the beginning of the function.
+      WindowOpenDisposition::CURRENT_TAB,
       false,  // may_transfer
       nullptr, entry));
   return navigation_request;
@@ -314,6 +317,7 @@ NavigationRequest::NavigationRequest(
     const BeginNavigationParams& begin_params,
     const RequestNavigationParams& request_params,
     bool browser_initiated,
+    WindowOpenDisposition disposition,
     bool may_transfer,
     const FrameNavigationEntry* frame_entry,
     const NavigationEntryImpl* entry)
@@ -322,6 +326,7 @@ NavigationRequest::NavigationRequest(
       begin_params_(begin_params),
       request_params_(request_params),
       browser_initiated_(browser_initiated),
+      disposition_(disposition),
       state_(NOT_STARTED),
       restore_type_(RestoreType::NONE),
       is_view_source_(false),
@@ -494,15 +499,15 @@ void NavigationRequest::CreateNavigationHandle() {
   redirect_chain.push_back(common_params_.url);
 
   std::unique_ptr<NavigationHandleImpl> navigation_handle =
-      NavigationHandleImpl::Create(common_params_.url, redirect_chain,
-                                   frame_tree_node_, !browser_initiated_,
-                                   FrameMsg_Navigate_Type::IsSameDocument(
-                                       common_params_.navigation_type),
-                                   common_params_.navigation_start,
-                                   nav_entry_id_,
-                                   false,  // started_in_context_menu
-                                   common_params_.should_check_main_world_csp,
-                                   begin_params_.is_form_submission);
+      NavigationHandleImpl::Create(
+          common_params_.url, redirect_chain, disposition_, frame_tree_node_,
+          !browser_initiated_,
+          FrameMsg_Navigate_Type::IsSameDocument(
+              common_params_.navigation_type),
+          common_params_.navigation_start, nav_entry_id_,
+          false,  // started_in_context_menu
+          common_params_.should_check_main_world_csp,
+          begin_params_.is_form_submission);
 
   if (!frame_tree_node->navigation_request()) {
     // A callback could have cancelled this request synchronously in which case

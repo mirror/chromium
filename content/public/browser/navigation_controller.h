@@ -26,6 +26,8 @@
 #include "ui/base/page_transition_types.h"
 #include "url/gurl.h"
 
+enum class WindowOpenDisposition;
+
 namespace base {
 
 class RefCountedString;
@@ -194,6 +196,8 @@ class NavigationController {
 
     // Indicates whether or not this navigation was initiated via context menu.
     bool started_from_context_menu;
+
+    WindowOpenDisposition disposition;
 
     explicit LoadURLParams(const GURL& url);
     ~LoadURLParams();

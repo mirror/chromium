@@ -6,6 +6,7 @@
 
 #include "base/memory/ref_counted_memory.h"
 #include "build/build_config.h"
+#include "ui/base/window_open_disposition.h"
 
 namespace content {
 
@@ -24,7 +25,8 @@ NavigationController::LoadURLParams::LoadURLParams(const GURL& url)
       has_user_gesture(false),
 #endif
       should_clear_history_list(false),
-      started_from_context_menu(false) {
+      started_from_context_menu(false),
+      disposition(WindowOpenDisposition::UNKNOWN) {
 }
 
 NavigationController::LoadURLParams::~LoadURLParams() {
@@ -50,7 +52,8 @@ NavigationController::LoadURLParams::LoadURLParams(
       has_user_gesture(other.has_user_gesture),
 #endif
       should_clear_history_list(false),
-      started_from_context_menu(other.started_from_context_menu) {
+      started_from_context_menu(other.started_from_context_menu),
+      disposition(other.disposition) {
 }
 
 NavigationController::LoadURLParams&
@@ -76,6 +79,7 @@ NavigationController::LoadURLParams::operator=(
   has_user_gesture = other.has_user_gesture;
 #endif
   started_from_context_menu = other.started_from_context_menu;
+  disposition = other.disposition;
 
   return *this;
 }

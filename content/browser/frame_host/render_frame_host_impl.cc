@@ -4125,7 +4125,8 @@ RenderFrameHostImpl::TakeNavigationHandleForCommit(
     }
 
     return NavigationHandleImpl::Create(
-        params.url, params.redirects, frame_tree_node_, is_renderer_initiated,
+        params.url, params.redirects, WindowOpenDisposition::CURRENT_TAB,
+        frame_tree_node_, is_renderer_initiated,
         params.was_within_same_document, base::TimeTicks::Now(),
         pending_nav_entry_id,
         false,                  // started_from_context_menu
@@ -4180,9 +4181,9 @@ RenderFrameHostImpl::TakeNavigationHandleForCommit(
   // pending_nav_entry_id. If the previous handle was a prematurely aborted
   // navigation loaded via LoadDataWithBaseURL, propagate the entry id.
   return NavigationHandleImpl::Create(
-      params.url, params.redirects, frame_tree_node_, is_renderer_initiated,
-      params.was_within_same_document, base::TimeTicks::Now(),
-      entry_id_for_data_nav,
+      params.url, params.redirects, WindowOpenDisposition::CURRENT_TAB,
+      frame_tree_node_, is_renderer_initiated, params.was_within_same_document,
+      base::TimeTicks::Now(), entry_id_for_data_nav,
       false,                  // started_from_context_menu
       CSPDisposition::CHECK,  // should_check_main_world_csp
       false);                 // is_form_submission

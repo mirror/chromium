@@ -7,6 +7,7 @@
 #include "components/navigation_interception/navigation_params.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/navigation_handle.h"
+#include "ui/base/window_open_disposition.h"
 
 using content::BrowserThread;
 
@@ -42,7 +43,8 @@ InterceptNavigationThrottle::CheckIfShouldIgnoreNavigation(bool is_redirect) {
   NavigationParams navigation_params(
       navigation_handle()->GetURL(), navigation_handle()->GetReferrer(),
       navigation_handle()->HasUserGesture(), navigation_handle()->IsPost(),
-      navigation_handle()->GetPageTransition(), is_redirect,
+      navigation_handle()->GetPageTransition(),
+      navigation_handle()->GetDisposition(), is_redirect,
       navigation_handle()->IsExternalProtocol(), true,
       navigation_handle()->GetBaseURLForDataURL());
   bool should_ignore_navigation = should_ignore_callback_.Run(

@@ -229,7 +229,9 @@ void NavigatorImpl::DidStartProvisionalLoad(
     render_process_host->FilterURL(false, &validated_redirect_chain[i]);
   render_frame_host->SetNavigationHandle(NavigationHandleImpl::Create(
       validated_url, validated_redirect_chain,
-      render_frame_host->frame_tree_node(), is_renderer_initiated,
+      // Not PlzNavigate.
+      WindowOpenDisposition::UNKNOWN, render_frame_host->frame_tree_node(),
+      is_renderer_initiated,
       false,  // is_same_document
       navigation_start, pending_nav_entry_id, started_from_context_menu,
       CSPDisposition::CHECK,  // should_check_main_world_csp
@@ -302,6 +304,7 @@ bool NavigatorImpl::NavigateToEntry(
     const FrameNavigationEntry& frame_entry,
     const NavigationEntryImpl& entry,
     ReloadType reload_type,
+    WindowOpenDisposition disposition,
     bool is_same_document_history_load,
     bool is_history_navigation_in_new_child,
     bool is_pending_entry,
@@ -377,7 +380,7 @@ bool NavigatorImpl::NavigateToEntry(
                                                      entry.restore_type()));
     RequestNavigation(
         frame_tree_node, dest_url, dest_referrer, frame_entry, entry,
-        reload_type, previews_state, is_same_document_history_load,
+        reload_type, disposition, previews_state, is_same_document_history_load,
         is_history_navigation_in_new_child, post_body, navigation_start);
     if (frame_tree_node->IsMainFrame() &&
         frame_tree_node->navigation_request()) {
@@ -496,10 +499,12 @@ bool NavigatorImpl::NavigateToPendingEntry(
     FrameTreeNode* frame_tree_node,
     const FrameNavigationEntry& frame_entry,
     ReloadType reload_type,
+    WindowOpenDisposition disposition,
     bool is_same_document_history_load) {
   return NavigateToEntry(frame_tree_node, frame_entry,
                          *controller_->GetPendingEntry(), reload_type,
-                         is_same_document_history_load, false, true, nullptr);
+                         disposition, is_same_document_history_load, false,
+                         true, nullptr);
 }
 
 bool NavigatorImpl::NavigateNewChildFrame(
@@ -536,7 +541,9 @@ bool NavigatorImpl::NavigateNewChildFrame(
   }
 
   return NavigateToEntry(render_frame_host->frame_tree_node(), *frame_entry,
-                         *entry, ReloadType::NONE, false, true, false, nullptr);
+                         *entry, ReloadType::NONE,
+                         WindowOpenDisposition::CURRENT_TAB, false, true, false,
+                         nullptr);
 }
 
 void NavigatorImpl::DidNavigate(
@@ -933,8 +940,9 @@ void NavigatorImpl::RequestTransferURL(
         static_cast<SiteInstanceImpl*>(source_site_instance), dest_url,
         referrer_to_use, method, -1);
   }
-  NavigateToEntry(node, *frame_entry, *entry.get(), ReloadType::NONE, false,
-                  false, false, post_body);
+  NavigateToEntry(node, *frame_entry, *entry.get(), ReloadType::NONE,
+                  WindowOpenDisposition::CURRENT_TAB, false, false, false,
+                  post_body);
 }
 
 // PlzNavigate
@@ -1132,6 +1140,7 @@ void NavigatorImpl::RequestNavigation(
     const FrameNavigationEntry& frame_entry,
     const NavigationEntryImpl& entry,
     ReloadType reload_type,
+    WindowOpenDisposition disposition,
     PreviewsState previews_state,
     bool is_same_document_history_load,
     bool is_history_navigation_in_new_child,
@@ -1159,9 +1168,9 @@ void NavigatorImpl::RequestNavigation(
   std::unique_ptr<NavigationRequest> scoped_request =
       NavigationRequest::CreateBrowserInitiated(
           frame_tree_node, dest_url, dest_referrer, frame_entry, entry,
-          navigation_type, previews_state, is_same_document_history_load,
-          is_history_navigation_in_new_child, post_body, navigation_start,
-          controller_);
+          navigation_type, previews_state, disposition,
+          is_same_document_history_load, is_history_navigation_in_new_child,
+          post_body, navigation_start, controller_);
 
   // Navigation to a javascript URL is not a "real" navigation so there is no
   // need to create a NavigationHandle. The navigation commits immediately and

@@ -81,6 +81,7 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
       const NavigationEntryImpl& entry,
       FrameMsg_Navigate_Type::Value navigation_type,
       PreviewsState previews_state,
+      WindowOpenDisposition disposition,
       bool is_same_document_history_load,
       bool is_history_navigation_in_new_child,
       const scoped_refptr<ResourceRequestBody>& post_body,
@@ -191,6 +192,7 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
                     const BeginNavigationParams& begin_params,
                     const RequestNavigationParams& request_params,
                     bool browser_initiated,
+                    WindowOpenDisposition disposition,
                     bool may_transfer,
                     const FrameNavigationEntry* frame_navigation_entry,
                     const NavigationEntryImpl* navitation_entry);
@@ -259,6 +261,8 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
   BeginNavigationParams begin_params_;
   RequestNavigationParams request_params_;
   const bool browser_initiated_;
+
+  WindowOpenDisposition disposition_;
 
   NavigationState state_;
 

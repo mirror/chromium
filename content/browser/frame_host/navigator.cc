@@ -20,6 +20,7 @@ NavigationController* Navigator::GetController() {
 bool Navigator::NavigateToPendingEntry(FrameTreeNode* frame_tree_node,
                                        const FrameNavigationEntry& frame_entry,
                                        ReloadType reload_type,
+                                       WindowOpenDisposition disposition,
                                        bool is_same_document_history_load) {
   return false;
 }
