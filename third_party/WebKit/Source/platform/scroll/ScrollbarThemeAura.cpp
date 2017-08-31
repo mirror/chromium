@@ -134,6 +134,10 @@ static int GetScrollbarThickness() {
 }  // namespace
 
 ScrollbarTheme& ScrollbarTheme::NativeTheme() {
+  LOG(ERROR) << "NativeTheme " << ScrollbarTheme::MobileEmulatorEnabled();
+  if (ScrollbarTheme::MobileEmulatorEnabled())
+    return ScrollbarThemeOverlay::MobileTheme();
+
   if (RuntimeEnabledFeatures::OverlayScrollbarsEnabled()) {
     DEFINE_STATIC_LOCAL(
         ScrollbarThemeOverlay, theme,

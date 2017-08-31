@@ -20,6 +20,7 @@
 #include "platform/geometry/IntSize.h"
 #include "platform/graphics/GraphicsLayer.h"
 #include "platform/loader/fetch/MemoryCache.h"
+#include "platform/scroll/ScrollbarTheme.h"
 #include "platform/wtf/PtrUtil.h"
 #include "public/platform/WebLayerTreeView.h"
 #include "public/web/WebSettings.h"
@@ -267,6 +268,7 @@ void DevToolsEmulator::EnableMobileEmulation() {
   if (emulate_mobile_enabled_)
     return;
   emulate_mobile_enabled_ = true;
+  ScrollbarTheme::SetMobileEmulatorEnabled(true);
   is_overlay_scrollbars_enabled_ =
       RuntimeEnabledFeatures::OverlayScrollbarsEnabled();
   RuntimeEnabledFeatures::SetOverlayScrollbarsEnabled(true);
@@ -277,6 +279,9 @@ void DevToolsEmulator::EnableMobileEmulation() {
       RuntimeEnabledFeatures::MobileLayoutThemeEnabled();
   RuntimeEnabledFeatures::SetMobileLayoutThemeEnabled(true);
   ComputedStyle::InvalidateInitialStyle();
+  use_solid_color_scrollbar_ =
+      web_view_->GetPage()->GetSettings().GetUseSolidColorScrollbars();
+  web_view_->GetPage()->GetSettings().SetUseSolidColorScrollbars(true);
   web_view_->GetPage()->GetSettings().SetViewportStyle(
       WebViewportStyle::kMobile);
   web_view_->GetPage()->GetSettings().SetViewportEnabled(true);
@@ -305,6 +310,7 @@ void DevToolsEmulator::EnableMobileEmulation() {
 void DevToolsEmulator::DisableMobileEmulation() {
   if (!emulate_mobile_enabled_)
     return;
+  ScrollbarTheme::SetMobileEmulatorEnabled(false);
   RuntimeEnabledFeatures::SetOverlayScrollbarsEnabled(
       is_overlay_scrollbars_enabled_);
   RuntimeEnabledFeatures::SetOrientationEventEnabled(
@@ -312,6 +318,8 @@ void DevToolsEmulator::DisableMobileEmulation() {
   RuntimeEnabledFeatures::SetMobileLayoutThemeEnabled(
       is_mobile_layout_theme_enabled_);
   ComputedStyle::InvalidateInitialStyle();
+  web_view_->GetPage()->GetSettings().SetUseSolidColorScrollbars(
+      use_solid_color_scrollbar_);
   web_view_->GetPage()->GetSettings().SetViewportEnabled(false);
   web_view_->GetPage()->GetSettings().SetViewportMetaEnabled(false);
   web_view_->GetPage()->GetVisualViewport().InitializeScrollbars();
