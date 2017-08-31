@@ -108,5 +108,98 @@ TEST(PostTaskAndReplyImplTest, PostTaskAndReply) {
   EXPECT_FALSE(reply_runner->HasPendingTask());
 }
 
+TEST(PostTaskAndReplyImplTest, PostAsyncTaskAndReply) {
+  scoped_refptr<TestSimpleTaskRunner> post_runner(new TestSimpleTaskRunner());
+  scoped_refptr<TestSimpleTaskRunner> reply_runner(new TestSimpleTaskRunner());
+  ThreadTaskRunnerHandle task_runner_handle(reply_runner);
+
+  OnceClosure on_completed;
+  bool reply_called = false;
+  ASSERT_TRUE(PostTaskAndReplyTaskRunner(post_runner.get())
+                  .PostAsyncTaskAndReply(
+                      FROM_HERE,
+                      BindOnce(
+                          [](OnceClosure* on_completed_storage,
+                             OnceClosure on_completed) {
+                            *on_completed_storage = std::move(on_completed);
+                          },
+                          Unretained(&on_completed)),
+                      BindOnce([](bool* called) { *called = true; },
+                               Unretained(&reply_called))));
+
+  // Expect that the |task| is posted to |post_runner|.
+  EXPECT_TRUE(post_runner->HasPendingTask());
+  EXPECT_FALSE(reply_runner->HasPendingTask());
+
+  // Run the task. Then, |on_completed| should keep the completion callback.
+  // Because |on_completed| is not yet called, reply is not yet posted
+  // to |reply_runner|.
+  post_runner->RunUntilIdle();
+  EXPECT_FALSE(on_completed.is_null());
+  EXPECT_FALSE(post_runner->HasPendingTask());
+  EXPECT_FALSE(reply_runner->HasPendingTask());
+
+  // Run |on_completed| on |post_runner|.
+  post_runner->PostTask(FROM_HERE, std::move(on_completed));
+  EXPECT_TRUE(post_runner->HasPendingTask());
+  EXPECT_FALSE(reply_runner->HasPendingTask());
+  post_runner->RunUntilIdle();
+  EXPECT_FALSE(post_runner->HasPendingTask());
+  EXPECT_TRUE(reply_runner->HasPendingTask());
+
+  // Make sure |reply| is not yet called.
+  EXPECT_FALSE(reply_called);
+
+  reply_runner->RunUntilIdle();
+  EXPECT_TRUE(reply_called);
+
+  // Expect no pending task in |post_runner| and |reply_runner|.
+  EXPECT_FALSE(post_runner->HasPendingTask());
+  EXPECT_FALSE(reply_runner->HasPendingTask());
+}
+
+TEST(PostTaskAndReplyImplTest,
+     PostAsyncTaskAndReply_CallbackDeletedBeforeCalled) {
+  scoped_refptr<TestSimpleTaskRunner> post_runner(new TestSimpleTaskRunner());
+  scoped_refptr<TestSimpleTaskRunner> reply_runner(new TestSimpleTaskRunner());
+  ThreadTaskRunnerHandle task_runner_handle(reply_runner);
+
+  bool object_deleted = false;
+  bool reply_called = false;
+  ASSERT_TRUE(
+      PostTaskAndReplyTaskRunner(post_runner.get())
+          .PostAsyncTaskAndReply(
+              FROM_HERE, BindOnce([](OnceClosure on_completed) {
+                // Do nothing. So, |on_completed| will never be called.
+              }),
+              BindOnce([](scoped_refptr<ObjectToDelete> obj,
+                          bool* called) { *called = true; },
+                       make_scoped_refptr(new ObjectToDelete(&object_deleted)),
+                       Unretained(&reply_called))));
+
+  // Expect that the |task| is posted to |post_runner|.
+  EXPECT_TRUE(post_runner->HasPendingTask());
+  EXPECT_FALSE(reply_runner->HasPendingTask());
+
+  // Run |task|. Then, because |on_completed| callback is destroyed before
+  // called. It should post a task to delete the |reply| on |reply_runner|.
+  post_runner->RunUntilIdle();
+  EXPECT_FALSE(post_runner->HasPendingTask());
+  EXPECT_TRUE(reply_runner->HasPendingTask());
+
+  // Make sure |reply| is not called, and |obj| is not yet deleted.
+  EXPECT_FALSE(object_deleted);
+  EXPECT_FALSE(reply_called);
+
+  // Then run |reply_runner|. It should delete the |reply| without calling it.
+  reply_runner->RunUntilIdle();
+  EXPECT_TRUE(object_deleted);
+  EXPECT_FALSE(reply_called);
+
+  // Expect no pending task in |post_runner| and |reply_runner|.
+  EXPECT_FALSE(post_runner->HasPendingTask());
+  EXPECT_FALSE(reply_runner->HasPendingTask());
+}
+
 }  // namespace internal
 }  // namespace base
