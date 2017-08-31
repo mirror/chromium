@@ -119,6 +119,10 @@ target(link_target_type, "ipc_service_sources") {
       "gpu_memory_buffer_factory_native_pixmap.h",
       "image_transport_surface_linux.cc",
     ]
+
+    if (!use_ozone) {
+      deps += [ "//ui/gfx:memory_buffer" ]
+    }
   }
   if (use_x11) {
     sources += [ "x_util.h" ]
