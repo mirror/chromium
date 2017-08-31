@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4376967d_291f60b2",
+        "filename": "third_party/WebKit/Source/core/frame/DeprecationReport.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-31T21:58:14Z",
+      "side": 1,
+      "message": "If you do keep this (I recommended on the thread that we shouldn\u0027t use base::Value here), can you change to the new Value API? It needs more documentation, sorry!\n\nReturn by Values and don\u0027t use the sub-classes. So:\n\nbase::Value DeprecationReport::ToValue() {\n  base::Value value(base::Value::Type::DICTIONARY);\n  value-\u003eSetKey(\"message\", base::Value(message().Ascii().data()));\n  ...\n  return value;\n}",
+      "revId": "18955301cd6150ad9f3d9572bf2e5da3eeaf1fb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
