@@ -27,10 +27,9 @@ void WebContentsModalDialogManager::SetDelegate(
     WebContentsModalDialogManagerDelegate* d) {
   delegate_ = d;
 
-  for (WebContentsModalDialogList::iterator it = child_dialogs_.begin();
-       it != child_dialogs_.end(); it++) {
+  for (const auto& dialog : child_dialogs_) {
     // Delegate can be NULL on Views/Win32 during tab drag.
-    (*it)->manager->HostChanged(d ? d->GetWebContentsModalDialogHost() : NULL);
+    dialog->manager->HostChanged(d ? d->GetWebContentsModalDialogHost() : NULL);
   }
 }
 
@@ -40,7 +39,8 @@ void WebContentsModalDialogManager::ShowDialogWithManager(
     std::unique_ptr<SingleWebContentsDialogManager> manager) {
   if (delegate_)
     manager->HostChanged(delegate_->GetWebContentsModalDialogHost());
-  child_dialogs_.push_back(new DialogState(dialog, std::move(manager)));
+  child_dialogs_.emplace_back(
+      std::make_unique<DialogState>(dialog, std::move(manager)));
 
   if (child_dialogs_.size() == 1) {
     BlockWebContentsInteraction(true);
@@ -71,7 +71,7 @@ void WebContentsModalDialogManager::WillClose(gfx::NativeWindow dialog) {
     return;
 
   bool removed_topmost_dialog = dlg == child_dialogs_.begin();
-  std::unique_ptr<DialogState> deleter(*dlg);
+  std::unique_ptr<DialogState> deleter = std::move(*dlg);
   child_dialogs_.erase(dlg);
   if (!child_dialogs_.empty() && removed_topmost_dialog &&
       !closing_all_dialogs_) {
@@ -84,14 +84,13 @@ void WebContentsModalDialogManager::WillClose(gfx::NativeWindow dialog) {
 WebContentsModalDialogManager::WebContentsModalDialogManager(
     content::WebContents* web_contents)
     : content::WebContentsObserver(web_contents),
-      delegate_(NULL),
-      closing_all_dialogs_(false) {
-}
+      delegate_(nullptr),
+      closing_all_dialogs_(false) {}
 
 WebContentsModalDialogManager::DialogState::DialogState(
     gfx::NativeWindow dialog,
     std::unique_ptr<SingleWebContentsDialogManager> mgr)
-    : dialog(dialog), manager(mgr.release()) {}
+    : dialog(dialog), manager(std::move(mgr)) {}
 
 WebContentsModalDialogManager::DialogState::~DialogState() {}
 

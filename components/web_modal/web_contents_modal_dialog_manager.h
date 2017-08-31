@@ -85,7 +85,8 @@ class WebContentsModalDialogManager
     std::unique_ptr<SingleWebContentsDialogManager> manager;
   };
 
-  typedef base::circular_deque<DialogState*> WebContentsModalDialogList;
+  using WebContentsModalDialogList =
+      base::circular_deque<std::unique_ptr<DialogState>>;
 
   // Utility function to get the dialog state for a dialog.
   WebContentsModalDialogList::iterator FindDialogState(
