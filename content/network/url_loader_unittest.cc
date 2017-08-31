@@ -428,6 +428,7 @@ TEST_F(URLLoaderImplTest, DoNotSniffHTMLFromImageGIF) {
 TEST_F(URLLoaderImplTest, CantSniffEmptyHtml) {
   set_sniff();
   Load(test_server()->GetURL("/content-sniffer-test4.html"));
+  fprintf(stderr, "MIME_TYPE: %s\n", mime_type().c_str());
   ASSERT_TRUE(mime_type().empty());
 }
 
