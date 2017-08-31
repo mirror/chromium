@@ -462,6 +462,30 @@
     },
     {
       "key": {
+        "uuid": "a290468c_7ee1fd1d",
+        "filename": "chrome/browser/extensions/unpacked_installer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-31T16:50:43Z",
+      "side": 1,
+      "message": "Both? :)\n\nSince loading an unpacked extension requires either a) very explicit user action or b) native binaries on the user\u0027s machine, this is lower priority.  But it\u0027s still something we *should* fix.  For the commandline case, it seems like either\na) We should allow for asynchronous loading or\nb) Use a run loop to spin until the loading process is complete, imitating synchronicity.\n\nb) is usually discouraged, but there are exceptions for command-line flags where it\u0027s the user\u0027s intent.\n\nIn fact, I think this *is* probably something we should fix.  Can you file a bug?",
+      "parentUuid": "bad1685c_ff86ede0",
+      "range": {
+        "startLine": 321,
+        "startChar": 2,
+        "endLine": 321,
+        "endChar": 27
+      },
+      "revId": "b5de490fff41a70506c41c98619239b333d44f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c7cfb207_5b644adf",
         "filename": "chrome/browser/extensions/unpacked_installer.h",
         "patchSetId": 8
