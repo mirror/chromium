@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "854c314f_08ad99d8",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 932,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-31T07:56:41Z",
+      "side": 1,
+      "message": "Here I just run the callback with non-sense parameters rather than closing the mojo binding |binding_|. Because |this| is expected to be destroyed by error handler of |binding_|, but binding_.Close() won\u0027t invoke the error handler, so I think we\u0027d better do nothing to |binding_| here and wait for the error handler invocation later due to termination of renderer process.",
+      "revId": "577300c672bd417cf3800e5cf4f9089b0f04c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
