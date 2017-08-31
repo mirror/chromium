@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b8c2d2b_d1e4aafd",
+        "filename": "third_party/WebKit/LayoutTests/fast/imagecapture/MediaStreamTrack-applyConstraints.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-08-31T09:13:27Z",
+      "side": 1,
+      "message": "Looks a bit redundant, if it\u0027s not a function the next line would throw.",
+      "range": {
+        "startLine": 43,
+        "startChar": 21,
+        "endLine": 43,
+        "endChar": 31
+      },
+      "revId": "1ab19ba70a5d42523bee2fd47481f19705ad5e43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
