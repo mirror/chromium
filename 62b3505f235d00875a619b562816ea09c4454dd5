@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "c4fd5bda_85c53337",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1474,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-31T23:55:26Z",
+      "side": 1,
+      "message": "If the chromium repo doesn\u0027t have any, that is likely good. I think some of the telemetry work happens in a separate repo, but I\u0027m not quite sure where.",
+      "parentUuid": "31280c79_539168a3",
+      "revId": "62b3505f235d00875a619b562816ea09c4454dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c53b3d60_a7ba089a",
         "filename": "content/common/frame_messages_forward.h",
         "patchSetId": 7
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "c53b3d60_a7ba089a",
+      "revId": "62b3505f235d00875a619b562816ea09c4454dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a77fa168_3f53c0dc",
+        "filename": "content/common/frame_messages_forward.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-31T23:55:26Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "ff41378a_56ea5f71",
       "revId": "62b3505f235d00875a619b562816ea09c4454dd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -254,6 +290,24 @@
       "side": 1,
       "message": "We only have test APIs for the InterfaceProvider side, not for\nBinderRegistry / AssociatedInterfaceRegistry. Of course, we could implement a test API for the latter side too, or simply use the production RemoveInterface/AddInterface methods.\n\nAnother disadvantage of hijacking the InterfaceRequest binding is that you can no longer intercept calls to pre-existing RFH\u0027s.\n\nIn addition, Ken prefers a solution where no manual update is needed to test helpers whenever a new method is added to mojom::FrameHost.\n\nTherefore I\u0027d use this solution for now, and then land a follow-up CL once Nasko\u0027s InterceptorForTesting lands to use that. WDYT?",
       "parentUuid": "56dc6b45_41f6ffed",
+      "revId": "62b3505f235d00875a619b562816ea09c4454dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0ffeb97_9185ca46",
+        "filename": "content/test/did_commit_provisional_load_interceptor.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-31T23:55:26Z",
+      "side": 1,
+      "message": "The InterceptorForTesting landed as part of the CL to enforce localStorage origin restrictions. I\u0027m following it up with even improved version of it in https://chromium-review.googlesource.com/c/chromium/src/+/644187/, so I think we can avoid adding test hooks in the main code at least on the browser side in browser tests.",
+      "parentUuid": "cbd37901_35786735",
       "revId": "62b3505f235d00875a619b562816ea09c4454dd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
