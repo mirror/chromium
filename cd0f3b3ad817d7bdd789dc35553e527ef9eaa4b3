@@ -46,6 +46,30 @@
       "revId": "cd0f3b3ad817d7bdd789dc35553e527ef9eaa4b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "98023aba_b1f5c149",
+        "filename": "third_party/WebKit/Source/core/svg/animation/SVGSMILElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1037,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-08-31T17:07:20Z",
+      "side": 1,
+      "message": "OK. By all means leave it as is then.",
+      "parentUuid": "da740d68_21442077",
+      "range": {
+        "startLine": 1037,
+        "startChar": 45,
+        "endLine": 1037,
+        "endChar": 55
+      },
+      "revId": "cd0f3b3ad817d7bdd789dc35553e527ef9eaa4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
