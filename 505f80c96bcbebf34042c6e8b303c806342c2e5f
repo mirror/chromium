@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dff03a09_9134f2b0",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-08-31T16:20:52Z",
+      "side": 1,
+      "message": "I personally find that readability is worse using this style. However I would not block this based on it.",
+      "range": {
+        "startLine": 126,
+        "startChar": 0,
+        "endLine": 126,
+        "endChar": 80
+      },
+      "revId": "505f80c96bcbebf34042c6e8b303c806342c2e5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "beafac7d_6c8ed7f7",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-08-31T16:20:52Z",
+      "side": 1,
+      "message": "nit: I would change Callback to CanHandleResolutionCallback. (Up to you)",
+      "range": {
+        "startLine": 217,
+        "startChar": 33,
+        "endLine": 217,
+        "endChar": 41
+      },
+      "revId": "505f80c96bcbebf34042c6e8b303c806342c2e5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
