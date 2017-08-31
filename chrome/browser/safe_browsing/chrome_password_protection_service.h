@@ -17,6 +17,10 @@ namespace content {
 class WebContents;
 }
 
+namespace views {
+class Widget;
+}
+
 namespace safe_browsing {
 
 class SafeBrowsingService;
@@ -28,8 +32,9 @@ using OnWarningDone =
 
 #if !defined(OS_MACOSX) || BUILDFLAG(MAC_VIEWS_BROWSER)
 // Shows the platform-specific password reuse modal dialog.
-void ShowPasswordReuseModalWarningDialog(content::WebContents* web_contents,
-                                         OnWarningDone done_callback);
+views::Widget* ShowPasswordReuseModalWarningDialog(
+    content::WebContents* web_contents,
+    OnWarningDone done_callback);
 #endif  // !OS_MACOSX || MAC_VIEWS_BROWSER
 
 // ChromePasswordProtectionService extends PasswordProtectionService by adding
@@ -140,6 +145,7 @@ class ChromePasswordProtectionService : public PasswordProtectionService {
   Profile* profile_;
   scoped_refptr<SafeBrowsingNavigationObserverManager>
       navigation_observer_manager_;
+  views::Widget* latest_warning_dialog_;
   DISALLOW_COPY_AND_ASSIGN(ChromePasswordProtectionService);
 };
 

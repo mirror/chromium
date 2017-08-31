@@ -34,6 +34,7 @@
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/web_contents.h"
+#include "ui/views/widget/widget.h"
 
 using content::BrowserThread;
 using sync_pb::UserEventSpecifics;
@@ -88,7 +89,8 @@ ChromePasswordProtectionService::ChromePasswordProtectionService(
           HostContentSettingsMapFactory::GetForProfile(profile)),
       ui_manager_(sb_service->ui_manager()),
       profile_(profile),
-      navigation_observer_manager_(sb_service->navigation_observer_manager()) {
+      navigation_observer_manager_(sb_service->navigation_observer_manager()),
+      latest_warning_dialog_(nullptr) {
   DCHECK(profile_);
 }
 
@@ -151,7 +153,7 @@ void ChromePasswordProtectionService::ShowModalWarning(
 #if !defined(OS_MACOSX) || BUILDFLAG(MAC_VIEWS_BROWSER)
   // TODO(jialiul): Remove the restriction on Mac when this dialog has a Cocoa
   // version as well.
-  ShowPasswordReuseModalWarningDialog(
+  latest_warning_dialog_ = ShowPasswordReuseModalWarningDialog(
       web_contents,
       base::BindOnce(&ChromePasswordProtectionService::OnWarningDone,
                      GetWeakPtr(), web_contents,

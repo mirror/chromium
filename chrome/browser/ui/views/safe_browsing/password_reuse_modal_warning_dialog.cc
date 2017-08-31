@@ -22,11 +22,12 @@
 namespace safe_browsing {
 
 #if !defined(OS_MACOSX) || BUILDFLAG(MAC_VIEWS_BROWSER)
-void ShowPasswordReuseModalWarningDialog(content::WebContents* web_contents,
-                                         OnWarningDone done_callback) {
+views::Widget* ShowPasswordReuseModalWarningDialog(
+    content::WebContents* web_contents,
+    OnWarningDone done_callback) {
   PasswordReuseModalWarningDialog* dialog = new PasswordReuseModalWarningDialog(
       web_contents, std::move(done_callback));
-  constrained_window::ShowWebModalDialogViews(dialog, web_contents);
+  return constrained_window::ShowWebModalDialogViews(dialog, web_contents);
 }
 #endif  // !OS_MACOSX || MAC_VIEWS_BROWSER
 
