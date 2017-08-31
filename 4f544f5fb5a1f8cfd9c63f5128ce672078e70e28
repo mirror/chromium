@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d5161050_52b00011",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/net/qualityprovider/ExternalEstimateProviderAndroid.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-31T20:15:22Z",
+      "side": 1,
+      "message": "It can, but not now. There is a derived class of this which overrides this method. We need to remove that first, otherwise it will break the downstream Android bots.",
+      "parentUuid": "c6b7e57a_dcc33c18",
+      "revId": "4f544f5fb5a1f8cfd9c63f5128ce672078e70e28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aad6a0c3_7d8507b3",
         "filename": "chrome/browser/android/net/external_estimate_provider_android.cc",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-31T20:12:07Z",
       "side": 1,
       "message": "This is an odd DCHECK. Can we just let no_value_ be whatever java says it is and leave the DCHECKs below to make sure java returns no_value_ or a positive value?",
+      "revId": "4f544f5fb5a1f8cfd9c63f5128ce672078e70e28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc4bca14_aa3e8258",
+        "filename": "chrome/browser/android/net/external_estimate_provider_android.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-31T20:15:22Z",
+      "side": 1,
+      "message": "It just verifies that no_value_ is a negative value.\nThis check is complementary to checking if ... java returns no_value_ or a positive value.",
+      "parentUuid": "aad6a0c3_7d8507b3",
       "revId": "4f544f5fb5a1f8cfd9c63f5128ce672078e70e28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
