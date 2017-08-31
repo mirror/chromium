@@ -74,8 +74,6 @@ PaletteDelegateChromeOS::PaletteDelegateChromeOS() : weak_factory_(this) {
 }
 
 PaletteDelegateChromeOS::~PaletteDelegateChromeOS() {
-  if (highlighter_selection_observer_)
-    ash::Shell::Get()->highlighter_controller()->SetObserver(nullptr);
 }
 
 std::unique_ptr<PaletteDelegateChromeOS::EnableListenerSubscription>
