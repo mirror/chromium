@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51d3fefa_2eaa4f54",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeSwitches.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-31T19:37:17Z",
+      "side": 1,
+      "message": "WebApks -\u003e WebAPKs\n\nYou can make the comment one line /** ... */",
+      "revId": "1d83fe85f2cfabcc8595b3f0be76df64ed3de1cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff361dde_984d7e2f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappLauncherActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-31T19:37:17Z",
+      "side": 1,
+      "message": "Can we do here:\n\nif (ChromeVersionInfo.isLocalBuild()\n                \u0026\u0026 CommandLine.getInstance().hasSwitch(SKIP_WEBAPK_VERIFICATION)) {\n            // Tell the WebApkValidator to work for all WebApks.\n            WebApkValidator.disableValidationForTesting();\n        }",
+      "revId": "1d83fe85f2cfabcc8595b3f0be76df64ed3de1cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1f79a1d_d6b6e251",
+        "filename": "chrome/android/webapk/libs/client/src/org/chromium/webapk/lib/client/WebApkValidator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-31T19:37:17Z",
+      "side": 1,
+      "message": "Won\u0027t this also affect https://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/externalnav/ExternalNavigationHandler.java?rcl\u003d191bc9d35eccd1e57861a85e3720c1f6883decac\u0026l\u003d520 in ExternalNavigationHandler.java ?\n\nI think that you want to have the early return in WebApkValidator#verifyV1WebApk()",
+      "revId": "1d83fe85f2cfabcc8595b3f0be76df64ed3de1cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
