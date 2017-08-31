@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c64ef503_2c509260",
+        "filename": "components/safe_browsing/password_protection/password_protection_request.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-31T22:40:41Z",
+      "side": 0,
+      "message": "It looks like we should update the comment for these. Currently:\n\n  // Domains from the Password Manager that match this password.\n  // Can be empty iff |matches_sync_password_| \u003d\u003d true\n  const std::vector\u003cstd::string\u003e matching_domains_;",
+      "range": {
+        "startLine": 61,
+        "startChar": 2,
+        "endLine": 61,
+        "endChar": 67
+      },
+      "revId": "b5add72c7acc5d9b33cfe14042e8e90b8d9b4f55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
