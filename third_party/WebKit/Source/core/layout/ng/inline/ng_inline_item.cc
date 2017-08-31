@@ -108,7 +108,7 @@ void NGInlineItem::SetEndOffset(unsigned end_offset) {
 
 LayoutUnit NGInlineItem::InlineSize() const {
   if (Type() == NGInlineItem::kText)
-    return LayoutUnit(shape_result_->Width());
+    return LayoutUnit(shape_result_->SnappedWidth());
 
   DCHECK_NE(Type(), NGInlineItem::kAtomicInline)
       << "Use NGInlineLayoutAlgorithm::InlineSize";
