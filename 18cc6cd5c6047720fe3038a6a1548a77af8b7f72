@@ -22,6 +22,30 @@
       "revId": "18cc6cd5c6047720fe3038a6a1548a77af8b7f72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cd6727c_3c22090e",
+        "filename": "components/web_modal/web_contents_modal_dialog_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-31T22:49:27Z",
+      "side": 1,
+      "message": "Ah, wasn\u0027t sure if there was a reason we were delaying the destruction of the dialog.",
+      "parentUuid": "d83a12bc_85acc656",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 79,
+        "endChar": 40
+      },
+      "revId": "18cc6cd5c6047720fe3038a6a1548a77af8b7f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
