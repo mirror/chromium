@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<script src='../resources/testharness.js'></script>
+<script src='../resources/testharnessreport.js'></script>
+<script src='resources/shadow-dom.js'></script>
+<html>
+<body>
+<p>Tests for moving focus by pressing tab key across shadow boundaries.<br>
+To manually test, press tab key sixteen times then shift+tab sixteen times.<br>
+It should traverse focusable elements in the increasing numerical order and then in the reverse order.</p>
+<style>
+
+#test-content > * {
+    display: block;
+    width: 400px;
+    height: 380px;
+    border: solid 1px black;
+    margin: 10px;
+    float: left;
+}
+
+pre {
+    padding-top: 1rem;
+    clear: both;
+}
+
+</style>
+<div id="test-content">
+<div id="host">
+  <div slot="slot5" tabindex="4" onfocus="log(this)">2. Assigned to slot5 whose tabindex is 2.</div>
+  <template data-mode='open'>
+    <slot name="slot1" onfocus="log(this)">
+    x. The default tabindex for a slot node is set to 0.
+    <div tabindex="0" onfocus="log(this)">5. The parent slot node's tabindex is 0. Second.</div>
+    <div tabindex="2" onfocus="log(this)">4. The parent slot node's tabindex is 0. First.</div>
+    </slot>
+
+    <slot name="slot2" tabindex="3" onfocus="log(this)">
+    x. The tabindex is 3. The slot node should be ignored.
+    <div tabindex="10" onfocus="log(this)">3. The parent slot node's tabindex is 3. The slot node's tabindex matters. This element's tabindex comes after.</div>
+    </slot>
+
+    <slot name="slot3" tabindex="0" onfocus="log(this)">
+    x. The tabindex is 0. The slot node should be ignored. If there is another slot node in same tabindex, the younger child comes first.
+    <div tabindex="1" onfocus="log(this)">6. The parent slot node's tabindex is 0. First.</div>
+    <div tabindex="1" onfocus="log(this)">7. The parent slot node's tabindex is 0. Second.</div>
+    </slot>
+
+    <slot name="slot4" tabindex="1" onfocus="log(this)">
+    x. The tabindex is 1. The slot node should be ignored.
+    <div onfocus="log(this)">x. Non-numbered element should be ignored.</div>
+    <div tabindex="5" onfocus="log(this)">1. The slot node tabindex is 1.</div>
+    </slot>
+
+    <slot name="slot5" tabindex="2" onfocus="log(this)">
+    x. The tabindex is 2. The slot node should be ignored. The host child is assigned to this slot node.
+    <div tabindex="1" onfocus="log(this)">-. The host child is assigned to the parent slot node. This text should apeare.</div>
+    </slot>
+
+    <slot name="slot6" tabindex="5" onfocus="log(this)">
+    x. The tabindex is 5. The slot node should be ignored.
+    <div tabindex="-1" onfocus="log(this)">x. tabindex is -1. Should be skipped.</div>
+    </slot>
+  </template>
+</div>
+</div>
+<pre></pre>
+<script>
+
+var oldActiveElement = null;
+function log()
+{
+    setTimeout(function () {
+        var newActiveElement = document.activeElement;
+
+        var shadowRoot = newActiveElement.shadowRoot || newActiveElement.closedShadowRoot;
+        if (shadowRoot) {
+            var activeElementInShadow = shadowRoot.activeElement;
+            if (activeElementInShadow)
+                newActiveElement = activeElementInShadow;
+        }
+
+        if (oldActiveElement == newActiveElement || newActiveElement == document.body)
+            return;
+        oldActiveElement = newActiveElement;
+        document.querySelector('pre').textContent += newActiveElement.firstChild.textContent.trim() + '\n';
+    }, 0);
+}
+
+if (window.testRunner) {
+    testRunner.dumpAsText();
+    testRunner.waitUntilDone();
+}
+
+window.onload = function () {
+    convertTemplatesToShadowRootsWithin(host);
+    document.onkeydown = log;
+
+    for (var element of document.querySelectorAll('#test-content *')) {
+        if (element instanceof HTMLIFrameElement)
+            element.contentDocument.onkeydown = log;
+        else
+            element.onfocus = log;
+    }
+
+    host.focus();
+    document.onkeydown();
+
+    if (window.eventSender)
+        moveFocusForward(7);
+}
+
+function moveFocusForward(focusCount)
+{
+    setTimeout(function () {
+        if (!focusCount)
+            return moveFocusBackward(6);
+        eventSender.keyDown('\t');
+        setTimeout(function () {
+            moveFocusForward(focusCount - 1);
+        }, 1);
+    }, 1);
+}
+
+function moveFocusBackward(focusCount)
+{
+    setTimeout(function () {
+        if (!focusCount) {
+            document.getElementById('test-content').style.display = 'none';
+            testRunner.notifyDone();
+            return;
+        }
+        eventSender.keyDown('\t', ['shiftKey']);
+        setTimeout(function () {
+            moveFocusBackward(focusCount - 1);
+        }, 1);
+    }, 1);
+}
+
+</script>
+</body>
+</html>
