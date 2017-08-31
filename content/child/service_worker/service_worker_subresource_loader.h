@@ -10,6 +10,7 @@
 #include "content/common/content_export.h"
 #include "content/common/service_worker/service_worker_event_dispatcher.mojom.h"
 #include "content/common/service_worker/service_worker_status_code.h"
+#include "content/common/service_worker/service_worker_url_loader_helper.h"
 #include "content/public/common/url_loader_factory.mojom.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
@@ -77,12 +78,6 @@ class CONTENT_EXPORT ServiceWorkerSubresourceLoader
   void SetPriority(net::RequestPriority priority,
                    int intra_priority_value) override;
 
-  // Populates |response_head_| (except for headers) with given |response|.
-  void SaveResponseInfo(const ServiceWorkerResponse& response);
-  // Generates and populates |response_head_.headers|.
-  void SaveResponseHeaders(int status_code,
-                           const std::string& status_text,
-                           const ServiceWorkerHeaderMap& headers);
   // Calls url_loader_client_->OnReceiveResponse() with |response_head_|.
   // Expected to be called after saving response info/headers.
   void CommitResponseHeaders();
@@ -111,6 +106,7 @@ class CONTENT_EXPORT ServiceWorkerSubresourceLoader
   void OnComplete(const ResourceRequestCompletionStatus& status) override;
 
   ResourceResponseHead response_head_;
+  base::Optional<net::SSLInfo> ssl_info_ = base::nullopt;
 
   mojom::URLLoaderClientPtr url_loader_client_;
   mojo::Binding<mojom::URLLoader> url_loader_binding_;
