@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abc2932e_ac2c1ed7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-31T11:08:21Z",
+      "side": 1,
+      "message": "add summary of adjustments made? e.g. remove globe icon, offline  badge size, etc.",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 43
+      },
+      "revId": "7c12bc8d60696eaa2c945da296debd7ef6fc6e75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31e579fa_366867d9",
+        "filename": "chrome/android/java/res/layout/tile_view_modern_condensed.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-31T11:08:21Z",
+      "side": 1,
+      "message": "nit: Define a style? :D",
+      "range": {
+        "startLine": 43,
+        "startChar": 8,
+        "endLine": 43,
+        "endChar": 28
+      },
+      "revId": "7c12bc8d60696eaa2c945da296debd7ef6fc6e75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
