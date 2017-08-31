@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a918a5d7_d4daba3c",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-31T01:43:23Z",
+      "side": 1,
+      "message": "Adapted from the other ConsumeStringOrURI.",
+      "revId": "2dd67d1e36d015535c4897b0823892df71134e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f33403df_b9ff399b",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-31T01:43:23Z",
+      "side": 1,
+      "message": "Does this placeholder thing make sense?",
+      "revId": "2dd67d1e36d015535c4897b0823892df71134e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66ea6254_167948b2",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-31T01:43:23Z",
+      "side": 1,
+      "message": "Does this part make sense?",
+      "revId": "2dd67d1e36d015535c4897b0823892df71134e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0823901_be199612",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 940,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-31T01:43:23Z",
+      "side": 1,
+      "message": "Does this need an explanation?",
+      "revId": "2dd67d1e36d015535c4897b0823892df71134e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2476d9e2_3ba5f223",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 947,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-31T01:43:23Z",
+      "side": 1,
+      "message": "Does this part make sense?",
+      "revId": "2dd67d1e36d015535c4897b0823892df71134e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3225c642_5b598223",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1012,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-31T01:43:23Z",
+      "side": 1,
+      "message": "Not sure if this is meant to be LookAheadOffset or Offset. Ignore this for now.",
+      "revId": "2dd67d1e36d015535c4897b0823892df71134e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77fad804_f5ce4d22",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserImpl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-31T01:43:23Z",
+      "side": 1,
+      "message": "Original patch did not have this. Instead, functions that needed a start and end offset just took in two size_t\u0027s. WDYT?",
+      "revId": "2dd67d1e36d015535c4897b0823892df71134e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a62b680c_ef8e1294",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserImpl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-31T01:43:23Z",
+      "side": 1,
+      "message": "Oops, this is unused. Ignore pls.",
+      "revId": "2dd67d1e36d015535c4897b0823892df71134e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69570476_ec12d012",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserTokenStream.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-31T01:43:23Z",
+      "side": 1,
+      "message": "I could merge this with the other ConsumeComponentValue by taking in a Wrapper* and checking if(wrapper) here. Not sure if the compiler is able to understand that wrapper won\u0027t change and it can be lifted out of the loop to convert\n\n    do {\n      if (wrapper) ...\n    } while\n\nto\n\n    if(wrapper) {\n      do { .. } while\n    } else {\n      do { .. } while\n    }",
+      "revId": "2dd67d1e36d015535c4897b0823892df71134e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b371bef_0ce9eb8e",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSTokenizer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-31T01:43:23Z",
+      "side": 1,
+      "message": "For symmetry, I could add Offset() { return input_.Offset(); } as well?\nAlso, this name is probably not self-explanatory.",
+      "revId": "2dd67d1e36d015535c4897b0823892df71134e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
