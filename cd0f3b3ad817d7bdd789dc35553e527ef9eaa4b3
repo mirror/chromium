@@ -22,6 +22,30 @@
       "revId": "cd0f3b3ad817d7bdd789dc35553e527ef9eaa4b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da740d68_21442077",
+        "filename": "third_party/WebKit/Source/core/svg/animation/SVGSMILElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1037,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-08-31T16:16:34Z",
+      "side": 1,
+      "message": "\u0027indefinite\u0027 is the SMIL term/value. It just so happens that we represent that special value with IEEE754 \u0027Infinity\u0027 (see SMILTime.h), so \u0027indefinite\u0027 is an appropriate term to use here I think.",
+      "parentUuid": "d552c6c0_4411d326",
+      "range": {
+        "startLine": 1037,
+        "startChar": 45,
+        "endLine": 1037,
+        "endChar": 55
+      },
+      "revId": "cd0f3b3ad817d7bdd789dc35553e527ef9eaa4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
