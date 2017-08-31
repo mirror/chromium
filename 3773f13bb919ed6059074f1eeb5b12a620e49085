@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "746a31c0_50429ad3",
+        "filename": "components/prefs/overlay_user_pref_store.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-31T20:39:10Z",
+      "side": 1,
+      "message": "Nit: Use the bug ID (in particular if it\u0027s more complicated than a single LDAP :) )",
+      "range": {
+        "startLine": 77,
+        "startChar": 10,
+        "endLine": 77,
+        "endChar": 25
+      },
+      "revId": "3773f13bb919ed6059074f1eeb5b12a620e49085",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
