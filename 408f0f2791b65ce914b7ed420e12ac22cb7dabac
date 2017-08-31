@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8937e78e_aced7bb0",
+        "filename": "components/multidevice/service/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-08-31T17:22:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a980160_cab7de86",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 86
+      },
+      "revId": "408f0f2791b65ce914b7ed420e12ac22cb7dabac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e3bbfe5_31d92974",
         "filename": "components/multidevice/service/BUILD.gn",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "408f0f2791b65ce914b7ed420e12ac22cb7dabac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98b9a190_33f2ed0e",
+        "filename": "components/multidevice/service/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-08-31T17:22:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e3bbfe5_31d92974",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 39
+      },
+      "revId": "408f0f2791b65ce914b7ed420e12ac22cb7dabac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ecaecec7_ac7dfdc9",
+        "filename": "components/multidevice/service/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-08-31T17:22:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e70cbd4_51fc2928",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 41
+      },
+      "revId": "408f0f2791b65ce914b7ed420e12ac22cb7dabac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e047fb0_b5771522",
         "filename": "components/multidevice/service/BUILD.gn",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "408f0f2791b65ce914b7ed420e12ac22cb7dabac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06403d9d_6dd35ab3",
+        "filename": "components/multidevice/service/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-08-31T17:22:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e047fb0_b5771522",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 39
+      },
+      "revId": "408f0f2791b65ce914b7ed420e12ac22cb7dabac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "86c16441_5d13008f",
+        "filename": "components/multidevice/service/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-08-31T17:22:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1d03f32_f58e9b43",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 27
+      },
+      "revId": "408f0f2791b65ce914b7ed420e12ac22cb7dabac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11b677e1_f6026b42",
         "filename": "components/multidevice/service/DEPS",
         "patchSetId": 2
@@ -137,6 +257,30 @@
       "revId": "408f0f2791b65ce914b7ed420e12ac22cb7dabac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6287617_2e0c2834",
+        "filename": "components/multidevice/service/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-08-31T17:22:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11b677e1_f6026b42",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 29
+      },
+      "revId": "408f0f2791b65ce914b7ed420e12ac22cb7dabac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "c5d3f1d4_4ae28e03",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-08-31T17:22:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9cf7085f_a9eba4b8",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 73
+      },
+      "revId": "408f0f2791b65ce914b7ed420e12ac22cb7dabac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1df224b7_656e2cde",
         "filename": "components/multidevice/service/device_sync_impl.cc",
         "patchSetId": 2
@@ -174,6 +342,30 @@
       "writtenOn": "2017-08-31T03:47:50Z",
       "side": 1,
       "message": "This is still really tough to understand. Instead, do something like this:\n\nidentity_manager_-\u003eGetPrimaryAccountWhenAvailable(\n    base::Bind(\u0026DeviceSyncImpl::OnPrimaryAccountAvailable,\n               weak_ptr_factory.GetWeakPtr()));\n\n...then,\n\nvoid DeviceSyncImpl::OnPrimaryAccountAvailableCallback(\n    const AccountInfo\u0026 account_info,\n    const ::identity::AccountState\u0026 account_state) {\n  DCHECK(current_state_ \u003d\u003d WAITING_FOR_PRIMARY_ACCOUNT);\n  current_state_ \u003d WAITING_FOR_KEY_PAIR_GENERATION;\n\n  // Generate keypair, which is another async function. Use the same pattern.\n}\n\nMake sure you DCHECK() the expected status in each function and set the new status when it changes. Also, I\u0027d recommend just calling it |status_| instead of |current_status_|.",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 52
+      },
+      "revId": "408f0f2791b65ce914b7ed420e12ac22cb7dabac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45af5408_b2e3266c",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-08-31T17:22:11Z",
+      "side": 1,
+      "message": "Done\n\nIs it possible that while identity_manager_ is fetching account info, something will call ForceEnrollmentNow() (or any of the other async API funcs), which as is, will cause the state to change.  Then, when OnPrimaryAccountAvailable callbacks, DCHECK will expect WAITING_FOR_PRIMARY_ACCOUNT, and cause a crash (because the state has changed as a result of someone calling ForceEnrollmentNow()/any of the other funcs prematurely)?  Or will this situation never happen? \n\nMaybe I should not manipulate the state in any of the exposed functions like ForceEnrollmentNow() or ForceSyncNow()?",
+      "parentUuid": "1df224b7_656e2cde",
       "range": {
         "startLine": 41,
         "startChar": 0,
@@ -206,6 +398,30 @@
       "revId": "408f0f2791b65ce914b7ed420e12ac22cb7dabac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ed24b80_0e798a7a",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-08-31T17:22:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1422ca3_94d35dd8",
+      "range": {
+        "startLine": 128,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 71
+      },
+      "revId": "408f0f2791b65ce914b7ed420e12ac22cb7dabac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -252,6 +468,54 @@
       "revId": "408f0f2791b65ce914b7ed420e12ac22cb7dabac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bad9f8c_f9f10b4e",
+        "filename": "components/multidevice/service/public/interfaces/device_sync_struct_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-08-31T17:22:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "baf521e7_6b9e7770",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 79
+      },
+      "revId": "408f0f2791b65ce914b7ed420e12ac22cb7dabac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "371e8406_b9f5ba39",
+        "filename": "components/multidevice/service/public/interfaces/device_sync_struct_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-08-31T17:22:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "127f1b3d_e1cf7f68",
+      "range": {
+        "startLine": 15,
+        "startChar": 9,
+        "endLine": 15,
+        "endChar": 20
+      },
+      "revId": "408f0f2791b65ce914b7ed420e12ac22cb7dabac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
