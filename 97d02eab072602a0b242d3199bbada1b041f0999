@@ -271,6 +271,24 @@
       "revId": "97d02eab072602a0b242d3199bbada1b041f0999",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05bd1688_6acd769f",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1179,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-31T19:42:18Z",
+      "side": 1,
+      "message": "Ok, I guess you\u0027re right.",
+      "parentUuid": "09a8657c_f8dc51cd",
+      "revId": "97d02eab072602a0b242d3199bbada1b041f0999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
