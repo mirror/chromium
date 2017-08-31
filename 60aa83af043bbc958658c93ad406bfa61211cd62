@@ -19,6 +19,70 @@
     },
     {
       "key": {
+        "uuid": "467be9d9_1cd1247f",
+        "filename": "content/network/network_change_manager_client_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-31T17:21:51Z",
+      "side": 1,
+      "message": "Hmmm.  It\u0027s an interesting question as to whether NCMCI belongs in content/network or not.  If we think of content/network as becoming a component, it does--this is the client side of the component interface which will be compiled into the consumers of that interface.  If we think of it as becoming a service (which is the right model), I don\u0027t think NCNMI belongs here--services expose mojo interfaces, not C++ interfaces, and don\u0027t have very much code compiled into consumers.  But this code will be needed in all consumers.  \n\nMatt (or eventually John): Does the service directory model have a slot for \"code that belongs in the consumer of the service\"?\n\nHelen: I\u0027m not worried about including network_service_instance (if we decide to leave this code in content/network pending resolution of the discussion above), but I\u0027m inclined to remove browser_thread.h and replace it with a simple sequence checker (and a note in the header file about needing to use this on the thread on which it was created).  My rational is that the Mojo world is going to be much more abstract and less tied to global concepts, and there\u0027s no reason we might not create a process at some point that has nothing to do with the UI/IO/FILE/etc. distinctions we currently have in the browser process.",
+      "parentUuid": "d9afd23e_611eccb4",
+      "revId": "60aa83af043bbc958658c93ad406bfa61211cd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb0779cc_e1fd74a5",
+        "filename": "content/network/network_change_manager_client_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-31T17:21:51Z",
+      "side": 1,
+      "message": "Comment describing usage before the class?  \n\nMore specifically: When I hit this class my first thought was \"Why does this exist?  The clients will just implement the NetworkChangeManagerClient interface to get notifications.\"  Which, yes, means I wasn\u0027t remembering the design doc, but many people who read this in the future won\u0027t have read your design doc :-}.",
+      "range": {
+        "startLine": 20,
+        "startChar": 21,
+        "endLine": 20,
+        "endChar": 51
+      },
+      "revId": "60aa83af043bbc958658c93ad406bfa61211cd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8109881b_1a703251",
+        "filename": "content/network/network_change_manager_client_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-31T17:21:51Z",
+      "side": 1,
+      "message": "I\u0027d prefer the pattern where you could do a static Get() method to get a pointer to the global, and then these methods would be non-static methods on that global.",
+      "range": {
+        "startLine": 79,
+        "startChar": 16,
+        "endLine": 79,
+        "endChar": 30
+      },
+      "revId": "60aa83af043bbc958658c93ad406bfa61211cd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b474f56b_e7ccfd50",
         "filename": "content/network/network_change_manager_impl_unittest.cc",
         "patchSetId": 2
@@ -30,6 +94,52 @@
       "writtenOn": "2017-08-30T21:26:17Z",
       "side": 1,
       "message": "presubmit doesn\u0027t like three of these includes\n\n  content/network/network_change_manager_impl_unittest.cc\n      Illegal include: \"content/public/browser/browser_thread.h\"\n    Because of \"-content\" from content/network\u0027s include_rules. \\\n  content/network/network_change_manager_impl_unittest.cc\n      Illegal include: \"content/public/common/content_features.h\"\n    Because of \"-content\" from content/network\u0027s include_rules. \\\n  content/network/network_change_manager_impl_unittest.cc\n      Illegal include: \"content/public/test/test_browser_thread_bundle.h\"\n    Because of \"-content\" from content/network\u0027s include_rules.",
+      "revId": "60aa83af043bbc958658c93ad406bfa61211cd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64ef354a_f9c80b9a",
+        "filename": "content/network/network_service_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-31T17:21:51Z",
+      "side": 1,
+      "message": "Why?",
+      "range": {
+        "startLine": 10,
+        "startChar": 10,
+        "endLine": 10,
+        "endChar": 16
+      },
+      "revId": "60aa83af043bbc958658c93ad406bfa61211cd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b62986c_31de36af",
+        "filename": "content/public/common/network_change_manager.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-31T17:21:51Z",
+      "side": 1,
+      "message": "Given that these are declared in the typemaps, do they need to be defined here?  \n\nHigher level (since I could imagine the answer to the above question is \"yes\"): I\u0027m uncomfortable with \"this needs to match the definition\" without any enforcement.  Ideal would be for it to automatically be created as matching those types.  Less ideal would be either to have tests (could be compile time) to enforce that they\u0027re the same, or to do explicit mapping between the mojo enums and the C++ enums (e.g.content/public/common/cookie_manager_traits.cc).  Which I guess was the best thing I found when doing cookies, so I\u0027ll recommend that while indicating that if you can auto-convert in some fashion I missed that\u0027s better :-}.",
+      "range": {
+        "startLine": 8,
+        "startChar": 5,
+        "endLine": 8,
+        "endChar": 19
+      },
       "revId": "60aa83af043bbc958658c93ad406bfa61211cd62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
