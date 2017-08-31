@@ -875,8 +875,7 @@ void ControllerImpl::HandleCompleteDownload(CompletionType type,
   auto driver_entry = driver_->Find(guid);
   uint64_t file_size =
       driver_entry.has_value() ? driver_entry->bytes_downloaded : 0;
-  stats::LogDownloadCompletion(
-      type, entry->completion_time - entry->create_time, file_size);
+  stats::LogDownloadCompletion(type, file_size);
 
   if (type == CompletionType::SUCCEED) {
     DCHECK(driver_entry.has_value());
@@ -926,11 +925,18 @@ void ControllerImpl::ScheduleCleanupTask() {
     return;
 
   base::TimeDelta start_time = earliest_cleanup_start_time - base::Time::Now();
+  if (start_time < base::TimeDelta::FromSeconds(0))
+    start_time = base::TimeDelta::FromSeconds(0);
   base::TimeDelta end_time = start_time + config_->file_cleanup_window;
-
+  long start_time_long =
+      base::saturated_cast<long>(std::ceil(start_time.InSecondsF()));
+  long end_time_long =
+      base::saturated_cast<long>(std::ceil(end_time.InSecondsF()));
+  DCHECK_LT(start_time_long, end_time_long)
+      << "GCM requires start time to be less than end time, start time = "
+      << start_time_long << " , end_time = " << end_time_long;
   task_scheduler_->ScheduleTask(DownloadTaskType::CLEANUP_TASK, false, false,
-                                std::ceil(start_time.InSecondsF()),
-                                std::ceil(end_time.InSecondsF()));
+                                start_time_long, end_time_long);
 }
 
 void ControllerImpl::ScheduleKillDownloadTaskIfNecessary() {
