@@ -106,6 +106,13 @@ class CrosSettings {
                        const std::string& email,
                        bool* wildcard_match) const;
 
+  // The functions searches for |email| in the list |list|
+  // It respects whitelists so foo@bar.baz will match *@bar.baz too. If the
+  // match was via a wildcard, |wildcard_match| is set to true.
+  bool FindEmailInList(const base::ListValue* list,
+                       const std::string& email,
+                       bool* wildcard_match) const;
+
   // Adding/removing of providers.
   bool AddSettingsProvider(std::unique_ptr<CrosSettingsProvider> provider);
   std::unique_ptr<CrosSettingsProvider> RemoveSettingsProvider(
