@@ -135,6 +135,7 @@
 #include "core/svg/SVGAElement.h"
 #include "core/svg/SVGElement.h"
 #include "core/svg/SVGTreeScopeResources.h"
+#include "core/timing/TextElementTimingAncestorTracker.h"
 #include "platform/EventDispatchForbiddenScope.h"
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/bindings/DOMDataStore.h"
@@ -146,6 +147,7 @@
 #include "platform/scroll/SmoothScrollSequencer.h"
 #include "platform/wtf/BitVector.h"
 #include "platform/wtf/HashFunctions.h"
+#include "platform/wtf/Optional.h"
 #include "platform/wtf/text/CString.h"
 #include "platform/wtf/text/StringBuilder.h"
 #include "platform/wtf/text/TextPosition.h"
@@ -1849,7 +1851,24 @@ void Element::AttachLayoutTree(AttachContext& context) {
   if (ElementShadow* shadow = this->Shadow())
     shadow->Attach(children_context);
 
-  ContainerNode::AttachLayoutTree(children_context);
+  Optional<TextElementTimingAncestorTracker> tracker;
+  if (!children_context.text_element_timing_ancestor_tracker) {
+    tracker.emplace(TextElementTimingAncestorTracker());
+    children_context.text_element_timing_ancestor_tracker = &tracker.value();
+    children_context.text_element_timing_ancestor_tracker
+        ->InitializeAncestorElementTimingStack(this);
+  }
+
+  {
+    TextElementTimingAncestorTracker::ScopedElementTimingNameTracker
+        scoped_element_timing_tracker(
+            this, children_context.text_element_timing_ancestor_tracker);
+
+    ContainerNode::AttachLayoutTree(children_context);
+  }
+
+  if (tracker)
+    children_context.text_element_timing_ancestor_tracker = nullptr;
 
   CreateAndAttachPseudoElementIfNeeded(kPseudoIdAfter, children_context);
   CreateAndAttachPseudoElementIfNeeded(kPseudoIdBackdrop, children_context);
