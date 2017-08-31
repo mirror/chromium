@@ -88,6 +88,24 @@
       "revId": "02bf8eb72be3f81d852b257008f9682b03c872c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "842d8243_0c3a166b",
+        "filename": "ios/chrome/browser/ssl/ios_ssl_error_handler.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-31T10:03:00Z",
+      "side": 1,
+      "message": "The tab helpers on iOS are designed to (eventually) work as they work on desktop/android chrome. The desktop version is documented in src/docs/tab_helper.md, and as on desktop, it is possible to have WebState that are missing some tab helpers, like on desktop.\n\nSee https://chromium.googlesource.com/chromium/src.git/+/master/docs/tab_helpers.md#Not-every-has-every-tab-helper.\n\nIn general, if your code is ui code and it gets the WebState from TabModel (or WebStateList), then you can assume that some of the tab helper are going to exists (because they are created when the WebState is added to the WebStateList and are necessary to use the WebState to back a tab – in the UI sense). However, if the WebState is used in generic code or code that is invoked from as part of web// delegate or client, then it is not safe to assume that any tab helper will exist and the code need to be resilient in that case.\n\nWhat to do when a tab helper is not available depends on the particular feature. Here, it seems to me that the decision not to proceed with the request sounds good from a security point of view. I would however change the comment a bit, and instead not reference tab, but instead say something like:\n\n  // Abort the navigation if there is a SSL error and no way to present an\n  // interstitial to the user (because it does not correspond to a visible\n  // ui). Doing otherwise could be a security risk.",
+      "parentUuid": "c15d9ea1_234398ba",
+      "revId": "02bf8eb72be3f81d852b257008f9682b03c872c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
