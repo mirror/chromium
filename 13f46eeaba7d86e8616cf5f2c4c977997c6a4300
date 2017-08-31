@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fd325f72_8e41fb31",
+        "filename": "ios/chrome/browser/ui/commands/browser_commands.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-31T00:57:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "312a1816_bd7b561f",
+      "range": {
+        "startLine": 91,
+        "startChar": 31,
+        "endLine": 91,
+        "endChar": 36
+      },
+      "revId": "13f46eeaba7d86e8616cf5f2c4c977997c6a4300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "655b14f2_c38722a8",
         "filename": "ios/chrome/browser/ui/commands/browser_commands.h",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e9810f51_c964fc9d",
+        "filename": "ios/chrome/browser/ui/commands/browser_commands.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-31T00:57:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "655b14f2_c38722a8",
+      "range": {
+        "startLine": 93,
+        "startChar": 42,
+        "endLine": 93,
+        "endChar": 52
+      },
+      "revId": "13f46eeaba7d86e8616cf5f2c4c977997c6a4300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0fdae37e_0ab0f166",
         "filename": "ios/chrome/browser/ui/omnibox/location_bar_controller_impl.h",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "13f46eeaba7d86e8616cf5f2c4c977997c6a4300",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9105bac_b0d8dafe",
+        "filename": "ios/chrome/browser/ui/omnibox/location_bar_controller_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-31T00:57:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fdae37e_0ab0f166",
+      "range": {
+        "startLine": 88,
+        "startChar": 8,
+        "endLine": 88,
+        "endChar": 23
+      },
+      "revId": "13f46eeaba7d86e8616cf5f2c4c977997c6a4300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -118,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "a25867e8_6501568a",
+        "filename": "ios/chrome/browser/ui/omnibox/location_bar_controller_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-31T00:57:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d6b96f3_6a5ecc5d",
+      "range": {
+        "startLine": 93,
+        "startChar": 8,
+        "endLine": 93,
+        "endChar": 23
+      },
+      "revId": "13f46eeaba7d86e8616cf5f2c4c977997c6a4300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ac0b18c_193fac3f",
         "filename": "ios/chrome/browser/ui/omnibox/page_info_view_controller.mm",
         "patchSetId": 3
@@ -138,6 +234,30 @@
       "revId": "13f46eeaba7d86e8616cf5f2c4c977997c6a4300",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef529ecb_898df664",
+        "filename": "ios/chrome/browser/ui/omnibox/page_info_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-31T00:57:54Z",
+      "side": 1,
+      "message": "This is an accessibility id, not a label, so it does not show up to end users, and is used primarily for our egtests.",
+      "parentUuid": "9ac0b18c_193fac3f",
+      "range": {
+        "startLine": 474,
+        "startChar": 26,
+        "endLine": 474,
+        "endChar": 31
+      },
+      "revId": "13f46eeaba7d86e8616cf5f2c4c977997c6a4300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
