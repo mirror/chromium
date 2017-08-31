@@ -19018,6 +19018,7 @@ crbug.com/591099 virtual/mojo-localstorage/storage/domstorage/localstorage/missi
 crbug.com/591099 virtual/new-remote-playback-pipeline/media/controls/video-controls-with-cast-rendering.html [ Failure ]
 crbug.com/591099 virtual/new-remote-playback-pipeline/media/controls/video-overlay-cast-dark-rendering.html [ Failure ]
 crbug.com/591099 virtual/new-remote-playback-pipeline/media/controls/video-overlay-cast-light-rendering.html [ Failure ]
+crbug.com/591099 virtual/outofblink-cors/ [ Skip ]
 crbug.com/591099 virtual/prefer_compositing_to_lcd_text/compositing/overflow/accelerated-overflow-scroll-should-not-affect-perspective.html [ Failure ]
 crbug.com/591099 virtual/prefer_compositing_to_lcd_text/compositing/overflow/accelerated-scrolling-with-clip-path-text.html [ Failure ]
 crbug.com/591099 virtual/prefer_compositing_to_lcd_text/compositing/overflow/accelerated-scrolling-with-clip-path.html [ Failure ]
