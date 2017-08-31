@@ -130,11 +130,17 @@ bool CanMouseDownStartSelect(Node* node) {
   return true;
 }
 
+PositionInFlatTreeWithAffinity PositionWithAffinityOfHitTestResult(
+    const HitTestResult& hit_test_result) {
+  return FromPositionInDOMTree<EditingInFlatTreeStrategy>(
+      hit_test_result.InnerNode()->GetLayoutObject()->PositionForPoint(
+          hit_test_result.LocalPoint()));
+}
+
 VisiblePositionInFlatTree VisiblePositionOfHitTestResult(
     const HitTestResult& hit_test_result) {
-  return CreateVisiblePosition(FromPositionInDOMTree<EditingInFlatTreeStrategy>(
-      hit_test_result.InnerNode()->GetLayoutObject()->PositionForPoint(
-          hit_test_result.LocalPoint())));
+  return CreateVisiblePosition(
+      PositionWithAffinityOfHitTestResult(hit_test_result));
 }
 
 DocumentMarker* SpellCheckMarkerAtPosition(
@@ -294,13 +300,13 @@ bool SelectionController::HandleSingleClick(
   // link or image.
   bool extend_selection = IsExtendingSelection(event);
 
-  const VisiblePositionInFlatTree& visible_hit_pos =
-      VisiblePositionOfHitTestResult(event.GetHitTestResult());
-  const VisiblePositionInFlatTree& visible_pos =
-      visible_hit_pos.IsNull()
-          ? CreateVisiblePosition(
+  const PositionInFlatTreeWithAffinity& hit_position =
+      PositionWithAffinityOfHitTestResult(event.GetHitTestResult());
+  const PositionInFlatTreeWithAffinity& position_to_use =
+      hit_position.IsNull()
+          ? PositionInFlatTreeWithAffinity(
                 PositionInFlatTree::FirstPositionInOrBeforeNode(inner_node))
-          : visible_hit_pos;
+          : hit_position;
   const VisibleSelectionInFlatTree& selection =
       this->Selection().ComputeVisibleSelectionInFlatTree();
 
@@ -331,11 +337,12 @@ bool SelectionController::HandleSingleClick(
   if (extend_selection && !selection.IsNone()) {
     // Note: "fast/events/shift-click-user-select-none.html" makes
     // |pos.isNull()| true.
-    const PositionInFlatTree& pos = AdjustPositionRespectUserSelectAll(
-        inner_node, selection.Start(), selection.End(),
-        visible_pos.DeepEquivalent());
+    const PositionInFlatTree& adjusted_position =
+        AdjustPositionRespectUserSelectAll(inner_node, selection.Start(),
+                                           selection.End(),
+                                           position_to_use.GetPosition());
     const TextGranularity granularity = Selection().Granularity();
-    if (pos.IsNull()) {
+    if (adjusted_position.IsNull()) {
       UpdateSelectionForMouseDownDispatchingSelectStart(
           inner_node, selection.AsSelection(), granularity,
           HandleVisibility::kNotVisible);
@@ -344,10 +351,10 @@ bool SelectionController::HandleSingleClick(
     UpdateSelectionForMouseDownDispatchingSelectStart(
         inner_node,
         frame_->GetEditor().Behavior().ShouldConsiderSelectionAsDirectional()
-            ? ExtendSelectionAsDirectional(pos, selection.AsSelection(),
-                                           granularity)
-            : ExtendSelectionAsNonDirectional(pos, selection.AsSelection(),
-                                              granularity),
+            ? ExtendSelectionAsDirectional(adjusted_position,
+                                           selection.AsSelection(), granularity)
+            : ExtendSelectionAsNonDirectional(
+                  adjusted_position, selection.AsSelection(), granularity),
         granularity, HandleVisibility::kNotVisible);
     return false;
   }
@@ -359,7 +366,7 @@ bool SelectionController::HandleSingleClick(
     return false;
   }
 
-  if (visible_pos.IsNull()) {
+  if (position_to_use.IsNull()) {
     UpdateSelectionForMouseDownDispatchingSelectStart(
         inner_node, SelectionInFlatTree(), TextGranularity::kCharacter,
         HandleVisibility::kNotVisible);
@@ -380,16 +387,15 @@ bool SelectionController::HandleSingleClick(
   UpdateSelectionForMouseDownDispatchingSelectStart(
       inner_node,
       ExpandSelectionToRespectUserSelectAll(
-          inner_node, SelectionInFlatTree::Builder()
-                          .Collapse(visible_pos.ToPositionWithAffinity())
-                          .Build()),
+          inner_node,
+          SelectionInFlatTree::Builder().Collapse(position_to_use).Build()),
       TextGranularity::kCharacter,
       is_handle_visible ? HandleVisibility::kVisible
                         : HandleVisibility::kNotVisible);
 
   if (has_editable_style && event.Event().FromTouch()) {
     frame_->GetTextSuggestionController().HandlePotentialMisspelledWordTap(
-        visible_pos.DeepEquivalent());
+        position_to_use.GetPosition());
   }
 
   return false;
