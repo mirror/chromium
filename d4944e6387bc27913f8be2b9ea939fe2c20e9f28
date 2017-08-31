@@ -22,6 +22,30 @@
       "revId": "d4944e6387bc27913f8be2b9ea939fe2c20e9f28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04a97263_0c1688a1",
+        "filename": "content/child/blink_platform_impl.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-08-31T20:31:44Z",
+      "side": 1,
+      "message": "In order for mediaControls.css to include images it needs to be converted in the grd file from an include to a structure. At the moment a structure does not support gzip. My plan is to come back and fix this in a later CL.",
+      "parentUuid": "720677c7_f6652648",
+      "range": {
+        "startLine": 562,
+        "startChar": 5,
+        "endLine": 562,
+        "endChar": 9
+      },
+      "revId": "d4944e6387bc27913f8be2b9ea939fe2c20e9f28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
