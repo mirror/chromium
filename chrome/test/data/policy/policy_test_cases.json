@@ -3206,6 +3206,50 @@
     ]
   },
 
+  "NativeDevicePrinters": {
+    "os": ["chromeos"],
+    "test_policy": {
+      "NativeDevicePrinters": {
+        "url": "https://example.com/policyfile",
+        "hash": "deadbeefdeadbeefdeadbeef"
+      }
+    },
+    "pref_mappings": [{
+      "pref": "cros.device.printer_configurations",
+      "local_state": true
+    }]
+  },
+
+  "NativeDevicePrintersAccessMode": {
+    "os": ["chromeos"],
+    "test_policy": {
+      "NativeDevicePrintersAccessMode": 1
+    },
+    "pref_mappings": [
+      { "pref": "cros.device.printers_access_mode" }
+    ]
+  },
+
+  "NativeDevicePrintersBlacklist": {
+    "os": ["chromeos"],
+    "test_policy": {
+      "NativeDevicePrintersBlacklist": ["id4", "id7", "id10"]
+    },
+    "pref_mappings": [
+      { "pref": "cros.device.printers_blacklist" }
+    ]
+  },
+  "NativeDevicePrintersWhitelist": {
+    "os": ["chromeos"],
+    "test_policy": {
+      "NativeDevicePrintersWhitelist":  ["id4", "id7", "id10"]
+    },
+    "pref_mappings": [
+      { "pref": "cros.device.printers_whitelist" }
+    ]
+  },
+
+
   "----- Chrome Frame policies -------------------------------------------": {},
 
   "ChromeFrameRendererSettings": {
