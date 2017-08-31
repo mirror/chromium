@@ -45,6 +45,30 @@
       "revId": "9575a4da959c3a63c4d94c6e5830b7a2bee8ead1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ac4e108_08bb9df6",
+        "filename": "cc/tiles/image_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-31T21:59:10Z",
+      "side": 1,
+      "message": "What is the call stack in which ~ImageController is called? Are there many?",
+      "parentUuid": "b192e32a_352fec23",
+      "range": {
+        "startLine": 29,
+        "startChar": 19,
+        "endLine": 29,
+        "endChar": 71
+      },
+      "revId": "9575a4da959c3a63c4d94c6e5830b7a2bee8ead1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
