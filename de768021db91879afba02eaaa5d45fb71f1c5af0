@@ -16,6 +16,24 @@
       "revId": "de768021db91879afba02eaaa5d45fb71f1c5af0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e67e8bd_f3f7c77c",
+        "filename": "chromeos/components/tether/network_connection_handler_tether_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-31T16:49:04Z",
+      "side": 1,
+      "message": "This already happened as part of NetworkConnectionHandler, but I suppose that that is an implementation detail. I added extra guarding here for that case.",
+      "parentUuid": "b80e5712_6855f1fa",
+      "revId": "de768021db91879afba02eaaa5d45fb71f1c5af0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
