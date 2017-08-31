@@ -184,6 +184,24 @@
     },
     {
       "key": {
+        "uuid": "deb22440_fef3cb15",
+        "filename": "content/browser/frame_host/frame_tree.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-31T15:25:36Z",
+      "side": 1,
+      "message": "OK, this actually turned out to break a bunch more tests.  I think I fixed them with the latest PS, but it required a couple more changes:\n\n* This didn\u0027t work for WebUI (e.g., WebUIWebViewBrowserTest.ExecuteScriptCode), which unfortunately depends on calling render_view_host-\u003eGetMainFrame() -- which is now invalid after the view was created inactive and before it transitions to active.  To address this, I\u0027ve disabled this when we\u0027re switching BrowsingInstances - I don\u0027t think the race would be possible in that case.  Right?\n\n* A bunch of WebNavigationApiTest.* ran into https://crbug.com/760403, failing because provisional frame\u0027s initial document\u0027s URL was about:blank instead of empty.  So I just fixed this now in DocumentInit by checking Parent() vs. Owner(), which should be correct with provisional frames also, but I\u0027ll need to check with Daniel on whether that\u0027s ok.  There\u0027s also a failing layout test, http/tests/inspector-protocol/page/page-lifecycleEvents.js, on the latest trybot run, and I\u0027ll need to see whether that\u0027s related.\n\n* Two tests, WebContentsImplBrowserTest.GetSizeForNewRenderView and BrowserTest.GetSizeForNewRenderView, weren\u0027t getting RenderViewCreated in their size-monitoring observers for a RVH transitioning to active.  I fixed the observers to monitor RenderFrameCreated for main frames instead.  It appears that the size itself is still wrong on Mac, so I still need to investigate that.\n\nThe change to not use a proxy when the current host is not live isn\u0027t required, but something I noticed that might make sense -- because following the logic for that case, we\u0027ll immediately run this code a little later (in GetFrameHostForNavigation or UpdateStateForNavigate):\n\n    if (!render_frame_host_-\u003eIsRenderFrameLive()) {\n      // ...\n      if (GetRenderFrameProxyHost(dest_site_instance.get())) {\n        navigation_rfh-\u003eSend(\n            new FrameMsg_SwapIn(navigation_rfh-\u003eGetRoutingID()));\n      }\n      CommitPending();\n\nwhich will destroy the proxy right after we create it and send the extra SwapIn.  Given this, I think creating the proxy isn\u0027t really necessary.  I noticed we follow this path on initial navigations in several tests.  If we still wanted to still do it for consistency though, I think we could.",
+      "parentUuid": "7d1dbdb8_aba89a3f",
+      "revId": "0c09b277ef1f79d2fc8bbc0b2d24f3ff38ece7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9297d5b_fb7d868f",
         "filename": "content/browser/frame_host/frame_tree.h",
         "patchSetId": 8
