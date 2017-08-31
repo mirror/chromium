@@ -22,6 +22,30 @@
       "revId": "68ed49095621a74c613f2624a31f375711abf931",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5df216f0_c07830df",
+        "filename": "device/hid/public/interfaces/hid.mojom",
+        "patchSetId": 18
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-08-31T00:05:15Z",
+      "side": 1,
+      "message": "Yes, it is in our plan. I\u0027ll remove duplicated native structs after mojofication.",
+      "parentUuid": "00111f78_07d82254",
+      "range": {
+        "startLine": 53,
+        "startChar": 7,
+        "endLine": 53,
+        "endChar": 24
+      },
+      "revId": "68ed49095621a74c613f2624a31f375711abf931",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
