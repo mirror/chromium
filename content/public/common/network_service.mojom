@@ -6,6 +6,7 @@ module content.mojom;
 
 import "cookie_manager.mojom";
 import "mojo/common/file_path.mojom";
+import "proxy_config.mojom";
 import "url_loader.mojom";
 import "url_loader_factory.mojom";
 import "url/mojo/url.mojom";
@@ -43,6 +44,28 @@ struct NetworkContextParams {
 
   // Enables HTTP/0.9 on ports other than 80 for HTTP and 443 for HTTPS.
   bool http_09_on_non_default_ports_enabled = false;
+
+  // If set, the consumer is responsible for managing the proxy config, and
+  // all updates must be sent on this pipe.
+  //
+  // If both |proxy_config| and |proxy_config_client_request| are null, the
+  // NetworkContext will attempt to automatically detect the system proxy
+  // configuration (Which defaults to no proxy on Linux and Android).
+  //
+  // Use an associated pipe to give the guratantee that all requests using a
+  // newly created URLLoaderFactory will use the new configuration.
+  associated ProxyConfigClient&? proxy_config_client_request;
+  // If set, the initial proxy configuration to use. If not set, and
+  // |proxy_config_client_request| is set, the NetworkContext will wait for
+  // the initial proxy configuration before issuing requests.
+  ProxyConfig? proxy_config;
+
+  // If |proxy_config_client| is non-null, this is called periodically during
+  // periods of activity, and can be used as a signal for polling-based logic
+  // to determine the proxy config.
+  // TODO(mmenke): Can the consumer piggy back on other network events through
+  // other channels (navigation, issuing requests, etc)?
+  ProxyConfigPollerClient? proxy_config_poller_client;
 };
 
 // Represents a distinct context for making network requests, with its own

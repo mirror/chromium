@@ -1,0 +1,63 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#include "content/network/controlled_proxy_config_service.h"
+
+namespace content {
+
+ControlledProxyConfigService::ControlledProxyConfigService(
+    mojom::ProxyConfigPollerClientPtr proxy_poller_client,
+    base::Optional<net::ProxyConfig> initial_proxy_config,
+    mojom::ProxyConfigClientAssociatedRequest proxy_config_client_request)
+    : proxy_poller_client_(std::move(proxy_poller_client)), binding_(this) {
+  DCHECK(initial_proxy_config || proxy_config_client_request.is_pending());
+  if (initial_proxy_config)
+    OnProxyConfigUpdated(*initial_proxy_config);
+  // While the is_bound() check is not strictly necessary, polling doesn't make
+  // any sense if using a static proxy configuration.
+  if (binding_.is_bound() && proxy_config_client_request.is_pending())
+    binding_.Bind(std::move(proxy_config_client_request));
+}
+
+ControlledProxyConfigService::~ControlledProxyConfigService() {}
+
+void ControlledProxyConfigService::OnProxyConfigUpdated(
+    const net::ProxyConfig& proxy_config) {
+  // Do nothing if the proxy configuration is unchanged.
+  if (!config_pending_ && config_.Equals(proxy_config))
+    return;
+
+  config_pending_ = false;
+  config_ = proxy_config;
+
+  for (auto& observer : observers_)
+    observer.OnProxyConfigChanged(config_, CONFIG_VALID);
+}
+
+void ControlledProxyConfigService::AddObserver(Observer* observer) {
+  observers_.AddObserver(observer);
+}
+
+void ControlledProxyConfigService::RemoveObserver(Observer* observer) {
+  observers_.RemoveObserver(observer);
+}
+
+net::ProxyConfigService::ConfigAvailability
+ControlledProxyConfigService::GetLatestProxyConfig(net::ProxyConfig* config) {
+  if (config_pending_) {
+    *config = net::ProxyConfig();
+    return CONFIG_PENDING;
+  }
+  *config = config_;
+  return CONFIG_VALID;
+}
+
+void ControlledProxyConfigService::OnLazyPoll() {
+  // TODO(mmenke): These should either be rate limited, or the other process
+  // should use another signal ofactivity.
+  if (proxy_poller_client_)
+    proxy_poller_client_->OnLazyProxyConfigPoll();
+}
+
+}  // namespace content

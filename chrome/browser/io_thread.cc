@@ -55,7 +55,6 @@
 #include "components/policy/policy_constants.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
-#include "components/proxy_config/pref_proxy_config_tracker.h"
 #include "components/variations/variations_associated_data.h"
 #include "components/version_info/version_info.h"
 #include "content/public/browser/browser_thread.h"
@@ -339,11 +338,6 @@ IOThread::IOThread(
       g_browser_process->platform_part()->browser_policy_connector_chromeos();
   allow_gssapi_library_load_ = connector->IsActiveDirectoryManaged();
 #endif
-  pref_proxy_config_tracker_.reset(
-      ProxyServiceFactory::CreatePrefProxyConfigTrackerOfLocalState(
-          local_state));
-  system_proxy_config_service_ = ProxyServiceFactory::CreateProxyConfigService(
-      pref_proxy_config_tracker_.get());
   ChromeNetworkDelegate::InitializePrefsOnUIThread(
       &system_enable_referrers_,
       nullptr,
@@ -392,7 +386,6 @@ IOThread::~IOThread() {
   // be multiply constructed.
   BrowserThread::SetIOThreadDelegate(nullptr);
 
-  pref_proxy_config_tracker_->DetachFromPrefService();
   DCHECK(!globals_);
 
   // Destroy the old distributor to check that the observers list it holds is
@@ -599,7 +592,6 @@ void IOThread::CleanUp() {
   // This must be reset before the ChromeNetLog is destroyed.
   network_change_observer_.reset();
 
-  system_proxy_config_service_.reset();
   delete globals_;
   globals_ = NULL;
 
@@ -729,9 +721,8 @@ bool IOThread::PacHttpsUrlStrippingEnabled() const {
   return pac_https_url_stripping_enabled_.GetValue();
 }
 
-void IOThread::SetUpProxyConfigService(
-    net::URLRequestContextBuilderMojo* builder,
-    std::unique_ptr<net::ProxyConfigService> proxy_config_service) const {
+void IOThread::SetUpProxyService(
+    net::URLRequestContextBuilderMojo* builder) const {
   const base::CommandLine& command_line =
       *base::CommandLine::ForCurrentProcess();
 
@@ -756,7 +747,6 @@ void IOThread::SetUpProxyConfigService(
       PacHttpsUrlStrippingEnabled()
           ? net::ProxyService::SanitizeUrlPolicy::SAFE
           : net::ProxyService::SanitizeUrlPolicy::UNSAFE);
-  builder->set_proxy_config_service(std::move(proxy_config_service));
 }
 
 void IOThread::ConstructSystemRequestContext() {
@@ -817,8 +807,7 @@ void IOThread::ConstructSystemRequestContext() {
 
   builder->set_ct_verifier(std::move(ct_verifier));
 
-  SetUpProxyConfigService(builder.get(),
-                          std::move(system_proxy_config_service_));
+  SetUpProxyService(builder.get());
 
   globals_->network_service = content::NetworkService::Create();
   if (!is_quic_allowed_on_init_)

@@ -86,10 +86,18 @@ class CONTENT_EXPORT NetworkContext : public mojom::NetworkContext {
   void DisableQuic();
 
  private:
-  NetworkContext();
+  // Constructor only used in tests.
+  explicit NetworkContext(mojom::NetworkContextParamsPtr params);
 
   // On connection errors the NetworkContext destroys itself.
   void OnConnectionError();
+
+  void ApplyContextParamsToBuilder(
+      net::URLRequestContextBuilder* builder,
+      mojom::NetworkContextParams* network_context_params);
+
+  std::unique_ptr<net::URLRequestContext> MakeURLRequestContext(
+      mojom::NetworkContextParams* network_context_params);
 
   NetworkServiceImpl* const network_service_;
 
