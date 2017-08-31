@@ -305,13 +305,19 @@ void NGBlockNode::CopyFragmentDataToLayoutBox(
     }
   }
 
-  if (box_->IsLayoutBlock()) {
-    ToLayoutBlock(box_)->LayoutPositionedObjects(true);
-    NGWritingMode writing_mode =
-        FromPlatformWritingMode(Style().GetWritingMode());
-    NGBoxFragment fragment(writing_mode, physical_fragment);
-    ToLayoutBlock(box_)->ComputeOverflow(fragment.OverflowSize().block_size -
-                                         border_scrollbar_padding.block_end);
+  if (box_->IsLayoutBlock() && IsLastFragment(*physical_fragment)) {
+    LayoutUnit block_size;
+    if (const auto* break_token = physical_fragment->BreakToken()) {
+      block_size = ToNGBlockBreakToken(break_token)->UsedBlockSize();
+    } else {
+      NGWritingMode writing_mode =
+          FromPlatformWritingMode(Style().GetWritingMode());
+      NGBoxFragment fragment(writing_mode, physical_fragment);
+      block_size = fragment.OverflowSize().block_size;
+    }
+    LayoutBlock* block = ToLayoutBlock(box_);
+    block->LayoutPositionedObjects(true);
+    block->ComputeOverflow(block_size - border_scrollbar_padding.block_end);
   }
 
   box_->UpdateAfterLayout();
