@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a79e6483_96997bb9",
+        "filename": "services/shape_detection/android/java/src/org/chromium/shape_detection/BarcodeDetectionImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-08-31T08:32:45Z",
+      "side": 1,
+      "message": "But I think the exception message \"Google Play Services is not available.\" is better than \"Barcode Detection not implemented.\" because HTML developer can notify user to install it when it\u0027s not built-in by default in China for most mobile device.\n\nexception message \"GMS Detector is not operational\" can let user try again later because the dependency download is in progress.\n\nexception message \"Invalid bitmap\" can let user know it\u0027s a invalid image.\n\nAnd it will be a larger patch if only add a parameter in Detect mojom interface.",
+      "parentUuid": "7b5cd78f_dfaafd07",
+      "range": {
+        "startLine": 45,
+        "startChar": 12,
+        "endLine": 46,
+        "endChar": 95
+      },
+      "revId": "5355c908b370c3175c75784710278b6931d5b675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "de2d0e6a_f5ada1a0",
         "filename": "services/shape_detection/android/java/src/org/chromium/shape_detection/FaceDetectionImplGmsCore.java",
         "patchSetId": 3
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "c4dc0d7b_d3d056df",
+        "filename": "services/shape_detection/android/java/src/org/chromium/shape_detection/FaceDetectionImplGmsCore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-08-31T08:32:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de2d0e6a_f5ada1a0",
+      "revId": "5355c908b370c3175c75784710278b6931d5b675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4e5cf5a_f828e968",
         "filename": "services/shape_detection/face_detection_impl_mac.mm",
         "patchSetId": 3
@@ -56,6 +98,24 @@
       "revId": "5355c908b370c3175c75784710278b6931d5b675",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4585d163_7f0b7764",
+        "filename": "services/shape_detection/face_detection_impl_mac.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-08-31T08:32:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4e5cf5a_f828e968",
+      "revId": "5355c908b370c3175c75784710278b6931d5b675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -79,6 +139,30 @@
       "revId": "5355c908b370c3175c75784710278b6931d5b675",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8edd808_dba1e1a4",
+        "filename": "services/shape_detection/public/interfaces/barcodedetection.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-08-31T08:32:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91675280_d2fe70f7",
+      "range": {
+        "startLine": 23,
+        "startChar": 7,
+        "endLine": 23,
+        "endChar": 61
+      },
+      "revId": "5355c908b370c3175c75784710278b6931d5b675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
