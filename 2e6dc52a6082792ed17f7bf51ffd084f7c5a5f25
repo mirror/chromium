@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8d60bfd_4c8eb75d",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-08-31T17:38:25Z",
+      "side": 1,
+      "message": "I would don\u0027t use templates here.\n\n\nWhat is about just\n\nif (app_info-\u003eshortcut || intent.has_value()) {\n  arc::mojom::AppInstance* app_instance \u003d GET_APP_INSTANCE(LaunchIntent);\n  if (!app_instance)\n    return false;\n   app_instance-\u003eLaunchIntent(intent_uri, bounds);\n} else {\n  arc::mojom::AppInstance* app_instance \u003d GET_APP_INSTANCE(LaunchApp);\n  if (!app_instance)\n     return false;\n   app_instance-\u003eLaunchApp(package_name, activity, bounds);\n}\n\nWDYT",
+      "range": {
+        "startLine": 162,
+        "startChar": 0,
+        "endLine": 162,
+        "endChar": 62
+      },
+      "revId": "2e6dc52a6082792ed17f7bf51ffd084f7c5a5f25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
