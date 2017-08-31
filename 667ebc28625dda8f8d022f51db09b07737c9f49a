@@ -1,0 +1,297 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d67300e_987e99ba",
+        "filename": "third_party/WebKit/LayoutTests/device_orientation/motion/add-listener-from-callback.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-31T18:08:44Z",
+      "side": 1,
+      "message": "This description doesn\u0027t appear to be accurate.",
+      "range": {
+        "startLine": 22,
+        "startChar": 4,
+        "endLine": 22,
+        "endChar": 90
+      },
+      "revId": "667ebc28625dda8f8d022f51db09b07737c9f49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3ebefc4_3d4d8a08",
+        "filename": "third_party/WebKit/LayoutTests/device_orientation/motion/detached-frame.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-31T18:08:44Z",
+      "side": 1,
+      "message": "You can still use step_func_done here.",
+      "range": {
+        "startLine": 22,
+        "startChar": 46,
+        "endLine": 22,
+        "endChar": 60
+      },
+      "revId": "667ebc28625dda8f8d022f51db09b07737c9f49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e07d68b_1b56408f",
+        "filename": "third_party/WebKit/LayoutTests/device_orientation/motion/fire-last-event.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-31T18:08:44Z",
+      "side": 1,
+      "message": "step_func_done",
+      "range": {
+        "startLine": 27,
+        "startChar": 67,
+        "endLine": 27,
+        "endChar": 76
+      },
+      "revId": "667ebc28625dda8f8d022f51db09b07737c9f49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "705ef43c_b8c6a4bb",
+        "filename": "third_party/WebKit/LayoutTests/device_orientation/motion/multiple-event-listeners.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-31T18:08:44Z",
+      "side": 1,
+      "message": "Just \"initThirdListener\" here and below for initFourthListener.",
+      "range": {
+        "startLine": 40,
+        "startChar": 17,
+        "endLine": 40,
+        "endChar": 49
+      },
+      "revId": "667ebc28625dda8f8d022f51db09b07737c9f49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d297ffa8_10719da1",
+        "filename": "third_party/WebKit/LayoutTests/device_orientation/motion/multiple-event-listeners.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-31T18:08:44Z",
+      "side": 1,
+      "message": "These listeners need to be wrapped in test.step_func() so that they are recognized by test steps by the test framework.",
+      "range": {
+        "startLine": 70,
+        "startChar": 42,
+        "endLine": 70,
+        "endChar": 55
+      },
+      "revId": "667ebc28625dda8f8d022f51db09b07737c9f49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2700fcb7_c1ef0551",
+        "filename": "third_party/WebKit/LayoutTests/device_orientation/motion/null-values.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-31T18:08:44Z",
+      "side": 1,
+      "message": "Listeners must be wrapped in test.step_func().",
+      "range": {
+        "startLine": 71,
+        "startChar": 42,
+        "endLine": 71,
+        "endChar": 55
+      },
+      "revId": "667ebc28625dda8f8d022f51db09b07737c9f49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58664dd2_fac3c662",
+        "filename": "third_party/WebKit/LayoutTests/device_orientation/motion/optional-event-properties.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-31T18:08:44Z",
+      "side": 1,
+      "message": "Each of these can just be their own test(test \u003d\u003e { ... }) block with a relevant description.",
+      "range": {
+        "startLine": 217,
+        "startChar": 0,
+        "endLine": 235,
+        "endChar": 31
+      },
+      "revId": "667ebc28625dda8f8d022f51db09b07737c9f49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d41a8c3_a6665339",
+        "filename": "third_party/WebKit/LayoutTests/device_orientation/motion/page-visibility.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-31T18:08:44Z",
+      "side": 1,
+      "message": "Opening brace on end of previous line.",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 3
+      },
+      "revId": "667ebc28625dda8f8d022f51db09b07737c9f49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95ae7967_db4c87a6",
+        "filename": "third_party/WebKit/LayoutTests/device_orientation/motion/page-visibility.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-31T18:08:44Z",
+      "side": 1,
+      "message": "Listener must be wrapped in step_func.",
+      "range": {
+        "startLine": 24,
+        "startChar": 47,
+        "endLine": 24,
+        "endChar": 60
+      },
+      "revId": "667ebc28625dda8f8d022f51db09b07737c9f49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03afccc5_5eaa125a",
+        "filename": "third_party/WebKit/LayoutTests/device_orientation/motion/page-visibility.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-31T18:08:44Z",
+      "side": 1,
+      "message": "Listener must be wrapped in step_func.",
+      "range": {
+        "startLine": 26,
+        "startChar": 44,
+        "endLine": 26,
+        "endChar": 60
+      },
+      "revId": "667ebc28625dda8f8d022f51db09b07737c9f49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b64305f_bbc15ffc",
+        "filename": "third_party/WebKit/LayoutTests/device_orientation/motion/page-visibility.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-31T18:08:44Z",
+      "side": 1,
+      "message": "Listener must be wrapped in step_func.",
+      "range": {
+        "startLine": 39,
+        "startChar": 44,
+        "endLine": 39,
+        "endChar": 57
+      },
+      "revId": "667ebc28625dda8f8d022f51db09b07737c9f49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45eae570_7d7a7419",
+        "filename": "third_party/WebKit/LayoutTests/device_orientation/motion/window-property.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-31T18:08:44Z",
+      "side": 1,
+      "message": "This check seems redundant with the next one.",
+      "range": {
+        "startLine": 28,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 63
+      },
+      "revId": "667ebc28625dda8f8d022f51db09b07737c9f49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce6a0279_6b024df1",
+        "filename": "third_party/WebKit/LayoutTests/device_orientation/resources/device-orientation-helpers.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-31T18:08:44Z",
+      "side": 1,
+      "message": "Add third parameter \"acceleration.x\" to this and the other assertions below so it is easier to debug failures.",
+      "revId": "667ebc28625dda8f8d022f51db09b07737c9f49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
