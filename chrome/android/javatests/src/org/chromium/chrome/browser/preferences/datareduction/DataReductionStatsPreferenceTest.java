@@ -95,7 +95,8 @@ public class DataReductionStatsPreferenceTest {
     @Feature({"DataReduction"})
     public void testDontInitializeSiteBreakdownPref() throws Throwable {
         // Disable the feature
-        ChromeFeatureList.setTestFeatures(null);
+        Map<String, Boolean> features = new HashMap<>();
+        ChromeFeatureList.setTestFeatures(features);
 
         DataReductionStatsPreference.initializeDataReductionSiteBreakdownPref();
         Assert.assertFalse(ContextUtils.getAppSharedPreferences().contains(
