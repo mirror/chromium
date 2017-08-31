@@ -218,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "68dbb3de_f09427c9",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1356,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-08-31T21:42:30Z",
+      "side": 1,
+      "message": "Let\u0027s file a follow-up issue and check what happens with implementations. My concern is that someone marks a combobox invalid/required/disabled/whatever and in some impl combos it is spoken on textfield focus, and in others it is not.",
+      "parentUuid": "483812ba_e6420e7d",
+      "revId": "7ef8f7e0287c1861232cb47c6fc59ec2b57951ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "854484fa_cb982a11",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
         "patchSetId": 7
@@ -253,6 +271,24 @@
     },
     {
       "key": {
+        "uuid": "70c4eb32_7cf88d89",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-08-31T21:42:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "79410cdd_acf7ab70",
+      "revId": "7ef8f7e0287c1861232cb47c6fc59ec2b57951ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f98dbb6_c62de39e",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
         "patchSetId": 7
@@ -285,6 +321,24 @@
       "revId": "7ef8f7e0287c1861232cb47c6fc59ec2b57951ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "873fe5d3_23c2c074",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 941,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-08-31T21:42:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98bbba77_3a0354f9",
+      "revId": "7ef8f7e0287c1861232cb47c6fc59ec2b57951ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
