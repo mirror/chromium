@@ -725,8 +725,8 @@ TEST_F(TabletPowerButtonControllerTest, SuspendDoneStopsForcingOff) {
   EXPECT_FALSE(GetBacklightsForcedOff());
 }
 
-// Tests that for tablet power button, we have immediate pre-lock animation
-// (crbug.com/746657).
+// Tests that for tablet power button, pre-lock and post-lock animations are
+// immediate.
 TEST_F(TabletPowerButtonControllerTest, ImmediatePreLockAnimation) {
   TestSessionStateAnimator* test_animator = new TestSessionStateAnimator;
   lock_state_controller_->set_animator_for_test(test_animator);
@@ -742,9 +742,9 @@ TEST_F(TabletPowerButtonControllerTest, ImmediatePreLockAnimation) {
   EXPECT_TRUE(lock_state_test_api_->is_animating_lock());
 
   EXPECT_TRUE(GetLockedState());
-  // Advance post lock animation to check animating lock gets reset.
-  test_animator->Advance(test_animator->GetDuration(
-      SessionStateAnimator::ANIMATION_SPEED_MOVE_WINDOWS));
+  EXPECT_TRUE(test_animator->AreContainersAnimated(
+      SessionStateAnimator::LOCK_SCREEN_CONTAINERS,
+      SessionStateAnimator::ANIMATION_HIDE_IMMEDIATELY));
   EXPECT_FALSE(lock_state_test_api_->is_animating_lock());
 }
 

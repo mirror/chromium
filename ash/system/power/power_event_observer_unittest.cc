@@ -171,9 +171,9 @@ TEST_F(PowerEventObserverTest, DelayResuspendForLockAnimations) {
   EXPECT_EQ(0, GetNumVisibleCompositors());
 }
 
-// Tests that for suspend imminent induced locking screen, we have immediate
-// pre-lock animation (crbug.com/751908).
-TEST_F(PowerEventObserverTest, ImmediatePreLockAnimation) {
+// Tests that for suspend imminent induced locking screen, pre-lock and
+// post-lock animations are immediate.
+TEST_F(PowerEventObserverTest, ImmediateAnimations) {
   TestSessionStateAnimator* test_animator = new TestSessionStateAnimator;
   LockStateController* lock_state_controller =
       Shell::Get()->lock_state_controller();
@@ -190,9 +190,9 @@ TEST_F(PowerEventObserverTest, ImmediatePreLockAnimation) {
   EXPECT_TRUE(lock_state_test_api.is_animating_lock());
 
   EXPECT_TRUE(GetLockedState());
-  // Advance post lock animation to check animating lock gets reset.
-  test_animator->Advance(test_animator->GetDuration(
-      SessionStateAnimator::ANIMATION_SPEED_MOVE_WINDOWS));
+  EXPECT_TRUE(test_animator->AreContainersAnimated(
+      SessionStateAnimator::LOCK_SCREEN_CONTAINERS,
+      SessionStateAnimator::ANIMATION_HIDE_IMMEDIATELY));
   EXPECT_FALSE(lock_state_test_api.is_animating_lock());
 }
 
