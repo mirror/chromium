@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b15240ac_97a80784",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/intersection-observer/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-08-31T11:43:48Z",
+      "side": 1,
+      "message": "szager@, is there a team and component for this?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 6
+      },
+      "revId": "e68e6eef0b7c091d44697278a742182f8482787d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "319852bd_5f1e99e4",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/preload/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-08-31T11:43:48Z",
+      "side": 1,
+      "message": "Yoav, is there a team for this and server-timing?",
+      "range": {
+        "startLine": 3,
+        "startChar": 5,
+        "endLine": 3,
+        "endChar": 9
+      },
+      "revId": "e68e6eef0b7c091d44697278a742182f8482787d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38374499_9b910163",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/wasm/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-08-31T11:43:48Z",
+      "side": 1,
+      "message": "mtrofin@, is there a team for this?",
+      "range": {
+        "startLine": 1,
+        "startChar": 19,
+        "endLine": 1,
+        "endChar": 29
+      },
+      "revId": "e68e6eef0b7c091d44697278a742182f8482787d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
