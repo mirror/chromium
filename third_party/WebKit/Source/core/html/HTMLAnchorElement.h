@@ -93,7 +93,6 @@ class CORE_EXPORT HTMLAnchorElement : public HTMLElement, public DOMURLUtils {
 
   void ParseAttribute(const AttributeModificationParams&) override;
   bool SupportsFocus() const override;
-  bool MatchesEnabledPseudoClass() const override;
 
  private:
   void AttributeChanged(const AttributeModificationParams&) override;
