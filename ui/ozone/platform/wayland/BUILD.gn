@@ -20,6 +20,8 @@ source_set("wayland") {
     "ozone_platform_wayland.h",
     "wayland_connection.cc",
     "wayland_connection.h",
+    "wayland_cursor.cc",
+    "wayland_cursor.h",
     "wayland_keyboard.cc",
     "wayland_keyboard.h",
     "wayland_object.cc",

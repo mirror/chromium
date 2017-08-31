@@ -115,6 +115,13 @@ WaylandOutput* WaylandConnection::PrimaryOutput() const {
   return output_list_.front().get();
 }
 
+void WaylandConnection::SetCursorBitmap(const std::vector<SkBitmap>& bitmaps,
+                                        const gfx::Point& location) {
+  if (!pointer_ || !pointer_->cursor())
+    return;
+  pointer_->cursor()->UpdateBitmap(bitmaps, location, serial_);
+}
+
 void WaylandConnection::OnDispatcherListChanged() {
   StartProcessingEvents();
 }
@@ -223,6 +230,7 @@ void WaylandConnection::Capabilities(void* data,
       connection->pointer_ = base::MakeUnique<WaylandPointer>(
           pointer, base::Bind(&WaylandConnection::DispatchUiEvent,
                               base::Unretained(connection)));
+      connection->pointer_->set_connection(connection);
     }
   } else if (connection->pointer_) {
     connection->pointer_.reset();
@@ -237,6 +245,7 @@ void WaylandConnection::Capabilities(void* data,
       connection->keyboard_ = base::MakeUnique<WaylandKeyboard>(
           keyboard, base::Bind(&WaylandConnection::DispatchUiEvent,
                                base::Unretained(connection)));
+      connection->keyboard_->set_connection(connection);
     }
   } else if (connection->keyboard_) {
     connection->keyboard_.reset();
