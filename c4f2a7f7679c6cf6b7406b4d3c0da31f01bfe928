@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "249c6e57_4d44b20e",
+        "filename": "chrome/browser/ui/android/usb_chooser_dialog_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-08-31T18:30:41Z",
+      "side": 1,
+      "message": "The description of this CL says \"This should be removed once we have proper implementation of\nUSB chooser dialog and SSL client certificate selector in VR.\"\n\nMaybe add a TODO here to mention the above in order to keep track of that. If there is a Chromium issue filed, also mention the issue number here.",
+      "revId": "c4f2a7f7679c6cf6b7406b4d3c0da31f01bfe928",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
