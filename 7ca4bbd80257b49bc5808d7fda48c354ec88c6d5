@@ -159,6 +159,30 @@
     },
     {
       "key": {
+        "uuid": "397558cc_f5777554",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-31T02:31:57Z",
+      "side": 1,
+      "message": "SGTM.",
+      "parentUuid": "d36d9f2a_79d4a690",
+      "range": {
+        "startLine": 70,
+        "startChar": 6,
+        "endLine": 70,
+        "endChar": 12
+      },
+      "revId": "7ca4bbd80257b49bc5808d7fda48c354ec88c6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cba72f40_9ce17dca",
         "filename": "components/url_formatter/elide_url_unittest.cc",
         "patchSetId": 1
