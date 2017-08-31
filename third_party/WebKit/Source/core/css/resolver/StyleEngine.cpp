@@ -27,7 +27,7 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include "core/dom/StyleEngine.h"
+#include "core/css/resolver/StyleEngine.h"
 
 #include "core/HTMLNames.h"
 #include "core/css/CSSDefaultStyleSheets.h"
@@ -36,16 +36,16 @@
 #include "core/css/FontFaceCache.h"
 #include "core/css/StyleSheetContents.h"
 #include "core/css/invalidation/InvalidationSet.h"
+#include "core/css/resolver/DocumentStyleSheetCollector.h"
 #include "core/css/resolver/ScopedStyleResolver.h"
+#include "core/css/resolver/ShadowTreeStyleSheetCollection.h"
+#include "core/css/resolver/StyleChangeReason.h"
 #include "core/css/resolver/StyleRuleUsageTracker.h"
 #include "core/css/resolver/ViewportStyleResolver.h"
-#include "core/dom/DocumentStyleSheetCollector.h"
 #include "core/dom/Element.h"
 #include "core/dom/ElementTraversal.h"
 #include "core/dom/ProcessingInstruction.h"
 #include "core/dom/ShadowRoot.h"
-#include "core/dom/ShadowTreeStyleSheetCollection.h"
-#include "core/dom/StyleChangeReason.h"
 #include "core/frame/Settings.h"
 #include "core/html/HTMLIFrameElement.h"
 #include "core/html/HTMLLinkElement.h"
