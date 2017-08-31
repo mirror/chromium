@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "adb1c5a0_70ecc1c4",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/getstarted/popup.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-31T20:36:39Z",
+      "side": 1,
+      "message": "Let\u0027s clean this up a bit.  Suggestions below; lemme know what you think!",
+      "revId": "e64fd01ab700fe9a76df21974dc5d54f70350093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff82eb62_928828c1",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/getstarted/popup.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-31T20:36:39Z",
+      "side": 1,
+      "message": "body {\n        margin: 10px;\n        white-space: nowrap;\n      }\n      h1 {\n        font-size: 15px;\n      }\n      #container {\n        align-items: center;\n        display: flex;\n        justify-content: space-between;\n      }",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 0
+      },
+      "revId": "e64fd01ab700fe9a76df21974dc5d54f70350093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf267dbc_e7d7005a",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/getstarted/popup.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-31T20:36:39Z",
+      "side": 1,
+      "message": "\u003ch1\u003eBackground Color Changer\u003c/h1\u003e\n    \u003cdiv id\u003d\"container\"\u003e\n      \u003cspan\u003eChoose a color\u003c/span\u003e\n      \u003cselect id\u003d\"picker\"\u003e\n        \u003coption selected disabled hidden value\u003d\u0027\u0027\u003e\u003c/option\u003e\n        \u003coption value\u003d\"white\"\u003eWhite\u003c/option\u003e\n        \u003coption value\u003d\"pink\"\u003ePink\u003c/option\u003e\n        \u003coption value\u003d\"green\"\u003eGreen\u003c/option\u003e\n        \u003coption value\u003d\"yellow\"\u003eYellow\u003c/option\u003e\n      \u003c/select\u003e\n    \u003c/div\u003e",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 10
+      },
+      "revId": "e64fd01ab700fe9a76df21974dc5d54f70350093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a9e1cb1_17c1a6ed",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/getstarted/popup.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-31T20:36:39Z",
+      "side": 1,
+      "message": "Maybe make this a promise instead?  (and maybe the same for getCurrentTabURL?)\nfunction getSavedBackgroundColor(url) {\n  return new Promise(function(resolve, reject) {\n    chrome.storage.sync.get(url, (items) \u003d\u003e {\n      if (chrome.runtime.lastError)\n        reject(chrome.runtime.lastError);\n      else\n        resolve(items[url]);\n    });\n  });\n}",
+      "revId": "e64fd01ab700fe9a76df21974dc5d54f70350093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecf94be4_9331fe8e",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/getstarted/popup.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-31T20:36:39Z",
+      "side": 1,
+      "message": "And then here, we do:\ngetCurrentTabUrl().then((url) \u003d\u003e {\n  return getSavedBackgroundColor(url);\n}).then((savedColor) \u003d\u003e {\n  if (savedColor) {\n    changeBackgroundColor(savedColor);\n    dropdown.value \u003d savedColor;\n  }\n}).catch(function(error) {\n  alert(\u0027Uh oh!  Something bad happened: \u0027 + error);\n});\n\nWDYT?  Is that too much newfangled fanciness for a tutorial?",
+      "revId": "e64fd01ab700fe9a76df21974dc5d54f70350093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
