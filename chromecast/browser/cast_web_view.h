@@ -98,6 +98,8 @@ class CastWebView : content::WebContentsObserver, content::WebContentsDelegate {
       override;
 #endif  // defined(OS_ANDROID)
 
+  void DelayedCloseContents();
+
   Delegate* const delegate_;
   CastWebContentsManager* const web_contents_manager_;
   content::BrowserContext* const browser_context_;

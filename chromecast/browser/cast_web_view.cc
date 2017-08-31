@@ -32,6 +32,10 @@
 namespace chromecast {
 
 namespace {
+// The time (in milliseconds) we guarantee a page to run its 'onunload' handler.
+// WebContents destruction is initiated after this time elapses (however, the
+// page may be granted additional time to shutdown while the next app starts).
+constexpr int kWebContentsPreShutdownDelayMs = 50;
 
 std::unique_ptr<content::WebContents> CreateWebContents(
     content::BrowserContext* browser_context,
@@ -93,12 +97,26 @@ void CastWebView::ClosePage(const base::TimeDelta& shutdown_delay) {
 
 void CastWebView::CloseContents(content::WebContents* source) {
   DCHECK_EQ(source, web_contents_.get());
+  // Wait for a short amount of time before initiating WebContents destruction.
+  // The page's 'onunload' handler is guaranteed this small window of time to
+  // run the handler before the page is (potentially) forcibly closed.
+  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      FROM_HERE,
+      base::Bind(&CastWebView::DelayedCloseContents,
+                 weak_factory_.GetWeakPtr()),
+      base::TimeDelta::FromMilliseconds(kWebContentsPreShutdownDelayMs));
+}
+
+void CastWebView::DelayedCloseContents() {
+  // Initiate WebContents deletion here so that the gfx surface will be delted
+  // as part of destroying RenderWidgetHostViewCast object. We want to delete
+  // the surface before we start the next app because the next app could be an
+  // external one whose Start() function would destroy the primary gfx plane.
   window_.reset();  // Window destructor requires live web_contents on Android.
-  // We need to delay the deletion of web_contents_ to give (and guarantee) the
-  // renderer enough time to finish 'onunload' handler (but we don't want to
-  // wait any longer than that to delay the starting of next app).
+  // We may allow the page additional time to finish handling teardown events.
   web_contents_manager_->DelayWebContentsDeletion(std::move(web_contents_),
                                                   shutdown_delay_);
+  // Notify that the next app can start.
   delegate_->OnPageStopped(net::OK);
 }
 
