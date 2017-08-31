@@ -37,34 +37,9 @@ CSSTokenizer::CSSTokenizer(const String& string, size_t offset)
   tokens_.ReserveInitialCapacity((string.length() - offset) / 3);
 }
 
-CSSTokenizer::CSSTokenizer(const String& string,
-                           CSSParserObserverWrapper& wrapper)
-    : input_(string) {
-  if (string.IsEmpty())
-    return;
-
-  // TODO(shend): Do not tokenize all in one go. We should be tokenizing on the
-  // fly.
-  unsigned offset = 0;
-  while (true) {
-    CSSParserToken token = NextToken();
-    if (token.GetType() == kEOFToken)
-      break;
-    if (token.GetType() == kCommentToken) {
-      wrapper.AddComment(offset, input_.Offset(), tokens_.size());
-    } else {
-      tokens_.push_back(token);
-      wrapper.AddToken(offset);
-    }
-    offset = input_.Offset();
-  }
-
-  wrapper.AddToken(offset);
-  wrapper.FinalizeConstruction(tokens_.begin());
-}
-
 CSSParserToken CSSTokenizer::TokenizeSingle() {
   while (true) {
+    prev_offset_ = input_.Offset();
     const CSSParserToken token = NextToken();
     if (token.GetType() == kCommentToken)
       continue;
@@ -72,6 +47,14 @@ CSSParserToken CSSTokenizer::TokenizeSingle() {
       tokens_.push_back(token);
     return token;
   }
+}
+
+CSSParserToken CSSTokenizer::TokenizeSingleWithComments() {
+  prev_offset_ = input_.Offset();
+  const CSSParserToken token = NextToken();
+  if (token.GetType() != kCommentToken && !token.IsEOF())
+    tokens_.push_back(token);
+  return token;
 }
 
 void CSSTokenizer::EnsureTokenizedToEOF() {
