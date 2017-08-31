@@ -314,6 +314,24 @@
       "revId": "8bdb1ea26c7b44d6d769cdc95039d4b51a9f582e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b02a4cc_902daa4f",
+        "filename": "services/video_capture/public/cpp/receiver_media_to_mojo_adapter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-08-31T06:30:23Z",
+      "side": 1,
+      "message": "Very nice. I like that solution.",
+      "parentUuid": "d9c5914a_4e15d405",
+      "revId": "8bdb1ea26c7b44d6d769cdc95039d4b51a9f582e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
