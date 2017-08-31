@@ -16,6 +16,40 @@
       "revId": "00828b0403728e1da3f6bd34d3b89f04be461a8f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ea91d41_748f9a11",
+        "filename": "ios/chrome/browser/ui/ntp/new_tab_page_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-08-31T00:03:22Z",
+      "side": 1,
+      "message": "I assume IDC_SHOW_OTHER_DEVICES will do this someday too.  Might be worth doing a little refactoring now  so tag above and below is only within the RECENT_TABS_PANEL bit.  WDYT?",
+      "revId": "00828b0403728e1da3f6bd34d3b89f04be461a8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5104248_d46b5952",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-08-31T00:03:22Z",
+      "side": 1,
+      "message": "same refactoring nit as before",
+      "revId": "00828b0403728e1da3f6bd34d3b89f04be461a8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
