@@ -140,6 +140,30 @@
       "revId": "3df5b704d4cb52430df6b250242e3b04eef8a6ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "60bad894_121c7b04",
+        "filename": "ui/base/test/ui_controls_internal_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-08-31T18:55:13Z",
+      "side": 1,
+      "message": "I believe in Chromium, we do not actively use :: if there is not conflict.",
+      "parentUuid": "bba50231_ee152410",
+      "range": {
+        "startLine": 178,
+        "startChar": 24,
+        "endLine": 178,
+        "endChar": 26
+      },
+      "revId": "3df5b704d4cb52430df6b250242e3b04eef8a6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
