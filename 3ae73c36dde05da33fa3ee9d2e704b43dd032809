@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab631cd4_1da9c417",
+        "filename": "chrome/browser/ui/webui/chromeos/power_ui.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-31T20:55:27Z",
+      "side": 1,
+      "message": "Maybe just const auto\u0026 in this file?",
+      "revId": "3ae73c36dde05da33fa3ee9d2e704b43dd032809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ca04db0_f9de454c",
+        "filename": "chrome/test/chromedriver/logging.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-31T20:55:27Z",
+      "side": 1,
+      "message": "Make one more pass and remove the \u003cdeque\u003e includes? e.g. git grep -l \"circular_deque\\.h\" chrome | xargs grep -l \"\u003cdeque\u003e\"",
+      "revId": "3ae73c36dde05da33fa3ee9d2e704b43dd032809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
