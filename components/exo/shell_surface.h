@@ -203,9 +203,9 @@ class ShellSurface : public SurfaceTreeHost,
   // Enable/disable window frame.
   void SetFrame(bool enabled);
 
-  // Set scale factor for surface. The scale factor will be applied to surface
-  // and all descendants.
-  void SetScale(double scale);
+  // [Deprecated] Set scale factor for surface. The scale factor will be applied
+  // to surface and all descendants.
+  void SetScale_DEPRECATED(double scale);
 
   // Set top inset for surface.
   void SetTopInset(int height);
@@ -382,7 +382,6 @@ class ShellSurface : public SurfaceTreeHost,
   gfx::Rect geometry_;
   gfx::Rect pending_geometry_;
   double scale_ = 1.0;
-  double pending_scale_ = 1.0;
   base::Closure close_callback_;
   base::Closure surface_destroyed_callback_;
   StateChangedCallback state_changed_callback_;
