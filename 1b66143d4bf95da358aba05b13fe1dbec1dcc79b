@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8604601d_bb17c290",
+        "filename": "ios/chrome/browser/ui/ntp/recent_tabs/recent_tabs_table_coordinator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-08-31T12:40:57Z",
+      "side": 1,
+      "message": "sent",
+      "range": {
+        "startLine": 32,
+        "startChar": 35,
+        "endLine": 32,
+        "endChar": 39
+      },
+      "revId": "1b66143d4bf95da358aba05b13fe1dbec1dcc79b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
