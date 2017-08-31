@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "b502ab01_8651eaf9",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPISubclass.h.tmpl",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-31T00:24:55Z",
+      "side": 1,
+      "message": "the if/endif indentation seems to be off here",
+      "revId": "d2b42cdfbedc46c1750afcae957c45d40ec41f38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6bef7d92_c3947c3b",
         "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/application_macros.tmpl",
         "patchSetId": 3

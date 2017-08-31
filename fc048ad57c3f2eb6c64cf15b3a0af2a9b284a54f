@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "307cfacb_c4edada9",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/make_css_property_api_headers.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-31T00:24:55Z",
+      "side": 0,
+      "message": "why is this assertion deleted?",
+      "revId": "fc048ad57c3f2eb6c64cf15b3a0af2a9b284a54f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

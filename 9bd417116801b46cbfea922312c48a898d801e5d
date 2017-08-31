@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bcbc29e0_c2257fbb",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/make_css_property_api_headers.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-31T00:24:55Z",
+      "side": 1,
+      "message": "seems unnecessary to unpack all these now that the whole property is being passed in",
+      "revId": "9bd417116801b46cbfea922312c48a898d801e5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
