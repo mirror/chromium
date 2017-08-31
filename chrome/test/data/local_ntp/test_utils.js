@@ -50,6 +50,28 @@ function assert(condition, opt_message) {
   }
 }
 
+/**
+ * Aborts a test if |got| !== true.
+ * @param {boolean} got The boolean that must be true.
+ * @param {string=} opt_message A message to log if the condition is not met.
+ */
+function assertTrue(got, opt_message) {
+  if (got !== true) {
+    throw new Error(opt_message || 'Assertion failed');
+  }
+}
+
+/**
+ * Aborts a test if |got| !== false.
+ * @param {boolean} got The boolean that must be false.
+ * @param {string=} opt_message A message to log if the condition is not met.
+ */
+function assertFalse(got, opt_message) {
+  if (got !== false) {
+    throw new Error(opt_message || 'Assertion failed');
+  }
+}
+
 
 /**
  * Aborts a test if |expected| !== |got|.
