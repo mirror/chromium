@@ -34,6 +34,24 @@
       "revId": "5231c5dbb7af44edf75cfa1ebe31926a4f31be27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92d9b5f8_468e4f21",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_importer.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-08-31T14:11:25Z",
+      "side": 1,
+      "message": "Sounds good. At least if it happens we will easily find out from this different log message.",
+      "parentUuid": "0e44a800_a2ed1aa7",
+      "revId": "5231c5dbb7af44edf75cfa1ebe31926a4f31be27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
