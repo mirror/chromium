@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a0231135_54eda5fb",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-08-31T22:28:46Z",
+      "side": 1,
+      "message": "I think even if the needs_commit_surface_hierarchy_ is false, but child surfaces of it may still need commit. So we still need to call this function. right?",
+      "parentUuid": "2e27a1d0_902cb4a2",
+      "revId": "10bbe50313ca212ca80c52b80a5ec1e64386fade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e24f340_30ac167f",
         "filename": "components/exo/surface.cc",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-31T20:23:27Z",
       "side": 1,
       "message": "nit: DCHECK(needs_commit_surface_hierarchy_) above this after the change I suggested above",
+      "revId": "10bbe50313ca212ca80c52b80a5ec1e64386fade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8850dd5e_33b763e3",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-08-31T22:28:46Z",
+      "side": 1,
+      "message": "See comment above.",
+      "parentUuid": "5e24f340_30ac167f",
       "revId": "10bbe50313ca212ca80c52b80a5ec1e64386fade",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "76c8f77a_c8e7cef2",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-08-31T22:28:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aaa1332b_fec8ca75",
+      "range": {
+        "startLine": 436,
+        "startChar": 8,
+        "endLine": 436,
+        "endChar": 9
+      },
+      "revId": "10bbe50313ca212ca80c52b80a5ec1e64386fade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34498b8a_27ef0507",
         "filename": "components/exo/surface.h",
         "patchSetId": 7
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "3ec57d74_8711cdf2",
+        "filename": "components/exo/surface.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-08-31T22:28:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34498b8a_27ef0507",
+      "range": {
+        "startLine": 150,
+        "startChar": 7,
+        "endLine": 150,
+        "endChar": 27
+      },
+      "revId": "10bbe50313ca212ca80c52b80a5ec1e64386fade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31aa0853_ac094fe7",
         "filename": "components/exo/surface.h",
         "patchSetId": 7
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "a605b7a0_1211b80d",
+        "filename": "components/exo/surface.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-08-31T22:28:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31aa0853_ac094fe7",
+      "revId": "10bbe50313ca212ca80c52b80a5ec1e64386fade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c6977ec_06b3e344",
         "filename": "components/exo/surface_tree_host.cc",
         "patchSetId": 7
@@ -113,6 +215,24 @@
       "revId": "10bbe50313ca212ca80c52b80a5ec1e64386fade",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "332bdbcb_2fe220b0",
+        "filename": "components/exo/surface_tree_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-08-31T22:28:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c6977ec_06b3e344",
+      "revId": "10bbe50313ca212ca80c52b80a5ec1e64386fade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "88ebf36d_65f52ac3",
+        "filename": "components/exo/surface_tree_host.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-08-31T22:28:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d354959b_2a0d2de0",
+      "range": {
+        "startLine": 107,
+        "startChar": 29,
+        "endLine": 107,
+        "endChar": 43
+      },
+      "revId": "10bbe50313ca212ca80c52b80a5ec1e64386fade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8715ba9_ec370bfb",
         "filename": "components/exo/surface_unittest.cc",
         "patchSetId": 7
@@ -153,6 +297,24 @@
       "revId": "10bbe50313ca212ca80c52b80a5ec1e64386fade",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "615db278_150fbc24",
+        "filename": "components/exo/surface_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-08-31T22:28:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8715ba9_ec370bfb",
+      "revId": "10bbe50313ca212ca80c52b80a5ec1e64386fade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
