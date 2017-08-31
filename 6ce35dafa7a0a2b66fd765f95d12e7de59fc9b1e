@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "82b81087_bf1b60f3",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-08-31T13:53:00Z",
+      "side": 1,
+      "message": "I think you mean destructor, but yes, I\u0027ve converted it to what I think you are suggesting.",
+      "parentUuid": "3c3071ec_36d306fc",
+      "range": {
+        "startLine": 119,
+        "startChar": 2,
+        "endLine": 123,
+        "endChar": 78
+      },
+      "revId": "6ce35dafa7a0a2b66fd765f95d12e7de59fc9b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3f22b93f_4dc8ab95",
         "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "6ce35dafa7a0a2b66fd765f95d12e7de59fc9b1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b302d9a3_cc98db00",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-08-31T13:53:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f22b93f_4dc8ab95",
+      "range": {
+        "startLine": 189,
+        "startChar": 47,
+        "endLine": 189,
+        "endChar": 65
+      },
+      "revId": "6ce35dafa7a0a2b66fd765f95d12e7de59fc9b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "fe5dfd6d_516f4079",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-08-31T13:53:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43e49846_e4fe98e4",
+      "range": {
+        "startLine": 196,
+        "startChar": 2,
+        "endLine": 202,
+        "endChar": 3
+      },
+      "revId": "6ce35dafa7a0a2b66fd765f95d12e7de59fc9b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2216fb96_4145276e",
         "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
         "patchSetId": 9
@@ -91,6 +163,30 @@
       "revId": "6ce35dafa7a0a2b66fd765f95d12e7de59fc9b1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0ca885a_44cbee77",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-08-31T13:53:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2216fb96_4145276e",
+      "range": {
+        "startLine": 206,
+        "startChar": 2,
+        "endLine": 208,
+        "endChar": 4
+      },
+      "revId": "6ce35dafa7a0a2b66fd765f95d12e7de59fc9b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "0ed02ad1_c6215fe6",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-08-31T13:53:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c868c4a3_7e0abf78",
+      "range": {
+        "startLine": 222,
+        "startChar": 0,
+        "endLine": 224,
+        "endChar": 14
+      },
+      "revId": "6ce35dafa7a0a2b66fd765f95d12e7de59fc9b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8497c2b_d3fdb462",
         "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
         "patchSetId": 9
@@ -128,6 +248,30 @@
       "writtenOn": "2017-08-31T00:53:01Z",
       "side": 1,
       "message": "Are the rest of the calls below happy with the UI thread (STA Initialized IIRC)? My impression is that the WinRT family of APIs needs to be RoInitialize\u0027d, which requires an MTA a la RO_INIT_MULTITHREADED.\n\nThis means you\u0027ll need to spin up a separate thread just for this or yell at the task scheduler folks (e.g. me) to add MTA/WinRT+MTA task runner folks to do that.",
+      "range": {
+        "startLine": 261,
+        "startChar": 1,
+        "endLine": 261,
+        "endChar": 50
+      },
+      "revId": "6ce35dafa7a0a2b66fd765f95d12e7de59fc9b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9854266e_42fc0875",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-08-31T13:53:00Z",
+      "side": 1,
+      "message": "I don\u0027t remember seeing a requirement for multithreaded apartments for WinRT, but yes, this runs in the context of the main STA (CoGetApartmentType returns APTTYPE_MAINSTA). I\u0027ve not seen a problem so far -- all the calls below succeed.\n\nIf we need to change this, I would like to punt on it for now, for two reasons:\n1) Once we start supporting launching Chrome in response to clicking on a notification in the Action Center, the startup code will have to figure out the proper WinRT initialization and we might be able to leverage that work.\n2) We\u0027re behind a flag and not near launch and I\u0027d really like to get this CL in because it is blocking myself and others from fleshing out native notifications further.\n\nOr, if you do decide to implement a task runner, I\u0027d be happy to help out getting it integrated here (separate CL).",
+      "parentUuid": "b8497c2b_d3fdb462",
       "range": {
         "startLine": 261,
         "startChar": 1,
@@ -160,6 +304,30 @@
       "revId": "6ce35dafa7a0a2b66fd765f95d12e7de59fc9b1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "364719cd_1b8eb323",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-08-31T13:53:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6ce3f80_f82b25cf",
+      "range": {
+        "startLine": 278,
+        "startChar": 2,
+        "endLine": 280,
+        "endChar": 6
+      },
+      "revId": "6ce35dafa7a0a2b66fd765f95d12e7de59fc9b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
