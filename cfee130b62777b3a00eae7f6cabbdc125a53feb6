@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "400b1421_05fd3e52",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/open_with_menu.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-31T03:35:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ebd9e6e_022a4c66",
+      "revId": "cfee130b62777b3a00eae7f6cabbdc125a53feb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "008f3205_8dc98e9a",
         "filename": "chrome/browser/renderer_context_menu/render_view_context_menu.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-30T19:59:45Z",
       "side": 1,
       "message": "nit: Then we should probably do the same in the header too to avoid adding unused member variable on non-CrOS platforms:\n\n #if defined(OS_CHROMEOS)\n   // An observer that handles \"Open with \u003capp\u003e\" items.                                                                                                                                                                                                                                    \n   std::unique_ptr\u003cRenderViewContextMenuObserver\u003e open_with_menu_observer_;\n #endif",
+      "revId": "cfee130b62777b3a00eae7f6cabbdc125a53feb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37f98174_61ae1b92",
+        "filename": "chrome/browser/renderer_context_menu/render_view_context_menu.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1083,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-31T03:35:06Z",
+      "side": 1,
+      "message": "I\u0027m kind of ambivalent about this, but done.",
+      "parentUuid": "008f3205_8dc98e9a",
       "revId": "cfee130b62777b3a00eae7f6cabbdc125a53feb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
