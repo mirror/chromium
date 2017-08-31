@@ -70,6 +70,24 @@
       "revId": "02bf8eb72be3f81d852b257008f9682b03c872c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c15d9ea1_234398ba",
+        "filename": "ios/chrome/browser/ssl/ios_ssl_error_handler.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-31T08:26:31Z",
+      "side": 1,
+      "message": "I discussed with Sylvain who is doing the tab conversion.\nTabHelper should not be considered as required and existence must be tested before usage.\nIt also means that the existence of CaptivePortalDetectorTabHelper is not equivalent to the fact that the webState is attached to a tab (even if it is the case in current implementation).\n\nIn this CL, I just handle the case of the captive portal, and I filed a bug (760873) for a fix  of the interstitial issue.\nCurrent behavior is that on SSL error, navigation is interrupted by the interstitial, and as user never interacts, the webState is frozen. For ReadingList, the timeout is triggered and webState is destroyed correctly.",
+      "parentUuid": "59d37f2e_2bfd7766",
+      "revId": "02bf8eb72be3f81d852b257008f9682b03c872c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
