@@ -245,7 +245,7 @@ template("linux_package") {
   deb_target_name = "${target_name}_deb"
   action(deb_target_name) {
     visibility = [ ":*" ]
-    script = "flock_make_package.py"
+    script = "make_package.py"
 
     if (current_cpu == "x86") {
       deb_arch = "i386"
@@ -263,7 +263,6 @@ template("linux_package") {
     ]
 
     args = [
-      rebase_path("$root_out_dir/linux_package.lock", root_build_dir),
       rebase_path("$root_out_dir/installer/debian/build.sh", root_build_dir),
       "-o",
       rebase_path(root_out_dir, root_build_dir),
@@ -287,7 +286,7 @@ template("linux_package") {
     rpm_target_name = "${target_name}_rpm"
     action(rpm_target_name) {
       visibility = [ ":*" ]
-      script = "flock_make_package.py"
+      script = "make_package.py"
 
       if (current_cpu == "x86") {
         rpm_arch = "i386"
@@ -305,7 +304,6 @@ template("linux_package") {
       ]
 
       args = [
-        rebase_path("$root_out_dir/linux_package.lock", root_build_dir),
         rebase_path("$root_out_dir/installer/rpm/build.sh", root_build_dir),
         "-o",
         rebase_path(root_out_dir, root_build_dir),
