@@ -9,13 +9,17 @@
 
 #include <memory>
 #include <string>
+#include <vector>
 
 #include "base/macros.h"
 #include "components/metrics/metrics_provider.h"
+#include "components/metrics/proto/extension_install.pb.h"
 
 class Profile;
 
 namespace extensions {
+class Extension;
+class ExtensionPrefs;
 class ExtensionSet;
 }
 
@@ -56,6 +60,8 @@ class ExtensionsMetricsProvider : public metrics::MetricsProvider {
                            uint32_t client_key);
 
  private:
+  friend class ExtensionMetricsProviderInstallsTest;
+
   // Returns the profile for which extensions will be gathered.  Once a
   // suitable profile has been found, future calls will continue to return the
   // same value so that reported extensions are consistent.
@@ -67,6 +73,20 @@ class ExtensionsMetricsProvider : public metrics::MetricsProvider {
   // Writes the hashed list of installed extensions into the specified
   // SystemProfileProto object.
   void ProvideOccupiedBucketMetric(metrics::SystemProfileProto* system_profile);
+
+  // Writes information about the installed extensions for all profiles into
+  // the proto.
+  void ProvideExtensionInstallsMetric(
+      metrics::SystemProfileProto* system_profile);
+
+  // Creates the install proto for a given |extension|.
+  static metrics::ExtensionInstallProto ConstructInstallProto(
+      const extensions::Extension& extension,
+      extensions::ExtensionPrefs* prefs);
+
+  // Returns all the extension installs for a given |profile|.
+  static std::vector<metrics::ExtensionInstallProto> GetInstallsForProfile(
+      Profile* profile);
 
   // The MetricsStateManager from which the client ID is obtained.
   metrics::MetricsStateManager* metrics_state_manager_;
