@@ -16,6 +16,24 @@
       "revId": "e47f68dd2054d6b48175098a0635470d5ca0465d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a35d91c_7ba4f3df",
+        "filename": "tools/vim/chromium.ycm_extra_conf.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-08-31T18:43:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed10b1bf_e59d7dd8",
+      "revId": "e47f68dd2054d6b48175098a0635470d5ca0465d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
