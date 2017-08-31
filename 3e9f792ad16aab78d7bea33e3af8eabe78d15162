@@ -22,6 +22,30 @@
       "revId": "3e9f792ad16aab78d7bea33e3af8eabe78d15162",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcbc61a4_b6242560",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-31T17:47:55Z",
+      "side": 1,
+      "message": "Because vr_usage_monitor.h has a comment that says \"This class is not thread-safe and must only be used from the main thread.\" but does nothing to actually back up that claim.",
+      "parentUuid": "408e4a28_0506d413",
+      "range": {
+        "startLine": 173,
+        "startChar": 2,
+        "endLine": 173,
+        "endChar": 50
+      },
+      "revId": "3e9f792ad16aab78d7bea33e3af8eabe78d15162",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
