@@ -22,6 +22,29 @@
       "revId": "e6e27577f8465d3299d651bad4823e0bff652d4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8ec1a24_601dbbf3",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 10421,
+      "author": {
+        "id": 1111798
+      },
+      "writtenOn": "2017-08-31T12:35:03Z",
+      "side": 1,
+      "message": "Suggest: \"in\" --\u003e \"into Chrome\"\n\nThis makes it clearer that sign-in modifies the behavior of Chrome. (Otherwise one might think it is an authentication for security purposes.)",
+      "range": {
+        "startLine": 10421,
+        "startChar": 52,
+        "endLine": 10421,
+        "endChar": 54
+      },
+      "revId": "e6e27577f8465d3299d651bad4823e0bff652d4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
