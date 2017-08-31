@@ -16,6 +16,24 @@
       "revId": "c804edb6d2673e55af30ef89d93a8ebde733efed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b9c6c4a_91480553",
+        "filename": "chromeos/components/tether/message_transfer_operation.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-31T21:55:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9f51fe4_1fc96660",
+      "revId": "c804edb6d2673e55af30ef89d93a8ebde733efed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
