@@ -90,7 +90,8 @@ class CORE_EXPORT TreeScope : public GarbageCollectedMixin {
 
   DOMSelection* GetSelection() const;
 
-  Element* Retarget(const Element& target) const;
+  Element* AdjustedFocusedElementInternal(const Element& target) const;
+  Element* Retarget(Element* target) const;
 
   // Find first anchor with the given name.
   // First searches for an element with the given ID, but if that fails, then
