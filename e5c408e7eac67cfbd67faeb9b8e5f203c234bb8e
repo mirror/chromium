@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "4fd1072e_9c8c27b0",
+        "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-31T18:47:20Z",
+      "side": 1,
+      "message": "Can you order these alphabetically by name?",
+      "revId": "e5c408e7eac67cfbd67faeb9b8e5f203c234bb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "952a38a0_57b6d7f3",
         "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
         "patchSetId": 3
@@ -13,6 +30,30 @@
       "writtenOn": "2017-08-31T03:39:45Z",
       "side": 1,
       "message": "I think we don\u0027t want to include the Untrusted variants (here and avast!). MITMs use these untrusted certs to pass on real authority-invalid errors from the site. For example if you visit a site that is serving a self-signed certificate, Bitdefender will fail to validate the site\u0027s certificate and will pass that error on to the client by issuing a certificate from this untrusted CA. So in this case, the error isn\u0027t caused by a misconfigured MITM, so we shouldn\u0027t show the MITM interstitial.",
+      "range": {
+        "startLine": 161,
+        "startChar": 29,
+        "endLine": 161,
+        "endChar": 38
+      },
+      "revId": "e5c408e7eac67cfbd67faeb9b8e5f203c234bb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c48bdd7_e40731af",
+        "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-31T18:47:20Z",
+      "side": 1,
+      "message": "Good catch. Let\u0027s use \"Bitdefender Personal CA.Net-Defender\" instead. That seems to be the pattern we want.",
+      "parentUuid": "952a38a0_57b6d7f3",
       "range": {
         "startLine": 161,
         "startChar": 29,
@@ -48,6 +89,97 @@
     },
     {
       "key": {
+        "uuid": "fb9c1068_adc1d21d",
+        "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-31T18:47:20Z",
+      "side": 1,
+      "message": "Let\u0027s name this \"Avast Antivirus\".",
+      "revId": "e5c408e7eac67cfbd67faeb9b8e5f203c234bb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b9ae803_5736fe35",
+        "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
+        "patchSetId": 3
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-31T18:47:20Z",
+      "side": 1,
+      "message": "Remove \"Untrusted\" as it\u0027s just avast passing SSL errors along, as Emily mentioned above.",
+      "revId": "e5c408e7eac67cfbd67faeb9b8e5f203c234bb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4e96f7e_e8676569",
+        "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
+        "patchSetId": 3
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-31T18:47:20Z",
+      "side": 1,
+      "message": "\"Cyberoam Firewall\"",
+      "revId": "e5c408e7eac67cfbd67faeb9b8e5f203c234bb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7fbb4c7_8938f212",
+        "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
+        "patchSetId": 3
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-31T18:47:20Z",
+      "side": 1,
+      "message": "nit: We can remove the organization regex and use the same common name regex for both.",
+      "revId": "e5c408e7eac67cfbd67faeb9b8e5f203c234bb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cf40f83_75753b93",
+        "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
+        "patchSetId": 3
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-31T18:47:20Z",
+      "side": 1,
+      "message": "nit: This pattern might be redundant since we already look for the root.",
+      "range": {
+        "startLine": 207,
+        "startChar": 15,
+        "endLine": 207,
+        "endChar": 0
+      },
+      "revId": "e5c408e7eac67cfbd67faeb9b8e5f203c234bb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "16aec598_e87f3247",
         "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
         "patchSetId": 3
@@ -59,6 +191,24 @@
       "writtenOn": "2017-08-31T17:54:34Z",
       "side": 1,
       "message": "\"TREND\" is a little generic. meacer@, is it easy to check for false positives?",
+      "revId": "e5c408e7eac67cfbd67faeb9b8e5f203c234bb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dfea37d_6f6d612c",
+        "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
+        "patchSetId": 3
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-31T18:47:20Z",
+      "side": 1,
+      "message": "I think IWSS.TREND is sufficient, we don\u0027t need an org regex for this one.",
+      "parentUuid": "16aec598_e87f3247",
       "revId": "e5c408e7eac67cfbd67faeb9b8e5f203c234bb8e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -82,6 +232,40 @@
         "endLine": 271,
         "endChar": 21
       },
+      "revId": "e5c408e7eac67cfbd67faeb9b8e5f203c234bb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77602a99_2df0f22a",
+        "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
+        "patchSetId": 3
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-31T18:47:20Z",
+      "side": 1,
+      "message": "nit: Let\u0027s just name this \"ContentKeeper\"",
+      "revId": "e5c408e7eac67cfbd67faeb9b8e5f203c234bb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd9cdab2_fe1637c1",
+        "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
+        "patchSetId": 3
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-31T18:47:20Z",
+      "side": 1,
+      "message": "\"SmoothWall Firewall\"",
       "revId": "e5c408e7eac67cfbd67faeb9b8e5f203c234bb8e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
