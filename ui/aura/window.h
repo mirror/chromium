@@ -127,6 +127,9 @@ class AURA_EXPORT Window : public ui::LayerDelegate,
   // See description in Layer::SetFillsBoundsCompletely.
   void SetFillsBoundsCompletely(bool fills_bounds);
 
+  // Updates the occlusion state of the window.
+  void SetOccluded(bool occluded);
+
   WindowDelegate* delegate() { return delegate_; }
   const WindowDelegate* delegate() const { return delegate_; }
 
@@ -484,6 +487,8 @@ class AURA_EXPORT Window : public ui::LayerDelegate,
   // from the visibility of the underlying layer, which may remain visible after
   // the window is hidden (e.g. to animate its disappearance).
   bool visible_;
+
+  bool occluded_;
 
   int id_;
 
