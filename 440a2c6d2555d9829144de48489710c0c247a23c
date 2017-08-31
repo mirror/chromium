@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "21117c2d_65488620",
+        "filename": "chrome/browser/plugins/plugin_info_message_filter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-08-31T01:39:56Z",
+      "side": 1,
+      "message": "Related to this, one subtlety to be aware of with using web_contents-\u003eGetMainFrame()-\u003eGetDocumentId() is that it can only be used after the document of interest is committed. If one wants to log UKM metrics for a pending navigation before commit, the navigation id approach should be used instead.",
+      "parentUuid": "5e374057_6dcc6d3a",
+      "revId": "440a2c6d2555d9829144de48489710c0c247a23c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "43951ff5_85e57baa",
         "filename": "content/browser/frame_host/navigator_impl.cc",
         "patchSetId": 8
