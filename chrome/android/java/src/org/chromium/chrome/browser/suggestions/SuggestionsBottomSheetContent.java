@@ -310,6 +310,9 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
                     public void onResult(List<SnippetArticle> contextualSuggestions) {
                         mSuggestionsCarousel.newContextualSuggestionsAvailable(
                                 url, contextualSuggestions);
+                        String text = "Fetched " + contextualSuggestions.size()
+                                + " contextual suggestions.";
+                        Toast.makeText(mRecyclerView.getContext(), text, Toast.LENGTH_SHORT).show();
                     }
                 });
     }
