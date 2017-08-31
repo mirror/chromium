@@ -468,13 +468,13 @@ void MTPDeviceDelegateImplMac::NotifyReadDir() {
       storage::DirectoryEntry entry;
       entry.name = relative_path.value();
       entry.is_directory = info.is_directory;
-      entry_list.push_back(entry);
+      entry_list.push_back(std::move(entry));
     }
 
     if (found_path) {
-      content::BrowserThread::PostTask(content::BrowserThread::IO,
-          FROM_HERE,
-          base::Bind(iter->success_callback, entry_list, false));
+      content::BrowserThread::PostTask(
+          content::BrowserThread::IO, FROM_HERE,
+          base::BindOnce(iter->success_callback, std::move(entry_list), false));
     } else {
       content::BrowserThread::PostTask(content::BrowserThread::IO,
           FROM_HERE,

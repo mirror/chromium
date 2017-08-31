@@ -1595,17 +1595,17 @@ void MTPDeviceDelegateImplLinux::OnDidReadDirectory(
     storage::DirectoryEntry entry;
     entry.name = mtp_entry.name;
     entry.is_directory = mtp_entry.file_info.is_directory;
-    file_list.push_back(entry);
+    file_list.push_back(std::move(entry));
 
     // Refresh the in memory tree.
-    dir_node->EnsureChildExists(entry.name, mtp_entry.file_id);
-    child_nodes_seen_.insert(entry.name);
+    dir_node->EnsureChildExists(mtp_entry.name, mtp_entry.file_id);
+    child_nodes_seen_.insert(mtp_entry.name);
 
     // Add to |file_info_cache_|.
-    file_info_cache_[dir_path.Append(entry.name)] = mtp_entry;
+    file_info_cache_[dir_path.Append(mtp_entry.name)] = mtp_entry;
   }
 
-  success_callback.Run(file_list, has_more);
+  success_callback.Run(std::move(file_list), has_more);
   if (has_more)
     return;  // Wait to be called again.
 

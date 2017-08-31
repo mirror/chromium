@@ -242,7 +242,7 @@ class DeviceMediaAsyncFileUtil::MediaPathFilterWrapper
   // Append the ones that look like media files to |results|.
   // Should run on a media task runner.
   AsyncFileUtil::EntryList FilterMediaEntries(
-      const AsyncFileUtil::EntryList& file_list);
+      AsyncFileUtil::EntryList file_list);
 
   // Check if |path| looks like a media file.
   bool CheckFilePath(const base::FilePath& path);
@@ -266,12 +266,11 @@ DeviceMediaAsyncFileUtil::MediaPathFilterWrapper::~MediaPathFilterWrapper() {
 
 AsyncFileUtil::EntryList
 DeviceMediaAsyncFileUtil::MediaPathFilterWrapper::FilterMediaEntries(
-    const AsyncFileUtil::EntryList& file_list) {
+    AsyncFileUtil::EntryList file_list) {
   AsyncFileUtil::EntryList results;
-  for (size_t i = 0; i < file_list.size(); ++i) {
-    const storage::DirectoryEntry& entry = file_list[i];
+  for (auto& entry : file_list) {
     if (entry.is_directory || CheckFilePath(base::FilePath(entry.name))) {
-      results.push_back(entry);
+      results.push_back(std::move(entry));
     }
   }
   return results;
