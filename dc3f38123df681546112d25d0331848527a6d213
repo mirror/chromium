@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f10263f7_1ed8df2e",
+        "filename": "components/safe_browsing/browser/threat_details.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-08-31T00:48:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "464be8e3_eb5fac1b",
+      "revId": "dc3f38123df681546112d25d0331848527a6d213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "266cf271_0c289319",
         "filename": "components/safe_browsing/browser/threat_details.cc",
         "patchSetId": 14
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "26a3815f_bc9fa923",
+        "filename": "components/safe_browsing/browser/threat_details.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-08-31T00:48:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "266cf271_0c289319",
+      "range": {
+        "startLine": 745,
+        "startChar": 0,
+        "endLine": 745,
+        "endChar": 34
+      },
+      "revId": "dc3f38123df681546112d25d0331848527a6d213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38dcef9e_3988318a",
         "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
         "patchSetId": 14
@@ -56,6 +98,24 @@
       "revId": "dc3f38123df681546112d25d0331848527a6d213",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbdbc3c9_8c886162",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-08-31T00:48:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38dcef9e_3988318a",
+      "revId": "dc3f38123df681546112d25d0331848527a6d213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "8d912457_5944c755",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-08-31T00:48:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07d53514_6cbf68ab",
+      "revId": "dc3f38123df681546112d25d0331848527a6d213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a65af484_4dc5acb9",
         "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
         "patchSetId": 14
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "10f60a0b_9a6ddae8",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-08-31T00:48:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a65af484_4dc5acb9",
+      "revId": "dc3f38123df681546112d25d0331848527a6d213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1209e77_408be32a",
         "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
         "patchSetId": 14
@@ -104,6 +200,24 @@
       "writtenOn": "2017-08-30T20:54:01Z",
       "side": 1,
       "message": "er, I thought it is not recommended to use any static member function. Did I miss anything here?",
+      "revId": "dc3f38123df681546112d25d0331848527a6d213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02fae06a_9ccd1364",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-08-31T00:48:42Z",
+      "side": 1,
+      "message": "Apparently, it\u0027s ok for ints, pointers etc. but not objects.",
+      "parentUuid": "a1209e77_408be32a",
       "revId": "dc3f38123df681546112d25d0331848527a6d213",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "516b70de_6ce5b29c",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-08-31T00:48:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfc16ff0_1c872a73",
+      "revId": "dc3f38123df681546112d25d0331848527a6d213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66740af1_b7005bd7",
         "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
         "patchSetId": 14
@@ -144,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "b2c0cc42_0cb6987a",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-08-31T00:48:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66740af1_b7005bd7",
+      "revId": "dc3f38123df681546112d25d0331848527a6d213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ce63717_5798ff2a",
         "filename": "components/safe_browsing/web_ui/safe_browsing_ui.h",
         "patchSetId": 14
@@ -158,6 +308,24 @@
       "revId": "dc3f38123df681546112d25d0331848527a6d213",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "262fc959_9790a110",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-08-31T00:48:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ce63717_5798ff2a",
+      "revId": "dc3f38123df681546112d25d0331848527a6d213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
