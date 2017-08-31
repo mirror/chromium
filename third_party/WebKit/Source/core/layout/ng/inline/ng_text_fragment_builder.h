@@ -29,6 +29,8 @@ class CORE_EXPORT NGTextFragmentBuilder final : public NGBaseFragmentBuilder {
 
   NGTextFragmentBuilder& SetShapeResult(RefPtr<const ShapeResult>);
 
+  NGTextFragmentBuilder& SetExpansion(int expansion);
+
   NGTextFragmentBuilder& SetEndEffect(NGTextEndEffect);
 
   // Creates the fragment. Can only be called once.
@@ -42,6 +44,9 @@ class CORE_EXPORT NGTextFragmentBuilder final : public NGBaseFragmentBuilder {
   NGLogicalSize size_;
 
   RefPtr<const ShapeResult> shape_result_;
+
+  // Only for CopyFragmentDataToLayoutBox(), remove when switch to NG paint.
+  int expansion_ = 0;
 
   NGTextEndEffect end_effect_ = NGTextEndEffect::kNone;
 };

@@ -42,6 +42,7 @@ class CORE_EXPORT NGPhysicalTextFragment final : public NGPhysicalFragment {
                          unsigned start_offset,
                          unsigned end_offset,
                          NGPhysicalSize size,
+                         int expansion,
                          NGLineOrientation line_orientation,
                          NGTextEndEffect end_effect,
                          RefPtr<const ShapeResult> shape_result)
@@ -51,6 +52,7 @@ class CORE_EXPORT NGPhysicalTextFragment final : public NGPhysicalFragment {
         start_offset_(start_offset),
         end_offset_(end_offset),
         shape_result_(shape_result),
+        expansion_(expansion),
         line_orientation_(static_cast<unsigned>(line_orientation)),
         end_effect_(static_cast<unsigned>(end_effect)) {}
 
@@ -68,6 +70,10 @@ class CORE_EXPORT NGPhysicalTextFragment final : public NGPhysicalFragment {
   unsigned StartOffset() const { return start_offset_; }
   unsigned EndOffset() const { return end_offset_; }
 
+  // The amount of expansion for justification.
+  // Only for CopyFragmentDataToLayoutBox(), remove when switch to NG paint.
+  int Expansion() const { return expansion_; }
+
   NGLineOrientation LineOrientation() const {
     return static_cast<NGLineOrientation>(line_orientation_);
   }
@@ -82,7 +88,7 @@ class CORE_EXPORT NGPhysicalTextFragment final : public NGPhysicalFragment {
   RefPtr<NGPhysicalFragment> CloneWithoutOffset() const {
     return AdoptRef(new NGPhysicalTextFragment(
         layout_object_, Style(), text_, item_index_, start_offset_, end_offset_,
-        size_, LineOrientation(), EndEffect(), shape_result_));
+        size_, expansion_, LineOrientation(), EndEffect(), shape_result_));
   }
 
  private:
@@ -98,6 +104,8 @@ class CORE_EXPORT NGPhysicalTextFragment final : public NGPhysicalFragment {
   unsigned end_offset_;
 
   RefPtr<const ShapeResult> shape_result_;
+
+  int expansion_;
 
   unsigned line_orientation_ : 2;  // NGLineOrientation
   unsigned end_effect_ : 1;        // NGTextEndEffect
