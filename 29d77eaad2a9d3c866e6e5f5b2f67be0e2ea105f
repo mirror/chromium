@@ -16,6 +16,24 @@
       "revId": "29d77eaad2a9d3c866e6e5f5b2f67be0e2ea105f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3eac435c_196415ff",
+        "filename": "chrome/installer/linux/debian/build.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-08-31T22:54:31Z",
+      "side": 1,
+      "message": "We already do in cleanup(), which has a \"trap cleanup 0\" a few lines above this",
+      "parentUuid": "18e50360_17504d2e",
+      "revId": "29d77eaad2a9d3c866e6e5f5b2f67be0e2ea105f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
