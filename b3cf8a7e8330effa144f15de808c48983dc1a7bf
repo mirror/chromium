@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8019f61_4607f5f5",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 980,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-31T16:22:14Z",
+      "side": 1,
+      "message": "I just learned that you can use /* clang-format off */ and /* clang-format on */ to surround lines of code that you don\u0027t want formatted. Please restore the formatting here if you don\u0027t mind, or lmk if you need me to do it.",
+      "revId": "b3cf8a7e8330effa144f15de808c48983dc1a7bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
