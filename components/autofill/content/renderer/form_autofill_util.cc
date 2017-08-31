@@ -888,6 +888,7 @@ void FillFormField(const FormFieldData& data,
     }
     field->SetAutofillValue(blink::WebString::FromUTF16(value));
   }
+
   // Setting the form might trigger JavaScript, which is capable of
   // destroying the frame.
   if (!field->GetDocument().GetFrame())
@@ -1731,12 +1732,6 @@ bool ClearPreviewedFormWithElement(const WebFormControlElement& element,
     if (!control_element.IsAutofilled())
       continue;
 
-    if ((IsTextInput(input_element) || IsMonthInput(input_element) ||
-         IsTextAreaElement(control_element) ||
-         IsSelectElement(control_element)) &&
-        control_element.SuggestedValue().IsEmpty())
-      continue;
-
     // Clear the suggested value. For the initiating node, also restore the
     // original value.
     if (IsTextInput(input_element) || IsMonthInput(input_element) ||
@@ -1751,11 +1746,11 @@ bool ClearPreviewedFormWithElement(const WebFormControlElement& element,
         int length = control_element.Value().length();
         control_element.SetSelectionRange(length, length);
       } else {
-        control_element.SetAutofilled(false);
+        control_element.SetAutofilled(was_autofilled);
       }
     } else if (IsSelectElement(control_element)) {
       control_element.SetSuggestedValue(WebString());
-      control_element.SetAutofilled(false);
+      control_element.SetAutofilled(was_autofilled);
     }
   }
 

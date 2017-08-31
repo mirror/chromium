@@ -156,8 +156,13 @@ bool TextControlElement::IsPlaceholderEmpty() const {
 }
 
 bool TextControlElement::PlaceholderShouldBeVisible() const {
+  // LOG(ERROR) << "IsPlaceholderEmpty " << IsPlaceholderEmpty();
+  // LOG(ERROR) << "IsShadowPlaceholderEmpty " << (PlaceholderElement() &&
+  // !PlaceholderElement()->textContent(false).IsEmpty());
   return SupportsPlaceholder() && IsEmptyValue() && IsEmptySuggestedValue() &&
-         !IsPlaceholderEmpty();
+         (!IsPlaceholderEmpty() ||
+          (PlaceholderElement() &&
+           !PlaceholderElement()->textContent(false).IsEmpty()));
 }
 
 HTMLElement* TextControlElement::PlaceholderElement() const {
@@ -173,6 +178,9 @@ void TextControlElement::UpdatePlaceholderVisibility() {
   }
 
   bool place_holder_was_visible = IsPlaceholderVisible();
+  // LOG(ERROR) << "place_holder_was_visible = " << place_holder_was_visible;
+  // LOG(ERROR) << "PlaceholderShouldBeVisible = " <<
+  // PlaceholderShouldBeVisible();
   SetPlaceholderVisibility(PlaceholderShouldBeVisible());
   if (place_holder_was_visible == IsPlaceholderVisible())
     return;
@@ -398,7 +406,7 @@ bool TextControlElement::SetSelectionRange(
     unsigned start,
     unsigned end,
     TextFieldSelectionDirection direction) {
-  if (OpenShadowRoot() || !IsTextControl())
+  if (OpenShadowRoot() || !IsTextControl() || !IsEmptySuggestedValue())
     return false;
   const unsigned editor_value_length = InnerEditorValue().length();
   end = std::min(end, editor_value_length);
