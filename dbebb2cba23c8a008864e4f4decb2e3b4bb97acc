@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "890f1357_b9de8733",
+        "filename": "chrome/browser/ui/find_bar/find_tab_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-31T13:50:20Z",
+      "side": 1,
+      "message": "per my earlier comment. I think we should\n \n - Move this to chrome/browser/ui/views/find_bar_host.cc .\n - update the documentation for |selection_bounds| in frame_messages.h and find_notification_details.h \n\nFor the second point my reading is that |selection_bounds| (selection_rect) is _not_ screen coordinates, but \"root frame\" coordinates\n\nframe_messages.h says\n\n// Response to FrameMsg_Find with the results of the requested find-in-page\n// search, the number of matches found and the selection rect (in screen\n// coordinates) for the string found. If |final_update| is false, it signals\n\n\nfind_notification_details says\n\n  gfx::Rect selection_rect_;  // Where selection occurred (screen coordinate).\n\nbut\n\n - DropdownBarHost::Init(..) creates a TYPE_CONTROL widget that positions relative to the parent window (e.g. in SetDialogPosition) and\n - -[FindBarCocoaController findBarHorizontalPosition] says \"FindBarController::GetLocationForFindbarView() expects it relative to the content\u0027s boundaries.\"\n\n\nSee more details in my earlier comment.\n\n\nBasically, there\u0027s \"something weird\" with the coordinates being used here and it needs to be clearer.\n\nAnd the info I\u0027ve gathered for you here seems incompatible with the way ScreenToDIPRectInWindow is documented to work. Can you investigate?",
+      "revId": "dbebb2cba23c8a008864e4f4decb2e3b4bb97acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
