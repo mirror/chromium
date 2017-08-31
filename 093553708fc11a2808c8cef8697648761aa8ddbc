@@ -162,6 +162,24 @@
     },
     {
       "key": {
+        "uuid": "9c0ece92_3d165685",
+        "filename": "ui/views/controls/button/checkbox.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-31T01:50:22Z",
+      "side": 1,
+      "message": "\u003e Wait, checkboxes and buttons use different colors for their labels?  That seems like it can\u0027t be right.  I would think both the checkbox stroke and the checkbox label here need to match the pushbutton label.\n\n(I think this is legit -- dialog button font is also a heavier weight (i.e. MEDIUM), so even though they are a lighter color, they will use a comparable volume of \"ink\")",
+      "parentUuid": "1d3984c8_b3516fd7",
+      "revId": "093553708fc11a2808c8cef8697648761aa8ddbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81d48c79_ebc6d884",
         "filename": "ui/views/controls/button/checkbox.cc",
         "patchSetId": 3
