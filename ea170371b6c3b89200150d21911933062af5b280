@@ -86,6 +86,24 @@
       "revId": "ea170371b6c3b89200150d21911933062af5b280",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3662218b_448cfebd",
+        "filename": "gpu/config/gpu_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-08-31T21:44:20Z",
+      "side": 1,
+      "message": "I agree it\u0027s not good to define a param as const while you modify it inside a function, so I changed it to non-const. However, a const_cast somewhere is unavoidable, unless I change the entire GpuMain(const MainFunctionParams\u0026 parameters) to non-const, which is dangerous.",
+      "parentUuid": "1a034a0c_415a73c4",
+      "revId": "ea170371b6c3b89200150d21911933062af5b280",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
