@@ -11,6 +11,7 @@
 #include "content/public/common/url_loader.mojom.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
+#include "services/network/public/cpp/net_adapters.h"
 
 namespace storage {
 class BlobStorageContext;
@@ -18,6 +19,7 @@ class BlobStorageContext;
 
 namespace content {
 
+class ServiceWorkerCacheWriter;
 class ServiceWorkerContextCore;
 class ServiceWorkerProviderHost;
 class URLLoaderFactoryGetter;
@@ -65,11 +67,30 @@ class ServiceWorkerScriptURLLoader : public mojom::URLLoader,
       mojo::ScopedDataPipeConsumerHandle body) override;
   void OnComplete(const ResourceRequestCompletionStatus& status) override;
 
+  void OnWriteHeadersComplete(const ResourceResponseHead& response_head,
+                              const base::Optional<net::SSLInfo>& ssl_info,
+                              mojom::DownloadedTempFilePtr downloaded_file,
+                              net::Error error);
+
  private:
   mojom::URLLoaderPtr network_loader_;
   mojo::Binding<mojom::URLLoaderClient> network_client_binding_;
+
+  // Used for forwarding a fetched script to the controller in a renderer.
   mojom::URLLoaderClientPtr forwarding_client_;
+  mojo::ScopedDataPipeProducerHandle forwarding_producer_;
+
   base::WeakPtr<ServiceWorkerProviderHost> provider_host_;
+  std::unique_ptr<ServiceWorkerCacheWriter> cache_writer_;
+
+  // Used for receiving a fetched script from the network service.
+  mojo::ScopedDataPipeConsumerHandle consumer_;
+  mojo::SimpleWatcher watcher_;
+
+  // Adapter for transferring data from a mojo data pipe to net.
+  scoped_refptr<network::MojoToNetPendingBuffer> pending_read_;
+
+  base::WeakPtrFactory<ServiceWorkerScriptURLLoader> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(ServiceWorkerScriptURLLoader);
 };
