@@ -1,8 +1,5 @@
 # Being ported, https://crbug.com/754861.
 
--AudioRendererSinkCacheTest.SmokeTest
--BrowsingDataRemoverImplTest.MultipleTasks
--CacheStorageManagerTest.GetAllOriginsUsageWithOldIndex
 -ChildMemoryCoordinatorImplTest.MultipleClients
 -LegacyInputRouterImplTest.AckedTouchEventState
 -MediaStreamManagerTest.MakeAndCancelMultipleRequests
@@ -11,7 +8,6 @@
 -RenderWidgetHostViewAuraCopyRequestTest.DedupeFrameSubscriberRequests
 -RenderWidgetHostViewAuraCopyRequestTest.DestroyedAfterCopyRequest
 -RenderWidgetHostViewAuraCopyRequestTest.PresentTime
--RendererAudioOutputStreamFactoryIntegrationTest.StreamIntegrationTest
 -ServiceWorkerDatabaseTest.DatabaseVersion_CorruptedSchemaVersion
 -ServiceWorkerProviderHostTest.ActiveIsNotController
 -URLLoaderFactoryImplTest/URLLoaderFactoryImplTest.DownloadToFile/0
@@ -24,6 +20,7 @@
 -URLLoaderFactoryImplTest/URLLoaderFactoryImplTest.OnTransferSizeUpdated/1
 -URLLoaderImplTest.Basic
 -URLLoaderImplTest.BasicSSL
+-URLLoaderImplTest.CantSniffEmptyHtml
 -URLLoaderImplTest.DoNotSniffHTMLFromImageGIF
 -URLLoaderImplTest.DoNotSniffHTMLFromTextPlain
 -URLLoaderImplTest.Empty
@@ -58,6 +55,7 @@
 -AppCacheStorageImplTest.Reinitialize2
 -AppCacheStorageImplTest.Reinitialize3
 -AppCacheUpdateJobTest.AlreadyChecking/1
+-BrowsingDataRemoverImplTest.MultipleTasks
 -ChromeAppCacheServiceTest.KeepOnDestruction
 -ChromeAppCacheServiceTest.SaveSessionState
 -DOMStorageAreaTest.DeleteOrigin
