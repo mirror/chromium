@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c53690ac_166c5f9d",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-31T04:41:37Z",
+      "side": 1,
+      "message": "Looks like we can remove SWURLLoaderJob::SaveResponseInfo() entirely, and have the callsites call ServiceWorkerURLLoaderHelper::SaveResponseInfo(response, \u0026response_head_).",
+      "revId": "523ee2e9ff8a567d38c4895fb6d22be09abb0207",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6bdced3_8ab7ebdb",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-31T04:41:37Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "523ee2e9ff8a567d38c4895fb6d22be09abb0207",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c12e515_04850a3c",
+        "filename": "content/common/service_worker/service_worker_url_loader_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-31T04:41:37Z",
+      "side": 1,
+      "message": "This function doesn\u0027t seem to help readability. The callsites should just call url_loader_client-\u003eOnReceiveResponse() directly.",
+      "revId": "523ee2e9ff8a567d38c4895fb6d22be09abb0207",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
