@@ -262,6 +262,30 @@
     },
     {
       "key": {
+        "uuid": "3458533c_28648101",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceElementTiming.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-31T16:26:12Z",
+      "side": 1,
+      "message": "Ahh, sorry, I didn\u0027t catch that. Thanks! I didn\u0027t look close enough at them individually (I just removed both and it didn\u0027t compile). ScriptState.h can be removed, but \"bindings/core/v8/V8ObjectBuilder.h\" needs to stay because of the builder.AddString() line in BuildJSONValue.",
+      "parentUuid": "0b659a9e_ebf844d9",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 42
+      },
+      "revId": "8e047530c13e685c85f4c6fd79f17dab13c9d6e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec37033d_16dc6818",
         "filename": "third_party/WebKit/Source/core/timing/PerformanceElementTiming.h",
         "patchSetId": 10
