@@ -9,7 +9,6 @@ import android.content.Intent;
 
 import org.chromium.chrome.browser.ServiceTabLauncher;
 import org.chromium.chrome.browser.document.ChromeLauncherActivity;
-import org.chromium.chrome.browser.offlinepages.downloads.OfflinePageDownloadBridge;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tabmodel.AsyncTabParams;
 import org.chromium.content_public.browser.LoadUrlParams;

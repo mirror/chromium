@@ -9,6 +9,7 @@
 #include "components/offline_pages/core/background/save_page_request.h"
 #include "components/offline_pages/core/client_policy_controller.h"
 #include "components/offline_pages/core/downloads/download_ui_adapter.h"
+#include "components/offline_pages/core/downloads/offline_item_conversions.h"
 #include "components/offline_pages/core/downloads/offline_page_download_notifier.h"
 
 namespace offline_pages {
@@ -51,7 +52,7 @@ void DownloadNotifyingObserver::OnAdded(const SavePageRequest& request) {
 
   // Calling Progress ensures notification is created in lieu of specific
   // Add/Create call.
-  notifier_->NotifyDownloadProgress(DownloadUIItem(request));
+  notifier_->NotifyDownloadProgress(CreateOfflineItem(request));
 
   // Now we need to update the notification if it is not active/offlining.
   if (request.request_state() != SavePageRequest::RequestState::OFFLINING)
@@ -79,12 +80,12 @@ void DownloadNotifyingObserver::OnCompleted(
   if (!IsVisibleInUI(request.client_id()))
     return;
   if (status == RequestCoordinator::BackgroundSavePageResult::SUCCESS)
-    notifier_->NotifyDownloadSuccessful(DownloadUIItem(request));
+    notifier_->NotifyDownloadSuccessful(CreateOfflineItem(request));
   else if (status ==
            RequestCoordinator::BackgroundSavePageResult::USER_CANCELED)
-    notifier_->NotifyDownloadCanceled(DownloadUIItem(request));
+    notifier_->NotifyDownloadCanceled(CreateOfflineItem(request));
   else
-    notifier_->NotifyDownloadFailed(DownloadUIItem(request));
+    notifier_->NotifyDownloadFailed(CreateOfflineItem(request));
 }
 
 bool DownloadNotifyingObserver::IsVisibleInUI(const ClientId& page) {
@@ -99,11 +100,11 @@ bool DownloadNotifyingObserver::IsVisibleInUI(const ClientId& page) {
 void DownloadNotifyingObserver::NotifyRequestStateChange(
     const SavePageRequest& request) {
   if (request.request_state() == SavePageRequest::RequestState::PAUSED)
-    notifier_->NotifyDownloadPaused(DownloadUIItem(request));
+    notifier_->NotifyDownloadPaused(CreateOfflineItem(request));
   else if (request.request_state() == SavePageRequest::RequestState::AVAILABLE)
-    notifier_->NotifyDownloadInterrupted(DownloadUIItem(request));
+    notifier_->NotifyDownloadInterrupted(CreateOfflineItem(request));
   else
-    notifier_->NotifyDownloadProgress(DownloadUIItem(request));
+    notifier_->NotifyDownloadProgress(CreateOfflineItem(request));
 }
 
 }  // namespace offline_pages
