@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18e50360_17504d2e",
+        "filename": "chrome/installer/linux/debian/build.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-31T21:33:53Z",
+      "side": 1,
+      "message": "Do we want to delete these directories so there\u0027s a clean slate between builds?",
+      "revId": "29d77eaad2a9d3c866e6e5f5b2f67be0e2ea105f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
