@@ -71,6 +71,7 @@ class ICCProfileCache {
   // |display_id|.
   bool GetAndSetNeedsHistogram(uint64_t display_id,
                                const ICCProfile& icc_profile) {
+    return true;
     base::AutoLock lock(lock_);
 
     auto found = id_to_icc_profile_mru_.Get(icc_profile.id_);
