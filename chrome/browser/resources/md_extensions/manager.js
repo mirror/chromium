@@ -35,9 +35,6 @@ cr.define('extensions', function() {
     behaviors: [I18nBehavior],
 
     properties: {
-      /** @type {extensions.Sidebar} */
-      sidebar: Object,
-
       /** @type {extensions.Toolbar} */
       toolbar: Object,
 
@@ -165,7 +162,7 @@ cr.define('extensions', function() {
 
     /** @private */
     onMenuButtonTap_: function() {
-      this.$.drawer.toggle();
+      this.$.sidebar.toggle();
     },
 
     /**
@@ -287,18 +284,21 @@ cr.define('extensions', function() {
      * @private
      */
     changePage_: function(newPage) {
-      this.$.drawer.closeDrawer();
+      this.$.sidebar.close();
       if (this.optionsDialog.open)
         this.optionsDialog.close();
 
       const fromPage = this.currentPage_ ? this.currentPage_.page : null;
       const toPage = newPage.page;
       let data;
-      if (newPage.extensionId)
-        data = assert(this.getData_(newPage.extensionId));
 
-      if (newPage.hasOwnProperty('type'))
+      if (newPage.hasOwnProperty('type')) {
         this.listType_ = newPage.type;
+      } else if (newPage.extensionId) {
+        data = assert(this.getData_(newPage.extensionId));
+        // Sidebar needs this if we're on detail/error view.
+        this.listType_ = extensions.getItemListType(data);
+      }
 
       if (toPage == Page.DETAILS)
         this.detailViewItem_ = assert(data);
