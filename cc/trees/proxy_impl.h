@@ -115,6 +115,9 @@ class CC_EXPORT ProxyImpl : public LayerTreeHostImplClient,
   void SendBeginMainFrameNotExpectedSoon() override;
   void ScheduledActionBeginMainFrameNotExpectedUntil(
       base::TimeTicks time) override;
+  size_t GetNumberOfCompositedAnimations() const override;
+  size_t GetNumberOfMainThreadAnimations() const override;
+  size_t GetNumberOfMainThreadCouldBeCompositedAnimations() const override;
 
   DrawResult DrawInternal(bool forced_draw);
 
