@@ -145,7 +145,7 @@ class CompositorFrameSinkSupportTest : public testing::Test {
         consumer_sync_token_(GenTestSyncToken(5)) {
     manager_.SetLocalClient(&frame_sink_manager_client_);
     manager_.surface_manager()->AddObserver(&surface_observer_);
-    manager_.RegisterFrameSinkId(kArbitraryFrameSinkId);
+    manager_.RegisterFrameSinkId(kArbitraryFrameSinkId, "");
     support_ = CompositorFrameSinkSupport::Create(
         &fake_support_client_, &manager_, kArbitraryFrameSinkId, kIsRoot,
         kNeedsSyncPoints);
@@ -531,7 +531,7 @@ TEST_F(CompositorFrameSinkSupportTest, ResourceLifetime) {
 }
 
 TEST_F(CompositorFrameSinkSupportTest, AddDuringEviction) {
-  manager_.RegisterFrameSinkId(kAnotherArbitraryFrameSinkId);
+  manager_.RegisterFrameSinkId(kAnotherArbitraryFrameSinkId, "");
   test::MockCompositorFrameSinkSupportClient mock_client;
   auto support = CompositorFrameSinkSupport::Create(
       &mock_client, &manager_, kAnotherArbitraryFrameSinkId, kIsRoot,
@@ -551,7 +551,7 @@ TEST_F(CompositorFrameSinkSupportTest, AddDuringEviction) {
 
 // Tests doing an EvictCurrentSurface before shutting down the factory.
 TEST_F(CompositorFrameSinkSupportTest, EvictCurrentSurface) {
-  manager_.RegisterFrameSinkId(kAnotherArbitraryFrameSinkId);
+  manager_.RegisterFrameSinkId(kAnotherArbitraryFrameSinkId, "");
   test::MockCompositorFrameSinkSupportClient mock_client;
   auto support = CompositorFrameSinkSupport::Create(
       &mock_client, &manager_, kAnotherArbitraryFrameSinkId, kIsRoot,
@@ -584,7 +584,7 @@ TEST_F(CompositorFrameSinkSupportTest, EvictCurrentSurface) {
 // is deleted.
 TEST_F(CompositorFrameSinkSupportTest, EvictSurfaceWithTemporaryReference) {
   constexpr FrameSinkId parent_frame_sink_id(1234, 5678);
-  manager_.RegisterFrameSinkId(parent_frame_sink_id);
+  manager_.RegisterFrameSinkId(parent_frame_sink_id, "");
 
   const LocalSurfaceId local_surface_id(5, kArbitraryToken);
   const SurfaceId surface_id(support_->frame_sink_id(), local_surface_id);
