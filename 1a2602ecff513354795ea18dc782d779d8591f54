@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4def0d5_16bdfee0",
+        "filename": "chrome/browser/geolocation/geolocation_permission_context_android.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-08-31T08:04:37Z",
+      "side": 1,
+      "message": "If you\u0027re in multi-window and both windows prompt, one of the requests will be dropped... maybe it\u0027s enough of an edge case to not worry.",
+      "revId": "1a2602ecff513354795ea18dc782d779d8591f54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
