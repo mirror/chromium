@@ -382,6 +382,24 @@
     },
     {
       "key": {
+        "uuid": "ae4e179a_5a07a681",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwSettings.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1239716
+      },
+      "writtenOn": "2017-08-31T00:04:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd9c3672_1a395bb6",
+      "revId": "16b3862bdafb068a92293faae18c1d60bee97434",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7260df32_48de1723",
         "filename": "android_webview/java/src/org/chromium/android_webview/AwSettings.java",
         "patchSetId": 1
