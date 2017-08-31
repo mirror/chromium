@@ -13,6 +13,7 @@
 #include "net/test/ct_test_util.h"
 #include "net/test/test_data_directory.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/boringssl/src/include/openssl/ssl.h"
 
 namespace net {
 
@@ -191,6 +192,44 @@ TEST_F(HttpResponseInfoTest, FailsInitFromPickleWithSSLV3) {
   net::HttpResponseInfo restored_ssl3_response_info;
   EXPECT_FALSE(
       restored_ssl3_response_info.InitFromPickle(ssl3_pickle, &truncated));
+}
+
+// Tests that cache entries with cipher suites BoringSSL doesn't understand are
+// dropped.
+TEST_F(HttpResponseInfoTest, FailsInitFromPickleWithUnknownCipher) {
+  // TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+  static const uint16_t kECDHECipher = 0xc02f;
+  // TLS_DHE_RSA_WITH_AES_128_GCM_SHA256
+  static const uint16_t kDHECipher = 0x009e;
+
+  // A valid certificate is needed for ssl_info.is_valid() to be true.
+  response_info_.ssl_info.cert =
+      ImportCertFromFile(GetTestCertsDirectory(), "ok_cert.pem");
+
+  // Existing cipher suites should succeed.
+  ASSERT_TRUE(SSL_get_cipher_by_value(kECDHECipher));
+  SSLConnectionStatusSetCipherSuite(kECDHECipher,
+                                    &response_info_.ssl_info.connection_status);
+  base::Pickle ecdhe_pickle;
+  response_info_.Persist(&ecdhe_pickle, false, false);
+  bool truncated = false;
+  net::HttpResponseInfo restored_ecdhe_response_info;
+  EXPECT_TRUE(
+      restored_ecdhe_response_info.InitFromPickle(ecdhe_pickle, &truncated));
+  EXPECT_EQ(kECDHECipher,
+            SSLConnectionStatusToCipherSuite(
+                restored_ecdhe_response_info.ssl_info.connection_status));
+  EXPECT_FALSE(truncated);
+
+  // BoringSSL no longer suports DHE ciphers. Those should be discarded.
+  ASSERT_FALSE(SSL_get_cipher_by_value(kDHECipher));
+  SSLConnectionStatusSetCipherSuite(kDHECipher,
+                                    &response_info_.ssl_info.connection_status);
+  base::Pickle dhe_pickle;
+  response_info_.Persist(&dhe_pickle, false, false);
+  net::HttpResponseInfo restored_dhe_response_info;
+  EXPECT_FALSE(
+      restored_dhe_response_info.InitFromPickle(dhe_pickle, &truncated));
 }
 
 }  // namespace

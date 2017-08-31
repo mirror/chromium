@@ -36,7 +36,8 @@ X509Certificate::PickleType GetPickleTypeForVersion(int version) {
   }
 }
 
-bool KeyExchangeGroupIsValid(int ssl_connection_status) {
+bool KeyExchangeGroupIsValid(int ssl_connection_status,
+                             const SSL_CIPHER* cipher) {
   // TLS 1.3 and later always treat the field correctly.
   if (SSLConnectionStatusToVersion(ssl_connection_status) >=
       SSL_CONNECTION_VERSION_TLS1_3) {
@@ -44,8 +45,6 @@ bool KeyExchangeGroupIsValid(int ssl_connection_status) {
   }
 
   // Prior to TLS 1.3, only ECDHE ciphers have groups.
-  const SSL_CIPHER* cipher = SSL_get_cipher_by_value(
-      SSLConnectionStatusToCipherSuite(ssl_connection_status));
   return cipher && SSL_CIPHER_get_kx_nid(cipher) == NID_kx_ecdhe;
 }
 
@@ -235,6 +234,7 @@ bool HttpResponseInfo::InitFromPickle(const base::Pickle& pickle,
     ssl_info.security_bits = security_bits;
   }
 
+  const SSL_CIPHER* cipher;
   if (flags & RESPONSE_INFO_HAS_SSL_CONNECTION_STATUS) {
     int connection_status;
     if (!iter.ReadInt(&connection_status))
@@ -246,6 +246,12 @@ bool HttpResponseInfo::InitFromPickle(const base::Pickle& pickle,
       return false;
     }
     ssl_info.connection_status = connection_status;
+    // If the cipher has since been removed from BoringSSL entirely, drop the
+    // cache entry rather than report confusing entries in the UI.
+    cipher = SSL_get_cipher_by_value(
+        SSLConnectionStatusToCipherSuite(connection_status));
+    if (!cipher)
+      return false;
   }
 
   if (flags & RESPONSE_INFO_HAS_SIGNED_CERTIFICATE_TIMESTAMPS) {
@@ -313,7 +319,7 @@ bool HttpResponseInfo::InitFromPickle(const base::Pickle& pickle,
     // Historically, the key_exchange_group field was key_exchange_info which
     // conflated a number of different values based on the cipher suite, so some
     // values must be discarded. See https://crbug.com/639421.
-    if (KeyExchangeGroupIsValid(ssl_info.connection_status))
+    if (KeyExchangeGroupIsValid(ssl_info.connection_status, cipher))
       ssl_info.key_exchange_group = key_exchange_group;
   }
 
