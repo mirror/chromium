@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d71a9555_5ee73ef1",
+        "filename": "chrome/browser/ui/framebust_block_infobar_delegate.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-31T18:55:16Z",
+      "side": 1,
+      "message": "We\u0027re reusing an existing icon here. Would be happy to use a vector otherwise. If you feel strongly about this I can migrate the icon to vector where it\u0027s currently used too in another CL?",
+      "parentUuid": "0dc1e70f_36bffcee",
+      "revId": "8b544ddf6cc8cc9050a42e4fb5478c423f3eed3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ffd9bca3_a5a66799",
         "filename": "chrome/browser/ui/framebust_block_infobar_delegate.cc",
         "patchSetId": 22
@@ -33,6 +51,24 @@
       "revId": "8b544ddf6cc8cc9050a42e4fb5478c423f3eed3c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9d2cb80_133ecb7f",
+        "filename": "chrome/browser/ui/framebust_block_infobar_delegate.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-31T18:55:16Z",
+      "side": 1,
+      "message": "Obsolete, made the delegate unrelated to infobars.",
+      "parentUuid": "ffd9bca3_a5a66799",
+      "revId": "8b544ddf6cc8cc9050a42e4fb5478c423f3eed3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b609f09d_56c79922",
+        "filename": "chrome/browser/ui/framebust_block_infobar_delegate.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-31T18:55:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3021a7e0_14bcb2d3",
+      "revId": "8b544ddf6cc8cc9050a42e4fb5478c423f3eed3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6310c5a_d6ffc85e",
         "filename": "chrome/browser/ui/framebust_block_infobar_delegate.h",
         "patchSetId": 22
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "51fac9d3_b5298a98",
+        "filename": "chrome/browser/ui/framebust_block_infobar_delegate.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-31T18:55:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6310c5a_d6ffc85e",
+      "revId": "8b544ddf6cc8cc9050a42e4fb5478c423f3eed3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a8da837_e1a07492",
         "filename": "chrome/browser/ui/framebust_block_infobar_delegate.h",
         "patchSetId": 22
@@ -84,6 +156,24 @@
       "revId": "8b544ddf6cc8cc9050a42e4fb5478c423f3eed3c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb91b82a_b8661306",
+        "filename": "chrome/browser/ui/framebust_block_infobar_delegate.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-31T18:55:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a8da837_e1a07492",
+      "revId": "8b544ddf6cc8cc9050a42e4fb5478c423f3eed3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
