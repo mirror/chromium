@@ -40,7 +40,7 @@ const base::Feature kLocalDatabaseManagerEnabled{
 // SafeBrowsing URL checks never block starting requests or following redirects.
 // S13nSafeBrowsingParallelUrlCheck is ignored in that case.
 const base::Feature kParallelUrlCheck{"S13nSafeBrowsingParallelUrlCheck",
-                                      base::FEATURE_DISABLED_BY_DEFAULT};
+                                      base::FEATURE_ENABLED_BY_DEFAULT};
 
 const base::Feature kPasswordFieldOnFocusPinging{
     "PasswordFieldOnFocusPinging", base::FEATURE_ENABLED_BY_DEFAULT};
