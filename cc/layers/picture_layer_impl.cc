@@ -207,7 +207,9 @@ void PictureLayerImpl::AppendQuads(RenderPass* render_pass,
       render_pass->CreateAndAppendSharedQuadState();
 
   if (raster_source_->IsSolidColor()) {
-    PopulateSharedQuadState(shared_quad_state);
+    bool is_contents_opaque =
+        SkColorGetA(raster_source_->GetSolidColor()) == 0xFF;
+    PopulateSharedQuadState(shared_quad_state, is_contents_opaque);
 
     AppendDebugBorderQuad(
         render_pass, bounds(), shared_quad_state, append_quads_data);
@@ -223,7 +225,7 @@ void PictureLayerImpl::AppendQuads(RenderPass* render_pass,
       layer_tree_impl() ? layer_tree_impl()->device_scale_factor() : 1;
   float max_contents_scale = MaximumTilingContentsScale();
   PopulateScaledSharedQuadState(shared_quad_state, max_contents_scale,
-                                max_contents_scale);
+                                max_contents_scale, contents_opaque());
   Occlusion scaled_occlusion;
   if (mask_type_ == Layer::LayerMaskType::NOT_MASK) {
     scaled_occlusion =
@@ -388,8 +390,11 @@ void PictureLayerImpl::AppendQuads(RenderPass* render_pass,
               alpha >= std::numeric_limits<float>::epsilon()) {
             SolidColorDrawQuad* quad =
                 render_pass->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
-            quad->SetNew(shared_quad_state, geometry_rect,
-                         visible_geometry_rect, draw_info.solid_color(), false);
+            bool needs_blending =
+                SkColorGetA(draw_info.solid_color() == 0xFF) ? false : true;
+            quad->SetAll(shared_quad_state, geometry_rect,
+                         visible_geometry_rect, needs_blending,
+                         draw_info.solid_color(), false);
             ValidateQuadResources(quad);
           }
           has_draw_quad = true;
@@ -409,8 +414,9 @@ void PictureLayerImpl::AppendQuads(RenderPass* render_pass,
       }
       SolidColorDrawQuad* quad =
           render_pass->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
-      quad->SetNew(shared_quad_state, geometry_rect, visible_geometry_rect,
-                   color, false);
+      bool needs_blending = true;
+      quad->SetAll(shared_quad_state, geometry_rect, visible_geometry_rect,
+                   needs_blending, color, false);
       ValidateQuadResources(quad);
 
       if (geometry_rect.Intersects(scaled_viewport_for_tile_priority)) {

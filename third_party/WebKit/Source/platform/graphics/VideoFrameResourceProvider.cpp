@@ -16,7 +16,7 @@ void VideoFrameResourceProvider::AppendQuads(cc::RenderPass& render_pass) {
   gfx::Rect visible_rect(0, 0, 10000, 10000);
   viz::SharedQuadState* shared_state =
       render_pass.CreateAndAppendSharedQuadState();
-  shared_state->SetAll(gfx::Transform(), rect, rect, rect, false, 1,
+  shared_state->SetAll(gfx::Transform(), rect, rect, rect, false, true, 1,
                        SkBlendMode::kSrcOver, 0);
   cc::SolidColorDrawQuad* solid_color_quad =
       render_pass.CreateAndAppendDrawQuad<cc::SolidColorDrawQuad>();

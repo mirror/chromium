@@ -299,13 +299,16 @@ void SynchronousLayerTreeFrameSink::SubmitCompositorFrame(
     embed_render_pass->has_transparent_background = false;
 
     // The RenderPass has a single SurfaceDrawQuad (and SharedQuadState for it).
+    bool is_contents_opaque =
+        !frame.render_pass_list.back()->has_transparent_background;
     auto* shared_quad_state =
         embed_render_pass->CreateAndAppendSharedQuadState();
     auto* surface_quad =
         embed_render_pass->CreateAndAppendDrawQuad<cc::SurfaceDrawQuad>();
     shared_quad_state->SetAll(
         child_transform, gfx::Rect(child_size), gfx::Rect(child_size),
-        gfx::Rect() /* clip_rect */, false /* is_clipped */, 1.f /* opacity */,
+        gfx::Rect() /* clip_rect */, false /* is_clipped */,
+        is_contents_opaque /* is_contents_opaque */, 1.f /* opacity */,
         SkBlendMode::kSrcOver, 0 /* sorting_context_id */);
     surface_quad->SetNew(
         shared_quad_state, gfx::Rect(child_size), gfx::Rect(child_size),

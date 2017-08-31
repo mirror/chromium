@@ -133,15 +133,19 @@ SurfaceDrawQuad* SurfaceLayerImpl::CreateSurfaceDrawQuad(
   if (!shared_quad_state) {
     shared_quad_state = render_pass->CreateAndAppendSharedQuadState();
     PopulateScaledSharedQuadState(shared_quad_state, layer_to_content_scale_x,
-                                  layer_to_content_scale_y);
+                                  layer_to_content_scale_y, contents_opaque());
   }
   if (common_shared_quad_state)
     *common_shared_quad_state = shared_quad_state;
 
+  // TODO(yiyix): Use SetNew to update SurfaceDrawQuad state after removing
+  // opaque_rect from draw quad crbug.com/672929
   SurfaceDrawQuad* surface_draw_quad =
       render_pass->CreateAndAppendDrawQuad<SurfaceDrawQuad>();
-  surface_draw_quad->SetNew(shared_quad_state, quad_rect, visible_quad_rect,
-                            surface_info.id(), surface_draw_quad_type, nullptr);
+  bool needs_blending = false;
+  surface_draw_quad->SetAll(shared_quad_state, quad_rect, visible_quad_rect,
+                            needs_blending, surface_info.id(),
+                            surface_draw_quad_type, nullptr);
 
   return surface_draw_quad;
 }
@@ -159,7 +163,7 @@ void SurfaceLayerImpl::AppendRainbowDebugBorder(RenderPass* render_pass) {
 
   viz::SharedQuadState* shared_quad_state =
       render_pass->CreateAndAppendSharedQuadState();
-  PopulateSharedQuadState(shared_quad_state);
+  PopulateSharedQuadState(shared_quad_state, contents_opaque());
 
   SkColor color;
   float border_width;
