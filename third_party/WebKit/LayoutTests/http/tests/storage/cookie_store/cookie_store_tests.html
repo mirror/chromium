@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Async Cookes: Basic tests for cookieStore</title>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script src="../resources/testharness-helpers.js"></script>
+<!--
+ ! Document-based polyfill for bootstrapping; current version here:
+ ! https://github.com/WICG/async-cookies-api/raw/gh-pages/cookies.js
+ !-->
+<script src="cookie-store-polyfill.js"></script>
+<script>
+'use strict';
+
+const IS_UNSECURED = location.protocol !== 'https:';
+
+const COOKIE_HELPER_CGI = '../resources/cookie-helper.cgi';
+
+const promise_rejects_when_unsecured = async (
+    testCase,
+    code,
+    promise,
+    message = 'Feature unavailable from unsecured contexts'
+) => {
+  if (IS_UNSECURED) await promise_rejects(testCase, code, promise, message);
+  else await promise;
+};
+
+// These cases were initially based on the async cookies API interactive tests:
+//
+// https://raw.githubusercontent.com/WICG/async-cookies-api/gh-pages/cookies_test.js
+
+function getOneSimpleOriginCookie() {
+  return cookieStore.get('__Host-COOKIENAME').then(function(cookie) {
+    if (!cookie) return undefined;
+    return cookie.value;
+  });
+}
+
+// Approximate async equivalent to the document.cookie getter but with
+// important differences: optional additional getAll arguments are
+// forwarded, and an empty cookie jar returns undefined.
+//
+// This is intended primarily for verification against expected cookie
+// jar contents. It should produce more readable messages using
+// assert_equals in failing cases than assert_object_equals would
+// using parsed cookie jar contents and also allows expectations to be
+// written more compactly.
+const getCookieString = async(...args) => {
+  const allCookies = await cookieStore.getAll(...args);
+  if (!allCookies.length) return undefined;
+  return allCookies.map(
+      ({ name, value }) => (name ? (name + '=') : '') + value).join('; ');
+}
+
+// Approximate async equivalent to the document.cookie getter but from
+// the server's point of view. Returns UTF-8 interpretation. Allows
+// sub-path to be specified.
+//
+// Unlike document.cookie, this returns undefined when no cookies are
+// present.
+const getCookieStringHttp = async(extraPath = null) => {
+  const url =
+        COOKIE_HELPER_CGI + ((extraPath == null) ? '' : ('/' + extraPath));
+  const response = await fetch(url, { credentials: 'include' });
+  const text = await response.text();
+  assert_equals(
+      response.ok,
+      true,
+      'CGI should have succeeded in getCookieStringHttp\n' + text);
+  assert_equals(
+      response.headers.get('content-type'),
+      'text/plain; charset=utf-8',
+      'CGI did not return UTF-8 text in getCookieStringHttp');
+  if (text === '') return undefined;
+  assert_equals(
+      text.indexOf('cookie='),
+      0,
+      'CGI response did not begin with "cookie=" and was not empty: ' + text);
+  return decodeURIComponent(text.replace(/^cookie=/, ''));
+}
+
+// Approximate async equivalent to the document.cookie getter but from
+// the server's point of view. Returns binary string
+// interpretation. Allows sub-path to be specified.
+//
+// Unlike document.cookie, this returns undefined when no cookies are
+// present.
+const getCookieBinaryHttp = async(extraPath = null) => {
+  const url =
+        COOKIE_HELPER_CGI +
+        ((extraPath == null) ?
+         '' :
+         ('/' + extraPath)) + '?charset=iso-8859-1';
+  const response = await fetch(url, { credentials: 'include' });
+  const text = await response.text();
+  assert_equals(
+      response.ok,
+      true,
+      'CGI should have succeeded in getCookieBinaryHttp\n' + text);
+  assert_equals(
+      response.headers.get('content-type'),
+      'text/plain; charset=iso-8859-1',
+      'CGI did not return ISO 8859-1 text in getCookieBinaryHttp');
+  if (text === '') return undefined;
+  assert_equals(
+      text.indexOf('cookie='),
+      0,
+      'CGI response did not begin with "cookie=" and was not empty: ' + text);
+  return unescape(text.replace(/^cookie=/, ''));
+}
+
+// Approximate async equivalent to the document.cookie setter but from
+// the server's point of view.
+const setCookieStringHttp = async setCookie => {
+  const encodedSetCookie = encodeURIComponent(setCookie);
+  const url = COOKIE_HELPER_CGI;
+  const headers = new Headers();
+  headers.set(
+      'content-type',
+      'application/x-www-form-urlencoded; charset=utf-8');
+  const response = await fetch(
+      url,
+      {
+        credentials: 'include',
+        method: 'POST',
+        headers: headers,
+        body: 'set-cookie=' + encodedSetCookie,
+      });
+  const text = await response.text();
+  assert_equals(
+      response.ok,
+      true,
+      'CGI should have succeeded in setCookieStringHttp set-cookie: ' +
+        setCookie + '\n' + text);
+  assert_equals(
+      response.headers.get('content-type'),
+      'text/plain; charset=utf-8',
+      'CGI did not return UTF-8 text in setCookieStringHttp');
+  assert_equals(
+      text,
+      'set-cookie=' + encodedSetCookie,
+      'CGI did not faithfully echo the set-cookie value');
+};
+
+// Approximate async equivalent to the document.cookie setter but from
+// the server's point of view. This version sets a binary cookie rather
+// than a UTF-8 one.
+const setCookieBinaryHttp = async setCookie => {
+  const encodedSetCookie = escape(setCookie).split('/').join('%2F');
+  const url = COOKIE_HELPER_CGI + '?charset=iso-8859-1';
+  const headers = new Headers();
+  headers.set(
+      'content-type',
+      'application/x-www-form-urlencoded; charset=iso-8859-1');
+  const response = await fetch(url, {
+    credentials: 'include',
+    method: 'POST',
+    headers: headers,
+    body: 'set-cookie=' + encodedSetCookie
+  });
+  const text = await response.text();
+  assert_equals(
+      response.ok,
+      true,
+      'CGI should have succeeded in setCookieBinaryHttp set-cookie: ' +
+        setCookie + '\n' + text);
+  assert_equals(
+      response.headers.get('content-type'),
+      'text/plain; charset=iso-8859-1',
+      'CGI did not return Latin-1 text in setCookieBinaryHttp');
+  assert_equals(
+      text,
+      'set-cookie=' + encodedSetCookie,
+      'CGI did not faithfully echo the set-cookie value');
+};
+
+// Approximate async equivalent to the document.cookie setter but using
+// <meta http-equiv="set-cookie" content="...">
+const setCookieStringMeta = async setCookie => {
+  const meta = Object.assign(document.createElement('meta'), {
+    httpEquiv: 'set-cookie',
+    content: setCookie
+  });
+  document.head.appendChild(meta);
+  await new Promise(resolve => requestAnimationFrame(resolve));
+  meta.parentNode.removeChild(meta);
+};
+
+// Async document.cookie getter; converts '' to undefined which loses
+// information in the edge case where a single ''-valued anonymous
+// cookie is visible.
+const getCookieStringDocument = async () => {
+  return String(document.cookie || '') || undefined;
+};
+
+// Async document.cookie setter
+const setCookieStringDocument = async setCookie => {
+  document.cookie = setCookie;
+};
+
+promise_test(async testCase => {
+  assert_equals(
+      await getCookieString(),
+      undefined,
+      'No cookies at start of test');
+  assert_equals(
+      await getCookieStringHttp(),
+      undefined,
+      'No HTTP cookies at start of test');
+  assert_equals(
+      await getCookieStringDocument(),
+      undefined,
+      'No document.cookie cookies at start of test');
+  let unfinished = true;
+  try {
+    await testObservation();
+    // These use the same cookie names and so cannot run interleaved
+    await testNoNameAndNoValue();
+    assert_equals(
+        await getCookieString(),
+        undefined,
+        'Empty cookie jar after testNoNameAndNoValue');
+    assert_equals(
+        await getCookieStringHttp(),
+        undefined,
+        'Empty HTTP cookie jar after testNoNameAndNoValue');
+    assert_equals(
+        await getCookieStringDocument(),
+        undefined,
+        'Empty document.cookie cookie jar after testNoNameAndNoValue');
+    await testNoNameMultipleValues();
+    assert_equals(
+        await getCookieString(),
+        undefined,
+        'Empty cookie jar after testNoNameMultipleValues');
+    assert_equals(
+        await getCookieStringHttp(),
+        undefined,
+        'Empty HTTP cookie jar after testNoNameMultipleValues');
+    await testNoNameEqualsInValue();
+    assert_equals(
+        await getCookieString(),
+        undefined,
+        'Empty cookie jar after testNoNameEqualsInValue');
+    assert_equals(
+        await getCookieStringHttp(),
+        undefined,
+        'Empty HTTP cookie jar after testNoNameEqualsInValue');
+    await setCookieStringMeta('META-🍪=🔵; path=/');
+    assert_equals(
+        await getCookieString(),
+        'META-🍪=🔵',
+        'Cookie we wrote in cookie jar using META');
+    assert_equals(
+        await getCookieStringHttp(),
+        'META-🍪=🔵',
+        'Cookie we wrote in HTTP cookie jar using META');
+    await setCookieStringMeta('META-🍪=DELETED; path=/; max-age=0');
+    assert_equals(
+        await getCookieString(),
+        undefined,
+        'Empty cookie jar after META cookie-clearing using max-age=0');
+    assert_equals(
+        await getCookieStringHttp(),
+        undefined,
+        'Empty HTTP cookie jar after META cookie-clearing using max-age=0');
+    await setCookieStringDocument('DOCUMENT-🍪=🔵; path=/');
+    assert_equals(
+        await getCookieString(),
+        'DOCUMENT-🍪=🔵',
+        'Cookie we wrote in cookie jar using document.cookie');
+    assert_equals(
+        await getCookieStringHttp(),
+        'DOCUMENT-🍪=🔵',
+        'Cookie we wrote in HTTP cookie jar using document.cookie');
+    assert_equals(
+        await getCookieStringDocument(),
+        'DOCUMENT-🍪=🔵',
+        'Cookie we wrote in document.cookie using document.cookie');
+    await setCookieStringDocument('DOCUMENT-🍪=DELETED; path=/; max-age=0');
+    assert_equals(
+        await getCookieString(),
+        undefined,
+        'Empty cookie jar after document.cookie' +
+          ' cookie-clearing using max-age=0');
+    assert_equals(
+        await getCookieStringHttp(),
+        undefined,
+        'Empty HTTP cookie jar after document.cookie' +
+          ' cookie-clearing using max-age=0');
+    assert_equals(
+        await getCookieStringDocument(),
+        undefined,
+        'Empty document.cookie cookie jar after document.cookie' +
+          ' cookie-clearing using max-age=0');
+    await setCookieStringHttp('HTTP-🍪=🔵; path=/');
+    assert_equals(
+        await getCookieString(),
+        'HTTP-🍪=🔵',
+        'Cookie we wrote in cookie jar using HTTP');
+    assert_equals(
+        await getCookieStringHttp(),
+        'HTTP-🍪=🔵',
+        'Cookie we wrote in HTTP cookie jar using HTTP');
+    await setCookieStringHttp('HTTP-🍪=DELETED; path=/; max-age=0');
+    assert_equals(
+        await getCookieString(),
+        undefined,
+        'Empty cookie jar after HTTP cookie-clearing using max-age=0');
+    assert_equals(
+        await getCookieStringHttp(),
+        undefined,
+        'Empty HTTP cookie jar after HTTP cookie-clearing using max-age=0');
+    await setCookieStringHttp('HTTPONLY-🍪=🔵; path=/; httponly');
+    assert_equals(
+        await getCookieString(),
+        undefined,
+        'HttpOnly cookie we wrote in cookie jar using HTTP' +
+          ' is invisible to script');
+    assert_equals(
+        await getCookieStringHttp(),
+        'HTTPONLY-🍪=🔵',
+        'HttpOnly cookie we wrote in HTTP cookie jar using HTTP');
+    await setCookieStringHttp(
+        'HTTPONLY-🍪=DELETED; path=/; max-age=0; httponly');
+    assert_equals(
+        await getCookieString(),
+        undefined,
+        'Empty cookie jar after HTTP cookie-clearing using max-age=0');
+    assert_equals(
+        await getCookieStringHttp(),
+        undefined,
+        'Empty HTTP cookie jar after HTTP cookie-clearing using max-age=0');
+    // TODO: determine why non-UTF-8 byte sequences cause the
+    // Set-Cookie to be dropped and determine whether this is
+    // always the case.
+    await setCookieBinaryHttp(
+        unescape(encodeURIComponent('HTTP-🍪=🔵')) + '\xef\xbf\xbd; path=/');
+    assert_equals(
+        await getCookieString(),
+        'HTTP-🍪=🔵\ufffd',
+        'Binary cookie we wrote in cookie jar using HTTP');
+    assert_equals(
+        await getCookieStringHttp(),
+        'HTTP-🍪=🔵\ufffd',
+        'Binary cookie we wrote in HTTP cookie jar using HTTP');
+    assert_equals(
+        decodeURIComponent(escape(await getCookieBinaryHttp())),
+        'HTTP-🍪=🔵\ufffd',
+        'Binary cookie we wrote in binary HTTP cookie jar');
+    assert_equals(
+        await getCookieBinaryHttp(),
+        unescape(encodeURIComponent('HTTP-🍪=🔵')) + '\xef\xbf\xbd',
+        'Binary cookie we wrote in binary HTTP cookie jar');
+    await setCookieBinaryHttp(
+        unescape(encodeURIComponent('HTTP-🍪=DELETED; path=/; max-age=0')));
+    assert_equals(
+        await getCookieString(),
+        undefined,
+        'Empty cookie jar after binary HTTP cookie-clearing using max-age=0');
+    assert_equals(
+        await getCookieStringHttp(),
+        undefined,
+        'Empty HTTP cookie jar after' +
+          ' binary HTTP cookie-clearing using max-age=0');
+    assert_equals(
+        await getCookieBinaryHttp(),
+        undefined,
+        'Empty binary HTTP cookie jar after' +
+          ' binary HTTP cookie-clearing using max-age=0');
+    await cookieStore.set('TEST', 'value');
+    assert_equals(
+        await getCookieString(),
+        'TEST=value',
+        'Cookie jar contains only cookie we set');
+    assert_equals(
+        await getCookieStringHttp(),
+        'TEST=value',
+        'HTTP cookie jar contains only cookie we set');
+    let allCookies = await cookieStore.getAll();
+    assert_equals(
+        allCookies[0].name,
+        'TEST',
+        'First entry in allCookies should be named TEST');
+    assert_equals(
+        allCookies[0].value,
+        'value',
+        'First entry in allCookies should have value "value"');
+    assert_equals(
+        allCookies.length,
+        1,
+        'Only one cookie should exist in allCookies');
+    let firstCookie = await cookieStore.get();
+    assert_equals(
+        firstCookie.name,
+        'TEST',
+        'First cookie should be named TEST');
+    assert_equals(
+        firstCookie.value,
+        'value',
+        'First cookie should have value "value"');
+    let allCookies_TEST = await cookieStore.getAll('TEST');
+    assert_equals(
+        allCookies_TEST[0].name,
+        'TEST',
+        'First entry in allCookies_TEST should be named TEST');
+    assert_equals(
+        allCookies_TEST[0].value,
+        'value',
+        'First entry in allCookies_TEST should have value "value"');
+    assert_equals(
+        allCookies_TEST.length,
+        1,
+        'Only one cookie should exist in allCookies_TEST');
+    let firstCookie_TEST = await cookieStore.get('TEST');
+    assert_equals(
+        firstCookie_TEST.name,
+        'TEST',
+        'First TEST cookie should be named TEST');
+    assert_equals(
+        firstCookie_TEST.value,
+        'value',
+        'First TEST cookie should have value "value"');
+    await promise_rejects_when_unsecured(
+        testCase,
+        new SyntaxError(),
+        setOneSimpleOriginSessionCookie(),
+        '__Host- prefix only writable from' +
+          ' secure contexts (setOneSimpleOriginSessionCookie)');
+    if (!IS_UNSECURED) {
+      assert_equals(
+          await getOneSimpleOriginCookie(),
+          'cookie-value',
+          '__Host-COOKIENAME cookie should be found' +
+            ' in a secure context (getOneSimpleOriginCookie)');
+    } else {
+      assert_equals(
+          await getOneSimpleOriginCookie(),
+          undefined,
+          '__Host-COOKIENAME cookie should not be found' +
+            ' in an unsecured context (getOneSimpleOriginCookie)');
+    }
+    if (!IS_UNSECURED) {
+      assert_equals(
+          await getOneSimpleOriginCookieAsync(),
+          'cookie-value',
+          '__Host-COOKIENAME cookie should be found' +
+            ' in a secure context (getOneSimpleOriginCookieAsync)');
+    } else {
+      assert_equals(
+          await getOneSimpleOriginCookieAsync(),
+          undefined,
+          '__Host-COOKIENAME cookie should not be found' +
+            ' in an unsecured context (getOneSimpleOriginCookieAsync)');
+    }
+    if (IS_UNSECURED) {
+      assert_equals(
+          await countMatchingSimpleOriginCookies(),
+          0,
+          'No __Host-COOKIEN* cookies should be found' +
+            ' in an unsecured context (countMatchingSimpleOriginCookies)');
+    } else {
+      assert_equals(
+          await countMatchingSimpleOriginCookies(),
+          1,
+          'One __Host-COOKIEN* cookie should be found' +
+            ' in a secur context (countMatchingSimpleOriginCookies)');
+    }
+    await promise_rejects_when_unsecured(
+        testCase,
+        new SyntaxError(),
+        setOneDaySecureCookieWithDate(),
+        'Secure cookies only writable' +
+          ' from secure contexts (setOneDaySecureCookieWithDate)');
+    await setOneDayUnsecuredCookieWithMillisecondsSinceEpoch();
+    assert_equals(
+        await getCookieString('LEGACYCOOKIENAME'),
+        'LEGACYCOOKIENAME=cookie-value',
+        'Ensure unsecured cookie we set is visible');
+    await deleteUnsecuredCookieWithDomainAndPath();
+    await promise_rejects_when_unsecured(
+        testCase,
+        new SyntaxError(),
+        setSecureCookieWithHttpLikeExpirationString(),
+        'Secure cookies only writable from secure contexts' +
+          ' (setSecureCookieWithHttpLikeExpirationString)');
+    await promise_rejects_when_unsecured(
+        testCase,
+        new SyntaxError(),
+        setThreeSimpleOriginSessionCookiesSequentially(),
+        '__Host- cookies only writable from secure contexts' +
+          ' (setThreeSimpleOriginSessionCookiesSequentially)');
+    await promise_rejects_when_unsecured(
+        testCase,
+        new SyntaxError(),
+        setThreeSimpleOriginSessionCookiesNonsequentially(),
+        '__Host- cookies only writable from secure contexts' +
+          ' (setThreeSimpleOriginSessionCookiesNonsequentially)');
+    await promise_rejects_when_unsecured(
+        testCase,
+        new SyntaxError(),
+        setExpiredSecureCookieWithDomainPathAndFallbackValue(),
+        'Secure cookies only writable from secure contexts' +
+          ' (setExpiredSecureCookieWithDomainPathAndFallbackValue)');
+    await promise_rejects_when_unsecured(
+        testCase,
+        new SyntaxError(),
+        deleteSimpleOriginCookie(),
+        '__Host- cookies only writable from secure contexts' +
+          ' (deleteSimpleOriginCookie)');
+    await promise_rejects_when_unsecured(
+        testCase,
+        new SyntaxError(),
+        deleteSecureCookieWithDomainAndPath(),
+        'Secure cookies only writable from secure contexts' +
+          ' (deleteSecureCookieWithDomainAndPath)');
+    if (IS_UNSECURED) {
+      assert_equals(
+          await getCookieString(),
+          'TEST=value',
+          'Only one unsecured cookie before cleanup at end of test');
+    } else {
+      assert_equals(
+          await getCookieString(),
+          'TEST=value; ' +
+            '__Host-🍪=🔵cookie-value1🔴; ' +
+            '__Host-🌟=🌠cookie-value2🌠; ' +
+            '__Host-🌱=🔶cookie-value3🔷; ' +
+            '__Host-unordered🍪=🔵unordered-cookie-value1🔴; ' +
+            '__Host-unordered🌟=🌠unordered-cookie-value2🌠; ' +
+            '__Host-unordered🌱=🔶unordered-cookie-value3🔷',
+          'All residual cookies before cleanup at end of test');
+    }
+    if (IS_UNSECURED) {
+      assert_equals(
+          await getCookieStringHttp(),
+          'TEST=value',
+          'Only one unsecured HTTP cookie before cleanup at end of test');
+    } else {
+      assert_equals(
+          await getCookieStringHttp(),
+          'TEST=value; ' +
+            '__Host-🍪=🔵cookie-value1🔴; ' +
+            '__Host-🌟=🌠cookie-value2🌠; ' +
+            '__Host-🌱=🔶cookie-value3🔷; ' +
+            '__Host-unordered🍪=🔵unordered-cookie-value1🔴; ' +
+            '__Host-unordered🌟=🌠unordered-cookie-value2🌠; ' +
+            '__Host-unordered🌱=🔶unordered-cookie-value3🔷',
+          'All residual HTTP cookies before cleanup at end of test');
+    }
+    if (IS_UNSECURED) {
+      assert_equals(
+          await getCookieStringDocument(),
+          'TEST=value',
+          'Only one unsecured document.cookie cookie' +
+            ' before cleanup at end of test');
+    } else {
+      assert_equals(
+          await getCookieStringDocument(),
+          'TEST=value; ' +
+            '__Host-🍪=🔵cookie-value1🔴; ' +
+            '__Host-🌟=🌠cookie-value2🌠; ' +
+            '__Host-🌱=🔶cookie-value3🔷; ' +
+            '__Host-unordered🍪=🔵unordered-cookie-value1🔴; ' +
+            '__Host-unordered🌟=🌠unordered-cookie-value2🌠; ' +
+            '__Host-unordered🌱=🔶unordered-cookie-value3🔷',
+          'All residual document.cookie cookies before cleanup at end of test');
+    }
+    unfinished = false;
+  } finally {
+    try {
+      await cookieStore.delete('');
+      await cookieStore.delete('TEST');
+      await cookieStore.delete('META-🍪');
+      await cookieStore.delete('DOCUMENT-🍪');
+      await cookieStore.delete('HTTP-🍪');
+      await setCookieStringHttp(
+          'HTTPONLY-🍪=DELETED; path=/; max-age=0; httponly');
+      await promise_rejects_when_unsecured(
+          testCase,
+          new SyntaxError(),
+          cookieStore.delete('__Host-COOKIENAME'));
+      await promise_rejects_when_unsecured(
+          testCase,
+          new SyntaxError(),
+          cookieStore.delete('__Host-🍪'));
+      await promise_rejects_when_unsecured(
+          testCase,
+          new SyntaxError(),
+          cookieStore.delete('__Host-🌟'));
+      await promise_rejects_when_unsecured(
+          testCase,
+          new SyntaxError(),
+          cookieStore.delete('__Host-🌱'));
+      await promise_rejects_when_unsecured(
+          testCase,
+          new SyntaxError(),
+          cookieStore.delete('__Host-unordered🍪'));
+      await promise_rejects_when_unsecured(
+          testCase,
+          new SyntaxError(),
+          cookieStore.delete('__Host-unordered🌟'));
+      await promise_rejects_when_unsecured(
+          testCase,
+          new SyntaxError(),
+          cookieStore.delete('__Host-unordered🌱'));
+      assert_equals(
+          await getCookieString(),
+          undefined,
+          'No cookies at end of test');
+      assert_equals(
+          await getCookieStringHttp(),
+          undefined,
+          'No HTTP cookies at end of test');
+    } catch (e) {
+      // only re-throw cleanup failures if finished to avoid masking earlier failures
+      if (!unfinished) throw e;
+    }
+  }
+}, 'All tests (async API)');
+
+let getOneSimpleOriginCookieAsync = async() => {
+  let cookie = await cookieStore.get('__Host-COOKIENAME');
+  if (!cookie) return undefined;
+  return cookie.value;
+};
+
+let countMatchingSimpleOriginCookies = async() => {
+  let cookieList = await cookieStore.getAll({
+    name: '__Host-COOKIEN',
+    matchType: 'startsWith'
+  });
+  console.log('How many matching cookies? %d', cookieList.length);
+  cookieList.forEach(({ name, value }) => console.log(
+      'Matching cookie %s has value %o', name, value));
+  return cookieList.length;
+};
+
+let setOneSimpleOriginSessionCookie = async() => {
+  await cookieStore.set('__Host-COOKIENAME', 'cookie-value');
+};
+
+let setOneDaySecureCookieWithDate = async() => {
+  // one day ahead, ignoring a possible leap-second
+  let inTwentyFourHours = new Date(Date.now() + 24 * 60 * 60 * 1000);
+  await cookieStore.set('__Secure-COOKIENAME', 'cookie-value', {
+    path: '/cgi-bin/',
+    expires: inTwentyFourHours,
+    secure: true,
+    domain: 'example.org'
+  });
+  console.log('Set!');
+};
+
+// FIXME: remove this once IFRAME puppets and ServiceWorker support
+// are implemented in the polyfill
+setOneDaySecureCookieWithDate =
+    eval(String(setOneDaySecureCookieWithDate).split(
+        '/cgi-bin/').join(location.pathname.replace(/[^/]+$/, '')));
+setOneDaySecureCookieWithDate =
+    eval(String(setOneDaySecureCookieWithDate).split(
+        'example.org').join(location.hostname));
+
+let setOneDayUnsecuredCookieWithMillisecondsSinceEpoch = async() => {
+  // one day ahead, ignoring a possible leap-second
+  let inTwentyFourHours = Date.now() + 24 * 60 * 60 * 1000;
+  await cookieStore.set('LEGACYCOOKIENAME', 'cookie-value', {
+    path: '/cgi-bin/',
+    expires: inTwentyFourHours,
+    secure: false,
+    domain: 'example.org'
+  });
+  console.log('Set!');
+};
+
+// FIXME: remove this once IFRAME puppets and ServiceWorker support
+// are implemented in the polyfill
+setOneDayUnsecuredCookieWithMillisecondsSinceEpoch =
+    eval(String(setOneDayUnsecuredCookieWithMillisecondsSinceEpoch).split(
+        '/cgi-bin/').join(location.pathname.replace(/[^/]+$/, '')));
+setOneDayUnsecuredCookieWithMillisecondsSinceEpoch =
+    eval(String(setOneDayUnsecuredCookieWithMillisecondsSinceEpoch).split(
+        'example.org').join(location.hostname));
+
+let deleteUnsecuredCookieWithDomainAndPath = async() => {
+  await cookieStore.delete('LEGACYCOOKIENAME', {
+    path: '/cgi-bin/',
+    secure: false,
+    domain: 'example.org'
+  });
+  console.log('Expired! Deleted!! Cleared!!1!');
+};
+
+// FIXME: remove this once IFRAME puppets and ServiceWorker support
+// are implemented in the polyfill
+deleteUnsecuredCookieWithDomainAndPath =
+    eval(String(deleteUnsecuredCookieWithDomainAndPath).split(
+        '/cgi-bin/').join(location.pathname.replace(/[^/]+$/, '')));
+deleteUnsecuredCookieWithDomainAndPath =
+    eval(String(deleteUnsecuredCookieWithDomainAndPath).split(
+        'example.org').join(location.hostname));
+
+let setSecureCookieWithHttpLikeExpirationString = async() => {
+  const year = (new Date()).getUTCFullYear() + 1;
+  const date = new Date('07 Jun ' + year + ' 07:07:07 UTC');
+  const day = ('Sun Mon Tue Wed Thu Fri Sat'.split(' '))[date.getUTCDay()];
+  await cookieStore.set('__Secure-COOKIENAME', 'cookie-value', {
+    path: '/cgi-bin/',
+    expires: day + ', 07 Jun ' + year + ' 07:07:07 GMT',
+    secure: true,
+    domain: 'example.org'
+  });
+  console.log('Set!');
+};
+
+// FIXME: remove this once IFRAME puppets and ServiceWorker support
+// are implemented in the polyfill
+setSecureCookieWithHttpLikeExpirationString =
+    eval(String(setSecureCookieWithHttpLikeExpirationString).split(
+        '/cgi-bin/').join(location.pathname.replace(/[^/]+$/, '')));
+setSecureCookieWithHttpLikeExpirationString =
+    eval(String(setSecureCookieWithHttpLikeExpirationString).split(
+        'example.org').join(location.hostname));
+
+let setThreeSimpleOriginSessionCookiesSequentially = async() => {
+  await cookieStore.set('__Host-🍪', '🔵cookie-value1🔴');
+  await cookieStore.set('__Host-🌟', '🌠cookie-value2🌠');
+  await cookieStore.set('__Host-🌱', '🔶cookie-value3🔷');
+  console.log('All set!');
+  // NOTE: this assumes no concurrent writes from elsewhere; it also
+  // uses three separate cookie jar read operations where a single getAll
+  // would be more efficient, but this way the CookieStore does the filtering
+  // for us.
+  let matchingValues = await Promise.all([ '🍪', '🌟', '🌱' ].map(
+      async ಠ_ಠ => (await cookieStore.get('__Host-' + ಠ_ಠ)).value));
+  let actual = matchingValues.join(';');
+  let expected = '🔵cookie-value1🔴;🌠cookie-value2🌠;🔶cookie-value3🔷';
+  if (actual !== expected) throw new Error(
+      'Expected ' + JSON.stringify(expected) +
+        ' but got ' + JSON.stringify(actual));
+  console.log('All verified!');
+};
+
+let setThreeSimpleOriginSessionCookiesNonsequentially = async() => {
+  await Promise.all([
+    cookieStore.set('__Host-unordered🍪', '🔵unordered-cookie-value1🔴'),
+    cookieStore.set('__Host-unordered🌟', '🌠unordered-cookie-value2🌠'),
+    cookieStore.set('__Host-unordered🌱', '🔶unordered-cookie-value3🔷')
+  ]);
+  console.log('All set!');
+  // NOTE: this assumes no concurrent writes from elsewhere; it also
+  // uses three separate cookie jar read operations where a single getAll
+  // would be more efficient, but this way the CookieStore does the filtering
+  // for us.
+  let matchingCookies = await Promise.all([ '🍪', '🌟', '🌱' ].map(
+      ಠ_ಠ => cookieStore.get('__Host-unordered' + ಠ_ಠ)));
+  let actual = matchingCookies.map(({ value }) => value).join(';');
+  let expected =
+      '🔵unordered-cookie-value1🔴;' +
+      '🌠unordered-cookie-value2🌠;' +
+      '🔶unordered-cookie-value3🔷';
+  if (actual !== expected) throw new Error(
+      'Expected ' + JSON.stringify(expected) +
+        ' but got ' + JSON.stringify(actual));
+  console.log('All verified!');
+};
+
+let setExpiredSecureCookieWithDomainPathAndFallbackValue = async() => {
+  let theVeryRecentPast = Date.now();
+  let expiredCookieSentinelValue = 'EXPIRED';
+  await cookieStore.set('__Secure-COOKIENAME', expiredCookieSentinelValue, {
+    path: '/cgi-bin/',
+    expires: theVeryRecentPast,
+    secure: true,
+    domain: 'example.org'
+  });
+  console.log('Expired! Deleted!! Cleared!!1!');
+};
+
+// FIXME: remove this once IFRAME puppets and ServiceWorker support
+// are implemented in the polyfill
+setExpiredSecureCookieWithDomainPathAndFallbackValue =
+    eval(String(setExpiredSecureCookieWithDomainPathAndFallbackValue).split(
+        '/cgi-bin/').join(location.pathname.replace(/[^/]+$/, '')));
+setExpiredSecureCookieWithDomainPathAndFallbackValue =
+    eval(String(setExpiredSecureCookieWithDomainPathAndFallbackValue).split(
+        'example.org').join(location.hostname));
+
+let deleteSimpleOriginCookie = async() => {
+  await cookieStore.delete('__Host-COOKIENAME');
+  console.log('Expired! Deleted!! Cleared!!1!');
+};
+
+let deleteSecureCookieWithDomainAndPath = async() => {
+  await cookieStore.delete('__Secure-COOKIENAME', {
+    path: '/cgi-bin/',
+    domain: 'example.org',
+    secure: true
+  });
+  console.log('Expired! Deleted!! Cleared!!1!');
+};
+
+// FIXME: remove this once IFRAME puppets and ServiceWorker support
+// are implemented in the polyfill
+deleteSecureCookieWithDomainAndPath =
+    eval(String(deleteSecureCookieWithDomainAndPath).split(
+        '/cgi-bin/').join(location.pathname.replace(/[^/]+$/, '')));
+deleteSecureCookieWithDomainAndPath =
+    eval(String(deleteSecureCookieWithDomainAndPath).split(
+        'example.org').join(location.hostname));
+
+let testObservation_ = resolve => {
+  // This will get invoked (asynchronously) shortly after the
+  // observe(...) call to provide an initial snapshot; in that case
+  // the length of cookieChanges may be 0, indicating no matching
+  // script-visible cookies for any URL+cookieStore currently
+  // observed. The CookieObserver instance is passed as the second
+  // parameter to allow additional calls to observe or disconnect.
+  let callback = (cookieChanges, observer) => {
+    console.log(
+        '%d script-visible cookie changes for CookieObserver %o',
+        cookieChanges.length,
+        observer);
+    cookieChanges.forEach(({ cookieStore, type, url, name, value, all }) => {
+      console.log(
+          'CookieChange type %s for observed url %s in CookieStore %o; all: %o',
+          type,
+          // Note that this will be the passed-in or defaulted value
+          // for the corresponding call to observe(...).
+          url,
+          // This is the same CookieStore passed to observe(...)
+          cookieStore,
+          // This means we do not need to maintain our own shadow
+          // cookie jar and disambiguates in cases where the same
+          // cookie name appears more than once in the store with
+          // differing scope
+          all);
+      switch (type) {
+        case 'visible':
+          // Creation or modification (e.g. change in value, or
+          // removal of HttpOnly), or appearance to script due to
+          // change in policy or permissions
+          console.log(
+              'Cookie %s now visible to script with value %s',
+              name,
+              value);
+          break;
+        case 'hidden':
+          // Deletion/expiration or disappearance (e.g. due to
+          // modification adding HttpOnly), or disappearance from
+          // script due to change in policy or permissions
+          console.log('Cookie %s expired or no longer visible to script', name);
+          break;
+        default:
+          console.error('Unexpected CookieChange type, ');
+          throw 'Unexpected CookieChange type ' + type;
+      }
+    });
+    // Resolve promise after first callback
+    if (resolve) resolve();
+    resolve = null;
+  };
+  let observer = new CookieObserver(callback);
+  // If null or omitted this defaults to location.pathname up to and
+  // including the final '/' in a document context, or worker scope up
+  // to and including the final '/' in a service worker context.
+  let url = (location.pathname).replace(/[^\/]+$/, '');
+  // If null or omitted this defaults to interest in all
+  // script-visible cookies.
+  let interests = [
+    // Interested in all secure cookies named '__Secure-COOKIENAME';
+    // the default matchType is 'equals' at the given URL.
+    { name: '__Secure-COOKIENAME', url: url },
+    // Interested in all simple origin cookies named like
+    // /^__Host-COOKIEN.*$/ at the default URL.
+    { name: '__Host-COOKIEN', matchType: 'startsWith' },
+    // Interested in all simple origin cookies named '__Host-🍪'
+    // at the default URL.
+    { name: '__Host-🍪' },
+    // Interested in all cookies named 'OLDCOOKIENAME' at the given URL.
+    { name: 'OLDCOOKIENAME', matchType: 'equals', url: url },
+    // Interested in all simple origin cookies named like
+    // /^__Host-AUTHTOKEN.*$/ at the given URL.
+    { name: '__Host-AUTHTOKEN', matchType: 'startsWith', url: url + 'auth/' }
+  ];
+  observer.observe(cookieStore, interests);
+  // Default interest: all script-visible changes, default URL
+  observer.observe(cookieStore);
+};
+
+// FIXME: remove this once IFRAME puppets and ServiceWorker support
+// are implemented in the polyfill
+testObservation_ = eval(String(testObservation_).split('auth/').join('auth'));
+
+let testObservation = () => new Promise(testObservation_);
+
+let testNoNameAndNoValue = async() => {
+  await cookieStore.set('', 'first-value');
+  let actual1 =
+      (await cookieStore.getAll('')).map(({ value }) => value).join(';');
+  let expected1 = 'first-value';
+  if (actual1 !== expected1) throw new Error(
+      'Expected ' + JSON.stringify(expected1) +
+        ' but got ' + JSON.stringify(actual1));
+  await cookieStore.set('', '');
+  let actual2 =
+      (await cookieStore.getAll('')).map(({ value }) => value).join(';');
+  let expected2 = '';
+  if (actual2 !== expected2) throw new Error(
+      'Expected ' + JSON.stringify(expected) +
+        ' but got ' + JSON.stringify(actual));
+  await cookieStore.delete('');
+};
+
+let testNoNameMultipleValues = async() => {
+  await cookieStore.set('', 'first-value');
+  let actual1 =
+      (await cookieStore.getAll('')).map(({ value }) => value).join(';');
+  let expected1 = 'first-value';
+  if (actual1 !== expected1) throw new Error(
+      'Expected ' + JSON.stringify(expected1) +
+        ' but got ' + JSON.stringify(actual1));
+  await cookieStore.set('', 'second-value');
+  let actual2 =
+      (await cookieStore.getAll('')).map(({ value }) => value).join(';');
+  let expected2 = 'second-value';
+  if (actual2 !== expected2) throw new Error(
+      'Expected ' + JSON.stringify(expected2) +
+        ' but got ' + JSON.stringify(actual2));
+  await cookieStore.delete('');
+};
+
+let testNoNameEqualsInValue = async() => {
+  await cookieStore.set('', 'first-value');
+  let actual1 =
+      (await cookieStore.getAll('')).map(({ value }) => value).join(';');
+  let expected1 = 'first-value';
+  if (actual1 !== expected1) throw new Error(
+      'Expected ' + JSON.stringify(expected1) +
+        ' but got ' + JSON.stringify(actual1));
+  try {
+    await cookieStore.set('', 'suspicious-value=resembles-name-and-value');
+  } catch (expectedError) {
+    let actual2 =
+        (await cookieStore.getAll('')).map(({ value }) => value).join(';');
+    let expected2 = 'first-value';
+    if (actual2 !== expected2) throw new Error(
+        'Expected ' + JSON.stringify(expected2) +
+          ' but got ' + JSON.stringify(actual2));
+    assert_equals(
+        await getCookieString(),
+        'first-value',
+        'Earlier cookie jar after rejected part of testNoNameEqualsInValue');
+    await cookieStore.delete('');
+    assert_equals(
+        await getCookieString(),
+        undefined,
+        'Empty cookie jar after cleanup in testNoNameEqualsInValue');
+    return;
+  }
+  throw new Error(
+      'Expected promise rejection' +
+        ' when setting a cookie with no name and "=" in value');
+};
+
+</script>

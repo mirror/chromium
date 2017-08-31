@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Async Cookes: Interoperability of document.cookie and cookieStore</title>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script src="../resources/testharness-helpers.js"></script>
+<!--
+ ! Document-based polyfill for bootstrapping; current version here:
+ ! https://github.com/WICG/async-cookies-api/raw/gh-pages/cookies.js
+ !-->
+<script src="cookie-store-polyfill.js"></script>
+<script>
+'use strict';
+
+// Meant to be far enough into the future that it won't happen before
+// the test ends.
+const EXPIRES_AT = Date.now() + (24 * 60 * 60 + 1) * 1000;
+
+// Set cookies on ORIGINAL_HOST, then move ourselves to TEST_HOST so
+// we can verify registrable domain and cross-origin behavior.
+if (location.hostname === '127.0.0.1') {
+
+  promise_test(async () => {
+    location.hostname = ORIGINAL_HOST;
+    return new Promise(_ => 'never resolves, wait for navigation');
+  }, 'Moving to ORIGINAL_HOST');
+
+} else if (location.hostname === ORIGINAL_HOST) {
+
+  promise_test(async () => {
+    await clearKnownCookies();
+    await cookieStore.set(STRICT_DOM, '1',
+                          { sameSite: 'Strict', expires: EXPIRES_AT });
+    await cookieStore.set(LAX_DOM, '1',
+                          { sameSite: 'Lax', expires: EXPIRES_AT });
+    await cookieStore.set(NORMAL_DOM, '1',
+                          { expires: EXPIRES_AT });
+    location.hostname = TEST_HOST;
+    return new Promise(_ => 'never resolves, wait for navigation');
+  }, 'Moving to TEST_HOST');
+
+} else {
+
+  promise_test(async testCase => {
+    await clearKnownCookies();
+    await clearKnownCookies({ domain: TEST_HOST });
+
+    assert_equals(document.cookie, '',
+                  'document.cookie empty at start of test');
+    assert_false(await cookieStore.has(),
+                 'cookieStore.has false at start of test');
+    assert_false(await cookieStore.has(STRICT_DOM),
+                 'cookiestore.has(...) false at start of test');
+    assert_false(await cookieStore.has(LAX_DOM),
+                 'cookiestore.has(...) false at start of test');
+    assert_false(await cookieStore.has(NORMAL_DOM),
+                 'cookiestore.has(...) false at start of test');
+    assert_equals(await cookieStore.get(), undefined,
+                  'cookiestore.get undefined at start of test');
+    assert_equals(await cookieStore.get(STRICT_DOM), undefined,
+                  'cookiestore.get(...) undefined at start of test');
+    assert_equals(await cookieStore.get(LAX_DOM), undefined,
+                  'cookiestore.get(...) undefined at start of test');
+    assert_equals(await cookieStore.get(NORMAL_DOM), undefined,
+                  'cookiestore.get(...) undefined at start of test');
+    assert_equals((await cookieStore.getAll()).length, 0,
+                  'cookieStore.getAll sees cookie jar empty at start of test');
+    assert_equals(
+	(await cookieStore.getAll(STRICT_DOM)).length,
+	0,
+        'cookieStore.getAll(...) sees cookie jar empty at start of test');
+    assert_equals(
+	(await cookieStore.getAll(LAX_DOM)).length,
+	0,
+        'cookieStore.getAll(...) sees cookie jar empty at start of test');
+    assert_equals(
+	(await cookieStore.getAll(NORMAL_DOM)).length,
+	0,
+        'cookieStore.getAll(...) sees cookie jar empty at start of test');
+
+    document.cookie = STRICT_DOM + '=2.1; SameSite=Strict; domain=' +
+        TEST_HOST + '; path=/';
+    document.cookie = LAX_DOM + '=2.2; SameSite=Lax; domain=' +
+        TEST_HOST + '; path=/';
+    document.cookie = NORMAL_DOM + '=2.3; domain=' +
+        TEST_HOST + '; path=/';
+
+    assert_equals(
+	document.cookie,
+        STRICT_DOM + '=2.1; ' + LAX_DOM + '=2.2; ' + NORMAL_DOM + '=2.3',
+        'all three SameSite options work with explicit domain');
+    assert_true(await cookieStore.has(),
+                'cookieStore.has true after cookie set');
+    assert_true(await cookieStore.has(STRICT_DOM),
+                'cookieStore.has(...) true after cookie set');
+    assert_true(await cookieStore.has(LAX_DOM),
+                'cookieStore.has(...) true after cookie set');
+    assert_true(await cookieStore.has(NORMAL_DOM),
+                'cookieStore.has(...) true after cookie set');
+    assert_equals((await cookieStore.get()).value, '2.1',
+                  'cookiestore.get works after cookie set');
+    assert_equals((await cookieStore.get(STRICT_DOM)).name, STRICT_DOM,
+                  'cookiestore.get(...) sees cookie name after cookie set');
+    assert_equals((await cookieStore.get(LAX_DOM)).name, LAX_DOM,
+                  'cookiestore.get(...) sees cookie name after cookie set');
+    assert_equals((await cookieStore.get(NORMAL_DOM)).name, NORMAL_DOM,
+                  'cookiestore.get(...) sees cookie name after cookie set');
+    assert_equals((await cookieStore.get(STRICT_DOM)).value, '2.1',
+                  'cookiestore.get(...) works after cookie set');
+    assert_equals((await cookieStore.get(LAX_DOM)).value, '2.2',
+                  'cookiestore.get(...) works after cookie set');
+    assert_equals((await cookieStore.get(NORMAL_DOM)).value, '2.3',
+                  'cookiestore.get(...) works after cookie set');
+    assert_equals(
+	(await cookieStore.getAll()).length, 3,
+        'cookieStore.getAll sees cookie jar entries after cookie set');
+    assert_equals(
+	(await cookieStore.getAll(STRICT_DOM)).length, 1,
+        'cookieStore.getAll(...) sees cookie jar entry after cookie set');
+    assert_equals(
+	(await cookieStore.getAll(LAX_DOM)).length, 1,
+        'cookieStore.getAll(...) sees cookie jar entry after cookie set');
+    assert_equals(
+	(await cookieStore.getAll(NORMAL_DOM)).length, 1,
+        'cookieStore.getAll(...) sees cookie jar entry after cookie set');
+    assert_equals(
+	(await cookieStore.getAll(STRICT_DOM))[0].name,
+        STRICT_DOM,
+        'cookieStore.getAll(...) sees cookie name after cookie set');
+    assert_equals(
+	(await cookieStore.getAll(LAX_DOM))[0].name,
+        LAX_DOM,
+        'cookieStore.getAll(...) sees cookie name after cookie set');
+    assert_equals((await cookieStore.getAll(NORMAL_DOM))[0].name,
+                  NORMAL_DOM,
+                  'cookieStore.getAll(...) sees cookie name after cookie set');
+    assert_equals((await cookieStore.getAll(STRICT_DOM))[0].value, '2.1',
+                  'cookieStore.getAll(...) sees cookie value after cookie set');
+    assert_equals((await cookieStore.getAll(LAX_DOM))[0].value, '2.2',
+                  'cookieStore.getAll(...) sees cookie value after cookie set');
+    assert_equals((await cookieStore.getAll(NORMAL_DOM))[0].value, '2.3',
+                  'cookieStore.getAll(...) sees cookie value after cookie set');
+
+    await clearKnownCookies();
+    await clearKnownCookies({ domain: TEST_HOST });
+
+    assert_equals(document.cookie, '',
+                  'document.cookie empty at end of test');
+    assert_false(await cookieStore.has(),
+                 'cookieStore.has false at end of test');
+    assert_false(await cookieStore.has(STRICT_DOM),
+                 'cookiestore.has(...) false at end of test');
+    assert_false(await cookieStore.has(LAX_DOM),
+                 'cookiestore.has(...) false at end of test');
+    assert_false(await cookieStore.has(NORMAL_DOM),
+                 'cookiestore.has(...) false at end of test');
+    assert_equals(await cookieStore.get(), undefined,
+                  'cookiestore.get undefined at end of test');
+    assert_equals(await cookieStore.get(STRICT_DOM), undefined,
+                  'cookiestore.get(...) undefined at end of test');
+    assert_equals(await cookieStore.get(LAX_DOM), undefined,
+                  'cookiestore.get(...) undefined at end of test');
+    assert_equals(await cookieStore.get(NORMAL_DOM), undefined,
+                  'cookiestore.get(...) undefined at end of test');
+    assert_equals((await cookieStore.getAll()).length, 0,
+                  'cookieStore.getAll sees cookie jar empty at end of test');
+    assert_equals(
+	(await cookieStore.getAll(STRICT_DOM)).length,
+	0,
+        'cookieStore.getAll(...) sees cookie jar empty at end of test');
+    assert_equals(
+	(await cookieStore.getAll(LAX_DOM)).length,
+	0,
+        'cookieStore.getAll(...) sees cookie jar empty at end of test');
+    assert_equals(
+	(await cookieStore.getAll(NORMAL_DOM)).length,
+	0,
+        'cookieStore.getAll(...) sees cookie jar empty at end of test');
+  }, 'document.cookie set visible to document.cookie and cookieStore APIs');
+
+  promise_test(async testCase => {
+    await clearKnownCookies();
+    await clearKnownCookies({ domain: TEST_HOST });
+
+    assert_equals(document.cookie, '',
+                  'document.cookie empty at start of test');
+    assert_false(await cookieStore.has(),
+                 'cookieStore.has false at start of test');
+    assert_false(await cookieStore.has(STRICT_DOM),
+                 'cookiestore.has(...) false at start of test');
+    assert_false(await cookieStore.has(LAX_DOM),
+                 'cookiestore.has(...) false at start of test');
+    assert_false(await cookieStore.has(NORMAL_DOM),
+                 'cookiestore.has(...) false at start of test');
+    assert_equals(await cookieStore.get(), undefined,
+                  'cookiestore.get undefined at start of test');
+    assert_equals(await cookieStore.get(STRICT_DOM), undefined,
+                  'cookiestore.get(...) undefined at start of test');
+    assert_equals(await cookieStore.get(LAX_DOM), undefined,
+                  'cookiestore.get(...) undefined at start of test');
+    assert_equals(await cookieStore.get(NORMAL_DOM), undefined,
+                  'cookiestore.get(...) undefined at start of test');
+    assert_equals(
+	(await cookieStore.getAll()).length,
+	0,
+        'cookieStore.getAll sees cookie jar empty at start of test');
+    assert_equals(
+	(await cookieStore.getAll(STRICT_DOM)).length,
+	0,
+        'cookieStore.getAll(...) sees cookie jar empty at start of test');
+    assert_equals(
+	(await cookieStore.getAll(LAX_DOM)).length,
+	0,
+        'cookieStore.getAll(...) sees cookie jar empty at start of test');
+    assert_equals(
+	(await cookieStore.getAll(NORMAL_DOM)).length,
+	0,
+        'cookieStore.getAll(...) sees cookie jar empty at start of test');
+
+    await cookieStore.set(STRICT_DOM, '3.1',
+                          { sameSite: 'Strict', domain: TEST_HOST });
+    await cookieStore.set(LAX_DOM, '3.2',
+                          { sameSite: 'Lax', domain: TEST_HOST });
+    await cookieStore.set(NORMAL_DOM, '3.3',
+                          { domain: TEST_HOST });
+
+    assert_equals(
+	document.cookie,
+        STRICT_DOM + '=3.1; ' + LAX_DOM + '=3.2; ' + NORMAL_DOM + '=3.3',
+        'all three SameSite options work with explicit domain');
+    assert_true(await cookieStore.has(),
+                'cookieStore.has true after cookie set');
+    assert_true(await cookieStore.has(STRICT_DOM),
+                'cookieStore.has(...) true after cookie set');
+    assert_true(await cookieStore.has(LAX_DOM),
+                'cookieStore.has(...) true after cookie set');
+    assert_true(await cookieStore.has(NORMAL_DOM),
+                'cookieStore.has(...) true after cookie set');
+    assert_equals((await cookieStore.get()).value, '3.1',
+                  'cookiestore.get works after cookie set');
+    assert_equals((await cookieStore.get(STRICT_DOM)).name, STRICT_DOM,
+                  'cookiestore.get(...) sees cookie name after cookie set');
+    assert_equals((await cookieStore.get(LAX_DOM)).name, LAX_DOM,
+                  'cookiestore.get(...) sees cookie name after cookie set');
+    assert_equals((await cookieStore.get(NORMAL_DOM)).name, NORMAL_DOM,
+                  'cookiestore.get(...) sees cookie name after cookie set');
+    assert_equals((await cookieStore.get(STRICT_DOM)).value, '3.1',
+                  'cookiestore.get(...) works after cookie set');
+    assert_equals((await cookieStore.get(LAX_DOM)).value, '3.2',
+                  'cookiestore.get(...) works after cookie set');
+    assert_equals((await cookieStore.get(NORMAL_DOM)).value, '3.3',
+                  'cookiestore.get(...) works after cookie set');
+    assert_equals(
+	(await cookieStore.getAll()).length,
+	3,
+        'cookieStore.getAll sees cookie jar entries after cookie set');
+    assert_equals(
+	(await cookieStore.getAll(STRICT_DOM)).length,
+	1,
+        'cookieStore.getAll(...) sees cookie jar entry after cookie set');
+    assert_equals(
+	(await cookieStore.getAll(LAX_DOM)).length,
+	1,
+        'cookieStore.getAll(...) sees cookie jar entry after cookie set');
+    assert_equals(
+	(await cookieStore.getAll(NORMAL_DOM)).length,
+	1,
+        'cookieStore.getAll(...) sees cookie jar entry after cookie set');
+    assert_equals(
+	(await cookieStore.getAll(STRICT_DOM))[0].name,
+        STRICT_DOM,
+        'cookieStore.getAll(...) sees cookie name after cookie set');
+    assert_equals(
+	(await cookieStore.getAll(LAX_DOM))[0].name,
+        LAX_DOM,
+        'cookieStore.getAll(...) sees cookie name after cookie set');
+    assert_equals(
+	(await cookieStore.getAll(NORMAL_DOM))[0].name,
+        NORMAL_DOM,
+        'cookieStore.getAll(...) sees cookie name after cookie set');
+    assert_equals(
+	(await cookieStore.getAll(STRICT_DOM))[0].value,
+	'3.1',
+        'cookieStore.getAll(...) sees cookie value after cookie set');
+    assert_equals(
+	(await cookieStore.getAll(LAX_DOM))[0].value,
+	'3.2',
+        'cookieStore.getAll(...) sees cookie value after cookie set');
+    assert_equals(
+	(await cookieStore.getAll(NORMAL_DOM))[0].value,
+	'3.3',
+        'cookieStore.getAll(...) sees cookie value after cookie set');
+
+    await clearKnownCookies();
+    await clearKnownCookies({ domain: TEST_HOST });
+
+    assert_equals(document.cookie, '',
+                  'document.cookie empty at end of test');
+    assert_false(await cookieStore.has(),
+                 'cookieStore.has false at end of test');
+    assert_equals(await cookieStore.get(), undefined,
+                  'cookiestore.get undefined at end of test');
+    assert_equals(await cookieStore.get(STRICT_DOM), undefined,
+                  'cookiestore.get(...) undefined at end of test');
+    assert_equals(await cookieStore.get(LAX_DOM), undefined,
+                  'cookiestore.get(...) undefined at end of test');
+    assert_equals(await cookieStore.get(NORMAL_DOM), undefined,
+                  'cookiestore.get(...) undefined at end of test');
+    assert_equals((await cookieStore.getAll()).length, 0,
+                  'cookieStore.getAll sees cookie jar empty at end of test');
+    assert_equals(
+	(await cookieStore.getAll(STRICT_DOM)).length,
+	0,
+        'cookieStore.getAll(...) sees cookie jar empty at end of test');
+    assert_equals(
+	(await cookieStore.getAll(LAX_DOM)).length, 0,
+        'cookieStore.getAll(...) sees cookie jar empty at end of test');
+    assert_equals(
+	(await cookieStore.getAll(NORMAL_DOM)).length, 0,
+        'cookieStore.getAll(...) sees cookie jar empty at end of test');
+  }, 'cookieStore get/getAll/set and sameSite <=> document.cookie');
+
+}
+
+</script>
