@@ -65,9 +65,147 @@ NSString* const kOmniboxFadeAnimationKey = @"OmniboxFadeAnimation";
 }  // namespace
 
 @interface OmniboxTextFieldIOS ()
-
+@property(nonatomic, strong) UIStackView* stackView;
 // Current image id used in left view.
 @property(nonatomic, assign) NSUInteger leftViewImageId;
+
+@end
+
+@implementation OmniboxTextFieldIOS
+@synthesize textField = _textField;
+@synthesize stackView = _stackView;
+@synthesize leftView = _leftView;
+@synthesize rightView = _rightView;
+@synthesize leftViewMode = _leftViewMode;
+@synthesize rightViewMode = _rightViewMode;
+@synthesize leftViewImageId = _leftViewImageId;
+
+- (instancetype)initWithFrame:(CGRect)frame {
+  return [self initWithFrame:frame
+                        font:[UIFont systemFontOfSize:kFontSize]
+                   textColor:TextColor()
+                   tintColor:nil];
+}
+
+- (instancetype)initWithFrame:(CGRect)frame
+                         font:(UIFont*)font
+                    textColor:(UIColor*)textColor
+                    tintColor:(UIColor*)tintColor {
+  self = [super initWithFrame:frame];
+  if (self) {
+    _stackView = [[UIStackView alloc] init];
+    _textField = [[AutocompleteTextField alloc] initWithFrame:frame
+                                                         font:font
+                                                    textColor:textColor
+                                                    tintColor:tintColor];
+    [self addSubview:_stackView];
+    [_stackView addArrangedSubview:_textField];
+  }
+  return self;
+}
+
+- (void)layoutSubviews {
+  [super layoutSubviews];
+  self.stackView.frame = self.bounds;
+}
+
+#pragma mark - properties
+
+- (void)setLeftView:(UIView*)leftView {
+  if (_leftView) {
+    [self.stackView removeArrangedSubview:_leftView];
+  }
+
+  if (leftView) {
+    [self.stackView insertArrangedSubview:leftView atIndex:0];
+  }
+
+  _leftView = leftView;
+}
+
+- (void)setRightView:(UIView*)rightView {
+  if (_rightView) {
+    [self.stackView removeArrangedSubview:_rightView];
+  }
+
+  if (rightView) {
+    [self.stackView
+        addArrangedSubview:rightView];  // adds to last index automatically.
+  }
+
+  _rightView = rightView;
+}
+
+#pragma mark - layout
+
+- (void)enableLeftViewButton:(BOOL)isEnabled {
+  if ([self leftView])
+    [(UIButton*)[self leftView] setEnabled:isEnabled];
+}
+
+#pragma mark - Placeholder image handling methods.
+
+- (void)setPlaceholderImage:(int)imageId {
+  _leftViewImageId = imageId;
+  [self updateLeftView];
+}
+
+- (void)showPlaceholderImage {
+  [self setLeftViewMode:UITextFieldViewModeAlways];
+}
+
+- (void)hidePlaceholderImage {
+  [self setLeftViewMode:UITextFieldViewModeNever];
+}
+
+- (void)updateLeftView {
+  UIButton* leftViewButton = (UIButton*)self.leftView;
+
+  // For iPhone, the left view is only updated when not in editing mode (i.e.
+  // the text field is not first responder).
+  if (_leftViewImageId && (IsIPadIdiom() || ![self isFirstResponder])) {
+    UIImage* image = [NativeImage(_leftViewImageId)
+        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    UIImageView* imageView = [[UIImageView alloc] initWithImage:image];
+    [leftViewButton setImage:imageView.image forState:UIControlStateNormal];
+    [leftViewButton setTitle:nil forState:UIControlStateNormal];
+    UIColor* tint = [UIColor whiteColor];
+    if (!self.textField.incognito) {
+      switch (_leftViewImageId) {
+        case IDR_IOS_LOCATION_BAR_HTTP:
+          tint = [UIColor darkGrayColor];
+          break;
+        case IDR_IOS_OMNIBOX_HTTPS_VALID:
+          tint = skia::UIColorFromSkColor(gfx::kGoogleGreen700);
+          break;
+        case IDR_IOS_OMNIBOX_HTTPS_POLICY_WARNING:
+          tint = skia::UIColorFromSkColor(gfx::kGoogleYellow700);
+          break;
+        case IDR_IOS_OMNIBOX_HTTPS_INVALID:
+          tint = skia::UIColorFromSkColor(gfx::kGoogleRed700);
+          break;
+        default:
+          tint = [UIColor darkGrayColor];
+      }
+    }
+    [leftViewButton setTintColor:tint];
+  } else {
+    // Reset the chip text.
+    [leftViewButton setTitle:nil forState:UIControlStateNormal];
+  }
+  // Normally this isn't needed, but there is a bug in iOS 7.1+ where setting
+  // the image while disabled doesn't always honor UIControlStateNormal.
+  // crbug.com/355077
+  [leftViewButton setNeedsLayout];
+
+  [leftViewButton sizeToFit];
+  self.textField.leftView.isAccessibilityElement =
+      self.textField.attributedText.length != 0 && leftViewButton.isEnabled;
+}
+
+@end
+
+@interface AutocompleteTextField ()
 
 // Gets the bounds of the rect covering the URL.
 - (CGRect)preEditLabelRectForBounds:(CGRect)bounds;
@@ -78,8 +216,6 @@ NSString* const kOmniboxFadeAnimationKey = @"OmniboxFadeAnimation";
 // to contain the correct inline autocomplete text.
 - (void)setTextInternal:(NSAttributedString*)text
      autocompleteLength:(NSUInteger)autocompleteLength;
-// Display an image or chip text in the left accessory view.
-- (void)updateLeftView;
 // Override deleteBackward so that backspace can clear query refinement chips.
 - (void)deleteBackward;
 // Returns the layers affected by animations added by |-animateFadeWithStyle:|.
@@ -95,7 +231,7 @@ NSString* const kOmniboxFadeAnimationKey = @"OmniboxFadeAnimation";
 #pragma mark -
 #pragma mark OmniboxTextFieldIOS
 
-@implementation OmniboxTextFieldIOS {
+@implementation AutocompleteTextField {
   UILabel* _selection;
   UILabel* _preEditStaticLabel;
   UIFont* _font;
@@ -103,7 +239,6 @@ NSString* const kOmniboxFadeAnimationKey = @"OmniboxFadeAnimation";
   UIColor* _displayedTintColor;
 }
 
-@synthesize leftViewImageId = _leftViewImageId;
 @synthesize preEditText = _preEditText;
 @synthesize clearingPreEditText = _clearingPreEditText;
 @synthesize selectedTextBackgroundColor = _selectedTextBackgroundColor;
@@ -324,11 +459,6 @@ NSString* const kOmniboxFadeAnimationKey = @"OmniboxFadeAnimation";
   return !![self preEditText];
 }
 
-- (void)enableLeftViewButton:(BOOL)isEnabled {
-  if ([self leftView])
-    [(UIButton*)[self leftView] setEnabled:isEnabled];
-}
-
 - (NSString*)nsDisplayedText {
   if (_selection)
     return [_selection text];
@@ -382,51 +512,6 @@ NSString* const kOmniboxFadeAnimationKey = @"OmniboxFadeAnimation";
   [_selection setBackgroundColor:[UIColor clearColor]];
   [self addSubview:_selection];
   [self hideTextAndCursor];
-}
-
-- (void)updateLeftView {
-  UIButton* leftViewButton = (UIButton*)self.leftView;
-
-  // For iPhone, the left view is only updated when not in editing mode (i.e.
-  // the text field is not first responder).
-  if (_leftViewImageId && (IsIPadIdiom() || ![self isFirstResponder])) {
-    UIImage* image = [NativeImage(_leftViewImageId)
-        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    UIImageView* imageView = [[UIImageView alloc] initWithImage:image];
-    [leftViewButton setImage:imageView.image forState:UIControlStateNormal];
-    [leftViewButton setTitle:nil forState:UIControlStateNormal];
-    UIColor* tint = [UIColor whiteColor];
-    if (!_incognito) {
-      switch (_leftViewImageId) {
-        case IDR_IOS_LOCATION_BAR_HTTP:
-          tint = [UIColor darkGrayColor];
-          break;
-        case IDR_IOS_OMNIBOX_HTTPS_VALID:
-          tint = skia::UIColorFromSkColor(gfx::kGoogleGreen700);
-          break;
-        case IDR_IOS_OMNIBOX_HTTPS_POLICY_WARNING:
-          tint = skia::UIColorFromSkColor(gfx::kGoogleYellow700);
-          break;
-        case IDR_IOS_OMNIBOX_HTTPS_INVALID:
-          tint = skia::UIColorFromSkColor(gfx::kGoogleRed700);
-          break;
-        default:
-          tint = [UIColor darkGrayColor];
-      }
-    }
-    [leftViewButton setTintColor:tint];
-  } else {
-    // Reset the chip text.
-    [leftViewButton setTitle:nil forState:UIControlStateNormal];
-  }
-  // Normally this isn't needed, but there is a bug in iOS 7.1+ where setting
-  // the image while disabled doesn't always honor UIControlStateNormal.
-  // crbug.com/355077
-  [leftViewButton setNeedsLayout];
-
-  [leftViewButton sizeToFit];
-  self.leftView.isAccessibilityElement =
-      self.attributedText.length != 0 && leftViewButton.isEnabled;
 }
 
 - (void)deleteBackward {
@@ -904,20 +989,7 @@ NSString* const kOmniboxFadeAnimationKey = @"OmniboxFadeAnimation";
                                   [self fadeAnimationLayers]);
 }
 
-#pragma mark - Placeholder image handling methods.
 
-- (void)setPlaceholderImage:(int)imageId {
-  _leftViewImageId = imageId;
-  [self updateLeftView];
-}
-
-- (void)showPlaceholderImage {
-  [self setLeftViewMode:UITextFieldViewModeAlways];
-}
-
-- (void)hidePlaceholderImage {
-  [self setLeftViewMode:UITextFieldViewModeNever];
-}
 
 #pragma mark - Copy/Paste
 

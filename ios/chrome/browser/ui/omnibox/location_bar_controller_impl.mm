@@ -196,7 +196,7 @@ void LocationBarControllerImpl::OnChanged() {
 
   NSString* placeholderText =
       show_hint_text_ ? l10n_util::GetNSString(IDS_OMNIBOX_EMPTY_HINT) : nil;
-  [field_ setPlaceholder:placeholderText];
+  [field_.textField setPlaceholder:placeholderText];
 }
 
 bool LocationBarControllerImpl::IsShowingPlaceholderWhileCollapsed() {
@@ -226,7 +226,7 @@ void LocationBarControllerImpl::OnKillFocus() {
   // Show the placeholder text on iPad.
   if (IsIPadIdiom()) {
     NSString* placeholderText = l10n_util::GetNSString(IDS_OMNIBOX_EMPTY_HINT);
-    [field_ setPlaceholder:placeholderText];
+    [field_.textField setPlaceholder:placeholderText];
   }
 
   UpdateRightDecorations();
@@ -245,7 +245,7 @@ void LocationBarControllerImpl::OnSetFocus() {
 
   // Hide the placeholder text on iPad.
   if (IsIPadIdiom()) {
-    [field_ setPlaceholder:nil];
+    [field_.textField setPlaceholder:nil];
   }
   UpdateRightDecorations();
   [delegate_ locationBarHasBecomeFirstResponder];
@@ -269,6 +269,7 @@ void LocationBarControllerImpl::InstallLocationIcon() {
   UIImage* image = NativeImage(IDR_IOS_OMNIBOX_SEARCH);
   [button setImage:image forState:UIControlStateNormal];
   [button setFrame:CGRectMake(0, 0, image.size.width, image.size.height)];
+  [button.widthAnchor constraintEqualToConstant:image.size.width].active = YES;
   [button addTarget:nil
                 action:@selector(chromeExecuteCommand:)
       forControlEvents:UIControlEventTouchUpInside];
@@ -282,14 +283,13 @@ void LocationBarControllerImpl::InstallLocationIcon() {
   [button setTitleColor:[UIColor colorWithWhite:0.631 alpha:1]
                forState:UIControlStateNormal];
   [button titleLabel].font = [[MDCTypography fontLoader] regularFontOfSize:12];
-  [field_ setLeftView:button];
 
   // The placeholder image is only shown when in edit mode on iPhone, and always
   // shown on iPad.
   if (IsIPadIdiom())
-    [field_ setLeftViewMode:UITextFieldViewModeAlways];
+    [field_ setLeftView:button];
   else
-    [field_ setLeftViewMode:UITextFieldViewModeNever];
+    [field_ setLeftView:button];
 }
 
 void LocationBarControllerImpl::CreateClearTextIcon(bool is_incognito) {
@@ -325,7 +325,7 @@ void LocationBarControllerImpl::UpdateRightDecorations() {
     // omnibox animation is completed.
     if (IsIPadIdiom())
       [field_ setRightView:nil];
-  } else if ([field_ displayedText].empty()) {
+  } else if ([field_.textField displayedText].empty()) {
     [field_ setRightView:nil];
   } else {
     [field_ setRightView:clear_text_button_];
