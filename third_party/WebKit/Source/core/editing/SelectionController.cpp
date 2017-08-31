@@ -296,6 +296,8 @@ bool SelectionController::HandleSingleClick(
 
   const VisiblePositionInFlatTree& visible_hit_pos =
       VisiblePositionOfHitTestResult(event.GetHitTestResult());
+  // We shouldn't store visible_pos across potential DOM changes. See
+  // crbug.com/648949.
   const VisiblePositionInFlatTree& visible_pos =
       visible_hit_pos.IsNull()
           ? CreateVisiblePosition(
@@ -377,17 +379,26 @@ bool SelectionController::HandleSingleClick(
       is_handle_visible = event.Event().FromTouch();
   }
 
-  UpdateSelectionForMouseDownDispatchingSelectStart(
-      inner_node,
-      ExpandSelectionToRespectUserSelectAll(
-          inner_node, SelectionInFlatTree::Builder()
-                          .Collapse(visible_pos.ToPositionWithAffinity())
-                          .Build()),
-      TextGranularity::kCharacter,
-      is_handle_visible ? HandleVisibility::kVisible
-                        : HandleVisibility::kNotVisible);
+  // This applies the JavaScript selectstart handler, which can change the DOM.
+  if (!UpdateSelectionForMouseDownDispatchingSelectStart(
+          inner_node,
+          ExpandSelectionToRespectUserSelectAll(
+              inner_node, SelectionInFlatTree::Builder()
+                              .Collapse(visible_pos.ToPositionWithAffinity())
+                              .Build()),
+          TextGranularity::kCharacter,
+          is_handle_visible ? HandleVisibility::kVisible
+                            : HandleVisibility::kNotVisible)) {
+    // UpdateSelectionForMouseDownDispatchingSelectStart() returns false when
+    // the selectstart handler has prevented the default selection behavior from
+    // occurring.
+    return false;
+  }
 
-  if (has_editable_style && event.Event().FromTouch()) {
+  // SelectionControllerTest_SetCaretAtHitTestResultWithDisconnectedPosition
+  // makes the IsValidFor() check fail.
+  if (has_editable_style && event.Event().FromTouch() &&
+      visible_pos.IsValidFor(*frame_->GetDocument())) {
     frame_->GetTextSuggestionController().HandlePotentialMisspelledWordTap(
         visible_pos.DeepEquivalent());
   }
