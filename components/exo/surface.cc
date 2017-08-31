@@ -730,7 +730,7 @@ void Surface::AppendContentsToFrame(const gfx::Point& origin,
       gfx::Transform(buffer_to_target_matrix),
       gfx::Rect(content_size_) /* quad_layer_rect */,
       output_rect /* visible_quad_layer_rect */, gfx::Rect() /* clip_rect */,
-      false /* is_clipped */, state_.alpha /* opacity */,
+      false /* is_clipped */, true, state_.alpha /* opacity */,
       SkBlendMode::kSrcOver /* blend_mode */, 0 /* sorting_context_id */);
 
   if (current_resource_.id) {
