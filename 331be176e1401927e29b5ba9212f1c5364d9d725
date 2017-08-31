@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75ce1eeb_491e433b",
+        "filename": "chrome/browser/android/vr_shell/vr_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-31T18:23:56Z",
+      "side": 1,
+      "message": "nit: Add a comment saying that fling replaces scrollend?",
+      "range": {
+        "startLine": 309,
+        "startChar": 6,
+        "endLine": 309,
+        "endChar": 31
+      },
+      "revId": "331be176e1401927e29b5ba9212f1c5364d9d725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
