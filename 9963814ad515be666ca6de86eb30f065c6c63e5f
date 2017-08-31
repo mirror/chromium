@@ -22,6 +22,30 @@
       "revId": "9963814ad515be666ca6de86eb30f065c6c63e5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaf6af10_c2c50b13",
+        "filename": "testing/buildbot/filters/fuchsia.base_unittests.filter",
+        "patchSetId": 11
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-31T19:17:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32b77ada_3d6be075",
+      "range": {
+        "startLine": 56,
+        "startChar": 20,
+        "endLine": 56,
+        "endChar": 21
+      },
+      "revId": "9963814ad515be666ca6de86eb30f065c6c63e5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
