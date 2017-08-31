@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69d402dd_4546b110",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkersView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-08-31T21:50:39Z",
+      "side": 1,
+      "message": "IMHO, it is more intuitive if the \"www\" URL prefix is ignored. e.g. this patch shows service workers in the following order:\n\npodle.audio\nwww.google.com\nwww.pokedex.org\n\nSuggested order:\nwww.google.com\npodle.audio\nwww.pokedex.org",
+      "revId": "f30ee87416ab1f86f37e56c20336e602eb174e34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
