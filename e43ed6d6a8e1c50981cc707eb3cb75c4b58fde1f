@@ -22,6 +22,30 @@
       "revId": "e43ed6d6a8e1c50981cc707eb3cb75c4b58fde1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a2643db_db18f39b",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 17
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-08-31T01:14:24Z",
+      "side": 1,
+      "message": "Using weakSelf here allows TableView to be deallocated by others (before the animation finished) and allows us to skip the animation earlier when it happened.  It is also a safe approach to prevent the potential retaining cycle with a very little cost.\nThe following also uses weakSelf when stopping the spinner background:\nhttps://cs.chromium.org/chromium/src/ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm?l\u003d808\nAny thoughts?  thx.",
+      "parentUuid": "fc7fa8d5_c67ddfef",
+      "range": {
+        "startLine": 566,
+        "startChar": 30,
+        "endLine": 566,
+        "endChar": 38
+      },
+      "revId": "e43ed6d6a8e1c50981cc707eb3cb75c4b58fde1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
