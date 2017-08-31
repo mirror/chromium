@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85894483_3ad46dcc",
+        "filename": "content/browser/appcache/appcache_update_job.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 1302,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-31T18:33:54Z",
+      "side": 1,
+      "message": "I think we might/need want the call to SetUpdateAppCacheStatus(AppCacheGroup::IDLE) here too since this is another path to the COMPLETED state.",
+      "revId": "1cee5cf445174986a714cfb4b5886ee17827b195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

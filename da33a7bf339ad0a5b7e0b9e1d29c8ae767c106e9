@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e23893ef_34ba461c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 15
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-31T18:33:54Z",
+      "side": 1,
+      "message": "please adjust the line wraps before committing",
+      "revId": "da33a7bf339ad0a5b7e0b9e1d29c8ae767c106e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
