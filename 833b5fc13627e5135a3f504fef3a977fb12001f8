@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ccdef74e_5e3e9f4c",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-31T22:57:04Z",
+      "side": 1,
+      "message": "() still not needed",
+      "range": {
+        "startLine": 436,
+        "startChar": 8,
+        "endLine": 436,
+        "endChar": 9
+      },
+      "revId": "833b5fc13627e5135a3f504fef3a977fb12001f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed307905_e4d1c66f",
+        "filename": "components/exo/surface_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-31T22:57:04Z",
+      "side": 1,
+      "message": "end comment with \".\" and remove \"to 2\" part as that\u0027s no longer correct",
+      "range": {
+        "startLine": 41,
+        "startChar": 7,
+        "endLine": 41,
+        "endChar": 39
+      },
+      "revId": "833b5fc13627e5135a3f504fef3a977fb12001f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8bbdb6c_423cd63e",
+        "filename": "components/exo/surface_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-31T22:57:04Z",
+      "side": 1,
+      "message": "can you replace 1.5 with 1.25f. that\u0027s more common on chromeos devices",
+      "range": {
+        "startLine": 69,
+        "startChar": 61,
+        "endLine": 69,
+        "endChar": 64
+      },
+      "revId": "833b5fc13627e5135a3f504fef3a977fb12001f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
