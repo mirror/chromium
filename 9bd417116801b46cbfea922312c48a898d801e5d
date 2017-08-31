@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bc9f2307_2963c86e",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/make_css_property_api_headers.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-08-31T01:51:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bcbc29e0_c2257fbb",
+      "revId": "9bd417116801b46cbfea922312c48a898d801e5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c416679a_06cb4f7a",
         "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPISubclass.h.tmpl",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-31T00:49:18Z",
       "side": 1,
       "message": "this will include all these headers into all of the api subclass headers, where many of them don\u0027t need all these. which is not ideal. but i can\u0027t think of a simple solution to this problem. perhaps make a note here of which #includes are added here because they are needed by some particular subclass?",
+      "revId": "9bd417116801b46cbfea922312c48a898d801e5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eb85b19_79da5272",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPISubclass.h.tmpl",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-08-31T01:51:02Z",
+      "side": 1,
+      "message": "I\u0027ve added a TODO, but I don\u0027t think it\u0027s necessary to list dependent classes for each header file.",
+      "parentUuid": "c416679a_06cb4f7a",
       "revId": "9bd417116801b46cbfea922312c48a898d801e5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
