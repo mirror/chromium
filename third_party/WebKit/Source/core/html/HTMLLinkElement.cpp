@@ -73,6 +73,13 @@ void HTMLLinkElement::ParseAttribute(
     rel_list_->DidUpdateAttributeValue(params.old_value, value);
     Process();
   } else if (name == hrefAttr) {
+    bool was_link = IsLink();
+    SetIsLink(!params.new_value.IsNull());
+    if (was_link || IsLink()) {
+      PseudoStateChanged(CSSSelector::kPseudoLink);
+      PseudoStateChanged(CSSSelector::kPseudoVisited);
+      PseudoStateChanged(CSSSelector::kPseudoAnyLink);
+    }
     // Log href attribute before logging resource fetching in process().
     LogUpdateAttributeIfIsolatedWorldAndInDocument("link", params);
     Process();

@@ -217,6 +217,11 @@ TEST_F(DocumentLoadingRenderingTest, ShouldScheduleFrameAfterSheetsLoaded) {
   auto* element = GetDocument().getElementById("link");
   EXPECT_NE(nullptr, element);
   element->setAttribute(HTMLNames::hrefAttr, "second.css");
+  // Modifying href schedules style invalidations for :link, :visited, and
+  // :any-link.
+  EXPECT_TRUE(Compositor().NeedsBeginFrame());
+
+  Compositor().BeginFrame();
   EXPECT_FALSE(Compositor().NeedsBeginFrame());
 
   second_css_resource.Complete("body { color: red; }");
