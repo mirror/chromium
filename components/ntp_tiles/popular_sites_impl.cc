@@ -301,7 +301,17 @@ GURL PopularSitesImpl::GetURLToFetch() {
   const std::string directory = GetDirectoryToFetch();
   const std::string country = GetCountryToFetch();
   const std::string version = GetVersionToFetch();
-  base::StringToInt(version, &version_in_pending_url_);
+
+  if (!base::StringToInt(version, &version_in_pending_url_)) {
+    // StringToInt always converts the given string. If the leading digits are
+    // not a valid number, it defaults to 0.
+    if (version_in_pending_url_ <= 0) {
+      base::StringToInt(kPopularSitesDefaultVersion, &version_in_pending_url_);
+      LOG(WARNING) << "The set version \"" << version << "\" does not start "
+                   << "with a valid version number. Default version was used "
+                   << "instead (" << kPopularSitesDefaultVersion << ").";
+    }
+  }
 
   const GURL override_url =
       GURL(prefs_->GetString(ntp_tiles::prefs::kPopularSitesOverrideURL));
