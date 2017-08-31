@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5e1fe16_88000725",
+        "filename": "ppapi/proxy/platform_verification_private_resource.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-08-31T19:24:45Z",
+      "side": 1,
+      "message": "Do we need to fix this as well?",
+      "revId": "13282ca83aceb973724050b4abd177c6fdfc7be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e4dd350_7ff9a602",
+        "filename": "ppapi/proxy/platform_verification_private_resource.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-08-31T19:24:45Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 96,
+        "startChar": 39,
+        "endLine": 96,
+        "endChar": 44
+      },
+      "revId": "13282ca83aceb973724050b4abd177c6fdfc7be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
