@@ -4022,7 +4022,7 @@ crbug.com/591099 external/wpt/html/the-xhtml-syntax/parsing-xhtml-documents/xhtm
 crbug.com/591099 external/wpt/html/the-xhtml-syntax/parsing-xhtml-documents/xhtml-mathml-dtd-entity-8.htm [ Crash Timeout ]
 crbug.com/591099 external/wpt/html/the-xhtml-syntax/parsing-xhtml-documents/xhtml-mathml-dtd-entity-9.htm [ Timeout ]
 crbug.com/591099 external/wpt/http/basic-auth-cache-test.html [ Crash Timeout ]
-crbug.com/591099 external/wpt/imagebitmap/createImageBitmap-invalid-args.html [ Failure ]
+crbug.com/591099 external/wpt/2dcontext/imagebitmap/createImageBitmap-invalid-args.html [ Failure ]
 crbug.com/591099 external/wpt/innerText/getter.html [ Crash Failure ]
 crbug.com/591099 external/wpt/intersection-observer/edge-inclusive-intersection.html [ Failure ]
 crbug.com/591099 external/wpt/intersection-observer/remove-element.html [ Failure ]
