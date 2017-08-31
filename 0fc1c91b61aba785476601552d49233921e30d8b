@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bce12892_2eccfd74",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-08-31T18:20:52Z",
+      "side": 1,
+      "message": "Done.\nIsUserPrimary() is added just a few days ago. Thus I did not use it here for now to avoid merge conflicts for M61. Will add a note in the bug to remind myself to update the usage in the future refactor.",
+      "parentUuid": "207896ff_c6738671",
+      "revId": "0fc1c91b61aba785476601552d49233921e30d8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b3cb2689_9ddbcf13",
         "filename": "ash/shelf/app_list_button.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "1512260a_ed7b50e6",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-08-31T18:20:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3cb2689_9ddbcf13",
+      "revId": "0fc1c91b61aba785476601552d49233921e30d8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a02b6d89_01042e8f",
         "filename": "ash/shelf/app_list_button_unittest.cc",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-30T23:41:38Z",
       "side": 1,
       "message": "I like how the screens are different sizes and offsets.",
+      "revId": "0fc1c91b61aba785476601552d49233921e30d8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bb69925_7754d4cf",
+        "filename": "ash/shelf/app_list_button_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-08-31T18:20:52Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "a02b6d89_01042e8f",
       "revId": "0fc1c91b61aba785476601552d49233921e30d8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "00f12bc3_e695dce8",
+        "filename": "ash/shelf/app_list_button_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-08-31T18:20:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ddb122e5_9f395684",
+      "revId": "0fc1c91b61aba785476601552d49233921e30d8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52d832fa_6b828fb6",
         "filename": "ash/shell.cc",
         "patchSetId": 1
@@ -84,6 +156,24 @@
       "revId": "0fc1c91b61aba785476601552d49233921e30d8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdc7a1a1_662c0d2e",
+        "filename": "ash/shell.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-08-31T18:20:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52d832fa_6b828fb6",
+      "revId": "0fc1c91b61aba785476601552d49233921e30d8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "0ba4f712_ec5f398a",
+        "filename": "ash/shell.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-08-31T18:20:52Z",
+      "side": 1,
+      "message": "I called it \"settings_enalbed\" since there\u0027s already a chromeos swtich named \"IsVoiceInteractionEnabled\". I added the TODO for now and will add the note in the bug once we decide to keep the \"settings_enalbed\" name.",
+      "parentUuid": "cb0e5d21_e5044d6c",
+      "revId": "0fc1c91b61aba785476601552d49233921e30d8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d4346a80_c86a5503",
         "filename": "ash/shell.h",
         "patchSetId": 1
@@ -118,6 +226,24 @@
       "revId": "0fc1c91b61aba785476601552d49233921e30d8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "385a52bc_7da77d89",
+        "filename": "ash/shell.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-08-31T18:20:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4346a80_c86a5503",
+      "revId": "0fc1c91b61aba785476601552d49233921e30d8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
