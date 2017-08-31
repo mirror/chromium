@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7ff3d666_40b69574",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/accelerometer/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-08-31T21:44:08Z",
+      "side": 1,
+      "message": "What do the WPT bots do w/ the OWNERS files, i.e., why do they even care? I would much rather be able to re-use the file: syntax if possible.",
+      "parentUuid": "029784f6_560466ba",
+      "revId": "060c3094039409f34de7fa9ba6954f3ffce26fca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "30cf215e_0001f521",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/intersection-observer/OWNERS",
         "patchSetId": 2
