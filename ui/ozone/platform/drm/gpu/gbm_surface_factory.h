@@ -38,6 +38,8 @@ class GbmSurfaceFactory : public SurfaceFactoryOzone {
 
   std::vector<gfx::BufferFormat> GetScanoutFormats(
       gfx::AcceleratedWidget widget) override;
+  std::vector<std::pair<int32_t, uint64_t>> GetSupportedFormatsWithModifiers(
+      gfx::AcceleratedWidget widget) override;
   std::unique_ptr<SurfaceOzoneCanvas> CreateCanvasForWidget(
       gfx::AcceleratedWidget widget) override;
   scoped_refptr<gfx::NativePixmap> CreateNativePixmap(
@@ -60,6 +62,8 @@ class GbmSurfaceFactory : public SurfaceFactoryOzone {
   DrmThreadProxy* drm_thread_proxy_;
 
   std::map<gfx::AcceleratedWidget, GbmSurfaceless*> widget_to_surface_map_;
+
+  std::vector<std::pair<int32_t, uint64_t>> formats_with_modifiers_;
 
   DISALLOW_COPY_AND_ASSIGN(GbmSurfaceFactory);
 };
