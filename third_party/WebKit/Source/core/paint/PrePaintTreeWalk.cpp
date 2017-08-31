@@ -105,9 +105,10 @@ static void UpdateAuxiliaryObjectProperties(const LayoutObject& object,
   if (!object.HasLayer())
     return;
 
+  // TODO(smcgruer): Remove all this, I presume.
   PaintLayer* paint_layer = object.EnclosingLayer();
-  paint_layer->UpdateAncestorOverflowLayer(
-      context.ancestor_overflow_paint_layer);
+  // paint_layer->UpdateAncestorOverflowLayer(
+  //    context.ancestor_overflow_paint_layer);
 
   if (object.StyleRef().HasStickyConstrainedPosition()) {
     paint_layer->GetLayoutObject().UpdateStickyPositionConstraints();
