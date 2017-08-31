@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "438a43c2_f29b7adc",
+        "filename": "chrome/installer/zucchini/image_index.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-31T18:16:53Z",
+      "side": 1,
+      "message": "That won\u0027t work, because emplace() is templated, type of {group.traits()} cannot be inferred.",
+      "parentUuid": "0c1c7ea4_55c4f655",
+      "range": {
+        "startLine": 27,
+        "startChar": 51,
+        "endLine": 27,
+        "endChar": 65
+      },
+      "revId": "9633cd452af77c85d9778e93edccbab34acaaa24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "398142f5_f9c70a5e",
         "filename": "chrome/installer/zucchini/image_index.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "9633cd452af77c85d9778e93edccbab34acaaa24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f0cf1dd_3a5037f2",
+        "filename": "chrome/installer/zucchini/image_index.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-31T18:16:53Z",
+      "side": 1,
+      "message": "Whoops, fixed it!",
+      "parentUuid": "398142f5_f9c70a5e",
+      "range": {
+        "startLine": 30,
+        "startChar": 55,
+        "endLine": 30,
+        "endChar": 60
+      },
+      "revId": "9633cd452af77c85d9778e93edccbab34acaaa24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
