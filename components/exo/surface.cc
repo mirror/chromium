@@ -37,6 +37,7 @@
 #include "ui/compositor/layer.h"
 #include "ui/events/event.h"
 #include "ui/gfx/buffer_format_util.h"
+#include "ui/gfx/geometry/dip_util.h"
 #include "ui/gfx/geometry/safe_integer_conversions.h"
 #include "ui/gfx/geometry/size_conversions.h"
 #include "ui/gfx/gpu_memory_buffer.h"
@@ -425,29 +426,24 @@ void Surface::Commit() {
 
 void Surface::CommitSurfaceHierarchy(
     const gfx::Point& origin,
-    FrameType frame_type,
     LayerTreeFrameSinkHolder* frame_sink_holder,
-    cc::CompositorFrame* frame,
     std::list<FrameCallback>* frame_callbacks,
     std::list<PresentationCallback>* presentation_callbacks) {
-  bool needs_commit =
-      frame_type == FRAME_TYPE_COMMIT && needs_commit_surface_hierarchy_;
-  bool needs_full_damage = frame_type == FRAME_TYPE_RECREATED_RESOURCES;
+  bool needs_commit = needs_commit_surface_hierarchy_;
 
   if (needs_commit) {
     needs_commit_surface_hierarchy_ = false;
 
-    if (pending_state_.opaque_region != state_.opaque_region ||
-        pending_state_.buffer_scale != state_.buffer_scale ||
-        pending_state_.buffer_transform != state_.buffer_transform ||
-        pending_state_.viewport != state_.viewport ||
-        pending_state_.crop != state_.crop ||
-        pending_state_.only_visible_on_secure_output !=
-            state_.only_visible_on_secure_output ||
-        pending_state_.blend_mode != state_.blend_mode ||
-        pending_state_.alpha != state_.alpha) {
-      needs_full_damage = true;
-    }
+    bool needs_full_damage =
+        (pending_state_.opaque_region != state_.opaque_region ||
+         pending_state_.buffer_scale != state_.buffer_scale ||
+         pending_state_.buffer_transform != state_.buffer_transform ||
+         pending_state_.viewport != state_.viewport ||
+         pending_state_.crop != state_.crop ||
+         pending_state_.only_visible_on_secure_output !=
+             state_.only_visible_on_secure_output ||
+         pending_state_.blend_mode != state_.blend_mode ||
+         pending_state_.alpha != state_.alpha);
 
     state_ = pending_state_;
     pending_state_.only_visible_on_secure_output = false;
@@ -492,6 +488,19 @@ void Surface::CommitSurfaceHierarchy(
       }
       sub_surfaces_changed_ = false;
     }
+
+    gfx::Rect output_rect(origin, content_size_);
+    if (needs_full_damage) {
+      damage_rect_ = output_rect;
+    } else {
+      // pending_damage_ is in Surface coordinates.
+      damage_rect_ = gfx::SkIRectToRect(pending_damage_.getBounds());
+      damage_rect_.set_origin(origin);
+      damage_rect_.Intersect(output_rect);
+    }
+
+    // Reset damage.
+    pending_damage_.setEmpty();
   }
 
   // The top most sub-surface is at the front of the RenderPass's quad_list,
@@ -501,15 +510,27 @@ void Surface::CommitSurfaceHierarchy(
     // Synchronsouly commit all pending state of the sub-surface and its
     // decendents.
     sub_surface->CommitSurfaceHierarchy(
-        origin + sub_surface_entry.second.OffsetFromOrigin(), frame_type,
-        frame_sink_holder, frame, frame_callbacks, presentation_callbacks);
+        origin + sub_surface_entry.second.OffsetFromOrigin(), frame_sink_holder,
+        frame_callbacks, presentation_callbacks);
+  }
+}
+
+void Surface::DrawSurfaceHierarchy(const gfx::Point& origin,
+                                   float device_scale_factor,
+                                   LayerTreeFrameSinkHolder* frame_sink_holder,
+                                   cc::CompositorFrame* frame) {
+  // The top most sub-surface is at the front of the RenderPass's quad_list,
+  // so we need composite sub-surface in reversed order.
+  for (const auto& sub_surface_entry : base::Reversed(sub_surfaces_)) {
+    auto* sub_surface = sub_surface_entry.first;
+    // Synchronsouly commit all pending state of the sub-surface and its
+    // decendents.
+    sub_surface->DrawSurfaceHierarchy(
+        origin + sub_surface_entry.second.OffsetFromOrigin(),
+        device_scale_factor, frame_sink_holder, frame);
   }
 
-  AppendContentsToFrame(origin, frame, needs_full_damage);
-
-  // Reset damage.
-  if (needs_commit)
-    pending_damage_.setEmpty();
+  AppendContentsToFrame(origin, device_scale_factor, frame);
 
   DCHECK(
       !current_resource_.id ||
@@ -676,23 +697,18 @@ void Surface::UpdateResource(LayerTreeFrameSinkHolder* frame_sink_holder,
 }
 
 void Surface::AppendContentsToFrame(const gfx::Point& origin,
-                                    cc::CompositorFrame* frame,
-                                    bool needs_full_damage) {
+                                    float device_scale_factor,
+                                    cc::CompositorFrame* frame) {
   const std::unique_ptr<cc::RenderPass>& render_pass =
       frame->render_pass_list.back();
   gfx::Rect output_rect(origin, content_size_);
   gfx::Rect quad_rect(current_resource_.size);
-  gfx::Rect damage_rect;
 
-  if (needs_full_damage) {
-    damage_rect = output_rect;
-  } else {
-    // pending_damage_ is in Surface coordinates.
-    damage_rect = gfx::SkIRectToRect(pending_damage_.getBounds());
-    damage_rect.set_origin(origin);
-    damage_rect.Intersect(output_rect);
-  }
-  render_pass->damage_rect.Union(damage_rect);
+  // Surface uses DIP, but the |render_pass->damage_rect| uses pixels, so we
+  // need scale it beased on the |device_scale_factor|.
+  render_pass->damage_rect.Union(
+      gfx::ConvertRectToPixel(device_scale_factor, damage_rect_));
+  damage_rect_ = gfx::Rect();
 
   // Create a transformation matrix that maps buffer coordinates to target by
   // inverting the transform and scale of buffer.
@@ -723,9 +739,11 @@ void Surface::AppendContentsToFrame(const gfx::Point& origin,
         output_rect.height() / transformed_buffer_size.height());
   }
   buffer_to_target_matrix.postTranslate(origin.x(), origin.y());
+  buffer_to_target_matrix.postScale(device_scale_factor, device_scale_factor);
 
   viz::SharedQuadState* quad_state =
       render_pass->CreateAndAppendSharedQuadState();
+
   quad_state->SetAll(
       gfx::Transform(buffer_to_target_matrix),
       gfx::Rect(content_size_) /* quad_layer_rect */,

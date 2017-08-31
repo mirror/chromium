@@ -141,17 +141,16 @@ class Surface : public ui::PropertyHandler {
   // This will synchronously commit all pending state of the surface and its
   // descendants by recursively calling CommitSurfaceHierarchy() for each
   // sub-surface with pending state.
-  enum FrameType {
-    FRAME_TYPE_COMMIT,
-    FRAME_TYPE_RECREATED_RESOURCES,
-  };
   void CommitSurfaceHierarchy(
       const gfx::Point& origin,
-      FrameType frame_type,
       LayerTreeFrameSinkHolder* frame_sink_holder,
-      cc::CompositorFrame* frame,
       std::list<FrameCallback>* frame_callbacks,
       std::list<PresentationCallback>* presentation_callbacks);
+
+  void DrawSurfaceHierarchy(const gfx::Point& origin,
+                            float device_scale_factor,
+                            LayerTreeFrameSinkHolder* frame_sink_holder,
+                            cc::CompositorFrame* frame);
 
   // Returns true if surface is in synchronized mode.
   bool IsSynchronized() const;
@@ -256,9 +255,6 @@ class Surface : public ui::PropertyHandler {
     return needs_commit_surface_hierarchy_;
   }
 
-  // Set SurfaceLayer contents to the current buffer.
-  void SetSurfaceLayerContents(ui::Layer* layer);
-
   // Updates current_resource_ with a new resource id corresponding to the
   // contents of the attached buffer (or id 0, if no buffer is attached).
   // UpdateSurface must be called afterwards to ensure the release callback
@@ -269,8 +265,8 @@ class Surface : public ui::PropertyHandler {
   // Puts the current surface into a draw quad, and appends the draw quads into
   // the |frame|.
   void AppendContentsToFrame(const gfx::Point& origin,
-                             cc::CompositorFrame* frame,
-                             bool needs_full_damage);
+                             float device_scale_factor,
+                             cc::CompositorFrame* frame);
 
   void UpdateContentSize();
 
@@ -295,6 +291,10 @@ class Surface : public ui::PropertyHandler {
 
   // The damage region to schedule paint for when Commit() is called.
   SkRegion pending_damage_;
+
+  // The damage rect which will be used by DrawSurfaceHierarchy() to generate
+  // frame.
+  gfx::Rect damage_rect_;
 
   // These lists contains the callbacks to notify the client when it is a good
   // time to start producing a new frame. These callbacks move to
