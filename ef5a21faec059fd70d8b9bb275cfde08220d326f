@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e82feba_694fba06",
+        "filename": "content/browser/isolated_origin_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-31T23:49:37Z",
+      "side": 1,
+      "message": "This object is leaked.",
+      "revId": "ef5a21faec059fd70d8b9bb275cfde08220d326f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
