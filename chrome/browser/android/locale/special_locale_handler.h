@@ -12,12 +12,10 @@
 using base::android::JavaParamRef;
 
 class TemplateURLService;
-class Profile;
 
 class SpecialLocaleHandler {
  public:
-  explicit SpecialLocaleHandler(Profile* profile,
-                                const std::string& locale,
+  explicit SpecialLocaleHandler(const std::string& locale,
                                 TemplateURLService* service);
   void Destroy(JNIEnv* env, const JavaParamRef<jobject>& obj);
   jboolean LoadTemplateUrls(JNIEnv* env, const JavaParamRef<jobject>& obj);
@@ -30,12 +28,10 @@ class SpecialLocaleHandler {
 
  protected:
   virtual std::vector<std::unique_ptr<TemplateURLData>>
-    GetLocalPrepopulatedEngines(Profile* profile);
+  GetLocalPrepopulatedEngines();
   virtual int GetDesignatedSearchEngine();
 
  private:
-  Profile* profile_;
-
   std::string locale_;
 
   // Tracks all local search engines that were added to TURL service.
