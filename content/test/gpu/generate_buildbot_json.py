@@ -1417,6 +1417,22 @@ COMMON_GTESTS = {
     'desktop_args': ['--use-gpu-in-tests'],
     'linux_args': [ '--no-xvfb' ]
   },
+  'gpu_unittests': {
+    'tester_configs': [
+      {
+        # Run this on the FYI waterfall and optional tryservers.
+        'predicate': Predicates.FYI_AND_OPTIONAL,
+        'os_types': ['win', 'linux', 'mac'],
+      },
+    ],
+    'disabled_tester_configs': [
+      {
+        'names': [
+          'Linux ChromiumOS Ozone (Intel)',
+        ],
+      },
+    ],
+  },
   # The gles2_conform_tests are closed-source and deliberately only run
   # on the FYI waterfall and the optional tryservers.
   'gles2_conform_test': {
