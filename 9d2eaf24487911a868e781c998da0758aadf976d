@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "edbe01cd_72fc1cda",
+        "filename": "ui/file_manager/file_manager/foreground/js/directory_contents.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-08-31T08:10:07Z",
+      "side": 1,
+      "message": "This may be done on a higher level as well - feel free to post opinions.\nCandidates for the higher level (lower level first):\nDirectoryModel.partialUpdate_\nDirectoryModel.onEntriesChanged_",
+      "revId": "9d2eaf24487911a868e781c998da0758aadf976d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2026c4c_c60598d6",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_list_model.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-08-31T08:10:07Z",
+      "side": 1,
+      "message": "I know this is kinda hacky, but I couldn\u0027t figure out a better way to pass the information I need on. I\u0027m open to suggestions!",
+      "revId": "9d2eaf24487911a868e781c998da0758aadf976d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
