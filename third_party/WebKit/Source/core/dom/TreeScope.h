@@ -90,7 +90,7 @@ class CORE_EXPORT TreeScope : public GarbageCollectedMixin {
 
   DOMSelection* GetSelection() const;
 
-  Element* Retarget(const Element& target) const;
+  Element* AdjustedFocusedElementInternal(const Element& target) const;
 
   // Find first anchor with the given name.
   // First searches for an element with the given ID, but if that fails, then
@@ -157,6 +157,8 @@ class CORE_EXPORT TreeScope : public GarbageCollectedMixin {
   RadioButtonGroupScope radio_button_group_scope_;
 
   Member<SVGTreeScopeResources> svg_tree_scoped_resources_;
+
+  Element* Retarget(Element* target) const;
 };
 
 inline bool TreeScope::HasElementWithId(const AtomicString& id) const {

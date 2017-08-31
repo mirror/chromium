@@ -243,12 +243,17 @@ Element* TreeScope::HitTestPoint(int x,
   HitTestResult result =
       HitTestInDocument(&RootNode().GetDocument(), x, y, request);
   Node* node = result.InnerNode();
+  DCHECK(!node->IsShadowRoot());
+
   if (!node || node->IsDocumentNode())
     return nullptr;
+  Element* element;
   if (node->IsPseudoElement() || node->IsTextNode())
-    node = node->ParentOrShadowHostNode();
-  DCHECK(!node || node->IsElementNode() || node->IsShadowRoot());
-  node = AncestorInThisScope(node);
+    element = node->ParentOrShadowHostElement();
+  else
+    element = ToElement(node);
+
+  node = Retarget(element);
   if (!node || !node->IsElementNode())
     return nullptr;
   return ToElement(node);
@@ -356,13 +361,47 @@ void TreeScope::AdoptIfNeeded(Node& node) {
     adopter.Execute();
 }
 
-Element* TreeScope::Retarget(const Element& target) const {
+Element* TreeScope::AdjustedFocusedElementInternal(
+    const Element& target) const {
   for (const Element* ancestor = &target; ancestor;
        ancestor = ancestor->OwnerShadowHost()) {
     if (this == ancestor->GetTreeScope())
       return const_cast<Element*>(ancestor);
   }
   return nullptr;
+}
+
+Element* TreeScope::Retarget(Element* target) const {
+  DCHECK(!!target);
+  DCHECK(target->isConnected() && this->RootNode().isConnected());
+
+  const TreeScope& init_target = target->GetTreeScope();
+  if (!init_target.RootNode().IsShadowRoot())
+    return target;
+
+  HeapVector<Member<const TreeScope>, 16> target_tree_scopes;
+  HeapVector<Member<const TreeScope>, 16> this_tree_scopes;
+
+  for (const TreeScope* tree_scope = &init_target; tree_scope;
+       tree_scope = tree_scope->ParentTreeScope())
+    target_tree_scopes.push_back(tree_scope);
+  for (const TreeScope* tree_scope = this; tree_scope;
+       tree_scope = tree_scope->ParentTreeScope())
+    this_tree_scopes.push_back(tree_scope);
+
+  auto rtarget_it = target_tree_scopes.rbegin();
+  auto rthis_it = this_tree_scopes.rbegin();
+
+  for (; rthis_it != this_tree_scopes.rend() && *rtarget_it == *rthis_it;
+       rtarget_it++, rthis_it++)
+    ;
+
+  if (rtarget_it == target_tree_scopes.rend())
+    return target;
+
+  Node& root = (*rtarget_it).Get()->RootNode();
+  DCHECK(root.IsShadowRoot());
+  return root.ParentOrShadowHostElement();
 }
 
 Element* TreeScope::AdjustedFocusedElement() const {
@@ -375,7 +414,7 @@ Element* TreeScope::AdjustedFocusedElement() const {
     return nullptr;
 
   if (RootNode().IsInV1ShadowTree()) {
-    if (Element* retargeted = Retarget(*element)) {
+    if (Element* retargeted = AdjustedFocusedElementInternal(*element)) {
       return (this == &retargeted->GetTreeScope()) ? retargeted : nullptr;
     }
     return nullptr;
