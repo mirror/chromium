@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e374057_6dcc6d3a",
+        "filename": "chrome/browser/plugins/plugin_info_message_filter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-08-31T00:20:55Z",
+      "side": 1,
+      "message": "just FYI, in page load metrics, i expect we will continue to use NAVIGATION_IDs rather than document ids to allocate source ids, as there can be page loads that fail to commit and thus we will only ever have a navigation id. Given this, what we may want to do internally to UKM is associate nav ids and document ids for the same conceptual page load together, and return a single canonical source id that\u0027s the same regardless of whether the navigation id or document id was used for a given page load. this will allow joining of ukm metrics for the same page load regardless of whether document id or navigation id was used to get the source id.",
+      "revId": "440a2c6d2555d9829144de48489710c0c247a23c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43951ff5_85e57baa",
+        "filename": "content/browser/frame_host/navigator_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-08-31T00:20:55Z",
+      "side": 1,
+      "message": "just a thought: does it make sense to factor this into a single higher level conceptual method RFHI::OnNewCommittedDocument(...) or something similar that takes the origin, and internally updates the origin and updates the document id? It would ideally be unnecesarry to have a public API to increment the document id - that would be ideally done internally from a higher level API like OnNewCommittedDocument(...).\n\nI defer to content owners on the final decision here though - this is just a suggestion.",
+      "revId": "440a2c6d2555d9829144de48489710c0c247a23c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f2de65e_43b8ae49",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-08-31T00:20:55Z",
+      "side": 1,
+      "message": "should this be set to -1 initially to indicate there is not a valid document id yet?",
+      "revId": "440a2c6d2555d9829144de48489710c0c247a23c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64efadb1_1ba1897e",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-08-31T00:20:55Z",
+      "side": 1,
+      "message": "can we DCHECK that this has a valid value that\u0027s been updated? otherwise i could imagine us recording a bunch of bogus ukm data for RFHs that haven\u0027t had their document id state initialized yet (no committed document yet).",
+      "revId": "440a2c6d2555d9829144de48489710c0c247a23c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c67e3370_9fa7762e",
+        "filename": "content/public/browser/render_frame_host.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-08-31T00:20:55Z",
+      "side": 1,
+      "message": "I\u0027d rather change this comment to include handling document.write in the TODO as well. It may be that internally blink re-uses the existing document on document.write, but conceptually and as documented in the spec, document.write/open behave as if a new document was created.\n\nSome text from the spec:\nhttps://html.spec.whatwg.org/multipage/dynamic-markup-insertion.html#document.write()\n\"If the insertion point is undefined, then: ... Run the document open steps\"\n\nand document.open steps say:\nhttps://html.spec.whatwg.org/multipage/dynamic-markup-insertion.html#opening-the-input-stream\n\"Causes the Document to be replaced in-place, as if it was a new Document object, but reusing the previous object, which is then returned.\"\n\nSo ideally we\u0027d handle this case in a way that\u0027s similar to how we process same-document navigations in NavigationHandle, allocating a new document id but perhaps having an annotation indicating it\u0027s created via document.open. There are multiple places in the browser process that want to know about document.open causing document replacement which are best served by updating the document id, so let\u0027s include this in the TODO.",
+      "revId": "440a2c6d2555d9829144de48489710c0c247a23c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
