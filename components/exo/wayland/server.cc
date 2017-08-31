@@ -2624,14 +2624,18 @@ void bind_remote_shell(wl_client* client,
 // to VSync parameters.
 class VSyncTiming : public ui::CompositorVSyncManager::Observer {
  public:
-  ~VSyncTiming() { vsync_manager_->RemoveObserver(this); }
+  ~VSyncTiming() {
+    if (vsync_manager_)
+      vsync_manager_->RemoveObserver(this);
+  }
 
   static std::unique_ptr<VSyncTiming> Create(ui::Compositor* compositor,
                                              wl_resource* timing_resource) {
     std::unique_ptr<VSyncTiming> vsync_timing(
         new VSyncTiming(compositor, timing_resource));
     // Note: AddObserver() will call OnUpdateVSyncParameters.
-    vsync_timing->vsync_manager_->AddObserver(vsync_timing.get());
+    if (vsync_timing->vsync_manager_)
+      vsync_timing->vsync_manager_->AddObserver(vsync_timing.get());
     return vsync_timing;
   }
 
@@ -2671,7 +2675,7 @@ class VSyncTiming : public ui::CompositorVSyncManager::Observer {
 
  private:
   VSyncTiming(ui::Compositor* compositor, wl_resource* timing_resource)
-      : vsync_manager_(compositor->vsync_manager()),
+      : vsync_manager_(compositor ? compositor->vsync_manager() : nullptr),
         timing_resource_(timing_resource) {}
 
   // The VSync manager being observed.
@@ -2707,9 +2711,10 @@ void vsync_feedback_get_vsync_timing(wl_client* client,
   wl_resource* timing_resource =
       wl_resource_create(client, &zcr_vsync_timing_v1_interface, 1, id);
 
-  // TODO(reveman): Multi-display support.
-  ui::Compositor* compositor =
-      ash::Shell::GetPrimaryRootWindow()->layer()->GetCompositor();
+  // TODO(reveman): Multi-display and Mash (no ash::Shell in Chrome) support.
+  ui::Compositor* compositor = nullptr;
+  if (ash::Shell::HasInstance())
+    compositor = ash::Shell::GetPrimaryRootWindow()->layer()->GetCompositor();
 
   SetImplementation(timing_resource, &vsync_timing_implementation,
                     VSyncTiming::Create(compositor, timing_resource));
