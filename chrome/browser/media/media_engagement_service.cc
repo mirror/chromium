@@ -66,7 +66,7 @@ bool MediaEngagementTimeFilterAdapter(
 const char MediaEngagementService::kHistogramScoreAtStartupName[] =
     "Media.Engagement.ScoreAtStartup";
 
-const int MediaEngagementService::kSchemaVersion = 1;
+const int MediaEngagementService::kSchemaVersion = 2;
 
 // static
 bool MediaEngagementService::IsEnabled() {
