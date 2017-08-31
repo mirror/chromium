@@ -43,6 +43,12 @@ class WaylandConnection : public PlatformEventSource,
   const std::vector<std::unique_ptr<WaylandOutput>>& GetOutputList() const;
   WaylandOutput* PrimaryOutput() const;
 
+  void set_serial(uint32_t serial) { serial_ = serial; }
+  uint32_t serial() { return serial_; }
+
+  void SetCursorBitmap(const std::vector<SkBitmap>& bitmaps,
+                       const gfx::Point& location);
+
  private:
   void Flush();
   void DispatchUiEvent(Event* event);
@@ -84,6 +90,8 @@ class WaylandConnection : public PlatformEventSource,
   bool scheduled_flush_ = false;
   bool watching_ = false;
   base::MessagePumpLibevent::FileDescriptorWatcher controller_;
+
+  uint32_t serial_ = 0;
 
   std::vector<std::unique_ptr<WaylandOutput>> output_list_;
 
