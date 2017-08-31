@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e2a223a_7c77c635",
+        "filename": "base/post_task_and_reply_with_result_internal.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-31T13:59:15Z",
+      "side": 1,
+      "message": "Should this be move to base/tuple.h? Or be kept here, or anywhere else?",
+      "revId": "311d49ab8b9f192ea9f580b88493038a9876824f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee0b4c30_999f1e15",
+        "filename": "base/post_task_and_reply_with_result_internal.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-31T13:59:15Z",
+      "side": 1,
+      "message": "I think we can merge after tzik@\u0027s work.\n\nhttps://chromium-review.googlesource.com/c/chromium/src/+/620513\nhttps://chromium-review.googlesource.com/c/chromium/src/+/620430",
+      "revId": "311d49ab8b9f192ea9f580b88493038a9876824f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d17f1b6_5b1a5d34",
+        "filename": "base/task_runner_util.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-31T13:59:15Z",
+      "side": 1,
+      "message": "Note: WithResult suffix is dropped, referring the effort of\nhttps://chromium-review.googlesource.com/c/chromium/src/+/618071",
+      "revId": "311d49ab8b9f192ea9f580b88493038a9876824f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b2dfdda_e2f539ee",
+        "filename": "base/threading/post_task_and_reply_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-31T13:59:15Z",
+      "side": 1,
+      "message": "Note: I intentionally did not touch PostTaskAndReply stuff.\nIf this is ok, I\u0027ll update it in a separate CL to keep both classes more consistent.\nE.g., use macros for SequenceChecker, update unittest style to new code, etc.",
+      "revId": "311d49ab8b9f192ea9f580b88493038a9876824f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a9eb391_557c50e1",
+        "filename": "base/threading/post_task_and_reply_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-31T13:59:15Z",
+      "side": 1,
+      "message": "If it is preferred, I think we can merge those two methods into one with template.\n\ntemplate\u003ctypename Task, typename Relay\u003e\nbool PostTaskAndReplyImpl::PostTaskAndReplyInternal(\n    const tracked_objects::Location\u0026 from_here,\n    Task task,\n    OnceClosure reply) {\n  ...\n}\n\nWDYT? Or should we keep this separated as is?",
+      "revId": "311d49ab8b9f192ea9f580b88493038a9876824f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
