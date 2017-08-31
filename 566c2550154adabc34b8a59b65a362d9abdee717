@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "faaf2ed5_2f543dfa",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-31T21:37:26Z",
+      "side": 1,
+      "message": "Add Bug: 686866 here.",
+      "revId": "566c2550154adabc34b8a59b65a362d9abdee717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
