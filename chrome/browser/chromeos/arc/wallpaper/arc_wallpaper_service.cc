@@ -184,8 +184,8 @@ void ArcWallpaperService::OnInstanceReady() {
   binding_.Bind(mojo::MakeRequest(&host_proxy));
   wallpaper_instance->Init(std::move(host_proxy));
   ash::WallpaperController* wc = GetWallpaperController();
-  DCHECK(wc);
-  wc->AddObserver(this);
+  if (wc)
+    wc->AddObserver(this);
 }
 
 void ArcWallpaperService::OnInstanceClosed() {
