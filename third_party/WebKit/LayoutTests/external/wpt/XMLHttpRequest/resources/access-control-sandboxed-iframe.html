@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <body>
+  <script type="text/javascript">
+window.addEventListener("message", (evt) => {
+  let message = evt.data.split(" ");
+  const url = message[0];
+  const expectedResult = message[1];
+  const xhr = new XMLHttpRequest;
+
+  xhr.open("GET", url, false);
+
+  try {
+    xhr.send();
+  } catch(e) {
+    parent.postMessage(expectedResult +
+        ": Exception thrown. Sandboxed iframe XHR access was " +
+        ((expectedResult == "FAIL") ? "unexpectedly" : "successfully") +
+        " denied in 'send'.", "*");
+    return;
+  }
+
+  parent.postMessage(xhr.responseText, "*");
+}, false);
+
+parent.postMessage("ready", "*");
+  </script>
+  </body>
+</html>
