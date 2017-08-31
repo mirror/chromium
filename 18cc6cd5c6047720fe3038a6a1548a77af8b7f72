@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d83a12bc_85acc656",
+        "filename": "components/web_modal/web_contents_modal_dialog_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2017-08-31T22:44:16Z",
+      "side": 1,
+      "message": "The deleter shouldn\u0027t be needed any more.",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 79,
+        "endChar": 40
+      },
+      "revId": "18cc6cd5c6047720fe3038a6a1548a77af8b7f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
