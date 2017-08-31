@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e3d454da_3eb5a37d",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-08-31T21:39:04Z",
+      "side": 1,
+      "message": "I uploaded a new patch that essentially does what I described above. Still needs to adjust test but PTAL and let me know if it\u0027s more acceptable!",
+      "parentUuid": "fcae4fe8_ae81a79f",
+      "revId": "5c85d0489704bff7f5ae26c16e0aa6f74cd05f39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee68f4bf_1da85df4",
         "filename": "chrome/browser/resources/md_extensions/sidebar.js",
         "patchSetId": 2
