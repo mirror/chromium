@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7bff047_3db8b60d",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-31T17:49:00Z",
+      "side": 0,
+      "message": "Although, nit: Keep this here as long as `should_ssl_errors_be_fatal` is still a bogus value.",
+      "revId": "f36dbf3ffdc25abf5838a158c9bd24d0622dcfc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
