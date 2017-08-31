@@ -71,15 +71,6 @@ void TaskGroupSampler::Refresh(int64_t refresh_flags) {
         on_cpu_refresh_callback_);
   }
 
-  if (TaskManagerObserver::IsResourceRefreshEnabled(REFRESH_TYPE_MEMORY,
-                                                    refresh_flags)) {
-    base::PostTaskAndReplyWithResult(
-        blocking_pool_runner_.get(),
-        FROM_HERE,
-        base::Bind(&TaskGroupSampler::RefreshMemoryUsage, this),
-        on_memory_refresh_callback_);
-  }
-
 #if defined(OS_MACOSX) || defined(OS_LINUX)
   if (TaskManagerObserver::IsResourceRefreshEnabled(REFRESH_TYPE_IDLE_WAKEUPS,
                                                     refresh_flags)) {
