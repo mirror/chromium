@@ -31156,6 +31156,14 @@ from previous Chrome versions.
   <int value="3" label="PREVIEW_EVENT_NEW_SETTINGS"/>
 </enum>
 
+<enum name="PrintPreviewPdfActionBuckets">
+  <int value="0" label="PRINT_PREVIEW"/>
+  <int value="1" label="ROTATE_CW"/>
+  <int value="2" label="ROTATE_CCW"/>
+  <int value="3" label="SELECT_TEXT"/>
+  <int value="4" label="UPDATE_ZOOM"/>
+</enum>
+
 <enum name="PrintPreviewPrintDestinationBuckets">
   <int value="0" label="DESTINATION_SHOWN"/>
   <int value="1" label="DESTINATION_CLOSED_CHANGED"/>
