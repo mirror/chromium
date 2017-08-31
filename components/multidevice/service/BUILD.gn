@@ -17,10 +17,13 @@ static_library("service") {
 
   deps = [
     "//base",
+    "//components/signin/core/browser:account_info",
   ]
 
   public_deps = [
+    "//components/cryptauth",
     "//components/multidevice/service/public/interfaces",
+    "//services/identity/public/interfaces",
     "//services/service_manager/public/cpp",
   ]
 }
@@ -38,6 +41,7 @@ service("multidevice") {
   deps = [
     ":service",
     "//base",
+    "//components/cryptauth",
   ]
 }
 
