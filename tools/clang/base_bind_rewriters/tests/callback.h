@@ -12,23 +12,18 @@ enum class RepeatMode { Once, Repeating };
 
 }  // namespace internal
 
-template <typename Signature,
-          internal::CopyMode copy_mode = internal::CopyMode::Copyable,
-          internal::RepeatMode repeat_mode = internal::RepeatMode::Repeating>
-class Callback;
+template <typename Signature>
+class OnceCallback;
 
 template <typename Signature>
-using OnceCallback = Callback<Signature,
-                              internal::CopyMode::MoveOnly,
-                              internal::RepeatMode::Once>;
-template <typename Signature>
-using RepeatingCallback = Callback<Signature,
-                                   internal::CopyMode::Copyable,
-                                   internal::RepeatMode::Repeating>;
+class RepeatingCallback;
 
-using Closure = Callback<void()>;
+template <typename Signature>
+using Callback = RepeatingCallback<Signature>;
+
 using OnceClosure = OnceCallback<void()>;
 using RepeatingClosure = RepeatingCallback<void()>;
+using Closure = Callback<void()>;
 
 namespace internal {
 
