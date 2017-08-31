@@ -1,5 +1,6 @@
 <link rel="import" href="chrome://resources/html/polymer.html">
 
+<link rel="import" href="chrome://resources/cr_elements/cr_drawer/cr_drawer.html">
 <link rel="import" href="chrome://resources/html/cr.html">
 <link rel="import" href="chrome://resources/polymer/v1_0/paper-icon-button/paper-icon-button-light.html">
 <link rel="import" href="chrome://resources/polymer/v1_0/paper-item/paper-item.html">
@@ -50,25 +51,29 @@
         width: 15px;
       }
     </style>
-    <paper-menu id="section-menu" selected="0">
-      <paper-item class="section-item" id="sections-extensions"
-          on-tap="onExtensionsTap_">
-        <span>$i18n{sidebarExtensions}</span>
-      </paper-item>
-      <paper-item class="section-item" id="sections-apps"
-          on-tap="onAppsTap_">
-        <span>$i18n{sidebarApps}</span>
-      </paper-item>
-      <paper-item class="section-item" id="sections-shortcuts"
-          on-tap="onKeyboardShortcutsTap_">
-        <span>$i18n{keyboardShortcuts}</span>
-      </paper-item>
-    </paper-menu>
-    <a class="section-item" id="more-extensions" target="_blank"
-        href="$i18n{getMoreExtensionsUrl}">
-      <span>$i18n{getMoreExtensions}</span>
-      <button class="open-in-new" is="paper-icon-button-light"></button>
-    </a>
+    <dialog id="drawer" is="cr-drawer" heading="$i18n{toolbarTitle}">
+      <div class="drawer-content">
+        <paper-menu id="section-menu" selected="{{selected_}}">
+          <paper-item class="section-item" id="sections-extensions"
+              on-tap="onExtensionsTap_">
+            <span>$i18n{sidebarExtensions}</span>
+          </paper-item>
+          <paper-item class="section-item" id="sections-apps"
+              on-tap="onAppsTap_">
+            <span>$i18n{sidebarApps}</span>
+          </paper-item>
+          <paper-item class="section-item" id="sections-shortcuts"
+              on-tap="onKeyboardShortcutsTap_">
+            <span>$i18n{keyboardShortcuts}</span>
+          </paper-item>
+        </paper-menu>
+        <a class="section-item" id="more-extensions" target="_blank"
+            href="$i18n{getMoreExtensionsUrl}">
+          <span>$i18n{getMoreExtensions}</span>
+          <button class="open-in-new" is="paper-icon-button-light"></button>
+        </a>
+      </div>
+    </dialog>
   </template>
   <script src="chrome://extensions/sidebar.js"></script>
 </dom-module>
