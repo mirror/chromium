@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2227eedb_7fd23d2e",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsRotateToFullscreenDelegate.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-08-31T16:18:12Z",
+      "side": 1,
+      "message": "No need to link to a crbug.com, blame is here for you :)",
+      "revId": "4f8a82a49cc5fbb85714e35b64ec742a8925c090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2951c9a_48e5fbaa",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsRotateToFullscreenDelegate.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-08-31T16:18:12Z",
+      "side": 1,
+      "message": "Everyday optional is used, I\u0027m happier :)",
+      "revId": "4f8a82a49cc5fbb85714e35b64ec742a8925c090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
