@@ -16,6 +16,24 @@
       "revId": "80faddb8ce0b081ec0b58a69933c07de6c269515",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78740ae6_87bd36d4",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMappingTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2326,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-08-31T00:16:58Z",
+      "side": 1,
+      "message": "Added compositing/background-color/view-blend-base-background.html to test blended base background and \u003cbody\u003e\u0027s background.\n\nThe other cases are already covered by existing tests:\n- white base background used as view background: all layout tests without \u003chtml\u003e or \u003cbody\u003e backgrounds.\n- opaque \u003cbody\u003e background: layout tests with \u003chtml\u003e or \u003cbody\u003e backgrounds, e.g. many tests under compositing/contents-opaque.\n- scrolling contents layer background: many tests under compositing/overflow.",
+      "parentUuid": "f2a0ec44_c3e33344",
+      "revId": "80faddb8ce0b081ec0b58a69933c07de6c269515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
