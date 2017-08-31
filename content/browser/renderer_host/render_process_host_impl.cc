@@ -183,6 +183,7 @@
 #include "ipc/ipc_logging.h"
 #include "media/base/media_switches.h"
 #include "media/media_features.h"
+#include "media/mojo/services/video_decode_perf_history.h"
 #include "mojo/edk/embedder/embedder.h"
 #include "mojo/public/cpp/bindings/associated_interface_ptr.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
@@ -1932,6 +1933,9 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
         base::Bind(&BlobRegistryWrapper::Bind,
                    storage_partition_impl_->GetBlobRegistry(), GetID()));
   }
+
+  registry->AddInterface(
+      base::Bind(&media::VideoDecodePerfHistory::BindRequest));
 
   ServiceManagerConnection* service_manager_connection =
       BrowserContext::GetServiceManagerConnectionFor(browser_context_);
