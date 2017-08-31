@@ -16,6 +16,24 @@
       "revId": "a625715b068e268f5a951699aa9299d437564a82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4812c67f_c07faba7",
+        "filename": "services/network/public/cpp/network_struct_traits_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-31T07:19:25Z",
+      "side": 1,
+      "message": "Yeah thanks, done.",
+      "parentUuid": "a009e96e_403ef136",
+      "revId": "a625715b068e268f5a951699aa9299d437564a82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
