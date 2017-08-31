@@ -99,12 +99,8 @@ class ResourceFetcherImpl::ClientImpl : public mojom::URLLoaderClient {
 
   void Cancel() {
     ClearReceivedDataToFail();
-
-    // Close will invoke OnComplete() eventually.
+    completed_ = true;
     Close();
-
-    // Reset |loader_| to avoid unexpected other callbacks invocations.
-    loader_.reset();
   }
 
   bool IsActive() const {
@@ -233,6 +229,10 @@ class ResourceFetcherImpl::ClientImpl : public mojom::URLLoaderClient {
     ReadDataPipe();
   }
   void OnComplete(const ResourceRequestCompletionStatus& status) override {
+    // When Cancel() sets |complete_|, OnComplete() may be called.
+    if (completed_)
+      return;
+
     DCHECK(IsActive()) << "status: " << static_cast<int>(status_);
     if (status.error_code != net::OK) {
       ClearReceivedDataToFail();
