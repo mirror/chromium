@@ -122,6 +122,7 @@ void ImmersiveModeControllerAsh::Init(BrowserView* browser_view) {
 }
 
 void ImmersiveModeControllerAsh::SetEnabled(bool enabled) {
+  LOG(ERROR) << "SetEnabled" << enabled;
   if (controller_->IsEnabled() == enabled)
     return;
 
