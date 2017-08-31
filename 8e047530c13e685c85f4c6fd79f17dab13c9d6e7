@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "01c3c575_d290313b",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/performance-timing/element-timing/resources/verifyelementtiming.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-31T15:59:27Z",
+      "side": 1,
+      "message": "Nope, what you\u0027ve got now is better, sorry.",
+      "parentUuid": "1804cfd6_c954aaf1",
+      "range": {
+        "startLine": 8,
+        "startChar": 23,
+        "endLine": 8,
+        "endChar": 98
+      },
+      "revId": "8e047530c13e685c85f4c6fd79f17dab13c9d6e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "28a71dc9_e091eb8e",
         "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
         "patchSetId": 10
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "Not exactly, just making it clear what its scope needs to be. I don\u0027t mind changing it, and it does need to outlive the ScopedElementTimingNameTracker. Moved it to function scope in latest patchset.",
       "parentUuid": "28a71dc9_e091eb8e",
+      "range": {
+        "startLine": 1849,
+        "startChar": 2,
+        "endLine": 1849,
+        "endChar": 3
+      },
+      "revId": "8e047530c13e685c85f4c6fd79f17dab13c9d6e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9c303be7_01ce08f5",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1849,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-31T15:59:27Z",
+      "side": 1,
+      "message": "Thanks, I prefer this.",
+      "parentUuid": "d1c73660_250ae53b",
       "range": {
         "startLine": 1849,
         "startChar": 2,
@@ -190,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "0b659a9e_ebf844d9",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceElementTiming.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-31T15:59:27Z",
+      "side": 1,
+      "message": "Hmmm, I thought since we were just passing references to the objects, we shouldn\u0027t need complete types?",
+      "parentUuid": "37edfcbf_fb0c1cbb",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 42
+      },
+      "revId": "8e047530c13e685c85f4c6fd79f17dab13c9d6e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec37033d_16dc6818",
         "filename": "third_party/WebKit/Source/core/timing/PerformanceElementTiming.h",
         "patchSetId": 10
@@ -237,6 +309,30 @@
     },
     {
       "key": {
+        "uuid": "b0866678_b29ba1de",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceElementTiming.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-31T15:59:27Z",
+      "side": 1,
+      "message": "I _believe_ it\u0027s fine to have ElementType and elementType.\nI agree it\u0027s a bit weird though.",
+      "parentUuid": "7ae71e57_ef609b87",
+      "range": {
+        "startLine": 26,
+        "startChar": 24,
+        "endLine": 26,
+        "endChar": 28
+      },
+      "revId": "8e047530c13e685c85f4c6fd79f17dab13c9d6e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0bdeec0_b0ad0e30",
         "filename": "third_party/WebKit/Source/core/timing/TextElementTiming.h",
         "patchSetId": 10
@@ -272,6 +368,30 @@
       "side": 1,
       "message": "I reworded this, hopefully it\u0027s clearer. It was supposed to mean \"for each of its ancestors *with an elementtiming attribute*.\", but was confusing.",
       "parentUuid": "d0bdeec0_b0ad0e30",
+      "range": {
+        "startLine": 22,
+        "startChar": 58,
+        "endLine": 22,
+        "endChar": 78
+      },
+      "revId": "8e047530c13e685c85f4c6fd79f17dab13c9d6e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a64fbc05_65896ae7",
+        "filename": "third_party/WebKit/Source/core/timing/TextElementTiming.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-31T15:59:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4e5a767e_be42e85b",
       "range": {
         "startLine": 22,
         "startChar": 58,
@@ -472,6 +592,30 @@
     },
     {
       "key": {
+        "uuid": "dedf6326_581d2851",
+        "filename": "third_party/WebKit/Source/core/timing/TextElementTimingAncestorTracker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-31T15:59:27Z",
+      "side": 1,
+      "message": "Yup, that SGTM.",
+      "parentUuid": "3540741c_a9589461",
+      "range": {
+        "startLine": 78,
+        "startChar": 9,
+        "endLine": 78,
+        "endChar": 18
+      },
+      "revId": "8e047530c13e685c85f4c6fd79f17dab13c9d6e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a25fc953_3071711e",
         "filename": "third_party/WebKit/Source/core/timing/TextElementTimingTest.cpp",
         "patchSetId": 10
@@ -507,6 +651,30 @@
       "side": 1,
       "message": "Yes, I\u0027ve read this and interpreted the part about \"For simple scalar (non-object) values there is no reason to prefer one form and we allow either\" as follow the local style, or defer to the reviewer :). ++i it is!",
       "parentUuid": "a25fc953_3071711e",
+      "range": {
+        "startLine": 28,
+        "startChar": 38,
+        "endLine": 28,
+        "endChar": 41
+      },
+      "revId": "8e047530c13e685c85f4c6fd79f17dab13c9d6e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "303eb616_82b42233",
+        "filename": "third_party/WebKit/Source/core/timing/TextElementTimingTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-31T15:59:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ffe03433_66aa26a2",
       "range": {
         "startLine": 28,
         "startChar": 38,
@@ -648,6 +816,30 @@
       "side": 1,
       "message": "No it\u0027s not, we don\u0027t call DidCommitCompositorFrame directly on a WebView. I think if we casted the WebWidget to a WebView it might break?\n\nI removed this.",
       "parentUuid": "09ad023e_7e390e21",
+      "range": {
+        "startLine": 87,
+        "startChar": 19,
+        "endLine": 87,
+        "endChar": 43
+      },
+      "revId": "8e047530c13e685c85f4c6fd79f17dab13c9d6e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d5e3832a_c9a85a4d",
+        "filename": "third_party/WebKit/public/web/WebView.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-31T15:59:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "92061d35_0d388d54",
       "range": {
         "startLine": 87,
         "startChar": 19,
