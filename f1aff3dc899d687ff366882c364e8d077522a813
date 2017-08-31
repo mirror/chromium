@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "893e1f76_984c4b55",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_subpage.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-31T19:45:46Z",
+      "side": 1,
+      "message": "nit: I\u0027m not sure whether this will be helpful or confusing in the future. Having  this.scanIntervalId_ \u003d null didn\u0027t really make sense (this code has migrated from Polymer .5 and less polished practices in general), I think we can just remove that without adding a comment. If you think a comment will be helpful, I would suggest putting it with the declaration of scanIntervalId_.",
+      "revId": "f1aff3dc899d687ff366882c364e8d077522a813",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
