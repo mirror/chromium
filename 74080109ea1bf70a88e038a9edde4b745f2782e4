@@ -34,6 +34,24 @@
       "revId": "74080109ea1bf70a88e038a9edde4b745f2782e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6775c827_0d40a326",
+        "filename": "ios/chrome/browser/ui/settings/reauthentication_module.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-31T15:45:50Z",
+      "side": 1,
+      "message": "Yes, using LOG(ERROR) will work with QA team (just won\u0027t allow you to get the data from the wild). Can you add a TODO(crbug.com/xxxxxx) comment to remove this eventually once the bug is fixed?",
+      "parentUuid": "51898353_c2477d53",
+      "revId": "74080109ea1bf70a88e038a9edde4b745f2782e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
