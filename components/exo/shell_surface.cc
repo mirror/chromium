@@ -331,7 +331,10 @@ ShellSurface::ShellSurface(Surface* surface,
       origin_(origin),
       activatable_(activatable),
       can_minimize_(can_minimize),
-      container_(container) {
+      container_(container),
+      scale_(bounds_mode_ == BoundsMode::CLIENT
+                 ? WMHelper::GetInstance()->GetDefaultDeviceScaleFactor()
+                 : 1.0) {
   WMHelper::GetInstance()->AddActivationObserver(this);
   WMHelper::GetInstance()->AddDisplayConfigurationObserver(this);
   display::Screen::GetScreen()->AddObserver(this);
@@ -341,6 +344,14 @@ ShellSurface::ShellSurface(Surface* surface,
   set_owned_by_client();
   if (parent_)
     parent_->AddObserver(this);
+
+  if (scale_ != 1.0) {
+    pending_scale_ = scale_;
+    gfx::Transform transform;
+    DCHECK_NE(scale_, 0.0);
+    transform.Scale(1.0 / scale_, 1.0 / scale_);
+    host_window()->SetTransform(transform);
+  }
 }
 
 ShellSurface::ShellSurface(Surface* surface)
@@ -800,6 +811,7 @@ void ShellSurface::OnSurfaceCommit() {
 
     UpdateSurfaceBounds();
 
+    // TODO(oshima): This is deprecated. Remove this.
     // Update surface scale.
     if (pending_scale_ != scale_) {
       gfx::Transform transform;
