@@ -17,26 +17,23 @@ namespace blink {
 namespace {
 // TODO(lunalu): Deprecate the methods in this namesapce when deprecating old
 // allow syntax.
-bool IsValidOldAllowSyntax(const String& policy,
-                           RefPtr<SecurityOrigin> src_origin) {
-  // Old syntax enable all features on src_origin, If src_origin does not exist
-  // (example, http header does not have a src_origin), then the syntax cannot
-  // be valid.
-  if (!src_origin)
-    return false;
+void IsValidOldAllowSyntax(const String& policy, bool* old_syntax) {
+  if (!old_syntax)
+    return;
+  *old_syntax = false;
   // allow = "feature" is also supported by new syntax.
   if (!policy.Contains(' '))
-    return false;
+    return;
   // Old syntax only allows whitespace as valid delimiter.
   if (policy.Contains(';') || policy.Contains(','))
-    return false;
+    return;
   // An empty policy is also allowed in the new syntax.
   if (policy.ContainsOnlyWhitespace())
-    return false;
+    return;
   // Old syntax does not support specifying wildcards / origins for any feature.
   if (policy.Contains("self") || policy.Contains("src") ||
       policy.Contains("none") || policy.Contains("*")) {
-    return false;
+    return;
   }
 
   // Verify that the policy follows this syntax:
@@ -47,9 +44,10 @@ bool IsValidOldAllowSyntax(const String& policy,
 
   for (unsigned i = 0; i < policy.length(); i++) {
     if (!IsValidFeatureNameCharacter(policy[i]) && !IsASCIISpace(policy[i]))
-      return false;
+      return;
   }
-  return true;
+  *old_syntax = true;
+  return;
 }
 
 Vector<WebParsedFeaturePolicyDeclaration> ParseOldAllowSyntax(
@@ -84,7 +82,7 @@ Vector<WebParsedFeaturePolicyDeclaration> ParseOldAllowSyntax(
 WebParsedFeaturePolicy ParseFeaturePolicyHeader(const String& policy,
                                                 RefPtr<SecurityOrigin> origin,
                                                 Vector<String>* messages) {
-  return ParseFeaturePolicy(policy, origin, RefPtr<SecurityOrigin>(), messages,
+  return ParseFeaturePolicy(policy, origin, origin, messages,
                             GetDefaultFeatureNameMap());
 }
 
@@ -108,9 +106,8 @@ Vector<WebParsedFeaturePolicyDeclaration> ParseFeaturePolicy(
   // Temporarily supporting old allow syntax:
   //     allow = "feature1 feature2 feature3 ... "
   // TODO(lunalu): depracate this old syntax in the future.
-  if (IsValidOldAllowSyntax(policy, src_origin)) {
-    if (old_syntax)
-      *old_syntax = true;
+  IsValidOldAllowSyntax(policy, old_syntax);
+  if (old_syntax && *old_syntax) {
     return ParseOldAllowSyntax(policy, src_origin, messages, feature_names);
   }
 
