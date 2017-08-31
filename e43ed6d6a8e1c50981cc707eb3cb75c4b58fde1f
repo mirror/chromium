@@ -70,6 +70,30 @@
       "revId": "e43ed6d6a8e1c50981cc707eb3cb75c4b58fde1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a1d852b_3cc2b45f",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 17
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-08-31T12:27:25Z",
+      "side": 1,
+      "message": "It seems the procedural block is run after activityIndicator finishes its animation (I googled and someone said it could take 1~3s):\nhttps://cs.chromium.org/chromium/src/ios/chrome/browser/ui/bookmarks/bookmark_home_waiting_view.mm?l\u003d60\nIf we don\u0027t use weakSelf here, if user leaves Bookmarks while the spinner below is waiting activityIndicator\u0027s completion to run the block.  I wonder if it will cause the retaining cycle between the block and tableView?\nwhat do you think?",
+      "parentUuid": "3d2e42bf_2a163b89",
+      "range": {
+        "startLine": 566,
+        "startChar": 30,
+        "endLine": 566,
+        "endChar": 38
+      },
+      "revId": "e43ed6d6a8e1c50981cc707eb3cb75c4b58fde1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
