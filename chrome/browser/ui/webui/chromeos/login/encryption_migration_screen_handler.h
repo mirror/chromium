@@ -135,6 +135,11 @@ class EncryptionMigrationScreenHandler : public EncryptionMigrationScreenView,
   // This will be different between regular and minimal migration.
   UIState GetMigratingUIState() const;
 
+  // Stop forcing migration if it was forced by policy.
+  void MaybeStopForcingMigration();
+
+  device::mojom::WakeLock* GetWakeLock();
+
   Delegate* delegate_ = nullptr;
   bool show_on_init_ = false;
 
