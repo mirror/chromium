@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7976bc8d_4e8ef630",
+        "filename": "cc/animation/animation_host.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-08-31T13:45:43Z",
+      "side": 1,
+      "message": "Nit; comment just explains what you are doing, which is evident from the code (copy_if is quite clear to read). The interesting question is \u0027why do we only select worklet animation players for animator state\u0027 imo.",
+      "revId": "4911304dd5e180d8ceba4763e884b5d20cba7a2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21f5efe0_b0df68e7",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-08-31T13:45:43Z",
+      "side": 1,
+      "message": "Doesn\u0027t vr/ use this function?",
+      "revId": "4911304dd5e180d8ceba4763e884b5d20cba7a2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c34f334_1df45c89",
+        "filename": "cc/trees/layer_tree_mutator.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-08-31T13:45:43Z",
+      "side": 1,
+      "message": "Nit; these comments don\u0027t feel like they add any information vs the code.\n\nPerhaps a larger question is - if this struct is entirely about WorkletAnimation, why isn\u0027t it called WorkletAnimatorInputState ?",
+      "revId": "4911304dd5e180d8ceba4763e884b5d20cba7a2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
