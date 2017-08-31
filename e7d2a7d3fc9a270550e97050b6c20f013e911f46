@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f998e124_a766bd40",
+        "filename": "extensions/browser/api/bluetooth/bluetooth_private_api.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-31T23:39:53Z",
+      "side": 1,
+      "message": "Okay, implemented option 2.",
+      "parentUuid": "d43bfbc8_533644f8",
+      "revId": "e7d2a7d3fc9a270550e97050b6c20f013e911f46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "609b4c75_4a6e6954",
         "filename": "extensions/common/api/bluetooth_private.idl",
         "patchSetId": 5
