@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d61ad28_9828e01e",
+        "filename": "chrome/browser/vr/elements/webvr_url_toast_texture.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-31T14:18:07Z",
+      "side": 1,
+      "message": "Although there should always be a host, you should still check host.is_nonempty() to be sure, and handle the case where there is no host.  Could be to show and empty string, or ellipsis, not sure.",
+      "revId": "189e7e559d31ff3fe760bd665967789d6421c753",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b4fcd7e_ae265ce1",
+        "filename": "chrome/browser/vr/elements/webvr_url_toast_texture.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-31T14:18:07Z",
+      "side": 1,
+      "message": "There are 3 things that can follow the host - path, query and ref.  I think it\u0027s probably fine to just check path here, but for completeness, you could check all 3 (with the same non-empty check).  Depends what you think you want to show.",
+      "revId": "189e7e559d31ff3fe760bd665967789d6421c753",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eae0db4f_ef2154a7",
+        "filename": "chrome/browser/vr/elements/webvr_url_toast_texture.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-31T14:18:07Z",
+      "side": 1,
+      "message": "This should be an ellipsis character:\n\nurl +\u003d gfx::kForwardSlash + base::string16(gfx::kEllipsisUTF16);",
+      "range": {
+        "startLine": 121,
+        "startChar": 31,
+        "endLine": 121,
+        "endChar": 34
+      },
+      "revId": "189e7e559d31ff3fe760bd665967789d6421c753",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
