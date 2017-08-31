@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b12b813_65d74a51",
+        "filename": "components/download/internal/scheduler/device_status_listener.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-08-31T20:44:55Z",
+      "side": 1,
+      "message": "Thanks for this comment, I\u0027ll change the code later.",
+      "revId": "8111bffb33eedfbeb7b1f1f0eec1d3d08ac4b55a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
