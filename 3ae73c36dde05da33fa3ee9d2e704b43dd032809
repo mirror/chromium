@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2ac6a494_7a63a933",
+        "filename": "chrome/browser/ui/webui/chromeos/power_ui.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-31T21:46:54Z",
+      "side": 1,
+      "message": "I\u0027m not actually sure that this would be a readability improvement, and I try not to do such changes in other people\u0027s code in such cases.",
+      "parentUuid": "ab631cd4_1da9c417",
+      "revId": "3ae73c36dde05da33fa3ee9d2e704b43dd032809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ca04db0_f9de454c",
         "filename": "chrome/test/chromedriver/logging.h",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "3ae73c36dde05da33fa3ee9d2e704b43dd032809",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "683fc928_7c7bcc02",
+        "filename": "chrome/test/chromedriver/logging.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-31T21:46:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ca04db0_f9de454c",
+      "revId": "3ae73c36dde05da33fa3ee9d2e704b43dd032809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
