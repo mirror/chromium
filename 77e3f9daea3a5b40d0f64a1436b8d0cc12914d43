@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3387b898_fb8fd6de",
+        "filename": "third_party/WebKit/Source/core/html/HTMLIFrameElement.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-31T15:48:56Z",
+      "side": 1,
+      "message": "Can you add a TODO to eventually remove the bool*, and link to https://crbug.com/761009 ?",
+      "revId": "77e3f9daea3a5b40d0f64a1436b8d0cc12914d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bf5a249_20ed1e83",
+        "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicy.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-31T15:48:56Z",
+      "side": 1,
+      "message": "And could you add a quick description here of |old_syntax|? Something like \"if not null, then |old_syntax| will be set to true if the deprecated space-separated-feature-list syntax is detected\" and a todo to remove this when https://crbug.com/761009 is resolved.",
+      "revId": "77e3f9daea3a5b40d0f64a1436b8d0cc12914d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
