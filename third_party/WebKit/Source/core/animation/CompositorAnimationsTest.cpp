@@ -1333,4 +1333,34 @@ TEST_F(AnimationCompositorAnimationsTest,
   LayoutObjectProxy::Dispose(layout_object);
 }
 
+TEST_F(AnimationCompositorAnimationsTest,
+       cannotStartElementOnCompositorEffectSPv2) {
+  Persistent<Element> element = document_->createElement("shared");
+  LayoutObjectProxy* layout_object = LayoutObjectProxy::Create(element.Get());
+  element->SetLayoutObject(layout_object);
+
+  AnimatableValueKeyframeVector key_frames;
+  key_frames.push_back(CreateDefaultKeyframe(CSSPropertyOpacity,
+                                             EffectModel::kCompositeReplace,
+                                             0.0)
+                           .Get());
+  key_frames.push_back(CreateDefaultKeyframe(CSSPropertyOpacity,
+                                             EffectModel::kCompositeReplace,
+                                             1.0)
+                           .Get());
+  EffectModel* animation_effect1 =
+      AnimatableValueKeyframeEffectModel::Create(key_frames);
+
+  Timing timing;
+  timing.iteration_duration = 1.f;
+
+  // The first animation for opacity is ok to run on compositor.
+  KeyframeEffect* keyframe_effect1 =
+      KeyframeEffect::Create(element.Get(), animation_effect1, timing);
+  Animation* animation1 = timeline_->Play(keyframe_effect1);
+  EXPECT_TRUE(CompositorAnimations::CheckCanStartAnimationOnCompositor(
+                  timing, *element.Get(), animation1, *animation_effect1, 1)
+                  .Ok());
+}
+
 }  // namespace blink

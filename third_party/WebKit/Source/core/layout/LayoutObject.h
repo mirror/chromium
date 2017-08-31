@@ -1780,6 +1780,8 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
                              canStartElementOnCompositorTransformSPv2);
     FRIEND_TEST_ALL_PREFIXES(AnimationCompositorAnimationsTest,
                              canStartElementOnCompositorEffectSPv2);
+    FRIEND_TEST_ALL_PREFIXES(AnimationCompositorAnimationsTest,
+                             cannotStartElementOnCompositorEffectSPv2);
     FRIEND_TEST_ALL_PREFIXES(PrePaintTreeWalkTest, ClipRects);
 
     // Each LayoutObject has one or more painting fragments (exactly one
