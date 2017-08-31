@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b7d1642f_d9d3c4ee",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1144419
+      },
+      "writtenOn": "2017-08-31T14:36:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30b56d11_8a7274a2",
+      "range": {
+        "startLine": 13,
+        "startChar": 10,
+        "endLine": 13,
+        "endChar": 16
+      },
+      "revId": "b60fe4330b7bee3efe3e29870a8179022e6c61eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48e01f40_e68f8d8f",
         "filename": "chrome/browser/chromeos/arc/arc_util.cc",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-31T13:59:01Z",
       "side": 1,
       "message": "Should we also check if the user-policy derived ArcEnabled \u003d\u003d true for the user ( I think it\u0027s mapped to a pref so it would be available here)?",
+      "range": {
+        "startLine": 182,
+        "startChar": 11,
+        "endLine": 182,
+        "endChar": 25
+      },
+      "revId": "b60fe4330b7bee3efe3e29870a8179022e6c61eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96a3d84d_981c82d5",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1144419
+      },
+      "writtenOn": "2017-08-31T14:36:36Z",
+      "side": 1,
+      "message": "You\u0027re right, thanks for catching it.",
+      "parentUuid": "48e01f40_e68f8d8f",
       "range": {
         "startLine": 182,
         "startChar": 11,
@@ -68,6 +116,30 @@
       "revId": "b60fe4330b7bee3efe3e29870a8179022e6c61eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee3fc9e6_b25019b6",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1144419
+      },
+      "writtenOn": "2017-08-31T14:36:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97ada711_c93341d2",
+      "range": {
+        "startLine": 222,
+        "startChar": 3,
+        "endLine": 222,
+        "endChar": 10
+      },
+      "revId": "b60fe4330b7bee3efe3e29870a8179022e6c61eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
