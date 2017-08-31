@@ -404,9 +404,9 @@ PaintResult PaintLayerPainter::PaintLayerContents(
   sk_sp<SkImageFilter> image_filter =
       FilterPainter::GetImageFilter(paint_layer_);
 
-  bool should_paint_content = paint_layer_.HasVisibleContent() &&
-                              is_self_painting_layer &&
-                              !is_painting_overlay_scrollbars;
+  bool should_paint_content =
+      paint_layer_.HasVisibleContent() && is_self_painting_layer &&
+      !is_painting_overlay_scrollbars && !paint_layer_.IsInCollapsedCell();
 
   PaintLayerFragments layer_fragments;
 
