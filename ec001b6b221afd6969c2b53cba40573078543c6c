@@ -22,6 +22,30 @@
       "revId": "ec001b6b221afd6969c2b53cba40573078543c6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf8ffc9d_1c99f3ec",
+        "filename": "components/cronet/ios/test/cronet_netlog_test.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-08-31T02:14:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8b3d0e2_683e2f1f",
+      "range": {
+        "startLine": 113,
+        "startChar": 9,
+        "endLine": 113,
+        "endChar": 20
+      },
+      "revId": "ec001b6b221afd6969c2b53cba40573078543c6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
