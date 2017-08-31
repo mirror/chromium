@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30b56d11_8a7274a2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-08-31T13:59:01Z",
+      "side": 1,
+      "message": "nit: and user -\u003e We also check ArcEnabled user policy, don\u0027t we?",
+      "range": {
+        "startLine": 13,
+        "startChar": 10,
+        "endLine": 13,
+        "endChar": 16
+      },
+      "revId": "b60fe4330b7bee3efe3e29870a8179022e6c61eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48e01f40_e68f8d8f",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-08-31T13:59:01Z",
+      "side": 1,
+      "message": "Should we also check if the user-policy derived ArcEnabled \u003d\u003d true for the user ( I think it\u0027s mapped to a pref so it would be available here)?",
+      "range": {
+        "startLine": 182,
+        "startChar": 11,
+        "endLine": 182,
+        "endChar": 25
+      },
+      "revId": "b60fe4330b7bee3efe3e29870a8179022e6c61eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97ada711_c93341d2",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-08-31T13:59:01Z",
+      "side": 1,
+      "message": "Please add a sentence describing what *|is_arc_enabled| gets set to.",
+      "range": {
+        "startLine": 222,
+        "startChar": 3,
+        "endLine": 222,
+        "endChar": 10
+      },
+      "revId": "b60fe4330b7bee3efe3e29870a8179022e6c61eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
