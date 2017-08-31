@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b9732c04_9f4a424a",
+        "filename": "content/browser/appcache/appcache_update_job.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 1302,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-31T23:00:15Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "1372b946_0ff63b43",
+      "revId": "ec3e4772740504416c3f1550a2e38a241a0f858d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee0fb242_1c778a64",
         "filename": "content/browser/appcache/appcache_update_job.cc",
         "patchSetId": 21
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-31T20:04:35Z",
       "side": 1,
       "message": "is this test needed? it seems like it shouldn\u0027t be",
+      "revId": "ec3e4772740504416c3f1550a2e38a241a0f858d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1700c642_a1ba84de",
+        "filename": "content/browser/appcache/appcache_update_job.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 1316,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-31T23:00:15Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "ee0fb242_1c778a64",
       "revId": "ec3e4772740504416c3f1550a2e38a241a0f858d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
