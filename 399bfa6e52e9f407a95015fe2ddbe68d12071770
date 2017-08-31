@@ -46,6 +46,30 @@
       "revId": "399bfa6e52e9f407a95015fe2ddbe68d12071770",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae506924_c9bd2e49",
+        "filename": "media/mojo/services/cdm_manifest.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-08-31T21:39:09Z",
+      "side": 1,
+      "message": "thanks!",
+      "parentUuid": "2f5c9bd8_7fbb83cc",
+      "range": {
+        "startLine": 4,
+        "startChar": 19,
+        "endLine": 4,
+        "endChar": 23
+      },
+      "revId": "399bfa6e52e9f407a95015fe2ddbe68d12071770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
