@@ -16,6 +16,24 @@
       "revId": "3f21feae072d5790eeb27cd4150c703307e8576b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77e1bbe6_1d866970",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field_paste_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-08-31T14:28:47Z",
+      "side": 1,
+      "message": "Done, and I don\u0027t need it here anyway since I already use a category. Added it in the implementation.",
+      "parentUuid": "eb486f5e_b9963c1d",
+      "revId": "3f21feae072d5790eeb27cd4150c703307e8576b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
