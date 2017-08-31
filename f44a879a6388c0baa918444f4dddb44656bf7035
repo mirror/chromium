@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "a0eddd3f_2207a32f",
+        "filename": "ash/rotator/screen_rotation_animator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-31T16:03:07Z",
+      "side": 1,
+      "message": "// support for Texture-\u003eSkBitmap",
+      "revId": "f44a879a6388c0baa918444f4dddb44656bf7035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d264c6df_d29d5c19",
         "filename": "cc/ipc/copy_output_request.mojom",
         "patchSetId": 10
