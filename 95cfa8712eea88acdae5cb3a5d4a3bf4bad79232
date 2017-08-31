@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ddab3b3_f6320cb5",
+        "filename": "chrome/browser/ui/ash/launcher/app_shortcut_launcher_item_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-31T03:59:28Z",
+      "side": 0,
+      "message": "How come you no longer need to check for OFF?",
+      "range": {
+        "startLine": 55,
+        "startChar": 6,
+        "endLine": 56,
+        "endChar": 64
+      },
+      "revId": "95cfa8712eea88acdae5cb3a5d4a3bf4bad79232",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

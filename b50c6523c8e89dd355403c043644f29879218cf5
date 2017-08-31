@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14609a5e_5903e646",
+        "filename": "chrome/browser/ui/ash/multi_user/multi_user_notification_blocker_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-31T03:59:28Z",
+      "side": 1,
+      "message": "This won\u0027t work for mash. As this is chrome code can you get at the delegate directly?",
+      "range": {
+        "startLine": 26,
+        "startChar": 7,
+        "endLine": 26,
+        "endChar": 68
+      },
+      "revId": "b50c6523c8e89dd355403c043644f29879218cf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92fafff7_0c489a67",
+        "filename": "chrome/browser/ui/ash/multi_user/multi_user_window_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-31T03:59:28Z",
+      "side": 1,
+      "message": "optional: consider naming EnableForTest of something. SetInstanceForTest doesn\u0027t indicate this turns on multi-profile mode.",
+      "range": {
+        "startLine": 90,
+        "startChar": 14,
+        "endLine": 90,
+        "endChar": 32
+      },
+      "revId": "b50c6523c8e89dd355403c043644f29879218cf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
