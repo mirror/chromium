@@ -1,0 +1,233 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e15aa6f_1fc194fd",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-08-31T08:18:32Z",
+      "side": 1,
+      "message": "Factor this into a constant, kBytesInKB.",
+      "range": {
+        "startLine": 124,
+        "startChar": 21,
+        "endLine": 124,
+        "endChar": 25
+      },
+      "revId": "4dd94c7be5ba9af0a5708789dc2aae1c7d592fde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "042a914a_3605d6b3",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-08-31T08:18:32Z",
+      "side": 1,
+      "message": "Replace these too.",
+      "range": {
+        "startLine": 137,
+        "startChar": 59,
+        "endLine": 137,
+        "endChar": 63
+      },
+      "revId": "4dd94c7be5ba9af0a5708789dc2aae1c7d592fde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d260ce2_7d159d58",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-08-31T08:18:32Z",
+      "side": 1,
+      "message": "Why is this necessary?",
+      "revId": "4dd94c7be5ba9af0a5708789dc2aae1c7d592fde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1896e47f_5c2dc4d3",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-08-31T08:18:32Z",
+      "side": 1,
+      "message": "Add the units that these will be in (all in bytes?)",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 43
+      },
+      "revId": "4dd94c7be5ba9af0a5708789dc2aae1c7d592fde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ce17766_8e608177",
+        "filename": "chrome/test/data/webui/sys_internals/sys_internals_browsertest.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-08-31T08:18:32Z",
+      "side": 1,
+      "message": "Add a TODO to move this into its own file.",
+      "revId": "4dd94c7be5ba9af0a5708789dc2aae1c7d592fde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdc26968_905db135",
+        "filename": "chrome/test/data/webui/sys_internals/sys_internals_browsertest.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-08-31T08:18:32Z",
+      "side": 1,
+      "message": "message handler integration test",
+      "range": {
+        "startLine": 42,
+        "startChar": 8,
+        "endLine": 42,
+        "endChar": 12
+      },
+      "revId": "4dd94c7be5ba9af0a5708789dc2aae1c7d592fde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ff21346_6ad20d72",
+        "filename": "chrome/test/data/webui/sys_internals/sys_internals_browsertest.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-08-31T08:18:32Z",
+      "side": 1,
+      "message": "I\u0027m not really convinced of the value of const for these functions. Why is it worth doing over just function isBitmask(n)?",
+      "range": {
+        "startLine": 44,
+        "startChar": 4,
+        "endLine": 44,
+        "endChar": 9
+      },
+      "revId": "4dd94c7be5ba9af0a5708789dc2aae1c7d592fde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "926c0fb1_2610789f",
+        "filename": "chrome/test/data/webui/sys_internals/sys_internals_browsertest.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-08-31T08:18:32Z",
+      "side": 1,
+      "message": "You can remove this. Checking that a constant is a bitmask isn\u0027t valuable.",
+      "revId": "4dd94c7be5ba9af0a5708789dc2aae1c7d592fde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bab767d_f118ebe3",
+        "filename": "chrome/test/data/webui/sys_internals/sys_internals_browsertest.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-08-31T08:18:32Z",
+      "side": 1,
+      "message": "nit: There should be a space before this. Run git cl format --js?",
+      "range": {
+        "startLine": 81,
+        "startChar": 31,
+        "endLine": 81,
+        "endChar": 32
+      },
+      "revId": "4dd94c7be5ba9af0a5708789dc2aae1c7d592fde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d15a380a_f0274d22",
+        "filename": "chrome/test/data/webui/sys_internals/sys_internals_browsertest.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-08-31T08:18:32Z",
+      "side": 1,
+      "message": "Unused?",
+      "range": {
+        "startLine": 120,
+        "startChar": 8,
+        "endLine": 120,
+        "endChar": 45
+      },
+      "revId": "4dd94c7be5ba9af0a5708789dc2aae1c7d592fde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92303f63_e104dc6e",
+        "filename": "chrome/test/data/webui/sys_internals/sys_internals_browsertest.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-08-31T08:18:32Z",
+      "side": 1,
+      "message": "You should use the assert* functions in webui/test_api.js rather than throwing your own errors.",
+      "revId": "4dd94c7be5ba9af0a5708789dc2aae1c7d592fde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
