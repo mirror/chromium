@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7be0d34_39c6e2d8",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-31T22:18:42Z",
+      "side": 1,
+      "message": "Think we should override AboutToRequestFocusFromTabTraversal and pass focus based on its |reverse| arg.",
+      "revId": "2458a95b3603bbc1b2bcd16bdbac8f78b6a42b79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d8dd76d_28417766",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-31T22:18:42Z",
+      "side": 1,
+      "message": "Can we use\n  GetWidget()-\u003eGetFocusManager()-\u003eAdvanceFocus(reverse) ?",
+      "revId": "2458a95b3603bbc1b2bcd16bdbac8f78b6a42b79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9161e19f_9a1ceb2b",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-31T22:18:42Z",
+      "side": 1,
+      "message": "nit: no ash:: since the code is in ash namespace",
+      "range": {
+        "startLine": 278,
+        "startChar": 2,
+        "endLine": 278,
+        "endChar": 7
+      },
+      "revId": "2458a95b3603bbc1b2bcd16bdbac8f78b6a42b79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77e9e68d_3647342a",
+        "filename": "ash/login/ui/lock_screen_sanity_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-31T22:18:42Z",
+      "side": 1,
+      "message": "Also check the underlying widgets?\ni.e.\n  EXPECT_TRUE(lock-\u003eGetWidget()-\u003eIsActive());\n  EXPECT_FALSE(system_tray-\u003eGetWidget()-\u003eIsActive());",
+      "range": {
+        "startLine": 93,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 52
+      },
+      "revId": "2458a95b3603bbc1b2bcd16bdbac8f78b6a42b79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
