@@ -16,6 +16,24 @@
       "revId": "e4e92b4f5d723f7f34ce4d1ca79e9eeae47b071d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "347ec926_ffa0d71f",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-31T18:08:16Z",
+      "side": 1,
+      "message": "Sure, added LOG(WARNING)",
+      "parentUuid": "d4784f4b_c3c347cd",
+      "revId": "e4e92b4f5d723f7f34ce4d1ca79e9eeae47b071d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
