@@ -600,9 +600,7 @@ gin::ObjectTemplateBuilder GpuBenchmarking::GetObjectTemplateBuilder(
       .SetMethod("sendMessageToMicroBenchmark",
                  &GpuBenchmarking::SendMessageToMicroBenchmark)
       .SetMethod("hasGpuChannel", &GpuBenchmarking::HasGpuChannel)
-      .SetMethod("hasGpuProcess", &GpuBenchmarking::HasGpuProcess)
-      .SetMethod("getGpuDriverBugWorkarounds",
-                 &GpuBenchmarking::GetGpuDriverBugWorkarounds);
+      .SetMethod("hasGpuProcess", &GpuBenchmarking::HasGpuProcess);
 }
 
 void GpuBenchmarking::SetNeedsDisplayOnAllLayers() {
@@ -1074,21 +1072,6 @@ bool GpuBenchmarking::HasGpuProcess() {
     return false;
 
   return has_gpu_process;
-}
-
-void GpuBenchmarking::GetGpuDriverBugWorkarounds(gin::Arguments* args) {
-  std::vector<std::string> gpu_driver_bug_workarounds;
-  gpu::GpuChannelHost* gpu_channel =
-      RenderThreadImpl::current()->GetGpuChannel();
-  if (!gpu_channel ||
-      !gpu_channel->Send(new GpuChannelMsg_GetDriverBugWorkArounds(
-          &gpu_driver_bug_workarounds))) {
-    return;
-  }
-
-  v8::Local<v8::Value> result;
-  if (gin::TryConvertToV8(args->isolate(), gpu_driver_bug_workarounds, &result))
-    args->Return(result);
 }
 
 }  // namespace content

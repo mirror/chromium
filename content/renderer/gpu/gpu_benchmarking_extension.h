@@ -62,7 +62,6 @@ class GpuBenchmarking : public gin::Wrappable<GpuBenchmarking> {
   bool SendMessageToMicroBenchmark(int id, v8::Local<v8::Object> message);
   bool HasGpuChannel();
   bool HasGpuProcess();
-  void GetGpuDriverBugWorkarounds(gin::Arguments* args);
 
   mojom::InputInjectorPtr input_injector_;
   DISALLOW_COPY_AND_ASSIGN(GpuBenchmarking);

@@ -200,8 +200,6 @@ class GPU_EXPORT GpuChannel : public IPC::Listener, public FilteredSender {
                              bool* result,
                              gpu::Capabilities* capabilities);
   void OnDestroyCommandBuffer(int32_t route_id);
-  void OnGetDriverBugWorkArounds(
-      std::vector<std::string>* gpu_driver_bug_workarounds);
 
   std::unique_ptr<GpuCommandBufferStub> CreateCommandBuffer(
       const GPUCreateCommandBufferConfig& init_params,
