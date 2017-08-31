@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a980160_cab7de86",
+        "filename": "components/multidevice/service/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-31T03:47:50Z",
+      "side": 1,
+      "message": "Add a dep - don\u0027t add these as sources.",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 86
+      },
+      "revId": "408f0f2791b65ce914b7ed420e12ac22cb7dabac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e3bbfe5_31d92974",
+        "filename": "components/multidevice/service/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-31T03:47:50Z",
+      "side": 1,
+      "message": "I don\u0027t believe you need this.",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 39
+      },
+      "revId": "408f0f2791b65ce914b7ed420e12ac22cb7dabac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e70cbd4_51fc2928",
+        "filename": "components/multidevice/service/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-31T03:47:50Z",
+      "side": 1,
+      "message": "Remove.",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 41
+      },
+      "revId": "408f0f2791b65ce914b7ed420e12ac22cb7dabac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e047fb0_b5771522",
+        "filename": "components/multidevice/service/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-31T03:47:50Z",
+      "side": 1,
+      "message": "I don\u0027t think you need this either.",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 39
+      },
+      "revId": "408f0f2791b65ce914b7ed420e12ac22cb7dabac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1d03f32_f58e9b43",
+        "filename": "components/multidevice/service/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-31T03:47:50Z",
+      "side": 1,
+      "message": "Remove.",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 27
+      },
+      "revId": "408f0f2791b65ce914b7ed420e12ac22cb7dabac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11b677e1_f6026b42",
+        "filename": "components/multidevice/service/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-31T03:47:50Z",
+      "side": 1,
+      "message": "Remove.",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 29
+      },
+      "revId": "408f0f2791b65ce914b7ed420e12ac22cb7dabac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cf7085f_a9eba4b8",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-31T03:47:50Z",
+      "side": 1,
+      "message": "nit: This comment isn\u0027t really necessary.",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 73
+      },
+      "revId": "408f0f2791b65ce914b7ed420e12ac22cb7dabac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1df224b7_656e2cde",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-31T03:47:50Z",
+      "side": 1,
+      "message": "This is still really tough to understand. Instead, do something like this:\n\nidentity_manager_-\u003eGetPrimaryAccountWhenAvailable(\n    base::Bind(\u0026DeviceSyncImpl::OnPrimaryAccountAvailable,\n               weak_ptr_factory.GetWeakPtr()));\n\n...then,\n\nvoid DeviceSyncImpl::OnPrimaryAccountAvailableCallback(\n    const AccountInfo\u0026 account_info,\n    const ::identity::AccountState\u0026 account_state) {\n  DCHECK(current_state_ \u003d\u003d WAITING_FOR_PRIMARY_ACCOUNT);\n  current_state_ \u003d WAITING_FOR_KEY_PAIR_GENERATION;\n\n  // Generate keypair, which is another async function. Use the same pattern.\n}\n\nMake sure you DCHECK() the expected status in each function and set the new status when it changes. Also, I\u0027d recommend just calling it |status_| instead of |current_status_|.",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 52
+      },
+      "revId": "408f0f2791b65ce914b7ed420e12ac22cb7dabac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1422ca3_94d35dd8",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-31T03:47:50Z",
+      "side": 1,
+      "message": "This is also confusing. Just use \"current_state_ \u003d \u003cstate\u003e;\". If you need to use the value again, just use it again.",
+      "range": {
+        "startLine": 128,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 71
+      },
+      "revId": "408f0f2791b65ce914b7ed420e12ac22cb7dabac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baf521e7_6b9e7770",
+        "filename": "components/multidevice/service/public/interfaces/device_sync_struct_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-31T03:47:50Z",
+      "side": 1,
+      "message": "nit: Can you also explain what the conversions are?\n\n\"Maps between device_sync::mojom::BeaconSeed and cryptauth::BeaconSeed.\"\n\netc.",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 79
+      },
+      "revId": "408f0f2791b65ce914b7ed420e12ac22cb7dabac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "127f1b3d_e1cf7f68",
+        "filename": "components/multidevice/service/public/interfaces/device_sync_struct_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-31T03:47:50Z",
+      "side": 1,
+      "message": "StructTraits",
+      "range": {
+        "startLine": 15,
+        "startChar": 9,
+        "endLine": 15,
+        "endChar": 20
+      },
+      "revId": "408f0f2791b65ce914b7ed420e12ac22cb7dabac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
