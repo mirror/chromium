@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fb8416dc_4ead94a4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordEntryEditor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-08-31T10:47:09Z",
+      "side": 1,
+      "message": "Yep, you\u0027re right.",
+      "parentUuid": "a37cb701_73ba065b",
+      "range": {
+        "startLine": 386,
+        "startChar": 25,
+        "endLine": 386,
+        "endChar": 67
+      },
+      "revId": "ba15ce1788856b2ae8b37c5d151b96c068037f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd4417cc_a0730b64",
         "filename": "chrome/android/java/strings/android_chrome_strings.grd",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "ba15ce1788856b2ae8b37c5d151b96c068037f3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34d7bd05_98666c58",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-08-31T10:47:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd4417cc_a0730b64",
+      "range": {
+        "startLine": 452,
+        "startChar": 77,
+        "endLine": 452,
+        "endChar": 85
+      },
+      "revId": "ba15ce1788856b2ae8b37c5d151b96c068037f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
