@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CONTENT_BROWSER_LOADER_GLOBAL_ROUTING_ID_H_
-#define CONTENT_BROWSER_LOADER_GLOBAL_ROUTING_ID_H_
+#ifndef CONTENT_PUBLIC_BROWSER_GLOBAL_ROUTING_ID_H_
+#define CONTENT_PUBLIC_BROWSER_GLOBAL_ROUTING_ID_H_
 
 #include <tuple>
 
@@ -13,13 +13,10 @@ namespace content {
 
 // Uniquely identifies the route from which a net::URLRequest comes.
 struct GlobalRoutingID {
-  GlobalRoutingID() : child_id(-1), route_id(-1) {
-  }
+  GlobalRoutingID() : child_id(-1), route_id(-1) {}
 
   GlobalRoutingID(int child_id, int route_id)
-      : child_id(child_id),
-        route_id(route_id) {
-  }
+      : child_id(child_id), route_id(route_id) {}
 
   // The unique ID of the child process (different from OS's PID).
   int child_id;
@@ -32,8 +29,7 @@ struct GlobalRoutingID {
            std::tie(other.child_id, other.route_id);
   }
   bool operator==(const GlobalRoutingID& other) const {
-    return child_id == other.child_id &&
-        route_id == other.route_id;
+    return child_id == other.child_id && route_id == other.route_id;
   }
   bool operator!=(const GlobalRoutingID& other) const {
     return !(*this == other);
@@ -69,4 +65,4 @@ struct GlobalFrameRoutingId {
 
 }  // namespace content
 
-#endif  // CONTENT_BROWSER_LOADER_GLOBAL_ROUTING_ID_H_
+#endif  // CONTENT_PUBLIC_BROWSER_GLOBAL_ROUTING_ID_H_

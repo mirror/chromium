@@ -47,7 +47,7 @@ auto TupleForward(Tuple&& tuple) -> decltype(TupleForwardImpl(
 // This function is for all the async IPCs that don't pass an extra parameter
 // using IPC_BEGIN_MESSAGE_MAP_WITH_PARAM.
 template <typename ObjT, typename Method, typename P, typename Tuple>
-void DispatchToMethod(ObjT* obj, Method method, P*, Tuple&& tuple) {
+void DispatchToMethod(ObjT* obj, Method method, P, Tuple&& tuple) {
   base::DispatchToMethod(obj, method, std::forward<Tuple>(tuple));
 }
 
@@ -58,7 +58,7 @@ template <typename ObjT,
           size_t... Ns>
 void DispatchToMethodImpl(ObjT* obj,
                           Method method,
-                          P* parameter,
+                          P parameter,
                           Tuple&& tuple,
                           std::index_sequence<Ns...>) {
   (obj->*method)(parameter, std::get<Ns>(std::forward<Tuple>(tuple))...);
@@ -69,8 +69,8 @@ void DispatchToMethodImpl(ObjT* obj,
 template <typename ObjT, typename P, typename... Args, typename Tuple>
 std::enable_if_t<sizeof...(Args) == std::tuple_size<std::decay_t<Tuple>>::value>
 DispatchToMethod(ObjT* obj,
-                 void (ObjT::*method)(P*, Args...),
-                 P* parameter,
+                 void (ObjT::*method)(P, Args...),
+                 P parameter,
                  Tuple&& tuple) {
   constexpr size_t size = std::tuple_size<std::decay_t<Tuple>>::value;
   DispatchToMethodImpl(obj, method, parameter, std::forward<Tuple>(tuple),
@@ -138,7 +138,7 @@ class MessageT<Meta, std::tuple<Ins...>, void> : public Message {
   static bool Dispatch(const Message* msg,
                        T* obj,
                        S* sender,
-                       P* parameter,
+                       P parameter,
                        Method func) {
     TRACE_EVENT0("ipc", Meta::kName);
     Param p;
@@ -187,7 +187,7 @@ class MessageT<Meta, std::tuple<Ins...>, std::tuple<Outs...>>
   static bool Dispatch(const Message* msg,
                        T* obj,
                        S* sender,
-                       P* /* parameter */,
+                       P /* parameter */,
                        Method func) {
     TRACE_EVENT0("ipc", Meta::kName);
     SendParam send_params;
@@ -211,7 +211,7 @@ class MessageT<Meta, std::tuple<Ins...>, std::tuple<Outs...>>
   template <class T, class P, class Method>
   static bool DispatchDelayReply(const Message* msg,
                                  T* obj,
-                                 P* /* parameter */,
+                                 P /* parameter */,
                                  Method func) {
     TRACE_EVENT0("ipc", Meta::kName);
     SendParam send_params;
@@ -233,7 +233,7 @@ class MessageT<Meta, std::tuple<Ins...>, std::tuple<Outs...>>
   template <class T, class P, class Method>
   static bool DispatchWithParamDelayReply(const Message* msg,
                                           T* obj,
-                                          P* parameter,
+                                          P parameter,
                                           Method func) {
     TRACE_EVENT0("ipc", Meta::kName);
     SendParam send_params;
@@ -248,7 +248,7 @@ class MessageT<Meta, std::tuple<Ins...>, std::tuple<Outs...>>
 
     std::tuple<Message&> t = std::tie(*reply);
     ConnectMessageAndReply(msg, reply);
-    std::tuple<P*> parameter_tuple(parameter);
+    std::tuple<P> parameter_tuple(parameter);
     base::DispatchToMethod(
         obj, func,
         std::tuple_cat(std::move(parameter_tuple), TupleForward(send_params)),

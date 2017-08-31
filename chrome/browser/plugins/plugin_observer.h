@@ -13,6 +13,7 @@
 #include "base/memory/weak_ptr.h"
 #include "chrome/common/features.h"
 #include "components/component_updater/component_updater_service.h"
+#include "content/public/browser/global_routing_id.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/browser/web_contents_user_data.h"
 
@@ -29,7 +30,7 @@ class PluginObserver : public content::WebContentsObserver,
   void PluginCrashed(const base::FilePath& plugin_path,
                      base::ProcessId plugin_pid) override;
   bool OnMessageReceived(const IPC::Message& message,
-                         content::RenderFrameHost* render_frame_host) override;
+                         content::RenderFrameHost* sender) override;
 
  private:
   class ComponentObserver;
@@ -39,28 +40,30 @@ class PluginObserver : public content::WebContentsObserver,
   explicit PluginObserver(content::WebContents* web_contents);
 
   // Message handlers:
-  void OnBlockedUnauthorizedPlugin(const base::string16& name,
+  void OnBlockedUnauthorizedPlugin(int sender_process_id,
+                                   const base::string16& name,
                                    const std::string& identifier);
-  void OnBlockedOutdatedPlugin(int placeholder_id,
+  void OnBlockedOutdatedPlugin(int sender_process_id,
+                               int placeholder_routing_id,
                                const std::string& identifier);
-  void OnBlockedComponentUpdatedPlugin(int placeholder_id,
+  void OnBlockedComponentUpdatedPlugin(int sender_process_id,
+                                       int placeholder_routing_id,
                                        const std::string& identifier);
-  void OnRemovePluginPlaceholderHost(int placeholder_id);
-  void RemoveComponentObserver(int placeholder_id);
-  void OnShowFlashPermissionBubble();
-  void OnCouldNotLoadPlugin(const base::FilePath& plugin_path);
+  void OnRemovePluginPlaceholderHost(int sender_process_id,
+                                     int placeholder_routing_id);
+  void OnShowFlashPermissionBubble(int sender_process_id);
+  void OnCouldNotLoadPlugin(int sender_process_id,
+                            const base::FilePath& plugin_path);
+
+  void RemoveComponentObserver(const content::GlobalRoutingID& placeholder_id);
 
   // Stores all PluginPlaceholderHosts, keyed by their routing ID.
-  // TODO(lukasza): https://crbug.com/760637: Routing ids are only guaranteed to
-  // be unique within a single process - they shouldn't be used as map keys,
-  // unless they are paired with a process id.
-  std::map<int, std::unique_ptr<PluginPlaceholderHost>> plugin_placeholders_;
+  std::map<content::GlobalRoutingID, std::unique_ptr<PluginPlaceholderHost>>
+      plugin_placeholders_;
 
   // Stores all ComponentObservers, keyed by their routing ID.
-  // TODO(lukasza): https://crbug.com/760637: Routing ids are only guaranteed to
-  // be unique within a single process - they shouldn't be used as map keys,
-  // unless they are paired with a process id.
-  std::map<int, std::unique_ptr<ComponentObserver>> component_observers_;
+  std::map<content::GlobalRoutingID, std::unique_ptr<ComponentObserver>>
+      component_observers_;
 
   base::WeakPtrFactory<PluginObserver> weak_ptr_factory_;
 
