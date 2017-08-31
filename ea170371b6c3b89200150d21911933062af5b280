@@ -122,6 +122,24 @@
       "revId": "ea170371b6c3b89200150d21911933062af5b280",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "354bcd45_4cda6829",
+        "filename": "gpu/config/gpu_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-08-31T23:07:41Z",
+      "side": 1,
+      "message": "I like the idea of using base::CommandLine::ForCurrentProcess(). Will do that in a followup.",
+      "parentUuid": "0de0f9c2_52de6952",
+      "revId": "ea170371b6c3b89200150d21911933062af5b280",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
