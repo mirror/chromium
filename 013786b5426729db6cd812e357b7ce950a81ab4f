@@ -22,6 +22,30 @@
       "revId": "013786b5426729db6cd812e357b7ce950a81ab4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df04c90d_2853600c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/IncognitoBottomSheetContent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-08-31T14:54:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69add998_60345d6e",
+      "range": {
+        "startLine": 169,
+        "startChar": 0,
+        "endLine": 184,
+        "endChar": 5
+      },
+      "revId": "013786b5426729db6cd812e357b7ce950a81ab4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
