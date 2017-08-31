@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3c8a674_402a54d3",
+        "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-31T23:18:19Z",
+      "side": 1,
+      "message": "nit: write it like lines 199-200. Lines 201-202 had to use the + because the string doesn\u0027t fit on 1 line.",
+      "revId": "689308b5d560d4682f2e1b88d7f639d3a111e9e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a012d47_9a7b0de3",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1292,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-31T23:18:19Z",
+      "side": 1,
+      "message": "Why is this needed?",
+      "revId": "689308b5d560d4682f2e1b88d7f639d3a111e9e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
