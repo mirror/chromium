@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "bf6c7569_26bc1bc9",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1148594
+      },
+      "writtenOn": "2017-08-31T18:39:51Z",
+      "side": 1,
+      "message": "I meant replacing std::function with a template parameter, and keeping the lambda expressions. See latest patch.",
+      "parentUuid": "5fba3752_a1f14df9",
+      "range": {
+        "startLine": 124,
+        "startChar": 26,
+        "endLine": 124,
+        "endChar": 39
+      },
+      "revId": "6d622319f17f213ee3f825d385d882399866bf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc5e3dbb_ae015ed3",
         "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
         "patchSetId": 4

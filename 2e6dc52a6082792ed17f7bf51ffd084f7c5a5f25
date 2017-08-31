@@ -22,6 +22,30 @@
       "revId": "2e6dc52a6082792ed17f7bf51ffd084f7c5a5f25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f909c317_092e9961",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1148594
+      },
+      "writtenOn": "2017-08-31T18:39:51Z",
+      "side": 1,
+      "message": "The follow-up CL [1] passes different lambdas to call a new Mojo API taking a display_id instead of bounds. Do you prefer inlining all the API checks in this function?\n\n[1] https://chromium-review.googlesource.com/c/chromium/src/+/641666",
+      "parentUuid": "a8d60bfd_4c8eb75d",
+      "range": {
+        "startLine": 162,
+        "startChar": 0,
+        "endLine": 162,
+        "endChar": 62
+      },
+      "revId": "2e6dc52a6082792ed17f7bf51ffd084f7c5a5f25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
