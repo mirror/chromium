@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "21268f33_382738ed",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1238298
+      },
+      "writtenOn": "2017-08-31T01:57:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca4d2612_f9578654",
+      "revId": "ca4a168c656c42cffaa4a647cfb5d1a3ba82e32a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f68f524_f62a575a",
         "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
         "patchSetId": 8
@@ -47,6 +65,24 @@
       "writtenOn": "2017-08-30T10:31:43Z",
       "side": 1,
       "message": "I feel that you can rewrite this loop with reverse iterator, and as\nloop termination conditions, you can include lines 402-403 and 405\nin the loop.\n\nThis may not improve the readability, but could you try?",
+      "revId": "ca4a168c656c42cffaa4a647cfb5d1a3ba82e32a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "150f9395_ec697968",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1238298
+      },
+      "writtenOn": "2017-08-31T01:57:30Z",
+      "side": 1,
+      "message": "I will try the reverse iterator.\nI separate 402-405 from the loop because it won\u0027t cover the case when either of HeapVectors is empty from the begining if 402-405 is in the loop.\n\nBut now I think this case requires that either target or this is not inside of the tree scope which includes document body, meaning there is no path between target and this.\nIn this case, it is probably correct to return nullptr according to the retargeting rule.\n\nDo you agree?\nIf so, it might be probably good to rewrite like follows.\n\nwhile(hoge) {\n    fuga;\n    402-405;\n}\nreturn nullptr;",
+      "parentUuid": "1f68f524_f62a575a",
       "revId": "ca4a168c656c42cffaa4a647cfb5d1a3ba82e32a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
