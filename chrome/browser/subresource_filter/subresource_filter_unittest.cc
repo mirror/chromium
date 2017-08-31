@@ -249,6 +249,39 @@ TEST_F(SubresourceFilterTest,
   EXPECT_FALSE(CreateAndNavigateDisallowedSubframe(main_rfh()));
 }
 
+TEST_F(SubresourceFilterTest, WhiteListReload_Global) {
+  const GURL url("https://a.test");
+  ConfigureAsSubresourceFilterOnlyURL(url);
+  SimulateNavigateAndCommit(url, main_rfh());
+  EXPECT_FALSE(CreateAndNavigateDisallowedSubframe(main_rfh()));
+
+  GetClient()->OnReloadRequested();
+  EXPECT_EQ(CONTENT_SETTING_ALLOW,
+            GetSettingsManager()->GetSitePermission(url));
+  SimulateNavigateAndCommit(url, main_rfh());
+  EXPECT_TRUE(CreateAndNavigateDisallowedSubframe(main_rfh()));
+}
+
+TEST_F(SubresourceFilterTest, WhiteListReload_PerTab) {
+  scoped_features().ResetSubresourceFilterState(
+      base::FeatureList::OVERRIDE_ENABLE_FEATURE, "SafeBrowsingV4OnlyEnabled");
+  subresource_filter::Configuration config(
+      subresource_filter::ActivationLevel::ENABLED,
+      subresource_filter::ActivationScope::ALL_SITES);
+  scoped_configuration().ResetConfiguration(std::move(config));
+
+  const GURL url("https://a.test");
+  ConfigureAsSubresourceFilterOnlyURL(url);
+  SimulateNavigateAndCommit(url, main_rfh());
+  EXPECT_FALSE(CreateAndNavigateDisallowedSubframe(main_rfh()));
+
+  GetClient()->OnReloadRequested();
+  EXPECT_EQ(CONTENT_SETTING_BLOCK,
+            GetSettingsManager()->GetSitePermission(url));
+  SimulateNavigateAndCommit(url, main_rfh());
+  EXPECT_TRUE(CreateAndNavigateDisallowedSubframe(main_rfh()));
+}
+
 TEST_F(SubresourceFilterTest, UIShown_LogsRappor) {
   rappor::TestRapporServiceImpl rappor_tester;
   TestingBrowserProcess::GetGlobal()->SetRapporServiceImpl(&rappor_tester);
