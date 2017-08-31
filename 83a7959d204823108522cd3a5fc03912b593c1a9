@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb001235_5fd5af3b",
+        "filename": "extensions/common/permissions/permission_message_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-31T21:06:23Z",
+      "side": 1,
+      "message": "GURL(base::StringPrintf(\"%s%s%s\", url::kHttpScheme, url::kStandardSchemeSeparator, host.c_str()));\nis proabably a bit better than manually using \"http://\"",
+      "range": {
+        "startLine": 56,
+        "startChar": 25,
+        "endLine": 56,
+        "endChar": 52
+      },
+      "revId": "83a7959d204823108522cd3a5fc03912b593c1a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53da8e4b_5fe2c42d",
+        "filename": "extensions/common/permissions/permission_message_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-31T21:06:23Z",
+      "side": 1,
+      "message": "It looks like if you pass url_formatter::SchemeDisplay::OMMIT_HTTP_AND_HTTPS as second param to FormatUrlForSecurityDisplay, it will automatically trim the scheme for you.",
+      "range": {
+        "startLine": 57,
+        "startChar": 13,
+        "endLine": 57,
+        "endChar": 30
+      },
+      "revId": "83a7959d204823108522cd3a5fc03912b593c1a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
