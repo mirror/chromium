@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aeaae1ef_b045db2a",
+        "filename": "chrome/android/third_party/widget_bottomsheet_base/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-31T18:47:23Z",
+      "side": 0,
+      "message": "Can we also remove this from chrome/android/BUILD.gn and chrome/test/android/BUILD.gn? That will help shave some size off our APK since we\u0027re no longer using the transition lib.\n\nWe can likely remove the definition in build/secondary/third_party/android_tools/support/BUILD.gn as well, but I\u0027m okay with leaving that for M63 clean up.",
+      "range": {
+        "startLine": 23,
+        "startChar": 4,
+        "endLine": 23,
+        "endChar": 66
+      },
+      "revId": "957d722f8c8216f619539af66801cb23d4267063",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
