@@ -16,6 +16,24 @@
       "revId": "b3b799fb2e30b9e6c2f62721b2a423907d4f16d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e2055e0_a15cdc22",
+        "filename": "chrome/browser/extensions/external_pref_loader.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-31T21:55:27Z",
+      "side": 1,
+      "message": "Yes, removed these explicit removal.\nDone.",
+      "parentUuid": "a8879318_2c486819",
+      "revId": "b3b799fb2e30b9e6c2f62721b2a423907d4f16d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
