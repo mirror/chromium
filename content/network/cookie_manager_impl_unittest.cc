@@ -319,6 +319,143 @@ TEST_F(CookieManagerImplTest, GetCookieList) {
   EXPECT_EQ("E", cookies[1].Value());
 }
 
+TEST_F(CookieManagerImplTest, GetCookieListHttpOnly) {
+  // Clean out the cookies.
+  mojom::CookieDeletionFilter filter;
+  EXPECT_EQ(4u, service_wrapper()->DeleteCookies(filter));
+
+  // Create an httponly and a non-httponly cookie.
+  bool result;
+  result = SetCanonicalCookie(
+      net::CanonicalCookie("A", "B", "foo_host", "/", base::Time(),
+                           base::Time(), base::Time(), false, true,
+                           net::CookieSameSite::NO_RESTRICTION,
+                           net::COOKIE_PRIORITY_MEDIUM),
+      true, true);
+  ASSERT_TRUE(result);
+  result = SetCanonicalCookie(
+      net::CanonicalCookie("C", "D", "foo_host", "/", base::Time(),
+                           base::Time(), base::Time(), false, false,
+                           net::CookieSameSite::NO_RESTRICTION,
+                           net::COOKIE_PRIORITY_MEDIUM),
+      true, true);
+  ASSERT_TRUE(result);
+
+  // Retrieve without httponly cookies (default)
+  net::CookieOptions options;
+  EXPECT_TRUE(options.exclude_httponly());
+  std::vector<net::CanonicalCookie> cookies = service_wrapper()->GetCookieList(
+      GURL("https://foo_host/with/path"), options);
+  EXPECT_EQ(1u, cookies.size());
+  EXPECT_EQ("C", cookies[0].Name());
+
+  // Retrieve with httponly cookies.
+  options.set_include_httponly();
+  cookies = service_wrapper()->GetCookieList(GURL("https://foo_host/with/path"),
+                                             options);
+  EXPECT_EQ(2u, cookies.size());
+  std::sort(cookies.begin(), cookies.end(), &CompareCanonicalCookies);
+
+  EXPECT_EQ("A", cookies[0].Name());
+  EXPECT_EQ("C", cookies[1].Name());
+}
+
+TEST_F(CookieManagerImplTest, GetCookieListSameSite) {
+  // Clean out the cookies.
+  mojom::CookieDeletionFilter filter;
+  EXPECT_EQ(4u, service_wrapper()->DeleteCookies(filter));
+
+  // Create an unrestricted, a lax, and a strict cookie.
+  bool result;
+  result = SetCanonicalCookie(
+      net::CanonicalCookie("A", "B", "foo_host", "/", base::Time(),
+                           base::Time(), base::Time(), false, false,
+                           net::CookieSameSite::NO_RESTRICTION,
+                           net::COOKIE_PRIORITY_MEDIUM),
+      true, true);
+  ASSERT_TRUE(result);
+  result = SetCanonicalCookie(
+      net::CanonicalCookie("C", "D", "foo_host", "/", base::Time(),
+                           base::Time(), base::Time(), false, false,
+                           net::CookieSameSite::LAX_MODE,
+                           net::COOKIE_PRIORITY_MEDIUM),
+      true, true);
+  ASSERT_TRUE(result);
+  result = SetCanonicalCookie(
+      net::CanonicalCookie("E", "F", "foo_host", "/", base::Time(),
+                           base::Time(), base::Time(), false, false,
+                           net::CookieSameSite::STRICT_MODE,
+                           net::COOKIE_PRIORITY_MEDIUM),
+      true, true);
+  ASSERT_TRUE(result);
+
+  // Retrieve only unrestricted cookies.
+  net::CookieOptions options;
+  EXPECT_EQ(net::CookieOptions::SameSiteCookieMode::DO_NOT_INCLUDE,
+            options.same_site_cookie_mode());
+  std::vector<net::CanonicalCookie> cookies = service_wrapper()->GetCookieList(
+      GURL("https://foo_host/with/path"), options);
+  EXPECT_EQ(1u, cookies.size());
+  EXPECT_EQ("A", cookies[0].Name());
+
+  // Retrieve unrestricted and lax cookies.
+  options.set_same_site_cookie_mode(
+      net::CookieOptions::SameSiteCookieMode::INCLUDE_LAX);
+  cookies = service_wrapper()->GetCookieList(GURL("https://foo_host/with/path"),
+                                             options);
+  EXPECT_EQ(2u, cookies.size());
+  std::sort(cookies.begin(), cookies.end(), &CompareCanonicalCookies);
+  EXPECT_EQ("A", cookies[0].Name());
+  EXPECT_EQ("C", cookies[1].Name());
+
+  // Retrieve everything.
+  options.set_same_site_cookie_mode(
+      net::CookieOptions::SameSiteCookieMode::INCLUDE_STRICT_AND_LAX);
+  cookies = service_wrapper()->GetCookieList(GURL("https://foo_host/with/path"),
+                                             options);
+  EXPECT_EQ(3u, cookies.size());
+  std::sort(cookies.begin(), cookies.end(), &CompareCanonicalCookies);
+  EXPECT_EQ("A", cookies[0].Name());
+  EXPECT_EQ("C", cookies[1].Name());
+  EXPECT_EQ("E", cookies[2].Name());
+}
+
+TEST_F(CookieManagerImplTest, GetCookieListAccessTime) {
+  // Clean out the cookies and set a new, clean cookie.
+  mojom::CookieDeletionFilter filter;
+  EXPECT_EQ(4u, service_wrapper()->DeleteCookies(filter));
+  bool result;
+  result = SetCanonicalCookie(
+      net::CanonicalCookie("A", "B", "foo_host", "/", base::Time(),
+                           base::Time(), base::Time(), false, false,
+                           net::CookieSameSite::NO_RESTRICTION,
+                           net::COOKIE_PRIORITY_MEDIUM),
+      true, true);
+  ASSERT_TRUE(result);
+
+  // Get the cookie without updating the access time and check
+  // that it's null.
+  net::CookieOptions options;
+  options.set_do_not_update_access_time();
+  std::vector<net::CanonicalCookie> cookies = service_wrapper()->GetCookieList(
+      GURL("https://foo_host/with/path"), options);
+  ASSERT_EQ(1u, cookies.size());
+  EXPECT_EQ("A", cookies[0].Name());
+  EXPECT_TRUE(cookies[0].LastAccessDate().is_null());
+
+  // Get the cookie updating the access time and check
+  // that it's a valid value.
+  base::Time start(base::Time::Now());
+  options.set_update_access_time();
+  cookies = service_wrapper()->GetCookieList(GURL("https://foo_host/with/path"),
+                                             options);
+  ASSERT_EQ(1u, cookies.size());
+  EXPECT_EQ("A", cookies[0].Name());
+  EXPECT_FALSE(cookies[0].LastAccessDate().is_null());
+  EXPECT_GE(cookies[0].LastAccessDate(), start);
+  EXPECT_LE(cookies[0].LastAccessDate(), base::Time::Now());
+}
+
 TEST_F(CookieManagerImplTest, SetExtraCookie) {
   EXPECT_TRUE(service_wrapper()->SetCanonicalCookie(
       net::CanonicalCookie("X", "Y", "new_host", "/", base::Time(),
