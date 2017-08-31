@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77584909_e0bb20db",
+        "filename": "ios/chrome/browser/ui/omnibox/location_bar_controller_impl.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-31T11:15:23Z",
+      "side": 1,
+      "message": "Now that this isn\u0027t a scoped_nsobject, use dot notation to set properties.",
+      "range": {
+        "startLine": 296,
+        "startChar": 3,
+        "endLine": 296,
+        "endChar": 20
+      },
+      "revId": "83cb6b3d5f0dde010e2113103ddadfed1735014e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
