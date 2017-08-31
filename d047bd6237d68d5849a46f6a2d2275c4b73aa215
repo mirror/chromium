@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21a4456e_c2a275d1",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutImage.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-08-31T16:37:52Z",
+      "side": 1,
+      "message": "Add a comment for the context for IsCacheValidator().\n\nPerhaps pasting your comment that describes the context (https://chromium-review.googlesource.com/c/chromium/src/+/634131#message-cc383973599a601c024491ecb589a181423258e5) to the crbug and adding a link to the crbug as a TODO comment here is concise.",
+      "revId": "d047bd6237d68d5849a46f6a2d2275c4b73aa215",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "991d33c3_73f4e605",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ImageResourceContent.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-08-31T16:37:52Z",
+      "side": 1,
+      "message": "Please add TODO comment (This should be deprecated and shouldn\u0027t be used).",
+      "revId": "d047bd6237d68d5849a46f6a2d2275c4b73aa215",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
