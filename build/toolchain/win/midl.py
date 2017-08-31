@@ -43,4 +43,4 @@ def main(arch, outdir, tlb, h, dlldata, iid, proxy, idl, *flags):
 
 
 if __name__ == '__main__':
-  sys.exit(main(sys.argv[1:]))
+  sys.exit(main(*sys.argv[1:]))
