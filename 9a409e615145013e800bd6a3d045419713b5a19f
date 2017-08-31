@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c288d7f_0ba3468e",
+        "filename": "chrome/browser/media/media_engagement_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-31T20:36:05Z",
+      "side": 1,
+      "message": "Why does this need to be public?",
+      "revId": "9a409e615145013e800bd6a3d045419713b5a19f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b79876d_a72c9390",
+        "filename": "chrome/browser/prefs/browser_prefs.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-31T20:36:05Z",
+      "side": 1,
+      "message": "Please add this in line 474, where the non-#ifdef\u0027d preferences are registered.",
+      "range": {
+        "startLine": 672,
+        "startChar": 2,
+        "endLine": 672,
+        "endChar": 56
+      },
+      "revId": "9a409e615145013e800bd6a3d045419713b5a19f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
