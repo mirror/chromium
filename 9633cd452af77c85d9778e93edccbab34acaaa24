@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c1c7ea4_55c4f655",
+        "filename": "chrome/installer/zucchini/image_index.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-31T17:38:10Z",
+      "side": 1,
+      "message": "NIT: Maybe {group.traits()} would be clearer, to indicate that there\u0027s some construction ?",
+      "range": {
+        "startLine": 27,
+        "startChar": 51,
+        "endLine": 27,
+        "endChar": 65
+      },
+      "revId": "9633cd452af77c85d9778e93edccbab34acaaa24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "398142f5_f9c70a5e",
+        "filename": "chrome/installer/zucchini/image_index.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-31T17:38:10Z",
+      "side": 1,
+      "message": "returns false",
+      "range": {
+        "startLine": 30,
+        "startChar": 55,
+        "endLine": 30,
+        "endChar": 60
+      },
+      "revId": "9633cd452af77c85d9778e93edccbab34acaaa24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
