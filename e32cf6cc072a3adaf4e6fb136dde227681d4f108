@@ -16,6 +16,24 @@
       "revId": "e32cf6cc072a3adaf4e6fb136dde227681d4f108",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9b6e42a_3b87c534",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-31T12:40:28Z",
+      "side": 1,
+      "message": "Actually bug is 760574. Will add both in the description.",
+      "parentUuid": "e9eebc6a_f8e8756a",
+      "revId": "e32cf6cc072a3adaf4e6fb136dde227681d4f108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
