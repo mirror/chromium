@@ -216,7 +216,8 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
   ClientHintsPreferences GetClientHintsPreferences() const;
   float GetDevicePixelRatio() const;
   bool ShouldSendClientHint(mojom::WebClientHintsType,
-                            const ClientHintsPreferences&) const;
+                            const ClientHintsPreferences&,
+                            const KURL&) const;
   // Checks if the origin requested persisting the client hints, and notifies
   // the |ContentSettingsClient| with the list of client hints and the
   // persistence duration.
