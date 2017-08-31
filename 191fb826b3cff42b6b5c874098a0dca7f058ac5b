@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ed39ef7_994c620b",
+        "filename": "content/renderer/browser_plugin/browser_plugin.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-31T23:13:35Z",
+      "side": 0,
+      "message": "This used to send the UpdateGeometry even if the size didn\u0027t change. It doesn\u0027t any more - isn\u0027t it an issue?",
+      "revId": "191fb826b3cff42b6b5c874098a0dca7f058ac5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
