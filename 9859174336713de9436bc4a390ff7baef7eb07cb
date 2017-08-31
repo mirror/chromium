@@ -16,6 +16,24 @@
       "revId": "9859174336713de9436bc4a390ff7baef7eb07cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4326bee1_21dfb459",
+        "filename": "net/cert/internal/system_trust_store.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-31T22:34:27Z",
+      "side": 1,
+      "message": "Done, but looks like X509_get_default_cert_file() returns a hard-coded path. Note that chrome compiles with boringssl statically and doesn\u0027t use libboringssl.so provided by Fuchsia. \n\nI don\u0027t know if we could link it dynamically. Ryan, WDYT?\n\nIn any case it should be possible to dlopen() the system version of libboringssl.so and get the path from there. Would you prefer that solution?",
+      "parentUuid": "fd91d7ea_45256d77",
+      "revId": "9859174336713de9436bc4a390ff7baef7eb07cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
