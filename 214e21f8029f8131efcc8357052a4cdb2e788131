@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd32249b_721ba69f",
+        "filename": "extensions/browser/api/metrics_private/metrics_private_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-31T22:33:36Z",
+      "side": 1,
+      "message": "includes added for presubmit warning.",
+      "revId": "214e21f8029f8131efcc8357052a4cdb2e788131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fc66998_a701b74f",
+        "filename": "extensions/browser/api/metrics_private/metrics_private_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-31T22:33:36Z",
+      "side": 1,
+      "message": "Similar to MetricsPrivateRecordSparseValueFunction below.\nThis new one takes a string and hashes it.",
+      "revId": "214e21f8029f8131efcc8357052a4cdb2e788131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d5a2ee0_f44aedde",
+        "filename": "third_party/closure_compiler/externs/metrics_private.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-31T22:33:36Z",
+      "side": 1,
+      "message": "This change was made by the tool that generates this file.",
+      "revId": "214e21f8029f8131efcc8357052a4cdb2e788131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "881699b1_e56288c1",
+        "filename": "third_party/closure_compiler/externs/metrics_private.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-31T22:33:36Z",
+      "side": 1,
+      "message": "This change was made by the tool that generates this file (and I\u0027m not sure why it changed but it seems ok).",
+      "revId": "214e21f8029f8131efcc8357052a4cdb2e788131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
