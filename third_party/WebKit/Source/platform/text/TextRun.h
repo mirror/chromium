@@ -32,6 +32,7 @@
 #include "platform/text/TextDirection.h"
 #include "platform/text/TextJustify.h"
 #include "platform/wtf/Allocator.h"
+#include "platform/wtf/Optional.h"
 #include "platform/wtf/text/StringView.h"
 #include "platform/wtf/text/WTFString.h"
 
@@ -149,6 +150,8 @@ class PLATFORM_EXPORT TextRun final {
     result.SetText(Data16(start_offset), length);
     return result;
   }
+
+  Optional<unsigned> IndexOfSubRun(const TextRun&) const;
 
   UChar operator[](unsigned i) const {
     SECURITY_DCHECK(i < len_);

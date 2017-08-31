@@ -48,9 +48,11 @@ void NGLineInfo::SetLineStyle(const NGInlineNode& node,
 }
 
 void NGLineInfo::SetLineLocation(LayoutUnit line_left,
+                                 LayoutUnit line_width,
                                  LayoutUnit available_width,
                                  LayoutUnit line_top) {
   line_left_ = line_left;
+  line_width_ = line_width;
   available_width_ = available_width;
   line_top_ = line_top;
 }

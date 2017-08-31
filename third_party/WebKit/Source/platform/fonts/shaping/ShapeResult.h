@@ -65,6 +65,8 @@ class PLATFORM_EXPORT ShapeResult : public RefCounted<ShapeResult> {
       unsigned count);
   ~ShapeResult();
 
+  RefPtr<ShapeResult> Clone() const { return Create(*this); }
+
   // The logical width of this result.
   float Width() const { return width_; }
   LayoutUnit SnappedWidth() const { return LayoutUnit::FromFloatCeil(width_); }
@@ -102,6 +104,9 @@ class PLATFORM_EXPORT ShapeResult : public RefCounted<ShapeResult> {
   void ApplySpacing(ShapeResultSpacing<String>&);
   PassRefPtr<ShapeResult> ApplySpacingToCopy(ShapeResultSpacing<TextRun>&,
                                              const TextRun&) const;
+  template <typename TextContainerType>
+  void ApplySpacing(ShapeResultSpacing<TextContainerType>&,
+                    int text_start_offset);
 
   void CopyRange(unsigned start, unsigned end, ShapeResult*) const;
 
@@ -115,9 +120,6 @@ class PLATFORM_EXPORT ShapeResult : public RefCounted<ShapeResult> {
     return AdoptRef(new ShapeResult(other));
   }
 
-  template <typename TextContainerType>
-  void ApplySpacing(ShapeResultSpacing<TextContainerType>&,
-                    const TextContainerType&);
   template <bool is_horizontal_run>
   void ComputeGlyphPositions(ShapeResult::RunInfo*,
                              unsigned start_glyph,

@@ -307,13 +307,14 @@ void ShapeResult::FallbackFonts(
 
 template <typename TextContainerType>
 void ShapeResult::ApplySpacing(ShapeResultSpacing<TextContainerType>& spacing,
-                               const TextContainerType& text) {
+                               int text_start_offset) {
   float offset_x, offset_y;
   float& offset = spacing.IsVerticalOffset() ? offset_y : offset_x;
   float total_space = 0;
   for (auto& run : runs_) {
     if (!run)
       continue;
+    unsigned run_start_index = run->start_index_ + text_start_offset;
     float total_space_for_run = 0;
     for (size_t i = 0; i < run->glyph_data_.size(); i++) {
       HarfBuzzRunGlyphData& glyph_data = run->glyph_data_[i];
@@ -325,7 +326,7 @@ void ShapeResult::ApplySpacing(ShapeResultSpacing<TextContainerType>& spacing,
       } else {
         offset_x = offset_y = 0;
         float space = spacing.ComputeSpacing(
-            text, run->start_index_ + glyph_data.character_index, offset);
+            run_start_index + glyph_data.character_index, offset);
         glyph_data.advance += space;
         total_space_for_run += space;
         glyph_data.offset.Expand(offset_x, offset_y);
@@ -341,14 +342,17 @@ void ShapeResult::ApplySpacing(ShapeResultSpacing<TextContainerType>& spacing,
 }
 
 void ShapeResult::ApplySpacing(ShapeResultSpacing<String>& spacing) {
-  ApplySpacing(spacing, spacing.Text());
+  ApplySpacing(spacing, 0);
 }
 
 PassRefPtr<ShapeResult> ShapeResult::ApplySpacingToCopy(
     ShapeResultSpacing<TextRun>& spacing,
     const TextRun& run) const {
+  Optional<unsigned> index_of_sub_run = spacing.Text().IndexOfSubRun(run);
+  DCHECK(index_of_sub_run.has_value());
   RefPtr<ShapeResult> result = ShapeResult::Create(*this);
-  result->ApplySpacing(spacing, run);
+  if (index_of_sub_run.has_value())
+    result->ApplySpacing(spacing, index_of_sub_run.value());
   return result;
 }
 
