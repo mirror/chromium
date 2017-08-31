@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "745b0f66_956aa3e9",
+        "filename": "chrome/android/webapk/shell_apk/res/layout/host_browser_list_item.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-31T18:27:21Z",
+      "side": 1,
+      "message": "Can you specify the top and bottom padding in the LinearLayout instead of on the ImageView. Specifying the top and bottom padding will not generate layout-v17",
+      "revId": "74832fbbe6e05516c181981a57117313a333b567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ea56da9_22c23f11",
+        "filename": "chrome/android/webapk/shell_apk/res/layout/host_browser_list_item.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-31T18:27:21Z",
+      "side": 1,
+      "message": "According to the spec, if the font size is 13sp, shouldn\u0027t the top and bottom margin be 4dp\n\nIn particular I saw this in the spec https://material.googleplex.com/components/lists.html#lists-specs\n\nAvatar with text and icon\nFont: Roboto Regular 16sp\nTile height: 72dp\nIcon left padding: 16dp\nText left padding: 72dp\nPadding above list: 8dp\nText right padding: 16dp\n\nDense avatar with text and icon\nFont: Roboto Regular 13sp\nTile height: 60dp\nIcon left padding: 16dp\nText left padding: 72dp\nPadding above list: 4dp\nText right padding: 16dp",
+      "revId": "74832fbbe6e05516c181981a57117313a333b567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92ad5327_f3dc7ea8",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/ChooseHostBrowserDialog.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-31T18:27:21Z",
+      "side": 1,
+      "message": "Can you specify this vertical padding via XML?\nIt looks like setting bottom padding on |desc| and setting top padding on |browserList| are two ways of doing the same thing. Can we do one or the other but not both?",
+      "revId": "74832fbbe6e05516c181981a57117313a333b567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2befc940_2a6ac6ca",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkUtils.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-31T18:27:21Z",
+      "side": 1,
+      "message": "Shouldn\u0027t the top padding for the content area by 20? https://material.googleplex.com/components/dialogs.html#dialogs-specs",
+      "revId": "74832fbbe6e05516c181981a57117313a333b567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc467632_cf6abebd",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkUtils.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-31T18:27:21Z",
+      "side": 1,
+      "message": "This can now be simply setPadding() :)",
+      "revId": "74832fbbe6e05516c181981a57117313a333b567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
