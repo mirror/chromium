@@ -225,6 +225,30 @@
     },
     {
       "key": {
+        "uuid": "7c9880fc_64fb80f3",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_features.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-31T11:38:44Z",
+      "side": 1,
+      "message": "+1 (I\u0027ve also asked the namespace to be removed from credential_manager code for the same reason).",
+      "parentUuid": "d56da55d_bc1edea5",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 20
+      },
+      "revId": "f0649b200faa089f8cdce7983f84716d9c7640ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b8b2e081_de1ca1e8",
         "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_view_controller.h",
         "patchSetId": 27
