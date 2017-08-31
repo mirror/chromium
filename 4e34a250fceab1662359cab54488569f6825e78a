@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51a0b054_684fc2fc",
+        "filename": "base/task_runner_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-08-31T04:52:47Z",
+      "side": 1,
+      "message": "std::decay_t?",
+      "range": {
+        "startLine": 73,
+        "startChar": 33,
+        "endLine": 73,
+        "endChar": 74
+      },
+      "revId": "4e34a250fceab1662359cab54488569f6825e78a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4854c94f_e5ef86bb",
+        "filename": "base/threading/post_task_and_reply_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-08-31T04:52:47Z",
+      "side": 1,
+      "message": "std::make_unique?",
+      "range": {
+        "startLine": 180,
+        "startChar": 15,
+        "endLine": 180,
+        "endChar": 25
+      },
+      "revId": "4e34a250fceab1662359cab54488569f6825e78a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
