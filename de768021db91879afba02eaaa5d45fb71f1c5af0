@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b80e5712_6855f1fa",
+        "filename": "chromeos/components/tether/network_connection_handler_tether_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-31T15:44:14Z",
+      "side": 1,
+      "message": "It seems like it is possible that this could be called with the current connected tether network (e.g. with multiple Settings pages open, or a UI bug)? Do we need to check for that and just do nothing? (That is how the rest of the networking UI behaves - connecting to a connected network is a no-op).",
+      "revId": "de768021db91879afba02eaaa5d45fb71f1c5af0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
