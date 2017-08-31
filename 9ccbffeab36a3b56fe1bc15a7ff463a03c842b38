@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74877162_cba35d19",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1111,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-31T03:34:46Z",
+      "side": 1,
+      "message": "Could you add a link to the design doc?\n// I think it\u0027s better to make a shortlink from https://goo.gl :)",
+      "revId": "9ccbffeab36a3b56fe1bc15a7ff463a03c842b38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
