@@ -104,6 +104,23 @@
       "revId": "bda76014f5195f537da1c8eb9b81355187fbbb30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "75dba7c7_adfb4c23",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_view_ios.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-08-31T18:29:37Z",
+      "side": 1,
+      "message": "Per https://developer.apple.com/videos/play/wwdc2017/411/ use \nif (@available(iOS 11, *)) {",
+      "revId": "bda76014f5195f537da1c8eb9b81355187fbbb30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
