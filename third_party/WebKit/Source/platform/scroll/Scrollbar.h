@@ -51,8 +51,10 @@ class PLATFORM_EXPORT Scrollbar : public GarbageCollectedFinalized<Scrollbar>,
   static Scrollbar* Create(ScrollableArea* scrollable_area,
                            ScrollbarOrientation orientation,
                            ScrollbarControlSize size,
-                           PlatformChromeClient* chrome_client) {
-    return new Scrollbar(scrollable_area, orientation, size, chrome_client);
+                           PlatformChromeClient* chrome_client,
+                           ScrollbarTheme* theme = nullptr) {
+    return new Scrollbar(scrollable_area, orientation, size, chrome_client,
+                         theme);
   }
 
   // Theme object ownership remains with the caller and it must outlive the

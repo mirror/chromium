@@ -87,6 +87,7 @@
 #include "platform/graphics/paint/DrawingRecorder.h"
 #include "platform/scroll/ScrollAnimatorBase.h"
 #include "platform/scroll/ScrollbarTheme.h"
+#include "platform/scroll/ScrollbarThemeOverlay.h"
 #include "platform/wtf/CheckedNumeric.h"
 #include "public/platform/Platform.h"
 
@@ -1253,6 +1254,23 @@ bool PaintLayerScrollableArea::NeedsScrollbarReconstruction() const {
       did_custom_scrollbar_owner_changed = true;
   }
 
+  // Check native scrollbar theme change.
+  if (!did_scrollbar_theme_changed) {
+    ScrollbarTheme* current_theme = &ScrollbarTheme::GetTheme();
+    if (Page* page = Box().GetFrame()->LocalFrameRoot().GetPage()) {
+      if (page->GetSettings().GetForceAndroidOverlayScrollbar())
+        current_theme = &ScrollbarThemeOverlay::MobileTheme();
+    }
+
+    if (HasVerticalScrollbar() &&
+        current_theme != &VerticalScrollbar()->GetTheme())
+      did_scrollbar_theme_changed = true;
+
+    if (HasHorizontalScrollbar() &&
+        current_theme != &HorizontalScrollbar()->GetTheme())
+      did_scrollbar_theme_changed = true;
+  }
+
   return has_any_scrollbar &&
          (did_scrollbar_theme_changed ||
           (should_use_custom && did_custom_scrollbar_owner_changed));
@@ -2127,9 +2145,18 @@ Scrollbar* PaintLayerScrollableArea::ScrollbarManager::CreateScrollbar(
       scrollbar_size = LayoutTheme::GetTheme().ScrollbarControlSizeForPart(
           style_source.StyleRef().Appearance());
     }
+
+    ScrollbarTheme* theme = &ScrollbarTheme::GetTheme();
+    if (Page* page =
+            ScrollableArea()->Box().GetFrame()->LocalFrameRoot().GetPage()) {
+      if (page->GetSettings().GetForceAndroidOverlayScrollbar())
+        theme = &ScrollbarThemeOverlay::MobileTheme();
+    }
+
     scrollbar = Scrollbar::Create(
         ScrollableArea(), orientation, scrollbar_size,
-        &ScrollableArea()->Box().GetFrame()->GetPage()->GetChromeClient());
+        &ScrollableArea()->Box().GetFrame()->GetPage()->GetChromeClient(),
+        theme);
   }
   ScrollableArea()->Box().GetDocument().View()->AddScrollbar(scrollbar);
   return scrollbar;
