@@ -113,6 +113,29 @@
       "revId": "a54f1c313af20000f57109e2555449b9769d608e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d966ee6a_7efdf02c",
+        "filename": "components/arc/midis/arc_midis_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000985
+      },
+      "writtenOn": "2017-08-31T19:24:50Z",
+      "side": 1,
+      "message": "Nit: Be consistent with ending periods.",
+      "range": {
+        "startLine": 79,
+        "startChar": 63,
+        "endLine": 79,
+        "endChar": 64
+      },
+      "revId": "a54f1c313af20000f57109e2555449b9769d608e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
