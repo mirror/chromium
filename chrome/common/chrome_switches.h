@@ -117,6 +117,7 @@ extern const char kEnableOfflineAutoReload[];
 extern const char kEnableOfflineAutoReloadVisibleOnly[];
 extern const char kEnablePermissionActionReporting[];
 extern const char kEnablePictureInPicture[];
+extern const char kEnablePolicyTool[];
 extern const char kEnablePotentiallyAnnoyingSecurityFeatures[];
 extern const char kEnablePowerOverlay[];
 extern const char kEnablePrintPreviewRegisterPromos[];
@@ -339,6 +340,7 @@ extern const char kUseSystemDefaultPrinter[];
 bool ExtensionsDisabled(const base::CommandLine& command_line);
 bool ExtensionsDisabled();
 bool MdFeedbackEnabled();
+bool PolicyToolEnabled();
 
 #if defined(OS_CHROMEOS)
 bool PowerOverlayEnabled();
