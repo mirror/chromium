@@ -416,7 +416,7 @@ TEST_F(NetworkContextTest, CookieManager) {
       ->cookie_store()
       ->GetCookieListWithOptionsAsync(
           GURL("http://www.test.com/whatever"), net::CookieOptions(),
-          base::Bind(&GetCookieListCallback, &run_loop2, &cookies));
+          base::BindOnce(&GetCookieListCallback, &run_loop2, &cookies));
   run_loop2.Run();
   ASSERT_EQ(1u, cookies.size());
   EXPECT_EQ("TestCookie", cookies[0].Name());

@@ -85,8 +85,8 @@ void ServiceWorkerSubresourceLoader::StartRequest(
   event_dispatcher_->get()->DispatchFetchEvent(
       GetNextFetchEventID(), *request, mojom::FetchEventPreloadHandlePtr(),
       std::move(response_callback_ptr),
-      base::Bind(&ServiceWorkerSubresourceLoader::OnFetchEventFinished,
-                 weak_factory_.GetWeakPtr()));
+      base::BindOnce(&ServiceWorkerSubresourceLoader::OnFetchEventFinished,
+                     weak_factory_.GetWeakPtr()));
 }
 
 std::unique_ptr<ServiceWorkerFetchRequest>
