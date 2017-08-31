@@ -30,6 +30,8 @@ class VrInputManager {
   void GenerateKeyboardEvent(int char_value, int modifiers);
 
  private:
+  void UpdateState(blink::WebInputEvent::Type type);
+  bool GestureIsValid(blink::WebInputEvent::Type type);
   void SendGesture(const blink::WebGestureEvent& gesture);
   void ForwardGestureEvent(const blink::WebGestureEvent& gesture);
   void ForwardMouseEvent(const blink::WebMouseEvent& mouse_event);
@@ -37,6 +39,7 @@ class VrInputManager {
       const content::NativeWebKeyboardEvent& keyboard_event);
 
   content::WebContents* web_contents_;
+  bool is_in_scroll_;
 
   DISALLOW_COPY_AND_ASSIGN(VrInputManager);
 };

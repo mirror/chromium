@@ -33,12 +33,17 @@ WebGestureEvent MakeGestureEvent(WebInputEvent::Type type,
 }  // namespace
 
 VrInputManager::VrInputManager(content::WebContents* web_contents)
-    : web_contents_(web_contents) {}
+    : web_contents_(web_contents), is_in_scroll_(false) {}
 
 VrInputManager::~VrInputManager() = default;
 
 void VrInputManager::ProcessUpdatedGesture(
     std::unique_ptr<blink::WebInputEvent> event) {
+  if (!GestureIsValid(event->GetType()))
+    return;
+
+  UpdateState(event->GetType());
+
   if (WebInputEvent::IsMouseEventType(event->GetType()))
     ForwardMouseEvent(static_cast<const blink::WebMouseEvent&>(*event));
   else if (WebInputEvent::IsGestureEventType(event->GetType()))
@@ -62,6 +67,23 @@ void VrInputManager::GenerateKeyboardEvent(int char_value, int modifiers) {
 
   event.SetType(blink::WebInputEvent::Type::kKeyUp);
   ForwardKeyboardEvent(event);
+}
+
+void VrInputManager::UpdateState(WebInputEvent::Type type) {
+  if (type == WebInputEvent::kGestureScrollBegin)
+    is_in_scroll_ = true;
+  else if (type == WebInputEvent::kGestureScrollEnd ||
+           type == WebInputEvent::kGestureFlingStart)
+    is_in_scroll_ = false;
+}
+
+bool VrInputManager::GestureIsValid(WebInputEvent::Type type) {
+  if (!is_in_scroll_ && (type == WebInputEvent::kGestureScrollUpdate ||
+                         type == WebInputEvent::kGestureScrollEnd ||
+                         type == WebInputEvent::kGestureFlingStart)) {
+    return false;
+  }
+  return true;
 }
 
 void VrInputManager::SendGesture(const WebGestureEvent& gesture) {
