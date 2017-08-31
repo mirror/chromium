@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "3bc83863_7ecd391c",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-31T01:39:50Z",
+      "side": 1,
+      "message": "It seems all usage of |visible_pos| are ToPwa() or DeepEquiv().\nCould you change this to |PwA| to denote we don\u0027t care about DOM tree\nand style change in another patch?\n\nWe should not use VP after DOM change or style change, since it is no more\nvisible canonicalized position.",
+      "revId": "f237f4da04da1e448e373944fc43e0ca566064f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9866cd7f_5a4d310b",
         "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
         "patchSetId": 5
