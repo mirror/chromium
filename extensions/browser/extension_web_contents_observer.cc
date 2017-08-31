@@ -102,12 +102,6 @@ void ExtensionWebContentsObserver::RenderFrameCreated(
   Manifest::Type type = extension->GetType();
 
   // Some extensions use file:// URLs.
-  //
-  // Note: this particular grant isn't relevant for hosted apps, but in the
-  // future we should be careful about granting privileges to hosted app
-  // subframes in places like this, since they currently stay in process with
-  // their parent. A malicious site shouldn't be able to gain a hosted app's
-  // privileges just by embedding a subframe to a popular hosted app.
   if (type == Manifest::TYPE_EXTENSION ||
       type == Manifest::TYPE_LEGACY_PACKAGED_APP) {
     ExtensionPrefs* prefs = ExtensionPrefs::Get(browser_context_);

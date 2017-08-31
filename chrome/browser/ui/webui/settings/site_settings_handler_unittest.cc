@@ -10,8 +10,6 @@
 #include "base/test/histogram_tester.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/content_settings/host_content_settings_map_factory.h"
-#include "chrome/browser/extensions/extension_service.h"
-#include "chrome/browser/extensions/test_extension_system.h"
 #include "chrome/browser/infobars/infobar_service.h"
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
@@ -30,6 +28,7 @@
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "content/public/test/test_web_ui.h"
 #include "extensions/browser/extension_registry.h"
+#include "extensions/browser/renderer_startup_helper.h"
 #include "extensions/common/extension_builder.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -671,12 +670,6 @@ class SiteSettingsHandlerInfobarTest : public BrowserWithTestWindowTest {
     window2_ = base::WrapUnique(CreateBrowserWindow());
     browser2_ = base::WrapUnique(
         CreateBrowser(profile(), browser()->type(), false, window2_.get()));
-
-    extensions::TestExtensionSystem* extension_system =
-        static_cast<extensions::TestExtensionSystem*>(
-            extensions::ExtensionSystem::Get(profile()));
-    extension_system->CreateExtensionService(
-        base::CommandLine::ForCurrentProcess(), base::FilePath(), false);
   }
 
   void TearDown() override {
@@ -729,18 +722,16 @@ TEST_F(SiteSettingsHandlerInfobarTest, SettingPermissionsTriggersInfobar) {
   const GURL origin_anchor(origin_anchor_string);
   const GURL chrome("chrome://about");
   const GURL origin("https://www.example.com/");
-  const GURL extension(
-      "chrome-extension://fooooooooooooooooooooooooooooooo/bar.html");
+  const GURL extension("chrome-extension://fooextension/bar.html");
 
   // Make sure |extension|'s extension ID exists before navigating to it. This
   // fixes a test timeout that occurs with --enable-browser-side-navigation on.
   scoped_refptr<const extensions::Extension> test_extension =
-      extensions::ExtensionBuilder("Test")
-          .SetID("fooooooooooooooooooooooooooooooo")
-          .Build();
-  extensions::ExtensionSystem::Get(profile())
-      ->extension_service()
-      ->AddExtension(test_extension.get());
+      extensions::ExtensionBuilder("Test").SetID("fooextension").Build();
+  extensions::RendererStartupHelperFactory::GetForBrowserContext(profile())
+      ->OnExtensionLoaded(*test_extension);
+  ASSERT_TRUE(extensions::ExtensionRegistry::Get(profile())->AddEnabled(
+      test_extension));
 
   //               __________  ______________  ___________________  _______
   //   Window 2:  / insecure '/ origin_query \' example_subdomain \' about \
