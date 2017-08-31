@@ -105,6 +105,24 @@
       "revId": "dca80f32b0c9ba72255c2808aca57ed82b06aa05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3691db79_ea0f1cee",
+        "filename": "ui/events/platform/key_event_filter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-08-31T22:45:59Z",
+      "side": 1,
+      "message": "It\u0027s not a single line flow, because on Windows and Mac OSX, there are two routes when the LowLevelKeyboardProc is used.\nI tried to explain it more clearly in the comments, would you mind to take a look?",
+      "parentUuid": "2df36823_46172e48",
+      "revId": "dca80f32b0c9ba72255c2808aca57ed82b06aa05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
