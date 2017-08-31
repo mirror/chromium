@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f74032a8_ac0c9689",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/MainActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-31T20:43:16Z",
+      "side": 1,
+      "message": "I think that we should add WebApkConstants.EXTRA_SOURCE\u003d\"org.chromium.chrome.browser.webapk_source\"\n\nMainActivity.java will populate the extra with a string and WebApkInfo will convert the string to a UMA value.\nMainActivity.java will forward all of the extras that it gets to WebappLauncherActivity. This way if Chrome sets an extra in the MainActivity.java launch intent, WebappLauncherActivity.java will get that extra\n\nWebappLauncherActivity will have to read both org.chromium.chrome.browser.webapp_source and org.chromium.chrome.browser.webapk_source\n\nWe should be able to make MainActivity.java no longer send the WebApkConstants.EXTRA_FORCE_NAVIGATION extra",
+      "revId": "3fb3dfe5f07e28376e94f103fbfb3c7cf95849d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33ce08ec_571a54cd",
+        "filename": "chrome/android/webapk/shell_apk/unbound_manifest_config.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-31T20:43:16Z",
+      "side": 1,
+      "message": "Doesn\u0027t share_template need to be a non-relative URL (Though it might be relative in the user provided Web Manifest)",
+      "revId": "3fb3dfe5f07e28376e94f103fbfb3c7cf95849d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
