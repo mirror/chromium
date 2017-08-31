@@ -21,6 +21,12 @@
 #include "third_party/icu/source/common/unicode/ubidi.h"
 #include "ui/gfx/geometry/rect.h"
 
+#if !defined(OS_ANDROID) && !defined(OS_IOS)
+#include "components/omnibox/browser/vector_icons.h"  // nogncheck
+#include "ui/gfx/paint_vector_icon.h"
+#include "ui/gfx/vector_icon_types.h"
+#endif
+
 using bookmarks::BookmarkModel;
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -30,7 +36,8 @@ const size_t OmniboxPopupModel::kNoMatch = static_cast<size_t>(-1);
 
 OmniboxPopupModel::OmniboxPopupModel(OmniboxPopupView* popup_view,
                                      OmniboxEditModel* edit_model)
-    : view_(popup_view),
+    : match_icons_(AutocompleteResult::GetMaxMatches()),
+      view_(popup_view),
       edit_model_(edit_model),
       selected_line_(kNoMatch),
       selected_line_state_(NORMAL),
@@ -231,11 +238,6 @@ void OmniboxPopupModel::TryDeletingCurrentItem() {
   }
 }
 
-gfx::Image OmniboxPopupModel::GetIconIfExtensionMatch(
-    const AutocompleteMatch& match) const {
-  return edit_model_->client()->GetIconIfExtensionMatch(match);
-}
-
 bool OmniboxPopupModel::IsStarredMatch(const AutocompleteMatch& match) const {
   BookmarkModel* bookmark_model = edit_model_->client()->GetBookmarkModel();
   return bookmark_model && bookmark_model->IsBookmarked(match.destination_url);
@@ -251,21 +253,24 @@ void OmniboxPopupModel::OnResultChanged() {
   manually_selected_match_.Clear();
   selected_line_state_ = NORMAL;
 
-#if !defined(OS_ANDROID) && !defined(OS_IOS)
   // Update all match icons.
-  if (base::FeatureList::IsEnabled(
-          omnibox::kUIExperimentShowSuggestionFavicons)) {
-    favicon_task_tracker_.TryCancelAll();
+  favicon_task_tracker_.TryCancelAll();
+  for (size_t i = 0; i < result.size(); i++) {
+    const AutocompleteMatch& match = result.match_at(i);
 
-    if (result.size() != displayed_page_favicons_.size())
-      displayed_page_favicons_.resize(result.size());
+    gfx::Image extension_icon =
+        edit_model_->client()->GetIconIfExtensionMatch(match);
+    if (!extension_icon.IsEmpty()) {
+      SetMatchIconToNonFavicon(i, extension_icon);
+      continue;
+    }
 
-    for (size_t i = 0; i < result.size(); i++) {
-      const AutocompleteMatch& match = result.match_at(i);
+    if (base::FeatureList::IsEnabled(
+            omnibox::kUIExperimentShowSuggestionFavicons)) {
       if (AutocompleteMatch::IsSearchType(match.type)) {
         // Clear any existing icon.
-        if (!displayed_page_favicons_[i].is_empty())
-          OnPageFaviconFetched(i, GURL(), gfx::Image());
+        if (!match_icons_[i].favicon_for_page_url.is_empty())
+          SetMatchIconToNonFavicon(i, gfx::Image());
         continue;
       }
 
@@ -275,16 +280,15 @@ void OmniboxPopupModel::OnResultChanged() {
       // TODO(tommycli): Investigate whether the fetching can be done in the
       // autocomplete controller, which already has knowledge of whether and
       // when the matches are changing.
-      if (match.destination_url == displayed_page_favicons_[i])
+      if (match.destination_url == match_icons_[i].favicon_for_page_url)
         continue;
 
       edit_model_->client()->GetFaviconForPageUrl(
           &favicon_task_tracker_, match.destination_url,
-          base::Bind(&OmniboxPopupModel::OnPageFaviconFetched,
+          base::Bind(&OmniboxPopupModel::OnFaviconFetched,
                      weak_factory_.GetWeakPtr(), i, match.destination_url));
     }
   }
-#endif  // !defined(OS_ANDROID) && !defined(OS_IOS)
 
   bool popup_was_open = view_->IsOpen();
   view_->UpdatePopupAppearance();
@@ -308,12 +312,41 @@ void OmniboxPopupModel::SetAnswerBitmap(const SkBitmap& bitmap) {
   view_->UpdatePopupAppearance();
 }
 
-void OmniboxPopupModel::OnPageFaviconFetched(size_t match_index,
-                                             const GURL& page_url,
-                                             const gfx::Image& icon) {
-  DCHECK_LT(match_index, displayed_page_favicons_.size());
-  DCHECK_NE(displayed_page_favicons_[match_index], page_url);
+gfx::Image OmniboxPopupModel::GetMatchIcon(size_t match_index,
+                                           SkColor vector_icon_color) const {
+  DCHECK_LT(match_index, match_icons_.size());
+  const gfx::Image& icon = match_icons_[match_index].custom_icon;
+  if (!icon.IsEmpty())
+    return icon;
 
-  displayed_page_favicons_[match_index] = page_url;
-  view_->SetMatchIcon(match_index, icon);
+#if !defined(OS_ANDROID) && !defined(OS_IOS)
+  auto& match = result().match_at(match_index);
+  const auto& vector_icon_type =
+      IsStarredMatch(match) ? omnibox::kStarIcon
+                            : AutocompleteMatch::TypeToVectorIcon(match.type);
+  return gfx::Image(
+      gfx::CreateVectorIcon(vector_icon_type, 16, vector_icon_color));
+#else
+  return gfx::Image();
+#endif  // !defined(OS_ANDROID) && !defined(OS_IOS)
+}
+
+void OmniboxPopupModel::SetMatchIconToNonFavicon(size_t match_index,
+                                                 const gfx::Image& icon) {
+  DCHECK_LT(match_index, match_icons_.size());
+
+  match_icons_[match_index].favicon_for_page_url = GURL();
+  match_icons_[match_index].custom_icon = icon;
+}
+
+void OmniboxPopupModel::OnFaviconFetched(size_t match_index,
+                                         const GURL& page_url,
+                                         const gfx::Image& icon) {
+  DCHECK_LT(match_index, match_icons_.size());
+  DCHECK_NE(match_icons_[match_index].favicon_for_page_url, page_url);
+
+  match_icons_[match_index].favicon_for_page_url = page_url;
+  match_icons_[match_index].custom_icon = icon;
+
+  view_->OnMatchIconUpdated(match_index);
 }

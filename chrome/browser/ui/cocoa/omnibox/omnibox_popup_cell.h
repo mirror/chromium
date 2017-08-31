@@ -9,6 +9,7 @@
 
 #include "base/mac/scoped_nsobject.h"
 #include "components/omnibox/browser/autocomplete_match.h"
+#include "ui/gfx/image/image.h"
 
 class OmniboxPopupViewMac;
 
@@ -27,7 +28,7 @@ class OmniboxPopupViewMac;
 @property(readonly, retain, nonatomic) NSAttributedString* prefix;
 
 // Common icon that shows next to most rows in the list.
-@property(readonly, retain, nonatomic) NSImage* image;
+@property(nonatomic) gfx::Image image;
 
 // Uncommon icon that only shows on answer rows (e.g. weather).
 @property(readonly, retain, nonatomic) NSImage* answerImage;
@@ -40,7 +41,7 @@ class OmniboxPopupViewMac;
 @property(readonly, nonatomic) int maxLines;
 
 - (instancetype)initWithMatch:(const AutocompleteMatch&)match
-                        image:(NSImage*)image
+                        image:(const gfx::Image&)image
                   answerImage:(NSImage*)answerImage
                  forDarkTheme:(BOOL)isDarkTheme;
 
