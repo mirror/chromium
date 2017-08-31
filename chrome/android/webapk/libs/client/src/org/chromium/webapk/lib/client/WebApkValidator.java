@@ -43,6 +43,7 @@ public class WebApkValidator {
     private static byte[] sExpectedSignature;
     private static byte[] sCommentSignedPublicKeyBytes;
     private static PublicKey sCommentSignedPublicKey;
+    private static boolean sOverrideVerificationForTesting;
 
     /**
      * Queries the PackageManager to determine whether a WebAPK can handle the URL. Ignores whether
@@ -158,6 +159,9 @@ public class WebApkValidator {
      * @return true iff the WebAPK is installed and passes security checks
      */
     public static boolean isValidWebApk(Context context, String webappPackageName) {
+        if (sOverrideVerificationForTesting) {
+            return true;
+        }
         if (sExpectedSignature == null || sCommentSignedPublicKeyBytes == null) {
             Log.wtf(TAG,
                     "WebApk validation failure - expected signature not set."
@@ -284,6 +288,14 @@ public class WebApkValidator {
         if (sCommentSignedPublicKeyBytes == null) {
             sCommentSignedPublicKeyBytes = v2PublicKeyBytes;
         }
+    }
+
+    /**
+     * Disables all verification performed by this class. This is meant only for development with
+     * unsigned WebApks and should never be enabled in a real build.
+     */
+    public static void disableValidationForTesting() {
+        sOverrideVerificationForTesting = true;
     }
 
     /**
