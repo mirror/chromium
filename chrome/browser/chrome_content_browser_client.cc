@@ -2994,13 +2994,11 @@ void ChromeContentBrowserClient::RegisterInProcessServices(
 void ChromeContentBrowserClient::RegisterOutOfProcessServices(
       OutOfProcessServiceMap* services) {
 #if BUILDFLAG(ENABLE_PRINTING)
-  (*services)[printing::mojom::kServiceName] = {
-      base::ASCIIToUTF16("PDF Compositor Service"),
-      content::SANDBOX_TYPE_UTILITY};
+  (*services)[printing::mojom::kServiceName] =
+      base::ASCIIToUTF16("PDF Compositor Service");
 #endif
-
-  (*services)[profiling::mojom::kServiceName] = {
-      base::ASCIIToUTF16("Profiling Service"), content::SANDBOX_TYPE_UTILITY};
+  (*services)[profiling::mojom::kServiceName] =
+      base::ASCIIToUTF16("Profiling Service");
 }
 
 std::unique_ptr<base::Value>
