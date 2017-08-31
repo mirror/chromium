@@ -66,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "e0724f80_66666bd2",
+        "filename": "chrome/browser/plugins/plugin_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-08-31T22:42:11Z",
+      "side": 1,
+      "message": "Good point.  Done (but see also the changes in //ipc/ipc_message_templates.h that are needed to support non-pointer parameter types).",
+      "parentUuid": "17ef282c_206b85db",
+      "revId": "b58a676023eb9456ac72c572e6d0399ccc293473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38e9f88e_e4dec3f7",
         "filename": "chrome/browser/plugins/plugin_observer.cc",
         "patchSetId": 4
@@ -80,6 +98,24 @@
       "revId": "b58a676023eb9456ac72c572e6d0399ccc293473",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ec61ffe_87ca12ec",
+        "filename": "chrome/browser/plugins/plugin_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-08-31T22:42:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "38e9f88e_e4dec3f7",
+      "revId": "b58a676023eb9456ac72c572e6d0399ccc293473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
