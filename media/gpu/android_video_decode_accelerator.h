@@ -409,6 +409,9 @@ class MEDIA_GPU_EXPORT AndroidVideoDecodeAccelerator
   // Are overlays required by command-line options?
   bool is_overlay_required_ = false;
 
+  // Time since we last updated the chooser state.
+  base::TimeTicks most_recent_chooser_retry_;
+
   // WeakPtrFactory for posting tasks back to |this|.
   base::WeakPtrFactory<AndroidVideoDecodeAccelerator> weak_this_factory_;
 
