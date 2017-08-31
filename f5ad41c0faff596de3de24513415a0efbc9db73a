@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "0d807fcd_28caaf51",
+        "filename": "net/cert/nss_cert_database.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-31T17:41:04Z",
+      "side": 1,
+      "message": "So the issue is that code assumes if URLRequest surfaced ERR_CERT_INVALID or anything else that\u0027s IsCertificateError, then the URLRequest has an X509Certificate on it. This works because right now only CertVerifyProc spits out ERR_CERT_INVALID and other certificate errors.\n\nBut I see that ImportUserCert is the only one left and psm::ImportUserCert already does it internally, so okay. :-)",
+      "parentUuid": "42ebf1f4_0126c35c",
+      "range": {
+        "startLine": 250,
+        "startChar": 11,
+        "endLine": 250,
+        "endChar": 27
+      },
+      "revId": "f5ad41c0faff596de3de24513415a0efbc9db73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fb926f2d_667f23aa",
         "filename": "net/cert/nss_cert_database.h",
         "patchSetId": 8
@@ -78,6 +102,24 @@
       "side": 1,
       "message": "That seems to only work with bare-pointer types that can be delete-ed.",
       "parentUuid": "fb926f2d_667f23aa",
+      "revId": "f5ad41c0faff596de3de24513415a0efbc9db73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "897e2a7e_874c9676",
+        "filename": "net/cert/nss_cert_database.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-31T17:41:04Z",
+      "side": 1,
+      "message": "Ah I see. Hrmf.",
+      "parentUuid": "1cb24b87_8f580f9c",
       "revId": "f5ad41c0faff596de3de24513415a0efbc9db73a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
