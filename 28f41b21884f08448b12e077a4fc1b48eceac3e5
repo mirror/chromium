@@ -46,6 +46,30 @@
       "revId": "28f41b21884f08448b12e077a4fc1b48eceac3e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9950db2_4176bbd1",
+        "filename": "chrome/android/java/res/layout/content_suggestions_action_card_modern.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-08-31T14:07:17Z",
+      "side": 1,
+      "message": "I see what you mean. I feels a bit off from an inheritance perspective. Generally, if the base class does stuff the derived class doesn\u0027t want to do, inheritance might be the wrong approach. But, it\u0027s a nit and your reasoning also makes sense :-)",
+      "parentUuid": "9e973981_8e20a9cb",
+      "range": {
+        "startLine": 7,
+        "startChar": 28,
+        "endLine": 7,
+        "endChar": 48
+      },
+      "revId": "28f41b21884f08448b12e077a4fc1b48eceac3e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
