@@ -30,7 +30,7 @@ namespace {
 
 constexpr int kMainWorldId = 0;
 
-base::LazyInstance<std::set<const ExtensionFrameHelper*>>::DestructorAtExit
+base::LazyInstance<std::set<const ExtensionFrameHelper*>>::Leaky
     g_frame_helpers = LAZY_INSTANCE_INITIALIZER;
 
 // Returns true if the render frame corresponding with |frame_helper| matches

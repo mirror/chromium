@@ -112,7 +112,7 @@ base::LazyInstance<PrintPreviewRequestIdMapWithLock>::DestructorAtExit
 
 // PrintPreviewUI IDMap used to avoid exposing raw pointer addresses to WebUI.
 // Only accessed on the UI thread.
-base::LazyInstance<base::IDMap<PrintPreviewUI*>>::DestructorAtExit
+base::LazyInstance<base::IDMap<PrintPreviewUI*>>::Leaky
     g_print_preview_ui_id_map = LAZY_INSTANCE_INITIALIZER;
 
 // PrintPreviewUI serves data for chrome://print requests.
