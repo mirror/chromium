@@ -16,6 +16,24 @@
       "revId": "141c7b5f7ede2bf84a4761c4c020a417a6e8d5c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1402d433_65d959f4",
+        "filename": "chrome/browser/ui/toolbar/toolbar_model_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-31T17:53:55Z",
+      "side": 1,
+      "message": "The better way of doing this is to use ExtensionService::AddExtension(), which is what most tests do.  Unfortunately, a BrowserWithTestWindowTest does not (I think) set up a valid ExtensionService.  ToolbarActionsBarUnitTest is an example of a BrowserWithTestWindowTest that *will* set up everything needed, and there\u0027s a decent chance that the pattern there is more appropriate for anything that needs to do extension-y things (beyond constructing an extension).\n\nI\u0027d be a bit opposed to a function with just RendererStartupHelper and ExtensionRegistry, since those are fairly arbitrary (and just happen to be the two needed by these particular tests).",
+      "parentUuid": "3cab7243_84bfee6d",
+      "revId": "141c7b5f7ede2bf84a4761c4c020a417a6e8d5c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
