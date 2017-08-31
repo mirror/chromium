@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16caa36e_e77173c3",
+        "filename": "chromeos/components/tether/initializer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-31T01:47:58Z",
+      "side": 0,
+      "message": "Revert deleted line.",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 1
+      },
+      "revId": "d96af20ab51519c4b335c1486f4d73eb36472361",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
