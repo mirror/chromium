@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "940092ef_fd828b73",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 1456,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-31T22:04:15Z",
+      "side": 1,
+      "message": "Let\u0027s declare pendingItem separately before the condition above to try to help formatting/avoid unnecessary GetPendingItem() calls.\n\nNavigationItem* pendingItem \u003d self.navigationManagerImpl-\u003eGetPendingItem();\nif (pendingItem) {\n  // update pending item\n} else {\n  // add pending item and update |pendingItem|\n}\nNavigationInitiationType initiationType \u003d\n  static_cast\u003cNavigationItemImpl*\u003e(pendingItem)-\u003eNavigationInitiationType();\n// use |initiationType| to create context.",
+      "revId": "c6289d613a3eb7a3f4d4b7472f50c1773ed20398",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
