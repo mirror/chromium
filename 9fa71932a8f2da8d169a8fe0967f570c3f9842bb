@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "233cccf1_15cd24be",
+        "filename": "media/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-31T21:21:24Z",
+      "side": 1,
+      "message": "optional: this comment is obvious given the wild card. I would nuke it, but I leave the decision to you.",
+      "range": {
+        "startLine": 23,
+        "startChar": 2,
+        "endLine": 23,
+        "endChar": 31
+      },
+      "revId": "9fa71932a8f2da8d169a8fe0967f570c3f9842bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
