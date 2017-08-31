@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5255b6ec_9a486ff3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/document-metadata/the-style-element/style_type_change.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-31T11:53:05Z",
+      "side": 1,
+      "message": "This should be split into separate test() calls. One test for the initial length, and one test per style.type change.",
+      "revId": "30810ca8bcf623285dcc06debdb81049a9398d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
