@@ -1088,12 +1088,7 @@ TEST_F(Canvas2DLayerBridgeTest, DISABLED_PrepareMailboxWhileBackgroundRendering)
   EXPECT_TRUE(bridge->IsValid());
 }
 
-#if USE_IOSURFACE_FOR_2D_CANVAS
-TEST_F(Canvas2DLayerBridgeTest, DeleteIOSurfaceAfterTeardown)
-#else
-TEST_F(Canvas2DLayerBridgeTest, DISABLED_DeleteIOSurfaceAfterTeardown)
-#endif
-{
+TEST_F(Canvas2DLayerBridgeTest, DeleteGpuMemoryBufferAfterTeardown) {
   ScopedTestingPlatformSupport<FakePlatformSupport> platform;
 
   viz::TextureMailbox texture_mailbox;
@@ -1109,7 +1104,6 @@ TEST_F(Canvas2DLayerBridgeTest, DISABLED_DeleteIOSurfaceAfterTeardown)
 
   bool lost_resource = false;
   release_callback->Run(gpu::SyncToken(), lost_resource);
-
   EXPECT_EQ(1u, gl_.CreateImageCount());
   EXPECT_EQ(1u, gl_.DestroyImageCount());
 }
