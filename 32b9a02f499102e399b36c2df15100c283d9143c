@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1170d4a6_5f7ca19e",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-31T19:01:36Z",
+      "side": 1,
+      "message": "As we discussed offline, it probably makes more sense to move this logging into PrefetchDownloader, when DownloadService reports the completed download. This will also consolidate 2 reports to the same UMA into one.\n\nSeparately, we can log the success of the task or this reconcile action, as simpler UMA datatype.",
+      "revId": "32b9a02f499102e399b36c2df15100c283d9143c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
