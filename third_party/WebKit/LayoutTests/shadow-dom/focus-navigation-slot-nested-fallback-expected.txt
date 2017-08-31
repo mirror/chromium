@@ -1,0 +1,16 @@
+Tests for moving focus by pressing tab key across shadow boundaries.
+To manually test, press tab key sixteen times then shift+tab sixteen times.
+It should traverse focusable elements in the increasing numerical order and then in the reverse order.
+
+1. Assigned to slot2.
+2. No host child is assigned to slot3.
+3. Inner Shadow Host.
+4. Assigned to slot4.
+5. Inner Shadow Host.
+6. Assigned to slot7 which is assigned to slot6.
+5. Inner Shadow Host.
+4. Assigned to slot4.
+3. Inner Shadow Host.
+2. No host child is assigned to slot3.
+1. Assigned to slot2.
+
