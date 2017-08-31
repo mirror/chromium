@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "563525c0_d1214b26",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-31T04:43:41Z",
+      "side": 1,
+      "message": "This is copied from the other ConsumeStringOrURI as well. Not sure I understand your question, but in this function, tokens are consumed whenever stream.Consume* is called, and failure conditions are all the if statements that return AtomicString().",
+      "parentUuid": "92eee202_01da63c1",
+      "revId": "2dd67d1e36d015535c4897b0823892df71134e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a918a5d7_d4daba3c",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSParserImpl.cpp",
         "patchSetId": 7
@@ -105,6 +123,24 @@
     },
     {
       "key": {
+        "uuid": "7de6eaef_59c23231",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-31T04:43:41Z",
+      "side": 1,
+      "message": "Ok, added comment. Alternative options:\n- Better name, like DontCare, or Ignore or something (I like Ignore, since there\u0027s an std::ignore in the STL).\n- Just do it like the original patch:\n\n   ConsumeDeclaration(...., {0, 0}, ...)",
+      "parentUuid": "67cc1e8f_e9507b51",
+      "revId": "2dd67d1e36d015535c4897b0823892df71134e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "66ea6254_167948b2",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSParserImpl.cpp",
         "patchSetId": 7
@@ -140,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "08a473da_6c22a926",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-31T04:43:41Z",
+      "side": 1,
+      "message": "We only care about token offsets gathered in this prelude, and not the previous ones. So we need to clear the stored tokens from last round. Would a more informative name help? e.g. ClearTokens(), BeginConstruction() (to mirror FinalizeConstruction on L613) or whatever is the opposite of Finalize ?",
+      "parentUuid": "ced5f0d1_77daf5d7",
+      "revId": "2dd67d1e36d015535c4897b0823892df71134e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a0823901_be199612",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSParserImpl.cpp",
         "patchSetId": 7
@@ -169,6 +223,24 @@
       "side": 1,
       "message": "You are doing math magic. Yes. I understood what is going on. But thats cause you had explained it IRL",
       "parentUuid": "a0823901_be199612",
+      "revId": "2dd67d1e36d015535c4897b0823892df71134e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4506603_889eefb1",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 940,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-31T04:43:41Z",
+      "side": 1,
+      "message": "Lol I explained this IRL? Anyway I think I can remove this. The reason was that ConsumeDeclarationList can be called in a block or not in a block. If it\u0027s in the block, we would like to get the offset before the \u0027{\u0027, but the BlockGuard consumes the \u0027{\u0027, so we need to subtract 1 to get the correct offset. If it\u0027s called without a block, then stream.Offset() is 0, so we can\u0027t subtract 1. However, it looks like we don\u0027t actually need the offset before the \u0027{\u0027 (see https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/inspector/InspectorStyleSheet.cpp?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d231)",
+      "parentUuid": "5e453fa2_7aa3e5f3",
       "revId": "2dd67d1e36d015535c4897b0823892df71134e2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -244,6 +316,24 @@
     },
     {
       "key": {
+        "uuid": "8b36397d_10aff83c",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserImpl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-31T04:43:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a83b103b_2c3beb54",
+      "revId": "2dd67d1e36d015535c4897b0823892df71134e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b1b24a4_3d6d020a",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSParserImpl.h",
         "patchSetId": 7
@@ -313,6 +403,24 @@
     },
     {
       "key": {
+        "uuid": "acb571e5_c18a04c9",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserTokenStream.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-31T04:43:41Z",
+      "side": 1,
+      "message": "If the compiler can\u0027t figure it out, then the non-inspector code path pays a branch on a tight loop. I think the original patch\u0027s philosophy is: don\u0027t make the normal code path pay for stuff that is only needed by the inspector, so I\u0027d rather keep it separate if you agree.",
+      "parentUuid": "5e6beb38_0ed413d2",
+      "revId": "2dd67d1e36d015535c4897b0823892df71134e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db2d7831_09d40be3",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSParserTokenStream.h",
         "patchSetId": 7
@@ -327,6 +435,24 @@
       "revId": "2dd67d1e36d015535c4897b0823892df71134e2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e71f335_9cf739bf",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserTokenStream.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-31T04:43:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db2d7831_09d40be3",
+      "revId": "2dd67d1e36d015535c4897b0823892df71134e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -365,6 +491,24 @@
     },
     {
       "key": {
+        "uuid": "9649c56d_7dfd194f",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSTokenizer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-31T04:43:41Z",
+      "side": 1,
+      "message": "By symmetry I mean, Offset() and PreviousOffset() go together. If I just have PreviousOffset(), it\u0027s kinda weird.",
+      "parentUuid": "f4c3255a_b2a6e59a",
+      "revId": "2dd67d1e36d015535c4897b0823892df71134e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4087a01a_c67fb1ec",
         "filename": "third_party/WebKit/Source/core/inspector/InspectorStyleSheet.cpp",
         "patchSetId": 7
@@ -376,6 +520,24 @@
       "writtenOn": "2017-08-31T03:27:19Z",
       "side": 1,
       "message": "What black magic is this?",
+      "revId": "2dd67d1e36d015535c4897b0823892df71134e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d1f926c_c0c28dd5",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorStyleSheet.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-31T04:43:41Z",
+      "side": 1,
+      "message": "lol this was in the original patch. The idea is that we\u0027ve changed how @keyframe rules are reported to the inspector. I don\u0027t quite fully understand this code, but like it makes tests pass so \\(._.)/",
+      "parentUuid": "4087a01a_c67fb1ec",
       "revId": "2dd67d1e36d015535c4897b0823892df71134e2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
