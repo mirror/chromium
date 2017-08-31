@@ -19,6 +19,7 @@ import android.view.accessibility.AccessibilityEvent;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -52,7 +53,7 @@ public class AutocompleteEditTextTest {
 
     // Robolectric's ShadowAccessibilityManager has a bug (crbug.com/756707). Turn this on once it's
     // fixed, and you can turn this off temporarily when upgrading robolectric library.
-    private static final boolean TEST_ACCESSIBILITY = false;
+    private static final boolean TEST_ACCESSIBILITY = true;
 
     @Rule
     public Features.Processor mProcessor = new Features.Processor();
@@ -191,6 +192,12 @@ public class AutocompleteEditTextTest {
         mAutocomplete.setIgnoreTextChangesForAutocomplete(false);
 
         if (DEBUG) Log.i(TAG, "setUp finished.");
+    }
+
+    @After
+    public void tearDown() {
+        mShadowAccessibilityManager.setEnabled(false);
+        mShadowAccessibilityManager.setTouchExplorationEnabled(false);
     }
 
     private void assertTexts(String userText, String autocompleteText) {
