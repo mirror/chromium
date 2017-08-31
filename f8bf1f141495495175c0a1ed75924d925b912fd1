@@ -16,6 +16,24 @@
       "revId": "f8bf1f141495495175c0a1ed75924d925b912fd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47a6e3a9_02840676",
+        "filename": "base/allocator/partition_allocator/address_space_randomization.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-08-31T23:05:39Z",
+      "side": 1,
+      "message": "I want as much randomness as I can keep, but I didn\u0027t realize the leak was as bad as you note. Sigh. :) How do you feel about 2**10 * 2**15 → 32 MiB?",
+      "parentUuid": "87dbb022_6835377a",
+      "revId": "f8bf1f141495495175c0a1ed75924d925b912fd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
