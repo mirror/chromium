@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9b9f61e6_62bbcfd1",
+        "filename": "third_party/WebKit/public/platform/input_host.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-31T21:02:14Z",
+      "side": 1,
+      "message": "Thanks. Can you leave a comment here with this information? The browser is trusted, so it\u0027s fine for it to send the renderer arbitrary indices.",
+      "parentUuid": "8aca2a65_99c798cf",
+      "revId": "bc696b4cf77627116308166386d1e67ce6b27dcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e3a355f9_db661755",
         "filename": "third_party/WebKit/public/platform/input_host.mojom",
         "patchSetId": 11
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Is this a security concern? Like we want to somehow prevent the renderer from being able to OOM the browser process?\n\nIf the browser code gets too many suggestions, it will notice before it tries to draw the menu, and will only draw as many as can fit on-screen (this is an O(1) calculation).. Ordinarily (i.e. unless the renderer code has been hijacked somehow), the number of spell check suggestions is capped by how many suggestions the Android spell checker returned, and the number of text suggestions is capped by the limit the browser code gave the renderer (currently 5, to match the native Android text box).",
       "parentUuid": "e3a355f9_db661755",
+      "revId": "bc696b4cf77627116308166386d1e67ce6b27dcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7430d85_24c0a4ee",
+        "filename": "third_party/WebKit/public/platform/input_host.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-31T21:02:14Z",
+      "side": 1,
+      "message": "We don\u0027t consider browser DOS a security issue, so currently there isn\u0027t much enforcement, but it\u0027s something we\u0027re considering adding at the IPC/mojom layer. If you know there\u0027s a cap, you may want to at least enforce it in the message handler impl.",
+      "parentUuid": "b7e7d39c_f3549187",
       "revId": "bc696b4cf77627116308166386d1e67ce6b27dcf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
