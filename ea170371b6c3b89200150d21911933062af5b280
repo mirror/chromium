@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eae99ea3_fc13ee3c",
+        "filename": "content/browser/gpu/gpu_data_manager_impl_private.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-31T20:37:15Z",
+      "side": 1,
+      "message": "nit: as discussed, this will need to allow at least WAKE_UP_GPU_BEFORE_DRAWING, returning false if not set.",
+      "revId": "ea170371b6c3b89200150d21911933062af5b280",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7daebceb_af211d91",
+        "filename": "content/browser/gpu/gpu_data_manager_impl_private.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1222,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-31T20:37:15Z",
+      "side": 1,
+      "message": "nit: should we set gpu_feature_info_set_ to true here?",
+      "revId": "ea170371b6c3b89200150d21911933062af5b280",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a034a0c_415a73c4",
+        "filename": "gpu/config/gpu_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-31T20:37:15Z",
+      "side": 1,
+      "message": "nit: can we avoid this const_cast? I believe all callers of ComputeGpuFeatureInfo have a mutable CommandLine, so it should be possible.",
+      "revId": "ea170371b6c3b89200150d21911933062af5b280",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
