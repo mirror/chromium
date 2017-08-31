@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ba5d1ec_1784368b",
+        "filename": "media/gpu/android_video_decode_accelerator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-31T21:44:34Z",
+      "side": 1,
+      "message": "Please document that because this enum is used to back an UMA histogram, it should be treated as append-only.",
+      "range": {
+        "startLine": 412,
+        "startChar": 46,
+        "endLine": 412,
+        "endChar": 0
+      },
+      "revId": "9e66492dbedf5e004f85536430f50d75efa287b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
