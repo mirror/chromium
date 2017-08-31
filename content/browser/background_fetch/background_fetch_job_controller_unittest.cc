@@ -16,6 +16,7 @@
 #include "base/run_loop.h"
 #include "content/browser/background_fetch/background_fetch_constants.h"
 #include "content/browser/background_fetch/background_fetch_data_manager.h"
+#include "content/browser/background_fetch/background_fetch_delegate_impl.h"
 #include "content/browser/background_fetch/background_fetch_registration_id.h"
 #include "content/browser/background_fetch/background_fetch_test_base.h"
 #include "content/browser/service_worker/service_worker_context_wrapper.h"
@@ -87,9 +88,10 @@ class BackgroundFetchJobControllerTest : public BackgroundFetchTestBase {
     StoragePartition* storage_partition =
         BrowserContext::GetDefaultStoragePartition(browser_context());
 
-    delegate_proxy_.reset(new BackgroundFetchDelegateProxy(
-        browser_context(),
-        make_scoped_refptr(storage_partition->GetURLRequestContext())));
+    delegate_ = base::MakeUnique<BackgroundFetchDelegateImpl>(
+        browser_context(), storage_partition->GetURLRequestContext());
+    delegate_proxy_ = base::MakeUnique<BackgroundFetchDelegateProxy>();
+    delegate_proxy_->SetDelegate(delegate_.get());
 
     return base::MakeUnique<BackgroundFetchJobController>(
         delegate_proxy_.get(), registration_id, BackgroundFetchOptions(),
@@ -107,6 +109,7 @@ class BackgroundFetchJobControllerTest : public BackgroundFetchTestBase {
   base::OnceClosure job_completed_closure_;
 
   std::unique_ptr<BackgroundFetchDelegateProxy> delegate_proxy_;
+  std::unique_ptr<BackgroundFetchDelegate> delegate_;
 
  private:
   void DidCreateRegistration(blink::mojom::BackgroundFetchError* out_error,

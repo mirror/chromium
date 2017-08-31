@@ -8,6 +8,7 @@
 
 #include "base/memory/ptr_util.h"
 #include "content/browser/background_fetch/background_fetch_data_manager.h"
+#include "content/browser/background_fetch/background_fetch_delegate_impl.h"
 #include "content/browser/background_fetch/background_fetch_event_dispatcher.h"
 #include "content/browser/background_fetch/background_fetch_job_controller.h"
 #include "content/browser/background_fetch/background_fetch_registration_id.h"
@@ -53,13 +54,24 @@ BackgroundFetchContext::~BackgroundFetchContext() {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 }
 
-void BackgroundFetchContext::InitializeOnIOThread(
-    scoped_refptr<net::URLRequestContextGetter> request_context_getter) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+void BackgroundFetchContext::InitializeOnUIThread(
+    scoped_refptr<net::URLRequestContextGetter> request_context_getter,
+    base::Closure quit_closure) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   request_context_getter_ = request_context_getter;
-  delegate_proxy_ = base::MakeUnique<BackgroundFetchDelegateProxy>(
+  delegate_ = base::MakeUnique<BackgroundFetchDelegateImpl>(
       browser_context_, request_context_getter);
+
+  quit_closure.Run();
+}
+
+void BackgroundFetchContext::InitializeOnIOThread() {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+
+  DCHECK(delegate_);
+  delegate_proxy_ = base::MakeUnique<BackgroundFetchDelegateProxy>();
+  delegate_proxy_->SetDelegate(delegate_.get());
 }
 
 void BackgroundFetchContext::StartFetch(
@@ -154,13 +166,9 @@ void BackgroundFetchContext::CreateController(
           base::BindOnce(&BackgroundFetchContext::DidCompleteJob,
                          weak_factory_.GetWeakPtr()));
 
-  // TODO(peter): We should actually be able to use Background Fetch in layout
-  // tests. That requires a download manager and a request context.
-  if (request_context_getter_) {
-    // Start fetching the first few requests immediately. At some point in the
-    // future we may want a more elaborate scheduling mechanism here.
-    controller->Start();
-  }
+  // Start fetching the first few requests immediately. At some point in the
+  // future we may want a more elaborate scheduling mechanism here.
+  controller->Start();
 
   active_fetches_.insert(
       std::make_pair(registration_id, std::move(controller)));
