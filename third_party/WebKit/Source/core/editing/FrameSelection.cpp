@@ -256,6 +256,7 @@ void FrameSelection::DidSetSelectionDeprecated(
   }
 
   frame_caret_->StopCaretBlinkTimer();
+  frame_caret_->SetCaretBlinkingSuspended(false);
   UpdateAppearance();
 
   // Always clear the x position used for vertical arrow navigation.
