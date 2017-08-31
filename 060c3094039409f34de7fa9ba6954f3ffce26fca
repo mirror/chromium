@@ -16,6 +16,23 @@
       "revId": "060c3094039409f34de7fa9ba6954f3ffce26fca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30cf215e_0001f521",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/intersection-observer/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-08-31T16:51:31Z",
+      "side": 1,
+      "message": "I don\u0027t like OWNERS files with only one name in them.  Let\u0027s add eae@chromium.org",
+      "revId": "060c3094039409f34de7fa9ba6954f3ffce26fca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
