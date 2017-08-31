@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "fc199f9e_82d9a8b2",
+        "filename": "third_party/WebKit/Source/core/css/StylePropertySerializer.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-31T23:55:06Z",
+      "side": 1,
+      "message": "my bad, i was looking for it under core/css but it\u0027s under core/css/properties",
+      "parentUuid": "d0ededff_5c7f520c",
+      "revId": "c7a62600bd5a1c345c9b4debf7f3a5b3b67a20dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "44911500_1e9cfddb",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParser.cpp",
         "patchSetId": 12
