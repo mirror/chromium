@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e8cb65a_9dd14679",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_coordinator.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-31T17:47:55Z",
+      "side": 1,
+      "message": "Should we make these globally accessible constants?",
+      "revId": "f2354ff1c16e87de9080fd73dec6b0d402b96145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6f38da5_33eab06f",
+        "filename": "ios/chrome/browser/ui/ntp/notification_promo_whats_new.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-31T17:47:55Z",
+      "side": 1,
+      "message": "I would prefer not to change this method name. The value of the promo type is still chrome command, so IsChromeCommand is more consistent.\n\nChanging the promo type value involves updating the protocol specifications and changing the finch side. Prior Chrome versions would be inconsistent with this new protocol, so we could target only this version and later.\n\nAlso, I don\u0027t think the IsChromeCommand name is tied in particular to IDC Commands and works just as well for the dispatcher.",
+      "revId": "f2354ff1c16e87de9080fd73dec6b0d402b96145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
