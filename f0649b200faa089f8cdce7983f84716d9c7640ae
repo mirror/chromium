@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "7b6cee59_b1b696d7",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_container_view_controller+internal.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-31T18:05:33Z",
+      "side": 1,
+      "message": "Edited the comment in the internal subclass to reflect this.",
+      "parentUuid": "50c563fc_96d0fcbf",
+      "revId": "f0649b200faa089f8cdce7983f84716d9c7640ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "798d5195_1e80cba6",
         "filename": "ios/clean/chrome/browser/ui/tab/tab_container_view_controller+internal.h",
         "patchSetId": 27
@@ -309,6 +327,30 @@
       "side": 1,
       "message": "Fine. I would avoid the nested namespace however. I guess this needs clarification at the Chromium level, a thread from 2011 and a bit of lore passed by word of mouth won\u0027t replace a clear document…",
       "parentUuid": "da95f1fb_ed836aec",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 20
+      },
+      "revId": "f0649b200faa089f8cdce7983f84716d9c7640ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a741266_af35abc6",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_features.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-31T18:05:33Z",
+      "side": 1,
+      "message": "I renamed these constants to reflect the file they live in. kTabFeaturesTabStrip, kTabFeaturesBottomToolbar.",
+      "parentUuid": "dab1bee3_1d972251",
       "range": {
         "startLine": 11,
         "startChar": 0,
