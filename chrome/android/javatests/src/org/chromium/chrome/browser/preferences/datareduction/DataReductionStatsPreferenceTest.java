@@ -21,6 +21,7 @@ import org.junit.runner.RunWith;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.test.BaseJUnit4ClassRunner;
 import org.chromium.base.test.util.AdvancedMockContext;
+import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.base.test.util.Feature;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.net.spdyproxy.DataReductionProxySettings;
@@ -92,6 +93,7 @@ public class DataReductionStatsPreferenceTest {
     @Test
     @SmallTest
     @UiThreadTest
+    @CommandLineFlags.Add("disable-field-trial-config")
     @Feature({"DataReduction"})
     public void testDontInitializeSiteBreakdownPref() throws Throwable {
         // Disable the feature
