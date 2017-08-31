@@ -58,13 +58,16 @@ void ScopedSubresourceFilterConfigurator::ResetConfiguration(
 ScopedSubresourceFilterFeatureToggle::ScopedSubresourceFilterFeatureToggle() {}
 ScopedSubresourceFilterFeatureToggle::ScopedSubresourceFilterFeatureToggle(
     base::FeatureList::OverrideState feature_state,
-    const std::string& additional_features_to_enable) {
-  ResetSubresourceFilterState(feature_state, additional_features_to_enable);
+    const std::string& additional_features_to_enable,
+    const std::string& additional_features_to_disable) {
+  ResetSubresourceFilterState(feature_state, additional_features_to_enable,
+                              additional_features_to_disable);
 }
 
 void ScopedSubresourceFilterFeatureToggle::ResetSubresourceFilterState(
     base::FeatureList::OverrideState feature_state,
-    const std::string& additional_features_to_enable) {
+    const std::string& additional_features_to_enable,
+    const std::string& additional_features_to_disable) {
   std::string enabled_features;
   std::string disabled_features;
 
@@ -78,6 +81,12 @@ void ScopedSubresourceFilterFeatureToggle::ResetSubresourceFilterState(
     if (!enabled_features.empty())
       enabled_features += ',';
     enabled_features += additional_features_to_enable;
+  }
+
+  if (!additional_features_to_disable.empty()) {
+    if (!disabled_features.empty())
+      disabled_features += ',';
+    disabled_features += additional_features_to_disable;
   }
 
   scoped_configuration_.ResetConfiguration();

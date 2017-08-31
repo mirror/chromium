@@ -6,11 +6,13 @@
 
 #include "base/memory/ptr_util.h"
 #include "chrome/browser/subresource_filter/subresource_filter_content_settings_manager.h"
+#include "chrome/browser/subresource_filter/subresource_filter_failsafe.h"
 
 SubresourceFilterProfileContext::SubresourceFilterProfileContext(
     Profile* profile)
     : settings_manager_(
-          base::MakeUnique<SubresourceFilterContentSettingsManager>(profile)) {}
+          base::MakeUnique<SubresourceFilterContentSettingsManager>(profile)),
+      failsafe_(SubresourceFilterFailsafe::MaybeCreate(profile)) {}
 
 SubresourceFilterProfileContext::~SubresourceFilterProfileContext() {}
 
