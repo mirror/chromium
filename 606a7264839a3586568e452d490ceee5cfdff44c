@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a45a828_320bde04",
+        "filename": "chrome/browser/resources/settings/search_page/search_page.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-31T15:11:53Z",
+      "side": 1,
+      "message": "The template should be used to control the visibility of this section. Please replace voiceInteractionFeatureEnabled_ with e.g. getGoogleAssistantEnabled_(voiceInteractionFeatureEnabled_, prefs.arc.enabled.value)",
+      "revId": "606a7264839a3586568e452d490ceee5cfdff44c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19bf8464_ef4d25f9",
+        "filename": "chrome/browser/resources/settings/search_page/search_page.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-31T15:11:53Z",
+      "side": 1,
+      "message": "\u003e 80 chars (but see above)",
+      "revId": "606a7264839a3586568e452d490ceee5cfdff44c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc5eb361_0335c433",
+        "filename": "chrome/browser/resources/settings/search_page/search_page.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-31T15:11:53Z",
+      "side": 1,
+      "message": "Please fix the indentation of the rest of this while you are at it.",
+      "revId": "606a7264839a3586568e452d490ceee5cfdff44c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
