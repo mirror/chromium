@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2508431c_aaae5491",
+        "filename": "chrome/browser/ui/toolbar/toolbar_model_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-31T14:53:44Z",
+      "side": 1,
+      "message": "This and the other unit test were failing with this change, because,   TestRenderViewHost::CreateRenderView fires RenderFrameCreated but not RenderViewCreated. (bizarre!)  This caused us to hit the DCHECK in RendererStartupHelper::ActivateExtensionInProcess() when navigating to this extension\u0027s URL: \"[renderer_startup_helper.cc(199)] Check failed: false. Extension fooextensionactivated before loading\".\nAdding this line makes ActivateExtensionInProcess think the extension is loaded and avoids the DCHECK.",
+      "revId": "99add0f1e3011f4d25b07e6c8fbe2abe9741034f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
