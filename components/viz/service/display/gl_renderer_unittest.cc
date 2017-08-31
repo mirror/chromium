@@ -14,7 +14,6 @@
 #include "base/test/scoped_feature_list.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
-#include "cc/base/math_util.h"
 #include "cc/output/overlay_strategy_single_on_top.h"
 #include "cc/output/overlay_strategy_underlay.h"
 #include "cc/output/texture_mailbox_deleter.h"
@@ -41,6 +40,7 @@
 #include "third_party/skia/include/core/SkMatrix.h"
 #include "third_party/skia/include/effects/SkColorFilterImageFilter.h"
 #include "third_party/skia/include/effects/SkColorMatrixFilter.h"
+#include "ui/gfx/math_util.h"
 #include "ui/gfx/transform.h"
 #include "ui/latency/latency_info.h"
 
@@ -1699,8 +1699,8 @@ TEST_F(GLRendererShaderTest, DrawRenderPassQuadSkipsAAForClippingTransform) {
   // Verify that the test transform and test rect actually do cause the clipped
   // flag to trigger. Otherwise we are not testing the intended scenario.
   bool clipped = false;
-  cc::MathUtil::MapQuad(transform_preventing_aa,
-                        gfx::QuadF(gfx::RectF(child_rect)), &clipped);
+  gfx::MathUtil::MapQuad(transform_preventing_aa,
+                         gfx::QuadF(gfx::RectF(child_rect)), &clipped);
   ASSERT_TRUE(clipped);
 
   child_pass =
