@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "db2366ee_04dbc339",
+        "filename": "chrome/installer/linux/debian/build.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-08-31T22:52:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc29263e_7ef0757f",
+      "revId": "204dd2408d35404f5d78a4948b2d6f41d9ad74c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25d8c972_892a8b49",
         "filename": "chrome/installer/linux/debian/build.sh",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2017-08-31T21:20:51Z",
       "side": 1,
       "message": "Why not keep $(basename $0) ?",
+      "range": {
+        "startLine": 138,
+        "startChar": 15,
+        "endLine": 138,
+        "endChar": 23
+      },
+      "revId": "204dd2408d35404f5d78a4948b2d6f41d9ad74c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87a9cbc0_4b63c17c",
+        "filename": "chrome/installer/linux/debian/build.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-08-31T22:52:14Z",
+      "side": 1,
+      "message": "Because in the code, it looked like the intention was to have the \"[\"s lined up, but because of the expansion, it wasn\u0027t lined up in the output.  But I think you\u0027re right; correctness is more important than formatting in this case, so I changed it back.",
+      "parentUuid": "25d8c972_892a8b49",
       "range": {
         "startLine": 138,
         "startChar": 15,
@@ -56,6 +98,24 @@
       "revId": "204dd2408d35404f5d78a4948b2d6f41d9ad74c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f25e877_1038a338",
+        "filename": "chrome/installer/linux/debian/build.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-08-31T22:52:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47e41416_631f0ed4",
+      "revId": "204dd2408d35404f5d78a4948b2d6f41d9ad74c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
