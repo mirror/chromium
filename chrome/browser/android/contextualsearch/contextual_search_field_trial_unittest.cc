@@ -16,7 +16,8 @@ class ContextualSearchFieldTrialTest : public testing::Test {
   ~ContextualSearchFieldTrialTest() override {}
 
   // Inner class that stubs out access to Variations and command-line switches.
-  class ContextualSearchFieldTrialStubbed : public ContextualSearchFieldTrial {
+  class ContextualSearchFieldTrialStubbed final
+      : public ContextualSearchFieldTrial {
    public:
     // Use these to set a non-empty value to override return of a Get method.
     void SetSwitchValue(const std::string& value);
