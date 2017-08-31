@@ -93,6 +93,30 @@
       "revId": "7508117ca02e78f20269c845139a1a21ead82a9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4405bb70_7cf0cc43",
+        "filename": "android_webview/browser/aw_safe_browsing_resource_throttle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-08-31T19:12:14Z",
+      "side": 1,
+      "message": "is it possible to create a UserData class that is extending base::SupportsUserData::Data with a public static method FromRequest(). FromRequest would return null if there is no data and the data otherwise.\n\nI am ok if you want to file a bug and do it in a next iteration.",
+      "parentUuid": "1c4f5831_afd0bc4a",
+      "range": {
+        "startLine": 46,
+        "startChar": 1,
+        "endLine": 46,
+        "endChar": 68
+      },
+      "revId": "7508117ca02e78f20269c845139a1a21ead82a9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
