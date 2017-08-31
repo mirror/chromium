@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "ae161100_29500646",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 764,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-31T18:12:06Z",
+      "side": 1,
+      "message": "Would it makes sen to log some kind of UMA if we end up pausing or not pausing a download due to navigations?  Might be nice to know how many times we\u0027re bypassing this safety net or not.",
+      "range": {
+        "startLine": 764,
+        "startChar": 22,
+        "endLine": 764,
+        "endChar": 60
+      },
+      "revId": "9421fb87fc1dd0cb733ff6dcddc553c90ca2e211",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "141aa5dc_315b4e96",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1004,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-31T18:12:06Z",
+      "side": 1,
+      "message": "Maybe phrase this as:\n\nbool pausable_priority \u003d ...;\nbool resumable_download \u003d ...;\n\nreturn pauseable_priority \u0026\u0026 resumable_download;",
+      "range": {
+        "startLine": 998,
+        "startChar": 2,
+        "endLine": 1004,
+        "endChar": 3
+      },
+      "revId": "9421fb87fc1dd0cb733ff6dcddc553c90ca2e211",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26f5c49a_87bb7d9e",
+        "filename": "components/download/internal/navigation_monitor_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-31T18:12:06Z",
+      "side": 1,
+      "message": "Ah this builds on my comment in Xing\u0027s CL.  We need to ref count the start/stop navigations right?  We could have multi-window or contextual search or some feature loading content in a web contents.",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 70
+      },
+      "revId": "9421fb87fc1dd0cb733ff6dcddc553c90ca2e211",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "060070fe_8aeb1be7",
         "filename": "components/download/internal/navigation_monitor_impl.h",
         "patchSetId": 1
