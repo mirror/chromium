@@ -72,11 +72,17 @@ base::string16 ElideComponentizedPath(
   for (size_t i = url_path_number_of_elements - 1; i > 0; --i) {
     base::string16 elided_path = BuildPathFromComponents(
         url_path_prefix, url_path_elements, url_filename, i);
-    if (available_pixel_width >= gfx::GetStringWidthF(elided_path, font_list))
+    if (available_pixel_width >= gfx::GetStringWidthF(elided_path, font_list)) {
+      LOG(INFO) << "Can fit elided path: " << elided_path;
+      LOG(INFO) << "Returning elided \"" << elided_path + url_query << "\"";
       return gfx::ElideText(elided_path + url_query, font_list,
                        available_pixel_width, gfx::ELIDE_TAIL);
+    } else {
+      LOG(INFO) << "Cannot fit elided path: " << elided_path;
+    }
   }
 
+  LOG(INFO) << "Returning empty string";
   return base::string16();
 }
 
