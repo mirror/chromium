@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "87acdc1f_52e6f2a4",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-31T01:35:13Z",
+      "side": 1,
+      "message": "This ASSERT doesn\u0027t seem necessary (if the expected output is empty, this won\u0027t break, it\u0027ll just not test anything).",
+      "revId": "7ca4bbd80257b49bc5808d7fda48c354ec88c6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bf3a409_f5559039",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-31T01:35:13Z",
+      "side": 1,
+      "message": "float.\n\nGetStringWidth returns int (not size_t; not sure where that came from). But ElideURL takes a float so may as well convert it to a float ahead of time.\n\nThe reason is that when you go \"GetStringWidth(elided, font_list) - 1\" below, it can underflow if ElideUrl returns the empty string. Making it a float makes it go negative instead, which should be fine.",
+      "range": {
+        "startLine": 59,
+        "startChar": 4,
+        "endLine": 59,
+        "endChar": 10
+      },
+      "revId": "7ca4bbd80257b49bc5808d7fda48c354ec88c6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "33759be7_16135cce",
         "filename": "components/url_formatter/elide_url_unittest.cc",
         "patchSetId": 1
@@ -13,6 +53,47 @@
       "writtenOn": "2017-08-30T19:34:54Z",
       "side": 1,
       "message": "Folks, please scrutinize this. The original per-pixel approach ends up taking multiple seconds per testcase for long URLs.",
+      "revId": "7ca4bbd80257b49bc5808d7fda48c354ec88c6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "971ee6a5_1d68f3b0",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-31T01:35:13Z",
+      "side": 1,
+      "message": "This SGTM! Good compromise.",
+      "parentUuid": "33759be7_16135cce",
+      "revId": "7ca4bbd80257b49bc5808d7fda48c354ec88c6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd871341_f07a8ae1",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-31T01:35:13Z",
+      "side": 1,
+      "message": "Can this just be EXPECT?",
+      "range": {
+        "startLine": 70,
+        "startChar": 6,
+        "endLine": 70,
+        "endChar": 12
+      },
       "revId": "7ca4bbd80257b49bc5808d7fda48c354ec88c6d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -36,6 +117,24 @@
     },
     {
       "key": {
+        "uuid": "bc86ec59_0d7c9464",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-31T01:35:13Z",
+      "side": 1,
+      "message": "Will defer to owners.",
+      "parentUuid": "cba72f40_9ce17dca",
+      "revId": "7ca4bbd80257b49bc5808d7fda48c354ec88c6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff27249e_3205acd6",
         "filename": "components/url_formatter/elide_url_unittest.cc",
         "patchSetId": 1
@@ -47,6 +146,24 @@
       "writtenOn": "2017-08-30T20:02:01Z",
       "side": 1,
       "message": "In a test like this, it\u0027s really nice to have each expected result on a new line.  However, it\u0027s also nice to be able to \u0027git cl format\u0027 without trashing formatting.  In GL shaders, we use \u0027/* clang-format off/on */\u0027 to instruct the formatter to ignore blocks.  We could do that here.  Preference?",
+      "revId": "7ca4bbd80257b49bc5808d7fda48c354ec88c6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4d4460b_2603ec07",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-31T01:35:13Z",
+      "side": 1,
+      "message": "Will defer to owners. (I agree this is kind of ugly.)",
+      "parentUuid": "ff27249e_3205acd6",
       "revId": "7ca4bbd80257b49bc5808d7fda48c354ec88c6d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +187,24 @@
     },
     {
       "key": {
+        "uuid": "4c4426ea_996effd2",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-31T01:35:13Z",
+      "side": 1,
+      "message": "Looks like a bug. I think just file it and tag it here; not a big deal but maybe it\u0027s something that will be fixed by your big rework.",
+      "parentUuid": "85148355_90b7bbb1",
+      "revId": "7ca4bbd80257b49bc5808d7fda48c354ec88c6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b1db7d8_461c445f",
         "filename": "components/url_formatter/elide_url_unittest.cc",
         "patchSetId": 1
@@ -87,6 +222,24 @@
     },
     {
       "key": {
+        "uuid": "2162888f_4389321c",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-31T01:35:13Z",
+      "side": 1,
+      "message": "Hmm, not sure. I don\u0027t think it\u0027s worth spending too much time explaining or fixing these weird cases here.\n\nThe point of this CL is essentially to document (in a self-testing way) the current behaviour, so that when you change it all, these test cases automatically tell the story of what\u0027s changed. And it serves that purpose very well.",
+      "parentUuid": "1b1db7d8_461c445f",
+      "revId": "7ca4bbd80257b49bc5808d7fda48c354ec88c6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23ce80e8_b91f53b2",
         "filename": "components/url_formatter/elide_url_unittest.cc",
         "patchSetId": 1
@@ -98,6 +251,24 @@
       "writtenOn": "2017-08-30T19:34:54Z",
       "side": 1,
       "message": "This TODO should be resolved via this code review.",
+      "revId": "7ca4bbd80257b49bc5808d7fda48c354ec88c6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00fe24ae_612f3351",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-31T01:35:13Z",
+      "side": 1,
+      "message": "Doesn\u0027t seem worth having a separate test.\n\nNote: I like to write DO NOT SUBMIT in comments that I intend to resolve before landing; the CQ will prevent it.",
+      "parentUuid": "23ce80e8_b91f53b2",
       "revId": "7ca4bbd80257b49bc5808d7fda48c354ec88c6d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
