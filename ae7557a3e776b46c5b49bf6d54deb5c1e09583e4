@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "291d3b03_91940f7c",
+        "filename": "chrome/browser/chromeos/app_mode/fake_cws.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1236093
+      },
+      "writtenOn": "2017-08-31T06:00:13Z",
+      "side": 1,
+      "message": "Please take a look on comment. Previously comment was not up to date. I changed it in the meanings of my changes.",
+      "revId": "ae7557a3e776b46c5b49bf6d54deb5c1e09583e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
