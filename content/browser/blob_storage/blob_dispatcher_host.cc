@@ -378,8 +378,7 @@ bool BlobDispatcherHost::IsInUseInHost(const std::string& uuid) {
   // using blobs by sending an IncrementRefCount IPC. Furthermore with mojo
   // blobs it doesn't make sense anymore to try to decide if a blob is in use in
   // a process, so just always return true in that case.
-  return base::FeatureList::IsEnabled(features::kMojoBlobs) ||
-         base::ContainsKey(blobs_inuse_map_, uuid);
+  return IsMojoBlobsEnabled() || base::ContainsKey(blobs_inuse_map_, uuid);
 }
 
 bool BlobDispatcherHost::IsUrlRegisteredInHost(const GURL& blob_url) {
