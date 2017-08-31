@@ -126,6 +126,12 @@ class MockInputRouterImplClient : public InputRouterImplClient {
     return &widget_input_handler_;
   }
 
+  void OnImeCompositionRangeChanged(
+      const gfx::Range& range,
+      const std::vector<gfx::Rect>& character_bounds) override {}
+
+  void OnImeCancelComposition() override {}
+
   std::vector<MockWidgetInputHandler::DispatchedEvent>
   GetAndResetDispatchedEvents() {
     return widget_input_handler_.GetAndResetDispatchedEvents();
