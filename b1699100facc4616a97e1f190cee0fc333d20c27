@@ -34,6 +34,24 @@
       "revId": "b1699100facc4616a97e1f190cee0fc333d20c27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15f89468_f05f0779",
+        "filename": "components/ukm/ukm_source.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-08-31T01:24:31Z",
+      "side": 0,
+      "message": "Ah, I see, so to cause this DCHECK to fire, IIUC, what\u0027s happening is:\n\n* we create an initial source id\n* we explicitly set its URL to empty to create a source id (this doesn\u0027t cause UpdateUrl to get invoked; only set_url gets invoked in this step)\n* we later update the source\u0027s URL to a non-empty value\n\nIt\u0027s only in the last step that UpdateUrl is invoked.\n\nIn which code path are we doing the 3 steps above? I don\u0027t see any modified code paths in this change performing these 3 steps. I see steps 1 and 2, but not 1, 2, and 3 on the same source_id.",
+      "parentUuid": "4a323f9e_0c43b328",
+      "revId": "b1699100facc4616a97e1f190cee0fc333d20c27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
