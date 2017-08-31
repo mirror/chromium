@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff9b2bf0_3904b8c6",
+        "filename": "third_party/wayland-protocols/unstable/remote-shell/remote-shell-unstable-v1.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-31T18:31:54Z",
+      "side": 1,
+      "message": "The reason for using int is to avoid conversion error. (1.6 was converted to 1.60156)",
+      "revId": "cfe5f118292838d91bd1ef92a92cbe455148ddab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5804989f_90f4b783",
+        "filename": "third_party/wayland-protocols/unstable/remote-shell/remote-shell-unstable-v1.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-31T18:31:54Z",
+      "side": 1,
+      "message": "I moved the logic to compute the dpi for these to server side so that all scale related values are determined in one place. I can move this to wayland service if you prefer that way. Please let me know.",
+      "revId": "cfe5f118292838d91bd1ef92a92cbe455148ddab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
