@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba92788e_904f5e59",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-31T18:28:42Z",
+      "side": 1,
+      "message": "Do you foresee a need for cloning? Can we get away with having only a move constructor and move assignment? It would be less unittests to write.",
+      "revId": "4f2b1267bc0d87fc46d91a535bb5768b81419a9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "237c82b9_98e8b7eb",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-31T18:28:42Z",
+      "side": 1,
+      "message": "Do you foresee a need for having InsertXYZ() methods for each type, or could we get away with just Insert(base::StringPiece, std::unique_ptr\u003cCBORValue\u003e)?",
+      "revId": "4f2b1267bc0d87fc46d91a535bb5768b81419a9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

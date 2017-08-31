@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6409a76c_7c9725d3",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-31T18:28:42Z",
+      "side": 1,
+      "message": "We should really add a unittest for the functionality that we keep here.",
+      "revId": "cdf60476a68183c6d312e3279bfbc3b953f18c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c09032a5_7488c37d",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-31T18:28:42Z",
+      "side": 1,
+      "message": "Style nit: Should have move assignment operator as well.",
+      "revId": "cdf60476a68183c6d312e3279bfbc3b953f18c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0d4eb88_86f97939",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-31T18:28:42Z",
+      "side": 1,
+      "message": "Hmm, why do we wrap the value in unique_ptr here but not for an array value? Is the value type missing some requirement of flat_map?",
+      "range": {
+        "startLine": 86,
+        "startChar": 41,
+        "endLine": 86,
+        "endChar": 51
+      },
+      "revId": "cdf60476a68183c6d312e3279bfbc3b953f18c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
