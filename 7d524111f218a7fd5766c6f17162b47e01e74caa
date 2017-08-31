@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "a8bae7e7_ddefc274",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-31T15:47:27Z",
+      "side": 1,
+      "message": "I don\u0027t understand why this is needed?",
+      "range": {
+        "startLine": 10,
+        "startChar": 20,
+        "endLine": 11,
+        "endChar": 47
+      },
+      "revId": "7d524111f218a7fd5766c6f17162b47e01e74caa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7f1d182_a78d5cd4",
         "filename": "ios/chrome/browser/content_suggestions/content_suggestions_coordinator.mm",
         "patchSetId": 4
