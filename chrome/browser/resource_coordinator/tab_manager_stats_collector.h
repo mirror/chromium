@@ -84,6 +84,9 @@ class TabManagerStatsCollector final : public SessionRestoreObserver {
                          const std::string& metric_name,
                          uint64_t count,
                          const base::TimeDelta& interval);
+  void RecordSwapMetrics(SessionType type,
+                         const std::string& metric_name,
+                         double rate_per_second);
 
   // Handles the situation when failing to update swap metrics.
   void OnUpdateSwapMetricsFailed();

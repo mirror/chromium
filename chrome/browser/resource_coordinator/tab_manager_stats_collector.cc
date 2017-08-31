@@ -12,6 +12,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/optional.h"
 #include "base/stl_util.h"
 #include "base/time/time.h"
 #include "chrome/browser/resource_coordinator/tab_manager_web_contents_data.h"
@@ -24,6 +25,9 @@ namespace {
 
 const char* kSessionTypeName[] = {"SessionRestore", "BackgroundTabOpening"};
 
+constexpr base::TimeDelta kSwapMetricsInterval =
+    base::TimeDelta::FromSeconds(1);
+
 }  // namespace
 
 class TabManagerStatsCollector::SwapMetricsDelegate
@@ -35,28 +39,65 @@ class TabManagerStatsCollector::SwapMetricsDelegate
       : tab_manager_stats_collector_(tab_manager_stats_collector),
         session_type_(type) {}
 
-  ~SwapMetricsDelegate() override = default;
+  ~SwapMetricsDelegate() override {
+    if (max_swap_in_per_second_) {
+      tab_manager_stats_collector_->RecordSwapMetrics(
+          session_type_, "PeakSwapInPerSecond",
+          max_swap_in_per_second_.value());
+    }
+    if (max_swap_out_per_second_) {
+      tab_manager_stats_collector_->RecordSwapMetrics(
+          session_type_, "PeakSwapOutPerSecond",
+          max_swap_out_per_second_.value());
+    }
+    if (max_decompressed_pages_per_second_) {
+      tab_manager_stats_collector_->RecordSwapMetrics(
+          session_type_, "PeakDecompressedSwapInPerSecond",
+          max_decompressed_pages_per_second_.value());
+    }
+    if (max_compressed_pages_per_second_) {
+      tab_manager_stats_collector_->RecordSwapMetrics(
+          session_type_, "PeakCompressedPagesPerSecond",
+          max_compressed_pages_per_second_.value());
+    }
+  }
 
   void OnSwapInCount(uint64_t count, base::TimeDelta interval) override {
     tab_manager_stats_collector_->RecordSwapMetrics(
-        session_type_, "SwapInPerSecond", count, interval);
+        session_type_, "PeriodicSwapInPerSecond", count, interval);
+    double rate = static_cast<double>(count) / interval.InSecondsF();
+    if (!max_swap_in_per_second_ || max_swap_in_per_second_.value() < rate)
+      max_swap_in_per_second_.emplace(rate);
   }
 
   void OnSwapOutCount(uint64_t count, base::TimeDelta interval) override {
     tab_manager_stats_collector_->RecordSwapMetrics(
-        session_type_, "SwapOutPerSecond", count, interval);
+        session_type_, "PeriodicSwapOutPerSecond", count, interval);
+    double rate = static_cast<double>(count) / interval.InSecondsF();
+    if (!max_swap_out_per_second_ || max_swap_out_per_second_.value() < rate)
+      max_swap_out_per_second_.emplace(rate);
   }
 
   void OnDecompressedPageCount(uint64_t count,
                                base::TimeDelta interval) override {
     tab_manager_stats_collector_->RecordSwapMetrics(
-        session_type_, "DecompressedPagesPerSecond", count, interval);
+        session_type_, "PeriodicDecompressedPagesPerSecond", count, interval);
+    double rate = static_cast<double>(count) / interval.InSecondsF();
+    if (!max_decompressed_pages_per_second_ ||
+        max_decompressed_pages_per_second_.value() < rate) {
+      max_decompressed_pages_per_second_.emplace(rate);
+    }
   }
 
   void OnCompressedPageCount(uint64_t count,
                              base::TimeDelta interval) override {
     tab_manager_stats_collector_->RecordSwapMetrics(
-        session_type_, "CompressedPagesPerSecond", count, interval);
+        session_type_, "PeriodicCompressedPagesPerSecond", count, interval);
+    double rate = static_cast<double>(count) / interval.InSecondsF();
+    if (!max_compressed_pages_per_second_ ||
+        max_compressed_pages_per_second_.value() < rate) {
+      max_compressed_pages_per_second_.emplace(rate);
+    }
   }
 
   void OnUpdateMetricsFailed() override {
@@ -66,6 +107,10 @@ class TabManagerStatsCollector::SwapMetricsDelegate
  private:
   TabManagerStatsCollector* tab_manager_stats_collector_;
   const SessionType session_type_;
+  base::Optional<double> max_swap_in_per_second_;
+  base::Optional<double> max_swap_out_per_second_;
+  base::Optional<double> max_decompressed_pages_per_second_;
+  base::Optional<double> max_compressed_pages_per_second_;
 };
 
 TabManagerStatsCollector::TabManagerStatsCollector()
@@ -146,8 +191,10 @@ void TabManagerStatsCollector::OnSessionRestoreStartedLoadingTabs() {
 
 void TabManagerStatsCollector::OnSessionRestoreFinishedLoadingTabs() {
   DCHECK(is_session_restore_loading_tabs_);
-  if (swap_metrics_driver_)
-    swap_metrics_driver_->UpdateMetrics();
+  if (swap_metrics_driver_) {
+    swap_metrics_driver_->Stop();
+    swap_metrics_driver_ = nullptr;
+  }
   is_session_restore_loading_tabs_ = false;
 }
 
@@ -162,8 +209,10 @@ void TabManagerStatsCollector::OnBackgroundTabOpeningSessionStarted() {
 
 void TabManagerStatsCollector::OnBackgroundTabOpeningSessionEnded() {
   DCHECK(is_in_background_tab_opening_session_);
-  if (swap_metrics_driver_)
-    swap_metrics_driver_->UpdateMetrics();
+  if (swap_metrics_driver_) {
+    swap_metrics_driver_->Stop();
+    swap_metrics_driver_ = nullptr;
+  }
   is_in_background_tab_opening_session_ = false;
 }
 
@@ -179,10 +228,10 @@ void TabManagerStatsCollector::CreateAndInitSwapMetricsDriverIfNeeded(
   swap_metrics_driver_ = content::SwapMetricsDriver::Create(
       base::WrapUnique<content::SwapMetricsDriver::Delegate>(
           new SwapMetricsDelegate(this, type)),
-      base::TimeDelta::FromSeconds(0));
+      kSwapMetricsInterval);
   // The driver could still be null on a platform with no swap driver support.
   if (swap_metrics_driver_)
-    swap_metrics_driver_->InitializeMetrics();
+    swap_metrics_driver_->Start();
 }
 
 void TabManagerStatsCollector::RecordSwapMetrics(
@@ -190,14 +239,21 @@ void TabManagerStatsCollector::RecordSwapMetrics(
     const std::string& metric_name,
     uint64_t count,
     const base::TimeDelta& interval) {
+  RecordSwapMetrics(type, metric_name,
+                    static_cast<double>(count) / interval.InSecondsF());
+}
+
+void TabManagerStatsCollector::RecordSwapMetrics(SessionType type,
+                                                 const std::string& metric_name,
+                                                 double rate_per_second) {
   base::HistogramBase* histogram = base::Histogram::FactoryGet(
       "TabManager.Experimental." + std::string(kSessionTypeName[type]) + "." +
           metric_name,
-      1,      // minimum
-      10000,  // maximum
-      50,     // bucket_count
+      1,       // minimum
+      100000,  // maximum
+      50,      // bucket_count
       base::HistogramBase::kUmaTargetedHistogramFlag);
-  histogram->Add(static_cast<double>(count) / interval.InSecondsF());
+  histogram->Add(rate_per_second);
 }
 
 void TabManagerStatsCollector::OnUpdateSwapMetricsFailed() {
