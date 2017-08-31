@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83f1de77_344f8376",
+        "filename": "content/browser/android/web_contents_observer_proxy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-31T20:50:26Z",
+      "side": 1,
+      "message": "I don\u0027t think the LocalRef is necessary if you have the object already in a global ref.",
+      "range": {
+        "startLine": 230,
+        "startChar": 2,
+        "endLine": 230,
+        "endChar": 20
+      },
+      "revId": "4cb730c0a390445e000de5c0625fa30ade9a43a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c3b906b_dfab2182",
+        "filename": "content/browser/media/media_web_contents_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-31T20:50:26Z",
+      "side": 1,
+      "message": "I would maybe flip this condition now.",
+      "range": {
+        "startLine": 220,
+        "startChar": 6,
+        "endLine": 220,
+        "endChar": 20
+      },
+      "revId": "4cb730c0a390445e000de5c0625fa30ade9a43a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
