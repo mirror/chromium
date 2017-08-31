@@ -66,9 +66,21 @@ class {{export_attribute}} {{interface.name}}
 
 {#--- Testing interceptor #}
 class {{export_attribute}} {{interface.name}}InterceptorForTesting : public {{interface.name}} {
-  virtual {{interface.name}}* GetForwardingInterface() = 0;
+ public:
+  virtual {{interface.name}}* GetForwardingInterface() {
+    DCHECK(forwarding_interface_)
+        << "Cannot make interface method calls before calling SetForwardingInterface";
+    return forwarding_interface_.get();
+  }
+
+  virtual void SetForwardingInterface(
+      std::unique_ptr<{{interface.name}}> forwarding_interface) {
+    forwarding_interface_ = std::move(forwarding_interface);
+  }
 
 {%- for method in interface.methods %}
   void {{method.name}}({{interface_macros.declare_request_params("", method, use_once_callback)}});
 {%- endfor %}
+ protected:
+  std::unique_ptr<{{interface.name}}> forwarding_interface_;
 };

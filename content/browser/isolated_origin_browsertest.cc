@@ -510,52 +510,32 @@ IN_PROC_BROWSER_TEST_F(IsolatedOriginTest, IsolatedOriginWithSubdomain) {
 class StoragePartitonInterceptor
     : public mojom::StoragePartitionServiceInterceptorForTesting {
  public:
-  StoragePartitonInterceptor(RenderProcessHostImpl* rph) {
-    // Install a custom callback for handling errors during interface calls.
-    // This is needed because the passthrough calls that this object makes
-    // to the real implementaion of the service don't have the correct
-    // context to invoke the real error callback.
-    mojo::edk::SetDefaultProcessErrorCallback(base::Bind(
-        [](int process_id, const std::string& s) {
-          bad_message::ReceivedBadMessage(process_id,
-                                          bad_message::DSMF_LOAD_STORAGE);
-        },
-        rph->GetID()));
-
-    static_cast<StoragePartitionImpl*>(rph->GetStoragePartition())
-        ->Bind(rph->GetID(), mojo::MakeRequest(&storage_partition_service_));
-  }
-
-  // Allow all methods that aren't explicitly overriden to pass through
-  // unmodified.
-  mojom::StoragePartitionService* GetForwardingInterface() override {
-    return storage_partition_service_.get();
-  }
+  StoragePartitonInterceptor() {}
 
   // Override this method to allow changing the origin. It simulates a
   // renderer process sending incorrect data to the browser process, so
   // security checks can be tested.
   void OpenLocalStorage(const url::Origin& origin,
                         mojom::LevelDBWrapperRequest request) override {
+    LOG(ERROR) << "Interceptor::OpenLocalStorage";
     url::Origin mismatched_origin(GURL("http://abc.foo.com"));
     GetForwardingInterface()->OpenLocalStorage(mismatched_origin,
                                                std::move(request));
   }
-
- private:
-  // Keep a pointer to the original implementation of the service, so all
-  // calls can be forwarded to it.
-  // Note: When making calls through this object, they are in-process calls,
-  // so state on the receiving side of the call will be missing the real
-  // information of which process has made the real method call.
-  mojom::StoragePartitionServicePtr storage_partition_service_;
 };
 
 void CreateTestStoragePartitionService(
     RenderProcessHostImpl* rph,
     mojom::StoragePartitionServiceRequest request) {
-  mojo::MakeStrongBinding(base::MakeUnique<StoragePartitonInterceptor>(rph),
-                          std::move(request));
+  StoragePartitionImpl* storage_partition =
+      static_cast<StoragePartitionImpl*>(rph->GetStoragePartition());
+
+  mojo::BindingId binding_id =
+      storage_partition->Bind(rph->GetID(), std::move(request));
+  StoragePartitonInterceptor* interceptor = new StoragePartitonInterceptor();
+  interceptor->SetForwardingInterface(base::WrapUnique(
+      storage_partition->bindings_for_testing().SwapImplForTesting(
+          binding_id, interceptor)));
 }
 
 // Verify that an isolated renderer process cannot read localStorage of an
