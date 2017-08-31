@@ -69,6 +69,24 @@
       "revId": "0c563a5e813e6da6734da55c765a29b03b2e0f2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35d7e905_af7741f1",
+        "filename": "services/preferences/pref_store_manager_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-31T02:20:28Z",
+      "side": 1,
+      "message": "This codepath isn\u0027t exposed over IPC. All the inputs to this constructor come from the browser.\n\nPrefs is currently only exposed to mash, which seems like a high-privilege process (not that it can provide values to use here).",
+      "parentUuid": "0ca49209_f7d28966",
+      "revId": "0c563a5e813e6da6734da55c765a29b03b2e0f2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
