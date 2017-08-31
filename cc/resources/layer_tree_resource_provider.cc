@@ -124,7 +124,6 @@ void LayerTreeResourceProvider::PrepareSendToParent(
 void LayerTreeResourceProvider::ReceiveReturnsFromParent(
     const std::vector<viz::ReturnedResource>& resources) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  GLES2Interface* gl = ContextGL();
 
   for (const viz::ReturnedResource& returned : resources) {
     viz::ResourceId local_id = returned.id;
@@ -141,18 +140,6 @@ void LayerTreeResourceProvider::ReceiveReturnsFromParent(
     resource->lost |= returned.lost;
     if (resource->exported_count)
       continue;
-
-    if (returned.sync_token.HasData()) {
-      DCHECK(!resource->has_shared_bitmap_id);
-      if (resource->origin == Resource::INTERNAL) {
-        DCHECK(resource->gl_id);
-        gl->WaitSyncTokenCHROMIUM(returned.sync_token.GetConstData());
-        resource->SetSynchronized();
-      } else {
-        DCHECK(!resource->gl_id);
-        resource->UpdateSyncToken(returned.sync_token);
-      }
-    }
 
     if (!resource->marked_for_deletion)
       continue;

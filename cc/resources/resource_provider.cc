@@ -1355,41 +1355,10 @@ void ResourceProvider::DeleteAndReturnUnusedResourcesToChild(
     returned.lost = is_lost;
     to_return.push_back(returned);
 
-    if (IsGpuResourceType(resource.type) && child_info->needs_sync_tokens) {
-      if (resource.needs_sync_token()) {
-        need_synchronization_resources.push_back(&to_return.back());
-      } else if (returned.sync_token.HasData() &&
-                 !returned.sync_token.verified_flush()) {
-        // Before returning any sync tokens, they must be verified.
-        unverified_sync_tokens.push_back(returned.sync_token.GetData());
-      }
-    }
-
     child_info->child_to_parent_map.erase(child_id);
     resource.imported_count = 0;
     DeleteResourceInternal(it, style);
   }
-
-  gpu::SyncToken new_sync_token;
-  if (!need_synchronization_resources.empty()) {
-    DCHECK(child_info->needs_sync_tokens);
-    DCHECK(gl);
-    const uint64_t fence_sync = gl->InsertFenceSyncCHROMIUM();
-    gl->OrderingBarrierCHROMIUM();
-    gl->GenUnverifiedSyncTokenCHROMIUM(fence_sync, new_sync_token.GetData());
-    unverified_sync_tokens.push_back(new_sync_token.GetData());
-  }
-
-  if (!unverified_sync_tokens.empty()) {
-    DCHECK(child_info->needs_sync_tokens);
-    DCHECK(gl);
-    gl->VerifySyncTokensCHROMIUM(unverified_sync_tokens.data(),
-                                 unverified_sync_tokens.size());
-  }
-
-  // Set sync token after verification.
-  for (viz::ReturnedResource* returned : need_synchronization_resources)
-    returned->sync_token = new_sync_token;
 
   if (!to_return.empty())
     child_info->return_callback.Run(to_return,
