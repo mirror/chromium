@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3db8f66f_e64265ec",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-31T23:37:28Z",
+      "side": 1,
+      "message": "reports or something such",
+      "range": {
+        "startLine": 371,
+        "startChar": 6,
+        "endLine": 371,
+        "endChar": 25
+      },
+      "revId": "9356d5f490961e52e2a09ae58d2ebb7fd56fac0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "476b8d21_9b863084",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-31T23:37:28Z",
+      "side": 1,
+      "message": "drop !",
+      "range": {
+        "startLine": 374,
+        "startChar": 6,
+        "endLine": 374,
+        "endChar": 7
+      },
+      "revId": "9356d5f490961e52e2a09ae58d2ebb7fd56fac0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "635b4baf_716d2f5a",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-31T23:37:28Z",
+      "side": 1,
+      "message": "is this linted?",
+      "range": {
+        "startLine": 89,
+        "startChar": 2,
+        "endLine": 90,
+        "endChar": 23
+      },
+      "revId": "9356d5f490961e52e2a09ae58d2ebb7fd56fac0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "575c30ce_7ca5579a",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-31T23:37:28Z",
+      "side": 1,
+      "message": "such simple methods can be inlined. Example: https://google.github.io/styleguide/cppguide.html#Class_Format",
+      "range": {
+        "startLine": 92,
+        "startChar": 45,
+        "endLine": 92,
+        "endChar": 60
+      },
+      "revId": "9356d5f490961e52e2a09ae58d2ebb7fd56fac0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -351,6 +351,30 @@
       "revId": "73b8ea4c6c8cdbe9f36fc33eb58e9331b25f4fab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7992431_2d2c135e",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-31T23:37:28Z",
+      "side": 1,
+      "message": "Not done? The comment would also need to be updated.",
+      "parentUuid": "780aab66_d82a3e78",
+      "range": {
+        "startLine": 52,
+        "startChar": 63,
+        "endLine": 52,
+        "endChar": 76
+      },
+      "revId": "73b8ea4c6c8cdbe9f36fc33eb58e9331b25f4fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
