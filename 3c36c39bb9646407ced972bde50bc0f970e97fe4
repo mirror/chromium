@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c089eb34_a6aaddae",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-31T01:44:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "759542d5_a50a0b3b",
+      "revId": "3c36c39bb9646407ced972bde50bc0f970e97fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6386f6ab_b4ec95f5",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "3c36c39bb9646407ced972bde50bc0f970e97fe4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0242a2a8_7e6008ef",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-31T01:44:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6386f6ab_b4ec95f5",
+      "revId": "3c36c39bb9646407ced972bde50bc0f970e97fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "57ab68c7_dade4c8e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-31T01:44:50Z",
+      "side": 1,
+      "message": "Rephrased.",
+      "parentUuid": "2a9f6a99_4ecca15c",
+      "revId": "3c36c39bb9646407ced972bde50bc0f970e97fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf3f0e9a_70de8a5a",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "3c36c39bb9646407ced972bde50bc0f970e97fe4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de33262c_13a1c38b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-31T01:44:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf3f0e9a_70de8a5a",
+      "revId": "3c36c39bb9646407ced972bde50bc0f970e97fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "390935a9_5e3ad8b2",
+        "filename": "ui/ozone/demo/surfaceless_gl_renderer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-31T01:44:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "935a448b_035f3aaf",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 11
+      },
+      "revId": "3c36c39bb9646407ced972bde50bc0f970e97fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "401f6f58_b43228f0",
         "filename": "ui/ozone/demo/surfaceless_gl_renderer.cc",
         "patchSetId": 1
@@ -116,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "a4176f73_ed8155fe",
+        "filename": "ui/ozone/demo/surfaceless_gl_renderer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-31T01:44:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "401f6f58_b43228f0",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 15
+      },
+      "revId": "3c36c39bb9646407ced972bde50bc0f970e97fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9c00699_1847df14",
         "filename": "ui/ozone/demo/surfaceless_gl_renderer.cc",
         "patchSetId": 1
@@ -136,6 +256,30 @@
       "revId": "3c36c39bb9646407ced972bde50bc0f970e97fe4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a97168a_66eab5f8",
+        "filename": "ui/ozone/demo/surfaceless_gl_renderer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-31T01:44:50Z",
+      "side": 1,
+      "message": "Added a comment that mentions the fact that currently the validation is asynchronous and results are cached.\n\n----------- \n\nI agree with you that we should simplify it and I think there are other points we could/should improve regarding the overlay validator:\n\n- We\u0027re not using the real buffers we\u0027ll schedule for scanout for the test. That gives us incorrect results. Buffers might be compressed or tiled, we don\u0027t know that, and the validation will be done on newly allocated buffers without those modifiers (crbug.com/756454). Additionally, allocating  buffers on the GPU side is expensive. It easily takes ~10ms. If Chrome used the actual buffers we could avoid that cost. \n\n- We have a GL interface that uses texture_ids to schedule buffers, while we have a totally different interface for validation, those use two different channels. This makes it hard to use texture ids for validation (somthing we considered to avoid reallocating buffers on the service side).\n\n- Once we move to a world with compositing and drm happening in the same process we should avoid doing validation asynchronously. If we use the actual buffers the validation is really fast and we should also be able to avoid the cache completely.",
+      "parentUuid": "f9c00699_1847df14",
+      "range": {
+        "startLine": 181,
+        "startChar": 2,
+        "endLine": 181,
+        "endChar": 55
+      },
+      "revId": "3c36c39bb9646407ced972bde50bc0f970e97fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
