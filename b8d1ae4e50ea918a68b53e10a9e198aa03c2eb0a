@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e416770_61237bcb",
+        "filename": "cc/tiles/tile_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-31T20:56:39Z",
+      "side": 1,
+      "message": "Should we do this in DidFinishRunningTileTasksRequiredForDraw and DidFinishRunningTileTasksRequiredForActivation as well?",
+      "revId": "b8d1ae4e50ea918a68b53e10a9e198aa03c2eb0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
