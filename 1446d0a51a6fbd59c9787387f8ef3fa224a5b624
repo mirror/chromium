@@ -16,6 +16,24 @@
       "revId": "1446d0a51a6fbd59c9787387f8ef3fa224a5b624",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26532628_1f50a6f9",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-preflight-denied.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-31T00:24:18Z",
+      "side": 1,
+      "message": "SGTM! Thanks for the advice!",
+      "parentUuid": "c380f1a5_07284c73",
+      "revId": "1446d0a51a6fbd59c9787387f8ef3fa224a5b624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
