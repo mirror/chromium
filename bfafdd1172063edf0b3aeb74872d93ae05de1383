@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8df05a1_042d80ba",
+        "filename": "chromecast/media/cma/backend/alsa/filter_group.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-08-31T23:55:39Z",
+      "side": 1,
+      "message": "add ()",
+      "range": {
+        "startLine": 176,
+        "startChar": 17,
+        "endLine": 176,
+        "endChar": 50
+      },
+      "revId": "bfafdd1172063edf0b3aeb74872d93ae05de1383",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "293947cd_e1175bd2",
+        "filename": "chromecast/public/media/decoder_config.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-08-31T23:55:39Z",
+      "side": 1,
+      "message": "Either remove this, or make it part of the API. ie instead of \u0027int playout_channel\u0027 it should be \u0027Channel playout_channel\u0027. If you choose to keep the enum, make it an enum class, and add kChannelAll to the enum.",
+      "range": {
+        "startLine": 283,
+        "startChar": 0,
+        "endLine": 299,
+        "endChar": 60
+      },
+      "revId": "bfafdd1172063edf0b3aeb74872d93ae05de1383",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

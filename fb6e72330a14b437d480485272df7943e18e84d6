@@ -491,6 +491,24 @@
       "revId": "fb6e72330a14b437d480485272df7943e18e84d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d84ed5b6_bcc8d879",
+        "filename": "chromecast/public/media/decoder_config.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-08-31T23:55:39Z",
+      "side": 1,
+      "message": "Yes, it is ABI-compatible. OEMs that don\u0027t update will just ignore this member.",
+      "parentUuid": "2eb8ecb3_64766643",
+      "revId": "fb6e72330a14b437d480485272df7943e18e84d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
