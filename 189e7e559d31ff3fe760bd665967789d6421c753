@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6f99d5b2_289dd085",
+        "filename": "chrome/browser/vr/elements/webvr_url_toast_texture.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-31T15:43:44Z",
+      "side": 1,
+      "message": "Based on discussion on chat, use empty string if host is invalid or empty.",
+      "parentUuid": "8d61ad28_9828e01e",
+      "revId": "189e7e559d31ff3fe760bd665967789d6421c753",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0b4fcd7e_ae265ce1",
         "filename": "chrome/browser/vr/elements/webvr_url_toast_texture.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "189e7e559d31ff3fe760bd665967789d6421c753",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9acff23_b908233e",
+        "filename": "chrome/browser/vr/elements/webvr_url_toast_texture.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-31T15:43:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b4fcd7e_ae265ce1",
+      "revId": "189e7e559d31ff3fe760bd665967789d6421c753",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -56,6 +92,30 @@
       "revId": "189e7e559d31ff3fe760bd665967789d6421c753",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf584907_9aff9f01",
+        "filename": "chrome/browser/vr/elements/webvr_url_toast_texture.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-31T15:43:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eae0db4f_ef2154a7",
+      "range": {
+        "startLine": 121,
+        "startChar": 31,
+        "endLine": 121,
+        "endChar": 34
+      },
+      "revId": "189e7e559d31ff3fe760bd665967789d6421c753",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
