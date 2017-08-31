@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fd7f3b46_828534d1",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-preflight-async-not-supported.htm",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-31T00:11:38Z",
+      "side": 1,
+      "message": "That makes sense! Thanks! I\u0027ll change it.",
+      "parentUuid": "bfbb0995_3d6876a6",
+      "revId": "4284c0800d86cd76e59539faaeba64c98474a585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73769a34_9b88f414",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-preflight-async-not-supported.htm",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "3dff2a95_9eac256e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-preflight-async-not-supported.htm",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-31T00:11:38Z",
+      "side": 1,
+      "message": "Whoops! Very good point! Thank you!",
+      "parentUuid": "73769a34_9b88f414",
+      "revId": "4284c0800d86cd76e59539faaeba64c98474a585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1bc65356_8690c999",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-preflight-async-not-supported.htm",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "4284c0800d86cd76e59539faaeba64c98474a585",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "527b5407_0dcee197",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-preflight-async-not-supported.htm",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-31T00:11:38Z",
+      "side": 1,
+      "message": "All right! Thanks for looking up the relevant specs. Does it look all right now?",
+      "parentUuid": "1bc65356_8690c999",
+      "revId": "4284c0800d86cd76e59539faaeba64c98474a585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
