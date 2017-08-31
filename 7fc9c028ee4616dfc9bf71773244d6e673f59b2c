@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11909af4_06fc1298",
+        "filename": "chrome/browser/android/preferences/pref_service_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-31T20:37:12Z",
+      "side": 1,
+      "message": "Is this a bool on purpose?",
+      "range": {
+        "startLine": 556,
+        "startChar": 2,
+        "endLine": 556,
+        "endChar": 6
+      },
+      "revId": "7fc9c028ee4616dfc9bf71773244d6e673f59b2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
