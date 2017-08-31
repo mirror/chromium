@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "170ccdae_cd3cbd21",
+        "filename": "components/arc/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-31T15:45:23Z",
+      "side": 1,
+      "message": "Is there any downside of removing these files from here? You\u0027re already adding them to the public_deps section, so that should both bring in the header and the .o files.\n\nGranted, I\u0027m not a gn expert, so take this with a grain of salt.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 18
+      },
+      "revId": "e99b3cf7438d995fdffd7a8f72fe219658a503bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41e601a5_052d7a3f",
+        "filename": "components/arc/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-31T15:45:23Z",
+      "side": 1,
+      "message": "I think you can also remove this if you add pref_registry to the public_deps of :prefs. Anybody who includes :prefs should have pref_registry anyways, so I don\u0027t think there\u0027s a downside of moving it there.",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 33
+      },
+      "revId": "e99b3cf7438d995fdffd7a8f72fe219658a503bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d87ba1c4_4d7a48c7",
         "filename": "components/arc/arc_prefs.h",
         "patchSetId": 5
