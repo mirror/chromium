@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "13076d12_a02aa237",
+        "filename": "chrome/browser/plugins/plugin_info_message_filter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-08-31T19:21:32Z",
+      "side": 1,
+      "message": "Yes, my plan is that we will have some things record entries about Navigations, and some thing that record entries about Documents, and something that records the associations between Navigations and Documents, and we\u0027ll probably put them together in processed logs.  For now it\u0027s fine that the entries are separate, as long as we associate URLs with both of them.  \n\nI\u0027ll plan to rebase this change onto your WCO for recording NavigationID-URLs, and add DocumentID-URLs.",
+      "parentUuid": "21117c2d_65488620",
+      "revId": "440a2c6d2555d9829144de48489710c0c247a23c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43951ff5_85e57baa",
         "filename": "content/browser/frame_host/navigator_impl.cc",
         "patchSetId": 8
@@ -71,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4dcdfeaa_2436024a",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-08-31T19:21:32Z",
+      "side": 1,
+      "message": "ID 0 was reserved for uninitialized.",
+      "parentUuid": "0f2de65e_43b8ae49",
+      "revId": "440a2c6d2555d9829144de48489710c0c247a23c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "64efadb1_1ba1897e",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 8
@@ -88,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "2b8d9ecf_0d37e042",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-08-31T19:21:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64efadb1_1ba1897e",
+      "revId": "440a2c6d2555d9829144de48489710c0c247a23c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c67e3370_9fa7762e",
         "filename": "content/public/browser/render_frame_host.h",
         "patchSetId": 8
@@ -102,6 +156,24 @@
       "revId": "440a2c6d2555d9829144de48489710c0c247a23c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c980903a_f06b817e",
+        "filename": "content/public/browser/render_frame_host.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-08-31T19:21:32Z",
+      "side": 1,
+      "message": "Based on creis+dcheng\u0027s comments leaving this as is.\n\nPossibly one route for this in the future would be to add another kind of ID for DocumentContent or something, but that\u0027s a separate issue.",
+      "parentUuid": "c67e3370_9fa7762e",
+      "revId": "440a2c6d2555d9829144de48489710c0c247a23c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
