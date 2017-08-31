@@ -480,7 +480,7 @@ void VaapiVideoDecodeAccelerator::QueueInputBuffer(
   if (bitstream_buffer.size() == 0) {
     // Dummy buffer for flush.
     DCHECK(!base::SharedMemory::IsHandleValid(bitstream_buffer.handle()));
-    input_buffers_.push(make_linked_ptr(new InputBuffer()));
+    input_buffers_.push(new InputBuffer());
   } else {
     std::unique_ptr<SharedMemoryRegion> shm(
         new SharedMemoryRegion(bitstream_buffer, true));
@@ -488,7 +488,7 @@ void VaapiVideoDecodeAccelerator::QueueInputBuffer(
     RETURN_AND_NOTIFY_ON_FAILURE(shm->Map(), "Failed to map input buffer",
                                  UNREADABLE_INPUT, );
 
-    linked_ptr<InputBuffer> input_buffer(new InputBuffer());
+    std::unique_ptr<InputBuffer> input_buffer(new InputBuffer());
     input_buffer->shm = std::move(shm);
     input_buffer->id = bitstream_buffer.id();
     input_buffers_.push(input_buffer);
@@ -822,7 +822,7 @@ void VaapiVideoDecodeAccelerator::AssignPictureBuffers(
                               ? buffers[i].service_texture_ids()[0]
                               : 0;
 
-    linked_ptr<VaapiPicture> picture(VaapiPicture::CreatePicture(
+    std::unique_ptr<VaapiPicture> picture(VaapiPicture::CreatePicture(
         vaapi_wrapper_, make_context_current_cb_, bind_image_cb_,
         buffers[i].id(), requested_pic_size_, service_id, client_id));
     RETURN_AND_NOTIFY_ON_FAILURE(

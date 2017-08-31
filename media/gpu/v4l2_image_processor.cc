@@ -278,7 +278,7 @@ void V4L2ImageProcessor::ProcessTask(std::unique_ptr<JobRecord> job_record) {
       std::move(job_record->output_dmabuf_fds);
 
   EnqueueOutput(index);
-  input_queue_.push(make_linked_ptr(job_record.release()));
+  input_queue_.push(std::move(job_record.release()));
   EnqueueInput();
 }
 
@@ -643,7 +643,7 @@ bool V4L2ImageProcessor::EnqueueInputRecord() {
   DCHECK(!free_input_buffers_.empty());
 
   // Enqueue an input (VIDEO_OUTPUT) buffer for an input video frame.
-  linked_ptr<JobRecord> job_record = input_queue_.front();
+  std::unique_ptr<JobRecord> job_record(std::move(input_queue_.front()));
   input_queue_.pop();
   const int index = free_input_buffers_.back();
   InputRecord& input_record = input_buffer_map_[index];
