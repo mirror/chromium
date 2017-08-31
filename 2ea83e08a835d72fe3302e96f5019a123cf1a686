@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c86c79c3_5c2779a7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/PerformanceMonitor.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-31T18:06:18Z",
+      "side": 1,
+      "message": "Should this be done in terms of charts, not metrics straight away?",
+      "revId": "2ea83e08a835d72fe3302e96f5019a123cf1a686",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
