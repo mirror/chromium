@@ -213,6 +213,24 @@
     },
     {
       "key": {
+        "uuid": "21dfd5f5_1c09db0f",
+        "filename": "android_webview/glue/java/src/com/android/webview/chromium/Converters.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1239716
+      },
+      "writtenOn": "2017-08-31T03:10:55Z",
+      "side": 1,
+      "message": "The other complex types only need to be wrapped in a single direction.\n\nValueCallback has a single case where it wraps both ways in AwContentsClient::getVisitedHistory; this affects one codepath:\n\nhttp://cs/clankium/src/android_webview/java/src/org/chromium/android_webview/AwContents.java?l\u003d1476\nhttp://cs/clankium/src/android_webview/glue/java/src/com/android/webview/chromium/WebViewContentsClientAdapter.java?l\u003d224\nhttp://cs/clankium/src/third_party/android_tools/sdk/sources/android-25/android/webkit/WebChromeClient.java?l\u003d402",
+      "parentUuid": "a57e1941_7a743162",
+      "revId": "16b3862bdafb068a92293faae18c1d60bee97434",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19615c5d_b3501e85",
         "filename": "android_webview/glue/java/src/com/android/webview/chromium/Converters.java",
         "patchSetId": 1
