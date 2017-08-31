@@ -16,6 +16,24 @@
       "revId": "af0c4af89cbee1094466e52ca8efcc5625bf9b6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f22c9e10_097a3b05",
+        "filename": "chrome/browser/android/ntp/content_suggestions_notifier_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-31T08:46:24Z",
+      "side": 1,
+      "message": "\u003e I understand there is no longer a user-toggle in O to disable this, but are there any other code paths that end up here? eg a feature kill switch? If there are then you might want to keep the unregistration to clean up the channel from settings. (I will be doing something similar for site notification channels because we\u0027re keeping the feature flag in but enabled as default for one release as a kill switch).\n\nIf the feature is disabled, then we won\u0027t end up here—this service is never instantiated to begin with.\n\nBut maybe it would be nice to have the factory unregister it. Hmm.\n\nWell, for now, this CL no longer deletes the unregisterChannel() method, but if I add code to the factory, that\u0027ll be a separate CL.",
+      "parentUuid": "4a873dcc_d4861dae",
+      "revId": "af0c4af89cbee1094466e52ca8efcc5625bf9b6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
