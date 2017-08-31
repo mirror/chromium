@@ -2262,7 +2262,7 @@
           "hard_timeout": 10800,
           "ignore_task_failure": false,
           "io_timeout": 600,
-          "upload_test_results": false
+          "upload_test_results": true
         }
       },
       {
@@ -3378,7 +3378,7 @@
           "hard_timeout": 10800,
           "ignore_task_failure": false,
           "io_timeout": 600,
-          "upload_test_results": false
+          "upload_test_results": true
         }
       },
       {
@@ -3440,7 +3440,7 @@
           "hard_timeout": 10800,
           "ignore_task_failure": false,
           "io_timeout": 600,
-          "upload_test_results": false
+          "upload_test_results": true
         }
       },
       {
@@ -4205,7 +4205,7 @@
           "hard_timeout": 10800,
           "ignore_task_failure": false,
           "io_timeout": 600,
-          "upload_test_results": false
+          "upload_test_results": true
         }
       },
       {
@@ -4329,7 +4329,7 @@
           "hard_timeout": 10800,
           "ignore_task_failure": false,
           "io_timeout": 600,
-          "upload_test_results": false
+          "upload_test_results": true
         }
       },
       {
@@ -6533,7 +6533,7 @@
           "hard_timeout": 10800,
           "ignore_task_failure": false,
           "io_timeout": 600,
-          "upload_test_results": false
+          "upload_test_results": true
         }
       },
       {
@@ -7649,7 +7649,7 @@
           "hard_timeout": 10800,
           "ignore_task_failure": false,
           "io_timeout": 600,
-          "upload_test_results": false
+          "upload_test_results": true
         }
       },
       {
@@ -7711,7 +7711,7 @@
           "hard_timeout": 10800,
           "ignore_task_failure": false,
           "io_timeout": 600,
-          "upload_test_results": false
+          "upload_test_results": true
         }
       },
       {
@@ -8455,7 +8455,7 @@
           "hard_timeout": 10800,
           "ignore_task_failure": false,
           "io_timeout": 600,
-          "upload_test_results": false
+          "upload_test_results": true
         }
       },
       {
@@ -8579,7 +8579,7 @@
           "hard_timeout": 10800,
           "ignore_task_failure": false,
           "io_timeout": 600,
-          "upload_test_results": false
+          "upload_test_results": true
         }
       },
       {
