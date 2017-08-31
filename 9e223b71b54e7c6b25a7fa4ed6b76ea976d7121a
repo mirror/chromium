@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89153d0b_6718f32e",
+        "filename": "content/public/browser/web_contents_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-31T00:41:44Z",
+      "side": 1,
+      "message": "Can you reword this as a warning to the users of this interface that this is deprecated and users should switch away from it? (Emailing embedder-dev is optional but recommended.)",
+      "range": {
+        "startLine": 482,
+        "startChar": 5,
+        "endLine": 484,
+        "endChar": 41
+      },
+      "revId": "9e223b71b54e7c6b25a7fa4ed6b76ea976d7121a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
