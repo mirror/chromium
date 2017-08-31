@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ded31c63_6a6830d1",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-31T17:15:17Z",
+      "side": 1,
+      "message": "?",
+      "range": {
+        "startLine": 4,
+        "startChar": 3,
+        "endLine": 4,
+        "endChar": 10
+      },
+      "revId": "a6f2d33f0b9b1d34df4f55f4fa70d0a050409b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
