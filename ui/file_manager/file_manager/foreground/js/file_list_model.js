@@ -107,18 +107,27 @@ FileListModel.prototype.prepareSort = function(field, callback) {
  *
  * @param {number} index The index of the item to update.
  * @param {number} deleteCount The number of items to remove.
+ * @param {string} an optional cause of the splice.
  * @param {...*} var_args The items to add.
  * @return {!Array} An array with the removed items.
  * @override
  */
-FileListModel.prototype.splice = function(index, deleteCount, var_args) {
+FileListModel.prototype.splice = function(
+    index, deleteCount, cause = '', var_args) {
   var insertPos = Math.max(0, Math.min(index, this.indexes_.length));
   deleteCount = Math.min(deleteCount, this.indexes_.length - insertPos);
+  // Store the number of arguments that are not items to add.
+  var fix_arguments = 2;
+  if (fix_arguments < arguments.length) {
+    if (typeof arguments[fix_arguments] === 'string') {
+      fix_arguments++;
+    }
+  }
 
   for (var i = insertPos; i < insertPos + deleteCount; i++) {
     this.onRemoveEntryFromList_(this.array_[this.indexes_[i]]);
   }
-  for (var i = 2; i < arguments.length; i++) {
+  for (var i = fix_arguments; i < arguments.length; i++) {
     this.onAddEntryToList_(arguments[i]);
   }
 
@@ -137,8 +146,8 @@ FileListModel.prototype.splice = function(index, deleteCount, var_args) {
   // Store the given new items in |newItems| and sort it before marge them to
   // the existing list.
   var newItems = [];
-  for (var i = 0; i < arguments.length - 2; i++)
-    newItems.push(arguments[i + 2]);
+  for (var i = 0; i < arguments.length - fix_arguments; i++)
+    newItems.push(arguments[i + fix_arguments]);
   if (comp)
     newItems.sort(comp);
 
@@ -216,7 +225,7 @@ FileListModel.prototype.splice = function(index, deleteCount, var_args) {
   }
 
   // Dispatch permute/splice event.
-  this.dispatchPermutedEvent_(permutation);
+  this.dispatchPermutedEvent_(permutation, cause);
   // TODO(arv): Maybe unify splice and change events?
   var spliceEvent = new Event('splice');
   spliceEvent.removed = deletedItems;
