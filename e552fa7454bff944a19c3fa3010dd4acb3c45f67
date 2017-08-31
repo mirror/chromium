@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f4e86089_534ff0af",
+        "filename": "tools/battor_agent/battor_agent_bin.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-08-31T20:29:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "082ca90e_f45a8af4",
+      "range": {
+        "startLine": 128,
+        "startChar": 61,
+        "endLine": 129,
+        "endChar": 62
+      },
+      "revId": "e552fa7454bff944a19c3fa3010dd4acb3c45f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "502663fa_f4a08339",
         "filename": "tools/battor_agent/battor_agent_bin.cc",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2017-08-31T20:17:36Z",
       "side": 1,
       "message": "Can you make \"interactive\" a constant at the top of the file, a la https://cs.chromium.org/chromium/src/tools/battor_agent/battor_finder.cc?type\u003dcs\u0026q\u003dbase::commandline+f:battor_agent\u0026sq\u003dpackage:chromium\u0026l\u003d22",
+      "revId": "e552fa7454bff944a19c3fa3010dd4acb3c45f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7db063b_62512e1d",
+        "filename": "tools/battor_agent/battor_agent_bin.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-08-31T20:29:28Z",
+      "side": 1,
+      "message": "Also a good comment. I think I meant to do that but then forgot.",
+      "parentUuid": "502663fa_f4a08339",
       "revId": "e552fa7454bff944a19c3fa3010dd4acb3c45f67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
