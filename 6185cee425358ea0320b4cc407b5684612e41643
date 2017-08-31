@@ -22,6 +22,30 @@
       "revId": "6185cee425358ea0320b4cc407b5684612e41643",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a36103c_eb16a007",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-08-31T16:26:39Z",
+      "side": 0,
+      "message": "Done (i.e. I\u0027ve reverted the changes in content/browser/web_contents/web_contents_impl.cc)",
+      "parentUuid": "57f1f30c_e20e8fc7",
+      "range": {
+        "startLine": 782,
+        "startChar": 7,
+        "endLine": 784,
+        "endChar": 43
+      },
+      "revId": "6185cee425358ea0320b4cc407b5684612e41643",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
