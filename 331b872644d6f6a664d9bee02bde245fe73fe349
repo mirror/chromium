@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75f5ed90_00c013c3",
+        "filename": "chrome/browser/ui/browser_command_controller_interactive_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-31T23:21:47Z",
+      "side": 1,
+      "message": "This seems really bad. I\u0027m sure there are other ways that tests check that the page has loaded, please find someone knowledgable of that test methodology, and find an alternate solution (or confirmation that this workaround really is what you need).",
+      "revId": "331b872644d6f6a664d9bee02bde245fe73fe349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
