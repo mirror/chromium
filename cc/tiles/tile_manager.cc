@@ -472,6 +472,8 @@ void TileManager::DidFinishRunningAllTileTasks() {
   DCHECK(resource_pool_);
   DCHECK(tile_task_manager_);
 
+  raster_buffer_provider_->Flush();
+
   has_scheduled_tile_tasks_ = false;
 
   if (all_tiles_that_need_to_be_rasterized_are_scheduled_ &&
@@ -1401,8 +1403,6 @@ void TileManager::CheckIfMoreTilesNeedToBePrepared() {
   resource_pool_->ReduceResourceUsage();
   image_controller_.ReduceMemoryUsage();
 
-  raster_buffer_provider_->Flush();
-
   // TODO(vmpstr): Temporary check to debug crbug.com/642927.
   CHECK(tile_task_manager_);
 
@@ -1512,6 +1512,9 @@ void TileManager::CheckPendingGpuWorkTiles(bool issue_signals) {
                "tree_priority",
                TreePriorityToString(global_state_.tree_priority));
 
+  pending_required_for_activation_callback_id_ = 0;
+  pending_required_for_draw_callback_id_ = 0;
+
   ResourceProvider::ResourceIdArray required_for_activation_ids;
   ResourceProvider::ResourceIdArray required_for_draw_ids;
 
@@ -1542,9 +1545,7 @@ void TileManager::CheckPendingGpuWorkTiles(bool issue_signals) {
     ++it;
   }
 
-  if (required_for_activation_ids.empty()) {
-    pending_required_for_activation_callback_id_ = 0;
-  } else {
+  if (!required_for_activation_ids.empty()) {
     pending_required_for_activation_callback_id_ =
         raster_buffer_provider_->SetReadyToDrawCallback(
             required_for_activation_ids,
@@ -1554,7 +1555,6 @@ void TileManager::CheckPendingGpuWorkTiles(bool issue_signals) {
             pending_required_for_activation_callback_id_);
   }
 
-  pending_required_for_draw_callback_id_ = 0;
   if (!required_for_draw_ids.empty()) {
     pending_required_for_draw_callback_id_ =
         raster_buffer_provider_->SetReadyToDrawCallback(
