@@ -758,6 +758,7 @@ bool RenderWidgetHostImpl::GetResizeParams(ResizeParams* resize_params) {
     viz::LocalSurfaceId local_surface_id = view_->GetLocalSurfaceId();
     if (local_surface_id.is_valid())
       resize_params->local_surface_id = local_surface_id;
+    fprintf(stderr, "Resize %s\n", local_surface_id.ToString().c_str());
   }
 
   const bool size_changed =

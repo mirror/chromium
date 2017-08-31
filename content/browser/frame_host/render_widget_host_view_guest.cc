@@ -295,6 +295,7 @@ void RenderWidgetHostViewGuest::SendSurfaceInfoToEmbedderImpl(
 void RenderWidgetHostViewGuest::SubmitCompositorFrame(
     const viz::LocalSurfaceId& local_surface_id,
     cc::CompositorFrame frame) {
+  fprintf(stderr, ">>>Guest CompositorFrame\n");
   TRACE_EVENT0("content", "RenderWidgetHostViewGuest::OnSwapCompositorFrame");
 
   last_scroll_offset_ = frame.metadata.root_scroll_offset;
@@ -449,6 +450,12 @@ bool RenderWidgetHostViewGuest::LockMouse() {
 
 void RenderWidgetHostViewGuest::UnlockMouse() {
   return platform_view_->UnlockMouse();
+}
+
+viz::LocalSurfaceId RenderWidgetHostViewGuest::GetLocalSurfaceId() const {
+  if (guest_)
+    return guest_->local_surface_id();
+  return viz::LocalSurfaceId();
 }
 
 void RenderWidgetHostViewGuest::DidCreateNewRendererCompositorFrameSink(
