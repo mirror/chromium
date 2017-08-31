@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76a64d28_4db03b60",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_metrics.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-31T01:28:18Z",
+      "side": 1,
+      "message": "This is an odd choice for the bucket count.  What\u0027s the reasoning here?  It seems like perhaps you\u0027re assuming linearly spaced buckets; but actually, histogram buckets are exponentially spaced by default.  I\u0027d recommend using the typical value of \"50\" unless you have a strong reason not to -- this typically provides a good resolution for the low values, and still sufficient resolution for the larger values as well.",
+      "range": {
+        "startLine": 62,
+        "startChar": 48,
+        "endLine": 62,
+        "endChar": 58
+      },
+      "revId": "ade414a1e54fa42eb6bbfed32c781489dc82f4f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01c35b94_9b680911",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 5950,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-31T01:28:18Z",
+      "side": 1,
+      "message": "nit: These labels are quite long.  I\u0027d suggest something like \"Valid token\" and \"Invalid token\", or even just \"Valid\" and \"Invalid\", for the sake of easier-to-read dashboards.  Up to you, though, to select your preferred balance of clarity vs. brevity.  (Ditto for the labels above.)",
+      "range": {
+        "startLine": 5950,
+        "startChar": 55,
+        "endLine": 5950,
+        "endChar": 0
+      },
+      "revId": "ade414a1e54fa42eb6bbfed32c781489dc82f4f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41b2bd38_e0c49ac9",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 46955,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-31T01:28:18Z",
+      "side": 1,
+      "message": "nit: s/a/an",
+      "range": {
+        "startLine": 46955,
+        "startChar": 27,
+        "endLine": 46955,
+        "endChar": 28
+      },
+      "revId": "ade414a1e54fa42eb6bbfed32c781489dc82f4f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
