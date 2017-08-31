@@ -92,8 +92,9 @@ void MediaEngagementContentsObserver::RecordUkmMetrics() {
   if (!service_->ShouldRecordEngagement(url))
     return;
 
-  ukm::SourceId source_id = ukm_recorder->GetNewSourceID();
-  ukm_recorder->UpdateSourceURL(source_id, url);
+  ukm::SourceId source_id =
+      ConvertToSourceId(web_contents()->GetMainFrame()->GetDocumentId(),
+                        ukm::SourceIdType::DOCUMENT_ID);
 
   MediaEngagementScore score = service_->CreateEngagementScore(url);
   ukm::builders::Media_Engagement_SessionFinished(source_id)
