@@ -16,6 +16,24 @@
       "revId": "60e60169e9f0463815222971726b3ed439f126be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cab07ed5_e6a350be",
+        "filename": "chrome/browser/ui/ash/palette_delegate_chromeos.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-08-31T23:50:23Z",
+      "side": 1,
+      "message": "It seems fragile to assume that external dtor ordering will not change.",
+      "parentUuid": "78f4bd38_ba83f30a",
+      "revId": "60e60169e9f0463815222971726b3ed439f126be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
