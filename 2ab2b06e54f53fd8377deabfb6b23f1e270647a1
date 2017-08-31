@@ -52,6 +52,24 @@
       "revId": "2ab2b06e54f53fd8377deabfb6b23f1e270647a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7c355e4_26a45ddf",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_benchmarks/webvr.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1116794
+      },
+      "writtenOn": "2017-08-31T21:40:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a08c0b7_1cd6a202",
+      "revId": "2ab2b06e54f53fd8377deabfb6b23f1e270647a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
