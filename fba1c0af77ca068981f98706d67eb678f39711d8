@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38aee706_3103764b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/MediaSource.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-31T17:20:57Z",
+      "side": 1,
+      "message": "Should this be an enum {}?  Or are those allowed by the Chrome Android style guide?",
+      "revId": "fba1c0af77ca068981f98706d67eb678f39711d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fd08a02_388c00cb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/MediaSource.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-31T17:20:57Z",
+      "side": 1,
+      "message": "Can the list of AUTOJOIN_POLICIES be declared as a static (check the style guide)?",
+      "revId": "fba1c0af77ca068981f98706d67eb678f39711d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a615010_7dbec683",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/MediaSource.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-31T17:20:57Z",
+      "side": 1,
+      "message": "CAST_APP_CAPABILIITES declared as a static List?",
+      "revId": "fba1c0af77ca068981f98706d67eb678f39711d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31366b65_d7766478",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/MediaSource.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-31T17:20:57Z",
+      "side": 1,
+      "message": "Please add a TODO(crbug.com/XXX) to remove legacy URL support at a future milestone.",
+      "revId": "fba1c0af77ca068981f98706d67eb678f39711d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
