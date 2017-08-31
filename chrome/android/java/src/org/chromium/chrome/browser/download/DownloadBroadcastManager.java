@@ -264,9 +264,6 @@ public class DownloadBroadcastManager extends Service {
      * @return delegate for interactions with the entry
      */
     private static DownloadServiceDelegate getServiceDelegate(ContentId id) {
-        if (LegacyHelpers.isLegacyOfflinePage(id)) {
-            return OfflinePageDownloadBridge.getDownloadServiceDelegate();
-        }
         if (LegacyHelpers.isLegacyDownload(id)) {
             return DownloadManagerService.getDownloadManagerService();
         }
