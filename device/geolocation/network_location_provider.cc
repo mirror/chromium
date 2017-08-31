@@ -123,10 +123,7 @@ NetworkLocationProvider::NetworkLocationProvider(
           base::Bind(&NetworkLocationProvider::OnLocationResponse,
                      base::Unretained(this)))),
       position_cache_(new PositionCache),
-      weak_factory_(this) {
-  DLOG_IF(WARNING, !url.is_valid())
-      << __func__ << " Bad URL: " << url.possibly_invalid_spec();
-}
+      weak_factory_(this) {}
 
 NetworkLocationProvider::~NetworkLocationProvider() {
   DCHECK(thread_checker_.CalledOnValidThread());
@@ -183,10 +180,9 @@ void NetworkLocationProvider::OnLocationResponse(
 
 bool NetworkLocationProvider::StartProvider(bool high_accuracy) {
   DCHECK(thread_checker_.CalledOnValidThread());
+
   if (IsStarted())
     return true;
-  if (!request_->url().is_valid())
-    return false;
 
   // Registers a callback with the data provider. The first call to Register()
   // will create a singleton data provider that will be deleted on Unregister().
