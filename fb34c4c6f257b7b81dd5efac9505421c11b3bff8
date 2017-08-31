@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46eb8aaa_11c4090e",
+        "filename": "ui/views/controls/button/checkbox.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-31T06:37:26Z",
+      "side": 1,
+      "message": "Nit: I still wonder if this shouldn\u0027t just call GetInkDropBaseColor() (or maybe both should call some third helper function), if they\u0027re supposed to stay in sync, rather than duplicating code.",
+      "revId": "fb34c4c6f257b7b81dd5efac9505421c11b3bff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
