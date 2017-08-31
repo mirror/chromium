@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b7db8456_e328fff8",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/application_macros.tmpl",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-08-31T00:14:44Z",
+      "side": 1,
+      "message": "They could be defined in the .h.tmpl for the moment, but later we\u0027ll need them to generate .cpp files.",
+      "parentUuid": "6bef7d92_c3947c3b",
+      "revId": "d2b42cdfbedc46c1750afcae957c45d40ec41f38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "39be570a_6f9adaf0",
         "filename": "third_party/WebKit/Source/build/scripts/templates/StyleBuilderFunctions.cpp.tmpl",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "d2b42cdfbedc46c1750afcae957c45d40ec41f38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ac06745_1136091f",
+        "filename": "third_party/WebKit/Source/build/scripts/templates/StyleBuilderFunctions.cpp.tmpl",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-08-31T00:14:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39be570a_6f9adaf0",
+      "revId": "d2b42cdfbedc46c1750afcae957c45d40ec41f38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9b5678f9_e268c70c",
+        "filename": "third_party/WebKit/Source/build/scripts/templates/StyleBuilderFunctions.cpp.tmpl",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-08-31T00:14:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3831f35_ef2b0ed0",
+      "revId": "d2b42cdfbedc46c1750afcae957c45d40ec41f38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4b98cb1_a6bf60f2",
         "filename": "third_party/WebKit/Source/build/scripts/templates/StyleBuilderFunctions.cpp.tmpl",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "d2b42cdfbedc46c1750afcae957c45d40ec41f38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2dd21ea_613f6e82",
+        "filename": "third_party/WebKit/Source/build/scripts/templates/StyleBuilderFunctions.cpp.tmpl",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-08-31T00:14:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4b98cb1_a6bf60f2",
+      "revId": "d2b42cdfbedc46c1750afcae957c45d40ec41f38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
