@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24102181_731b256e",
+        "filename": "net/http/http_stream_factory.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-31T20:11:58Z",
+      "side": 1,
+      "message": "WebSockets can\u0027t use HTTP/2 at all, can they?",
+      "revId": "e73110aa6c964b2ebcc8f960021598728b667dfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb09c231_475181e0",
+        "filename": "net/http/http_stream_factory.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-31T20:11:58Z",
+      "side": 1,
+      "message": "Likewise, are bidi streams possible in HTTP/1.1?",
+      "revId": "e73110aa6c964b2ebcc8f960021598728b667dfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1293db04_8dd5a79f",
+        "filename": "net/socket/client_socket_pool_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-31T20:11:58Z",
+      "side": 1,
+      "message": "This string will make net-internals confusing because it\u0027s still a TLS socket.\n\n(mmenke may be a better judge of how best to do this. I actually don\u0027t know what this \"group\" enum does. I feel like normally we just add more and more parameters to this monster function, but maybe this is preferable?)",
+      "revId": "e73110aa6c964b2ebcc8f960021598728b667dfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
