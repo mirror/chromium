@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10d2619f_ed759946",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/make_css_property_metadata.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-31T05:30:19Z",
+      "side": 0,
+      "message": "nice",
+      "revId": "0b71497e605218c9945829c54a74e30ad45ddde2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ed85be0_f1a795e6",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/templates/CSSPropertyMetadata.cpp.tmpl",
+        "patchSetId": 12
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-31T05:30:19Z",
+      "side": 0,
+      "message": "yay you deleted a switch!",
+      "revId": "0b71497e605218c9945829c54a74e30ad45ddde2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

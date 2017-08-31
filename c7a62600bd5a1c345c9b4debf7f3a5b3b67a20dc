@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf1bd5eb_a622208e",
+        "filename": "third_party/WebKit/Source/core/css/StylePropertySerializer.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-31T05:30:19Z",
+      "side": 1,
+      "message": "as above",
+      "revId": "c7a62600bd5a1c345c9b4debf7f3a5b3b67a20dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44911500_1e9cfddb",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParser.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-31T05:30:19Z",
+      "side": 1,
+      "message": "include CSSPropertyAPI in this file",
+      "revId": "c7a62600bd5a1c345c9b4debf7f3a5b3b67a20dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
