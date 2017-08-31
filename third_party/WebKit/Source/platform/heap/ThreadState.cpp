@@ -1484,6 +1484,12 @@ void ThreadState::CollectGarbage(BlinkGC::StackState stack_state,
     // from accessing any GCed heap while a GC runs.
     CrossThreadPersistentRegion::LockScope persistent_lock(
         ProcessHeap::GetCrossThreadPersistentRegion());
+    ScriptForbiddenIfMainThreadScope script_forbidden;
+    // Disallow allocation during garbage collection (but not during the
+    // finalization that happens when the visitorScope is torn down).
+    NoAllocationScope no_allocation_scope(this);
+    StackFrameDepthScope stack_depth_scope(&Heap().GetStackFrameDepth());
+
     std::unique_ptr<Visitor> visitor;
     if (gc_type == BlinkGC::kTakeSnapshot) {
       visitor = Visitor::Create(this, Visitor::kSnapshotMarking);
@@ -1499,8 +1505,6 @@ void ThreadState::CollectGarbage(BlinkGC::StackState stack_state,
       }
     }
 
-    ScriptForbiddenIfMainThreadScope script_forbidden;
-
     TRACE_EVENT2("blink_gc,devtools.timeline", "BlinkGCMarking", "lazySweeping",
                  gc_type == BlinkGC::kGCWithoutSweep, "gcReason",
                  GcReasonString(reason));
@@ -1509,14 +1513,8 @@ void ThreadState::CollectGarbage(BlinkGC::StackState stack_state,
     if (gc_type == BlinkGC::kTakeSnapshot)
       BlinkGCMemoryDumpProvider::Instance()->ClearProcessDumpForCurrentGC();
 
-    // Disallow allocation during garbage collection (but not during the
-    // finalization that happens when the visitorScope is torn down).
-    NoAllocationScope no_allocation_scope(this);
-
     Heap().CommitCallbackStacks();
     PreGC();
-
-    StackFrameDepthScope stack_depth_scope(&Heap().GetStackFrameDepth());
 
     size_t total_object_size = Heap().HeapStats().AllocatedObjectSize() +
                                Heap().HeapStats().MarkedObjectSize();
@@ -1581,10 +1579,10 @@ void ThreadState::CollectGarbage(BlinkGC::StackState stack_state,
     ThreadHeap::ReportMemoryUsageHistogram();
     WTF::Partitions::ReportMemoryUsageHistogram();
     PostGC(gc_type);
+    Heap().DecommitCallbackStacks();
   }
 
   PreSweep(gc_type);
-  Heap().DecommitCallbackStacks();
 }
 
 void ThreadState::CollectAllGarbage() {
