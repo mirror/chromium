@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0c62c09_c445cc1d",
+        "filename": "build/win/message_compiler.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-31T21:20:22Z",
+      "side": 1,
+      "message": "We just ignored -r before I guess? You want to check that -r \u003d\u003d -h though?",
+      "range": {
+        "startLine": 62,
+        "startChar": 7,
+        "endLine": 62,
+        "endChar": 19
+      },
+      "revId": "5ddde33fe8996bd1f4ddea58a6c80b8867ab1274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
