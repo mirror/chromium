@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4cefe1e0_f3bb938f",
+        "filename": "content/browser/frame_host/navigation_entry_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-08-31T05:36:56Z",
+      "side": 1,
+      "message": "That makes sense. I initially added it here since started_from_context_menu_ was recently added here as well. Changed LoadEntry instead.",
+      "parentUuid": "d67a6ebc_b039e23e",
+      "revId": "ab6f9412f9f8c7ac3f2ddfcd0dcfa006e9367546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc5b5749_b9c16f85",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2a1830a5_441d9c13",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 4187,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-08-31T05:36:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc5b5749_b9c16f85",
+      "revId": "ab6f9412f9f8c7ac3f2ddfcd0dcfa006e9367546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd8ac71d_7d3d4c33",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 6
@@ -50,6 +86,24 @@
       "revId": "ab6f9412f9f8c7ac3f2ddfcd0dcfa006e9367546",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "028d0ee8_cad57400",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 6465,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-08-31T05:36:56Z",
+      "side": 1,
+      "message": "I tried click (and its variations e.g. ctrl + click, etc.), window.open and location.href. None result in a policy other than CurrentTab. I also looked at the code but there are many layers and some of them modify the policy, so I\u0027m not 100% sure. Would it make sense to add a histogram for this? In any case, I removed it from BeginParams for now.",
+      "parentUuid": "bd8ac71d_7d3d4c33",
+      "revId": "ab6f9412f9f8c7ac3f2ddfcd0dcfa006e9367546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
