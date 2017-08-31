@@ -16,6 +16,24 @@
       "revId": "0eae8be9832d735a097911e2a1d759933d27c237",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e23be9e_9045ab90",
+        "filename": "base/allocator/partition_allocator/page_allocator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-08-31T01:09:12Z",
+      "side": 1,
+      "message": "For a small subset of allocations, yes, we could do this. However, for the great majority of code gen, it seems to be a longstanding (and likely intractable) problem to do this without a large performance regression (lots of small mmap\u0027s).\n\nYour point is well-taken however; I\u0027ll introduce another permission, PageReadExec, to encourage the more careful pattern. However, that leads to a somewhat larger patch to make this work. I hope you don\u0027t mind - I think it will make this better to include it here.",
+      "parentUuid": "b26740a4_3f52de93",
+      "revId": "0eae8be9832d735a097911e2a1d759933d27c237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
