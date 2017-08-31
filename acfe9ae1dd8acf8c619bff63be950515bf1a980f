@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fd391d0_91effc7f",
+        "filename": "cc/trees/layer_tree_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-31T23:14:36Z",
+      "side": 0,
+      "message": "Is this function now unused? If so, remove it please.",
+      "revId": "acfe9ae1dd8acf8c619bff63be950515bf1a980f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

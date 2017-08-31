@@ -1,0 +1,606 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10c415d3_e9117b7c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-31T23:14:36Z",
+      "side": 1,
+      "message": "There is code that limits this to 1000 images, but that might be too large of a number.",
+      "range": {
+        "startLine": 12,
+        "startChar": 57,
+        "endLine": 13,
+        "endChar": 18
+      },
+      "revId": "ca870be415b96930d0b8ce1e9f2d921287570d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5885e9c_ebede05f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-31T23:14:36Z",
+      "side": 1,
+      "message": "Link a bug, or remove this line please.",
+      "revId": "ca870be415b96930d0b8ce1e9f2d921287570d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "956a2a86_4d7d3633",
+        "filename": "cc/paint/paint_image.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-31T23:14:36Z",
+      "side": 1,
+      "message": "Please document these two calls.",
+      "revId": "ca870be415b96930d0b8ce1e9f2d921287570d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3c497db_f9424423",
+        "filename": "cc/paint/paint_image.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-31T23:14:36Z",
+      "side": 1,
+      "message": "Should this be renamed to id(), since you don\u0027t seem to be using the word \"stable\" in new places that reference this.",
+      "range": {
+        "startLine": 123,
+        "startChar": 5,
+        "endLine": 123,
+        "endChar": 14
+      },
+      "revId": "ca870be415b96930d0b8ce1e9f2d921287570d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7913a9c_3a1ded0f",
+        "filename": "cc/paint/paint_image_destruction_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-31T23:14:36Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "ca870be415b96930d0b8ce1e9f2d921287570d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08a18a32_9360537f",
+        "filename": "cc/paint/paint_image_destruction_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-31T23:14:36Z",
+      "side": 1,
+      "message": "Is there anyway to do this without introducing a singleton? This means that if compositors are sharing a process, they will all be using the same destruction tracker, which seems awkward.",
+      "range": {
+        "startLine": 10,
+        "startChar": 30,
+        "endLine": 10,
+        "endChar": 71
+      },
+      "revId": "ca870be415b96930d0b8ce1e9f2d921287570d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58521ed7_8a2886d2",
+        "filename": "cc/paint/paint_image_destruction_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-31T23:14:36Z",
+      "side": 1,
+      "message": "On what thread is this going to run?",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 20
+      },
+      "revId": "ca870be415b96930d0b8ce1e9f2d921287570d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94f8ebf4_586e1cc5",
+        "filename": "cc/paint/paint_image_destruction_tracker.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-31T23:14:36Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "ca870be415b96930d0b8ce1e9f2d921287570d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40b41112_ce3d560e",
+        "filename": "cc/paint/paint_image_destruction_tracker.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-31T23:14:36Z",
+      "side": 1,
+      "message": "Can this be a forward declare, or does it need to be included?",
+      "range": {
+        "startLine": 9,
+        "startChar": 11,
+        "endLine": 9,
+        "endChar": 41
+      },
+      "revId": "ca870be415b96930d0b8ce1e9f2d921287570d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0149a84_b8930710",
+        "filename": "cc/paint/paint_image_destruction_tracker.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-31T23:14:36Z",
+      "side": 1,
+      "message": "Add a class comment describing what this is with sample usage please.\n\nAlso, nit: this class seems to be somewhat poorly named, since it\u0027s not actually tracking anything except a list of observers.",
+      "revId": "ca870be415b96930d0b8ce1e9f2d921287570d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0952ddd1_478bd0bd",
+        "filename": "cc/paint/paint_image_destruction_tracker.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-31T23:14:36Z",
+      "side": 1,
+      "message": "Same.",
+      "revId": "ca870be415b96930d0b8ce1e9f2d921287570d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05447122_e9e9b3af",
+        "filename": "cc/paint/paint_image_destruction_tracker.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-31T23:14:36Z",
+      "side": 1,
+      "message": "nit: observer",
+      "range": {
+        "startLine": 27,
+        "startChar": 29,
+        "endLine": 27,
+        "endChar": 32
+      },
+      "revId": "ca870be415b96930d0b8ce1e9f2d921287570d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b10f146d_3947e154",
+        "filename": "cc/paint/paint_image_destruction_tracker.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-31T23:14:36Z",
+      "side": 1,
+      "message": "Same.",
+      "range": {
+        "startLine": 28,
+        "startChar": 32,
+        "endLine": 28,
+        "endChar": 35
+      },
+      "revId": "ca870be415b96930d0b8ce1e9f2d921287570d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4d2579c_0223b6f0",
+        "filename": "cc/paint/paint_image_destruction_tracker.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-31T23:14:36Z",
+      "side": 1,
+      "message": "Comment",
+      "revId": "ca870be415b96930d0b8ce1e9f2d921287570d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a58794f2_0514edb8",
+        "filename": "cc/paint/paint_image_destruction_tracker.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-31T23:14:36Z",
+      "side": 1,
+      "message": "Comment why this is the thread safe version, please.",
+      "revId": "ca870be415b96930d0b8ce1e9f2d921287570d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac71221a_2037ecc9",
+        "filename": "cc/paint/paint_image_generator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-31T23:14:36Z",
+      "side": 1,
+      "message": "Sorry I missed this in previous reviews, but this also seems a bit awkward. PaintImageGenerator seems to be already tightly coupled with PaintImage, but the change you have here is adding to the coupling. Should the content id be coming exclusively from the generator itself (ie PaintImageGenerator::GetNextContentId()?). It\u0027s unclear why PaintImage is generating content ids when it\u0027s not actually dictating the content but simply storing it.",
+      "range": {
+        "startLine": 17,
+        "startChar": 6,
+        "endLine": 17,
+        "endChar": 59
+      },
+      "revId": "ca870be415b96930d0b8ce1e9f2d921287570d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fac9a5c0_e9c4e477",
+        "filename": "cc/paint/paint_image_generator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-31T23:14:36Z",
+      "side": 1,
+      "message": "PaintImage is generally created after PaintImageGenerator is, since PaintImage owns PaintImageGenerator. Where is this id coming from?",
+      "range": {
+        "startLine": 71,
+        "startChar": 22,
+        "endLine": 71,
+        "endChar": 51
+      },
+      "revId": "ca870be415b96930d0b8ce1e9f2d921287570d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b6f3160_c6b448ac",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-31T23:14:36Z",
+      "side": 1,
+      "message": "Write this as a for loop, please.",
+      "range": {
+        "startLine": 680,
+        "startChar": 0,
+        "endLine": 681,
+        "endChar": 32
+      },
+      "revId": "ca870be415b96930d0b8ce1e9f2d921287570d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56a0c18f_e2e92308",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-31T23:14:36Z",
+      "side": 1,
+      "message": "nit: ++key_it;",
+      "range": {
+        "startLine": 684,
+        "startChar": 6,
+        "endLine": 684,
+        "endChar": 15
+      },
+      "revId": "ca870be415b96930d0b8ce1e9f2d921287570d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "539f4edd_534d556c",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-31T23:14:36Z",
+      "side": 1,
+      "message": "I was under the impression that the upload is independent of the the generator. Why can\u0027t the upload exist and be reffed and used by Skia when this is called? Can you comment to explain please?",
+      "range": {
+        "startLine": 688,
+        "startChar": 8,
+        "endLine": 688,
+        "endChar": 57
+      },
+      "revId": "ca870be415b96930d0b8ce1e9f2d921287570d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e493134f_1e64c587",
+        "filename": "cc/tiles/gpu_image_decode_cache_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1742,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-31T23:14:36Z",
+      "side": 1,
+      "message": "Remove the test if it\u0027s no longer valid.",
+      "range": {
+        "startLine": 1742,
+        "startChar": 0,
+        "endLine": 1742,
+        "endChar": 2
+      },
+      "revId": "ca870be415b96930d0b8ce1e9f2d921287570d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efb58d0a_b608864d",
+        "filename": "cc/tiles/image_decode_cache.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-31T23:14:36Z",
+      "side": 1,
+      "message": "This tightly couples any ImageDecodeCache implementation to PaintImageDestructionTracker. Have you considered alternate approaches, like PaintImageDestructionTracker having an updated non-owning pointer to the current decode cache? I\u0027m just curious why you decided on this design.",
+      "range": {
+        "startLine": 12,
+        "startChar": 2,
+        "endLine": 12,
+        "endChar": 64
+      },
+      "revId": "ca870be415b96930d0b8ce1e9f2d921287570d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b70cee5_8da8139a",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-31T23:14:36Z",
+      "side": 1,
+      "message": "Use a for loop please.",
+      "range": {
+        "startLine": 878,
+        "startChar": 0,
+        "endLine": 879,
+        "endChar": 32
+      },
+      "revId": "ca870be415b96930d0b8ce1e9f2d921287570d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5ffe702_e5b1ed75",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 882,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-31T23:14:36Z",
+      "side": 1,
+      "message": "nit: ++key_it;",
+      "range": {
+        "startLine": 882,
+        "startChar": 6,
+        "endLine": 882,
+        "endChar": 15
+      },
+      "revId": "ca870be415b96930d0b8ce1e9f2d921287570d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd82e184_0b82f09c",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1113,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-31T23:14:36Z",
+      "side": 1,
+      "message": "Don\u0027t do this please. DecodedImage is agnostic to the decode cache being used and it should stay that way.",
+      "range": {
+        "startLine": 1113,
+        "startChar": 2,
+        "endLine": 1113,
+        "endChar": 38
+      },
+      "revId": "ca870be415b96930d0b8ce1e9f2d921287570d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "995dc788_9477a17e",
+        "filename": "cc/tiles/software_image_decode_cache_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1674,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-31T23:14:36Z",
+      "side": 1,
+      "message": "Remove the test if it\u0027s no longer relevant.",
+      "revId": "ca870be415b96930d0b8ce1e9f2d921287570d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a282a59_0e74bc6a",
+        "filename": "third_party/WebKit/Source/platform/graphics/DecodingImageGenerator.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-31T23:14:36Z",
+      "side": 1,
+      "message": "We\u0027re not creating a paint image here, so it\u0027s unclear to me why we\u0027re getting a paint image id.",
+      "range": {
+        "startLine": 58,
+        "startChar": 38,
+        "endLine": 59,
+        "endChar": 29
+      },
+      "revId": "ca870be415b96930d0b8ce1e9f2d921287570d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbdb8bdd_e298d1e6",
+        "filename": "third_party/WebKit/Source/platform/graphics/Image.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-31T23:14:36Z",
+      "side": 1,
+      "message": "Either the function or the variable name have to change here.",
+      "range": {
+        "startLine": 256,
+        "startChar": 17,
+        "endLine": 256,
+        "endChar": 65
+      },
+      "revId": "ca870be415b96930d0b8ce1e9f2d921287570d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
