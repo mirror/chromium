@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bd217836_61602a53",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-31T18:06:56Z",
+      "side": 1,
+      "message": "Ack.  Thanks!",
+      "parentUuid": "54c69235_8acd308b",
+      "revId": "d24760c856011fb98cd34c9ec8823ca886ec3a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e39feada_dce934a7",
         "filename": "components/url_formatter/elide_url_unittest.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-31T16:49:52Z",
       "side": 1,
       "message": "I would also recommend testing with #ref in this one. Or at least it should be in one test case.",
+      "revId": "d24760c856011fb98cd34c9ec8823ca886ec3a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e5e432d_7b2baea8",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-31T18:06:56Z",
+      "side": 1,
+      "message": "I\u0027m intentionally not adding new cases in this CL - the point was to move current cases to the progressive approach, so that when the new algo lands, it\u0027s easier to see how the tests change.  There will be a lot of new (and different tests).",
+      "parentUuid": "e39feada_dce934a7",
       "revId": "d24760c856011fb98cd34c9ec8823ca886ec3a45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "30e90c9f_6f4f8c4a",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-31T18:06:56Z",
+      "side": 1,
+      "message": "I moved it, but sitting next to RunProgerssiveElisionTest, I don\u0027t think it warrants a comment.  Let me know if you disagree.",
+      "parentUuid": "a5914133_e441f01a",
+      "revId": "9c7d635e77debdbd129ae9aa9a9a2b9e4882e3d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6397098a_23cbee10",
         "filename": "components/url_formatter/elide_url_unittest.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "9c7d635e77debdbd129ae9aa9a9a2b9e4882e3d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db4446f6_1fb2ac48",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-31T18:06:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6397098a_23cbee10",
+      "revId": "9c7d635e77debdbd129ae9aa9a9a2b9e4882e3d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2bb17b7d_69342a15",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-31T18:06:56Z",
+      "side": 1,
+      "message": "That would terminate both loops.  I want to stop chewing on the current URL, as it\u0027s broken, but continue to other URLs in the input.",
+      "parentUuid": "ffe3e7f9_0bf2c6e5",
+      "revId": "9c7d635e77debdbd129ae9aa9a9a2b9e4882e3d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "05c7c5e4_fd79de23",
         "filename": "components/url_formatter/elide_url_unittest.cc",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-31T16:42:23Z",
       "side": 1,
       "message": "nit: also mention the use of a non-\u0027www\u0027 domain? (\u0027www\u0027 seems to be truncated without ellipses  like \u0027http://\u0027, whereas \u0027xyz\u0027 is given ellipses)",
+      "revId": "9c7d635e77debdbd129ae9aa9a9a2b9e4882e3d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2c4832e_2c128e16",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-31T18:06:56Z",
+      "side": 1,
+      "message": "Will do, but these tests will likely change quite a bit with the new algorithm.",
+      "parentUuid": "05c7c5e4_fd79de23",
       "revId": "9c7d635e77debdbd129ae9aa9a9a2b9e4882e3d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "91b7db30_d1921c7e",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-31T18:06:56Z",
+      "side": 1,
+      "message": "As above, the new algorithm will cover this with new tests.",
+      "parentUuid": "ab01802e_f8357c8a",
+      "revId": "9c7d635e77debdbd129ae9aa9a9a2b9e4882e3d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a799f769_8edd95fc",
         "filename": "components/url_formatter/elide_url_unittest.cc",
         "patchSetId": 2
@@ -121,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "c944157f_d12d34f0",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-31T18:06:56Z",
+      "side": 1,
+      "message": "The back-to-back ellipses?  Agreed.  :)",
+      "parentUuid": "a799f769_8edd95fc",
+      "revId": "9c7d635e77debdbd129ae9aa9a9a2b9e4882e3d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3db3f552_0f30c07e",
         "filename": "components/url_formatter/elide_url_unittest.cc",
         "patchSetId": 2
@@ -132,6 +240,24 @@
       "writtenOn": "2017-08-31T16:42:23Z",
       "side": 1,
       "message": "optional nit, separate line for \"\"?",
+      "revId": "9c7d635e77debdbd129ae9aa9a9a2b9e4882e3d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97eb2cf5_a14368c1",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-31T18:06:56Z",
+      "side": 1,
+      "message": "Good catch.",
+      "parentUuid": "3db3f552_0f30c07e",
       "revId": "9c7d635e77debdbd129ae9aa9a9a2b9e4882e3d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -161,6 +287,30 @@
     },
     {
       "key": {
+        "uuid": "14dfe249_b9258e48",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-31T18:06:56Z",
+      "side": 1,
+      "message": "It was probably an explicit test for http scheme stripping (this happens before elision starts), but I see it\u0027s now a duplicate of a case below.",
+      "parentUuid": "c77aefaa_c7334779",
+      "range": {
+        "startLine": 109,
+        "startChar": 11,
+        "endLine": 109,
+        "endChar": 43
+      },
+      "revId": "9c7d635e77debdbd129ae9aa9a9a2b9e4882e3d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f97da66_365c7fc6",
         "filename": "components/url_formatter/elide_url_unittest.cc",
         "patchSetId": 2
@@ -172,6 +322,24 @@
       "writtenOn": "2017-08-31T16:42:23Z",
       "side": 1,
       "message": "Weird that we\u0027d restore the leading directory name after it was ellipsized with a larger width, and instead remove the trailing directory name... but I guess that alleviates the need to do something like |\"google.com/intl\" + kEllipsisStr + \"/ads/\"|. Oh well, I don\u0027t have a serious concern and you haven\u0027t changed any behavior.",
+      "revId": "9c7d635e77debdbd129ae9aa9a9a2b9e4882e3d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10cb8497_0cd98172",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-31T18:06:56Z",
+      "side": 1,
+      "message": "I believe you hit the nail on the head.  The current algorithm can remove whole path segments mid-path (in a very expensive way), but if it finds that even the last segment won\u0027t fit without elision, it gives up on adjusting the path and tail-elides.  Chopping inner segments per-character would take even longer.\n\nIn the new algorithm, maybe we could leave the last path segment when falling back to simpler elision, but that would preserve a semi-nasty hack in the current approach:\n\ngoogle.com/.../ads/\ngoogle.com/.../ad...\ngoogle.com/.../a...\ngoogle.com/.../...   \u003c---  Uhh oh\n\nThe vibe I get from enamel is \"keep it simple\", and for that reason, I like things as-is, personally.",
+      "parentUuid": "2f97da66_365c7fc6",
       "revId": "9c7d635e77debdbd129ae9aa9a9a2b9e4882e3d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -195,6 +363,24 @@
     },
     {
       "key": {
+        "uuid": "6108112b_de15a5ce",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-31T18:06:56Z",
+      "side": 1,
+      "message": "I\u0027ll add comments for what I *think* the original intent was.  :)",
+      "parentUuid": "b396be3c_ad0ac233",
+      "revId": "9c7d635e77debdbd129ae9aa9a9a2b9e4882e3d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "81bda8fd_1985a4ca",
         "filename": "components/url_formatter/elide_url_unittest.cc",
         "patchSetId": 2
@@ -206,6 +392,30 @@
       "writtenOn": "2017-08-31T16:42:23Z",
       "side": 1,
       "message": "Weird that we don\u0027t first strip the \u0027www\u0027 here...",
+      "range": {
+        "startLine": 146,
+        "startChar": 16,
+        "endLine": 146,
+        "endChar": 46
+      },
+      "revId": "9c7d635e77debdbd129ae9aa9a9a2b9e4882e3d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f064c117_34e98154",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-31T18:06:56Z",
+      "side": 1,
+      "message": "I think the current behavior is broken (see comment on previous patch set).",
+      "parentUuid": "81bda8fd_1985a4ca",
       "range": {
         "startLine": 146,
         "startChar": 16,
