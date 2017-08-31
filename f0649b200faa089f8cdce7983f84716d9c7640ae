@@ -273,6 +273,30 @@
     },
     {
       "key": {
+        "uuid": "da95f1fb_ed836aec",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_features.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-31T12:00:48Z",
+      "side": 1,
+      "message": "In this specific case, kTabStrip and kBottomToolbar are not suitable names for going into the global namespace.  (They are too generic.)\n\nThe style guide seems to offer two options for handling this:\n1) Rename them to be less generic.\n\n2) Put them into a namespace, as a better alternative to putting them inside a class.\n\n#1 seems like the better option here, because it\u0027s only a couple of constants.\n\nBut both the style guide and the email chain seem to explicitly allow for option #2, as a way to group related util functions.  If there\u0027s disagreement here, we should resolve it in a different forum than this codereview.",
+      "parentUuid": "a3940a15_c08be2fa",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 20
+      },
+      "revId": "f0649b200faa089f8cdce7983f84716d9c7640ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b8b2e081_de1ca1e8",
         "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_view_controller.h",
         "patchSetId": 27
