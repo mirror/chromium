@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "078e507b_ba9ad362",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/background-fetch/mixed-content-and-allowed-schemes.https.window-expected.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-31T16:13:08Z",
+      "side": 1,
+      "message": "Why do we end up needing CORS preflight requests for these two entries?",
+      "revId": "103c8eaebcb6924110f0b167a580842d373f2664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2003f491_f7553f04",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/background_fetch/block-cors-preflights.https.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-31T16:13:08Z",
+      "side": 1,
+      "message": "nit: please add that this is the reason it explicitly isn\u0027t part of WPT",
+      "revId": "103c8eaebcb6924110f0b167a580842d373f2664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c53855ef_b70ea2a5",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/background_fetch/block-cors-preflights.https.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-31T16:13:08Z",
+      "side": 1,
+      "message": "should we check that this is OK when requesting from localhost?",
+      "revId": "103c8eaebcb6924110f0b167a580842d373f2664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d23130d8_1d402205",
+        "filename": "third_party/WebKit/Source/modules/background_fetch/BackgroundFetchManager.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-31T16:13:08Z",
+      "side": 1,
+      "message": "Reject*",
+      "revId": "103c8eaebcb6924110f0b167a580842d373f2664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
