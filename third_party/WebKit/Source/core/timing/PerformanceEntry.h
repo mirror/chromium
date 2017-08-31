@@ -94,6 +94,13 @@ class CORE_EXPORT PerformanceEntry
 
   static PerformanceEntry::EntryType ToEntryTypeEnum(const String& entry_type);
 
+  static const Vector<PerformanceEntryType>& AllValidEntryTypes() {
+    CR_DEFINE_STATIC_LOCAL(Vector<PerformanceEntryType>, entry_types,
+                           ({kNavigation, kComposite, kMark, kMeasure, kRender,
+                             kResource, kLongTask, kTaskAttribution, kPaint}));
+    return entry_types;
+  }
+
   DEFINE_INLINE_VIRTUAL_TRACE() {}
 
  protected:
