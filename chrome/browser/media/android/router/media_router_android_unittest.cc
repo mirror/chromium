@@ -24,7 +24,7 @@ namespace media_router {
 class MockMediaRouterAndroidBridge : public MediaRouterAndroidBridge {
  public:
   MockMediaRouterAndroidBridge() : MediaRouterAndroidBridge(nullptr) {}
-  ~MockMediaRouterAndroidBridge() = default;
+  ~MockMediaRouterAndroidBridge() override = default;
 
   MOCK_METHOD7(CreateRoute,
                void(const MediaSource::Id&,
