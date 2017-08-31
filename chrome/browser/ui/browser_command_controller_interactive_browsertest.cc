@@ -325,12 +325,31 @@ void BrowserCommandControllerInteractiveTest::
             "        document.body.webkitRequestFullscreen();"
             "      }"
             "    });"
+            "document.body.innerText = 'loaded';"
             "</script></html>";
+        // NavigateToURLWithDisposition() may return early in PlzNavigation
+        // mode. So we ask the page to send a string when everything is ready,
+        // and C++ logic can use ExecuteScriptAndExtractString() to wait until
+        // the page has been fully loaded.
         ui_test_utils::NavigateToURLWithDisposition(
             this->GetActiveBrowser(),
             GURL("data:text/html," + page),
             WindowOpenDisposition::CURRENT_TAB,
             ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
+        // This test is flaky when browser side navigation is enabled on Linux.
+        // See http://crbug.com/759704.
+        // After talking with Camille (clamy@), NavigateToURLWithDisposition()
+        // may return early in PlzNavigation mode. So we actively wait until the
+        // page is fully loaded.
+        // A more proper fix should be placed in NavigateToURLWithDisposition()
+        // function.
+        std::string result;
+        while (result != "loaded") {
+          ASSERT_TRUE(content::ExecuteScriptAndExtractString(
+              GetActiveWebContents()->GetRenderViewHost(),
+              "window.domAutomationController.send(document.body.innerText);",
+              &result));
+        }
         ASSERT_NO_FATAL_FAILURE(this->SendJsFullscreenShortcutAndWait());
       }
     } else {
