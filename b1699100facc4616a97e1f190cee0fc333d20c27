@@ -70,6 +70,24 @@
       "revId": "b1699100facc4616a97e1f190cee0fc333d20c27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0c8bfa4_55b5cff2",
+        "filename": "components/ukm/ukm_source.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-31T18:07:08Z",
+      "side": 0,
+      "message": "I re-added this line...I\u0027m not triggering it anymore",
+      "parentUuid": "a062ecdf_c87ded32",
+      "revId": "b1699100facc4616a97e1f190cee0fc333d20c27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
