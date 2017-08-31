@@ -28,6 +28,7 @@
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "content/public/test/test_web_ui.h"
 #include "extensions/browser/extension_registry.h"
+#include "extensions/browser/renderer_startup_helper.h"
 #include "extensions/common/extension_builder.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -722,10 +723,15 @@ TEST_F(SiteSettingsHandlerInfobarTest, SettingPermissionsTriggersInfobar) {
   const GURL chrome("chrome://about");
   const GURL origin("https://www.example.com/");
   const GURL extension("chrome-extension://fooextension/bar.html");
+
   // Make sure |extension|'s extension ID exists before navigating to it. This
   // fixes a test timeout that occurs with --enable-browser-side-navigation on.
+  scoped_refptr<const extensions::Extension> test_extension =
+      extensions::ExtensionBuilder("Test").SetID("fooextension").Build();
+  extensions::RendererStartupHelperFactory::GetForBrowserContext(profile())
+      ->OnExtensionLoaded(*test_extension);
   ASSERT_TRUE(extensions::ExtensionRegistry::Get(profile())->AddEnabled(
-      extensions::ExtensionBuilder("Test").SetID("fooextension").Build()));
+      test_extension));
 
   //               __________  ______________  ___________________  _______
   //   Window 2:  / insecure '/ origin_query \' example_subdomain \' about \
