@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d87ba1c4_4d7a48c7",
+        "filename": "components/arc/arc_prefs.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-31T11:19:52Z",
+      "side": 1,
+      "message": "Note: Rebasing adds this to ASM. Moved, too.",
+      "revId": "e99b3cf7438d995fdffd7a8f72fe219658a503bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3ee09964_41634d3b",
+        "filename": "chrome/browser/extensions/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 968,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-31T11:19:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afa4be21_9ba2b5f8",
+      "range": {
+        "startLine": 968,
+        "startChar": 7,
+        "endLine": 968,
+        "endChar": 23
+      },
+      "revId": "0fdbe4452aa77c948e7876d9e42ed5b7493d7aaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c18a6e36_494aeed4",
         "filename": "components/arc/arc_export.h",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-30T15:32:13Z",
       "side": 1,
       "message": "nit: newline below.\n\nqq: under which circumstances is this file included when OS_CHROMEOS is not defined, but COMPONENT_BUILD and ARC_IMPLEMENTATION are? Is it possible to unconditionally make this check/error? That way you can model the whole thing like\n\n\n #if !defined(OS_CHROMEOS)\n #error \"ARC can be built only for ChromeOS.\"\n #endif  // defined(OS_CHROMEOS)\n\n #if defined(COMPONENT_BUILD) \u0026\u0026 defined(ARC_IMPLEMENTATION)\n #define ARC_EXPORT __attribute__((visibility(\"default\")))\n #else  // !defined(COMPONENT_BUILD) || !defined(ARC_IMPLEMENTATION)\n #define ARC_EXPORT\n #endif",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 31
+      },
+      "revId": "0fdbe4452aa77c948e7876d9e42ed5b7493d7aaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5055fba1_adb3a553",
+        "filename": "components/arc/arc_export.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-31T11:19:52Z",
+      "side": 1,
+      "message": "Good point. There seems no. So fixed as you recommended. Thanks.",
+      "parentUuid": "c18a6e36_494aeed4",
       "range": {
         "startLine": 12,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0ebe89cb_e4f1ce73",
+        "filename": "components/arc/arc_export.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-31T11:19:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4baa9c68_929418ef",
+      "range": {
+        "startLine": 15,
+        "startChar": 10,
+        "endLine": 15,
+        "endChar": 65
+      },
+      "revId": "0fdbe4452aa77c948e7876d9e42ed5b7493d7aaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e503f8c1_ebce1b81",
         "filename": "components/arc/arc_prefs.cc",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "550f2131_8f5f3737",
+        "filename": "components/arc/arc_prefs.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-31T11:19:52Z",
+      "side": 1,
+      "message": "Done in .h.",
+      "parentUuid": "e503f8c1_ebce1b81",
+      "range": {
+        "startLine": 12,
+        "startChar": 10,
+        "endLine": 12,
+        "endChar": 15
+      },
+      "revId": "0fdbe4452aa77c948e7876d9e42ed5b7493d7aaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87397389_7670aa83",
         "filename": "components/arc/arc_prefs.h",
         "patchSetId": 3
@@ -108,6 +204,24 @@
       "revId": "0fdbe4452aa77c948e7876d9e42ed5b7493d7aaa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebe39724_32c593c7",
+        "filename": "components/arc/arc_prefs.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-31T11:19:52Z",
+      "side": 1,
+      "message": "Please let me keep to be consistent with other files in components/arc.",
+      "parentUuid": "87397389_7670aa83",
+      "revId": "0fdbe4452aa77c948e7876d9e42ed5b7493d7aaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
