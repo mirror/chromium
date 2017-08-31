@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "002d0b74_4a917793",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-31T09:05:15Z",
+      "side": 1,
+      "message": "Do you mind doing this in a separate CL?",
+      "revId": "cb07228fb06fb946380849973bf6742df9dd465a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5f5a875_764b8b13",
+        "filename": "content/common/widget.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-31T09:05:15Z",
+      "side": 1,
+      "message": "Nit: update this comment to something like:\n// Interface exposed by the renderer for Widgets.",
+      "revId": "cb07228fb06fb946380849973bf6742df9dd465a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dc25f03_badc9e9f",
+        "filename": "content/common/widget.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-31T09:05:15Z",
+      "side": 1,
+      "message": "Is it possible to just add a param to this method and have it be responsible for binding all the input handling state in one call?",
+      "revId": "cb07228fb06fb946380849973bf6742df9dd465a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f994c7e3_3d07f0d1",
+        "filename": "content/renderer/input/widget_input_handler_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-31T09:05:15Z",
+      "side": 1,
+      "message": "Sorry for the silly question, but what\u0027s touch-action: none? Is this a CSS property or something else?",
+      "revId": "cb07228fb06fb946380849973bf6742df9dd465a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3606b62d_1fc82357",
+        "filename": "content/renderer/input/widget_input_handler_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-31T09:05:15Z",
+      "side": 1,
+      "message": "Return a const WidgetInputHandlerHost\u0026 here?",
+      "revId": "cb07228fb06fb946380849973bf6742df9dd465a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "881903ff_cd9237a8",
+        "filename": "content/renderer/input/widget_input_handler_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-31T09:05:15Z",
+      "side": 1,
+      "message": "Some comments documenting what fields are accessed on which task runners would be useful. For example, it\u0027s not immediately obvious why this needs to be a ThreadSafeInterfacePtr",
+      "revId": "cb07228fb06fb946380849973bf6742df9dd465a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6565bf7b_b934f892",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1103,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-31T09:05:15Z",
+      "side": 1,
+      "message": "Why would host be unset here? Doesn\u0027t that mean we would just drop this message completely if host somehow wasn\u0027t set?",
+      "revId": "cb07228fb06fb946380849973bf6742df9dd465a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
