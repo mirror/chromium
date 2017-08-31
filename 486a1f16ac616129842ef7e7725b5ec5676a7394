@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "512c6397_8ab2f7b8",
+        "filename": "cc/input/browser_controls_offset_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-31T14:38:46Z",
+      "side": 1,
+      "message": "This change here breaks showing the omnibox when exiting VR. I don\u0027t understand how the ratio ever gets set now... it looks like it would only get set either by another animation? This is very confusing :P",
+      "range": {
+        "startLine": 112,
+        "startChar": 4,
+        "endLine": 112,
+        "endChar": 78
+      },
+      "revId": "486a1f16ac616129842ef7e7725b5ec5676a7394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
