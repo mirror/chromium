@@ -16,6 +16,7 @@
 #include "components/omnibox/browser/autocomplete_match.h"
 #include "components/omnibox/browser/omnibox_popup_view.h"
 #include "ui/gfx/font.h"
+#include "ui/gfx/image/image.h"
 
 class AutocompleteResult;
 class OmniboxEditModel;
@@ -40,7 +41,7 @@ class OmniboxPopupViewMac : public OmniboxPopupView,
   void InvalidateLine(size_t line) override {}
   void OnLineSelected(size_t line) override {}
   void UpdatePopupAppearance() override;
-  void SetMatchIcon(size_t match_index, const gfx::Image& icon) override;
+  void OnMatchIconUpdated(size_t match_index) override;
   gfx::Rect GetTargetBounds() override;
   // This is only called by model in SetSelectedLine() after updating
   // everything.  Popup should already be visible.
@@ -53,8 +54,7 @@ class OmniboxPopupViewMac : public OmniboxPopupView,
   void OnMatrixRowMiddleClicked(OmniboxPopupMatrix* matrix,
                                 size_t row) override;
 
-  // Returns the NSImage that should be used as an icon for the given match.
-  NSImage* ImageForMatch(const AutocompleteMatch& match) const;
+  gfx::Image ImageForMatch(size_t match_index) const;
 
   OmniboxPopupMatrix* matrix() { return matrix_; }
 

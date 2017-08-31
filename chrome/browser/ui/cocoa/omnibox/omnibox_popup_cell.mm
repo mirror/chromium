@@ -385,11 +385,11 @@ NSAttributedString* CreateClassifiedAttributedString(
 @synthesize maxLines = maxLines_;
 
 - (instancetype)initWithMatch:(const AutocompleteMatch&)match
-                        image:(NSImage*)image
+                        image:(const gfx::Image&)image
                   answerImage:(NSImage*)answerImage
                  forDarkTheme:(BOOL)isDarkTheme {
   if ((self = [super init])) {
-    image_ = [image retain];
+    image_ = image;
     answerImage_ = [answerImage retain];
 
     isContentsRTL_ =
@@ -496,18 +496,20 @@ NSAttributedString* CreateClassifiedAttributedString(
   NSWindow* parentWindow = [[controlView window] parentWindow];
   BOOL isDarkTheme = [parentWindow hasDarkTheme];
   NSRect imageRect = cellFrame;
-  imageRect.size = [[cellData image] size];
+  const gfx::Image& image = [cellData image];
+  NSImage* nativeImage = image.ToNSImage();
+  imageRect.size = [nativeImage size];
   imageRect.origin.x += kMaterialImageXOffset + [tableView contentLeftPadding];
   imageRect.origin.y +=
       GetVerticalMargin() + kMaterialExtraVerticalImagePadding;
   if (isVerticalLayout)
     imageRect.origin.y += halfLineHeight;
-  [[cellData image] drawInRect:FlipIfRTL(imageRect, cellFrame)
-                      fromRect:NSZeroRect
-                     operation:NSCompositeSourceOver
-                      fraction:1.0
-                respectFlipped:YES
-                         hints:nil];
+  [nativeImage drawInRect:FlipIfRTL(imageRect, cellFrame)
+                 fromRect:NSZeroRect
+                operation:NSCompositeSourceOver
+                 fraction:1.0
+           respectFlipped:YES
+                    hints:nil];
 
   CGFloat left = kMaterialTextStartOffset + [tableView contentLeftPadding];
   NSPoint origin = NSMakePoint(left, GetVerticalMargin());
