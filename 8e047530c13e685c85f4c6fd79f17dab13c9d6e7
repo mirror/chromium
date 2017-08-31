@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f8118c95_9e249f22",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/performance-timing/element-timing/basetest.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-31T00:44:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70ea4d49_79276e45",
+      "range": {
+        "startLine": 17,
+        "startChar": 39,
+        "endLine": 17,
+        "endChar": 40
+      },
+      "revId": "8e047530c13e685c85f4c6fd79f17dab13c9d6e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec6afa40_22e3b457",
         "filename": "third_party/WebKit/LayoutTests/http/tests/performance-timing/element-timing/resources/verifyelementtiming.js",
         "patchSetId": 10
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-30T19:39:31Z",
       "side": 1,
       "message": "I\u0027d be tempted to just bufferedEntries.sort().reverse().",
+      "range": {
+        "startLine": 8,
+        "startChar": 23,
+        "endLine": 8,
+        "endChar": 98
+      },
+      "revId": "8e047530c13e685c85f4c6fd79f17dab13c9d6e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1804cfd6_c954aaf1",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/performance-timing/element-timing/resources/verifyelementtiming.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-31T00:44:29Z",
+      "side": 1,
+      "message": "Hmm, that doesn\u0027t work. Don\u0027t we need to specify the sort key here, doesn\u0027t the default sort use toString() for objects (which isn\u0027t helpful here)?\n\nWe could override PerformanceElementTiming\u0027s toString method:\n\nPerformanceElementTiming.prototype.toString \u003d function() { return this.name; };\n\nBut, I\u0027m not sure this is any better. WDYT?",
+      "parentUuid": "ec6afa40_22e3b457",
       "range": {
         "startLine": 8,
         "startChar": 23,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d1c73660_250ae53b",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1849,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-31T00:44:29Z",
+      "side": 1,
+      "message": "Not exactly, just making it clear what its scope needs to be. I don\u0027t mind changing it, and it does need to outlive the ScopedElementTimingNameTracker. Moved it to function scope in latest patchset.",
+      "parentUuid": "28a71dc9_e091eb8e",
+      "range": {
+        "startLine": 1849,
+        "startChar": 2,
+        "endLine": 1849,
+        "endChar": 3
+      },
+      "revId": "8e047530c13e685c85f4c6fd79f17dab13c9d6e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2cfdd6a_751e7afc",
         "filename": "third_party/WebKit/Source/core/timing/PerformanceElementTiming.cpp",
         "patchSetId": 10
@@ -91,6 +163,30 @@
       "revId": "8e047530c13e685c85f4c6fd79f17dab13c9d6e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37edfcbf_fb0c1cbb",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceElementTiming.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-31T00:44:29Z",
+      "side": 1,
+      "message": "They are forward declared in the header but this is the .cpp file so I\u0027ll get incomplete types if I don\u0027t include them here. This does look like a header though :)",
+      "parentUuid": "d2cfdd6a_751e7afc",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 42
+      },
+      "revId": "8e047530c13e685c85f4c6fd79f17dab13c9d6e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "7ae71e57_ef609b87",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceElementTiming.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-31T00:44:29Z",
+      "side": 1,
+      "message": "OK, sure, happy too get rid of it. I wasn\u0027t sure the style when there is a identifier with the same name but different case, i.e. elementType().",
+      "parentUuid": "ec37033d_16dc6818",
+      "range": {
+        "startLine": 26,
+        "startChar": 24,
+        "endLine": 26,
+        "endChar": 28
+      },
+      "revId": "8e047530c13e685c85f4c6fd79f17dab13c9d6e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0bdeec0_b0ad0e30",
         "filename": "third_party/WebKit/Source/core/timing/TextElementTiming.h",
         "patchSetId": 10
@@ -137,6 +257,30 @@
       "revId": "8e047530c13e685c85f4c6fd79f17dab13c9d6e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e5a767e_be42e85b",
+        "filename": "third_party/WebKit/Source/core/timing/TextElementTiming.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-31T00:44:29Z",
+      "side": 1,
+      "message": "I reworded this, hopefully it\u0027s clearer. It was supposed to mean \"for each of its ancestors *with an elementtiming attribute*.\", but was confusing.",
+      "parentUuid": "d0bdeec0_b0ad0e30",
+      "range": {
+        "startLine": 22,
+        "startChar": 58,
+        "endLine": 22,
+        "endChar": 78
+      },
+      "revId": "8e047530c13e685c85f4c6fd79f17dab13c9d6e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "441f40b9_0004b299",
+        "filename": "third_party/WebKit/Source/core/timing/TextElementTiming.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-31T00:44:29Z",
+      "side": 1,
+      "message": "Yes, using yours :).",
+      "parentUuid": "852ea054_311e65b2",
+      "range": {
+        "startLine": 39,
+        "startChar": 9,
+        "endLine": 40,
+        "endChar": 24
+      },
+      "revId": "8e047530c13e685c85f4c6fd79f17dab13c9d6e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7a0fb4a_8f891a49",
         "filename": "third_party/WebKit/Source/core/timing/TextElementTiming.h",
         "patchSetId": 10
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "c31fecec_d25d4d4e",
+        "filename": "third_party/WebKit/Source/core/timing/TextElementTiming.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-31T00:44:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7a0fb4a_8f891a49",
+      "range": {
+        "startLine": 45,
+        "startChar": 5,
+        "endLine": 45,
+        "endChar": 13
+      },
+      "revId": "8e047530c13e685c85f4c6fd79f17dab13c9d6e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01e1a78c_328689d2",
         "filename": "third_party/WebKit/Source/core/timing/TextElementTiming.h",
         "patchSetId": 10
@@ -197,6 +389,30 @@
       "writtenOn": "2017-08-30T19:39:31Z",
       "side": 1,
       "message": "It\u0027s a shame we don\u0027t have a small_map (https://cs.chromium.org/chromium/src/base/containers/small_map.h?type\u003dcs\u0026q\u003dsmall_map+\u0026sq\u003dpackage:chromium\u0026l\u003d171) implementation usable in third_party.\n\nIn most cases, this will probably be small enough that a flat implementation would be better, but we probably should use a proper set for the nasty cases.\n\nSigh...",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 9
+      },
+      "revId": "8e047530c13e685c85f4c6fd79f17dab13c9d6e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "196d2f39_3c436e0a",
+        "filename": "third_party/WebKit/Source/core/timing/TextElementTiming.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-31T00:44:29Z",
+      "side": 1,
+      "message": "Sigh indeed. A flat implementation came to mind when implementing this because in most cases I would suspect the number of elements with an elementtiming attribute to be small. small_map looks like it would be a great fit.",
+      "parentUuid": "01e1a78c_328689d2",
       "range": {
         "startLine": 60,
         "startChar": 2,
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "3540741c_a9589461",
+        "filename": "third_party/WebKit/Source/core/timing/TextElementTimingAncestorTracker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-31T00:44:29Z",
+      "side": 1,
+      "message": "Technically no, but it is used by the ScopedElementTimingNameTracker. Since it\u0027s an inner class, it has access to private methods so we could make StackSize(), PushElementTimingName() and PopElementTimingName() all private.\n\nInitially I didn\u0027t want to make just one of them private, and the others felt like a necessary part of the interface. But, maybe its better to just require all stack maintenance (push/pop/size) is handled by ScopedElementTimingNameTracker, which it is anyways.\n\nIn the latest patchset, I made all 3 private.",
+      "parentUuid": "1316d3b0_21df96df",
+      "range": {
+        "startLine": 78,
+        "startChar": 9,
+        "endLine": 78,
+        "endChar": 18
+      },
+      "revId": "8e047530c13e685c85f4c6fd79f17dab13c9d6e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a25fc953_3071711e",
         "filename": "third_party/WebKit/Source/core/timing/TextElementTimingTest.cpp",
         "patchSetId": 10
@@ -252,6 +492,30 @@
       "revId": "8e047530c13e685c85f4c6fd79f17dab13c9d6e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffe03433_66aa26a2",
+        "filename": "third_party/WebKit/Source/core/timing/TextElementTimingTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-31T00:44:29Z",
+      "side": 1,
+      "message": "Yes, I\u0027ve read this and interpreted the part about \"For simple scalar (non-object) values there is no reason to prefer one form and we allow either\" as follow the local style, or defer to the reviewer :). ++i it is!",
+      "parentUuid": "a25fc953_3071711e",
+      "range": {
+        "startLine": 28,
+        "startChar": 38,
+        "endLine": 28,
+        "endChar": 41
+      },
+      "revId": "8e047530c13e685c85f4c6fd79f17dab13c9d6e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -278,6 +542,30 @@
     },
     {
       "key": {
+        "uuid": "fb02f2dc_3522087c",
+        "filename": "third_party/WebKit/Source/core/timing/TextElementTimingTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-31T00:44:29Z",
+      "side": 1,
+      "message": "I added a test that directly checks the timestamps returned from PerformanceBase::getEntriesByType(\"elementtiming\") against the commit timestamps. It does two separate document write/commit phases to make sure timestamps are increasing. Let me know if you can think of anything else we should test here.",
+      "parentUuid": "2580b896_0c0334c2",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 0
+      },
+      "revId": "8e047530c13e685c85f4c6fd79f17dab13c9d6e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26e235e1_eb186502",
         "filename": "third_party/WebKit/Source/platform/RuntimeEnabledFeatures.json5",
         "patchSetId": 10
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "a7c8e8b4_338cb567",
+        "filename": "third_party/WebKit/Source/platform/RuntimeEnabledFeatures.json5",
+        "patchSetId": 10
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-31T00:44:29Z",
+      "side": 1,
+      "message": "Changed to status: \"test\". No status listed will break the LayoutTests: https://www.chromium.org/blink/runtime-enabled-features.",
+      "parentUuid": "26e235e1_eb186502",
+      "range": {
+        "startLine": 820,
+        "startChar": 15,
+        "endLine": 820,
+        "endChar": 27
+      },
+      "revId": "8e047530c13e685c85f4c6fd79f17dab13c9d6e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09ad023e_7e390e21",
         "filename": "third_party/WebKit/public/web/WebView.h",
         "patchSetId": 10
@@ -321,6 +633,30 @@
       "revId": "8e047530c13e685c85f4c6fd79f17dab13c9d6e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92061d35_0d388d54",
+        "filename": "third_party/WebKit/public/web/WebView.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-31T00:44:29Z",
+      "side": 1,
+      "message": "No it\u0027s not, we don\u0027t call DidCommitCompositorFrame directly on a WebView. I think if we casted the WebWidget to a WebView it might break?\n\nI removed this.",
+      "parentUuid": "09ad023e_7e390e21",
+      "range": {
+        "startLine": 87,
+        "startChar": 19,
+        "endLine": 87,
+        "endChar": 43
+      },
+      "revId": "8e047530c13e685c85f4c6fd79f17dab13c9d6e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
