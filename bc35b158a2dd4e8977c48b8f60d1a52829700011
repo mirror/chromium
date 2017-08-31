@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce2570f1_85fa3ab0",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-31T19:20:29Z",
+      "side": 1,
+      "message": "Instead, have a private function:\n\nvoid ForceEnrollmentInternal(bool is_initializing) {\n  enrollment_manager_-\u003eForceEnrollmentNow(\n      is_initializing ? INVOCATION_REASON_INITIALIZATION\n                      : INVOCATION_REASON_UNKNOWN;\n}\n\nThen, call the function with UNKNOWN when it comes from the API and INITIALIZATION if it comes from your initialization flow. You need to enroll in the initialization flow if !IsEnrollmentValid() - see below.",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 20
+      },
+      "revId": "bc35b158a2dd4e8977c48b8f60d1a52829700011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7787e245_41c8e8e6",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-31T19:20:29Z",
+      "side": 1,
+      "message": "You only want to do this if !enrollment_manager_-\u003eIsEnrollmentValid(). If you\u0027re already enrolled, you shouldn\u0027t re-enroll.\n\nIf you\u0027ve already enrolled, you need to perform a device sync here. If you have not, you need to wait for the enrollment to finish, then perform a device sync.\n\nI\u0027d recommend checking out the logic here and trying to mirror it:\nhttps://cs.chromium.org/chromium/src/chrome/browser/cryptauth/chrome_cryptauth_service.cc",
+      "range": {
+        "startLine": 126,
+        "startChar": 0,
+        "endLine": 126,
+        "endChar": 51
+      },
+      "revId": "bc35b158a2dd4e8977c48b8f60d1a52829700011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c50322c_18417c82",
+        "filename": "components/multidevice/service/device_sync_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-31T19:20:29Z",
+      "side": 1,
+      "message": "You only need the first two states and then a state which shows that the class is ready to do things. If you think about the state machine here, what is really different from NOTIFY_ENROLLMENT_FINISHED vs NOTIFY_SYNC_FINISHED? Both states are just ready to do things, and no further action would depend on what state you\u0027re in.\n\nSo, you can just add a third READY state and use it once the keypair is generated.",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 35
+      },
+      "revId": "bc35b158a2dd4e8977c48b8f60d1a52829700011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -378,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "bd7f6faa_c89c2336",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-31T19:20:29Z",
+      "side": 1,
+      "message": "That\u0027s a good question! I don\u0027t have a great answer for you right now, since we still need to figure out how this code is going to be initialized when the user logs in.\n\nFor now, let\u0027s just notify observers that the enrollment (or sync) failed if we are not in a state to actually enroll/sync, and log an error using PA_LOG(). Thanks!",
+      "parentUuid": "45af5408_b2e3266c",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 52
+      },
+      "revId": "408f0f2791b65ce914b7ed420e12ac22cb7dabac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b1422ca3_94d35dd8",
         "filename": "components/multidevice/service/device_sync_impl.cc",
         "patchSetId": 2
