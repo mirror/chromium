@@ -22,6 +22,30 @@
       "revId": "5ddde33fe8996bd1f4ddea58a6c80b8867ab1274",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cbdfb92_a981d63f",
+        "filename": "build/win/message_compiler.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-31T21:24:03Z",
+      "side": 1,
+      "message": "Line 38 checks that.\n\nWe passed it through before without doing anything with it, but now we require that it\u0027s identical to -h and we need to change it to tmp_dir, so now we need to look at it.",
+      "parentUuid": "a0c62c09_c445cc1d",
+      "range": {
+        "startLine": 62,
+        "startChar": 7,
+        "endLine": 62,
+        "endChar": 19
+      },
+      "revId": "5ddde33fe8996bd1f4ddea58a6c80b8867ab1274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
