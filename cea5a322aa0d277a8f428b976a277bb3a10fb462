@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "04d825ca_f7005d14",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/FullscreenActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-08-31T22:24:43Z",
+      "side": 1,
+      "message": "I see. So I do know that hide is not getting called on removeTab, but looks like the old Activity\u0027s model is calling select tab when we remove the other and that probably triggers a show on the next tab. So the reparented tab still doesn\u0027t get hidden, but the tab behind is selected and shown.\n\nSadly, we do have to select and show it for general case, since in a multi window world we have to assume the old activity is still alive and maybe still showing at least partially. So then your design does makes sense in the way that, we wait to reparent until we can have the focus in the new activity and draw UI to avoid seeing the transitional effects in the old activity.",
+      "parentUuid": "82a19973_230839dd",
+      "range": {
+        "startLine": 49,
+        "startChar": 12,
+        "endLine": 49,
+        "endChar": 17
+      },
+      "revId": "cea5a322aa0d277a8f428b976a277bb3a10fb462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "839739b2_ae908f99",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/FullscreenActivity.java",
         "patchSetId": 1

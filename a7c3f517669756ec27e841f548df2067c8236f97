@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02b35df1_4c0a0219",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1399,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-08-31T22:24:43Z",
+      "side": 1,
+      "message": "This will break createDetach() most likely. See the uses of that. CustomTabsConnection\u0027s hidden tab feature uses it and that detach call does depend on AsyncTabParams. maybe this is a param to detach?",
+      "range": {
+        "startLine": 1399,
+        "startChar": 16,
+        "endLine": 1399,
+        "endChar": 22
+      },
+      "revId": "a7c3f517669756ec27e841f548df2067c8236f97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
