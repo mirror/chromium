@@ -8,7 +8,6 @@
 
 #include "base/memory/aligned_memory.h"
 #include "base/message_loop/message_loop.h"
-#include "cc/base/math_util.h"
 #include "cc/paint/paint_flags.h"
 #include "cc/paint/skia_paint_canvas.h"
 #include "cc/quads/draw_quad.h"
@@ -30,6 +29,7 @@
 #include "third_party/skia/include/effects/SkColorMatrixFilter.h"
 #include "ui/gfx/color_transform.h"
 #include "ui/gfx/geometry/rect_conversions.h"
+#include "ui/gfx/math_util.h"
 #include "ui/gfx/test/icc_profiles.h"
 
 using gpu::gles2::GLES2Interface;
@@ -2613,7 +2613,7 @@ TYPED_TEST(SoftwareRendererPixelTest, PictureDrawQuadIdentityScale) {
   bool needs_blending = true;
   gfx::Transform blue_quad_to_target_transform;
   blue_quad_to_target_transform.Translate(offset.x(), offset.y());
-  gfx::Rect blue_target_clip_rect = MathUtil::MapEnclosingClippedRect(
+  gfx::Rect blue_target_clip_rect = gfx::MathUtil::MapEnclosingClippedRect(
       blue_quad_to_target_transform, blue_clip_rect);
   SharedQuadState* blue_shared_state =
       CreateTestSharedQuadStateClipped(blue_quad_to_target_transform, blue_rect,

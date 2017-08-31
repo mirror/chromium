@@ -6,7 +6,6 @@
 
 #include "base/callback.h"
 #include "base/memory/ptr_util.h"
-#include "cc/base/math_util.h"
 #include "chrome/browser/vr/elements/button.h"
 #include "chrome/browser/vr/elements/close_button_texture.h"
 #include "chrome/browser/vr/elements/content_element.h"
@@ -34,6 +33,7 @@
 #include "chrome/browser/vr/vr_gl_util.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/vector_icons/vector_icons.h"
+#include "ui/gfx/math_util.h"
 #include "ui/gfx/transform_util.h"
 
 namespace vr {
@@ -640,7 +640,7 @@ void UiSceneManager::CreateToasts() {
   element->SetSize(kToastWidthDMM, kToastHeightDMM);
   element->SetTranslate(0, kWebVrToastDistance * sin(kWebVrAngleRadians),
                         -kWebVrToastDistance * cos(kWebVrAngleRadians));
-  element->SetRotate(1, 0, 0, cc::MathUtil::Rad2Deg(kWebVrAngleRadians));
+  element->SetRotate(1, 0, 0, gfx::MathUtil::Rad2Deg(kWebVrAngleRadians));
   element->SetScale(kWebVrToastDistance, kWebVrToastDistance, 1);
   element->SetVisible(false);
   element->set_hit_testable(false);
