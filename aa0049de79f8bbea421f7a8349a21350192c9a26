@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c420caeb_ad862b5e",
+        "filename": "components/autofill/content/renderer/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-08-31T11:34:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "478b96db_a732c595",
+      "range": {
+        "startLine": 17,
+        "startChar": 9,
+        "endLine": 17,
+        "endChar": 18
+      },
+      "revId": "aa0049de79f8bbea421f7a8349a21350192c9a26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5715087c_f549ae71",
         "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "aa0049de79f8bbea421f7a8349a21350192c9a26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f19a6176_d261e910",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-08-31T11:34:08Z",
+      "side": 1,
+      "message": "i think the erase function of the set works fine, i have removed this function.",
+      "parentUuid": "5715087c_f549ae71",
+      "range": {
+        "startLine": 165,
+        "startChar": 2,
+        "endLine": 165,
+        "endChar": 26
+      },
+      "revId": "aa0049de79f8bbea421f7a8349a21350192c9a26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "49097137_83265515",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-08-31T11:34:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6b3154f_2a37399a",
+      "range": {
+        "startLine": 538,
+        "startChar": 12,
+        "endLine": 538,
+        "endChar": 13
+      },
+      "revId": "aa0049de79f8bbea421f7a8349a21350192c9a26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2584fb34_9125b6e9",
         "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "8851d428_41567140",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-08-31T11:34:08Z",
+      "side": 1,
+      "message": "Hi i have decided to convert the local vector into a set because 1. we don\u0027t really care about order and 2. we don\u0027t want double entries. But I am keeping the password form\u0027s variable as a vector. I didn\u0027t see any direct function that converts a set into a vector, the best alternative i have seen was to swap the old vector with an empty one and then copy. If we have a better approach to this i will be happy to use it. O:)",
+      "parentUuid": "2584fb34_9125b6e9",
+      "range": {
+        "startLine": 554,
+        "startChar": 6,
+        "endLine": 554,
+        "endChar": 43
+      },
+      "revId": "aa0049de79f8bbea421f7a8349a21350192c9a26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4280cf5_fca20bfc",
         "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
         "patchSetId": 2
@@ -114,6 +210,30 @@
       "revId": "aa0049de79f8bbea421f7a8349a21350192c9a26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8593539_ef975b65",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-08-31T11:34:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4280cf5_fca20bfc",
+      "range": {
+        "startLine": 557,
+        "startChar": 6,
+        "endLine": 557,
+        "endChar": 12
+      },
+      "revId": "aa0049de79f8bbea421f7a8349a21350192c9a26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
