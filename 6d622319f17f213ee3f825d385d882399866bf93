@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb43899f_bddbce05",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-31T17:02:02Z",
+      "side": 1,
+      "message": "sorry, std::function is banned in Chromium: http://chromium-cpp.appspot.com/#blacklist_stdlib\n\nuse base::Callback instead",
+      "range": {
+        "startLine": 124,
+        "startChar": 26,
+        "endLine": 124,
+        "endChar": 39
+      },
+      "revId": "6d622319f17f213ee3f825d385d882399866bf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc5e3dbb_ae015ed3",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-31T17:02:02Z",
+      "side": 1,
+      "message": "You\u0027ll run into problems here because base::Bind() disallows capturing lambdas (see why in the above link and https://groups.google.com/a/chromium.org/forum/#!topic/cxx/SoEj7oIDNuA )\n\ngfx::Rect is copyable, so you can just pass it into base::Bind() and take it as a parameter to the lambda, and everything will be ok.",
+      "range": {
+        "startLine": 237,
+        "startChar": 12,
+        "endLine": 237,
+        "endChar": 19
+      },
+      "revId": "6d622319f17f213ee3f825d385d882399866bf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
