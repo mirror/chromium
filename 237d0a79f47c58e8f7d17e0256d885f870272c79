@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fee1ba96_b4a1e705",
+        "filename": "chrome/browser/extensions/unpacked_installer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-31T20:52:01Z",
+      "side": 1,
+      "message": "Also I think the existing code path did not throw a hard error for command line extensions with illegal file names. Now it would.",
+      "revId": "237d0a79f47c58e8f7d17e0256d885f870272c79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
