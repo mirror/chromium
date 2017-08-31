@@ -1207,6 +1207,9 @@ extern const char kEnableAudioFocusDisabled[];
 extern const char kEnableAudioFocusEnabled[];
 extern const char kEnableAudioFocusEnabledDuckFlash[];
 
+extern const char kEnableExternalDriveRename[];
+extern const char kEnableExternalDriveRenameDescription[];
+
 extern const char kEnableNewAppMenuIconName[];
 extern const char kEnableNewAppMenuIconDescription[];
 
