@@ -63,6 +63,7 @@ Window::Window(WindowDelegate* delegate,
       delegate_(delegate),
       parent_(nullptr),
       visible_(false),
+      occluded_(false),
       id_(kInitialId),
       transparent_(false),
       event_targeting_policy_(
@@ -725,6 +726,12 @@ void Window::SetVisible(bool visible) {
     delegate_->OnWindowTargetVisibilityChanged(visible);
 
   NotifyWindowVisibilityChanged(this, visible);
+}
+
+void Window::SetOccluded(bool occluded) {
+  if (delegate_ && occluded != occluded_)
+    delegate_->OnWindowOcclusionChanged(occluded);
+  occluded_ = occluded;
 }
 
 void Window::SchedulePaint() {

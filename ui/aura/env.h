@@ -11,6 +11,7 @@
 #include "base/observer_list.h"
 #include "base/supports_user_data.h"
 #include "ui/aura/aura_export.h"
+#include "ui/aura/window_occlusion_tracker.h"
 #include "ui/base/dragdrop/os_exchange_data_provider_factory.h"
 #include "ui/events/event_handler.h"
 #include "ui/events/event_target.h"
@@ -174,6 +175,8 @@ class AURA_EXPORT Env : public ui::EventTarget,
 
   std::unique_ptr<InputStateLookup> input_state_lookup_;
   std::unique_ptr<ui::PlatformEventSource> event_source_;
+
+  WindowOcclusionTracker window_occlusion_tracker_;
 
 #if defined(USE_OZONE)
   // Factory for pixmaps that can use be transported from the client to the GPU

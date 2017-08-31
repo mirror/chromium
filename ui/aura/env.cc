@@ -158,6 +158,8 @@ Env::Env(Mode mode)
       context_factory_private_(nullptr) {
   DCHECK(lazy_tls_ptr.Pointer()->Get() == NULL);
   lazy_tls_ptr.Pointer()->Set(this);
+
+  AddObserver(&window_occlusion_tracker_);
 }
 
 void Env::Init() {
