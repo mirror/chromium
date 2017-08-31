@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34dbbabc_c6b6dead",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-08-31T17:51:30Z",
+      "side": 1,
+      "message": "Isn\u0027t this just \u0027if\u0027 (i.e. only one step forward needed)?",
+      "revId": "fd71bcfe5be4ec394a1f36326055aab7ff2f8cc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a8835c2a_15ca64d1",
+        "filename": "ui/accessibility/ax_event_generator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-08-31T17:51:30Z",
+      "side": 1,
+      "message": "Add a comment. I would want to know what this Event is when compared to other events under ui/accessibility.",
+      "revId": "fd71bcfe5be4ec394a1f36326055aab7ff2f8cc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2b999ade_0a137797",
+        "filename": "ui/accessibility/ax_event_generator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-08-31T17:51:30Z",
+      "side": 1,
+      "message": "These events differ from ax_enums...can we document the purpose of each? This one is new.",
+      "revId": "fd71bcfe5be4ec394a1f36326055aab7ff2f8cc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d64a977d_23fd427e",
+        "filename": "ui/accessibility/ax_event_generator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-08-31T17:51:30Z",
+      "side": 1,
+      "message": "Suggestion: most of these have CHANGED as a suffix. Why not get rid of it (and maybe call it ChangeEvent?",
+      "revId": "fd71bcfe5be4ec394a1f36326055aab7ff2f8cc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ade5fdd0_7e11802e",
+        "filename": "ui/accessibility/ax_event_generator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-08-31T17:51:30Z",
+      "side": 1,
+      "message": "You could probably write this quickly as a typedef\u0027ed std::pair.",
+      "revId": "fd71bcfe5be4ec394a1f36326055aab7ff2f8cc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bd61d88c_b637911a",
+        "filename": "ui/accessibility/ax_event_generator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-08-31T17:51:30Z",
+      "side": 1,
+      "message": "Don\u0027t you also want const std::set?",
+      "revId": "fd71bcfe5be4ec394a1f36326055aab7ff2f8cc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
