@@ -714,7 +714,11 @@ DirectoryContents.prototype.update = function(updatedEntries, removedUrls) {
         end++;
       }
       // Remove the range [begin, end) at once to avoid multiple sorting.
-      this.fileList_.splice(begin, end - begin);
+      var cause = ''
+      if (removedUrls.length > 0 && updatedEntries.length < 1) {
+        cause = 'delete'
+      }
+      this.fileList_.splice(begin, end - begin, cause);
       i--;
       continue;
     }
