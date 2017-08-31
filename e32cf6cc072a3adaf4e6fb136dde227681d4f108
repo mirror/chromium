@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9eebc6a_f8e8756a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-31T12:36:58Z",
+      "side": 1,
+      "message": "Maybe \"Bug: 753779\" since this is a followup to the fix introduced for bug 753779.",
+      "revId": "e32cf6cc072a3adaf4e6fb136dde227681d4f108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
