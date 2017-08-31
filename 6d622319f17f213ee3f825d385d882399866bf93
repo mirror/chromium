@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "78dbe7e9_f35ba60b",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1148594
+      },
+      "writtenOn": "2017-08-31T17:28:33Z",
+      "side": 1,
+      "message": "On second thought, I don\u0027t need run-time binding. How about a template?",
+      "parentUuid": "fb43899f_bddbce05",
+      "range": {
+        "startLine": 124,
+        "startChar": 26,
+        "endLine": 124,
+        "endChar": 39
+      },
+      "revId": "6d622319f17f213ee3f825d385d882399866bf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc5e3dbb_ae015ed3",
         "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
         "patchSetId": 4
