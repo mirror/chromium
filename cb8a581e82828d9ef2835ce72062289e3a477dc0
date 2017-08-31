@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a292e94_27f76e48",
+        "filename": "ui/views/bubble/tray_bubble_view.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-31T21:11:20Z",
+      "side": 1,
+      "message": "Wouldn\u0027t this mean accelerators defined by the tray don\u0027t get handled? I would expect those to work while the tray is up.",
+      "range": {
+        "startLine": 160,
+        "startChar": 5,
+        "endLine": 161,
+        "endChar": 77
+      },
+      "revId": "cb8a581e82828d9ef2835ce72062289e3a477dc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dadd2bb_bcba72a5",
+        "filename": "ui/views/bubble/tray_bubble_view.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-31T21:11:20Z",
+      "side": 1,
+      "message": "Is the bubble normally inactive?",
+      "range": {
+        "startLine": 167,
+        "startChar": 7,
+        "endLine": 168,
+        "endChar": 26
+      },
+      "revId": "cb8a581e82828d9ef2835ce72062289e3a477dc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c8f81b8_c89a867e",
+        "filename": "ui/views/bubble/tray_bubble_view.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-31T21:11:20Z",
+      "side": 1,
+      "message": "I\u0027m surprised this is here and not after the call to the delegate, but it seems we do this for menus too. Ok.\n\nAlso, please update this comment. The comment documents the code, not why this call is here. The why is the interesting part.",
+      "range": {
+        "startLine": 177,
+        "startChar": 2,
+        "endLine": 179,
+        "endChar": 27
+      },
+      "revId": "cb8a581e82828d9ef2835ce72062289e3a477dc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba31626c_6c4d2c54",
+        "filename": "ui/views/bubble/tray_bubble_view.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-31T21:11:20Z",
+      "side": 1,
+      "message": "How about typing this to RerouteEventHandler and naming the variable something like reroute_event_handler_. Less mysterious that way.",
+      "range": {
+        "startLine": 215,
+        "startChar": 18,
+        "endLine": 215,
+        "endChar": 51
+      },
+      "revId": "cb8a581e82828d9ef2835ce72062289e3a477dc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
