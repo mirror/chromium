@@ -22,6 +22,30 @@
       "revId": "b7b90ee13ec59ff92ad5a9a268520df7263e719e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98068beb_f67f495b",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1265,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-31T17:40:42Z",
+      "side": 1,
+      "message": "There is a check at the start of this function. Am I missing something?",
+      "parentUuid": "57d55e3a_e9ed1d75",
+      "range": {
+        "startLine": 1265,
+        "startChar": 12,
+        "endLine": 1265,
+        "endChar": 21
+      },
+      "revId": "b7b90ee13ec59ff92ad5a9a268520df7263e719e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
