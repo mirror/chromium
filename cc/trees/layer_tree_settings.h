@@ -147,6 +147,9 @@ class CC_EXPORT LayerTreeSettings {
   // Whether to use out of process raster.  If true, whenever gpu raster
   // would have been used, out of process gpu raster will be used instead.
   bool enable_oop_rasterization = false;
+
+  // Disables anti-aliasing for all layer types that supports it.
+  bool force_anti_aliasing_off = false;
 };
 
 }  // namespace cc

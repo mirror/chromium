@@ -179,6 +179,12 @@ struct StructTraits<viz::mojom::RenderPassQuadStateDataView, cc::DrawQuad> {
     return quad->tex_coord_rect;
   }
 
+  static bool force_anti_aliasing_off(const cc::DrawQuad& input) {
+    const cc::RenderPassDrawQuad* quad =
+        cc::RenderPassDrawQuad::MaterialCast(&input);
+    return quad->force_anti_aliasing_off;
+  }
+
   static bool Read(viz::mojom::RenderPassQuadStateDataView data,
                    cc::DrawQuad* out);
 };
@@ -331,6 +337,11 @@ struct StructTraits<viz::mojom::TileQuadStateDataView, cc::DrawQuad> {
   static uint32_t resource_id(const cc::DrawQuad& input) {
     const cc::TileDrawQuad* quad = cc::TileDrawQuad::MaterialCast(&input);
     return quad->resource_id();
+  }
+
+  static bool force_anti_aliasing_off(const cc::DrawQuad& input) {
+    const cc::TileDrawQuad* quad = cc::TileDrawQuad::MaterialCast(&input);
+    return quad->force_anti_aliasing_off;
   }
 
   static bool Read(viz::mojom::TileQuadStateDataView data, cc::DrawQuad* out);

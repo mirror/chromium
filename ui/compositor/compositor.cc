@@ -97,6 +97,9 @@ Compositor::Compositor(const viz::FrameSinkId& frame_sink_id,
   refresh_rate_ = context_factory_->GetRefreshRate();
   settings.main_frame_before_activation_enabled = false;
 
+  // Turn off anti-aliasing in order to increase support for HW overlays.
+  settings.force_anti_aliasing_off = true;
+
   if (command_line->HasSwitch(switches::kLimitFps)) {
     std::string fps_str =
         command_line->GetSwitchValueASCII(switches::kLimitFps);
