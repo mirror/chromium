@@ -22,6 +22,30 @@
       "revId": "074b42c185b2568557ec6b1702a392b036842c48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50cd349d_de883cf3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/AllDismissedItem.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-31T18:09:22Z",
+      "side": 1,
+      "message": "Duh missed one file",
+      "parentUuid": "f1243bde_424bbeb0",
+      "range": {
+        "startLine": 81,
+        "startChar": 37,
+        "endLine": 81,
+        "endChar": 71
+      },
+      "revId": "074b42c185b2568557ec6b1702a392b036842c48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
