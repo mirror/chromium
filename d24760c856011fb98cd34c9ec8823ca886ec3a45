@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54c69235_8acd308b",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-31T16:49:52Z",
+      "side": 1,
+      "message": "+1, I think the above approach is pretty clever actually.\n\nI\u0027m glad you explained it in comment, because it\u0027s non-obvious.",
+      "revId": "d24760c856011fb98cd34c9ec8823ca886ec3a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e39feada_dce934a7",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-31T16:49:52Z",
+      "side": 1,
+      "message": "I would also recommend testing with #ref in this one. Or at least it should be in one test case.",
+      "revId": "d24760c856011fb98cd34c9ec8823ca886ec3a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
