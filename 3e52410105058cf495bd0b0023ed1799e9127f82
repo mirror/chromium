@@ -282,6 +282,24 @@
     },
     {
       "key": {
+        "uuid": "e935e834_ce863f5e",
+        "filename": "chrome/test/data/extensions/api_test/webrequest/test_blocking.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-31T19:01:28Z",
+      "side": 1,
+      "message": "Was it?  It doesn\u0027t appear to be in gerrit, but maybe that\u0027s a bug.",
+      "parentUuid": "2399d6d5_392ab3a6",
+      "revId": "3e52410105058cf495bd0b0023ed1799e9127f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c83748f_72a6a22e",
         "filename": "chrome/test/data/extensions/api_test/webrequest_permissions/initiator/background.js",
         "patchSetId": 10
