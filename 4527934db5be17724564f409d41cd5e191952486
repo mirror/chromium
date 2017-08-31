@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d86854a_6e796c39",
+        "filename": "chrome/browser/ui/toolbar/toolbar_model_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-31T18:53:43Z",
+      "side": 1,
+      "message": "nit: remove?",
+      "revId": "4527934db5be17724564f409d41cd5e191952486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5e9be64_c447d425",
+        "filename": "chrome/browser/ui/toolbar/toolbar_model_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-31T18:53:43Z",
+      "side": 1,
+      "message": "aside: it would be nice if TestExtensionSystem did this automatically.",
+      "revId": "4527934db5be17724564f409d41cd5e191952486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c354cba2_5a297573",
+        "filename": "chrome/browser/ui/toolbar/toolbar_model_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-31T18:53:43Z",
+      "side": 1,
+      "message": "nit: use |extension_system| here",
+      "revId": "4527934db5be17724564f409d41cd5e191952486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
