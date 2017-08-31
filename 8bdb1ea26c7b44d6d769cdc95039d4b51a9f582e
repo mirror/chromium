@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4e8e0201_05c27f7c",
+        "filename": "media/capture/content/thread_safe_capture_oracle.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-31T03:37:51Z",
+      "side": 1,
+      "message": "Most other clients that WrapExternalSharedMemory() for their own reasons also use this \"destruction observer\" mechanism. So, I don\u0027t think we want to go adding custom WrapXYZ() methods to VideoFrame for dozens of different use cases.\n\nAlso, right now, VCBufferHandles are only pinned this way in two places (here and in the GPU JPEG decoder code). Once I move tab capture into VIZ, this will no longer be needed (so only the GPU JPEG decoder code will do this).",
+      "parentUuid": "29a4873c_f792d23c",
+      "revId": "8bdb1ea26c7b44d6d769cdc95039d4b51a9f582e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d0a9c8f0_87b7c133",
         "filename": "media/capture/video/shared_memory_buffer_tracker.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-30T16:15:56Z",
       "side": 1,
       "message": "I am not convinced that the above is thread safe.\nCould the following sequence happen?\nThread 1 enters the critical section, sets its need_to_map_memory to true, the leaves the critical section, then remains at line 50. Thread 2 enters the critical section, sets its need_to_map_memory to false, then returns, and then the Handle may get used on Thread 2 before the memory is mapped in Thread 1.",
+      "revId": "8bdb1ea26c7b44d6d769cdc95039d4b51a9f582e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4784280e_59172ab3",
+        "filename": "media/capture/video/shared_memory_buffer_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-31T03:37:51Z",
+      "side": 1,
+      "message": "Good catch! Looks like the solution is to hold the lock while the memory is being mapped.",
+      "parentUuid": "d0a9c8f0_87b7c133",
       "revId": "8bdb1ea26c7b44d6d769cdc95039d4b51a9f582e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "df3ab41e_7e46103d",
+        "filename": "media/capture/video/shared_memory_buffer_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-31T03:37:51Z",
+      "side": 1,
+      "message": "Done: I described this in the header file where the lock is declared.",
+      "parentUuid": "ba2a4069_87b15c9d",
+      "revId": "8bdb1ea26c7b44d6d769cdc95039d4b51a9f582e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12a1cbba_4e7b6f76",
         "filename": "media/capture/video/shared_memory_buffer_tracker.cc",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "8bdb1ea26c7b44d6d769cdc95039d4b51a9f582e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3c2d095_18aeff79",
+        "filename": "media/capture/video/shared_memory_buffer_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-31T03:37:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12a1cbba_4e7b6f76",
+      "revId": "8bdb1ea26c7b44d6d769cdc95039d4b51a9f582e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "cd7e1403_1ca4c10f",
+        "filename": "media/capture/video/shared_memory_buffer_tracker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-31T03:37:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81834b06_40c3e810",
+      "revId": "8bdb1ea26c7b44d6d769cdc95039d4b51a9f582e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c3de3e3_0ef940d2",
         "filename": "services/video_capture/public/cpp/receiver_media_to_mojo_adapter.cc",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "8bdb1ea26c7b44d6d769cdc95039d4b51a9f582e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d6b63d8_35180d46",
+        "filename": "services/video_capture/public/cpp/receiver_media_to_mojo_adapter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-31T03:37:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c3de3e3_0ef940d2",
+      "revId": "8bdb1ea26c7b44d6d769cdc95039d4b51a9f582e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "fa044af1_6ea397d4",
+        "filename": "services/video_capture/public/cpp/receiver_media_to_mojo_adapter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-31T03:37:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "66962630_c8b507e2",
+      "revId": "8bdb1ea26c7b44d6d769cdc95039d4b51a9f582e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee5b6cc9_ca46d1be",
         "filename": "services/video_capture/public/cpp/receiver_media_to_mojo_adapter.cc",
         "patchSetId": 3
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "b337d137_7c0032cb",
+        "filename": "services/video_capture/public/cpp/receiver_media_to_mojo_adapter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-31T03:37:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee5b6cc9_ca46d1be",
+      "revId": "8bdb1ea26c7b44d6d769cdc95039d4b51a9f582e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3711e89f_4fc60313",
         "filename": "services/video_capture/public/cpp/receiver_media_to_mojo_adapter.cc",
         "patchSetId": 3
@@ -149,6 +293,24 @@
       "writtenOn": "2017-08-30T16:15:56Z",
       "side": 1,
       "message": "After this CL, there are now a few behavior differences between MojoBufferHandleProvider and BufferPoolBufferHandleProvider:\n1.) MojoBufferHandleProvider never unmaps the memory, while BufferPoolBufferHandleProvider unmaps when the last in-process access handle is discarded.\n2.) MojoBufferHandleProvider::GetNonOwnedSharedMemoryHandleForLegacyIPC() guarantees that memory is and stays mapped. BufferPoolBufferHandleProvider::GetNonOwnedSharedMemoryHandleForLegacyIPC() does not participate in mapping/unmapping logic.\n\nBoth differences are probably fine, since the interface VideoCaptureDevice::Client::Buffer::HandleProvider does not specify any particular behavior. I just wanted to double check that you are aware and agree.",
+      "revId": "8bdb1ea26c7b44d6d769cdc95039d4b51a9f582e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9c5914a_4e15d405",
+        "filename": "services/video_capture/public/cpp/receiver_media_to_mojo_adapter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-31T03:37:51Z",
+      "side": 1,
+      "message": "I thought for a bit about how to solve the \"don\u0027t map memory until you really use it\" problem for both. It seems all I needed to do was split-out the shmem-handling part of SharedMemoryBufferTracker away from the Tracker-specific stuff.\n\nSo, I\u0027ve made a new SharedMemoryHandleProvider, and then had SharedMemoryBufferTracker use that to manage the shared memory. Then, in receiver_media_to_mojo_adapter.cc, I was able to delete the MojoBufferHandleProvider completely, and just use SharedMemoryHandleProvider there instead.\n\nSo, now both have common functionality and behavior, and only one implementation. No more unnecessary memory mappings! :)",
+      "parentUuid": "3711e89f_4fc60313",
       "revId": "8bdb1ea26c7b44d6d769cdc95039d4b51a9f582e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
