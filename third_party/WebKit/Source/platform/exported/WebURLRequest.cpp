@@ -418,6 +418,18 @@ bool WebURLRequest::IsExternalRequest() const {
   return resource_request_->IsExternalRequest();
 }
 
+bool WebURLRequest::IsCORSPreventPreflight() const {
+  return resource_request_->IsCORSPreventPreflight();
+}
+
+bool WebURLRequest::IsCORSRedirect() const {
+  return resource_request_->IsCORSRedirect();
+}
+
+WebURL WebURLRequest::GetCORSPreRedirectURL() const {
+  return resource_request_->GetCORSPreRedirectURL();
+}
+
 WebURLRequest::LoadingIPCType WebURLRequest::GetLoadingIPCType() const {
   return resource_request_->GetLoadingIPCType();
 }

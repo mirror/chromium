@@ -598,6 +598,10 @@ void WebURLLoaderImpl::Context::Start(const WebURLRequest& request,
   resource_request->resource_type = WebURLRequestToResourceType(request);
   resource_request->priority =
       ConvertWebKitPriorityToNetPriority(request.GetPriority());
+  resource_request->is_external_request = request.IsExternalRequest();
+  resource_request->cors_prevent_preflight = request.IsCORSPreventPreflight();
+  resource_request->cors_redirect = request.IsCORSRedirect();
+  resource_request->cors_pre_redirect_url = request.GetCORSPreRedirectURL();
   resource_request->appcache_host_id = request.AppCacheHostID();
   resource_request->should_reset_appcache = request.ShouldResetAppCache();
   resource_request->service_worker_mode =
@@ -614,7 +618,6 @@ void WebURLLoaderImpl::Context::Start(const WebURLRequest& request,
       GetRequestContextTypeForWebURLRequest(request);
   resource_request->fetch_mixed_content_context_type =
       GetMixedContentContextTypeForWebURLRequest(request);
-
   resource_request->fetch_frame_type =
       GetRequestContextFrameTypeForWebURLRequest(request);
   resource_request->request_body =

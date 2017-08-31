@@ -89,11 +89,29 @@ struct CONTENT_EXPORT ResourceRequest {
   // or kAppCacheNoHostId.
   int appcache_host_id;
 
-  // True if corresponding AppCache group should be resetted.
+  // True if corresponding AppCache group should be reset.
   bool should_reset_appcache = false;
 
-  // Indicates which frame (or worker context) the request is being loaded into,
-  // or kInvalidServiceWorkerProviderId.
+  // https://wicg.github.io/cors-rfc1918/#external-request
+  bool is_external_request = false;
+
+  // Some clients have a need to suppress CORS preflight requests (e.g.
+  // EventSource and ResourceMultiBufferDataProvider). If true, no preflight
+  // requests will be performed.
+  bool cors_prevent_preflight = false;
+
+  // TODO(hintzed): We use this flag to track if this requests has been
+  // redirected across origins because at the moment a cross origin redirect
+  // request would be canceld and a new one created by
+  // DocumentThreadableLoader.
+  bool cors_redirect = false;
+
+  // TODO(hintzed): Once we can modify CORS redirects, CORSURLLoader can keep
+  // track of the previous URL.
+  GURL cors_pre_redirect_url;
+
+  // Indicates which frame (or worker context) the request is being loaded
+  // into, or kInvalidServiceWorkerProviderId.
   int service_worker_provider_id = kInvalidServiceWorkerProviderId;
 
   // True if the request originated from a Service Worker, e.g. due to a
@@ -146,7 +164,7 @@ struct CONTENT_EXPORT ResourceRequest {
   // True if upload progress should be available for request.
   bool enable_upload_progress = false;
 
-  // True if login prompts for this request should be supressed. Cached
+  // True if login prompts for this request should be suppressed. Cached
   // credentials or default credentials may still be used for authentication.
   bool do_not_prompt_for_login = false;
 
@@ -191,7 +209,7 @@ struct CONTENT_EXPORT ResourceRequest {
   // browser.
   GURL resource_body_stream_url;
 
-  // Wether or not the initiator of this request is a secure context.
+  // Whether or not the initiator of this request is a secure context.
   bool initiated_in_secure_context = false;
 
   // The response should be downloaded and stored in the network cache, but not
