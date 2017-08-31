@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "891994dd_60451859",
+        "filename": "third_party/WebKit/Source/core/editing/VisiblePosition.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-31T01:30:59Z",
+      "side": 1,
+      "message": "Could you implement PositionTemplate::IsValidFor() and\nPwA::IsValidFor(doc) { return position_.IsValidFor(doc); }\nVP::IsValidFor(doc) { return position_with_affinity.IsValidFor(doc); }\n\nWe may want to change VS::IsValidFor() and SelectionTemplate::IsValidFor(),\nto utilize Pos::IsValidFor(), but it is another story.\n\nBTW, VP depends on DOM tree and style, so we should check dom_tree_version\nand style_version. ctro and getter should check both dom_tree_version and\nstyle_version, but we have too many use sites not to allow checking now.\n\nWe may wan to introduce StrictVisiblePosition or utilize\nDocumentLifecycle::DisallowTransitionScope somehow. I have no clear idea\nyet.",
+      "revId": "62e17db2e0d2935a37e08f7250f859fee761a328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
