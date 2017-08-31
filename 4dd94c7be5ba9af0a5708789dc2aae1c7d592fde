@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f5540146_1a3bca08",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1230199
+      },
+      "writtenOn": "2017-08-31T11:41:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e15aa6f_1fc194fd",
+      "range": {
+        "startLine": 124,
+        "startChar": 21,
+        "endLine": 124,
+        "endChar": 25
+      },
+      "revId": "4dd94c7be5ba9af0a5708789dc2aae1c7d592fde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "042a914a_3605d6b3",
         "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.cc",
         "patchSetId": 17
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "cfc13ca8_f44de57c",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1230199
+      },
+      "writtenOn": "2017-08-31T11:41:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "042a914a_3605d6b3",
+      "range": {
+        "startLine": 137,
+        "startChar": 59,
+        "endLine": 137,
+        "endChar": 63
+      },
+      "revId": "4dd94c7be5ba9af0a5708789dc2aae1c7d592fde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d260ce2_7d159d58",
         "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.h",
         "patchSetId": 17
@@ -62,6 +110,24 @@
       "revId": "4dd94c7be5ba9af0a5708789dc2aae1c7d592fde",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba7dbbac_8cd6b550",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1230199
+      },
+      "writtenOn": "2017-08-31T11:41:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d260ce2_7d159d58",
+      "revId": "4dd94c7be5ba9af0a5708789dc2aae1c7d592fde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "4ac4fafe_118032e9",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1230199
+      },
+      "writtenOn": "2017-08-31T11:41:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1896e47f_5c2dc4d3",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 43
+      },
+      "revId": "4dd94c7be5ba9af0a5708789dc2aae1c7d592fde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ce17766_8e608177",
         "filename": "chrome/test/data/webui/sys_internals/sys_internals_browsertest.js",
         "patchSetId": 17
@@ -102,6 +192,24 @@
       "revId": "4dd94c7be5ba9af0a5708789dc2aae1c7d592fde",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd1df963_6fd0f1e6",
+        "filename": "chrome/test/data/webui/sys_internals/sys_internals_browsertest.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1230199
+      },
+      "writtenOn": "2017-08-31T11:41:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ce17766_8e608177",
+      "revId": "4dd94c7be5ba9af0a5708789dc2aae1c7d592fde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "62a9cc78_423d189a",
+        "filename": "chrome/test/data/webui/sys_internals/sys_internals_browsertest.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1230199
+      },
+      "writtenOn": "2017-08-31T11:41:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bdc26968_905db135",
+      "range": {
+        "startLine": 42,
+        "startChar": 8,
+        "endLine": 42,
+        "endChar": 12
+      },
+      "revId": "4dd94c7be5ba9af0a5708789dc2aae1c7d592fde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ff21346_6ad20d72",
         "filename": "chrome/test/data/webui/sys_internals/sys_internals_browsertest.js",
         "patchSetId": 17
@@ -139,6 +271,30 @@
       "writtenOn": "2017-08-31T08:18:32Z",
       "side": 1,
       "message": "I\u0027m not really convinced of the value of const for these functions. Why is it worth doing over just function isBitmask(n)?",
+      "range": {
+        "startLine": 44,
+        "startChar": 4,
+        "endLine": 44,
+        "endChar": 9
+      },
+      "revId": "4dd94c7be5ba9af0a5708789dc2aae1c7d592fde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd2a42e9_1683aa83",
+        "filename": "chrome/test/data/webui/sys_internals/sys_internals_browsertest.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1230199
+      },
+      "writtenOn": "2017-08-31T11:41:48Z",
+      "side": 1,
+      "message": "I\u0027m trying to follow the style guide: https://google.github.io/styleguide/jsguide.html#appendices-legacy-exceptions-function\nIt says that don\u0027t use \"block scoped functions declarations\" and use \"const\" instead of \"var\".",
+      "parentUuid": "6ff21346_6ad20d72",
       "range": {
         "startLine": 44,
         "startChar": 4,
@@ -168,6 +324,24 @@
     },
     {
       "key": {
+        "uuid": "3a3421a8_38072166",
+        "filename": "chrome/test/data/webui/sys_internals/sys_internals_browsertest.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1230199
+      },
+      "writtenOn": "2017-08-31T11:41:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "926c0fb1_2610789f",
+      "revId": "4dd94c7be5ba9af0a5708789dc2aae1c7d592fde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7bab767d_f118ebe3",
         "filename": "chrome/test/data/webui/sys_internals/sys_internals_browsertest.js",
         "patchSetId": 17
@@ -188,6 +362,30 @@
       "revId": "4dd94c7be5ba9af0a5708789dc2aae1c7d592fde",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fda38af0_4ea6b7a9",
+        "filename": "chrome/test/data/webui/sys_internals/sys_internals_browsertest.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1230199
+      },
+      "writtenOn": "2017-08-31T11:41:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bab767d_f118ebe3",
+      "range": {
+        "startLine": 81,
+        "startChar": 31,
+        "endLine": 81,
+        "endChar": 32
+      },
+      "revId": "4dd94c7be5ba9af0a5708789dc2aae1c7d592fde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -214,6 +412,30 @@
     },
     {
       "key": {
+        "uuid": "9cd6c6bb_3088e260",
+        "filename": "chrome/test/data/webui/sys_internals/sys_internals_browsertest.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1230199
+      },
+      "writtenOn": "2017-08-31T11:41:48Z",
+      "side": 1,
+      "message": "I define this var in line 62 for the function |isCounter| to check if all counter is less than COUNTER_MAX.\nMaybe I should use another way to do this?",
+      "parentUuid": "d15a380a_f0274d22",
+      "range": {
+        "startLine": 120,
+        "startChar": 8,
+        "endLine": 120,
+        "endChar": 45
+      },
+      "revId": "4dd94c7be5ba9af0a5708789dc2aae1c7d592fde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "92303f63_e104dc6e",
         "filename": "chrome/test/data/webui/sys_internals/sys_internals_browsertest.js",
         "patchSetId": 17
@@ -225,6 +447,24 @@
       "writtenOn": "2017-08-31T08:18:32Z",
       "side": 1,
       "message": "You should use the assert* functions in webui/test_api.js rather than throwing your own errors.",
+      "revId": "4dd94c7be5ba9af0a5708789dc2aae1c7d592fde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57b2441c_2916b22c",
+        "filename": "chrome/test/data/webui/sys_internals/sys_internals_browsertest.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1230199
+      },
+      "writtenOn": "2017-08-31T11:41:48Z",
+      "side": 1,
+      "message": "I follow this doc: https://www.chromium.org/developers/updating-webui-for-material-design/testing-webui-with-mocha\nIt says that for asynchronous function use this callback function |done| and pass a JS Error to it when test failed.",
+      "parentUuid": "92303f63_e104dc6e",
       "revId": "4dd94c7be5ba9af0a5708789dc2aae1c7d592fde",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
