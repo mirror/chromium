@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5456ab67_0e36527b",
+        "filename": "ui/app_list/views/search_result_page_view_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-31T18:07:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c755954_edc0e7ea",
+      "revId": "e1d55996b0099027b1c6501d60297f5638b8a1c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cce82b16_96bd6909",
         "filename": "ui/app_list/views/search_result_page_view_unittest.cc",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-31T17:24:16Z",
       "side": 1,
       "message": "Is this class still in use ?",
+      "revId": "e1d55996b0099027b1c6501d60297f5638b8a1c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c7e9b50_0fc35e92",
+        "filename": "ui/app_list/views/search_result_page_view_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-31T18:07:15Z",
+      "side": 1,
+      "message": "Yes, for LeftRightMovement and UpDownMovement tests. Though SetUp() overridden is not needed now.",
+      "parentUuid": "cce82b16_96bd6909",
       "revId": "e1d55996b0099027b1c6501d60297f5638b8a1c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
