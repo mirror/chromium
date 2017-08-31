@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3d6d216b_89ae77f3",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_fetcher_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-08-31T05:57:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1eb51509_c22fc101",
+      "range": {
+        "startLine": 71,
+        "startChar": 18,
+        "endLine": 71,
+        "endChar": 19
+      },
+      "revId": "e053bab3ffd92bb701b6a71eb5cd38f0d8548c4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c55d00bb_80652bbe",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_fetcher_win.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "e053bab3ffd92bb701b6a71eb5cd38f0d8548c4e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bb03ffa_1b2ce046",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_fetcher_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-08-31T05:57:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c55d00bb_80652bbe",
+      "range": {
+        "startLine": 72,
+        "startChar": 22,
+        "endLine": 72,
+        "endChar": 23
+      },
+      "revId": "e053bab3ffd92bb701b6a71eb5cd38f0d8548c4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "750188db_bd9c7365",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_fetcher_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-08-31T05:57:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f24314ab_586defcb",
+      "range": {
+        "startLine": 73,
+        "startChar": 19,
+        "endLine": 73,
+        "endChar": 20
+      },
+      "revId": "e053bab3ffd92bb701b6a71eb5cd38f0d8548c4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c629d1d_09823438",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_fetcher_win.cc",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "95b460bf_9602755b",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_fetcher_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-08-31T05:57:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c629d1d_09823438",
+      "range": {
+        "startLine": 74,
+        "startChar": 15,
+        "endLine": 74,
+        "endChar": 16
+      },
+      "revId": "e053bab3ffd92bb701b6a71eb5cd38f0d8548c4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2db010b_0da8eab4",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_fetcher_win.cc",
         "patchSetId": 1
@@ -105,6 +201,30 @@
       "writtenOn": "2017-08-29T18:20:59Z",
       "side": 1,
       "message": "Not quite sure what the right value here is. This request downloads an exe from google servers.",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 61
+      },
+      "revId": "e053bab3ffd92bb701b6a71eb5cd38f0d8548c4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d5ee683_0269698d",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_fetcher_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-08-31T05:57:44Z",
+      "side": 1,
+      "message": "Then it should be GoogleOwnedService.",
+      "parentUuid": "a2db010b_0da8eab4",
       "range": {
         "startLine": 75,
         "startChar": 0,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "05d2d97c_c8eef5c7",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_fetcher_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-08-31T05:57:44Z",
+      "side": 1,
+      "message": "Cookies are not disabled in load flags and they are enabled by default. May I disable them?",
+      "parentUuid": "b9fa6209_4974be28",
+      "range": {
+        "startLine": 78,
+        "startChar": 31,
+        "endLine": 78,
+        "endChar": 35
+      },
+      "revId": "e053bab3ffd92bb701b6a71eb5cd38f0d8548c4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fead11f3_1ea1a603",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_fetcher_win.cc",
         "patchSetId": 1
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "672566a2_8129796d",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_fetcher_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-08-31T05:57:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fead11f3_1ea1a603",
+      "range": {
+        "startLine": 79,
+        "startChar": 25,
+        "endLine": 79,
+        "endChar": 26
+      },
+      "revId": "e053bab3ffd92bb701b6a71eb5cd38f0d8548c4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45176acd_98b2f57c",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_fetcher_win.cc",
         "patchSetId": 1
@@ -174,6 +342,30 @@
       "writtenOn": "2017-08-29T18:20:59Z",
       "side": 1,
       "message": "NA (This feature currently can\u0027t be disabled by users)",
+      "range": {
+        "startLine": 80,
+        "startChar": 19,
+        "endLine": 80,
+        "endChar": 20
+      },
+      "revId": "e053bab3ffd92bb701b6a71eb5cd38f0d8548c4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e0744a3_22d73488",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_fetcher_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-08-31T05:57:44Z",
+      "side": 1,
+      "message": "Is it behind any user request or consent that we can mention here?",
+      "parentUuid": "45176acd_98b2f57c",
       "range": {
         "startLine": 80,
         "startChar": 19,
