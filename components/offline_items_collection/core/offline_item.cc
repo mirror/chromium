@@ -41,6 +41,7 @@ bool OfflineItem::Progress::operator==(
 OfflineItem::OfflineItem()
     : filter(OfflineItemFilter::FILTER_OTHER),
       is_transient(false),
+      is_suggested(false),
       total_size_bytes(0),
       externally_removed(false),
       is_openable(false),
@@ -64,6 +65,7 @@ bool OfflineItem::operator==(const OfflineItem& offline_item) const {
          description == offline_item.description &&
          filter == offline_item.filter &&
          is_transient == offline_item.is_transient &&
+         is_suggested == offline_item.is_suggested &&
          total_size_bytes == offline_item.total_size_bytes &&
          externally_removed == offline_item.externally_removed &&
          creation_time == offline_item.creation_time &&
