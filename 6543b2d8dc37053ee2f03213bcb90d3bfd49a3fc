@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7e58384_6926c2b8",
+        "filename": "ui/message_center/notification.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-08-31T07:21:45Z",
+      "side": 1,
+      "message": "Please add a link to the filed issue.",
+      "range": {
+        "startLine": 122,
+        "startChar": 33,
+        "endLine": 122,
+        "endChar": 0
+      },
+      "revId": "6543b2d8dc37053ee2f03213bcb90d3bfd49a3fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
