@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a216fa8b_67de1bc5",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 869,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-31T22:38:42Z",
+      "side": 1,
+      "message": "hm, I don\u0027t think this it right. what about accelerated animations? we don\u0027t want to defer them\n\nCould we instead add invalid_rect to a deferred_paint_ region and return early in Layer::SchedulePaint if content_layer_ is set instead?",
+      "revId": "3d0d2e71edac7c9a2fb4faae1e4a9f60e0783c3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09833cc6_42c2cf1d",
+        "filename": "ui/compositor/layer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-31T22:38:42Z",
+      "side": 1,
+      "message": "SetPaintDeferred(bool deferred) ?",
+      "revId": "3d0d2e71edac7c9a2fb4faae1e4a9f60e0783c3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
