@@ -122,7 +122,7 @@ FastInkView::FastInkView(aura::Window* root_window) : weak_ptr_factory_(this) {
   screen_to_buffer_transform_ =
       widget_->GetNativeWindow()->GetHost()->GetRootTransform();
 
-  frame_sink_holder_ = base::MakeUnique<FastInkLayerTreeFrameSinkHolder>(
+  frame_sink_holder_ = std::make_unique<FastInkLayerTreeFrameSinkHolder>(
       this, widget_->GetNativeView()->CreateLayerTreeFrameSink());
 }
 
@@ -281,7 +281,7 @@ void FastInkView::UpdateSurface() {
 
   // Create new resource if needed.
   if (!resource)
-    resource = base::MakeUnique<FastInkResource>();
+    resource = std::make_unique<FastInkResource>();
 
   // Acquire context provider for resource if needed.
   // Note: We make no attempts to recover if the context provider is later

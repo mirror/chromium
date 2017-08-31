@@ -19,7 +19,7 @@ AppListPresenterDelegateFactory::~AppListPresenterDelegateFactory() {}
 std::unique_ptr<app_list::AppListPresenterDelegate>
 AppListPresenterDelegateFactory::GetDelegate(
     app_list::AppListPresenterImpl* presenter) {
-  return base::MakeUnique<AppListPresenterDelegate>(
+  return std::make_unique<AppListPresenterDelegate>(
       presenter, view_delegate_factory_.get());
 }
 

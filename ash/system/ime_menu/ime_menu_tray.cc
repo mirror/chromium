@@ -314,7 +314,7 @@ ImeMenuTray::ImeMenuTray(Shelf* shelf)
   tray_notifier->AddVirtualKeyboardObserver(this);
 
   if (!drag_controller())
-    set_drag_controller(base::MakeUnique<TrayDragController>(shelf));
+    set_drag_controller(std::make_unique<TrayDragController>(shelf));
 }
 
 ImeMenuTray::~ImeMenuTray() {

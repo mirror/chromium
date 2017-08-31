@@ -215,7 +215,7 @@ UserView::UserView(SystemTrayItem* owner, LoginStatus login) : owner_(owner) {
       views::BoxLayout::CROSS_AXIS_ALIGNMENT_CENTER);
   layout->SetFlexForView(user_card_container_, 1);
 
-  SetBorder(base::MakeUnique<ActiveUserBorder>());
+  SetBorder(std::make_unique<ActiveUserBorder>());
 }
 
 UserView::~UserView() {

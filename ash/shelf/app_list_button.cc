@@ -247,7 +247,7 @@ std::unique_ptr<views::InkDropRipple> AppListButton::CreateInkDropRipple()
   gfx::Rect bounds(center.x() - kAppListButtonRadius,
                    center.y() - kAppListButtonRadius, 2 * kAppListButtonRadius,
                    2 * kAppListButtonRadius);
-  return base::MakeUnique<views::FloodFillInkDropRipple>(
+  return std::make_unique<views::FloodFillInkDropRipple>(
       size(), GetLocalBounds().InsetsFrom(bounds),
       GetInkDropCenterBasedOnLastEvent(), GetInkDropBaseColor(),
       ink_drop_visible_opacity());
@@ -275,7 +275,7 @@ std::unique_ptr<views::InkDrop> AppListButton::CreateInkDrop() {
 }
 
 std::unique_ptr<views::InkDropMask> AppListButton::CreateInkDropMask() const {
-  return base::MakeUnique<views::CircleInkDropMask>(
+  return std::make_unique<views::CircleInkDropMask>(
       size(),
       last_event_is_back_event_ ? GetBackButtonCenterPoint()
                                 : GetAppListButtonCenterPoint(),
@@ -555,9 +555,9 @@ void AppListButton::OnActiveUserSessionChanged(const AccountId& account_id) {
     AddChildView(voice_interaction_overlay_);
     voice_interaction_overlay_->SetVisible(false);
     voice_interaction_animation_delay_timer_ =
-        base::MakeUnique<base::OneShotTimer>();
+        std::make_unique<base::OneShotTimer>();
     voice_interaction_animation_hide_delay_timer_ =
-        base::MakeUnique<base::OneShotTimer>();
+        std::make_unique<base::OneShotTimer>();
   }
 }
 

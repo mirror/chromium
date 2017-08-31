@@ -488,7 +488,7 @@ void NetworkListView::UpdateNetworks(
   for (const auto* network : networks) {
     if (!NetworkTypePattern::NonVirtual().MatchesType(network->type()))
       continue;
-    network_list_.push_back(base::MakeUnique<NetworkInfo>(network->guid()));
+    network_list_.push_back(std::make_unique<NetworkInfo>(network->guid()));
   }
 }
 

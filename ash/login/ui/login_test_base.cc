@@ -35,7 +35,7 @@ LoginTestBase::~LoginTestBase() {}
 void LoginTestBase::ShowWidgetWithContent(views::View* content) {
   EXPECT_FALSE(widget_) << "CreateWidget can only be called once.";
 
-  delegate_ = base::MakeUnique<WidgetDelegate>(content);
+  delegate_ = std::make_unique<WidgetDelegate>(content);
 
   views::Widget::InitParams params(
       views::Widget::InitParams::TYPE_WINDOW_FRAMELESS);

@@ -123,7 +123,7 @@ void TabletPowerButtonController::TestApi::SendKeyEvent(ui::KeyEvent* event) {
 
 TabletPowerButtonController::TabletPowerButtonController(
     LockStateController* controller)
-    : display_controller_(base::MakeUnique<PowerButtonDisplayController>()),
+    : display_controller_(std::make_unique<PowerButtonDisplayController>()),
       tick_clock_(new base::DefaultTickClock()),
       controller_(controller),
       accelerometer_scoped_observer_(this) {

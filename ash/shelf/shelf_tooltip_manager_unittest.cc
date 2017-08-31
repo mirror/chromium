@@ -36,7 +36,7 @@ class ShelfTooltipManagerTest : public AshTestBase {
   views::Widget* GetTooltip() { return tooltip_manager_->bubble_->GetWidget(); }
 
   std::unique_ptr<views::Widget> CreateTestWidget() {
-    std::unique_ptr<views::Widget> widget = base::MakeUnique<views::Widget>();
+    std::unique_ptr<views::Widget> widget = std::make_unique<views::Widget>();
     views::Widget::InitParams params;
     params.ownership = views::Widget::InitParams::WIDGET_OWNS_NATIVE_WIDGET;
     params.context = CurrentContext();

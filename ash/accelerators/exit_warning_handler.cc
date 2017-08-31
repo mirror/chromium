@@ -153,7 +153,7 @@ void ExitWarningHandler::Show() {
   params.name = "ExitWarningWindow";
   params.parent =
       root_window->GetChildById(kShellWindowId_SettingBubbleContainer);
-  widget_ = base::MakeUnique<views::Widget>();
+  widget_ = std::make_unique<views::Widget>();
   widget_->Init(params);
   widget_->Show();
 

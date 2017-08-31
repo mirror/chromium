@@ -14,9 +14,9 @@
 namespace ash {
 
 TestAppListPresenterImpl::TestAppListPresenterImpl()
-    : app_list::AppListPresenterImpl(base::MakeUnique<
+    : app_list::AppListPresenterImpl(std::make_unique<
                                      AppListPresenterDelegateFactory>(
-          base::MakeUnique<app_list::test::TestAppListViewDelegateFactory>())) {
+          std::make_unique<app_list::test::TestAppListViewDelegateFactory>())) {
   // Connect Ash's app list implementation to the presenter.
   app_list::mojom::AppListPtr app_list_ptr;
   Shell::Get()->app_list()->BindRequest(mojo::MakeRequest(&app_list_ptr));

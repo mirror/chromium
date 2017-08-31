@@ -70,7 +70,7 @@ class WindowWatcher::WorkspaceWindowWatcher : public aura::WindowObserver {
 
 WindowWatcher::WindowWatcher() {
   Shell::Get()->AddShellObserver(this);
-  workspace_window_watcher_ = base::MakeUnique<WorkspaceWindowWatcher>(this);
+  workspace_window_watcher_ = std::make_unique<WorkspaceWindowWatcher>(this);
   for (aura::Window* root : Shell::GetAllRootWindows())
     workspace_window_watcher_->RootWindowAdded(root);
 }
@@ -109,7 +109,7 @@ void WindowWatcher::OnWindowAdded(aura::Window* new_window) {
   model->Add(item);
 
   model->SetShelfItemDelegate(
-      item.id, base::MakeUnique<WindowWatcherShelfItemDelegate>(item.id, this));
+      item.id, std::make_unique<WindowWatcherShelfItemDelegate>(item.id, this));
   new_window->SetProperty(kShelfIDKey, new std::string(item.id.Serialize()));
 }
 

@@ -20,13 +20,13 @@ namespace ash {
 
 // static
 void PaletteTool::RegisterToolInstances(PaletteToolManager* tool_manager) {
-  tool_manager->AddTool(base::MakeUnique<CaptureRegionMode>(tool_manager));
-  tool_manager->AddTool(base::MakeUnique<CaptureScreenAction>(tool_manager));
-  tool_manager->AddTool(base::MakeUnique<CreateNoteAction>(tool_manager));
+  tool_manager->AddTool(std::make_unique<CaptureRegionMode>(tool_manager));
+  tool_manager->AddTool(std::make_unique<CaptureScreenAction>(tool_manager));
+  tool_manager->AddTool(std::make_unique<CreateNoteAction>(tool_manager));
   if (chromeos::switches::IsVoiceInteractionEnabled())
-    tool_manager->AddTool(base::MakeUnique<MetalayerMode>(tool_manager));
-  tool_manager->AddTool(base::MakeUnique<LaserPointerMode>(tool_manager));
-  tool_manager->AddTool(base::MakeUnique<MagnifierMode>(tool_manager));
+    tool_manager->AddTool(std::make_unique<MetalayerMode>(tool_manager));
+  tool_manager->AddTool(std::make_unique<LaserPointerMode>(tool_manager));
+  tool_manager->AddTool(std::make_unique<MagnifierMode>(tool_manager));
 }
 
 PaletteTool::PaletteTool(Delegate* delegate) : delegate_(delegate) {}

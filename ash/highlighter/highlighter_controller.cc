@@ -77,7 +77,7 @@ void HighlighterController::CreatePointerView(
     base::TimeDelta presentation_delay,
     aura::Window* root_window) {
   highlighter_view_ =
-      base::MakeUnique<HighlighterView>(presentation_delay, root_window);
+      std::make_unique<HighlighterView>(presentation_delay, root_window);
   result_view_.reset();
 }
 
@@ -119,7 +119,7 @@ void HighlighterController::UpdatePointerView(ui::TouchEvent* event) {
             gfx::ScaleRect(box, GetScreenshotScale(current_window))));
       }
 
-      result_view_ = base::MakeUnique<HighlighterResultView>(current_window);
+      result_view_ = std::make_unique<HighlighterResultView>(current_window);
       result_view_->Animate(
           box, gesture_type,
           base::Bind(&HighlighterController::DestroyResultView,

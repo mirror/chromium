@@ -629,10 +629,10 @@ void RootWindowController::ShowContextMenu(const gfx::Point& location_in_screen,
   const int64_t display_id = display::Screen::GetScreen()
                                  ->GetDisplayNearestWindow(GetRootWindow())
                                  .id();
-  menu_model_ = base::MakeUnique<ShelfContextMenuModel>(
+  menu_model_ = std::make_unique<ShelfContextMenuModel>(
       std::vector<mojom::MenuItemPtr>(), nullptr, display_id);
 
-  menu_model_adapter_ = base::MakeUnique<views::MenuModelAdapter>(
+  menu_model_adapter_ = std::make_unique<views::MenuModelAdapter>(
       menu_model_.get(),
       base::Bind(&RootWindowController::OnMenuClosed, base::Unretained(this)));
 
@@ -641,7 +641,7 @@ void RootWindowController::ShowContextMenu(const gfx::Point& location_in_screen,
   if (!wallpaper_widget_controller())
     return;
 
-  menu_runner_ = base::MakeUnique<views::MenuRunner>(
+  menu_runner_ = std::make_unique<views::MenuRunner>(
       menu_model_adapter_->CreateMenu(), views::MenuRunner::CONTEXT_MENU);
   menu_runner_->RunMenuAt(wallpaper_widget_controller()->widget(), nullptr,
                           gfx::Rect(location_in_screen, gfx::Size()),
@@ -665,7 +665,7 @@ RootWindowController::RootWindowController(
       mus_window_tree_host_(window_tree_host),
       window_tree_host_(ash_host ? ash_host->AsWindowTreeHost()
                                  : window_tree_host),
-      shelf_(base::MakeUnique<Shelf>()) {
+      shelf_(std::make_unique<Shelf>()) {
   DCHECK((ash_host && !window_tree_host) || (!ash_host && window_tree_host));
 
   if (!root_window_controllers_)
@@ -768,7 +768,7 @@ void RootWindowController::InitLayoutManagers() {
       GetContainer(kShellWindowId_AlwaysOnTopContainer);
   DCHECK(always_on_top_container);
   always_on_top_controller_ =
-      base::MakeUnique<AlwaysOnTopController>(always_on_top_container);
+      std::make_unique<AlwaysOnTopController>(always_on_top_container);
 
   // Create Panel layout manager
   aura::Window* panel_container = GetContainer(kShellWindowId_PanelContainer);
@@ -781,12 +781,12 @@ void RootWindowController::InitLayoutManagers() {
   // occur after the ShelfLayoutManager is constructed by ShelfWidget.
   aura::Window* shelf_container = GetContainer(kShellWindowId_ShelfContainer);
   shelf_container->SetEventTargeter(
-      base::MakeUnique<ShelfWindowTargeter>(shelf_container, shelf_.get()));
+      std::make_unique<ShelfWindowTargeter>(shelf_container, shelf_.get()));
   aura::Window* status_container = GetContainer(kShellWindowId_StatusContainer);
   status_container->SetEventTargeter(
-      base::MakeUnique<ShelfWindowTargeter>(status_container, shelf_.get()));
+      std::make_unique<ShelfWindowTargeter>(status_container, shelf_.get()));
 
-  panel_container_handler_ = base::MakeUnique<PanelWindowEventHandler>();
+  panel_container_handler_ = std::make_unique<PanelWindowEventHandler>();
   GetContainer(kShellWindowId_PanelContainer)
       ->AddPreTargetHandler(panel_container_handler_.get());
 

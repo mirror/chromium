@@ -93,7 +93,7 @@ TEST_F(TrayActionTest, NoTrayActionClient) {
   EXPECT_EQ(0u, observer.observed_states().size());
 
   std::unique_ptr<TestTrayActionClient> action_client =
-      base::MakeUnique<TestTrayActionClient>();
+      std::make_unique<TestTrayActionClient>();
   tray_action->SetClient(action_client->CreateInterfacePtrAndBind(),
                          TrayActionState::kLaunching);
 

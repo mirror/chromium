@@ -103,7 +103,7 @@ ui::ModalType ChildModalWindow::GetModalType() const {
 }
 
 ChildModalParent::ChildModalParent(aura::Window* context)
-    : widget_(base::MakeUnique<Widget>()),
+    : widget_(std::make_unique<Widget>()),
       button_(new views::LabelButton(
           this,
           base::ASCIIToUTF16("Show/Hide Child Modal Window"))),

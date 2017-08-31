@@ -65,7 +65,7 @@ Shelf::Shelf() : shelf_locking_manager_(this) {
   // TODO: ShelfBezelEventHandler needs to work with mus too.
   // http://crbug.com/636647
   if (Shell::GetAshConfig() != Config::MASH)
-    bezel_event_handler_ = base::MakeUnique<ShelfBezelEventHandler>(this);
+    bezel_event_handler_ = std::make_unique<ShelfBezelEventHandler>(this);
 }
 
 Shelf::~Shelf() {}
@@ -252,7 +252,7 @@ void Shelf::ActivateShelfItemOnDisplay(int item_index, int64_t display_id) {
   ShelfModel* shelf_model = Shell::Get()->shelf_model();
   const ShelfItem& item = shelf_model->items()[item_index];
   ShelfItemDelegate* item_delegate = shelf_model->GetShelfItemDelegate(item.id);
-  std::unique_ptr<ui::Event> event = base::MakeUnique<ui::KeyEvent>(
+  std::unique_ptr<ui::Event> event = std::make_unique<ui::KeyEvent>(
       ui::ET_KEY_RELEASED, ui::VKEY_UNKNOWN, ui::EF_NONE);
   item_delegate->ItemSelected(std::move(event), display_id, LAUNCH_FROM_UNKNOWN,
                               base::Bind(&NoopCallback));
@@ -317,7 +317,7 @@ void Shelf::WillChangeVisibilityState(ShelfVisibilityState new_state) {
   } else if (!auto_hide_event_handler_ &&
              Shell::GetAshConfig() != Config::MASH) {
     auto_hide_event_handler_ =
-        base::MakeUnique<AutoHideEventHandler>(shelf_layout_manager());
+        std::make_unique<AutoHideEventHandler>(shelf_layout_manager());
   }
 }
 

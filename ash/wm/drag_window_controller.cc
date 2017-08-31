@@ -188,7 +188,7 @@ DragWindowController::DragWindowController(aura::Window* window)
     if (current.id() == display.id())
       continue;
     drag_windows_.push_back(
-        base::MakeUnique<DragWindowDetails>(display, window_));
+        std::make_unique<DragWindowDetails>(display, window_));
   }
 }
 

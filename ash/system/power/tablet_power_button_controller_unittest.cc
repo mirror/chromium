@@ -75,10 +75,10 @@ class TabletPowerButtonControllerTest : public AshTestBase {
                              ->tablet_power_button_controller_for_test();
 
     lock_state_controller_ = Shell::Get()->lock_state_controller();
-    test_api_ = base::MakeUnique<TabletPowerButtonController::TestApi>(
+    test_api_ = std::make_unique<TabletPowerButtonController::TestApi>(
         tablet_controller_);
     lock_state_test_api_ =
-        base::MakeUnique<LockStateControllerTestApi>(lock_state_controller_);
+        std::make_unique<LockStateControllerTestApi>(lock_state_controller_);
     tick_clock_ = new base::SimpleTestTickClock;
     tablet_controller_->SetTickClockForTesting(
         std::unique_ptr<base::TickClock>(tick_clock_));

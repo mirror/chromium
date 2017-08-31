@@ -27,7 +27,7 @@ ScreenDimmer::ScreenDimmer(Container container)
     : container_(container),
       is_dimming_(false),
       at_bottom_(false),
-      window_dimmers_(base::MakeUnique<WindowUserData<WindowDimmer>>()) {
+      window_dimmers_(std::make_unique<WindowUserData<WindowDimmer>>()) {
   Shell::Get()->AddShellObserver(this);
 }
 
@@ -62,7 +62,7 @@ void ScreenDimmer::Update(bool should_dim) {
     if (should_dim) {
       if (!window_dimmer) {
         window_dimmers_->Set(container,
-                             base::MakeUnique<WindowDimmer>(container));
+                             std::make_unique<WindowDimmer>(container));
         window_dimmer = window_dimmers_->Get(container);
         window_dimmer->SetDimOpacity(container_ == Container::ROOT
                                          ? kDimmingLayerOpacityForRoot

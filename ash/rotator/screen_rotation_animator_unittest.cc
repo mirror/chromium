@@ -168,12 +168,12 @@ void ScreenRotationAnimatorSlowAnimationTest::SetUp() {
   AshTestBase::SetUp();
 
   display_ = display::Screen::GetScreen()->GetPrimaryDisplay();
-  animator_ = base::MakeUnique<ScreenRotationAnimator>(
+  animator_ = std::make_unique<ScreenRotationAnimator>(
       Shell::GetRootWindowForDisplayId(display_.id()));
-  test_api_ = base::MakeUnique<ScreenRotationAnimatorTestApi>(animator_.get());
+  test_api_ = std::make_unique<ScreenRotationAnimatorTestApi>(animator_.get());
   test_api()->DisableAnimationTimers();
   non_zero_duration_mode_ =
-      base::MakeUnique<ui::ScopedAnimationDurationScaleMode>(
+      std::make_unique<ui::ScopedAnimationDurationScaleMode>(
           ui::ScopedAnimationDurationScaleMode::SLOW_DURATION);
 }
 
@@ -233,12 +233,12 @@ void ScreenRotationAnimatorSmoothAnimationTest::SetUp() {
   ash_test_helper()->reset_commandline();
 
   display_ = display::Screen::GetScreen()->GetPrimaryDisplay();
-  run_loop_ = base::MakeUnique<base::RunLoop>();
+  run_loop_ = std::make_unique<base::RunLoop>();
   SetScreenRotationAnimator(Shell::GetRootWindowForDisplayId(display_.id()),
                             run_loop_->QuitWhenIdleClosure(),
                             run_loop_->QuitWhenIdleClosure());
   non_zero_duration_mode_ =
-      base::MakeUnique<ui::ScopedAnimationDurationScaleMode>(
+      std::make_unique<ui::ScopedAnimationDurationScaleMode>(
           ui::ScopedAnimationDurationScaleMode::SLOW_DURATION);
 }
 
@@ -246,9 +246,9 @@ void ScreenRotationAnimatorSmoothAnimationTest::SetScreenRotationAnimator(
     aura::Window* root_window,
     const base::Closure& before_callback,
     const base::Closure& after_callback) {
-  animator_ = base::MakeUnique<TestScreenRotationAnimator>(
+  animator_ = std::make_unique<TestScreenRotationAnimator>(
       root_window, before_callback, after_callback);
-  test_api_ = base::MakeUnique<ScreenRotationAnimatorTestApi>(animator_.get());
+  test_api_ = std::make_unique<ScreenRotationAnimatorTestApi>(animator_.get());
   test_api()->DisableAnimationTimers();
 }
 

@@ -215,7 +215,7 @@ void FrameSizeButton::UpdateSnapType(const ui::LocatedEvent& event) {
     aura::Window* window = frame_->GetNativeWindow();
     if (!phantom_window_controller_.get()) {
       phantom_window_controller_ =
-          base::MakeUnique<PhantomWindowController>(window);
+          std::make_unique<PhantomWindowController>(window);
     }
     gfx::Rect phantom_bounds_in_screen =
         (snap_type_ == SNAP_LEFT)

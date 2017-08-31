@@ -48,7 +48,7 @@ void ResizeShadowController::OnWindowVisibilityChanging(aura::Window* window,
 }
 
 ResizeShadow* ResizeShadowController::CreateShadow(aura::Window* window) {
-  auto shadow = base::MakeUnique<ResizeShadow>(window);
+  auto shadow = std::make_unique<ResizeShadow>(window);
   window->AddObserver(this);
 
   ResizeShadow* raw_shadow = shadow.get();
