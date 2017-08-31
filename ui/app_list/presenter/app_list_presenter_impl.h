@@ -57,13 +57,6 @@ class APP_LIST_PRESENTER_EXPORT AppListPresenterImpl
   // display (in which the |window| exists) the app list should be shown.
   void Show(int64_t display_id);
 
-  // Updates y position and opacity of app list. |is_end_gesture| means it is
-  // the end of the gesture dragging of app list from shelf and should restore
-  // the opacity of the app list.
-  void UpdateYPositionAndOpacity(int y_position_in_screen,
-                                 float background_opacity,
-                                 bool is_end_gesture);
-
   // Invoked to dismiss app list. This may leave the view open but hidden from
   // the user.
   void Dismiss();
@@ -80,6 +73,13 @@ class APP_LIST_PRESENTER_EXPORT AppListPresenterImpl
 
   // Sets the app list interface pointer; used to report visibility changes.
   void SetAppList(mojom::AppListPtr app_list);
+
+  // Updates y position and opacity of app list.
+  void UpdateYPositionAndOpacity(int y_position_in_screen,
+                                 float background_opacity);
+
+  // Ends the drag of app list from shelf.
+  void EndDragFromShelf(mojom::AppListState app_list_state);
 
  private:
   friend class test::AppListPresenterImplTestApi;
