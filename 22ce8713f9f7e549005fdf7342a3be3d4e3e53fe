@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "2809c8d1_bfa267e1",
+        "filename": "build/run_swarming_xcode_install.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-08-31T13:53:47Z",
+      "side": 1,
+      "message": "generally we just stick it up together, to save one extra line",
+      "revId": "22ce8713f9f7e549005fdf7342a3be3d4e3e53fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66f9c876_16ea2d8f",
+        "filename": "build/run_swarming_xcode_install.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-08-31T13:53:47Z",
+      "side": 1,
+      "message": "Always use prefix\u003d\u0027\u003csomething\u003e\u0027 when creating temporary files and directory. This way it\u0027s easier to see what tool leaks whenever it happens. When there\u0027s no prefix, it\u0027s a sign of sloppier programming. Unsurprisingly, most of the leaks do not have a prefix.",
+      "revId": "22ce8713f9f7e549005fdf7342a3be3d4e3e53fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07f28686_34ed26c3",
+        "filename": "build/run_swarming_xcode_install.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-08-31T13:53:47Z",
+      "side": 1,
+      "message": "use consistent quotes",
+      "revId": "22ce8713f9f7e549005fdf7342a3be3d4e3e53fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9eddf64_7ef46447",
+        "filename": "build/run_swarming_xcode_install.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-08-31T13:53:47Z",
+      "side": 1,
+      "message": "Here and below:\nPrefix the command with sys.executable.\nAligment at ( makes it uses way more lines than necessary. You could do instead:\n\n  cmd \u003d [\n    sys.executable, os.path.join(luci_client, \u0027isolateserver.py\u0027), \u0027archive\u0027,\n    \u0027-I\u0027, \u0027touch-isolate.appspot.com\u0027, tmp_dir,\n  ]\n  isolate_hash \u003d subprocess.check_output(cmd).split()[0]\n \n5 lines instead of 7 and more readable IMHO, but that\u0027s a personal thing.",
+      "revId": "22ce8713f9f7e549005fdf7342a3be3d4e3e53fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7455bc12_cc4fafcc",
         "filename": "build/run_swarming_xcode_install.py",
         "patchSetId": 4
