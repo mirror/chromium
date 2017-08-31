@@ -1646,7 +1646,8 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <owner>newcomer@chromium.org</owner>
   <summary>
     The number of apps launched from the launcher. This is logged each time an
-    app is launched. The bucket denotes whether the app is suggested.
+    app is launched. Enabled means the app was a suggested app, disabled means
+    it was not a suggested app.
   </summary>
 </histogram>
 
