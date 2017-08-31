@@ -50,6 +50,14 @@ extern const char kRealmKey[];
 extern const char kAuthCredentialsKey[];
 extern const char kUsernameKey[];
 extern const char kPasswordKey[];
+extern const char kTLSInfoKey[];
+extern const char kTLSSentChainKey[];
+extern const char kTLSBuiltChainKey[];
+extern const char kTLSBuiltChainValidKey[];
+extern const char kTLSProtocolKey[];
+extern const char kTLSVersionKey[];
+extern const char kTLSKeyExchangeKey[];
+extern const char kTLSCipherSuiteKey[];
 
 // Events.
 extern const char kOnAuthRequiredEvent[];

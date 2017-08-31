@@ -33,6 +33,7 @@ class Extension;
 
 namespace net {
 class NetLogWithSource;
+class X509Certificate;
 }
 
 namespace extension_web_request_api_helpers {
@@ -50,6 +51,7 @@ struct ExtraInfoSpec {
     BLOCKING = 1 << 2,
     ASYNC_BLOCKING = 1 << 3,
     REQUEST_BODY = 1 << 4,
+    TLS_INFO = 1 << 5,
   };
 
   static bool InitFromValue(const base::ListValue& value, int* extra_info_spec);
@@ -335,6 +337,12 @@ void ClearCacheOnNavigation();
 std::unique_ptr<base::DictionaryValue> CreateHeaderDictionary(
     const std::string& name,
     const std::string& value);
+
+// Returns a list of base::Value containing the DER encoding of the certs
+// in the chain of certificates referenced by |cert|. Ownership is passed to the
+// caller.
+std::unique_ptr<base::Value> ExtractCertificateChain(
+    net::X509Certificate* cert);
 
 }  // namespace extension_web_request_api_helpers
 

@@ -23,7 +23,10 @@
 #include "net/base/upload_data_stream.h"
 #include "net/http/http_request_headers.h"
 #include "net/http/http_response_headers.h"
+#include "net/ssl/ssl_cipher_suite_names.h"
+#include "net/ssl/ssl_connection_status_flags.h"
 #include "net/url_request/url_request.h"
+#include "third_party/boringssl/src/include/openssl/ssl.h"
 
 using extension_web_request_api_helpers::ExtraInfoSpec;
 
@@ -252,6 +255,53 @@ void WebRequestEventDetails::OnDeterminedFrameData(
     const ExtensionApiFrameIdMap::FrameData& frame_data) {
   SetFrameData(frame_data);
   callback.Run(std::move(self));
+}
+
+void WebRequestEventDetails::SetTLSInfo(const net::URLRequest* request) {
+  if (!(extra_info_spec_ & ExtraInfoSpec::TLS_INFO))
+    return;
+  if (request->ssl_info().cert == NULL &&
+      request->ssl_info().unverified_cert.get() == NULL)
+    return;
+
+  const net::SSLInfo tls_info = request->ssl_info();
+  auto info_dict = std::make_unique<base::DictionaryValue>();
+
+  if (tls_info.unverified_cert)
+    info_dict->Set(keys::kTLSSentChainKey, helpers::ExtractCertificateChain(
+                                               tls_info.unverified_cert.get()));
+
+  if (request->ssl_info().cert != NULL)
+    info_dict->Set(keys::kTLSBuiltChainKey,
+                   helpers::ExtractCertificateChain(tls_info.cert.get()));
+
+  info_dict->SetBoolean(keys::kTLSBuiltChainValidKey,
+                        !net::IsCertStatusError(tls_info.cert_status));
+
+  const char* protocol;
+  const char* version_str;
+  int ssl_version =
+      net::SSLConnectionStatusToVersion(tls_info.connection_status);
+  net::SSLVersionToString(&version_str, net::SSLConnectionStatusToVersion(
+                                            tls_info.connection_status));
+  if (ssl_version == net::SSL_CONNECTION_VERSION_QUIC) {
+    protocol = "QUIC";
+  } else {
+    protocol = "TLS";
+    info_dict->SetString(keys::kTLSVersionKey, version_str);
+    info_dict->SetInteger(
+        keys::kTLSCipherSuiteKey,
+        net::SSLConnectionStatusToCipherSuite(tls_info.connection_status));
+    if (tls_info.key_exchange_group) {
+      const char* key_exchange =
+          SSL_get_curve_name(tls_info.key_exchange_group);
+      if (key_exchange)
+        info_dict->SetString(keys::kTLSKeyExchangeKey, key_exchange);
+    }
+  }
+  info_dict->SetString(keys::kTLSProtocolKey, protocol);
+
+  dict_.Set(keys::kTLSInfoKey, std::move(info_dict));
 }
 
 }  // namespace extensions

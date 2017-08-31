@@ -77,6 +77,10 @@ class WebRequestEventDetails {
   // - ip
   void SetResponseSource(const net::URLRequest* request);
 
+  // Sets the following key:
+  // - sslInfo
+  void SetTLSInfo(const net::URLRequest* request);
+
   void SetBoolean(const std::string& key, bool value) {
     dict_.SetBoolean(key, value);
   }
