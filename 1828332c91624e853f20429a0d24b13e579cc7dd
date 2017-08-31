@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78a4bc7d_6b565444",
+        "filename": "extensions/browser/api/feedback_private/feedback_private_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-31T16:56:40Z",
+      "side": 1,
+      "message": "We usually don\u0027t want to use DispatchEventWithLazyListener() without good reason, because if the listener wasn\u0027t registered, there\u0027s a decent chance it won\u0027t receive the event anyway.  We only use it when the extension hasn\u0027t had a chance to register it\u0027s own listener.\n\nWhen/where is the listener registered, and why isn\u0027t it successful?",
+      "revId": "1828332c91624e853f20429a0d24b13e579cc7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
