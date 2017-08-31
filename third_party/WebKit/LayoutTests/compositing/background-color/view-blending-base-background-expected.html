@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<script>
+onload = function() {
+  if (window.testRunner && window.internals)
+    testRunner.setCustomTextOutput(internals.layerTreeAsText(document));
+}
+</script>
+<body style="background: rgb(127, 127, 191)">
+  The view's background should blend the white base background and <body>'s background.
+</body>
