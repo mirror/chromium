@@ -543,6 +543,30 @@
     },
     {
       "key": {
+        "uuid": "f5a45b20_65bd08f1",
+        "filename": "extensions/browser/api/declarative_net_request/utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-31T20:18:25Z",
+      "side": 1,
+      "message": "It feels weird to me to populate error in the ParseInfo constructor. We should not be using the constructor as a function, but to populate the state of the object. This feels cleaner to me.",
+      "parentUuid": "97d9f7b6_a636662c",
+      "range": {
+        "startLine": 147,
+        "startChar": 0,
+        "endLine": 147,
+        "endChar": 73
+      },
+      "revId": "02520a48ae15e83f38be33d4ad2a29336f834c60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3d3f3f6c_bb66225b",
         "filename": "extensions/browser/api/declarative_net_request/utils.cc",
         "patchSetId": 5
@@ -626,6 +650,30 @@
       "side": 1,
       "message": "Expanding to yet another special directory isn\u0027t a good idea. Even with that you\u0027d need to write special cases, e.g. we shouldn\u0027t be uploading that directory when packing an extension.\n\n_metadata/ is already one that contains more or less the files we generate (e.g. computed_hashes.json), other than extension author\u0027s  files. _metadata/ is already accepted as such directory, so it would be much better if we fit the indexed file there (less surprise for the developer, less privacy concern for developers who might worry that webstore is mucking with their extension resources). Also, other similarity is that even if you blow the files away from _metadata/, we generate them again, index file also falls in this category, right?\n\nIf you *have to* use a separate directory, maybe put the directory under _metadata/?\n\nSo there are a few cases I can think of right now we need to worry about:\n- As you mention, unpacked load -\u003e no spurious warnings\n- Packing crx -\u003e we shouldn\u0027t be putting the index file into the .crx right?\n- Uploading to webstore -\u003e make sure stuff behaves sanely\n- trunk channel vs stable channel interaction: e.g. what happens when an extension with flatbuffer index files packed with stable channel chrome and then uploaded to store? What happens if we try it with trunk?",
       "parentUuid": "7a678306_2138ca4e",
+      "range": {
+        "startLine": 156,
+        "startChar": 5,
+        "endLine": 156,
+        "endChar": 12
+      },
+      "revId": "02520a48ae15e83f38be33d4ad2a29336f834c60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fcdd425_40cb8e70",
+        "filename": "extensions/browser/api/declarative_net_request/utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-31T20:18:25Z",
+      "side": 1,
+      "message": "Using _metadata now. Filed https://bugs.chromium.org/p/chromium/issues/detail?id\u003d760850 to ensure these issues are addressed subsequently.\n\nI think I have a reasonable fix for spurious warnings on unpacked extension reloads -\u003e Delete the _metadata folder on reload for unpacked extensions. See subsequent CL.\n\nWe can also delete any file at the indexed ruleset location during installation for packed extensions, this should also ensure that we are somehow not tricked into using an indexed ruleset provided by an extension developer.",
+      "parentUuid": "862b8fe9_715cb9f5",
       "range": {
         "startLine": 156,
         "startChar": 5,

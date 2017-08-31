@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2d26969_c18ba31e",
+        "filename": "extensions/common/file_util.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-31T20:18:25Z",
+      "side": 0,
+      "message": "nit: Undo this diff.",
+      "range": {
+        "startLine": 347,
+        "startChar": 76,
+        "endLine": 347,
+        "endChar": 77
+      },
+      "revId": "694135c1762f6d74f699661e834184fddaa5f752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
