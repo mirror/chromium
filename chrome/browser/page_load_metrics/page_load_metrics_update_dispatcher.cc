@@ -17,6 +17,8 @@
 #include "chrome/common/page_load_metrics/page_load_metrics_constants.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/render_frame_host.h"
+#include "extensions/common/constants.h"
+#include "url/gurl.h"
 
 namespace page_load_metrics {
 
@@ -340,7 +342,10 @@ void PageLoadMetricsUpdateDispatcher::UpdateMetrics(
   if (render_frame_host->GetParent() == nullptr) {
     UpdateMainFrameMetadata(new_metadata);
     UpdateMainFrameTiming(new_timing);
-  } else {
+  } else if (!render_frame_host->GetLastCommittedURL().SchemeIs(
+                 extensions::kExtensionScheme)) {
+    // Ignore updates in subframes from Chrome extensions, as they aren't part
+    // of the web page they are hosted in.
     UpdateSubFrameMetadata(new_metadata);
     UpdateSubFrameTiming(render_frame_host, new_timing);
   }
