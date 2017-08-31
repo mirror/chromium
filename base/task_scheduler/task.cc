@@ -32,6 +32,8 @@ Task::Task(const tracked_objects::Location& posted_from,
               : traits),
       delay(delay) {}
 
+Task::Task(Task&&) noexcept = default;
+
 Task::~Task() = default;
 
 }  // namespace internal
