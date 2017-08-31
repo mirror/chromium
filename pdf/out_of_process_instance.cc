@@ -56,6 +56,7 @@ const char kChromeExtension[] =
 const char kType[] = "type";
 // Viewport message arguments. (Page -> Plugin).
 const char kJSViewportType[] = "viewport";
+const char kJSUserInitiated[] = "userInitiated";
 const char kJSXOffset[] = "xOffset";
 const char kJSYOffset[] = "yOffset";
 const char kJSZoom[] = "zoom";
@@ -164,6 +165,17 @@ const int kAccessibilityPageDelayMs = 100;
 const double kMinZoom = 0.01;
 
 const char kPPPPdfInterface[] = PPP_PDF_INTERFACE_1;
+
+// This enum is used to back an UMA histogram, and should therefore be treated
+// as append only.
+enum PdfActionBuckets {
+  PRINT_PREVIEW = 0,
+  ROTATE_CW = 1,
+  ROTATE_CCW = 2,
+  SELECT_TEXT = 3,
+  UPDATE_ZOOM = 4,
+  PDFACTION_BUCKET_BOUNDARY,
+};
 
 // Used for UMA. Do not delete entries, and keep in sync with histograms.xml.
 enum PDFFeatures {
@@ -368,7 +380,8 @@ OutOfProcessInstance::OutOfProcessInstance(PP_Instance instance)
       background_color_(0),
       top_toolbar_height_(0),
       accessibility_state_(ACCESSIBILITY_STATE_OFF),
-      is_print_preview_(false) {
+      is_print_preview_(false),
+      preview_opened_(false) {
   callback_factory_.Initialize(this);
   engine_ = PDFEngine::Create(this);
   pp::Module::Get()->AddPluginInterface(kPPPPdfInterface, &ppp_private);
@@ -565,6 +578,9 @@ void OutOfProcessInstance::HandleMessage(const pp::Var& message) {
 
     // Bound the input parameters.
     zoom = std::max(kMinZoom, zoom);
+    if (dict.Get(pp::Var(kJSUserInitiated)).AsBool())
+      PrintPreviewHistogramEnumeration(UPDATE_ZOOM);
+
     SetZoom(zoom);
     scroll_offset = BoundScrollOffsetToDocument(scroll_offset);
     engine_->ScrolledToXPosition(scroll_offset.x() * device_scale_);
@@ -637,6 +653,9 @@ void OutOfProcessInstance::HandleMessage(const pp::Var& message) {
     engine_->New(url_.c_str(), nullptr /* empty header */);
 
     paint_manager_.InvalidateRect(pp::Rect(pp::Point(), plugin_size_));
+    if (!preview_opened_)
+      PrintPreviewHistogramEnumeration(PRINT_PREVIEW);
+    preview_opened_ = true;
   } else if (type == kJSLoadPreviewPageType &&
              dict.Get(pp::Var(kJSPreviewPageUrl)).is_string() &&
              dict.Get(pp::Var(kJSPreviewPageIndex)).is_int()) {
@@ -1504,15 +1523,16 @@ void OutOfProcessInstance::DocumentLoadComplete(int page_count) {
   }
 
   pp::PDF::SetContentRestriction(this, content_restrictions);
-
   HistogramCustomCounts("PDF.PageCount", page_count, 1, 1000000, 50);
 }
 
 void OutOfProcessInstance::RotateClockwise() {
+  PrintPreviewHistogramEnumeration(ROTATE_CW);
   engine_->RotateClockwise();
 }
 
 void OutOfProcessInstance::RotateCounterclockwise() {
+  PrintPreviewHistogramEnumeration(ROTATE_CCW);
   engine_->RotateCounterclockwise();
 }
 
@@ -1724,6 +1744,8 @@ void OutOfProcessInstance::IsSelectingChanged(bool is_selecting) {
   message.Set(kType, kJSSetIsSelectingType);
   message.Set(kJSIsSelecting, pp::Var(is_selecting));
   PostMessage(message);
+  if (is_selecting)
+    PrintPreviewHistogramEnumeration(SELECT_TEXT);
 }
 
 void OutOfProcessInstance::ProcessPreviewPageInfo(const std::string& url,
@@ -1805,6 +1827,13 @@ void OutOfProcessInstance::HistogramCustomCounts(const std::string& name,
     return;
 
   uma_.HistogramCustomCounts(name, sample, min, max, bucket_count);
+}
+
+void OutOfProcessInstance::PrintPreviewHistogramEnumeration(int32_t sample) {
+  if (!IsPrintPreview())
+    return;
+  uma_.HistogramEnumeration("PrintPreview.PdfAction", sample,
+                            PDFACTION_BUCKET_BOUNDARY);
 }
 
 void OutOfProcessInstance::HistogramEnumeration(const std::string& name,
