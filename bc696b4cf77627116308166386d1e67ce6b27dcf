@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8aca2a65_99c798cf",
+        "filename": "third_party/WebKit/public/platform/input_host.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-31T20:37:58Z",
+      "side": 1,
+      "message": "The renderer maintains a list of SuggestionMarker objects, each of which holds a Vector\u003cString\u003e with a list of suggestions. The browser code only uses it as an opaque identifier to pass back to the renderer. So the renderer code can\u0027t make the browser code go out-of-bounds, but the browser can make the renderer go out-of-bounds (if it matters).",
+      "parentUuid": "db90e2d6_27027a82",
+      "revId": "bc696b4cf77627116308166386d1e67ce6b27dcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e3a355f9_db661755",
         "filename": "third_party/WebKit/public/platform/input_host.mojom",
         "patchSetId": 11
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-31T20:29:36Z",
       "side": 1,
       "message": "Should there be a limit on the number of suggestions the browser will accept from the renderer?",
+      "revId": "bc696b4cf77627116308166386d1e67ce6b27dcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7e7d39c_f3549187",
+        "filename": "third_party/WebKit/public/platform/input_host.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-31T20:37:58Z",
+      "side": 1,
+      "message": "Is this a security concern? Like we want to somehow prevent the renderer from being able to OOM the browser process?\n\nIf the browser code gets too many suggestions, it will notice before it tries to draw the menu, and will only draw as many as can fit on-screen (this is an O(1) calculation).. Ordinarily (i.e. unless the renderer code has been hijacked somehow), the number of spell check suggestions is capped by how many suggestions the Android spell checker returned, and the number of text suggestions is capped by the limit the browser code gave the renderer (currently 5, to match the native Android text box).",
+      "parentUuid": "e3a355f9_db661755",
       "revId": "bc696b4cf77627116308166386d1e67ce6b27dcf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
