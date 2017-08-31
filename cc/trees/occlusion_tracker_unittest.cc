@@ -9,7 +9,6 @@
 #include "cc/animation/animation_host.h"
 #include "cc/base/filter_operation.h"
 #include "cc/base/filter_operations.h"
-#include "cc/base/math_util.h"
 #include "cc/layers/layer.h"
 #include "cc/layers/layer_impl.h"
 #include "cc/test/animation_test_common.h"
@@ -26,6 +25,7 @@
 #include "components/viz/common/quads/copy_output_result.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "ui/gfx/math_util.h"
 #include "ui/gfx/transform.h"
 
 namespace cc {
@@ -637,7 +637,7 @@ class OcclusionTrackerTestSurfaceRotatedOffAxis : public OcclusionTrackerTest {
 
     TestOcclusionTrackerWithClip occlusion(gfx::Rect(0, 0, 1000, 1000));
 
-    gfx::Rect clipped_layer_in_child = MathUtil::MapEnclosingClippedRect(
+    gfx::Rect clipped_layer_in_child = gfx::MathUtil::MapEnclosingClippedRect(
         layer_transform, layer->visible_layer_rect());
 
     this->VisitLayer(layer, &occlusion);
