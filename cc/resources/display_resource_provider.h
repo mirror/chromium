@@ -132,8 +132,28 @@ class CC_EXPORT DisplayResourceProvider : public ResourceProvider {
  private:
   friend class ScopedBatchReturnResources;
 
+  void UnlockForRead(viz::ResourceId id) override;
+
+  struct Child {
+    Child();
+    Child(const Child& other);
+    ~Child();
+
+    ResourceIdMap child_to_parent_map;
+    ReturnCallback return_callback;
+    bool marked_for_deletion;
+    bool needs_sync_tokens;
+  };
+  using ChildMap = std::unordered_map<int, Child>;
+
+  void DeleteAndReturnUnusedResourcesToChild(ChildMap::iterator child_it,
+                                             DeleteStyle style,
+                                             const ResourceIdArray& unused);
+  void DestroyChildInternal(ChildMap::iterator it, DeleteStyle style);
+
   void SetBatchReturnResources(bool aggregate);
 
+  ChildMap children_;
   base::flat_map<viz::ResourceId, sk_sp<SkImage>> resource_sk_image_;
 
   DISALLOW_COPY_AND_ASSIGN(DisplayResourceProvider);

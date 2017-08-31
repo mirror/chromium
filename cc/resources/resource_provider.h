@@ -566,22 +566,9 @@ class CC_EXPORT ResourceProvider
   };
   using ResourceMap = std::unordered_map<viz::ResourceId, Resource>;
 
-  struct Child {
-    Child();
-    Child(const Child& other);
-    ~Child();
-
-    ResourceIdMap child_to_parent_map;
-    ReturnCallback return_callback;
-    bool marked_for_deletion;
-    bool needs_sync_tokens;
-  };
-  using ChildMap = std::unordered_map<int, Child>;
-
   Resource* InsertResource(viz::ResourceId id, Resource resource);
   Resource* GetResource(viz::ResourceId id);
   const Resource* LockForRead(viz::ResourceId id);
-  void UnlockForRead(viz::ResourceId id);
   Resource* LockForWrite(viz::ResourceId id);
   void UnlockForWrite(Resource* resource);
 
@@ -607,12 +594,13 @@ class CC_EXPORT ResourceProvider
     FOR_SHUTDOWN,
   };
   void DeleteResourceInternal(ResourceMap::iterator it, DeleteStyle style);
-  void DeleteAndReturnUnusedResourcesToChild(ChildMap::iterator child_it,
-                                             DeleteStyle style,
-                                             const ResourceIdArray& unused);
-  void DestroyChildInternal(ChildMap::iterator it, DeleteStyle style);
 
   void CreateMailbox(Resource* resource);
+
+  bool ReadLockFenceHasPassed(const Resource* resource) {
+    return !resource->read_lock_fence.get() ||
+           resource->read_lock_fence->HasPassed();
+  }
 
   // Returns null if we do not have a viz::ContextProvider.
   gpu::gles2::GLES2Interface* ContextGL() const;
@@ -639,7 +627,6 @@ class CC_EXPORT ResourceProvider
   } const settings_;
 
   ResourceMap resources_;
-  ChildMap children_;
 
   // Keep track of whether deleted resources should be batched up or returned
   // immediately.
@@ -654,6 +641,8 @@ class CC_EXPORT ResourceProvider
   viz::ResourceId next_id_;
   int next_child_;
 
+  bool lost_context_provider_;
+
   THREAD_CHECKER(thread_checker_);
 
 #if defined(OS_ANDROID)
@@ -662,11 +651,6 @@ class CC_EXPORT ResourceProvider
 #endif
 
  private:
-  bool ReadLockFenceHasPassed(const Resource* resource) {
-    return !resource->read_lock_fence.get() ||
-           resource->read_lock_fence->HasPassed();
-  }
-
   viz::ResourceId CreateGpuResource(const gfx::Size& size,
                                     TextureHint hint,
                                     ResourceType type,
@@ -678,9 +662,10 @@ class CC_EXPORT ResourceProvider
 
   void CreateTexture(Resource* resource);
 
+  virtual void UnlockForRead(viz::ResourceId id) {}
+
   bool IsGLContextLost() const;
 
-  bool lost_context_provider_;
   scoped_refptr<Fence> current_read_lock_fence_;
   std::unique_ptr<TextureIdAllocator> texture_id_allocator_;
   viz::BufferToTextureTargetMap buffer_to_texture_target_map_;

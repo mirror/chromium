@@ -2600,8 +2600,8 @@ TEST_P(ResourceProviderTest, TextureMailbox_SharedMemory) {
   std::unique_ptr<viz::SharedBitmap> shared_bitmap(
       CreateAndFillSharedBitmap(shared_bitmap_manager_.get(), size, kBadBeef));
 
-  std::unique_ptr<ResourceProvider> resource_provider(
-      std::make_unique<ResourceProvider>(
+  std::unique_ptr<DisplayResourceProvider> resource_provider(
+      std::make_unique<DisplayResourceProvider>(
           nullptr, shared_bitmap_manager_.get(),
           gpu_memory_buffer_manager_.get(), main_thread_task_runner_.get(),
           kDelegatedSyncPointsRequired, kEnableColorCorrectRendering,
