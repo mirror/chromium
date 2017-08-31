@@ -1,0 +1,209 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76ec43c3_7440d71d",
+        "filename": "chrome/browser/ui/cocoa/location_bar/bubble_decoration.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-31T18:21:25Z",
+      "side": 1,
+      "message": "Comment.",
+      "revId": "04c4659f173b8cc74f178b3410b0c45ffb37e68a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87d8008b_31fe728a",
+        "filename": "chrome/browser/ui/cocoa/location_bar/location_bar_view_mac.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-31T18:21:25Z",
+      "side": 1,
+      "message": "Should this enum be shared with any of the cross-platform model code?\n\nThis would be a good case for enum class, so you could do:\n\nenum class PageInfoVerboseType {\n  kNone,\n  kSecurity,\n  kEVCert,\n  kChrome,\n  kExtension,\n};\n\n… and the callsites would always be prefixed with PageInfoVerboseType::.",
+      "revId": "04c4659f173b8cc74f178b3410b0c45ffb37e68a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad3daa7b_ed4b5522",
+        "filename": "chrome/browser/ui/cocoa/location_bar/location_bar_view_mac.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-31T18:21:25Z",
+      "side": 1,
+      "message": "verbose is an adjective, so this needs a noun (type? state?).",
+      "range": {
+        "startLine": 232,
+        "startChar": 26,
+        "endLine": 232,
+        "endChar": 33
+      },
+      "revId": "04c4659f173b8cc74f178b3410b0c45ffb37e68a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5b97e54_c6a77784",
+        "filename": "chrome/browser/ui/cocoa/location_bar/location_bar_view_mac.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-31T18:21:25Z",
+      "side": 1,
+      "message": "same",
+      "revId": "04c4659f173b8cc74f178b3410b0c45ffb37e68a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "497df9d7_31c0cc8d",
+        "filename": "chrome/browser/ui/cocoa/location_bar/location_bar_view_mac_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-31T18:21:25Z",
+      "side": 1,
+      "message": "explicit",
+      "revId": "04c4659f173b8cc74f178b3410b0c45ffb37e68a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b54810b_0ebcc461",
+        "filename": "chrome/browser/ui/cocoa/location_bar/page_info_bubble_decoration.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-31T18:21:25Z",
+      "side": 1,
+      "message": "explicit",
+      "revId": "04c4659f173b8cc74f178b3410b0c45ffb37e68a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23200274_0adccb1f",
+        "filename": "chrome/browser/ui/cocoa/location_bar/page_info_bubble_decoration.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-31T18:21:25Z",
+      "side": 1,
+      "message": "Comment.",
+      "revId": "04c4659f173b8cc74f178b3410b0c45ffb37e68a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "688dfd44_34b6de4f",
+        "filename": "chrome/browser/ui/cocoa/location_bar/page_info_bubble_decoration.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-31T18:21:25Z",
+      "side": 1,
+      "message": "Use @[] instead.",
+      "revId": "04c4659f173b8cc74f178b3410b0c45ffb37e68a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52a8b6ed_ffead941",
+        "filename": "chrome/browser/ui/cocoa/location_bar/page_info_bubble_decoration.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-31T18:21:25Z",
+      "side": 1,
+      "message": "@[]",
+      "revId": "04c4659f173b8cc74f178b3410b0c45ffb37e68a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2062371_eec2ccd2",
+        "filename": "chrome/browser/ui/cocoa/location_bar/page_info_bubble_decoration.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-31T18:21:25Z",
+      "side": 1,
+      "message": "naming: icon_image",
+      "range": {
+        "startLine": 281,
+        "startChar": 15,
+        "endLine": 281,
+        "endChar": 16
+      },
+      "revId": "04c4659f173b8cc74f178b3410b0c45ffb37e68a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef34890f_b20da05b",
+        "filename": "chrome/browser/ui/cocoa/location_bar/page_info_bubble_decoration.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-31T18:21:25Z",
+      "side": 1,
+      "message": "_s",
+      "range": {
+        "startLine": 285,
+        "startChar": 14,
+        "endLine": 285,
+        "endChar": 15
+      },
+      "revId": "04c4659f173b8cc74f178b3410b0c45ffb37e68a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
