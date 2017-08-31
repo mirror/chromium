@@ -18,6 +18,7 @@
 #include "ios/chrome/browser/favicon/favicon_service_factory.h"
 #import "ios/chrome/browser/find_in_page/find_tab_helper.h"
 #include "ios/chrome/browser/history/history_service_factory.h"
+#include "ios/chrome/browser/history/history_tab_helper.h"
 #include "ios/chrome/browser/history/top_sites_factory.h"
 #import "ios/chrome/browser/infobars/infobar_manager_impl.h"
 #include "ios/chrome/browser/reading_list/reading_list_model_factory.h"
@@ -67,6 +68,7 @@ void AttachTabHelpers(web::WebState* web_state) {
   SadTabTabHelper::CreateForWebState(web_state, tab);
   PagePlaceholderTabHelper::CreateForWebState(web_state, tab);
   CaptivePortalDetectorTabHelper::CreateForWebState(web_state);
+  HistoryTabHelper::CreateForWebState(web_state);
 
   ReadingListModel* model =
       ReadingListModelFactory::GetForBrowserState(browser_state);
