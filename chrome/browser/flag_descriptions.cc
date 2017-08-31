@@ -1992,6 +1992,11 @@ const char kEnableAudioFocusEnabledDuckFlash[] =
     "Enabled (Flash lowers volume when interrupted by other sound, "
     "experimental)";
 
+const char kEnableExternalDriveRename[] = "Enable external drive rename";
+const char kEnableExternalDriveRenameDescription[] =
+    "If enabled, external removable drives will get 'Rename' action in the "
+    "context menu";
+
 const char kEnableNewAppMenuIconName[] = "Enable the New App Menu Icon";
 const char kEnableNewAppMenuIconDescription[] =
     "Use the new app menu icon with update notification animations.";
