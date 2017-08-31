@@ -27,6 +27,7 @@
 #include <xdg-shell-unstable-v6-server-protocol.h>
 
 #include <algorithm>
+#include <cmath>
 #include <cstdlib>
 #include <iterator>
 #include <string>
@@ -2085,11 +2086,9 @@ void remote_surface_set_orientation(wl_client* client,
           : Orientation::LANDSCAPE);
 }
 
-void remote_surface_set_scale(wl_client* client,
-                              wl_resource* resource,
-                              wl_fixed_t scale) {
-  GetUserDataAs<ShellSurface>(resource)->SetScale(wl_fixed_to_double(scale));
-}
+void remote_surface_set_scale_DEPRECATED(wl_client* client,
+                                         wl_resource* resource,
+                                         wl_fixed_t scale) {}
 
 void remote_surface_set_rectangular_shadow_DEPRECATED(wl_client* client,
                                                       wl_resource* resource,
@@ -2224,7 +2223,7 @@ const struct zcr_remote_surface_v1_interface remote_surface_implementation = {
     remote_surface_destroy,
     remote_surface_set_app_id,
     remote_surface_set_window_geometry,
-    remote_surface_set_scale,
+    remote_surface_set_scale_DEPRECATED,
     remote_surface_set_rectangular_shadow_DEPRECATED,
     remote_surface_set_rectangular_shadow_background_opacity,
     remote_surface_set_title,
@@ -2255,6 +2254,15 @@ void notification_surface_destroy(wl_client* client, wl_resource* resource) {
   wl_resource_destroy(resource);
 }
 
+/*
+uint64_t GetAndroidDensity(double platform_scale) {
+  static const double kChromeToAndroidScaleFactor = 0.75;
+  static const uint64_t kAndroidDefaultDensity = 160;
+  return std::max(1.0, platform_scale * kChromeToAndroidScaleFactor) *
+       kAndroidDefaultDensity;
+}
+*/
+
 const struct zcr_notification_surface_v1_interface
     notification_surface_implementation = {notification_surface_destroy};
 
@@ -2280,6 +2288,13 @@ class WaylandRemoteShell : public WMHelper::TabletModeObserver,
                        ? ZCR_REMOTE_SHELL_V1_LAYOUT_MODE_TABLET
                        : ZCR_REMOTE_SHELL_V1_LAYOUT_MODE_WINDOWED;
 
+    if (wl_resource_get_version(remote_shell_resource_) >= 8) {
+      uint64_t density =
+          (WMHelper::GetInstance()->GetPlatformScale()
+           ? WMHelper::GetInstance()->GetPlatformScale() : 1.0) * 100;
+      LOG(ERROR) << "*** oshima: Sending scale:" << density;
+      zcr_remote_shell_v1_send_global_density(remote_shell_resource_, density);
+    }
     SendDisplayMetrics();
     SendActivated(helper->GetActiveWindow(), nullptr);
   }
@@ -2602,7 +2617,7 @@ const struct zcr_remote_shell_v1_interface remote_shell_implementation = {
     remote_shell_destroy, remote_shell_get_remote_surface,
     remote_shell_get_notification_surface};
 
-const uint32_t remote_shell_version = 7;
+const uint32_t remote_shell_version = 8;
 
 void bind_remote_shell(wl_client* client,
                        void* data,

@@ -32,6 +32,7 @@
 #include "ui/compositor/compositor.h"
 #include "ui/compositor/layer.h"
 #include "ui/display/display.h"
+#include "ui/display/manager/display_manager.h"
 #include "ui/display/screen.h"
 #include "ui/views/widget/widget.h"
 #include "ui/wm/core/shadow.h"
@@ -374,15 +375,53 @@ TEST_F(ShellSurfaceTest, SetGeometry) {
             shell_surface->host_window()->bounds().ToString());
 }
 
-TEST_F(ShellSurfaceTest, SetScale) {
+TEST_F(ShellSurfaceTest, PlatformScaleForcedScaleFactor) {
+  int64_t display_id = display::Screen::GetScreen()->GetPrimaryDisplay().id();
+  display::Display::SetInternalDisplayId(display_id);
+  double scale = 1.5;
+  display::Display::ResetForceDeviceScaleFactorForTesting();
+  display::Display::SetForceDeviceScaleFactor(scale);
+  DCHECK(display::Display::HasForceDeviceScaleFactor());
+
   gfx::Size buffer_size(64, 64);
   std::unique_ptr<Buffer> buffer(
       new Buffer(exo_test_helper()->CreateGpuMemoryBuffer(buffer_size)));
   std::unique_ptr<Surface> surface(new Surface);
   std::unique_ptr<ShellSurface> shell_surface(new ShellSurface(surface.get()));
 
-  double scale = 1.5;
-  shell_surface->SetScale(scale);
+  surface->Attach(buffer.get());
+  surface->Commit();
+
+  gfx::Transform transform;
+  transform.Scale(1.0 / scale, 1.0 / scale);
+  EXPECT_EQ(transform.ToString(),
+            surface->window()->layer()->GetTargetTransform().ToString());
+  display::Display::ResetForceDeviceScaleFactorForTesting();
+}
+
+TEST_F(ShellSurfaceTest, PlatformScaleFromDisplayManager) {
+  int64_t display_id = display::Screen::GetScreen()->GetPrimaryDisplay().id();
+  display::Display::SetInternalDisplayId(display_id);
+
+  display::DisplayManager* display_manager =
+      ash::Shell::Get()->display_manager();
+  display::ManagedDisplayInfo native_display_info(display_id, "test", false);
+  native_display_info.SetBounds(gfx::Rect(0, 0, 1920, 1080));
+  double scale = 1.25;
+  native_display_info.set_device_scale_factor(scale);
+
+  std::vector<display::ManagedDisplayInfo> display_info_list;
+  display_info_list.push_back(native_display_info);
+
+  display_manager->OnNativeDisplaysChanged(display_info_list);
+  display_manager->UpdateInternalManagedDisplayModeListForTest();
+
+  gfx::Size buffer_size(64, 64);
+  std::unique_ptr<Buffer> buffer(
+      new Buffer(exo_test_helper()->CreateGpuMemoryBuffer(buffer_size)));
+  std::unique_ptr<Surface> surface(new Surface);
+  std::unique_ptr<ShellSurface> shell_surface(new ShellSurface(surface.get()));
+
   surface->Attach(buffer.get());
   surface->Commit();
 
