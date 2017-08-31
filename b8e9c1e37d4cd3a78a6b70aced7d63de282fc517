@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "2c670faf_61d0497c",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 694,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-08-31T23:34:04Z",
+      "side": 1,
+      "message": "Yea, I think you are right, since the next block will handle the new_state and call HandleCompleteDownload.",
+      "parentUuid": "aba127f2_e5bdf285",
+      "revId": "b8e9c1e37d4cd3a78a6b70aced7d63de282fc517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3e4361f7_e8d84492",
         "filename": "components/download/internal/controller_impl.cc",
         "patchSetId": 2
@@ -142,6 +160,30 @@
       "side": 1,
       "message": "Yeah, the root cause may be that, notice entry.completion_time only pipes correctly from content when the download is actually successfully finished. We should not crash even if the db gives us craps, like someone tries to modify db records.\n\n\nI  think \nstart_time \u003d base::TimeDelta::FromSeconds(0);\nhas already done this.",
       "parentUuid": "1d0196c4_054de19c",
+      "range": {
+        "startLine": 917,
+        "startChar": 15,
+        "endLine": 917,
+        "endChar": 37
+      },
+      "revId": "b8e9c1e37d4cd3a78a6b70aced7d63de282fc517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83052461_593e8f7c",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 917,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-08-31T23:34:04Z",
+      "side": 1,
+      "message": "Oh, I was suggesting to have \ncleanup_time_for_entry \u003d std::max(cleanup_time_for_entry, base::Time::Now())\nhere so that we don\u0027t need the changes in line 929-940.\nOr you can have start_time \u003d 0 too which works in the same way. \n\nAnyway, I feel we don\u0027t need the saturated_cast\u003clong\u003e for any of these which shouldn\u0027t happen as long as the config-\u003efile_cleanup_window is not insane??\nwdyt?",
+      "parentUuid": "0eb30d2a_dd0b3434",
       "range": {
         "startLine": 917,
         "startChar": 15,
