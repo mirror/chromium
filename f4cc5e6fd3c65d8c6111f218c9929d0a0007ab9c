@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cb3b62d6_de6d69b7",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_journey_logger_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-08-31T16:35:23Z",
+      "side": 1,
+      "message": "(removed)",
+      "parentUuid": "ad4a93dd_f5ceca21",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 70
+      },
+      "revId": "f4cc5e6fd3c65d8c6111f218c9929d0a0007ab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "147cf974_7a54a0da",
         "filename": "ios/chrome/browser/ui/payments/payment_request_journey_logger_egtest.mm",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "f4cc5e6fd3c65d8c6111f218c9929d0a0007ab9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2056b2a_715cb6c3",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_journey_logger_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-08-31T16:35:23Z",
+      "side": 1,
+      "message": "I thought some tests were checking some metrics when there was only one profile, but they weren\u0027t. Moved into -setUp.",
+      "parentUuid": "147cf974_7a54a0da",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 37
+      },
+      "revId": "f4cc5e6fd3c65d8c6111f218c9929d0a0007ab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
