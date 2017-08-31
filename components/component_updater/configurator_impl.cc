@@ -194,7 +194,7 @@ bool ConfiguratorImpl::EnabledBackgroundDownloader() const {
 }
 
 bool ConfiguratorImpl::EnabledCupSigning() const {
-  return true;
+  return false;
 }
 
 std::vector<uint8_t> ConfiguratorImpl::GetRunActionKeyHash() const {
