@@ -8,8 +8,9 @@
 #include "base/logging.h"
 #include "net/cert/internal/cert_errors.h"
 #include "net/cert/internal/parsed_certificate.h"
+#include "net/cert/internal/system_trust_store.h"
 #include "net/cert/x509_certificate.h"
-#include "third_party/boringssl/src/include/openssl/pool.h"
+#include "net/cert/x509_util.h"
 
 namespace net {
 
