@@ -22,6 +22,7 @@ class CacheRenderSurfaceObserver : public ui::ImplicitAnimationObserver,
   CacheRenderSurfaceObserver(ui::Layer* layer) : layer_(layer) {
     layer_->AddObserver(this);
     layer_->AddCacheRenderSurfaceRequest();
+    layer_->DeferPaint(true);
   }
   ~CacheRenderSurfaceObserver() override {
     if (layer_)
@@ -33,8 +34,11 @@ class CacheRenderSurfaceObserver : public ui::ImplicitAnimationObserver,
     // If animation finishes before |layer_| is destoyed, we will reset the
     // cache and remove |this| from the |layer_| observer list when deleting
     // |this|.
-    if (layer_)
+    if (layer_) {
       layer_->RemoveCacheRenderSurfaceRequest();
+      layer_->DeferPaint(false);
+      layer_->ScheduleDraw();
+    }
     delete this;
   }
 

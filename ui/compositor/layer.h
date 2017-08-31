@@ -363,6 +363,9 @@ class COMPOSITOR_EXPORT Layer : public LayerAnimationDelegate,
   // Suppresses painting the content by disconnecting |delegate_|.
   void SuppressPaint();
 
+  // Defer painting.
+  void DeferPaint(bool defer);
+
   // Notifies the layer that the device scale factor has changed.
   void OnDeviceScaleFactorChanged(float device_scale_factor);
 
@@ -605,6 +608,10 @@ class COMPOSITOR_EXPORT Layer : public LayerAnimationDelegate,
   // the value > 0, means we need to cache the render surface. If the value
   // == 0, means we should not cache the render surface.
   unsigned cache_render_surface_requests_;
+
+  // True if we want to defer painting. This could be used in animation to
+  // prevent raster and animation at the same time.
+  bool defer_paint_;
 
   DISALLOW_COPY_AND_ASSIGN(Layer);
 };
