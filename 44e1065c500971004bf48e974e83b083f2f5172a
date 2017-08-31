@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c1a07ee_8fc9d8b9",
+        "filename": "build/config/android/rules.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 1702,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-31T02:09:25Z",
+      "side": 1,
+      "message": "We should probably file a dedicated bug for this, reference that here, and mark the \"use lld on android\" bug blocked on that new bug, so that we don\u0027t forget about it.",
+      "range": {
+        "startLine": 1702,
+        "startChar": 16,
+        "endLine": 1702,
+        "endChar": 20
+      },
+      "revId": "44e1065c500971004bf48e974e83b083f2f5172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
