@@ -40,7 +40,8 @@ class CORE_EXPORT HTMLFrameElement final : public HTMLFrameElementBase {
   bool NoResize() const;
 
   Vector<WebParsedFeaturePolicyDeclaration> ConstructContainerPolicy(
-      Vector<String>*, bool*) const override;
+      Vector<String>*,
+      bool*) const override;
 
  private:
   explicit HTMLFrameElement(Document&);

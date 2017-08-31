@@ -132,7 +132,8 @@ class CORE_EXPORT HTMLFrameOwnerElement : public HTMLElement,
   // frame attributes and the effective origin specified in the frame
   // attributes.
   virtual Vector<WebParsedFeaturePolicyDeclaration> ConstructContainerPolicy(
-      Vector<String>*, bool*) const = 0;
+      Vector<String>*,
+      bool*) const = 0;
 
   // Update the container policy and notify the frame loader client of any
   // changes.
