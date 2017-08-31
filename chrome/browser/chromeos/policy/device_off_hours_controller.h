@@ -7,8 +7,11 @@
 
 #include <memory>
 
+#include "base/observer_list.h"
+#include "base/timer/timer.h"
 #include "base/values.h"
 #include "chrome/browser/chromeos/policy/proto/chrome_device_policy.pb.h"
+#include "chromeos/dbus/session_manager_client.h"
 
 namespace policy {
 namespace off_hours {
@@ -28,6 +31,96 @@ std::unique_ptr<base::DictionaryValue> ConvertPolicyProtoToValue(
     const enterprise_management::DeviceOffHoursProto& container);
 
 }  // namespace off_hours
+
+// The main class for handling “OffHours” policy
+// turns "OffHours" mode on and off,
+// interacts with other classes using observers,
+// handles server and client time, timezone.
+class DeviceOffHoursController
+    : public chromeos::SessionManagerClient::Observer {
+ public:
+  // Observer interface.
+  class Observer {
+   public:
+    // Gets called when "OffHours" mode could be changed.
+    virtual void OffHoursModeMaybeChanged();
+
+    // Gets called when "Offhours" controller shut down.
+    // (i.e. when destructor is called.)
+    virtual void OffHoursControllerShutDown();
+
+   protected:
+    virtual ~Observer();
+  };
+
+  // Add an observer.
+  void AddObserver(Observer* observer);
+  // Remove an observer.
+  void RemoveObserver(Observer* observer);
+
+  // Manage singleton instance.
+  static void Initialize();
+  static bool IsInitialized();
+  static DeviceOffHoursController* Get();
+
+  // Return current "OffHours" mode status.
+  bool IsOffHoursMode();
+
+  // Check and update "OffHours" mode status.
+  // Set timer to next update "OffHours" mode.
+  static void UpdateOffHoursMode(
+      const enterprise_management::ChromeDeviceSettingsProto& input_policies);
+
+  // Apply "OffHours" policy for device policies.
+  // Return ChromeDeviceSettingsProto without |ignored_policies|.
+  // |ignored_policies| will be apply with default values.
+  static std::unique_ptr<enterprise_management::ChromeDeviceSettingsProto>
+  GetOffHoursProto(
+      const enterprise_management::ChromeDeviceSettingsProto& input_policies);
+
+ private:
+  // Creates a device off hours controller instance.
+  DeviceOffHoursController();
+  ~DeviceOffHoursController();
+
+  // Run OffHoursModeMaybeChanged() for observers.
+  void NotifyOffHoursModeChanged() const;
+
+  // SessionManagerClient::Observer:
+  void ScreenIsUnlocked() override;
+
+  // Will log out user if user isn't eligible after "OffHours" mode.
+  // It depends on settings in |policies|.
+  // Called AttemptUserExit() when
+  //   During "OffHours" is guest user, but it isn't allowed in |policies|.
+  //   Current user are not in |user_whitelist| and |allow_new_users| mode is
+  //   false. (See AllowNewUsersProto)
+  void LogoutUserIfNeed(
+      const enterprise_management::ChromeDeviceSettingsProto& policies);
+
+  // Manage singleton instance.
+  static void Shutdown();
+
+  // Manage "OffHours" mode.
+  void SetOffHoursMode();
+  void UnsetOffHoursMode();
+
+  // Timer for update device settings.
+  // |delay| value in milliseconds.
+  void StartOffHoursTimer(int delay);
+  void StopOffHoursTimer();
+
+  base::ObserverList<Observer> observers_;
+
+  // Timer for update device settings
+  // at the begin of next “OffHours” interval
+  // or at the end of current interval.
+  base::OneShotTimer timer_;
+
+  bool off_hours_mode_ = false;
+
+  DISALLOW_COPY_AND_ASSIGN(DeviceOffHoursController);
+};
 }  // namespace policy
 
 #endif  // CHROME_BROWSER_CHROMEOS_POLICY_DEVICE_OFF_HOURS_CONTROLLER_H_
