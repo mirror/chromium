@@ -4,6 +4,8 @@
 
 package org.chromium.chrome.browser.webapps;
 
+import static org.chromium.chrome.browser.ChromeSwitches.SKIP_WEBAPK_VERIFICATION;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -15,7 +17,9 @@ import android.util.Base64;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.ApplicationStatus;
+import org.chromium.base.CommandLine;
 import org.chromium.base.Log;
+import org.chromium.chrome.browser.ChromeVersionInfo;
 import org.chromium.chrome.browser.IntentHandler;
 import org.chromium.chrome.browser.ShortcutHelper;
 import org.chromium.chrome.browser.ShortcutSource;
@@ -248,6 +252,12 @@ public class WebappLauncherActivity extends Activity {
      * @return true iff all validation criteria are met.
      */
     private boolean isValidWebApk(Intent intent) {
+        if (ChromeVersionInfo.isLocalBuild()
+                && CommandLine.getInstance().hasSwitch(SKIP_WEBAPK_VERIFICATION)) {
+            // Tell the WebApkValidator to work for all WebApks.
+            WebApkValidator.disableValidationForTesting();
+            return true;
+        }
         String webApkPackage =
                 IntentUtils.safeGetStringExtra(intent, WebApkConstants.EXTRA_WEBAPK_PACKAGE_NAME);
         if (TextUtils.isEmpty(webApkPackage)) return false;
