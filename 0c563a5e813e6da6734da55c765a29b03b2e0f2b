@@ -87,6 +87,24 @@
       "revId": "0c563a5e813e6da6734da55c765a29b03b2e0f2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c766aa2f_f5b99f2e",
+        "filename": "services/preferences/pref_store_manager_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-08-31T17:56:12Z",
+      "side": 1,
+      "message": "I\u0027m sorry; I guess I am really confused. When an interface is defined in a .mojom, that means it is available as an IPC endpoint. (Right?) So even if you intend to only ever call it from within the same process, as an IPC security reviewer I have to assume surprising things can happen. We currently don\u0027t have a nice/obvious/declarative way to assert that \"only foo can call this\".",
+      "parentUuid": "35d7e905_af7741f1",
+      "revId": "0c563a5e813e6da6734da55c765a29b03b2e0f2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
