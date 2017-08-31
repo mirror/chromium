@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <script src="../resources/runner.js"></script>
+    <script>
+      var isDone = false;
+      var iteration = 0;
+
+      function runTest() {
+        var image = new Image();
+        var startTime;
+
+        // upon decode finished...
+        image.onload = function() {
+          PerfTestRunner.measureValueAsync(PerfTestRunner.now() - startTime);
+          PerfTestRunner.addRunTestEndMarker();
+
+          // if we have more iterations left
+          if (!isDone) {
+            iteration++;
+            runTest();
+          }
+        }
+
+        PerfTestRunner.addRunTestStartMarker();
+        startTime = PerfTestRunner.now(); // For tracing metrics
+        // initiate decode
+        image.src = "../../../../chrome/test/data/image_decoding/droids.webp?" + iteration;
+      }
+
+      window.onload = function () {
+        PerfTestRunner.startMeasureValuesAsync({
+          unit: "ms",
+          done: function () {
+            isDone = true;
+          },
+          run: function () {
+            runTest();
+          },
+          iterationCount: 20,
+          description: "Measures performance of webp decoding.",
+        });
+      };
+    </script>
+  </body>
+</html>
