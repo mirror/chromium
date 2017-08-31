@@ -9,7 +9,10 @@ class GURL;
 
 namespace webui {
 
-// Name of histogram that WebUI URLs are logged to.
+// Name of histogram that WebUI URLs are logged to (origin and path).
+extern const char kWebUICreatedForPath[];
+
+// Name of histogram that WebUI URLs are logged to (origin only).
 extern const char kWebUICreatedForUrl[];
 
 // Called when WebUI objects are created to get aggregate usage data (i.e. is
