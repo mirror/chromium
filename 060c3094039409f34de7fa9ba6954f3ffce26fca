@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "d6052384_29443db9",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/accelerometer/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-08-31T21:56:55Z",
+      "side": 1,
+      "message": "Namely, the importer gathers all the owners of affected files during an automatic import, and CC them in that import CL. The owners of these tests were stored in a separate list (W3CImportExpectations), and we switched to the Chromium-flavor OWNERS files only recently, with a naiive, homegrown parser.\n\nAre you aware of better ways for this task? I know there\u0027s \"git cl owners\", but it is interactive.",
+      "parentUuid": "7ff3d666_40b69574",
+      "revId": "060c3094039409f34de7fa9ba6954f3ffce26fca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "30cf215e_0001f521",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/intersection-observer/OWNERS",
         "patchSetId": 2
