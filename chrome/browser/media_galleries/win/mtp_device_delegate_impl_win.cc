@@ -205,7 +205,7 @@ base::File::Error ReadDirectoryOnBlockingPoolThread(
     storage::DirectoryEntry entry;
     entry.is_directory = file_enum->IsDirectory();
     entry.name = storage::VirtualPath::BaseName(current).value();
-    entries->push_back(entry);
+    entries->push_back(std::move(entry));
   }
   return error;
 }

@@ -377,7 +377,7 @@ TEST_F(DraggedFileUtilTest, ReadDirectoryTest) {
       storage::DirectoryEntry entry;
       entry.is_directory = file_info.IsDirectory();
       entry.name = current.BaseName().value();
-      expected_entry_map[entry.name] = entry;
+      expected_entry_map[entry.name] = std::move(entry);
 
 #if defined(OS_POSIX)
       // Creates a symlink for each file/directory.
