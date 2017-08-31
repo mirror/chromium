@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ce00f48_55b6568c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-08-31T09:22:12Z",
+      "side": 1,
+      "message": "Unrelated to this review, but I noticed when doing wpt stats that you use both google.com and chromium.org accounts, is that intentional, or did you just set the wrong address on one of your machines?",
+      "range": {
+        "startLine": 2,
+        "startChar": 30,
+        "endLine": 2,
+        "endChar": 39
+      },
+      "revId": "761a4ae011a307ab433ec90b73da05475a86480e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1f667e7_41cc96b0",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/net/git_cl.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-08-31T09:22:12Z",
+      "side": 1,
+      "message": "s/for/until/ or s/returns/to return/",
+      "range": {
+        "startLine": 91,
+        "startChar": 31,
+        "endLine": 91,
+        "endChar": 44
+      },
+      "revId": "761a4ae011a307ab433ec90b73da05475a86480e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
