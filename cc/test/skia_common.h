@@ -9,6 +9,7 @@
 
 #include "base/memory/ref_counted.h"
 #include "cc/paint/paint_image.h"
+#include "cc/paint/paint_image_generator.h"
 #include "third_party/skia/include/core/SkImage.h"
 #include "third_party/skia/include/core/SkRefCnt.h"
 
@@ -33,6 +34,12 @@ sk_sp<PaintImageGenerator> CreatePaintImageGenerator(const gfx::Size& size);
 PaintImage CreateDiscardablePaintImage(
     const gfx::Size& size,
     sk_sp<SkColorSpace> color_space = nullptr);
+
+PaintImage CreateAnimatedImage(
+    const gfx::Size& size,
+    std::vector<FrameMetadata> frames = {FrameMetadata()},
+    PaintImage::RepetitionPolicy policy =
+        PaintImage::RepetitionPolicy::kLoopInfinite);
 
 }  // namespace cc
 

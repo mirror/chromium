@@ -74,6 +74,7 @@ class CC_PAINT_EXPORT PaintImage {
 
   enum class AnimationType { ANIMATED, VIDEO, STATIC };
   enum class CompletionState { DONE, PARTIALLY_DONE };
+  enum class RepetitionPolicy { kLoopOnce, kLoopInfinite, kLoopNone };
 
   static Id GetNextId();
   static ContentId GetNextContentId();
@@ -122,6 +123,8 @@ class CC_PAINT_EXPORT PaintImage {
   AnimationType animation_type() const { return animation_type_; }
   CompletionState completion_state() const { return completion_state_; }
   bool is_multipart() const { return is_multipart_; }
+  RepetitionPolicy repetition_policy() const { return repetition_policy_; }
+  bool ShouldAnimate() const;
 
   // TODO(vmpstr): Don't get the SkImage here if you don't need to.
   uint32_t unique_id() const { return GetSkImage()->uniqueID(); }
@@ -161,6 +164,7 @@ class CC_PAINT_EXPORT PaintImage {
   Id id_ = 0;
   AnimationType animation_type_ = AnimationType::STATIC;
   CompletionState completion_state_ = CompletionState::DONE;
+  RepetitionPolicy repetition_policy_ = RepetitionPolicy::kLoopNone;
 
   // If non-empty, holds the subset of this image relative to the original image
   // at the origin.

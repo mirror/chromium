@@ -69,6 +69,11 @@ class CC_PAINT_EXPORT PaintImageBuilder {
     paint_image_.frame_index_ = frame_index;
     return *this;
   }
+  PaintImageBuilder& set_repetition_policy(
+      PaintImage::RepetitionPolicy policy) {
+    paint_image_.repetition_policy_ = policy;
+    return *this;
+  }
 
   PaintImageBuilder& set_sk_image_id(uint32_t sk_image_id) {
     paint_image_.sk_image_id_ = sk_image_id;
