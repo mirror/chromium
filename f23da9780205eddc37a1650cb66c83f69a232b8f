@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a2b8893_d8c85ad0",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-31T14:26:12Z",
+      "side": 1,
+      "message": "\"abort\" is such an overloaded term at the moment. Let\u0027s say something like \"Request promise rejected (\"",
+      "range": {
+        "startLine": 469,
+        "startChar": 17,
+        "endLine": 469,
+        "endChar": 39
+      },
+      "revId": "f23da9780205eddc37a1650cb66c83f69a232b8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82cc96c8_8cb1d8d0",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-31T14:26:12Z",
+      "side": 1,
+      "message": "Could we log a message similar to above in the helper function in terms of format and the fact that the promise is rejected with the same error? Up to you what you choose as the error message.",
+      "revId": "f23da9780205eddc37a1650cb66c83f69a232b8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
