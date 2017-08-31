@@ -70,6 +70,24 @@
       "revId": "c556f2438eed1bf86b39fbdbcd438fd1afb8cb3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "200114f9_f9dc7014",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1115004
+      },
+      "writtenOn": "2017-08-31T02:31:49Z",
+      "side": 0,
+      "message": "I\u0027d want to understand why this code was added in the first place to know if it\u0027s safe to remove. Did you do the code archaeology to do that already? If so, please include a short description in the change description. If not, I\u0027d prefer it be a separate change.",
+      "parentUuid": "301056a0_a1c88017",
+      "revId": "c556f2438eed1bf86b39fbdbcd438fd1afb8cb3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
