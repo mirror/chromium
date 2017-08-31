@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13c43129_505da750",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-31T01:17:40Z",
+      "side": 1,
+      "message": "We have previously included a mention of the SDK hash we\u0027re rolling to, so we can easily spot that in the Chromium commit history.",
+      "revId": "1993ffda739d13ceaed529df1aa49675c51f1a4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
