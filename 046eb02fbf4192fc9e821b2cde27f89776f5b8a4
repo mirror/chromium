@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "edf87fa5_b38dddfa",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/document_cookie_interop.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-08-31T00:54:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19122ec8_4e7ef1a2",
+      "revId": "046eb02fbf4192fc9e821b2cde27f89776f5b8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d2e2427_a46ed7c1",
         "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/document_cookie_interop.html",
         "patchSetId": 6
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "469672f9_5802df12",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/document_cookie_interop.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-08-31T00:54:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d2e2427_a46ed7c1",
+      "revId": "046eb02fbf4192fc9e821b2cde27f89776f5b8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "874d019a_45a4bf36",
         "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/document_cookie_interop.html",
         "patchSetId": 6
@@ -64,6 +100,24 @@
       "writtenOn": "2017-08-02T17:08:56Z",
       "side": 1,
       "message": "1) The code is going to diverge, let\u0027s remove the \"copied from\" line.\n\n2) Would it be possible to move this to a setup function? I\u0027m guessing you want explicit_done: true so tests don\u0027t start until the test is on the correct page.\nDocs: http://web-platform-tests.org/writing-tests/testharness-api.html",
+      "revId": "046eb02fbf4192fc9e821b2cde27f89776f5b8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdd8816c_cae1220a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/document_cookie_interop.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-08-31T00:54:46Z",
+      "side": 1,
+      "message": "I used a dangling promise instead, is that OK?",
+      "parentUuid": "874d019a_45a4bf36",
       "revId": "046eb02fbf4192fc9e821b2cde27f89776f5b8a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "28eef0d1_4acf9417",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/document_cookie_interop.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-08-31T00:54:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "450280c1_b4ccff1f",
+      "revId": "046eb02fbf4192fc9e821b2cde27f89776f5b8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c73ad4c_008c19f9",
         "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/document_cookie_interop.html",
         "patchSetId": 6
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "343bce36_375629bd",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/document_cookie_interop.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-08-31T00:54:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c73ad4c_008c19f9",
+      "revId": "046eb02fbf4192fc9e821b2cde27f89776f5b8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d5351c3_8769f594",
         "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/document_cookie_interop.html",
         "patchSetId": 6
@@ -115,6 +205,24 @@
       "writtenOn": "2017-08-02T17:08:56Z",
       "side": 1,
       "message": "Why is the then() necessary?",
+      "revId": "046eb02fbf4192fc9e821b2cde27f89776f5b8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03f56ed5_03b25b1e",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/document_cookie_interop.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-08-31T00:54:46Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "8d5351c3_8769f594",
       "revId": "046eb02fbf4192fc9e821b2cde27f89776f5b8a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
