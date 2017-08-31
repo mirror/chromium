@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4441fdd_5d42fc0b",
+        "filename": "extensions/browser/api/DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-31T22:13:05Z",
+      "side": 1,
+      "message": "We shouldn\u0027t modify DEPS here, add a DES file to the bluetooth subdir if we need it (see other comment).",
+      "revId": "e7d2a7d3fc9a270550e97050b6c20f013e911f46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eef7c263_8eee9028",
+        "filename": "extensions/browser/api/bluetooth/bluetooth_private_api.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-31T22:13:05Z",
+      "side": 1,
+      "message": "Ugh. This is a problem. The include would need to be OS_CHROMEOS specific for one, but including ash/ is a layering violation.\n\nI can think of three solutions:\n1. Move the pref to src/chromeos/chromeos_pref_names.cc, and add a DEPS file with +chromeos to extensions/browser/api/bluetooth (don\u0027t add it to e/b/apu/DEPS)\n2. Also call setPrefValue from bluetooth_page.js (which is a little awkward,but frankly so is this imho)\n\n+rkc@ WDYT?",
+      "revId": "e7d2a7d3fc9a270550e97050b6c20f013e911f46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "609b4c75_4a6e6954",
+        "filename": "extensions/common/api/bluetooth_private.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-31T22:13:05Z",
+      "side": 1,
+      "message": "\u0027save_to_pref\u0027 is kind of an implementation detail. Also, this isn\u0027t part of the new adapter state, it should be an extra optional parameter to setAdapterState, named something like \u0027user_initialted\u0027.\n\nThat said, I can\u0027t think of a use case when this should ever be false. I think we should always modify the pref if the adapter state is changed through the extension API.",
+      "revId": "e7d2a7d3fc9a270550e97050b6c20f013e911f46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
