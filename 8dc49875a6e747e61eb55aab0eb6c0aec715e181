@@ -70,6 +70,24 @@
       "revId": "8dc49875a6e747e61eb55aab0eb6c0aec715e181",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e3b041a_ee8c642f",
+        "filename": "chrome/browser/resources/settings/site_settings/category_default_setting.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-31T22:47:04Z",
+      "side": 1,
+      "message": "Right off, that sounds like a good idea. I\u0027m not sure why undefined was used, unless it was for convenience of testing whether enforcement is falsey. Maybe we could use null or \u0027\u0027 if that\u0027s the case. Though being explicit about whether enforcement \u003d\u003d NONE seems good too.\n\nThat seems like it\u0027s getting outside of the scope of this CL though, so it\u0027s your call on whether to change this CL for that. \n\nIt would help me if ya did any one of the following:\n- change this CL to give enforcement a value (like NONE)\n- land this CL and make a follow-up CL to give enforcement a value (like NONE)\n- make a crbug to give enforcement a value (like NONE) and assign it to me\n- land this CL and let me know it\u0027s on me to follow-up on enforcement NONE :)",
+      "parentUuid": "d9d5905f_c9402cf3",
+      "revId": "8dc49875a6e747e61eb55aab0eb6c0aec715e181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
