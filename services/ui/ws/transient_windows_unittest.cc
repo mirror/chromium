@@ -79,7 +79,7 @@ TEST_F(TransientWindowsTest, TransientChildren) {
   TestServerWindowDelegate server_window_delegate;
 
   std::unique_ptr<ServerWindow> parent(
-      CreateTestWindow(&server_window_delegate, WindowId(), nullptr));
+      CreateTestWindow(&server_window_delegate, WindowId(1, 0), nullptr));
   std::unique_ptr<ServerWindow> w1(
       CreateTestWindow(&server_window_delegate, WindowId(1, 1), parent.get()));
   std::unique_ptr<ServerWindow> w3(
@@ -107,25 +107,25 @@ TEST_F(TransientWindowsTest, TransientChildrenGroupAbove) {
   TestServerWindowDelegate server_window_delegate;
 
   std::unique_ptr<ServerWindow> parent(
-      CreateTestWindow(&server_window_delegate, WindowId(), nullptr));
+      CreateTestWindow(&server_window_delegate, WindowId(0, 1), nullptr));
   std::unique_ptr<ServerWindow> w1(
-      CreateTestWindow(&server_window_delegate, WindowId(0, 1), parent.get()));
-
-  ServerWindow* w11 =
-      CreateTestWindow(&server_window_delegate, WindowId(0, 11), parent.get());
-  std::unique_ptr<ServerWindow> w2(
       CreateTestWindow(&server_window_delegate, WindowId(0, 2), parent.get()));
 
-  ServerWindow* w21 =
+  ServerWindow* w11 =
       CreateTestWindow(&server_window_delegate, WindowId(0, 21), parent.get());
+  std::unique_ptr<ServerWindow> w2(
+      CreateTestWindow(&server_window_delegate, WindowId(0, 3), parent.get()));
+
+  ServerWindow* w21 =
+      CreateTestWindow(&server_window_delegate, WindowId(0, 31), parent.get());
   ServerWindow* w211 =
-      CreateTestWindow(&server_window_delegate, WindowId(0, 211), parent.get());
+      CreateTestWindow(&server_window_delegate, WindowId(0, 311), parent.get());
   ServerWindow* w212 =
-      CreateTestWindow(&server_window_delegate, WindowId(0, 212), parent.get());
+      CreateTestWindow(&server_window_delegate, WindowId(0, 312), parent.get());
   ServerWindow* w213 =
-      CreateTestWindow(&server_window_delegate, WindowId(0, 213), parent.get());
+      CreateTestWindow(&server_window_delegate, WindowId(0, 313), parent.get());
   ServerWindow* w22 =
-      CreateTestWindow(&server_window_delegate, WindowId(0, 22), parent.get());
+      CreateTestWindow(&server_window_delegate, WindowId(0, 32), parent.get());
   ASSERT_EQ(8u, parent->children().size());
 
   // w11 is now owned by w1.
@@ -140,80 +140,80 @@ TEST_F(TransientWindowsTest, TransientChildrenGroupAbove) {
   w21->AddTransientWindow(w212);
   // w213 is now owned by w21.
   w21->AddTransientWindow(w213);
-  EXPECT_EQ("1 11 2 21 211 212 213 22", ChildWindowIDsAsString(parent.get()));
+  EXPECT_EQ("2 21 3 31 311 312 313 32", ChildWindowIDsAsString(parent.get()));
 
   // Stack w1 at the top (end), this should force w11 to be last (on top of w1).
   parent->StackChildAtTop(w1.get());
   EXPECT_EQ(w11, parent->children().back());
-  EXPECT_EQ("2 21 211 212 213 22 1 11", ChildWindowIDsAsString(parent.get()));
+  EXPECT_EQ("3 31 311 312 313 32 2 21", ChildWindowIDsAsString(parent.get()));
 
   // This tests that the order in children_ array rather than in
   // transient_children_ array is used when reinserting transient children.
   // If transient_children_ array was used '22' would be following '21'.
   parent->StackChildAtTop(w2.get());
   EXPECT_EQ(w22, parent->children().back());
-  EXPECT_EQ("1 11 2 21 211 212 213 22", ChildWindowIDsAsString(parent.get()));
+  EXPECT_EQ("2 21 3 31 311 312 313 32", ChildWindowIDsAsString(parent.get()));
 
   w11->Reorder(w2.get(), mojom::OrderDirection::ABOVE);
   EXPECT_EQ(w11, parent->children().back());
-  EXPECT_EQ("2 21 211 212 213 22 1 11", ChildWindowIDsAsString(parent.get()));
+  EXPECT_EQ("3 31 311 312 313 32 2 21", ChildWindowIDsAsString(parent.get()));
 
   w21->Reorder(w1.get(), mojom::OrderDirection::ABOVE);
   EXPECT_EQ(w22, parent->children().back());
-  EXPECT_EQ("1 11 2 21 211 212 213 22", ChildWindowIDsAsString(parent.get()));
+  EXPECT_EQ("2 21 3 31 311 312 313 32", ChildWindowIDsAsString(parent.get()));
 
   w21->Reorder(w22, mojom::OrderDirection::ABOVE);
   EXPECT_EQ(w213, parent->children().back());
-  EXPECT_EQ("1 11 2 22 21 211 212 213", ChildWindowIDsAsString(parent.get()));
+  EXPECT_EQ("2 21 3 32 31 311 312 313", ChildWindowIDsAsString(parent.get()));
 
   w11->Reorder(w21, mojom::OrderDirection::ABOVE);
   EXPECT_EQ(w11, parent->children().back());
-  EXPECT_EQ("2 22 21 211 212 213 1 11", ChildWindowIDsAsString(parent.get()));
+  EXPECT_EQ("3 32 31 311 312 313 2 21", ChildWindowIDsAsString(parent.get()));
 
   w213->Reorder(w21, mojom::OrderDirection::ABOVE);
   EXPECT_EQ(w11, parent->children().back());
-  EXPECT_EQ("2 22 21 213 211 212 1 11", ChildWindowIDsAsString(parent.get()));
+  EXPECT_EQ("3 32 31 313 311 312 2 21", ChildWindowIDsAsString(parent.get()));
 
   // No change when stacking a transient parent above its transient child.
   w21->Reorder(w211, mojom::OrderDirection::ABOVE);
   EXPECT_EQ(w11, parent->children().back());
-  EXPECT_EQ("2 22 21 213 211 212 1 11", ChildWindowIDsAsString(parent.get()));
+  EXPECT_EQ("3 32 31 313 311 312 2 21", ChildWindowIDsAsString(parent.get()));
 
   // This tests that the order in children_ array rather than in
   // transient_children_ array is used when reinserting transient children.
   // If transient_children_ array was used '22' would be following '21'.
   w2->Reorder(w1.get(), mojom::OrderDirection::ABOVE);
   EXPECT_EQ(w212, parent->children().back());
-  EXPECT_EQ("1 11 2 22 21 213 211 212", ChildWindowIDsAsString(parent.get()));
+  EXPECT_EQ("2 21 3 32 31 313 311 312", ChildWindowIDsAsString(parent.get()));
 
   w11->Reorder(w213, mojom::OrderDirection::ABOVE);
   EXPECT_EQ(w11, parent->children().back());
-  EXPECT_EQ("2 22 21 213 211 212 1 11", ChildWindowIDsAsString(parent.get()));
+  EXPECT_EQ("3 32 31 313 311 312 2 21", ChildWindowIDsAsString(parent.get()));
 }
 
 TEST_F(TransientWindowsTest, TransienChildGroupBelow) {
   TestServerWindowDelegate server_window_delegate;
 
   std::unique_ptr<ServerWindow> parent(
-      CreateTestWindow(&server_window_delegate, WindowId(), nullptr));
+      CreateTestWindow(&server_window_delegate, WindowId(0, 1), nullptr));
   std::unique_ptr<ServerWindow> w1(
-      CreateTestWindow(&server_window_delegate, WindowId(0, 1), parent.get()));
-
-  ServerWindow* w11 =
-      CreateTestWindow(&server_window_delegate, WindowId(0, 11), parent.get());
-  std::unique_ptr<ServerWindow> w2(
       CreateTestWindow(&server_window_delegate, WindowId(0, 2), parent.get()));
 
-  ServerWindow* w21 =
+  ServerWindow* w11 =
       CreateTestWindow(&server_window_delegate, WindowId(0, 21), parent.get());
+  std::unique_ptr<ServerWindow> w2(
+      CreateTestWindow(&server_window_delegate, WindowId(0, 3), parent.get()));
+
+  ServerWindow* w21 =
+      CreateTestWindow(&server_window_delegate, WindowId(0, 31), parent.get());
   ServerWindow* w211 =
-      CreateTestWindow(&server_window_delegate, WindowId(0, 211), parent.get());
+      CreateTestWindow(&server_window_delegate, WindowId(0, 311), parent.get());
   ServerWindow* w212 =
-      CreateTestWindow(&server_window_delegate, WindowId(0, 212), parent.get());
+      CreateTestWindow(&server_window_delegate, WindowId(0, 312), parent.get());
   ServerWindow* w213 =
-      CreateTestWindow(&server_window_delegate, WindowId(0, 213), parent.get());
+      CreateTestWindow(&server_window_delegate, WindowId(0, 313), parent.get());
   ServerWindow* w22 =
-      CreateTestWindow(&server_window_delegate, WindowId(0, 22), parent.get());
+      CreateTestWindow(&server_window_delegate, WindowId(0, 32), parent.get());
   ASSERT_EQ(8u, parent->children().size());
 
   // w11 is now owned by w1.
@@ -228,7 +228,7 @@ TEST_F(TransientWindowsTest, TransienChildGroupBelow) {
   w21->AddTransientWindow(w212);
   // w213 is now owned by w21.
   w21->AddTransientWindow(w213);
-  EXPECT_EQ("1 11 2 21 211 212 213 22", ChildWindowIDsAsString(parent.get()));
+  EXPECT_EQ("2 21 3 31 311 312 313 32", ChildWindowIDsAsString(parent.get()));
 
   // Stack w2 at the bottom, this should force w11 to be last (on top of w1).
   // This also tests that the order in children_ array rather than in
@@ -236,60 +236,60 @@ TEST_F(TransientWindowsTest, TransienChildGroupBelow) {
   // If transient_children_ array was used '22' would be following '21'.
   parent->StackChildAtBottom(w2.get());
   EXPECT_EQ(w11, parent->children().back());
-  EXPECT_EQ("2 21 211 212 213 22 1 11", ChildWindowIDsAsString(parent.get()));
+  EXPECT_EQ("3 31 311 312 313 32 2 21", ChildWindowIDsAsString(parent.get()));
 
   parent->StackChildAtBottom(w1.get());
   EXPECT_EQ(w22, parent->children().back());
-  EXPECT_EQ("1 11 2 21 211 212 213 22", ChildWindowIDsAsString(parent.get()));
+  EXPECT_EQ("2 21 3 31 311 312 313 32", ChildWindowIDsAsString(parent.get()));
 
   w21->Reorder(w1.get(), mojom::OrderDirection::BELOW);
   EXPECT_EQ(w11, parent->children().back());
-  EXPECT_EQ("2 21 211 212 213 22 1 11", ChildWindowIDsAsString(parent.get()));
+  EXPECT_EQ("3 31 311 312 313 32 2 21", ChildWindowIDsAsString(parent.get()));
 
   w11->Reorder(w2.get(), mojom::OrderDirection::BELOW);
   EXPECT_EQ(w22, parent->children().back());
-  EXPECT_EQ("1 11 2 21 211 212 213 22", ChildWindowIDsAsString(parent.get()));
+  EXPECT_EQ("2 21 3 31 311 312 313 32", ChildWindowIDsAsString(parent.get()));
 
   w22->Reorder(w21, mojom::OrderDirection::BELOW);
   EXPECT_EQ(w213, parent->children().back());
-  EXPECT_EQ("1 11 2 22 21 211 212 213", ChildWindowIDsAsString(parent.get()));
+  EXPECT_EQ("2 21 3 32 31 311 312 313", ChildWindowIDsAsString(parent.get()));
 
   w21->Reorder(w11, mojom::OrderDirection::BELOW);
   EXPECT_EQ(w11, parent->children().back());
-  EXPECT_EQ("2 22 21 211 212 213 1 11", ChildWindowIDsAsString(parent.get()));
+  EXPECT_EQ("3 32 31 311 312 313 2 21", ChildWindowIDsAsString(parent.get()));
 
   w213->Reorder(w211, mojom::OrderDirection::BELOW);
   EXPECT_EQ(w11, parent->children().back());
-  EXPECT_EQ("2 22 21 213 211 212 1 11", ChildWindowIDsAsString(parent.get()));
+  EXPECT_EQ("3 32 31 313 311 312 2 21", ChildWindowIDsAsString(parent.get()));
 
   // No change when stacking a transient parent below its transient child.
   w21->Reorder(w211, mojom::OrderDirection::BELOW);
   EXPECT_EQ(w11, parent->children().back());
-  EXPECT_EQ("2 22 21 213 211 212 1 11", ChildWindowIDsAsString(parent.get()));
+  EXPECT_EQ("3 32 31 313 311 312 2 21", ChildWindowIDsAsString(parent.get()));
 
   w1->Reorder(w2.get(), mojom::OrderDirection::BELOW);
   EXPECT_EQ(w212, parent->children().back());
-  EXPECT_EQ("1 11 2 22 21 213 211 212", ChildWindowIDsAsString(parent.get()));
+  EXPECT_EQ("2 21 3 32 31 313 311 312", ChildWindowIDsAsString(parent.get()));
 
   w213->Reorder(w11, mojom::OrderDirection::BELOW);
   EXPECT_EQ(w11, parent->children().back());
-  EXPECT_EQ("2 22 21 213 211 212 1 11", ChildWindowIDsAsString(parent.get()));
+  EXPECT_EQ("3 32 31 313 311 312 2 21", ChildWindowIDsAsString(parent.get()));
 }
 
 // Tests that transient windows are stacked properly when created.
 TEST_F(TransientWindowsTest, StackUponCreation) {
   TestServerWindowDelegate delegate;
   std::unique_ptr<ServerWindow> parent(
-      CreateTestWindow(&delegate, WindowId(), nullptr));
+      CreateTestWindow(&delegate, WindowId(0, 1), nullptr));
   std::unique_ptr<ServerWindow> window0(
-      CreateTestWindow(&delegate, WindowId(0, 1), parent.get()));
-  std::unique_ptr<ServerWindow> window1(
       CreateTestWindow(&delegate, WindowId(0, 2), parent.get()));
+  std::unique_ptr<ServerWindow> window1(
+      CreateTestWindow(&delegate, WindowId(0, 3), parent.get()));
 
   ServerWindow* window2 =
-      CreateTestWindow(&delegate, WindowId(0, 3), parent.get());
+      CreateTestWindow(&delegate, WindowId(0, 4), parent.get());
   window0->AddTransientWindow(window2);
-  EXPECT_EQ("1 3 2", ChildWindowIDsAsString(parent.get()));
+  EXPECT_EQ("2 4 3", ChildWindowIDsAsString(parent.get()));
 }
 
 // Tests that windows are restacked properly after a call to
@@ -297,33 +297,34 @@ TEST_F(TransientWindowsTest, StackUponCreation) {
 TEST_F(TransientWindowsTest, RestackUponAddOrRemoveTransientWindow) {
   TestServerWindowDelegate delegate;
   std::unique_ptr<ServerWindow> parent(
-      CreateTestWindow(&delegate, WindowId(), nullptr));
+      CreateTestWindow(&delegate, WindowId(0, 1), nullptr));
   std::unique_ptr<ServerWindow> windows[4];
   for (int i = 0; i < 4; i++)
-    windows[i].reset(CreateTestWindow(&delegate, WindowId(0, i), parent.get()));
+    windows[i].reset(
+        CreateTestWindow(&delegate, WindowId(0, i + 2), parent.get()));
 
-  EXPECT_EQ("0 1 2 3", ChildWindowIDsAsString(parent.get()));
+  EXPECT_EQ("2 3 4 5", ChildWindowIDsAsString(parent.get()));
 
   windows[0]->AddTransientWindow(windows[2].get());
-  EXPECT_EQ("0 2 1 3", ChildWindowIDsAsString(parent.get()));
+  EXPECT_EQ("2 4 3 5", ChildWindowIDsAsString(parent.get()));
 
   windows[0]->AddTransientWindow(windows[3].get());
-  EXPECT_EQ("0 2 3 1", ChildWindowIDsAsString(parent.get()));
+  EXPECT_EQ("2 4 5 3", ChildWindowIDsAsString(parent.get()));
 
   windows[0]->RemoveTransientWindow(windows[2].get());
-  EXPECT_EQ("0 3 2 1", ChildWindowIDsAsString(parent.get()));
+  EXPECT_EQ("2 5 4 3", ChildWindowIDsAsString(parent.get()));
 
   windows[0]->RemoveTransientWindow(windows[3].get());
-  EXPECT_EQ("0 3 2 1", ChildWindowIDsAsString(parent.get()));
+  EXPECT_EQ("2 5 4 3", ChildWindowIDsAsString(parent.get()));
 }
 
 // Verifies TransientWindowObserver is notified appropriately.
 TEST_F(TransientWindowsTest, TransientWindowObserverNotified) {
   TestServerWindowDelegate delegate;
   std::unique_ptr<ServerWindow> parent(
-      CreateTestWindow(&delegate, WindowId(), nullptr));
+      CreateTestWindow(&delegate, WindowId(0, 1), nullptr));
   std::unique_ptr<ServerWindow> w1(
-      CreateTestWindow(&delegate, WindowId(0, 1), parent.get()));
+      CreateTestWindow(&delegate, WindowId(0, 2), parent.get()));
 
   TestTransientWindowObserver test_observer;
   parent->AddObserver(&test_observer);
