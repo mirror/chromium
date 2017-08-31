@@ -428,6 +428,7 @@ CHAR-LIMIT guidelines:
       <message name="IDS_PASSWORD_ENTRY_EDITOR_SITE_TITLE" desc='Title preceding the identification of the site where the stored password comes from.'>
         Site
       </message>
+
       <message name="IDS_PASSWORD_ENTRY_EDITOR_USERNAME_TITLE" desc='Title preceding username of the account where the stored password comes from.'>
         Username
       </message>
@@ -448,6 +449,9 @@ CHAR-LIMIT guidelines:
       </message>
       <message name="IDS_PASSWORD_ENTRY_EDITOR_DELETE_STORED_PASSWORD_ACTION_TITLE" desc='Title for button on action bar that deletes the stored password.'>
         Delete password
+      </message>
+      <message name="IDS_PASSWORD_ENTRY_EDITOR_HIDE_STORED_PASSWORD" desc="A tool tip on a button that hides the saved password that is being shown.">
+        Hide password
       </message>
       <message name="IDS_PASSWORD_ENTRY_EDITOR_DELETE_STORED_PASSWORD" desc='Content description for the button that allows users to delete the stored password.'>
         Delete stored password
