@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d9bff62_868ce70d",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-31T00:12:40Z",
+      "side": 1,
+      "message": "Should this just be self? Why does there need to be a property?",
+      "range": {
+        "startLine": 114,
+        "startChar": 52,
+        "endLine": 114,
+        "endChar": 60
+      },
+      "revId": "e69d0db8ed9c3dde4199bcd6a8dd2bcfbdc77c60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
