@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "493c0f9b_088fca88",
+        "filename": "ios/chrome/browser/ui/ntp/new_tab_page_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-08-31T14:31:23Z",
+      "side": 1,
+      "message": "This comment should maybe explain why?",
+      "revId": "10ac2e60c91b8de6072949d72df9eb8e1febacfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
