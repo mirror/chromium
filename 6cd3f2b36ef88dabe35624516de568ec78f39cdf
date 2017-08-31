@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab09e867_44ff95a9",
+        "filename": "chrome/browser/ui/views/external_protocol_dialog.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-31T06:53:37Z",
+      "side": 1,
+      "message": "Nit: DCHECK(....empty())?",
+      "revId": "6cd3f2b36ef88dabe35624516de568ec78f39cdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bf9b9d5_952316c9",
+        "filename": "chrome/browser/ui/views/external_protocol_dialog.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-31T06:53:37Z",
+      "side": 1,
+      "message": "Nit: If that\u0027s a function, maybe mention where it lives?",
+      "revId": "6cd3f2b36ef88dabe35624516de568ec78f39cdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
