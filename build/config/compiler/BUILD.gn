@@ -1131,8 +1131,6 @@ config("default_warnings") {
     if (is_mac && !is_nacl) {
       # When compiling Objective-C, warns if a method is used whose
       # availability is newer than the deployment target.
-      # TODO(thakis): Consider enabling this on iOS too,
-      # https://crbug.com/742498
       cflags += [ "-Wunguarded-availability" ]
     }
 
@@ -1140,6 +1138,10 @@ config("default_warnings") {
       # When compiling Objective-C, warns if a selector named via @selector has
       # not been defined in any visible interface.
       cflags += [ "-Wundeclared-selector" ]
+
+      # When compiling Objective-C, warns if a method is used whose
+      # availability is newer than the deployment target.
+      cflags += [ "-Wunguarded-availability" ]
     }
 
     # Suppress warnings about ABI changes on ARM (Clang doesn't give this
