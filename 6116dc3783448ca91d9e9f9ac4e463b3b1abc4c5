@@ -119,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "738a229a_7a85fdfb",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 3460,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-31T06:59:53Z",
+      "side": 1,
+      "message": "Short answer: they aren\u0027t. I guess this is only called for the main frame today, so maybe it\u0027s OK to keep this logic as-is.\n\n(This probably means we don\u0027t need to check MainFrameImpl())",
+      "parentUuid": "41ed5b30_4e7060ea",
+      "revId": "6116dc3783448ca91d9e9f9ac4e463b3b1abc4c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1abf69d2_2a401a2c",
         "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetBase.cpp",
         "patchSetId": 6
@@ -511,6 +529,24 @@
       "side": 1,
       "message": "It seems to be used in layout tests ... so I would guess \u0027no\u0027?",
       "parentUuid": "2bd3a391_5db64d4a",
+      "revId": "6116dc3783448ca91d9e9f9ac4e463b3b1abc4c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a79f00f8_0efb4f9c",
+        "filename": "third_party/WebKit/public/web/WebView.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-31T06:59:53Z",
+      "side": 1,
+      "message": "Shouldn\u0027t the layout tests be calling the WebWidget version of this function anyway?\n\n(If this is too big a change for this CL, it\u0027s fine to do in a followup; I just want to see if I\u0027m missing something here)",
+      "parentUuid": "1ce7b513_60070cb8",
       "revId": "6116dc3783448ca91d9e9f9ac4e463b3b1abc4c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

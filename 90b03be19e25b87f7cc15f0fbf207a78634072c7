@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6f525be_6c06fac4",
+        "filename": "content/renderer/render_widget.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-31T06:59:53Z",
+      "side": 1,
+      "message": "Maybe this can be made non-virtual?",
+      "range": {
+        "startLine": 415,
+        "startChar": 2,
+        "endLine": 415,
+        "endChar": 9
+      },
+      "revId": "90b03be19e25b87f7cc15f0fbf207a78634072c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
