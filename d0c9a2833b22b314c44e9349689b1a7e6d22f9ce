@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d750e60f_75dadfa7",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1144419
+      },
+      "writtenOn": "2017-08-31T15:41:48Z",
+      "side": 1,
+      "message": "I\u0027ve changed to check only the pref because IsArcAvailable is redundant with the switch.",
+      "parentUuid": "1f1b2f75_17dd6852",
+      "range": {
+        "startLine": 182,
+        "startChar": 11,
+        "endLine": 183,
+        "endChar": 62
+      },
+      "revId": "d0c9a2833b22b314c44e9349689b1a7e6d22f9ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8fc1c381_632cee67",
         "filename": "chrome/browser/chromeos/arc/arc_util.cc",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-31T14:59:42Z",
       "side": 1,
       "message": "nit: It seems a bit odd that the necessity to perform the migration is checked only in this particular \"AskForEcryptfsArcUsers\" case.\nShouldn\u0027t the whole function IsArcMigrationAllowedForProfile() return false if the command line is not present?",
+      "range": {
+        "startLine": 184,
+        "startChar": 11,
+        "endLine": 185,
+        "endChar": 62
+      },
+      "revId": "d0c9a2833b22b314c44e9349689b1a7e6d22f9ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6d49462_a5c6e3c6",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1144419
+      },
+      "writtenOn": "2017-08-31T15:41:48Z",
+      "side": 1,
+      "message": "The flag in command line specifies only if the device had ARC M in version 60. Migration is\nallowed for all the devices as long as the admin didn\u0027t prohibit it.",
+      "parentUuid": "8fc1c381_632cee67",
       "range": {
         "startLine": 184,
         "startChar": 11,
@@ -68,6 +116,30 @@
       "revId": "d0c9a2833b22b314c44e9349689b1a7e6d22f9ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f78dd686_41014f34",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1144419
+      },
+      "writtenOn": "2017-08-31T15:41:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f845bd84_9dde4701",
+      "range": {
+        "startLine": 224,
+        "startChar": 36,
+        "endLine": 225,
+        "endChar": 32
+      },
+      "revId": "d0c9a2833b22b314c44e9349689b1a7e6d22f9ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +189,54 @@
     },
     {
       "key": {
+        "uuid": "b73b0e36_5e077e46",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1070,
+      "author": {
+        "id": 1144419
+      },
+      "writtenOn": "2017-08-31T15:41:48Z",
+      "side": 1,
+      "message": "I agree, we need symmetry here and IsArcAvailable is very close to redundant with the flag. Because currently I can\u0027t imagine any of 5 devices that had ARC M, to suddenly remove ARC in some update. So, I will just remove IsArcAvailable from arc_util.",
+      "parentUuid": "44e2dd3a_563961fa",
+      "range": {
+        "startLine": 1070,
+        "startChar": 10,
+        "endLine": 1070,
+        "endChar": 21
+      },
+      "revId": "d0c9a2833b22b314c44e9349689b1a7e6d22f9ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44bdc068_507996c2",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1070,
+      "author": {
+        "id": 1144419
+      },
+      "writtenOn": "2017-08-31T15:41:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "724d7803_bee2f43c",
+      "range": {
+        "startLine": 1070,
+        "startChar": 6,
+        "endLine": 1070,
+        "endChar": 8
+      },
+      "revId": "d0c9a2833b22b314c44e9349689b1a7e6d22f9ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f62e766a_16310c77",
         "filename": "chromeos/chromeos_switches.cc",
         "patchSetId": 7
@@ -137,6 +257,30 @@
       "revId": "d0c9a2833b22b314c44e9349689b1a7e6d22f9ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "473cf27b_91011295",
+        "filename": "chromeos/chromeos_switches.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1144419
+      },
+      "writtenOn": "2017-08-31T15:41:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f62e766a_16310c77",
+      "range": {
+        "startLine": 89,
+        "startChar": 11,
+        "endLine": 89,
+        "endChar": 37
+      },
+      "revId": "d0c9a2833b22b314c44e9349689b1a7e6d22f9ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
