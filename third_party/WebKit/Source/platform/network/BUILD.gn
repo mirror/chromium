@@ -1,0 +1,128 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+import("//third_party/WebKit/Source/build/scripts/scripts.gni")
+import("//third_party/WebKit/Source/platform/platform_generated.gni")
+
+visibility = [ ":*" ]
+
+action("http_names") {
+  script = "../../build/scripts/make_names.py"
+
+  http_names_in = "HTTPNames.json5"
+  inputs = make_names_files + [ http_names_in ]
+
+  outputs = [
+    "$blink_platform_output_dir/HTTPNames.cpp",
+    "$blink_platform_output_dir/HTTPNames.h",
+  ]
+
+  args = [
+    rebase_path(http_names_in, root_build_dir),
+    "--output_dir",
+    rebase_path(blink_platform_output_dir, root_build_dir),
+  ]
+}
+
+group("make_generated") {
+  visibility = []  # Allow re-assignment of list.
+  visibility = [ "//third_party/WebKit/Source/platform:*" ]
+  public_deps = [
+    ":http_names",
+  ]
+}
+
+source_set("network") {
+  visibility = []  # Allow re-assignment of list.
+  visibility = [ "//third_party/WebKit/Source/platform/*" ]
+
+  sources = [
+    "ContentSecurityPolicyParsers.cpp",
+    "ContentSecurityPolicyParsers.h",
+    "ContentSecurityPolicyResponseHeaders.cpp",
+    "ContentSecurityPolicyResponseHeaders.h",
+    "EncodedFormData.cpp",
+    "EncodedFormData.h",
+    "FormDataEncoder.cpp",
+    "FormDataEncoder.h",
+    "HTTPHeaderMap.cpp",
+    "HTTPHeaderMap.h",
+    "HTTPParsers.cpp",
+    "HTTPParsers.h",
+    "HeaderFieldTokenizer.cpp",
+    "HeaderFieldTokenizer.h",
+    "NetworkHints.cpp",
+    "NetworkHints.h",
+    "NetworkInstrumentation.cpp",
+    "NetworkInstrumentation.h",
+    "NetworkLog.h",
+    "NetworkStateNotifier.cpp",
+    "NetworkStateNotifier.h",
+    "NetworkUtils.cpp",
+    "NetworkUtils.h",
+    "ParsedContentDisposition.cpp",
+    "ParsedContentDisposition.h",
+    "ParsedContentHeaderFieldParameters.cpp",
+    "ParsedContentHeaderFieldParameters.h",
+    "ParsedContentType.cpp",
+    "ParsedContentType.h",
+    "WebSocketHandshakeRequest.cpp",
+    "WebSocketHandshakeRequest.h",
+    "WebSocketHandshakeResponse.cpp",
+    "WebSocketHandshakeResponse.h",
+    "mime/ContentType.cpp",
+    "mime/ContentType.h",
+    "mime/MIMETypeFromURL.cpp",
+    "mime/MIMETypeFromURL.h",
+    "mime/MIMETypeRegistry.cpp",
+    "mime/MIMETypeRegistry.h",
+  ]
+
+  sources += get_target_outputs(":http_names")
+
+  public_deps = [ ":make_generated" ]
+
+  deps = [
+    "//base",
+    "//media",
+    "//net",
+    "//third_party/WebKit/Source/platform/blob",
+    "//third_party/WebKit/common:blink_common",
+  ]
+}
+
+source_set("unit_tests") {
+  visibility += [ "//third_party/WebKit/Source/platform:*" ]
+  testonly = true
+
+  sources = [
+    "EncodedFormDataTest.cpp",
+    "HTTPParsersTest.cpp",
+    "NetworkStateNotifierTest.cpp",
+    "NetworkUtilsTest.cpp",
+    "ParsedContentDispositionTest.cpp",
+    "ParsedContentHeaderFieldParametersTest.cpp",
+    "ParsedContentTypeTest.cpp",
+    "mime/MIMETypeRegistryTest.cpp",
+    "mime/MockMimeRegistry.h",
+  ]
+
+  deps = [
+    "//net",
+    "//testing/gtest",
+  ]
+}
+
+source_set("test_support") {
+  visibility += [ "//third_party/WebKit/Source/platform:test_support" ]
+  testonly = true
+
+  sources = [
+    "mime/MockMimeRegistry.h",
+  ]
+
+  deps = [
+    "//net",
+  ]
+}
