@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9855504f_e60af652",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-31T16:52:02Z",
+      "side": 1,
+      "message": "Although it\u0027s a bit longer, we might want to whitelist instead of blacklist.\n\nif (type !\u003d PerformanceEntry::kResource \u0026\u0026\n    type !\u003d ... \u0026\u0026 \n    ...) {\n  return entries;\n}\n\nOver time, we expect new entry types not to support getEntriesByType, so this approach should make this error prone moving forward.",
+      "range": {
+        "startLine": 144,
+        "startChar": 2,
+        "endLine": 148,
+        "endChar": 3
+      },
+      "revId": "a3c889d4abf33ac713cf396a13a8288d1861e259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9018a70_371dbbf8",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceObserver.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-31T16:52:02Z",
+      "side": 1,
+      "message": "This approach could easily get out of sync, if AllValidEntryTypes isn\u0027t updated.\n\nInstead, to EntryType a MaxEntryType entry, and just loop through the valid values.\n\nSomething roughly like:\nfor (int i \u003d 1; i \u003c\u003d static_cast\u003cint\u003e(EntryType::MaxEntryType); i \u003d i \u003c\u003c 1) ...",
+      "range": {
+        "startLine": 121,
+        "startChar": 9,
+        "endLine": 121,
+        "endChar": 66
+      },
+      "revId": "a3c889d4abf33ac713cf396a13a8288d1861e259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9d7bcd9_0f387c5f",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceObserver.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-31T16:52:02Z",
+      "side": 1,
+      "message": "Maybe IsObserving?",
+      "range": {
+        "startLine": 60,
+        "startChar": 7,
+        "endLine": 60,
+        "endChar": 16
+      },
+      "revId": "a3c889d4abf33ac713cf396a13a8288d1861e259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
