@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "431d99e3_e9b7ea2d",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-31T19:12:50Z",
+      "side": 1,
+      "message": "nit: add {} because the if() condition is more than 1 line",
+      "revId": "73dcc7263d769867678c1d49fe2d5b94b43be312",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0972bae7_234da780",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-31T19:12:50Z",
+      "side": 1,
+      "message": "nit: Put this GetPrimaryUserSession() \u003d\u003d GetUserSession() into a helper function called IsUserPrimary() and put a TODO there to switch it to SessionController::IsUserPrimary(). Use it above also.",
+      "revId": "73dcc7263d769867678c1d49fe2d5b94b43be312",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbf8648f_c5a8b83d",
+        "filename": "ash/shell.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 849,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-31T19:12:50Z",
+      "side": 1,
+      "message": "nit: keep the comment from the old code that refers to system settings. That helps explain why it\u0027s called |settings| and not |setting|. (I would call it |setting| singular, but I guess that can be fixed when the controller gets introduced.)",
+      "revId": "73dcc7263d769867678c1d49fe2d5b94b43be312",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
