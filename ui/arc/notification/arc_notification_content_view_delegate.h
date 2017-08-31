@@ -22,6 +22,8 @@ class ArcNotificationContentViewDelegate {
   virtual void OnSlideChanged() = 0;
   virtual message_center::NotificationControlButtonsView*
   GetControlButtonsView() const = 0;
+  virtual bool GetExpanded() const = 0;
+  virtual void SetExpanded(bool expanded) = 0;
 };
 
 }  // namespace arc
