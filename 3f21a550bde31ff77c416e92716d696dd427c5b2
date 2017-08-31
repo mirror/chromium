@@ -16,6 +16,24 @@
       "revId": "3f21a550bde31ff77c416e92716d696dd427c5b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bed62f4_5dbdff2d",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorOverlayPage.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-08-31T00:08:46Z",
+      "side": 1,
+      "message": "Did that for the pageScaleFactor (making the \"scale\" function unnecessary). There\u0027s still _another_ scale factor (windowToViewport) that is applied on the native code side, for consistency with the rest of the inspector highlight.",
+      "parentUuid": "82b2eddf_ba4de486",
+      "revId": "3f21a550bde31ff77c416e92716d696dd427c5b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
