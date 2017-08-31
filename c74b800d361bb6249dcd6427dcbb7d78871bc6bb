@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f07d4b64_2908fa22",
+        "filename": "ash/test_shell_delegate.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-08-31T07:47:35Z",
+      "side": 1,
+      "message": "optional: do you want to DCHECK that source \u003d\u003d TouchscreenEnabledSource::GLOBAL?",
+      "revId": "c74b800d361bb6249dcd6427dcbb7d78871bc6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a7d8b8e_281b4a8e",
+        "filename": "chrome/browser/chromeos/system/input_device_settings.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-08-31T07:47:35Z",
+      "side": 1,
+      "message": "nit: I think this should be pref_service or prefs. The pref service consists of several layers of pref stores, the bottom contains the default values, above that you have user preferences (configured by the user), extension preferences and policy preferences. The name \"user_prefs\" is already used in another context.",
+      "range": {
+        "startLine": 296,
+        "startChar": 15,
+        "endLine": 296,
+        "endChar": 25
+      },
+      "revId": "c74b800d361bb6249dcd6427dcbb7d78871bc6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "767a880a_4a4215af",
+        "filename": "chrome/browser/chromeos/system/input_device_settings.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-08-31T07:47:35Z",
+      "side": 1,
+      "message": "This is a very strange pattern. Typically you would do\nreturn user_prefs-\u003eGetBoolean(::prefs::kTouchscreenEnabled);\nand if it is not overridden by a user preference/extension/enterprise policy, the default value provided by the registration of the pref is returned.\n\nThe only case where this would be needed if you deal with profiles for which RegisterProfilePrefs has not been called. Is that the case?",
+      "revId": "c74b800d361bb6249dcd6427dcbb7d78871bc6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aabfbe48_b9f39044",
+        "filename": "chrome/browser/chromeos/system/input_device_settings.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-08-31T07:47:35Z",
+      "side": 1,
+      "message": "I think it would be useful to document this relationship (both need to be true) in the declaration of global_touchscreen_enabled_ or InputDeviceSettings.",
+      "revId": "c74b800d361bb6249dcd6427dcbb7d78871bc6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
