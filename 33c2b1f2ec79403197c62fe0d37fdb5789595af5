@@ -16,6 +16,24 @@
       "revId": "33c2b1f2ec79403197c62fe0d37fdb5789595af5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1b579c3_4cf27933",
+        "filename": "third_party/WebKit/LayoutTests/fast/block/float/float-not-removed-from-pre-block-expected.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-31T06:21:52Z",
+      "side": 1,
+      "message": "This is a result of the bugfix. It\u0027s reverting back to the expectation we had before WhitespaceAttacher was introduced.",
+      "parentUuid": "0fa1fe22_2d71a48d",
+      "revId": "33c2b1f2ec79403197c62fe0d37fdb5789595af5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
