@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "b9a87fc8_fcaf2ecc",
+        "filename": "cc/paint/discardable_image_map.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-31T23:02:57Z",
+      "side": 1,
+      "message": "\u003e \u003e Each time we get a new recording, the animation system will copy the updated metadata from this image. Specifically:\n\u003e \u003e \n\u003e \u003e FrameMetadata (for frame complete and duration state).\n\u003e \u003e RepetitionPolicy (for how many loops of the animation to make).\n\u003e \n\u003e Does that mean you only need these two things and not the full PaintImage?\n\nYes, I just need a few metadata bits for the image. I can only copy those bits here?\n\n\u003e \n\u003e \u003e \n\u003e \u003e The Layer will register itself for each animated image it receives in a recording, and unregisters images from the previous recording once they are updated.\n\u003e \n\u003e Where will the layer register itself? Are you talking about cc::Layer here? Could you link to the document describing this design, maybe it\u0027s clearer there what this is trying to accomplish.\n\nNo, it would be the PictureLayerImpl that would register itself for all animated images present in the RasterSource. Sure, let me put up the future use of this in a doc so it becomes clearer.\n\n\u003e \n\u003e My hesitation here is that this feels like a convenient, but ultimately not the best, place to gather this information. If we don\u0027t care about the location of this image within the layer, nor do we care about the scale at which it appears, then it should be gathered earlier in the stack (ie at record time maybe?) Or maybe Blink can supply a set of animated images along with a recording.\n\nThe problem is that blink doesn\u0027t know what images exist in the recording, since we don\u0027t cache that information on each PaintRecord. We would need to store this when building a DisplayList and this is the one place where we do this step of visiting all images for a new list coming from blink.\n\nWe would need the location of the image within a layer for invalidations/querying the visibility of the image but that is already stored in |image_id_to_rect_|.",
+      "parentUuid": "4a7bd6af_c04be028",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 40,
+        "endChar": 50
+      },
+      "revId": "c257374bd58a7e386283e0a763debdc80d19a89d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c4e27503_5aaab660",
         "filename": "cc/paint/paint_image_builder.cc",
         "patchSetId": 3
