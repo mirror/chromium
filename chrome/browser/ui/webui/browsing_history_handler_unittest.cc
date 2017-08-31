@@ -11,6 +11,7 @@
 
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
+#include "base/run_loop.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/simple_test_clock.h"
 #include "base/values.h"
@@ -180,6 +181,7 @@ TEST_F(BrowsingHistoryHandlerTest, ObservingWebHistoryDeletions) {
     web_history_service()->ExpireHistoryBetween(
         std::set<GURL>(), base::Time(), base::Time::Max(), callback,
         PARTIAL_TRAFFIC_ANNOTATION_FOR_TESTS);
+    base::RunLoop().RunUntilIdle();
 
     EXPECT_EQ(1U, web_ui()->call_data().size());
     EXPECT_EQ("historyDeleted", web_ui()->call_data().back()->function_name());
@@ -196,6 +198,7 @@ TEST_F(BrowsingHistoryHandlerTest, ObservingWebHistoryDeletions) {
     web_history_service()->ExpireHistoryBetween(
         std::set<GURL>(), base::Time(), base::Time::Max(), callback,
         PARTIAL_TRAFFIC_ANNOTATION_FOR_TESTS);
+    base::RunLoop().RunUntilIdle();
 
     EXPECT_EQ(2U, web_ui()->call_data().size());
     EXPECT_EQ("historyDeleted", web_ui()->call_data().back()->function_name());
@@ -217,6 +220,7 @@ TEST_F(BrowsingHistoryHandlerTest, ObservingWebHistoryDeletions) {
             &history::BrowsingHistoryService::RemoveWebHistoryComplete,
             handler.browsing_history_service_->weak_factory_.GetWeakPtr()),
         PARTIAL_TRAFFIC_ANNOTATION_FOR_TESTS);
+    base::RunLoop().RunUntilIdle();
 
     EXPECT_EQ(3U, web_ui()->call_data().size());
     EXPECT_EQ("deleteComplete", web_ui()->call_data().back()->function_name());
@@ -233,6 +237,7 @@ TEST_F(BrowsingHistoryHandlerTest, ObservingWebHistoryDeletions) {
     web_history_service()->ExpireHistoryBetween(
         std::set<GURL>(), base::Time(), base::Time::Max(), callback,
         PARTIAL_TRAFFIC_ANNOTATION_FOR_TESTS);
+    base::RunLoop().RunUntilIdle();
 
     // No additional WebUI calls were made.
     EXPECT_EQ(3U, web_ui()->call_data().size());
@@ -260,8 +265,7 @@ TEST_F(BrowsingHistoryHandlerTest, MdTruncatesTitles) {
   handler.RegisterMessages();  // Needed to create BrowsingHistoryService.
   web_ui()->ClearTrackedCalls();
 
-  handler.browsing_history_service_->QueryComplete(
-      base::string16(), history::QueryOptions(), &results);
+  handler.browsing_history_service_->QueryComplete(&results);
   ASSERT_FALSE(web_ui()->call_data().empty());
 
   const base::ListValue* arg2;
