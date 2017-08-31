@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cd910d9a_0cc9b56d",
+        "filename": "ash/test_shell_delegate.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-31T16:13:14Z",
+      "side": 1,
+      "message": "wouldn\u0027t that break any tests that happen to exercise the debug accelerator? (i don\u0027t know if we have any.)\n\nbut if this is okay to add, please use DCHECK_EQ. :-)",
+      "parentUuid": "f07d4b64_2908fa22",
+      "revId": "c74b800d361bb6249dcd6427dcbb7d78871bc6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4a7d8b8e_281b4a8e",
         "filename": "chrome/browser/chromeos/system/input_device_settings.cc",
         "patchSetId": 13
