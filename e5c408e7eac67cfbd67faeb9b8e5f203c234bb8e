@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "952a38a0_57b6d7f3",
+        "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-31T03:39:45Z",
+      "side": 1,
+      "message": "I think we don\u0027t want to include the Untrusted variants (here and avast!). MITMs use these untrusted certs to pass on real authority-invalid errors from the site. For example if you visit a site that is serving a self-signed certificate, Bitdefender will fail to validate the site\u0027s certificate and will pass that error on to the client by issuing a certificate from this untrusted CA. So in this case, the error isn\u0027t caused by a misconfigured MITM, so we shouldn\u0027t show the MITM interstitial.",
+      "range": {
+        "startLine": 161,
+        "startChar": 29,
+        "endLine": 161,
+        "endChar": 38
+      },
+      "revId": "e5c408e7eac67cfbd67faeb9b8e5f203c234bb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dd33f3f_0ff466dd",
+        "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-31T03:39:45Z",
+      "side": 1,
+      "message": "typo: missing s",
+      "range": {
+        "startLine": 166,
+        "startChar": 13,
+        "endLine": 166,
+        "endChar": 14
+      },
+      "revId": "e5c408e7eac67cfbd67faeb9b8e5f203c234bb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f652c678_dd22b069",
+        "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
+        "patchSetId": 3
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-31T03:39:45Z",
+      "side": 1,
+      "message": "is this supposed to be Keep*er*?",
+      "range": {
+        "startLine": 271,
+        "startChar": 20,
+        "endLine": 271,
+        "endChar": 21
+      },
+      "revId": "e5c408e7eac67cfbd67faeb9b8e5f203c234bb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
