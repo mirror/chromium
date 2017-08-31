@@ -84,6 +84,10 @@ const char kArcAvailable[] = "arc-available";
 // If it is not set, then ARC is started in default mode.
 const char kArcStartMode[] = "arc-start-mode";
 
+// If this flag is present then the device had ARC M available in M60 and gets
+// ARC N when updating.
+const char kArcTransitionMToNRequired[] = "arc-transition-migration-required";
+
 // Screenshot testing: specifies the directoru where artifacts will be stored.
 const char kArtifactsDir[] = "artifacts-dir";
 
