@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7f1d182_a78d5cd4",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-08-31T09:05:06Z",
+      "side": 1,
+      "message": "Use constants for \"bookmark\" and \"ratethisapp\".",
+      "range": {
+        "startLine": 333,
+        "startChar": 20,
+        "endLine": 333,
+        "endChar": 28
+      },
+      "revId": "7d524111f218a7fd5766c6f17162b47e01e74caa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
