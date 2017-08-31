@@ -279,9 +279,8 @@ void BookmarkModelAssociator::Context::UpdateDuplicateCount(
   // base::Hash is defined for 8-byte strings only so have to
   // cast the title data to char* and double the length in order to
   // compute its hash.
-  size_t bookmark_hash = base::Hash(reinterpret_cast<const char*>(title.data()),
-                                    title.length() * 2) ^
-                         base::Hash(url.spec());
+  size_t bookmark_hash =
+      base::Hash(title.data(), title.length() * 2) ^ base::Hash(url.spec());
 
   if (!hashes_.insert(bookmark_hash).second) {
     // This hash code already exists in the set.

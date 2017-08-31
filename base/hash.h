@@ -18,19 +18,9 @@
 namespace base {
 
 // WARNING: This hash function should not be used for any cryptographic purpose.
-BASE_EXPORT uint32_t SuperFastHash(const char* data, size_t length);
-
 // Computes a hash of a memory buffer |data| of a given |length|.
-// WARNING: This hash function should not be used for any cryptographic purpose.
-inline uint32_t Hash(const char* data, size_t length) {
-  return SuperFastHash(data, length);
-}
-
-// Computes a hash of a string |str|.
-// WARNING: This hash function should not be used for any cryptographic purpose.
-inline uint32_t Hash(const std::string& str) {
-  return Hash(str.data(), str.size());
-}
+BASE_EXPORT uint32_t Hash(const void* data, size_t length);
+BASE_EXPORT uint32_t Hash(const std::string& str);
 
 // Implement hashing for pairs of at-most 32 bit integer values.
 // When size_t is 32 bits, we turn the 64-bit hash code into 32 bits by using
