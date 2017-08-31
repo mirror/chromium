@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "457a507f_056b34e2",
+        "filename": "chrome/renderer/content_settings_observer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-31T10:41:52Z",
+      "side": 1,
+      "message": "nit: do we need this separately from url?",
+      "revId": "1e5f986d7a64ba8413f55fa88d308130519ea158",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43801776_d2978c1b",
+        "filename": "chrome/renderer/content_settings_observer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-31T10:41:52Z",
+      "side": 1,
+      "message": "nit: can we just do\n\nauto it \u003d ...;\n\nhere and remove line 501?",
+      "revId": "1e5f986d7a64ba8413f55fa88d308130519ea158",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0b91a8f_32b1e7b6",
         "filename": "chrome/renderer/content_settings_observer.h",
         "patchSetId": 7
@@ -13,6 +47,24 @@
       "writtenOn": "2017-08-31T07:33:56Z",
       "side": 1,
       "message": "This should retrieve all the enabled client hints in one call, rather than requiring multiple calls to read out content settings.",
+      "revId": "1e5f986d7a64ba8413f55fa88d308130519ea158",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24b95a36_6160717c",
+        "filename": "chrome/renderer/content_settings_observer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-31T10:41:52Z",
+      "side": 1,
+      "message": "hmm... yeah usually we call Allow* method for each setting but this one seems to be rather expensive, might be better to have a batched one.",
+      "parentUuid": "b0b91a8f_32b1e7b6",
       "revId": "1e5f986d7a64ba8413f55fa88d308130519ea158",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
