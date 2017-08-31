@@ -126,13 +126,13 @@ void VpxEncoder::EncodeOnEncodingTaskRunner(scoped_refptr<VideoFrame> frame,
              &alpha_keyframe);
     DCHECK_EQ(keyframe, alpha_keyframe);
   }
-  frame = nullptr;
 
   origin_task_runner_->PostTask(
       FROM_HERE,
       base::Bind(OnFrameEncodeCompleted, on_encoded_video_callback_,
                  video_params, base::Passed(&data), base::Passed(&alpha_data),
                  capture_timestamp, keyframe));
+  frame = nullptr;
 }
 
 void VpxEncoder::DoEncode(vpx_codec_ctx_t* const encoder,
