@@ -22,6 +22,30 @@
       "revId": "baf81303697bc26e99dd7e069941b5edea3e50b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4486d548_c26a8fa3",
+        "filename": "chromecast/browser/cast_content_browser_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-08-31T16:51:10Z",
+      "side": 1,
+      "message": "It\u0027s in internal code, in the vendor shlib, so I don\u0027t think we want to use base::FeatureList - hence this switch.",
+      "parentUuid": "684dc807_2e93a18a",
+      "range": {
+        "startLine": 139,
+        "startChar": 0,
+        "endLine": 139,
+        "endChar": 75
+      },
+      "revId": "baf81303697bc26e99dd7e069941b5edea3e50b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
