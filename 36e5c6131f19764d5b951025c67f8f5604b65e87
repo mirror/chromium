@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c80e6a7_c5e715bf",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1284,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-31T21:31:58Z",
+      "side": 1,
+      "message": "This should always be true; pushStates are always renderer-initiated.  If you\u0027re interested if a user action triggered this renderer-initiated navigation, you can check if the page transition type is CLIENT_REDIRECT.  Just some conceptual clarification here: the only navigations that are user-initiated are ones caused by user interaction with Chrome UI (i.e. typing into omnibox, tapping bookmark, etc).  If user interaction has been registered before a renderer-initiated navigation, then we typically use the page transition type of LINK.  If a renderer-initiated navigation occurs without user interaction, we mark the transition type as CLIENT_REDIRECT.",
+      "revId": "36e5c6131f19764d5b951025c67f8f5604b65e87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3d0934a_5277c757",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1455,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-31T21:31:58Z",
+      "side": 1,
+      "message": "This codepath is also used for user-initiated loads.  Instead of true, we should be using:\n\npendingItem-\u003eNavigationInitiationType() \u003d\u003d NavigationInitiationType::RENDERER_INITIATED",
+      "revId": "36e5c6131f19764d5b951025c67f8f5604b65e87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fe1bf29_65df9001",
+        "filename": "ios/web/web_state/ui/crw_wk_navigation_states_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-31T21:31:58Z",
+      "side": 1,
+      "message": "Can you test that the value changed after replacing the context?",
+      "revId": "36e5c6131f19764d5b951025c67f8f5604b65e87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

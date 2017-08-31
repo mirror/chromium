@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "369fb177_faa70620",
+        "filename": "ios/web/web_state/navigation_context_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-31T21:31:58Z",
+      "side": 1,
+      "message": "Let\u0027s name it SetIsRendererInitiated() to match the other bool setters above.",
+      "revId": "80db91e29d27d5b369baf35b4ef210b1866575b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8a55cbe_1c08e585",
+        "filename": "ios/web/web_state/navigation_context_impl_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-31T21:31:58Z",
+      "side": 1,
+      "message": "We should add EXPECT_FALSE(context-\u003eIsRendererInitiated()) here and in the other blocks of code below to ensure that the setters don\u0027t accidentally change the value.",
+      "revId": "80db91e29d27d5b369baf35b4ef210b1866575b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9384c76_76aeb6b9",
+        "filename": "ios/web/web_state/navigation_context_impl_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-31T21:31:58Z",
+      "side": 1,
+      "message": "Let\u0027s also test that SetIsRendererInitiated() correctly resets the bool.",
+      "revId": "80db91e29d27d5b369baf35b4ef210b1866575b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
