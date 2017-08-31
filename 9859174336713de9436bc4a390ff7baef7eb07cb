@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd91d7ea_45256d77",
+        "filename": "net/cert/internal/system_trust_store.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1161769
+      },
+      "writtenOn": "2017-08-31T22:09:27Z",
+      "side": 1,
+      "message": "We have an open issue regarding how to make getting these certs more consistent system-wide.  In the short term, if you want to avoid hard-coding the path, X509_get_default_cert_file() from openssl/x509.h will return the correct value on Fuchsia.",
+      "revId": "9859174336713de9436bc4a390ff7baef7eb07cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
