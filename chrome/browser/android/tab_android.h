@@ -165,6 +165,11 @@ class TabAndroid : public CoreTabHelperDelegate,
   void DestroyWebContents(JNIEnv* env,
                           const base::android::JavaParamRef<jobject>& obj,
                           jboolean delete_native);
+  void OnSizeChanged(JNIEnv* env,
+                     const base::android::JavaParamRef<jobject>& obj,
+                     const base::android::JavaParamRef<jobject>& jweb_contents,
+                     int width,
+                     int height);
   void OnPhysicalBackingSizeChanged(
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& obj,
