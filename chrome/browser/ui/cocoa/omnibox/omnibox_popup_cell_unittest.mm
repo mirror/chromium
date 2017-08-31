@@ -42,11 +42,10 @@ TEST_VIEW(OmniboxPopupCellTest, control_);
 
 TEST_F(OmniboxPopupCellTest, Image) {
   AutocompleteMatch match;
-  cellData_.reset([[OmniboxPopupCellData alloc]
-       initWithMatch:match
-               image:[NSImage imageNamed:NSImageNameInfo]
-         answerImage:nil
-        forDarkTheme:NO]);
+  cellData_.reset([[OmniboxPopupCellData alloc] initWithMatch:match
+                                                        image:gfx::Image()
+                                                  answerImage:nil
+                                                 forDarkTheme:NO]);
   [cell_ setObjectValue:cellData_];
   [control_ display];
 }
@@ -56,7 +55,7 @@ TEST_F(OmniboxPopupCellTest, Title) {
   match.contents =
       base::ASCIIToUTF16("The quick brown fox jumps over the lazy dog.");
   cellData_.reset([[OmniboxPopupCellData alloc] initWithMatch:match
-                                                        image:nil
+                                                        image:gfx::Image()
                                                   answerImage:nil
                                                  forDarkTheme:NO]);
   [cell_ setObjectValue:cellData_];
@@ -82,7 +81,7 @@ TEST_F(OmniboxPopupCellTest, AnswerStyle) {
   match.answer = SuggestionAnswer::ParseAnswer(dictionary);
   EXPECT_TRUE(match.answer);
   cellData_.reset([[OmniboxPopupCellData alloc] initWithMatch:match
-                                                        image:nil
+                                                        image:gfx::Image()
                                                   answerImage:nil
                                                  forDarkTheme:NO]);
   EXPECT_NSEQ([[cellData_ description] string], finalString);
@@ -138,7 +137,7 @@ TEST_F(OmniboxPopupCellTest, DefinitionAnswerStyle) {
   match.answer = SuggestionAnswer::ParseAnswer(dictionary);
   EXPECT_TRUE(match.answer);
   cellData_.reset([[OmniboxPopupCellData alloc] initWithMatch:match
-                                                        image:nil
+                                                        image:gfx::Image()
                                                   answerImage:nil
                                                  forDarkTheme:NO]);
   EXPECT_NSEQ([[cellData_ description] string], finalString);
