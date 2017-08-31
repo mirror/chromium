@@ -22,6 +22,30 @@
       "revId": "83cb6b3d5f0dde010e2113103ddadfed1735014e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bba22a7e_582b424b",
+        "filename": "ios/chrome/browser/ui/omnibox/location_bar_controller_impl.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-31T14:37:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77584909_e0bb20db",
+      "range": {
+        "startLine": 296,
+        "startChar": 3,
+        "endLine": 296,
+        "endChar": 20
+      },
+      "revId": "83cb6b3d5f0dde010e2113103ddadfed1735014e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
