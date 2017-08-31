@@ -26,7 +26,7 @@ BackgroundFetchRequestInfo::~BackgroundFetchRequestInfo() {
 }
 
 void BackgroundFetchRequestInfo::PopulateWithResponse(
-    std::unique_ptr<const BackgroundFetchResponse> response) {
+    std::unique_ptr<BackgroundFetchResponse> response) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
   url_chain_ = response->url_chain;
@@ -44,7 +44,7 @@ void BackgroundFetchRequestInfo::PopulateWithResponse(
 }
 
 void BackgroundFetchRequestInfo::SetResult(
-    std::unique_ptr<const BackgroundFetchResult> result) {
+    std::unique_ptr<BackgroundFetchResult> result) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
   result_ = std::move(result);

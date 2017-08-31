@@ -28,6 +28,7 @@ class Origin;
 namespace content {
 
 class BackgroundFetchDataManager;
+class BackgroundFetchDelegate;
 class BackgroundFetchDelegateProxy;
 class BackgroundFetchEventDispatcher;
 class BackgroundFetchJobController;
@@ -52,10 +53,14 @@ class CONTENT_EXPORT BackgroundFetchContext
       BrowserContext* browser_context,
       const scoped_refptr<ServiceWorkerContextWrapper>& service_worker_context);
 
-  // Finishes initializing the Background Fetch context on the IO thread by
+  // Finishes initializing the Background Fetch context on the UI thread by
   // setting the |request_context_getter|.
-  void InitializeOnIOThread(
-      scoped_refptr<net::URLRequestContextGetter> request_context_getter);
+  void InitializeOnUIThread(
+      scoped_refptr<net::URLRequestContextGetter> request_context_getter,
+      base::Closure quit_closure);
+
+  // Finishes initializing the Background Fetch context on the IO thread.
+  void InitializeOnIOThread();
 
   // Starts a Background Fetch for the |registration_id|. The |requests| will be
   // asynchronously fetched. The |callback| will be invoked when the fetch has
@@ -122,6 +127,7 @@ class CONTENT_EXPORT BackgroundFetchContext
   std::unique_ptr<BackgroundFetchDataManager> data_manager_;
   std::unique_ptr<BackgroundFetchEventDispatcher> event_dispatcher_;
   std::unique_ptr<BackgroundFetchDelegateProxy> delegate_proxy_;
+  std::unique_ptr<BackgroundFetchDelegate> delegate_;
 
   // Map of the Background Fetch fetches that are currently in-progress.
   std::map<BackgroundFetchRegistrationId,

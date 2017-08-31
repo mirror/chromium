@@ -15,26 +15,22 @@
 #include "content/browser/background_fetch/background_fetch_request_info.h"
 #include "content/public/browser/browser_thread.h"
 
-namespace net {
-class URLRequestContextGetter;
-}
-
 namespace content {
 
+class BackgroundFetchDelegate;
 class BackgroundFetchJobController;
 struct BackgroundFetchResponse;
-class BrowserContext;
 
 // Proxy class for passing messages between BackgroundFetchJobControllers on the
 // IO thread and BackgroundFetchDelegate on the UI thread.
 // TODO(delphick): Create BackgroundFetchDelegate.
 class CONTENT_EXPORT BackgroundFetchDelegateProxy {
  public:
-  BackgroundFetchDelegateProxy(
-      BrowserContext* browser_context,
-      scoped_refptr<net::URLRequestContextGetter> request_context);
+  BackgroundFetchDelegateProxy();
 
   ~BackgroundFetchDelegateProxy();
+
+  void SetDelegate(BackgroundFetchDelegate* delegate);
 
   // Requests that the download manager start fetching |request|.
   // Should only be called from the BackgroundFetchJobController (on the IO
@@ -74,6 +70,8 @@ class CONTENT_EXPORT BackgroundFetchDelegateProxy {
            std::pair<scoped_refptr<BackgroundFetchRequestInfo>,
                      base::WeakPtr<BackgroundFetchJobController>>>
       controller_map_;
+
+  BackgroundFetchDelegate* delegate_;
 
   base::WeakPtrFactory<BackgroundFetchDelegateProxy> weak_ptr_factory_;
 
