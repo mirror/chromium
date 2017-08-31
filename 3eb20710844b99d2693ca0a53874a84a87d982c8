@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "1a67d1f1_a7b2ca92",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-31T15:27:23Z",
+      "side": 1,
+      "message": "We\u0027re not exactly changing this \u0027back\u0027, I would say something like \u0027Settings \u003e Bluetooth \u003e Use paper-toggle-button and powered state\u0027",
+      "revId": "3eb20710844b99d2693ca0a53874a84a87d982c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b01ec24_ba2eafc9",
+        "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_page.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-31T15:27:23Z",
+      "side": 1,
+      "message": "Still needed?",
+      "revId": "3eb20710844b99d2693ca0a53874a84a87d982c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5693bdba_a68f4570",
         "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_page.js",
         "patchSetId": 4
@@ -31,6 +65,41 @@
       "side": 1,
       "message": "Er, I meant \u0027asymmetric\u0027. Too many code reviews...",
       "parentUuid": "5693bdba_a68f4570",
+      "revId": "3eb20710844b99d2693ca0a53874a84a87d982c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a38469a7_0c55042e",
+        "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_page.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-31T15:27:23Z",
+      "side": 1,
+      "message": "So, thinking about this some more, if we take this approach we need a comment and a TODO here, something like:\n\n// |bluetoothToggleState_| should always reflect the adapter powered state.\n// TODO(sonnysasaka@): If the bluetooth adapter is unable to be enabled, the\n// powered state may not reflect the pref value. In that case we should\n// delay setting |bluetoothToggleState_| so that the user sees the toggle\n// animate on then off, indicating that the operation failed. \n// crbug.com/738523",
+      "parentUuid": "06307bab_60b02b7b",
+      "revId": "3eb20710844b99d2693ca0a53874a84a87d982c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38cb3208_d8819bba",
+        "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_page.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-31T15:27:23Z",
+      "side": 1,
+      "message": "We should also add a comment here, e.g.:\n// We change the pref value here. This should cause the adapter powered\n// state to also change. TODO(sonnysasaka@): Add a timer in case the powered\n// state does not change and change to reflect the actual powered state.\n// crbug.com/738523.\n\nAlso, we should ensure that the pref observer attempts to enable bluetooth\neven if the pref value was already set to true. That might be tricky though\nsince we might suppress API calls if the state doesn\u0027t change, so we may\nneed to replace this with an API call that sets the pref value and also\nattempts to set the powered state (again, regardless of the pref value).",
       "revId": "3eb20710844b99d2693ca0a53874a84a87d982c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
