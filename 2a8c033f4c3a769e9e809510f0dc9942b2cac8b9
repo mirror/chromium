@@ -16,6 +16,24 @@
       "revId": "2a8c033f4c3a769e9e809510f0dc9942b2cac8b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44ab6e52_12b51661",
+        "filename": "content/common/android/sync_compositor_messages.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2017-08-31T20:21:55Z",
+      "side": 1,
+      "message": "That is indeed appropriate now when they serve a different purpose. Consider it done.",
+      "parentUuid": "f5e275a0_0fd3bb4b",
+      "revId": "2a8c033f4c3a769e9e809510f0dc9942b2cac8b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
