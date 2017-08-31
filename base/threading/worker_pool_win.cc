@@ -9,6 +9,7 @@
 #include "base/bind.h"
 #include "base/callback.h"
 #include "base/logging.h"
+#include "base/macros.h"
 #include "base/pending_task.h"
 #include "base/threading/thread_local.h"
 #include "base/trace_event/trace_event.h"
@@ -19,8 +20,8 @@ namespace base {
 namespace {
 
 ThreadLocalBoolean* GetWorkerPoolRunningOnThisThread() {
-  static auto* thread_local_boolean = new ThreadLocalBoolean();
-  return thread_local_boolean;
+  CR_DEFINE_STATIC_LOCAL(ThreadLocalBoolean, thread_local_boolean, ());
+  return &thread_local_boolean;
 }
 
 DWORD CALLBACK WorkItemCallback(void* param) {

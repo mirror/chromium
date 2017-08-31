@@ -108,19 +108,20 @@ const size_t kOutputSnippetBytesLimit = 300 * 1024;
 // Set of live launch test processes with corresponding lock (it is allowed
 // for callers to launch processes on different threads).
 Lock* GetLiveProcessesLock() {
-  static auto* lock = new Lock;
-  return lock;
+  CR_DEFINE_STATIC_LOCAL(Lock, lock, ());
+  return &lock;
 }
 
 std::map<ProcessHandle, CommandLine>* GetLiveProcesses() {
-  static auto* map = new std::map<ProcessHandle, CommandLine>;
-  return map;
+  using LiveProcessesMap = std::map<ProcessHandle, CommandLine>;
+  CR_DEFINE_STATIC_LOCAL(LiveProcessesMap, map, ());
+  return &map;
 }
 
 // Performance trace generator.
 TestLauncherTracer* GetTestLauncherTracer() {
-  static auto* tracer = new TestLauncherTracer;
-  return tracer;
+  CR_DEFINE_STATIC_LOCAL(TestLauncherTracer, tracer, ());
+  return &tracer;
 }
 
 // TODO(fuchsia): Fuchsia does not have POSIX signals, but equivalent

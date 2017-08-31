@@ -4,6 +4,7 @@
 
 #include "base/memory/memory_pressure_listener.h"
 
+#include "base/macros.h"
 #include "base/observer_list_threadsafe.h"
 #include "base/trace_event/trace_event.h"
 
@@ -51,8 +52,8 @@ class MemoryPressureObserver {
 };
 
 MemoryPressureObserver* GetMemoryPressureObserver() {
-  static auto* observer = new MemoryPressureObserver();
-  return observer;
+  CR_DEFINE_STATIC_LOCAL(MemoryPressureObserver, observer, ());
+  return &observer;
 }
 
 subtle::Atomic32 g_notifications_suppressed = 0;

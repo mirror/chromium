@@ -46,8 +46,8 @@ typedef std::unordered_map<HANDLE, Info, HandleHash> HandleMap;
 // module.
 typedef base::internal::LockImpl NativeLock;
 NativeLock* GetLock() {
-  static auto* native_lock = new NativeLock();
-  return native_lock;
+  CR_DEFINE_STATIC_LOCAL(NativeLock, native_lock, ());
+  return &native_lock;
 }
 
 // Simple automatic locking using a native critical section so it supports

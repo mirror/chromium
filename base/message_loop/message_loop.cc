@@ -10,6 +10,7 @@
 #include "base/bind.h"
 #include "base/compiler_specific.h"
 #include "base/logging.h"
+#include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_pump_default.h"
 #include "base/run_loop.h"
@@ -42,8 +43,8 @@ namespace {
 // A lazily created thread local storage for quick access to a thread's message
 // loop, if one exists.
 base::ThreadLocalPointer<MessageLoop>* GetTLSMessageLoop() {
-  static auto* lazy_tls_ptr = new base::ThreadLocalPointer<MessageLoop>();
-  return lazy_tls_ptr;
+  CR_DEFINE_STATIC_LOCAL(base::ThreadLocalPointer<MessageLoop>, lazy_tls, ());
+  return &lazy_tls;
 }
 MessageLoop::MessagePumpFactory* message_pump_for_ui_factory_ = NULL;
 

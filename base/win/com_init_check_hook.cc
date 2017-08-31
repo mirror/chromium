@@ -9,6 +9,7 @@
 #include <stdint.h>
 #include <string.h>
 
+#include "base/macros.h"
 #include "base/strings/stringprintf.h"
 #include "base/synchronization/lock.h"
 #include "base/win/com_init_util.h"
@@ -87,8 +88,8 @@ const unsigned char g_hotpatch_placeholder_int3[] = {0xcc, 0xcc, 0xcc, 0xcc,
 class HookManager {
  public:
   static HookManager* GetInstance() {
-    static auto* hook_manager = new HookManager();
-    return hook_manager;
+    CR_DEFINE_STATIC_LOCAL(HookManager, hook_manager, ());
+    return &hook_manager;
   }
 
   void RegisterHook() {

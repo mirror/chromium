@@ -6,6 +6,7 @@
 
 #include "base/compiler_specific.h"
 #include "base/logging.h"
+#include "base/macros.h"
 #include "base/threading/platform_thread.h"
 
 namespace base {
@@ -31,8 +32,8 @@ struct StaticData {
 };
 
 StaticData* GetStaticData() {
-  static auto* static_data = new StaticData();
-  return static_data;
+  CR_DEFINE_STATIC_LOCAL(StaticData, static_data, ());
+  return &static_data;
 }
 
 }  // namespace

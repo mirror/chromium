@@ -6,6 +6,7 @@
 
 #include "base/atomicops.h"
 #include "base/logging.h"
+#include "base/macros.h"
 #include "base/synchronization/lock.h"
 #include "build/build_config.h"
 
@@ -92,8 +93,8 @@ struct TlsVectorEntry {
 // This lock isn't needed until after we've constructed the per-thread TLS
 // vector, so it's safe to use.
 base::Lock* GetTLSMetadataLock() {
-  static auto* lock = new base::Lock();
-  return lock;
+  CR_DEFINE_STATIC_LOCAL(base::Lock, lock, ());
+  return &lock;
 }
 TlsMetadata g_tls_metadata[kThreadLocalStorageSize];
 size_t g_last_assigned_slot = 0;

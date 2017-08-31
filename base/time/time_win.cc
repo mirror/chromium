@@ -41,6 +41,7 @@
 #include "base/bit_cast.h"
 #include "base/cpu.h"
 #include "base/logging.h"
+#include "base/macros.h"
 #include "base/synchronization/lock.h"
 #include "base/threading/platform_thread.h"
 
@@ -106,8 +107,8 @@ TimeDelta g_high_res_timer_usage;
 TimeTicks g_high_res_timer_last_activation;
 // The lock to control access to the above two variables.
 base::Lock* GetHighResLock() {
-  static auto* lock = new base::Lock();
-  return lock;
+  CR_DEFINE_STATIC_LOCAL(base::Lock, lock, ());
+  return &lock;
 }
 
 // Returns the current value of the performance counter.

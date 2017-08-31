@@ -15,6 +15,7 @@
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
 #include "base/logging.h"
+#include "base/macros.h"
 #include "base/synchronization/lock.h"
 #include "build/build_config.h"
 
@@ -143,8 +144,8 @@ struct PathData {
 };
 
 static PathData* GetPathData() {
-  static auto* path_data = new PathData();
-  return path_data;
+  CR_DEFINE_STATIC_LOCAL(PathData, path_data, ());
+  return &path_data;
 }
 
 // Tries to find |key| in the cache. |path_data| should be locked by the caller!

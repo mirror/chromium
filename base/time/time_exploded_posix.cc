@@ -14,6 +14,7 @@
 
 #include <limits>
 
+#include "base/macros.h"
 #include "base/numerics/safe_math.h"
 #include "base/synchronization/lock.h"
 #include "build/build_config.h"
@@ -35,8 +36,8 @@ namespace {
 // This prevents a crash on traversing the environment global and looking up
 // the 'TZ' variable in libc. See: crbug.com/390567.
 base::Lock* GetSysTimeToTimeStructLock() {
-  static auto* lock = new base::Lock();
-  return lock;
+  CR_DEFINE_STATIC_LOCAL(base::Lock, lock, ());
+  return &lock;
 }
 
 // Define a system-specific SysTime that wraps either to a time_t or
