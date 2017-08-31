@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e824959b_a7a516ce",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/MediaSource.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-31T20:59:31Z",
+      "side": 1,
+      "message": "I think this can be an enum, but eum values and named using UPPER_CASE per style guide, so there\u0027d be some extra logic to convert between lower and upper cases when using them. I suspect that is why these are Strings instead.",
+      "parentUuid": "38aee706_3103764b",
+      "revId": "fba1c0af77ca068981f98706d67eb678f39711d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2fd08a02_388c00cb",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/MediaSource.java",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "fba1c0af77ca068981f98706d67eb678f39711d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4fd605e_3e39540a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/MediaSource.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-31T20:59:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2fd08a02_388c00cb",
+      "revId": "fba1c0af77ca068981f98706d67eb678f39711d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3e593da9_3bd6bcc7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/MediaSource.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-31T20:59:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a615010_7dbec683",
+      "revId": "fba1c0af77ca068981f98706d67eb678f39711d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31366b65_d7766478",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/MediaSource.java",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "fba1c0af77ca068981f98706d67eb678f39711d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da28800e_94cdeda1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/MediaSource.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-31T20:59:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31366b65_d7766478",
+      "revId": "fba1c0af77ca068981f98706d67eb678f39711d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
