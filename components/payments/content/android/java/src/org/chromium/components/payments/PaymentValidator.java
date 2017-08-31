@@ -18,7 +18,7 @@ public class PaymentValidator {
         if (details == null) {
             return false;
         }
-        return nativeValidatePaymentDetails(details.serialize());
+        return nativeValidatePaymentDetailsAndroid(details.serialize());
     }
 
     private static native boolean nativeValidatePaymentDetails(ByteBuffer buffer);

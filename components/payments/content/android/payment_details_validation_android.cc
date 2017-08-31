@@ -10,13 +10,13 @@
 #include <vector>
 
 #include "base/android/jni_android.h"
-#include "components/payments/content/payment_details_validation.h"
+#include "components/payments/core/payment_details_validation.h"
 #include "jni/PaymentValidator_jni.h"
 #include "third_party/WebKit/public/platform/modules/payments/payment_request.mojom.h"
 
 namespace payments {
 
-jboolean ValidatePaymentDetails(
+jboolean ValidatePaymentDetailsAndroid(
     JNIEnv* env,
     const base::android::JavaParamRef<jclass>& jcaller,
     const base::android::JavaParamRef<jobject>& buffer) {
@@ -28,7 +28,7 @@ jboolean ValidatePaymentDetails(
   if (!mojom::PaymentDetails::Deserialize(std::move(mojo_buffer), &details))
     return false;
   std::string unused_error_message;
-  return validatePaymentDetails(details, &unused_error_message);
+  return ValidatePaymentDetails(details, &unused_error_message);
 }
 
 }  // namespace payments
