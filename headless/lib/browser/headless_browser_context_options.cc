@@ -74,6 +74,11 @@ bool HeadlessBrowserContextOptions::incognito_mode() const {
                                browser_options_->incognito_mode);
 }
 
+bool HeadlessBrowserContextOptions::use_resource_scheduler() const {
+  return ReturnOverriddenValue(use_resource_scheduler_,
+                               browser_options_->use_resource_scheduler);
+}
+
 const base::Callback<void(WebPreferences*)>&
 HeadlessBrowserContextOptions::override_web_preferences_callback() const {
   return ReturnOverriddenValue(

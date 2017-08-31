@@ -162,6 +162,11 @@ Builder& Builder::SetIncognitoMode(bool incognito_mode) {
   return *this;
 }
 
+Builder& Builder::SetUseResourceScheduler(bool use_resource_scheduler) {
+  options_.use_resource_scheduler = use_resource_scheduler;
+  return *this;
+}
+
 Builder& Builder::SetOverrideWebPreferencesCallback(
     base::Callback<void(WebPreferences*)> callback) {
   options_.override_web_preferences_callback = callback;
