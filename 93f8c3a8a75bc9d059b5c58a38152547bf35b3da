@@ -75,6 +75,24 @@
       "revId": "93f8c3a8a75bc9d059b5c58a38152547bf35b3da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "904efd07_d27714bf",
+        "filename": "ios/clean/chrome/browser/ui/recent_tabs/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-31T13:53:32Z",
+      "side": 1,
+      "message": "Thanks! Should I explicitly add the dependencies?",
+      "parentUuid": "4fe5c1da_d5034950",
+      "revId": "93f8c3a8a75bc9d059b5c58a38152547bf35b3da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
