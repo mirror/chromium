@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "05b0a15c_89ea9618",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-08-31T01:09:28Z",
+      "side": 1,
+      "message": "Interesting, thanks! I did not realize this.\n\nIs it an intended use case for UKM that metrics may be logged w/o a URL? If so it seems odd that callers have to call UpdateSourceURL just to trigger generation of a source.\n\nCan we add a comment here to explain why the UpdateSourceURL() with empty GURL is needed?\n\nAlso can you pass GURL::EmptyGURL() rather than GURL(\"\")?",
+      "parentUuid": "f34c0164_9a92ef1c",
+      "revId": "2449aeebfb924a7c988ef8eeff6f0fe4bf74dd94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "964429f0_4c57e999",
         "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.cc",
         "patchSetId": 3
