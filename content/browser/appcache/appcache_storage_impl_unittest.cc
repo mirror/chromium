@@ -456,7 +456,9 @@ class AppCacheStorageImplTest : public testing::Test {
     test_finished_event_->Signal();
   }
 
-  void PushNextTask(base::Closure task) { task_stack_.push(std::move(task)); }
+  void PushNextTask(base::OnceClosure task) {
+    task_stack_.push(std::move(task));
+  }
 
   void ScheduleNextTask() {
     DCHECK(io_thread->task_runner()->BelongsToCurrentThread());
