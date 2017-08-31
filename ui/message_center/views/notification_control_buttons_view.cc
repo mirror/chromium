@@ -53,7 +53,7 @@ NotificationControlButtonsView::~NotificationControlButtonsView() = default;
 
 void NotificationControlButtonsView::ShowCloseButton(bool show) {
   if (show && !close_button_) {
-    close_button_ = base::MakeUnique<message_center::PaddedButton>(this);
+    close_button_ = std::make_unique<message_center::PaddedButton>(this);
     close_button_->set_owned_by_client();
     close_button_->SetImage(views::Button::STATE_NORMAL,
                             message_center::GetCloseIcon());
@@ -75,7 +75,7 @@ void NotificationControlButtonsView::ShowCloseButton(bool show) {
 
 void NotificationControlButtonsView::ShowSettingsButton(bool show) {
   if (show && !settings_button_) {
-    settings_button_ = base::MakeUnique<message_center::PaddedButton>(this);
+    settings_button_ = std::make_unique<message_center::PaddedButton>(this);
     settings_button_->set_owned_by_client();
     settings_button_->SetImage(views::Button::STATE_NORMAL,
                                message_center::GetSettingsIcon());

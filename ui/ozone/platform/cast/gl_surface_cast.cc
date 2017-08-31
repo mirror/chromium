@@ -22,7 +22,7 @@ GLSurfaceCast::GLSurfaceCast(gfx::AcceleratedWidget widget,
                              GLOzoneEglCast* parent)
     : NativeViewGLSurfaceEGL(
           parent->GetNativeWindow(),
-          base::MakeUnique<gfx::FixedVSyncProvider>(base::TimeTicks(),
+          std::make_unique<gfx::FixedVSyncProvider>(base::TimeTicks(),
                                                     kVSyncInterval)),
       widget_(widget),
       parent_(parent),

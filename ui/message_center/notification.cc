@@ -246,7 +246,7 @@ std::unique_ptr<Notification> Notification::CreateSystemNotification(
         IDS_MESSAGE_CENTER_NOTIFICATION_CHROMEOS_SYSTEM,
         MessageCenter::Get()->GetProductOSName());
   }
-  std::unique_ptr<Notification> notification = base::MakeUnique<Notification>(
+  std::unique_ptr<Notification> notification = std::make_unique<Notification>(
       type, id, title, message, icon, display_source_or_default, origin_url,
       notifier_id, optional_fields, delegate);
   notification->set_accent_color(color);

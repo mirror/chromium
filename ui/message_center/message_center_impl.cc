@@ -213,7 +213,7 @@ void ChangeQueue::ApplyChangesForId(MessageCenterImpl* message_center,
 void ChangeQueue::AddNotification(std::unique_ptr<Notification> notification) {
   std::string id = notification->id();
   changes_.push_back(
-      base::MakeUnique<Change>(CHANGE_TYPE_ADD, id, std::move(notification)));
+      std::make_unique<Change>(CHANGE_TYPE_ADD, id, std::move(notification)));
 }
 
 void ChangeQueue::UpdateNotification(
@@ -222,7 +222,7 @@ void ChangeQueue::UpdateNotification(
   auto iter =
       std::find_if(changes_.rbegin(), changes_.rend(), ChangeFinder(old_id));
   if (iter == changes_.rend()) {
-    changes_.push_back(base::MakeUnique<Change>(CHANGE_TYPE_UPDATE, old_id,
+    changes_.push_back(std::make_unique<Change>(CHANGE_TYPE_UPDATE, old_id,
                                                 std::move(notification)));
     return;
   }
@@ -235,7 +235,7 @@ void ChangeQueue::UpdateNotification(
       // its ID, some previous changes may affect new ID.
       // (eg. Add A, Update B->C, and This update A->B).
       changes_.erase(--(iter.base()));
-      changes_.push_back(base::MakeUnique<Change>(CHANGE_TYPE_ADD, id,
+      changes_.push_back(std::make_unique<Change>(CHANGE_TYPE_ADD, id,
                                                   std::move(notification)));
       break;
     }
@@ -247,17 +247,17 @@ void ChangeQueue::UpdateNotification(
         std::string id = notification->id();
         // Safe to place the change at the last.
         changes_.erase(--(iter.base()));
-        changes_.push_back(base::MakeUnique<Change>(CHANGE_TYPE_ADD, id,
+        changes_.push_back(std::make_unique<Change>(CHANGE_TYPE_ADD, id,
                                                     std::move(notification)));
       } else {
         // Complex case: gives up to optimize.
-        changes_.push_back(base::MakeUnique<Change>(CHANGE_TYPE_UPDATE, old_id,
+        changes_.push_back(std::make_unique<Change>(CHANGE_TYPE_UPDATE, old_id,
                                                     std::move(notification)));
       }
       break;
     case CHANGE_TYPE_DELETE:
       // DELETE -> UPDATE. Something is wrong. Treats the UPDATE as ADD.
-      changes_.push_back(base::MakeUnique<Change>(CHANGE_TYPE_ADD, old_id,
+      changes_.push_back(std::make_unique<Change>(CHANGE_TYPE_ADD, old_id,
                                                   std::move(notification)));
       break;
     default:
@@ -269,7 +269,7 @@ void ChangeQueue::EraseNotification(const std::string& id, bool by_user) {
   auto iter =
       std::find_if(changes_.rbegin(), changes_.rend(), ChangeFinder(id));
   if (iter == changes_.rend()) {
-    auto change = base::MakeUnique<Change>(CHANGE_TYPE_DELETE, id, nullptr);
+    auto change = std::make_unique<Change>(CHANGE_TYPE_DELETE, id, nullptr);
     change->set_by_user(by_user);
     changes_.push_back(std::move(change));
     return;

@@ -221,7 +221,7 @@ DisplayMode_Params GetDisplayModeParams(const display::DisplayMode& mode) {
 
 std::unique_ptr<display::DisplayMode> CreateDisplayModeFromParams(
     const DisplayMode_Params& pmode) {
-  return base::MakeUnique<display::DisplayMode>(pmode.size, pmode.is_interlaced,
+  return std::make_unique<display::DisplayMode>(pmode.size, pmode.is_interlaced,
                                                 pmode.refresh_rate);
 }
 
@@ -308,7 +308,7 @@ GetAvailableDisplayControllerInfos(int fd) {
     size_t index = std::find(connectors.begin(), connectors.end(), c.get()) -
                    connectors.begin();
     DCHECK_LT(index, connectors.size());
-    displays.push_back(base::MakeUnique<HardwareDisplayControllerInfo>(
+    displays.push_back(std::make_unique<HardwareDisplayControllerInfo>(
         std::move(c), std::move(crtc), index));
   }
 

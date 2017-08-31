@@ -220,7 +220,7 @@ void WaylandConnection::Capabilities(void* data,
         LOG(ERROR) << "Failed to get wl_pointer from seat";
         return;
       }
-      connection->pointer_ = base::MakeUnique<WaylandPointer>(
+      connection->pointer_ = std::make_unique<WaylandPointer>(
           pointer, base::Bind(&WaylandConnection::DispatchUiEvent,
                               base::Unretained(connection)));
     }
@@ -234,7 +234,7 @@ void WaylandConnection::Capabilities(void* data,
         LOG(ERROR) << "Failed to get wl_keyboard from seat";
         return;
       }
-      connection->keyboard_ = base::MakeUnique<WaylandKeyboard>(
+      connection->keyboard_ = std::make_unique<WaylandKeyboard>(
           keyboard, base::Bind(&WaylandConnection::DispatchUiEvent,
                                base::Unretained(connection)));
     }

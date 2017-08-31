@@ -294,7 +294,7 @@ const char* ArcNotificationContentView::GetClassName() const {
 
 std::unique_ptr<ArcNotificationContentViewDelegate>
 ArcNotificationContentView::CreateContentViewDelegate() {
-  return base::MakeUnique<ArcNotificationContentView::ContentViewDelegate>(
+  return std::make_unique<ArcNotificationContentView::ContentViewDelegate>(
       this);
 }
 

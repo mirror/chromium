@@ -2280,7 +2280,7 @@ TEST(LayerAnimatorTest, SettingPropertyDuringAnAnimation) {
   delegate.SetOpacityFromAnimation(start_opacity);
 
   std::unique_ptr<LayerAnimationSequence> sequence =
-      base::MakeUnique<LayerAnimationSequence>(
+      std::make_unique<LayerAnimationSequence>(
           LayerAnimationElement::CreateOpacityElement(target_opacity, delta));
 
   animator->StartAnimation(sequence.release());
@@ -2315,7 +2315,7 @@ TEST(LayerAnimatorTest, ImmediatelySettingNewTargetDoesNotLeak) {
   int num_live_instances = 0;
   base::TimeDelta delta = base::TimeDelta::FromSeconds(1);
   std::unique_ptr<TestLayerAnimationSequence> sequence =
-      base::MakeUnique<TestLayerAnimationSequence>(
+      std::make_unique<TestLayerAnimationSequence>(
           LayerAnimationElement::CreateBoundsElement(target_bounds, delta),
           &num_live_instances);
 

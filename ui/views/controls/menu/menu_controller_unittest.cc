@@ -1322,9 +1322,9 @@ TEST_F(MenuControllerTest, RepostEventToEmptyMenuItem) {
   // appropriate Widget and View containersm with counds, so that hit testing
   // works.
   std::unique_ptr<TestMenuDelegate> sub_menu_item_delegate =
-      base::MakeUnique<TestMenuDelegate>();
+      std::make_unique<TestMenuDelegate>();
   std::unique_ptr<TestMenuItemViewShown> sub_menu_item =
-      base::MakeUnique<TestMenuItemViewShown>(sub_menu_item_delegate.get());
+      std::make_unique<TestMenuItemViewShown>(sub_menu_item_delegate.get());
   sub_menu_item->AddEmptyMenusForTest();
   sub_menu_item->SetController(controller);
   sub_menu_item->SetBounds(0, 50, 50, 50);
@@ -1341,13 +1341,13 @@ TEST_F(MenuControllerTest, RepostEventToEmptyMenuItem) {
 
   // Nest a context menu.
   std::unique_ptr<TestMenuDelegate> nested_menu_delegate_1 =
-      base::MakeUnique<TestMenuDelegate>();
+      std::make_unique<TestMenuDelegate>();
   std::unique_ptr<TestMenuItemViewShown> nested_menu_item_1 =
-      base::MakeUnique<TestMenuItemViewShown>(nested_menu_delegate_1.get());
+      std::make_unique<TestMenuItemViewShown>(nested_menu_delegate_1.get());
   nested_menu_item_1->SetBounds(0, 0, 100, 100);
   nested_menu_item_1->SetController(controller);
   std::unique_ptr<TestMenuControllerDelegate> nested_controller_delegate_1 =
-      base::MakeUnique<TestMenuControllerDelegate>();
+      std::make_unique<TestMenuControllerDelegate>();
   controller->AddNestedDelegate(nested_controller_delegate_1.get());
   controller->Run(owner(), nullptr, nested_menu_item_1.get(),
                   gfx::Rect(150, 50, 100, 100), MENU_ANCHOR_TOPLEFT, true,
@@ -1391,14 +1391,14 @@ TEST_F(MenuControllerTest, RepostEventToEmptyMenuItem) {
 
   // Nest a context menu.
   std::unique_ptr<TestMenuDelegate> nested_menu_delegate_2 =
-      base::MakeUnique<TestMenuDelegate>();
+      std::make_unique<TestMenuDelegate>();
   std::unique_ptr<TestMenuItemViewShown> nested_menu_item_2 =
-      base::MakeUnique<TestMenuItemViewShown>(nested_menu_delegate_2.get());
+      std::make_unique<TestMenuItemViewShown>(nested_menu_delegate_2.get());
   nested_menu_item_2->SetBounds(0, 0, 100, 100);
   nested_menu_item_2->SetController(controller);
 
   std::unique_ptr<TestMenuControllerDelegate> nested_controller_delegate_2 =
-      base::MakeUnique<TestMenuControllerDelegate>();
+      std::make_unique<TestMenuControllerDelegate>();
   controller->AddNestedDelegate(nested_controller_delegate_2.get());
   controller->Run(owner(), nullptr, nested_menu_item_2.get(),
                   gfx::Rect(150, 50, 100, 100), MENU_ANCHOR_TOPLEFT, true,
@@ -1418,7 +1418,7 @@ TEST_F(MenuControllerTest, DragFromViewIntoMenuAndExit) {
   SubmenuView* sub_menu = menu_item()->GetSubmenu();
   MenuItemView* first_item = sub_menu->GetMenuItemAt(0);
 
-  std::unique_ptr<View> drag_view = base::MakeUnique<View>();
+  std::unique_ptr<View> drag_view = std::make_unique<View>();
   drag_view->SetBoundsRect(gfx::Rect(0, 500, 100, 100));
   sub_menu->ShowAt(owner(), gfx::Rect(0, 0, 100, 100), false);
   gfx::Point press_location(drag_view->bounds().CenterPoint());

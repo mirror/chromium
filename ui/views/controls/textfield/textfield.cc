@@ -1948,7 +1948,7 @@ void Textfield::UpdateBackgroundColor() {
 }
 
 void Textfield::UpdateBorder() {
-  auto border = base::MakeUnique<views::FocusableBorder>();
+  auto border = std::make_unique<views::FocusableBorder>();
   if (invalid_)
     border->SetColorId(ui::NativeTheme::kColorId_AlertSeverityHigh);
   View::SetBorder(std::move(border));

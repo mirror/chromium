@@ -440,7 +440,7 @@ NotificationViewMD::NotificationViewMD(MessageCenterController* controller,
       new views::BoxLayout(views::BoxLayout::kVertical, gfx::Insets(), 0));
 
   control_buttons_view_ =
-      base::MakeUnique<NotificationControlButtonsView>(this);
+      std::make_unique<NotificationControlButtonsView>(this);
   control_buttons_view_->set_owned_by_client();
   control_buttons_view_->SetBackgroundColor(SK_ColorTRANSPARENT);
 
