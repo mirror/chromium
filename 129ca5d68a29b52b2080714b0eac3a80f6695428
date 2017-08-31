@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3881d7d5_5ea23a9e",
+        "filename": "net/url_request/url_request_context.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-31T16:16:11Z",
+      "side": 1,
+      "message": "I don\u0027t think we want more things in the URLRequestContext, particularly when the embedder has direct access to this.\n\nThis class isn\u0027t even used by the network stack, unlike everything else here.\n\nAlso, is there a design doc here?  Has any thought been given to how this would work post-network-stack servicification?",
+      "range": {
+        "startLine": 293,
+        "startChar": 7,
+        "endLine": 293,
+        "endChar": 29
+      },
+      "revId": "129ca5d68a29b52b2080714b0eac3a80f6695428",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
