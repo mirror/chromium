@@ -75,6 +75,11 @@ constexpr int kShutdownRequestDelayMs = 50;
 
 }  // namespace
 
+// static
+const int LockStateController::kPreLockContainersMask =
+    SessionStateAnimator::NON_LOCK_SCREEN_CONTAINERS |
+    SessionStateAnimator::LAUNCHER;
+
 LockStateController::LockStateController(
     ShutdownController* shutdown_controller)
     : animator_(new SessionStateAnimatorImpl()),
@@ -119,12 +124,13 @@ void LockStateController::LockWithoutAnimation() {
   if (animating_lock_)
     return;
   animating_lock_ = true;
-  // Before sending locking screen request, hide non lock screen containers
-  // immediately. TODO(warx): consider incorporating immediate post lock
-  // animation (crbug.com/746657).
-  animator_->StartAnimation(SessionStateAnimator::NON_LOCK_SCREEN_CONTAINERS,
+  // TODO(warx): consider incorporating immediate post lock animation
+  // (crbug.com/746657).
+  animator_->StartAnimation(kPreLockContainersMask,
                             SessionStateAnimator::ANIMATION_HIDE_IMMEDIATELY,
                             SessionStateAnimator::ANIMATION_SPEED_IMMEDIATE);
+  ShellPort::Get()->OnLockStateEvent(
+      LockStateObserver::EVENT_LOCK_ANIMATION_STARTED);
   Shell::Get()->session_controller()->LockScreen();
 }
 
