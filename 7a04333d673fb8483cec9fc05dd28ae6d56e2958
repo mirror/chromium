@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "626ad5ce_c1208d51",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-08-31T16:40:43Z",
+      "side": 1,
+      "message": "This should probably be a constant. Then change all the requests.size() below to use it instead.",
+      "range": {
+        "startLine": 169,
+        "startChar": 50,
+        "endLine": 169,
+        "endChar": 51
+      },
+      "revId": "7a04333d673fb8483cec9fc05dd28ae6d56e2958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f0bd117_10a1e846",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-08-31T16:40:43Z",
+      "side": 1,
+      "message": "nit: Add a comment to say what this \"magic\" number is.",
+      "range": {
+        "startLine": 179,
+        "startChar": 12,
+        "endLine": 179,
+        "endChar": 14
+      },
+      "revId": "7a04333d673fb8483cec9fc05dd28ae6d56e2958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1432f88c_5b3d0ed9",
+        "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 805,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-08-31T16:40:43Z",
+      "side": 1,
+      "message": "Should RunSoon take OnceClosure?",
+      "range": {
+        "startLine": 805,
+        "startChar": 12,
+        "endLine": 805,
+        "endChar": 23
+      },
+      "revId": "7a04333d673fb8483cec9fc05dd28ae6d56e2958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
