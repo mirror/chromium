@@ -30,6 +30,7 @@
 #include "ui/base/clipboard/custom_data_helper.h"
 #import "ui/base/cocoa/focus_tracker.h"
 #include "ui/base/dragdrop/cocoa_dnd_util.h"
+#include "ui/base/ui_features.h"
 #include "ui/display/screen.h"
 #include "ui/gfx/image/image_skia_util_mac.h"
 #include "ui/gfx/mac/coordinate_conversion.h"
@@ -131,7 +132,12 @@ WebContentsViewMac::WebContentsViewMac(WebContentsImpl* web_contents,
                                        WebContentsViewDelegate* delegate)
     : web_contents_(web_contents),
       delegate_(delegate),
-      allow_other_views_(false) {
+      allow_other_views_(false),
+#if BUILDFLAG(MAC_VIEWS_BROWSER)
+      is_mac_views_browser_(true) {
+#else
+      is_mac_views_browser_(false) {
+#endif
 }
 
 WebContentsViewMac::~WebContentsViewMac() {
@@ -521,9 +527,12 @@ void WebContentsViewMac::CloseTab() {
   WebContentsImpl* webContents = [self webContents];
   if (webContents && webContents->GetDelegate()) {
     NSPoint location = [NSEvent mouseLocation];
+    gfx::Point converted_location(location.x, location.y);
+    if (webContentsView_->is_mac_views_browser())
+      converted_location = gfx::ScreenPointFromNSPoint(location);
     webContents->GetDelegate()->ContentsMouseEvent(
-        webContents, gfx::Point(location.x, location.y),
-        [theEvent type] == NSMouseMoved, [theEvent type] == NSMouseExited);
+        webContents, converted_location, [theEvent type] == NSMouseMoved,
+        [theEvent type] == NSMouseExited);
   }
 }
 

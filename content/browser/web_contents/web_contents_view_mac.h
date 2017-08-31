@@ -131,6 +131,7 @@ class WebContentsViewMac : public WebContentsView,
 
   WebContentsImpl* web_contents() { return web_contents_; }
   WebContentsViewDelegate* delegate() { return delegate_.get(); }
+  bool is_mac_views_browser() { return is_mac_views_browser_; }
 
   using RenderWidgetHostViewCreateFunction =
       RenderWidgetHostViewMac* (*)(RenderWidgetHost*, bool);
@@ -162,6 +163,9 @@ class WebContentsViewMac : public WebContentsView,
   bool allow_other_views_;
 
   std::unique_ptr<PopupMenuHelper> popup_menu_helper_;
+
+  // Whether this view is on MAC_VIEWS_BROWSER.
+  bool is_mac_views_browser_;
 
   DISALLOW_COPY_AND_ASSIGN(WebContentsViewMac);
 };
