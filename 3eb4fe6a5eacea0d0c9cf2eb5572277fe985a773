@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "49d285d7_41be39c2",
+        "filename": "third_party/zlib/adler32.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-08-31T20:33:53Z",
+      "side": 1,
+      "message": "Older compilers (e.g. gcc 4.0) defined only __ARM_NEON__, while new compilers should have __ARM_NEON. The best way to make sure the code will work with a broader range of compilers is to test them both.\n\nWe should not use __aarch64__ because that would disable the code for 32bits.\n\nFor gcc 6.3, we have:\nadenilson@p700:~$ ./apps/gcc/aarch64-6.3/bin/aarch64-linux-gnu-gcc -dM -E - \u003c /dev/null | grep NEON\n#define __ARM_NEON 1\n\nadenilson@p700:~$ ./apps/gcc/armv8-6.3/bin/armv8l-linux-gnueabihf-gcc -dM -E - \u003c /dev/null | grep NEON\n#define __ARM_NEON_FP 6\n#define __ARM_NEON__ 1\n#define __ARM_NEON 1",
+      "parentUuid": "5d08cf2f_55b4acc7",
+      "revId": "3eb4fe6a5eacea0d0c9cf2eb5572277fe985a773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "493bec6b_ae89e736",
         "filename": "third_party/zlib/adler32.c",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-23T14:27:25Z",
       "side": 1,
       "message": "prototype of NEON_adler32 is:\n\n  unsigned long NEON_adler32(unsigned long adler,\n                             const unsigned char* buf,\n                             const unsigned int len);\n\nHere you call it with a z_size_t len as the last argument.  Is that a potential problem?",
+      "revId": "3eb4fe6a5eacea0d0c9cf2eb5572277fe985a773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5ef7f02_dd6fdded",
+        "filename": "third_party/zlib/adler32.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-08-31T20:33:53Z",
+      "side": 1,
+      "message": "It is a good idea, it should work fine if we use the same type.\n\nWill just double check to unsure that there aren\u0027t any warnings/etc.",
+      "parentUuid": "493bec6b_ae89e736",
       "revId": "3eb4fe6a5eacea0d0c9cf2eb5572277fe985a773",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
