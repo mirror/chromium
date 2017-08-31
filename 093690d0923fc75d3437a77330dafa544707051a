@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83e277be_e49c860c",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/ChooseHostBrowserDialog.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-31T22:18:31Z",
+      "side": 1,
+      "message": "I don\u0027t think that you need to change this line anymore given that you are no longer using LinearLayout.LayoutParams in WebApkUtils#addListPadding()",
+      "revId": "093690d0923fc75d3437a77330dafa544707051a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9000dccb_75aa12fd",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkUtils.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-31T22:18:31Z",
+      "side": 1,
+      "message": "Maybe rename this variable to LIST_COLUMN_PADDING because I think that makes the variable better describe what it is used for",
+      "revId": "093690d0923fc75d3437a77330dafa544707051a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43d8d4db_defdcf9a",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkUtils.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-31T22:18:31Z",
+      "side": 1,
+      "message": "Can we have a separate constant DIALOG_CONTENT_TOP_PADDING for the top padding instead of dividing DIALOG_TEXT_PADDING by 2?",
+      "revId": "093690d0923fc75d3437a77330dafa544707051a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8199209a_4647379c",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkUtils.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-31T22:18:31Z",
+      "side": 1,
+      "message": "Is 24dp the number we want for the bottom padding? We have the buttons below the content area",
+      "revId": "093690d0923fc75d3437a77330dafa544707051a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a83a5a9c_8fd007f6",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkUtils.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-31T22:18:31Z",
+      "side": 1,
+      "message": "I would suggest inlining the implementation of this function into the callers",
+      "revId": "093690d0923fc75d3437a77330dafa544707051a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
