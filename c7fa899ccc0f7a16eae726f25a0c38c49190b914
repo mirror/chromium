@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3fbe494_97d6ead0",
+        "filename": "third_party/WebKit/Source/core/editing/suggestion/TextSuggestionController.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-31T21:57:54Z",
+      "side": 1,
+      "message": "It seems better to:\n1. Move all the \"sort-by-length\" logic to ComputeSuggestionInfos()\n2. Make ComputeSuggestionInfos() also return the text node\n\nThe reasons are:\n\n- Sorting the suggestion markers my length seems to a low-level detail in ComputeSuggestionInfos. The remaining part doesn\u0027t care about that.\n\n- The choosing of text_node doesn\u0027t seem to have any hard requirement, and it also seems to be a detail in ComputeSuggestionInfos. We don\u0027t want the logic to be replicated, in case of introducing any inconsistency.",
+      "revId": "c7fa899ccc0f7a16eae726f25a0c38c49190b914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e53d4003_b0cabdb5",
+        "filename": "third_party/WebKit/Source/core/editing/suggestion/TextSuggestionController.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-31T21:57:54Z",
+      "side": 1,
+      "message": "nit: Rename it |active_suggestion_range| to be more specific. We have a lot of markers in this function.",
+      "range": {
+        "startLine": 426,
+        "startChar": 23,
+        "endLine": 426,
+        "endChar": 35
+      },
+      "revId": "c7fa899ccc0f7a16eae726f25a0c38c49190b914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2bf1956_bfa4c509",
+        "filename": "third_party/WebKit/Source/core/editing/suggestion/TextSuggestionController.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-31T21:57:54Z",
+      "side": 1,
+      "message": "The computation of |highlight_color| looks hacky.\n\nMaybe also put it in ComputeSuggestionInfos()?",
+      "range": {
+        "startLine": 432,
+        "startChar": 14,
+        "endLine": 432,
+        "endChar": 29
+      },
+      "revId": "c7fa899ccc0f7a16eae726f25a0c38c49190b914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
