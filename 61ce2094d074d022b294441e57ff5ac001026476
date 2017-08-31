@@ -34,6 +34,24 @@
       "revId": "61ce2094d074d022b294441e57ff5ac001026476",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5204fd67_71079395",
+        "filename": "media/gpu/android_video_decode_accelerator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-31T22:43:32Z",
+      "side": 1,
+      "message": "Otherwise the values aren\u0027t convertible to ints and thus can\u0027t be stored in UMA; nor can they follow the UMA style guide with the explicit \"\u003d #\" IIRC.",
+      "parentUuid": "776a6577_3637ffe2",
+      "revId": "61ce2094d074d022b294441e57ff5ac001026476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
