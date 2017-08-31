@@ -34,6 +34,24 @@
       "revId": "141c7b5f7ede2bf84a4761c4c020a417a6e8d5c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "546df000_b0d17562",
+        "filename": "chrome/browser/ui/toolbar/toolbar_model_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-31T18:01:28Z",
+      "side": 1,
+      "message": "I\u0027d be in favor of running a proper ExtensionService (or TestExtensionService) codepath, if the test config/setup changes aren\u0027t unreasonable. I agree that calling these other functions as a half-measure seems arbitrary and fragile.",
+      "parentUuid": "1402d433_65d959f4",
+      "revId": "141c7b5f7ede2bf84a4761c4c020a417a6e8d5c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
