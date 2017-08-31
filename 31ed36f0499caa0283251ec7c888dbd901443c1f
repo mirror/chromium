@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4f20ce9_90d50e78",
+        "filename": "ios/chrome/browser/ui/key_commands_provider.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-31T00:16:02Z",
+      "side": 0,
+      "message": "Celebrate!~ No more chromeExecuteCommand in this file!",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 4
+      },
+      "revId": "31ed36f0499caa0283251ec7c888dbd901443c1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
