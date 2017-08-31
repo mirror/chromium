@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1a876ab_c9224205",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/FileSystemMapping.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-31T22:50:29Z",
+      "side": 1,
+      "message": "Before was O(n^2) now it\u0027s O(n log n).\n\nSemantically this should be exactly the same... it was just super confusing when I read it, so I figured simplifying it might be useful for code health.",
+      "revId": "b5e3aa244a6d84ea4618bcee0ddf05d4120ee293",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
