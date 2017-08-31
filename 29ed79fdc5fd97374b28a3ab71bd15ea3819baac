@@ -16,6 +16,24 @@
       "revId": "29ed79fdc5fd97374b28a3ab71bd15ea3819baac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96155d3f_c22ad70d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-preflight-request-invalid-status-301.htm",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-31T00:16:05Z",
+      "side": 1,
+      "message": "Haha, oops! I guess I tried to go too fast on this one. Thanks for pointing that out!",
+      "parentUuid": "da73be21_f8520e1e",
+      "revId": "29ed79fdc5fd97374b28a3ab71bd15ea3819baac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
