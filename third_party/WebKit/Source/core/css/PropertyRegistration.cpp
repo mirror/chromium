@@ -16,10 +16,10 @@
 #include "core/css/parser/CSSTokenizer.h"
 #include "core/css/parser/CSSVariableParser.h"
 #include "core/css/resolver/StyleBuilderConverter.h"
+#include "core/css/resolver/StyleChangeReason.h"
+#include "core/css/resolver/StyleEngine.h"
 #include "core/dom/Document.h"
 #include "core/dom/ExceptionCode.h"
-#include "core/dom/StyleChangeReason.h"
-#include "core/dom/StyleEngine.h"
 
 namespace blink {
 

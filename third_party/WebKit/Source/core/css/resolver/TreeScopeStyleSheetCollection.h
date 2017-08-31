@@ -31,7 +31,7 @@
 #define TreeScopeStyleSheetCollection_h
 
 #include "core/CoreExport.h"
-#include "core/dom/StyleSheetCollection.h"
+#include "core/css/resolver/StyleSheetCollection.h"
 #include "core/dom/TreeOrderedList.h"
 #include "core/dom/TreeScope.h"
 

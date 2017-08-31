@@ -26,7 +26,7 @@
 #include "core/html/track/vtt/VTTElement.h"
 
 #include "core/HTMLElementFactory.h"
-#include "core/dom/StyleChangeReason.h"
+#include "core/css/resolver/StyleChangeReason.h"
 
 namespace blink {
 

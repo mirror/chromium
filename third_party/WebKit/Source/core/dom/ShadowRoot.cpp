@@ -28,12 +28,12 @@
 
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/css/StyleSheetList.h"
+#include "core/css/resolver/StyleEngine.h"
 #include "core/css/resolver/StyleResolver.h"
 #include "core/dom/ElementShadow.h"
 #include "core/dom/ElementTraversal.h"
 #include "core/dom/ShadowRootRareDataV0.h"
 #include "core/dom/SlotAssignment.h"
-#include "core/dom/StyleEngine.h"
 #include "core/dom/Text.h"
 #include "core/dom/V0InsertionPoint.h"
 #include "core/dom/WhitespaceAttacher.h"

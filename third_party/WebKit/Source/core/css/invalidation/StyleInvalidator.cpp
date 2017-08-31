@@ -5,12 +5,12 @@
 #include "core/css/invalidation/StyleInvalidator.h"
 
 #include "core/css/invalidation/InvalidationSet.h"
+#include "core/css/resolver/StyleChangeReason.h"
 #include "core/dom/Document.h"
 #include "core/dom/Element.h"
 #include "core/dom/ElementShadow.h"
 #include "core/dom/ElementTraversal.h"
 #include "core/dom/ShadowRoot.h"
-#include "core/dom/StyleChangeReason.h"
 #include "core/html/HTMLSlotElement.h"
 #include "core/inspector/InspectorTraceEvents.h"
 #include "core/layout/LayoutObject.h"

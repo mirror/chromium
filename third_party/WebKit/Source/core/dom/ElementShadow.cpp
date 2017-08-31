@@ -28,9 +28,9 @@
 
 #include "core/css/StyleSheetList.h"
 #include "core/css/resolver/ScopedStyleResolver.h"
+#include "core/css/resolver/StyleChangeReason.h"
 #include "core/dom/ElementShadowV0.h"
 #include "core/dom/NodeTraversal.h"
-#include "core/dom/StyleChangeReason.h"
 #include "core/frame/Deprecation.h"
 #include "core/probe/CoreProbes.h"
 #include "platform/EventDispatchForbiddenScope.h"
