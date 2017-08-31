@@ -52,6 +52,24 @@
       "revId": "141c7b5f7ede2bf84a4761c4c020a417a6e8d5c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4994c90_02b1a920",
+        "filename": "chrome/browser/ui/toolbar/toolbar_model_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-31T18:37:50Z",
+      "side": 1,
+      "message": "I changed both tests to create a valid ExtensionService and properly install the extension now, which I agree is cleaner.  Had to change extension ID in the second test to make it proper length, to avoid a DCHECK in IdIsValid.  Thanks Devlin for the pointer to ToolbarActionsBarUnitTest!",
+      "parentUuid": "546df000_b0d17562",
+      "revId": "141c7b5f7ede2bf84a4761c4c020a417a6e8d5c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
