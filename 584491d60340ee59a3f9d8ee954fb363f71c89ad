@@ -46,6 +46,30 @@
       "revId": "584491d60340ee59a3f9d8ee954fb363f71c89ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec9e22a4_a11d4c23",
+        "filename": "chrome/browser/certificate_manager_model.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-31T23:45:42Z",
+      "side": 1,
+      "message": "I\u0027m not familiar enough with NSS to know what is right. I\u0027m leaving this up to you. (but 2 sounds wrong).",
+      "parentUuid": "773e118d_5bcb2ebe",
+      "range": {
+        "startLine": 84,
+        "startChar": 31,
+        "endLine": 84,
+        "endChar": 52
+      },
+      "revId": "584491d60340ee59a3f9d8ee954fb363f71c89ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
