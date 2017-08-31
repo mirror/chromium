@@ -249,6 +249,30 @@
     },
     {
       "key": {
+        "uuid": "a3940a15_c08be2fa",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_features.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-31T11:47:36Z",
+      "side": 1,
+      "message": "Is this rule documented somewhere?  The best I could find was https://groups.google.com/a/chromium.org/forum/#!msg/chromium-dev/RVps606IB_g/qtLrKme6UKYJ, which is not worded strongly enough to be definitive and seems to allow namespaces as per the style guide.",
+      "parentUuid": "7c9880fc_64fb80f3",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 20
+      },
+      "revId": "f0649b200faa089f8cdce7983f84716d9c7640ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b8b2e081_de1ca1e8",
         "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_view_controller.h",
         "patchSetId": 27
