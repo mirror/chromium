@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad4a93dd_f5ceca21",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_journey_logger_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-31T16:13:39Z",
+      "side": 1,
+      "message": "You can\u0027t add the same profile twice in these tests. But why do you need this?",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 70
+      },
+      "revId": "f4cc5e6fd3c65d8c6111f218c9929d0a0007ab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "147cf974_7a54a0da",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_journey_logger_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-31T16:13:39Z",
+      "side": 1,
+      "message": "Can you add the second profile in -setUp if most tests need it and test for it?",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 37
+      },
+      "revId": "f4cc5e6fd3c65d8c6111f218c9929d0a0007ab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
