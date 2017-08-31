@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "5d08cf2f_55b4acc7",
+        "filename": "third_party/zlib/adler32.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-08-31T15:40:40Z",
+      "side": 1,
+      "message": "I\u0027ve noticed that some compilers don\u0027t define __ARM_NEON__ when compiling for aarch64.  Do they all define __ARM_NEON?  Or do we need a defined(__aarch64__)?",
+      "revId": "3eb4fe6a5eacea0d0c9cf2eb5572277fe985a773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "493bec6b_ae89e736",
         "filename": "third_party/zlib/adler32.c",
         "patchSetId": 5
@@ -136,6 +153,29 @@
     },
     {
       "key": {
+        "uuid": "3c82d200_da8788f3",
+        "filename": "third_party/zlib/neon_adler32.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-08-31T15:40:40Z",
+      "side": 1,
+      "message": "Just double checking... this would be the same as if (len \u003e 0) right?  At this point it can only be 1 or 0?",
+      "range": {
+        "startLine": 81,
+        "startChar": 4,
+        "endLine": 81,
+        "endChar": 21
+      },
+      "revId": "3eb4fe6a5eacea0d0c9cf2eb5572277fe985a773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1f09972a_dc2d2140",
         "filename": "third_party/zlib/neon_adler32.c",
         "patchSetId": 5
@@ -203,6 +243,23 @@
       "revId": "3eb4fe6a5eacea0d0c9cf2eb5572277fe985a773",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b689ee49_d48d0bc2",
+        "filename": "third_party/zlib/neon_adler32.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-08-31T15:40:40Z",
+      "side": 1,
+      "message": "FWIW, it\u0027s harmless to declare this function unconditionally.",
+      "revId": "3eb4fe6a5eacea0d0c9cf2eb5572277fe985a773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
