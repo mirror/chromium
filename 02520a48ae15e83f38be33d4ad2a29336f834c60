@@ -567,6 +567,30 @@
     },
     {
       "key": {
+        "uuid": "dd480340_f0ade7b8",
+        "filename": "extensions/browser/api/declarative_net_request/utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-31T21:34:21Z",
+      "side": 1,
+      "message": "OK.\nCan\u0027t GetErrorDescription take |error| string* and fill that to avoid string copy?",
+      "parentUuid": "f5a45b20_65bd08f1",
+      "range": {
+        "startLine": 147,
+        "startChar": 0,
+        "endLine": 147,
+        "endChar": 73
+      },
+      "revId": "02520a48ae15e83f38be33d4ad2a29336f834c60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3d3f3f6c_bb66225b",
         "filename": "extensions/browser/api/declarative_net_request/utils.cc",
         "patchSetId": 5
@@ -674,6 +698,30 @@
       "side": 1,
       "message": "Using _metadata now. Filed https://bugs.chromium.org/p/chromium/issues/detail?id\u003d760850 to ensure these issues are addressed subsequently.\n\nI think I have a reasonable fix for spurious warnings on unpacked extension reloads -\u003e Delete the _metadata folder on reload for unpacked extensions. See subsequent CL.\n\nWe can also delete any file at the indexed ruleset location during installation for packed extensions, this should also ensure that we are somehow not tricked into using an indexed ruleset provided by an extension developer.",
       "parentUuid": "862b8fe9_715cb9f5",
+      "range": {
+        "startLine": 156,
+        "startChar": 5,
+        "endLine": 156,
+        "endChar": 12
+      },
+      "revId": "02520a48ae15e83f38be33d4ad2a29336f834c60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d84e7d0_016d3432",
+        "filename": "extensions/browser/api/declarative_net_request/utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-31T21:34:21Z",
+      "side": 1,
+      "message": "Thanks for the bug.\n\nI\u0027m not certain about deleting the file on unpacked reload, let\u0027s tackle that separately.\nFor packed, deleting sgtm.",
+      "parentUuid": "1fcdd425_40cb8e70",
       "range": {
         "startLine": 156,
         "startChar": 5,
