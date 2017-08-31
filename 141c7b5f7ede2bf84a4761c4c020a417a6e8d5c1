@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3cab7243_84bfee6d",
+        "filename": "chrome/browser/ui/toolbar/toolbar_model_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-31T17:49:53Z",
+      "side": 1,
+      "message": "This seems a bit weird, is there a better pattern for creating/loading/enabling an extension for unit tests? (ie. ActivateExtensionInProcess isn\u0027t even called here; it\u0027s not immediately obvious how that\u0027s relevant; your comment \"when navigating to it later\" is a decent breadcrumb, but this isn\u0027t ideal). Perhaps we should have a test helper function that encapsulates the complexity of loading a test extension elsewhere, and that can call RendererStartupHelper::OnExtensionLoaded, ExtensionRegistry::AddEnabled, and whatever else; I\u0027d be surprised if that doesn\u0027t already exist. ditto comment for the other test file",
+      "revId": "141c7b5f7ede2bf84a4761c4c020a417a6e8d5c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
