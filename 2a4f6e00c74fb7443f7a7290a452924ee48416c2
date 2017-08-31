@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2328a76c_89e3eaa8",
+        "filename": "ios/chrome/browser/ui/ntp/google_landing_mediator.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-31T16:44:12Z",
+      "side": 1,
+      "message": "This is duplicated in content_suggestions_coordinator. Should it be extracted to a promo handler object to be DRY? (I suggest in another CL).",
+      "range": {
+        "startLine": 446,
+        "startChar": 0,
+        "endLine": 471,
+        "endChar": 1
+      },
+      "revId": "2a4f6e00c74fb7443f7a7290a452924ee48416c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
