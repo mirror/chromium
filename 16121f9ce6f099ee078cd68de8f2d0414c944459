@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "10d84cba_13b023b6",
+        "filename": "chromeos/components/tether/network_list_sorter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-31T16:56:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a3b06ef_90fd39cb",
+      "revId": "16121f9ce6f099ee078cd68de8f2d0414c944459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea681543_ac284ae4",
         "filename": "chromeos/components/tether/network_list_sorter.h",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "6aa7b996_e9aa042c",
+        "filename": "chromeos/components/tether/network_list_sorter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-31T16:56:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea681543_ac284ae4",
+      "revId": "16121f9ce6f099ee078cd68de8f2d0414c944459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b090475_1c447479",
         "filename": "chromeos/components/tether/network_list_sorter.h",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "16121f9ce6f099ee078cd68de8f2d0414c944459",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88dbdd3a_5a4ac1ea",
+        "filename": "chromeos/components/tether/network_list_sorter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-31T16:56:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b090475_1c447479",
+      "revId": "16121f9ce6f099ee078cd68de8f2d0414c944459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
