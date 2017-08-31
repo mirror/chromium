@@ -83,6 +83,7 @@
 #include "ipc/ipc_message_macros.h"
 #include "ipc/ipc_message_start.h"
 #include "skia/ext/image_operations.h"
+//#include "third_party/WebKit/public/platform/WebInputEvent.h"
 #include "third_party/khronos/GLES2/gl2.h"
 #include "third_party/khronos/GLES2/gl2ext.h"
 #include "third_party/skia/include/core/SkCanvas.h"
@@ -1167,14 +1168,6 @@ void RenderWidgetHostViewAndroid::CopyFromSurface(
                  preferred_color_type, start_time, callback, readback_lock));
 }
 
-void RenderWidgetHostViewAndroid::ShowDisambiguationPopup(
-    const gfx::Rect& rect_pixels, const SkBitmap& zoomed_bitmap) {
-  if (!popup_zoomer_)
-    return;
-
-  popup_zoomer_->ShowPopup(rect_pixels, zoomed_bitmap);
-}
-
 std::unique_ptr<SyntheticGestureTarget>
 RenderWidgetHostViewAndroid::CreateSyntheticGestureTarget() {
   return std::unique_ptr<SyntheticGestureTarget>(
@@ -2018,16 +2011,6 @@ bool RenderWidgetHostViewAndroid::ShowSelectionMenu(
 
   return selection_popup_controller_->ShowSelectionMenu(params,
                                                         GetTouchHandleHeight());
-}
-
-void RenderWidgetHostViewAndroid::ResolveTapDisambiguation(
-    double timestamp_seconds,
-    gfx::Point tap_viewport_offset,
-    bool is_long_press) {
-  DCHECK(host_);
-  host_->Send(new ViewMsg_ResolveTapDisambiguation(
-      host_->GetRoutingID(), timestamp_seconds, tap_viewport_offset,
-      is_long_press));
 }
 
 void RenderWidgetHostViewAndroid::MoveCaret(const gfx::Point& point) {
