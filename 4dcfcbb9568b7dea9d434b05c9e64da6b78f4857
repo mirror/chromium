@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09cd53b4_33b72be3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-31T23:53:07Z",
+      "side": 1,
+      "message": "NtpTouchDelegat extends TouchDelegate for convenience (so that it can be used with BottomSheet#setTouchDelegate()), but it holds references to other TouchDelegates rather than relying on the superclass implementation directly.",
+      "range": {
+        "startLine": 412,
+        "startChar": 12,
+        "endLine": 413,
+        "endChar": 21
+      },
+      "revId": "4dcfcbb9568b7dea9d434b05c9e64da6b78f4857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a3963fe_cf319be3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-31T23:53:07Z",
+      "side": 1,
+      "message": "One would think the toolbar delegate would correctly route touches to the menu button, but without this the toolbar sends all touch events to the UrlBar. It\u0027s probably something to do with our internal touch handling on ToolbarControlContainer and ToolbarPhone, but I couldn\u0027t figure out what was going wrong and this is a simple \"fix\".",
+      "range": {
+        "startLine": 438,
+        "startChar": 14,
+        "endLine": 439,
+        "endChar": 68
+      },
+      "revId": "4dcfcbb9568b7dea9d434b05c9e64da6b78f4857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
