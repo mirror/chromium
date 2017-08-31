@@ -39,7 +39,8 @@ void ContextualContentSuggestionsService::FetchContextualSuggestions(
       url,
       base::BindOnce(
           &ContextualContentSuggestionsService::DidFetchContextualSuggestions,
-          base::Unretained(this), url, std::move(callback)));
+          base::Unretained(this), url.GetWithoutFilename(),
+          std::move(callback)));
 }
 
 void ContextualContentSuggestionsService::FetchContextualSuggestionImage(
