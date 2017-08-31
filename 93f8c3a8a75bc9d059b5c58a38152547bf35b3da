@@ -39,6 +39,24 @@
       "revId": "93f8c3a8a75bc9d059b5c58a38152547bf35b3da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d6141d4_451769b3",
+        "filename": "ios/clean/chrome/browser/ui/recent_tabs/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-31T09:47:01Z",
+      "side": 1,
+      "message": "gn check is not complaining.\ngn path only shows private deps.\n//ios/clean/chrome/browser/ui/recent_tabs:recent_tabs --[private]--\u003e\n//ios/chrome/browser/sessions:sessions --[private]--\u003e\n//components/sessions:sessions",
+      "parentUuid": "d2812035_c7e3df81",
+      "revId": "93f8c3a8a75bc9d059b5c58a38152547bf35b3da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
