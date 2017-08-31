@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db90e2d6_27027a82",
+        "filename": "third_party/WebKit/public/platform/input_host.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-31T20:29:36Z",
+      "side": 1,
+      "message": "What\u0027s this an index into? Can the renderer get the browser to start indexing out-of-bounds of some array? Or is this just an opaque integer to the browser that the renderer uses to correlate with later messages from the browser?",
+      "revId": "bc696b4cf77627116308166386d1e67ce6b27dcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3a355f9_db661755",
+        "filename": "third_party/WebKit/public/platform/input_host.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-31T20:29:36Z",
+      "side": 1,
+      "message": "Should there be a limit on the number of suggestions the browser will accept from the renderer?",
+      "revId": "bc696b4cf77627116308166386d1e67ce6b27dcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
