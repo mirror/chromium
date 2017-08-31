@@ -8,11 +8,13 @@
 
 #include <utility>
 
+#include "ash/public/cpp/ash_pref_names.h"
 #include "base/callback.h"
 #include "base/lazy_instance.h"
 #include "base/strings/string_piece.h"
 #include "base/strings/string_util.h"
 #include "components/device_event_log/device_event_log.h"
+#include "components/prefs/pref_service.h"
 #include "device/bluetooth/bluetooth_adapter.h"
 #include "device/bluetooth/bluetooth_adapter_factory.h"
 #include "device/bluetooth/bluetooth_common.h"
@@ -172,6 +174,16 @@ bool BluetoothPrivateSetAdapterStateFunction::DoWork(
   if (powered && adapter->IsPowered() != *powered) {
     BLUETOOTH_LOG(USER) << "SetAdapterState: powerd=" << *powered;
     pending_properties_.insert(kPoweredProperty);
+#if defined(OS_CHROMEOS)
+    bool* save_to_pref = new_state.save_to_pref.get();
+    if (save_to_pref && *save_to_pref) {
+      PrefService* prefs =
+          ExtensionsBrowserClient::Get()->GetPrefServiceForContext(
+              browser_context());
+      if (prefs)
+        prefs->SetBoolean(ash::prefs::kUserBluetoothAdapterEnabled, *powered);
+    }
+#endif
     adapter->SetPowered(*powered, CreatePropertySetCallback(kPoweredProperty),
                         CreatePropertyErrorCallback(kPoweredProperty));
   }
