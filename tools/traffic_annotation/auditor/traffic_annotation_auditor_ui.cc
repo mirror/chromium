@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "base/files/file_util.h"
+//#include "base/process/launch.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
@@ -19,7 +20,7 @@ namespace {
 const char* HELP_TEXT = R"(
 Traffic Annotation Auditor
 Extracts network traffic annotaions from the repository, audits them for errors
-and coverage, and produces reports.
+and coverage, produces reports, and updates related files.
 
 Usage: traffic_annotation_auditor [OPTION]... [path_filters]
 
@@ -40,6 +41,12 @@ Options:
   --full-run          Optional flag asking the tool to run on the whole
                       repository without text filtering files. Using this flag
                       may increase processing time x40.
+  --test-only         Just runs tests and does not update any file. If not
+                      specified, 'tools/traffic_annotation/summary/
+                      annotations.xml' might be modified and if it does,
+                      'tools/traffic_annotation/scripts/
+                      annotations_xml_downstream_updater.py will
+                      be called to updated downstream files.
   --summary-file      Optional path to the output file with all annotations.
   --annotations-file  Optional path to a TSV output file with all annotations.
   path_filters        Optional paths to filter what files the tool is run on.
@@ -48,10 +55,27 @@ Example:
   traffic_annotation_auditor --build-dir=out/Debug summary-file=report.txt
 )";
 
-const base::FilePath kAnnotationsXmlPath(
-    FILE_PATH_LITERAL("tools/traffic_annotation/summary/annotations.xml"));
-
+const base::FilePath kDownstreamUpdater(FILE_PATH_LITERAL(
+    "tools/traffic_annotation/scripts/annotations_xml_downstream_updater.py"));
 }  // namespace
+
+// Calls |kDownstreamUpdater| script to update everything that depends requires
+// update based on anntoations.xml.
+bool RunUpdateAnnotationUsers(const base::FilePath& source_path) {
+  base::CommandLine cmdline(source_path.Append(kDownstreamUpdater));
+
+#if defined(OS_WIN)
+  cmdline.PrependWrapper(L"python");
+#endif
+
+  int exit_code = system(cmdline.GetCommandLineString().c_str());
+  if (exit_code) {
+    LOG(ERROR) << "Running " << kDownstreamUpdater.MaybeAsASCII()
+               << " failed with exit code: " << exit_code;
+    return false;
+  }
+  return true;
+}
 
 // Writes a summary of annotations, calls, and errors.
 bool WriteSummaryFile(const base::FilePath& filepath,
@@ -262,6 +286,7 @@ int main(int argc, char* argv[]) {
   base::FilePath extractor_input =
       command_line.GetSwitchValuePath("extractor-input");
   bool full_run = command_line.HasSwitch("full-run");
+  bool test_only = command_line.HasSwitch("test-only");
   base::FilePath summary_file = command_line.GetSwitchValuePath("summary-file");
   base::FilePath annotations_file =
       command_line.GetSwitchValuePath("annotations-file");
@@ -321,7 +346,10 @@ int main(int argc, char* argv[]) {
     return 1;
 
   // Perform checks.
-  auditor.RunAllChecks();
+  if (!auditor.RunAllChecks()) {
+    LOG(ERROR) << "Running checks failed.";
+    return 1;
+  }
 
   // Write the summary file.
   if (!summary_file.empty() &&
@@ -331,21 +359,29 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
-  // Update annotations list.
-  if (!TrafficAnnotationExporter().UpdateAnnotationsXML(
-          source_path.Append(kAnnotationsXmlPath),
-          auditor.extracted_annotations(),
-          TrafficAnnotationAuditor::GetReservedUniqueIDs())) {
-    LOG(ERROR) << "Could not update annotations XML.";
-    return 1;
-  }
-
   // Write annotations TSV file.
   if (!annotations_file.empty() &&
       !WriteAnnotationsFile(annotations_file,
                             auditor.extracted_annotations())) {
     LOG(ERROR) << "Could not write TSV file.";
     return 1;
+  }
+
+  // Test/Update annotations list.
+  TrafficAnnotationExporter exporter(source_path);
+  if (!exporter.UpdateAnnotations(
+          auditor.extracted_annotations(),
+          TrafficAnnotationAuditor::GetReservedUniqueIDs())) {
+    return 1;
+  }
+  if (exporter.modified()) {
+    if (test_only) {
+      printf("Error: annotation.xml needs update.");
+    } else if (!exporter.SaveAnnotationsXML() ||
+               !RunUpdateAnnotationUsers(source_path)) {
+      LOG(ERROR) << "Could not update annotations XML or histogram enums.";
+      return 1;
+    }
   }
 
   // Dump Errors and Warnings to stdout.
