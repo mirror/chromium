@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e62bc8bd_b8f26765",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-31T23:47:57Z",
+      "side": 1,
+      "message": "{} is optional",
+      "revId": "da7ace26a36b3ce8a101e125cb2f363e33833e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db480191_b22cce8b",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-31T23:47:57Z",
+      "side": 1,
+      "message": "I think you meant  if (threat_details_list.empty() ...\n\nThough you probably don\u0027t need this if statement. If list is empty, the for loop below won\u0027t run.",
+      "revId": "da7ace26a36b3ce8a101e125cb2f363e33833e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e629732_66ef1eef",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-31T23:47:57Z",
+      "side": 1,
+      "message": "nit: DISALLOW_COPY_AND_ASSIGN",
+      "revId": "da7ace26a36b3ce8a101e125cb2f363e33833e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
