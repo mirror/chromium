@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "23d5abb7_b7fcee8a",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-08-31T14:47:17Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "f257359a_599b493a",
+      "range": {
+        "startLine": 228,
+        "startChar": 35,
+        "endLine": 228,
+        "endChar": 59
+      },
+      "revId": "3e12781a43eff4790ffe9bd37fdb1f6f027cd29b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd59a2de_b9928728",
         "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
         "patchSetId": 11
@@ -167,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "ab4001c9_2feb8905",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-08-31T14:47:17Z",
+      "side": 1,
+      "message": "Another solution is remove |device_policies| here, but put to UnsetOffHoursMode() function.\n(UnsetOffHoursMode(const em::ChromeDeviceSettingsProto\u0026 policies))",
+      "parentUuid": "09e74b9f_debf1b80",
+      "range": {
+        "startLine": 283,
+        "startChar": 31,
+        "endLine": 283,
+        "endChar": 46
+      },
+      "revId": "3e12781a43eff4790ffe9bd37fdb1f6f027cd29b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "39724d6b_2129e6eb",
         "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
         "patchSetId": 11
@@ -178,6 +226,30 @@
       "writtenOn": "2017-08-28T17:05:43Z",
       "side": 1,
       "message": "What if it\u0027s not initialized here? When it will start observing?",
+      "range": {
+        "startLine": 329,
+        "startChar": 0,
+        "endLine": 333,
+        "endChar": 3
+      },
+      "revId": "3e12781a43eff4790ffe9bd37fdb1f6f027cd29b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e49710df_a3d20a2a",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-08-31T14:47:17Z",
+      "side": 1,
+      "message": "I don\u0027t know the best solution of that.\nI think it\u0027s better to do like that: \nchromeos::DBusThreadManager::Get()-\u003eGetSessionManagerClient()-\u003eAddObserver(this);\n(i.e. https://cs.chromium.org/chromium/src/chrome/browser/chromeos/extensions/extension_system_event_observer.cc?type\u003dcs\u0026l\u003d14)\n\nBecause Session Manager Client have to be initialized before DeviceOffHoursController.",
+      "parentUuid": "39724d6b_2129e6eb",
       "range": {
         "startLine": 329,
         "startChar": 0,
@@ -304,6 +376,30 @@
       "revId": "3e12781a43eff4790ffe9bd37fdb1f6f027cd29b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4673cee0_5b28329d",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-08-31T14:47:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f86df6c_df99d6c5",
+      "range": {
+        "startLine": 65,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 27
+      },
+      "revId": "3e12781a43eff4790ffe9bd37fdb1f6f027cd29b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
