@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "157f96d7_ca84200d",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field_paste_delegate.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-08-31T14:46:40Z",
+      "side": 1,
+      "message": "this indent looks weird to me?",
+      "revId": "bda76014f5195f537da1c8eb9b81355187fbbb30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a05520c_5f6b6b32",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field_paste_delegate.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-08-31T14:46:40Z",
+      "side": 1,
+      "message": "API_AVAILABLE(ios(11.0)) is for header files.\n\nIn implementations you can use `if (@available(iOS 11, *)) {`",
+      "revId": "bda76014f5195f537da1c8eb9b81355187fbbb30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a663c6d_a67e902b",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field_paste_delegate.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-08-31T14:46:40Z",
+      "side": 1,
+      "message": "I don\u0027t know enough about this API.  Do you need to check itemStrings length first?  Will this always be \u003e 0?",
+      "revId": "bda76014f5195f537da1c8eb9b81355187fbbb30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
