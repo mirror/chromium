@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "96d11676_3443d90e",
+        "filename": "chrome/browser/ui/ash/multi_user/multi_user_notification_blocker_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-31T15:33:22Z",
+      "side": 1,
+      "message": "I\u0027m planning to move this whole file to ash/ after this.",
+      "parentUuid": "14609a5e_5903e646",
+      "range": {
+        "startLine": 26,
+        "startChar": 7,
+        "endLine": 26,
+        "endChar": 68
+      },
+      "revId": "b50c6523c8e89dd355403c043644f29879218cf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "92fafff7_0c489a67",
         "filename": "chrome/browser/ui/ash/multi_user/multi_user_window_manager.h",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-31T03:59:28Z",
       "side": 1,
       "message": "optional: consider naming EnableForTest of something. SetInstanceForTest doesn\u0027t indicate this turns on multi-profile mode.",
+      "range": {
+        "startLine": 90,
+        "startChar": 14,
+        "endLine": 90,
+        "endChar": 32
+      },
+      "revId": "b50c6523c8e89dd355403c043644f29879218cf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45f536d5_3707ad29",
+        "filename": "chrome/browser/ui/ash/multi_user/multi_user_window_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-31T15:33:22Z",
+      "side": 1,
+      "message": "updated the comment",
+      "parentUuid": "92fafff7_0c489a67",
       "range": {
         "startLine": 90,
         "startChar": 14,
