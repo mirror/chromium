@@ -22,6 +22,97 @@
       "revId": "a54f1c313af20000f57109e2555449b9769d608e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02d485d3_cf053146",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-31T07:37:00Z",
+      "side": 1,
+      "message": "This is not implemented?\nActually Connect() does not return anything.",
+      "range": {
+        "startLine": 12,
+        "startChar": 36,
+        "endLine": 14,
+        "endChar": 43
+      },
+      "revId": "a54f1c313af20000f57109e2555449b9769d608e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffee75c0_1872d0d8",
+        "filename": "components/arc/arc_bridge_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-31T07:37:00Z",
+      "side": 1,
+      "message": "Style: Please sort in lexicographical order. Ditto for below.",
+      "revId": "a54f1c313af20000f57109e2555449b9769d608e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0c77ddc_1d52a4f7",
+        "filename": "components/arc/common/midis.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-31T07:37:00Z",
+      "side": 1,
+      "message": "For consistency with other mojo APIs in ARC, please name MidisHost.",
+      "revId": "a54f1c313af20000f57109e2555449b9769d608e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ccbc68a_29252672",
+        "filename": "components/arc/common/midis.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-31T07:37:00Z",
+      "side": 1,
+      "message": "Could you write the method document?",
+      "revId": "a54f1c313af20000f57109e2555449b9769d608e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd778c39_8b237b87",
+        "filename": "components/arc/common/midis.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-31T07:37:00Z",
+      "side": 1,
+      "message": "nit: s/interface/",
+      "revId": "a54f1c313af20000f57109e2555449b9769d608e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
