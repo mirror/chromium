@@ -51,6 +51,24 @@
       "revId": "0c563a5e813e6da6734da55c765a29b03b2e0f2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ca49209_f7d28966",
+        "filename": "services/preferences/pref_store_manager_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-08-31T01:56:13Z",
+      "side": 1,
+      "message": "Do we need any validation, though? For example, what processes do this service\u0027s callers run in? Can a low-privilege process, like a web contents renderer, cause the Prefs service\u0027s host process to crash (for example)?",
+      "parentUuid": "37558960_d54094ae",
+      "revId": "0c563a5e813e6da6734da55c765a29b03b2e0f2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
