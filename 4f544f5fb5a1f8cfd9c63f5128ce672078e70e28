@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6b7e57a_dcc33c18",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/net/qualityprovider/ExternalEstimateProviderAndroid.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-08-31T20:12:07Z",
+      "side": 1,
+      "message": "Can this be removed as well? I\u0027m not seeing where this is called.",
+      "revId": "4f544f5fb5a1f8cfd9c63f5128ce672078e70e28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aad6a0c3_7d8507b3",
+        "filename": "chrome/browser/android/net/external_estimate_provider_android.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-08-31T20:12:07Z",
+      "side": 1,
+      "message": "This is an odd DCHECK. Can we just let no_value_ be whatever java says it is and leave the DCHECKs below to make sure java returns no_value_ or a positive value?",
+      "revId": "4f544f5fb5a1f8cfd9c63f5128ce672078e70e28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
