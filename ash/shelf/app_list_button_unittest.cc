@@ -195,7 +195,10 @@ TEST_F(VoiceInteractionAppListButtonTest,
       chromeos::switches::kEnableVoiceInteraction));
 
   // Simulate two user with primary user as active.
-  CreateUserSessions(2);
+  UpdateSession(1u, "user1@test.com");
+  UpdateSession(2u, "user2@test.com");
+  std::vector<uint32_t> order = {1u, 2u};
+  controller_->SetUserSessionOrder(order);
 
   // Disable voice interaction in system settings.
   Shell::Get()->NotifyVoiceInteractionEnabled(false);
