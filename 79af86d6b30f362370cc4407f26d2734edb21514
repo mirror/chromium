@@ -16,6 +16,24 @@
       "revId": "79af86d6b30f362370cc4407f26d2734edb21514",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "700c8a2e_7ae5ccc6",
+        "filename": "DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-31T20:45:30Z",
+      "side": 1,
+      "message": "Done.\n\nYup, that was exactly my intent :D Patch set 1 is the original CL, and patch set 2 has the version update.",
+      "parentUuid": "cc3a42f7_8727b630",
+      "revId": "79af86d6b30f362370cc4407f26d2734edb21514",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
