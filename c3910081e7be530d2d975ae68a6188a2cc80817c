@@ -22,6 +22,30 @@
       "revId": "c3910081e7be530d2d975ae68a6188a2cc80817c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c7bc17b_2a658f45",
+        "filename": "third_party/WebKit/Source/platform/mediastream/MediaStreamComponent.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-08-31T08:45:25Z",
+      "side": 1,
+      "message": "Good point, done. With this change a track and a stream could have the same unique id but that doesn\u0027t matter.",
+      "parentUuid": "01492a2c_8b569f71",
+      "range": {
+        "startLine": 68,
+        "startChar": 6,
+        "endLine": 68,
+        "endChar": 16
+      },
+      "revId": "c3910081e7be530d2d975ae68a6188a2cc80817c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
