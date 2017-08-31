@@ -15,6 +15,7 @@
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/render_widget_host.h"
 #include "content/public/browser/web_contents.h"
+#include "ui/display/screen.h"
 #include "ui/events/event.h"
 #include "ui/events/keycodes/keyboard_codes.h"
 #include "ui/views/focus/external_focus_tracker.h"
@@ -132,13 +133,24 @@ gfx::Range FindBarHost::GetSelectedRange() {
 
 void FindBarHost::UpdateUIForFindResult(const FindNotificationDetails& result,
                                         const base::string16& find_text) {
+#if defined(OS_WIN) || defined(OS_LINUX)
+  gfx::Rect selection = display::Screen::GetScreen()->ScreenToDIPRectInWindow(
+      GetFindBarController()->web_contents()->GetNativeView(),
+      result.selection_rect());
+  FindNotificationDetails result_scaled(
+      result.request_id(), result.number_of_matches(), selection,
+      result.active_match_ordinal(), result.final_update());
+#else
+  FindNotificationDetails result_scaled = result;
+#endif
+
   if (!find_text.empty())
-    find_bar_view()->UpdateForResult(result, find_text);
+    find_bar_view()->UpdateForResult(result_scaled, find_text);
   else
     find_bar_view()->ClearMatchCount();
 
   // We now need to check if the window is obscuring the search results.
-  MoveWindowIfNecessary(result.selection_rect());
+  MoveWindowIfNecessary(result_scaled.selection_rect());
 
   // Once we find a match we no longer want to keep track of what had
   // focus. EndFindSession will then set the focus to the page content.

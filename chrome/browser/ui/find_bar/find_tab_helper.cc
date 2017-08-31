@@ -169,6 +169,7 @@ void FindTabHelper::HandleFindReply(int request_id,
       active_match_ordinal = last_search_result_.active_match_ordinal();
 
     gfx::Rect selection = selection_rect;
+
     if (final_update && active_match_ordinal == 0)
       selection = gfx::Rect();
     else if (selection_rect.IsEmpty())
