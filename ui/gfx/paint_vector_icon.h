@@ -9,11 +9,11 @@
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/gfx/gfx_export.h"
 #include "ui/gfx/image/image_skia.h"
+#include "ui/gfx/vector_icon_types.h"
 
 namespace gfx {
 
 class Canvas;
-struct VectorIcon;
 
 // Describes an instance of an icon: an icon definition and a set of drawing
 // parameters.
@@ -28,11 +28,11 @@ struct GFX_EXPORT IconDescription {
 
   ~IconDescription();
 
-  const VectorIcon& icon;
+  const VectorIcon icon;
   int dip_size;
   SkColor color;
   const base::TimeDelta elapsed_time;
-  const VectorIcon& badge_icon;
+  const VectorIcon badge_icon;
 };
 
 GFX_EXPORT extern const VectorIcon kNoneIcon;
