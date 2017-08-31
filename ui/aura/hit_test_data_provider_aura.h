@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef UI_AURA_MUS_HIT_TEST_DATA_PROVIDER_AURA_H_
-#define UI_AURA_MUS_HIT_TEST_DATA_PROVIDER_AURA_H_
+#ifndef UI_AURA_HIT_TEST_DATA_PROVIDER_AURA_H_
+#define UI_AURA_HIT_TEST_DATA_PROVIDER_AURA_H_
 
 #include "base/macros.h"
 #include "components/viz/client/hit_test_data_provider.h"
@@ -38,4 +38,4 @@ class HitTestDataProviderAura : public viz::HitTestDataProvider {
 
 }  // namespace aura
 
-#endif  // UI_AURA_MUS_HIT_TEST_DATA_PROVIDER_AURA_H_
+#endif  // UI_AURA_HIT_TEST_DATA_PROVIDER_AURA_H_
