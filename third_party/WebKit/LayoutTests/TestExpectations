@@ -3592,3 +3592,6 @@ crbug.com/758109 [ Linux Debug ] fast/workers/worker-multi-startup.html [ Pass T
 
 # This test has a fixed number of time which can depend on performance.
 crbug.com/v8/6448 [ Debug ] external/wpt/hr-time/window-worker-time-origin.html [ Pass Failure ]
+
+# Flaky
+crbug.com/747975 [ Linux ] virtual/mojo-loading/http/tests/media/video-buffered-range-contains-currentTime.html [ Failure Pass ]
