@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eaaa3508_260ca56f",
+        "filename": "mojo/public/cpp/bindings/lib/sync_handle_registry.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-31T21:42:23Z",
+      "side": 1,
+      "message": "Correspondingly, do we need to AddEvent if the callbacks are all null and a new callback is registered?",
+      "revId": "e39cfa03682ba6ddae51ed2aefcb97f4931b3e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b6ec6b0_95790f17",
+        "filename": "mojo/public/cpp/bindings/tests/sync_handle_registry_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-31T21:42:23Z",
+      "side": 1,
+      "message": "nit: depending *on*?",
+      "revId": "e39cfa03682ba6ddae51ed2aefcb97f4931b3e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0db4e4a_1c3314ab",
+        "filename": "mojo/public/cpp/bindings/tests/sync_handle_registry_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-31T21:42:23Z",
+      "side": 1,
+      "message": "optional: it would be nice to have more test cases, for example:\n- register a second callback for event_1, while in a callback registered for event_1.\n- signal the same event while in the callback of the event.\n- destroy the event while in the callback.\n\n(These could be in sepearate CL, too.)",
+      "revId": "e39cfa03682ba6ddae51ed2aefcb97f4931b3e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
