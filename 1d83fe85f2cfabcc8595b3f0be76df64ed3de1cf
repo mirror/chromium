@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1b14eac8_9de946ab",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeSwitches.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-08-31T21:08:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51d3fefa_2eaa4f54",
+      "revId": "1d83fe85f2cfabcc8595b3f0be76df64ed3de1cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff361dde_984d7e2f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappLauncherActivity.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-31T19:37:17Z",
       "side": 1,
       "message": "Can we do here:\n\nif (ChromeVersionInfo.isLocalBuild()\n                \u0026\u0026 CommandLine.getInstance().hasSwitch(SKIP_WEBAPK_VERIFICATION)) {\n            // Tell the WebApkValidator to work for all WebApks.\n            WebApkValidator.disableValidationForTesting();\n        }",
+      "revId": "1d83fe85f2cfabcc8595b3f0be76df64ed3de1cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "897d7362_b4496678",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappLauncherActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-08-31T21:08:00Z",
+      "side": 1,
+      "message": "moved into chromewebapkhost (so it\u0027s always called)",
+      "parentUuid": "ff361dde_984d7e2f",
       "revId": "1d83fe85f2cfabcc8595b3f0be76df64ed3de1cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "1d83fe85f2cfabcc8595b3f0be76df64ed3de1cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c389b9d4_8b78ecce",
+        "filename": "chrome/android/webapk/libs/client/src/org/chromium/webapk/lib/client/WebApkValidator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-08-31T21:08:00Z",
+      "side": 1,
+      "message": "Found another similar spot which also enables it to work unbound_webapk. Basically any apk that has our starturl metadata will be considered valid. Seems like a reasonable trade-off to me.",
+      "parentUuid": "b1f79a1d_d6b6e251",
+      "revId": "1d83fe85f2cfabcc8595b3f0be76df64ed3de1cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
