@@ -14,7 +14,7 @@ FakeDisconnectTetheringRequestSender::~FakeDisconnectTetheringRequestSender() {}
 
 void FakeDisconnectTetheringRequestSender::SendDisconnectRequestToDevice(
     const std::string& device_id) {
-  // TODO(lesliewatkins): Flesh out.
+  device_ids_sent_requests_.push_back(device_id);
 }
 
 bool FakeDisconnectTetheringRequestSender::HasPendingRequests() {
