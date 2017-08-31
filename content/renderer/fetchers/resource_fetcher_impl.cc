@@ -27,10 +27,6 @@
 
 namespace {
 
-// TODO(toyoshim): Make the maximum size configurable via arguments of
-// ResourceFetcher::Start().
-constexpr size_t kMaxDownloadSize = 1024 * 1024;
-
 constexpr int32_t kRoutingId = 0;
 const char kAccessControlAllowOriginHeader[] = "Access-Control-Allow-Origin";
 
@@ -48,42 +44,24 @@ ResourceFetcher* ResourceFetcher::Create(const GURL& url) {
 // class to use SimpleURLLoader with blink-friendly types.
 class ResourceFetcherImpl::ClientImpl : public mojom::URLLoaderClient {
  public:
-  ClientImpl(ResourceFetcherImpl* parent, const Callback& callback)
+  ClientImpl(ResourceFetcherImpl* parent,
+             const Callback& callback,
+             size_t maximum_download_size)
       : parent_(parent),
         client_binding_(this),
         data_pipe_watcher_(FROM_HERE,
                            mojo::SimpleWatcher::ArmingPolicy::MANUAL),
         status_(Status::kNotStarted),
         completed_(false),
+        maximum_download_size_(maximum_download_size),
         callback_(callback) {}
 
   ~ClientImpl() override {}
 
   void Start(const ResourceRequest& request,
              mojom::URLLoaderFactory* url_loader_factory,
+             const net::NetworkTrafficAnnotationTag& annotation_tag,
              base::SingleThreadTaskRunner* task_runner) {
-    // TODO(toyoshim): NetworkTrafficAnnotationTag should be provided by each
-    // caller. content::ResourceFetcher interface will be changed to take it.
-    static const net::NetworkTrafficAnnotationTag traffic_annotation =
-        net::DefineNetworkTrafficAnnotation("content_resource_fetcher", R"(
-      semantics {
-        sender: "content ResourceFetcher"
-        description:
-          "Chrome content API initiated request, which includes network error "
-          "pages and mojo internal component downloader."
-        trigger:
-          "Showing network error pages, or needs to download mojo component."
-        data: "Anything the initiator wants."
-        destination: OTHER
-      }
-      policy {
-        cookies_allowed: YES
-        cookies_store: "user"
-        setting: "These requests cannot be disabled in settings."
-        policy_exception_justification:
-          "Not implemented. Without these requests, Chrome will not work."
-      })");
-
     status_ = Status::kStarted;
     response_.SetURL(request.url);
 
@@ -94,7 +72,7 @@ class ResourceFetcherImpl::ClientImpl : public mojom::URLLoaderClient {
         mojo::MakeRequest(&loader_), kRoutingId,
         ResourceDispatcher::MakeRequestID(), mojom::kURLLoadOptionNone, request,
         std::move(client),
-        net::MutableNetworkTrafficAnnotationTag(traffic_annotation));
+        net::MutableNetworkTrafficAnnotationTag(annotation_tag));
   }
 
   void Cancel() {
@@ -167,7 +145,7 @@ class ResourceFetcherImpl::ClientImpl : public mojom::URLLoaderClient {
       }
       DCHECK_EQ(MOJO_RESULT_OK, result);  // Only program errors can fire.
 
-      if (data_.size() + size > kMaxDownloadSize) {
+      if (data_.size() + size > maximum_download_size_) {
         data_pipe_->EndReadData(size);
         Cancel();
         return;
@@ -256,6 +234,9 @@ class ResourceFetcherImpl::ClientImpl : public mojom::URLLoaderClient {
   // ready even after OnComplete() is called.
   bool completed_;
 
+  // Maximum download size to be stored in |data_|.
+  const size_t maximum_download_size_;
+
   // Received data to be passed to the |callback_|.
   std::string data_;
 
@@ -305,8 +286,46 @@ void ResourceFetcherImpl::Start(
     blink::WebLocalFrame* frame,
     blink::WebURLRequest::RequestContext request_context,
     const Callback& callback) {
+  static const net::NetworkTrafficAnnotationTag annotation_tag =
+      net::DefineNetworkTrafficAnnotation("content_resource_fetcher", R"(
+    semantics {
+      sender: "content ResourceFetcher"
+      description:
+        "Chrome content API initiated request, which includes network error "
+        "pages and mojo internal component downloader."
+      trigger:
+        "Showing network error pages, or needs to download mojo component."
+      data: "Anything the initiator wants."
+      destination: OTHER
+    }
+    policy {
+      cookies_allowed: YES
+      cookies_store: "user"
+      setting: "These requests cannot be disabled in settings."
+      policy_exception_justification:
+        "Not implemented. Without these requests, Chrome will not work."
+    })");
+
+  mojom::URLLoaderFactory* url_loader_factory =
+      RenderFrame::FromWebFrame(frame)
+          ->GetDefaultURLLoaderFactoryGetter()
+          ->GetNetworkLoaderFactory();
+  DCHECK(url_loader_factory);
+
+  Start(frame, request_context, url_loader_factory, annotation_tag, callback,
+        kDefaultMaximumDownloadSize);
+}
+
+void ResourceFetcherImpl::Start(
+    blink::WebLocalFrame* frame,
+    blink::WebURLRequest::RequestContext request_context,
+    mojom::URLLoaderFactory* url_loader_factory,
+    const net::NetworkTrafficAnnotationTag& annotation_tag,
+    const Callback& callback,
+    size_t maximum_download_size) {
   DCHECK(!client_);
   DCHECK(frame);
+  DCHECK(url_loader_factory);
   DCHECK(!frame->GetDocument().IsNull());
   if (request_.method.empty())
     request_.method = net::HttpRequestHeaders::kGetMethod;
@@ -329,7 +348,10 @@ void ResourceFetcherImpl::Start(
 
   request_.resource_type = WebURLRequestContextToResourceType(request_context);
 
-  client_.reset(new ClientImpl(this, callback));
+  // Existing caller uses kRequestContextScript or kRequestContextInternal.
+  // We may want to use RESOURCE_TYPE_SCRIPT for kRequestContextScript, but
+  // kRequestContextInternal would be fine.
+  request_.resource_type = RESOURCE_TYPE_SUB_RESOURCE;
 
   // TODO(toyoshim): mojom::URLLoaderFactory should be given by each caller.
   mojom::URLLoaderFactory* url_loader_factory =
