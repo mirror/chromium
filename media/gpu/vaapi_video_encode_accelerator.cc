@@ -320,7 +320,7 @@ void VaapiVideoEncodeAccelerator::EndFrame() {
   while (ref_pic_list0_.size() > max_num_ref_frames)
     ref_pic_list0_.pop_back();
 
-  submitted_encode_jobs_.push(make_linked_ptr(current_encode_job_.release()));
+  submitted_encode_jobs_.push(std::move(current_encode_job_.release()));
 }
 
 static void InitVAPicture(VAPictureH264* va_pic) {
@@ -538,12 +538,13 @@ void VaapiVideoEncodeAccelerator::TryToReturnBitstreamBuffer() {
   if (submitted_encode_jobs_.empty() || available_bitstream_buffers_.empty())
     return;
 
-  linked_ptr<BitstreamBufferRef> buffer = available_bitstream_buffers_.front();
+  std::unique_ptr<BitstreamBufferRef> buffer(
+      std::move(available_bitstream_buffers_.front()));
   available_bitstream_buffers_.pop();
 
   uint8_t* target_data = reinterpret_cast<uint8_t*>(buffer->shm->memory());
 
-  linked_ptr<EncodeJob> encode_job = submitted_encode_jobs_.front();
+  std::unique_ptr<EncodeJob> encode_job (std::move(submitted_encode_jobs_.front());
   submitted_encode_jobs_.pop();
 
   size_t data_size = 0;
@@ -615,7 +616,7 @@ void VaapiVideoEncodeAccelerator::EncodeTask(
   DCHECK_NE(state_, kUninitialized);
 
   encoder_input_queue_.push(
-      make_linked_ptr(new InputFrameRef(frame, force_keyframe)));
+      base::MakeUnique(new InputFrameRef(frame, force_keyframe)));
   EncodeFrameTask();
 }
 
@@ -630,7 +631,7 @@ void VaapiVideoEncodeAccelerator::EncodeFrameTask() {
     return;
   }
 
-  linked_ptr<InputFrameRef> frame_ref = encoder_input_queue_.front();
+  std::unique_ptr<InputFrameRef> frame_ref (std::move(encoder_input_queue_.front());
   encoder_input_queue_.pop();
 
   if (!UploadFrame(frame_ref->frame)) {
@@ -691,7 +692,7 @@ void VaapiVideoEncodeAccelerator::UseOutputBitstreamBufferTask(
   DCHECK(encoder_thread_task_runner_->BelongsToCurrentThread());
   DCHECK_NE(state_, kUninitialized);
 
-  available_bitstream_buffers_.push(make_linked_ptr(buffer_ref.release()));
+  available_bitstream_buffers_.push(std::move(buffer_ref.release()));
   TryToReturnBitstreamBuffer();
 }
 

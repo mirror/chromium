@@ -480,7 +480,7 @@ void VaapiVideoDecodeAccelerator::QueueInputBuffer(
   if (bitstream_buffer.size() == 0) {
     // Dummy buffer for flush.
     DCHECK(!base::SharedMemory::IsHandleValid(bitstream_buffer.handle()));
-    input_buffers_.push(make_linked_ptr(new InputBuffer()));
+    input_buffers_.push(new InputBuffer());
   } else {
     std::unique_ptr<SharedMemoryRegion> shm(
         new SharedMemoryRegion(bitstream_buffer, true));
@@ -488,10 +488,10 @@ void VaapiVideoDecodeAccelerator::QueueInputBuffer(
     RETURN_AND_NOTIFY_ON_FAILURE(shm->Map(), "Failed to map input buffer",
                                  UNREADABLE_INPUT, );
 
-    linked_ptr<InputBuffer> input_buffer(new InputBuffer());
+    std::unique_ptr<InputBuffer> input_buffer(new InputBuffer());
     input_buffer->shm = std::move(shm);
     input_buffer->id = bitstream_buffer.id();
-    input_buffers_.push(input_buffer);
+    input_buffers_.push(std::move(input_buffer));
     ++num_stream_bufs_at_decoder_;
     TRACE_COUNTER1("Video Decoder", "Stream buffers at decoder",
                    num_stream_bufs_at_decoder_);
@@ -545,7 +545,7 @@ bool VaapiVideoDecodeAccelerator::GetInputBuffer_Locked() {
     case kIdle:
       DCHECK(!input_buffers_.empty());
 
-      curr_input_buffer_ = input_buffers_.front();
+      curr_input_buffer_ = std::move(input_buffers_.front());
       input_buffers_.pop();
 
       if (curr_input_buffer_->is_flush()) {
@@ -822,7 +822,7 @@ void VaapiVideoDecodeAccelerator::AssignPictureBuffers(
                               ? buffers[i].service_texture_ids()[0]
                               : 0;
 
-    linked_ptr<VaapiPicture> picture(VaapiPicture::CreatePicture(
+    std::unique_ptr<VaapiPicture> picture(VaapiPicture::CreatePicture(
         vaapi_wrapper_, make_context_current_cb_, bind_image_cb_,
         buffers[i].id(), requested_pic_size_, service_id, client_id));
     RETURN_AND_NOTIFY_ON_FAILURE(
@@ -1018,7 +1018,7 @@ void VaapiVideoDecodeAccelerator::Reset() {
 
   // Drop all remaining input buffers, if present.
   while (!input_buffers_.empty()) {
-    const auto& input_buffer = input_buffers_.front();
+    const auto& input_buffer = std::move(input_buffers_.front());
     if (!input_buffer->is_flush()) {
       task_runner_->PostTask(
           FROM_HERE, base::Bind(&Client::NotifyEndOfBitstreamBuffer, client_,
