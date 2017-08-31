@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ade93c20_88ab8c6f",
+        "filename": "ios/chrome/browser/ui/ntp/google_landing_mediator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-08-31T01:15:43Z",
+      "side": 1,
+      "message": "Is this the recommended way to use dispatcher\u0027s now?  Why performSelector?",
+      "revId": "3b26535454e94599e20b9724d0b34a81f4f9454f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
