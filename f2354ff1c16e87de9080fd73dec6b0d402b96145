@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c1f4a649_2c87d389",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_coordinator.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-31T20:08:29Z",
+      "side": 1,
+      "message": "As we discussed offline, a bug to consolidate the code makes sense.",
+      "parentUuid": "586e291f_03c9e909",
+      "revId": "f2354ff1c16e87de9080fd73dec6b0d402b96145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6f38da5_33eab06f",
         "filename": "ios/chrome/browser/ui/ntp/notification_promo_whats_new.h",
         "patchSetId": 7
