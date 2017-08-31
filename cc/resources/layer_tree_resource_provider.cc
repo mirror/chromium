@@ -142,18 +142,6 @@ void LayerTreeResourceProvider::ReceiveReturnsFromParent(
     if (resource->exported_count)
       continue;
 
-    if (returned.sync_token.HasData()) {
-      DCHECK(!resource->has_shared_bitmap_id);
-      if (resource->origin == Resource::INTERNAL) {
-        DCHECK(resource->gl_id);
-        gl->WaitSyncTokenCHROMIUM(returned.sync_token.GetConstData());
-        resource->SetSynchronized();
-      } else {
-        DCHECK(!resource->gl_id);
-        resource->UpdateSyncToken(returned.sync_token);
-      }
-    }
-
     if (!resource->marked_for_deletion)
       continue;
 
