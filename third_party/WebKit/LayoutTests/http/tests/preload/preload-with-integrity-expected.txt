@@ -1,0 +1,4 @@
+CONSOLE MESSAGE: line 7: preload-with-integrity.js loaded.
+Regression test for 677022.
+
+The test is successful if it completes without console warnings about unused preloads.
