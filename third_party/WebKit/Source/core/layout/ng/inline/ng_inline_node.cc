@@ -42,9 +42,9 @@ namespace blink {
 namespace {
 
 struct FragmentPosition {
+  RefPtr<const NGPhysicalFragment> fragment;
   NGLogicalOffset offset;
   LayoutUnit inline_size;
-  NGTextEndEffect end_effect;
   NGBorderEdges border_edges;
 
   void operator+=(const NGBoxStrut& strut) {
@@ -93,9 +93,9 @@ void CreateBidiRuns(BidiRunList<BidiRun>* bidi_runs,
       // Store text fragments in a vector in the same order as BidiRunList.
       // One LayoutText may produce multiple text fragments that they can't
       // be set to a map.
-      positions_for_bidi_runs_out->push_back(FragmentPosition{
-          fragment.Offset() + parent_offset, fragment.InlineSize(),
-          physical_fragment->EndEffect()});
+      positions_for_bidi_runs_out->push_back(
+          FragmentPosition{physical_fragment, fragment.Offset() + parent_offset,
+                           fragment.InlineSize()});
     } else {
       DCHECK_EQ(child->Type(), NGPhysicalFragment::kFragmentBox);
       NGPhysicalBoxFragment* physical_fragment =
@@ -115,8 +115,8 @@ void CreateBidiRuns(BidiRunList<BidiRun>* bidi_runs,
       // Store box fragments in a map by LineLayoutItem.
       positions_out->Set(
           LineLayoutItem(child->GetLayoutObject()),
-          FragmentPosition{child_offset, fragment.InlineSize(),
-                           NGTextEndEffect::kNone, fragment.BorderEdges()});
+          FragmentPosition{physical_fragment, child_offset,
+                           fragment.InlineSize(), fragment.BorderEdges()});
     }
   }
 }
@@ -157,7 +157,9 @@ unsigned PlaceInlineBoxChildren(
       inline_box->SetLogicalWidth(position.inline_size);
       if (inline_box->IsInlineTextBox()) {
         InlineTextBox* text_box = ToInlineTextBox(inline_box);
-        text_box->SetHasHyphen(position.end_effect == NGTextEndEffect::kHyphen);
+        const auto* physical_fragment = ToNGPhysicalTextFragment(position.fragment.Get());
+        text_box->SetExpansion(physical_fragment->Expansion());
+        text_box->SetHasHyphen(physical_fragment->EndEffect() == NGTextEndEffect::kHyphen);
       } else if (inline_box->GetLineLayoutItem().IsBox()) {
         LineLayoutBox box(inline_box->GetLineLayoutItem());
         box.SetLocation(inline_box->Location());

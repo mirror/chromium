@@ -54,6 +54,10 @@ struct CORE_EXPORT NGInlineItemResult {
   LayoutUnit borders_paddings_block_start;
   LayoutUnit borders_paddings_block_end;
 
+  // The amount of expansion for justification.
+  // Only for CopyFragmentDataToLayoutBox(), remove when switch to NG paint.
+  int expansion = 0;
+
   // Create a box when the box is empty, for open/close tags.
   bool needs_box_when_empty = false;
 
@@ -130,6 +134,11 @@ class CORE_EXPORT NGLineInfo {
                        LayoutUnit available_width,
                        LayoutUnit line_top);
 
+  unsigned StartOffset() const { return start_offset_; }
+  unsigned EndOffset() const { return end_offset_; }
+  void SetStartOffset(unsigned offset) { start_offset_ = offset; }
+  void SetEndOffset(unsigned offset) { end_offset_ = offset; }
+
  private:
   const ComputedStyle* line_style_ = nullptr;
   NGInlineItemResults results_;
@@ -138,6 +147,9 @@ class CORE_EXPORT NGLineInfo {
   LayoutUnit available_width_;
   LayoutUnit line_top_;
   LayoutUnit text_indent_;
+
+  unsigned start_offset_;
+  unsigned end_offset_;
 
   bool use_first_line_style_ = false;
   bool is_last_line_ = false;
