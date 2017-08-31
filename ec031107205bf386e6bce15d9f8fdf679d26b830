@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23c765da_982a446e",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-31T00:45:02Z",
+      "side": 1,
+      "message": "Optional nit: can you put this next to VisibleContentRect on line 279? I think that\u0027ll help folks from using the wrong one.",
+      "revId": "ec031107205bf386e6bce15d9f8fdf679d26b830",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
