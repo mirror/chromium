@@ -153,6 +153,7 @@ View::View()
 }
 
 View::~View() {
+  DLOG(INFO) << "DEestroy: " << this;
   if (parent_)
     parent_->RemoveChildView(this);
 

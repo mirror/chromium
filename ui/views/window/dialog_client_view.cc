@@ -330,6 +330,7 @@ void DialogClientView::SetupLayout() {
   layout->set_minimum_size(minimum_size_);
   FocusManager* focus_manager = GetFocusManager();
   ViewTracker view_tracker(focus_manager->GetFocusedView());
+  DLOG(INFO) << &view_tracker << " Track " << view_tracker.view();
 
   // Clobber any existing LayoutManager since it has weak references to child
   // Views which may be removed by SetupViews().
@@ -416,6 +417,7 @@ void DialogClientView::SetupLayout() {
       Contains(previously_focused_view)) {
     previously_focused_view->RequestFocus();
   }
+  DLOG(INFO) << "UnTrack " << view_tracker.view();
 }
 
 void DialogClientView::SetupViews() {

@@ -13,10 +13,12 @@ ViewTracker::ViewTracker(View* view) : view_(view) {
 }
 
 ViewTracker::~ViewTracker() {
+  DLOG(INFO) << "Zappity";
   SetView(nullptr);
 }
 
 void ViewTracker::SetView(View* view) {
+  DLOG(INFO) << this << " SetView " << view_ << " --> " << view;
   if (view == view_)
     return;
 
@@ -28,6 +30,7 @@ void ViewTracker::SetView(View* view) {
 }
 
 void ViewTracker::OnViewIsDeleting(View* observed_view) {
+  DLOG(INFO) << "Deleting: " << observed_view;
   SetView(nullptr);
 }
 
