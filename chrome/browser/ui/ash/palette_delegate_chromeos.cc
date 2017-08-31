@@ -37,6 +37,10 @@ class VoiceInteractionSelectionObserver
       : profile_(profile) {}
   ~VoiceInteractionSelectionObserver() override = default;
 
+  void set_on_selection_done(const base::Closure& done) {
+    on_selection_done_ = done;
+  }
+
  private:
   void HandleSelection(const gfx::Rect& rect) override {
     // Delay the actual voice interaction service invocation for better
@@ -48,6 +52,9 @@ class VoiceInteractionSelectionObserver
                    base::Unretained(this), rect),
         false /* not repeating */);
     delay_timer_->Reset();
+
+    DCHECK(on_selection_done_);
+    base::ResetAndReturn(&on_selection_done_).Run();
   }
 
   void ReportSelection(const gfx::Rect& rect) {
@@ -62,6 +69,7 @@ class VoiceInteractionSelectionObserver
   Profile* const profile_;  // Owned by ProfileManager.
 
   std::unique_ptr<base::Timer> delay_timer_;
+  base::Closure on_selection_done_;
 
   DISALLOW_COPY_AND_ASSIGN(VoiceInteractionSelectionObserver);
 };
@@ -200,7 +208,7 @@ void PaletteDelegateChromeOS::CancelPartialScreenshot() {
   ash::Shell::Get()->screenshot_controller()->CancelScreenshotSession();
 }
 
-void PaletteDelegateChromeOS::ShowMetalayer() {
+void PaletteDelegateChromeOS::ShowMetalayer(const base::Closure& done) {
   auto* service =
       arc::ArcVoiceInteractionFrameworkService::GetForBrowserContext(profile_);
   if (!service)
@@ -213,6 +221,7 @@ void PaletteDelegateChromeOS::ShowMetalayer() {
     ash::Shell::Get()->highlighter_controller()->SetObserver(
         highlighter_selection_observer_.get());
   }
+  highlighter_selection_observer_->set_on_selection_done(done);
   ash::Shell::Get()->highlighter_controller()->SetEnabled(true);
 }
 

@@ -29,8 +29,7 @@ bool HighlighterControllerTestApi::IsShowingHighlighter() const {
 }
 
 bool HighlighterControllerTestApi::IsFadingAway() const {
-  return IsShowingHighlighter() &&
-         instance_->highlighter_view_->animation_timer_.get();
+  return IsShowingHighlighter() && instance_->highlighter_view_->animating();
 }
 
 bool HighlighterControllerTestApi::IsShowingSelectionResult() const {
