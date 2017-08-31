@@ -17,5 +17,6 @@
   "web_manifest_url": "https://pwa.rocks/pwa.webmanifest",
   "version_code": "1",
   "version_name": "1.0",
-  "bound_webapk": false
+  "bound_webapk": false,
+  "share_template": "share?text={text}"
 }

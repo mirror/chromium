@@ -61,6 +61,13 @@ public class MainActivity extends Activity {
     private String mStartUrl;
 
     /**
+     * The "Launch Source" to be supplied to the host browser specifying the reason for launching
+     * the WebApk. Corresponds to chromium launch reasons in chrome/browser/android/shortcut_info.h.
+     *
+     */
+    private int mSource;
+
+    /**
      * Creates install Intent.
      * @param packageName Package to install.
      * @return The intent.
@@ -82,7 +89,19 @@ public class MainActivity extends Activity {
             return;
         }
 
-        mOverrideUrl = getOverrideUrl();
+        if (Intent.ACTION_SEND.equals(getIntent().getAction())) {
+            String shareTemplate = metadata.getString(WebApkMetaDataKeys.SHARE_TEMPLATE);
+            String sharedText = getIntent().getStringExtra(Intent.EXTRA_TEXT);
+            if (sharedText == null) {
+                finish();
+                return;
+            }
+            mOverrideUrl = shareTemplate.replaceAll("\\{text\\}", sharedText);
+            mSource = WebApkConstants.SHORTCUT_SOURCE_SHARE;
+        } else {
+            mOverrideUrl = getOverrideUrl();
+            mSource = getIntent().getIntExtra(WebApkConstants.EXTRA_SOURCE, 0);
+        }
         mStartUrl = (mOverrideUrl != null) ? mOverrideUrl
                                            : metadata.getString(WebApkMetaDataKeys.START_URL);
         if (mStartUrl == null) {
@@ -153,10 +172,9 @@ public class MainActivity extends Activity {
 
     private void launchInHostBrowser(String runtimeHost) {
         boolean forceNavigation = false;
-        int source = getIntent().getIntExtra(WebApkConstants.EXTRA_SOURCE, 0);
         if (mOverrideUrl != null) {
-            if (source == WebApkConstants.SHORTCUT_SOURCE_UNKNOWN) {
-                source = WebApkConstants.SHORTCUT_SOURCE_EXTERNAL_INTENT;
+            if (mSource == WebApkConstants.SHORTCUT_SOURCE_UNKNOWN) {
+                mSource = WebApkConstants.SHORTCUT_SOURCE_EXTERNAL_INTENT;
             }
             forceNavigation =
                     getIntent().getBooleanExtra(WebApkConstants.EXTRA_FORCE_NAVIGATION, true);
@@ -168,7 +186,7 @@ public class MainActivity extends Activity {
         intent.setAction(ACTION_START_WEBAPK);
         intent.setPackage(runtimeHost);
         intent.putExtra(WebApkConstants.EXTRA_URL, mStartUrl)
-                .putExtra(WebApkConstants.EXTRA_SOURCE, source)
+                .putExtra(WebApkConstants.EXTRA_SOURCE, mSource)
                 .putExtra(WebApkConstants.EXTRA_WEBAPK_PACKAGE_NAME, getPackageName())
                 .putExtra(WebApkConstants.EXTRA_FORCE_NAVIGATION, forceNavigation);
 
