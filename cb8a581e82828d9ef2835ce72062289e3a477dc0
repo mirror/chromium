@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "36094f1b_87a6a50e",
+        "filename": "ui/views/bubble/tray_bubble_view.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-08-31T23:34:21Z",
+      "side": 1,
+      "message": "Only accelerators listed here can work while tray is open.\n\nWhat accelerators do you expect to work? Currently, TrayBubbleView doesn\u0027t have its own accelerator. The problem is that widget can capture too much event. I think this may be because usually Widget::OnKeyEvent is called after global accelerators are processed (please correct me if it\u0027s not the case).\n\nWe may be able to pass key events to global accelerators first. But the reason I made this to pass key event to the widget first is to make this consistent with the menu as much as possible.",
+      "parentUuid": "8a292e94_27f76e48",
+      "range": {
+        "startLine": 160,
+        "startChar": 5,
+        "endLine": 161,
+        "endChar": 77
+      },
+      "revId": "cb8a581e82828d9ef2835ce72062289e3a477dc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8dadd2bb_bcba72a5",
         "filename": "ui/views/bubble/tray_bubble_view.cc",
         "patchSetId": 28
