@@ -65,6 +65,7 @@ UsbChooserDialogAndroid::UsbChooserDialogAndroid(
   if (vr::VrTabHelper::IsInVr(web_contents)) {
     DCHECK(!callback_.is_null());
     std::move(callback_).Run(nullptr);
+    vr::VrTabHelper::UISuppressed(vr::UiSuppressedElement::kUsbChooser);
     return;
   }
 

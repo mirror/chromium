@@ -185,6 +185,8 @@ void ShowSSLClientCertificateSelector(
     std::unique_ptr<content::ClientCertificateDelegate> delegate) {
   if (vr::VrTabHelper::IsInVr(contents)) {
     delegate->ContinueWithCertificate(nullptr, nullptr);
+    vr::VrTabHelper::UISuppressed(
+        vr::UiSuppressedElement::kSslClientCertificate);
     return;
   }
 
