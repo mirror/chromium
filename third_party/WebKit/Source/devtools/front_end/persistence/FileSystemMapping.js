@@ -28,9 +28,6 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/**
- * @unrestricted
- */
 Persistence.FileSystemMapping = class extends Common.Object {
   /**
    * @param {!Persistence.IsolatedFileSystemManager} fileSystemManager
@@ -38,6 +35,11 @@ Persistence.FileSystemMapping = class extends Common.Object {
   constructor(fileSystemManager) {
     super();
     this._fileSystemMappingSetting = Common.settings.createLocalSetting('fileSystemMapping', {});
+    /** @type {!Object<string, !Persistence.FileSystemMapping.Entry>} */
+    this._mappingForURLPrefix = {};
+    /** @type {!Array<string>} */
+    this._urlPrefixes = [];
+
     /** @type {!Object.<string, !Array.<!Persistence.FileSystemMapping.Entry>>} */
     this._fileSystemMappings = {};
     this._loadFromSettings();
@@ -56,7 +58,7 @@ Persistence.FileSystemMapping = class extends Common.Object {
    */
   _fileSystemsLoaded(fileSystems) {
     for (var fileSystem of fileSystems)
-      this.addFileSystem(fileSystem.path());
+      this._addFileSystem(fileSystem);
   }
 
   /**
@@ -64,7 +66,7 @@ Persistence.FileSystemMapping = class extends Common.Object {
    */
   _fileSystemAdded(event) {
     var fileSystem = /** @type {!Persistence.IsolatedFileSystem} */ (event.data);
-    this.addFileSystem(fileSystem.path());
+    this._addFileSystem(fileSystem);
   }
 
   /**
@@ -72,7 +74,7 @@ Persistence.FileSystemMapping = class extends Common.Object {
    */
   _fileSystemRemoved(event) {
     var fileSystem = /** @type {!Persistence.IsolatedFileSystem} */ (event.data);
-    this.removeFileSystem(fileSystem.path());
+    this._removeFileSystem(fileSystem);
   }
 
   _loadFromSettings() {
@@ -109,23 +111,18 @@ Persistence.FileSystemMapping = class extends Common.Object {
   _rebuildIndexes() {
     // We are building an index here to search for the longest url prefix match faster.
     this._mappingForURLPrefix = {};
-    this._urlPrefixes = [];
-    for (var fileSystemPath in this._fileSystemMappings) {
-      var fileSystemMapping = this._fileSystemMappings[fileSystemPath];
-      for (var i = 0; i < fileSystemMapping.length; ++i) {
-        var entry = fileSystemMapping[i];
+    for (var fileSystemMapping of Object.values(this._fileSystemMappings)) {
+      for (var entry of fileSystemMapping)
         this._mappingForURLPrefix[entry.urlPrefix] = entry;
-        if (this._urlPrefixes.indexOf(entry.urlPrefix) === -1)
-          this._urlPrefixes.push(entry.urlPrefix);
-      }
     }
-    this._urlPrefixes.sort();
+    this._urlPrefixes = Object.keys(this._mappingForURLPrefix).sort();
   }
 
   /**
-   * @param {string} fileSystemPath
+   * @param {!Persistence.IsolatedFileSystem} fileSystem
    */
-  addFileSystem(fileSystemPath) {
+  _addFileSystem(fileSystem) {
+    var fileSystemPath = fileSystem.path();
     if (this._fileSystemMappings[fileSystemPath])
       return;
 
@@ -134,9 +131,10 @@ Persistence.FileSystemMapping = class extends Common.Object {
   }
 
   /**
-   * @param {string} fileSystemPath
+   * @param {!Persistence.IsolatedFileSystem} fileSystem
    */
-  removeFileSystem(fileSystemPath) {
+  _removeFileSystem(fileSystem) {
+    var fileSystemPath = fileSystem.path();
     if (!this._fileSystemMappings[fileSystemPath])
       return;
     delete this._fileSystemMappings[fileSystemPath];
@@ -330,9 +328,6 @@ Persistence.FileSystemMapping.Events = {
   FileMappingRemoved: Symbol('FileMappingRemoved')
 };
 
-/**
- * @unrestricted
- */
 Persistence.FileSystemMapping.Entry = class {
   /**
    * @param {string} fileSystemPath
@@ -340,8 +335,11 @@ Persistence.FileSystemMapping.Entry = class {
    * @param {string} pathPrefix
    */
   constructor(fileSystemPath, urlPrefix, pathPrefix) {
+    /** @const */
     this.fileSystemPath = fileSystemPath;
+    /** @const */
     this.urlPrefix = urlPrefix;
+    /** @const */
     this.pathPrefix = pathPrefix;
   }
 };
