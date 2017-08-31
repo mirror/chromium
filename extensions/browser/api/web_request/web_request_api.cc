@@ -983,6 +983,7 @@ void ExtensionWebRequestEventRouter::OnCompleted(
       CreateEventDetails(request, extra_info_spec));
   event_details->SetResponseHeaders(request, request->response_headers());
   event_details->SetResponseSource(request);
+  event_details->SetTLSInfo(request);
 
   DispatchEvent(browser_context, request, listeners, navigation_ui_data,
                 std::move(event_details));
@@ -1054,6 +1055,7 @@ void ExtensionWebRequestEventRouter::OnErrorOccurred(
   else
     event_details->SetBoolean(keys::kFromCache, request->was_cached());
   event_details->SetString(keys::kErrorKey, net::ErrorToString(net_error));
+  event_details->SetTLSInfo(request);
 
   DispatchEvent(browser_context, request, listeners, navigation_ui_data,
                 std::move(event_details));

@@ -56,7 +56,17 @@
       {
         "id": "OnCompletedOptions",
         "type": "string",
-        "enum": ["responseHeaders"]
+          "enum": ["responseHeaders", "tlsInfo"]
+      },
+      {
+        "id": "OnErrorOccurredOptions",
+        "type": "string",
+        "enum": ["tlsInfo"]
+      },
+      {
+        "id": "SecureProtocols",
+        "type": "string",
+        "enum": ["TLS", "QUIC"]
       },
       {
         "id": "RequestFilter",
@@ -150,6 +160,47 @@
           }
         },
         "description": "Contains data uploaded in a URL request."
+      },
+      {
+        "id": "TLSInfo",
+        "type": "object",
+        "properties": {
+          "builtChain": {
+            "type": "array",
+            "items": { "type": "any" },
+            "description": "An array of ArrayBuffers with a copy of the DER encoded certificates in the chain built by the validation engine."
+          },
+          "sentChain": {
+            "type": "array",
+            "items": { "type": "any" },
+            "optional": true,
+            "description": "An array of ArrayBuffers with a copy of the DER encoded certificates in the chain sent by the web server."
+          },
+          "chainValid": {
+            "type": "boolean",
+            "description": "A boolean indicating the validity of the chain that was built."
+          },
+          "protocol": {
+            "$ref": "SecureProtocols",
+            "description": "A string containing the protocol that was used."
+          },
+          "cipherSuite": {
+            "type": "integer",
+            "optional": true,
+            "description": "A integer containing the IANA Cipher Suite ID."
+          },
+          "tlsVersion": {
+            "type": "string",
+            "optional": true,
+            "description": "A string containing the TLS version that was used."
+          },
+          "keyExchangeGroup": {
+            "type": "string",
+            "optional": true,
+            "description": "A string containing the name of the group used in the key exchange method."
+          }
+        },
+        "description": "Contains information about the TLS/SSL connection used in a request."
       }
     ],
     "functions": [
@@ -527,7 +578,8 @@
               "fromCache": {"type": "boolean", "description": "Indicates if this response was fetched from disk cache."},
               "statusCode": {"type": "integer", "description": "Standard HTTP status code returned by the server."},
               "responseHeaders": {"$ref": "HttpHeaders", "optional": true, "description": "The HTTP response headers that were received along with this response."},
-              "statusLine": {"type": "string", "description": "HTTP status line of the response or the 'HTTP/0.9 200 OK' string for HTTP/0.9 responses (i.e., responses that lack a status line) or an empty string if there are no headers."}
+              "statusLine": {"type": "string", "description": "HTTP status line of the response or the 'HTTP/0.9 200 OK' string for HTTP/0.9 responses (i.e., responses that lack a status line) or an empty string if there are no headers."},
+              "tlsInfo": {"$ref": "TLSInfo", "optional": true, "description": "Information about the TLS connection used for the underlying connection. Only provided if <code>tlsInfo<code> is specified in the <code>extraInfoSpec</code> parameter."}
             }
           }
         ],
@@ -567,7 +619,8 @@
               "timeStamp": {"type": "number", "description": "The time when this signal is triggered, in milliseconds since the epoch."},
               "ip": {"type": "string", "optional": true, "description": "The server IP address that the request was actually sent to. Note that it may be a literal IPv6 address."},
               "fromCache": {"type": "boolean", "description": "Indicates if this response was fetched from disk cache."},
-              "error": {"type": "string", "description": "The error description. This string is <em>not</em> guaranteed to remain backwards compatible between releases. You must not parse and act based upon its content."}
+              "error": {"type": "string", "description": "The error description. This string is <em>not</em> guaranteed to remain backwards compatible between releases. You must not parse and act based upon its content."},
+              "tlsInfo": {"$ref": "TLSInfo", "optional": true, "description": "Information about the TLS connection used for the underlying connection. Only provided if <code>tlsInfo<code> is specified in the <code>extraInfoSpec</code> parameter."}
             }
           }
         ],
@@ -576,6 +629,15 @@
             "$ref": "RequestFilter",
             "name": "filter",
             "description": "A set of filters that restricts the events that will be sent to this listener."
+          },
+          {
+            "type": "array",
+            "optional": true,
+            "name": "extraInfoSpec",
+            "description": "Array of extra information that should be passed to the listener function.",
+            "items": {
+              "$ref": "OnErrorOccurredOptions"
+            }
           }
         ]
       }
