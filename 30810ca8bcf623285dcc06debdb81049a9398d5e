@@ -34,6 +34,24 @@
       "revId": "30810ca8bcf623285dcc06debdb81049a9398d5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5f524a30_0fed97a2",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/document-metadata/the-style-element/style_type_change.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-31T13:00:08Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cb5ca0a0_611cb8b4",
+      "revId": "30810ca8bcf623285dcc06debdb81049a9398d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
