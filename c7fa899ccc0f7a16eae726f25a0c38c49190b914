@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "da3a89b5_c420375a",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/ImeAdapter.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 916,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-31T23:38:12Z",
+      "side": 1,
+      "message": "Will fix the typo in FLAG_AUTO_CCORRECTION",
+      "revId": "c7fa899ccc0f7a16eae726f25a0c38c49190b914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e88572bc_dff75f37",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/ImeAdapter.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 924,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-31T23:38:12Z",
+      "side": 1,
+      "message": "This should actually be a continue, not return",
+      "revId": "c7fa899ccc0f7a16eae726f25a0c38c49190b914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f3fbe494_97d6ead0",
         "filename": "third_party/WebKit/Source/core/editing/suggestion/TextSuggestionController.cpp",
         "patchSetId": 12
@@ -13,6 +47,24 @@
       "writtenOn": "2017-08-31T21:57:54Z",
       "side": 1,
       "message": "It seems better to:\n1. Move all the \"sort-by-length\" logic to ComputeSuggestionInfos()\n2. Make ComputeSuggestionInfos() also return the text node\n\nThe reasons are:\n\n- Sorting the suggestion markers my length seems to a low-level detail in ComputeSuggestionInfos. The remaining part doesn\u0027t care about that.\n\n- The choosing of text_node doesn\u0027t seem to have any hard requirement, and it also seems to be a detail in ComputeSuggestionInfos. We don\u0027t want the logic to be replicated, in case of introducing any inconsistency.",
+      "revId": "c7fa899ccc0f7a16eae726f25a0c38c49190b914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb0c7d70_088d2fe0",
+        "filename": "third_party/WebKit/Source/core/editing/suggestion/TextSuggestionController.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-31T23:38:12Z",
+      "side": 1,
+      "message": "Note: if we do this, we also need to return the first suggestion marker",
+      "parentUuid": "f3fbe494_97d6ead0",
       "revId": "c7fa899ccc0f7a16eae726f25a0c38c49190b914",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
