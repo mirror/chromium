@@ -10,6 +10,8 @@
 #include "chrome/browser/ui/app_list/arc/arc_app_icon_loader.h"
 #include "chrome/browser/ui/app_list/arc/arc_app_utils.h"
 #include "chrome/browser/ui/app_list/search/search_util.h"
+#include "ui/display/display.h"
+#include "ui/display/screen.h"
 
 namespace {
 const char kArcAppPrefix[] = "arc://";
@@ -46,7 +48,11 @@ void ArcAppResult::ExecuteLaunchCommand(int event_flags) {
 void ArcAppResult::Open(int event_flags) {
   RecordHistogram(APP_SEARCH_RESULT);
 
-  if (!arc::LaunchApp(profile(), app_id(), event_flags))
+  int64_t display_id =
+      display::Screen::GetScreen()
+          ->GetDisplayNearestWindow(controller()->GetAppListWindow())
+          .id();
+  if (!arc::LaunchApp(profile(), app_id(), event_flags, display_id))
     return;
 
   // Manually close app_list view because focus is not changed on ARC app start,
