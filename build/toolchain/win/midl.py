@@ -14,9 +14,6 @@ def main(arch, outdir, tlb, h, dlldata, iid, proxy, idl, *flags):
   env_pairs = open(arch).read()[:-2].split('\0')
   env_dict = dict([item.split('=', 1) for item in env_pairs])
 
-  #"""Filter noisy filenames output from MIDL compile step that isn't
-  #quietable via command line flags.
-  #"""
   args = ['midl', '/nologo'] + list(flags) + [
       '/out', outdir,
       '/tlb', tlb,
