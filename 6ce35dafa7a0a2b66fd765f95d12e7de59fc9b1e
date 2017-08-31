@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c3071ec_36d306fc",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-31T00:53:01Z",
+      "side": 1,
+      "message": "I\u0027d be fine making these static to avoid the heap alloc below.\n\nWe effectively never call the constructor for this class as is.",
+      "range": {
+        "startLine": 119,
+        "startChar": 2,
+        "endLine": 123,
+        "endChar": 78
+      },
+      "revId": "6ce35dafa7a0a2b66fd765f95d12e7de59fc9b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f22b93f_4dc8ab95",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-31T00:53:01Z",
+      "side": 1,
+      "message": "It is customary in COM to set *[outval] \u003d nullptr at the beginning of the function.",
+      "range": {
+        "startLine": 189,
+        "startChar": 47,
+        "endLine": 189,
+        "endChar": 65
+      },
+      "revId": "6ce35dafa7a0a2b66fd765f95d12e7de59fc9b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43e49846_e4fe98e4",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-31T00:53:01Z",
+      "side": 1,
+      "message": "Invert these, as you may have successfully activated Windows.Data.Xml.Dom.XmlDocument, but failed the QueryInterface step.\n\nThen you can add a\n\nif (FAILED(hr)) {\n  LOG(ERROR) \u003c\u003c \"Failed to get XmlDocument as IXmlDocumentIO\";\n  return hr;\n}",
+      "range": {
+        "startLine": 196,
+        "startChar": 2,
+        "endLine": 202,
+        "endChar": 3
+      },
+      "revId": "6ce35dafa7a0a2b66fd765f95d12e7de59fc9b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2216fb96_4145276e",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-31T00:53:01Z",
+      "side": 1,
+      "message": "Nit: Remove linebreak between these two lines.",
+      "range": {
+        "startLine": 206,
+        "startChar": 2,
+        "endLine": 208,
+        "endChar": 4
+      },
+      "revId": "6ce35dafa7a0a2b66fd765f95d12e7de59fc9b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c868c4a3_7e0abf78",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-31T00:53:01Z",
+      "side": 1,
+      "message": "Nit: Remove linebreak between these two lines.",
+      "range": {
+        "startLine": 222,
+        "startChar": 0,
+        "endLine": 224,
+        "endChar": 14
+      },
+      "revId": "6ce35dafa7a0a2b66fd765f95d12e7de59fc9b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8497c2b_d3fdb462",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-31T00:53:01Z",
+      "side": 1,
+      "message": "Are the rest of the calls below happy with the UI thread (STA Initialized IIRC)? My impression is that the WinRT family of APIs needs to be RoInitialize\u0027d, which requires an MTA a la RO_INIT_MULTITHREADED.\n\nThis means you\u0027ll need to spin up a separate thread just for this or yell at the task scheduler folks (e.g. me) to add MTA/WinRT+MTA task runner folks to do that.",
+      "range": {
+        "startLine": 261,
+        "startChar": 1,
+        "endLine": 261,
+        "endChar": 50
+      },
+      "revId": "6ce35dafa7a0a2b66fd765f95d12e7de59fc9b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6ce3f80_f82b25cf",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-31T00:53:01Z",
+      "side": 1,
+      "message": "Nit: Remove linebreak between these two lines.",
+      "range": {
+        "startLine": 278,
+        "startChar": 2,
+        "endLine": 280,
+        "endChar": 6
+      },
+      "revId": "6ce35dafa7a0a2b66fd765f95d12e7de59fc9b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
