@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59949083_a578a42b",
+        "filename": "content/network/network_context.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-31T12:55:35Z",
+      "side": 1,
+      "message": "I\u0027ll need to measure how long this takes before commenting.",
+      "range": {
+        "startLine": 252,
+        "startChar": 2,
+        "endLine": 252,
+        "endChar": 9
+      },
+      "revId": "cbfe70981f2cac3862fc59ab57b0209855554683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
