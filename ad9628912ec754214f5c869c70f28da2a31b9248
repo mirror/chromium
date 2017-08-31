@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d7902fe_cda72ff4",
+        "filename": "ui/ozone/platform/wayland/wayland_cursor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2017-08-31T16:09:19Z",
+      "side": 1,
+      "message": "I think this should create a skia bitmap with the expected format which uses your shm as a backing store, and then use skia to copy (so that any necessary conversions are done).",
+      "range": {
+        "startLine": 67,
+        "startChar": 2,
+        "endLine": 67,
+        "endChar": 8
+      },
+      "revId": "ad9628912ec754214f5c869c70f28da2a31b9248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fff8d870_93c276f9",
+        "filename": "ui/ozone/platform/wayland/wayland_cursor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2017-08-31T16:09:19Z",
+      "side": 1,
+      "message": "CreateSharedMemoryBuffer",
+      "range": {
+        "startLine": 41,
+        "startChar": 7,
+        "endLine": 41,
+        "endChar": 22
+      },
+      "revId": "ad9628912ec754214f5c869c70f28da2a31b9248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "059ce76e_b9d15383",
+        "filename": "ui/ozone/platform/wayland/wayland_cursor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2017-08-31T16:09:19Z",
+      "side": 1,
+      "message": "shared_memory_",
+      "range": {
+        "startLine": 50,
+        "startChar": 38,
+        "endLine": 50,
+        "endChar": 48
+      },
+      "revId": "ad9628912ec754214f5c869c70f28da2a31b9248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
