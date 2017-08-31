@@ -387,6 +387,30 @@
       "revId": "b6e781e42f775371c77cfda6b6a0f3a955d45994",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e5b495f2_46192d57",
+        "filename": "ios/clean/chrome/browser/ui/ntp/ntp_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-31T09:50:47Z",
+      "side": 1,
+      "message": "I will convert the identifier to the enum in a future CL.",
+      "parentUuid": "04c6a787_862dc8ac",
+      "range": {
+        "startLine": 156,
+        "startChar": 2,
+        "endLine": 168,
+        "endChar": 3
+      },
+      "revId": "b6e781e42f775371c77cfda6b6a0f3a955d45994",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
