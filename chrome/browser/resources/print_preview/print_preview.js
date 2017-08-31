@@ -382,13 +382,17 @@ cr.define('print_preview', function() {
       this.tracker.add(
           this.previewArea_,
           print_preview.PreviewArea.EventType.SETTINGS_INVALID,
-          this.onSettingsInvalid_.bind(this));
+          this.onSettingsInvalid_.bind(this, false));
 
       this.tracker.add(
           this.destinationStore_,
           print_preview.DestinationStore.EventType
               .SELECTED_DESTINATION_CAPABILITIES_READY,
           this.printIfReady_.bind(this));
+      this.tracker.add(
+          this.destinationStore_,
+          print_preview.DestinationStore.EventType.SELECTED_DESTINATION_INVALID,
+          this.onSettingsInvalid_.bind(this, true));
       this.tracker.add(
           this.destinationStore_,
           print_preview.DestinationStore.EventType.DESTINATION_SELECT,
@@ -588,7 +592,7 @@ cr.define('print_preview', function() {
         // print, or if setings are invalid.
         whenPrintDone.then(
             this.onPrintToCloud_.bind(this),
-            this.onSettingsInvalid_.bind(this));
+            this.onSettingsInvalid_.bind(this, false));
       } else if (destination.isPrivet || destination.isExtension) {
         // Privet and extension resolve when printing is complete or if there
         // is an error printing.
@@ -945,9 +949,15 @@ cr.define('print_preview', function() {
 
     /**
      * Called when native layer receives invalid settings for a print request.
+     * @param {boolean} showPreviewAreaMessage Whether to tell the preview
+     *     area to show an error message.
      * @private
      */
-    onSettingsInvalid_: function() {
+    onSettingsInvalid_: function(showPreviewAreaMessage) {
+      if (showPreviewAreaMessage) {
+        this.previewArea_.showCustomMessage(
+            loadTimeData.getString('invalidPrinterSettings'));
+      }
       this.uiState_ = PrintPreviewUiState_.ERROR;
       this.isPreviewGenerationInProgress_ = false;
       this.printHeader_.isPrintButtonEnabled = false;
