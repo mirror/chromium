@@ -22,6 +22,30 @@
       "revId": "6498f7e81aea225605fea50c7203d9e7bd215787",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bb8dd7f_aa8c1470",
+        "filename": "components/ntp_snippets/mock_content_suggestions_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-31T15:05:18Z",
+      "side": 1,
+      "message": "The ref is here as a lack of support for move semantics. I am not sure about the reason why there was a const in the first place.\nI my test I am calling this callback, and Run() is not a const method so I need a non-const callback.",
+      "parentUuid": "451ea8a5_2cde9b74",
+      "range": {
+        "startLine": 60,
+        "startChar": 37,
+        "endLine": 60,
+        "endChar": 38
+      },
+      "revId": "6498f7e81aea225605fea50c7203d9e7bd215787",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
