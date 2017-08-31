@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90851072_0554e1c5",
+        "filename": "build/toolchain/win/midl.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-31T21:40:50Z",
+      "side": 1,
+      "message": "There\u0027s no +x on this file I think, does something still whine about that?",
+      "revId": "347d728e2b62b2f983e630fbaef377688ee29688",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
