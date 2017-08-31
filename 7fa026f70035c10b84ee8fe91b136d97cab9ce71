@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3f594f6_0c43eb31",
+        "filename": "ui/chromeos/touch_exploration_controller_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-31T20:59:55Z",
+      "side": 1,
+      "message": "nit: initialize to 0",
+      "revId": "7fa026f70035c10b84ee8fe91b136d97cab9ce71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
