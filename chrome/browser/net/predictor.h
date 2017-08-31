@@ -397,7 +397,7 @@ class Predictor {
   // will greatly reduce the number of resolutions done, but it will assure that
   // any resolutions that are done, are in a timely and hence potentially
   // helpful manner.
-  bool CongestionControlPerformed(UrlInfo* info);
+  bool CongestionControlPerformed(Results::iterator info_it);
 
   // Take lookup requests from work_queue_ and tell HostResolver to look them up
   // asynchronously, provided we don't exceed concurrent resolution limit.
