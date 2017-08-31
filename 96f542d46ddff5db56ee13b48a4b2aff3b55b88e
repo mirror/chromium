@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "809a8970_859ffce1",
+        "filename": "chrome/browser/profiling_host/memlog_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1215674
+      },
+      "writtenOn": "2017-08-31T17:30:58Z",
+      "side": 1,
+      "message": "copy pasta:\n\n2012 -\u003e 2017",
+      "revId": "96f542d46ddff5db56ee13b48a4b2aff3b55b88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "925bfd42_0f64e421",
+        "filename": "chrome/browser/profiling_host/memlog_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1215674
+      },
+      "writtenOn": "2017-08-31T17:30:58Z",
+      "side": 1,
+      "message": "I was thinking these definitions should be outside of the anonymous namespace?",
+      "revId": "96f542d46ddff5db56ee13b48a4b2aff3b55b88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7e8e32c4_e0673176",
         "filename": "chrome/browser/profiling_host/memlog_browsertest.cc",
         "patchSetId": 2
@@ -30,6 +64,24 @@
       "writtenOn": "2017-08-31T17:30:16Z",
       "side": 1,
       "message": "I\u0027ll remove when I take up this work.",
+      "parentUuid": "7e8e32c4_e0673176",
+      "revId": "96f542d46ddff5db56ee13b48a4b2aff3b55b88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d252bd4c_5d347975",
+        "filename": "chrome/browser/profiling_host/memlog_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1215674
+      },
+      "writtenOn": "2017-08-31T17:30:58Z",
+      "side": 1,
+      "message": "As these statement are for test, I believe they should be EXPECT_* instead?",
       "parentUuid": "7e8e32c4_e0673176",
       "revId": "96f542d46ddff5db56ee13b48a4b2aff3b55b88e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
