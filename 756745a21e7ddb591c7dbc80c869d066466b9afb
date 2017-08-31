@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8e726c79_02afead1",
+        "filename": "third_party/zlib/contrib/inffast64/inffast64.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1237531
+      },
+      "writtenOn": "2017-08-31T05:36:44Z",
+      "side": 1,
+      "message": "Well, the code would be correct, I guess, but I\u0027m not sure if it would end up faster than vanilla zlib\u0027s \"1 byte at a time\" approach. I don\u0027t have any 64 bit hardware to test this on that is only strictly aligned or big endian, and if such architectures are also not very common, the benefit of trying to accomodate them seems marginal.\n\nInstead, the approach that I\u0027ve taken in this patch is to start with the 64-bit hardware architectures that matter in practice: x86_64 and AArch64 primarly, and PowerPC64. All of those, IIUC, can do unaligned little endian loads, so that\u0027s what I focus on.",
+      "parentUuid": "2bed4c5f_25323951",
+      "revId": "756745a21e7ddb591c7dbc80c869d066466b9afb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d566c0a_38dcc4a0",
         "filename": "third_party/zlib/contrib/inffast64/inffast64.c",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "4df6d201_60538f46",
+        "filename": "third_party/zlib/contrib/inffast64/inffast64.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1237531
+      },
+      "writtenOn": "2017-08-31T05:36:44Z",
+      "side": 1,
+      "message": "I didn\u0027t mention it, but I already tried that, unsuccessfully. It measured a little slower on x86_64.",
+      "parentUuid": "6d566c0a_38dcc4a0",
+      "revId": "756745a21e7ddb591c7dbc80c869d066466b9afb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f4e40a_36b6591d",
         "filename": "third_party/zlib/contrib/inffast64/inffast64.c",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-30T00:51:17Z",
       "side": 1,
       "message": "FWIW, 32-bit targets can benefit from `hold |\u003d (unsigned long)*(uint16_t*)in \u003c\u003c bits;` here, and below (x3).  Though this change probably belongs in a different version of the file, or a different patch.",
+      "revId": "756745a21e7ddb591c7dbc80c869d066466b9afb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a0f6c679_dcdc57ec",
+        "filename": "third_party/zlib/contrib/inffast64/inffast64.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1237531
+      },
+      "writtenOn": "2017-08-31T05:36:44Z",
+      "side": 1,
+      "message": "They possibly could, but I agree that that\u0027d be a different patch.\n\nAny further complexity would have a non-zero cost, though, so I\u0027m also less excited about optimizing non-64-bit CPUs, especially if on AArch32 we\u0027re already taking an entirely different inflate_fast implementation (thanks to https://bugs.chromium.org/p/chromium/issues/detail?id\u003d697280). In practice, there\u0027s 32-bit x86, which is only getting less and less common over time, and... not much else?",
+      "parentUuid": "87f4e40a_36b6591d",
       "revId": "756745a21e7ddb591c7dbc80c869d066466b9afb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
