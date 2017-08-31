@@ -19,6 +19,47 @@
     },
     {
       "key": {
+        "uuid": "b2ecb255_60543130",
+        "filename": "components/download/content/public/download_navigation_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-31T18:07:41Z",
+      "side": 1,
+      "message": "On slow connections loading a page could take a minute.  Tracking end of page load makes sense.  Do we have to worry about the distinction between navigation loads and javascript driven loads?  IIRC there was some difference between load start/stop and page load start/stop?",
+      "parentUuid": "89a00dc3_8f004c7a",
+      "revId": "75f24c4d381a5f16f705c2cfd19847ffeecf7a89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03527e55_9221c0e0",
+        "filename": "components/download/internal/navigation_monitor_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-31T18:07:41Z",
+      "side": 1,
+      "message": "remove \"for\"",
+      "range": {
+        "startLine": 16,
+        "startChar": 43,
+        "endLine": 16,
+        "endChar": 47
+      },
+      "revId": "75f24c4d381a5f16f705c2cfd19847ffeecf7a89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e8c5fa05_eaaaf7fd",
         "filename": "components/download/internal/navigation_monitor_impl.cc",
         "patchSetId": 3
@@ -35,6 +76,29 @@
         "startChar": 0,
         "endLine": 17,
         "endChar": 23
+      },
+      "revId": "75f24c4d381a5f16f705c2cfd19847ffeecf7a89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f820511c_3acce320",
+        "filename": "components/download/internal/navigation_monitor_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-31T18:07:41Z",
+      "side": 1,
+      "message": "Do we have to deal with multiple tabs loading at the same time?  Count the number of starts/stops we see?",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 22,
+        "endChar": 40
       },
       "revId": "75f24c4d381a5f16f705c2cfd19847ffeecf7a89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
