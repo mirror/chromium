@@ -20,6 +20,7 @@
 #include "base/numerics/safe_conversions.h"
 #include "base/numerics/safe_math.h"
 #include "base/process/process_handle.h"
+#include "base/rand_util.h"
 #include "base/third_party/valgrind/memcheck.h"
 #include "base/threading/platform_thread.h"
 #include "base/threading/worker_pool.h"
@@ -38,14 +39,6 @@ namespace {
 
 constexpr char kWorkerThreadSanitizedName[] = "WorkerThread-*";
 
-// When ThreadData is first initialized, should we start in an ACTIVE state to
-// record all of the startup-time tasks, or should we start up DEACTIVATED, so
-// that we only record after parsing the command line flag --enable-tracking.
-// Note that the flag may force either state, so this really controls only the
-// period of time up until that flag is parsed.  If there is no flag seen, then
-// this state may prevail for much or all of the process lifetime.
-const ThreadData::Status kInitialStartupState = ThreadData::PROFILING_ACTIVE;
-
 // Possible states of the profiler timing enabledness.
 enum {
   UNDEFINED_TIMING,
@@ -56,6 +49,15 @@ enum {
 // State of the profiler timing enabledness.
 base::subtle::Atomic32 g_profiler_timing_enabled = UNDEFINED_TIMING;
 
+// Enable the task profiler for 50% of sessions so we can measure its
+// performance impact via UMA.
+bool IsProfilerEnabled() {
+  // Note: Does not use base::Feature because this state needs to be available
+  // before field trials are initialized
+  static int coin_flip = base::RandInt(0, 1);
+  return coin_flip == 1;
+}
+
 // Returns whether profiler timing is enabled.  The default is true, but this
 // may be overridden by a command-line flag.  Some platforms may
 // programmatically set this command-line flag to the "off" value if it's not
@@ -63,6 +65,8 @@ base::subtle::Atomic32 g_profiler_timing_enabled = UNDEFINED_TIMING;
 // This in turn can be overridden by explicitly calling
 // ThreadData::EnableProfilerTiming, say, based on a field trial.
 inline bool IsProfilerTimingEnabled() {
+  if (!IsProfilerEnabled())
+    return false;
   // Reading |g_profiler_timing_enabled| is done without barrier because
   // multiple initialization is not an issue while the barrier can be relatively
   // costly given that this method is sometimes called in a tight loop.
@@ -900,7 +904,10 @@ void ThreadData::EnsureTlsInitialization() {
   // The lock is not critical for setting status_, but it doesn't hurt.  It also
   // ensures that if we have a racy initialization, that we'll bail as soon as
   // we get the lock earlier in this method.
-  base::subtle::Release_Store(&status_, kInitialStartupState);
+  if (IsProfilerEnabled())
+    base::subtle::Release_Store(&status_, ThreadData::PROFILING_ACTIVE);
+  else
+    base::subtle::Release_Store(&status_, ThreadData::DEACTIVATED);
   DCHECK(base::subtle::NoBarrier_Load(&status_) != UNINITIALIZED);
 }
 

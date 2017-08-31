@@ -17,6 +17,7 @@
 #include "base/task_scheduler/task_traits.h"
 #include "base/threading/sequenced_worker_pool.h"
 #include "base/time/time.h"
+#include "base/tracked_objects.h"
 #include "build/build_config.h"
 #include "chrome/browser/about_flags.h"
 #include "chrome/browser/browser_process.h"
@@ -489,6 +490,18 @@ void ChromeBrowserMainExtraPartsMetrics::PreBrowserStart() {
   flags_ui::PrefServiceFlagsStorage flags_storage(
       g_browser_process->local_state());
   about_flags::RecordUMAStatistics(&flags_storage);
+
+  switch (base::ThreadData::status()) {
+    case base::ThreadData::PROFILING_ACTIVE:
+      ChromeMetricsServiceAccessor::RegisterSyntheticFieldTrial("TaskProfiler",
+                                                                "Enabled");
+      break;
+    case base::ThreadData::DEACTIVATED:
+      ChromeMetricsServiceAccessor::RegisterSyntheticFieldTrial("TaskProfiler",
+                                                                "Disabled");
+      break;
+    default:
+  }
 
 #if defined(OS_WIN)
   ChromeMetricsServiceAccessor::RegisterSyntheticFieldTrial("ChromeWinClang",
