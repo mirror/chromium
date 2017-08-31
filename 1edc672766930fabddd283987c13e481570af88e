@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "a367183a_fa0b771e",
+        "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-08-31T09:16:41Z",
+      "side": 1,
+      "message": "Hmm, yeah, I understand, but I think having two different ways to set the callback was also a bit confusing.\n\nIf you did want to make it so that the callback is set up with a particular ID, I\u0027d say the way to do that would be to change the Debouncer back to a one-shot thing, and create a new one each time the element changes.\n\nAnyway, just food for thought. I think the current version is fine.",
+      "parentUuid": "0db533a6_a281688c",
+      "revId": "1edc672766930fabddd283987c13e481570af88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82c18dbf_40121adc",
         "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
         "patchSetId": 3
