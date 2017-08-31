@@ -48,7 +48,7 @@ struct MidiEvent {
 
 class FakeMidiManager : public midi::MidiManager {
  public:
-  FakeMidiManager() : MidiManager(nullptr) {}
+  FakeMidiManager(midi::MidiService* service) : MidiManager(service) {}
   void DispatchSendMidiData(midi::MidiManagerClient* client,
                             uint32_t port_index,
                             const std::vector<uint8_t>& data,
@@ -59,6 +59,30 @@ class FakeMidiManager : public midi::MidiManager {
                                 timestamp));
   }
   std::vector<MidiEvent> events_;
+
+  DISALLOW_COPY_AND_ASSIGN(FakeMidiManager);
+};
+
+class FakeMidiManagerFactory : public midi::MidiService::ManagerFactory {
+ public:
+  FakeMidiManagerFactory() = default;
+  ~FakeMidiManagerFactory() override = default;
+  std::unique_ptr<midi::MidiManager> Create(
+      midi::MidiService* service) override {
+    std::unique_ptr<FakeMidiManager> manager =
+        base::MakeUnique<FakeMidiManager>(service);
+    manager_ = manager.get();
+    return manager;
+  }
+  FakeMidiManager* GetCreatedManager() {
+    DCHECK(manager_);
+    return manager_;
+  }
+
+ private:
+  FakeMidiManager* manager_ = nullptr;
+
+  DISALLOW_COPY_AND_ASSIGN(FakeMidiManagerFactory);
 };
 
 class MidiHostForTesting : public MidiHost {
@@ -74,6 +98,8 @@ class MidiHostForTesting : public MidiHost {
   // implementation to kill a malicious renderer process causes a check failure
   // in unit tests.
   void ShutdownForBadMessage() override {}
+
+  DISALLOW_COPY_AND_ASSIGN(MidiHostForTesting);
 };
 
 class MidiHostTest : public testing::Test {
@@ -82,8 +108,11 @@ class MidiHostTest : public testing::Test {
       : io_browser_thread_(BrowserThread::IO, &message_loop_),
         data_(kNoteOn, kNoteOn + arraysize(kNoteOn)),
         port_id_(0) {
-    manager_ = new FakeMidiManager;
-    service_.reset(new midi::MidiService(base::WrapUnique(manager_)));
+    std::unique_ptr<FakeMidiManagerFactory> factory =
+        base::MakeUnique<FakeMidiManagerFactory>();
+    factory_ = factory.get();
+    service_ = base::MakeUnique<midi::MidiService>(std::move(factory));
+    manager_ = factory_->GetCreatedManager();
     host_ = new MidiHostForTesting(kRenderProcessId, service_.get());
   }
   ~MidiHostTest() override {
@@ -130,6 +159,7 @@ class MidiHostTest : public testing::Test {
   std::vector<uint8_t> data_;
   int32_t port_id_;
   FakeMidiManager* manager_;  // Raw pointer for testing, owned by |service_|.
+  FakeMidiManagerFactory* factory_;  // Owned by |service_|.
   std::unique_ptr<midi::MidiService> service_;
   scoped_refptr<MidiHostForTesting> host_;
 

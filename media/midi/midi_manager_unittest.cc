@@ -30,8 +30,8 @@ using mojom::Result;
 
 class FakeMidiManager : public MidiManager {
  public:
-  FakeMidiManager()
-      : MidiManager(nullptr),
+  explicit FakeMidiManager(MidiService* service)
+      : MidiManager(service),
         start_initialization_is_called_(false),
         finalize_is_called_(false) {}
   ~FakeMidiManager() override {}
@@ -66,6 +66,25 @@ class FakeMidiManager : public MidiManager {
 
  private:
   DISALLOW_COPY_AND_ASSIGN(FakeMidiManager);
+};
+
+class FakeMidiManagerFactory : public MidiService::ManagerFactory {
+ public:
+  FakeMidiManagerFactory() = default;
+  ~FakeMidiManagerFactory() override = default;
+  std::unique_ptr<MidiManager> Create(MidiService* service) override {
+    std::unique_ptr<FakeMidiManager> manager =
+        base::MakeUnique<FakeMidiManager>(service);
+    manager_ = manager.get();
+    return manager;
+  }
+  FakeMidiManager* GetCreatedManager() {
+    DCHECK(manager_);
+    return manager_;
+  }
+
+ private:
+  FakeMidiManager* manager_ = nullptr;
 };
 
 class FakeMidiManagerClient : public MidiManagerClient {
@@ -112,10 +131,13 @@ class FakeMidiManagerClient : public MidiManagerClient {
 
 class MidiManagerTest : public ::testing::Test {
  public:
-  MidiManagerTest()
-      : manager_(new FakeMidiManager),
-        service_(new MidiService(base::WrapUnique(manager_))),
-        message_loop_(new base::MessageLoop) {}
+  MidiManagerTest() : message_loop_(new base::MessageLoop) {
+    std::unique_ptr<FakeMidiManagerFactory> factory =
+        base::MakeUnique<FakeMidiManagerFactory>();
+    factory_ = factory.get();
+    service_ = base::MakeUnique<MidiService>(std::move(factory));
+    manager_ = factory_->GetCreatedManager();
+  }
   ~MidiManagerTest() override {
     manager_->Shutdown();
     base::RunLoop run_loop;
@@ -168,6 +190,7 @@ class MidiManagerTest : public ::testing::Test {
 
  protected:
   FakeMidiManager* manager_;  // Owned by |service_|.
+  FakeMidiManagerFactory* factory_;  // Owned by |service_|.
   std::unique_ptr<MidiService> service_;
 
  private:
