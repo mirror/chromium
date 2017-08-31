@@ -61,10 +61,6 @@ ExternalProtocolDialog::~ExternalProtocolDialog() {
 //////////////////////////////////////////////////////////////////////////////
 // ExternalProtocolDialog, views::DialogDelegate implementation:
 
-int ExternalProtocolDialog::GetDefaultDialogButton() const {
-  return ui::DIALOG_BUTTON_CANCEL;
-}
-
 base::string16 ExternalProtocolDialog::GetDialogButtonLabel(
     ui::DialogButton button) const {
   return delegate_->GetDialogButtonLabel(button);
@@ -80,7 +76,6 @@ void ExternalProtocolDialog::DeleteDelegate() {
 
 bool ExternalProtocolDialog::Cancel() {
   bool is_checked = message_box_view_->IsCheckBoxSelected();
-  delegate_->DoCancel(delegate_->url(), is_checked);
 
   ExternalProtocolHandler::RecordCheckboxStateMetrics(is_checked);
   ExternalProtocolHandler::RecordHandleStateMetrics(
@@ -109,11 +104,8 @@ bool ExternalProtocolDialog::Accept() {
 }
 
 bool ExternalProtocolDialog::Close() {
-  // If the user dismisses the dialog without interacting with the buttons (e.g.
-  // via pressing Esc or the X), act as though they cancelled the request, but
-  // ignore the checkbox state. This ensures that if they check the checkbox but
-  // dismiss the dialog, we don't stop prompting them forever.
-  delegate_->DoCancel(delegate_->url(), false);
+  // Closing without cancelling should not record metrics, so just do nothing.
+  // This is implemented to prevent Cancel() being called by a base class.
   return true;
 }
 
