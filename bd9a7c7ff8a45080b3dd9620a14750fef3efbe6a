@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "651f2ce3_bc979fa9",
+        "filename": "mojo/public/cpp/bindings/binding.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-31T19:32:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a762263b_9aa16caf",
+      "revId": "bd9a7c7ff8a45080b3dd9620a14750fef3efbe6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84d4533b_012d1b38",
         "filename": "mojo/public/cpp/bindings/lib/binding_state.h",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-31T16:46:08Z",
       "side": 1,
       "message": "How about something like {Exchange,Swap}ImplForTesting?  I kind of like \"swap\" better as the verb, but this is a minor aesthetic preference. I do think ForTesting is important because I don\u0027t want usage to leak beyond test environments.",
+      "revId": "bd9a7c7ff8a45080b3dd9620a14750fef3efbe6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcddb800_205d7005",
+        "filename": "mojo/public/cpp/bindings/lib/binding_state.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-31T19:32:52Z",
+      "side": 1,
+      "message": "Yeah, this was more of a proof of concept, I don\u0027t like the current name either :).\nI\u0027ve modified it to use SwapImplForTesting.",
+      "parentUuid": "84d4533b_012d1b38",
       "revId": "bd9a7c7ff8a45080b3dd9620a14750fef3efbe6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
