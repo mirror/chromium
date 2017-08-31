@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "029784f6_560466ba",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/accelerometer/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-08-31T14:23:13Z",
+      "side": 1,
+      "message": "Unfortunately our WPT bots do not support this syntax atm. In fact, we only support the minimal one-email-per-line syntax and ignore everything else.\n\nHow useful do you think the full syntax support would be? Can you file a bug (feature request) for that? It is non-trivial to support all the syntax, and the best way would be to invoke depot_tools instead of reinventing the wheel.\n\nFor now, I think you can either copy the content from the referenced file, or follow some existing examples in external/wpt to use their team alias instead.",
+      "revId": "060c3094039409f34de7fa9ba6954f3ffce26fca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
