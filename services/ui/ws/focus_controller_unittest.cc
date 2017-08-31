@@ -76,21 +76,21 @@ class TestFocusControllerObserver : public FocusControllerObserver {
 
 TEST(FocusControllerTest, Basic) {
   TestServerWindowDelegate server_window_delegate;
-  ServerWindow root(&server_window_delegate, WindowId());
+  ServerWindow root(&server_window_delegate, WindowId(1, 1));
   server_window_delegate.set_root_window(&root);
   root.SetVisible(true);
   root.set_is_activation_parent(true);
-  ServerWindow child(&server_window_delegate, WindowId());
+  ServerWindow child(&server_window_delegate, WindowId(1, 2));
   child.SetVisible(true);
   child.set_is_activation_parent(true);
   root.Add(&child);
-  ServerWindow child_child(&server_window_delegate, WindowId());
+  ServerWindow child_child(&server_window_delegate, WindowId(1, 3));
   child_child.SetVisible(true);
   child.Add(&child_child);
   child_child.set_is_activation_parent(true);
 
   // Sibling of |child|.
-  ServerWindow child2(&server_window_delegate, WindowId());
+  ServerWindow child2(&server_window_delegate, WindowId(1, 4));
   child2.SetVisible(true);
   root.Add(&child2);
 
@@ -145,14 +145,14 @@ TEST(FocusControllerTest, Basic) {
 
 TEST(FocusControllerTest, NoFocusableWindows) {
   TestServerWindowDelegate server_window_delegate;
-  ServerWindow parent(&server_window_delegate, WindowId());
+  ServerWindow parent(&server_window_delegate, WindowId(1, 1));
   server_window_delegate.set_root_window(&parent);
   parent.SetVisible(true);
-  ServerWindow child_first(&server_window_delegate, WindowId());
+  ServerWindow child_first(&server_window_delegate, WindowId(1, 2));
   child_first.SetVisible(true);
   parent.Add(&child_first);
   std::unique_ptr<ServerWindow> child_second(
-      new ServerWindow(&server_window_delegate, WindowId()));
+      new ServerWindow(&server_window_delegate, WindowId(1, 3)));
   child_second->SetVisible(true);
   parent.Add(child_second.get());
 
@@ -171,18 +171,18 @@ TEST(FocusControllerTest, NoFocusableWindows) {
 // Tests that focus shifts correctly if the focused window is destroyed.
 TEST(FocusControllerTest, FocusShiftsOnDestroy) {
   TestServerWindowDelegate server_window_delegate;
-  ServerWindow root(&server_window_delegate, WindowId());
+  ServerWindow root(&server_window_delegate, WindowId(1, 1));
   server_window_delegate.set_root_window(&root);
   root.SetVisible(true);
   root.set_is_activation_parent(true);
-  ServerWindow parent(&server_window_delegate, WindowId());
+  ServerWindow parent(&server_window_delegate, WindowId(1, 2));
   root.Add(&parent);
   parent.SetVisible(true);
-  ServerWindow child_first(&server_window_delegate, WindowId());
+  ServerWindow child_first(&server_window_delegate, WindowId(1, 3));
   child_first.SetVisible(true);
   parent.Add(&child_first);
   std::unique_ptr<ServerWindow> child_second(
-      new ServerWindow(&server_window_delegate, WindowId()));
+      new ServerWindow(&server_window_delegate, WindowId(1, 4)));
   child_second->SetVisible(true);
   parent.Add(child_second.get());
 
@@ -208,18 +208,18 @@ TEST(FocusControllerTest, FocusShiftsOnDestroy) {
 
 TEST(FocusControllerTest, ActivationSkipsOverHiddenWindow) {
   TestServerWindowDelegate server_window_delegate;
-  ServerWindow root(&server_window_delegate, WindowId());
+  ServerWindow root(&server_window_delegate, WindowId(1, 1));
   server_window_delegate.set_root_window(&root);
   root.SetVisible(true);
   root.set_is_activation_parent(true);
-  ServerWindow parent(&server_window_delegate, WindowId());
+  ServerWindow parent(&server_window_delegate, WindowId(1, 2));
   root.Add(&parent);
   parent.SetVisible(true);
   parent.set_is_activation_parent(true);
 
-  ServerWindow child_first(&server_window_delegate, WindowId());
-  ServerWindow child_second(&server_window_delegate, WindowId());
-  ServerWindow child_third(&server_window_delegate, WindowId());
+  ServerWindow child_first(&server_window_delegate, WindowId(1, 3));
+  ServerWindow child_second(&server_window_delegate, WindowId(1, 4));
+  ServerWindow child_third(&server_window_delegate, WindowId(1, 5));
 
   parent.Add(&child_first);
   parent.Add(&child_second);
@@ -266,18 +266,18 @@ TEST(FocusControllerTest, ActivationSkipsOverHiddenWindow) {
 
 TEST(FocusControllerTest, ActivationSkipsOverHiddenContainers) {
   TestServerWindowDelegate server_window_delegate;
-  ServerWindow root(&server_window_delegate, WindowId());
+  ServerWindow root(&server_window_delegate, WindowId(1, 1));
   root.SetVisible(true);
   root.set_is_activation_parent(true);
-  ServerWindow parent(&server_window_delegate, WindowId());
+  ServerWindow parent(&server_window_delegate, WindowId(1, 2));
   root.Add(&parent);
   server_window_delegate.set_root_window(&root);
   parent.SetVisible(true);
   parent.set_is_activation_parent(true);
 
-  ServerWindow child1(&server_window_delegate, WindowId());
+  ServerWindow child1(&server_window_delegate, WindowId(1, 3));
   child1.set_is_activation_parent(true);
-  ServerWindow child2(&server_window_delegate, WindowId());
+  ServerWindow child2(&server_window_delegate, WindowId(1, 4));
   child2.set_is_activation_parent(true);
 
   parent.Add(&child1);
@@ -286,10 +286,10 @@ TEST(FocusControllerTest, ActivationSkipsOverHiddenContainers) {
   child1.SetVisible(true);
   child2.SetVisible(true);
 
-  ServerWindow child11(&server_window_delegate, WindowId());
-  ServerWindow child12(&server_window_delegate, WindowId());
-  ServerWindow child21(&server_window_delegate, WindowId());
-  ServerWindow child22(&server_window_delegate, WindowId());
+  ServerWindow child11(&server_window_delegate, WindowId(1, 5));
+  ServerWindow child12(&server_window_delegate, WindowId(1, 6));
+  ServerWindow child21(&server_window_delegate, WindowId(1, 7));
+  ServerWindow child22(&server_window_delegate, WindowId(1, 8));
 
   child1.Add(&child11);
   child1.Add(&child12);
@@ -317,17 +317,17 @@ TEST(FocusControllerTest, ActivationSkipsOverHiddenContainers) {
 
 TEST(FocusControllerTest, NonFocusableWindowNotActivated) {
   TestServerWindowDelegate server_window_delegate;
-  ServerWindow root(&server_window_delegate, WindowId());
+  ServerWindow root(&server_window_delegate, WindowId(1, 1));
   server_window_delegate.set_root_window(&root);
   root.SetVisible(true);
   root.set_is_activation_parent(true);
-  ServerWindow parent(&server_window_delegate, WindowId());
+  ServerWindow parent(&server_window_delegate, WindowId(1, 2));
   root.Add(&parent);
   parent.SetVisible(true);
   parent.set_is_activation_parent(true);
 
-  ServerWindow child_first(&server_window_delegate, WindowId());
-  ServerWindow child_second(&server_window_delegate, WindowId());
+  ServerWindow child_first(&server_window_delegate, WindowId(1, 3));
+  ServerWindow child_second(&server_window_delegate, WindowId(1, 4));
   parent.Add(&child_first);
   parent.Add(&child_second);
   child_first.SetVisible(true);
@@ -383,19 +383,19 @@ class TestServerWindowDelegate2 : public ServerWindowDelegate {
 
 TEST(FocusControllerTest, ActiveWindowMovesToDifferentDisplay) {
   TestServerWindowDelegate2 server_window_delegate;
-  ServerWindow root1(&server_window_delegate, WindowId());
+  ServerWindow root1(&server_window_delegate, WindowId(1, 1));
   root1.SetVisible(true);
   root1.set_is_activation_parent(true);
-  ServerWindow root2(&server_window_delegate, WindowId());
+  ServerWindow root2(&server_window_delegate, WindowId(1, 2));
   root2.SetVisible(true);
   root2.set_is_activation_parent(true);
 
-  ServerWindow child(&server_window_delegate, WindowId());
+  ServerWindow child(&server_window_delegate, WindowId(1, 3));
   root1.Add(&child);
   child.SetVisible(true);
   child.set_is_activation_parent(true);
 
-  ServerWindow child_child(&server_window_delegate, WindowId());
+  ServerWindow child_child(&server_window_delegate, WindowId(1, 4));
   child.Add(&child_child);
   child_child.SetVisible(true);
 
