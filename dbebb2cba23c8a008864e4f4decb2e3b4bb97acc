@@ -52,6 +52,24 @@
       "revId": "dbebb2cba23c8a008864e4f4decb2e3b4bb97acc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "374e8f73_763d4dcf",
+        "filename": "chrome/browser/ui/find_bar/find_tab_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1239649
+      },
+      "writtenOn": "2017-09-01T14:56:32Z",
+      "side": 1,
+      "message": "Can you please elaborate which rectangle needs to be more clear and why provided evidence would not be enough? Seems to me like the code tells well enough about what coordinate system FindBarController::GetLocationForFindbarView expects. Or do you mean about the ScreenToDIPRectInWindow function?",
+      "parentUuid": "b54355e2_e71eb89d",
+      "revId": "dbebb2cba23c8a008864e4f4decb2e3b4bb97acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
