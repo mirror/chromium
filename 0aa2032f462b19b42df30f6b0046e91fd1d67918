@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ee348601_aa2d1235",
+        "filename": "chrome/installer/linux/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-09-01T00:17:43Z",
+      "side": 1,
+      "message": "those are the same target",
+      "parentUuid": "6b3a24b0_8ea558cc",
+      "revId": "0aa2032f462b19b42df30f6b0046e91fd1d67918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1119fece_f1c9c0d4",
         "filename": "chrome/installer/linux/strip-chrome-binary.py",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-01T00:11:25Z",
       "side": 1,
       "message": "Can this be a shell script instead? I don\u0027t think Python\u0027s buying us much here.",
+      "revId": "0aa2032f462b19b42df30f6b0046e91fd1d67918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83b69f32_097dbe3f",
+        "filename": "chrome/installer/linux/strip-chrome-binary.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-09-01T00:17:43Z",
+      "side": 1,
+      "message": "gn \"action\"s must be python scripts.  If I could, I would just get gn to call eu_strip directly",
+      "parentUuid": "1119fece_f1c9c0d4",
       "revId": "0aa2032f462b19b42df30f6b0046e91fd1d67918",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
