@@ -62,13 +62,29 @@ void MediaStreamDispatcherHost::StreamGenerated(
     int render_frame_id,
     int page_request_id,
     const std::string& label,
-    const StreamDeviceInfoArray& audio_devices,
-    const StreamDeviceInfoArray& video_devices) {
+    const MediaStreamDevices& audio_devices,
+    const MediaStreamDevices& video_devices) {
   DVLOG(1) << __func__ << " label= " << label;
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
+  // TODO(c.padhi): Remove this when OnStreamGenerated's input types are
+  // changed to MediaStreamDevice, see https://crbug.com/760493.
+  StreamDeviceInfoArray audio_array, video_array;
+  for (const MediaStreamDevice& device : audio_devices) {
+    StreamDeviceInfo device_info;
+    device_info.device = device;
+    device_info.session_id = device.session_id;
+    audio_array.push_back(device_info);
+  }
+  for (const MediaStreamDevice& device : video_devices) {
+    StreamDeviceInfo device_info;
+    device_info.device = device;
+    device_info.session_id = device.session_id;
+    video_array.push_back(device_info);
+  }
+
   GetMediaStreamDispatcherForFrame(render_frame_id)
-      ->OnStreamGenerated(page_request_id, label, audio_devices, video_devices);
+      ->OnStreamGenerated(page_request_id, label, audio_array, video_array);
 }
 
 void MediaStreamDispatcherHost::StreamGenerationFailed(
@@ -85,25 +101,36 @@ void MediaStreamDispatcherHost::StreamGenerationFailed(
 
 void MediaStreamDispatcherHost::DeviceStopped(int render_frame_id,
                                               const std::string& label,
-                                              const StreamDeviceInfo& device) {
-  DVLOG(1) << __func__ << " label=" << label << " type=" << device.device.type
-           << " device_id=" << device.device.id;
+                                              const MediaStreamDevice& device) {
+  DVLOG(1) << __func__ << " label=" << label << " type=" << device.type
+           << " device_id=" << device.id;
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
+  // TODO(c.padhi): Remove this when OnDeviceStopped's input type is
+  // changed to MediaStreamDevice, see https://crbug.com/760493.
+  StreamDeviceInfo device_info;
+  device_info.device = device;
+  device_info.session_id = device.session_id;
+
   GetMediaStreamDispatcherForFrame(render_frame_id)
-      ->OnDeviceStopped(label, device);
+      ->OnDeviceStopped(label, device_info);
 }
 
-void MediaStreamDispatcherHost::DeviceOpened(
-    int render_frame_id,
-    int page_request_id,
-    const std::string& label,
-    const StreamDeviceInfo& video_device) {
+void MediaStreamDispatcherHost::DeviceOpened(int render_frame_id,
+                                             int page_request_id,
+                                             const std::string& label,
+                                             const MediaStreamDevice& device) {
   DVLOG(1) << __func__ << " page_request_id=" << page_request_id;
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
+  // TODO(c.padhi): Remove this when OnDeviceOpened's input type is
+  // changed to MediaStreamDevice, see https://crbug.com/760493.
+  StreamDeviceInfo device_info;
+  device_info.device = device;
+  device_info.session_id = device.session_id;
+
   GetMediaStreamDispatcherForFrame(render_frame_id)
-      ->OnDeviceOpened(page_request_id, label, video_device);
+      ->OnDeviceOpened(page_request_id, label, device_info);
 }
 
 mojom::MediaStreamDispatcher*
