@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "882e350e_1f43e7c4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-01T13:49:16Z",
+      "side": 1,
+      "message": "weight MEDIUM -\u003e NORMAL.",
+      "range": {
+        "startLine": 7,
+        "startChar": 21,
+        "endLine": 7,
+        "endChar": 43
+      },
+      "revId": "8fc23fb791e1e24dd26b3c324edb6db9f1c37981",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87d7cd74_4e2c1686",
+        "filename": "chrome/browser/ui/views/harmony/chrome_typography.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-01T13:49:16Z",
+      "side": 1,
+      "message": "this can just be removed. (part of GetDefaultFont\u0027s contract is to set a \"normal\" style for stuff it doesn\u0027t know about)",
+      "revId": "8fc23fb791e1e24dd26b3c324edb6db9f1c37981",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
