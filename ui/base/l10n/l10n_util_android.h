@@ -18,6 +18,10 @@ UI_BASE_EXPORT base::string16 GetDisplayNameForLocale(
     const std::string& locale,
     const std::string& display_locale);
 
+UI_BASE_EXPORT base::string16 GetDisplayNamesForLocale(
+    const std::string locales,
+    const std::string& display_locale);
+
 UI_BASE_EXPORT bool IsLayoutRtl();
 
 }  // namespace l10n_util

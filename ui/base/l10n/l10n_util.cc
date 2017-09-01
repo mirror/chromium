@@ -19,7 +19,9 @@
 #include "base/i18n/rtl.h"
 #include "base/i18n/string_compare.h"
 #include "base/lazy_instance.h"
+#include "base/logging.h"
 #include "base/macros.h"
+#include "base/rand_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
@@ -545,6 +547,7 @@ base::string16 GetDisplayNameForLocale(const std::string& locale,
                                        const std::string& display_locale,
                                        bool is_for_ui) {
   std::string locale_code = locale;
+
   // Internally, we use the language code of zh-CN and zh-TW, but we want the
   // display names to be Chinese (Simplified) and Chinese (Traditional) instead
   // of Chinese (China) and Chinese (Taiwan).
@@ -880,6 +883,13 @@ const std::vector<std::string>& GetAvailableLocales() {
 
 void GetAcceptLanguagesForLocale(const std::string& display_locale,
                                  std::vector<std::string>* locale_codes) {
+  // benchmark hacking...
+  if (base::RandInt(0, 1)) {
+    GetDisplayNamesForLocale("batch", display_locale);
+  } else {
+    GetDisplayNamesForLocale("loop", display_locale);
+  }
+
   for (const char* accept_language : kAcceptLanguageList) {
     if (!l10n_util::IsLocaleNameTranslated(accept_language, display_locale)) {
       // TODO(jungshik) : Put them at the end of the list with language codes

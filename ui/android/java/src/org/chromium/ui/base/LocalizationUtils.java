@@ -27,6 +27,8 @@ public class LocalizationUtils {
     public static final int RIGHT_TO_LEFT = 1;
     public static final int LEFT_TO_RIGHT = 2;
 
+    public static final String SPLIT = ",";
+
     private static Boolean sIsLayoutRtl;
 
     private LocalizationUtils() { /* cannot be instantiated */ }
@@ -39,6 +41,35 @@ public class LocalizationUtils {
     @CalledByNative
     private static String getDisplayNameForLocale(Locale locale, Locale displayLocale) {
         return locale.getDisplayName(displayLocale);
+    }
+
+    private static Locale getJavaLocale(String[] info) {
+        if (info.length == 1) {
+            return new Locale(info[0], "", "");
+        } else if (info.length == 2) {
+            return new Locale(info[0], info[1], "");
+        } else if (info.length == 3) {
+            return new Locale(info[0], info[1], info[2]);
+        }
+        // Log.e("LLNB", "Java-Display-L0::Wrong!!");
+        return null;
+    }
+
+    @CalledByNative
+    private static String getDisplayNamesForLocales(String languages, String display) {
+        StringBuilder names = new StringBuilder();
+        String[] dpp = display.split(",");
+        Locale d = getJavaLocale(dpp);
+        // TODO(googleo): use StringTokenizer instead of split.
+        String[] parts = languages.split(";");
+        for (int i = 0; i < parts.length; i++) {
+            String[] info = parts[i].split(SPLIT);
+            Locale t = getJavaLocale(info);
+            if (t != null) {
+                names.append(t.getDisplayName(d)).append(SPLIT);
+            }
+        }
+        return names.toString();
     }
 
     /**
