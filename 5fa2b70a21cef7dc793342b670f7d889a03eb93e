@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "846379ff_c555f3fc",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 1497,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-09-01T22:05:00Z",
+      "side": 1,
+      "message": "Did some reorganization here, which I think makes things easier to follow.",
+      "revId": "5fa2b70a21cef7dc793342b670f7d889a03eb93e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
