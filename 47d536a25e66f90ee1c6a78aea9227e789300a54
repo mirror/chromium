@@ -33,6 +33,24 @@
       "revId": "47d536a25e66f90ee1c6a78aea9227e789300a54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b625331c_e5267baf",
+        "filename": "extensions/shell/installer/linux/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-09-01T18:58:50Z",
+      "side": 1,
+      "message": "... sigh.  No it cannot, because it copied all of the code from c/i/l which it is now out-of-date with and does not have the strip-target fix to allow parallel builds.\n\nFurthermore, it still has an expected_deps file.. which would make all my current efforts to remove it pointless, unless I also change the extension code.",
+      "parentUuid": "d3be8ae5_7cb35b73",
+      "revId": "47d536a25e66f90ee1c6a78aea9227e789300a54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
