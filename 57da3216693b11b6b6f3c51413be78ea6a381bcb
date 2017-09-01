@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0cacec31_0f35ed4d",
+        "filename": "chrome/test/chromedriver/window_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1002882
+      },
+      "writtenOn": "2017-09-01T17:25:40Z",
+      "side": 1,
+      "message": "Does this need update too?",
+      "range": {
+        "startLine": 674,
+        "startChar": 7,
+        "endLine": 674,
+        "endChar": 23
+      },
+      "revId": "57da3216693b11b6b6f3c51413be78ea6a381bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
