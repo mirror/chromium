@@ -55,7 +55,6 @@ class Buffer : public base::SupportsWeakPtr<Buffer> {
   bool ProduceTransferableResource(
       LayerTreeFrameSinkHolder* layer_tree_frame_sink_holder,
       bool secure_output_only,
-      bool client_usage,
       viz::TransferableResource* resource);
 
   // This should be called when the buffer is attached to a Surface.
@@ -70,6 +69,12 @@ class Buffer : public base::SupportsWeakPtr<Buffer> {
   // Returns the format of the buffer.
   gfx::BufferFormat GetFormat() const;
 
+  // Returns true if the TransferableResource produced by
+  // |ProduceTransferableResource| is still avaliable. If the
+  // TransferableResource has been returned and released by compositor, false
+  // will be returned.
+  bool IsTransferanleResourceAvaliable() const { return !!resource_id_; }
+
   // Returns a trace value representing the state of the buffer.
   std::unique_ptr<base::trace_event::TracedValue> AsTracedValue() const;
 
@@ -82,12 +87,14 @@ class Buffer : public base::SupportsWeakPtr<Buffer> {
 
   // This is used by ProduceTextureMailbox() to produce a release callback
   // that releases a texture so it can be destroyed or reused.
-  void ReleaseTexture(std::unique_ptr<Texture> texture);
+  void ReleaseTexture(std::unique_ptr<Texture> texture,
+                      viz::ResourceId resource_id);
 
   // This is used by ProduceTextureMailbox() to produce a release callback
   // that releases the buffer contents referenced by a texture before the
   // texture is destroyed or reused.
   void ReleaseContentsTexture(std::unique_ptr<Texture> texture,
+                              viz::ResourceId resource_id,
                               const base::Closure& callback);
 
   // Notifies the client that buffer has been released if no longer attached
@@ -119,6 +126,9 @@ class Buffer : public base::SupportsWeakPtr<Buffer> {
   // The last used contents texture. ProduceTransferableResource() will use this
   // instead of creating a new texture when possible.
   std::unique_ptr<Texture> contents_texture_;
+
+  // The last resource id produced by ProduceTransferableResource().
+  viz::ResourceId resource_id_ = 0;
 
   // The client release callback.
   base::Closure release_callback_;
