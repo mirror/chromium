@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a9597ca_6eedeff0",
+        "filename": "chrome/utility/extensions/extensions_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-01T01:12:35Z",
+      "side": 1,
+      "message": "Can this be Mac-only? Probably need to update a bunch of #if defines.",
+      "revId": "8006b98bfd0efd5ab541227d2d3296c101479458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
