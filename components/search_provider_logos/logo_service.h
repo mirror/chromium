@@ -14,6 +14,10 @@
 
 class TemplateURLService;
 
+namespace base {
+class Clock;
+}  // namespace base
+
 namespace image_fetcher {
 class ImageDecoder;
 }  // namespace image_fetcher
@@ -24,6 +28,7 @@ class URLRequestContextGetter;
 
 namespace search_provider_logos {
 
+class LogoCache;
 class LogoTracker;
 class LogoObserver;
 
@@ -41,11 +46,18 @@ class LogoService : public KeyedService {
       std::unique_ptr<image_fetcher::ImageDecoder> image_decoder,
       scoped_refptr<net::URLRequestContextGetter> request_context_getter,
       bool use_gray_background);
+
   ~LogoService() override;
 
   // Gets the logo for the default search provider and notifies |observer|
   // with the results.
   void GetLogo(search_provider_logos::LogoObserver* observer);
+
+  // Overrides the cache used to store logos.
+  void SetLogoCacheForTests(std::unique_ptr<LogoCache> cache);
+
+  // Overrides the clock used to check the time.
+  void SetClockForTests(std::unique_ptr<base::Clock> clock);
 
  private:
   // Constructor arguments.
@@ -56,6 +68,10 @@ class LogoService : public KeyedService {
 
   // logo_tracker_ takes ownership if/when it is initialized.
   std::unique_ptr<image_fetcher::ImageDecoder> image_decoder_;
+
+  // For testing. logo_tracker_ takes ownership if/when it is initialized.
+  std::unique_ptr<base::Clock> clock_for_test_;
+  std::unique_ptr<LogoCache> logo_cache_for_test_;
 
   // Lazily initialized on first call to GetLogo().
   std::unique_ptr<search_provider_logos::LogoTracker> logo_tracker_;
