@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6f844ef_80c0ac8f",
+        "filename": "chrome/browser/chromeos/options/cert_library.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-09-01T18:44:21Z",
+      "side": 0,
+      "message": "btw here the old code is getting the alt_text from the subject instead of the issuer. Pretty sure that was a bug (I filed crbug.com/736159 for that ..)",
+      "revId": "b46ac1d4efb5ff10ae44896730a5da668e0ad822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad339d53_28a1b45d",
+        "filename": "chromeos/network/network_certificate_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-09-01T18:44:21Z",
+      "side": 0,
+      "message": "same thing here.",
+      "range": {
+        "startLine": 32,
+        "startChar": 20,
+        "endLine": 32,
+        "endChar": 27
+      },
+      "revId": "b46ac1d4efb5ff10ae44896730a5da668e0ad822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
