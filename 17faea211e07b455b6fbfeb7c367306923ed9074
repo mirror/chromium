@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b0d7714_2966b324",
+        "filename": "components/download/internal/navigation_monitor_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-01T05:53:33Z",
+      "side": 1,
+      "message": "Should this call OnNavigationEvent?",
+      "range": {
+        "startLine": 15,
+        "startChar": 28,
+        "endLine": 15,
+        "endChar": 78
+      },
+      "revId": "17faea211e07b455b6fbfeb7c367306923ed9074",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
