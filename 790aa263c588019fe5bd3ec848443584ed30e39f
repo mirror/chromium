@@ -281,6 +281,30 @@
       "revId": "790aa263c588019fe5bd3ec848443584ed30e39f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b8ae080_3e3f3e8b",
+        "filename": "chromeos/components/tether/initializer_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-01T23:29:33Z",
+      "side": 1,
+      "message": "That\u0027s not possible. If you look at StartAsynchronousShutdown(), |tether_network_disconnection_handler_| is reset BEFORE |active_host_| is reset. Thus, |active_host_| is not deleted by the time that TetherNetworkDisconnectionHandler code is run. Are you sure this wasn\u0027t caused by you moving all the reset()s to the top of RequestShutdown() like you were doing for a bit?",
+      "parentUuid": "d48509b2_5908ab1b",
+      "range": {
+        "startLine": 179,
+        "startChar": 0,
+        "endLine": 179,
+        "endChar": 23
+      },
+      "revId": "790aa263c588019fe5bd3ec848443584ed30e39f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
