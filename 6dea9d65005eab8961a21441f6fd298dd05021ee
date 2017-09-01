@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af8bdaaf_f2c629c7",
+        "filename": "content/browser/devtools/render_frame_devtools_agent_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-09-01T22:35:38Z",
+      "side": 1,
+      "message": "nit: don\u0027t need \"content::\". also below",
+      "revId": "6dea9d65005eab8961a21441f6fd298dd05021ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec8ae67e_9973a5b7",
+        "filename": "content/network/network_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-09-01T22:35:38Z",
+      "side": 1,
+      "message": "nit: perhaps instead of going through NetworkContext just to get to NetworkServiceImpl, this class can just expose network_service_ in a getter?",
+      "revId": "6dea9d65005eab8961a21441f6fd298dd05021ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
