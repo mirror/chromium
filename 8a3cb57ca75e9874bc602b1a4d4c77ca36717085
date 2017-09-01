@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7792c730_eddcda93",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXARIAGridCell.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-01T19:34:54Z",
+      "side": 1,
+      "message": "How about like this:\n\nAXObject* ancestor \u003d ParentObjectUnignored();\nwhile (ancestor \u0026\u0026 !ancestor-\u003eIsAXTable())\n  ancestor \u003d ancestor-\u003eParentObjectUnignored();\nreturn ancestor;  // maybe cast this to AXTable???",
+      "revId": "8a3cb57ca75e9874bc602b1a4d4c77ca36717085",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "619d3a88_eebba75d",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXARIAGridRow.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-01T19:34:54Z",
+      "side": 1,
+      "message": "How about not calling the inherited function, and just\nonly adding cell children here?",
+      "revId": "8a3cb57ca75e9874bc602b1a4d4c77ca36717085",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5aefaa4b_2ff9bd9e",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXARIAGridRow.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-01T19:34:54Z",
+      "side": 1,
+      "message": "Why do you need a separate vector? Why not just use\nchildren?",
+      "revId": "8a3cb57ca75e9874bc602b1a4d4c77ca36717085",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
