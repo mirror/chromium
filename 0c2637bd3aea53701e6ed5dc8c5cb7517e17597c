@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de0b555e_d7341718",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-01T20:37:24Z",
+      "side": 1,
+      "message": "nit: use base::queue in base/containers/queue.h (which I just learned about!)",
+      "revId": "0c2637bd3aea53701e6ed5dc8c5cb7517e17597c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
