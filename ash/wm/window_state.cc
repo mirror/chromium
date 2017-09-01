@@ -494,6 +494,22 @@ void WindowState::SetBoundsDirectCrossFade(const gfx::Rect& new_bounds) {
   // windows of |window|.
   std::unique_ptr<ui::LayerTreeOwner> old_layer_owner =
       ::wm::RecreateLayers(window_);
+
+  // Layers are recreated, but the old layers share the same frame sink
+  // as the new ones. To detach them, allocate a new surface id for all windows
+  // recursively starting from |window_|.
+  std::queue<aura::Window*> windows_;
+  windows_.push(window_);
+  while (windows_.size()) {
+    aura::Window* window = windows_.front();
+    windows_.pop();
+    window->AllocateLocalSurfaceId();
+    const auto& child_windows = window->children();
+    for (aura::Window* child_window : child_windows) {
+      windows_.push(child_window);
+    }
+  }
+
   ui::Layer* old_layer = old_layer_owner->root();
   DCHECK(old_layer);
   ui::Layer* new_layer = window_->layer();
