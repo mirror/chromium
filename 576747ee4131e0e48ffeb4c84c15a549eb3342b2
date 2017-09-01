@@ -45,6 +45,30 @@
       "revId": "576747ee4131e0e48ffeb4c84c15a549eb3342b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0abfecad_47e5b2e3",
+        "filename": "media/mojo/services/mojo_cdm_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-09-01T16:19:27Z",
+      "side": 1,
+      "message": "Already done in https://chromium-review.googlesource.com/c/chromium/src/+/644666. That CR noted that cdm_config should be fixed, resulting in this CL.",
+      "parentUuid": "60c41acc_af17be3f",
+      "range": {
+        "startLine": 71,
+        "startChar": 18,
+        "endLine": 71,
+        "endChar": 52
+      },
+      "revId": "576747ee4131e0e48ffeb4c84c15a549eb3342b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
