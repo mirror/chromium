@@ -4,11 +4,21 @@
 
 #include "components/multidevice/service/device_sync_impl.h"
 
+#include "base/base64.h"
 #include "chrome/browser/chromeos/login/easy_unlock/secure_message_delegate_chromeos.h"
 #include "components/cryptauth/proto/cryptauth_api.pb.h"
 #include "components/cryptauth/remote_device_provider.h"
 #include "services/identity/public/interfaces/constants.mojom.h"
 #include "services/service_manager/public/cpp/connector.h"
+
+namespace {
+const char kSuccessCode[] = "SUCCESS";
+const char kErrorInternal[] = "ERROR_INTERNAL";
+const char kErrorNoValidAccessToken[] = "ERROR_NO_VALID_ACCESS_TOKEN";
+const char kErrorServerFailedToRespond[] = "ERROR_SERVER_FAILED_TO_RESPOND";
+const char kErrorCannotParseServerResponse[] =
+    "ERROR_CANNOT_PARSE_SERVER_RESPONSE";
+}  // namespace
 
 namespace multidevice {
 
@@ -63,9 +73,41 @@ void DeviceSyncImpl::GetSyncedDevices(GetSyncedDevicesCallback callback) {
   std::move(callback).Run(remote_device_provider_->GetSyncedDevices());
 }
 
-void DeviceSyncImpl::AddObserver(
-    device_sync::mojom::DeviceSyncObserverPtr observer) {
-  observers_.AddPtr(std::move(observer));
+void DeviceSyncImpl::SetCapabilityEnabled(
+    const std::string& device_id,
+    cryptauth::DeviceCapabilityManager::Capability capability,
+    bool enabled,
+    SetCapabilityEnabledCallback callback) {
+  device_capability_manager_->SetCapabilityEnabled(
+      public_key_, capability, enabled,
+      base::Bind(&DeviceSyncImpl::CapabilityEnabledCallback,
+                 weak_ptr_factory_.GetWeakPtr(), base::Passed(&callback),
+                 kSuccessCode),
+      base::Bind(&DeviceSyncImpl::CapabilityEnabledCallback,
+                 weak_ptr_factory_.GetWeakPtr(), base::Passed(&callback)));
+}
+
+void DeviceSyncImpl::FindEligibleDevicesForCapability(
+    cryptauth::DeviceCapabilityManager::Capability capability,
+    FindEligibleDevicesForCapabilityCallback callback) {
+  device_capability_manager_->FindEligibleDevicesForCapability(
+      capability,
+      base::Bind(&DeviceSyncImpl::SuccessEligibleDevicesForCapabilityCallback,
+                 weak_ptr_factory_.GetWeakPtr(), base::Passed(&callback)),
+      base::Bind(&DeviceSyncImpl::ErrorEligibleDevicesForCapabilityCallback,
+                 weak_ptr_factory_.GetWeakPtr(), base::Passed(&callback)));
+}
+
+void DeviceSyncImpl::IsCapabilityPromotable(
+    const std::string& device_id,
+    cryptauth::DeviceCapabilityManager::Capability capability,
+    IsCapabilityPromotableCallback callback) {
+  device_capability_manager_->IsCapabilityPromotable(
+      GetDeviceID(device_id), capability,
+      base::Bind(&DeviceSyncImpl::SuccessCapabilityPromotableCallback,
+                 weak_ptr_factory_.GetWeakPtr(), base::Passed(&callback)),
+      base::Bind(&DeviceSyncImpl::ErrorCapabilityPromotableCallback,
+                 weak_ptr_factory_.GetWeakPtr(), base::Passed(&callback)));
 }
 
 void DeviceSyncImpl::OnEnrollmentStarted() {}
@@ -95,6 +137,58 @@ void DeviceSyncImpl::OnSyncFinished(
             cryptauth::CryptAuthDeviceManager::DeviceChangeResult::
                 CHANGED /* device_change_result*/);
   });
+}
+
+void DeviceSyncImpl::ForceEnrollmentInternal(bool is_initializing) {
+  if (is_initializing)
+    enrollment_manager_->AddObserver(this);
+
+  enrollment_manager_->ForceEnrollmentNow(
+      is_initializing
+          ? cryptauth::InvocationReason::INVOCATION_REASON_INITIALIZATION
+          : cryptauth::InvocationReason::INVOCATION_REASON_MANUAL);
+}
+
+void DeviceSyncImpl::ForceSyncInternal(bool is_initializing) {
+  if (is_initializing)
+    device_manager_->AddObserver(this);
+
+  device_manager_->ForceSyncNow(
+      is_initializing
+          ? cryptauth::InvocationReason::INVOCATION_REASON_INITIALIZATION
+          : cryptauth::InvocationReason::INVOCATION_REASON_MANUAL);
+}
+
+void DeviceSyncImpl::GetUserPublicKey(GetUserPublicKeyCallback callback) {
+  std::move(callback).Run(public_key_);
+}
+
+void DeviceSyncImpl::AddObserver(
+    device_sync::mojom::DeviceSyncObserverPtr observer) {
+  observers_.AddPtr(std::move(observer));
+}
+
+device_sync::mojom::ResultCode DeviceSyncImpl::ConvertToMojomResultCode(
+    std::string result_code) {
+  if (result_code == kSuccessCode) {
+    return device_sync::mojom::ResultCode::SUCCESS;
+  } else if (result_code == kErrorInternal) {
+    return device_sync::mojom::ResultCode::ERROR_INTERNAL;
+  } else if (result_code == kErrorNoValidAccessToken) {
+    return device_sync::mojom::ResultCode::ERROR_NO_VALID_ACCESS_TOKEN;
+  } else if (result_code == kErrorServerFailedToRespond) {
+    return device_sync::mojom::ResultCode::ERROR_SERVER_FAILED_TO_RESPOND;
+  } else if (result_code == kErrorCannotParseServerResponse) {
+    return device_sync::mojom::ResultCode::ERROR_CANNOT_PARSE_SERVER_RESPONSE;
+  }
+  NOTREACHED();
+  return device_sync::mojom::ResultCode::ERROR_INTERNAL;
+}
+
+std::string DeviceSyncImpl::GetDeviceID(const std::string public_key) {
+  std::string device_id;
+  base::Base64Encode(public_key, &device_id);
+  return device_id;
 }
 
 void DeviceSyncImpl::OnPrimaryAccountAvailable(
@@ -136,24 +230,48 @@ void DeviceSyncImpl::OnKeyPairGenerated(const std::string& public_key,
   ForceEnrollmentInternal(true /* is_initializing */);
 }
 
-void DeviceSyncImpl::ForceEnrollmentInternal(bool is_initializing) {
-  if (is_initializing)
-    enrollment_manager_->AddObserver(this);
-
-  enrollment_manager_->ForceEnrollmentNow(
-      is_initializing
-          ? cryptauth::InvocationReason::INVOCATION_REASON_INITIALIZATION
-          : cryptauth::InvocationReason::INVOCATION_REASON_MANUAL);
+void DeviceSyncImpl::CapabilityEnabledCallback(
+    SetCapabilityEnabledCallback callback,
+    const std::string& response) {
+  std::move(callback).Run(device_sync::mojom::SetCapabilityResponse::New(
+      ConvertToMojomResultCode(response)));
 }
 
-void DeviceSyncImpl::ForceSyncInternal(bool is_initializing) {
-  if (is_initializing)
-    device_manager_->AddObserver(this);
+void DeviceSyncImpl::SuccessEligibleDevicesForCapabilityCallback(
+    FindEligibleDevicesForCapabilityCallback callback,
+    const std::vector<cryptauth::ExternalDeviceInfo>& eligible_devices,
+    const std::vector<cryptauth::IneligibleDevice>& ineligible_devices) {
+  std::vector<std::string> eligible_device_ids;
+  for (const auto& eligible_device : eligible_devices) {
+    eligible_device_ids.emplace_back(GetDeviceID(eligible_device.public_key()));
+  }
+  std::move(callback).Run(device_sync::mojom::FindEligibleDevicesResponse::New(
+      ConvertToMojomResultCode(kSuccessCode), eligible_device_ids,
+      ineligible_devices));
+}
 
-  device_manager_->ForceSyncNow(
-      is_initializing
-          ? cryptauth::InvocationReason::INVOCATION_REASON_INITIALIZATION
-          : cryptauth::InvocationReason::INVOCATION_REASON_MANUAL);
+void DeviceSyncImpl::ErrorEligibleDevicesForCapabilityCallback(
+    FindEligibleDevicesForCapabilityCallback callback,
+    const std::string& error_code) {
+  std::move(callback).Run(device_sync::mojom::FindEligibleDevicesResponse::New(
+      ConvertToMojomResultCode(error_code), std::vector<std::string>(),
+      std::vector<cryptauth::IneligibleDevice>()));
+}
+
+void DeviceSyncImpl::SuccessCapabilityPromotableCallback(
+    IsCapabilityPromotableCallback callback,
+    bool is_promotable) {
+  std::move(callback).Run(
+      device_sync::mojom::IsCapabilityPromotableResponse::New(
+          ConvertToMojomResultCode(kSuccessCode), is_promotable));
+}
+
+void DeviceSyncImpl::ErrorCapabilityPromotableCallback(
+    IsCapabilityPromotableCallback callback,
+    const std::string& result_code) {
+  std::move(callback).Run(
+      device_sync::mojom::IsCapabilityPromotableResponse::New(
+          ConvertToMojomResultCode(result_code), false /* is_promotable */));
 }
 
 }  // namespace multidevice
