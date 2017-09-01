@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d095d6cc_4c4a7ca3",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-01T17:27:08Z",
+      "side": 1,
+      "message": "Ack. Schema of persisted background fetches is not yet stabilised. We\u0027ll only start maintaining backwards compatibility once we actually turn persistence on by default.",
+      "parentUuid": "3107412c_a8f29627",
+      "revId": "7a04333d673fb8483cec9fc05dd28ae6d56e2958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d201b4e_f8daa7ea",
         "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e4888cdc_60a044b8",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-01T17:27:08Z",
+      "side": 1,
+      "message": "For consistency with other Background Fetch code, and to avoid unsigned gotchas (like reverse iterating for loops). Added a comment clarifying that.",
+      "parentUuid": "8d201b4e_f8daa7ea",
+      "revId": "7a04333d673fb8483cec9fc05dd28ae6d56e2958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93a15982_af6ce2ba",
         "filename": "content/browser/background_fetch/background_fetch_data_manager_unittest.cc",
         "patchSetId": 5
@@ -50,6 +86,24 @@
       "revId": "7a04333d673fb8483cec9fc05dd28ae6d56e2958",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f31ed8d9_6327852c",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-01T17:27:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93a15982_af6ce2ba",
+      "revId": "7a04333d673fb8483cec9fc05dd28ae6d56e2958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "0becb883_096eb568",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-01T17:27:08Z",
+      "side": 1,
+      "message": "The actual number of requests is irrelevant - it just needs to be greater than zero so their absence can be tested.\n\nBut I\u0027ve tried to make this clearer by calculating an |expected_data_count| variable shortly after defining |requests|, and introducing the constants mentioned below.",
+      "parentUuid": "626ad5ce_c1208d51",
+      "range": {
+        "startLine": 169,
+        "startChar": 50,
+        "endLine": 169,
+        "endChar": 51
+      },
+      "revId": "7a04333d673fb8483cec9fc05dd28ae6d56e2958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f0bd117_10a1e846",
         "filename": "content/browser/background_fetch/background_fetch_data_manager_unittest.cc",
         "patchSetId": 5
@@ -96,6 +174,30 @@
       "revId": "7a04333d673fb8483cec9fc05dd28ae6d56e2958",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "161ece55_9ddaa9f3",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-01T17:27:08Z",
+      "side": 1,
+      "message": "Done (introduced kUserDataKeysPerRegistration and kUserDataKeysPerRequest)",
+      "parentUuid": "8f0bd117_10a1e846",
+      "range": {
+        "startLine": 179,
+        "startChar": 12,
+        "endLine": 179,
+        "endChar": 14
+      },
+      "revId": "7a04333d673fb8483cec9fc05dd28ae6d56e2958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -146,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "cd3f4024_3c79360a",
+        "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 805,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-01T17:27:08Z",
+      "side": 1,
+      "message": "Yeah, I started migrating RunSoon, then decided against it as it would make the patch confusing to review. It\u0027d be easy to do a bulk rename in a separate patch though.",
+      "parentUuid": "dd09f0b8_d4a36472",
+      "range": {
+        "startLine": 805,
+        "startChar": 12,
+        "endLine": 805,
+        "endChar": 23
+      },
+      "revId": "7a04333d673fb8483cec9fc05dd28ae6d56e2958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e7aab6f_5efa6e5e",
         "filename": "content/browser/service_worker/service_worker_database.cc",
         "patchSetId": 5
@@ -163,6 +289,24 @@
     },
     {
       "key": {
+        "uuid": "9cf685cf_eea01cd1",
+        "filename": "content/browser/service_worker/service_worker_database.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1022,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-01T17:27:08Z",
+      "side": 1,
+      "message": "Done (made it store result to bool did_remove_prefix and DCHECK).",
+      "parentUuid": "5e7aab6f_5efa6e5e",
+      "revId": "7a04333d673fb8483cec9fc05dd28ae6d56e2958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ddb3e635_15b92c07",
         "filename": "content/browser/service_worker/service_worker_database.h",
         "patchSetId": 5
@@ -177,6 +321,24 @@
       "revId": "7a04333d673fb8483cec9fc05dd28ae6d56e2958",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40c51791_351797f3",
+        "filename": "content/browser/service_worker/service_worker_database.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-01T17:27:08Z",
+      "side": 1,
+      "message": "Done (I just renamed it, and oddly it was already a const std::string, but agree that would be more efficient).",
+      "parentUuid": "ddb3e635_15b92c07",
+      "revId": "7a04333d673fb8483cec9fc05dd28ae6d56e2958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -203,6 +365,30 @@
     },
     {
       "key": {
+        "uuid": "fae3fa7b_b00d599c",
+        "filename": "content/browser/service_worker/service_worker_database_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1208,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-01T17:27:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f559ec2b_9878cede",
+      "range": {
+        "startLine": 1208,
+        "startChar": 36,
+        "endLine": 1208,
+        "endChar": 54
+      },
+      "revId": "7a04333d673fb8483cec9fc05dd28ae6d56e2958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e768497_c2b1367a",
         "filename": "content/browser/service_worker/service_worker_storage.h",
         "patchSetId": 5
@@ -223,6 +409,30 @@
       "revId": "7a04333d673fb8483cec9fc05dd28ae6d56e2958",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "039ada99_dc0f75b5",
+        "filename": "content/browser/service_worker/service_worker_storage.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-01T17:27:08Z",
+      "side": 1,
+      "message": "Done.\n\nChanged \"none\" to \"not\" for consistency, and because in hindsight that\u0027s actually more accurate (i.e. it\u0027ll return OK if some are successfully deleted and others are not found).\n\nAll of the *UserData* methods fail with SERVICE_WORKER_ERROR_FAILED if given kInvalidServiceWorkerRegistrationId, which seems intuitively reasonable.\n\nEmpty prefixes are bad because UserData is consumed by multiple Chrome components (push_messaging, payments, background_sync, background_fetch), and none of those should ever read/delete all UserData for a registration_id (or globally), since that would include unowned UserData from other components.\n\nThe fact that the key_prefixes list must be non-empty is just for consistency and because that would be wasteful.\n\nI\u0027ve added a comment documenting that neither |key_prefixes| nor the prefixes within can be empty.",
+      "parentUuid": "0e768497_c2b1367a",
+      "range": {
+        "startLine": 200,
+        "startChar": 52,
+        "endLine": 200,
+        "endChar": 56
+      },
+      "revId": "7a04333d673fb8483cec9fc05dd28ae6d56e2958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
