@@ -17,14 +17,13 @@
 #include "ui/gfx/geometry/point.h"
 #include "ui/gfx/geometry/size.h"
 
-template <size_t size>
-std::string StripLambda(const char (&shader)[size]) {
+base::StringPiece StripLambda(base::StringPiece shader) {
   // Must contain at least "[]() {}" and trailing null (included in size).
-  static_assert(size >= 8,
-                "String passed to StripLambda must be at least 8 characters");
-  DCHECK_EQ(strncmp("[]() {", shader, 6), 0);
-  DCHECK_EQ(shader[size - 2], '}');
-  return std::string(shader + 6, shader + size - 2);
+  DCHECK(shader.starts_with("[]() {"));
+  shader.remove_prefix(6);
+  DCHECK(shader.ends_with("}"));
+  shader.remove_suffix(1);
+  return shader;
 }
 
 // Shaders are passed in with lambda syntax, which tricks clang-format into
@@ -58,13 +57,12 @@ static void GetProgramUniformLocations(GLES2Interface* context,
   }
 }
 
-static std::string SetFragmentTexCoordPrecision(
-    TexCoordPrecision requested_precision,
-    std::string shader_string) {
-  std::string prefix;
+static void SetFragmentTexCoordPrecision(TexCoordPrecision requested_precision,
+                                         std::string* shader_string) {
+  const char* prefix = "";
   switch (requested_precision) {
     case TEX_COORD_PRECISION_HIGH:
-      DCHECK_NE(shader_string.find("TexCoordPrecision"), std::string::npos);
+      DCHECK_NE(shader_string->find("TexCoordPrecision"), std::string::npos);
       prefix =
           "#ifdef GL_FRAGMENT_PRECISION_HIGH\n"
           "  #define TexCoordPrecision highp\n"
@@ -73,20 +71,21 @@ static std::string SetFragmentTexCoordPrecision(
           "#endif\n";
       break;
     case TEX_COORD_PRECISION_MEDIUM:
-      DCHECK_NE(shader_string.find("TexCoordPrecision"), std::string::npos);
+      DCHECK_NE(shader_string->find("TexCoordPrecision"), std::string::npos);
       prefix = "#define TexCoordPrecision mediump\n";
       break;
     case TEX_COORD_PRECISION_NA:
-      DCHECK_EQ(shader_string.find("TexCoordPrecision"), std::string::npos);
-      DCHECK_EQ(shader_string.find("texture2D"), std::string::npos);
-      DCHECK_EQ(shader_string.find("texture2DRect"), std::string::npos);
+      DCHECK_EQ(shader_string->find("TexCoordPrecision"), std::string::npos);
+      DCHECK_EQ(shader_string->find("texture2D"), std::string::npos);
+      DCHECK_EQ(shader_string->find("texture2DRect"), std::string::npos);
       break;
     default:
       NOTREACHED();
       break;
   }
-  std::string lut_prefix = "#define LutLookup texture2D\n";
-  return prefix + lut_prefix + shader_string;
+  const char* lut_prefix = "#define LutLookup texture2D\n";
+  shader_string->insert(0, prefix);
+  shader_string->insert(0, lut_prefix);
 }
 
 TexCoordPrecision TexCoordPrecisionRequired(GLES2Interface* context,
@@ -112,39 +111,43 @@ TexCoordPrecision TexCoordPrecisionRequired(GLES2Interface* context,
   return TEX_COORD_PRECISION_MEDIUM;
 }
 
-static std::string SetFragmentSamplerType(SamplerType requested_type,
-                                          std::string shader_string) {
+void SetFragmentSamplerType(SamplerType requested_type,
+                            std::string* shader_string) {
+  const char* prefix = nullptr;
   switch (requested_type) {
     case SAMPLER_TYPE_2D:
-      DCHECK_NE(shader_string.find("SamplerType"), std::string::npos);
-      DCHECK_NE(shader_string.find("TextureLookup"), std::string::npos);
-      return "#define SamplerType sampler2D\n"
-             "#define TextureLookup texture2D\n" +
-             shader_string;
+      DCHECK_NE(shader_string->find("SamplerType"), std::string::npos);
+      DCHECK_NE(shader_string->find("TextureLookup"), std::string::npos);
+      prefix =
+          "#define SamplerType sampler2D\n"
+          "#define TextureLookup texture2D\n";
+      break;
     case SAMPLER_TYPE_2D_RECT:
-      DCHECK_NE(shader_string.find("SamplerType"), std::string::npos);
-      DCHECK_NE(shader_string.find("TextureLookup"), std::string::npos);
-      return "#extension GL_ARB_texture_rectangle : require\n"
-             "#define SamplerType sampler2DRect\n"
-             "#define TextureLookup texture2DRect\n" +
-             shader_string;
+      DCHECK_NE(shader_string->find("SamplerType"), std::string::npos);
+      DCHECK_NE(shader_string->find("TextureLookup"), std::string::npos);
+      prefix =
+          "#extension GL_ARB_texture_rectangle : require\n"
+          "#define SamplerType sampler2DRect\n"
+          "#define TextureLookup texture2DRect\n";
+      break;
     case SAMPLER_TYPE_EXTERNAL_OES:
-      DCHECK_NE(shader_string.find("SamplerType"), std::string::npos);
-      DCHECK_NE(shader_string.find("TextureLookup"), std::string::npos);
-      return "#extension GL_OES_EGL_image_external : enable\n"
-             "#extension GL_NV_EGL_stream_consumer_external : enable\n"
-             "#define SamplerType samplerExternalOES\n"
-             "#define TextureLookup texture2D\n" +
-             shader_string;
+      DCHECK_NE(shader_string->find("SamplerType"), std::string::npos);
+      DCHECK_NE(shader_string->find("TextureLookup"), std::string::npos);
+      prefix =
+          "#extension GL_OES_EGL_image_external : enable\n"
+          "#extension GL_NV_EGL_stream_consumer_external : enable\n"
+          "#define SamplerType samplerExternalOES\n"
+          "#define TextureLookup texture2D\n";
+      break;
     case SAMPLER_TYPE_NA:
-      DCHECK_EQ(shader_string.find("SamplerType"), std::string::npos);
-      DCHECK_EQ(shader_string.find("TextureLookup"), std::string::npos);
-      return shader_string;
+      DCHECK_EQ(shader_string->find("SamplerType"), std::string::npos);
+      DCHECK_EQ(shader_string->find("TextureLookup"), std::string::npos);
+      return;
     default:
       NOTREACHED();
-      break;
+      return;
   }
-  return shader_string;
+  shader_string->insert(0, prefix);
 }
 
 }  // namespace
@@ -393,9 +396,11 @@ std::string FragmentShader::GetShaderString() const {
   // The AA shader values will use TexCoordPrecision.
   if (aa_mode_ == USE_AA && precision == TEX_COORD_PRECISION_NA)
     precision = TEX_COORD_PRECISION_MEDIUM;
-  return SetFragmentTexCoordPrecision(
-      precision, SetFragmentSamplerType(
-                     sampler_type_, SetBlendModeFunctions(GetShaderSource())));
+  std::string shader = GetShaderSource();
+  SetBlendModeFunctions(&shader);
+  SetFragmentSamplerType(sampler_type_, &shader);
+  SetFragmentTexCoordPrecision(precision, &shader);
+  return shader;
 }
 
 void FragmentShader::Init(GLES2Interface* context,
@@ -511,22 +516,22 @@ void FragmentShader::Init(GLES2Interface* context,
   DCHECK_EQ(index, locations.size());
 }
 
-std::string FragmentShader::SetBlendModeFunctions(
-    const std::string& shader_string) const {
-  if (shader_string.find("ApplyBlendMode") == std::string::npos)
-    return shader_string;
+void FragmentShader::SetBlendModeFunctions(std::string* shader_string) const {
+  if (shader_string->find("ApplyBlendMode") == std::string::npos)
+    return;
 
   if (!has_blend_mode()) {
-    return "#define ApplyBlendMode(X, Y) (X)\n" + shader_string;
+    shader_string->insert(0, "#define ApplyBlendMode(X, Y) (X)\n");
+    return;
   }
 
-  static const std::string kUniforms = SHADER0([]() {
+  static const base::StringPiece kUniforms = SHADER0([]() {
     uniform sampler2D s_backdropTexture;
     uniform sampler2D s_originalBackdropTexture;
     uniform TexCoordPrecision vec4 backdropRect;
   });
 
-  std::string mixFunction;
+  base::StringPiece mixFunction;
   if (mask_for_background_) {
     mixFunction = SHADER0([]() {
       vec4 MixBackdrop(TexCoordPrecision vec2 bgTexCoord, float mask) {
@@ -544,7 +549,7 @@ std::string FragmentShader::SetBlendModeFunctions(
     });
   }
 
-  static const std::string kFunctionApplyBlendMode = SHADER0([]() {
+  static const base::StringPiece kFunctionApplyBlendMode = SHADER0([]() {
     vec4 GetBackdropColor(float mask) {
       TexCoordPrecision vec2 bgTexCoord = gl_FragCoord.xy - backdropRect.xy;
       bgTexCoord.x /= backdropRect.z;
@@ -558,13 +563,20 @@ std::string FragmentShader::SetBlendModeFunctions(
     }
   });
 
-  return "precision mediump float;" + GetHelperFunctions() +
-         GetBlendFunction() + kUniforms + mixFunction +
-         kFunctionApplyBlendMode + shader_string;
+  std::string shader;
+  shader.reserve(shader_string->size() + 1024);
+  shader += "precision mediump float;";
+  AppendHelperFunctions(&shader);
+  AppendBlendFunction(&shader);
+  kUniforms.AppendToString(&shader);
+  mixFunction.AppendToString(&shader);
+  kFunctionApplyBlendMode.AppendToString(&shader);
+  shader += *shader_string;
+  *shader_string = std::move(shader);
 }
 
-std::string FragmentShader::GetHelperFunctions() const {
-  static const std::string kFunctionHardLight = SHADER0([]() {
+void FragmentShader::AppendHelperFunctions(std::string* buffer) const {
+  static const base::StringPiece kFunctionHardLight = SHADER0([]() {
     vec3 hardLight(vec4 src, vec4 dst) {
       vec3 result;
       result.r =
@@ -584,7 +596,7 @@ std::string FragmentShader::GetHelperFunctions() const {
     }
   });
 
-  static const std::string kFunctionColorDodgeComponent = SHADER0([]() {
+  static const base::StringPiece kFunctionColorDodgeComponent = SHADER0([]() {
     float getColorDodgeComponent(float srcc, float srca, float dstc,
                                  float dsta) {
       if (0.0 == dstc)
@@ -597,7 +609,7 @@ std::string FragmentShader::GetHelperFunctions() const {
     }
   });
 
-  static const std::string kFunctionColorBurnComponent = SHADER0([]() {
+  static const base::StringPiece kFunctionColorBurnComponent = SHADER0([]() {
     float getColorBurnComponent(float srcc, float srca, float dstc,
                                 float dsta) {
       if (dsta == dstc)
@@ -609,7 +621,7 @@ std::string FragmentShader::GetHelperFunctions() const {
     }
   });
 
-  static const std::string kFunctionSoftLightComponentPosDstAlpha =
+  static const base::StringPiece kFunctionSoftLightComponentPosDstAlpha =
       SHADER0([]() {
         float getSoftLightComponent(float srcc, float srca, float dstc,
                                     float dsta) {
@@ -633,7 +645,7 @@ std::string FragmentShader::GetHelperFunctions() const {
         }
       });
 
-  static const std::string kFunctionLum = SHADER0([]() {
+  static const base::StringPiece kFunctionLum = SHADER0([]() {
     float luminance(vec3 color) { return dot(vec3(0.3, 0.59, 0.11), color); }
 
     vec3 set_luminance(vec3 hueSat, float alpha, vec3 lumColor) {
@@ -656,7 +668,7 @@ std::string FragmentShader::GetHelperFunctions() const {
     }
   });
 
-  static const std::string kFunctionSat = SHADER0([]() {
+  static const base::StringPiece kFunctionSat = SHADER0([]() {
     float saturation(vec3 color) {
       return max(max(color.r, color.g), color.b) -
              min(min(color.r, color.g), color.b);
@@ -705,40 +717,50 @@ std::string FragmentShader::GetHelperFunctions() const {
   switch (blend_mode_) {
     case BLEND_MODE_OVERLAY:
     case BLEND_MODE_HARD_LIGHT:
-      return kFunctionHardLight;
+      kFunctionHardLight.AppendToString(buffer);
+      return;
     case BLEND_MODE_COLOR_DODGE:
-      return kFunctionColorDodgeComponent;
+      kFunctionColorDodgeComponent.AppendToString(buffer);
+      return;
     case BLEND_MODE_COLOR_BURN:
-      return kFunctionColorBurnComponent;
+      kFunctionColorBurnComponent.AppendToString(buffer);
+      return;
     case BLEND_MODE_SOFT_LIGHT:
-      return kFunctionSoftLightComponentPosDstAlpha;
+      kFunctionSoftLightComponentPosDstAlpha.AppendToString(buffer);
+      return;
     case BLEND_MODE_HUE:
     case BLEND_MODE_SATURATION:
-      return kFunctionLum + kFunctionSat;
+      kFunctionLum.AppendToString(buffer);
+      kFunctionSat.AppendToString(buffer);
+      return;
     case BLEND_MODE_COLOR:
     case BLEND_MODE_LUMINOSITY:
-      return kFunctionLum;
+      kFunctionLum.AppendToString(buffer);
+      return;
     default:
-      return std::string();
+      return;
   }
 }
 
-std::string FragmentShader::GetBlendFunction() const {
-  return "vec4 Blend(vec4 src, vec4 dst) {"
-         "    vec4 result;" +
-         GetBlendFunctionBodyForAlpha() + GetBlendFunctionBodyForRGB() +
-         "    return result;"
-         "}";
+void FragmentShader::AppendBlendFunction(std::string* buffer) const {
+  *buffer +=
+      "vec4 Blend(vec4 src, vec4 dst) {"
+      "    vec4 result;";
+  GetBlendFunctionBodyForAlpha().AppendToString(buffer);
+  GetBlendFunctionBodyForRGB().AppendToString(buffer);
+  *buffer +=
+      "    return result;"
+      "}";
 }
 
-std::string FragmentShader::GetBlendFunctionBodyForAlpha() const {
+base::StringPiece FragmentShader::GetBlendFunctionBodyForAlpha() const {
   if (blend_mode_ == BLEND_MODE_DESTINATION_IN)
     return "result.a = src.a * dst.a;";
   else
     return "result.a = src.a + (1.0 - src.a) * dst.a;";
 }
 
-std::string FragmentShader::GetBlendFunctionBodyForRGB() const {
+base::StringPiece FragmentShader::GetBlendFunctionBodyForRGB() const {
   switch (blend_mode_) {
     case BLEND_MODE_NORMAL:
       return "result.rgb = src.rgb + dst.rgb * (1.0 - src.a);";
