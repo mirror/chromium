@@ -1,0 +1,79 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#include "modules/vr/latest/VRFrameOfReference.h"
+
+#include "modules/vr/latest/VRStageBounds.h"
+
+namespace blink {
+
+// Rough estimate of avg human eye height.
+const double kDefaultEmulationHeight = 1.6;
+
+VRFrameOfReference::VRFrameOfReference(VRSession* session, Type type)
+    : VRCoordinateSystem(session), type_(type) {}
+
+VRFrameOfReference::~VRFrameOfReference() {}
+
+void VRFrameOfReference::UpdatePoseTransform(
+    std::unique_ptr<TransformationMatrix> transform) {
+  pose_transform_ = std::move(transform);
+}
+
+void VRFrameOfReference::UpdateStageBounds(VRStageBounds* bounds) {
+  bounds_ = bounds;
+  // TODO(bajones): Fire a `boundschange` event
+}
+
+void VRFrameOfReference::UseEmulatedHeight(double value) {
+  if (value == 0.0) {
+    value = kDefaultEmulationHeight;
+  }
+  emulatedHeight_ = value;
+  pose_transform_ = TransformationMatrix::Create();
+  pose_transform_->Translate3d(0, emulatedHeight_, 0);
+}
+
+std::unique_ptr<TransformationMatrix> VRFrameOfReference::TransformBasePose(
+    const TransformationMatrix& base_pose) {
+  switch (type_) {
+    case kTypeHeadModel: {
+      // TODO(bajones): Detect if base pose is already neck modeled and return
+      // it unchanged if so for better performance.
+
+      // Strip out current position
+      std::unique_ptr<TransformationMatrix> pose(
+          TransformationMatrix::Create(base_pose));
+      pose->SetM41(0.0);
+      pose->SetM42(0.0);
+      pose->SetM43(0.0);
+      // TODO(bajones): Apply our own neck model
+      return pose;
+    } break;
+    case kTypeEyeLevel:
+      // For now we assume that all base poses are delivered as eye-level poses.
+      // Thus in this case we just return the pose without transformation.
+      return TransformationMatrix::Create(base_pose);
+      break;
+    case kTypeStage:
+      // If the stage has a transform apply it to the base pose and return that,
+      // otherwise return null.
+      if (pose_transform_) {
+        std::unique_ptr<TransformationMatrix> pose(
+            TransformationMatrix::Create(*pose_transform_));
+        pose->Multiply(base_pose);
+        return pose;
+      }
+      break;
+  }
+
+  return nullptr;
+}
+
+DEFINE_TRACE(VRFrameOfReference) {
+  visitor->Trace(bounds_);
+  VRCoordinateSystem::Trace(visitor);
+}
+
+}  // namespace blink

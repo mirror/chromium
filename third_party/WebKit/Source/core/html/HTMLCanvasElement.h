@@ -71,8 +71,8 @@ class ImageData;
 class IntSize;
 
 class
-    CanvasRenderingContext2DOrWebGLRenderingContextOrWebGL2RenderingContextOrImageBitmapRenderingContext;
-typedef CanvasRenderingContext2DOrWebGLRenderingContextOrWebGL2RenderingContextOrImageBitmapRenderingContext
+    CanvasRenderingContext2DOrWebGLRenderingContextOrWebGL2RenderingContextOrImageBitmapRenderingContextOrVRPresentationContext;
+typedef CanvasRenderingContext2DOrWebGLRenderingContextOrWebGL2RenderingContextOrImageBitmapRenderingContextOrVRPresentationContext
     RenderingContext;
 
 class CORE_EXPORT HTMLCanvasElement final : public HTMLElement,
@@ -262,6 +262,11 @@ class CORE_EXPORT HTMLCanvasElement final : public HTMLElement,
 
   DispatchEventResult HostDispatchEvent(Event* event) override {
     return DispatchEvent(event);
+  }
+
+  bool HostAddEventListener(const AtomicString& event_type,
+                            EventListener* listener) override {
+    return addEventListener(event_type, listener);
   }
 
   bool IsWebGLAllowed() const override;
