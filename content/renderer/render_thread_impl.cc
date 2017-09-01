@@ -802,7 +802,7 @@ void RenderThreadImpl::Init(
   is_gpu_memory_buffer_compositor_resources_enabled_ = command_line.HasSwitch(
       switches::kEnableGpuMemoryBufferCompositorResources);
 
-#if defined(OS_MACOSX)
+#if defined(OS_MACOSX111)
   if (base::Process::IsAppNapEnabled()) {
     AppNapActivity::InitializeAppNapSupport();
   }

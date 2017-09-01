@@ -31,17 +31,18 @@
   (define iokit-registry-entry-class iokit-user-client-class))
 
 ; --enable-sandbox-logging causes the sandbox to log failures to the syslog.
-(if (param-true? disable-sandbox-denial-logging)
-   (deny default (with no-log))
-   (deny default))
+;(if (param-true? disable-sandbox-denial-logging)
+;   (deny default (with no-log))
+   (deny default);)
 
-(if (param-true? enable-logging) (debug deny))
+;(if (param-true? enable-logging) (debug deny))
+(debug deny)
 
 ; Allow sending signals to self - https://crbug.com/20370
 (allow signal (target self))
 
 ; Consumes a subpath and appends it to the user's homedir path.
-(define (user-homedir-path subpath) 
+(define (user-homedir-path subpath)
   (string-append (param homedir-as-literal) subpath))
 
 ; Allow logging for all processes.
@@ -71,13 +72,21 @@
 
 ; File reads.
 ; Reads from the home directory.
-(allow file-read-data (path (user-homedir-path "/.CFUserTextEncoding")))
+(allow file-read-data
+  (path (user-homedir-path "/.CFUserTextEncoding"))
+  (path (user-homedir-path "/Library/Preferences/.GlobalPreferences.plist"))
+  (regex
+    (string-append
+      (user-homedir-path "/Library/Preferences/ByHost/.GlobalPreferences.")
+      #"*.plist$"))
+  (path (user-homedir-path "/Library/Preferences/com.apple.universalaccess.plist")))
 
 ; Reads of /dev devices.
 (allow file-read-data
   (path "/dev/autofs_nowait")
   (path "/dev/fd")
   (path "/dev/null")
+  (path "/dev/random")
   (path "/dev/urandom"))
 
 (allow file-write-data (path "/dev/null"))
@@ -93,12 +102,15 @@
   (allow file-read-data (subpath "/usr/share/zoneinfo")))
 
 ; Reads from /Library.
-(allow file-read-data (subpath "/Library/Fonts"))
+(allow file-read-data
+  (path "/Library/Preferences/.GlobalPreferences.plist")
+  (subpath "/Library/Fonts"))
 
 ; Reads from /System.
 (allow file-read-data
   (path "/System/Library/CoreServices/CoreTypes.bundle/Contents/Library/AppExceptions.bundle/Exceptions.plist")
   (path "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/Exceptions.plist")
+  (path "/System/Library/CoreServices/checkfixlist")
   (path "/System/Library/CoreServices/SystemVersion.plist")
   (path "/System/Library/Preferences/Logging/Subsystems/com.apple.SkyLight.plist")
   (subpath "/System/Library/ColorSync/Profiles")
@@ -114,13 +126,13 @@
   (iokit-registry-entry-class "RootDomainUserClient"))
 
 ; POSIX IPC
-(allow ipc-posix-shm-read-data 
+(allow ipc-posix-shm-read-data
   (ipc-posix-name "apple.cfprefs.317580v1")
   (ipc-posix-name "apple.cfprefs.daemonv1")
   (ipc-posix-name "apple.shm.notification_center"))
 
 ; mach IPC
-(allow mach-lookup 
+(allow mach-lookup
   (global-name "com.apple.distributed_notifications@Uv3")
   (global-name "com.apple.fonts")
   (global-name "com.apple.logd")
