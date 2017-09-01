@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "946fbbd2_04edb694",
+        "filename": "ios/chrome/browser/ui/authentication/signin_earlgrey_utils.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-09-01T12:18:12Z",
+      "side": 1,
+      "message": "Why a class and not a set of functions? There are only class methods in this interface, and none of them are doing anything with self…",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 41
+      },
+      "revId": "47f0cd8e12c5bbd088accd1261f5d0131b0ba54b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea1073a8_a9f767da",
+        "filename": "ios/chrome/browser/ui/authentication/signin_earlgrey_utils.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-09-01T12:18:12Z",
+      "side": 1,
+      "message": "Draining the runloop feels out of place here and below. Should it be moved to the call sites?",
+      "range": {
+        "startLine": 89,
+        "startChar": 41,
+        "endLine": 89,
+        "endChar": 55
+      },
+      "revId": "47f0cd8e12c5bbd088accd1261f5d0131b0ba54b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
