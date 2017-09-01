@@ -5,6 +5,8 @@
 #ifndef UI_OZONE_PUBLIC_GL_OZONE_H_
 #define UI_OZONE_PUBLIC_GL_OZONE_H_
 
+#include <string>
+
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "ui/gfx/geometry/size.h"
@@ -38,6 +40,11 @@ class OZONE_BASE_EXPORT GLOzone {
 
   // Initializes static debug GL bindings.
   virtual void InitializeDebugGLBindings() = 0;
+
+  virtual void SetDisabledExtensionsPlatform(
+      const std::string& disabled_extensions) = 0;
+
+  virtual bool InitializeExtensionSettingsOneOffPlatform() = 0;
 
   // Clears static GL bindings.
   virtual void ShutdownGL() = 0;
