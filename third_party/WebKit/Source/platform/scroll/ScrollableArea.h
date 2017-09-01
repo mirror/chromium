@@ -381,6 +381,8 @@ class PLATFORM_EXPORT ScrollableArea : public GarbageCollectedMixin {
 
   virtual void ScrollbarFrameRectChanged() {}
 
+  TaskRunnerTimer<ScrollableArea>* GetFadeOverlayScrollbarsTimerForTesting();
+
  protected:
   ScrollableArea();
 
