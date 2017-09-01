@@ -14,6 +14,12 @@ cr.exportPath('settings');
  */
 settings.kMenuCloseDelay = 100;
 
+/**
+ * Name of the language setting is shown uma histogram.
+ * @type {string}
+ */
+const LanguageSettingIsShownUmaName = 'Translate.LanguageSettingsIsShown';
+
 (function() {
 'use strict';
 
@@ -57,6 +63,14 @@ Polymer({
      * @private
      */
     detailLanguage_: Object,
+
+    /**
+     * Whether the language settings list is opened.
+     */
+    languagesOpened_: {
+      type: Boolean,
+      observer: '_onLanguagesOpenedChanged',
+    },
 
     /** @private */
     showAddLanguagesDialog_: Boolean,
@@ -521,6 +535,19 @@ Polymer({
     }
 
     menu.showAt(/** @type {!Element} */ (e.target));
+  },
+
+  /**
+   * @param {boolean} newVal The new value of languagesOpened_.
+   * @param {boolean} oldVal The old value of languagesOpened_.
+   * @private
+   */
+  _onLanguagesOpenedChanged: function(newVal, oldVal) {
+    if (oldVal == false && newVal == true) {
+      chrome.send(
+          'metricsHandler:recordBooleanHistogram',
+          [LanguageSettingIsShownUmaName, true]);
+    }
   },
 
   /**
