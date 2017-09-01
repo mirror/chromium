@@ -1113,7 +1113,10 @@ void ShelfLayoutManager::StartGestureDrag(
   if (CanStartFullscreenAppListDrag(
           gesture_in_screen.details().scroll_y_hint())) {
     gesture_drag_status_ = GESTURE_DRAG_APPLIST_IN_PROGRESS;
-    Shell::Get()->ShowAppList(app_list::kSwipeFromShelf);
+    Shell::Get()->app_list()->Show(
+        display::Screen::GetScreen()
+            ->GetDisplayNearestWindow(shelf_widget_->GetNativeWindow())
+            .id());
     Shell::Get()->app_list()->UpdateYPositionAndOpacity(
         gesture_in_screen.location().y(),
         GetAppListBackgroundOpacityOnShelfOpacity());
@@ -1138,7 +1141,7 @@ void ShelfLayoutManager::UpdateGestureDrag(
     // Dismiss the app list if the shelf changed to vertical alignment during
     // dragging.
     if (!shelf_->IsHorizontalAlignment()) {
-      Shell::Get()->DismissAppList();
+      Shell::Get()->app_list()->Dismiss();
       gesture_drag_amount_ = 0.f;
       gesture_drag_status_ = GESTURE_DRAG_NONE;
       return;
@@ -1256,7 +1259,7 @@ void ShelfLayoutManager::CompleteAppListDrag(
 
 void ShelfLayoutManager::CancelGestureDrag() {
   if (gesture_drag_status_ == GESTURE_DRAG_APPLIST_IN_PROGRESS) {
-    Shell::Get()->DismissAppList();
+    Shell::Get()->app_list()->Dismiss();
   } else {
     gesture_drag_status_ = GESTURE_DRAG_CANCEL_IN_PROGRESS;
     UpdateVisibilityState();
