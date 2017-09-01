@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2de75a16_08853234",
+        "filename": "ios/chrome/browser/ui/authentication/signin_earlgrey_utils.mm",
+        "patchSetId": 17
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-01T11:44:02Z",
+      "side": 1,
+      "message": "This can simply be GREYAssertFalse(ios::SigninManagerFactory::GetForBrowserState(browser_state)-\u003eIsAuthenticated()).",
+      "range": {
+        "startLine": 107,
+        "startChar": 6,
+        "endLine": 107,
+        "endChar": 22
+      },
+      "revId": "f31205883ca40281ee192e03e91b8ed42a084e3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cc69e47_f88bef7d",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_egtest.mm",
+        "patchSetId": 17
+      },
+      "lineNbr": 1137,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-01T11:44:02Z",
+      "side": 1,
+      "message": "I think this test does not care that the identity is managed. Please use fakeIdentity1.",
+      "range": {
+        "startLine": 1137,
+        "startChar": 30,
+        "endLine": 1137,
+        "endChar": 50
+      },
+      "revId": "f31205883ca40281ee192e03e91b8ed42a084e3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73c3e0ae_00650714",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
+        "patchSetId": 17
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-01T11:44:02Z",
+      "side": 1,
+      "message": "Same here: I do not think this needs to be a managed identity. Please use fakeIdentity1.",
+      "range": {
+        "startLine": 318,
+        "startChar": 30,
+        "endLine": 318,
+        "endChar": 50
+      },
+      "revId": "f31205883ca40281ee192e03e91b8ed42a084e3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2c02e6d_312feb78",
+        "filename": "ios/chrome/browser/ui/history/history_ui_egtest.mm",
+        "patchSetId": 17
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-01T11:44:02Z",
+      "side": 1,
+      "message": "This was not a managed identity before. Please use fakeidentity1",
+      "range": {
+        "startLine": 265,
+        "startChar": 30,
+        "endLine": 265,
+        "endChar": 50
+      },
+      "revId": "f31205883ca40281ee192e03e91b8ed42a084e3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
