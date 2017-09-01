@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "194195ec_1125bce8",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1540,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-01T00:21:48Z",
+      "side": 1,
+      "message": "You\u0027re right. Fixed.",
+      "parentUuid": "6cda7d7b_12b18be1",
+      "revId": "0de217c77a2b1a4f7d2859e8db94b3dbbe9a872a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc273747_2aeed504",
         "filename": "ui/accessibility/platform/ax_platform_node_win.cc",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "0de217c77a2b1a4f7d2859e8db94b3dbbe9a872a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9047d40_6b201eb3",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 3394,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-01T00:21:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc273747_2aeed504",
+      "revId": "0de217c77a2b1a4f7d2859e8db94b3dbbe9a872a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
