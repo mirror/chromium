@@ -112,12 +112,6 @@ class CONTENT_EXPORT ServiceWorkerURLLoaderJob : public mojom::URLLoader,
   std::unique_ptr<ServiceWorkerFetchRequest> CreateFetchRequest(
       const ResourceRequest& request);
 
-  // Populates |response_info_| (except for headers) with given |response|.
-  void SaveResponseInfo(const ServiceWorkerResponse& response);
-  // Generates and populates |response.headers|.
-  void SaveResponseHeaders(int status_code,
-                           const std::string& status_text,
-                           const ServiceWorkerHeaderMap& headers);
   // Calls url_loader_client_->OnReceiveResopnse() with |response_head_|.
   // Expected to be called afer saving response info/headers.
   void CommitResponseHeaders();
