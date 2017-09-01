@@ -14,6 +14,7 @@
 
 #include "base/i18n/rtl.h"
 #include "base/memory/ptr_util.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/stl_util.h"
 #include "base/strings/string16.h"
 #include "base/strings/string_split.h"
@@ -45,6 +46,9 @@
 #endif
 
 namespace extensions {
+
+// Name for uma histograms.
+const char kUMALanguageSettingsChanges[] = "Language.LanguageSettingsChanges";
 
 namespace language_settings_private = api::language_settings_private;
 
@@ -273,6 +277,10 @@ LanguageSettingsPrivateEnableLanguageFunction::Run() {
 
   languages.push_back(parameters->language_code);
   translate_prefs->UpdateLanguageList(languages);
+  // UMA logging for changes to language settings.
+  // We want to log this because we're interested in how often users change
+  // their language settings.
+  UMA_HISTOGRAM_BOOLEAN(kUMALanguageSettingsChanges, true);
 
   return RespondNow(NoArguments());
 }
@@ -307,6 +315,10 @@ LanguageSettingsPrivateDisableLanguageFunction::Run() {
 
   languages.erase(it);
   translate_prefs->UpdateLanguageList(languages);
+  // UMA logging for changes to language settings.
+  // We want to log this because we're interested in how often users change
+  // their language settings.
+  UMA_HISTOGRAM_BOOLEAN(kUMALanguageSettingsChanges, true);
 
   return RespondNow(NoArguments());
 }

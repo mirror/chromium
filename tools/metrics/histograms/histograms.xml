@@ -28861,6 +28861,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Language.LanguageSettingsChanges" enum="Boolean">
+  <owner>renjieliu@chromium.org</owner>
+  <summary>
+    Logs everytime users make a change to their language settings. This value
+    will be used to tell us how often users change their language settings
+    (add/remove language, move language up/down).
+  </summary>
+</histogram>
+
 <histogram name="LanguageUsage.AcceptLanguage" enum="LanguageCode">
   <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
   <summary>Accept languages.</summary>
