@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d573b1ac_3604ba33",
+        "filename": "chrome/browser/resources/chromeos/login/arc_terms_of_service.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-09-01T00:40:55Z",
+      "side": 1,
+      "message": "This was my initial fix but this was not reliable and few events could still pass.",
+      "range": {
+        "startLine": 44,
+        "startChar": 9,
+        "endLine": 44,
+        "endChar": 30
+      },
+      "revId": "a7351a0093d2fe9ef8e0da5a7f67f8531baa2bff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
