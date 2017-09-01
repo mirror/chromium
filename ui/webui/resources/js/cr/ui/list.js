@@ -672,6 +672,9 @@ cr.define('cr.ui', function() {
           newCachedItems[newIndex].listIndex = newIndex;
         }
       }
+      if (!('cause' in e)) {
+        e.cause = '';
+      }
       this.cachedItems_ = newCachedItems;
       this.pinnedItem_ = null;
 
@@ -688,7 +691,7 @@ cr.define('cr.ui', function() {
 
       var sm = this.selectionModel;
       sm.adjustLength(e.newLength);
-      sm.adjustToReordering(e.permutation);
+      sm.adjustToReordering(e.permutation, e.cause);
 
       this.endBatchUpdates();
     },

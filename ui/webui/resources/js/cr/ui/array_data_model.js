@@ -375,10 +375,16 @@ cr.define('cr.ui', function() {
       this.dispatchEvent(e);
     },
 
-    dispatchPermutedEvent_: function(permutation) {
+    /**
+     * Create and dispatch a permuted event based on the parameters.
+     * @param {Array<number>} permutation The permutations causing the event.
+     * @param {string=} cause The optional cause of the event.
+     */
+    dispatchPermutedEvent_: function(permutation, cause = '') {
       var e = new Event('permuted');
       e.permutation = permutation;
       e.newLength = this.length;
+      e.cause = cause;
       this.dispatchEvent(e);
     },
 

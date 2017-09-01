@@ -54,6 +54,9 @@ FileListSelectionModel.prototype.onChangeEvent_ = function(event) {
   } else if (selectedIndexes.length >= 2) {
     this.isCheckSelectMode_ = true;
   }
+  if (event.cause && event.cause === 'delete') {
+    this.isCheckSelectMode_ = false;
+  }
 };
 
 /**
