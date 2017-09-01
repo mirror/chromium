@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9051b853_c48a1437",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-09-01T21:31:41Z",
+      "side": 1,
+      "message": "Ok, I added support for {title} as well per other comments",
+      "parentUuid": "6eb33ddd_bedaed19",
+      "range": {
+        "startLine": 12,
+        "startChar": 56,
+        "endLine": 12,
+        "endChar": 61
+      },
+      "revId": "3fb3dfe5f07e28376e94f103fbfb3c7cf95849d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10124fcd_8d4752c2",
         "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/MainActivity.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-01T04:20:36Z",
       "side": 1,
       "message": "I\u0027m a bit confused; I don\u0027t see any code that actually reads the share_target.url_template field from the manifest.json.",
+      "range": {
+        "startLine": 93,
+        "startChar": 73,
+        "endLine": 93,
+        "endChar": 87
+      },
+      "revId": "3fb3dfe5f07e28376e94f103fbfb3c7cf95849d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c9dfd97_46837904",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/MainActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-09-01T21:31:41Z",
+      "side": 1,
+      "message": "That will be a separate CL - this CL focuses exclusively on the webapk shell parts and doesn\u0027t deal with browser or server",
+      "parentUuid": "10124fcd_8d4752c2",
       "range": {
         "startLine": 93,
         "startChar": 73,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7bd550e9_0292d1f3",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/MainActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-09-01T21:31:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ac92275_b58d5c21",
+      "range": {
+        "startLine": 94,
+        "startChar": 66,
+        "endLine": 94,
+        "endChar": 76
+      },
+      "revId": "3fb3dfe5f07e28376e94f103fbfb3c7cf95849d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be0dbd72_328d90d7",
         "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/MainActivity.java",
         "patchSetId": 1
@@ -82,6 +154,24 @@
       "writtenOn": "2017-09-01T04:20:36Z",
       "side": 1,
       "message": "This code won\u0027t replace any of the other placeholders, so a URL template like:\n\n  sharetarget.html?title\u003d{title}\u0026text\u003d{text}\u0026url\u003d{url}\n\nwill end up as:\n\n  sharetarget.html?title\u003d{title}\u0026text\u003dMy%20Text\u0026url\u003d{url}\n\nWhich contains illegal characters. They should be replaced with the empty string:\n\n  sharetarget.html?title\u003d\u0026text\u003dMy%20Text\u0026url\u003d\n\nEven replacing \"{title}\" and \"{url}\" isn\u0027t sufficient, because we may add more fields in the future, and we\u0027ll want existing implementations to substitute them with \"\", rather than preserve the placeholders.\n\nSorry there isn\u0027t a spec for this yet. I\u0027ll start working on one. In the mean time, you can refer to the C++ implementation:\nhttps://cs.chromium.org/chromium/src/chrome/browser/webshare/share_service_impl.cc (ReplacePlaceholders).",
+      "revId": "3fb3dfe5f07e28376e94f103fbfb3c7cf95849d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d526da63_8edbe5e7",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/MainActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-09-01T21:31:41Z",
+      "side": 1,
+      "message": "Yep, as I said I wanted feedback on how that\u0027s supposed to be handled. I see that per the previous impl, we can just replace them with empty strings which I\u0027ve now doen.",
+      "parentUuid": "be0dbd72_328d90d7",
       "revId": "3fb3dfe5f07e28376e94f103fbfb3c7cf95849d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "5d730098_5291dfaa",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/MainActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-09-01T21:31:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34ec8102_8241804f",
+      "range": {
+        "startLine": 105,
+        "startChar": 45,
+        "endLine": 105,
+        "endChar": 57
+      },
+      "revId": "3fb3dfe5f07e28376e94f103fbfb3c7cf95849d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f74032a8_ac0c9689",
         "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/MainActivity.java",
         "patchSetId": 1
@@ -122,6 +236,24 @@
       "writtenOn": "2017-08-31T20:43:16Z",
       "side": 1,
       "message": "I think that we should add WebApkConstants.EXTRA_SOURCE\u003d\"org.chromium.chrome.browser.webapk_source\"\n\nMainActivity.java will populate the extra with a string and WebApkInfo will convert the string to a UMA value.\nMainActivity.java will forward all of the extras that it gets to WebappLauncherActivity. This way if Chrome sets an extra in the MainActivity.java launch intent, WebappLauncherActivity.java will get that extra\n\nWebappLauncherActivity will have to read both org.chromium.chrome.browser.webapp_source and org.chromium.chrome.browser.webapk_source\n\nWe should be able to make MainActivity.java no longer send the WebApkConstants.EXTRA_FORCE_NAVIGATION extra",
+      "revId": "3fb3dfe5f07e28376e94f103fbfb3c7cf95849d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7491d08d_0315c9e5",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/MainActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-09-01T21:31:41Z",
+      "side": 1,
+      "message": "I\u0027ll get back to this. I\u0027m not sure it\u0027s worth introducing another source attribute (or at least if we do it should not bee org.chromium.chrome.browser.webapk_source - should probably be more neutral). But that will be a separate patchset just focused on cleanup",
+      "parentUuid": "f74032a8_ac0c9689",
       "revId": "3fb3dfe5f07e28376e94f103fbfb3c7cf95849d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -157,6 +289,24 @@
       "side": 1,
       "message": "What is this file? It looks like not-quite-a-web-app-manifest.\n\nIn a Web App Manifest, this should be \"share_target\": {\"url_template\": \"...\"}. See https://wicg.github.io/web-share-target/demos/manifest.json.\n\nurl_template in the Web App Manifest has to be a relative URL, relative to the manifest URL\u0027s directory. So this looks fine to me.\n\nCould you include \"title\u003d{title}\u0026text\u003d{text}\u0026url\u003d{url}\" to make it more realistically match a real manifest (even if you currently don\u0027t deal with title and url)?",
       "parentUuid": "33ce08ec_571a54cd",
+      "revId": "3fb3dfe5f07e28376e94f103fbfb3c7cf95849d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d84eee7_bf00ddd1",
+        "filename": "chrome/android/webapk/shell_apk/unbound_manifest_config.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-09-01T21:31:41Z",
+      "side": 1,
+      "message": "this file is just a dictionary used to expand the webapk template. it allows us to make testing apks (notably the \"unbound_webapk\" and \"webapk\" targets) for local testing without using the server. So it doesn\u0027t need to be spec-compliant, it\u0027s just dictionary values for the shell_apks android manifest template and mirrors somewhat what the server may do.",
+      "parentUuid": "9cf78535_dd8d4aa9",
       "revId": "3fb3dfe5f07e28376e94f103fbfb3c7cf95849d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
