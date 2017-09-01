@@ -1,0 +1,164 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c63ff8d_b5201ec6",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 845,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-01T08:12:25Z",
+      "side": 1,
+      "message": "No need for GetNSStringWithFixup here, the string is iOS-only (as implied by the resource name IDS_IOS_*). The function GetNSStringWithFixup just remove the \u0026 characters from the string that are used to mark accelerators in Windows strings, so it is not necessary to use it for strings that are not shared with Windows.\n\nShould just use l10n_util::GetNSString() (though the code predates the CL, so it can be done in a separate CL).",
+      "range": {
+        "startLine": 845,
+        "startChar": 32,
+        "endLine": 845,
+        "endChar": 52
+      },
+      "revId": "c67da227a4eb079ed4181dfb68fd251bd0017e93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a57de454_502e54d0",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 850,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-01T08:12:25Z",
+      "side": 1,
+      "message": "ditto, iOS-only string, so should just use l10n_util::GetNSString() (though the code predates the CL, so it can be done in a separate CL).",
+      "range": {
+        "startLine": 850,
+        "startChar": 45,
+        "endLine": 850,
+        "endChar": 65
+      },
+      "revId": "c67da227a4eb079ed4181dfb68fd251bd0017e93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "804f5ada_0c3425c9",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 862,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-01T08:12:25Z",
+      "side": 1,
+      "message": "This is a localized string, so I\u0027m not sure that .upperCaseString is the correct method as it does not take the current locale in consideration. From the documentation:\n\n\u003e This property performs the canonical (non-localized) mapping. It is suitable for programming operations that require stable results not depending on the current locale.\n\u003e \n\u003e Important\n\u003e \u003e When working with text that’s presented to the user, use localizedUppercaseString or uppercaseStringWithLocale: instead.\n\nSo I think this should have used .localizedUppercaseString instead (though the code predates the CL, so it can be done in a separate CL).",
+      "revId": "c67da227a4eb079ed4181dfb68fd251bd0017e93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "427d7781_c233be98",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-01T08:12:25Z",
+      "side": 1,
+      "message": "Since you have modified this file, I would have asked to change this to use std::make_unique here too.",
+      "revId": "c67da227a4eb079ed4181dfb68fd251bd0017e93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8425182_f597a2f3",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-01T08:12:25Z",
+      "side": 1,
+      "message": "Avoid naked \"new\" and prefer to use std::make_unique instead:\n\n  _syncedSessionsObserver \u003d std::make_unique\u003c\n      synced_sessions::SyncedSessionsObserverBridge\u003e(self, _browserState));",
+      "revId": "c67da227a4eb079ed4181dfb68fd251bd0017e93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30a11221_927c342e",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-01T08:12:25Z",
+      "side": 1,
+      "message": "Why call this method -showLoadingSpinnerBackground and call the method to hide it -hideLoadingSpinner? Why not -showLoadingSpinner and -hideLoadingSpinner or -showLoadingSpinnerBackground and -hideLoadingSpinnerBackground?",
+      "range": {
+        "startLine": 537,
+        "startChar": 12,
+        "endLine": 537,
+        "endChar": 40
+      },
+      "revId": "c67da227a4eb079ed4181dfb68fd251bd0017e93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0d97930_0e852d80",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-01T08:12:25Z",
+      "side": 1,
+      "message": "I would not say those methods are \"Exposed to the SyncedSessionsObserver\" instead they are the API required to conform to the SyncedSessionsObserver protocol, so the pragma should have been:\n\n  #pragma mark - SyncedSessionsObserver",
+      "range": {
+        "startLine": 695,
+        "startChar": 14,
+        "endLine": 695,
+        "endChar": 52
+      },
+      "revId": "c67da227a4eb079ed4181dfb68fd251bd0017e93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4254029_bcfa94ff",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-01T08:12:25Z",
+      "side": 1,
+      "message": "nit:\n\n  // Nothing to do.",
+      "revId": "c67da227a4eb079ed4181dfb68fd251bd0017e93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
