@@ -5,6 +5,7 @@
 #ifndef BASE_TEST_HISTOGRAM_TESTER_H_
 #define BASE_TEST_HISTOGRAM_TESTER_H_
 
+#include <stdint.h>
 #include <map>
 #include <memory>
 #include <ostream>
@@ -15,6 +16,7 @@
 #include "base/macros.h"
 #include "base/metrics/histogram.h"
 #include "base/metrics/histogram_base.h"
+#include "base/metrics/record_histogram_checker.h"
 #include "base/time/time.h"
 
 namespace base {
@@ -134,6 +136,8 @@ class HistogramTester {
   // Used to determine the histogram changes made during this instance's
   // lifecycle.
   std::map<std::string, std::unique_ptr<HistogramSamples>> histograms_snapshot_;
+
+  std::unique_ptr<RecordHistogramChecker> backup_record_checker_;
 
   DISALLOW_COPY_AND_ASSIGN(HistogramTester);
 };
