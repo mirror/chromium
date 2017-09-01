@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2156a7c_7b8c339e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentApp.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2017-09-01T17:40:24Z",
+      "side": 1,
+      "message": "I added this function to fix test error.\nThis is necessary to make canMakePayment() return true always for testing purpose.\nBecause the UI test doesn\u0027t have actual SW code. So, we can not respond with |true|.\nAccording to your PR, if SW doesn\u0027t handle CanMakePaymentEvent, then return |false| by default.\n\nDo you agree with this?\n\nFYI, all tests are passed in my test CL:\n  https://chromium-review.googlesource.com/c/chromium/src/+/533194",
+      "revId": "9278d2adafdfd7dcca0311a96d4189c14995075b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
