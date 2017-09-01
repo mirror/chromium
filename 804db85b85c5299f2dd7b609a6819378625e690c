@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a1f68f7_472be873",
+        "filename": "chrome/browser/android/tab_android.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-01T08:34:15Z",
+      "side": 1,
+      "message": "Nit: |sender| isn\u0027t very accurate anymore, and I think you can just inline it now that the RenderViewHost is the interesting object.",
+      "range": {
+        "startLine": 722,
+        "startChar": 15,
+        "endLine": 722,
+        "endChar": 21
+      },
+      "revId": "804db85b85c5299f2dd7b609a6819378625e690c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
