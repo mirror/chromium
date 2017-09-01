@@ -16,7 +16,6 @@ import android.support.annotation.IntDef;
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.chrome.R;
-import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.ui.base.LocalizationUtils;
 
@@ -75,8 +74,7 @@ public class ThumbnailGradient {
     }
 
     private static boolean isEnabled() {
-        return ChromeFeatureList.isEnabled(ChromeFeatureList.CONTENT_SUGGESTIONS_LARGE_THUMBNAIL)
-                || FeatureUtilities.isChromeHomeModernEnabled();
+        return FeatureUtilities.isChromeHomeModernEnabled();
     }
 
     /**

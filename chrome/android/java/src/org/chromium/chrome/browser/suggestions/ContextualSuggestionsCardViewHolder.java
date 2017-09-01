@@ -6,13 +6,11 @@ package org.chromium.chrome.browser.suggestions;
 
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ntp.cards.NewTabPageViewHolder;
 import org.chromium.chrome.browser.ntp.snippets.SnippetArticle;
-import org.chromium.chrome.browser.widget.displaystyle.DisplayStyleObserver;
 import org.chromium.chrome.browser.widget.displaystyle.DisplayStyleObserverAdapter;
 import org.chromium.chrome.browser.widget.displaystyle.HorizontalDisplayStyle;
 import org.chromium.chrome.browser.widget.displaystyle.UiConfig;
@@ -27,7 +25,6 @@ public class ContextualSuggestionsCardViewHolder extends NewTabPageViewHolder {
     private static final double CARD_WIDTH_TO_WINDOW_SIZE_RATIO = 0.9;
     private final SuggestionsBinder mSuggestionsBinder;
     private final SuggestionsUiDelegate mUiDelegate;
-    private final UiConfig mUiConfig;
     private final DisplayStyleObserverAdapter mDisplayStyleObserver;
     private SnippetArticle mSuggestion;
 
@@ -36,30 +33,20 @@ public class ContextualSuggestionsCardViewHolder extends NewTabPageViewHolder {
         super(LayoutInflater.from(recyclerView.getContext())
                         .inflate(R.layout.contextual_suggestions_card, recyclerView, false));
 
-        mUiConfig = uiConfig;
         mUiDelegate = uiDelegate;
         mSuggestionsBinder = new SuggestionsBinder(itemView, uiDelegate);
 
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO(fhorschig): Add metrics to be recorded for the contextual suggestions.
-                int windowDisposition = WindowOpenDisposition.CURRENT_TAB;
-                mUiDelegate.getNavigationDelegate().navigateToSuggestionUrl(
-                        windowDisposition, mSuggestion.mUrl);
-            }
+        itemView.setOnClickListener(v -> {
+            // TODO(fhorschig): Add metrics to be recorded for the contextual suggestions.
+            int windowDisposition = WindowOpenDisposition.CURRENT_TAB;
+            mUiDelegate.getNavigationDelegate().navigateToSuggestionUrl(
+                    windowDisposition, mSuggestion.mUrl);
         });
 
         mDisplayStyleObserver =
-                new DisplayStyleObserverAdapter(itemView, uiConfig, new DisplayStyleObserver() {
-                    @Override
-                    public void onDisplayStyleChanged(UiConfig.DisplayStyle newDisplayStyle) {
-                        updateCardWidth(newDisplayStyle);
-                    }
-                });
+                new DisplayStyleObserverAdapter(itemView, uiConfig, this ::updateCardWidth);
         mSuggestionsBinder.updateFieldsVisibility(/* showHeadline = */ true,
-                /* showDescription = */ false, /* showThumbnail = */ true,
-                /* showThumbnailVideoOverlay = */ false, /* headerMaxLines = */ 3);
+                /* showThumbnail = */ true, /* showThumbnailVideoOverlay = */ false);
     }
 
     public void onBindViewHolder(SnippetArticle suggestion) {
