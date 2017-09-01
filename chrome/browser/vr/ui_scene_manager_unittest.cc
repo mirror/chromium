@@ -158,6 +158,7 @@ TEST_F(UiSceneManagerTest, ToastTransience) {
 
   manager_->SetWebVrMode(true, true);
   EXPECT_TRUE(IsVisible(kExclusiveScreenToastViewportAware));
+
   task_runner_->FastForwardUntilNoTasksRemain();
   EXPECT_FALSE(IsVisible(kExclusiveScreenToastViewportAware));
 
