@@ -24,6 +24,98 @@
 
 namespace blink {
 
+float Float16ToFloat(const uint16_t& f16) {
+  union FloatUIntUnion {
+    uint32_t fUInt;
+    float fFloat;
+  };
+  FloatUIntUnion magic = {126 << 23};
+  FloatUIntUnion o;
+  if (((f16 >> 10) & 0x001f) == 0) {
+    o.fUInt = magic.fUInt + (f16 & 0x03ff);
+    o.fFloat -= magic.fFloat;
+  } else {
+    o.fUInt = (f16 & 0x03ff) << 13;
+    if (((f16 >> 10) & 0x001f) == 0x1f)
+      o.fUInt |= (255 << 23);
+    else
+      o.fUInt |= ((127 - 15 + ((f16 >> 10) & 0x001f)) << 23);
+  }
+  o.fUInt |= ((f16 >> 15) << 31);
+  return o.fFloat;
+}
+
+static void PrintSkImage(sk_sp<SkImage> input, int errorId = 0) {
+  // find out the color space
+  SkColorSpace* color_space = input->colorSpace();
+  std::stringstream cstr;
+  if (!color_space)
+    cstr << "Legacy Color Space";
+  else if (SkColorSpace::Equals(color_space, SkColorSpace::MakeSRGB().get()))
+    cstr << "SRGB Color Space";
+  else if (SkColorSpace::Equals(color_space,
+                                SkColorSpace::MakeSRGBLinear().get()))
+    cstr << "Linear SRGB Color Space";
+  else if (SkColorSpace::Equals(
+               color_space,
+               SkColorSpace::MakeRGB(SkColorSpace::kLinear_RenderTargetGamma,
+                                     SkColorSpace::kDCIP3_D65_Gamut)
+                   .get()))
+    cstr << "P3 Color Space";
+  else if (SkColorSpace::Equals(
+               color_space,
+               SkColorSpace::MakeRGB(SkColorSpace::kLinear_RenderTargetGamma,
+                                     SkColorSpace::kRec2020_Gamut)
+                   .get()))
+    cstr << "Rec2020 Color Space";
+  cstr << ", ";
+  if (input->alphaType() == kPremul_SkAlphaType)
+    cstr << "Premul";
+  else
+    cstr << "Unpremul";
+
+  LOG(ERROR) << "Printing SkImage @" << errorId << " :" << input->width() << ","
+             << input->height() << " @ " << cstr.str();
+  SkColorType color_type = kN32_SkColorType;
+  if (input->colorSpace() && input->refColorSpace()->gammaIsLinear())
+    color_type = kRGBA_F16_SkColorType;
+  SkImageInfo info =
+      SkImageInfo::Make(input->width(), input->height(), color_type,
+                        input->alphaType(), input->refColorSpace());
+
+  std::stringstream str;
+  if (info.bytesPerPixel() == 4) {
+    std::unique_ptr<uint8_t[]> read_pixels(
+        new uint8_t[input->width() * input->height() * info.bytesPerPixel()]());
+    input->readPixels(info, read_pixels.get(),
+                      input->width() * info.bytesPerPixel(), 0, 0);
+
+    for (int i = 0; i < input->width() * input->height(); i++) {
+      if (i > 0 && i % input->width() == 0)
+        str << "\n";
+      str << "[";
+      for (int j = 0; j < info.bytesPerPixel(); j++)
+        str << (int)(read_pixels[i * info.bytesPerPixel() + j]) << ", ";
+      str << " ]";
+    }
+  } else {
+    std::unique_ptr<uint16_t[]> read_pixels(
+        new uint16_t[input->width() * input->height() * 4]());
+    input->readPixels(info, read_pixels.get(),
+                      input->width() * info.bytesPerPixel(), 0, 0);
+
+    for (int i = 0; i < input->width() * input->height(); i++) {
+      if (i > 0 && i % input->width() == 0)
+        str << "\n";
+      str << "[";
+      for (int j = 0; j < 4; j++)
+        str << Float16ToFloat(read_pixels[i * 4 + j]) << ", ";
+      str << " ]";
+    }
+  }
+  LOG(ERROR) << str.str();
+}
+
 OffscreenCanvasRenderingContext2D::~OffscreenCanvasRenderingContext2D() {}
 
 OffscreenCanvasRenderingContext2D::OffscreenCanvasRenderingContext2D(
@@ -113,6 +205,7 @@ OffscreenCanvasRenderingContext2D::TransferToStaticBitmapImage() {
     return nullptr;
   RefPtr<StaticBitmapImage> image = GetImageBuffer()->NewImageSnapshot(
       kPreferAcceleration, kSnapshotReasonTransferToImageBitmap);
+  PrintSkImage(image->PaintImageForCurrentFrame().GetSkImage(), 208);
 
   image->SetOriginClean(this->OriginClean());
   return image;
@@ -132,6 +225,7 @@ ImageBitmap* OffscreenCanvasRenderingContext2D::TransferToImageBitmap(
         true);  // Flush pending ops.
   }
   host()->DiscardImageBuffer();  // "Transfer" means no retained buffer.
+  PrintSkImage(image->PaintImageForCurrentFrame().GetSkImage(), 228);
   return ImageBitmap::Create(std::move(image));
 }
 
@@ -142,6 +236,7 @@ RefPtr<StaticBitmapImage> OffscreenCanvasRenderingContext2D::GetImage(
     return nullptr;
   RefPtr<StaticBitmapImage> image =
       GetImageBuffer()->NewImageSnapshot(hint, reason);
+  PrintSkImage(image->PaintImageForCurrentFrame().GetSkImage(), 239);
   return image;
 }
 
@@ -151,6 +246,7 @@ ImageData* OffscreenCanvasRenderingContext2D::ToImageData(
     return nullptr;
   RefPtr<StaticBitmapImage> snapshot =
       GetImageBuffer()->NewImageSnapshot(kPreferNoAcceleration, reason);
+  PrintSkImage(snapshot->PaintImageForCurrentFrame().GetSkImage(), 249);
   ImageData* image_data = nullptr;
   if (snapshot) {
     image_data = ImageData::Create(host()->Size());

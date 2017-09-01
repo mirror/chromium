@@ -93,6 +93,7 @@ void OffscreenCanvas::SetNeutered() {
 ImageBitmap* OffscreenCanvas::transferToImageBitmap(
     ScriptState* script_state,
     ExceptionState& exception_state) {
+  LOG(ERROR) << "OffscreenCanvas::transferToImageBitmap";
   if (is_neutered_) {
     exception_state.ThrowDOMException(
         kInvalidStateError,
@@ -118,8 +119,10 @@ RefPtr<Image> OffscreenCanvas::GetSourceImageForCanvas(
     AccelerationHint hint,
     SnapshotReason reason,
     const FloatSize& size) {
+  LOG(ERROR) << "OffscreenCanvas::GetSourceImageForCanvas";
   if (!context_) {
     *status = kInvalidSourceImageStatus;
+    // zakerinasab
     sk_sp<SkSurface> surface =
         SkSurface::MakeRasterN32Premul(size_.Width(), size_.Height());
     return surface ? StaticBitmapImage::Create(surface->makeImageSnapshot())
@@ -129,6 +132,7 @@ RefPtr<Image> OffscreenCanvas::GetSourceImageForCanvas(
     *status = kZeroSizeCanvasSourceImageStatus;
     return nullptr;
   }
+  LOG(ERROR) << "HERE";
   RefPtr<Image> image = context_->GetImage(hint, reason);
   if (!image) {
     *status = kInvalidSourceImageStatus;
@@ -147,6 +151,7 @@ ScriptPromise OffscreenCanvas::CreateImageBitmap(
     EventTarget&,
     Optional<IntRect> crop_rect,
     const ImageBitmapOptions& options) {
+  LOG(ERROR) << "OffscreenCanvas::CreateImageBitmap";
   return ImageBitmapSource::FulfillImageBitmap(
       script_state,
       IsPaintable() ? ImageBitmap::Create(this, crop_rect, options) : nullptr);
@@ -183,9 +188,12 @@ CanvasRenderingContext* OffscreenCanvas::GetCanvasRenderingContext(
       return nullptr;
     }
   } else {
+    LOG(ERROR) << "Calling factory->Create(this, attributes)...";
     context_ = factory->Create(this, attributes);
   }
 
+  LOG(ERROR) << "Color space: " << context_->ColorSpaceAsString();
+  LOG(ERROR) << "Pixel format: " << context_->PixelFormatAsString();
   return context_.Get();
 }
 
@@ -249,13 +257,20 @@ ImageBuffer* OffscreenCanvas::GetOrCreateImageBuffer() {
         context_->CreationAttributes().hasAlpha() ? kNonOpaque : kOpaque;
     std::unique_ptr<ImageBufferSurface> surface;
     if (RuntimeEnabledFeatures::Accelerated2dCanvasEnabled()) {
-      surface.reset(
-          new AcceleratedImageBufferSurface(surface_size, opacity_mode));
+      LOG(ERROR) << "Creating AcceleratedImageBufferSurface...";
+      LOG(ERROR) << "Color space: " << context_->ColorSpaceAsString();
+      LOG(ERROR) << "Pixel format: " << context_->PixelFormatAsString();
+      surface.reset(new AcceleratedImageBufferSurface(
+          surface_size, opacity_mode, context_->color_params()));
     }
 
     if (!surface || !surface->IsValid()) {
+      LOG(ERROR) << "Creating UnacceleratedImageBufferSurface...";
+      LOG(ERROR) << "Color space: " << context_->ColorSpaceAsString();
+      LOG(ERROR) << "Pixel format: " << context_->PixelFormatAsString();
       surface.reset(new UnacceleratedImageBufferSurface(
-          surface_size, opacity_mode, kInitializeImagePixels));
+          surface_size, opacity_mode, kInitializeImagePixels,
+          context_->color_params()));
     }
 
     image_buffer_ = ImageBuffer::Create(std::move(surface));
