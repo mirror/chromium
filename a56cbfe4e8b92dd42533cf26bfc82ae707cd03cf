@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "080c82c1_ed7b5acf",
+        "filename": "ash/palette_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-09-01T19:28:03Z",
+      "side": 1,
+      "message": "Yes. OnceCallback makes things cleaner.",
+      "parentUuid": "53e86f7e_ecbcb70c",
+      "revId": "a56cbfe4e8b92dd42533cf26bfc82ae707cd03cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23b3de56_53227882",
         "filename": "chrome/browser/ui/ash/palette_delegate_chromeos.cc",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a51f3ccc_527430f1",
+        "filename": "chrome/browser/ui/ash/palette_delegate_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-09-01T19:28:03Z",
+      "side": 1,
+      "message": "changed to std::move(...).Run()",
+      "parentUuid": "23b3de56_53227882",
+      "revId": "a56cbfe4e8b92dd42533cf26bfc82ae707cd03cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2346500d_403595b9",
         "filename": "chrome/browser/ui/ash/palette_delegate_chromeos.cc",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-31T23:16:42Z",
       "side": 1,
       "message": "Q: Can this be passed into the VoiceInteractionSelectionObserver constructor? If not, document how/why ShowMetalayer() can be called multiple times with different done callbacks.",
+      "revId": "a56cbfe4e8b92dd42533cf26bfc82ae707cd03cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cad316dc_ddd3f532",
+        "filename": "chrome/browser/ui/ash/palette_delegate_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-09-01T19:28:03Z",
+      "side": 1,
+      "message": "ShowMetalayer can indeed be called multiple times, and at this point we don\u0027t know from where this is happening and whether the callback is guaranteed to be the same. However migrating to OnceCallback makes reusing the callback impossible.",
+      "parentUuid": "2346500d_403595b9",
       "revId": "a56cbfe4e8b92dd42533cf26bfc82ae707cd03cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
