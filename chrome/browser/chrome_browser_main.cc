@@ -1509,6 +1509,16 @@ int ChromeBrowserMainParts::PreMainMessageLoopRunImpl() {
 
   std::string try_chrome =
       parsed_command_line().GetSwitchValueASCII(switches::kTryChromeAgain);
+
+  // The TryChromeDialog may be aborted by a rendezvous from another browser
+  // process (e.g., a launch via Chrome's taskbar icon or somesuch). In this
+  // case, browser startup should continue without processing the original
+  // command line (the one with --try-chrome-again), but rather with the command
+  // line from the other process (handled in
+  // ProcessSingletonNotificationCallback thanks to the ProcessSingleton). This
+  // here variable is cleared in that particular case, leading to a bypass of
+  // the StartupBrowserCreator.
+  bool process_command_line = true;
   if (!try_chrome.empty()) {
 #if defined(OS_WIN)
     // Setup.exe has determined that we need to run a retention experiment
@@ -1519,7 +1529,7 @@ int ChromeBrowserMainParts::PreMainMessageLoopRunImpl() {
     base::StringToInt(try_chrome, &try_chrome_int);
     TryChromeDialog::Result answer = TryChromeDialog::Show(
         try_chrome_int,
-        base::Bind(&ChromeProcessSingleton::SetActiveModalDialog,
+        base::Bind(&ChromeProcessSingleton::SetModalDialogNotificationHandler,
                    base::Unretained(process_singleton_.get())));
     switch (answer) {
       case TryChromeDialog::NOT_NOW:
@@ -1531,6 +1541,9 @@ int ChromeBrowserMainParts::PreMainMessageLoopRunImpl() {
         browser_creator_->set_welcome_back_page(
             StartupBrowserCreator::WelcomeBackPage::kWelcomeWin10);
       case TryChromeDialog::OPEN_CHROME_DEFAULT:
+        break;
+      case TryChromeDialog::OPEN_CHROME_DEFER:
+        process_command_line = false;
         break;
     }
 #else
@@ -1801,8 +1814,11 @@ int ChromeBrowserMainParts::PreMainMessageLoopRunImpl() {
 
   // This step is costly and is already measured in
   // Startup.StartupBrowserCreator_Start.
-  const bool started = browser_creator_->Start(
-      parsed_command_line(), base::FilePath(), profile_, last_opened_profiles);
+  // See the comment above for an explanation of |process_command_line|.
+  const bool started =
+      !process_command_line ||
+      browser_creator_->Start(parsed_command_line(), base::FilePath(), profile_,
+                              last_opened_profiles);
   const base::TimeTicks start_time_step3 = base::TimeTicks::Now();
   if (started) {
 #if defined(OS_WIN) || (defined(OS_LINUX) && !defined(OS_CHROMEOS))
