@@ -176,4 +176,8 @@ void ScopedOverviewAnimationSettings::AddObserver(
   animation_settings_->AddObserver(observer);
 }
 
+void ScopedOverviewAnimationSettings::CacheRenderSurface() {
+  animation_settings_->CacheRenderSurface();
+}
+
 }  // namespace ash

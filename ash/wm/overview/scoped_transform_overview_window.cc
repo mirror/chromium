@@ -25,6 +25,7 @@
 #include "ui/gfx/transform_util.h"
 #include "ui/views/widget/widget.h"
 #include "ui/wm/core/coordinate_conversion.h"
+#include "ui/wm/core/transient_window_manager.h"
 #include "ui/wm/core/window_util.h"
 
 namespace ash {
@@ -201,9 +202,13 @@ void ScopedTransformOverviewWindow::BeginScopedAnimation(
     OverviewAnimationType animation_type,
     ScopedAnimationSettings* animation_settings) {
   for (auto* window : GetTransientTreeIterator(GetOverviewWindow())) {
-    animation_settings->push_back(
+    std::unique_ptr<ScopedOverviewAnimationSettings> settings =
         base::MakeUnique<ScopedOverviewAnimationSettings>(animation_type,
-                                                          window));
+                                                          window);
+    // Only cache the parent window layer.
+    if (!::wm::TransientWindowManager::Get(window)->transient_parent())
+      settings->CacheRenderSurface();
+    animation_settings->push_back(std::move(settings));
   }
 }
 

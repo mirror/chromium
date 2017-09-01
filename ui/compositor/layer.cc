@@ -113,7 +113,8 @@ Layer::Layer()
       owner_(NULL),
       cc_layer_(NULL),
       device_scale_factor_(1.0f),
-      cache_render_surface_requests_(0) {
+      cache_render_surface_requests_(0),
+      paint_defferred_(false) {
   CreateCcLayer();
 }
 
@@ -141,7 +142,8 @@ Layer::Layer(LayerType type)
       owner_(NULL),
       cc_layer_(NULL),
       device_scale_factor_(1.0f),
-      cache_render_surface_requests_(0) {
+      cache_render_surface_requests_(0),
+      paint_defferred_(false) {
   CreateCcLayer();
 }
 
@@ -841,6 +843,13 @@ bool Layer::SchedulePaint(const gfx::Rect& invalid_rect) {
       type_ == LAYER_NINE_PATCH || (!delegate_ && !mailbox_.IsValid()))
     return false;
 
+  if (paint_defferred_ && content_layer_) {
+    deferred_paint_region_.Union(invalid_rect);
+    if (layer_mask_)
+      layer_mask_->deferred_paint_region_.Union(invalid_rect);
+    return false;
+  }
+
   damaged_region_.Union(invalid_rect);
   ScheduleDraw();
 
@@ -858,6 +867,9 @@ void Layer::ScheduleDraw() {
 }
 
 void Layer::SendDamagedRects() {
+  if (!paint_defferred_)
+    damaged_region_.Union(deferred_paint_region_);
+
   if (damaged_region_.IsEmpty())
     return;
   if (!delegate_ && !mailbox_.IsValid())
@@ -890,6 +902,20 @@ void Layer::SuppressPaint() {
   delegate_ = NULL;
   for (size_t i = 0; i < children_.size(); ++i)
     children_[i]->SuppressPaint();
+}
+
+void Layer::SetPaintDeferred(bool deferred) {
+  if (!delegate_)
+    return;
+  if (paint_defferred_ == deferred)
+    return;
+
+  paint_defferred_ = deferred;
+  for (size_t i = 0; i < children_.size(); ++i)
+    children_[i]->SetPaintDeferred(deferred);
+
+  if (layer_mask_)
+    layer_mask_->SetPaintDeferred(deferred);
 }
 
 void Layer::OnDeviceScaleFactorChanged(float device_scale_factor) {
