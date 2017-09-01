@@ -1519,7 +1519,7 @@ int ChromeBrowserMainParts::PreMainMessageLoopRunImpl() {
     base::StringToInt(try_chrome, &try_chrome_int);
     TryChromeDialog::Result answer = TryChromeDialog::Show(
         try_chrome_int,
-        base::Bind(&ChromeProcessSingleton::SetActiveModalDialog,
+        base::Bind(&ChromeProcessSingleton::SetModalDialogNotificationHandler,
                    base::Unretained(process_singleton_.get())));
     switch (answer) {
       case TryChromeDialog::NOT_NOW:

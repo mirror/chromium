@@ -65,11 +65,11 @@ class TryChromeDialogTest : public DialogBrowserTest {
   // Provide a way to test flavors other than 0.
   TryChromeDialogTest() : dialog_(0) {}
 
-  static void DialogHandler(gfx::NativeWindow active_dialog) {}
+  static void SetHandler(base::Closure handler) {}
 
   // DialogBrowserTest:
   void ShowDialog(const std::string& name) override {
-    dialog_.ShowDialog(base::Bind(&TryChromeDialogTest::DialogHandler),
+    dialog_.ShowDialog(base::Bind(&TryChromeDialogTest::SetHandler),
                        TryChromeDialog::DialogType::MODELESS_FOR_TEST,
                        TryChromeDialog::UsageType::FOR_TESTING);
   }
