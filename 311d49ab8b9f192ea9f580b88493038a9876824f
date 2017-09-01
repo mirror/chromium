@@ -36,6 +36,46 @@
     },
     {
       "key": {
+        "uuid": "13e190f8_3c1e4910",
+        "filename": "base/task_runner.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-01T15:48:10Z",
+      "side": 1,
+      "message": "Where does |task|\u0027s callback run? On TaskRunner as well?\n\nDocument the use case here as well with an example.",
+      "revId": "311d49ab8b9f192ea9f580b88493038a9876824f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d048018_2357ebc1",
+        "filename": "base/task_runner.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-01T15:48:10Z",
+      "side": 1,
+      "message": "Not a fan of this name as PostTaskAndReply is also async.",
+      "range": {
+        "startLine": 142,
+        "startChar": 7,
+        "endLine": 142,
+        "endChar": 28
+      },
+      "revId": "311d49ab8b9f192ea9f580b88493038a9876824f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d17f1b6_5b1a5d34",
         "filename": "base/task_runner_util.h",
         "patchSetId": 6
@@ -81,6 +121,23 @@
       "writtenOn": "2017-08-31T13:59:15Z",
       "side": 1,
       "message": "If it is preferred, I think we can merge those two methods into one with template.\n\ntemplate\u003ctypename Task, typename Relay\u003e\nbool PostTaskAndReplyImpl::PostTaskAndReplyInternal(\n    const tracked_objects::Location\u0026 from_here,\n    Task task,\n    OnceClosure reply) {\n  ...\n}\n\nWDYT? Or should we keep this separated as is?",
+      "revId": "311d49ab8b9f192ea9f580b88493038a9876824f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea9fc4e7_31262876",
+        "filename": "content/public/browser/browser_thread.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-01T15:48:10Z",
+      "side": 1,
+      "message": "Also would need to add it to base/task_scheduler/post_task.h",
       "revId": "311d49ab8b9f192ea9f580b88493038a9876824f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
