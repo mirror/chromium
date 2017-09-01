@@ -59,11 +59,11 @@ void BackgroundFetchContext::InitializeOnUIThread(
     base::Closure quit_closure) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
+  request_context_getter_ = request_context_getter;
   delegate_.reset(new BackgroundFetchDelegateImpl(browser_context_,
                                                   request_context_getter));
 
-  if (quit_closure)
-    quit_closure.Run();
+  quit_closure.Run();
 }
 
 void BackgroundFetchContext::InitializeOnIOThread() {

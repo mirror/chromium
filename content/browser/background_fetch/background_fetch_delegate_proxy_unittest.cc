@@ -7,8 +7,8 @@
 #include <vector>
 
 #include "base/memory/weak_ptr.h"
-#include "content/browser/background_fetch/background_fetch_delegate.h"
 #include "content/browser/background_fetch/background_fetch_test_base.h"
+#include "content/public/browser/background_fetch_delegate.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace content {
@@ -30,7 +30,7 @@ class FakeBackgroundFetchDelegate : public BackgroundFetchDelegate {
       client_->OnDownloadStarted(guid, std::move(response));
       if (complete_downloads_) {
         auto result = base::MakeUnique<BackgroundFetchResult>(
-            base::Time::Now(), base::FilePath(), 10);
+            base::Time::Now(), base::FilePath("foo.txt"), 10);
         BrowserThread::PostTask(
             BrowserThread::IO, FROM_HERE,
             base::BindOnce(&BackgroundFetchDelegate::Client::OnDownloadComplete,

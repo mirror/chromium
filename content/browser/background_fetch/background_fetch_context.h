@@ -58,7 +58,7 @@ class CONTENT_EXPORT BackgroundFetchContext
   // InitializeOnIOThread.
   void InitializeOnUIThread(
       scoped_refptr<net::URLRequestContextGetter> request_context_getter,
-      base::Closure quit_closure = base::Closure());
+      base::Closure quit_closure);
 
   // Finishes initializing the Background Fetch context on the IO thread. Must
   // be called after InitializeOnUIThread.
@@ -123,6 +123,8 @@ class CONTENT_EXPORT BackgroundFetchContext
 
   // |this| is owned, indirectly, by the BrowserContext.
   BrowserContext* browser_context_;
+
+  scoped_refptr<net::URLRequestContextGetter> request_context_getter_;
 
   std::unique_ptr<BackgroundFetchDataManager> data_manager_;
   std::unique_ptr<BackgroundFetchEventDispatcher> event_dispatcher_;

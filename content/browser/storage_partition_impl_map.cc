@@ -582,7 +582,7 @@ void StoragePartitionImplMap::PostCreateInitialization(
                    browser_context_->GetResourceContext()));
 
     partition->GetBackgroundFetchContext()->InitializeOnUIThread(
-        partition->GetURLRequestContext());
+        partition->GetURLRequestContext(), base::BindRepeating([] {}));
 
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
