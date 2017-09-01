@@ -22,6 +22,30 @@
       "revId": "1b7319d50ee8b38cdd0e66053797a69ad225327e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6daf3a2_374d24eb",
+        "filename": "third_party/WebKit/Source/core/editing/Position.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-09-01T21:02:52Z",
+      "side": 1,
+      "message": "I think it would probably be an improvement over the current implementations; yosin@ still wants to update callers to call IsValidFor() directly though so they can pass in the correct document (to catch the case where the Position has been moved to a different document).",
+      "parentUuid": "7568ab92_0e9ee004",
+      "range": {
+        "startLine": 352,
+        "startChar": 0,
+        "endLine": 355,
+        "endChar": 52
+      },
+      "revId": "1b7319d50ee8b38cdd0e66053797a69ad225327e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
