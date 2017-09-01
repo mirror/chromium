@@ -142,10 +142,6 @@ class SearchGeolocationService : public KeyedService {
   // current DSE CCTLD.
   bool IsContentSettingUserSettable();
 
-  // Whether the feature/experiment setup is enabling the consistent search
-  // geolocation system.
-  bool UseConsistentSearchGeolocation();
-
   void SetSearchEngineDelegateForTest(
       std::unique_ptr<SearchEngineDelegate> delegate);
 
