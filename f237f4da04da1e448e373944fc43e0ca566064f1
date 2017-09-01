@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "97f3461d_452546d1",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-01T01:51:56Z",
+      "side": 1,
+      "message": "Sorry for confusion, I didn\u0027t say we don\u0027t need to use VP here.\nMy saying is\n\nconst PwAInFlatTree\u0026 visible_pos \u003d CreateVP().ToPositionWithAffinity();\n\nIn this way, we don\u0027t change current behavior even if it is unexpected, e.g.\nmoving VP from another position.\n\nFor usage of |visible_pos| at L398, recomputing |visible_pos| to hit\npoint may be minimum surprise for users, e.g.\n\n1. Tap word \"abc\" at (x1, y1)\n2. \"selectstart\" move \"abc\" somewhere\n3. Hit Test again for (x1, y1) and get \"xyz\" which was under \"abc\".\n\n398    frame_-\u003eGetTextSuggestionController().HandlePotentialMisspelledWordTap(\n399       visible_pos.DeepEquivalent());\n\n\nBail out when DOM tree or style change is the easiest solution for us,\nbut it may break some existing site.\n\nBecause event path is computed once before dispatch, it is not bad idea\nto follow this way.\n\nI propose\n\nconst VP\u0026 recomputed_vp \u003d CreateVP(visible_pos);\nif (recompute_vp !\u003d visible_pos) {\n  // Surrounding tree at hit point is changed, we stop processing\n  // about hit point.\n  return;\n}\n... call HandlePotentialMisspelledWordTap()",
+      "parentUuid": "2dc92947_0a9e67a4",
+      "revId": "f237f4da04da1e448e373944fc43e0ca566064f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9866cd7f_5a4d310b",
         "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
         "patchSetId": 5
