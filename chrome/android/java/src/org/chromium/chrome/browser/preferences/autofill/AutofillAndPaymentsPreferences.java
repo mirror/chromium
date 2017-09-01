@@ -32,6 +32,7 @@ public class AutofillAndPaymentsPreferences extends PreferenceFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        System.out.println("Parastoo 1: " + getClass().getName());
         PreferenceUtils.addPreferencesFromResource(this, R.xml.autofill_and_payments_preferences);
         getActivity().setTitle(R.string.prefs_autofill_and_payments);
 
