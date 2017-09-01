@@ -14,6 +14,8 @@
 #include "components/user_manager/user_manager.h"
 #include "device/bluetooth/bluetooth_adapter.h"
 
+#include <queue>
+
 class PrefRegistrySimple;
 class PrefService;
 
@@ -84,16 +86,22 @@ class ASH_EXPORT BluetoothPowerController
   void SetBluetoothPower(bool enabled);
 
   // Sets the bluetooth power given the ready adapter.
-  void SetBluetoothPowerOnAdapterReady(bool enabled,
-                                       device::BluetoothAdapter* adapter);
+  void SetBluetoothPowerOnAdapterReady(bool enabled);
+
+  using BluetoothTask = base::OnceClosure;
 
   // If adapter is ready run the task right now, otherwise add the task
   // to the queue which will be executed when bluetooth adapter is ready.
-  void RunBluetoothTaskWhenAdapterReady(
-      base::OnceCallback<void(device::BluetoothAdapter*)> task);
+  void RunBluetoothTaskWhenAdapterReady(BluetoothTask task);
 
-  // Runs all pending bluetooth adapter-dependent tasks.
-  void RunPendingBluetoothTasks(device::BluetoothAdapter* adapter);
+  // Triggers running all pending bluetooth adapter-dependent tasks.
+  void TriggerRunPendingBluetoothTasks();
+
+  // Runs the next pending bluetooth task. This will trigger another
+  // RunNextPendingBluetoothTask when the current task is finished. It will stop
+  // executing the next task when the adapter becomes not present or the queue
+  // has been empty.
+  void RunNextPendingBluetoothTask();
 
   // Sets the pref value based on current bluetooth power state. May defer
   // the operation if bluetooth adapter is not ready yet.
@@ -101,9 +109,7 @@ class ASH_EXPORT BluetoothPowerController
 
   // Sets the pref value based on current bluetooth power state, given the ready
   // bluetooth adapter.
-  void SavePrefValueOnAdapterReady(PrefService* prefs,
-                                   const char* pref_name,
-                                   device::BluetoothAdapter* adapter);
+  void SavePrefValueOnAdapterReady(PrefService* prefs, const char* pref_name);
 
   // Decides whether to apply bluetooth setting based on user type.
   // Returns true if the user type represents a human individual, currently this
@@ -123,8 +129,7 @@ class ASH_EXPORT BluetoothPowerController
 
   // Contains pending tasks which depend on the availability of bluetooth
   // adapter.
-  std::vector<base::OnceCallback<void(device::BluetoothAdapter*)>>
-      pending_bluetooth_tasks_;
+  std::queue<BluetoothTask> pending_bluetooth_tasks_;
 
   // The registrar used to watch prefs changes in the above
   // |active_user_pref_service_| from outside ash.
@@ -132,6 +137,10 @@ class ASH_EXPORT BluetoothPowerController
   // settings controlled by this class from the WebUI settings.
   std::unique_ptr<PrefChangeRegistrar> active_user_pref_change_registrar_;
   std::unique_ptr<PrefChangeRegistrar> local_state_pref_change_registrar_;
+
+  // True indicates that pending_bluetooth_tasks_ is being executed and
+  // waiting for complete callback.
+  bool pending_tasks_busy_ = false;
 
   scoped_refptr<device::BluetoothAdapter> bluetooth_adapter_;
 
