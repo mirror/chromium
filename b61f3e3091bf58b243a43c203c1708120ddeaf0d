@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e13c74de_56df1a61",
+        "filename": "ios/chrome/browser/passwords/password_tab_helper.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-01T16:14:52Z",
+      "side": 1,
+      "message": "I know about that, I also prefer std::make_unique when I can use, however PasswordTabHelper constructor is private (to prevent instantiation directly), so I cannot use std::make_unique here.",
+      "parentUuid": "d81d83d8_0e0bb523",
+      "range": {
+        "startLine": 25,
+        "startChar": 46,
+        "endLine": 25,
+        "endChar": 56
+      },
+      "revId": "b61f3e3091bf58b243a43c203c1708120ddeaf0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0c9cfc2e_28f4b4a3",
         "filename": "ios/chrome/browser/passwords/password_tab_helper.mm",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-01T15:59:15Z",
       "side": 1,
       "message": "Is it critical to destroy everything here and not in the destructor? WebStateUserData would kill the object very soon anyway.\nIf not then we don\u0027t need WebStateObserver.",
+      "range": {
+        "startLine": 61,
+        "startChar": 24,
+        "endLine": 61,
+        "endChar": 41
+      },
+      "revId": "b61f3e3091bf58b243a43c203c1708120ddeaf0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de898c33_c90739fb",
+        "filename": "ios/chrome/browser/passwords/password_tab_helper.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-01T16:14:52Z",
+      "side": 1,
+      "message": "Yes, the cleanup needs to happen in WebStateDestroyed and not in PasswordTabHelper destructor.\n\nThis is because WebState inherits from SupportsUserData, and SupportsUserData only destroy the SupportsUserData::Data in its destructor. This mean that by the point PasswordTabHelper destructor is called, the WebState has already been destroyed and no method should be called on the WebState object.\n\nAlso, WebState asserts that all WebStateObserver have been removed before the WebState destruction completes (i.e. it has a base::ObserverList\u003cweb::WebStateObserver, true\u003e).",
+      "parentUuid": "0c9cfc2e_28f4b4a3",
       "range": {
         "startLine": 61,
         "startChar": 24,
