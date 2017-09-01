@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8f0da38_a9e2bc3e",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-01T08:33:13Z",
+      "side": 1,
+      "message": "I think the caller should just use SWURLLoaderHelper::CraeteFetchRequest directly",
+      "revId": "72988a72779e16aa6dee3e95ddc95b466faf0a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d8525ca_31763c56",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-01T08:33:13Z",
+      "side": 1,
+      "message": "ditto: caller should just call SWURLLoaderHelper diretly",
+      "revId": "72988a72779e16aa6dee3e95ddc95b466faf0a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a4f6652_61d1c544",
+        "filename": "content/common/service_worker/service_worker_url_loader_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-01T08:33:13Z",
+      "side": 1,
+      "message": "I guess this string should be updated to match this function name",
+      "revId": "72988a72779e16aa6dee3e95ddc95b466faf0a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00c36f2f_84ceba66",
+        "filename": "content/common/service_worker/service_worker_url_loader_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-01T08:33:13Z",
+      "side": 1,
+      "message": "for consistency with the other functions, let\u0027s make url_loader_client the last param",
+      "revId": "72988a72779e16aa6dee3e95ddc95b466faf0a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d63a9a56_a15cf2ef",
+        "filename": "content/common/service_worker/service_worker_url_loader_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-01T08:33:13Z",
+      "side": 1,
+      "message": "since this function just needs |body_as_stream-\u003estream|, we should just pass that directly instead:\nmojo::ScopedDataPipeConsumerHandle stream\n\nThen you don\u0027t need it to be a pointer.",
+      "revId": "72988a72779e16aa6dee3e95ddc95b466faf0a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c15c057_57a657bd",
+        "filename": "content/common/service_worker/service_worker_url_loader_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-01T08:33:13Z",
+      "side": 1,
+      "message": "since this class won\u0027t be instantiated, \"Helpers\" would be better than \"Helper\".\n\nI think we can drop \"URL\" from the name, since SubresourceLoader doesn\u0027t have it and probably URLLoader will be renamed MainResourceLoader.\n\nso maybe \"ServiceWorkerLoaderHelpers\"",
+      "revId": "72988a72779e16aa6dee3e95ddc95b466faf0a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "357f5f66_08444406",
+        "filename": "content/common/service_worker/service_worker_url_loader_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-01T08:33:13Z",
+      "side": 1,
+      "message": "I\u0027m starting to feel it\u0027s not worth it to factor this function out. \"Commit\" is a concept that has to do with status_, which this function doesn\u0027t have.\n\nIf we do factor something out, it could be MakeCompletionStatus(error_code, \u0026completion_status), but that would only save 1 line of code. So I\u0027m feeling we should just live with the code duplication now.",
+      "revId": "72988a72779e16aa6dee3e95ddc95b466faf0a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8289334c_a869c915",
+        "filename": "content/common/service_worker/service_worker_url_loader_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-01T08:33:13Z",
+      "side": 1,
+      "message": "You can remove the \"Methods that use this\" comments. We dont\u0027 really use that in the Chromium codebase.",
+      "revId": "72988a72779e16aa6dee3e95ddc95b466faf0a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "992469f8_7bc66edf",
+        "filename": "content/common/service_worker/service_worker_url_loader_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-01T08:33:13Z",
+      "side": 1,
+      "message": "Can you change the comment to describe what the function does?",
+      "revId": "72988a72779e16aa6dee3e95ddc95b466faf0a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "601cede2_19de7cc6",
+        "filename": "content/common/service_worker/service_worker_url_loader_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-01T08:33:13Z",
+      "side": 1,
+      "message": "This function is really setting out_head to a 500 error and then sending that response to |url_loader_client|. Can you change the comment to be more like that?",
+      "revId": "72988a72779e16aa6dee3e95ddc95b466faf0a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30d4f242_ad55f37f",
+        "filename": "content/common/service_worker/service_worker_url_loader_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-01T08:33:13Z",
+      "side": 1,
+      "message": "It\u0027s starting to look like we should align all the names for the things that are sending something to url_loader_client. Maybe:\n\nSendBlobResponseToClient()\nSendErrorResponseToClient()\nSendStreamResponseToClient()",
+      "revId": "72988a72779e16aa6dee3e95ddc95b466faf0a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
