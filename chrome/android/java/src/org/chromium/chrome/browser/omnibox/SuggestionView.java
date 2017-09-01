@@ -82,7 +82,8 @@ class SuggestionView extends ViewGroup {
 
     private final int mDarkTitleColorStandardFont;
     private final int mLightTitleColorStandardFont;
-    private final int mUrlColor;
+    private final int mDarkUrlColor;
+    private final int mLightUrlColor;
 
     private OmniboxResultItem mSuggestionItem;
     private OmniboxSuggestion mSuggestion;
@@ -127,7 +128,8 @@ class SuggestionView extends ViewGroup {
                 ApiCompatibilityUtils.getColor(resources, R.color.url_emphasis_default_text);
         mLightTitleColorStandardFont =
                 ApiCompatibilityUtils.getColor(resources, R.color.url_emphasis_light_default_text);
-        mUrlColor = ApiCompatibilityUtils.getColor(resources, R.color.suggestion_url);
+        mDarkUrlColor = ApiCompatibilityUtils.getColor(resources, R.color.google_blue_700);
+        mLightUrlColor = ApiCompatibilityUtils.getColor(resources, R.color.suggestion_url);
 
         TypedArray a = getContext().obtainStyledAttributes(
                 new int [] {R.attr.selectableItemBackground});
@@ -475,7 +477,8 @@ class SuggestionView extends ViewGroup {
 
         // Force left-to-right rendering for URLs. See UrlBar constructor for details.
         if (isUrl) {
-            textLine.setTextColor(mUrlColor);
+            textLine.setTextColor(
+                    (mUseDarkColors == null || mUseDarkColors) ? mDarkUrlColor : mLightUrlColor);
             ApiCompatibilityUtils.setTextDirection(textLine, TEXT_DIRECTION_LTR);
         } else {
             textLine.setTextColor(getStandardFontColor());
