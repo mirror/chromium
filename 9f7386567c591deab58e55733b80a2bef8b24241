@@ -16,6 +16,24 @@
       "revId": "9f7386567c591deab58e55733b80a2bef8b24241",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90659451_f1f88069",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 847,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-09-01T14:06:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3bf4b30_7b8dfbd3",
+      "revId": "9f7386567c591deab58e55733b80a2bef8b24241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
