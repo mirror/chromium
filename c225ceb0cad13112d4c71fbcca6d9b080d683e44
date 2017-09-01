@@ -22,6 +22,30 @@
       "revId": "c225ceb0cad13112d4c71fbcca6d9b080d683e44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76efbf58_46d8f3fc",
+        "filename": "chrome/browser/password_manager/password_manager_util_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1000389
+      },
+      "writtenOn": "2017-09-01T14:14:13Z",
+      "side": 1,
+      "message": "Thanks Will, let me cook up a CL to fix this.",
+      "parentUuid": "3fa6f16c_d250f6af",
+      "range": {
+        "startLine": 456,
+        "startChar": 43,
+        "endLine": 456,
+        "endChar": 71
+      },
+      "revId": "c225ceb0cad13112d4c71fbcca6d9b080d683e44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
