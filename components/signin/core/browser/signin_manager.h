@@ -92,10 +92,22 @@ class SigninManager : public SigninManagerBase,
   // in-progress credentials to the new profile.
   virtual void CopyCredentialsFrom(const SigninManager& source);
 
-  // Sign a user out, removing the preference, erasing all keys
-  // associated with the user, and canceling all auth in progress.
-  virtual void SignOut(signin_metrics::ProfileSignout signout_source_metric,
-                       signin_metrics::SignoutDelete signout_delete_metric);
+  // Signs a user out, removing the preference, erasing all keys
+  // associated with the authenticated user, and canceling all auth in progress.
+  // On mobile and on desktop pre-DICE, this also removes all accounts from
+  // Chrome by revoking all refresh tokens.
+  // On desktop with DICE enabled, this will not remove all accounts from
+  // Chrome.
+  void SignOut(signin_metrics::ProfileSignout signout_source_metric,
+               signin_metrics::SignoutDelete signout_delete_metric);
+
+  // Signs a user out, removing the preference, erasing all keys
+  // associated with the authenticated user, and canceling all auth in progress.
+  // It removes removes all accounts from Chrome by revoking all refresh
+  // tokens.
+  void SignOutAndRemoveAllAccounts(
+      signin_metrics::ProfileSignout signout_source_metric,
+      signin_metrics::SignoutDelete signout_delete_metric);
 
   // On platforms where SigninManager is responsible for dealing with
   // invalid username policy updates, we need to check this during
@@ -149,9 +161,16 @@ class SigninManager : public SigninManagerBase,
   // Flag saying whether signing out is allowed.
   bool prohibit_signout_;
 
+  virtual void StartSignOut(
+      signin_metrics::ProfileSignout signout_source_metric,
+      signin_metrics::SignoutDelete signout_delete_metric,
+      bool remove_all_accounts);
+
   // The sign out process which is started by SigninClient::PreSignOut()
-  virtual void DoSignOut(signin_metrics::ProfileSignout signout_source_metric,
-                         signin_metrics::SignoutDelete signout_delete_metric);
+  virtual void FinishSignOut(
+      signin_metrics::ProfileSignout signout_source_metric,
+      signin_metrics::SignoutDelete signout_delete_metric,
+      bool remove_all_accounts);
 
  private:
   enum SigninType {
