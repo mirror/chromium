@@ -63,8 +63,12 @@ login.createScreen('ArcTermsOfServiceScreen', 'arc-tos', function() {
       $('arc-tos-legacy').hidden = this.useMDOobe;
       if (this.useMDOobe) {
         $('arc-tos').setAttribute('md-mode', 'true');
+        $('arc-tos-overlay-text').setAttribute('md-mode', 'true');
+        $('arc-tos-overlay-url').setAttribute('md-mode', 'true');
       } else {
         $('arc-tos').removeAttribute('md-mode');
+        $('arc-tos-overlay-text').removeAttribute('md-mode');
+        $('arc-tos-overlay-url').removeAttribute('md-mode');
       }
 
       var closeButtons = document.querySelectorAll('.arc-overlay-close-button');
