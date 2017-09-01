@@ -1,0 +1,204 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bc858fe_0da1a59c",
+        "filename": "DEPS",
+        "patchSetId": 28
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-09-01T08:55:45Z",
+      "side": 1,
+      "message": "Why we need this?",
+      "range": {
+        "startLine": 1,
+        "startChar": 8,
+        "endLine": 1,
+        "endChar": 0
+      },
+      "revId": "005142595f5aa9f632712cae885a00d288f00285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4e5e7fc_978c81ed",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-09-01T08:55:45Z",
+      "side": 1,
+      "message": "DCHECK",
+      "revId": "005142595f5aa9f632712cae885a00d288f00285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdc30339_af2a7d76",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-09-01T08:55:45Z",
+      "side": 1,
+      "message": "We may still got error when resetting and flushing.",
+      "revId": "005142595f5aa9f632712cae885a00d288f00285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff2e2fbd_b89653ed",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-09-01T08:55:45Z",
+      "side": 1,
+      "message": "We use platfrom_error for unknown reason. Or why not convert the input \"error\".",
+      "range": {
+        "startLine": 208,
+        "startChar": 59,
+        "endLine": 208,
+        "endChar": 72
+      },
+      "revId": "005142595f5aa9f632712cae885a00d288f00285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5196c9b6_104d225f",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-09-01T08:55:45Z",
+      "side": 1,
+      "message": "Remove l.221 and call RunNextPendingRequest(). We only keep requests pending on BUSY.",
+      "range": {
+        "startLine": 216,
+        "startChar": 2,
+        "endLine": 216,
+        "endChar": 23
+      },
+      "revId": "005142595f5aa9f632712cae885a00d288f00285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ceba7c42_89a2add0",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-09-01T08:55:45Z",
+      "side": 1,
+      "message": "Why we need DecodeTask, Can we just use Decode?",
+      "revId": "005142595f5aa9f632712cae885a00d288f00285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87967d7e_9ecbddde",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-09-01T08:55:45Z",
+      "side": 1,
+      "message": "PLATFORM_FAILURE since we actually don\u0027t know the reason.",
+      "revId": "005142595f5aa9f632712cae885a00d288f00285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52609a94_aa3472ee",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-09-01T08:55:45Z",
+      "side": 1,
+      "message": "DCHECK",
+      "revId": "005142595f5aa9f632712cae885a00d288f00285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92a89c8c_a41558b0",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-09-01T08:55:45Z",
+      "side": 1,
+      "message": "RunPendingRequests() or RunPendingRequestsUtilBusy();",
+      "range": {
+        "startLine": 65,
+        "startChar": 7,
+        "endLine": 65,
+        "endChar": 28
+      },
+      "revId": "005142595f5aa9f632712cae885a00d288f00285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca1660a4_aac83fbb",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-09-01T08:55:45Z",
+      "side": 1,
+      "message": "nit: How about revised as\n\nDecode(), Flush() or Reset() should not be submitted to VDA while the previous Reset() or Flush() hasn\u0027t be finished yet. Those calls will be queued in |pending_requests_| in a FIFO manner. Those pending calls will be executed once the previous Flush()/Reset() has been finished.",
+      "range": {
+        "startLine": 78,
+        "startChar": 42,
+        "endLine": 78,
+        "endChar": 45
+      },
+      "revId": "005142595f5aa9f632712cae885a00d288f00285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
