@@ -48,6 +48,7 @@ void DisplayItemList::AppendSubsequenceAsJSON(size_t begin_index,
 
     json->SetInteger("index", i);
 
+#ifdef NDEBUG
     bool show_client_debug_name = options & kShowClientDebugName;
 #if DCHECK_IS_ON()
     if (display_item.HasValidClient()) {
@@ -56,6 +57,7 @@ void DisplayItemList::AppendSubsequenceAsJSON(size_t begin_index,
       else
         json->SetBoolean("clientIsAlive", false);
     }
+#endif
 #endif
 
 #ifdef NDEBUG
