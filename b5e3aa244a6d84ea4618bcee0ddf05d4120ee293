@@ -16,6 +16,29 @@
       "revId": "b5e3aa244a6d84ea4618bcee0ddf05d4120ee293",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee5efcea_d4293b2c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/FileSystemMapping.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-09-01T20:21:59Z",
+      "side": 1,
+      "message": "you need to de-dupe entries here to persist the old behavior.\n\nthis._urlPrefixes \u003d Array.from(new Set(Object.keys(this._mappingsForURLPrefix))).sort();",
+      "range": {
+        "startLine": 118,
+        "startChar": 24,
+        "endLine": 118,
+        "endChar": 62
+      },
+      "revId": "b5e3aa244a6d84ea4618bcee0ddf05d4120ee293",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
