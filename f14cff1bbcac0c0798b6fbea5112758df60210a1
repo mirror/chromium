@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "038a4727_ec78f622",
+        "filename": "chrome/browser/resources/settings/route.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-09-01T20:33:38Z",
+      "side": 1,
+      "message": "Since we\u0027re only doing settings, we can omit \u0027chrome://settings\u0027 from every bin, here and below.\n\nAnd just log the path part...",
+      "revId": "f14cff1bbcac0c0798b6fbea5112758df60210a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
