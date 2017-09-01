@@ -126,6 +126,7 @@
 #include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/scroll/ScrollAnimatorBase.h"
 #include "platform/scroll/ScrollbarTheme.h"
+#include "platform/scroll/ScrollbarThemeOverlay.h"
 #include "platform/scroll/ScrollerSizeMetrics.h"
 #include "platform/text/TextStream.h"
 #include "platform/wtf/CheckedNumeric.h"
@@ -480,6 +481,10 @@ void LocalFrameView::ScrollbarManager::SetHasVerticalScrollbar(
   scrollable_area_->SetScrollCornerNeedsPaintInvalidation();
 }
 
+LocalFrameView* LocalFrameView::ScrollbarManager::ScrollableArea() {
+  return ToLocalFrameView(scrollable_area_.Get());
+}
+
 Scrollbar* LocalFrameView::ScrollbarManager::CreateScrollbar(
     ScrollbarOrientation orientation) {
   Element* custom_scrollbar_element = nullptr;
@@ -490,10 +495,16 @@ Scrollbar* LocalFrameView::ScrollbarManager::CreateScrollbar(
         scrollable_area_.Get(), orientation, custom_scrollbar_element);
   }
 
+  ScrollbarTheme* theme = &ScrollbarTheme::GetTheme();
+  if (Page* page = ScrollableArea()->GetFrame().LocalFrameRoot().GetPage()) {
+    if (page->GetSettings().GetForceAndroidOverlayScrollbar())
+      theme = &ScrollbarThemeOverlay::MobileTheme();
+  }
+
   // Nobody set a custom style, so we just use a native scrollbar.
-  return Scrollbar::Create(scrollable_area_.Get(), orientation,
-                           kRegularScrollbar,
-                           &box->GetFrame()->GetPage()->GetChromeClient());
+  return Scrollbar::Create(
+      scrollable_area_.Get(), orientation, kRegularScrollbar,
+      &box->GetFrame()->GetPage()->GetChromeClient(), theme);
 }
 
 void LocalFrameView::ScrollbarManager::DestroyScrollbar(
@@ -4331,31 +4342,51 @@ bool LocalFrameView::AdjustScrollbarExistence(
 }
 
 bool LocalFrameView::NeedsScrollbarReconstruction() const {
-  Scrollbar* scrollbar = HorizontalScrollbar();
-  if (!scrollbar)
-    scrollbar = VerticalScrollbar();
-  if (!scrollbar) {
-    // We have no scrollbar to reconstruct.
+  // We have no scrollbar to reconstruct.
+  if (!HorizontalScrollbar() && VerticalScrollbar()) {
     return false;
   }
+
   Element* style_source = nullptr;
   bool needs_custom = ShouldUseCustomScrollbars(style_source);
-  bool is_custom = scrollbar->IsCustomScrollbar();
-  if (needs_custom != is_custom) {
-    // We have a native scrollbar that should be custom, or vice versa.
+
+  // We have a native scrollbar that should be custom, or vice versa.
+  if (HorizontalScrollbar() &&
+      HorizontalScrollbar()->IsCustomScrollbar() != needs_custom)
     return true;
-  }
-  if (!needs_custom) {
-    // We have a native scrollbar that should remain native.
+
+  if (VerticalScrollbar() &&
+      VerticalScrollbar()->IsCustomScrollbar() != needs_custom)
+    return true;
+
+  if (needs_custom) {
+    // We have a custom scrollbar with a stale m_owner.
+    if (HorizontalScrollbar() &&
+        ToLayoutScrollbar(HorizontalScrollbar())->StyleSource() !=
+            style_source->GetLayoutObject())
+      return true;
+    if (VerticalScrollbar() &&
+        ToLayoutScrollbar(VerticalScrollbar())->StyleSource() !=
+            style_source->GetLayoutObject())
+      return true;
+    // Should use custom scrollbar and nothing should change.
     return false;
   }
-  DCHECK(needs_custom && is_custom);
-  DCHECK(style_source);
-  if (ToLayoutScrollbar(scrollbar)->StyleSource() !=
-      style_source->GetLayoutObject()) {
-    // We have a custom scrollbar with a stale m_owner.
-    return true;
+
+  // Check if native scrollbar should change.
+  ScrollbarTheme* current_theme = &ScrollbarTheme::GetTheme();
+  if (Page* page = GetFrame().LocalFrameRoot().GetPage()) {
+    if (page->GetSettings().GetForceAndroidOverlayScrollbar())
+      current_theme = &ScrollbarThemeOverlay::MobileTheme();
   }
+
+  if (VerticalScrollbar() && current_theme != &VerticalScrollbar()->GetTheme())
+    return true;
+
+  if (HorizontalScrollbar() &&
+      current_theme != &HorizontalScrollbar()->GetTheme())
+    return true;
+
   return false;
 }
 

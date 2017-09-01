@@ -4,8 +4,10 @@
 
 #include "build/build_config.h"
 #include "core/frame/LocalFrameView.h"
+#include "core/frame/VisualViewport.h"
 #include "core/frame/WebLocalFrameImpl.h"
 #include "core/input/EventHandler.h"
+#include "core/inspector/DevToolsEmulator.h"
 #include "core/layout/LayoutView.h"
 #include "core/paint/PaintLayerScrollableArea.h"
 #include "core/testing/sim/SimDisplayItemList.h"
@@ -513,7 +515,7 @@ TEST_P(ParameterizedScrollbarsTest, MouseOverCustomScrollbar) {
       "  left: 0;"
       "  height: 180px;"
       "  width: 180px;"
-      "  overflow-x: auto;"
+      "  overflow-y: auto;"
       "}"
       "::-webkit-scrollbar {"
       "  width: 8px;"
@@ -847,6 +849,57 @@ TEST_P(ParameterizedScrollbarsTest,
 
   // No DCHECK Fails. Issue 676678.
   Compositor().BeginFrame();
+}
+
+// Make sure native scrollbar theme can change by layout.
+TEST_P(ParameterizedScrollbarsTest, NativeScrollbarThemeChangeByLayout) {
+  RuntimeEnabledFeatures::SetOverlayScrollbarsEnabled(false);
+  ScrollbarTheme::SetMockScrollbarsEnabled(false);
+  WebView().Resize(WebSize(200, 200));
+
+  SimRequest request("https://example.com/test.html", "text/html");
+  LoadURL("https://example.com/test.html");
+  request.Complete(
+      "<!DOCTYPE html>"
+      "<style type='text/css'>"
+      "body {"
+      "  height: 10000px;"
+      "}"
+      "</style>");
+
+  Compositor().BeginFrame();
+
+  Document& document = GetDocument();
+
+  ScrollableArea* scrollable_area =
+      document.View()->LayoutViewportScrollableArea();
+  DCHECK(scrollable_area->VerticalScrollbar());
+  DCHECK(!scrollable_area->VerticalScrollbar()->IsCustomScrollbar());
+  DCHECK(!scrollable_area->VerticalScrollbar()->IsOverlayScrollbar());
+  DCHECK(!scrollable_area->VerticalScrollbar()->GetTheme().IsMockTheme());
+
+  // Turn on mobile emulator.
+  WebDeviceEmulationParams params;
+  params.screen_position = WebDeviceEmulationParams::kMobile;
+  WebView().EnableDeviceEmulation(params);
+
+  // For FV Scrollbar, mobile emulator will change them to page VisualViewport
+  // scrollbar layer. For PLSA Scrollbar, mobile emulator will change their
+  // theme.
+  if (GetParam() == 0) {
+    VisualViewport& viewport = WebView().GetPage()->GetVisualViewport();
+    EXPECT_TRUE(viewport.LayerForVerticalScrollbar());
+  } else {
+    EXPECT_TRUE(scrollable_area->LayerForVerticalScrollbar());
+  }
+
+  // Turn off mobile emulator.
+  WebView().DisableDeviceEmulation();
+
+  EXPECT_TRUE(scrollable_area->VerticalScrollbar());
+  EXPECT_FALSE(scrollable_area->VerticalScrollbar()->IsCustomScrollbar());
+  EXPECT_FALSE(scrollable_area->VerticalScrollbar()->IsOverlayScrollbar());
+  EXPECT_FALSE(scrollable_area->VerticalScrollbar()->GetTheme().IsMockTheme());
 }
 
 static void DisableCompositing(WebSettings* settings) {
