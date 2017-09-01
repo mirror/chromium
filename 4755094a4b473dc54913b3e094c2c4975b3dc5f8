@@ -93,6 +93,30 @@
       "revId": "4755094a4b473dc54913b3e094c2c4975b3dc5f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c55f1296_c6cede06",
+        "filename": "content/browser/renderer_host/media/media_stream_dispatcher_host_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 756,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-01T20:48:39Z",
+      "side": 1,
+      "message": "I think the more prudent approach would be to define an additional MSD method (IsSameDeviceAndSession() or similar) and use it to replace SDI::IsEqual().\nAfter that, we can have another where we replace isEqual with IsSameDeviceSession if it turns out that it would yield the same result in all or nearly all cases. If there are a couple of exceptions the could be handled in an ad-hoc fashion.",
+      "parentUuid": "1e79b4cd_056b2884",
+      "range": {
+        "startLine": 756,
+        "startChar": 34,
+        "endLine": 756,
+        "endChar": 41
+      },
+      "revId": "4755094a4b473dc54913b3e094c2c4975b3dc5f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
