@@ -13,19 +13,6 @@ ChromeProcessSingleton::ChromeProcessSingleton(
                          modal_dialog_lock_.AsNotificationCallback()) {
 }
 
-
-ChromeProcessSingleton::ChromeProcessSingleton(
-      const base::FilePath& user_data_dir,
-      const ProcessSingleton::NotificationCallback& notification_callback,
-      const ProcessSingletonModalDialogLock::SetForegroundWindowHandler&
-          set_foreground_window_handler)
-    : startup_lock_(notification_callback),
-      modal_dialog_lock_(startup_lock_.AsNotificationCallback(),
-                         set_foreground_window_handler),
-      process_singleton_(user_data_dir,
-                         modal_dialog_lock_.AsNotificationCallback()) {
-}
-
 ChromeProcessSingleton::~ChromeProcessSingleton() {
 }
 
@@ -38,9 +25,10 @@ void ChromeProcessSingleton::Cleanup() {
   process_singleton_.Cleanup();
 }
 
-void ChromeProcessSingleton::SetActiveModalDialog(
-    gfx::NativeWindow active_dialog) {
-  modal_dialog_lock_.SetActiveModalDialog(active_dialog);
+void ChromeProcessSingleton::SetModalDialogNotificationHandler(
+    base::Closure notification_handler) {
+  modal_dialog_lock_.SetModalDialogNotificationHandler(
+      std::move(notification_handler));
 }
 
 void ChromeProcessSingleton::Unlock() {
