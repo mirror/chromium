@@ -241,7 +241,7 @@ ClassifyTest::~ClassifyTest() {}
 
 ACMatchClassifications ClassifyTest::RunTest(const base::string16& find_text) {
   return ShortcutsProvider::ClassifyAllMatchesInString(
-      find_text, ShortcutsProvider::CreateWordMapForString(find_text), text_,
+      find_text, ShortcutsProvider::CreateWordListForString(find_text), text_,
       matches_);
 }
 
