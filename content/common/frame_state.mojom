@@ -1,0 +1,84 @@
+module content.mojom;
+
+struct FileSystem {
+  string filesystem_url;
+  int64 offset;
+  int64 length;
+  double modification_time;
+}
+
+struct File {
+  string path;
+  int64 offset;
+  int64 length;
+  double modification_time;
+}
+
+union Element {
+  string blob;
+  array<uint8> bytes;
+  File file;
+  FileSystem file_system;
+}
+
+struct RequestBody {
+  repeated Element elements;
+  int64 identifier;
+  bool contains_sensitive_info;
+}
+
+struct HttpBody {
+  string http_content_type;
+  RequestBody request_body;
+  bool contains_passwords;
+}
+
+struct Point {
+  int32 x;
+  int32 y;
+}
+
+struct PointF {
+  double x;
+  double y;
+}
+
+enum ScrollRestorationType {
+  AUTO = 0;
+  MANUAL = 1;
+}
+
+enum WebReferrerPolicy {
+  Always = 1;
+  Default = 2;
+  NoReferrerWhenDowngrade = 3;
+  Never = 4;
+  Origin = 5;
+  OriginWhenCrossOrigin= 6;
+  NoReferrerWhenDowngradeOriginWhenCrossOrigin = 7;
+  SameOrigin = 8;
+  StrictOrigin = 9;
+}
+
+struct Frame {
+  string url_string;
+  string referrer;
+  string target;
+  string state_object;
+  array<string> document_state;
+  ScrollRestorationType scroll_restoration_type;
+  bool did_save_scroll_or_scale_state;
+  PointF visual_viewport_scroll_offset;
+  Point scroll_offset;
+  int64 item_sequence_number;
+  int64 document_sequence_number;
+  double page_scale_factor;
+  WebReferrerPolicy referrer_policy;
+  HttpBody http_body;
+  array<Frame> children;
+}
+
+struct Page {
+  array<string> referenced_files;
+  Frame top;
+}
