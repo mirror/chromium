@@ -22,6 +22,30 @@
       "revId": "7fc9c028ee4616dfc9bf71773244d6e673f59b2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3f2fe2d_57bc3d65",
+        "filename": "chrome/browser/android/preferences/pref_service_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-09-01T07:56:57Z",
+      "side": 1,
+      "message": "It should be an int, thanks for catching this",
+      "parentUuid": "11909af4_06fc1298",
+      "range": {
+        "startLine": 556,
+        "startChar": 2,
+        "endLine": 556,
+        "endChar": 6
+      },
+      "revId": "7fc9c028ee4616dfc9bf71773244d6e673f59b2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
