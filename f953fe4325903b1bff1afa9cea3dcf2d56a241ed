@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7510080_1d75be87",
+        "filename": "services/viz/public/interfaces/compositing/compositor_frame_sink.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-09-01T19:24:57Z",
+      "side": 1,
+      "message": "I think this import is unnecessary too.",
+      "revId": "f953fe4325903b1bff1afa9cea3dcf2d56a241ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e15d7b4f_ecf0ae83",
+        "filename": "services/viz/public/interfaces/compositing/compositor_frame_sink.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-09-01T19:24:57Z",
+      "side": 1,
+      "message": "I think this import is unnecessary.",
+      "revId": "f953fe4325903b1bff1afa9cea3dcf2d56a241ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
