@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ddd4935_637b2215",
+        "filename": "chrome/browser/ui/cocoa/tab_contents/chrome_web_contents_view_delegate_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-09-01T17:30:45Z",
+      "side": 1,
+      "message": "They don\u0027t? Or was it accidental that we never gave it to them and now we\u0027re perpetuating it?",
+      "range": {
+        "startLine": 40,
+        "startChar": 5,
+        "endLine": 41,
+        "endChar": 16
+      },
+      "revId": "91a93c4e75d9956a730114f1275867dfc643288f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eb18ace_28267815",
+        "filename": "content/public/browser/web_contents_view_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-09-01T17:30:45Z",
+      "side": 1,
+      "message": "You need to change the parallel C version too.",
+      "range": {
+        "startLine": 69,
+        "startChar": 16,
+        "endLine": 70,
+        "endChar": 44
+      },
+      "revId": "91a93c4e75d9956a730114f1275867dfc643288f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61f6e6ed_f4d546d5",
+        "filename": "content/shell/browser/renderer_host/shell_render_widget_host_view_mac_delegate.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-09-01T17:30:45Z",
+      "side": 1,
+      "message": "This is the equivalent of |? true : false|. In Mac64, BOOL\u003d\u003dbool, so you can just return the result of CommandLine::HasSwitch().",
+      "range": {
+        "startLine": 20,
+        "startChar": 26,
+        "endLine": 20,
+        "endChar": 36
+      },
+      "revId": "91a93c4e75d9956a730114f1275867dfc643288f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
