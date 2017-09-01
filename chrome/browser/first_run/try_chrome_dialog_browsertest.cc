@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "base/command_line.h"
+#include "base/strings/string_number_conversions.h"
 #include "build/build_config.h"
 #include "chrome/browser/ui/test/test_browser_dialog.h"
 #include "chrome/common/chrome_result_codes.h"
@@ -61,17 +62,18 @@ IN_PROC_BROWSER_TEST_F(TryChromeDialogBrowserTest, ToastCrasher) {}
 // Helper class to display the TryChromeDialog for testing.
 class TryChromeDialogTest : public DialogBrowserTest {
  public:
-  // TODO(ananta)
-  // Provide a way to test flavors other than 0.
-  TryChromeDialogTest() : dialog_(0) {}
+  TryChromeDialogTest() {}
 
   static void DialogHandler(gfx::NativeWindow active_dialog) {}
 
   // DialogBrowserTest:
   void ShowDialog(const std::string& name) override {
-    dialog_.ShowDialog(base::Bind(&TryChromeDialogTest::DialogHandler),
-                       TryChromeDialog::DialogType::MODELESS_FOR_TEST,
-                       TryChromeDialog::UsageType::FOR_TESTING);
+    int group = 0;
+    base::StringToInt(name, &group);
+    TryChromeDialog dialog(group);
+    dialog.ShowDialog(base::Bind(&TryChromeDialogTest::DialogHandler),
+                      TryChromeDialog::DialogType::MODELESS_FOR_TEST,
+                      TryChromeDialog::UsageType::FOR_TESTING);
   }
 
   // content::BrowserTestBase:
@@ -80,12 +82,70 @@ class TryChromeDialogTest : public DialogBrowserTest {
   }
 
  private:
-  TryChromeDialog dialog_;
-
   DISALLOW_COPY_AND_ASSIGN(TryChromeDialogTest);
 };
 
-IN_PROC_BROWSER_TEST_F(TryChromeDialogTest, InvokeDialog_default) {
+IN_PROC_BROWSER_TEST_F(TryChromeDialogTest, InvokeDialog_0) {
+  RunDialog();
+}
+
+IN_PROC_BROWSER_TEST_F(TryChromeDialogTest, InvokeDialog_1) {
+  RunDialog();
+}
+
+IN_PROC_BROWSER_TEST_F(TryChromeDialogTest, InvokeDialog_2) {
+  RunDialog();
+}
+
+IN_PROC_BROWSER_TEST_F(TryChromeDialogTest, InvokeDialog_3) {
+  RunDialog();
+}
+
+IN_PROC_BROWSER_TEST_F(TryChromeDialogTest, InvokeDialog_4) {
+  RunDialog();
+}
+
+IN_PROC_BROWSER_TEST_F(TryChromeDialogTest, InvokeDialog_5) {
+  RunDialog();
+}
+
+IN_PROC_BROWSER_TEST_F(TryChromeDialogTest, InvokeDialog_6) {
+  RunDialog();
+}
+
+IN_PROC_BROWSER_TEST_F(TryChromeDialogTest, InvokeDialog_7) {
+  RunDialog();
+}
+
+IN_PROC_BROWSER_TEST_F(TryChromeDialogTest, InvokeDialog_8) {
+  RunDialog();
+}
+
+IN_PROC_BROWSER_TEST_F(TryChromeDialogTest, InvokeDialog_9) {
+  RunDialog();
+}
+
+IN_PROC_BROWSER_TEST_F(TryChromeDialogTest, InvokeDialog_10) {
+  RunDialog();
+}
+
+IN_PROC_BROWSER_TEST_F(TryChromeDialogTest, InvokeDialog_11) {
+  RunDialog();
+}
+
+IN_PROC_BROWSER_TEST_F(TryChromeDialogTest, InvokeDialog_12) {
+  RunDialog();
+}
+
+IN_PROC_BROWSER_TEST_F(TryChromeDialogTest, InvokeDialog_13) {
+  RunDialog();
+}
+
+IN_PROC_BROWSER_TEST_F(TryChromeDialogTest, InvokeDialog_14) {
+  RunDialog();
+}
+
+IN_PROC_BROWSER_TEST_F(TryChromeDialogTest, InvokeDialog_15) {
   RunDialog();
 }
 

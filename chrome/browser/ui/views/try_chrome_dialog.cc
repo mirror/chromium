@@ -330,5 +330,6 @@ void TryChromeDialog::ButtonPressed(views::Button* sender,
 
   popup_->Close();
   popup_ = nullptr;
-  run_loop_->QuitWhenIdle();
+  if (run_loop_)
+    run_loop_->QuitWhenIdle();
 }
