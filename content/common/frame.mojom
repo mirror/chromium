@@ -92,6 +92,9 @@ struct CreateNewWindowReply {
   int64 cloned_session_storage_namespace_id;
 };
 
+[Native]
+struct DidCommitProvisionalLoadParams;
+
 // Implemented by the frame server (i.e. the browser process). For messages that
 // must be associated with the IPC channel.
 interface FrameHost {
@@ -100,4 +103,8 @@ interface FrameHost {
   // be created.
   [Sync] CreateNewWindow(CreateNewWindowParams params)
       => (CreateNewWindowReply reply);
+
+  // Sent by the renderer when a navigation commits in the frame.
+  DidCommitProvisionalLoad(
+      DidCommitProvisionalLoadParams params);
 };

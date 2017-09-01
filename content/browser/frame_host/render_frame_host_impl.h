@@ -133,6 +133,8 @@ class CONTENT_EXPORT RenderFrameHostImpl
           const ui::AXTreeUpdate&)>;
   using SmartClipCallback = base::Callback<void(const base::string16& text,
                                                 const base::string16& html)>;
+  using DidCommitProvisionalLoadCallback = base::RepeatingCallback<void(
+      const FrameHostMsg_DidCommitProvisionalLoad_Params&)>;
 
   // An accessibility reset is only allowed to prevent very rare corner cases
   // or race conditions where the browser and renderer get out of sync. If
@@ -662,6 +664,12 @@ class CONTENT_EXPORT RenderFrameHostImpl
     return stream_handle_.get();
   }
 
+#if defined(UNIT_TEST)
+  mojo::AssociatedBinding<mojom::FrameHost>& frame_host_binding() {
+    return frame_host_associated_binding_;
+  }
+#endif
+
  protected:
   friend class RenderFrameHostFactory;
 
@@ -731,7 +739,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
   void OnDidFailLoadWithError(const GURL& url,
                               int error_code,
                               const base::string16& error_description);
-  void OnDidCommitProvisionalLoad(const IPC::Message& msg);
   void OnUpdateState(const PageState& state);
   void OnBeforeUnloadACK(
       bool proceed,
@@ -839,6 +846,9 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // mojom::FrameHost
   void CreateNewWindow(mojom::CreateNewWindowParamsPtr params,
                        CreateNewWindowCallback callback) override;
+  void DidCommitProvisionalLoad(
+      std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params>
+          validated_params) override;
 
   void RunCreateWindowCompleteCallback(CreateNewWindowCallback callback,
                                        mojom::CreateNewWindowReplyPtr reply,
