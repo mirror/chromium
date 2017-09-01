@@ -34,11 +34,12 @@ class Widget;
 }
 
 namespace ash {
+class OverviewWindowDragController;
+class SplitViewOverviewOverlay;
+class WindowGrid;
 class WindowSelectorDelegate;
 class WindowSelectorItem;
 class WindowSelectorTest;
-class WindowGrid;
-class OverviewWindowDragController;
 
 // The WindowSelector shows a grid of all of your windows, allowing to select
 // one by clicking or tapping on it.
@@ -89,6 +90,9 @@ class ASH_EXPORT WindowSelector : public display::DisplayObserver,
   void SetBoundsForWindowGridsInScreenIgnoringWindow(
       const gfx::Rect& bounds,
       WindowSelectorItem* ignored_item);
+
+  // Called to show or hide split view overview overlay.
+  void SetSplitViewIndicatorsVisible(bool visible);
 
   // Removes the window selector item from the overview window grid.
   void RemoveWindowSelectorItem(WindowSelectorItem* item);
@@ -182,6 +186,10 @@ class ASH_EXPORT WindowSelector : public display::DisplayObserver,
 
   // List of all the window overview grids, one for each root window.
   std::vector<std::unique_ptr<WindowGrid>> grid_list_;
+
+  // List of all the split view indicators, one for each root window.
+  std::vector<std::unique_ptr<SplitViewOverviewOverlay>>
+      split_view_indicators_;
 
   // Tracks the index of the root window the selection widget is in.
   size_t selected_grid_index_;

@@ -23,6 +23,7 @@
 #include "ash/wm/overview/window_selector_delegate.h"
 #include "ash/wm/overview/window_selector_item.h"
 #include "ash/wm/panels/panel_layout_manager.h"
+#include "ash/wm/splitview/split_view_indicators_controller.h"
 #include "ash/wm/switchable_windows.h"
 #include "ash/wm/window_state.h"
 #include "ash/wm/window_util.h"
@@ -285,6 +286,12 @@ void WindowSelector::Init(const WindowList& windows,
             });
 
   for (auto* root : root_windows) {
+    if (SplitViewController::ShouldAllowSplitView()) {
+      auto split_view_indicator =
+          base::MakeUnique<SplitViewOverviewOverlay>(root);
+      split_view_indicators_.push_back(std::move(split_view_indicator));
+    }
+
     // Observed switchable containers for newly created windows on all root
     // windows.
     for (size_t i = 0; i < wm::kSwitchableWindowContainerIdsLength; ++i) {
@@ -493,6 +500,13 @@ void WindowSelector::SetBoundsForWindowGridsInScreenIgnoringWindow(
     WindowSelectorItem* ignored_item) {
   for (std::unique_ptr<WindowGrid>& grid : grid_list_)
     grid->SetBoundsAndUpdatePositionsIgnoringWindow(bounds, ignored_item);
+}
+
+void WindowSelector::SetSplitViewIndicatorsVisible(bool visible) {
+  for (std::unique_ptr<SplitViewOverviewOverlay>& indicator :
+       split_view_indicators_) {
+    indicator->SetVisible(visible);
+  }
 }
 
 void WindowSelector::RemoveWindowSelectorItem(WindowSelectorItem* item) {
