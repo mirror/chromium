@@ -145,8 +145,6 @@ group("gn_all") {
       "//third_party/cacheinvalidation:cacheinvalidation_unittests",
       "//third_party/pdfium/samples:pdfium_test",
       "//third_party/webrtc/rtc_tools:frame_analyzer",
-      "//tools/battor_agent",
-      "//tools/battor_agent:battor_agent_unittests",
       "//tools/gn",
       "//tools/gn:gn_unittests",
       "//tools/perf/clear_system_cache",
@@ -426,6 +424,13 @@ group("gn_all") {
   if ((is_win || is_mac || is_linux || is_chromeos) &&
       (target_cpu == "x86" || target_cpu == "x64")) {
     deps += [ "//third_party/swiftshader" ]
+  }
+
+  if (is_win || is_mac || (is_linux && use_udev)) {
+    deps += [
+      "//tools/battor_agent",
+      "//tools/battor_agent:battor_agent_unittests",
+    ]
   }
 
   # TODO(GYP): Figure out which of these should (and can) build

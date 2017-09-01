@@ -106,7 +106,6 @@ source_set("api") {
     "//device/base",
     "//device/bluetooth",
     "//device/hid",
-    "//device/serial",
   ]
 
   if (is_chromeos) {
@@ -140,6 +139,9 @@ source_set("api") {
       "//chromeos:media_perception_proto",
     ]
   }
+  if (is_win || is_mac || (is_linux && use_udev)) {
+    deps += [ "//device/serial" ]
+  }
 }
 
 json_schema_api("api_registration") {
@@ -152,8 +154,11 @@ json_schema_api("api_registration") {
 
   deps = [
     ":api",
-    "//device/serial",
     "//extensions/common/api",
     "//skia",
   ]
+
+  if (is_win || is_mac || (is_linux && use_udev)) {
+    deps += [ "//device/serial" ]
+  }
 }

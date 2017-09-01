@@ -5,6 +5,10 @@
 import("//build/config/features.gni")
 import("//mojo/public/tools/bindings/mojom.gni")
 
+if (is_linux) {
+  assert(use_udev)
+}
+
 # Library works only on desktop platforms.
 if (is_win || is_linux || is_mac) {
   config("platform_support") {

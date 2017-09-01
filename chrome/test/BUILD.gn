@@ -1654,7 +1654,6 @@ test("browser_tests") {
       "//crypto:test_support",
       "//device/base:mocks",
       "//device/bluetooth:mocks",
-      "//device/serial:test_support",
       "//device/usb:test_support",
       "//google_apis:test_support",
       "//media:test_support",
@@ -2577,6 +2576,9 @@ test("browser_tests") {
     }
     if (is_mac || is_win || is_chromeos) {
       sources += [ "../browser/extensions/api/networking_cast_private/networking_cast_private_apitest.cc" ]
+    }
+    if (is_win || is_mac || (is_linux && use_udev)) {
+      deps += [ "//device/serial:test_support" ]
     }
     if (enable_app_list) {
       sources += [
