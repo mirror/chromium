@@ -2,6 +2,121 @@
   "comments": [
     {
       "key": {
+        "uuid": "a6aa9f13_f08c02e3",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-09-01T17:40:50Z",
+      "side": 1,
+      "message": "I had to look up for...else--it looks like an indentation error. Maybe someone more familiar with Python would be fine with this, but it seems simpler to turn the break into a return and get rid of the else.",
+      "range": {
+        "startLine": 574,
+        "startChar": 9,
+        "endLine": 574,
+        "endChar": 0
+      },
+      "revId": "f17b0bedb48674065178311d09e1d8b04525b1a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d842fe3_803dde44",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 1618,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-09-01T17:40:50Z",
+      "side": 1,
+      "message": "You\u0027re not using this variable. Some languages have a convention of using an underscore for things that need to be bound to a variable, but which aren\u0027t going to be used; does Python have anything like that?",
+      "range": {
+        "startLine": 1618,
+        "startChar": 21,
+        "endLine": 1618,
+        "endChar": 35
+      },
+      "revId": "f17b0bedb48674065178311d09e1d8b04525b1a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b8d1799_a43e75f2",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 1654,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-09-01T17:40:50Z",
+      "side": 1,
+      "message": "wait",
+      "range": {
+        "startLine": 1654,
+        "startChar": 19,
+        "endLine": 1654,
+        "endChar": 22
+      },
+      "revId": "f17b0bedb48674065178311d09e1d8b04525b1a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29d3748a_025ed894",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 1656,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-09-01T17:40:50Z",
+      "side": 1,
+      "message": "I find this code hard to follow. You\u0027re not actually waiting here, although this would seem the logical place to do so (wouldn\u0027t it mean you don\u0027t need an else, and can simply restart everything when waitpid returns?)\n\nThe way this is structured as a big while True loop that maintains state seems rather error prone. For example, could you simply call desktop.shutdown_all_procs() everywhere you\u0027re currently setting tear_down \u003d True and get rid of that variable?",
+      "range": {
+        "startLine": 1656,
+        "startChar": 48,
+        "endLine": 1656,
+        "endChar": 0
+      },
+      "revId": "f17b0bedb48674065178311d09e1d8b04525b1a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1885f1b3_47ba5c47",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 1695,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-09-01T17:40:50Z",
+      "side": 1,
+      "message": "its",
+      "range": {
+        "startLine": 1695,
+        "startChar": 39,
+        "endLine": 1695,
+        "endChar": 43
+      },
+      "revId": "f17b0bedb48674065178311d09e1d8b04525b1a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af7d3e8b_016ba372",
         "filename": "remoting/host/remoting_me2me_host.cc",
         "patchSetId": 4
@@ -13,6 +128,47 @@
       "writtenOn": "2017-08-30T22:12:14Z",
       "side": 1,
       "message": "Should this flag be added to the usage message?",
+      "revId": "f17b0bedb48674065178311d09e1d8b04525b1a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06865c24_b7b0bf81",
+        "filename": "remoting/host/remoting_me2me_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-09-01T17:40:50Z",
+      "side": 1,
+      "message": "Only if we\u0027re currently reporting every command-line option. TBH, this binary isn\u0027t really intended to be run by users, so it could simply state that if there\u0027s a command-line parse error, similar to what the Python script does.",
+      "parentUuid": "af7d3e8b_016ba372",
+      "revId": "f17b0bedb48674065178311d09e1d8b04525b1a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5f3c8ba_ec544984",
+        "filename": "remoting/host/remoting_me2me_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 924,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-09-01T17:40:50Z",
+      "side": 1,
+      "message": "Add a comment clarifying that this will be called on successful offline-reason reporting?\n\nBetter still, if you have an explicit state for that (or if it can be inferred from the state and the report_offline_reason_ member), log something like \"Offline reason saved.\"",
+      "range": {
+        "startLine": 924,
+        "startChar": 31,
+        "endLine": 924,
+        "endChar": 0
+      },
       "revId": "f17b0bedb48674065178311d09e1d8b04525b1a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -36,6 +192,24 @@
     },
     {
       "key": {
+        "uuid": "41db47cf_45a44ca1",
+        "filename": "remoting/host/remoting_me2me_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1702,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-09-01T17:40:50Z",
+      "side": 1,
+      "message": "I think this is okay. I\u0027ve seen this pattern of explicitly testing via HasSwitch outside of command-line-parsing code elsewhere.",
+      "parentUuid": "e718c762_fa087e42",
+      "revId": "f17b0bedb48674065178311d09e1d8b04525b1a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43f9e829_02efaf37",
         "filename": "remoting/resources/remoting_strings.grd",
         "patchSetId": 4
@@ -47,6 +221,24 @@
       "writtenOn": "2017-08-30T22:12:14Z",
       "side": 1,
       "message": "Suggestions for better messages appreciated. I *think* just adding these is enough for the Android client to pick them up, and it looks like the iOS client doesn\u0027t report offline reasons at all.",
+      "revId": "f17b0bedb48674065178311d09e1d8b04525b1a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d340bfa2_f0f5e783",
+        "filename": "remoting/resources/remoting_strings.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 1131,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-09-01T17:40:50Z",
+      "side": 1,
+      "message": "I think they\u0027re a bit too technical. For the X server and host, you can say something like \"\u003ccomponent\u003e crashed or failed to start.\" For the session, I like the fact that you\u0027ve given more detail, and would probably go further; something like \"Session crashed or failed to start. If ~/.chrome-remote-desktop-session exists on the remote computer, make sure that runs a long-running process such as a desktop environment or window manager.\" I realize that technically it might be the global script that that\u0027s broken, but let\u0027s focus on the cases we know are causing problems and provide enough information to fix it.",
+      "parentUuid": "43f9e829_02efaf37",
       "revId": "f17b0bedb48674065178311d09e1d8b04525b1a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
