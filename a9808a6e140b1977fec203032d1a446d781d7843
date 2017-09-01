@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5d59f86_a3f0bb4f",
+        "filename": "components/user_manager/known_user.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-01T07:19:32Z",
+      "side": 1,
+      "message": "IIUC this doesn\u0027t guarantee that this preference value is written to the disk.\nbase::ImportantFileWriter is used to write the local state JSON file, but it writes the data asynchronously and it also uses 10-second delay.\n\nWhen an unexpected event (e.g. chrome crash, kernel crash, power loss) happens, it can result in a partially-finished minimal migration without the \"minimal_migration_attempted\" flag on the disk.",
+      "revId": "a9808a6e140b1977fec203032d1a446d781d7843",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
