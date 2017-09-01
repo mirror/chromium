@@ -52,6 +52,24 @@
       "revId": "b3cf8a7e8330effa144f15de808c48983dc1a7bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9729bbe_791abc0b",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 980,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-01T06:17:36Z",
+      "side": 1,
+      "message": "They add more visual noise as a reader, and it\u0027s not obvious what clang formatting the author wanted to avoid and why, so it\u0027s not generally clear if it\u0027s safe to remove them later.\n\nThe split string thing is weird... but why was this split to begin with?",
+      "parentUuid": "ad5e86df_1f069bf4",
+      "revId": "b3cf8a7e8330effa144f15de808c48983dc1a7bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
