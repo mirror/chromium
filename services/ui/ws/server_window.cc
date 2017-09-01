@@ -51,8 +51,10 @@ ServerWindow::ServerWindow(ServerWindowDelegate* delegate,
   // TODO(kylechar): Add method to reregister |frame_sink_id_| when viz service
   // has crashed.
   auto* host_frame_sink_manager = delegate_->GetHostFrameSinkManager();
-  if (host_frame_sink_manager)
-    host_frame_sink_manager->RegisterFrameSinkId(frame_sink_id_, this);
+  if (host_frame_sink_manager) {
+    host_frame_sink_manager->RegisterFrameSinkId(frame_sink_id_, this,
+                                                 GetName());
+  }
 }
 
 ServerWindow::~ServerWindow() {

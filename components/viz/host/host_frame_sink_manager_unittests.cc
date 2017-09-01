@@ -61,7 +61,9 @@ class MockFrameSinkManagerImpl : public FrameSinkManagerImpl {
   ~MockFrameSinkManagerImpl() override = default;
 
   // mojom::FrameSinkManager:
-  MOCK_METHOD1(RegisterFrameSinkId, void(const FrameSinkId& frame_sink_id));
+  MOCK_METHOD2(RegisterFrameSinkId,
+               void(const FrameSinkId& frame_sink_id,
+                    const std::string& label));
   MOCK_METHOD1(InvalidateFrameSinkId, void(const FrameSinkId& frame_sink_id));
   // Work around for gmock not supporting move-only types.
   void CreateCompositorFrameSink(
@@ -154,7 +156,7 @@ TEST_F(HostFrameSinkManagerTest, CreateMojomCompositorFrameSink) {
   FakeHostFrameSinkClient host_client;
 
   // Register then create CompositorFrameSink for child.
-  EXPECT_CALL(impl(), RegisterFrameSinkId(kFrameSinkChild1));
+  EXPECT_CALL(impl(), RegisterFrameSinkId(kFrameSinkChild1, "1"));
   host().RegisterFrameSinkId(kFrameSinkChild1, &host_client);
   EXPECT_TRUE(FrameSinkDataExists(kFrameSinkChild1));
 

@@ -157,9 +157,11 @@ void SurfaceManager::SatisfySequence(const SurfaceSequence& sequence) {
   GarbageCollectSurfaces();
 }
 
-void SurfaceManager::RegisterFrameSinkId(const FrameSinkId& frame_sink_id) {
+void SurfaceManager::RegisterFrameSinkId(const FrameSinkId& frame_sink_id,
+                                         const std::string& label) {
   bool inserted = valid_frame_sink_ids_.insert(frame_sink_id).second;
   DCHECK(inserted);
+  frame_sink_labels_[frame_sink_id] = label;
 }
 
 void SurfaceManager::InvalidateFrameSinkId(const FrameSinkId& frame_sink_id) {
@@ -556,6 +558,7 @@ void SurfaceManager::SurfaceReferencesToStringImpl(const SurfaceId& surface_id,
   Surface* surface = GetSurfaceForId(surface_id);
   if (surface) {
     *str << surface->surface_id().ToString();
+    *str << frame_sink_labels_[surface->surface_id().frame_sink_id()];
     *str << (IsMarkedForDestruction(surface_id) ? " destroyed" : " live");
 
     if (surface->HasPendingFrame()) {

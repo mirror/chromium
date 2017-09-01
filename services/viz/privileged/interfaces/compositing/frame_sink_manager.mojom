@@ -42,7 +42,7 @@ interface DisplayPrivate {
 interface FrameSinkManager {
   // Registers |frame_sink_id| will be used. This must be called before
   // Create(Root)CompositorFrameSink() is called.
-  RegisterFrameSinkId(cc.mojom.FrameSinkId frame_sink_id);
+  RegisterFrameSinkId(cc.mojom.FrameSinkId frame_sink_id, string label);
 
   // Invalidates |frame_sink_id| which cleans up any unsatisified surface
   // sequences or dangling temporary references assigned to it. If there is a

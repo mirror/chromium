@@ -68,10 +68,10 @@ void FrameSinkManagerImpl::SetLocalClient(
   client_ = client;
 }
 
-void FrameSinkManagerImpl::RegisterFrameSinkId(
-    const FrameSinkId& frame_sink_id) {
+void FrameSinkManagerImpl::RegisterFrameSinkId(const FrameSinkId& frame_sink_id,
+                                               const std::string& label) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  surface_manager_.RegisterFrameSinkId(frame_sink_id);
+  surface_manager_.RegisterFrameSinkId(frame_sink_id, label);
 }
 
 void FrameSinkManagerImpl::InvalidateFrameSinkId(
