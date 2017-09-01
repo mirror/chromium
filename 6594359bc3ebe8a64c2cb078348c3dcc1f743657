@@ -22,6 +22,30 @@
       "revId": "6594359bc3ebe8a64c2cb078348c3dcc1f743657",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d8b9717_253e5e81",
+        "filename": "chrome/browser/resources/settings/route.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-01T23:57:20Z",
+      "side": 1,
+      "message": "Yes, thanks!",
+      "parentUuid": "9327125b_7055d07a",
+      "range": {
+        "startLine": 558,
+        "startChar": 49,
+        "endLine": 558,
+        "endChar": 0
+      },
+      "revId": "6594359bc3ebe8a64c2cb078348c3dcc1f743657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
