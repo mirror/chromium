@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "620998e6_9fe59715",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 1462,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-09-01T17:01:40Z",
+      "side": 1,
+      "message": "You only expect this is options.config is None, right? That might be a safer test, perhaps with an assert that they\u0027re equal if options.config is not None.",
+      "range": {
+        "startLine": 1462,
+        "startChar": 37,
+        "endLine": 1462,
+        "endChar": 0
+      },
+      "revId": "1d95e433dc5c89c260b569e803018af4acf3b02e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
