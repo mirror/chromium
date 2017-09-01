@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef4d8c7c_38112adb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchPanel.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-01T18:36:17Z",
+      "side": 1,
+      "message": "I can\u0027t think of any situations where we wouldn\u0027t have an activity or a toolbar manager unless the search term resolution came in after the activity was destroyed, so I think this is OK.",
+      "range": {
+        "startLine": 594,
+        "startChar": 8,
+        "endLine": 594,
+        "endChar": 79
+      },
+      "revId": "8d262a18918de778cb0b129b2d438ce5e2a4a583",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
