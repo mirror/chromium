@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5031cfd6_eb71b4ca",
+        "filename": "build/config/android/rules.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 1412,
+      "author": {
+        "id": 1143954
+      },
+      "writtenOn": "2017-09-01T21:13:01Z",
+      "side": 1,
+      "message": "These are caused by doing gclient sync.",
+      "revId": "54ce2a931dfb9586e846cd0d2580345cbe0ee4bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85552aad_31bbea00",
+        "filename": "build/config/android/rules.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 2819,
+      "author": {
+        "id": 1143954
+      },
+      "writtenOn": "2017-09-01T21:13:01Z",
+      "side": 1,
+      "message": "Only these two lines are changes in this patch. Others are gclient sync changes.",
+      "revId": "54ce2a931dfb9586e846cd0d2580345cbe0ee4bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
