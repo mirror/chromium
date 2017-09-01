@@ -19,7 +19,11 @@ import org.chromium.webapk.lib.common.WebApkConstants;
 import org.chromium.webapk.lib.common.WebApkMetaDataKeys;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * WebAPK's main Activity.
@@ -61,6 +65,13 @@ public class MainActivity extends Activity {
     private String mStartUrl;
 
     /**
+     * The "Launch Source" to be supplied to the host browser specifying the reason for launching
+     * the WebApk. Corresponds to chromium launch reasons in chrome/browser/android/shortcut_info.h.
+     *
+     */
+    private int mSource;
+
+    /**
      * Creates install Intent.
      * @param packageName Package to install.
      * @return The intent.
@@ -82,7 +93,15 @@ public class MainActivity extends Activity {
             return;
         }
 
-        mOverrideUrl = getOverrideUrl();
+        if (Intent.ACTION_SEND.equals(getIntent().getAction())) {
+            Uri webManifestUrl = Uri.parse(metadata.getString(WebApkMetaDataKeys.WEB_MANIFEST_URL));
+            mOverrideUrl = makePathRelative(webManifestUrl, extractShareTarget(metadata));
+            Log.d("Sharing destination", mOverrideUrl);
+            mSource = WebApkConstants.SHORTCUT_SOURCE_SHARE;
+        } else {
+            mOverrideUrl = getOverrideUrl();
+            mSource = getIntent().getIntExtra(WebApkConstants.EXTRA_SOURCE, 0);
+        }
         mStartUrl = (mOverrideUrl != null) ? mOverrideUrl
                                            : metadata.getString(WebApkMetaDataKeys.START_URL);
         if (mStartUrl == null) {
@@ -116,6 +135,60 @@ public class MainActivity extends Activity {
         } else {
             showInstallHostBrowserDialog(metadata);
         }
+    }
+
+    private StringBuffer extractShareTarget(Bundle metadata) {
+        String shareTemplate = metadata.getString(WebApkMetaDataKeys.SHARE_TEMPLATE);
+        String sharedText = null;
+        try {
+            sharedText = URLEncoder.encode(getIntent().getStringExtra(Intent.EXTRA_TEXT), "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            // No-op: we'll just treat this as unspecified.
+        }
+        String sharedTitle = null;
+        try {
+            sharedTitle =
+                    URLEncoder.encode(getIntent().getStringExtra(Intent.EXTRA_SUBJECT), "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            // No-op: we'll just treat this as unspecified.
+        }
+
+        Pattern placeholder = Pattern.compile("\\{.*?\\}");
+        Matcher matcher = placeholder.matcher(shareTemplate);
+        StringBuffer buffer = new StringBuffer();
+        while (matcher.find()) {
+            if (matcher.group().equals("{text}")) {
+                matcher.appendReplacement(buffer, sharedText);
+            } else if (matcher.group().equals("{title}")) {
+                matcher.appendReplacement(buffer, sharedTitle);
+            } else {
+                matcher.appendReplacement(buffer, "");
+            }
+        }
+        matcher.appendTail(buffer);
+        return buffer;
+    }
+
+    private String makePathRelative(Uri webManifestUrl, StringBuffer relativeSharePath) {
+        List<String> path = webManifestUrl.getPathSegments();
+        int endIndex = path.size();
+
+        // Remove the last path element if there is at least one path element, *and* the path does
+        // not end with a slash. This means that URLs to specific files have the file component
+        // removed, but URLs to directories retain the directory.
+        if (endIndex > 0 && !webManifestUrl.getPath().endsWith("/")) {
+            endIndex -= 1;
+        }
+
+        // Make sure the path starts and ends with a slash (or is only a slash if there is no path).
+        Uri.Builder builder = webManifestUrl.buildUpon();
+        String scopePath = "/" + TextUtils.join("/", path.subList(0, endIndex));
+        if (scopePath.length() > 1) {
+            scopePath += "/";
+        }
+        builder.path(scopePath + relativeSharePath.toString());
+
+        return builder.build().toString();
     }
 
     /** Deletes the SharedPreferences. */
@@ -153,10 +226,9 @@ public class MainActivity extends Activity {
 
     private void launchInHostBrowser(String runtimeHost) {
         boolean forceNavigation = false;
-        int source = getIntent().getIntExtra(WebApkConstants.EXTRA_SOURCE, 0);
         if (mOverrideUrl != null) {
-            if (source == WebApkConstants.SHORTCUT_SOURCE_UNKNOWN) {
-                source = WebApkConstants.SHORTCUT_SOURCE_EXTERNAL_INTENT;
+            if (mSource == WebApkConstants.SHORTCUT_SOURCE_UNKNOWN) {
+                mSource = WebApkConstants.SHORTCUT_SOURCE_EXTERNAL_INTENT;
             }
             forceNavigation =
                     getIntent().getBooleanExtra(WebApkConstants.EXTRA_FORCE_NAVIGATION, true);
@@ -168,7 +240,7 @@ public class MainActivity extends Activity {
         intent.setAction(ACTION_START_WEBAPK);
         intent.setPackage(runtimeHost);
         intent.putExtra(WebApkConstants.EXTRA_URL, mStartUrl)
-                .putExtra(WebApkConstants.EXTRA_SOURCE, source)
+                .putExtra(WebApkConstants.EXTRA_SOURCE, mSource)
                 .putExtra(WebApkConstants.EXTRA_WEBAPK_PACKAGE_NAME, getPackageName())
                 .putExtra(WebApkConstants.EXTRA_FORCE_NAVIGATION, forceNavigation);
 
