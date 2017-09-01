@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc15246d_5b7bf5a8",
+        "filename": "content/renderer/media/webrtc/webrtc_media_stream_track_adapter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-01T12:28:58Z",
+      "side": 1,
+      "message": "Non-functional changes: Because the adapter has a scoped_refptr to the track it should be passed as a scoped_refptr",
+      "revId": "206a1b67254e6095b14dc6208dab017e04a6ad9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e47060b_26013cf2",
+        "filename": "content/renderer/media/webrtc/webrtc_media_stream_track_adapter_map.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-01T12:28:58Z",
+      "side": 1,
+      "message": "I need to get the track adapters from the webrtc signaling thread, exposing uninitialized adapters here is easier than changing APIs to expose the track adapters of tracks of the stream adapters that created them (which is why they\u0027re still uninitialized because we haven\u0027t jumped back to the main thread yet).",
+      "revId": "206a1b67254e6095b14dc6208dab017e04a6ad9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

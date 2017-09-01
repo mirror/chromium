@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8faf75b5_14827687",
+        "filename": "content/renderer/media/webrtc/rtc_rtp_receiver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-01T12:28:58Z",
+      "side": 0,
+      "message": "This DCHECK prevented me from creating the object on the webrtc signaling thread as opposed to the main thread (because of a main thread DCHECK in track_adapter_-\u003ewebrtc_track(), remember that TODO?) and also prevents you from creating an RTCRtpReceiver before the adapter is initialized.\n\nNow I want to create it before it is initialized (I don\u0027t have to but it makes the code simpler and still guaranteed to be safe) and the DCHECK about webrtc_track() and track() matching is performed in the getters of this class already.",
+      "revId": "6d9223a67b5c7058e8c0f503901d4658e9eb4141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
