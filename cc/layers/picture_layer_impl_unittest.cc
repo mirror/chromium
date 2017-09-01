@@ -15,7 +15,6 @@
 #include "base/macros.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "cc/animation/animation_host.h"
-#include "cc/base/math_util.h"
 #include "cc/layers/append_quads_data.h"
 #include "cc/layers/picture_layer.h"
 #include "cc/quads/draw_quad.h"
@@ -42,6 +41,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gfx/geometry/size_conversions.h"
+#include "ui/gfx/math_util.h"
 
 namespace cc {
 namespace {
@@ -357,8 +357,8 @@ TEST_F(PictureLayerImplTest, ExternalViewportRectForPrioritizingTiles) {
   // bounds, then tile priorities will end up being incorrect in cases of fully
   // offscreen layer.
   viewport_rect_for_tile_priority_in_view_space =
-      MathUtil::ProjectEnclosingClippedRect(screen_to_view,
-                                            viewport_rect_for_tile_priority);
+      gfx::MathUtil::ProjectEnclosingClippedRect(
+          screen_to_view, viewport_rect_for_tile_priority);
 
   EXPECT_EQ(viewport_rect_for_tile_priority_in_view_space,
             active_layer()->viewport_rect_for_tile_priority_in_content_space());
@@ -4760,7 +4760,7 @@ TEST_F(TileSizeTest, TileSizes) {
   layer->set_gpu_raster_max_texture_size(host_impl()->device_viewport_size());
   result = layer->CalculateTileSize(gfx::Size(10000, 10000));
   EXPECT_EQ(result.width(),
-            MathUtil::UncheckedRoundUp(
+            gfx::MathUtil::UncheckedRoundUp(
                 2000 + 2 * PictureLayerTiling::kBorderTexels, 32));
   EXPECT_EQ(result.height(), 512);  // 500 + 2, 32-byte aligned.
 
@@ -4809,7 +4809,7 @@ TEST_F(HalfWidthTileTest, TileSizes) {
   layer->set_gpu_raster_max_texture_size(host_impl()->device_viewport_size());
   result = layer->CalculateTileSize(gfx::Size(10000, 10000));
   EXPECT_EQ(result.width(),
-            MathUtil::UncheckedRoundUp(
+            gfx::MathUtil::UncheckedRoundUp(
                 (2000 + 2 * PictureLayerTiling::kBorderTexels) / 2, 32));
   EXPECT_EQ(result.height(), 512);
 

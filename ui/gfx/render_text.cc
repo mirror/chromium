@@ -18,7 +18,6 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
-#include "cc/base/math_util.h"
 #include "cc/paint/paint_canvas.h"
 #include "cc/paint/paint_shader.h"
 #include "third_party/icu/source/common/unicode/rbbi.h"
@@ -30,6 +29,7 @@
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/geometry/insets.h"
 #include "ui/gfx/geometry/safe_integer_conversions.h"
+#include "ui/gfx/math_util.h"
 #include "ui/gfx/platform_font.h"
 #include "ui/gfx/render_text_harfbuzz.h"
 #include "ui/gfx/scoped_canvas.h"
@@ -1458,7 +1458,7 @@ base::string16 RenderText::Elide(const base::string16& text,
     guess = lo + static_cast<size_t>(ToRoundedInt((available_width - lo_width) *
                                                   (hi - lo) /
                                                   (hi_width - lo_width)));
-    guess = cc::MathUtil::ClampToRange(guess, lo, hi);
+    guess = MathUtil::ClampToRange(guess, lo, hi);
     DCHECK_NE(last_guess, guess);
 
     // Restore colors. They will be truncated to size by SetText.

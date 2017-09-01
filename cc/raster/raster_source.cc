@@ -7,7 +7,6 @@
 #include <stddef.h>
 
 #include "base/trace_event/trace_event.h"
-#include "cc/base/math_util.h"
 #include "cc/base/region.h"
 #include "cc/debug/debug_colors.h"
 #include "cc/paint/display_item_list.h"
@@ -19,6 +18,7 @@
 #include "third_party/skia/include/core/SkPictureRecorder.h"
 #include "ui/gfx/geometry/axis_transform2d.h"
 #include "ui/gfx/geometry/rect_conversions.h"
+#include "ui/gfx/math_util.h"
 
 namespace cc {
 
@@ -49,7 +49,7 @@ void RasterSource::PlaybackToCanvas(
       !raster_bounds.intersect(gfx::RectToSkIRect(canvas_playback_rect)))
     return;
   // Treat all subnormal values as zero for performance.
-  ScopedSubnormalFloatDisabler disabler;
+  gfx::ScopedSubnormalFloatDisabler disabler;
 
   raster_canvas->save();
   raster_canvas->translate(-canvas_bitmap_rect.x(), -canvas_bitmap_rect.y());

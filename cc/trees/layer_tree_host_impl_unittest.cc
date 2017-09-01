@@ -21,7 +21,6 @@
 #include "cc/animation/animation_id_provider.h"
 #include "cc/animation/transform_operations.h"
 #include "cc/base/histograms.h"
-#include "cc/base/math_util.h"
 #include "cc/input/browser_controls_offset_manager.h"
 #include "cc/input/main_thread_scrolling_reason.h"
 #include "cc/input/page_scale_animation.h"
@@ -79,6 +78,7 @@
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gfx/geometry/size_conversions.h"
 #include "ui/gfx/geometry/vector2d_conversions.h"
+#include "ui/gfx/math_util.h"
 
 #define EXPECT_SCOPED(statements) \
   {                               \
@@ -6605,7 +6605,7 @@ TEST_F(LayerTreeHostImplTest, ScrollNonAxisAlignedRotatedLayer) {
     // amount proportional to the angle between it and the input scroll delta.
     gfx::Vector2d expected_scroll_delta(
         0, gesture_scroll_delta.y() *
-               std::cos(MathUtil::Deg2Rad(child_layer_angle)));
+               std::cos(gfx::MathUtil::Deg2Rad(child_layer_angle)));
     std::unique_ptr<ScrollAndScaleSet> scroll_info =
         host_impl_->ProcessScrollDeltas();
     EXPECT_TRUE(ScrollInfoContains(*scroll_info.get(), child_scroll_id,
@@ -6631,7 +6631,7 @@ TEST_F(LayerTreeHostImplTest, ScrollNonAxisAlignedRotatedLayer) {
     // amount proportional to the angle between it and the input scroll delta.
     gfx::Vector2d expected_scroll_delta(
         0, -gesture_scroll_delta.x() *
-               std::sin(MathUtil::Deg2Rad(child_layer_angle)));
+               std::sin(gfx::MathUtil::Deg2Rad(child_layer_angle)));
     std::unique_ptr<ScrollAndScaleSet> scroll_info =
         host_impl_->ProcessScrollDeltas();
     EXPECT_TRUE(ScrollInfoContains(*scroll_info.get(), child_scroll_id,
@@ -8835,7 +8835,7 @@ TEST_F(LayerTreeHostImplTest, FarAwayQuadsDontNeedAA) {
   const DrawQuad* quad = frame.render_passes[0]->quad_list.front();
 
   bool clipped = false, force_aa = false;
-  gfx::QuadF device_layer_quad = MathUtil::MapQuad(
+  gfx::QuadF device_layer_quad = gfx::MathUtil::MapQuad(
       quad->shared_quad_state->quad_to_target_transform,
       gfx::QuadF(gfx::RectF(quad->shared_quad_state->visible_quad_layer_rect)),
       &clipped);

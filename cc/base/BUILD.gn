@@ -29,8 +29,6 @@ component("base") {
     "list_container.h",
     "list_container_helper.cc",
     "list_container_helper.h",
-    "math_util.cc",
-    "math_util.h",
     "region.cc",
     "region.h",
     "render_surface_filters.cc",

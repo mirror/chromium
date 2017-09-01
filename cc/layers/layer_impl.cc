@@ -16,7 +16,6 @@
 #include "base/strings/stringprintf.h"
 #include "base/trace_event/trace_event.h"
 #include "base/trace_event/trace_event_argument.h"
-#include "cc/base/math_util.h"
 #include "cc/base/simple_enclosed_region.h"
 #include "cc/benchmarks/micro_benchmark_impl.h"
 #include "cc/debug/debug_colors.h"
@@ -46,6 +45,7 @@
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gfx/geometry/size_conversions.h"
 #include "ui/gfx/geometry/vector2d_conversions.h"
+#include "ui/gfx/math_util.h"
 
 namespace cc {
 LayerImpl::LayerImpl(LayerTreeImpl* tree_impl, int id)
@@ -737,11 +737,11 @@ void LayerImpl::AsValueInto(base::trace_event::TracedValue* state) const {
       TRACE_DISABLED_BY_DEFAULT("cc.debug"), state, "cc::LayerImpl",
       LayerTypeAsString(), this);
   state->SetInteger("layer_id", id());
-  MathUtil::AddToTracedValue("bounds", bounds_, state);
+  gfx::MathUtil::AddToTracedValue("bounds", bounds_, state);
 
   state->SetDouble("opacity", Opacity());
 
-  MathUtil::AddToTracedValue("position", position_, state);
+  gfx::MathUtil::AddToTracedValue("position", position_, state);
 
   state->SetInteger("draws_content", DrawsContent());
   state->SetInteger("gpu_memory_usage",
@@ -753,17 +753,18 @@ void LayerImpl::AsValueInto(base::trace_event::TracedValue* state) const {
   if (mutable_properties_ != MutableProperty::kNone)
     state->SetInteger("mutable_properties", mutable_properties_);
 
-  MathUtil::AddToTracedValue("scroll_offset", CurrentScrollOffset(), state);
+  gfx::MathUtil::AddToTracedValue("scroll_offset", CurrentScrollOffset(),
+                                  state);
 
   if (!ScreenSpaceTransform().IsIdentity())
-    MathUtil::AddToTracedValue("screen_space_transform", ScreenSpaceTransform(),
-                               state);
+    gfx::MathUtil::AddToTracedValue("screen_space_transform",
+                                    ScreenSpaceTransform(), state);
 
   bool clipped;
-  gfx::QuadF layer_quad =
-      MathUtil::MapQuad(ScreenSpaceTransform(),
-                        gfx::QuadF(gfx::RectF(gfx::Rect(bounds()))), &clipped);
-  MathUtil::AddToTracedValue("layer_quad", layer_quad, state);
+  gfx::QuadF layer_quad = gfx::MathUtil::MapQuad(
+      ScreenSpaceTransform(), gfx::QuadF(gfx::RectF(gfx::Rect(bounds()))),
+      &clipped);
+  gfx::MathUtil::AddToTracedValue("layer_quad", layer_quad, state);
   if (!touch_action_region_.region().IsEmpty()) {
     state->BeginArray("touch_action_region_region");
     touch_action_region_.region().AsValueInto(state);
@@ -783,7 +784,7 @@ void LayerImpl::AsValueInto(base::trace_event::TracedValue* state) const {
 
   gfx::BoxF box;
   if (LayerUtils::GetAnimationBounds(*this, &box))
-    MathUtil::AddToTracedValue("animation_bounds", box, state);
+    gfx::MathUtil::AddToTracedValue("animation_bounds", box, state);
 
   if (debug_info_) {
     std::string str;
@@ -863,16 +864,16 @@ Region LayerImpl::GetInvalidationRegionForDebugging() {
 }
 
 gfx::Rect LayerImpl::GetEnclosingRectInTargetSpace() const {
-  return MathUtil::MapEnclosingClippedRect(DrawTransform(),
-                                           gfx::Rect(bounds()));
+  return gfx::MathUtil::MapEnclosingClippedRect(DrawTransform(),
+                                                gfx::Rect(bounds()));
 }
 
 gfx::Rect LayerImpl::GetScaledEnclosingRectInTargetSpace(float scale) const {
   gfx::Transform scaled_draw_transform = DrawTransform();
   scaled_draw_transform.Scale(SK_MScalar1 / scale, SK_MScalar1 / scale);
   gfx::Size scaled_bounds = gfx::ScaleToCeiledSize(bounds(), scale);
-  return MathUtil::MapEnclosingClippedRect(scaled_draw_transform,
-                                           gfx::Rect(scaled_bounds));
+  return gfx::MathUtil::MapEnclosingClippedRect(scaled_draw_transform,
+                                                gfx::Rect(scaled_bounds));
 }
 
 RenderSurfaceImpl* LayerImpl::render_target() {
@@ -898,7 +899,7 @@ float LayerImpl::GetIdealContentsScale() const {
 
   const auto& transform = ScreenSpaceTransform();
   if (transform.HasPerspective()) {
-    float scale = MathUtil::ComputeApproximateMaxScale(transform);
+    float scale = gfx::MathUtil::ComputeApproximateMaxScale(transform);
 
     const int kMaxTilesToCoverLayerDimension = 5;
     // Cap the scale in a way that it should be covered by at most
@@ -928,7 +929,8 @@ float LayerImpl::GetIdealContentsScale() const {
   }
 
   gfx::Vector2dF transform_scales =
-      MathUtil::ComputeTransform2dScaleComponents(transform, default_scale);
+      gfx::MathUtil::ComputeTransform2dScaleComponents(transform,
+                                                       default_scale);
   return std::max(transform_scales.x(), transform_scales.y());
 }
 

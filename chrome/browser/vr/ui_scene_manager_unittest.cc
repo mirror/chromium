@@ -7,7 +7,6 @@
 #include "base/macros.h"
 #include "base/message_loop/message_loop.h"
 #include "base/test/scoped_mock_time_message_loop_task_runner.h"
-#include "cc/base/math_util.h"
 #include "chrome/browser/vr/color_scheme.h"
 #include "chrome/browser/vr/elements/ui_element.h"
 #include "chrome/browser/vr/elements/ui_element_name.h"
@@ -19,6 +18,7 @@
 #include "chrome/browser/vr/ui_scene.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "ui/gfx/math_util.h"
 
 namespace vr {
 
@@ -46,10 +46,10 @@ std::set<UiElementName> kElementsVisibleWithExitPrompt = {
 static constexpr float kTolerance = 1e-5;
 
 MATCHER_P2(SizeFsAreApproximatelyEqual, other, tolerance, "") {
-  return cc::MathUtil::ApproximatelyEqual(arg.width(), other.width(),
-                                          tolerance) &&
-         cc::MathUtil::ApproximatelyEqual(arg.height(), other.height(),
-                                          tolerance);
+  return gfx::MathUtil::ApproximatelyEqual(arg.width(), other.width(),
+                                           tolerance) &&
+         gfx::MathUtil::ApproximatelyEqual(arg.height(), other.height(),
+                                           tolerance);
 }
 
 }  // namespace

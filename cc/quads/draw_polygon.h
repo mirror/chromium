@@ -5,9 +5,9 @@
 #ifndef CC_QUADS_DRAW_POLYGON_H_
 #define CC_QUADS_DRAW_POLYGON_H_
 
+#include <memory>
 #include <vector>
 
-#include "cc/base/math_util.h"
 #include "cc/cc_export.h"
 #include "ui/gfx/geometry/point3_f.h"
 #include "ui/gfx/geometry/quad_f.h"

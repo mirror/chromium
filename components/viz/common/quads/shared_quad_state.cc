@@ -7,9 +7,9 @@
 #include "base/trace_event/trace_event.h"
 #include "base/trace_event/trace_event_argument.h"
 #include "base/values.h"
-#include "cc/base/math_util.h"
 #include "components/viz/common/traced_value.h"
 #include "third_party/skia/include/core/SkBlendMode.h"
+#include "ui/gfx/math_util.h"
 
 namespace viz {
 
@@ -46,14 +46,14 @@ void SharedQuadState::SetAll(const gfx::Transform& quad_to_target_transform,
 }
 
 void SharedQuadState::AsValueInto(base::trace_event::TracedValue* value) const {
-  cc::MathUtil::AddToTracedValue("transform", quad_to_target_transform, value);
-  cc::MathUtil::AddToTracedValue("layer_content_rect", quad_layer_rect, value);
-  cc::MathUtil::AddToTracedValue("layer_visible_content_rect",
-                                 visible_quad_layer_rect, value);
+  gfx::MathUtil::AddToTracedValue("transform", quad_to_target_transform, value);
+  gfx::MathUtil::AddToTracedValue("layer_content_rect", quad_layer_rect, value);
+  gfx::MathUtil::AddToTracedValue("layer_visible_content_rect",
+                                  visible_quad_layer_rect, value);
 
   value->SetBoolean("is_clipped", is_clipped);
 
-  cc::MathUtil::AddToTracedValue("clip_rect", clip_rect, value);
+  gfx::MathUtil::AddToTracedValue("clip_rect", clip_rect, value);
 
   value->SetDouble("opacity", opacity);
   value->SetString("blend_mode", SkBlendMode_Name(blend_mode));

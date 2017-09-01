@@ -12,7 +12,6 @@
 #include "base/bind.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
-#include "cc/base/math_util.h"
 #include "cc/test/fake_output_surface.h"
 #include "cc/test/fake_output_surface_client.h"
 #include "cc/test/fake_picture_layer_tiling_client.h"
@@ -24,6 +23,7 @@
 #include "ui/gfx/geometry/quad_f.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gfx/geometry/size_conversions.h"
+#include "ui/gfx/math_util.h"
 
 namespace cc {
 namespace {
@@ -36,8 +36,8 @@ static gfx::Rect ViewportInLayerSpace(
   if (!transform.GetInverse(&inverse))
     return gfx::Rect();
 
-  return MathUtil::ProjectEnclosingClippedRect(inverse,
-                                               gfx::Rect(device_viewport));
+  return gfx::MathUtil::ProjectEnclosingClippedRect(inverse,
+                                                    gfx::Rect(device_viewport));
 }
 
 class TestablePictureLayerTiling : public PictureLayerTiling {

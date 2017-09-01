@@ -14,7 +14,6 @@
 #include "base/logging.h"
 #include "base/memory/aligned_memory.h"
 #include "base/optional.h"
-#include "cc/base/math_util.h"
 #include "cc/paint/paint_canvas.h"
 #include "cc/paint/paint_export.h"
 #include "cc/paint/paint_flags.h"

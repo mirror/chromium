@@ -106,10 +106,6 @@ viz_component("common") {
   ]
 
   deps = [
-    # TODO(staraz): cc/base was added because SharedQuadState includes
-    # cc::MathUtil. Remove it once cc/base/math_util* are moved to viz.
-    "//cc/base",
-
     "//base",
     "//gpu",
     "//gpu/command_buffer/client:gles2_implementation",
