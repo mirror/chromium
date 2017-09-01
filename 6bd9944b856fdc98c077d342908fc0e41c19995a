@@ -22,6 +22,30 @@
       "revId": "6bd9944b856fdc98c077d342908fc0e41c19995a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b66736c_7cf79e5a",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_coordinator.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-09-01T17:37:09Z",
+      "side": 1,
+      "message": "I assume you mean have the NotificationPromoWhatsNew class internally map between this string and enum values, and expose just the enum.\n\nWe would not want to change the existence of the string itself, because:\n\nThe string comes from the experiment params of a finch config. The config can only pass JSON primitives, so you can\u0027t define your own enum on the config side. You could pass an integer, but that is less readable and more likely to have a mistake.\n\nAlso, this kind of change requires changes to the protocol used to set the finch params server side, and they way those params are interpreted client side. So, all previous versions of Chrome, which would use older protocol, could never have a promo shown to them again. It would be good to avoid this if possible.",
+      "parentUuid": "c5f7c525_589e3a80",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 5
+      },
+      "revId": "6bd9944b856fdc98c077d342908fc0e41c19995a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
