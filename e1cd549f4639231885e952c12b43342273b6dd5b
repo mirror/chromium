@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "9aed4fff_759beab2",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-09-01T13:42:04Z",
+      "side": 1,
+      "message": "Not exactlty an ETA (it could be coupled to a signal like \u003e90% of domains have explicitly chosen a policy) but a crbug to not forget \u0026 track removal. Added as TODO at the end of this comment block.",
+      "parentUuid": "a1f68586_83cf01c3",
+      "revId": "e1cd549f4639231885e952c12b43342273b6dd5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "234677b9_b44664ca",
         "filename": "chrome/browser/chromeos/arc/arc_util.cc",
         "patchSetId": 6
@@ -62,6 +80,30 @@
       "revId": "e1cd549f4639231885e952c12b43342273b6dd5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "609b0a88_bc9e5d86",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-09-01T13:42:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "234677b9_b44664ca",
+      "range": {
+        "startLine": 176,
+        "startChar": 34,
+        "endLine": 176,
+        "endChar": 46
+      },
+      "revId": "e1cd549f4639231885e952c12b43342273b6dd5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "25d8dd1a_f4311c60",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-09-01T13:42:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2fa9733_c37fd896",
+      "range": {
+        "startLine": 176,
+        "startChar": 48,
+        "endLine": 177,
+        "endChar": 61
+      },
+      "revId": "e1cd549f4639231885e952c12b43342273b6dd5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b354218a_9b40a2bb",
         "filename": "chrome/browser/chromeos/arc/arc_util.cc",
         "patchSetId": 6
@@ -111,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "c546c508_033b2400",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-09-01T13:42:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b354218a_9b40a2bb",
+      "range": {
+        "startLine": 178,
+        "startChar": 27,
+        "endLine": 179,
+        "endChar": 23
+      },
+      "revId": "e1cd549f4639231885e952c12b43342273b6dd5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c522318b_dad35781",
         "filename": "chrome/browser/chromeos/arc/arc_util.cc",
         "patchSetId": 6
@@ -128,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "b1d86041_1c10d321",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-09-01T13:42:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c522318b_dad35781",
+      "revId": "e1cd549f4639231885e952c12b43342273b6dd5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b86669b_dd3f3b2e",
         "filename": "chromeos/chromeos_switches.cc",
         "patchSetId": 6
@@ -142,6 +250,24 @@
       "revId": "e1cd549f4639231885e952c12b43342273b6dd5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea6893d2_c5343e4a",
+        "filename": "chromeos/chromeos_switches.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-09-01T13:42:04Z",
+      "side": 1,
+      "message": "Done - added comment with TODO and crbug reference.\nNot sure if it\u0027s already possible to remove in M-62 (e.g. if a device hasn\u0027t been turned on with M-61), but this code won\u0027t be here forever.",
+      "parentUuid": "9b86669b_dd3f3b2e",
+      "revId": "e1cd549f4639231885e952c12b43342273b6dd5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

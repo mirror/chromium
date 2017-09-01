@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "a88b5f85_8f509aac",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-09-01T13:42:04Z",
+      "side": 1,
+      "message": "Resolving as I\u0027ve now also added a comment as requested by Hidehiko.",
+      "parentUuid": "154322c8_d3757ebe",
+      "range": {
+        "startLine": 182,
+        "startChar": 11,
+        "endLine": 182,
+        "endChar": 62
+      },
+      "revId": "45f8fb5a85fe079b67b74b719f1ad4f02ab7d9c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9b7e9a8_a3318770",
         "filename": "chrome/browser/chromeos/arc/arc_util_unittest.cc",
         "patchSetId": 3
