@@ -1144,3 +1144,31 @@ instrumentation_test_apk("chrome_sync_shell_test_apk") {
   ]
   proguard_enabled = !is_java_debug
 }
+
+# Be very specific here so that our static initializer count does not vary
+# between bots. This target will cause release bots to fail if the count
+# changes in either direction, and so should be updated when static initializers
+# are removed.
+if (current_toolchain == default_toolchain) {
+  if (!is_debug && !using_sanitizer && proprietary_codecs) {
+    action("monochrome_static_initializers") {
+      script = "//build/android/resource_sizes.py"
+      inputs = [
+        "$root_build_dir/apks/MonochromePublic.apk",
+      ]
+      outputs = [
+        "$target_gen_dir/$target_name/si_count.txt",
+      ]
+      deps = [
+        ":monochrome_public_apk",
+      ]
+      args = [
+        "--chromium-output-directory=.",
+        "--assert-static-initializer-count=93",
+        "--touch",
+        rebase_path(outputs[0], root_build_dir),
+        rebase_path(inputs[0], root_build_dir),
+      ]
+    }
+  }
+}
