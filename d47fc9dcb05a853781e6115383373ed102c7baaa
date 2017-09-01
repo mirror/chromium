@@ -46,6 +46,30 @@
       "revId": "d47fc9dcb05a853781e6115383373ed102c7baaa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c30fd65a_3190253d",
+        "filename": "chrome/browser/extensions/api/language_settings_private/language_settings_private_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-09-01T04:24:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "376e2961_08c11b6a",
+      "range": {
+        "startLine": 173,
+        "startChar": 0,
+        "endLine": 173,
+        "endChar": 52
+      },
+      "revId": "d47fc9dcb05a853781e6115383373ed102c7baaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
