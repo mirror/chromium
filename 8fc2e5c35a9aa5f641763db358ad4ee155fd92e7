@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e70429b_9e272bdf",
+        "filename": "android_webview/glue/java/src/com/android/webview/chromium/Converters.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-01T01:09:17Z",
+      "side": 1,
+      "message": "android.webkit",
+      "range": {
+        "startLine": 9,
+        "startChar": 57,
+        "endLine": 9,
+        "endChar": 64
+      },
+      "revId": "8fc2e5c35a9aa5f641763db358ad4ee155fd92e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89d3e620_ee723e97",
+        "filename": "android_webview/glue/java/src/com/android/webview/chromium/Converters.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-01T01:09:17Z",
+      "side": 1,
+      "message": "\u003e I think it might be more readable this way; there are multiple instances of names like CLOSE in this file. It\u0027s easier for readers to instantly know which CLOSE is being referenced by reading it from the line, than for them to have to remember which CLOSE is imported by default at the top of the file.\n\nGenerally only import up to the top level class in the file, so you can still disambiguate with AwSettings.ZoomDensity.CLOSE.\n\nBut that raises the style issue of having all the converters in a single file. I still haven\u0027t decided if that\u0027s a good idea or not... traditionally these were just inlined where they are used, because most of these only have one spot that uses these. So I\u0027d go with if there is only one thing that calls any of these methods, then just inline the method at the call site. If there\u0027s more than one, then leave it here.\n\nother reviewers here has opinions?",
+      "revId": "8fc2e5c35a9aa5f641763db358ad4ee155fd92e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "248947f6_9dac3c08",
+        "filename": "android_webview/glue/java/src/com/android/webview/chromium/Converters.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-01T01:09:17Z",
+      "side": 1,
+      "message": "btw, where are these values defined/imported in this file?",
+      "revId": "8fc2e5c35a9aa5f641763db358ad4ee155fd92e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f354a823_031f3af8",
+        "filename": "android_webview/glue/java/src/com/android/webview/chromium/Converters.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-01T01:09:17Z",
+      "side": 1,
+      "message": "chrome supports java8 lambda upstream now. so these single-method wrappers can be converted to lambdas for easier readability",
+      "revId": "8fc2e5c35a9aa5f641763db358ad4ee155fd92e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdc3c9c6_43997715",
+        "filename": "android_webview/glue/java/src/com/android/webview/chromium/Converters.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-01T01:09:17Z",
+      "side": 1,
+      "message": "\u003e The other complex types only need to be wrapped in a single direction.\n\u003e \n\u003e ValueCallback has a single case where it wraps both ways in AwContentsClient::getVisitedHistory; this affects one codepath:\n\u003e \n\u003e http://cs/clankium/src/android_webview/java/src/org/chromium/android_webview/AwContents.java?l\u003d1476\n\u003e http://cs/clankium/src/android_webview/glue/java/src/com/android/webview/chromium/WebViewContentsClientAdapter.java?l\u003d224\n\u003e http://cs/clankium/src/third_party/android_tools/sdk/sources/android-25/android/webkit/WebChromeClient.java?l\u003d402\n\nI think that deserves a comment then\n\nI think for wrapping complex types that can happen in both directions, the to/from names doesn\u0027t make much sense. maybe just wrapAwValueCallback/wrapValueCallback instead?",
+      "revId": "8fc2e5c35a9aa5f641763db358ad4ee155fd92e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
