@@ -94,6 +94,30 @@
       "revId": "6498f7e81aea225605fea50c7203d9e7bd215787",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f7958be1_9e2dd790",
+        "filename": "components/ntp_snippets/mock_content_suggestions_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-01T08:57:43Z",
+      "side": 1,
+      "message": "The movable callback is moved into Fetch and from there its pointer will be passed into FetchMock. For the whole time of the call to FetchMock, the pointer is alive. When the call ends, execution moves back to Fetch and the callback is destroyed.\n\nDoes it make sense to you?",
+      "parentUuid": "930d0db2_e05e8086",
+      "range": {
+        "startLine": 60,
+        "startChar": 37,
+        "endLine": 60,
+        "endChar": 38
+      },
+      "revId": "6498f7e81aea225605fea50c7203d9e7bd215787",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
