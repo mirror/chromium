@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6eb9e3b1_3dcfafcf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-09-01T10:42:09Z",
+      "side": 1,
+      "message": "Ugrh, sorry. Forgot to set upstream.",
+      "parentUuid": "1033beb6_4a606a60",
+      "revId": "bf7c4472cfeebb262d4794a427b6dfe38fd652cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2e7ad41_fd4e0984",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a1e49180_6872ca2f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-09-01T10:42:09Z",
+      "side": 1,
+      "message": "yep",
+      "parentUuid": "f2e7ad41_fd4e0984",
+      "revId": "bf7c4472cfeebb262d4794a427b6dfe38fd652cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb48b1da_24b767ca",
         "filename": "components/ntp_snippets/contextual/contextual_content_suggestions_service.cc",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "bf7c4472cfeebb262d4794a427b6dfe38fd652cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36ecdec6_b4782a36",
+        "filename": "components/ntp_snippets/contextual/contextual_content_suggestions_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-09-01T10:42:09Z",
+      "side": 1,
+      "message": "I have to agree with Nicolas that we want to remove anchors in the java side, because we want to avoid suggestion fetch requests if the URL has not changed.",
+      "parentUuid": "eb48b1da_24b767ca",
+      "revId": "bf7c4472cfeebb262d4794a427b6dfe38fd652cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
