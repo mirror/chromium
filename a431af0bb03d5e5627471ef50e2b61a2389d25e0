@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "990e3e08_a74e7fbd",
+        "filename": "components/autofill/core/browser/autofill_profile.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-01T16:10:51Z",
+      "side": 1,
+      "message": ".. for example this could be the 2 least significant bits (0b11)",
+      "range": {
+        "startLine": 753,
+        "startChar": 5,
+        "endLine": 753,
+        "endChar": 61
+      },
+      "revId": "a431af0bb03d5e5627471ef50e2b61a2389d25e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1fc740d_08aec6b3",
+        "filename": "components/autofill/core/browser/autofill_profile.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 754,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-01T16:10:51Z",
+      "side": 1,
+      "message": "const int kBitmask \u003d ...",
+      "revId": "a431af0bb03d5e5627471ef50e2b61a2389d25e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8a72a64_3a49b047",
+        "filename": "components/autofill/core/browser/autofill_profile.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-01T16:10:51Z",
+      "side": 1,
+      "message": "bitfield_value \u003d bitfield_value \u003e\u003e validity_bits_per_type; ?",
+      "range": {
+        "startLine": 768,
+        "startChar": 4,
+        "endLine": 768,
+        "endChar": 47
+      },
+      "revId": "a431af0bb03d5e5627471ef50e2b61a2389d25e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
