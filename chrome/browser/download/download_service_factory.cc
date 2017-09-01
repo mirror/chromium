@@ -45,7 +45,9 @@ download::DownloadService* DownloadServiceFactory::GetForBrowserContext(
 DownloadServiceFactory::DownloadServiceFactory()
     : BrowserContextKeyedServiceFactory(
           "download::DownloadService",
-          BrowserContextDependencyManager::GetInstance()) {}
+          BrowserContextDependencyManager::GetInstance()) {
+  // DependsOn();
+}
 
 DownloadServiceFactory::~DownloadServiceFactory() = default;
 
