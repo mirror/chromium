@@ -141,6 +141,24 @@
       "revId": "3efdb3442d096af69d6be14dfb8fb979e8d228d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27582e6e_24ca7afd",
+        "filename": "components/exo/shell_surface.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-01T11:37:10Z",
+      "side": 1,
+      "message": "Let\u0027s do it right from the start. I think it would be relatively easy to implement on the Android side by using a round-trip (wl_display_roundtrip). That\u0027s of course not ideal performance wise but it would be a good start. Example from client side:\n\nMaximizeWindow() {\n  shell_set_maximized();\n  wl_display_round_trip(); // will result in a configure event with maximize state and a serial\n  configure_ack(serial_from_above);\n  commit();\n}",
+      "parentUuid": "ba4c667e_1698fd9d",
+      "revId": "3efdb3442d096af69d6be14dfb8fb979e8d228d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
