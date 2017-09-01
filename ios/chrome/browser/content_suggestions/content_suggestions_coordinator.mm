@@ -154,10 +154,11 @@ const char kNTPHelpURL[] = "https://support.google.com/chrome/?p=ios_new_tab";
   self.headerController.readingListModel =
       ReadingListModelFactory::GetForBrowserState(self.browserState);
   self.googleLandingMediator =
-      [[GoogleLandingMediator alloc] initWithConsumer:self.headerController
-                                         browserState:self.browserState
-                                           dispatcher:self.dispatcher
-                                         webStateList:self.webStateList];
+      [[GoogleLandingMediator alloc] initWithBrowserState:self.browserState
+                                             webStateList:self.webStateList];
+  self.googleLandingMediator.consumer = self.headerController;
+  self.googleLandingMediator.dispatcher = self.dispatcher;
+  [self.googleLandingMediator setUp];
 
   favicon::LargeIconService* largeIconService =
       IOSChromeLargeIconServiceFactory::GetForBrowserState(self.browserState);
