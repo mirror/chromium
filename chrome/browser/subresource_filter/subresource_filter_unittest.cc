@@ -9,6 +9,8 @@
 #include "chrome/test/base/testing_browser_process.h"
 #include "components/rappor/public/rappor_parameters.h"
 #include "components/rappor/test_rappor_service.h"
+#include "components/safe_browsing_db/util.h"
+#include "components/safe_browsing_db/v4_protocol_manager_util.h"
 #include "components/subresource_filter/content/browser/content_subresource_filter_driver_factory.h"
 #include "components/subresource_filter/content/browser/subresource_filter_observer_test_utils.h"
 #include "components/subresource_filter/core/browser/subresource_filter_features.h"
@@ -286,4 +288,27 @@ TEST_F(SubresourceFilterTest, AbusiveEnforcement_NoMetadata) {
   EXPECT_TRUE(CreateAndNavigateDisallowedSubframe(main_rfh()));
   EXPECT_EQ(nullptr, GetSettingsManager()->GetSiteMetadata(url));
   EXPECT_FALSE(GetClient()->did_show_ui_for_navigation());
+}
+
+TEST_F(SubresourceFilterTest, NotifySafeBrowsing) {
+  const safe_browsing::ThreatPatternType pattern_types[]{
+      safe_browsing::ThreatPatternType::NONE,
+      safe_browsing::ThreatPatternType::SUBRESOURCE_FILTER_BETTER_ADS,
+      safe_browsing::ThreatPatternType::SUBRESOURCE_FILTER_ABUSIVE_ADS,
+      safe_browsing::ThreatPatternType::SUBRESOURCE_FILTER_ALL_ADS};
+
+  const GURL url("https://example.test");
+  for (const auto& pattern_type : pattern_types) {
+    subresource_filter::TestSubresourceFilterObserver observer(web_contents());
+    auto threat_type =
+        safe_browsing::SBThreatType::SB_THREAT_TYPE_SUBRESOURCE_FILTER;
+    fake_safe_browsing_database()->AddBlacklistedUrl(url, threat_type,
+                                                     pattern_type);
+    SimulateNavigateAndCommit(url, main_rfh());
+
+    safe_browsing::ThreatMetadata metadata;
+    metadata.threat_pattern_type = pattern_type;
+    EXPECT_EQ(*observer.GetSafeBrowsingResult(url),
+              std::make_pair(threat_type, metadata));
+  }
 }
