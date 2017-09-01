@@ -114,15 +114,24 @@ constexpr bool MustTreatAsConstexpr(const T v) {
 // an error condition.
 struct CheckOnFailure {
   template <typename T>
+#if defined(NDEBUG)
+  // Give the optimizer an extra hint for release builds.
+  [[noreturn]]
+#endif
   static T HandleFailure() {
 #if defined(_MSC_VER)
     __debugbreak();
-#elif defined(__GNUC__) || defined(__clang__)
+#if defined(NDEBUG)
+    __assume(0);  // Prevent MSVC warning on missing return.
+#endif
+#elif defined(__GNUC__)
     __builtin_trap();
 #else
     ((void)(*(volatile char*)0 = 0));
 #endif
+#if !defined(NDEBUG)
     return T();
+#endif
   }
 };
 
