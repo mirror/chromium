@@ -52,6 +52,24 @@
       "revId": "f8bf1f141495495175c0a1ed75924d925b912fd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7368471_d8b46580",
+        "filename": "base/allocator/partition_allocator/address_space_randomization.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-09-01T16:59:07Z",
+      "side": 1,
+      "message": "PA is more general-purpose than V8\u0027s allocation, including potentially allocating executable pages (bbudge is working on this). (Although ASLR is an important defense for all kinds of memory mappings, not just executable memory.)\n\nThe number we chose for V8 is wince-inducingly low, from a security perspective, and for a more general-use allocator it\u0027s even more wince-inducing. Whatever number we choose here, it will result in less memory leaking than the status quo.",
+      "parentUuid": "447b0f8d_0759531c",
+      "revId": "f8bf1f141495495175c0a1ed75924d925b912fd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
