@@ -193,7 +193,8 @@ NSString* GetSpotlightCustomAttributeItemID() {
       ->GetCustomAttributeItemID();
 }
 
-void GetURLForSpotlightItemID(NSString* itemID, BlockWithNSURL completion) {
+void GetURLForSpotlightItemID(NSString* itemID, BlockWithNSURL completion)
+    NS_AVAILABLE_IOS(10_0) {
   NSString* queryString =
       [NSString stringWithFormat:@"%@ == \"%@\"",
                                  GetSpotlightCustomAttributeItemID(), itemID];
