@@ -22,6 +22,30 @@
       "revId": "a7c3f517669756ec27e841f548df2067c8236f97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c2d4e8c_5e4a0ff2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1399,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-09-01T10:53:46Z",
+      "side": 1,
+      "message": "createDetached calls detach with null as both the intent and finalizeCallback, so it just adds a TabReparentingParams(this, \u003cnew Intent with just EXTRA_TAB_ID\u003e, null) to the AsyncTabParamsManager.\n\nThis is taken out of the AsyncTabParamsManager in CustomTabActivity#finishNativeInitialization, removed and immediately passed to Tab#attachAndFinishReparenting.\n\nThe only thing Tab#attachAndFinishReparenting does with the params is to call TabReparentingParams#finalizeTabReparenting, which will be a no-op since there\u0027s no finalizeCallback.\n\nSo I don\u0027t think this will break CustomTabs - TabReparentingParams is only used in multiwindow Tab reparenting (and my current FullscreenActivity). I was actually tempted to try to separate the reparenting logic and TabReparentingParams - let whoever is reparenting the Tab worry about them, not the Tab itself. The only reason I didn\u0027t was because I assume that finalizeTabReparenting needs to be called at a certain point in attachAndFinishReparenting (after all the setup but before the Observers are notified).",
+      "parentUuid": "02b35df1_4c0a0219",
+      "range": {
+        "startLine": 1399,
+        "startChar": 16,
+        "endLine": 1399,
+        "endChar": 22
+      },
+      "revId": "a7c3f517669756ec27e841f548df2067c8236f97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
