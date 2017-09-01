@@ -22,6 +22,30 @@
       "revId": "dfe63527c33d35d9a0353c2b0cb0b09ea92f45ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6507729_743b4d54",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field_paste_delegate.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-09-01T12:21:30Z",
+      "side": 1,
+      "message": "It\u0027s not clear to me how to get the URL one. It seems to solve our current problem (copy URL in Chrome, paste it in Chrome and get it once and not twice). I don\u0027t see why it would paste \"URL\\ntitle\" since I\u0027m not combining any strings with \"\\n\" as a separator. I have an idea for a better, more robust fix, but I\u0027d like to land this for now (and ideally revert this CL if this is fixed in the final iOS 11.0 release).",
+      "parentUuid": "5d19cd1b_b907cbc0",
+      "range": {
+        "startLine": 20,
+        "startChar": 44,
+        "endLine": 20,
+        "endChar": 55
+      },
+      "revId": "dfe63527c33d35d9a0353c2b0cb0b09ea92f45ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
