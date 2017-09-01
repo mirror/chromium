@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "5777a8f9_8e09b314",
+        "filename": "chrome/browser/geolocation/geolocation_permission_context_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-09-01T02:59:40Z",
+      "side": 1,
+      "message": "Is this the right behavior if location_settings_dialog_request_id_ is already set (i.e. in the side by side window case you mentioned)?\n\nShould it just ignore the latter calls if there is already an active one?",
+      "revId": "1a2602ecff513354795ea18dc782d779d8591f54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76cc4732_6ff73671",
+        "filename": "chrome/browser/geolocation/geolocation_permission_context_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-09-01T02:59:40Z",
+      "side": 1,
+      "message": "Is this true? Won\u0027t the callback just be dropped in this case?",
+      "revId": "1a2602ecff513354795ea18dc782d779d8591f54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c4def0d5_16bdfee0",
         "filename": "chrome/browser/geolocation/geolocation_permission_context_android.h",
         "patchSetId": 3
@@ -13,6 +47,40 @@
       "writtenOn": "2017-08-31T08:04:37Z",
       "side": 1,
       "message": "If you\u0027re in multi-window and both windows prompt, one of the requests will be dropped... maybe it\u0027s enough of an edge case to not worry.",
+      "revId": "1a2602ecff513354795ea18dc782d779d8591f54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e78722f_224f4b08",
+        "filename": "chrome/browser/geolocation/geolocation_permission_context_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 844,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-09-01T02:59:40Z",
+      "side": 1,
+      "message": "Could you do something before Canceling to ensure there is an outstanding response? E.g. ASSERT_FALSE(responses_.empty())?",
+      "revId": "1a2602ecff513354795ea18dc782d779d8591f54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad08e378_bbc82376",
+        "filename": "chrome/browser/permissions/permission_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-09-01T02:59:40Z",
+      "side": 1,
+      "message": "Was this the only thing preventing the request being removed from pending requests immediately in all cases across all permissions?",
       "revId": "1a2602ecff513354795ea18dc782d779d8591f54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
