@@ -46,6 +46,30 @@
       "revId": "c225ceb0cad13112d4c71fbcca6d9b080d683e44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c36ea81_e3027449",
+        "filename": "chrome/browser/password_manager/password_manager_util_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1000389
+      },
+      "writtenOn": "2017-09-01T15:16:36Z",
+      "side": 1,
+      "message": "Hmmm, not quite that easy.  Because the code does not specify CRED_PACK_PROTECTED_CREDENTIALS, the password returned by CredUnPackAuthenticationBuffer() is encrypted.  This means that an empty password typed into the prompt does not result in an empty password string.  For example, when I type nothing in the prompt, the return string password is 37 character long (including null):\n\n    @@D\\a\\b\\f\\n\\rQAAAAA8qUBAAAAAAgsBRqGMLwEDD\n\nI\u0027m not sure we should use CRED_PACK_PROTECTED_CREDENTIALS just to handle this case.  I\u0027ll keep looking.",
+      "parentUuid": "76efbf58_46d8f3fc",
+      "range": {
+        "startLine": 456,
+        "startChar": 43,
+        "endLine": 456,
+        "endChar": 71
+      },
+      "revId": "c225ceb0cad13112d4c71fbcca6d9b080d683e44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
