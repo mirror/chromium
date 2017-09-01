@@ -6,12 +6,14 @@ import common
 from common import TestDriver
 from common import IntegrationTest
 from decorators import ChromeVersionEqualOrAfterM
+from decorators import NotAndroid
 import json
 
 
 class CrossOriginPush(IntegrationTest):
   # Ensure cross origin push from trusted proxy server is adopted by Chromium.
   @ChromeVersionEqualOrAfterM(62)
+  @NotAndroid
   def testClientConfigVariationsHeader(self):
     with TestDriver() as t:
       t.AddChromeArg('--log-net-log=chrome.netlog.json')
