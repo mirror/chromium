@@ -20,7 +20,8 @@ class TestFrameSinkManagerImpl : public mojom::FrameSinkManager {
 
  private:
   // mojom::FrameSinkManager:
-  void RegisterFrameSinkId(const FrameSinkId& frame_sink_id) override {}
+  void RegisterFrameSinkId(const FrameSinkId& frame_sink_id,
+                           const std::string& label) override {}
   void InvalidateFrameSinkId(const FrameSinkId& frame_sink_id) override {}
   void CreateRootCompositorFrameSink(
       const FrameSinkId& frame_sink_id,
