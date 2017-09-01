@@ -1677,6 +1677,10 @@ enum WebFeature {
   kWebkitBoxLineClampOneChildIsLayoutBlockFlowInline = 2142,
   kWebkitBoxLineClampManyChildren = 2143,
   kWebkitBoxLineClampDoesSomething = 2144,
+  kSpeechRecognitionSecureOrigin = 2145,
+  kSpeechRecognitionSecureOriginIframe = 2146,
+  kSpeechRecognitionInsecureOrigin = 2147,
+  kSpeechRecognitionInsecureOriginIframe = 2148,
 
   // Add new features immediately above this line. Don't change assigned
   // numbers of any item, and don't reuse removed slots.

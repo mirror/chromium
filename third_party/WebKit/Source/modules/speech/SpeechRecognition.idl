@@ -29,6 +29,7 @@
     ActiveScriptWrappable,
     Constructor,
     ConstructorCallWith=ExecutionContext,
+    RaisesException=Constructor,
     DependentLifetime,
     NoInterfaceObject
 ] interface SpeechRecognition : EventTarget {
