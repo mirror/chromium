@@ -871,9 +871,7 @@ TEST_P(QuicPacketCreatorTest, AddFrameAndFlush) {
   EXPECT_EQ(STREAM_FRAME, retransmittable[0].type);
   ASSERT_TRUE(retransmittable[0].stream_frame);
   EXPECT_TRUE(serialized_packet_.has_ack);
-  if (FLAGS_quic_reloadable_flag_quic_no_stop_waiting_frames) {
-    EXPECT_EQ(10u, serialized_packet_.largest_acked);
-  }
+  EXPECT_EQ(10u, serialized_packet_.largest_acked);
   DeleteSerializedPacket();
 
   EXPECT_FALSE(creator_.HasPendingFrames());
