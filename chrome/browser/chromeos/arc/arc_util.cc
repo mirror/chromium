@@ -9,6 +9,7 @@
 #include <set>
 
 #include "base/callback.h"
+#include "base/command_line.h"
 #include "base/files/file_path.h"
 #include "base/lazy_instance.h"
 #include "base/logging.h"
@@ -22,6 +23,7 @@
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/pref_names.h"
+#include "chromeos/chromeos_switches.h"
 #include "components/arc/arc_util.h"
 #include "components/prefs/pref_service.h"
 #include "components/user_manager/known_user.h"
@@ -134,7 +136,7 @@ bool IsArcAllowedForProfile(const Profile* profile) {
   }
 
   if (!IsArcCompatibleFileSystemUsedForProfile(profile) &&
-      !IsArcMigrationAllowedForProfile(profile)) {
+      !IsArcMigrationAllowedByPolicyForProfile(profile)) {
     VLOG(1) << "Incompatible encryption and migration forbidden.";
     return false;
   }
@@ -162,13 +164,27 @@ bool IsArcAllowedForProfile(const Profile* profile) {
   return true;
 }
 
-bool IsArcMigrationAllowedForProfile(const Profile* profile) {
+bool IsArcMigrationAllowedByPolicyForProfile(const Profile* profile) {
   if (!profile || !profile->GetPrefs()->IsManagedPreference(
                       prefs::kEcryptfsMigrationStrategy)) {
     return true;
   }
 
-  return profile->GetPrefs()->GetInteger(prefs::kEcryptfsMigrationStrategy) !=
+  int migration_strategy =
+      profile->GetPrefs()->GetInteger(prefs::kEcryptfsMigrationStrategy);
+  // |kAskForEcryptfsArcUsers| value is received only if the device is in EDU
+  // and admin left the migration policy unset. In this case only a group of
+  // devices that had ARC M available are allowed to migrate, provided ARC is
+  // enabled.
+  if (migration_strategy ==
+      static_cast<int>(
+          arc::policy_util::EcryptfsMigrationAction::kAskForEcryptfsArcUsers)) {
+    return profile->GetPrefs()->GetBoolean(prefs::kArcEnabled) &&
+           base::CommandLine::ForCurrentProcess()->HasSwitch(
+               chromeos::switches::kArcTransitionMigrationRequired);
+  }
+
+  return migration_strategy !=
          static_cast<int>(
              arc::policy_util::EcryptfsMigrationAction::kDisallowMigration);
 }
