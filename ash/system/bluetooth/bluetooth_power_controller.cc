@@ -113,7 +113,7 @@ void BluetoothPowerController::InitializeOnAdapterReady(
   bluetooth_adapter_ = std::move(adapter);
   bluetooth_adapter_->AddObserver(this);
   if (bluetooth_adapter_->IsPresent()) {
-    RunPendingBluetoothTasks(bluetooth_adapter_.get());
+    TriggerRunPendingBluetoothTasks();
   }
 }
 
@@ -161,7 +161,7 @@ void BluetoothPowerController::AdapterPresentChanged(
     device::BluetoothAdapter* adapter,
     bool present) {
   if (present)
-    RunPendingBluetoothTasks(adapter);
+    TriggerRunPendingBluetoothTasks();
 }
 
 void BluetoothPowerController::ApplyBluetoothPrimaryUserPref() {
@@ -207,46 +207,59 @@ void BluetoothPowerController::ApplyBluetoothLocalStatePref() {
 
 void BluetoothPowerController::SetBluetoothPower(bool enabled) {
   RunBluetoothTaskWhenAdapterReady(
-      base::BindOnce(&BluetoothPowerController::SetBluetoothPowerOnAdapterReady,
-                     weak_ptr_factory_.GetWeakPtr(), enabled));
+      base::Bind(&BluetoothPowerController::SetBluetoothPowerOnAdapterReady,
+                 weak_ptr_factory_.GetWeakPtr(), enabled));
 }
 
 void BluetoothPowerController::SetBluetoothPowerOnAdapterReady(
     bool enabled,
-    device::BluetoothAdapter* adapter) {
-  adapter->SetPowered(enabled, base::Bind(&base::DoNothing),
-                      base::Bind(&base::DoNothing));
+    device::BluetoothAdapter* adapter,
+    const base::Closure& callback) {
+  adapter->SetPowered(enabled, callback, callback);
 }
 
 void BluetoothPowerController::RunBluetoothTaskWhenAdapterReady(
-    base::OnceCallback<void(device::BluetoothAdapter*)> task) {
-  if (bluetooth_adapter_ && bluetooth_adapter_->IsPresent()) {
-    std::move(task).Run(bluetooth_adapter_.get());
-  } else {
-    pending_bluetooth_tasks_.push_back(std::move(task));
-  }
+    const BluetoothTask& task) {
+  pending_bluetooth_tasks_.push(task);
+  TriggerRunPendingBluetoothTasks();
 }
 
-void BluetoothPowerController::RunPendingBluetoothTasks(
-    device::BluetoothAdapter* adapter) {
-  for (auto& task : pending_bluetooth_tasks_) {
-    std::move(task).Run(adapter);
+void BluetoothPowerController::TriggerRunPendingBluetoothTasks() {
+  if (pending_tasks_busy_)
+    return;
+  pending_tasks_busy_ = true;
+  RunNextPendingBluetoothTask();
+}
+
+void BluetoothPowerController::RunNextPendingBluetoothTask() {
+  if (!bluetooth_adapter_ || !bluetooth_adapter_->IsPresent() ||
+      pending_bluetooth_tasks_.empty()) {
+    // Stop running pending tasks if either adapter becomes not present or
+    // all the pending tasks have been run.
+    pending_tasks_busy_ = false;
+    return;
   }
-  pending_bluetooth_tasks_.clear();
+  BluetoothTask task = pending_bluetooth_tasks_.front();
+  pending_bluetooth_tasks_.pop();
+  task.Run(bluetooth_adapter_.get(),
+           base::Bind(&BluetoothPowerController::RunNextPendingBluetoothTask,
+                      weak_ptr_factory_.GetWeakPtr()));
 }
 
 void BluetoothPowerController::SavePrefValue(PrefService* prefs,
                                              const char* pref_name) {
   RunBluetoothTaskWhenAdapterReady(
-      base::BindOnce(&BluetoothPowerController::SavePrefValueOnAdapterReady,
-                     weak_ptr_factory_.GetWeakPtr(), prefs, pref_name));
+      base::Bind(&BluetoothPowerController::SavePrefValueOnAdapterReady,
+                 weak_ptr_factory_.GetWeakPtr(), prefs, pref_name));
 }
 
 void BluetoothPowerController::SavePrefValueOnAdapterReady(
     PrefService* prefs,
     const char* pref_name,
-    device::BluetoothAdapter* adapter) {
+    device::BluetoothAdapter* adapter,
+    const base::Closure& callback) {
   prefs->SetBoolean(pref_name, adapter->IsPowered());
+  callback.Run();
 }
 
 bool BluetoothPowerController::ShouldApplyUserBluetoothSetting(
