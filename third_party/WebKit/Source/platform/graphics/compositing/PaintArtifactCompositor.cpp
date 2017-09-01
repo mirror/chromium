@@ -750,6 +750,8 @@ void PaintArtifactCompositor::Update(
     chunk.raster_invalidation_rects.clear();
     chunk.raster_invalidation_tracking.clear();
   }
+
+  ShowDebugData();
 }
 
 std::unique_ptr<WebLayer>
