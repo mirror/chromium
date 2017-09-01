@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "65441582_4d5387cd",
+        "filename": "components/data_reduction_proxy/content/browser/content_lofi_decider.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-09-01T01:41:30Z",
+      "side": 1,
+      "message": "Thanks!\n\nOrthogonal from this specific cl, I\u0027m curious if it\u0027s possible to remove PreviewState completely from content? e.g. stashing it in NavigationEntry from a component using the *ExtraData methods.",
+      "parentUuid": "8bb69ad0_db1156ed",
+      "revId": "338ec7ae51257b627aaccef816c5c03aef1bd0b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60a69d4c_d92b36ce",
         "filename": "third_party/WebKit/public/platform/WebURLRequest.h",
         "patchSetId": 10
