@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "729ea124_c93a225b",
+        "filename": "media/audio/cras/audio_manager_cras.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-09-01T07:32:35Z",
+      "side": 1,
+      "message": "BindOnce here and elsewhere for tasks that are posted.",
+      "revId": "986dd77de1ce2a8aca8dc584d00c919f4ef4946e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
