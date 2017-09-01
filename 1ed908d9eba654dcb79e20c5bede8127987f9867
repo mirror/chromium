@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "182f8356_7c771409",
+        "filename": "chrome/browser/resources/settings/route.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-01T19:22:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0d24b00_6c55ac21",
+      "revId": "1ed908d9eba654dcb79e20c5bede8127987f9867",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ad88875_5aee9b4c",
         "filename": "chrome/browser/resources/settings/route.js",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-01T18:41:37Z",
       "side": 1,
       "message": "CreatedForPath now seems like a misnomer. Should we use: VisitedPath?",
+      "revId": "1ed908d9eba654dcb79e20c5bede8127987f9867",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dff4f7a7_09e418e6",
+        "filename": "chrome/browser/resources/settings/route.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-01T19:22:11Z",
+      "side": 1,
+      "message": "Talked off-line and came to WebUI.Settings.PathVisited",
+      "parentUuid": "8ad88875_5aee9b4c",
       "revId": "1ed908d9eba654dcb79e20c5bede8127987f9867",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
