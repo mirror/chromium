@@ -7,21 +7,28 @@ EXPORTS
   ; When functions are added to this file, they must also be added to
   ; chrome_elf_x86.def
 
-  ; From components/crash/content/app/crashpad.cc
-  ClearCrashKeyValueImpl
-  ClearCrashKeyValueImplEx
-  RequestSingleCrashUploadImpl
-  SetCrashKeyValueImpl
-  SetCrashKeyValueImplEx
-  SetUploadConsentImpl
+  ; From components/crash/content/app/crash_export_stubs.cc
+  ClearCrashKeyValueExExportThunk
+  ClearCrashKeyValueExportThunk
+  CrashForExceptionExportThunk
+  GetCrashReportsExportThunk
+  InjectDumpForHungInputNoCrashKeysExportThunk
+  InjectDumpForHungInputExportThunk
+  RequestSingleCrashUploadExportThunk
+  SetCrashKeyValueExExportThunk
+  SetCrashKeyValueExportThunk
+  SetUploadConsentExportThunk
 
-  ; From components/crash/content/app/crashpad_win.cc
-  CrashForException
-  InjectDumpForHungInput
-  InjectDumpForHungInputNoCrashKeys
+  ; X64-only exports
+  RegisterNonABICompliantCodeRangeExportThunk
+  UnregisterNonABICompliantCodeRangeExportThunk
+
+  ; This export is used by SyzyASAN, do not rename or remove without talking
+  ; to syzygy-team@chromium.org first.
+  SetCrashKeyValue = SetCrashKeyValueExportThunk
+
 
   ; From chrome_elf/crash_helper.cc
-  GetCrashReportsImpl
   SetMetricsClientId
 
   ; From chrome_elf_main.cc
@@ -38,8 +45,3 @@ EXPORTS
   GetBlacklistIndex
   IsBlacklistInitialized
   SuccessfullyBlocked
-
-  ; X64-only exports
-  ; From components/crash/content/app/crashpad_win.cc
-  RegisterNonABICompliantCodeRange
-  UnregisterNonABICompliantCodeRange

@@ -16,8 +16,10 @@ namespace v8_breakpad_support {
 
 void SetUp() {
 #if defined(ARCH_CPU_X86_64)
-  gin::Debug::SetCodeRangeCreatedCallback(&RegisterNonABICompliantCodeRange);
-  gin::Debug::SetCodeRangeDeletedCallback(&UnregisterNonABICompliantCodeRange);
+  gin::Debug::SetCodeRangeCreatedCallback(
+      &RegisterNonABICompliantCodeRangeExportThunk);
+  gin::Debug::SetCodeRangeDeletedCallback(
+      &UnregisterNonABICompliantCodeRangeExportThunk);
 #endif
 }
 
