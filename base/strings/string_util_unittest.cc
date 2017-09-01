@@ -992,6 +992,45 @@ TEST(StringUtilTest, ReplaceStringPlaceholders) {
   EXPECT_EQ(ASCIIToUTF16("9aa,8bb,7cc,6dd,5ee,4ff,3gg,2hh,1ii"), formatted);
 }
 
+TEST(StringUtilTest, ReplaceStringPlaceholdersNetExpansionWithContraction) {
+  // In this test, some of the substitutions are shorter than the placeholders,
+  // but overall the string gets longer.
+  std::vector<string16> subst;
+  subst.push_back(ASCIIToUTF16("9a____"));
+  subst.push_back(ASCIIToUTF16("8B"));
+  subst.push_back(ASCIIToUTF16("7c___"));
+  subst.push_back(ASCIIToUTF16("6d"));
+  subst.push_back(ASCIIToUTF16("5e____"));
+  subst.push_back(ASCIIToUTF16("4F"));
+  subst.push_back(ASCIIToUTF16("3g___"));
+  subst.push_back(ASCIIToUTF16("2h"));
+  subst.push_back(ASCIIToUTF16("1i_____"));
+
+  string16 formatted = ReplaceStringPlaceholders(
+      ASCIIToUTF16("$1a,$2b,$3c,$4d,$5e,$6f,$7g,$8h,$9i"), subst, nullptr);
+
+  EXPECT_EQ(
+      ASCIIToUTF16("9a____a,8Bb,7c___c,6dd,5e____e,4Ff,3g___g,2hh,1i_____i"),
+      formatted);
+}
+
+TEST(StringUtilTest, ReplaceStringPlaceholdersNetContractionWithExpansion) {
+  // In this test, some of the substitutions are longer than the placeholders,
+  // but overall the string gets smaller. Additionally, the placeholders appear
+  // in a permuted order.
+  std::vector<string16> subst;
+  subst.push_back(ASCIIToUTF16("z"));
+  subst.push_back(ASCIIToUTF16("y"));
+  subst.push_back(ASCIIToUTF16("XYZW"));
+  subst.push_back(ASCIIToUTF16("x"));
+  subst.push_back(ASCIIToUTF16("w"));
+
+  string16 formatted =
+      ReplaceStringPlaceholders(ASCIIToUTF16("$3_$4$2$1$5"), subst, nullptr);
+
+  EXPECT_EQ(ASCIIToUTF16("XYZW_xyzw"), formatted);
+}
+
 TEST(StringUtilTest, ReplaceStringPlaceholdersOneDigit) {
   std::vector<string16> subst;
   subst.push_back(ASCIIToUTF16("1a"));
@@ -1025,6 +1064,19 @@ TEST(StringUtilTest, StdStringReplaceStringPlaceholders) {
           "$1a,$2b,$3c,$4d,$5e,$6f,$7g,$8h,$9i", subst, nullptr);
 
   EXPECT_EQ("9aa,8bb,7cc,6dd,5ee,4ff,3gg,2hh,1ii", formatted);
+}
+
+TEST(StringUtilTest, StdStringReplaceStringsMultipleMatches) {
+  std::vector<std::string> subst;
+  subst.push_back("4");   // Referenced twice.
+  subst.push_back("?");   // Unreferenced.
+  subst.push_back("16");  // Referenced once.
+  subst.push_back("!");   // Unreferenced.
+
+  std::string formatted =
+      ReplaceStringPlaceholders("$1 * $1 == $3", subst, nullptr);
+
+  EXPECT_EQ("4 * 4 == 16", formatted);
 }
 
 TEST(StringUtilTest, ReplaceStringPlaceholdersConsecutiveDollarSigns) {
