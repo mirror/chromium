@@ -20,7 +20,6 @@
 #include "cc/quads/surface_draw_quad.h"
 #include "cc/quads/texture_draw_quad.h"
 #include "cc/resources/display_resource_provider.h"
-#include "cc/test/fake_compositor_frame_sink_support_client.h"
 #include "cc/test/fake_resource_provider.h"
 #include "cc/test/render_pass_test_utils.h"
 #include "cc/test/test_shared_bitmap_manager.h"
@@ -31,6 +30,7 @@
 #include "components/viz/service/surfaces/surface.h"
 #include "components/viz/service/surfaces/surface_manager.h"
 #include "components/viz/test/compositor_frame_helpers.h"
+#include "components/viz/test/fake_compositor_frame_sink_client.h"
 #include "components/viz/test/fake_surface_observer.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -60,6 +60,25 @@ gfx::Size SurfaceSize() {
   static gfx::Size size(100, 100);
   return size;
 }
+
+// Helper class to use with CompositorFrameSinkSupport::WillDrawCallback.
+struct WillDrawSurfaceResult {
+ public:
+  const gfx::Rect& last_damage_rect() const { return last_damage_rect_; }
+  const LocalSurfaceId& last_local_surface_id() const {
+    return last_local_surface_id_;
+  }
+
+  void WillDrawSurface(const LocalSurfaceId& local_surface_id,
+                       const gfx::Rect& damage_rect) {
+    last_local_surface_id_ = local_surface_id;
+    last_damage_rect_ = damage_rect;
+  }
+
+ private:
+  gfx::Rect last_damage_rect_;
+  LocalSurfaceId last_local_surface_id_;
+};
 
 class SurfaceAggregatorTest : public testing::Test {
  public:
@@ -270,7 +289,7 @@ class SurfaceAggregatorTest : public testing::Test {
  protected:
   FrameSinkManagerImpl manager_;
   FakeSurfaceObserver observer_;
-  cc::FakeCompositorFrameSinkSupportClient fake_client_;
+  FakeCompositorFrameSinkClient fake_client_;
   std::unique_ptr<CompositorFrameSinkSupport> support_;
   SurfaceAggregator aggregator_;
 };
@@ -368,6 +387,12 @@ TEST_F(SurfaceAggregatorValidSurfaceTest, SimpleFrame) {
                   Quad::SolidColorQuad(SK_ColorBLUE)};
   Pass passes[] = {Pass(quads, arraysize(quads))};
 
+  // Add a callback for when surface is scheduled to draw.
+  WillDrawSurfaceResult will_draw_result;
+  support_->SetWillDrawSurfaceCallback(
+      base::BindRepeating(&WillDrawSurfaceResult::WillDrawSurface,
+                          base::Unretained(&will_draw_result)));
+
   SubmitCompositorFrame(support_.get(), passes, arraysize(passes),
                         root_local_surface_id_);
 
@@ -377,8 +402,8 @@ TEST_F(SurfaceAggregatorValidSurfaceTest, SimpleFrame) {
   AggregateAndVerify(passes, arraysize(passes), ids, arraysize(ids));
 
   // Check that WillDrawSurface was called.
-  EXPECT_EQ(gfx::Rect(SurfaceSize()), fake_client_.last_damage_rect());
-  EXPECT_EQ(root_local_surface_id_, fake_client_.last_local_surface_id());
+  EXPECT_EQ(gfx::Rect(SurfaceSize()), will_draw_result.last_damage_rect());
+  EXPECT_EQ(root_local_surface_id_, will_draw_result.last_local_surface_id());
 
   // Check that SurfaceObserver::OnSurfaceWillDraw was called.
   EXPECT_TRUE(observer_.SurfaceWillDrawCalled(root_surface_id));
@@ -2191,7 +2216,7 @@ void SubmitCompositorFrameWithResources(ResourceId* resource_ids,
 }
 
 TEST_F(SurfaceAggregatorWithResourcesTest, TakeResourcesOneSurface) {
-  cc::FakeCompositorFrameSinkSupportClient client;
+  FakeCompositorFrameSinkClient client;
   auto support = CompositorFrameSinkSupport::Create(
       &client, &manager_, kArbitraryRootFrameSinkId, kRootIsRoot,
       kNeedsSyncPoints);
@@ -2227,7 +2252,7 @@ TEST_F(SurfaceAggregatorWithResourcesTest, TakeResourcesOneSurface) {
 // ID, and a new display frame is generated, then the resources of the old
 // surface are returned to the appropriate client.
 TEST_F(SurfaceAggregatorWithResourcesTest, ReturnResourcesAsSurfacesChange) {
-  cc::FakeCompositorFrameSinkSupportClient client;
+  FakeCompositorFrameSinkClient client;
   auto support = CompositorFrameSinkSupport::Create(
       &client, &manager_, kArbitraryRootFrameSinkId, kRootIsRoot,
       kNeedsSyncPoints);
@@ -2264,7 +2289,7 @@ TEST_F(SurfaceAggregatorWithResourcesTest, ReturnResourcesAsSurfacesChange) {
 }
 
 TEST_F(SurfaceAggregatorWithResourcesTest, TakeInvalidResources) {
-  cc::FakeCompositorFrameSinkSupportClient client;
+  FakeCompositorFrameSinkClient client;
   auto support = CompositorFrameSinkSupport::Create(
       &client, &manager_, kArbitraryRootFrameSinkId, kRootIsRoot,
       kNeedsSyncPoints);
@@ -2294,7 +2319,7 @@ TEST_F(SurfaceAggregatorWithResourcesTest, TakeInvalidResources) {
 }
 
 TEST_F(SurfaceAggregatorWithResourcesTest, TwoSurfaces) {
-  cc::FakeCompositorFrameSinkSupportClient client;
+  FakeCompositorFrameSinkClient client;
   auto support1 = CompositorFrameSinkSupport::Create(
       &client, &manager_, FrameSinkId(1, 1), kChildIsRoot, kNeedsSyncPoints);
   auto support2 = CompositorFrameSinkSupport::Create(
