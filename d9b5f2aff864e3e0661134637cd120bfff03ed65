@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "692ace15_66595ad2",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2827,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-01T17:07:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "712396f7_6af0e8d3",
+      "revId": "d9b5f2aff864e3e0661134637cd120bfff03ed65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd49ee23_ae5fdb72",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
         "patchSetId": 2
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "It would not but LocalFrameView::GetCompositorElementId currently lies and returns the LayoutView\u0027s element id in RLS mode. This is a bit hacky but will go away when RLS ships. Another way to implement this would be to check the scrollable areas first, which will return the LayoutView, before checking the LocalFrameView itself. A third way to implement this would be to refactor LocalFrameView::GetCompositorElementId to only return the LocalFrameView\u0027s id and not the LayoutView\u0027s id, but that would be better as a followup.",
       "parentUuid": "fd49ee23_ae5fdb72",
+      "revId": "d9b5f2aff864e3e0661134637cd120bfff03ed65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bb84724_d4352c11",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 4439,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-01T17:07:25Z",
+      "side": 1,
+      "message": "Ah ok now I understand. Looks ok.",
+      "parentUuid": "7fb46413_0a59fd8f",
       "revId": "d9b5f2aff864e3e0661134637cd120bfff03ed65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
