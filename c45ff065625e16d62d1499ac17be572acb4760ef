@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9bf20111_c81211c5",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webvtt/parsing/cue-text-parsing/dat/entities.dat",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-09-01T14:25:14Z",
+      "side": 1,
+      "message": "Here we match \"not\" since it\u0027s the longest match in the entities table (\"notit\" or \"notit;\" is not in it), so that part is consumed and replaced by U+00AC. Then we continue processing \u0027i\u0027, \u0027t\u0027 and \u0027;\u0027 as usual. (This is per https://html.spec.whatwg.org/multipage/parsing.html#named-character-reference-state)",
+      "parentUuid": "48766d32_4c79be0f",
+      "range": {
+        "startLine": 150,
+        "startChar": 4,
+        "endLine": 150,
+        "endChar": 11
+      },
+      "revId": "c45ff065625e16d62d1499ac17be572acb4760ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c1e4ab3_df54e44e",
         "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTTokenizer.cpp",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "c45ff065625e16d62d1499ac17be572acb4760ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66cb3d26_61e14c8f",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTTokenizer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-09-01T14:25:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c1e4ab3_df54e44e",
+      "range": {
+        "startLine": 50,
+        "startChar": 25,
+        "endLine": 50,
+        "endChar": 35
+      },
+      "revId": "c45ff065625e16d62d1499ac17be572acb4760ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
