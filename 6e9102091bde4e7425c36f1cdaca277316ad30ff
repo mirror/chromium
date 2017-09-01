@@ -46,6 +46,30 @@
       "revId": "6e9102091bde4e7425c36f1cdaca277316ad30ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "667714ed_edc25431",
+        "filename": "chrome/android/java/res/layout/bottom_control_container.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-01T17:54:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "850e01a3_5cffe852",
+      "range": {
+        "startLine": 11,
+        "startChar": 26,
+        "endLine": 11,
+        "endChar": 31
+      },
+      "revId": "6e9102091bde4e7425c36f1cdaca277316ad30ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
