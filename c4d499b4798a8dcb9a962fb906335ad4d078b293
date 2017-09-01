@@ -81,6 +81,30 @@
       "revId": "c4d499b4798a8dcb9a962fb906335ad4d078b293",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58965572_cc40f9d2",
+        "filename": "content/child/web_database_impl.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-09-01T02:13:48Z",
+      "side": 1,
+      "message": "Just went and fixed up render_thread_impl to have a BinderRegistry without args, so this is now DONE.",
+      "parentUuid": "173ab511_9730266c",
+      "range": {
+        "startLine": 31,
+        "startChar": 21,
+        "endLine": 31,
+        "endChar": 59
+      },
+      "revId": "c4d499b4798a8dcb9a962fb906335ad4d078b293",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
