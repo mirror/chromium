@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b5c7698_200cb936",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-09-01T05:08:20Z",
+      "side": 1,
+      "message": "stray \u0027;\u0027",
+      "range": {
+        "startLine": 91,
+        "startChar": 4,
+        "endLine": 91,
+        "endChar": 5
+      },
+      "revId": "8676ffaa0afca8b9365a9d60b126a03a3b170d23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
