@@ -265,9 +265,9 @@ void PaintOpReader::Read(sk_sp<PaintShader>* shader) {
 
   decltype(ref.positions_)::size_type positions_size = 0;
   ReadSimple(&positions_size);
-  // TODO(enne): positions and colors have to have the same count, so maybe
-  // don't serialize this either?
-  if (positions_size != colors_size) {
+  // TODO(enne): positions count, if non-zero, has to be the same as colors
+  // count, so maybe don't serialize this either?
+  if (positions_size && positions_size != colors_size) {
     valid_ = false;
     return;
   }
