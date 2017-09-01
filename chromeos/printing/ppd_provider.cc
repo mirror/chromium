@@ -1134,7 +1134,12 @@ class PpdProviderImpl : public PpdProvider, public net::URLFetcherDelegate {
   base::WeakPtrFactory<PpdProviderImpl> weak_factory_;
 
  protected:
-  ~PpdProviderImpl() override {}
+  ~PpdProviderImpl() override {
+    // Deleting the fetcher_ is the only way we have to ensure that any
+    // outstanding URL fetches are cancelled, so we must do that before tearing
+    // down anything else in the object (even the weak_factory).
+    fetcher_.reset();
+  }
 };
 
 }  // namespace
