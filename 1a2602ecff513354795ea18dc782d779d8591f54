@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fed152f3_cb1e0896",
+        "filename": "chrome/browser/geolocation/geolocation_permission_context_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-09-01T05:27:41Z",
+      "side": 1,
+      "message": "Well... the \"right\" thing would be to use a list of id/callback pairs, but I suspect no one will ever encounter this edge case so I think as long as we don\u0027t crash it\u0027s fine. I added a comment to mention it though.",
+      "parentUuid": "5777a8f9_8e09b314",
+      "revId": "1a2602ecff513354795ea18dc782d779d8591f54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "76cc4732_6ff73671",
         "filename": "chrome/browser/geolocation/geolocation_permission_context_android.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-01T02:59:40Z",
       "side": 1,
       "message": "Is this true? Won\u0027t the callback just be dropped in this case?",
+      "revId": "1a2602ecff513354795ea18dc782d779d8591f54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "148fad99_f602e010",
+        "filename": "chrome/browser/geolocation/geolocation_permission_context_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-09-01T05:27:41Z",
+      "side": 1,
+      "message": "Oops, fixed.",
+      "parentUuid": "76cc4732_6ff73671",
       "revId": "1a2602ecff513354795ea18dc782d779d8591f54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "565b292c_08dcd2a2",
+        "filename": "chrome/browser/geolocation/geolocation_permission_context_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 844,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-09-01T05:27:41Z",
+      "side": 1,
+      "message": "I moved up the HasShownLocationSettingsDialog check. The responses array here is for completed requests so since this gets cancelled it starts and stays empty.",
+      "parentUuid": "9e78722f_224f4b08",
+      "revId": "1a2602ecff513354795ea18dc782d779d8591f54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad08e378_bbc82376",
         "filename": "chrome/browser/permissions/permission_manager.cc",
         "patchSetId": 3
@@ -81,6 +135,24 @@
       "writtenOn": "2017-09-01T02:59:40Z",
       "side": 1,
       "message": "Was this the only thing preventing the request being removed from pending requests immediately in all cases across all permissions?",
+      "revId": "1a2602ecff513354795ea18dc782d779d8591f54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8514449_7cc0e904",
+        "filename": "chrome/browser/permissions/permission_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-09-01T05:27:41Z",
+      "side": 1,
+      "message": "Apparently not, removed DCHECK for now and added a TODO, at least PermissionUpdateInfobar seems to be async about this.",
+      "parentUuid": "ad08e378_bbc82376",
       "revId": "1a2602ecff513354795ea18dc782d779d8591f54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
