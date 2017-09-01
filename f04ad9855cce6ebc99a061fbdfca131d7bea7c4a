@@ -16,6 +16,121 @@
       "revId": "f04ad9855cce6ebc99a061fbdfca131d7bea7c4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2138a67d_4e66d650",
+        "filename": "content/renderer/media/rtc_peer_connection_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1032,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-01T16:43:29Z",
+      "side": 1,
+      "message": "Should this have a DCHECK to make sure this doesn\u0027t run on the main thread?",
+      "range": {
+        "startLine": 1032,
+        "startChar": 11,
+        "endLine": 1032,
+        "endChar": 34
+      },
+      "revId": "f04ad9855cce6ebc99a061fbdfca131d7bea7c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ce4e7c8_8e84245f",
+        "filename": "content/renderer/media/webrtc/webrtc_media_stream_track_adapter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-01T16:43:29Z",
+      "side": 1,
+      "message": "what was wrong with the raw pointer, and, if you do need the scoped_refptr, why not by const ref?",
+      "range": {
+        "startLine": 40,
+        "startChar": 17,
+        "endLine": 40,
+        "endChar": 18
+      },
+      "revId": "f04ad9855cce6ebc99a061fbdfca131d7bea7c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfada434_ef80c8fb",
+        "filename": "content/renderer/media/webrtc/webrtc_media_stream_track_adapter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-01T16:43:29Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 177,
+        "startChar": 4,
+        "endLine": 177,
+        "endChar": 17
+      },
+      "revId": "f04ad9855cce6ebc99a061fbdfca131d7bea7c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5f792b1_73a8bbfe",
+        "filename": "content/renderer/media/webrtc/webrtc_media_stream_track_adapter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-01T16:43:29Z",
+      "side": 1,
+      "message": "why all the scoped_refptr by value?",
+      "range": {
+        "startLine": 46,
+        "startChar": 6,
+        "endLine": 46,
+        "endChar": 19
+      },
+      "revId": "f04ad9855cce6ebc99a061fbdfca131d7bea7c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "109e011b_baa404d4",
+        "filename": "content/renderer/media/webrtc/webrtc_media_stream_track_adapter_map.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-01T16:43:29Z",
+      "side": 1,
+      "message": "The code does perfectly match the comment in that it was changed from returning null if not initialized to assuming (via a DCHECK) that it\u0027s initialized.",
+      "range": {
+        "startLine": 99,
+        "startChar": 49,
+        "endLine": 99,
+        "endChar": 51
+      },
+      "revId": "f04ad9855cce6ebc99a061fbdfca131d7bea7c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

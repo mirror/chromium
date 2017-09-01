@@ -16,6 +16,29 @@
       "revId": "6d9223a67b5c7058e8c0f503901d4658e9eb4141",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "efda12c7_61bf6bf1",
+        "filename": "content/renderer/media/webrtc/rtc_rtp_receiver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-01T16:43:29Z",
+      "side": 0,
+      "message": "why was this DCHECKed before and now it\u0027s not?",
+      "range": {
+        "startLine": 26,
+        "startChar": 27,
+        "endLine": 26,
+        "endChar": 28
+      },
+      "revId": "6d9223a67b5c7058e8c0f503901d4658e9eb4141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
