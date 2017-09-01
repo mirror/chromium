@@ -22,6 +22,30 @@
       "revId": "ad7385e6583013f91093fe4578d61923635788d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f7f88e6_67405552",
+        "filename": "components/cronet/android/java/src/org/chromium/net/impl/InputStreamChannel.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-09-01T17:39:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f949d9e5_b670336b",
+      "range": {
+        "startLine": 31,
+        "startChar": 12,
+        "endLine": 31,
+        "endChar": 23
+      },
+      "revId": "ad7385e6583013f91093fe4578d61923635788d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
