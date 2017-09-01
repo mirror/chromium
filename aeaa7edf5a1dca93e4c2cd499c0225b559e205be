@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "a0fe6ef1_4a0d4189",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-09-01T15:01:46Z",
+      "side": 1,
+      "message": "What if you specify nullptr for the colorSpace arg?",
+      "range": {
+        "startLine": 100,
+        "startChar": 51,
+        "endLine": 100,
+        "endChar": 64
+      },
+      "revId": "aeaa7edf5a1dca93e4c2cd499c0225b559e205be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5a5df767_3d92ab72",
         "filename": "third_party/WebKit/Source/core/offscreencanvas/OffscreenCanvas.cpp",
         "patchSetId": 2
