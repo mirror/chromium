@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e6af1011_9db78b84",
+        "filename": "base/message_loop/incoming_task_queue.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-01T17:36:55Z",
+      "side": 1,
+      "message": "Found the wake code:\nhttp://androidxref.com/7.1.1_r6/xref/system/core/libutils/Looper.cpp#407\nssize_t nWrite \u003d TEMP_FAILURE_RETRY(write(mWakeEventFd, \u0026inc, sizeof(uint64_t)));\nnWrite is expected to be uint64_t",
+      "parentUuid": "0429ee22_bfca4744",
+      "revId": "c74f5d4d1fbc9cefb15ffe516b1c1d38d4008f3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d56d9d0c_b924a4de",
         "filename": "base/message_loop/incoming_task_queue.h",
         "patchSetId": 4
