@@ -65,7 +65,8 @@ class CORE_EXPORT PerformanceEntry
     kResource = 1 << 5,
     kLongTask = 1 << 6,
     kTaskAttribution = 1 << 7,
-    kPaint = 1 << 8
+    kPaint = 1 << 8,
+    kCustom = 1 << 9
   };
 
   String name() const;
@@ -86,6 +87,7 @@ class CORE_EXPORT PerformanceEntry
   bool IsComposite() const { return entry_type_enum_ == kComposite; }
   bool IsMark() const { return entry_type_enum_ == kMark; }
   bool IsMeasure() const { return entry_type_enum_ == kMeasure; }
+  bool IsCustom() const { return entry_type_enum_ == kCustom; }
 
   static bool StartTimeCompareLessThan(PerformanceEntry* a,
                                        PerformanceEntry* b) {

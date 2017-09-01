@@ -131,6 +131,10 @@ class CORE_EXPORT PerformanceBase : public EventTargetWithInlineData {
                ExceptionState&);
   void clearMeasures(const String& measure_name);
 
+  void queueEntry(const String& name,
+                  DOMHighResTimeStamp start_time,
+                  DOMHighResTimeStamp duration);
+
   void UnregisterPerformanceObserver(PerformanceObserver&);
   void RegisterPerformanceObserver(PerformanceObserver&);
   void UpdatePerformanceObserverFilterOptions();
@@ -170,6 +174,8 @@ class CORE_EXPORT PerformanceBase : public EventTargetWithInlineData {
 
   void DeliverObservationsTimerFired(TimerBase*);
 
+  PerformanceEntryVector custom_timing_buffer_;
+  unsigned custom_timing_buffer_size_;
   PerformanceEntryVector frame_timing_buffer_;
   unsigned frame_timing_buffer_size_;
   PerformanceEntryVector resource_timing_buffer_;

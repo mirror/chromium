@@ -39,6 +39,7 @@
 #include "core/frame/UseCounter.h"
 #include "core/loader/DocumentLoadTiming.h"
 #include "core/loader/DocumentLoader.h"
+#include "core/timing/CustomPerformanceEntry.h"
 #include "core/timing/PerformanceLongTaskTiming.h"
 #include "core/timing/PerformanceObserver.h"
 #include "core/timing/PerformanceResourceTiming.h"
@@ -76,12 +77,14 @@ DOMHighResTimeStamp GetUnixAtZeroMonotonic() {
 
 using PerformanceObserverVector = HeapVector<Member<PerformanceObserver>>;
 
+static const size_t kDefaultCustomTimingBufferSize = 100;
 static const size_t kDefaultResourceTimingBufferSize = 150;
 static const size_t kDefaultFrameTimingBufferSize = 150;
 
 PerformanceBase::PerformanceBase(double time_origin,
                                  RefPtr<WebTaskRunner> task_runner)
-    : frame_timing_buffer_size_(kDefaultFrameTimingBufferSize),
+    : custom_timing_buffer_size_(kDefaultCustomTimingBufferSize),
+      frame_timing_buffer_size_(kDefaultFrameTimingBufferSize),
       resource_timing_buffer_size_(kDefaultResourceTimingBufferSize),
       user_timing_(nullptr),
       time_origin_(time_origin),
@@ -173,6 +176,12 @@ PerformanceEntryVector PerformanceBase::getEntriesByType(
       if (first_contentful_paint_timing_)
         entries.push_back(first_contentful_paint_timing_);
       break;
+    case PerformanceEntry::kCustom:
+      for (const auto& custom_entry : custom_timing_buffer_) {
+        if (type == custom_entry->EntryTypeEnum()) {
+          entries.push_back(custom_entry);
+        }
+      }
     // Unsupported for LongTask, TaskAttribution.
     // Per the spec, these entries can only be accessed via
     // Performance Observer. No separate buffer is maintained.
@@ -451,6 +460,15 @@ void PerformanceBase::clearMeasures(const String& measure_name) {
   user_timing_->ClearMeasures(measure_name);
 }
 
+void PerformanceBase::queueEntry(const String& name,
+                                 DOMHighResTimeStamp start_time,
+                                 DOMHighResTimeStamp duration) {
+  // Insert an entry to custom_timing_buffer.
+  CustomPerformanceEntry* entry =
+      CustomPerformanceEntry::Create(start_time, start_time + duration, name);
+  custom_timing_buffer_.push_back(entry);
+}
+
 void PerformanceBase::RegisterPerformanceObserver(
     PerformanceObserver& observer) {
   observer_filter_options_ |= observer.FilterOptions();
@@ -557,6 +575,7 @@ DOMHighResTimeStamp PerformanceBase::now() const {
 }
 
 DEFINE_TRACE(PerformanceBase) {
+  visitor->Trace(custom_timing_buffer_);
   visitor->Trace(frame_timing_buffer_);
   visitor->Trace(resource_timing_buffer_);
   visitor->Trace(navigation_timing_);

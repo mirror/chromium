@@ -46,6 +46,10 @@ interface Performance : EventTarget {
     [MeasureAs=UnprefixedPerformanceTimeline] PerformanceEntryList getEntriesByType(DOMString entryType);
     [MeasureAs=UnprefixedPerformanceTimeline] PerformanceEntryList getEntriesByName(DOMString name, optional DOMString entryType = null);
 
+    // Custom Timing
+    void queueEntry(DOMString name, DOMHighResTimeStamp startTime,
+                    DOMHighResTimeStamp duration);
+
     // Resource Timing
     // https://w3c.github.io/resource-timing/#extensions-performance-interface
     void clearResourceTimings();

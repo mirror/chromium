@@ -381,6 +381,7 @@ core_idl_files =
                     "svg/SVGUnitTypes.idl",
                     "svg/SVGUseElement.idl",
                     "svg/SVGViewElement.idl",
+                    "timing/CustomPerformanceEntry.idl",
                     "timing/MemoryInfo.idl",
                     "timing/Performance.idl",
                     "timing/PerformanceEntry.idl",

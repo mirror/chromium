@@ -6,6 +6,8 @@ import("//third_party/WebKit/Source/core/core.gni")
 
 blink_core_sources("timing") {
   sources = [
+    "CustomPerformanceEntry.cpp",
+    "CustomPerformanceEntry.h",
     "DOMWindowPerformance.cpp",
     "DOMWindowPerformance.h",
     "MemoryInfo.cpp",
