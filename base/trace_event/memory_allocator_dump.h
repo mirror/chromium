@@ -124,14 +124,7 @@ class BASE_EXPORT MemoryAllocatorDump {
 
   const std::vector<Entry>& entries_for_testing() const { return entries_; }
 
-  // Decprecated testing method. Use entries_for_testing instead.
-  // TODO(hjd): Remove this and refactor callers to use entries_for_testing then
-  // inline DumpAttributes.
-  std::unique_ptr<TracedValue> attributes_for_testing() const;
-
  private:
-  void DumpAttributes(TracedValue* value) const;
-
   const std::string absolute_name_;
   ProcessMemoryDump* const process_memory_dump_;  // Not owned (PMD owns this).
   MemoryAllocatorDumpGuid guid_;
