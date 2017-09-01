@@ -128,6 +128,30 @@
     },
     {
       "key": {
+        "uuid": "70f99b41_7f1fa01e",
+        "filename": "cc/paint/paint_image_destruction_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-01T00:51:08Z",
+      "side": 1,
+      "message": "The use of the singleton was because I was relying on the destruction of the ImageFrameGenerator to clear the cache, which can be destroyed on any thread and wouldn\u0027t have access to the compositor. And it was a safe place to ensure that the image is not being referenced on the main thread or any cached recordings so we can definitely discard it.\n\nWe would have multiple compositors sharing it but I think we could also have multiple compositors sharing the same image. The ResourceCache should provide the same ImageResource for an image.\n\nBut enne@ also mentioned that it wasn\u0027t great to have the threading semantics here where we are getting notifications from any thread (because the generator can be destroyed on any thread) in this class that are getting posted back to the compositor thread using the ObserverList. The alternate would be to tie this with an object on the main thread that can get to the compositor and send a list of such images with a commit. But I\u0027m not clear on where to do that right now and if there is an object that I can clearly bound the decode\u0027s lifetime with. If this doesn\u0027t look like the right approach to do this, I can revisit once I have explored the alternatives in more detail.",
+      "parentUuid": "08a18a32_9360537f",
+      "range": {
+        "startLine": 10,
+        "startChar": 30,
+        "endLine": 10,
+        "endChar": 71
+      },
+      "revId": "ca870be415b96930d0b8ce1e9f2d921287570d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58521ed7_8a2886d2",
         "filename": "cc/paint/paint_image_destruction_tracker.cc",
         "patchSetId": 6
@@ -139,6 +163,30 @@
       "writtenOn": "2017-08-31T23:14:36Z",
       "side": 1,
       "message": "On what thread is this going to run?",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 20
+      },
+      "revId": "ca870be415b96930d0b8ce1e9f2d921287570d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4268d9cc_04a2bf47",
+        "filename": "cc/paint/paint_image_destruction_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-01T00:51:08Z",
+      "side": 1,
+      "message": "It runs on the thread on which the observer was registered, so the compositor thread for the caches.",
+      "parentUuid": "58521ed7_8a2886d2",
       "range": {
         "startLine": 30,
         "startChar": 2,
@@ -334,6 +382,30 @@
     },
     {
       "key": {
+        "uuid": "e7a43eac_75d1e78e",
+        "filename": "cc/paint/paint_image_generator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-01T00:51:08Z",
+      "side": 1,
+      "message": "The reason we had to keep the ContentId on PaintImage is because PaintRecord backed images also generate content ids as they create new PaintRecords https://cs.chromium.org/chromium/src/cc/paint/paint_image_builder.h?l\u003d40.\n\nThanks for pointing this out though. Since ContentId can uniquely identify a constant data backing across PaintImages, I think the FrameKey doesn\u0027t need the PaintImage::Id. The ContentId, frame_index and subset is enough to identify a unique frame.",
+      "parentUuid": "ac71221a_2037ecc9",
+      "range": {
+        "startLine": 17,
+        "startChar": 6,
+        "endLine": 17,
+        "endChar": 59
+      },
+      "revId": "ca870be415b96930d0b8ce1e9f2d921287570d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fac9a5c0_e9c4e477",
         "filename": "cc/paint/paint_image_generator.h",
         "patchSetId": 6
@@ -345,6 +417,30 @@
       "writtenOn": "2017-08-31T23:14:36Z",
       "side": 1,
       "message": "PaintImage is generally created after PaintImageGenerator is, since PaintImage owns PaintImageGenerator. Where is this id coming from?",
+      "range": {
+        "startLine": 71,
+        "startChar": 22,
+        "endLine": 71,
+        "endChar": 51
+      },
+      "revId": "ca870be415b96930d0b8ce1e9f2d921287570d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c97c1f33_f44df2de",
+        "filename": "cc/paint/paint_image_generator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-01T00:51:08Z",
+      "side": 1,
+      "message": "The PaintImage::Id is generated by the source of PaintImages before creating them, so it can pass this id to the generators it creates.",
+      "parentUuid": "fac9a5c0_e9c4e477",
       "range": {
         "startLine": 71,
         "startChar": 22,
@@ -426,6 +522,30 @@
     },
     {
       "key": {
+        "uuid": "b7a30841_a911d0dd",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-01T00:51:08Z",
+      "side": 1,
+      "message": "The callback is dispatched only when the ImageFrameGenerator is being destroyed. If there is an upload ref, that means a raster/upload task exists which uses this image so it should have a RasterSource with a cached generator. From what I understood, it shouldn\u0027t be possible to have the cache keep an image locked if there are no references to the encoded image. Could I be missing a case here?",
+      "parentUuid": "539f4edd_534d556c",
+      "range": {
+        "startLine": 688,
+        "startChar": 8,
+        "endLine": 688,
+        "endChar": 57
+      },
+      "revId": "ca870be415b96930d0b8ce1e9f2d921287570d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e493134f_1e64c587",
         "filename": "cc/tiles/gpu_image_decode_cache_unittest.cc",
         "patchSetId": 6
@@ -460,6 +580,30 @@
       "writtenOn": "2017-08-31T23:14:36Z",
       "side": 1,
       "message": "This tightly couples any ImageDecodeCache implementation to PaintImageDestructionTracker. Have you considered alternate approaches, like PaintImageDestructionTracker having an updated non-owning pointer to the current decode cache? I\u0027m just curious why you decided on this design.",
+      "range": {
+        "startLine": 12,
+        "startChar": 2,
+        "endLine": 12,
+        "endChar": 64
+      },
+      "revId": "ca870be415b96930d0b8ce1e9f2d921287570d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50c58821_0c5606c7",
+        "filename": "cc/tiles/image_decode_cache.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-01T00:51:08Z",
+      "side": 1,
+      "message": "With the current design, the destruction tracker would be shared across compositors in a process so it would have a list of these caches.",
+      "parentUuid": "efb58d0a_b608864d",
       "range": {
         "startLine": 12,
         "startChar": 2,
