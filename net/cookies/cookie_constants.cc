@@ -16,7 +16,6 @@ const char kPriorityMedium[] = "medium";
 const char kPriorityHigh[] = "high";
 
 const char kSameSiteLax[] = "lax";
-const char kSameSiteStrict[] = "strict";
 
 }  // namespace
 
@@ -50,9 +49,8 @@ CookiePriority StringToCookiePriority(const std::string& priority) {
 CookieSameSite StringToCookieSameSite(const std::string& same_site) {
   if (base::EqualsCaseInsensitiveASCII(same_site, kSameSiteLax))
     return CookieSameSite::LAX_MODE;
-  if (base::EqualsCaseInsensitiveASCII(same_site, kSameSiteStrict))
-    return CookieSameSite::STRICT_MODE;
-  return CookieSameSite::DEFAULT_MODE;
+
+  return CookieSameSite::STRICT_MODE;
 }
 
 }  // namespace net
