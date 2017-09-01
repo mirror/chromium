@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "959d3b95_cd8c123c",
+        "filename": "ash/wm/tablet_mode/tablet_mode_backdrop_delegate_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-01T14:30:25Z",
+      "side": 1,
+      "message": "can\u0027t you just compare iterators?",
+      "revId": "67707176baa9564dbc95b46de44dcfa0bcc1fdb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "485db1af_b922674c",
+        "filename": "ash/wm/workspace/backdrop_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-01T14:30:25Z",
+      "side": 1,
+      "message": "nit: wm::IsActiveWindow(window)",
+      "range": {
+        "startLine": 233,
+        "startChar": 20,
+        "endLine": 233,
+        "endChar": 35
+      },
+      "revId": "67707176baa9564dbc95b46de44dcfa0bcc1fdb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "206f3870_cc797399",
+        "filename": "ash/wm/workspace/workspace_layout_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1682,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-01T14:30:25Z",
+      "side": 1,
+      "message": "no need to convert to string. (EXPECT_ can now pretty print basic gfx tyeps)",
+      "revId": "67707176baa9564dbc95b46de44dcfa0bcc1fdb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2070a455_9feea641",
+        "filename": "ash/wm/workspace/workspace_layout_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1708,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-01T14:30:25Z",
+      "side": 1,
+      "message": "can you test if changing activation correctly updates the backdrop?",
+      "revId": "67707176baa9564dbc95b46de44dcfa0bcc1fdb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
