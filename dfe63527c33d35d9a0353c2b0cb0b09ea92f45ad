@@ -70,6 +70,30 @@
       "revId": "dfe63527c33d35d9a0353c2b0cb0b09ea92f45ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7f314034_897bd56d",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field_paste_delegate.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-09-01T13:29:53Z",
+      "side": 1,
+      "message": "Per offline discussion: This solves the particular issue when copying from Chrome and pasting into Chrome, but it\u0027s still possible to have a pasteboard state that will paste twice. The better fix would be to rely on the fact that transformPasteItem: is called N times before finally combineItemAttributedStrings: is called.",
+      "parentUuid": "a6507729_743b4d54",
+      "range": {
+        "startLine": 20,
+        "startChar": 44,
+        "endLine": 20,
+        "endChar": 55
+      },
+      "revId": "dfe63527c33d35d9a0353c2b0cb0b09ea92f45ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
