@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9b22501_aee76690",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-09-01T09:34:44Z",
+      "side": 1,
+      "message": "assert nil before previous tap?",
+      "range": {
+        "startLine": 228,
+        "startChar": 3,
+        "endLine": 228,
+        "endChar": 18
+      },
+      "revId": "3e72f902953e2e499fd48df509280efb92dc9749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dcb250a_b122426e",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-09-01T09:34:44Z",
+      "side": 1,
+      "message": "If you scroll up here, does it mean that on some devices the element will be out of the screen?",
+      "range": {
+        "startLine": 232,
+        "startChar": 2,
+        "endLine": 232,
+        "endChar": 10
+      },
+      "revId": "3e72f902953e2e499fd48df509280efb92dc9749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
