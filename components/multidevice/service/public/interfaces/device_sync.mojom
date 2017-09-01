@@ -69,7 +69,7 @@ struct SetCapabilityResponse {
 
 struct IneligibleDevice {
   string device_id;
-  string reason;  // Reason why the device is not eligible.
+  array<string> reasons;  // Reason why the device is not eligible.
 };
 
 struct FindEligibleDevicesResponse {
@@ -115,9 +115,32 @@ interface DeviceSync {
   // OnDevicesSynced() observer function.
   ForceSyncNow();
 
+  // Enables or disables a capability. This function triggers a network call,
+  // resulting in an asynchronous response.
+  SetCapabilityEnabled(
+      string device_id,
+      RemoteDeviceCapability capability,
+      bool enabled) => (SetCapabilityResponse response);
+
+  // Fetches IDs of devices associated with the current user that are eligible
+  // for the supplied RemoteDeviceCapability. This function triggers a network
+  // call, resulting in an asynchronous response.
+  FindEligibleDevicesForCapability(RemoteDeviceCapability capability)
+      => (FindEligibleDevicesResponse response);
+
   // Returns devices which have been synced from the server.
   [Sync]
   GetSyncedDevices() => (array<RemoteDevice> devices);
+
+  // Determines whether a device is promotable for a certain capability. This
+  // function triggers a network call, resulting in an asynchronous response.
+  IsCapabilityPromotable(string device_id, RemoteDeviceCapability capability)
+      => (IsCapabilityPromotableResponse response);
+
+  // Returns the public key of the current device. Note that a RemoteDevice for
+  // the current device is returned by GetSyncedDevices().
+  [Sync]
+  GetUserPublicKey() => (string public_key);
 
   // Adds an Observer of this API.
   AddObserver(DeviceSyncObserver observer);
