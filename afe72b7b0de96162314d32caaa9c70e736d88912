@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d9d7804_f6ccfe6f",
+        "filename": "chrome/android/java/src/com/google/android/apps/chrome/vr/VrMain.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-01T17:36:41Z",
+      "side": 1,
+      "message": "@Ted/Yusuf, do you think this is a good idea? I think it should work.",
+      "range": {
+        "startLine": 12,
+        "startChar": 58,
+        "endLine": 12,
+        "endChar": 63
+      },
+      "revId": "afe72b7b0de96162314d32caaa9c70e736d88912",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
