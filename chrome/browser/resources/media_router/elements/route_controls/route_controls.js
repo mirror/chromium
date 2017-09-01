@@ -78,6 +78,15 @@ Polymer({
     },
 
     /**
+     * The timestamp for when |routeStatus| was last updated.
+     * @private {boolean}
+     */
+    lastStatusUpdate_: {
+      type: Number,
+      value: 0,
+    },
+
+    /**
      * The timestamp for when the controller last submitted a volume change
      * request.
      * @private {boolean}
@@ -139,7 +148,7 @@ Polymer({
   canIncrementCurrentTime_: function() {
     return this.routeStatus.playState === media_router.PlayState.PLAYING &&
         (this.routeStatus.duration === 0 ||
-         this.routeStatus.currentTime < this.routeStatus.duration);
+         this.displayedCurrentTime_ < this.routeStatus.duration);
   },
 
   /**
@@ -258,10 +267,12 @@ Polymer({
    */
   maybeIncrementCurrentTime_: function() {
     if (this.canIncrementCurrentTime_()) {
-      this.routeStatus.currentTime++;
-      this.displayedCurrentTime_ = this.routeStatus.currentTime;
+      var secondsSinceUpdate =
+          Math.floor((Date.now() - this.lastStatusUpdate_) / 1000);
+      this.displayedCurrentTime_ =
+          this.routeStatus.currentTime + secondsSinceUpdate;
       if (this.routeStatus.duration === 0 ||
-          this.routeStatus.currentTime < this.routeStatus.duration) {
+          this.displayedCurrentTime_ < this.routeStatus.duration) {
         this.timeIncrementsTimeoutId_ =
             setTimeout(() => this.maybeIncrementCurrentTime_(), 1000);
       }
@@ -299,6 +310,7 @@ Polymer({
    * @private
    */
   onRouteStatusChange_: function(newRouteStatus) {
+    this.lastStatusUpdate_ = Date.now();
     if (this.shouldAcceptCurrentTimeUpdates_()) {
       this.displayedCurrentTime_ = newRouteStatus.currentTime;
     }
