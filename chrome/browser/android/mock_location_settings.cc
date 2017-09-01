@@ -11,6 +11,10 @@ bool MockLocationSettings::location_settings_dialog_enabled_ = false;
 LocationSettingsDialogOutcome
     MockLocationSettings::location_settings_dialog_outcome_ = NO_PROMPT;
 bool MockLocationSettings::has_shown_location_settings_dialog_ = false;
+bool MockLocationSettings::resolve_location_settings_dialog_async_ = false;
+LocationSettings::LocationSettingsDialogOutcomeCallback
+    MockLocationSettings::location_settings_dialog_callback_ =
+        LocationSettingsDialogOutcomeCallback();
 
 MockLocationSettings::MockLocationSettings() : LocationSettings() {
 }
@@ -44,6 +48,15 @@ void MockLocationSettings::ClearHasShownLocationSettingsDialog() {
   has_shown_location_settings_dialog_ = false;
 }
 
+void MockLocationSettings::SetAsyncLocationSettingsDialog() {
+  resolve_location_settings_dialog_async_ = true;
+}
+
+void MockLocationSettings::ResolveAsyncLocationSettingsDialog() {
+  std::move(location_settings_dialog_callback_)
+      .Run(location_settings_dialog_outcome_);
+}
+
 bool MockLocationSettings::HasAndroidLocationPermission() {
   return has_android_location_permission_;
 }
@@ -66,5 +79,10 @@ void MockLocationSettings::PromptToEnableSystemLocationSetting(
     content::WebContents* web_contents,
     LocationSettingsDialogOutcomeCallback callback) {
   has_shown_location_settings_dialog_ = true;
-  std::move(callback).Run(location_settings_dialog_outcome_);
+
+  if (resolve_location_settings_dialog_async_) {
+    location_settings_dialog_callback_ = std::move(callback);
+  } else {
+    std::move(callback).Run(location_settings_dialog_outcome_);
+  }
 }
