@@ -52,6 +52,24 @@
       "revId": "54efd2f3b2e27e558aa352d64a9744d5edc935c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b518097_7d09bc5a",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserImpl.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-01T03:57:06Z",
+      "side": 1,
+      "message": "lol alright I can ask timloh@ next week.",
+      "parentUuid": "5749191e_c97b3792",
+      "revId": "54efd2f3b2e27e558aa352d64a9744d5edc935c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
