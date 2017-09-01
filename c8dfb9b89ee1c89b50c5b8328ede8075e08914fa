@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a79615ef_4c354e3d",
+        "filename": "third_party/blink/tools/blinkpy/common/name_style_converter.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-01T10:18:11Z",
+      "side": 1,
+      "message": "nit: drop \"and other styles\"?",
+      "range": {
+        "startLine": 61,
+        "startChar": 37,
+        "endLine": 61,
+        "endChar": 54
+      },
+      "revId": "c8dfb9b89ee1c89b50c5b8328ede8075e08914fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
