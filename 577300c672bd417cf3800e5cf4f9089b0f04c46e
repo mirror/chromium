@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "d683bc38_e4363537",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-01T04:16:39Z",
+      "side": 1,
+      "message": "hm, let\u0027s call this Register(), for consistency with the other functions. This should be the default function that most people use and SendRegister() is for the weird cases where we don\u0027t have an expectation since the callback doesn\u0027t get invoked.",
+      "revId": "577300c672bd417cf3800e5cf4f9089b0f04c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6383437_f30387a1",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-01T04:16:39Z",
+      "side": 1,
+      "message": "Maybe: \"Origins are not matching, or some cannot access service worker.\"",
+      "revId": "577300c672bd417cf3800e5cf4f9089b0f04c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1714c80e_48dff11f",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 910,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-01T04:16:39Z",
+      "side": 1,
+      "message": "Ah this isn\u0027t true anymore. |dispatcher_host_| is now a weak ptr that can be nullptr at any time. We should just return if it\u0027s nullptr for consistency with the other Send* functions.",
+      "revId": "577300c672bd417cf3800e5cf4f9089b0f04c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "854c314f_08ad99d8",
         "filename": "content/browser/service_worker/service_worker_provider_host.cc",
         "patchSetId": 9
@@ -13,6 +64,246 @@
       "writtenOn": "2017-08-31T07:56:41Z",
       "side": 1,
       "message": "Here I just run the callback with non-sense parameters rather than closing the mojo binding |binding_|. Because |this| is expected to be destroyed by error handler of |binding_|, but binding_.Close() won\u0027t invoke the error handler, so I think we\u0027d better do nothing to |binding_| here and wait for the error handler invocation later due to termination of renderer process.",
+      "revId": "577300c672bd417cf3800e5cf4f9089b0f04c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41b6032b_2ecdc98a",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 932,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-01T04:16:39Z",
+      "side": 1,
+      "message": "I see. Suggest revising the comment to \"ReportBadMessage() will kill the renderer process, but Mojo complains if the callback is not run. Just run it with nonsense arguments.\"",
+      "parentUuid": "854c314f_08ad99d8",
+      "revId": "577300c672bd417cf3800e5cf4f9089b0f04c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b1f680a_f124df61",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 933,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-01T04:16:39Z",
+      "side": 1,
+      "message": "To make clear it\u0027s nonsense, let\u0027s just use std::string()",
+      "revId": "577300c672bd417cf3800e5cf4f9089b0f04c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78988ef7_8f4afde5",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 938,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-01T04:16:39Z",
+      "side": 1,
+      "message": "I think this should be part of IsValidRegisterMessage(). We dont\u0027 expect the renderer to send us this message when the client type isn\u0027t window.",
+      "range": {
+        "startLine": 938,
+        "startChar": 30,
+        "endLine": 938,
+        "endChar": 63
+      },
+      "revId": "577300c672bd417cf3800e5cf4f9089b0f04c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9fc4796_fd6f8b9c",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 984,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-01T04:16:39Z",
+      "side": 1,
+      "message": "Suggest moving this comment to line 987, right before the DCHECK.",
+      "revId": "577300c672bd417cf3800e5cf4f9089b0f04c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e71483bd_3a1e3dff",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-01T04:16:39Z",
+      "side": 1,
+      "message": "There\u0027s only one function though. Maybe \"Callback for Register().\" is clearer.",
+      "revId": "577300c672bd417cf3800e5cf4f9089b0f04c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22bbd402_3d4a7e44",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-01T04:16:39Z",
+      "side": 1,
+      "message": "DCHECK_EQ",
+      "revId": "577300c672bd417cf3800e5cf4f9089b0f04c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d55d7e8_5b1ce73b",
+        "filename": "content/child/service_worker/service_worker_provider_context.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-01T04:16:39Z",
+      "side": 1,
+      "message": "don\u0027t need to mention \"above\"",
+      "range": {
+        "startLine": 137,
+        "startChar": 63,
+        "endLine": 137,
+        "endChar": 68
+      },
+      "revId": "577300c672bd417cf3800e5cf4f9089b0f04c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a57443aa_c85ab241",
+        "filename": "content/child/service_worker/service_worker_provider_context.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-01T04:16:39Z",
+      "side": 1,
+      "message": "Suggest turning this comma into a period",
+      "range": {
+        "startLine": 165,
+        "startChar": 28,
+        "endLine": 165,
+        "endChar": 30
+      },
+      "revId": "577300c672bd417cf3800e5cf4f9089b0f04c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37d06a6d_1b770f4d",
+        "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-01T04:16:39Z",
+      "side": 1,
+      "message": "this should be moved to line 94",
+      "revId": "577300c672bd417cf3800e5cf4f9089b0f04c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7090c63_e8c9060a",
+        "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-01T04:16:39Z",
+      "side": 1,
+      "message": "Prefer early return if (!context_-\u003econtainer_host()), it\u0027ll save indentation especially as lines 88-90 will be moved here.",
+      "revId": "577300c672bd417cf3800e5cf4f9089b0f04c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3502ae58_bffbd207",
+        "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-01T04:16:39Z",
+      "side": 1,
+      "message": "Oops I didn\u0027t realize it\u0027d be so hard to get the mojo enum string.\n\nCan you factor out a helper function ErrorTypeToString()? It can just be in this file, or in ServiceWorkerUtils maybe. The TRACE macro arguments aren\u0027t run unless tracing is on, so it\u0027s better to keep the conversion to string inside the TRACE.",
+      "revId": "577300c672bd417cf3800e5cf4f9089b0f04c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "850a4430_9ab36445",
+        "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-01T04:16:39Z",
+      "side": 1,
+      "message": "to avoid double negatives, maybe switch the if/else to be if (error \u003d\u003d kNone) { /* OK stuff */} else { /* error stuff */}",
+      "revId": "577300c672bd417cf3800e5cf4f9089b0f04c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "969f36d8_b3effc6d",
+        "filename": "content/common/service_worker/service_worker_types.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-01T04:16:39Z",
+      "side": 1,
+      "message": "Let\u0027s just delete lines 33-34, it doesn\u0027t say anything beyond the struct Name.",
       "revId": "577300c672bd417cf3800e5cf4f9089b0f04c46e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
