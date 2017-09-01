@@ -1,0 +1,4 @@
+dictionary FocusOptions {
+    [RuntimeEnabled=FocusOptions]boolean preventScroll = false;
+    [RuntimeEnabled=FocusOptions]ScrollIntoViewOptions scrollOptions;
+};
