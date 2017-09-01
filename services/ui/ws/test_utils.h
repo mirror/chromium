@@ -43,6 +43,10 @@ namespace ui {
 namespace ws {
 namespace test {
 
+const ClientSpecificId kWindowManagerTreeId = kWindowServerClientId + 1;
+const std::string kWindowManagerTreeIdString =
+    std::to_string(kWindowManagerTreeId);
+
 // Collection of utilities useful in creating mus tests.
 
 // Test ScreenManager instance that allows adding/modifying/removing displays.
