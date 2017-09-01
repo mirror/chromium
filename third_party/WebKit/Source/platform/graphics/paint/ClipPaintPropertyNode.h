@@ -81,6 +81,7 @@ class PLATFORM_EXPORT ClipPaintPropertyNode
   }
 
   String ToTreeString() const;
+
 #endif
 
   String ToString() const;

@@ -135,7 +135,6 @@ LayoutRect PaintInvalidator::MapLocalRectToVisualRectInBacking(
     // Convert the result to the container's contents space.
     result.MoveBy(-context.paint_invalidation_container->PaintOffset());
   }
-
   if (!result.IsEmpty())
     result.Inflate(object.VisualRectOutsetForRasterEffects());
 
@@ -388,11 +387,6 @@ void PaintInvalidator::UpdateVisualRectIfNeeded(
 
 void PaintInvalidator::UpdateVisualRect(const LayoutObject& object,
                                         PaintInvalidatorContext& context) {
-  // The paint offset should already be updated through
-  // PaintPropertyTreeBuilder::updatePropertiesForSelf.
-  DCHECK(context.tree_builder_context_->current.paint_offset ==
-         object.PaintOffset());
-
   LayoutRect new_visual_rect = ComputeVisualRectInBacking(object, context);
   if (object.IsBoxModelObject()) {
     context.new_location = ComputeLocationInBacking(object, context);
@@ -406,7 +400,6 @@ void PaintInvalidator::UpdateVisualRect(const LayoutObject& object,
     // to check whether a visual rect changes for layout caused invalidation.
     context.new_location = new_visual_rect.Location();
   }
-
   object.GetMutableForPainting().SetVisualRect(new_visual_rect);
   ObjectPaintInvalidator(object).SetLocationInBacking(context.new_location);
 }

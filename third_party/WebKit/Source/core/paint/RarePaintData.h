@@ -28,8 +28,8 @@ class CORE_EXPORT RarePaintData {
   void SetLayer(std::unique_ptr<PaintLayer>);
 
   FragmentData* Fragment() const { return fragment_data_.get(); }
-
   FragmentData& EnsureFragment();
+  void ClearFragment() { fragment_data_.reset(); }
 
   // An id for this object that is unique for the lifetime of the WebView.
   LayoutObjectId UniqueId() const { return unique_id_; }

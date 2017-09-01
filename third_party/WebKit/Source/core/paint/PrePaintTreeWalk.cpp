@@ -54,6 +54,7 @@ struct PrePaintTreeWalkContext {
 };
 
 void PrePaintTreeWalk::Walk(LocalFrameView& root_frame) {
+  /// LOG(ERROR) << "PrePaintTreeWalk::Walk";
   DCHECK(root_frame.GetFrame().GetDocument()->Lifecycle().GetState() ==
          DocumentLifecycle::kInPrePaint);
 
