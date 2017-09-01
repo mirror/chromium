@@ -54,26 +54,11 @@ void DatabaseModified(const WebSecurityOrigin& origin,
                                                               database_name);
 }
 
-void DatabaseModifiedCrossThread(const String& origin_string,
-                                 const String& database_name) {
-  DatabaseModified(WebSecurityOrigin::CreateFromString(origin_string),
-                   database_name);
-}
-
 }  // namespace
 
 void SQLTransactionClient::DidCommitWriteTransaction(Database* database) {
-  String database_name = database->StringIdentifier();
-  ExecutionContext* execution_context =
-      database->GetDatabaseContext()->GetExecutionContext();
-  SecurityOrigin* origin = database->GetSecurityOrigin();
-  if (!execution_context->IsContextThread()) {
-    database->GetDatabaseTaskRunner()->PostTask(
-        BLINK_FROM_HERE, CrossThreadBind(&DatabaseModifiedCrossThread,
-                                         origin->ToRawString(), database_name));
-  } else {
-    DatabaseModified(WebSecurityOrigin(origin), database_name);
-  }
+  DatabaseModified(WebSecurityOrigin(database->GetSecurityOrigin()),
+                   database->StringIdentifier());
 }
 
 bool SQLTransactionClient::DidExceedQuota(Database* database) {
