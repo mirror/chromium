@@ -70,6 +70,24 @@
       "revId": "61ce2094d074d022b294441e57ff5ac001026476",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84c24334_6b3c8dce",
+        "filename": "media/gpu/android_video_decode_accelerator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-01T00:16:34Z",
+      "side": 1,
+      "message": "int isn\u0027t the default if you use \"enum class\" AFAIK. Without the class part, then yes it defaults to an integer type. https://stackoverflow.com/questions/12581064/enum-vs-strongly-typed-enum",
+      "parentUuid": "a8e56190_363bf645",
+      "revId": "61ce2094d074d022b294441e57ff5ac001026476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
