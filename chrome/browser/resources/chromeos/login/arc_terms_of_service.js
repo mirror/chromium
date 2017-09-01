@@ -41,6 +41,7 @@ Polymer({
    * @private
    */
   onAccept_: function() {
+    this.arcTosButtonsDisabled = true;
     this.screen.onAccept();
   },
 
@@ -59,6 +60,7 @@ Polymer({
    * @private
    */
   onSkip_: function() {
+    this.arcTosButtonsDisabled = true;
     this.screen.onSkip();
   }
 });
