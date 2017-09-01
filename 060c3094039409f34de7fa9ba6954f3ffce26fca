@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "d949cd5f_1ba7bee3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/accelerometer/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-09-01T10:13:53Z",
+      "side": 1,
+      "message": "I think using this syntax is rather useful, especially in these cases where a Source/modules/foo/OWNERS can be used, as that\u0027s going to stay correct for a long time. I\u0027d rather not copy the OWNERS and have to keep maintaining them over time.\n\nRobert, if I were to land this today, would everything break, or would the right people just not get CCd?",
+      "parentUuid": "d6052384_29443db9",
+      "revId": "060c3094039409f34de7fa9ba6954f3ffce26fca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72f10a40_64744361",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/input-events/OWNERS",
         "patchSetId": 2
