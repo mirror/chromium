@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a7f74eb_9728b090",
+        "filename": "chrome/browser/vr/elements/ui_texture.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-01T13:34:06Z",
+      "side": 1,
+      "message": "Why do we need to use a textured element, and add these method?  Isn\u0027t opacity independent of anything related to texture?",
+      "revId": "8d8b6a1cf50e7eab06ba7d47125b2b4041ea1fdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27b8d4d1_e78743d5",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-01T13:34:06Z",
+      "side": 1,
+      "message": "Should this test instead be in ui_scene_unittest.cc, or even ui_element_unittest.cc as scene is going away?  It doesn\u0027t seem to relate to the scene manager.",
+      "revId": "8d8b6a1cf50e7eab06ba7d47125b2b4041ea1fdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28c05f26_7cddc0dd",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-01T13:34:06Z",
+      "side": 1,
+      "message": "Why use actual elements like grid and content?  A generic \"parent\" and \"child\" UiElement instance would work right?  Then you don\u0027t have to worry about any potential subclass overrides mucking with the test logic.",
+      "revId": "8d8b6a1cf50e7eab06ba7d47125b2b4041ea1fdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fd3c5d1_a6b1ad46",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-01T13:34:06Z",
+      "side": 1,
+      "message": "Rather than by name, you can manage the elements by id (as test elements probably won\u0027t have names).",
+      "revId": "8d8b6a1cf50e7eab06ba7d47125b2b4041ea1fdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bab902d_55de3ce0",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-01T13:34:06Z",
+      "side": 1,
+      "message": "Even though it might not save many lines (or even add lines), you could push your two (or more) test elements into a vector, and have a helper method that calls render (and maybe other methods if needed) on all of them at once.",
+      "revId": "8d8b6a1cf50e7eab06ba7d47125b2b4041ea1fdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
