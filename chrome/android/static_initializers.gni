@@ -1,0 +1,9 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+if (target_cpu == "arm") {
+  expected_static_initializer_count = 13
+} else if (target_cpu == "arm64") {
+  expected_static_initializer_count = 10
+}
