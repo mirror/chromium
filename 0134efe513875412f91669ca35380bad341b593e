@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a07dec04_4bbe3332",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-09-01T14:19:25Z",
+      "side": 1,
+      "message": "This always skips the next checks, as regular users have Gaia account!\nDoes the feature still work with that?",
+      "range": {
+        "startLine": 237,
+        "startChar": 20,
+        "endLine": 237,
+        "endChar": 51
+      },
+      "revId": "0134efe513875412f91669ca35380bad341b593e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffdf1bb8_d98c6610",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-09-01T14:19:25Z",
+      "side": 1,
+      "message": "nit: omit braces",
+      "range": {
+        "startLine": 365,
+        "startChar": 0,
+        "endLine": 367,
+        "endChar": 3
+      },
+      "revId": "0134efe513875412f91669ca35380bad341b593e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a9d25d3_2b428d47",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-09-01T14:19:25Z",
+      "side": 1,
+      "message": "nit: omit braces",
+      "range": {
+        "startLine": 418,
+        "startChar": 0,
+        "endLine": 420,
+        "endChar": 3
+      },
+      "revId": "0134efe513875412f91669ca35380bad341b593e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc373a0b_00663877",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-09-01T14:19:25Z",
+      "side": 1,
+      "message": "nit:\u0027allowed. Will attempt \u0027",
+      "range": {
+        "startLine": 422,
+        "startChar": 27,
+        "endLine": 422,
+        "endChar": 32
+      },
+      "revId": "0134efe513875412f91669ca35380bad341b593e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d42ab6e6_1c853c8a",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-09-01T14:19:25Z",
+      "side": 1,
+      "message": "use kMillisecondsInHour?",
+      "range": {
+        "startLine": 449,
+        "startChar": 53,
+        "endLine": 449,
+        "endChar": 55
+      },
+      "revId": "0134efe513875412f91669ca35380bad341b593e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94fa6d97_613f4816",
+        "filename": "chrome/browser/chromeos/settings/cros_settings.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-09-01T14:19:25Z",
+      "side": 1,
+      "message": "Does the check valid here if the function is called from outside?",
+      "range": {
+        "startLine": 237,
+        "startChar": 0,
+        "endLine": 238,
+        "endChar": 0
+      },
+      "revId": "0134efe513875412f91669ca35380bad341b593e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
