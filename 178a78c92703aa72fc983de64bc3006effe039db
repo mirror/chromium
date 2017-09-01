@@ -52,6 +52,24 @@
       "revId": "178a78c92703aa72fc983de64bc3006effe039db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e26d4d74_315bf760",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1552,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-01T22:52:13Z",
+      "side": 1,
+      "message": "For the record, Alex found out that SCROLL event comes in as MOUSEWHEEL event in ShelfView. The following code is probably what is happening \n\nhttps://cs.chromium.org/chromium/src/ui/views/widget/widget.cc?rcl\u003d3365c7d597135d632a4c0dd3216db9ebec11f9a7\u0026l\u003d1276\n\nIn this case, we don\u0027t need to handle SCROLL separately.",
+      "parentUuid": "3469d8db_e8f53b2b",
+      "revId": "178a78c92703aa72fc983de64bc3006effe039db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
