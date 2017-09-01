@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "587716cc_5f636c8b",
+        "filename": "content/renderer/browser_plugin/browser_plugin.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-09-01T19:08:14Z",
+      "side": 1,
+      "message": "I don\u0027t care either way, but \"if (!compositing_helper_)\" should still work, right? -- http://en.cppreference.com/w/cpp/memory/unique_ptr/operator_bool\n\ni.e., the following should compile:\n\n  std::unique_ptr\u003cstd::string\u003e foob;\n  if (foob) {\n    printf(\"a\");\n  }\n\n  if (foob \u0026\u0026 false) {\n    printf(\"a\");\n  }\n\n  if (!foob) {\n    printf(\"a\");\n  }",
+      "revId": "c06532d77abe91b252bb613cde4a57369cde5054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
