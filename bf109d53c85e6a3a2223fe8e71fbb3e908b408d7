@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8df26d07_f5efd3ab",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_journey_logger_egtest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-09-01T17:34:47Z",
+      "side": 1,
+      "message": "No payment request is available on all iOS versions. It\u0027s just that DOMException isn\u0027t supported on \u003c iOS10.3. These DOMExceptions mostly serve developers when using the API and they shouldn\u0027t affect a normal working flow. I think it\u0027s acceptable to only disable the tests that depend on these DOMExceptions on \u003c iOS10.3",
+      "parentUuid": "e3817b5a_12203f72",
+      "revId": "bf109d53c85e6a3a2223fe8e71fbb3e908b408d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ffb21131_db8c4857",
         "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-01T17:23:35Z",
       "side": 1,
       "message": "Why not keep the LOG(ERROR) in abortPaymentRequest/abortPaymentRequestWithReason? All of these log messages use errorName/errorMessage that are being passed to the method, so that would avoid some duplication.",
+      "revId": "bf109d53c85e6a3a2223fe8e71fbb3e908b408d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "473e18c2_48080561",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-09-01T17:34:47Z",
+      "side": 1,
+      "message": "-abortPaymentRequest:reason:errorName:errorMessage:callback is also called in -abortPendingRequestWithAbortReason:errorMessage:callback which is called for normal abort/cancel scenarios. There\u0027s no error happening in those cases to log. That\u0027s why I moved out these LOG calls. I think this is fair cost to pay for a clean refactored abort/rejection code.",
+      "parentUuid": "ffb21131_db8c4857",
       "revId": "bf109d53c85e6a3a2223fe8e71fbb3e908b408d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
