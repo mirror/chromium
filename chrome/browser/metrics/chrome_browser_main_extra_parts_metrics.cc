@@ -17,11 +17,13 @@
 #include "base/task_scheduler/task_traits.h"
 #include "base/threading/sequenced_worker_pool.h"
 #include "base/time/time.h"
+#include "base/tracked_objects.h"
 #include "build/build_config.h"
 #include "chrome/browser/about_flags.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chrome_browser_main.h"
 #include "chrome/browser/mac/bluetooth_utility.h"
+#include "chrome/browser/metrics/chrome_metrics_service_accessor.h"
 #include "chrome/browser/shell_integration.h"
 #include "components/flags_ui/pref_service_flags_storage.h"
 #include "content/public/common/content_switches.h"
@@ -58,7 +60,6 @@
 
 #if defined(OS_WIN)
 #include "base/win/windows_version.h"
-#include "chrome/browser/metrics/chrome_metrics_service_accessor.h"
 #include "chrome/browser/shell_integration_win.h"
 #include "chrome/installer/util/google_update_settings.h"
 #endif  // defined(OS_WIN)
@@ -489,6 +490,18 @@ void ChromeBrowserMainExtraPartsMetrics::PreBrowserStart() {
   flags_ui::PrefServiceFlagsStorage flags_storage(
       g_browser_process->local_state());
   about_flags::RecordUMAStatistics(&flags_storage);
+
+  switch (tracked_objects::ThreadData::status()) {
+    case tracked_objects::ThreadData::PROFILING_ACTIVE:
+      ChromeMetricsServiceAccessor::RegisterSyntheticFieldTrial("TaskProfiler",
+                                                                "Enabled");
+      break;
+    case tracked_objects::ThreadData::DEACTIVATED:
+      ChromeMetricsServiceAccessor::RegisterSyntheticFieldTrial("TaskProfiler",
+                                                                "Disabled");
+      break;
+    default:
+  }
 
 #if defined(OS_WIN)
   ChromeMetricsServiceAccessor::RegisterSyntheticFieldTrial("ChromeWinClang",
