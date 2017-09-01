@@ -56,6 +56,30 @@
       "revId": "fd2b0dae3b52a87eefa501a06acfbe062de8e1fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c0c73dd_8652944b",
+        "filename": "third_party/WebKit/Source/core/dom/DocumentInit.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-01T03:14:06Z",
+      "side": 1,
+      "message": "Hmm. I guess it\u0027s unavoidable. I have a longstanding Blink intent which got blocked on extensions (for the same reason...)\n\nI\u0027m hoping to fix the extensions code one day still \u003d/",
+      "parentUuid": "af85024e_6c652b70",
+      "range": {
+        "startLine": 76,
+        "startChar": 26,
+        "endLine": 76,
+        "endChar": 41
+      },
+      "revId": "fd2b0dae3b52a87eefa501a06acfbe062de8e1fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
