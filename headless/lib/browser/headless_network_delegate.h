@@ -23,6 +23,8 @@ class HeadlessNetworkDelegate : public net::NetworkDelegateImpl,
       HeadlessBrowserContextImpl* headless_browser_context);
   ~HeadlessNetworkDelegate() override;
 
+  std::string GetAssociatedClientID(uint64_t request_id);
+
  private:
   // net::NetworkDelegateImpl implementation:
   int OnBeforeURLRequest(net::URLRequest* request,
@@ -78,6 +80,9 @@ class HeadlessNetworkDelegate : public net::NetworkDelegateImpl,
 
   base::Lock lock_;  // Protects |headless_browser_context_|.
   HeadlessBrowserContextImpl* headless_browser_context_;  // Not owned.
+
+  using RequestClientMap = std::unordered_map<uint64_t, std::string>;
+  RequestClientMap request_clients_;
 
   DISALLOW_COPY_AND_ASSIGN(HeadlessNetworkDelegate);
 };

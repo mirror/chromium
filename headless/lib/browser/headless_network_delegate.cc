@@ -34,11 +34,32 @@ HeadlessNetworkDelegate::~HeadlessNetworkDelegate() {
     headless_browser_context_->RemoveObserver(this);
 }
 
+std::string HeadlessNetworkDelegate::GetAssociatedClientID(
+    uint64_t request_id) {
+  auto it = request_clients_.find(request_id);
+  if (it == request_clients_.end())
+    return "";
+
+  return it->second;
+}
+
 int HeadlessNetworkDelegate::OnBeforeURLRequest(
     net::URLRequest* request,
     const net::CompletionCallback& callback,
     GURL* new_url) {
-  request->RemoveRequestHeaderByName(kDevToolsEmulateNetworkConditionsClientId);
+  std::string client_id;
+
+  bool has_devtools_client_id = request->extra_request_headers().HasHeader(
+      kDevToolsEmulateNetworkConditionsClientId);
+
+  if (has_devtools_client_id) {
+    request->extra_request_headers().GetHeader(
+        kDevToolsEmulateNetworkConditionsClientId, &client_id);
+    request->RemoveRequestHeaderByName(
+        kDevToolsEmulateNetworkConditionsClientId);
+    request_clients_[request->identifier()] = client_id;
+  }
+  LOG(ERROR) << "Adding client, size " << request_clients_.size();
   return net::OK;
 }
 
@@ -75,6 +96,8 @@ void HeadlessNetworkDelegate::OnCompleted(net::URLRequest* request,
   if (!headless_browser_context_)
     return;
 
+  request_clients_.erase(request->identifier());
+  LOG(ERROR) << "Removing client, size " << request_clients_.size();
   if (net_error != net::OK) {
     headless_browser_context_->NotifyUrlRequestFailed(request, net_error);
     return;
@@ -140,6 +163,7 @@ bool HeadlessNetworkDelegate::OnCanAccessFile(
 void HeadlessNetworkDelegate::OnHeadlessBrowserContextDestruct() {
   base::AutoLock lock(lock_);
   headless_browser_context_ = nullptr;
+  request_clients_.clear();
 }
 
 }  // namespace headless

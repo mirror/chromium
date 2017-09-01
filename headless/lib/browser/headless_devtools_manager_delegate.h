@@ -75,6 +75,10 @@ class HeadlessDevToolsManagerDelegate
                   int command_id,
                   const base::DictionaryValue* params,
                   const CommandCallback& callback);
+  void EmulateNetworkConditions(content::DevToolsAgentHost* agent_host,
+                                int command_id,
+                                const base::DictionaryValue* params,
+                                const CommandCallback& callback);
 
   base::WeakPtr<HeadlessBrowserImpl> browser_;
 

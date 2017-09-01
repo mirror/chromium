@@ -17,6 +17,7 @@
 #include "headless/lib/browser/headless_browser_impl.h"
 #include "headless/lib/browser/headless_web_contents_impl.h"
 #include "headless/public/devtools/domains/target.h"
+#include "headless/public/util/black_hole_protocol_handler.h"
 #include "printing/units.h"
 #include "ui/base/resource/resource_bundle.h"
 
@@ -193,6 +194,9 @@ HeadlessDevToolsManagerDelegate::HeadlessDevToolsManagerDelegate(
       base::Bind(&HeadlessDevToolsManagerDelegate::SetWindowBounds,
                  base::Unretained(this));
 
+  async_command_map_["Network.emulateNetworkConditions"] =
+      base::Bind(&HeadlessDevToolsManagerDelegate::EmulateNetworkConditions,
+                 base::Unretained(this));
   async_command_map_["Page.printToPDF"] = base::Bind(
       &HeadlessDevToolsManagerDelegate::PrintToPDF, base::Unretained(this));
 }
@@ -515,6 +519,16 @@ HeadlessDevToolsManagerDelegate::SetWindowBounds(
   web_contents->set_window_state(window_state);
   web_contents->SetBounds(bounds);
   return CreateSuccessResponse(command_id, nullptr);
+}
+
+void HeadlessDevToolsManagerDelegate::EmulateNetworkConditions(
+    content::DevToolsAgentHost* agent_host,
+    int command_id,
+    const base::DictionaryValue* params,
+    const CommandCallback& callback) {
+  callback.Run(
+      CreateErrorResponse(command_id, kErrorServerError, "Not implemented"));
+  // Associate NetworkConditions to context
 }
 
 }  // namespace headless

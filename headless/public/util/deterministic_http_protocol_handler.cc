@@ -6,6 +6,7 @@
 
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
+#include "headless/lib/browser/headless_network_delegate.h"
 #include "headless/public/headless_browser_context.h"
 #include "headless/public/util/deterministic_dispatcher.h"
 #include "headless/public/util/generic_url_request_job.h"
@@ -63,6 +64,13 @@ net::URLRequestJob* DeterministicHttpProtocolHandler::MaybeCreateJob(
     url_request_job_factory_.reset(new net::URLRequestJobFactoryImpl());
     url_request_context_->set_job_factory(url_request_job_factory_.get());
   }
+  HeadlessNetworkDelegate* headless_network_delegate =
+      static_cast<HeadlessNetworkDelegate*>(network_delegate);
+
+  LOG(ERROR) << "Associated client is: "
+             << headless_network_delegate->GetAssociatedClientID(
+                    request->identifier());
+
   return new GenericURLRequestJob(
       request, network_delegate, deterministic_dispatcher_,
       base::MakeUnique<HttpURLFetcher>(url_request_context_.get()),
