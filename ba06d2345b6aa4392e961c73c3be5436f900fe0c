@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9bb721ae_857a1a13",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-09-01T23:44:27Z",
+      "side": 1,
+      "message": "This does a lot more than just getting the paint offset translation. Maybe \"UpdatePaintOffset\"?",
+      "revId": "ba06d2345b6aa4392e961c73c3be5436f900fe0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e48b5087_56f22aa5",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1323,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-09-01T23:44:27Z",
+      "side": 1,
+      "message": "Because you\u0027ve separated out the context paint offset update, this can now go below FindObjectPropertiesNeedingUpdateScope since it works like all other property updates.",
+      "revId": "ba06d2345b6aa4392e961c73c3be5436f900fe0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a339143b_d2770b6d",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilderTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 978,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-09-01T23:44:27Z",
+      "side": 1,
+      "message": "Remove me\n\nWe need a chrishtr presubmit script for LOGs",
+      "revId": "ba06d2345b6aa4392e961c73c3be5436f900fe0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
