@@ -34,6 +34,24 @@
       "revId": "54efd2f3b2e27e558aa352d64a9744d5edc935c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5749191e_c97b3792",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserImpl.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-09-01T01:02:40Z",
+      "side": 1,
+      "message": "Hmmm this makes me scratch my head in suspicion.I dont know what the best course of action here is.",
+      "parentUuid": "58762fbf_07debd79",
+      "revId": "54efd2f3b2e27e558aa352d64a9744d5edc935c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
