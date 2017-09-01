@@ -438,7 +438,7 @@ class ArrayBufferAllocator : public v8::ArrayBuffer::Allocator {
         WTF::SetSystemPagesInaccessible(data, length);
         return;
       case Protection::kReadWrite:
-        (void)WTF::SetSystemPagesAccessible(data, length);
+        ignore_result(WTF::SetSystemPagesAccessible(data, length));
         return;
       default:
         NOTREACHED();
