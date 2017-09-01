@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4891e378_e89f5a6e",
+        "filename": "third_party/WebKit/LayoutTests/shadow-dom/focus-navigation-slot-nested-fallback.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-09-01T03:31:19Z",
+      "side": 1,
+      "message": "Please remove \"Slot shouldn\u0027t be focused.\", as it looks like garbage you accidentally left.\nIf this is an intended comment, enclose the comment with /* ... */.",
+      "revId": "dc1bc579433a3c0d5ef7ed84d0b358c36c449e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a8ab0ce_6d16f4ee",
+        "filename": "third_party/WebKit/LayoutTests/shadow-dom/focus-navigation-slot-nested-fallback.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-09-01T03:31:19Z",
+      "side": 1,
+      "message": "With testharness.js, you don\u0027t have to use window.testRunner explicitly, and you can\nuse async_test() API from testharness.js.\n\nPlease take a look at examples in the document, and feel free to ask how to apply it here.\nhttp://web-platform-tests.org/writing-tests/testharness-api.html",
+      "revId": "dc1bc579433a3c0d5ef7ed84d0b358c36c449e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
