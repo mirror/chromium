@@ -13,6 +13,7 @@
 #import "ui/base/test/windowed_nsnotification_observer.h"
 #include "ui/views/bubble/bubble_dialog_delegate.h"
 #include "ui/views/test/test_widget_observer.h"
+#include "ui/views/test/views_interactive_ui_test_base.h"
 #include "ui/views/test/widget_test.h"
 
 namespace views {
@@ -31,6 +32,12 @@ class NativeWidgetMacInteractiveUITest
     // TODO(tapted): Remove this when these are absorbed into Chrome's
     // interactive_ui_tests target. See http://crbug.com/403679.
     ui_controls::EnableUIControls();
+  }
+
+  // WidgetTest:
+  void SetUp() override {
+    ViewsInteractiveUITestBase::InteractiveSetUp();
+    WidgetTest::SetUp();
   }
 
   Widget* MakeWidget() {
@@ -72,9 +79,12 @@ TEST_P(NativeWidgetMacInteractiveUITest, ShowAttainsKeyStatus) {
 
   EXPECT_FALSE(widget->IsActive());
   EXPECT_EQ(0, activationCount_);
-  widget->Show();
+  {
+    WidgetActivationWaiter wait_for_first_active(widget, true);
+    widget->Show();
+    wait_for_first_active.Wait();
+  }
   EXPECT_TRUE(widget->IsActive());
-  RunPendingMessages();
   EXPECT_TRUE([widget->GetNativeWindow() isKeyWindow]);
   EXPECT_EQ(1, activationCount_);
   EXPECT_EQ(0, deactivationCount_);
@@ -83,16 +93,20 @@ TEST_P(NativeWidgetMacInteractiveUITest, ShowAttainsKeyStatus) {
   // works correctly.
   Widget* widget2 = MakeWidget();  // Note: not observed.
   EXPECT_EQ(0, deactivationCount_);
-  widget2->Show();
+  {
+    WidgetActivationWaiter wait_for_deactivate(widget, false);
+    widget2->Show();
+    wait_for_deactivate.Wait();
+  }
   EXPECT_EQ(1, deactivationCount_);
-
-  RunPendingMessages();
   EXPECT_FALSE(widget->IsActive());
-  EXPECT_EQ(1, deactivationCount_);
   EXPECT_EQ(1, activationCount_);
 
-  [widget->GetNativeWindow() makeKeyAndOrderFront:nil];
-  RunPendingMessages();
+  {
+    WidgetActivationWaiter wait_for_external_activate(widget, true);
+    [widget->GetNativeWindow() makeKeyAndOrderFront:nil];
+    wait_for_external_activate.Wait();
+  }
   EXPECT_TRUE(widget->IsActive());
   EXPECT_EQ(1, deactivationCount_);
   EXPECT_EQ(2, activationCount_);

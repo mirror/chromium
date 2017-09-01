@@ -14,6 +14,7 @@
 #include "ui/base/test/ui_controls.h"
 #import "ui/base/test/windowed_nsnotification_observer.h"
 #import "ui/events/test/cocoa_test_event_utils.h"
+#include "ui/views/test/views_interactive_ui_test_base.h"
 #include "ui/views/test/widget_test.h"
 #include "ui/views/widget/native_widget_mac.h"
 #include "ui/views/window/native_frame_view.h"
@@ -48,6 +49,7 @@ class BridgedNativeWidgetUITest : public test::WidgetTest {
 
   // testing::Test:
   void SetUp() override {
+    ViewsInteractiveUITestBase::InteractiveSetUp();
     WidgetTest::SetUp();
     Widget::InitParams init_params =
         CreateParams(Widget::InitParams::TYPE_WINDOW);
