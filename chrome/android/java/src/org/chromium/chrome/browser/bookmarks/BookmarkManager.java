@@ -26,6 +26,7 @@ import org.chromium.chrome.browser.partnerbookmarks.PartnerBookmarksShim;
 import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.snackbar.SnackbarManager;
 import org.chromium.chrome.browser.util.FeatureUtilities;
+import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet.BottomSheetContent;
 import org.chromium.chrome.browser.widget.selection.SelectableListLayout;
 import org.chromium.chrome.browser.widget.selection.SelectableListToolbar;
 import org.chromium.chrome.browser.widget.selection.SelectableListToolbar.SearchDelegate;
@@ -460,5 +461,12 @@ public class BookmarkManager implements BookmarkDelegate, SearchDelegate {
     @VisibleForTesting
     public BookmarkActionBar getToolbarForTests() {
         return mToolbar;
+    }
+
+    /**
+     * Called to scroll to the top of {@link BottomSheetContent}.
+     */
+    public void scrollToTop() {
+        mRecyclerView.smoothScrollToPosition(mRecyclerView.getTop());
     }
 }
