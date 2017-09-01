@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "712396f7_6af0e8d3",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2827,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-09-01T17:01:52Z",
+      "side": 1,
+      "message": "I currently have an assert in ScrollPaintPropertyNode that the namespace is equal to kScroll. This is more for LayoutObjects which can have multiple.",
+      "parentUuid": "f5b6b955_a46a51ff",
+      "revId": "d9b5f2aff864e3e0661134637cd120bfff03ed65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fd49ee23_ae5fdb72",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-01T15:32:00Z",
       "side": 1,
       "message": "Why would ScrollableAreaWithElementId ever get called with the id\nof the LocalFrameView in RLS mode?",
+      "revId": "d9b5f2aff864e3e0661134637cd120bfff03ed65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fb46413_0a59fd8f",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 4439,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-09-01T17:01:52Z",
+      "side": 1,
+      "message": "It would not but LocalFrameView::GetCompositorElementId currently lies and returns the LayoutView\u0027s element id in RLS mode. This is a bit hacky but will go away when RLS ships. Another way to implement this would be to check the scrollable areas first, which will return the LayoutView, before checking the LocalFrameView itself. A third way to implement this would be to refactor LocalFrameView::GetCompositorElementId to only return the LocalFrameView\u0027s id and not the LayoutView\u0027s id, but that would be better as a followup.",
+      "parentUuid": "fd49ee23_ae5fdb72",
       "revId": "d9b5f2aff864e3e0661134637cd120bfff03ed65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
