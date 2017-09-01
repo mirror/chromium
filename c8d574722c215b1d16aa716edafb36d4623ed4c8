@@ -22,6 +22,30 @@
       "revId": "c8d574722c215b1d16aa716edafb36d4623ed4c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b8d85f6_ec7ef636",
+        "filename": "base/files/file_path_watcher_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-09-01T17:17:31Z",
+      "side": 0,
+      "message": "Yes, I\u0027m trying to \"harden\" WeakPtr against this (see https://chromium-review.googlesource.com/c/chromium/src/+/575307) and other usage which may be safe but is probably not.\n\nYes, this implementation is pretty horrific, with a base::Thread permanently stuck executing a single task in which we\u0027re select()ing, and therefore not processing tasks, and therefore we need to Lock to modify structures accessed from that thread, and all to re-implement what MessageLoopForIO::FileDescriptorWatcher already does for us.\n\nNo, I would prefer to avoid adding a WeakPtrFactoryThreadSafe at this point - as noted above, the only reason we hit this issue is because this code isn\u0027t using common Chromium patterns in the first place - better to fix that and avoid encouraging more risky usage of WeakPtr.",
+      "parentUuid": "47a39af3_9e79219a",
+      "range": {
+        "startLine": 335,
+        "startChar": 15,
+        "endLine": 335,
+        "endChar": 41
+      },
+      "revId": "c8d574722c215b1d16aa716edafb36d4623ed4c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
