@@ -631,8 +631,8 @@ TEST_F(DiskCacheBackendTest, CreateBackendPostCleanup) {
   std::unique_ptr<disk_cache::Backend> cache;
 
   int rv = disk_cache::CreateCacheBackend(
-      net::DISK_CACHE, net::CACHE_BACKEND_SIMPLE, cache_path_, 0, false,
-      nullptr, &cache, run_loop.QuitClosure(), cb.callback());
+      net::APP_CACHE, net::CACHE_BACKEND_SIMPLE, cache_path_, 0, false, nullptr,
+      &cache, run_loop.QuitClosure(), cb.callback());
   EXPECT_THAT(cb.GetResult(rv), IsOk());
   ASSERT_TRUE(cache.get());
 
