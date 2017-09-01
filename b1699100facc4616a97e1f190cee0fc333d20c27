@@ -88,6 +88,24 @@
       "revId": "b1699100facc4616a97e1f190cee0fc333d20c27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47734c3e_376aa12a",
+        "filename": "components/ukm/ukm_source.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-09-01T01:02:45Z",
+      "side": 0,
+      "message": "Given Steven\u0027s comment, do you need to call UpdateSourceURL(GURL()) in the other places in the code? Seems like that should not be needed either.",
+      "parentUuid": "e0c8bfa4_55b5cff2",
+      "revId": "b1699100facc4616a97e1f190cee0fc333d20c27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
