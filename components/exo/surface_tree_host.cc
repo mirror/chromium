@@ -195,9 +195,8 @@ void SurfaceTreeHost::UpdateNeedsBeginFrame() {
 // SurfaceDelegate overrides:
 
 void SurfaceTreeHost::OnSurfaceCommit() {
-  root_surface_->CommitSurfaceHierarchy(
-      gfx::Point(), layer_tree_frame_sink_holder_.get(), &frame_callbacks_,
-      &presentation_callbacks_);
+  root_surface_->CommitSurfaceHierarchy(gfx::Point(), &frame_callbacks_,
+                                        &presentation_callbacks_);
   SubmitCompositorFrame();
 }
 
@@ -270,7 +269,7 @@ void SurfaceTreeHost::OnUpdateVSyncParameters(base::TimeTicks timebase,
 void SurfaceTreeHost::OnLostResources() {
   if (!host_window_->GetSurfaceId().is_valid() || !root_surface_)
     return;
-  root_surface_->RecreateResources(layer_tree_frame_sink_holder_.get());
+  root_surface_->LostResources();
   SubmitCompositorFrame();
 }
 
