@@ -34,6 +34,24 @@
       "revId": "78853484ff522c20b73e40316893219965d3ae55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ff98c8b_cc500e47",
+        "filename": "content/test/navigation_simulator_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-01T07:17:10Z",
+      "side": 1,
+      "message": "So, it turns out that the crashing tests are a red herring. (I\u0027ve reverted NavigationSimulatorTest.Cancel to test only renderer-initiated navigations in the latest patch to avoid dealing with that.)\n\nThe failure for the new tests turns out to be when NavigationSimulator::Fail() tries to get the RFH for the error page:\n\n    if (should_result_in_error_page) {\n      CHECK_EQ(1, num_ready_to_commit_called_);\n      render_frame_host_ \u003d ...\n    }\n\nEarlier in this CL, clamy@ said we should not commit the error page if the throttle cancels the navigation, which means that the logic guarding this code block is out of date.\n\nI\u0027ve added code to set `should_result_in_error_page` to false when the simulator navigation is canceled by a throttle. Let me know if that sounds like the wrong fix.",
+      "parentUuid": "dc487a3b_49124015",
+      "revId": "78853484ff522c20b73e40316893219965d3ae55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
