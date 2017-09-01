@@ -40,7 +40,7 @@ class OmniboxPopupViewMac : public OmniboxPopupView,
   void InvalidateLine(size_t line) override {}
   void OnLineSelected(size_t line) override {}
   void UpdatePopupAppearance() override;
-  void SetMatchIcon(size_t match_index, const gfx::Image& icon) override;
+  void OnMatchIconUpdated(size_t match_index) override;
   gfx::Rect GetTargetBounds() override;
   // This is only called by model in SetSelectedLine() after updating
   // everything.  Popup should already be visible.
@@ -54,7 +54,7 @@ class OmniboxPopupViewMac : public OmniboxPopupView,
                                 size_t row) override;
 
   // Returns the NSImage that should be used as an icon for the given match.
-  NSImage* ImageForMatch(const AutocompleteMatch& match) const;
+  NSImage* ImageForMatch(size_t match_index) const;
 
   OmniboxPopupMatrix* matrix() { return matrix_; }
 
