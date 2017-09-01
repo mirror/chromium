@@ -27,7 +27,6 @@ import org.chromium.base.Callback;
 import org.chromium.base.Promise;
 import org.chromium.base.SysUtils;
 import org.chromium.chrome.R;
-import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.compositor.layouts.ChromeAnimation;
 import org.chromium.chrome.browser.download.DownloadUtils;
 import org.chromium.chrome.browser.download.ui.DownloadFilter;
@@ -42,6 +41,7 @@ import org.chromium.chrome.browser.widget.TintedImageView;
 public class SuggestionsBinder {
     private static final String ARTICLE_AGE_FORMAT_STRING = " - %s";
     private static final int FADE_IN_ANIMATION_TIME_MS = 300;
+    private static final int MAX_HEADER_LINES = 3;
 
     private final ImageFetcher mImageFetcher;
     private final SuggestionsUiDelegate mUiDelegate;
@@ -50,7 +50,6 @@ public class SuggestionsBinder {
     private final LinearLayout mTextLayout;
     private final TextView mHeadlineTextView;
     private final TextView mPublisherTextView;
-    private final TextView mSnippetTextView;
     private final TextView mAgeTextView;
     private final TintedImageView mThumbnailView;
     // TODO(dgn): Modern suggestions currently do not support the video overlay at all.
@@ -77,18 +76,14 @@ public class SuggestionsBinder {
 
         mHeadlineTextView = mCardContainerView.findViewById(R.id.article_headline);
         mPublisherTextView = mCardContainerView.findViewById(R.id.article_publisher);
-        mSnippetTextView = mCardContainerView.findViewById(R.id.article_snippet);
         mAgeTextView = mCardContainerView.findViewById(R.id.article_age);
         mThumbnailVideoOverlay =
                 mCardContainerView.findViewById(R.id.article_thumbnail_video_overlay);
         mPublisherBar = mCardContainerView.findViewById(R.id.publisher_bar);
         mOfflineBadge = mCardContainerView.findViewById(R.id.offline_icon);
 
-        boolean useLargeThumbnailLayout =
-                ChromeFeatureList.isEnabled(ChromeFeatureList.CONTENT_SUGGESTIONS_LARGE_THUMBNAIL);
         mThumbnailSize = mCardContainerView.getResources().getDimensionPixelSize(
-                useLargeThumbnailLayout ? R.dimen.snippets_thumbnail_size_large
-                                        : R.dimen.snippets_thumbnail_size);
+                R.dimen.snippets_thumbnail_size_large);
         mThumbnailFootprintPx = mThumbnailSize
                 + mCardContainerView.getResources().getDimensionPixelSize(
                           R.dimen.snippets_thumbnail_margin);
@@ -98,7 +93,6 @@ public class SuggestionsBinder {
         mSuggestion = suggestion;
 
         mHeadlineTextView.setText(suggestion.mTitle);
-        mSnippetTextView.setText(suggestion.mPreviewText);
         mPublisherTextView.setText(getPublisherString(suggestion));
         mAgeTextView.setText(getArticleAge(suggestion));
 
@@ -106,11 +100,10 @@ public class SuggestionsBinder {
         setThumbnail();
     }
 
-    public void updateFieldsVisibility(boolean showHeadline, boolean showDescription,
-            boolean showThumbnail, boolean showThumbnailVideoOverlay, int headerMaxLines) {
+    public void updateFieldsVisibility(
+            boolean showHeadline, boolean showThumbnail, boolean showThumbnailVideoOverlay) {
         mHeadlineTextView.setVisibility(showHeadline ? View.VISIBLE : View.GONE);
-        mHeadlineTextView.setMaxLines(headerMaxLines);
-        mSnippetTextView.setVisibility(showDescription ? View.VISIBLE : View.GONE);
+        mHeadlineTextView.setMaxLines(MAX_HEADER_LINES);
         mThumbnailView.setVisibility(showThumbnail ? View.VISIBLE : View.GONE);
         if (mThumbnailVideoOverlay != null) {
             mThumbnailVideoOverlay.setVisibility(
@@ -120,27 +113,18 @@ public class SuggestionsBinder {
         ViewGroup.MarginLayoutParams publisherBarParams =
                 (ViewGroup.MarginLayoutParams) mPublisherBar.getLayoutParams();
 
-        if (showDescription) {
-            publisherBarParams.topMargin = mPublisherBar.getResources().getDimensionPixelSize(
-                    R.dimen.snippets_publisher_margin_top_with_article_snippet);
-        } else if (showHeadline) {
+        if (showHeadline) {
             // When we show a headline and not a description, we reduce the top margin of the
             // publisher bar.
             publisherBarParams.topMargin = mPublisherBar.getResources().getDimensionPixelSize(
-                    R.dimen.snippets_publisher_margin_top_without_article_snippet);
+                    R.dimen.snippets_publisher_margin_top);
         } else {
             // When there is no headline and no description, we remove the top margin of the
             // publisher bar.
             publisherBarParams.topMargin = 0;
         }
 
-        if (ChromeFeatureList.isEnabled(ChromeFeatureList.CONTENT_SUGGESTIONS_LARGE_THUMBNAIL)) {
-            mTextLayout.setMinimumHeight(showThumbnail ? mThumbnailSize : 0);
-        } else {
-            ApiCompatibilityUtils.setMarginEnd(
-                    publisherBarParams, showThumbnail ? mThumbnailFootprintPx : 0);
-        }
-
+        mTextLayout.setMinimumHeight(showThumbnail ? mThumbnailSize : 0);
         mPublisherBar.setLayoutParams(publisherBarParams);
     }
 
@@ -160,12 +144,8 @@ public class SuggestionsBinder {
         // We start initialising with the default favicon to reserve the space and prevent the text
         // from moving later.
         setDefaultFaviconOnView(publisherFaviconSizePx);
-        Callback<Bitmap> faviconCallback = new Callback<Bitmap>() {
-            @Override
-            public void onResult(Bitmap bitmap) {
-                setFaviconOnView(bitmap, publisherFaviconSizePx);
-            }
-        };
+        Callback<Bitmap> faviconCallback =
+                bitmap -> setFaviconOnView(bitmap, publisherFaviconSizePx);
 
         mImageFetcher.makeFaviconRequest(mSuggestion, publisherFaviconSizePx, faviconCallback);
     }

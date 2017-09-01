@@ -20,7 +20,6 @@ import java.util.List;
  * Provides access to the snippets to display on the NTP using the C++ ContentSuggestionsService.
  */
 public class SnippetsBridge implements SuggestionsSource {
-    private static final String TAG = "SnippetsBridge";
 
     private long mNativeSnippetsBridge;
     private final ObserverList<Observer> mObserverList = new ObserverList<>();
@@ -198,11 +197,11 @@ public class SnippetsBridge implements SuggestionsSource {
 
     @CalledByNative
     private static SnippetArticle addSuggestion(List<SnippetArticle> suggestions, int category,
-            String id, String title, String publisher, String previewText, String url,
-            long timestamp, float score, long fetchTime, boolean isVideoSuggestion) {
+            String id, String title, String publisher, String url, long timestamp, float score,
+            long fetchTime, boolean isVideoSuggestion) {
         int position = suggestions.size();
-        suggestions.add(new SnippetArticle(category, id, title, publisher, previewText, url,
-                timestamp, score, fetchTime, isVideoSuggestion));
+        suggestions.add(new SnippetArticle(category, id, title, publisher, url, timestamp, score,
+                fetchTime, isVideoSuggestion));
         return suggestions.get(position);
     }
 
