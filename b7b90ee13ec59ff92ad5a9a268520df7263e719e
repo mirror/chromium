@@ -70,6 +70,30 @@
       "revId": "b7b90ee13ec59ff92ad5a9a268520df7263e719e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f53e3746_a9c6363b",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1265,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-01T16:37:38Z",
+      "side": 1,
+      "message": "I\u0027ll add the check later, when whitelisting",
+      "parentUuid": "b0fc7e31_6ac5c8d5",
+      "range": {
+        "startLine": 1265,
+        "startChar": 12,
+        "endLine": 1265,
+        "endChar": 21
+      },
+      "revId": "b7b90ee13ec59ff92ad5a9a268520df7263e719e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
