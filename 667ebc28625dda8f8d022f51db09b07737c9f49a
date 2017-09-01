@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "20d4cbed_4d22ab59",
+        "filename": "third_party/WebKit/LayoutTests/device_orientation/motion/add-listener-from-callback.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-09-01T17:08:05Z",
+      "side": 1,
+      "message": "I think the original test code doesn\u0027t match the description.\n\nI rewrote the test code, which is similar to:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/LayoutTests/device_orientation/orientation/add-listener-from-callback.html\nto match the description.\n\nDone.",
+      "parentUuid": "7d67300e_987e99ba",
+      "range": {
+        "startLine": 22,
+        "startChar": 4,
+        "endLine": 22,
+        "endChar": 90
+      },
+      "revId": "667ebc28625dda8f8d022f51db09b07737c9f49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f3ebefc4_3d4d8a08",
         "filename": "third_party/WebKit/LayoutTests/device_orientation/motion/detached-frame.html",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "667ebc28625dda8f8d022f51db09b07737c9f49a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "781c3748_e3e99a23",
+        "filename": "third_party/WebKit/LayoutTests/device_orientation/motion/detached-frame.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-09-01T17:08:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3ebefc4_3d4d8a08",
+      "range": {
+        "startLine": 22,
+        "startChar": 46,
+        "endLine": 22,
+        "endChar": 60
+      },
+      "revId": "667ebc28625dda8f8d022f51db09b07737c9f49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "902fedff_a314f634",
+        "filename": "third_party/WebKit/LayoutTests/device_orientation/motion/fire-last-event.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-09-01T17:08:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e07d68b_1b56408f",
+      "range": {
+        "startLine": 27,
+        "startChar": 67,
+        "endLine": 27,
+        "endChar": 76
+      },
+      "revId": "667ebc28625dda8f8d022f51db09b07737c9f49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "705ef43c_b8c6a4bb",
         "filename": "third_party/WebKit/LayoutTests/device_orientation/motion/multiple-event-listeners.html",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "667ebc28625dda8f8d022f51db09b07737c9f49a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9b2c892_637bca49",
+        "filename": "third_party/WebKit/LayoutTests/device_orientation/motion/multiple-event-listeners.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-09-01T17:08:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "705ef43c_b8c6a4bb",
+      "range": {
+        "startLine": 40,
+        "startChar": 17,
+        "endLine": 40,
+        "endChar": 49
+      },
+      "revId": "667ebc28625dda8f8d022f51db09b07737c9f49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "47640d0a_470e59f1",
+        "filename": "third_party/WebKit/LayoutTests/device_orientation/motion/multiple-event-listeners.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-09-01T17:08:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d297ffa8_10719da1",
+      "range": {
+        "startLine": 70,
+        "startChar": 42,
+        "endLine": 70,
+        "endChar": 55
+      },
+      "revId": "667ebc28625dda8f8d022f51db09b07737c9f49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2700fcb7_c1ef0551",
         "filename": "third_party/WebKit/LayoutTests/device_orientation/motion/null-values.html",
         "patchSetId": 1
@@ -137,6 +257,30 @@
       "revId": "667ebc28625dda8f8d022f51db09b07737c9f49a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87241aae_cf0a02bb",
+        "filename": "third_party/WebKit/LayoutTests/device_orientation/motion/null-values.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-09-01T17:08:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2700fcb7_c1ef0551",
+      "range": {
+        "startLine": 71,
+        "startChar": 42,
+        "endLine": 71,
+        "endChar": 55
+      },
+      "revId": "667ebc28625dda8f8d022f51db09b07737c9f49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "306d72bd_541f40a7",
+        "filename": "third_party/WebKit/LayoutTests/device_orientation/motion/optional-event-properties.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-09-01T17:08:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58664dd2_fac3c662",
+      "range": {
+        "startLine": 217,
+        "startChar": 0,
+        "endLine": 235,
+        "endChar": 31
+      },
+      "revId": "667ebc28625dda8f8d022f51db09b07737c9f49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d41a8c3_a6665339",
         "filename": "third_party/WebKit/LayoutTests/device_orientation/motion/page-visibility.html",
         "patchSetId": 1
@@ -183,6 +351,30 @@
       "revId": "667ebc28625dda8f8d022f51db09b07737c9f49a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4346616_861e229e",
+        "filename": "third_party/WebKit/LayoutTests/device_orientation/motion/page-visibility.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-09-01T17:08:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d41a8c3_a6665339",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 3
+      },
+      "revId": "667ebc28625dda8f8d022f51db09b07737c9f49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "6d0bf7f8_473178d0",
+        "filename": "third_party/WebKit/LayoutTests/device_orientation/motion/page-visibility.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-09-01T17:08:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95ae7967_db4c87a6",
+      "range": {
+        "startLine": 24,
+        "startChar": 47,
+        "endLine": 24,
+        "endChar": 60
+      },
+      "revId": "667ebc28625dda8f8d022f51db09b07737c9f49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03afccc5_5eaa125a",
         "filename": "third_party/WebKit/LayoutTests/device_orientation/motion/page-visibility.html",
         "patchSetId": 1
@@ -229,6 +445,30 @@
       "revId": "667ebc28625dda8f8d022f51db09b07737c9f49a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b23b7f7_caa4e282",
+        "filename": "third_party/WebKit/LayoutTests/device_orientation/motion/page-visibility.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-09-01T17:08:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03afccc5_5eaa125a",
+      "range": {
+        "startLine": 26,
+        "startChar": 44,
+        "endLine": 26,
+        "endChar": 60
+      },
+      "revId": "667ebc28625dda8f8d022f51db09b07737c9f49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "943f7a3a_6bd6ff04",
+        "filename": "third_party/WebKit/LayoutTests/device_orientation/motion/page-visibility.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-09-01T17:08:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b64305f_bbc15ffc",
+      "range": {
+        "startLine": 39,
+        "startChar": 44,
+        "endLine": 39,
+        "endChar": 57
+      },
+      "revId": "667ebc28625dda8f8d022f51db09b07737c9f49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45eae570_7d7a7419",
         "filename": "third_party/WebKit/LayoutTests/device_orientation/motion/window-property.html",
         "patchSetId": 1
@@ -278,6 +542,30 @@
     },
     {
       "key": {
+        "uuid": "30221b34_cf95586b",
+        "filename": "third_party/WebKit/LayoutTests/device_orientation/motion/window-property.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-09-01T17:08:05Z",
+      "side": 1,
+      "message": "The original test code has this test, but it does seem redundant. So I removed it.\n\nDone.",
+      "parentUuid": "45eae570_7d7a7419",
+      "range": {
+        "startLine": 28,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 63
+      },
+      "revId": "667ebc28625dda8f8d022f51db09b07737c9f49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce6a0279_6b024df1",
         "filename": "third_party/WebKit/LayoutTests/device_orientation/resources/device-orientation-helpers.js",
         "patchSetId": 1
@@ -292,6 +580,24 @@
       "revId": "667ebc28625dda8f8d022f51db09b07737c9f49a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4a778fa_f065cdd9",
+        "filename": "third_party/WebKit/LayoutTests/device_orientation/resources/device-orientation-helpers.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-09-01T17:08:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce6a0279_6b024df1",
+      "revId": "667ebc28625dda8f8d022f51db09b07737c9f49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
