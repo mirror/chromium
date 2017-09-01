@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7fd662d1_23955da6",
+        "filename": "tools/chrome_proxy/webdriver/client_config.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-01T21:57:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "419ecf1b_31848e58",
+      "range": {
+        "startLine": 38,
+        "startChar": 3,
+        "endLine": 38,
+        "endChar": 13
+      },
+      "revId": "13b3c8a17a19bd820638698f081b843d229dd3d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae650db3_ebfd3136",
         "filename": "tools/chrome_proxy/webdriver/smoke.py",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "13b3c8a17a19bd820638698f081b843d229dd3d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5770e93_c0696a0a",
+        "filename": "tools/chrome_proxy/webdriver/smoke.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-01T21:57:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae650db3_ebfd3136",
+      "range": {
+        "startLine": 96,
+        "startChar": 6,
+        "endLine": 99,
+        "endChar": 48
+      },
+      "revId": "13b3c8a17a19bd820638698f081b843d229dd3d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
