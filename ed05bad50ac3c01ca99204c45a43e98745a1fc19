@@ -528,6 +528,30 @@
       "revId": "ed05bad50ac3c01ca99204c45a43e98745a1fc19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3e12148_28b6aaea",
+        "filename": "chrome/browser/ui/find_bar/find_tab_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1239649
+      },
+      "writtenOn": "2017-09-01T06:42:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4782898b_6ea8fe84",
+      "range": {
+        "startLine": 172,
+        "startChar": 4,
+        "endLine": 172,
+        "endChar": 40
+      },
+      "revId": "ed05bad50ac3c01ca99204c45a43e98745a1fc19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -16,6 +16,24 @@
       "revId": "dbebb2cba23c8a008864e4f4decb2e3b4bb97acc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8e09ff0_db89c9d9",
+        "filename": "chrome/browser/ui/find_bar/find_tab_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1239649
+      },
+      "writtenOn": "2017-09-01T06:42:34Z",
+      "side": 1,
+      "message": "Looked into it. Judging from the fact that FindBarController::GetLocationForFindbarView checks if new considered position is too far by doing:\n\n    if (new_pos.x() + new_pos.width() \u003e dialog_bounds.width()),\n\nit definitely looks like the coordinates are supposed to be given relative to dialog_bounds, meaning relative to parent widget. And as intersection check works like this:\n\n    avoid_overlapping_rect.Intersects(new_pos)\n\nThe avoid_overlapping_rect should be given in the same coordinates, meaning we should convert FindNotificationDetails.selection_rect() into local coordinates. It is said that FindBarHost::GetWidgetBounds returns find bar position in frame coordinates, but I am a bit unclear on how \"frame\" and \"root frame\" differ, aside from scaling. Seems to me like ScreenToDIPRectInWindow is doing just the thing we need.",
+      "parentUuid": "890f1357_b9de8733",
+      "revId": "dbebb2cba23c8a008864e4f4decb2e3b4bb97acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
