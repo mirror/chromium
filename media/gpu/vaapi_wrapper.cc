@@ -1201,7 +1201,7 @@ bool VaapiWrapper::VADisplayState::Initialize() {
     VAStatus va_res =
         vaInitialize(va_display_, &major_version_, &minor_version_);
     if (va_res != VA_STATUS_SUCCESS) {
-      LOG(WARNING) << "vaInitialize failed: " << vaErrorStr(va_res);
+      LOG(ERROR) << "vaInitialize failed: " << vaErrorStr(va_res);
       return false;
     }
 
