@@ -343,7 +343,6 @@
 <translation id="1521442365706402292">Manage certificates</translation>
 <translation id="152234381334907219">Never Saved</translation>
 <translation id="1524430321211440688">Keyboard</translation>
-<translation id="1525835343380843286">Server communication error</translation>
 <translation id="1526560967942511387">Untitled Document</translation>
 <translation id="1526925867532626635">Confirm sync settings</translation>
 <translation id="1529116897397289129">Saved cards will appear here</translation>
@@ -578,13 +577,11 @@
 <translation id="1877520246462554164">Failed to get authentication token. Please sign out then sign in again to try again.</translation>
 <translation id="1878524442024357078">Do not allow any sites to use a plug-in to access your computer</translation>
 <translation id="1880905663253319515">Delete certificate "<ph name="CERTIFICATE_NAME" />"?</translation>
-<translation id="1882130480443819387">Sort by title</translation>
 <translation id="1886996562706621347">Allow sites to ask to become default handlers for protocols (recommended)</translation>
 <translation id="1887850431809612466">Hardware revision</translation>
 <translation id="1889984860246851556">Open proxy settings</translation>
 <translation id="1891668193654680795">Trust this certificate for identifying software makers.</translation>
 <translation id="189210018541388520">Open full screen</translation>
-<translation id="1893406696975231168">Cloud provision flow failed</translation>
 <translation id="189358972401248634">Other languages</translation>
 <translation id="1895658205118569222">Shutdown</translation>
 <translation id="1895934970388272448">You must confirm registration on your printer to finish this process - check it now.</translation>
@@ -1030,7 +1027,6 @@ I don't think this site should be blocked!</translation>
 <translation id="2580924999637585241">Total: <ph name="NUMBER_OF_SHEETS" /> <ph name="SHEETS_LABEL" /></translation>
 <translation id="258095186877893873">Long</translation>
 <translation id="2581475589551312226">Automatically back up and restore Play app data to Google Drive. <ph name="BEGIN_LINK1" />Find out More<ph name="END_LINK1" /></translation>
-<translation id="2581601588594682520">Rename Folder</translation>
 <translation id="2582253231918033891"><ph name="PRODUCT_NAME" /> <ph name="PRODUCT_VERSION" /> (Platform <ph name="PLATFORM_VERSION" />) <ph name="DEVICE_SERIAL_NUMBER" /></translation>
 <translation id="2585300050980572691">Default search settings</translation>
 <translation id="2587922270115112871">Creating a supervised user does not create a Google account, and their settings and data will not follow them to other devices with Chrome Sync. A supervised user applies only to this device.</translation>
@@ -1854,7 +1850,6 @@ From <ph name="DOWNLOAD_DOMAIN" /></translation>
 <translation id="3788401245189148511">It could:</translation>
 <translation id="3789841737615482174">Install</translation>
 <translation id="3790146417033334899"><ph name="PLUGIN_NAME" /> only works on the desktop.</translation>
-<translation id="3790358761803015466">Couldn't reach Google Play. Try again now.</translation>
 <translation id="379082410132524484">Your card has expired</translation>
 <translation id="3790909017043401679">Enter SIM card PIN</translation>
 <translation id="3792890930871100565">Disconnect printers</translation>
@@ -3845,7 +3840,6 @@ Only use this feature with accounts that you trust.</translation>
 <translation id="6922128026973287222">Save data and browse faster using Google Data Saver. Click to learn more.</translation>
 <translation id="6929555043669117778">Continue blocking pop-ups</translation>
 <translation id="6930242544192836755">Duration</translation>
-<translation id="6935867720248834680">GMS services are unavailable</translation>
 <translation id="693807610556624488">Write operation exceeds the maximum length of the attribute to: "<ph name="DEVICE_NAME" />".</translation>
 <translation id="6941427089482296743">Remove all shown</translation>
 <translation id="6941937518557314510">Please sign in to <ph name="TOKEN_NAME" /> to authenticate to <ph name="HOST_NAME" /> with your certificate.</translation>
@@ -3936,7 +3930,6 @@ Only use this feature with accounts that you trust.</translation>
 <translation id="7051943809462976355">Searching for mouse...</translation>
 <translation id="7052237160939977163">Send performance trace data</translation>
 <translation id="7052633198403197513">F1</translation>
-<translation id="705398015793623141">'<ph name="DELETED_ITEM_NAME" />' has been deleted</translation>
 <translation id="7053983685419859001">Block</translation>
 <translation id="7054808953701320293">Got it, don't show me again.</translation>
 <translation id="7056526158851679338">&amp;Inspect Devices</translation>
@@ -4537,7 +4530,6 @@ Keep your key file in a safe place. You will need it to create new versions of y
 <translation id="8014206674403687691"><ph name="IDS_SHORT_PRODUCT_NAME" /> is unable to revert to the previously installed version. Please try again to Powerwash your device.</translation>
 <translation id="8016266267177410919">Temporary storage</translation>
 <translation id="8017335670460187064"><ph name="LABEL" /></translation>
-<translation id="8017667670902200762">Bad authentication</translation>
 <translation id="8018313076035239964">Control what information websites can use and what content they can show you</translation>
 <translation id="8022523925619404071">Enable auto-update</translation>
 <translation id="8023801379949507775">Update extensions now</translation>

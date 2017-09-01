@@ -134,7 +134,6 @@
 <translation id="3474649192738347024">ফর্মগুলি পূরণ করা হয়েছে৷</translation>
 <translation id="3478058380795961209">মেয়াদপূর্তির মাস</translation>
 <translation id="3482959374254649722">আপনার ট্যাবগুলি সিঙ্ক করা হচ্ছে ...</translation>
-<translation id="3487093336331957349">অনুসন্ধান এবং সাইটের পরামর্শগুলি</translation>
 <translation id="3493531032208478708">প্রস্তাবিত সামগ্রী সম্পর্কে <ph name="BEGIN_LINK" />আরো জানুন<ph name="END_LINK" /></translation>
 <translation id="3494788280727468875">ব্রাউস করা ডেটা সাফ করার বিষয়টি নিশ্চিত করুন</translation>
 <translation id="3519193562722059437">ওয়েব ব্রাউজ করার জন্য একটি ট্যাব খুলুন।</translation>
@@ -155,6 +154,7 @@
 <translation id="3779810277399252432">কোনও ইন্টারনেট সংযোগ নেই৷</translation>
 <translation id="3783017676699494206">চিত্র সংরক্ষণ করুন</translation>
 <translation id="385051799172605136">ফিরুন</translation>
+<translation id="3857761338463387655">ইমেল লিখতে এই অ্যাপটি ব্যবহার করুন:</translation>
 <translation id="3897092660631435901">মেনু</translation>
 <translation id="3928666092801078803">আমার ডেটা একত্রিত করুন</translation>
 <translation id="3950820424414687140">প্রবেশ করুন</translation>
@@ -243,6 +243,7 @@
 <translation id="5871497086027727873">১টি আইটেম সরানো হয়েছে</translation>
 <translation id="5911030830365207728">Google অনুবাদ</translation>
 <translation id="5916664084637901428">চালু</translation>
+<translation id="5948291296578561264">এর ফলে আপনি ফটো লাইব্রেরিতে ফটো সেভ করতে পারবেন।</translation>
 <translation id="5953603475187800576">Google Payments থেকে ঠিকানা এবং ক্রেডিট কার্ড দেখান</translation>
 <translation id="5955891643922670672">অফলাইন সংস্করণ দেখছেন</translation>
 <translation id="5964480694698977962">নতুন ছদ্মবেশী ট্যাব তৈরি করুন।</translation>
