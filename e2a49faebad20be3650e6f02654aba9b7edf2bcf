@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e06dce3c_c4bf096f",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_layout_algorithm.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-09-01T21:15:35Z",
+      "side": 1,
+      "message": "NGFragment retains a const raw pointer to the physical fragment. Is the lifetime of the LayoutResult guaranteed to match or exceed that of the NGBoxFragment being constructed here?\n\nIf it is, how can we assure that? Perhaps by having it be a const reference?\nIf not, should we make NGFragment use a RefPtr or transfer ownership and use an OwnPtr instead?",
+      "revId": "e2a49faebad20be3650e6f02654aba9b7edf2bcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9928d76c_3df9807e",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_floats_utils.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-09-01T21:15:35Z",
+      "side": 1,
+      "message": "Is this just a precaution or did we have a situation where we have a LayoutResult but not a PhysicalFragment?",
+      "range": {
+        "startLine": 157,
+        "startChar": 46,
+        "endLine": 157,
+        "endChar": 62
+      },
+      "revId": "e2a49faebad20be3650e6f02654aba9b7edf2bcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d503c0b_0b37bed0",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_floats_utils.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-09-01T21:15:35Z",
+      "side": 1,
+      "message": "Don\u0027t we need a if (unpositioned_float-\u003elayout_result) check around this? or is the Layout Call above (line 184) guaranteed to produce a result?",
+      "revId": "e2a49faebad20be3650e6f02654aba9b7edf2bcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7c7e493_66089ed9",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_fragment.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-09-01T21:15:35Z",
+      "side": 1,
+      "message": "Ah, I see that you also made this a const reference. Great!\nPlease ignore my previous comment about the relative lifetimes.",
+      "range": {
+        "startLine": 46,
+        "startChar": 8,
+        "endLine": 46,
+        "endChar": 26
+      },
+      "revId": "e2a49faebad20be3650e6f02654aba9b7edf2bcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
