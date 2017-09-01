@@ -16,6 +16,24 @@
       "revId": "ef5a21faec059fd70d8b9bb275cfde08220d326f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f055aacd_eac69350",
+        "filename": "content/browser/isolated_origin_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-01T00:36:48Z",
+      "side": 1,
+      "message": "Yes, this was a known issue, but I wanted to address your other comments first, while looking for a good way to not leak it. A new patchset is now up, where the interceptor  observes the process and cleans itself up.",
+      "parentUuid": "4e82feba_694fba06",
+      "revId": "ef5a21faec059fd70d8b9bb275cfde08220d326f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
