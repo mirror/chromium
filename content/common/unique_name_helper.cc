@@ -219,15 +219,12 @@ std::string UniqueNameHelper::UpdateLegacyNameFromV24(
     // tree and go down from there, it is impossible for a frame path to contain
     // a unique name (which needs a replacement) that has not already been seen
     // and inserted into |replacements|.
-    size_t index = 0;
     for (const auto& replacement : *replacements) {
       size_t next_index = legacy_name.find(replacement.old_name);
       if (next_index == std::string::npos)
         continue;
       legacy_name.replace(next_index, replacement.old_name.size(),
                           replacement.new_name);
-      index = next_index -
-              (replacement.old_name.size() - replacement.new_name.size());
     }
     return legacy_name;
   }
