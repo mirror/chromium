@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5caccf69_0e386398",
+        "filename": "components/exo/buffer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-09-01T20:17:38Z",
+      "side": 1,
+      "message": "We release the resource ASAP. But we need track the last resource_id, so we will know when it is released, and we will recreate it when surface try to reuse it.",
+      "parentUuid": "5767f888_a84241e9",
+      "revId": "802d759bba49c0d6dcd76acc2b12224e43134a0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "92959df5_28e51a7c",
         "filename": "components/exo/surface.cc",
         "patchSetId": 4
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "7b0b71ee_1080bb37",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-09-01T20:17:38Z",
+      "side": 1,
+      "message": "Done. I moved this if statement into CommitSurfaceHierarchy().",
+      "parentUuid": "92959df5_28e51a7c",
+      "range": {
+        "startLine": 527,
+        "startChar": 6,
+        "endLine": 527,
+        "endChar": 29
+      },
+      "revId": "802d759bba49c0d6dcd76acc2b12224e43134a0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e8cbc50_0d847412",
         "filename": "components/exo/surface.h",
         "patchSetId": 4
@@ -62,6 +104,30 @@
       "revId": "802d759bba49c0d6dcd76acc2b12224e43134a0e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b278cbf1_bf6156b3",
+        "filename": "components/exo/surface.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-09-01T20:17:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e8cbc50_0d847412",
+      "range": {
+        "startLine": 208,
+        "startChar": 7,
+        "endLine": 208,
+        "endChar": 20
+      },
+      "revId": "802d759bba49c0d6dcd76acc2b12224e43134a0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

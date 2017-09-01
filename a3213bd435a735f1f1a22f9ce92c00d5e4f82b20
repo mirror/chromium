@@ -16,6 +16,24 @@
       "revId": "a3213bd435a735f1f1a22f9ce92c00d5e4f82b20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c4d4918_c1a23cbd",
+        "filename": "components/exo/buffer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-09-01T20:17:38Z",
+      "side": 0,
+      "message": "I think we can check it in wl_surface_attach(). If a client try to use attached buffer, it will fail. WDYT?",
+      "parentUuid": "caad4c5a_50af843e",
+      "revId": "a3213bd435a735f1f1a22f9ce92c00d5e4f82b20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
