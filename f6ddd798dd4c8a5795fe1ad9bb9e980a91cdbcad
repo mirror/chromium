@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87ad74af_fc346dd5",
+        "filename": "components/viz/host/DEPS",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-09-01T18:55:22Z",
+      "side": 1,
+      "message": "Alphabetical order",
+      "revId": "f6ddd798dd4c8a5795fe1ad9bb9e980a91cdbcad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1457429d_7dcaf4b7",
+        "filename": "components/viz/service/display/surface_aggregator_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-09-01T18:55:22Z",
+      "side": 1,
+      "message": "This object gets torn down before support_, which might work fine in practice but I don\u0027t feel very comfortable passing this raw pointer to support_. IIRC we had flakes because of this before. Can we fix this lifetime issue, maybe by passing the ownership to the callback or using weak pointers?",
+      "range": {
+        "startLine": 394,
+        "startChar": 44,
+        "endLine": 394,
+        "endChar": 60
+      },
+      "revId": "f6ddd798dd4c8a5795fe1ad9bb9e980a91cdbcad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fd13d1a_79ce5d66",
+        "filename": "components/viz/service/frame_sinks/compositor_frame_sink_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-09-01T18:55:22Z",
+      "side": 1,
+      "message": "Can you also update this stale comment please? WindowSurface is gone.",
+      "revId": "f6ddd798dd4c8a5795fe1ad9bb9e980a91cdbcad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc42cfda_b0f333e2",
+        "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-09-01T18:55:22Z",
+      "side": 1,
+      "message": "Is it possible to merge two SubmitCompositorFrames into one? Or maybe only expose one of them publicly, or maybe add documentation explaining why there are two and when to use which?",
+      "revId": "f6ddd798dd4c8a5795fe1ad9bb9e980a91cdbcad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
