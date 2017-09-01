@@ -12,6 +12,7 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 
 import org.chromium.base.BuildInfo;
+import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.PasswordUIView;
@@ -19,20 +20,22 @@ import org.chromium.chrome.browser.autofill.PersonalDataManager;
 import org.chromium.chrome.browser.net.spdyproxy.DataReductionProxySettings;
 import org.chromium.chrome.browser.partnercustomizations.HomepageManager;
 import org.chromium.chrome.browser.preferences.datareduction.DataReductionPreferences;
-import org.chromium.chrome.browser.preferences.password.SavePasswordsPreferences;
 import org.chromium.chrome.browser.search_engines.TemplateUrlService;
-import org.chromium.chrome.browser.search_engines.TemplateUrlService.LoadListener;
 import org.chromium.chrome.browser.search_engines.TemplateUrlService.TemplateUrl;
 import org.chromium.chrome.browser.signin.SigninManager;
-import org.chromium.chrome.browser.signin.SigninManager.SignInStateObserver;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Nullable;
 
 /**
  * The main settings screen, shown when the user first opens Settings.
  */
 public class MainPreferences extends PreferenceFragment
-        implements SignInStateObserver, Preference.OnPreferenceClickListener, LoadListener {
+        implements SigninManager.SignInStateObserver, Preference.OnPreferenceClickListener,
+                   TemplateUrlService.LoadListener {
     public static final String PREF_SIGN_IN = "sign_in";
-    public static final String PREF_DOCUMENT_MODE = "document_mode";
     public static final String PREF_AUTOFILL_SETTINGS = "autofill_settings";
     public static final String PREF_SEARCH_ENGINE = "search_engine";
     public static final String PREF_SAVED_PASSWORDS = "saved_passwords";
@@ -40,116 +43,80 @@ public class MainPreferences extends PreferenceFragment
     public static final String PREF_DATA_REDUCTION = "data_reduction";
     public static final String PREF_NOTIFICATIONS = "notifications";
 
-    public static final String ACCOUNT_PICKER_DIALOG_TAG = "account_picker_dialog_tag";
-    public static final String EXTRA_SHOW_SEARCH_ENGINE_PICKER = "show_search_engine_picker";
+    private final ManagedPreferenceDelegate mManagedPreferenceDelegate;
+    private final SigninManager mSigninManager;
 
-    private SignInPreference mSignInPreference;
-    private ManagedPreferenceDelegate mManagedPreferenceDelegate;
+    private @Nullable SignInPreference mSignInPreference;
+    private final List<Preference> mAllPreferences = new ArrayList<>();
 
     public MainPreferences() {
         setHasOptionsMenu(true);
         mManagedPreferenceDelegate = createManagedPreferenceDelegate();
+        mSigninManager = SigninManager.get(getActivity());
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loadPreferences();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        // updatePreferences() must be called before setupSignInPref as updatePreferences loads
-        // the SignInPreference.
         updatePreferences();
 
-        if (SigninManager.get(getActivity()).isSigninSupported()) {
-            SigninManager.get(getActivity()).addSignInStateObserver(this);
-            setupSignInPref();
+        if (mSigninManager.isSigninSupported()) {
+            mSigninManager.addSignInStateObserver(this);
+            mSignInPreference.registerForUpdates();
         }
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        if (SigninManager.get(getActivity()).isSigninSupported()) {
-            SigninManager.get(getActivity()).removeSignInStateObserver(this);
-            clearSignInPref();
+
+        if (mSigninManager.isSigninSupported()) {
+            mSigninManager.removeSignInStateObserver(this);
+            mSignInPreference.unregisterForUpdates();
         }
     }
 
-    @Override
-    public boolean onPreferenceClick(Preference preference) {
-        Intent intent = new Intent(
-                  Intent.ACTION_VIEW,
-                  Uri.parse(PasswordUIView.getAccountDashboardURL()));
-        intent.setPackage(getActivity().getPackageName());
-        getActivity().startActivity(intent);
-        return true;
-    }
-
-    private void updatePreferences() {
-        if (getPreferenceScreen() != null) getPreferenceScreen().removeAll();
-
+    private void loadPreferences() {
         PreferenceUtils.addPreferencesFromResource(this, R.xml.main_preferences);
+        savePreferences();
 
-        if (TemplateUrlService.getInstance().isLoaded()) {
-            updateSummary();
-        } else {
-            TemplateUrlService.getInstance().registerLoadListener(this);
-            TemplateUrlService.getInstance().load();
-            ChromeBasePreference searchEnginePref =
-                    (ChromeBasePreference) findPreference(PREF_SEARCH_ENGINE);
-            searchEnginePref.setEnabled(false);
-        }
+        mSignInPreference = (SignInPreference) findPreference(PREF_SIGN_IN);
 
         ChromeBasePreference autofillPref =
                 (ChromeBasePreference) findPreference(PREF_AUTOFILL_SETTINGS);
         autofillPref.setManagedPreferenceDelegate(mManagedPreferenceDelegate);
 
+        ChromeBasePreference searchEnginePref =
+                (ChromeBasePreference) findPreference(PREF_SEARCH_ENGINE);
+        searchEnginePref.setManagedPreferenceDelegate(mManagedPreferenceDelegate);
+
         ChromeBasePreference passwordsPref =
                 (ChromeBasePreference) findPreference(PREF_SAVED_PASSWORDS);
-
-        passwordsPref.setTitle(getResources().getString(R.string.prefs_saved_passwords));
-        passwordsPref.setFragment(SavePasswordsPreferences.class.getCanonicalName());
-        setOnOffSummary(
-                passwordsPref, PrefServiceBridge.getInstance().isRememberPasswordsEnabled());
         passwordsPref.setManagedPreferenceDelegate(mManagedPreferenceDelegate);
-
-        Preference homepagePref = findPreference(PREF_HOMEPAGE);
-        if (HomepageManager.shouldShowHomepageSetting()) {
-            setOnOffSummary(homepagePref,
-                    HomepageManager.getInstance(getActivity()).getPrefHomepageEnabled());
-        } else {
-            getPreferenceScreen().removePreference(homepagePref);
-        }
 
         ChromeBasePreference dataReduction =
                 (ChromeBasePreference) findPreference(PREF_DATA_REDUCTION);
-        dataReduction.setSummary(DataReductionPreferences.generateSummary(getResources()));
         dataReduction.setManagedPreferenceDelegate(mManagedPreferenceDelegate);
-
-        if (!SigninManager.get(getActivity()).isSigninSupported()) {
-            getPreferenceScreen().removePreference(findPreference(PREF_SIGN_IN));
-        }
 
         if (BuildInfo.isAtLeastO()) {
             // If we are on Android O+ the Notifications preference should lead to the Android
             // Settings notifications page, not to Chrome's notifications settings page.
             Preference notifications = findPreference(PREF_NOTIFICATIONS);
-            notifications.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    // TODO(crbug.com/707804): Use Android O constants.
-                    Intent intent = new Intent();
-                    intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
-                    intent.putExtra(
-                            "android.provider.extra.APP_PACKAGE", BuildInfo.getPackageName());
-                    startActivity(intent);
-                    // We handle the click so the default action (opening NotificationsPreference)
-                    // isn't triggered.
-                    return true;
-                }
+            notifications.setOnPreferenceClickListener(preference -> {
+                // TODO(crbug.com/707804): Use Android O constants.
+                Intent intent = new Intent();
+                intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
+                intent.putExtra("android.provider.extra.APP_PACKAGE", BuildInfo.getPackageName());
+                startActivity(intent);
+                // We handle the click so the default action (opening NotificationsPreference)
+                // isn't triggered.
+                return true;
             });
         } else if (!ChromeFeatureList.isEnabled(
                            ChromeFeatureList.CONTENT_SUGGESTIONS_NOTIFICATIONS)) {
@@ -165,53 +132,100 @@ public class MainPreferences extends PreferenceFragment
         }
     }
 
-    @Override
-    public void onTemplateUrlServiceLoaded() {
-        TemplateUrlService.getInstance().unregisterLoadListener(this);
-        updateSummary();
+    /**
+     * Stores all preferences in memory so that, if they needed to be added/removed from the
+     * Preference Screen, there would be no need to reload them from 'main_preferences.xml'.
+     */
+    private void savePreferences() {
+        int prefCount = getPreferenceScreen().getPreferenceCount();
+        for (int index = 0; index < prefCount; index++) {
+            mAllPreferences.add(getPreferenceScreen().getPreference(index));
+        }
     }
 
-    private void updateSummary() {
-        ChromeBasePreference searchEnginePref =
-                (ChromeBasePreference) findPreference(PREF_SEARCH_ENGINE);
-        searchEnginePref.setManagedPreferenceDelegate(mManagedPreferenceDelegate);
-        searchEnginePref.setEnabled(true);
+    private void updatePreferences() {
+        if (TemplateUrlService.getInstance().isLoaded()) {
+            updateSearchEnginePreferenceSummary();
+        } else {
+            TemplateUrlService.getInstance().registerLoadListener(this);
+            TemplateUrlService.getInstance().load();
+            ChromeBasePreference searchEnginePref =
+                    (ChromeBasePreference) findPreference(PREF_SEARCH_ENGINE);
+            searchEnginePref.setEnabled(false);
+        }
 
-        String defaultSearchEngineName = null;
-        TemplateUrl dseTemplateUrl =
-                TemplateUrlService.getInstance().getDefaultSearchEngineTemplateUrl();
-        if (dseTemplateUrl != null) defaultSearchEngineName = dseTemplateUrl.getShortName();
-        searchEnginePref.setSummary(defaultSearchEngineName);
+        ChromeBasePreference passwordsPref =
+                (ChromeBasePreference) findPreference(PREF_SAVED_PASSWORDS);
+        setOnOffSummary(
+                passwordsPref, PrefServiceBridge.getInstance().isRememberPasswordsEnabled());
+
+        if (HomepageManager.shouldShowHomepageSetting()) {
+            addPreferenceIfAbsent(PREF_HOMEPAGE);
+            Preference homepagePref = findPreference(PREF_HOMEPAGE);
+            setOnOffSummary(homepagePref,
+                    HomepageManager.getInstance(getActivity()).getPrefHomepageEnabled());
+        } else {
+            removePreferenceIfPresent(PREF_HOMEPAGE);
+        }
+
+        ChromeBasePreference dataReduction =
+                (ChromeBasePreference) findPreference(PREF_DATA_REDUCTION);
+        dataReduction.setSummary(DataReductionPreferences.generateSummary(getResources()));
+
+        if (mSigninManager.isSigninSupported()) {
+            addPreferenceIfAbsent(PREF_SIGN_IN);
+        } else {
+            removePreferenceIfPresent(PREF_SIGN_IN);
+        }
+    }
+
+    private void addPreferenceIfAbsent(String key) {
+        Preference preference = getPreferenceScreen().findPreference(key);
+        if (preference == null) {
+            getPreferenceScreen().addPreference(getPreferenceFromSavedPreferences(key));
+        }
+    }
+
+    private void removePreferenceIfPresent(String key) {
+        Preference preference = getPreferenceScreen().findPreference(key);
+        if (preference != null) {
+            getPreferenceScreen().removePreference(preference);
+        }
+    }
+
+    private Preference getPreferenceFromSavedPreferences(String key) {
+        for (Preference preference : mAllPreferences) {
+            if (preference.getKey().equals(key)) {
+                return preference;
+            }
+        }
+
+        assert false : "Unexpected preference key: " + key;
+        return null;
     }
 
     private void setOnOffSummary(Preference pref, boolean isOn) {
         pref.setSummary(getResources().getString(isOn ? R.string.text_on : R.string.text_off));
     }
 
-    private void setupSignInPref() {
-        mSignInPreference = (SignInPreference) findPreference(PREF_SIGN_IN);
-        mSignInPreference.registerForUpdates();
+    private void updateSearchEnginePreferenceSummary() {
+        String defaultSearchEngineName = null;
+        TemplateUrl dseTemplateUrl =
+                TemplateUrlService.getInstance().getDefaultSearchEngineTemplateUrl();
+        if (dseTemplateUrl != null) defaultSearchEngineName = dseTemplateUrl.getShortName();
+
+        ChromeBasePreference searchEnginePref =
+                (ChromeBasePreference) findPreference(PREF_SEARCH_ENGINE);
+        searchEnginePref.setEnabled(true);
+        searchEnginePref.setSummary(defaultSearchEngineName);
     }
 
-    private void clearSignInPref() {
-        if (mSignInPreference != null) {
-            mSignInPreference.unregisterForUpdates();
-            mSignInPreference = null;
-        }
-    }
-
-    // SignInStateObserver
-
+    // SigninManager.SignInStateObserver implementation.
     @Override
     public void onSignedIn() {
         // After signing in or out of a managed account, preferences may change or become enabled
         // or disabled.
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-                updatePreferences();
-            }
-        });
+        new Handler().post(this ::updatePreferences);
     }
 
     @Override
@@ -219,6 +233,24 @@ public class MainPreferences extends PreferenceFragment
         updatePreferences();
     }
 
+    // TemplateUrlService.LoadListener implementation.
+    @Override
+    public void onTemplateUrlServiceLoaded() {
+        TemplateUrlService.getInstance().unregisterLoadListener(this);
+        updateSearchEnginePreferenceSummary();
+    }
+
+    // Preference.OnPreferenceClickListener implementation.
+    @Override
+    public boolean onPreferenceClick(Preference preference) {
+        Intent intent =
+                new Intent(Intent.ACTION_VIEW, Uri.parse(PasswordUIView.getAccountDashboardURL()));
+        intent.setPackage(getActivity().getPackageName());
+        getActivity().startActivity(intent);
+        return true;
+    }
+
+    @VisibleForTesting
     ManagedPreferenceDelegate getManagedPreferenceDelegateForTest() {
         return mManagedPreferenceDelegate;
     }
