@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0a2cf744_c0839c37",
+        "filename": "chrome/browser/chromeos/arc/accessibility/ax_tree_source_arc.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-09-01T16:52:24Z",
+      "side": 1,
+      "message": "Yup; I think supporting spans (including partial spans) should be in a follow up. I\u0027ll file a bug. Currently, ChromeVox doesn\u0027t support spans within nodes because there\u0027s no equivalent concept on web where spans get their own node. So, the follow up will involve some work here and in ChromeVox.",
+      "parentUuid": "00bc277c_c24b50b8",
+      "range": {
+        "startLine": 176,
+        "startChar": 6,
+        "endLine": 180,
+        "endChar": 36
+      },
+      "revId": "074faf229d2a98ebe9b4307cdc45047884f36728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "da6841a6_d328e44b",
         "filename": "chrome/browser/chromeos/arc/accessibility/ax_tree_source_arc.cc",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "575a2ef6_1973a18a",
+        "filename": "chrome/browser/chromeos/arc/accessibility/ax_tree_source_arc.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-09-01T16:52:24Z",
+      "side": 1,
+      "message": "I added a comment to the tracking bug for support CollectionItemInfo; hope that\u0027s alright.",
+      "parentUuid": "da6841a6_d328e44b",
+      "range": {
+        "startLine": 191,
+        "startChar": 6,
+        "endLine": 193,
+        "endChar": 65
+      },
+      "revId": "074faf229d2a98ebe9b4307cdc45047884f36728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5019bbe4_4ec59a2b",
         "filename": "chrome/browser/chromeos/arc/accessibility/ax_tree_source_arc.cc",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-01T09:18:14Z",
       "side": 1,
       "message": "I cannot find that ROLE_STRING is used in Android side. What is the purpose of ROLE_STRING property?",
+      "range": {
+        "startLine": 198,
+        "startChar": 2,
+        "endLine": 207,
+        "endChar": 3
+      },
+      "revId": "074faf229d2a98ebe9b4307cdc45047884f36728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7037e34_9f27f693",
+        "filename": "chrome/browser/chromeos/arc/accessibility/ax_tree_source_arc.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-09-01T16:52:24Z",
+      "side": 1,
+      "message": "I\u0027ll CC you on that codereview. It will come from Chrome and I uploaded a new change to support it ARC++-side.",
+      "parentUuid": "5019bbe4_4ec59a2b",
       "range": {
         "startLine": 198,
         "startChar": 2,
