@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "42bc5b07_d75a7a2c",
+        "filename": "content/browser/renderer_host/media/media_stream_dispatcher_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-09-01T18:32:17Z",
+      "side": 1,
+      "message": "Sure, we can do that.\nThe 2 CLs which landed did not have this code.",
+      "parentUuid": "229bbe4c_ecca2a86",
+      "range": {
+        "startLine": 74,
+        "startChar": 4,
+        "endLine": 74,
+        "endChar": 20
+      },
+      "revId": "4755094a4b473dc54913b3e094c2c4975b3dc5f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9d149517_e31bbe32",
         "filename": "content/browser/renderer_host/media/media_stream_dispatcher_host_unittest.cc",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-01T17:10:45Z",
       "side": 1,
       "message": "Note that the definition of IsEqual for StreamDeviceInfo is different from the one for MediaStreamDevice because of the extra equality check for the session ID.\nIt would be good to go through all the CLs in the series to make extra sure that no behavior change has been introduced.",
+      "range": {
+        "startLine": 756,
+        "startChar": 34,
+        "endLine": 756,
+        "endChar": 41
+      },
+      "revId": "4755094a4b473dc54913b3e094c2c4975b3dc5f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e79b4cd_056b2884",
+        "filename": "content/browser/renderer_host/media/media_stream_dispatcher_host_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 756,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-09-01T18:32:17Z",
+      "side": 1,
+      "message": "Sure. Thanks for pointing this out.\nWe need to add an equality check for session ID to MediaStreamDevice\u0027s IsEqual?",
+      "parentUuid": "9d149517_e31bbe32",
       "range": {
         "startLine": 756,
         "startChar": 34,
