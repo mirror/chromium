@@ -16,6 +16,24 @@
       "revId": "25d3966dba58414f84dec39c0b633bdb4699fb28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23599055_168d2dc0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabObserver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-09-01T12:05:10Z",
+      "side": 1,
+      "message": "OK, will rename and commit, I do not have a preference here.\n\nBTW, do you think we will record it for background tab? should this case be added to background tab tests? do we need another histogram for background tab flow?",
+      "parentUuid": "ebe54cee_f9a8e351",
+      "revId": "25d3966dba58414f84dec39c0b633bdb4699fb28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
