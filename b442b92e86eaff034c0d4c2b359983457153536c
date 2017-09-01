@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "6880bbe9_af5d6ea5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryProvider.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-01T15:15:06Z",
+      "side": 1,
+      "message": "Is there some way to note that this uses the previous query\u0027s string, e.g. \"Fetches more results using the previous query\u0027s text...?\"",
+      "range": {
+        "startLine": 57,
+        "startChar": 15,
+        "endLine": 57,
+        "endChar": 27
+      },
+      "revId": "b442b92e86eaff034c0d4c2b359983457153536c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5632a260_d78937a9",
         "filename": "components/history/core/browser/browsing_history_service.cc",
         "patchSetId": 8
