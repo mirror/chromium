@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b6e3d40_7c249273",
+        "filename": "chrome/browser/resources/chromeos/login/screen_arc_terms_of_service.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-01T19:28:23Z",
+      "side": 1,
+      "message": "Can we avoid specifying individual elements by using CSS descendant selector?\ni.e.\n  .popup-overlay[md-mode]\n\u003d\u003e #arc-tos[md-mode] .popup-overlay\n\n  .arc-tos-overlay-close-bottom[md-mode]\n\u003d\u003e #arc-tos[md-mode] .arc-tos-overlay-close-bottom\n\nthen we only need to set md-mode attr on #arc-tos as before.",
+      "revId": "8eceaf732a884efc8218746cc3972c48eb943368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
