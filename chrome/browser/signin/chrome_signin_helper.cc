@@ -5,7 +5,9 @@
 #include "chrome/browser/signin/chrome_signin_helper.h"
 
 #include "base/logging.h"
+#include "base/memory/ref_counted.h"
 #include "base/strings/string_util.h"
+#include "base/supports_user_data.h"
 #include "build/build_config.h"
 #include "chrome/browser/prefs/incognito_mode_prefs.h"
 #include "chrome/browser/profiles/profile_io_data.h"
@@ -22,6 +24,7 @@
 #include "components/signin/core/common/profile_management_switches.h"
 #include "components/signin/core/common/signin_features.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/resource_request_info.h"
 #include "content/public/browser/web_contents.h"
 #include "google_apis/gaia/gaia_auth_util.h"
 #include "net/http/http_response_headers.h"
@@ -45,6 +48,54 @@ const char kChromeManageAccountsHeader[] = "X-Chrome-Manage-Accounts";
 const char kDiceResponseHeader[] = "X-Chrome-ID-Consistency-Response";
 const char kGoogleSignoutResponseHeader[] = "Google-Accounts-SignOut";
 #endif
+
+const void* const kDiceURLRequestUserDataKey = &kDiceURLRequestUserDataKey;
+
+// Refcounted wrapper to allow creating and deleting a AccountReconcilorLock
+// from the IO thread.
+class AccountReconcilorLockWrapper
+    : public base::RefCountedThreadSafe<AccountReconcilorLockWrapper> {
+ public:
+  void Init(const content::ResourceRequestInfo::WebContentsGetter&
+                web_contents_getter) {
+    DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+    content::WebContents* web_contents = web_contents_getter.Run();
+    if (!web_contents)
+      return;
+    Profile* profile =
+        Profile::FromBrowserContext(web_contents->GetBrowserContext());
+    AccountReconcilor* account_reconcilor =
+        AccountReconcilorFactory::GetForProfile(profile);
+    account_reconcilor_lock_.reset(
+        new AccountReconcilor::AccountReconcilorLock(account_reconcilor));
+  }
+
+ private:
+  friend class base::RefCountedThreadSafe<AccountReconcilorLockWrapper>;
+  ~AccountReconcilorLockWrapper() {}
+
+  // The account reconcilor lock is created and deleted on UI thread.
+  std::unique_ptr<AccountReconcilor::AccountReconcilorLock,
+                  content::BrowserThread::DeleteOnUIThread>
+      account_reconcilor_lock_;
+};
+
+class DiceURLRequestUserData : public base::SupportsUserData::Data {
+ public:
+  DiceURLRequestUserData(const content::ResourceRequestInfo::WebContentsGetter&
+                             web_contents_getter)
+      : account_reconcilor_lock_wrapper_(new AccountReconcilorLockWrapper) {
+    // The lock wrapper is reference counted, because the DiceRequestUserData
+    // may be deleted before the task is run.
+    content::BrowserThread::PostTask(
+        content::BrowserThread::UI, FROM_HERE,
+        base::BindOnce(&AccountReconcilorLockWrapper::Init,
+                       account_reconcilor_lock_wrapper_, web_contents_getter));
+  }
+
+ private:
+  scoped_refptr<AccountReconcilorLockWrapper> account_reconcilor_lock_wrapper_;
+};
 
 // Processes the mirror response header on the UI thread. Currently depending
 // on the value of |header_value|, it either shows the profile avatar menu, or
@@ -260,6 +311,15 @@ void FixAccountConsistencyRequestHeader(net::URLRequest* request,
       request, redirect_url, account_id, io_data->IsSyncEnabled(),
       io_data->SyncHasAuthError(), io_data->GetCookieSettings(),
       profile_mode_mask);
+
+  if (/* something */ true) {
+    const content::ResourceRequestInfo* info =
+        content::ResourceRequestInfo::ForRequest(request);
+    DCHECK(info);
+    request->SetUserData(kDiceURLRequestUserDataKey,
+                         base::MakeUnique<DiceURLRequestUserData>(
+                             info->GetWebContentsGetterForRequest()));
+  }
 }
 
 void ProcessAccountConsistencyResponseHeaders(net::URLRequest* request,
