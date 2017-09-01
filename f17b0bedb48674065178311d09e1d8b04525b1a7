@@ -238,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "d575368f_6c5e61de",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 1656,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-09-01T22:00:34Z",
+      "side": 1,
+      "message": "The message still needs to be conditional on relaunch_times not being empty. The message is meant to indicate that there are components with a launch pending, but we decided not to launch them this time through the loop. The waitpid_handle_exceptions call below happens every time through the loop, not just when there\u0027s a launch pending, and most of the time is only waiting for child processes to exit. The difference is that when there *is* a launch pending, the call to wait will include a timeout so we loop again when it\u0027s time to relaunch.\n\nI could swap the if and else clauses on this conditional if you think it would make things more readable:\n\n    if not relaunch_times:\n      # Launch stuff\n    else:\n      # Print message\n\n    deadline \u003d …\n\n    pid, status \u003d waitpid_handle_exceptions(-1, deadline)",
+      "parentUuid": "dccf3bad_88363901",
+      "range": {
+        "startLine": 1656,
+        "startChar": 48,
+        "endLine": 1656,
+        "endChar": 0
+      },
+      "revId": "f17b0bedb48674065178311d09e1d8b04525b1a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1885f1b3_47ba5c47",
         "filename": "remoting/host/linux/linux_me2me_host.py",
         "patchSetId": 4
