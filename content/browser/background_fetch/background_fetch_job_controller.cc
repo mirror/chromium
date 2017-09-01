@@ -43,6 +43,7 @@ void BackgroundFetchJobController::Start() {
     data_manager_->PopNextRequest(
         registration_id_,
         base::BindOnce(&BackgroundFetchJobController::StartRequest,
+                       //               registration_id_.origin(),
                        weak_ptr_factory_.GetWeakPtr()));
   }
 }
@@ -59,7 +60,8 @@ void BackgroundFetchJobController::StartRequest(
     return;
   }
 
-  delegate_proxy_->StartRequest(this, request);
+  delegate_proxy_->StartRequest(weak_ptr_factory_.GetWeakPtr(),
+                                registration_id_.origin(), request);
 }
 
 void BackgroundFetchJobController::DidStartRequest(
