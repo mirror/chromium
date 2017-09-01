@@ -4,229 +4,232 @@
       "name": "LayoutView #document",
       "bounds": [785, 933],
       "contentsOpaque": true,
-      "backgroundColor": "#FFFFFF",
-      "paintInvalidations": [
-        {
-          "object": "LayoutHTMLCanvas CANVAS id='copyvideo'",
-          "rect": [571, 515, 80, 40],
-          "reason": "invalidate paint rectangle"
-        },
-        {
-          "object": "LayoutHTMLCanvas CANVAS id='destination-atopvideo'",
-          "rect": [571, 415, 80, 40],
-          "reason": "invalidate paint rectangle"
-        },
-        {
-          "object": "LayoutHTMLCanvas CANVAS id='destination-invideo'",
-          "rect": [571, 315, 80, 40],
-          "reason": "invalidate paint rectangle"
-        },
-        {
-          "object": "LayoutHTMLCanvas CANVAS id='source-outvideo'",
-          "rect": [571, 165, 80, 40],
-          "reason": "invalidate paint rectangle"
-        },
-        {
-          "object": "LayoutHTMLCanvas CANVAS id='source-invideo'",
-          "rect": [571, 115, 80, 40],
-          "reason": "invalidate paint rectangle"
-        },
-        {
-          "object": "LayoutHTMLCanvas CANVAS id='copycanvas'",
-          "rect": [429, 515, 80, 40],
-          "reason": "invalidate paint rectangle"
-        },
-        {
-          "object": "LayoutHTMLCanvas CANVAS id='destination-atopcanvas'",
-          "rect": [429, 415, 80, 40],
-          "reason": "invalidate paint rectangle"
-        },
-        {
-          "object": "LayoutHTMLCanvas CANVAS id='destination-incanvas'",
-          "rect": [429, 315, 80, 40],
-          "reason": "invalidate paint rectangle"
-        },
-        {
-          "object": "LayoutHTMLCanvas CANVAS id='source-outcanvas'",
-          "rect": [429, 165, 80, 40],
-          "reason": "invalidate paint rectangle"
-        },
-        {
-          "object": "LayoutHTMLCanvas CANVAS id='source-incanvas'",
-          "rect": [429, 115, 80, 40],
-          "reason": "invalidate paint rectangle"
-        },
-        {
-          "object": "LayoutHTMLCanvas CANVAS id='copyimage'",
-          "rect": [287, 515, 80, 40],
-          "reason": "invalidate paint rectangle"
-        },
-        {
-          "object": "LayoutHTMLCanvas CANVAS id='destination-atopimage'",
-          "rect": [287, 415, 80, 40],
-          "reason": "invalidate paint rectangle"
-        },
-        {
-          "object": "LayoutHTMLCanvas CANVAS id='destination-inimage'",
-          "rect": [287, 315, 80, 40],
-          "reason": "invalidate paint rectangle"
-        },
-        {
-          "object": "LayoutHTMLCanvas CANVAS id='source-outimage'",
-          "rect": [287, 165, 80, 40],
-          "reason": "invalidate paint rectangle"
-        },
-        {
-          "object": "LayoutHTMLCanvas CANVAS id='source-inimage'",
-          "rect": [287, 115, 80, 40],
-          "reason": "invalidate paint rectangle"
-        },
-        {
-          "object": "LayoutHTMLCanvas CANVAS id='copysolid color'",
-          "rect": [145, 515, 80, 40],
-          "reason": "invalidate paint rectangle"
-        },
-        {
-          "object": "LayoutHTMLCanvas CANVAS id='destination-atopsolid color'",
-          "rect": [145, 415, 80, 40],
-          "reason": "invalidate paint rectangle"
-        },
-        {
-          "object": "LayoutHTMLCanvas CANVAS id='destination-insolid color'",
-          "rect": [145, 315, 80, 40],
-          "reason": "invalidate paint rectangle"
-        },
-        {
-          "object": "LayoutHTMLCanvas CANVAS id='source-outsolid color'",
-          "rect": [145, 165, 80, 40],
-          "reason": "invalidate paint rectangle"
-        },
-        {
-          "object": "LayoutHTMLCanvas CANVAS id='source-insolid color'",
-          "rect": [145, 115, 80, 40],
-          "reason": "invalidate paint rectangle"
-        },
-        {
-          "object": "LayoutHTMLCanvas CANVAS id='xorvideo'",
-          "rect": [601, 565, 50, 40],
-          "reason": "invalidate paint rectangle"
-        },
-        {
-          "object": "LayoutHTMLCanvas CANVAS id='lightervideo'",
-          "rect": [601, 465, 50, 40],
-          "reason": "invalidate paint rectangle"
-        },
-        {
-          "object": "LayoutHTMLCanvas CANVAS id='destination-outvideo'",
-          "rect": [601, 365, 50, 40],
-          "reason": "invalidate paint rectangle"
-        },
-        {
-          "object": "LayoutHTMLCanvas CANVAS id='destination-overvideo'",
-          "rect": [601, 265, 50, 40],
-          "reason": "invalidate paint rectangle"
-        },
-        {
-          "object": "LayoutHTMLCanvas CANVAS id='source-atopvideo'",
-          "rect": [601, 215, 50, 40],
-          "reason": "invalidate paint rectangle"
-        },
-        {
-          "object": "LayoutHTMLCanvas CANVAS id='source-overvideo'",
-          "rect": [601, 65, 50, 40],
-          "reason": "invalidate paint rectangle"
-        },
-        {
-          "object": "LayoutHTMLCanvas CANVAS id='xorcanvas'",
-          "rect": [459, 565, 50, 40],
-          "reason": "invalidate paint rectangle"
-        },
-        {
-          "object": "LayoutHTMLCanvas CANVAS id='lightercanvas'",
-          "rect": [459, 465, 50, 40],
-          "reason": "invalidate paint rectangle"
-        },
-        {
-          "object": "LayoutHTMLCanvas CANVAS id='destination-outcanvas'",
-          "rect": [459, 365, 50, 40],
-          "reason": "invalidate paint rectangle"
-        },
-        {
-          "object": "LayoutHTMLCanvas CANVAS id='destination-overcanvas'",
-          "rect": [459, 265, 50, 40],
-          "reason": "invalidate paint rectangle"
-        },
-        {
-          "object": "LayoutHTMLCanvas CANVAS id='source-atopcanvas'",
-          "rect": [459, 215, 50, 40],
-          "reason": "invalidate paint rectangle"
-        },
-        {
-          "object": "LayoutHTMLCanvas CANVAS id='source-overcanvas'",
-          "rect": [459, 65, 50, 40],
-          "reason": "invalidate paint rectangle"
-        },
-        {
-          "object": "LayoutHTMLCanvas CANVAS id='xorimage'",
-          "rect": [317, 565, 50, 40],
-          "reason": "invalidate paint rectangle"
-        },
-        {
-          "object": "LayoutHTMLCanvas CANVAS id='lighterimage'",
-          "rect": [317, 465, 50, 40],
-          "reason": "invalidate paint rectangle"
-        },
-        {
-          "object": "LayoutHTMLCanvas CANVAS id='destination-outimage'",
-          "rect": [317, 365, 50, 40],
-          "reason": "invalidate paint rectangle"
-        },
-        {
-          "object": "LayoutHTMLCanvas CANVAS id='destination-overimage'",
-          "rect": [317, 265, 50, 40],
-          "reason": "invalidate paint rectangle"
-        },
-        {
-          "object": "LayoutHTMLCanvas CANVAS id='source-atopimage'",
-          "rect": [317, 215, 50, 40],
-          "reason": "invalidate paint rectangle"
-        },
-        {
-          "object": "LayoutHTMLCanvas CANVAS id='source-overimage'",
-          "rect": [317, 65, 50, 40],
-          "reason": "invalidate paint rectangle"
-        },
-        {
-          "object": "LayoutHTMLCanvas CANVAS id='xorsolid color'",
-          "rect": [175, 565, 50, 40],
-          "reason": "invalidate paint rectangle"
-        },
-        {
-          "object": "LayoutHTMLCanvas CANVAS id='lightersolid color'",
-          "rect": [175, 465, 50, 40],
-          "reason": "invalidate paint rectangle"
-        },
-        {
-          "object": "LayoutHTMLCanvas CANVAS id='destination-outsolid color'",
-          "rect": [175, 365, 50, 40],
-          "reason": "invalidate paint rectangle"
-        },
-        {
-          "object": "LayoutHTMLCanvas CANVAS id='destination-oversolid color'",
-          "rect": [175, 265, 50, 40],
-          "reason": "invalidate paint rectangle"
-        },
-        {
-          "object": "LayoutHTMLCanvas CANVAS id='source-atopsolid color'",
-          "rect": [175, 215, 50, 40],
-          "reason": "invalidate paint rectangle"
-        },
-        {
-          "object": "LayoutHTMLCanvas CANVAS id='source-oversolid color'",
-          "rect": [175, 65, 50, 40],
-          "reason": "invalidate paint rectangle"
-        }
-      ]
+      "backgroundColor": "#FFFFFF"
+    },
+    {
+      "name": "LayoutHTMLCanvas CANVAS id='source-oversolid color'",
+      "position": [144, 64],
+      "bounds": [132, 42]
+    },
+    {
+      "name": "LayoutHTMLCanvas CANVAS id='source-overimage'",
+      "position": [286, 64],
+      "bounds": [132, 42]
+    },
+    {
+      "name": "LayoutHTMLCanvas CANVAS id='source-overcanvas'",
+      "position": [428, 64],
+      "bounds": [132, 42]
+    },
+    {
+      "name": "LayoutHTMLCanvas CANVAS id='source-overvideo'",
+      "position": [570, 64],
+      "bounds": [132, 42]
+    },
+    {
+      "name": "LayoutHTMLCanvas CANVAS id='source-insolid color'",
+      "position": [144, 114],
+      "bounds": [132, 42]
+    },
+    {
+      "name": "LayoutHTMLCanvas CANVAS id='source-inimage'",
+      "position": [286, 114],
+      "bounds": [132, 42]
+    },
+    {
+      "name": "LayoutHTMLCanvas CANVAS id='source-incanvas'",
+      "position": [428, 114],
+      "bounds": [132, 42]
+    },
+    {
+      "name": "LayoutHTMLCanvas CANVAS id='source-invideo'",
+      "position": [570, 114],
+      "bounds": [132, 42]
+    },
+    {
+      "name": "LayoutHTMLCanvas CANVAS id='source-outsolid color'",
+      "position": [144, 164],
+      "bounds": [132, 42]
+    },
+    {
+      "name": "LayoutHTMLCanvas CANVAS id='source-outimage'",
+      "position": [286, 164],
+      "bounds": [132, 42]
+    },
+    {
+      "name": "LayoutHTMLCanvas CANVAS id='source-outcanvas'",
+      "position": [428, 164],
+      "bounds": [132, 42]
+    },
+    {
+      "name": "LayoutHTMLCanvas CANVAS id='source-outvideo'",
+      "position": [570, 164],
+      "bounds": [132, 42]
+    },
+    {
+      "name": "LayoutHTMLCanvas CANVAS id='source-atopsolid color'",
+      "position": [144, 214],
+      "bounds": [132, 42]
+    },
+    {
+      "name": "LayoutHTMLCanvas CANVAS id='source-atopimage'",
+      "position": [286, 214],
+      "bounds": [132, 42]
+    },
+    {
+      "name": "LayoutHTMLCanvas CANVAS id='source-atopcanvas'",
+      "position": [428, 214],
+      "bounds": [132, 42]
+    },
+    {
+      "name": "LayoutHTMLCanvas CANVAS id='source-atopvideo'",
+      "position": [570, 214],
+      "bounds": [132, 42]
+    },
+    {
+      "name": "LayoutHTMLCanvas CANVAS id='destination-oversolid color'",
+      "position": [144, 264],
+      "bounds": [132, 42]
+    },
+    {
+      "name": "LayoutHTMLCanvas CANVAS id='destination-overimage'",
+      "position": [286, 264],
+      "bounds": [132, 42]
+    },
+    {
+      "name": "LayoutHTMLCanvas CANVAS id='destination-overcanvas'",
+      "position": [428, 264],
+      "bounds": [132, 42]
+    },
+    {
+      "name": "LayoutHTMLCanvas CANVAS id='destination-overvideo'",
+      "position": [570, 264],
+      "bounds": [132, 42]
+    },
+    {
+      "name": "LayoutHTMLCanvas CANVAS id='destination-insolid color'",
+      "position": [144, 314],
+      "bounds": [132, 42]
+    },
+    {
+      "name": "LayoutHTMLCanvas CANVAS id='destination-inimage'",
+      "position": [286, 314],
+      "bounds": [132, 42]
+    },
+    {
+      "name": "LayoutHTMLCanvas CANVAS id='destination-incanvas'",
+      "position": [428, 314],
+      "bounds": [132, 42]
+    },
+    {
+      "name": "LayoutHTMLCanvas CANVAS id='destination-invideo'",
+      "position": [570, 314],
+      "bounds": [132, 42]
+    },
+    {
+      "name": "LayoutHTMLCanvas CANVAS id='destination-outsolid color'",
+      "position": [144, 364],
+      "bounds": [132, 42]
+    },
+    {
+      "name": "LayoutHTMLCanvas CANVAS id='destination-outimage'",
+      "position": [286, 364],
+      "bounds": [132, 42]
+    },
+    {
+      "name": "LayoutHTMLCanvas CANVAS id='destination-outcanvas'",
+      "position": [428, 364],
+      "bounds": [132, 42]
+    },
+    {
+      "name": "LayoutHTMLCanvas CANVAS id='destination-outvideo'",
+      "position": [570, 364],
+      "bounds": [132, 42]
+    },
+    {
+      "name": "LayoutHTMLCanvas CANVAS id='destination-atopsolid color'",
+      "position": [144, 414],
+      "bounds": [132, 42]
+    },
+    {
+      "name": "LayoutHTMLCanvas CANVAS id='destination-atopimage'",
+      "position": [286, 414],
+      "bounds": [132, 42]
+    },
+    {
+      "name": "LayoutHTMLCanvas CANVAS id='destination-atopcanvas'",
+      "position": [428, 414],
+      "bounds": [132, 42]
+    },
+    {
+      "name": "LayoutHTMLCanvas CANVAS id='destination-atopvideo'",
+      "position": [570, 414],
+      "bounds": [132, 42]
+    },
+    {
+      "name": "LayoutHTMLCanvas CANVAS id='lightersolid color'",
+      "position": [144, 464],
+      "bounds": [132, 42]
+    },
+    {
+      "name": "LayoutHTMLCanvas CANVAS id='lighterimage'",
+      "position": [286, 464],
+      "bounds": [132, 42]
+    },
+    {
+      "name": "LayoutHTMLCanvas CANVAS id='lightercanvas'",
+      "position": [428, 464],
+      "bounds": [132, 42]
+    },
+    {
+      "name": "LayoutHTMLCanvas CANVAS id='lightervideo'",
+      "position": [570, 464],
+      "bounds": [132, 42]
+    },
+    {
+      "name": "LayoutHTMLCanvas CANVAS id='copysolid color'",
+      "position": [144, 514],
+      "bounds": [132, 42]
+    },
+    {
+      "name": "LayoutHTMLCanvas CANVAS id='copyimage'",
+      "position": [286, 514],
+      "bounds": [132, 42]
+    },
+    {
+      "name": "LayoutHTMLCanvas CANVAS id='copycanvas'",
+      "position": [428, 514],
+      "bounds": [132, 42]
+    },
+    {
+      "name": "LayoutHTMLCanvas CANVAS id='copyvideo'",
+      "position": [570, 514],
+      "bounds": [132, 42]
+    },
+    {
+      "name": "LayoutHTMLCanvas CANVAS id='xorsolid color'",
+      "position": [144, 564],
+      "bounds": [132, 42]
+    },
+    {
+      "name": "LayoutHTMLCanvas CANVAS id='xorimage'",
+      "position": [286, 564],
+      "bounds": [132, 42]
+    },
+    {
+      "name": "LayoutHTMLCanvas CANVAS id='xorcanvas'",
+      "position": [428, 564],
+      "bounds": [132, 42]
+    },
+    {
+      "name": "LayoutHTMLCanvas CANVAS id='xorvideo'",
+      "position": [570, 564],
+      "bounds": [132, 42]
+    },
+    {
+      "name": "LayoutHTMLCanvas CANVAS id='source-canvas'",
+      "position": [15, 754],
+      "bounds": [152, 62]
     },
     {
       "name": "LayoutVideo VIDEO id='video'",
@@ -247,184 +250,6 @@
       "name": "Squashing Layer (first squashed layer: LayoutFlexibleBox (relative positioned) DIV)",
       "position": [15, 859],
       "bounds": [150, 18]
-    }
-  ],
-  "objectPaintInvalidations": [
-    {
-      "object": "LayoutHTMLCanvas CANVAS id='source-oversolid color'",
-      "reason": "invalidate paint rectangle"
-    },
-    {
-      "object": "LayoutHTMLCanvas CANVAS id='source-overimage'",
-      "reason": "invalidate paint rectangle"
-    },
-    {
-      "object": "LayoutHTMLCanvas CANVAS id='source-overcanvas'",
-      "reason": "invalidate paint rectangle"
-    },
-    {
-      "object": "LayoutHTMLCanvas CANVAS id='source-overvideo'",
-      "reason": "invalidate paint rectangle"
-    },
-    {
-      "object": "LayoutHTMLCanvas CANVAS id='source-insolid color'",
-      "reason": "invalidate paint rectangle"
-    },
-    {
-      "object": "LayoutHTMLCanvas CANVAS id='source-inimage'",
-      "reason": "invalidate paint rectangle"
-    },
-    {
-      "object": "LayoutHTMLCanvas CANVAS id='source-incanvas'",
-      "reason": "invalidate paint rectangle"
-    },
-    {
-      "object": "LayoutHTMLCanvas CANVAS id='source-invideo'",
-      "reason": "invalidate paint rectangle"
-    },
-    {
-      "object": "LayoutHTMLCanvas CANVAS id='source-outsolid color'",
-      "reason": "invalidate paint rectangle"
-    },
-    {
-      "object": "LayoutHTMLCanvas CANVAS id='source-outimage'",
-      "reason": "invalidate paint rectangle"
-    },
-    {
-      "object": "LayoutHTMLCanvas CANVAS id='source-outcanvas'",
-      "reason": "invalidate paint rectangle"
-    },
-    {
-      "object": "LayoutHTMLCanvas CANVAS id='source-outvideo'",
-      "reason": "invalidate paint rectangle"
-    },
-    {
-      "object": "LayoutHTMLCanvas CANVAS id='source-atopsolid color'",
-      "reason": "invalidate paint rectangle"
-    },
-    {
-      "object": "LayoutHTMLCanvas CANVAS id='source-atopimage'",
-      "reason": "invalidate paint rectangle"
-    },
-    {
-      "object": "LayoutHTMLCanvas CANVAS id='source-atopcanvas'",
-      "reason": "invalidate paint rectangle"
-    },
-    {
-      "object": "LayoutHTMLCanvas CANVAS id='source-atopvideo'",
-      "reason": "invalidate paint rectangle"
-    },
-    {
-      "object": "LayoutHTMLCanvas CANVAS id='destination-oversolid color'",
-      "reason": "invalidate paint rectangle"
-    },
-    {
-      "object": "LayoutHTMLCanvas CANVAS id='destination-overimage'",
-      "reason": "invalidate paint rectangle"
-    },
-    {
-      "object": "LayoutHTMLCanvas CANVAS id='destination-overcanvas'",
-      "reason": "invalidate paint rectangle"
-    },
-    {
-      "object": "LayoutHTMLCanvas CANVAS id='destination-overvideo'",
-      "reason": "invalidate paint rectangle"
-    },
-    {
-      "object": "LayoutHTMLCanvas CANVAS id='destination-insolid color'",
-      "reason": "invalidate paint rectangle"
-    },
-    {
-      "object": "LayoutHTMLCanvas CANVAS id='destination-inimage'",
-      "reason": "invalidate paint rectangle"
-    },
-    {
-      "object": "LayoutHTMLCanvas CANVAS id='destination-incanvas'",
-      "reason": "invalidate paint rectangle"
-    },
-    {
-      "object": "LayoutHTMLCanvas CANVAS id='destination-invideo'",
-      "reason": "invalidate paint rectangle"
-    },
-    {
-      "object": "LayoutHTMLCanvas CANVAS id='destination-outsolid color'",
-      "reason": "invalidate paint rectangle"
-    },
-    {
-      "object": "LayoutHTMLCanvas CANVAS id='destination-outimage'",
-      "reason": "invalidate paint rectangle"
-    },
-    {
-      "object": "LayoutHTMLCanvas CANVAS id='destination-outcanvas'",
-      "reason": "invalidate paint rectangle"
-    },
-    {
-      "object": "LayoutHTMLCanvas CANVAS id='destination-outvideo'",
-      "reason": "invalidate paint rectangle"
-    },
-    {
-      "object": "LayoutHTMLCanvas CANVAS id='destination-atopsolid color'",
-      "reason": "invalidate paint rectangle"
-    },
-    {
-      "object": "LayoutHTMLCanvas CANVAS id='destination-atopimage'",
-      "reason": "invalidate paint rectangle"
-    },
-    {
-      "object": "LayoutHTMLCanvas CANVAS id='destination-atopcanvas'",
-      "reason": "invalidate paint rectangle"
-    },
-    {
-      "object": "LayoutHTMLCanvas CANVAS id='destination-atopvideo'",
-      "reason": "invalidate paint rectangle"
-    },
-    {
-      "object": "LayoutHTMLCanvas CANVAS id='lightersolid color'",
-      "reason": "invalidate paint rectangle"
-    },
-    {
-      "object": "LayoutHTMLCanvas CANVAS id='lighterimage'",
-      "reason": "invalidate paint rectangle"
-    },
-    {
-      "object": "LayoutHTMLCanvas CANVAS id='lightercanvas'",
-      "reason": "invalidate paint rectangle"
-    },
-    {
-      "object": "LayoutHTMLCanvas CANVAS id='lightervideo'",
-      "reason": "invalidate paint rectangle"
-    },
-    {
-      "object": "LayoutHTMLCanvas CANVAS id='copysolid color'",
-      "reason": "invalidate paint rectangle"
-    },
-    {
-      "object": "LayoutHTMLCanvas CANVAS id='copyimage'",
-      "reason": "invalidate paint rectangle"
-    },
-    {
-      "object": "LayoutHTMLCanvas CANVAS id='copycanvas'",
-      "reason": "invalidate paint rectangle"
-    },
-    {
-      "object": "LayoutHTMLCanvas CANVAS id='copyvideo'",
-      "reason": "invalidate paint rectangle"
-    },
-    {
-      "object": "LayoutHTMLCanvas CANVAS id='xorsolid color'",
-      "reason": "invalidate paint rectangle"
-    },
-    {
-      "object": "LayoutHTMLCanvas CANVAS id='xorimage'",
-      "reason": "invalidate paint rectangle"
-    },
-    {
-      "object": "LayoutHTMLCanvas CANVAS id='xorcanvas'",
-      "reason": "invalidate paint rectangle"
-    },
-    {
-      "object": "LayoutHTMLCanvas CANVAS id='xorvideo'",
-      "reason": "invalidate paint rectangle"
     }
   ]
 }

@@ -4,11 +4,16 @@
       "name": "LayoutView #document",
       "bounds": [800, 600],
       "contentsOpaque": true,
-      "backgroundColor": "#FFFFFF",
+      "backgroundColor": "#FFFFFF"
+    },
+    {
+      "name": "LayoutHTMLCanvas (positioned) CANVAS id='canvas'",
+      "position": [50, 50],
+      "bounds": [500, 500],
       "paintInvalidations": [
         {
           "object": "LayoutHTMLCanvas (positioned) CANVAS id='canvas'",
-          "rect": [50, 50, 600, 500],
+          "rect": [0, 0, 600, 500],
           "reason": "geometry"
         }
       ]
