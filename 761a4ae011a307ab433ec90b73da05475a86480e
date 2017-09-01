@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a2082f03_b7fbe7fa",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-09-01T18:29:08Z",
+      "side": 1,
+      "message": "Not intentional, thanks for pointing this out! I had @google.com in my .gitconfig file -- after changing that, I think I\u0027m using @chromium.org everywhere now.",
+      "parentUuid": "2ce00f48_55b6568c",
+      "range": {
+        "startLine": 2,
+        "startChar": 30,
+        "endLine": 2,
+        "endChar": 39
+      },
+      "revId": "761a4ae011a307ab433ec90b73da05475a86480e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e1f667e7_41cc96b0",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/net/git_cl.py",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "761a4ae011a307ab433ec90b73da05475a86480e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20aa23af_09c9a310",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/net/git_cl.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-09-01T18:29:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1f667e7_41cc96b0",
+      "range": {
+        "startLine": 91,
+        "startChar": 31,
+        "endLine": 91,
+        "endChar": 44
+      },
+      "revId": "761a4ae011a307ab433ec90b73da05475a86480e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
