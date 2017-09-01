@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "533da25a_751de204",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-01T21:38:26Z",
+      "side": 1,
+      "message": "This class doesn\u0027t know anything about BottomSheetContents. How about \"scroll to the top of the bookmarks list\"?",
+      "range": {
+        "startLine": 467,
+        "startChar": 45,
+        "endLine": 467,
+        "endChar": 63
+      },
+      "revId": "94cf0788ec0b1caf951a40fed7f8ffe8e1e0ab85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e6ea75f_7686232c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadManagerUi.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-01T21:38:26Z",
+      "side": 1,
+      "message": "same comment here",
+      "range": {
+        "startLine": 513,
+        "startChar": 39,
+        "endLine": 513,
+        "endChar": 63
+      },
+      "revId": "94cf0788ec0b1caf951a40fed7f8ffe8e1e0ab85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c41d8b3_64364fda",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-01T21:38:26Z",
+      "side": 1,
+      "message": "and here",
+      "range": {
+        "startLine": 476,
+        "startChar": 39,
+        "endLine": 476,
+        "endChar": 64
+      },
+      "revId": "94cf0788ec0b1caf951a40fed7f8ffe8e1e0ab85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e403839_80b05496",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-01T21:38:26Z",
+      "side": 1,
+      "message": "This content has a recycler view that could be scrolled. It\u0027s shown in the \"Home\" tab.",
+      "range": {
+        "startLine": 379,
+        "startChar": 4,
+        "endLine": 379,
+        "endChar": 32
+      },
+      "revId": "94cf0788ec0b1caf951a40fed7f8ffe8e1e0ab85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
