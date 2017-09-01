@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "38565980_0fa7362c",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/media/ui/PictureInPictureControllerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-09-01T11:09:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6cc7e60e_fbb3dc81",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 3
+      },
+      "revId": "b3a0a6796308e80860bf7660663f8bd40ed7a998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "037af0c3_1a1cd77d",
         "filename": "chrome/test/data/media/bigbuck-player.html",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-01T10:55:39Z",
       "side": 1,
       "message": "Nit: getElementById(\u0027fullscreen\u0027)",
+      "range": {
+        "startLine": 13,
+        "startChar": 11,
+        "endLine": 13,
+        "endChar": 39
+      },
+      "revId": "b3a0a6796308e80860bf7660663f8bd40ed7a998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "860b4f68_7c568784",
+        "filename": "chrome/test/data/media/bigbuck-player.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-09-01T11:09:38Z",
+      "side": 1,
+      "message": "Done, same for line below.",
+      "parentUuid": "037af0c3_1a1cd77d",
       "range": {
         "startLine": 13,
         "startChar": 11,
