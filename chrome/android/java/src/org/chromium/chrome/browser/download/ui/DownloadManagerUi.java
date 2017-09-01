@@ -31,6 +31,7 @@ import org.chromium.chrome.browser.snackbar.Snackbar;
 import org.chromium.chrome.browser.snackbar.SnackbarManager;
 import org.chromium.chrome.browser.snackbar.SnackbarManager.SnackbarController;
 import org.chromium.chrome.browser.util.FeatureUtilities;
+import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet.BottomSheetContent;
 import org.chromium.chrome.browser.widget.selection.SelectableListLayout;
 import org.chromium.chrome.browser.widget.selection.SelectableListToolbar;
 import org.chromium.chrome.browser.widget.selection.SelectableListToolbar.SearchDelegate;
@@ -506,5 +507,12 @@ public class DownloadManagerUi implements OnMenuItemClickListener, SearchDelegat
     @VisibleForTesting
     public static void setProviderForTests(BackendProvider provider) {
         sProviderForTests = provider;
+    }
+
+    /**
+     * Called to scroll to the top of {@link BottomSheetContent}.
+     */
+    public void scrollToTop() {
+        mRecyclerView.smoothScrollToPosition(mRecyclerView.getTop());
     }
 }

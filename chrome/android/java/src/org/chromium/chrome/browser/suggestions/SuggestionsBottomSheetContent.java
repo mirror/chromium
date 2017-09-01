@@ -374,4 +374,7 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
         mToolbarView.setTranslationY(toolbarOffset);
         mRecyclerView.setTranslationY(toolbarOffset);
     }
+
+    @Override
+    public void scrollToTop() {}
 }

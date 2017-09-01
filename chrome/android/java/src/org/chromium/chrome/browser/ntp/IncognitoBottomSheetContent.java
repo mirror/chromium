@@ -170,4 +170,7 @@ public class IncognitoBottomSheetContent extends IncognitoNewTabPage implements 
     public boolean applyDefaultTopPadding() {
         return true;
     }
+
+    @Override
+    public void scrollToTop() {}
 }

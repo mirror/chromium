@@ -38,6 +38,7 @@ import org.chromium.chrome.browser.snackbar.SnackbarManager;
 import org.chromium.chrome.browser.snackbar.SnackbarManager.SnackbarController;
 import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.browser.util.IntentUtils;
+import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet.BottomSheetContent;
 import org.chromium.chrome.browser.widget.selection.SelectableListLayout;
 import org.chromium.chrome.browser.widget.selection.SelectableListToolbar;
 import org.chromium.chrome.browser.widget.selection.SelectableListToolbar.SearchDelegate;
@@ -469,5 +470,12 @@ public class HistoryManager implements OnMenuItemClickListener, SignInStateObser
     @Override
     public void onDismissNoAction(Object actionData) {
         // Handler for the link copied snackbar. Do nothing.
+    }
+
+    /**
+     * Called to scroll to the top of {@link BottomSheetContent}.
+     */
+    public void scrollToTop() {
+        mRecyclerView.smoothScrollToPosition(mRecyclerView.getTop());
     }
 }
