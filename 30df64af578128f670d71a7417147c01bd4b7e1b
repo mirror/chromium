@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d431432b_197deeb5",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface.h.tmpl",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-01T04:35:24Z",
+      "side": 1,
+      "message": "As you removed the NamedConstructorAttributeGetter entry from external_reference_table.cpp.tmpl, we may no longer need {{exported}} here.",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 14
+      },
+      "revId": "30df64af578128f670d71a7417147c01bd4b7e1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a3c1341_5305fc47",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface.h.tmpl",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-01T04:35:24Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 22,
+        "startChar": 2,
+        "endLine": 22,
+        "endChar": 14
+      },
+      "revId": "30df64af578128f670d71a7417147c01bd4b7e1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
