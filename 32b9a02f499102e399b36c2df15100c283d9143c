@@ -16,6 +16,24 @@
       "revId": "32b9a02f499102e399b36c2df15100c283d9143c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39cc8a6e_c741f04b",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-01T23:24:20Z",
+      "side": 1,
+      "message": "As further discussed this has been left here and the other metric is now reported based solely on the file being successfully downloaded (disregarding the posterior DB changes).\n\nTODOs and tasks were also created to keep track of the suggested UMA metrics to be added for the uncommon error cases.",
+      "parentUuid": "1170d4a6_5f7ca19e",
+      "revId": "32b9a02f499102e399b36c2df15100c283d9143c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
