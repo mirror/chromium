@@ -84,7 +84,6 @@ class FakeProfile : public Profile {
   void OnLogin() override;
   void InitChromeOSPreferences() override;
 
-  PrefProxyConfigTracker* GetProxyConfigTracker() override;
   chrome_browser_net::Predictor* GetNetworkPredictor() override;
   DevToolsNetworkControllerHandle* GetDevToolsNetworkControllerHandle()
       override;

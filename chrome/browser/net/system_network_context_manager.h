@@ -10,6 +10,8 @@
 #include "base/macros.h"
 #include "content/public/common/network_service.mojom.h"
 
+class ProxyConfigMonitor;
+
 // Responsible for creating and managing access to the system NetworkContext.
 // Lives on the UI thread. The NetworkContext this owns is intended for requests
 // not associated with a profile. It stores no data on disk, and has no HTTP
@@ -57,6 +59,10 @@ class SystemNetworkContextManager {
   void DisableQuic();
 
  private:
+  // Creates parameters for the NetworkContext. May only be called once, since
+  // it initializes some class members.
+  content::mojom::NetworkContextParamsPtr CreateNetworkContextParams();
+
   // NetworkContext using the network service, if the/ network service is
   // enabled. nullptr, otherwise.
   content::mojom::NetworkContextPtr network_service_network_context_;
@@ -65,6 +71,8 @@ class SystemNetworkContextManager {
   // Always initialized in SetUp, but it's only returned by Context() when the
   // network service is disabled.
   content::mojom::NetworkContextPtr io_thread_network_context_;
+
+  std::unique_ptr<ProxyConfigMonitor> proxy_config_monitor_;
 
   bool is_quic_allowed_ = true;
 

@@ -80,6 +80,8 @@ class ProxyConfigServiceImpl : public net::ProxyConfigService,
 class PROXY_CONFIG_EXPORT PrefProxyConfigTrackerImpl
     : public PrefProxyConfigTracker {
  public:
+  // |io_task_runner| is the thread the ProxyConfigService will live on. Use
+  // nullptr if it lives on th ecurrent thread.
   PrefProxyConfigTrackerImpl(
       PrefService* pref_service,
       scoped_refptr<base::SingleThreadTaskRunner> io_task_runner);

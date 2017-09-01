@@ -11,6 +11,7 @@
 #include "content/public/common/network_service.mojom.h"
 
 class Profile;
+class ProxyConfigMonitor;
 
 namespace user_prefs {
 class PrefRegistrySyncable;
@@ -57,6 +58,10 @@ class ProfileNetworkContextService : public KeyedService {
   // Checks |quic_allowed_|, and disables QUIC if needed.
   void DisableQuicIfNotAllowed();
 
+  // Creates parameters for the NetworkContext. May only be called once, since
+  // it initializes some class members.
+  content::mojom::NetworkContextParamsPtr CreateMainNetworkContextParams();
+
   Profile* const profile_;
 
   // This is a NetworkContext interface that uses ProfileIOData's
@@ -68,6 +73,8 @@ class ProfileNetworkContextService : public KeyedService {
   // Request corresponding to |profile_io_data_main_network_context_|. Ownership
   // is passed to ProfileIOData when SetUpProfileIODataMainContext() is called.
   content::mojom::NetworkContextRequest profile_io_data_context_request_;
+
+  std::unique_ptr<ProxyConfigMonitor> proxy_config_monitor_;
 
   BooleanPrefMember quic_allowed_;
 
