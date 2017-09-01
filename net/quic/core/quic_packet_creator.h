@@ -270,11 +270,6 @@ class QUIC_EXPORT_PRIVATE QuicPacketCreator {
 
   // Controls whether version should be included while serializing the packet.
   bool send_version_in_packet_;
-  // Staging variable to hold next packet number length. When sequence
-  // number length is to be changed, this variable holds the new length until
-  // a packet boundary, when the creator's packet_number_length_ can be changed
-  // to this new value.
-  QuicPacketNumberLength next_packet_number_length_;
   // If true, then |nonce_for_public_header_| will be included in the public
   // header of all packets created at the initial encryption level.
   bool have_diversification_nonce_;
