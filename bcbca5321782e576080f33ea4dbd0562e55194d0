@@ -16,6 +16,24 @@
       "revId": "bcbca5321782e576080f33ea4dbd0562e55194d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9860bb2f_8ff8ab25",
+        "filename": "chrome/browser/printing/print_preview_dialog_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-01T22:14:39Z",
+      "side": 0,
+      "message": "Yes, this looks odd to me, too.\n\n@rbpotter: It looks like this was added in your r412697, but really testing the fix you added earlier in r408860 to fix https://crbug.com/614998.  The bug seemed to be that Gmail\u0027s fragment navigation was causing print preview to close.  If so, then I\u0027m wondering if it would have been better to skip closing the dialog for same-document navigations (details-\u003eis_same_document) rather than when the transition is PAGE_TRANSITION_TYPED | PAGE_TRANSITION_FROM_ADDRESS_BAR?  (I\u0027m not sure how that transition type is related to the bug.)\n\nI\u0027m guessing the forward navigation in this test is also unnecessary?  If we update the fix to check for same-document navigations, then we can do a simpler same-document navigation in this test instead of a forward.",
+      "parentUuid": "48daa743_ecdc7435",
+      "revId": "bcbca5321782e576080f33ea4dbd0562e55194d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
