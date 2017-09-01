@@ -369,7 +369,9 @@ SDK.CSSMatchedStyles = class {
         }
 
         var canonicalName = SDK.cssMetadata().canonicalPropertyName(property.name);
-        if (foundImportantProperties.has(canonicalName)) {
+        var injected = rule && rule.isInjected();
+        // Important properties in injected rules take higher precedence.
+        if (property.important && !injected && foundImportantProperties.has(canonicalName)) {
           result.set(property, SDK.CSSMatchedStyles.PropertyState.Overloaded);
           continue;
         }
