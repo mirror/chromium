@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "52813012_86d6f93b",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-09-01T15:33:50Z",
+      "side": 1,
+      "message": "no:(",
+      "parentUuid": "a07dec04_4bbe3332",
+      "range": {
+        "startLine": 237,
+        "startChar": 20,
+        "endLine": 237,
+        "endChar": 51
+      },
+      "revId": "0134efe513875412f91669ca35380bad341b593e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffdf1bb8_d98c6610",
         "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
         "patchSetId": 14
@@ -45,6 +69,30 @@
       "revId": "0134efe513875412f91669ca35380bad341b593e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63cfa791_f645cde3",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-09-01T15:33:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffdf1bb8_d98c6610",
+      "range": {
+        "startLine": 365,
+        "startChar": 0,
+        "endLine": 367,
+        "endChar": 3
+      },
+      "revId": "0134efe513875412f91669ca35380bad341b593e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6ec61132_fffc5581",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-09-01T15:33:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a9d25d3_2b428d47",
+      "range": {
+        "startLine": 418,
+        "startChar": 0,
+        "endLine": 420,
+        "endChar": 3
+      },
+      "revId": "0134efe513875412f91669ca35380bad341b593e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc373a0b_00663877",
         "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
         "patchSetId": 14
@@ -91,6 +163,30 @@
       "revId": "0134efe513875412f91669ca35380bad341b593e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca9997fb_27138911",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-09-01T15:33:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc373a0b_00663877",
+      "range": {
+        "startLine": 422,
+        "startChar": 27,
+        "endLine": 422,
+        "endChar": 32
+      },
+      "revId": "0134efe513875412f91669ca35380bad341b593e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "13e62027_1caa68ee",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-09-01T15:33:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d42ab6e6_1c853c8a",
+      "range": {
+        "startLine": 449,
+        "startChar": 53,
+        "endLine": 449,
+        "endChar": 55
+      },
+      "revId": "0134efe513875412f91669ca35380bad341b593e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94fa6d97_613f4816",
         "filename": "chrome/browser/chromeos/settings/cros_settings.cc",
         "patchSetId": 14
@@ -128,6 +248,30 @@
       "writtenOn": "2017-09-01T14:19:25Z",
       "side": 1,
       "message": "Does the check valid here if the function is called from outside?",
+      "range": {
+        "startLine": 237,
+        "startChar": 0,
+        "endLine": 238,
+        "endChar": 0
+      },
+      "revId": "0134efe513875412f91669ca35380bad341b593e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2612027b_ffb1f21d",
+        "filename": "chrome/browser/chromeos/settings/cros_settings.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-09-01T15:33:50Z",
+      "side": 1,
+      "message": "It said \"SequenceChecker is a helper class used to help verify that some methods of a class are called sequentially (for thread-safety).\"\n(https://cs.chromium.org/chromium/src/base/sequence_checker.h?dr\u0026l\u003d52)\nI think yes, it\u0027s valid.",
+      "parentUuid": "94fa6d97_613f4816",
       "range": {
         "startLine": 237,
         "startChar": 0,
