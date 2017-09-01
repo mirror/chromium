@@ -70,6 +70,30 @@
       "revId": "c225ceb0cad13112d4c71fbcca6d9b080d683e44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51c11ac7_c6816308",
+        "filename": "chrome/browser/password_manager/password_manager_util_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-09-01T16:37:20Z",
+      "side": 1,
+      "message": "I recommend trying to just remove the password length check entirely. If ERROR_ACCOUNT_RESTRICTION is being returned, then the password is \u0027correct\u0027 and that\u0027s all we care about.\n\np.s. my previous comment (which I deleted) commented on the password possibly being encrypted and thus not zero length, but I deleted it... doh!",
+      "parentUuid": "6c36ea81_e3027449",
+      "range": {
+        "startLine": 456,
+        "startChar": 43,
+        "endLine": 456,
+        "endChar": 71
+      },
+      "revId": "c225ceb0cad13112d4c71fbcca6d9b080d683e44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
