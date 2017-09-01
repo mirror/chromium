@@ -15,6 +15,7 @@
 #include "content/public/app/content_main.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/devtools_agent_host.h"
+#include "content/public/browser/resource_dispatcher_host.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/content_switches.h"
 #include "headless/app/headless_shell_switches.h"
@@ -226,6 +227,12 @@ HeadlessBrowserContext* HeadlessBrowserImpl::GetBrowserContextForId(
 
 HeadlessDevToolsTarget* HeadlessBrowserImpl::GetDevToolsTarget() {
   return agent_host_ ? this : nullptr;
+}
+
+void HeadlessBrowserImpl::SetEnableResourceScheduler(
+    bool enable_resource_scheduler) {
+  content::ResourceDispatcherHost::Get()->SetEnableResourceScheduler(
+      enable_resource_scheduler);
 }
 
 bool HeadlessBrowserImpl::AttachClient(HeadlessDevToolsClient* client) {

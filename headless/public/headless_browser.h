@@ -79,6 +79,11 @@ class HEADLESS_EXPORT HeadlessBrowser {
   virtual scoped_refptr<base::SingleThreadTaskRunner> BrowserMainThread()
       const = 0;
 
+  // Whether or not the ResourceScheduler should be used. Caution page load
+  // times will be degraded unless you implement your own resource scheduling
+  // logic.
+  virtual void SetEnableResourceScheduler(bool enable_resource_scheduler) = 0;
+
   // Requests browser to stop as soon as possible. |Run| will return as soon as
   // browser stops.
   // IMPORTANT: All pointers to HeadlessBrowserContexts and HeadlessWebContents

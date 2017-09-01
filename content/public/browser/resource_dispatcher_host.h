@@ -90,6 +90,11 @@ class CONTENT_EXPORT ResourceDispatcherHost {
   virtual void ReprioritizeRequest(net::URLRequest* request,
                                    net::RequestPriority priority) = 0;
 
+  // Whether or not the ResourceScheduler should be used (on by default).
+  // Intended for use by C++ Headless embedders who may need to customize
+  // resource scheduling.
+  virtual void SetEnableResourceScheduler(bool enable_resource_scheduler) = 0;
+
  protected:
   virtual ~ResourceDispatcherHost() {}
 };
