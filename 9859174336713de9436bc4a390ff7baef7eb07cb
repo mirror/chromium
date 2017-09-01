@@ -142,6 +142,24 @@
       "revId": "9859174336713de9436bc4a390ff7baef7eb07cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86ca8658_98ab0b57",
+        "filename": "net/cert/internal/system_trust_store.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-09-01T01:08:29Z",
+      "side": 1,
+      "message": "OK, that\u0027s some of the context I was missing. :)\n\nIt sounds like this is the \u0027short term MVP unblocker\u0027 rather than the \u0027long term plan\u0027 (the bug and e-mail thread didn\u0027t have enough context for me to suss that out).\n\nI\u0027m not sure I know enough about the internal workings of dlopen() and dlsym() to know if there\u0027s the risk that opening Fuschia\u0027s BoringSSL will cause issues with Chrome\u0027s (static) copy, so I\u0027m pretty tempted to suggest just hardcoding the path, unless the plan for transitioning callers relies on using just that API (e.g. if the plan was to search/replace all callers of that API, and whether or not that\u0027d even work with dlopen() approach)\n\nI think as a minimum-viable-product, hardcoding the path seems reasonable, but something we\u0027d want to make sure to burndown - either moving to Fuschia API (as a short-term) or moving to a Chrome implementation (as a long term).\n\nDoes that work?",
+      "parentUuid": "5990cb62_9f97ee42",
+      "revId": "9859174336713de9436bc4a390ff7baef7eb07cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
