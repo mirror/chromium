@@ -53,9 +53,6 @@ bool ParamTraits<mojo::test::PickledStructChromium>::Read(
   return true;
 }
 
-#include "ipc/param_traits_size_macros.h"
-IPC_ENUM_TRAITS_MAX_VALUE(mojo::test::PickledEnumChromium,
-                          mojo::test::PickledEnumChromium::VALUE_2)
 #include "ipc/param_traits_write_macros.h"
 IPC_ENUM_TRAITS_MAX_VALUE(mojo::test::PickledEnumChromium,
                           mojo::test::PickledEnumChromium::VALUE_2)
