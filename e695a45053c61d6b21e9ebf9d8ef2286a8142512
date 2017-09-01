@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1f992c35_b54e24f0",
+        "filename": "ash/system/web_notification/fullscreen_notification_blocker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-01T16:15:06Z",
+      "side": 1,
+      "message": "removed",
+      "parentUuid": "97999412_83207e5c",
+      "revId": "e695a45053c61d6b21e9ebf9d8ef2286a8142512",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c634ca6d_23ff960f",
         "filename": "ash/system/web_notification/fullscreen_notification_blocker.cc",
         "patchSetId": 4
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "b7754534_55569202",
+        "filename": "ash/system/web_notification/fullscreen_notification_blocker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-01T16:15:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc06a538_d6c4604a",
+      "revId": "e695a45053c61d6b21e9ebf9d8ef2286a8142512",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ea1b1d4_318943b2",
         "filename": "chrome/browser/notifications/fullscreen_notification_blocker.cc",
         "patchSetId": 4
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "586aec03_38f91416",
+        "filename": "chrome/browser/notifications/fullscreen_notification_blocker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-01T16:15:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ea1b1d4_318943b2",
+      "revId": "e695a45053c61d6b21e9ebf9d8ef2286a8142512",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f405b75_33d4cb5a",
         "filename": "chrome/browser/notifications/fullscreen_notification_blocker.h",
         "patchSetId": 4
@@ -84,6 +138,24 @@
       "revId": "e695a45053c61d6b21e9ebf9d8ef2286a8142512",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e50c86c_d84e8239",
+        "filename": "chrome/browser/notifications/fullscreen_notification_blocker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-01T16:15:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0f405b75_33d4cb5a",
+      "revId": "e695a45053c61d6b21e9ebf9d8ef2286a8142512",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
