@@ -8,6 +8,7 @@
 
 #include "base/bind.h"
 #include "base/macros.h"
+#include "base/threading/scoped_blocking_call.h"
 #include "media/base/data_source.h"
 #include "media/ffmpeg/ffmpeg_common.h"
 
@@ -37,6 +38,7 @@ void BlockingUrlProtocol::Abort() {
 }
 
 int BlockingUrlProtocol::Read(int size, uint8_t* data) {
+  base::ScopedBlockingCall scoped_blocking_call(base::BlockingType::MAY_BLOCK);
   {
     // Read errors are unrecoverable.
     base::AutoLock lock(data_source_lock_);
@@ -84,6 +86,7 @@ bool BlockingUrlProtocol::GetPosition(int64_t* position_out) {
 }
 
 bool BlockingUrlProtocol::SetPosition(int64_t position) {
+  base::ScopedBlockingCall scoped_blocking_call(base::BlockingType::MAY_BLOCK);
   base::AutoLock lock(data_source_lock_);
   int64_t file_size;
   if (!data_source_ ||
@@ -97,6 +100,7 @@ bool BlockingUrlProtocol::SetPosition(int64_t position) {
 }
 
 bool BlockingUrlProtocol::GetSize(int64_t* size_out) {
+  base::ScopedBlockingCall scoped_blocking_call(base::BlockingType::MAY_BLOCK);
   base::AutoLock lock(data_source_lock_);
   return data_source_ ? data_source_->GetSize(size_out) : 0;
 }
