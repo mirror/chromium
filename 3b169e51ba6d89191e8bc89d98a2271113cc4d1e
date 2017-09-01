@@ -16,6 +16,24 @@
       "revId": "3b169e51ba6d89191e8bc89d98a2271113cc4d1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66a2a14b_f1fd4995",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_utilities.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-01T06:27:44Z",
+      "side": 1,
+      "message": "Oh, I didn\u0027t notice name_style_converter.py.  May I move it to third_party/blink/tools/blinkpy/common/? I\u0027d like to use it for file moving scripts, and the code must be put outside of third_party/WebKit/.",
+      "parentUuid": "f23e7c92_15666ebc",
+      "revId": "3b169e51ba6d89191e8bc89d98a2271113cc4d1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
