@@ -38961,6 +38961,13 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Net.DiskCache.Size" units="MB">
+  <owner>erikchen@chromium.org</owner>
+  <summary>
+    The sum of the size of all files in the HTTP cache directory.
+  </summary>
+</histogram>
+
 <histogram name="Net.DNS_Resolution_And_TCP_Connection_Latency">
   <obsolete>
     Deprecated- see Net.DNS_Resolution_And_TCP_Connection_Latency2
