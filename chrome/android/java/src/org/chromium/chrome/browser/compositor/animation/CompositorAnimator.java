@@ -7,6 +7,7 @@ package org.chromium.chrome.browser.compositor.animation;
 import android.animation.Animator;
 import android.animation.TimeInterpolator;
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.view.animation.DecelerateInterpolator;
 
 import org.chromium.base.VisibleForTesting;
@@ -90,6 +91,25 @@ public class CompositorAnimator extends Animator {
     public static DecelerateInterpolator getDecelerateInterpolator() {
         if (sDecelerateInterpolator == null) sDecelerateInterpolator = new DecelerateInterpolator();
         return sDecelerateInterpolator;
+    }
+
+    /**
+     * Create an animator for an {@link AnimatedFloat}. The returned animator will use a decelerate
+     * time interpolator instead of a linear one.
+     * @param context An Android {@link Context} to key the animation on.
+     * @param startValue The starting animation value.
+     * @param endValue The end animation value.
+     * @param duration The duration of the animation in ms.
+     * @param listener An update listener if specific actions need to be performed.
+     * @return A {@link CompositorAnimator} for the property.
+     */
+    public static CompositorAnimator ofFloat(Context context, float startValue, float endValue,
+            long duration, @Nullable AnimatorUpdateListener listener) {
+        CompositorAnimator animator = new CompositorAnimator(context);
+        animator.setValues(startValue, endValue);
+        if (listener != null) animator.addUpdateListener(listener);
+        animator.setDuration(duration);
+        return animator;
     }
 
     /** An interface for listening for frames of an animation. */
