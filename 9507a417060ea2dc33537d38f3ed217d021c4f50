@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "caf3b61a_0fc52e90",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 1127,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-01T20:59:11Z",
+      "side": 1,
+      "message": "nit: perhaps have \"Suggested\" in the name?  Otherwise I can easily imagine this enum meaning many other things.",
+      "range": {
+        "startLine": 1127,
+        "startChar": 12,
+        "endLine": 1127,
+        "endChar": 30
+      },
+      "revId": "9507a417060ea2dc33537d38f3ed217d021c4f50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
