@@ -4,10 +4,10 @@
 
 #include "core/dom/LayoutTreeBuilderTraversal.h"
 
+#include "core/css/PseudoElement.h"
 #include "core/dom/Document.h"
 #include "core/dom/Element.h"
 #include "core/dom/Node.h"
-#include "core/dom/PseudoElement.h"
 #include "core/layout/LayoutTestHelper.h"
 #include "core/layout/LayoutText.h"
 #include "core/testing/DummyPageHolder.h"

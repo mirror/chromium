@@ -5,8 +5,8 @@
 #include "core/css/cssom/ComputedStylePropertyMap.h"
 
 #include "core/css/ComputedStyleCSSValueMapping.h"
+#include "core/css/PseudoElement.h"
 #include "core/css/cssom/StyleValueFactory.h"
-#include "core/dom/PseudoElement.h"
 
 namespace blink {
 

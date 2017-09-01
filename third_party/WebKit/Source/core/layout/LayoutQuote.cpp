@@ -21,7 +21,7 @@
 
 #include "core/layout/LayoutQuote.h"
 
-#include "core/dom/PseudoElement.h"
+#include "core/css/PseudoElement.h"
 #include "core/layout/LayoutTextFragment.h"
 #include "core/layout/LayoutView.h"
 #include "platform/wtf/StdLibExtras.h"

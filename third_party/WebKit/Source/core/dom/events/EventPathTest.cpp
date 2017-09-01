@@ -6,8 +6,8 @@
 
 #include <memory>
 #include "core/HTMLNames.h"
+#include "core/css/PseudoElement.h"
 #include "core/dom/Document.h"
-#include "core/dom/PseudoElement.h"
 #include "core/style/ComputedStyleConstants.h"
 #include "core/testing/DummyPageHolder.h"
 #include "testing/gtest/include/gtest/gtest.h"
