@@ -53,6 +53,29 @@
     },
     {
       "key": {
+        "uuid": "14a13c4a_ddc2940a",
+        "filename": "chromeos/dbus/fake_shill_device_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1000212
+      },
+      "writtenOn": "2017-09-01T20:21:32Z",
+      "side": 1,
+      "message": "this seems unrelated?",
+      "range": {
+        "startLine": 416,
+        "startChar": 0,
+        "endLine": 420,
+        "endChar": 1
+      },
+      "revId": "0e09e8040ddc0de79a9a3efb273fa2ed33ea5d55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1aabc12_741f4c73",
         "filename": "extensions/common/api/networking_private.idl",
         "patchSetId": 3
