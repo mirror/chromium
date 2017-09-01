@@ -81,10 +81,27 @@ class CSSPropertyAPIHeadersWriter(CSSPropertyAPIWriter):
                 parameters=api_method['parameters'],
             )
 
+        # For error checking
+        classname_counts = {}
+        for property_ in self.properties().values():
+            api_class = property_['api_class']
+            if api_class and api_class is not True:
+                if api_class in classname_counts:
+                    classname_counts[api_class] += 1
+                else:
+                    classname_counts[api_class] = 1
+
         self._outputs = {}
         for property_ in self.properties().values():
-            if property_['api_class'] is None:
+            api_class = property_['api_class']
+            if api_class is None:
                 continue
+            if api_class is not True:
+                assert classname_counts[api_class] != 1,\
+                    ("Unique api_class '" + api_class + "' defined on '" +
+                     property_['name'] + "' property. api_class as string is " +
+                     "reserved for grouped properties. Did you mean " +
+                     "'api_class: true'?")
             methods = []
             for method_name in property_['api_methods']:
                 methods.append(self._api_methods[method_name])
