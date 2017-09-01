@@ -68,6 +68,110 @@
       "revId": "7a04333d673fb8483cec9fc05dd28ae6d56e2958",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd09f0b8_d4a36472",
+        "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 805,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-01T01:26:01Z",
+      "side": 1,
+      "message": "Yes a lot of service worker code has yet to migrate, though.",
+      "parentUuid": "1432f88c_5b3d0ed9",
+      "range": {
+        "startLine": 805,
+        "startChar": 12,
+        "endLine": 805,
+        "endChar": 23
+      },
+      "revId": "7a04333d673fb8483cec9fc05dd28ae6d56e2958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e7aab6f_5efa6e5e",
+        "filename": "content/browser/service_worker/service_worker_database.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1022,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-01T01:26:01Z",
+      "side": 1,
+      "message": "I agree this should totally not happen. Should we just do a DCHECK on the result instead? The style guide generally prohibits handling NOTREACHED() conditions.\n\nBut I also see we don\u0027t want to corrupt the DB if there\u0027s a bug. If we\u0027re really worried about it, we could do CHECK on the result.",
+      "revId": "7a04333d673fb8483cec9fc05dd28ae6d56e2958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddb3e635_15b92c07",
+        "filename": "content/browser/service_worker/service_worker_database.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-01T01:26:01Z",
+      "side": 1,
+      "message": "this should be const std::string\u0026?",
+      "revId": "7a04333d673fb8483cec9fc05dd28ae6d56e2958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f559ec2b_9878cede",
+        "filename": "content/browser/service_worker/service_worker_database_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1208,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-01T01:26:01Z",
+      "side": 1,
+      "message": "super nit: we could be consistent about calling it \"registration 1\", \"the registration1\", or \"registration1\" in the comments.",
+      "range": {
+        "startLine": 1208,
+        "startChar": 36,
+        "endLine": 1208,
+        "endChar": 54
+      },
+      "revId": "7a04333d673fb8483cec9fc05dd28ae6d56e2958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e768497_c2b1367a",
+        "filename": "content/browser/service_worker/service_worker_storage.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-01T01:26:01Z",
+      "side": 1,
+      "message": "There\u0027s a subtle difference between \"none\" and \"not\" here. Is there a difference between this function and ClearUserData() above?\n\nIs it worth documenting that |registratino_id| must be valid, and |key_prefixes| must be non-empty and all elements must be non-empty? Seems a bit surprising since this function says it\u0027s OK to pass keys that are not in the database. I guess the idea is the caller should be using ClearUserData() instead of passing empty prefixes?",
+      "range": {
+        "startLine": 200,
+        "startChar": 52,
+        "endLine": 200,
+        "endChar": 56
+      },
+      "revId": "7a04333d673fb8483cec9fc05dd28ae6d56e2958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
