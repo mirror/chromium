@@ -70,6 +70,24 @@
       "revId": "b3cf8a7e8330effa144f15de808c48983dc1a7bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fd305d8_d1a6b8d5",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 980,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-01T22:41:50Z",
+      "side": 1,
+      "message": "Merging the strings literals would be a legibility improvement. The splitting exists for two reasons: (1) some literals are too long for a single line and (2) some escaping is done improperly and only works if literals were split up...\n\nThe improper escaping is really confusing and just shoddy work (mostly due to my own prior ignorance/naiveté). For example the widely used |\"\\x5d0\"| is an incomplete escape sequence that should be |\"\\x05d0\"|, but just \u0027works\u0027 when followed by another escape sequence or is at the end of the string literal. the problem is that when the incomplete sequence is followed by a non-escape character, like \u0027c\u0027, it yields a totally different and unintended code point, ie. |\"\\x5d0\" \"c\"| \u0027works\u0027 and yields \"אc\" (U+05d0, Unicode Character \u0027HEBREW LETTER ALEF\u0027; followed by \u0027c\u0027), but |\"\\x5d0c\"| yields a totally separate string containing a single code point: \"崌\" (U+5D0C, Unicode Han Character \u0027mountain name\u0027).\n\nIn light of this revelation, I drafted a CL that refines all input strings in this file to UTF-8, mostly with proper \\u and \\U universal character name escape sequences (I left some non-escaped complex glyphs as-is in some literals). This took me most of the day, but it\u0027s good to settle on a more consistent and well-formed string literal format. Here\u0027s the link, and I\u0027ll CC you guys on that (or maybe you\u0027re even willing to review): http://crrev.com/c/648353\n\nAs for the spacing/layout, I find value in formatting that reflects the structured nature of the data therein, especially when it promotes legibility, like for arrays of structs and similar. It\u0027s a bummer that this layout gets blown away by \u0027git cl format\u0027, but I\u0027d rather aim to retain that value than to just blindly apply a formatting that reduces legibility. If you\u0027re hard-set against the directives, I suppose I\u0027ll just ignore \u0027git cl format\u0027 warnings that stem from that intentional formatting, and cross my fingers that other do the same.",
+      "parentUuid": "d9729bbe_791abc0b",
+      "revId": "b3cf8a7e8330effa144f15de808c48983dc1a7bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
