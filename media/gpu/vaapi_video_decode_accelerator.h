@@ -20,7 +20,6 @@
 
 #include "base/logging.h"
 #include "base/macros.h"
-#include "base/memory/linked_ptr.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
 #include "base/single_thread_task_runner.h"
@@ -221,13 +220,13 @@ class MEDIA_GPU_EXPORT VaapiVideoDecodeAccelerator
   };
 
   // Queue for available PictureBuffers (picture_buffer_ids).
-  typedef std::queue<linked_ptr<InputBuffer>> InputBuffers;
+  typedef std::queue<std::unique_ptr<InputBuffer>> InputBuffers;
   InputBuffers input_buffers_;
   // Signalled when input buffers are queued onto the input_buffers_ queue.
   base::ConditionVariable input_ready_;
 
   // Current input buffer at decoder.
-  linked_ptr<InputBuffer> curr_input_buffer_;
+  std::unique_ptr<InputBuffer> curr_input_buffer_;
 
   // Queue for incoming output buffers (texture ids).
   typedef std::queue<int32_t> OutputBuffers;
@@ -235,7 +234,7 @@ class MEDIA_GPU_EXPORT VaapiVideoDecodeAccelerator
 
   scoped_refptr<VaapiWrapper> vaapi_wrapper_;
 
-  typedef std::map<int32_t, linked_ptr<VaapiPicture>> Pictures;
+  typedef std::map<int32_t, std::unique_ptr<VaapiPicture>> Pictures;
   // All allocated Pictures, regardless of their current state.
   // Pictures are allocated once and destroyed at the end of decode.
   // Comes after vaapi_wrapper_ to ensure all pictures are destroyed
