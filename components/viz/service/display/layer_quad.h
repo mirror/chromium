@@ -2,9 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-
-#ifndef CC_OUTPUT_LAYER_QUAD_H_
-#define CC_OUTPUT_LAYER_QUAD_H_
+#ifndef COMPONENTS_VIZ_SERVICE_DISPLAY_LAYER_QUAD_H_
+#define COMPONENTS_VIZ_SERVICE_DISPLAY_LAYER_QUAD_H_
 
 #include "base/macros.h"
 #include "cc/cc_export.h"
@@ -16,7 +15,7 @@ class QuadF;
 
 static const float kAntiAliasingInflateDistance = 0.5f;
 
-namespace cc {
+namespace viz {
 
 class CC_EXPORT LayerQuad {
  public:
@@ -91,9 +90,7 @@ class CC_EXPORT LayerQuad {
     InflateX(d);
     InflateY(d);
   }
-  void InflateAntiAliasingDistance() {
-    Inflate(kAntiAliasingInflateDistance);
-  }
+  void InflateAntiAliasingDistance() { Inflate(kAntiAliasingInflateDistance); }
 
   gfx::QuadF ToQuadF() const;
 
@@ -108,6 +105,6 @@ class CC_EXPORT LayerQuad {
   DISALLOW_COPY_AND_ASSIGN(LayerQuad);
 };
 
-}  // namespace cc
+}  // namespace viz
 
-#endif  // CC_OUTPUT_LAYER_QUAD_H_
+#endif  // COMPONENTS_VIZ_SERVICE_DISPLAY_LAYER_QUAD_H_
