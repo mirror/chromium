@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "109f0a55_37610c09",
+        "filename": "third_party/blink/tools/webkitpy/common/camel_to_snake.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-01T04:44:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2907057_5055a6de",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 37
+      },
+      "revId": "bc6c5a8c2364489cadd77e5b32b12663b9804c0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e762427c_b24780d9",
         "filename": "third_party/blink/tools/webkitpy/common/camel_to_snake.py",
         "patchSetId": 4
@@ -36,6 +60,24 @@
       "writtenOn": "2017-08-30T23:10:19Z",
       "side": 1,
       "message": "The current convention is to put executable scripts all in the \"tools\" directory, and none of the files under webkitpy are executable scripts. Do you like this convention? We could add a wrapper script in blink/tools.",
+      "revId": "bc6c5a8c2364489cadd77e5b32b12663b9804c0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1e95d0c_b83ed244",
+        "filename": "third_party/blink/tools/webkitpy/common/camel_to_snake.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-01T04:44:13Z",
+      "side": 1,
+      "message": "Removed main().",
+      "parentUuid": "e762427c_b24780d9",
       "revId": "bc6c5a8c2364489cadd77e5b32b12663b9804c0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
