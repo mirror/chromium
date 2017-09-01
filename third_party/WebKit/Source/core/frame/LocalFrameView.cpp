@@ -91,6 +91,7 @@
 #include "core/paint/BlockPaintInvalidator.h"
 #include "core/paint/FramePainter.h"
 #include "core/paint/PaintLayer.h"
+#include "core/paint/PaintPropertyTreePrinter.h"
 #include "core/paint/PaintTiming.h"
 #include "core/paint/PrePaintTreeWalk.h"
 #include "core/paint/compositing/CompositedLayerMapping.h"

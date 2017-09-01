@@ -992,7 +992,7 @@ bool PaintLayer::IsPaintInvalidationContainer() const {
 }
 
 // Note: enclosingCompositingLayer does not include squashed layers. Compositing
-// stacking children of squashed layers receive graphics layers that are
+// stacking children of squashed layers receive graphics layers are
 // parented to the compositing ancestor of the squashed layer.
 PaintLayer* PaintLayer::EnclosingLayerWithCompositedLayerMapping(
     IncludeSelfOrNot include_self) const {
@@ -1623,18 +1623,81 @@ void PaintLayer::AppendSingleFragmentIgnoringPagination(
                                       sub_pixel_accumulation);
   if (respect_overflow_clip == kIgnoreOverflowClip)
     clip_rects_context.SetIgnoreOverflowClip();
+  // In non-painting scenarios (e.g. hit testing), there may not be any
+  // FragmentData objects at all, since hit testing does not require
+  // the pre-paint DocumentLifecycle phase.
   Clipper(geometry_mapper_option)
-      .CalculateRects(clip_rects_context, dirty_rect, fragment.layer_bounds,
+      .CalculateRects(clip_rects_context, GetLayoutObject().FirstFragment(),
+                      dirty_rect, fragment.layer_bounds,
                       fragment.background_rect, fragment.foreground_rect,
                       offset_from_root);
   fragments.push_back(fragment);
+  // LOG(ERROR) << "fragment: pagination_offset=" <<
+  // fragment.pagination_offset.ToString();
+  //   LOG(ERROR) << "layer bounds: " << fragment.layer_bounds.ToString();
+  //   LOG(ERROR) << "background_rect: " << fragment.background_rect.ToString();
+  // LOG(ERROR) << "foreground_rect: " << fragment.foreground_rect.ToString();
 }
 
 bool PaintLayer::ShouldFragmentCompositedBounds(
     const PaintLayer* compositing_layer) const {
+  if (!EnclosingPaginationLayer())
+    return false;
+  if (PaintsWithTransform(kGlobalPaintNormalPhase))
+    return true;
   // Composited layers may not be fragmented.
-  return EnclosingPaginationLayer() &&
-         !compositing_layer->EnclosingPaginationLayer();
+  return !compositing_layer->EnclosingPaginationLayer();
+}
+
+void PaintLayer::CollectFragmentsNew(
+    PaintLayerFragments& fragments,
+    const PaintLayer* root_layer,
+    const LayoutRect& dirty_rect,
+    ClipRectsCacheSlot clip_rects_cache_slot,
+    PaintLayer::GeometryMapperOption geometry_mapper_option,
+    OverlayScrollbarClipBehavior overlay_scrollbar_clip_behavior,
+    ShouldRespectOverflowClipType respect_overflow_clip,
+    const LayoutPoint* offset_from_root,
+    const LayoutSize& sub_pixel_accumulation) const {
+  PaintLayerFragment fragment;
+  ClipRectsContext clip_rects_context(root_layer, clip_rects_cache_slot,
+                                      overlay_scrollbar_clip_behavior,
+                                      sub_pixel_accumulation);
+  if (respect_overflow_clip == kIgnoreOverflowClip)
+    clip_rects_context.SetIgnoreOverflowClip();
+  if (!ShouldFragmentCompositedBounds(root_layer)) {
+    // In non-painting scenarios (e.g. hit testing), there may not be any
+    // FragmentData objects at all, since hit testing does not require
+    // the pre-paint DocumentLifecycle phase.
+    Clipper(geometry_mapper_option)
+        .CalculateRects(clip_rects_context, GetLayoutObject().FirstFragment(),
+                        dirty_rect, fragment.layer_bounds,
+                        fragment.background_rect, fragment.foreground_rect,
+                        offset_from_root);
+    fragments.push_back(fragment);
+
+    return;
+  }
+  //  LOG(ERROR) << "CollectFragmentsNew: " << GetLayoutObject().DebugName() <<
+  //  " " << this; GetLayoutObject().ShowLayoutTreeForThis();
+
+  for (auto* fragment_data = GetLayoutObject().FirstFragment(); fragment_data;
+       fragment_data = fragment_data->NextFragment()) {
+    Clipper(geometry_mapper_option)
+        .CalculateRects(clip_rects_context, fragment_data, dirty_rect,
+                        fragment.layer_bounds, fragment.background_rect,
+                        fragment.foreground_rect, nullptr);
+
+    fragment.pagination_offset = fragment_data->PaginationOffset();
+
+    // LOG(ERROR) << "fragment: pagination_offset=" <<
+    // fragment.pagination_offset.ToString(); LOG(ERROR) << "layer bounds: " <<
+    // fragment.layer_bounds.ToString(); LOG(ERROR) << "background_rect: " <<
+    // fragment.background_rect.ToString(); LOG(ERROR) << "foreground_rect: " <<
+    // fragment.foreground_rect.ToString();
+
+    fragments.push_back(fragment);
+  }
 }
 
 void PaintLayer::CollectFragments(
@@ -1648,6 +1711,14 @@ void PaintLayer::CollectFragments(
     const LayoutPoint* offset_from_root,
     const LayoutSize& sub_pixel_accumulation,
     const LayoutRect* layer_bounding_box) const {
+  if (geometry_mapper_option == kUseGeometryMapper) {
+    CollectFragmentsNew(fragments, root_layer, dirty_rect,
+                        clip_rects_cache_slot, geometry_mapper_option,
+                        overlay_scrollbar_clip_behavior, respect_overflow_clip,
+                        offset_from_root, sub_pixel_accumulation);
+    return;
+  }
+
   // For unpaginated layers, there is only one fragment. We also avoid
   // fragmentation when compositing, due to implementation limitations.
   if (!EnclosingPaginationLayer() ||
@@ -1658,6 +1729,7 @@ void PaintLayer::CollectFragments(
         respect_overflow_clip, offset_from_root, sub_pixel_accumulation);
     return;
   }
+  ///  LOG(ERROR) << "CollectFragments: " << GetLayoutObject().DebugName();
 
   // Compute our offset within the enclosing pagination layer.
   LayoutPoint offset_within_paginated_layer;
@@ -1678,7 +1750,7 @@ void PaintLayer::CollectFragments(
   ClipRect foreground_rect_in_flow_thread;
   Clipper(geometry_mapper_option)
       .CalculateRects(
-          pagination_clip_rects_context,
+          pagination_clip_rects_context, GetLayoutObject().FirstFragment(),
           LayoutRect(LayoutRect::InfiniteIntRect()),
           layer_bounds_in_flow_thread, background_rect_in_flow_thread,
           foreground_rect_in_flow_thread, &offset_within_paginated_layer);
@@ -1763,6 +1835,14 @@ void PaintLayer::CollectFragments(
     LayoutPoint offset = fragment.pagination_offset +
                          offset_of_pagination_layer_from_root +
                          sub_pixel_accumulation_if_needed;
+    // LOG(ERROR) << "layer_bounds_in_flow_thread: "  <<
+    // layer_bounds_in_flow_thread.ToString()
+    // << " fragment.pagination_offset: " <<
+    // fragment.pagination_offset.ToString()
+    // << " offset_of_pagination_layer_from_root: " <<
+    // offset_of_pagination_layer_from_root.ToString()
+    // << " sub_pixel_accumulation_if_needed: " <<
+    // sub_pixel_accumulation_if_needed.ToString();
     fragment.MoveBy(offset);
     pagination_clip.MoveBy(offset);
 
@@ -1774,6 +1854,12 @@ void PaintLayer::CollectFragments(
     // just intersecting the dirty rect with the column clip, so the column clip
     // ends up being all we apply.
     fragment.Intersect(pagination_clip);
+
+    // LOG(ERROR) << "fragment: pagination_offset=" <<
+    // fragment.pagination_offset.ToString(); LOG(ERROR) << "layer bounds: " <<
+    // fragment.layer_bounds.ToString(); LOG(ERROR) << "background_rect: " <<
+    // fragment.background_rect.ToString(); LOG(ERROR) << "foreground_rect: " <<
+    // fragment.foreground_rect.ToString();
 
     // TODO(mstensho): Don't add empty fragments. We've always done that in some
     // cases, but there should be no reason to do so. Either filter them out
@@ -1976,6 +2062,7 @@ PaintLayer* PaintLayer::HitTestLayer(
     bool applied_transform,
     const HitTestingTransformState* transform_state,
     double* z_offset) {
+  //  LOG(ERROR) << "HitTestLayer: " << GetLayoutObject().DebugName();
   DCHECK(GetLayoutObject().GetDocument().Lifecycle().GetState() >=
          DocumentLifecycle::kCompositingClean);
 
