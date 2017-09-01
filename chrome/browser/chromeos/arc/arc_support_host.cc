@@ -625,6 +625,8 @@ void ArcSupportHost::OnMessage(const base::DictionaryValue& message) {
       NOTREACHED();
       return;
     }
+    ShowError(Error::SERVER_COMMUNICATION_ERROR, true);
+    return;
     tos_delegate_->OnTermsAgreed(is_metrics_enabled, is_backup_restore_enabled,
                                  is_location_service_enabled);
   } else if (event == kEventOnRetryClicked) {
