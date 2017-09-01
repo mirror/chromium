@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "f601b16e_7a28e629",
+        "filename": "chrome/browser/translate/translate_language_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-09-01T09:18:23Z",
+      "side": 1,
+      "message": "sorry for the confusion, the crash is not here, martis@ suggested put browser_(browser()) and remove the brower_ \u003d browser() assigment here. however, in the InProcessBrowserTest initializer part, browser() is nullptr, so later part, browser_ stays as nullptr and crashes here.",
+      "parentUuid": "49faa21b_b8991ae8",
+      "range": {
+        "startLine": 63,
+        "startChar": 20,
+        "endLine": 63,
+        "endChar": 0
+      },
+      "revId": "1898ee4249bb4e41ca897daf88a0ea5226d2a05b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a375a59_a1797a0a",
         "filename": "chrome/browser/translate/translate_language_browsertest.cc",
         "patchSetId": 11
