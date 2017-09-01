@@ -91,6 +91,14 @@ BattOrSample BattOrSampleConverter::ToSample(const RawBattOrSample& sample,
   return BattOrSample{time_ms, voltage, current};
 }
 
+float BattOrSampleConverter::ToWatts(const RawBattOrSample& raw_sample) const {
+  BattOrSample sample = ToSample(raw_sample, 0);
+
+  // Convert to watts - multiply by 1e-6 because the input is milliwatts and
+  // millivolts.
+  return sample.current_mA * sample.voltage_mV * 1e-6;
+}
+
 BattOrSample BattOrSampleConverter::MinSample() const {
   // Create a minimum raw sample.
   RawBattOrSample sample_raw = {kAnalogDigitalConverterMinValue,

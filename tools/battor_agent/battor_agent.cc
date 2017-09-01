@@ -3,7 +3,9 @@
 // found in the LICENSE file.
 #include "tools/battor_agent/battor_agent.h"
 
+#include <algorithm>
 #include <iomanip>
+#include <vector>
 
 #include "base/bind.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -577,9 +579,9 @@ void BattOrAgent::CompleteCommand(BattOrError error) {
   num_command_attempts_ = 0;
 }
 
-std::string BattOrAgent::SamplesToString() {
+BattOrResults BattOrAgent::SamplesToString() {
   if (calibration_frame_.empty() || samples_.empty() || !battor_eeprom_)
-    return "";
+    return BattOrResults();
 
   BattOrSampleConverter converter(*battor_eeprom_, calibration_frame_);
 
@@ -614,7 +616,13 @@ std::string BattOrAgent::SamplesToString() {
     trace_stream << std::endl;
   }
 
-  return trace_stream.str();
+  // Convert to a vector of power in watts.
+  std::vector<float> samples(samples_.size());
+  for (size_t i = 0; i < samples_.size(); i++)
+    samples[i] = converter.ToWatts(samples_[i]);
+
+  return BattOrResults(trace_stream.str(), samples,
+                       battor_eeprom_->sd_sample_rate);
 }
 
 void BattOrAgent::SetActionTimeout(uint16_t timeout_seconds) {
