@@ -63,8 +63,8 @@ class CONTENT_EXPORT WebContentsViewDelegate {
   // events on the responder chain.
 #if defined(__OBJC__)
   virtual NSObject<RenderWidgetHostViewMacDelegate>*
-      CreateRenderWidgetHostViewDelegate(
-          RenderWidgetHost* render_widget_host);
+  CreateRenderWidgetHostViewDelegate(RenderWidgetHost* render_widget_host,
+                                     bool is_popup);
 #else
   virtual void* CreateRenderWidgetHostViewDelegate(
       RenderWidgetHost* render_widget_host);
