@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97e000cb_9297c983",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/enable-slimming-paint-v2",
+        "patchSetId": 5
+      },
+      "lineNbr": 1070,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-09-01T18:48:32Z",
+      "side": 0,
+      "message": "Do you know why the objectPaintInvalidations changes?",
+      "revId": "219ccfa6c37dd679048230810cc7c8e10738c689",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27f126c6_608cbacb",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/enable-slimming-paint-v2",
+        "patchSetId": 5
+      },
+      "lineNbr": 1073,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-09-01T18:48:32Z",
+      "side": 0,
+      "message": "This looks very different to me. Is the new one correct?",
+      "revId": "219ccfa6c37dd679048230810cc7c8e10738c689",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1655abb_c9c13988",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/enable-slimming-paint-v2",
+        "patchSetId": 5
+      },
+      "lineNbr": 1074,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-09-01T18:48:32Z",
+      "side": 0,
+      "message": "Similarly for this one and paint/invalidation/transform-repaint-descendants and paint/invalidation/window-resize-frameset.",
+      "revId": "219ccfa6c37dd679048230810cc7c8e10738c689",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02721fac_99e56542",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/enable-slimming-paint-v2",
+        "patchSetId": 5
+      },
+      "lineNbr": 1168,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-09-01T18:48:32Z",
+      "side": 0,
+      "message": "Do you know why this is different? It actually looks like different invalidation rects.",
+      "revId": "219ccfa6c37dd679048230810cc7c8e10738c689",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
