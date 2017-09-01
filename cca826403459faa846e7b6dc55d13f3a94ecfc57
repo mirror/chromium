@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d92df26_ca6f52c6",
+        "filename": "chrome/browser/resources/md_extensions/sidebar.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-01T14:55:02Z",
+      "side": 1,
+      "message": "This part seems less intuitive to me.  In particular, updating the selected value in two different places fragments the logic and seems like it could lead to bugs.  For instance, what happens here if the user navigates from an item list page to the shortcuts page?  listType_ won\u0027t be reassigned in manager (since neither |type| nor |extensionId| is present), but the selected attribute here will already be set to the previous list, right?\n\nI think this will be much more stable if we just update the selected entry each time, and just have updateSelected_ determine the right value based on the current page.  That would also get rid of listType.",
+      "revId": "cca826403459faa846e7b6dc55d13f3a94ecfc57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
