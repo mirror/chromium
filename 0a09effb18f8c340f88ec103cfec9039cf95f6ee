@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6273fce_8533c026",
+        "filename": "content/browser/indexed_db/leveldb/leveldb_iterator_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-09-01T16:48:24Z",
+      "side": 1,
+      "message": "I would just put that in an (local) struct, and then sizeof() it. But this might not worth it, because as I understand most memory is spent on key / value.",
+      "range": {
+        "startLine": 45,
+        "startChar": 17,
+        "endLine": 45,
+        "endChar": 23
+      },
+      "revId": "0a09effb18f8c340f88ec103cfec9039cf95f6ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "023c0d95_4aab7d8b",
+        "filename": "content/browser/indexed_db/leveldb/leveldb_iterator_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-09-01T16:48:24Z",
+      "side": 1,
+      "message": "Internally both key and value are std::strings, which increase their capacity 2x every time. So actual memory usage might be 2x of what size() returns.\n\nI can think of only one way to get actual allocation size - call malloc_usable_size (or its equivalent) on key/value pointers (bonus that it\u0027ll take into account rounding by the malloc).\n\nBut maybe using size() is fine - do you have any test scenario in mind where iterators are actually created?",
+      "range": {
+        "startLine": 62,
+        "startChar": 34,
+        "endLine": 62,
+        "endChar": 35
+      },
+      "revId": "0a09effb18f8c340f88ec103cfec9039cf95f6ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79085e25_10d5db58",
+        "filename": "content/browser/indexed_db/leveldb/leveldb_iterator_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-09-01T16:48:24Z",
+      "side": 1,
+      "message": "We need an allocation edge to malloc here.",
+      "range": {
+        "startLine": 186,
+        "startChar": 22,
+        "endLine": 186,
+        "endChar": 23
+      },
+      "revId": "0a09effb18f8c340f88ec103cfec9039cf95f6ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
