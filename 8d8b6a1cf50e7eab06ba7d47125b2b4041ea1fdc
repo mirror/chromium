@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "38496a76_2509a03e",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-01T20:20:44Z",
+      "side": 1,
+      "message": "I am wrong, you are right.  I forgot that you\u0027re testing an element-specific override, in which case this is necessary.\n\nIf we wanted a general-purpose test that covers all elements, it\u0027d be much trickier to write, but we could recursively walk all elements in the actual UI tree, vary the opacity of each, and ensure that the rendered opacity of children changes appropriately.  But this is a lot more complex I guess, and I don\u0027t know if it\u0027s warranted.",
+      "parentUuid": "ec6834b5_33c3100d",
+      "revId": "8d8b6a1cf50e7eab06ba7d47125b2b4041ea1fdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3fd3c5d1_a6b1ad46",
         "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
         "patchSetId": 3
