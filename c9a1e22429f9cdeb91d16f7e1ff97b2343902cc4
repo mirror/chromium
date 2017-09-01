@@ -22,6 +22,30 @@
       "revId": "c9a1e22429f9cdeb91d16f7e1ff97b2343902cc4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e839a6b5_05d2bb97",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field_paste_delegate.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-09-01T14:06:57Z",
+      "side": 1,
+      "message": "Per offline discussion - this won\u0027t compile.",
+      "parentUuid": "6fee3061_70023c66",
+      "range": {
+        "startLine": 31,
+        "startChar": 31,
+        "endLine": 31,
+        "endChar": 52
+      },
+      "revId": "c9a1e22429f9cdeb91d16f7e1ff97b2343902cc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
