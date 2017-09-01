@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b61309d_f80e55b2",
+        "filename": "tools/battor_agent/battor_agent_bin.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-09-01T15:43:41Z",
+      "side": 1,
+      "message": "Is this necessary? Isn\u0027t the other CL that you have already going to print a summary when no file is provided?",
+      "revId": "95cbaf141e0b7aa5b49c0d14e8f1a19de524c923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
