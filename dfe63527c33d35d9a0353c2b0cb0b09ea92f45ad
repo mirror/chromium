@@ -46,6 +46,30 @@
       "revId": "dfe63527c33d35d9a0353c2b0cb0b09ea92f45ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c078ea4d_4a92589e",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field_paste_delegate.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-09-01T12:50:59Z",
+      "side": 1,
+      "message": "I am OK to land this as it is to solve the issue of copying in Chrome/ pasting in Chrome.\nBut I think we will have to keep this delegate eventually to handle copy/paste from other applications.\n\nThe bug we reported to Apple is on the copy bug (a nil item is replaced by a URL at copy time), not a paste bug.\nIt is totally possible for an application to copy some items to end with a state where the pasteboard will contain multiple item.\n\nIn that case, we will need to implement \n(void)textPasteConfigurationSupporting:(id\u003cUITextPasteConfigurationSupporting\u003e)textPasteConfigurationSupporting\n                       transformPasteItem:(id\u003cUITextPasteItem\u003e)item;\n\nCheck which items contain URL, then only paste this one.\n\nFor a temporary fix, you may want to consider:\n- take only the first line if the item is multiple lines\n- try to convert each item to NSURL and take the first one which succeeds.",
+      "parentUuid": "a6507729_743b4d54",
+      "range": {
+        "startLine": 20,
+        "startChar": 44,
+        "endLine": 20,
+        "endChar": 55
+      },
+      "revId": "dfe63527c33d35d9a0353c2b0cb0b09ea92f45ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
