@@ -1654,7 +1654,7 @@ IPC_MESSAGE_ROUTED2(FrameHostMsg_AdvanceFocus,
 
 // Result of string search in the document.
 // Response to FrameMsg_Find with the results of the requested find-in-page
-// search, the number of matches found and the selection rect (in screen
+// search, the number of matches found and the selection rect (in root frame
 // coordinates) for the string found. If |final_update| is false, it signals
 // that this is not the last Find_Reply message - more will be sent as the
 // scoping effort continues.
