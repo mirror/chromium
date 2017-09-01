@@ -22,6 +22,30 @@
       "revId": "ae0922028c5a133900f5a21b8f439ec29b28e01d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1e40a6e_fda34c08",
+        "filename": "third_party/WebKit/public/platform/modules/payments/payment_app.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-09-01T18:36:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afa35d79_6c2ca8be",
+      "range": {
+        "startLine": 37,
+        "startChar": 26,
+        "endLine": 37,
+        "endChar": 40
+      },
+      "revId": "ae0922028c5a133900f5a21b8f439ec29b28e01d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
