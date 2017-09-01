@@ -14,7 +14,11 @@
 #include "base/callback.h"
 #include "base/location.h"
 #include "base/logging.h"
+#include "base/memory/ref_counted.h"
+#include "base/single_thread_task_runner.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/task_scheduler/post_task.h"
+#include "base/threading/thread_restrictions.h"
 #include "build/build_config.h"
 #include "chrome/common/chrome_constants.h"
 #include "content/public/browser/browser_thread.h"
@@ -28,8 +32,14 @@ using content::BrowserThread;
 namespace {
 
 #if defined(OS_WIN)
-base::File::Error ScanFile(const base::FilePath& dest_platform_path) {
-  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
+void ReplyAdapter(base::Callback<void(base::File::Error)> callback,
+                  base::File::Error* result) {
+  std::move(callback).Run(std::move(*result));
+}
+
+void ScanFile(const base::FilePath& dest_platform_path,
+              base::File::Error* result) {
+  base::ThreadRestrictions::AssertIOAllowed();
 
   base::win::ScopedComPtr<IAttachmentExecute> attachment_services;
   HRESULT hr = ::CoCreateInstance(CLSID_AttachmentServices, nullptr, CLSCTX_ALL,
@@ -38,20 +48,25 @@ base::File::Error ScanFile(const base::FilePath& dest_platform_path) {
   if (FAILED(hr)) {
     // The thread must have COM initialized.
     DCHECK_NE(CO_E_NOTINITIALIZED, hr);
-    return base::File::FILE_ERROR_SECURITY;
+    *result = base::File::FILE_ERROR_SECURITY;
+    return;
   }
 
   hr = attachment_services->SetLocalPath(dest_platform_path.value().c_str());
-  if (FAILED(hr))
-    return base::File::FILE_ERROR_SECURITY;
+  if (FAILED(hr)) {
+    *result = base::File::FILE_ERROR_SECURITY;
+    return;
+  }
 
   // A failure in the Save() call below could result in the downloaded file
   // being deleted.
   HRESULT scan_result = attachment_services->Save();
-  if (scan_result == S_OK)
-    return base::File::FILE_OK;
+  if (scan_result == S_OK) {
+    *result = base::File::FILE_OK;
+    return;
+  }
 
-  return base::File::FILE_ERROR_SECURITY;
+  *result = base::File::FILE_ERROR_SECURITY;
 }
 #endif
 
@@ -65,11 +80,13 @@ void AVScanningFileValidator::StartPostWriteValidation(
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
 #if defined(OS_WIN)
-  BrowserThread::PostTaskAndReplyWithResult(
-      BrowserThread::FILE,
-      FROM_HERE,
-      base::Bind(&ScanFile, dest_platform_path),
-      result_callback);
+  base::File::Error* result = new base::File::Error;
+  scoped_refptr<base::SingleThreadTaskRunner> runner =
+      base::CreateCOMSTATaskRunnerWithTraits(
+          {base::MayBlock(), base::TaskPriority::USER_VISIBLE});
+  runner->PostTaskAndReply(
+      FROM_HERE, base::Bind(&ScanFile, dest_platform_path, result),
+      base::Bind(&ReplyAdapter, std::move(result_callback), Owned(result)));
 #else
   result_callback.Run(base::File::FILE_OK);
 #endif
