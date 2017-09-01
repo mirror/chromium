@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "acf4d34f_fe2b1566",
+        "filename": "chrome/browser/win/jumplist.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-09-01T18:01:01Z",
+      "side": 1,
+      "message": "I think it\u0027s okay not to reset top_sites_has_pending_notification_ here.\n1) If the next notification is from TopSites, then this flag is set to true regardless of its previous value. So not resetting the top_sites flag doesn\u0027t make a difference here.\n2) If the next notification is from TabRestore, then both top_sites and tab_restore flags are now true. This means both categories will be updated. This is equivalent to \"delay-n-coalesce\". So not resetting the top_sites flag doesn\u0027t make a difference here neither.\n\nI think given the huge amount of notifications we get from both services, we don\u0027t need to actively poll the data when updates_to_skip_ hits zero. Skipping next N-2 updates rather than N should have similar effect to the \"active pull\". The value of N (now 10) doesn\u0027t affect much if it\u0027s within a range IMO, so I think we are good here.",
+      "parentUuid": "3053d315_4c176b92",
+      "revId": "6fe21e2bfd90b90c6a91d2d9660d9ab1d937a5a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "96b10c39_885e5c5f",
         "filename": "chrome/browser/win/jumplist.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "6fe21e2bfd90b90c6a91d2d9660d9ab1d937a5a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a30e1fac_896b2607",
+        "filename": "chrome/browser/win/jumplist.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-09-01T18:01:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "96b10c39_885e5c5f",
+      "revId": "6fe21e2bfd90b90c6a91d2d9660d9ab1d937a5a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
