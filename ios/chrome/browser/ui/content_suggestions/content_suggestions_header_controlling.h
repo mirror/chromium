@@ -28,6 +28,16 @@
 // Calls layoutIfNeeded on the header.
 - (void)layoutHeader;
 
+// Returns the Y value to use for the scroll view's contentOffset when scrolling
+// the omnibox to the top of the screen.
+- (CGFloat)pinnedOffsetY;
+
+// Whether the omnibox is currently focused.
+- (BOOL)isOmniboxFocused;
+
+// Returns the height of the header.
+- (CGFloat)headerHeight;
+
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_CONTENT_SUGGESTIONS_CONTENT_SUGGESTIONS_HEADER_CONTROLLING_H_

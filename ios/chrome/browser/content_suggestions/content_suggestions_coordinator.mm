@@ -48,7 +48,6 @@
 #import "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_view_controller_delegate.h"
 #import "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller.h"
 #import "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller_audience.h"
-#import "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller_delegate.h"
 #import "ios/chrome/browser/ui/content_suggestions/identifier/content_suggestion_identifier.h"
 #import "ios/chrome/browser/ui/content_suggestions/ntp_home_constant.h"
 #import "ios/chrome/browser/ui/ntp/google_landing_mediator.h"
@@ -82,7 +81,6 @@ const char kNTPHelpURL[] = "https://support.google.com/chrome/?p=ios_new_tab";
     ContentSuggestionsHeaderViewControllerCommandHandler,
     ContentSuggestionsHeaderViewControllerDelegate,
     ContentSuggestionsViewControllerAudience,
-    ContentSuggestionsViewControllerDelegate,
     CRWWebStateObserver,
     OverscrollActionsControllerDelegate>
 
@@ -182,7 +180,6 @@ const char kNTPHelpURL[] = "https://support.google.com/chrome/?p=ios_new_tab";
   [self.suggestionsViewController
       setDataSource:self.contentSuggestionsMediator];
   self.suggestionsViewController.suggestionCommandHandler = self;
-  self.suggestionsViewController.suggestionsDelegate = self;
   self.suggestionsViewController.audience = self;
   self.suggestionsViewController.overscrollDelegate = self;
   self.suggestionsViewController.metricsRecorder = self.metricsRecorder;
@@ -196,7 +193,7 @@ const char kNTPHelpURL[] = "https://support.google.com/chrome/?p=ios_new_tab";
           initWithCollectionController:self.suggestionsViewController
                       headerController:self.headerController];
 
-  self.suggestionsViewController.headerCommandHandler =
+  self.suggestionsViewController.headerSynchronizer =
       self.headerCollectionInteractionHandler;
   self.headerController.collectionSynchronizer =
       self.headerCollectionInteractionHandler;
@@ -453,30 +450,6 @@ const char kNTPHelpURL[] = "https://support.google.com/chrome/?p=ios_new_tab";
 
 - (BOOL)isScrolledToTop {
   return self.suggestionsViewController.scrolledToTop;
-}
-
-#pragma mark - ContentSuggestionsViewControllerDelegate
-
-- (CGFloat)pinnedOffsetY {
-  CGFloat headerHeight = content_suggestions::heightForLogoHeader(
-      self.headerController.logoIsShowing,
-      [self.contentSuggestionsMediator notificationPromo]->CanShow(), YES);
-  CGFloat offsetY =
-      headerHeight - ntp_header::kScrolledToTopOmniboxBottomMargin;
-  if (!IsIPadIdiom())
-    offsetY -= ntp_header::kToolbarHeight;
-
-  return offsetY;
-}
-
-- (BOOL)isOmniboxFocused {
-  return [self.headerController isOmniboxFocused];
-}
-
-- (CGFloat)headerHeight {
-  return content_suggestions::heightForLogoHeader(
-      self.headerController.logoIsShowing,
-      [self.contentSuggestionsMediator notificationPromo]->CanShow(), YES);
 }
 
 #pragma mark - ContentSuggestionsViewControllerAudience

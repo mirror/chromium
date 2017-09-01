@@ -18,6 +18,7 @@
 #import "ios/chrome/browser/ui/content_suggestions/content_suggestions_collection_utils.h"
 #import "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_view_controller_delegate.h"
 #import "ios/chrome/browser/ui/content_suggestions/ntp_home_constant.h"
+#import "ios/chrome/browser/ui/ntp/new_tab_page_header_constants.h"
 #import "ios/chrome/browser/ui/ntp/new_tab_page_header_view.h"
 #import "ios/chrome/browser/ui/toolbar/web_toolbar_controller.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
@@ -157,6 +158,22 @@ const CGFloat kHintLabelSidePadding = 12;
 
 - (void)layoutHeader {
   [self.headerView layoutIfNeeded];
+}
+
+- (CGFloat)pinnedOffsetY {
+  CGFloat headerHeight = content_suggestions::heightForLogoHeader(
+      self.logoIsShowing, self.promoCanShow, YES);
+  CGFloat offsetY =
+      headerHeight - ntp_header::kScrolledToTopOmniboxBottomMargin;
+  if (!IsIPadIdiom())
+    offsetY -= ntp_header::kToolbarHeight;
+
+  return offsetY;
+}
+
+- (CGFloat)headerHeight {
+  return content_suggestions::heightForLogoHeader(self.logoIsShowing,
+                                                  self.promoCanShow, YES);
 }
 
 #pragma mark - ContentSuggestionsHeaderProvider
