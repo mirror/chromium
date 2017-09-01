@@ -5,7 +5,9 @@
 #ifndef COMPONENTS_OFFLINE_PAGES_CORE_PREFETCH_PREFETCH_DISPATCHER_IMPL_H_
 #define COMPONENTS_OFFLINE_PAGES_CORE_PREFETCH_PREFETCH_DISPATCHER_IMPL_H_
 
+#include <map>
 #include <memory>
+#include <set>
 #include <string>
 #include <vector>
 
@@ -81,14 +83,23 @@ class PrefetchDispatcherImpl : public PrefetchDispatcher,
    // becomes idle and any task called SchedulePipelineProcessing() before.
    void QueueActionTasks();
 
-  PrefetchService* service_;
-  TaskQueue task_queue_;
-  bool needs_pipeline_processing_ = false;
-  std::unique_ptr<ScopedBackgroundTask> background_task_;
+   void CreateDownloadCleanupTask(
+       const std::set<std::string>& outstanding_download_ids,
+       const std::map<std::string, std::pair<base::FilePath, int64_t>>&
+           success_downloads);
 
-  base::WeakPtrFactory<PrefetchDispatcherImpl> weak_factory_;
+   PrefetchService* service_;
+   TaskQueue task_queue_;
+   bool needs_pipeline_processing_ = false;
+   std::unique_ptr<ScopedBackgroundTask> background_task_;
 
-  DISALLOW_COPY_AND_ASSIGN(PrefetchDispatcherImpl);
+   bool needs_download_cleanup_ = false;
+   std::set<std::string> outstanding_download_ids_;
+   std::map<std::string, std::pair<base::FilePath, int64_t>> success_downloads_;
+
+   base::WeakPtrFactory<PrefetchDispatcherImpl> weak_factory_;
+
+   DISALLOW_COPY_AND_ASSIGN(PrefetchDispatcherImpl);
 };
 
 }  // namespace offline_pages
