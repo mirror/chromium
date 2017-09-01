@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "510eac7e_8e575899",
+        "filename": "chrome_elf/chrome_elf_x64.def",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-09-01T17:35:18Z",
+      "side": 1,
+      "message": "I hope so - I think this one is going to be particularly ugly to move, though.",
+      "parentUuid": "61bcff64_383b5af5",
+      "range": {
+        "startLine": 32,
+        "startChar": 20,
+        "endLine": 32,
+        "endChar": 0
+      },
+      "revId": "eb13aa9a9ce0fbc1d18f9502e898421ac1dab439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71b5c59c_f0ab4758",
         "filename": "chrome_elf/chrome_elf_x64.def",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "a7b03c3e_2de1fae8",
+        "filename": "chrome_elf/chrome_elf_x64.def",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-09-01T17:35:18Z",
+      "side": 1,
+      "message": "They are, just below the fold, as there\u0027s no diff below them in the x86 file. (You scared me there :).",
+      "parentUuid": "71b5c59c_f0ab4758",
+      "range": {
+        "startLine": 43,
+        "startChar": 1,
+        "endLine": 47,
+        "endChar": 21
+      },
+      "revId": "eb13aa9a9ce0fbc1d18f9502e898421ac1dab439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb9773ce_4e3408f3",
         "filename": "components/crash/content/app/crashpad_win.cc",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-01T16:33:37Z",
       "side": 1,
       "message": "ExportThunk?",
+      "range": {
+        "startLine": 229,
+        "startChar": 37,
+        "endLine": 229,
+        "endChar": 41
+      },
+      "revId": "eb13aa9a9ce0fbc1d18f9502e898421ac1dab439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5675642_c4008920",
+        "filename": "components/crash/content/app/crashpad_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-09-01T17:35:18Z",
+      "side": 1,
+      "message": "Nopes, these aren\u0027t exported - the exports should all come from the crash_export_thunks.cc file now, or from the _stubs.cc file for tests where we want crash reporting disabled.\nThat is a dangling comment, though.",
+      "parentUuid": "cb9773ce_4e3408f3",
       "range": {
         "startLine": 229,
         "startChar": 37,
