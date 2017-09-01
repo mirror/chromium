@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47a39af3_9e79219a",
+        "filename": "base/files/file_path_watcher_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-01T14:47:34Z",
+      "side": 0,
+      "message": "Interesting, it indeed looks like WeakPtrFactory::GetWeakPtr() isn\u0027t thread-safe (because WeakReferenceOwner::GetRef() isn\u0027t -- RefCountedThreadSafe uses atomic state, fine, but the check for HasRefs() and the following decision to create a flag aren\u0027t atomic). But I feel many places in Chromium assume it is... a DCHECK should be added in there to make sure all erroneous callsites are fixed and no new one can be introduced (is that a goal of 760814?).\n\nI don\u0027t particularly like the pattern introduced here either though... How broadly is this spread? Do we need WeakPtrFactoryThreadSafe? (it would merely need to hold an extra ref internally I think so that it can safely not race on the HasRefs() check)",
+      "range": {
+        "startLine": 335,
+        "startChar": 15,
+        "endLine": 335,
+        "endChar": 41
+      },
+      "revId": "c8d574722c215b1d16aa716edafb36d4623ed4c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

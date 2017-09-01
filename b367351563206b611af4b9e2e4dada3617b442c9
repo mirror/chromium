@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f91ecaec_65e3a6d7",
+        "filename": "base/files/file_path_watcher_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-01T14:47:34Z",
+      "side": 1,
+      "message": "// A const WeakPtr instance from |weak_factory_| that can be safely used from other threads.",
+      "revId": "b367351563206b611af4b9e2e4dada3617b442c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f8c1ac9_0999acab",
+        "filename": "base/files/file_path_watcher_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-01T14:47:34Z",
+      "side": 1,
+      "message": "Is the reason not to use the initializer list the presubmit that WeakPtrFactory should be last? That feels wrong for this use case.",
+      "revId": "b367351563206b611af4b9e2e4dada3617b442c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
