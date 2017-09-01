@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7f38f16_86b67b03",
+        "filename": "components/viz/host/host_frame_sink_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-09-01T16:09:29Z",
+      "side": 1,
+      "message": "Do you need default value here? It used to be discouraged in the style guide, not sure if it still is called out but I think most of the time being explicit is better.",
+      "range": {
+        "startLine": 73,
+        "startChar": 51,
+        "endLine": 73,
+        "endChar": 56
+      },
+      "revId": "5cfd3f3c7cc1f1f64077d06e97f5bbda7c2b1467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdb1dc14_9196b065",
+        "filename": "components/viz/service/surfaces/surface_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-09-01T16:09:29Z",
+      "side": 1,
+      "message": "Will it add separator white space automatically?",
+      "range": {
+        "startLine": 561,
+        "startChar": 12,
+        "endLine": 561,
+        "endChar": 30
+      },
+      "revId": "5cfd3f3c7cc1f1f64077d06e97f5bbda7c2b1467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1318aca6_ecfb66dd",
+        "filename": "components/viz/service/surfaces/surface_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-09-01T16:09:29Z",
+      "side": 1,
+      "message": "Do you need both this and the set above? Could just this one be used for both purposes?",
+      "range": {
+        "startLine": 289,
+        "startChar": 43,
+        "endLine": 289,
+        "endChar": 61
+      },
+      "revId": "5cfd3f3c7cc1f1f64077d06e97f5bbda7c2b1467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "620c466d_9f92b583",
+        "filename": "services/viz/privileged/interfaces/compositing/frame_sink_manager.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-09-01T16:09:29Z",
+      "side": 1,
+      "message": "nit: \"Registers |frame_sink_id| that will be kept track of.\" or something like that.",
+      "range": {
+        "startLine": 43,
+        "startChar": 5,
+        "endLine": 43,
+        "endChar": 43
+      },
+      "revId": "5cfd3f3c7cc1f1f64077d06e97f5bbda7c2b1467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
