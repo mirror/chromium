@@ -95,12 +95,20 @@ AXObject* AXTableCell::ParentTable() const {
   return AxObjectCache().Get(ToLayoutTableCell(layout_object_)->Table());
 }
 
-bool AXTableCell::IsTableCell() const {
-  AXObject* parent = ParentObjectUnignored();
-  if (!parent || !parent->IsTableRow())
-    return false;
+AXObject* AXTableCell::ParentRow() const {
+  if (!layout_object_ || !layout_object_->IsTableCell())
+    return nullptr;
 
-  return true;
+  // If the document no longer exists, we might not have an axObjectCache.
+  if (IsDetached())
+    return nullptr;
+
+  return AxObjectCache().Get(ToLayoutTableCell(layout_object_)->Row());
+}
+
+bool AXTableCell::IsTableCell() const {
+  AXObject* row = ParentRow();
+  return row && row->IsTableRow();
 }
 
 unsigned AXTableCell::AriaColumnIndex() const {
