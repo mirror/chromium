@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fef8118_8e9317fc",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-09-01T05:25:54Z",
+      "side": 1,
+      "message": "xiaochengh@, you suggested maybe pulling the position from the FrameSelection. But I think the selectstart handler can change the selection range (I think it could move it somewhere else, or make it a range, or remove it entirely). So that\u0027s a whole other can of worms (but might be an easier one to work with?).",
+      "revId": "8aa46ccc4e72900f9386d4e8288ff8e3f14c16ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
