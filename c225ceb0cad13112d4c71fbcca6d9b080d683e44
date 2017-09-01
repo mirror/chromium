@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fa6f16c_d250f6af",
+        "filename": "chrome/browser/password_manager/password_manager_util_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-09-01T02:17:42Z",
+      "side": 1,
+      "message": "I think this check is failing and ERROR_ACCOUNT_RESTRICTION is not being handled correctly.\n\nsee https://bugs.chromium.org/p/chromium/issues/detail?id\u003d347825\n\nthe MSDN article states \"The size includes the terminating null character\" so it\u0027s possible this is actually \u00271\u0027 on empty password.",
+      "range": {
+        "startLine": 456,
+        "startChar": 43,
+        "endLine": 456,
+        "endChar": 71
+      },
+      "revId": "c225ceb0cad13112d4c71fbcca6d9b080d683e44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
