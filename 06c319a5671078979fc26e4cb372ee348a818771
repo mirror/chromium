@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aea53c40_9cecfe8a",
+        "filename": "ios/build/bots/scripts/test_runner.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1003211
+      },
+      "writtenOn": "2017-09-01T21:17:17Z",
+      "side": 1,
+      "message": "Fits on one line now.",
+      "revId": "06c319a5671078979fc26e4cb372ee348a818771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
