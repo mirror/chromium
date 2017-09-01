@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5b6b955_a46a51ff",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2827,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-01T15:31:00Z",
+      "side": 1,
+      "message": "Why do you need this namespace? Is there more than one compositor element\nid for this object?",
+      "revId": "d9b5f2aff864e3e0661134637cd120bfff03ed65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
