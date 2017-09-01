@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fbeb53d0_68b255f4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-09-01T20:54:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7f34c75_7b866ef0",
+      "range": {
+        "startLine": 9,
+        "startChar": 4,
+        "endLine": 9,
+        "endChar": 10
+      },
+      "revId": "6bfb04a8d79e9f55cfe20df199beb16ea92aa760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5617e12d_709dfd4e",
         "filename": "cc/ipc/cc_param_traits.cc",
         "patchSetId": 5
@@ -36,6 +60,24 @@
       "writtenOn": "2017-09-01T20:35:11Z",
       "side": 1,
       "message": "Yeah, sizeof here should more than generously cover it.",
+      "revId": "6bfb04a8d79e9f55cfe20df199beb16ea92aa760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e6f0947_fbe07ac3",
+        "filename": "cc/ipc/cc_param_traits.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-09-01T20:54:04Z",
+      "side": 1,
+      "message": "Thanks for verifying that.",
+      "parentUuid": "5617e12d_709dfd4e",
       "revId": "6bfb04a8d79e9f55cfe20df199beb16ea92aa760",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
