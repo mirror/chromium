@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b02987f_87dd118e",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-01T00:27:35Z",
+      "side": 1,
+      "message": "When I first saw this, I thought the custom title is in navigationItem.titleView and didn\u0027t understand the layout code.  It could be easier to read if the comment tells the custom title view is in leftBarButtonItem in advance.",
+      "revId": "c77074b29f7c729a750b163583390eb27d6dd475",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcc3caf5_0509e110",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 995,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-01T00:27:35Z",
+      "side": 1,
+      "message": "thanks",
+      "revId": "c77074b29f7c729a750b163583390eb27d6dd475",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
