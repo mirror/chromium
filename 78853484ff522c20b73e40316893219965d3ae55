@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da4c2d0b_01cb56d7",
+        "filename": "content/test/navigation_simulator_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-01T01:47:06Z",
+      "side": 1,
+      "message": "Some of the existing tests crash with PlzNavigate,\nMy new tests also don\u0027t work, but I haven\u0027t figured out why yet.\n\nIs there anything else I need to know about to write PlzNavigate tests?",
+      "revId": "78853484ff522c20b73e40316893219965d3ae55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
