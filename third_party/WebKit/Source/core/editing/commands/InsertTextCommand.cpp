@@ -147,7 +147,9 @@ bool InsertTextCommand::PerformOverwrite(const String& text,
 void InsertTextCommand::DoApply(EditingState* editing_state) {
   DCHECK_EQ(text_.find('\n'), kNotFound);
 
-  if (!EndingVisibleSelection().IsNonOrphanedCaretOrRange())
+  if (EndingVisibleSelection().IsNone() ||
+      EndingVisibleSelection().Start().IsOrphan() ||
+      EndingVisibleSelection().End().IsOrphan())
     return;
 
   // Delete the current selection.
