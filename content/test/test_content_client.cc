@@ -17,6 +17,8 @@
 #include "base/android/apk_assets.h"
 #endif
 
+#include "ui/base/resource/resource_bundle.h"
+
 namespace content {
 
 TestContentClient::TestContentClient()
@@ -46,6 +48,9 @@ TestContentClient::TestContentClient()
         FILE_PATH_LITERAL("content_shell.pak"));
     data_pack_.LoadFromPath(content_shell_pack_path);
   }
+
+  if (!ui::ResourceBundle::HasSharedInstance())
+    ui::ResourceBundle::InitSharedInstanceWithPakPath(content_shell_pack_path);
 }
 
 TestContentClient::~TestContentClient() {
