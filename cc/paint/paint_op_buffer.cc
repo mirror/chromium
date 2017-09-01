@@ -16,6 +16,7 @@
 #include "third_party/skia/include/core/SkAnnotation.h"
 #include "third_party/skia/include/core/SkCanvas.h"
 #include "third_party/skia/include/core/SkRegion.h"
+#include "ui/gfx/math_util.h"
 
 namespace cc {
 namespace {
@@ -661,7 +662,8 @@ size_t TranslateOp::Serialize(const PaintOp* op,
 template <typename T>
 void UpdateTypeAndSkip(T* op) {
   op->type = static_cast<uint8_t>(T::kType);
-  op->skip = MathUtil::UncheckedRoundUp(sizeof(T), PaintOpBuffer::PaintOpAlign);
+  op->skip =
+      gfx::MathUtil::UncheckedRoundUp(sizeof(T), PaintOpBuffer::PaintOpAlign);
 }
 
 template <typename T>
@@ -1327,7 +1329,7 @@ size_t PaintOp::Serialize(void* memory,
     return 0u;
 
   size_t aligned_written =
-      MathUtil::UncheckedRoundUp(written, PaintOpBuffer::PaintOpAlign);
+      gfx::MathUtil::UncheckedRoundUp(written, PaintOpBuffer::PaintOpAlign);
   if (aligned_written >= kMaxSkip)
     return 0u;
   if (aligned_written > size)
@@ -1791,7 +1793,7 @@ void PaintOpBuffer::ReallocBuffer(size_t new_size) {
 std::pair<void*, size_t> PaintOpBuffer::AllocatePaintOp(size_t sizeof_op) {
   // Compute a skip such that all ops in the buffer are aligned to the
   // maximum required alignment of all ops.
-  size_t skip = MathUtil::UncheckedRoundUp(sizeof_op, PaintOpAlign);
+  size_t skip = gfx::MathUtil::UncheckedRoundUp(sizeof_op, PaintOpAlign);
   DCHECK_LT(skip, PaintOp::kMaxSkip);
   if (used_ + skip > reserved_) {
     // Start reserved_ at kInitialBufferSize and then double.

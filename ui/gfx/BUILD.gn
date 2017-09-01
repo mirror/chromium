@@ -24,6 +24,8 @@ source_set("gfx_export") {
 
 component("geometry_skia") {
   sources = [
+    "math_util.cc",
+    "math_util.h",
     "skia_util.cc",
     "skia_util.h",
     "transform.cc",
@@ -700,6 +702,7 @@ test("gfx_unittests") {
       "image/image_mac_unittest.mm",
       "image/image_util_unittest.cc",
       "mac/coordinate_conversion_unittest.mm",
+      "math_util_unittest.cc",
       "mojo/struct_traits_unittest.cc",
       "nine_image_painter_unittest.cc",
       "path_mac_unittest.mm",

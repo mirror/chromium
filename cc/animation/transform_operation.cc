@@ -14,9 +14,9 @@
 #include "base/logging.h"
 #include "cc/animation/transform_operation.h"
 #include "cc/animation/transform_operations.h"
-#include "cc/base/math_util.h"
 #include "ui/gfx/geometry/box_f.h"
 #include "ui/gfx/geometry/vector3d_f.h"
+#include "ui/gfx/math_util.h"
 #include "ui/gfx/transform_util.h"
 
 namespace {
@@ -124,31 +124,35 @@ bool TransformOperation::ApproximatelyEqual(const TransformOperation& other,
     return false;
   switch (type) {
     case TransformOperation::TRANSFORM_OPERATION_TRANSLATE:
-      return MathUtil::ApproximatelyEqual(translate.x, other.translate.x,
-                                          tolerance) &&
-             MathUtil::ApproximatelyEqual(translate.y, other.translate.y,
-                                          tolerance) &&
-             MathUtil::ApproximatelyEqual(translate.z, other.translate.z,
-                                          tolerance);
+      return gfx::MathUtil::ApproximatelyEqual(translate.x, other.translate.x,
+                                               tolerance) &&
+             gfx::MathUtil::ApproximatelyEqual(translate.y, other.translate.y,
+                                               tolerance) &&
+             gfx::MathUtil::ApproximatelyEqual(translate.z, other.translate.z,
+                                               tolerance);
     case TransformOperation::TRANSFORM_OPERATION_ROTATE:
-      return MathUtil::ApproximatelyEqual(rotate.axis.x, other.rotate.axis.x,
-                                          tolerance) &&
-             MathUtil::ApproximatelyEqual(rotate.axis.y, other.rotate.axis.y,
-                                          tolerance) &&
-             MathUtil::ApproximatelyEqual(rotate.axis.z, other.rotate.axis.z,
-                                          tolerance) &&
-             MathUtil::ApproximatelyEqual(rotate.angle, other.rotate.angle,
-                                          tolerance);
+      return gfx::MathUtil::ApproximatelyEqual(
+                 rotate.axis.x, other.rotate.axis.x, tolerance) &&
+             gfx::MathUtil::ApproximatelyEqual(
+                 rotate.axis.y, other.rotate.axis.y, tolerance) &&
+             gfx::MathUtil::ApproximatelyEqual(
+                 rotate.axis.z, other.rotate.axis.z, tolerance) &&
+             gfx::MathUtil::ApproximatelyEqual(rotate.angle, other.rotate.angle,
+                                               tolerance);
     case TransformOperation::TRANSFORM_OPERATION_SCALE:
-      return MathUtil::ApproximatelyEqual(scale.x, other.scale.x, tolerance) &&
-             MathUtil::ApproximatelyEqual(scale.y, other.scale.y, tolerance) &&
-             MathUtil::ApproximatelyEqual(scale.z, other.scale.z, tolerance);
+      return gfx::MathUtil::ApproximatelyEqual(scale.x, other.scale.x,
+                                               tolerance) &&
+             gfx::MathUtil::ApproximatelyEqual(scale.y, other.scale.y,
+                                               tolerance) &&
+             gfx::MathUtil::ApproximatelyEqual(scale.z, other.scale.z,
+                                               tolerance);
     case TransformOperation::TRANSFORM_OPERATION_SKEW:
-      return MathUtil::ApproximatelyEqual(skew.x, other.skew.x, tolerance) &&
-             MathUtil::ApproximatelyEqual(skew.y, other.skew.y, tolerance);
+      return gfx::MathUtil::ApproximatelyEqual(skew.x, other.skew.x,
+                                               tolerance) &&
+             gfx::MathUtil::ApproximatelyEqual(skew.y, other.skew.y, tolerance);
     case TransformOperation::TRANSFORM_OPERATION_PERSPECTIVE:
-      return MathUtil::ApproximatelyEqual(perspective_depth,
-                                          other.perspective_depth, tolerance);
+      return gfx::MathUtil::ApproximatelyEqual(
+          perspective_depth, other.perspective_depth, tolerance);
     case TransformOperation::TRANSFORM_OPERATION_MATRIX:
       // TODO(vollick): we could expose a tolerance on gfx::Transform, but it's
       // complex since we need a different tolerance per component. Driving this

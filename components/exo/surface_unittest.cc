@@ -26,6 +26,7 @@
 #include "ui/display/display_switches.h"
 #include "ui/gfx/geometry/dip_util.h"
 #include "ui/gfx/gpu_memory_buffer.h"
+#include "ui/gfx/math_util.h"
 #include "ui/wm/core/window_util.h"
 
 namespace exo {
@@ -282,7 +283,7 @@ TEST_P(SurfaceTest, SetBufferTransform) {
     ASSERT_EQ(1u, quad_list.size());
     EXPECT_EQ(
         ToPixel(gfx::Rect(0, 0, 512, 256)),
-        cc::MathUtil::MapEnclosingClippedRect(
+        gfx::MathUtil::MapEnclosingClippedRect(
             quad_list.front()->shared_quad_state->quad_to_target_transform,
             quad_list.front()->rect));
   }
@@ -322,7 +323,7 @@ TEST_P(SurfaceTest, SetBufferTransform) {
         ToPixel(gfx::Rect(child_position,
                           gfx::ScaleToRoundedSize(child_buffer_size,
                                                   1.0f / kChildBufferScale))),
-        cc::MathUtil::MapEnclosingClippedRect(
+        gfx::MathUtil::MapEnclosingClippedRect(
             quad_list.front()->shared_quad_state->quad_to_target_transform,
             quad_list.front()->rect));
   }
