@@ -53,6 +53,29 @@
     },
     {
       "key": {
+        "uuid": "7ed06e46_3fe8cb6a",
+        "filename": "content/browser/background_fetch/background_fetch_delegate.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-01T18:53:36Z",
+      "side": 1,
+      "message": "Will this interface go away once Background Fetch has fully switched to the Download Service, or will it instead move to content/public and become the content-layer interface to a subclass that lives in the chrome-layer? Either way, it would be nice to document that.",
+      "range": {
+        "startLine": 31,
+        "startChar": 6,
+        "endLine": 31,
+        "endChar": 29
+      },
+      "revId": "9deabdc4a30ca3896849b964b4176bc9d9e3a975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4eda8b1c_452bff15",
         "filename": "content/browser/background_fetch/background_fetch_delegate.h",
         "patchSetId": 8
@@ -104,6 +127,29 @@
     },
     {
       "key": {
+        "uuid": "e4a77647_4feb1a4f",
+        "filename": "content/browser/background_fetch/background_fetch_delegate.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-01T18:53:36Z",
+      "side": 1,
+      "message": "Nit: this seems to be common functionality to any implementation of this interface, so I\u0027d lean towards making this non-virtual (i.e. store the client_ in this class), and expose a protected getter for it.",
+      "range": {
+        "startLine": 59,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 9
+      },
+      "revId": "9deabdc4a30ca3896849b964b4176bc9d9e3a975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f57dab7_6239ba10",
         "filename": "content/browser/background_fetch/background_fetch_delegate_impl.cc",
         "patchSetId": 8
@@ -138,6 +184,52 @@
     },
     {
       "key": {
+        "uuid": "a04d74a9_92303bca",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-01T18:53:36Z",
+      "side": 1,
+      "message": "Micro-nit: not sure I\u0027d bother having this method, since it\u0027s only used once.",
+      "range": {
+        "startLine": 151,
+        "startChar": 29,
+        "endLine": 151,
+        "endChar": 39
+      },
+      "revId": "9deabdc4a30ca3896849b964b4176bc9d9e3a975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "963da7ad_4bc9cd02",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-01T18:53:36Z",
+      "side": 1,
+      "message": "Nit: std::make_unique is already allowed by https://chromium-cpp.appspot.com (ditto elsewhere)",
+      "range": {
+        "startLine": 171,
+        "startChar": 12,
+        "endLine": 171,
+        "endChar": 22
+      },
+      "revId": "9deabdc4a30ca3896849b964b4176bc9d9e3a975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7e321900_dc9ed58f",
         "filename": "content/browser/background_fetch/background_fetch_delegate_impl.h",
         "patchSetId": 8
@@ -149,6 +241,29 @@
       "writtenOn": "2017-09-01T15:26:23Z",
       "side": 1,
       "message": "nit: move to the include block on lines 13-14.",
+      "revId": "9deabdc4a30ca3896849b964b4176bc9d9e3a975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8d5a339_8b395a96",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-01T18:53:36Z",
+      "side": 1,
+      "message": "Please add a class comment, e.g. \"Implementation of BackgroundFetchDelegate using the legacy DownloadManager.\"",
+      "range": {
+        "startLine": 25,
+        "startChar": 6,
+        "endLine": 25,
+        "endChar": 20
+      },
       "revId": "9deabdc4a30ca3896849b964b4176bc9d9e3a975",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -206,6 +321,75 @@
       "writtenOn": "2017-09-01T15:26:23Z",
       "side": 1,
       "message": "nit: name param",
+      "revId": "9deabdc4a30ca3896849b964b4176bc9d9e3a975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d4171d1_4468af65",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-01T18:53:36Z",
+      "side": 1,
+      "message": "Remove this TODO :)",
+      "range": {
+        "startLine": 26,
+        "startChar": 19,
+        "endLine": 26,
+        "endChar": 25
+      },
+      "revId": "9deabdc4a30ca3896849b964b4176bc9d9e3a975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f3874c1_878c98cf",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-01T18:53:36Z",
+      "side": 1,
+      "message": "Add a class comment along the lines of \"Subclasses must only be destroyed on the IO thread, since these methods will be called on IO.\"",
+      "range": {
+        "startLine": 29,
+        "startChar": 8,
+        "endLine": 29,
+        "endChar": 18
+      },
+      "revId": "9deabdc4a30ca3896849b964b4176bc9d9e3a975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "809613d6_fcb2e116",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-01T18:53:36Z",
+      "side": 1,
+      "message": "Seems this can be merged into the constructor.",
+      "range": {
+        "startLine": 46,
+        "startChar": 7,
+        "endLine": 46,
+        "endChar": 18
+      },
       "revId": "9deabdc4a30ca3896849b964b4176bc9d9e3a975",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
