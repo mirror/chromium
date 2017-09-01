@@ -24,6 +24,7 @@ class CancellingNavigationThrottle : public NavigationThrottle {
   enum CancelTime {
     WILL_START_REQUEST,
     WILL_REDIRECT_REQUEST,
+    WILL_FAIL_REQUEST,
     WILL_PROCESS_RESPONSE,
     NEVER,
   };
@@ -41,6 +42,7 @@ class CancellingNavigationThrottle : public NavigationThrottle {
   // NavigationThrottle:
   NavigationThrottle::ThrottleCheckResult WillStartRequest() override;
   NavigationThrottle::ThrottleCheckResult WillRedirectRequest() override;
+  NavigationThrottle::ThrottleCheckResult WillFailRequest() override;
   NavigationThrottle::ThrottleCheckResult WillProcessResponse() override;
   const char* GetNameForLogging() override;
 
