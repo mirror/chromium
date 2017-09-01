@@ -1,0 +1,333 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d380ab02_176f2cd9",
+        "filename": "content/browser/background_fetch/background_fetch_context.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-01T15:26:23Z",
+      "side": 1,
+      "message": "Why is this necessary? Getting the StoragePartition for a given URL will pretty much give us the same timing, right? (The call to this method is made as pretty much the last thing in the creation sequence of a StoragePartition.)",
+      "revId": "9deabdc4a30ca3896849b964b4176bc9d9e3a975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dd37637_2ea0bfac",
+        "filename": "content/browser/background_fetch/background_fetch_context.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-01T15:26:23Z",
+      "side": 1,
+      "message": "Could we limit BackgroundFetchContext\u0027s knowledge to BackgroundFetchDelegate, and only use Impl in the .cc? I guess this (and the DeleteOnUIThread trait) will go away when it\u0027s owned by BrowserContext.",
+      "revId": "9deabdc4a30ca3896849b964b4176bc9d9e3a975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad15576b_69b9f60f",
+        "filename": "content/browser/background_fetch/background_fetch_context.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-01T15:26:23Z",
+      "side": 1,
+      "message": "So as discussed, let\u0027s remove the plumbing to get the URLRequestContextGetter directly from the StoragePartition on initialization time and instead do it lazily in BackgroundFetchDelegateImpl::DownloadUrl(), as the Download Service does here:\n\nhttps://cs.chromium.org/chromium/src/components/download/content/internal/download_driver_impl.cc?type\u003dcs\u0026q\u003df:components/download+requestcontext\u0026l\u003d134\n\nThat allows us to get rid of having all three of a UI-thread constructor, a UI-thread init method and an IO-thread init method.",
+      "revId": "9deabdc4a30ca3896849b964b4176bc9d9e3a975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4eda8b1c_452bff15",
+        "filename": "content/browser/background_fetch/background_fetch_delegate.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-01T15:26:23Z",
+      "side": 1,
+      "message": "This will be an interface in the API, so please document all virtual methods with their intended behaviour.",
+      "revId": "9deabdc4a30ca3896849b964b4176bc9d9e3a975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bd06fea_cb0bceff",
+        "filename": "content/browser/background_fetch/background_fetch_delegate.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-01T15:26:23Z",
+      "side": 1,
+      "message": "nit: all arguments must be named",
+      "revId": "9deabdc4a30ca3896849b964b4176bc9d9e3a975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18c20b57_211d4d0b",
+        "filename": "content/browser/background_fetch/background_fetch_delegate.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-01T15:26:23Z",
+      "side": 1,
+      "message": "Can we call this OnDownloadProgress?",
+      "revId": "9deabdc4a30ca3896849b964b4176bc9d9e3a975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f57dab7_6239ba10",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-01T15:26:23Z",
+      "side": 1,
+      "message": "nit: please coalesce the anonymous namespace blocks",
+      "revId": "9deabdc4a30ca3896849b964b4176bc9d9e3a975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8be44ee_ac9d1a52",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-01T15:26:23Z",
+      "side": 1,
+      "message": "If we assume that the BGFDelegateImpl will be owned by BrowserContext, could we store |client| as a raw pointer instead, as we would know for sure whether it would outlive the StoragePartition?",
+      "revId": "9deabdc4a30ca3896849b964b4176bc9d9e3a975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e321900_dc9ed58f",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-01T15:26:23Z",
+      "side": 1,
+      "message": "nit: move to the include block on lines 13-14.",
+      "revId": "9deabdc4a30ca3896849b964b4176bc9d9e3a975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94a71270_948d31f5",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-01T15:26:23Z",
+      "side": 1,
+      "message": "// BackgroundFetchDelegate implementation:\n\nAnd remove the line breaks between these methods.",
+      "revId": "9deabdc4a30ca3896849b964b4176bc9d9e3a975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed9df6d3_9efafe7e",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-01T15:26:23Z",
+      "side": 1,
+      "message": "virtual -\u003e override",
+      "range": {
+        "startLine": 31,
+        "startChar": 16,
+        "endLine": 31,
+        "endChar": 19
+      },
+      "revId": "9deabdc4a30ca3896849b964b4176bc9d9e3a975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bac896e_2aaf313f",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-01T15:26:23Z",
+      "side": 1,
+      "message": "nit: name param",
+      "revId": "9deabdc4a30ca3896849b964b4176bc9d9e3a975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baf41f35_a19d4dc7",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-01T15:26:23Z",
+      "side": 1,
+      "message": "nit: could return early to avoid indent",
+      "revId": "9deabdc4a30ca3896849b964b4176bc9d9e3a975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07076be5_53d306d4",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-01T15:26:23Z",
+      "side": 1,
+      "message": "These should probably be private and have one-line getters...",
+      "revId": "9deabdc4a30ca3896849b964b4176bc9d9e3a975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2267f335_9bc001d5",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-01T15:26:23Z",
+      "side": 1,
+      "message": "nit: could these be const\u0026?",
+      "revId": "9deabdc4a30ca3896849b964b4176bc9d9e3a975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9780399f_15cee9af",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-01T15:26:23Z",
+      "side": 1,
+      "message": "nit: these can be protected",
+      "revId": "9deabdc4a30ca3896849b964b4176bc9d9e3a975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e53b05d3_86122844",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-01T15:26:23Z",
+      "side": 1,
+      "message": "nit: do we need a std::unique_ptr\u003c\u003e here? BFDelegateProxy is initialized as a member already.",
+      "revId": "9deabdc4a30ca3896849b964b4176bc9d9e3a975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b3b99f1_503a7cc2",
+        "filename": "content/browser/background_fetch/background_fetch_job_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-01T15:26:23Z",
+      "side": 1,
+      "message": "delete",
+      "revId": "9deabdc4a30ca3896849b964b4176bc9d9e3a975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7611f9fe_c42170c5",
+        "filename": "content/browser/background_fetch/background_fetch_job_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-01T15:26:23Z",
+      "side": 1,
+      "message": "nit: drop these comments and add a new one:\n\n// BackgroundFetchDelegateProxy::Controller implementation:",
+      "revId": "9deabdc4a30ca3896849b964b4176bc9d9e3a975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
