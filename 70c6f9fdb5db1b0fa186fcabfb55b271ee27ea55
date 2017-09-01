@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7835f228_219a2a91",
+        "filename": "services/ui/ws/platform_display_default.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1175809
+      },
+      "writtenOn": "2017-09-01T20:55:38Z",
+      "side": 1,
+      "message": "I thought we could get rid of the (use_x11 \u0026\u0026 !os_chromeos) elif block altogether (i.e. WS isnt supported with use_x11), but maybe it is not the case?",
+      "revId": "70c6f9fdb5db1b0fa186fcabfb55b271ee27ea55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
