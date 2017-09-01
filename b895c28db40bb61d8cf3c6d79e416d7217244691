@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5a89667_3234a0be",
+        "filename": "components/metrics/metrics_state_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-01T15:03:08Z",
+      "side": 1,
+      "message": "Have you checked that the timing of this makes sense?\n\nkMetricsResetIds is set temporary and then used to reset client id on next session.\n\nSee this code:\n\nhttps://cs.chromium.org/chromium/src/components/metrics/metrics_state_manager.cc?rcl\u003dba0aeefa9190a13567c764f237df5d86349e71a5\u0026l\u003d344\n\nAre you sure ProvidePreviousSessionData() runs before that code? If it doesn\u0027t, then you wouldn\u0027t be using state from the previous session correctly. (Or maybe that\u0027s OK and what we want, but if so we should think things through and provide the reasoning in a comment.)",
+      "range": {
+        "startLine": 72,
+        "startChar": 57,
+        "endLine": 72,
+        "endChar": 0
+      },
+      "revId": "b895c28db40bb61d8cf3c6d79e416d7217244691",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
