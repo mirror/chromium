@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61bcff64_383b5af5",
+        "filename": "chrome_elf/chrome_elf_x64.def",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-09-01T16:33:37Z",
+      "side": 1,
+      "message": "You\u0027re going to add ExportThunk to all these later, or no?",
+      "range": {
+        "startLine": 32,
+        "startChar": 20,
+        "endLine": 32,
+        "endChar": 0
+      },
+      "revId": "eb13aa9a9ce0fbc1d18f9502e898421ac1dab439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71b5c59c_f0ab4758",
+        "filename": "chrome_elf/chrome_elf_x64.def",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-09-01T16:33:37Z",
+      "side": 1,
+      "message": "How come these ones aren\u0027t in x86?",
+      "range": {
+        "startLine": 43,
+        "startChar": 1,
+        "endLine": 47,
+        "endChar": 21
+      },
+      "revId": "eb13aa9a9ce0fbc1d18f9502e898421ac1dab439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb9773ce_4e3408f3",
+        "filename": "components/crash/content/app/crashpad_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-09-01T16:33:37Z",
+      "side": 1,
+      "message": "ExportThunk?",
+      "range": {
+        "startLine": 229,
+        "startChar": 37,
+        "endLine": 229,
+        "endChar": 41
+      },
+      "revId": "eb13aa9a9ce0fbc1d18f9502e898421ac1dab439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
