@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a5df767_3d92ab72",
+        "filename": "third_party/WebKit/Source/core/offscreencanvas/OffscreenCanvas.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-09-01T14:45:03Z",
+      "side": 1,
+      "message": "Added for color management in OffscreenCanvas.",
+      "range": {
+        "startLine": 264,
+        "startChar": 48,
+        "endLine": 264,
+        "endChar": 60
+      },
+      "revId": "aeaa7edf5a1dca93e4c2cd499c0225b559e205be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecbf16ba_d1fba24d",
+        "filename": "third_party/WebKit/Source/core/offscreencanvas/OffscreenCanvas.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-09-01T14:45:03Z",
+      "side": 1,
+      "message": "Added for color management in OffscreenCanvas.",
+      "range": {
+        "startLine": 273,
+        "startChar": 0,
+        "endLine": 273,
+        "endChar": 37
+      },
+      "revId": "aeaa7edf5a1dca93e4c2cd499c0225b559e205be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2224843c_c808561a",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/AcceleratedImageBufferSurface.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-09-01T14:45:03Z",
+      "side": 1,
+      "message": "This is a simple test to see what\u0027s happening when drawing something into the accelerated surface. I expect to get (32, 128, 255, 255), but instead I get (4, 55, 255, 255). I tried to reproduce this in a fiddle (https://fiddle.skia.org/c/5bf5d4e17418453f675c66e708bc1a05) but the fiddle works fine. I wonder what is causing the non-full color components change when alpha is 255.",
+      "revId": "aeaa7edf5a1dca93e4c2cd499c0225b559e205be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
