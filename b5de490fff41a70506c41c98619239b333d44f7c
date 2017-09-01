@@ -225,6 +225,30 @@
     },
     {
       "key": {
+        "uuid": "3141f782_e73301bc",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/rule_indexing_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-01T01:18:58Z",
+      "side": 1,
+      "message": "Oh right, one is Value other is not, can you rename this to rules_value_ to avoid confusion?",
+      "parentUuid": "150a7c3f_4acd10c5",
+      "range": {
+        "startLine": 130,
+        "startChar": 0,
+        "endLine": 130,
+        "endChar": 18
+      },
+      "revId": "b5de490fff41a70506c41c98619239b333d44f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5226a3f1_16cd9931",
         "filename": "chrome/browser/extensions/api/declarative_net_request/rule_indexing_unittest.cc",
         "patchSetId": 8
@@ -510,6 +534,30 @@
     },
     {
       "key": {
+        "uuid": "03a25dbd_e5146752",
+        "filename": "chrome/browser/extensions/unpacked_installer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-01T01:18:58Z",
+      "side": 1,
+      "message": "You should add reference to the bug here.",
+      "parentUuid": "9e00532e_fe334819",
+      "range": {
+        "startLine": 321,
+        "startChar": 2,
+        "endLine": 321,
+        "endChar": 27
+      },
+      "revId": "b5de490fff41a70506c41c98619239b333d44f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7cfb207_5b644adf",
         "filename": "chrome/browser/extensions/unpacked_installer.h",
         "patchSetId": 8
@@ -683,6 +731,29 @@
       "revId": "b5de490fff41a70506c41c98619239b333d44f7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7615e8d7_e8ee3b77",
+        "filename": "extensions/common/file_util.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-01T01:18:58Z",
+      "side": 1,
+      "message": "I\u0027m gonna put a dummy note here as a reminder to revert this partially as we discussed offline.",
+      "range": {
+        "startLine": 368,
+        "startChar": 0,
+        "endLine": 368,
+        "endChar": 77
+      },
+      "revId": "b5de490fff41a70506c41c98619239b333d44f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
