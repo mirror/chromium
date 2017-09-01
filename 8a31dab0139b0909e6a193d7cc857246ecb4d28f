@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "0ff2a310_861e492e",
+        "filename": "cc/input/scroll_customization.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-01T19:41:50Z",
+      "side": 1,
+      "message": "It is fine to follow the TouchAction pattern here.",
+      "parentUuid": "017463b6_7dfe47ee",
+      "revId": "8a31dab0139b0909e6a193d7cc857246ecb4d28f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f04f5be6_a2f05f27",
         "filename": "cc/input/scroll_customization.h",
         "patchSetId": 9
@@ -87,6 +105,24 @@
       "revId": "8a31dab0139b0909e6a193d7cc857246ecb4d28f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf9d4ad7_c44a56fb",
+        "filename": "cc/input/scroll_customization.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-01T19:41:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0fd8a5c6_89038ea7",
+      "revId": "8a31dab0139b0909e6a193d7cc857246ecb4d28f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -184,6 +220,30 @@
     },
     {
       "key": {
+        "uuid": "5e1e41cd_96a35f23",
+        "filename": "cc/input/scroll_customization.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-01T19:41:50Z",
+      "side": 1,
+      "message": "Its type is ScrollCustomization but it is used as a mask to filter only applicable\nvalues from element scroll customization value. I am fine with either using ScrollCustomizationDirection or ScrollCustomizationMask but I think \nthe name change helps to avoid confusion with Element.GetScrollCustomization.\n\n\n\n\u003e Adding the inline modifier will make sure that we get different definitions of inline in different translation units. Without inline there will be link errors due to multiple definitions of the cc::GetScrollCustomizationFromScrollStateData.\n\nI don\u0027t think you get a link error due to duplicate definition but rather you may be\ngetting one because the cc definition is not exported. Try exporting it and see if\ninline is no longer needed.",
+      "parentUuid": "548486fb_65dfa7e6",
+      "range": {
+        "startLine": 94,
+        "startChar": 27,
+        "endLine": 94,
+        "endChar": 68
+      },
+      "revId": "8a31dab0139b0909e6a193d7cc857246ecb4d28f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c5d12096_1fec7bfc",
         "filename": "cc/input/scroll_customization.h",
         "patchSetId": 9
@@ -219,6 +279,30 @@
       "side": 1,
       "message": "Thanks. Good suggestion! I believe you are referring to examples such as this: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/input/ScrollManager.cpp?rcl\u003d2cf2b39b0730d15af71ac6e1e24125bcce663fe0\u0026l\u003d142\n\nI think it is a good idea but it should perhaps be added to ScrollState as opposed to ScrollStateData which is more of a \"Raw\" value.\n\nI have added ScrollState::effectiveDeltaX/Y(). If this sticks I can go ahead (later) and refactor the code base to use the newly added methods).",
       "parentUuid": "c5d12096_1fec7bfc",
+      "range": {
+        "startLine": 98,
+        "startChar": 9,
+        "endLine": 98,
+        "endChar": 16
+      },
+      "revId": "8a31dab0139b0909e6a193d7cc857246ecb4d28f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b32ab301_eb8698ab",
+        "filename": "cc/input/scroll_customization.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-01T19:41:50Z",
+      "side": 1,
+      "message": "sgtm.",
+      "parentUuid": "a4601e3d_9257dc21",
       "range": {
         "startLine": 98,
         "startChar": 9,
