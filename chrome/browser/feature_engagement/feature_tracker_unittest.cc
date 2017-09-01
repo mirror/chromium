@@ -11,6 +11,7 @@
 #include "base/run_loop.h"
 #include "base/sequenced_task_runner.h"
 #include "base/test/scoped_feature_list.h"
+#include "base/time/time.h"
 #include "chrome/browser/feature_engagement/session_duration_updater.h"
 #include "chrome/browser/feature_engagement/session_duration_updater_factory.h"
 #include "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker.h"
@@ -29,7 +30,7 @@ namespace feature_engagement {
 
 namespace {
 
-const int kTestTimeInMinutes = 100;
+const int kTestTimeDeltaInMinutes = 100;
 const int kTestTimeSufficentInMinutes = 110;
 const int kTestTimeInsufficientInMinutes = 90;
 const char kTestProfileName[] = "test-profile";
@@ -40,16 +41,17 @@ class TestFeatureTracker : public FeatureTracker {
       : FeatureTracker(
             profile,
             feature_engagement::SessionDurationUpdaterFactory::GetInstance()
-                ->GetForProfile(profile)),
+                ->GetForProfile(profile),
+            &kIPHNewTabFeature,
+            base::TimeDelta::FromMinutes(kTestTimeDeltaInMinutes)),
         pref_service_(
             base::MakeUnique<sync_preferences::TestingPrefServiceSyncable>()) {
     SessionDurationUpdater::RegisterProfilePrefs(pref_service_->registry());
   }
 
-  int GetSessionTimeRequiredToShowInMinutes() override {
-    return kTestTimeInMinutes;
+  base::TimeDelta GetSessionTimeRequiredToShowWrapper() {
+    return GetSessionTimeRequiredToShow();
   }
-
   void OnSessionTimeMet() override {}
 
  private:
@@ -124,6 +126,13 @@ TEST_F(FeatureTrackerTest, TestAddAndRemoveObservers) {
   mock_feature_tracker_.get()->RemoveSessionDurationObserver();
 
   EXPECT_FALSE(mock_feature_tracker_->IsObserving());
+}
+
+// Test that session time defaults to the time in the constructor.
+TEST_F(FeatureTrackerTest, TestSessionTimeWithNoFieldTrialValue) {
+  EXPECT_EQ(mock_feature_tracker_->GetSessionTimeRequiredToShowWrapper(),
+            base::TimeDelta::FromMinutes(kTestTimeDeltaInMinutes));
+  mock_feature_tracker_.get()->RemoveSessionDurationObserver();
 }
 
 }  // namespace
