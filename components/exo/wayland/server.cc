@@ -2280,6 +2280,17 @@ class WaylandRemoteShell : public WMHelper::TabletModeObserver,
                        ? ZCR_REMOTE_SHELL_V1_LAYOUT_MODE_TABLET
                        : ZCR_REMOTE_SHELL_V1_LAYOUT_MODE_WINDOWED;
 
+    if (wl_resource_get_version(remote_shell_resource_) >= 8) {
+      float scale_factor =
+          WMHelper::GetInstance()->GetDefaultDeviceScaleFactor();
+      // Send using 16.16 fixed point.
+      const int kDecimalBits = 16;
+      int32_t fixed_scale =
+          static_cast<int32_t>(scale_factor * (1 << kDecimalBits));
+      zcr_remote_shell_v1_send_default_device_scale_factor(
+          remote_shell_resource_, fixed_scale);
+    }
+
     SendDisplayMetrics();
     SendActivated(helper->GetActiveWindow(), nullptr);
   }
@@ -2602,7 +2613,7 @@ const struct zcr_remote_shell_v1_interface remote_shell_implementation = {
     remote_shell_destroy, remote_shell_get_remote_surface,
     remote_shell_get_notification_surface};
 
-const uint32_t remote_shell_version = 7;
+const uint32_t remote_shell_version = 8;
 
 void bind_remote_shell(wl_client* client,
                        void* data,
