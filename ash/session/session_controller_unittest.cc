@@ -96,6 +96,7 @@ class SessionControllerTest : public testing::Test {
     session->user_info->account_id = AccountId::FromUserEmail(email);
     session->user_info->display_name = email;
     session->user_info->display_email = email;
+    session->user_info->is_new_profile = false;
 
     controller_->UpdateUserSession(std::move(session));
   }
@@ -369,6 +370,134 @@ TEST_F(SessionControllerTest, IsUserChild) {
 
   // Child accounts are supervised.
   EXPECT_TRUE(controller()->IsUserSupervised());
+}
+
+using SessionControllerPrefsTest = NoSessionAshTestBase;
+
+// Verifies that ShellObserver is notified for PrefService changes.
+TEST_F(SessionControllerPrefsTest, Observer) {
+  constexpr char kUser1[] = "user1@test.com";
+  constexpr char kUser2[] = "user2@test.com";
+  const AccountId kUserAccount1 = AccountId::FromUserEmail(kUser1);
+  const AccountId kUserAccount2 = AccountId::FromUserEmail(kUser2);
+
+  TestSessionObserver observer;
+  SessionController* controller = Shell::Get()->session_controller();
+  controller->AddObserver(&observer);
+
+  // Setup 2 users.
+  TestSessionControllerClient* session = GetSessionControllerClient();
+  // Disable auto-provision of PrefService for each user.
+  constexpr bool kEnableSettings = true;
+  constexpr bool kProvidePrefService = false;
+  session->AddUserSession(kUser1, user_manager::USER_TYPE_REGULAR,
+                          kEnableSettings, kProvidePrefService);
+  session->AddUserSession(kUser2, user_manager::USER_TYPE_REGULAR,
+                          kEnableSettings, kProvidePrefService);
+
+  // The observer is not notified because the PrefService for kUser1 is not yet
+  // ready.
+  session->SwitchActiveUser(kUserAccount1);
+  EXPECT_EQ(nullptr, observer.last_user_pref_service());
+
+  auto pref_service = base::MakeUnique<TestingPrefServiceSimple>();
+  Shell::RegisterProfilePrefs(pref_service->registry());
+  controller->ProvideUserPrefServiceForTest(kUserAccount1,
+                                            std::move(pref_service));
+  EXPECT_EQ(controller->GetUserPrefServiceForUser(kUserAccount1),
+            observer.last_user_pref_service());
+  EXPECT_EQ(controller->GetUserPrefServiceForUser(kUserAccount1),
+            controller->GetLastActiveUserPrefService());
+
+  observer.clear_last_user_pref_service();
+
+  // Switching to a user for which prefs are not ready does not notify and
+  // GetLastActiveUserPrefService() returns the old PrefService.
+  session->SwitchActiveUser(AccountId::FromUserEmail(kUser2));
+  EXPECT_EQ(nullptr, observer.last_user_pref_service());
+  EXPECT_EQ(controller->GetUserPrefServiceForUser(kUserAccount1),
+            controller->GetLastActiveUserPrefService());
+
+  session->SwitchActiveUser(AccountId::FromUserEmail(kUser1));
+  EXPECT_EQ(controller->GetUserPrefServiceForUser(kUserAccount1),
+            observer.last_user_pref_service());
+  EXPECT_EQ(controller->GetUserPrefServiceForUser(kUserAccount1),
+            controller->GetLastActiveUserPrefService());
+
+  // There should be no notification about a PrefService for an inactive user
+  // becoming initialized.
+  observer.clear_last_user_pref_service();
+  pref_service = base::MakeUnique<TestingPrefServiceSimple>();
+  Shell::RegisterProfilePrefs(pref_service->registry());
+  controller->ProvideUserPrefServiceForTest(kUserAccount2,
+                                            std::move(pref_service));
+  EXPECT_EQ(nullptr, observer.last_user_pref_service());
+
+  session->SwitchActiveUser(AccountId::FromUserEmail(kUser2));
+  EXPECT_EQ(controller->GetUserPrefServiceForUser(kUserAccount2),
+            observer.last_user_pref_service());
+  EXPECT_EQ(controller->GetUserPrefServiceForUser(kUserAccount2),
+            controller->GetLastActiveUserPrefService());
+
+  controller->RemoveObserver(&observer);
+}
+
+TEST_F(SessionControllerTest, GetUserType) {
+  // Child accounts
+  mojom::UserSessionPtr session = mojom::UserSession::New();
+  session->session_id = 1u;
+  session->user_info = mojom::UserInfo::New();
+  session->user_info->type = user_manager::USER_TYPE_CHILD;
+  controller()->UpdateUserSession(std::move(session));
+  EXPECT_EQ(user_manager::USER_TYPE_CHILD, controller()->GetUserType());
+
+  // Regular accounts
+  session = mojom::UserSession::New();
+  session->session_id = 1u;
+  session->user_info = mojom::UserInfo::New();
+  session->user_info->type = user_manager::USER_TYPE_REGULAR;
+  controller()->UpdateUserSession(std::move(session));
+  EXPECT_EQ(user_manager::USER_TYPE_REGULAR, controller()->GetUserType());
+}
+
+TEST_F(SessionControllerTest, IsUserPrimary) {
+  controller()->ClearUserSessionsForTest();
+
+  // The first added user is a primary user
+  mojom::UserSessionPtr session = mojom::UserSession::New();
+  session->session_id = 1u;
+  session->user_info = mojom::UserInfo::New();
+  session->user_info->type = user_manager::USER_TYPE_REGULAR;
+  controller()->UpdateUserSession(std::move(session));
+  EXPECT_TRUE(controller()->IsUserPrimary());
+
+  // The users added thereafter are not primary users
+  session = mojom::UserSession::New();
+  session->session_id = 2u;
+  session->user_info = mojom::UserInfo::New();
+  session->user_info->type = user_manager::USER_TYPE_REGULAR;
+  controller()->UpdateUserSession(std::move(session));
+  // Simulates user switching by changing the order of session_ids.
+  controller()->SetUserSessionOrder({2u, 1u});
+  EXPECT_FALSE(controller()->IsUserPrimary());
+}
+
+TEST_F(SessionControllerTest, IsUserFirstLogin) {
+  mojom::UserSessionPtr session = mojom::UserSession::New();
+  session->session_id = 1u;
+  session->user_info = mojom::UserInfo::New();
+  session->user_info->type = user_manager::USER_TYPE_REGULAR;
+  controller()->UpdateUserSession(std::move(session));
+  EXPECT_FALSE(controller()->IsUserFirstLogin());
+
+  // user_info->is_new_profile being true means the user is first time login.
+  session = mojom::UserSession::New();
+  session->session_id = 1u;
+  session->user_info = mojom::UserInfo::New();
+  session->user_info->type = user_manager::USER_TYPE_REGULAR;
+  session->user_info->is_new_profile = true;
+  controller()->UpdateUserSession(std::move(session));
+  EXPECT_TRUE(controller()->IsUserFirstLogin());
 }
 
 }  // namespace
