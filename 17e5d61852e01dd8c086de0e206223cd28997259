@@ -1,0 +1,232 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c67bf586_6d4270de",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-01T15:10:53Z",
+      "side": 1,
+      "message": "This is required to give the variable storage?",
+      "revId": "17e5d61852e01dd8c086de0e206223cd28997259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff689da2_5f7d3427",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-01T15:10:53Z",
+      "side": 1,
+      "message": "no new line",
+      "revId": "17e5d61852e01dd8c086de0e206223cd28997259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c81419a_8bbc43c2",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-01T15:10:53Z",
+      "side": 1,
+      "message": "outer_-\u003eworker_capacity_ ?",
+      "range": {
+        "startLine": 127,
+        "startChar": 14,
+        "endLine": 127,
+        "endChar": 30
+      },
+      "revId": "17e5d61852e01dd8c086de0e206223cd28997259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed97c51d_c834dbd0",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-01T15:10:53Z",
+      "side": 1,
+      "message": "Why is this different from the polling interval?",
+      "revId": "17e5d61852e01dd8c086de0e206223cd28997259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8c49ca1_f4196403",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-01T15:10:53Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand this requirement, add a comment explaining the reasoning behind this method\u0027s condition.",
+      "range": {
+        "startLine": 778,
+        "startChar": 9,
+        "endLine": 778,
+        "endChar": 74
+      },
+      "revId": "17e5d61852e01dd8c086de0e206223cd28997259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caee863e_9f44f828",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-01T15:10:53Z",
+      "side": 1,
+      "message": "// This value was set unscientifically based on intuition (blah blah on your intuition if there is one) and may be adjusted in the future.",
+      "revId": "17e5d61852e01dd8c086de0e206223cd28997259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eecb1e6_90b3c6ab",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-01T15:10:53Z",
+      "side": 1,
+      "message": "_for_testing_ ?",
+      "range": {
+        "startLine": 255,
+        "startChar": 38,
+        "endLine": 255,
+        "endChar": 39
+      },
+      "revId": "17e5d61852e01dd8c086de0e206223cd28997259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "945e275c_40495db5",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-01T15:10:53Z",
+      "side": 1,
+      "message": "I\u0027d assume you depend on sequencing here? Given this is already a sequence might as well store a SequencedTaskRunner?",
+      "revId": "17e5d61852e01dd8c086de0e206223cd28997259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92e956e3_0a83be52",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-01T15:10:53Z",
+      "side": 1,
+      "message": "Doesn\u0027t style required a space before { ?",
+      "range": {
+        "startLine": 65,
+        "startChar": 53,
+        "endLine": 65,
+        "endChar": 54
+      },
+      "revId": "17e5d61852e01dd8c086de0e206223cd28997259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b470437_778ace7b",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-01T15:10:53Z",
+      "side": 1,
+      "message": "Don\u0027t we have a helper for exactly that in our task_scheduler test utils?",
+      "revId": "17e5d61852e01dd8c086de0e206223cd28997259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "059f20d7_b2fae159",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-01T15:10:53Z",
+      "side": 1,
+      "message": "constexpr",
+      "revId": "17e5d61852e01dd8c086de0e206223cd28997259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c25b324f_a8e10459",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 868,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-01T15:10:53Z",
+      "side": 1,
+      "message": "Still need this?",
+      "revId": "17e5d61852e01dd8c086de0e206223cd28997259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
