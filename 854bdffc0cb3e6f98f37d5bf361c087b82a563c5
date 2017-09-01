@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "99c6f0ca_44e9109a",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_benchmarks/vr_browsing_mode_vr_performance.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-01T20:35:12Z",
+      "side": 1,
+      "message": "Applied naming scheme as discussed internally.",
+      "parentUuid": "285ea0da_57486370",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 33
+      },
+      "revId": "854bdffc0cb3e6f98f37d5bf361c087b82a563c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7319f560_8596dc56",
         "filename": "tools/perf/contrib/vr_benchmarks/vr_benchmarks/vr_browsing_mode_vr_performance.py",
         "patchSetId": 6
@@ -187,6 +211,30 @@
       "revId": "854bdffc0cb3e6f98f37d5bf361c087b82a563c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a4f6f4c_00a2fa80",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_benchmarks/vr_browsing_mode_vr_performance.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-01T20:35:12Z",
+      "side": 1,
+      "message": "Applied naming scheme as discussed internally.",
+      "parentUuid": "1974aa0c_9e620594",
+      "range": {
+        "startLine": 38,
+        "startChar": 11,
+        "endLine": 38,
+        "endChar": 47
+      },
+      "revId": "854bdffc0cb3e6f98f37d5bf361c087b82a563c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
