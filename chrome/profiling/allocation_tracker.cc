@@ -41,8 +41,8 @@ void AllocationTracker::OnFree(const FreePacket& free_packet) {
 }
 
 void AllocationTracker::OnComplete() {
-  std::move(complete_callback_).Run();
-  // Danger: object may be deleted now.
+  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
+                                                std::move(complete_callback_));
 }
 
 }  // namespace profiling
