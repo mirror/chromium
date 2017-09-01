@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "297c9854_6bb64156",
+        "filename": "chrome/browser/task_manager/providers/web_contents/renderer_task.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-09-01T21:37:15Z",
+      "side": 1,
+      "message": "FYI -- this is a little dangerous to plumb in here, because in the current implementation the RendererTask may outlive some of the RFH\u0027s that it represents. IIRC, that\u0027s why we converted to RPH at the soonest possible moment.\n\n-- e.g. A(B, B) in --site-per-process, the SubframeTask will be created for frames[0], but will represent frames[1] too. If frames[0] detaches, then |subframe| goes away, but the SubframeTask lives so long as frames[1] is around.",
+      "revId": "17f1e5e35b44e458c314ef51ba4f3a9c6ee53988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
