@@ -43,6 +43,7 @@
 #include "core/layout/LayoutMultiColumnFlowThread.h"
 #include "core/layout/LayoutMultiColumnSpannerPlaceholder.h"
 #include "core/layout/LayoutPagedFlowThread.h"
+#include "core/layout/LayoutTableCell.h"
 #include "core/layout/LayoutView.h"
 #include "core/layout/TextAutosizer.h"
 #include "core/layout/line/GlyphOverflow.h"
@@ -434,6 +435,9 @@ void LayoutBlockFlow::UpdateBlockLayout(bool relayout_children) {
       pagination_state_changed_ = false;
       state.SetPaginationStateChanged();
     }
+
+    if (IsTableCell() && ToLayoutTableCell(this)->IsFirstColumnCollapsed())
+      state.SetIsInCollapsedCell();
 
     LayoutChildren(relayout_children, layout_scope);
 

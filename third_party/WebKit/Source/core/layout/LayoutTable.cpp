@@ -1146,6 +1146,25 @@ LayoutTable::ColAndColGroup LayoutTable::SlowColElementAtAbsoluteColumn(
   return ColAndColGroup();
 }
 
+// Maps LayoutTableCol => absoluteColumnIndex,
+// an inverse of slowColElementAtAbsoluteColumn
+unsigned LayoutTable::ColElementToAbsoluteColumnIndex(
+    const LayoutTableCol* col_element) const {
+  unsigned col = 0;
+  for (LayoutTableCol* column_layout_object = FirstColumn();
+       column_layout_object;
+       column_layout_object = column_layout_object->NextColumn()) {
+    if (column_layout_object == col_element)
+      break;
+    if (column_layout_object->IsTableColumnGroupWithColumnChildren()) {
+      // Do nothing, span will increase with children
+    } else {
+      col += column_layout_object->Span();
+    }
+  }
+  return col;
+}
+
 void LayoutTable::RecalcSections() const {
   DCHECK(needs_section_recalc_);
 

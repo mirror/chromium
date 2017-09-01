@@ -762,6 +762,8 @@ void LayoutBox::UpdateAfterLayout() {
   if (HasLayer()) {
     Layer()->UpdateTransformationMatrix();
     Layer()->UpdateSizeAndScrollingAfterLayout();
+    Layer()->SetIsInCollapsedCell(
+        View()->GetLayoutState()->IsInCollapsedCell());
   }
 }
 
