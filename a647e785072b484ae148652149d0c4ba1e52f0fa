@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81fb1d9c_9c13c4e9",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-09-01T03:09:12Z",
+      "side": 1,
+      "message": "Nit: This comment seems out of date, as does the next one \u0027otherwise...\u0027. Can you update the comments to better explain the logic?",
+      "revId": "a647e785072b484ae148652149d0c4ba1e52f0fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
