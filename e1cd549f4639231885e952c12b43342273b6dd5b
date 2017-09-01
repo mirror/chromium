@@ -22,6 +22,126 @@
       "revId": "e1cd549f4639231885e952c12b43342273b6dd5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1f68586_83cf01c3",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-01T12:10:30Z",
+      "side": 1,
+      "message": "Do you have ETA to get rid of this in future? Could you add TODO for clean up?",
+      "revId": "e1cd549f4639231885e952c12b43342273b6dd5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "234677b9_b44664ca",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-01T12:10:30Z",
+      "side": 1,
+      "message": "Could you comment that, on admin console, it is mandatory for admins to set migration policy when ARC enabled preference is set?",
+      "range": {
+        "startLine": 176,
+        "startChar": 34,
+        "endLine": 176,
+        "endChar": 46
+      },
+      "revId": "e1cd549f4639231885e952c12b43342273b6dd5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2fa9733_c37fd896",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-01T12:10:30Z",
+      "side": 1,
+      "message": "In precise this looks not very correct. How about,\n\nIn this case, only a group of devices that had ARC M PlayStore enabled are allowed to migrate.\n\nNote: in ARC chrome code, we are trying to use \"available\" for the meaning that ARC image is installed. So, technically, it is not possible to see it from ARC enabled preference.",
+      "range": {
+        "startLine": 176,
+        "startChar": 48,
+        "endLine": 177,
+        "endChar": 61
+      },
+      "revId": "e1cd549f4639231885e952c12b43342273b6dd5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b354218a_9b40a2bb",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-01T12:10:30Z",
+      "side": 1,
+      "message": "Could you add DCHECK to see if kArcEnabled is actually managed?",
+      "range": {
+        "startLine": 178,
+        "startChar": 27,
+        "endLine": 179,
+        "endChar": 23
+      },
+      "revId": "e1cd549f4639231885e952c12b43342273b6dd5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c522318b_dad35781",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-01T12:10:30Z",
+      "side": 1,
+      "message": "Could you comment that IsArcPlayStoreEnabledForProfile cannot be used due to circular dependency?",
+      "revId": "e1cd549f4639231885e952c12b43342273b6dd5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b86669b_dd3f3b2e",
+        "filename": "chromeos/chromeos_switches.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-01T12:10:30Z",
+      "side": 1,
+      "message": "Clarification: This is only for M61 EDU device, right?\nI.e., this will be removed on M62 device etc? If so please add TODO to remove.",
+      "revId": "e1cd549f4639231885e952c12b43342273b6dd5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
