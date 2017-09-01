@@ -834,13 +834,18 @@ speech.toggleStartStop = function() {
  * Handles click events during speech recognition.
  * @param {boolean} shouldSubmit True if a query should be submitted.
  * @param {boolean} shouldRetry True if the interface should be restarted.
+ * @param {boolean} navigatingAway True if the browser is navigating away
+ *     from the NTP.
  * @private
  */
-speech.onClick_ = function(shouldSubmit, shouldRetry) {
+speech.onClick_ = function(shouldSubmit, shouldRetry, navigatingAway) {
   if (speech.finalResult_ && shouldSubmit) {
     speech.submitFinalResult_();
   } else if (speech.currentState_ == speech.State_.STOPPED && shouldRetry) {
     speech.restart();
+  } else if (speech.currentState_ == speech.State_.STOPPED && navigatingAway) {
+    // If the user clicks on a "Learn more" or "Details" support page link
+    // from an error message, do nothing, and let Chrome navigate to that page.
   } else {
     speech.abort_();
   }
@@ -868,7 +873,7 @@ let text = {};
  * ID for the link shown in error output.
  * @const
  */
-text.ERROR_LINK_ID = 'voice-text-area';
+text.ERROR_LINK_ID = 'voice-text-link';
 
 
 /**
@@ -993,21 +998,22 @@ text.updateTextArea = function(interimText, opt_finalText) {
 
 
 /**
- * Sets the text view to the initializing state.
+ * Sets the text view to the initializing state. The initializing message
+ * shown while waiting for permission is not displayed immediately, but after
+ * a short timeout. The reason for this is that the "Waiting..." message would
+ * still appear ("blink") every time a user opens Voice Search, even if they
+ * have already granted and persisted microphone permission for the NTP,
+ * and could therefore directly proceed to the "Speak now" message.
  */
 text.showInitializingMessage = function() {
-  const displayMessage = function() {
-    if (text.interim_.innerText == '') {
-      text.updateTextArea(speech.messages.waiting);
-    }
-  };
-
   text.interim_.textContent = '';
   text.final_.textContent = '';
 
-  // We give the interface some time to get the permission. Once permission
-  // is obtained, the ready message is displayed, in which case the
-  // initializing message won't be shown.
+  const displayMessage = function() {
+    if (text.interim_.textContent == '') {
+      text.updateTextArea(speech.messages.waiting);
+    }
+  };
   text.initializingTimer_ =
       window.setTimeout(displayMessage, text.INITIALIZING_TIMEOUT_MS_);
 };
@@ -1100,6 +1106,8 @@ text.getErrorLink_ = function(error) {
  * Clears the text elements.
  */
 text.clear = function() {
+  text.updateTextArea('');
+
   text.cancelListeningTimeout();
   window.clearTimeout(text.initializingTimer_);
 
@@ -1152,7 +1160,9 @@ text.getTextClassName_ = function() {
  */
 text.startListeningMessageAnimation_ = function() {
   const animateListeningText = function() {
-    if (text.interim_.innerText == speech.messages.ready) {
+    // TODO(oskopek): Substitute the fragile string comparison with a correct
+    // state condition.
+    if (text.interim_.textContent == speech.messages.ready) {
       text.updateTextArea(speech.messages.listening);
       text.interim_.classList.add(text.LISTENING_ANIMATION_CLASS_);
     }
@@ -1550,12 +1560,12 @@ view.onWindowClick_ = function(event) {
   if (!view.isVisible_) {
     return;
   }
-  const targetId = event.target.id;
-  const shouldRetry = (targetId == microphone.RED_BUTTON_ID ||
-                       targetId == text.ERROR_LINK_ID) &&
-      view.isNoMatchShown_;
-  const submitQuery =
-      targetId == microphone.RED_BUTTON_ID && !view.isNoMatchShown_;
-  view.onClick_(submitQuery, shouldRetry);
+  const linkClicked = event.target.id == text.ERROR_LINK_ID;
+  const micIconClicked = event.target.id == microphone.RED_BUTTON_ID;
+
+  const shouldRetry = (micIconClicked || linkClicked) && view.isNoMatchShown_;
+  const submitQuery = micIconClicked && !view.isNoMatchShown_;
+  const navigatingAway = linkClicked && !view.isNoMatchShown_;
+  view.onClick_(submitQuery, shouldRetry, navigatingAway);
 };
 /* END VIEW */
