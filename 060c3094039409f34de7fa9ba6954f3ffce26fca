@@ -103,6 +103,23 @@
       "revId": "060c3094039409f34de7fa9ba6954f3ffce26fca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1eb9a7d1_256c4df8",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/web-share/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-09-01T01:17:50Z",
+      "side": 1,
+      "message": "lgtm.\n\nIf you can\u0027t use the file: syntax (discussed above), just replace this with:\n\n  mgiuca@chromium.org\n  sammc@chromium.org",
+      "revId": "060c3094039409f34de7fa9ba6954f3ffce26fca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
