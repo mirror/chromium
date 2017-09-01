@@ -62,6 +62,7 @@ class CORE_EXPORT NGInlineLayoutAlgorithm final
                       LayoutUnit* line_left,
                       LayoutUnit inline_size,
                       LayoutUnit available_width);
+  void ApplyJustify(NGLineInfo*);
 
   LayoutUnit ComputeContentSize(const NGLineInfo&,
                                 const NGExclusionSpace&,
