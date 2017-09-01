@@ -8,7 +8,7 @@
 
 #include "base/memory/ptr_util.h"
 #include "build/build_config.h"
-#include "content/browser/background_fetch/background_fetch_response.h"
+#include "content/public/browser/background_fetch_response.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/download_item.h"
