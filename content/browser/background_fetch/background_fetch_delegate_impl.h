@@ -5,12 +5,11 @@
 #ifndef CONTENT_BROWSER_BACKGROUND_FETCH_BACKGROUND_FETCH_DELEGATE_IMPL_H_
 #define CONTENT_BROWSER_BACKGROUND_FETCH_BACKGROUND_FETCH_DELEGATE_IMPL_H_
 
-#include "content/browser/background_fetch/background_fetch_delegate.h"
-
 #include <memory>
 #include <string>
 
 #include "base/memory/weak_ptr.h"
+#include "content/public/browser/background_fetch_delegate.h"
 #include "content/public/browser/download_interrupt_reasons.h"
 
 namespace net {

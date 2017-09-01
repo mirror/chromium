@@ -7,8 +7,8 @@
 #include <vector>
 
 #include "base/memory/weak_ptr.h"
-#include "content/browser/background_fetch/background_fetch_delegate.h"
 #include "content/browser/background_fetch/background_fetch_test_base.h"
+#include "content/public/browser/background_fetch_delegate.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace content {
