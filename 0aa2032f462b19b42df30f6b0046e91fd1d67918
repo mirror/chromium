@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "6a933a11_2fdfc6ec",
+        "filename": "chrome/installer/linux/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-09-01T00:33:55Z",
+      "side": 1,
+      "message": "In gn, I believe //a/b/c is an alias for //a/b/c:c",
+      "parentUuid": "ac487c97_a52efc85",
+      "revId": "0aa2032f462b19b42df30f6b0046e91fd1d67918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1119fece_f1c9c0d4",
         "filename": "chrome/installer/linux/strip-chrome-binary.py",
         "patchSetId": 1
