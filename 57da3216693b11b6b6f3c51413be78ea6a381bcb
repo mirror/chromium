@@ -22,6 +22,30 @@
       "revId": "57da3216693b11b6b6f3c51413be78ea6a381bcb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fd85541_f089f91a",
+        "filename": "chrome/test/chromedriver/window_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-09-01T17:53:49Z",
+      "side": 1,
+      "message": "Touch events don\u0027t have a \"button\" or \"finger\" property. It is implied that a finger must be touching the screen during a touch move, while the mouse can be moved with or without button pressed.",
+      "parentUuid": "0cacec31_0f35ed4d",
+      "range": {
+        "startLine": 674,
+        "startChar": 7,
+        "endLine": 674,
+        "endChar": 23
+      },
+      "revId": "57da3216693b11b6b6f3c51413be78ea6a381bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
