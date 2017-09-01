@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e0c71b3_9e9564e0",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 982,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-01T08:37:33Z",
+      "side": 1,
+      "message": "nit: non-null then? (both params)",
+      "revId": "494b12dc623aed0113b73f7a18d626e8284d8891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27fabf6d_f4b99024",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 1436,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-01T08:37:33Z",
+      "side": 1,
+      "message": "Is this still accurate, if it\u0027s also called from updateSpeechResult below?\nAlso, s/is receiving/starts receiving/ ?",
+      "revId": "494b12dc623aed0113b73f7a18d626e8284d8891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50f4586d_debfcf54",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 1455,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-01T08:37:33Z",
+      "side": 1,
+      "message": "When would this happen? (Add a comment?)",
+      "revId": "494b12dc623aed0113b73f7a18d626e8284d8891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

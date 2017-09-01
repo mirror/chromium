@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a6f9873_e3e92530",
+        "filename": "chrome/test/data/local_ntp/voice_view_browsertest.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-01T08:37:33Z",
+      "side": 1,
+      "message": "I don\u0027t quite know how to read this comment. What triggers it firing or not firing? If both cases can happen, can we test both?",
+      "range": {
+        "startLine": 216,
+        "startChar": 64,
+        "endLine": 216,
+        "endChar": 0
+      },
+      "revId": "3f5c09697bbe3473f0c9f705717b003538f65647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5b06d26_719c5752",
+        "filename": "chrome/test/data/local_ntp/voice_view_browsertest.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-01T08:37:33Z",
+      "side": 1,
+      "message": "nit: \"retry\" and \"submit\" are mutually exclusive, IMO it\u0027s enough to say \"submits the query\" here, without mentioning retrying.",
+      "range": {
+        "startLine": 358,
+        "startChar": 38,
+        "endLine": 358,
+        "endChar": 0
+      },
+      "revId": "3f5c09697bbe3473f0c9f705717b003538f65647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69b56b2d_c2ee0fcb",
+        "filename": "chrome/test/data/local_ntp/voice_view_browsertest.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-01T08:37:33Z",
+      "side": 1,
+      "message": "Also check that the voice search view got hidden again?",
+      "range": {
+        "startLine": 408,
+        "startChar": 44,
+        "endLine": 408,
+        "endChar": 0
+      },
+      "revId": "3f5c09697bbe3473f0c9f705717b003538f65647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

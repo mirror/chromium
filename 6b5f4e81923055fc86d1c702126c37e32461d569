@@ -119,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "66a3e52f_634cc3c2",
+        "filename": "chrome/test/data/local_ntp/voice_view_browsertest.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-01T08:37:33Z",
+      "side": 1,
+      "message": "SGTM",
+      "parentUuid": "982a878a_fd34724a",
+      "revId": "6b5f4e81923055fc86d1c702126c37e32461d569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ec2dece_68622ad3",
         "filename": "chrome/test/data/local_ntp/voice_view_browsertest.js",
         "patchSetId": 2
