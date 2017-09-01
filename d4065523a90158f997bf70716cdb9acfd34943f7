@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "22098bf7_c53769ce",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 754,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-01T21:41:50Z",
+      "side": 1,
+      "message": "nit: no need for this now that you have a variable name",
+      "range": {
+        "startLine": 754,
+        "startChar": 49,
+        "endLine": 754,
+        "endChar": 74
+      },
+      "revId": "d4065523a90158f997bf70716cdb9acfd34943f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fd5b0e7a_e38c80c6",
         "filename": "services/viz/public/interfaces/compositing/shared_quad_state.mojom",
         "patchSetId": 52
