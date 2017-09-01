@@ -4443,6 +4443,11 @@ void LocalFrameView::ScrollContents(const IntSize& scroll_delta) {
   FrameRectsChanged();
 }
 
+FloatPoint LocalFrameView::ContentsToFrame(
+    const FloatPoint& point_in_content_space) const {
+  return point_in_content_space - GetScrollOffset();
+}
+
 IntPoint LocalFrameView::ContentsToFrame(
     const IntPoint& point_in_content_space) const {
   return point_in_content_space - ScrollOffsetInt();

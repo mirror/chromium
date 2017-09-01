@@ -566,6 +566,22 @@ bool Layer::ShouldDraw() const {
 }
 
 // static
+void Layer::ConvertPointFToLayer(const Layer* source,
+                                 const Layer* target,
+                                 gfx::PointF* point) {
+  if (source == target)
+    return;
+
+  const Layer* root_layer = GetRoot(source);
+  CHECK_EQ(root_layer, GetRoot(target));
+
+  if (source != root_layer)
+    source->ConvertFloatPointForAncestor(root_layer, point);
+  if (target != root_layer)
+    target->ConvertFloatPointFromAncestor(root_layer, point);
+}
+
+// static
 void Layer::ConvertPointToLayer(const Layer* source,
                                 const Layer* target,
                                 gfx::Point* point) {
@@ -1030,6 +1046,26 @@ void Layer::StackRelativeTo(Layer* child, Layer* other, bool above) {
 
   child->cc_layer_->RemoveFromParent();
   cc_layer_->InsertChild(child->cc_layer_, dest_i);
+}
+
+bool Layer::ConvertFloatPointForAncestor(const Layer* ancestor,
+                                         gfx::PointF* point) const {
+  gfx::Transform transform;
+  bool result = GetTargetTransformRelativeTo(ancestor, &transform);
+  auto p = gfx::Point3F(*point);
+  transform.TransformPoint(&p);
+  *point = p.AsPointF();
+  return result;
+}
+
+bool Layer::ConvertFloatPointFromAncestor(const Layer* ancestor,
+                                          gfx::PointF* point) const {
+  gfx::Transform transform;
+  bool result = GetTargetTransformRelativeTo(ancestor, &transform);
+  auto p = gfx::Point3F(*point);
+  transform.TransformPointReverse(&p);
+  *point = p.AsPointF();
+  return result;
 }
 
 bool Layer::ConvertPointForAncestor(const Layer* ancestor,
