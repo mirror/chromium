@@ -141,6 +141,32 @@ CrasAudioHandler* CrasAudioHandler::Get() {
 }
 
 void CrasAudioHandler::OnVideoCaptureStarted(media::VideoFacingMode facing) {
+  if (!main_task_runner_->BelongsToCurrentThread()) {
+    main_task_runner_->PostTask(
+        FROM_HERE,
+        base::BindOnce(&CrasAudioHandler::OnVideoCaptureStartedOnMainThread,
+                       weak_ptr_factory_.GetWeakPtr(), facing));
+    return;
+  }
+  // Unittest may call this from the main thread.
+  OnVideoCaptureStartedOnMainThread(facing);
+}
+
+void CrasAudioHandler::OnVideoCaptureStopped(media::VideoFacingMode facing) {
+  if (!main_task_runner_->BelongsToCurrentThread()) {
+    main_task_runner_->PostTask(
+        FROM_HERE,
+        base::BindOnce(&CrasAudioHandler::OnVideoCaptureStoppedOnMainThread,
+                       weak_ptr_factory_.GetWeakPtr(), facing));
+    return;
+  }
+  // Unittest may call this from the main thread.
+  OnVideoCaptureStoppedOnMainThread(facing);
+}
+
+void CrasAudioHandler::OnVideoCaptureStartedOnMainThread(
+    media::VideoFacingMode facing) {
+  DCHECK(main_task_runner_->BelongsToCurrentThread());
   // Do nothing if the device doesn't have both front and rear microphones.
   if (!HasDualInternalMic())
     return;
@@ -178,7 +204,9 @@ void CrasAudioHandler::OnVideoCaptureStarted(media::VideoFacingMode facing) {
   ActivateMicForCamera(facing);
 }
 
-void CrasAudioHandler::OnVideoCaptureStopped(media::VideoFacingMode facing) {
+void CrasAudioHandler::OnVideoCaptureStoppedOnMainThread(
+    media::VideoFacingMode facing) {
+  DCHECK(main_task_runner_->BelongsToCurrentThread());
   // Do nothing if the device doesn't have both front and rear microphones.
   if (!HasDualInternalMic())
     return;
@@ -321,7 +349,6 @@ const AudioDevice* CrasAudioHandler::GetDeviceByType(AudioDeviceType type) {
 }
 
 void CrasAudioHandler::GetDefaultOutputBufferSize(int32_t* buffer_size) const {
-  base::AutoLock auto_lock(default_output_buffer_size_lock_);
   *buffer_size = default_output_buffer_size_;
 }
 
@@ -657,6 +684,7 @@ CrasAudioHandler::CrasAudioHandler(
           kHDMIRediscoverGracePeriodDurationInMs),
       hdmi_rediscovering_(false),
       default_output_buffer_size_(kDefaultOutputBufferSize),
+      main_task_runner_(base::ThreadTaskRunnerHandle::Get()),
       weak_ptr_factory_(this) {
   if (!audio_pref_handler.get())
     return;
@@ -1598,7 +1626,6 @@ void CrasAudioHandler::HandleGetDefaultOutputBufferSize(int32_t buffer_size,
     return;
   }
 
-  base::AutoLock auto_lock(default_output_buffer_size_lock_);
   default_output_buffer_size_ = buffer_size;
 }
 
