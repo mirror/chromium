@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "d7ef06b0_fb750726",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/accelerometer/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-09-01T19:00:33Z",
+      "side": 1,
+      "message": "Nothing will break, but this directive will be a no-op and the people won\u0027t be CC\u0027ed (they are currently not CC\u0027ed because of the lack of OWNERS anyway).\n\nFiled crbug.com/761365 for the feature request.",
+      "parentUuid": "d949cd5f_1ba7bee3",
+      "revId": "060c3094039409f34de7fa9ba6954f3ffce26fca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72f10a40_64744361",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/input-events/OWNERS",
         "patchSetId": 2
