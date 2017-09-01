@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "48ed1f85_b57fbf21",
+        "filename": "chrome/installer/linux/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-09-01T00:59:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dad8d4ea_155432e2",
+      "revId": "c1828d740e43b4b3f737c717a0a7b248841201a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0ac1040_2fb37b0c",
         "filename": "chrome/installer/linux/debian/check-package-constraints-satisfied.py",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "c1828d740e43b4b3f737c717a0a7b248841201a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87ba7027_1151f75c",
+        "filename": "chrome/installer/linux/debian/check-package-constraints-satisfied.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-09-01T00:59:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0ac1040_2fb37b0c",
+      "revId": "c1828d740e43b4b3f737c717a0a7b248841201a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2fa6c016_462c8519",
+        "filename": "chrome/installer/linux/debian/check-package-constraints-satisfied.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-09-01T00:59:34Z",
+      "side": 1,
+      "message": "added a case for \u0027arm\u0027, and verified that it works properly on the arm binary.  Note, however, that this is using the amd64 package versions to do the check.  So I guess we could either change dist-package-versions.json to include different arches or just exit(0) on non-amd64 like you said.  I\u0027ll leave the decision to you",
+      "parentUuid": "8344c41c_d72756a0",
+      "revId": "c1828d740e43b4b3f737c717a0a7b248841201a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18735379_24b7e7d1",
         "filename": "chrome/installer/linux/debian/check-package-constraints-satisfied.py",
         "patchSetId": 6
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-01T00:27:20Z",
       "side": 1,
       "message": "How do we get empty |dep| values? (Too lazy to check)",
+      "revId": "c1828d740e43b4b3f737c717a0a7b248841201a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62927c15_06e279e4",
+        "filename": "chrome/installer/linux/debian/check-package-constraints-satisfied.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-09-01T00:59:34Z",
+      "side": 1,
+      "message": "If there are no dependencies, there will just be a single dep \"\"",
+      "parentUuid": "18735379_24b7e7d1",
       "revId": "c1828d740e43b4b3f737c717a0a7b248841201a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
