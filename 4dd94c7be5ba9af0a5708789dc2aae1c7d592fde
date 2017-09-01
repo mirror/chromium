@@ -307,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "44b26c17_7f01f73a",
+        "filename": "chrome/test/data/webui/sys_internals/sys_internals_browsertest.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-01T04:18:10Z",
+      "side": 1,
+      "message": "I think that\u0027s referring to block scoping, as opposed to function scoping. Since this is all function scoping, it\u0027s fine to use function X().",
+      "parentUuid": "fd2a42e9_1683aa83",
+      "range": {
+        "startLine": 44,
+        "startChar": 4,
+        "endLine": 44,
+        "endChar": 9
+      },
+      "revId": "4dd94c7be5ba9af0a5708789dc2aae1c7d592fde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "926c0fb1_2610789f",
         "filename": "chrome/test/data/webui/sys_internals/sys_internals_browsertest.js",
         "patchSetId": 17
@@ -436,6 +460,30 @@
     },
     {
       "key": {
+        "uuid": "52fc9853_7fdd16c6",
+        "filename": "chrome/test/data/webui/sys_internals/sys_internals_browsertest.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-01T04:18:10Z",
+      "side": 1,
+      "message": "I don\u0027t think this kind of check is valuable, just remove this and the value checks from isCounter.",
+      "parentUuid": "9cd6c6bb_3088e260",
+      "range": {
+        "startLine": 120,
+        "startChar": 8,
+        "endLine": 120,
+        "endChar": 45
+      },
+      "revId": "4dd94c7be5ba9af0a5708789dc2aae1c7d592fde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "92303f63_e104dc6e",
         "filename": "chrome/test/data/webui/sys_internals/sys_internals_browsertest.js",
         "patchSetId": 17
@@ -465,6 +513,24 @@
       "side": 1,
       "message": "I follow this doc: https://www.chromium.org/developers/updating-webui-for-material-design/testing-webui-with-mocha\nIt says that for asynchronous function use this callback function |done| and pass a JS Error to it when test failed.",
       "parentUuid": "92303f63_e104dc6e",
+      "revId": "4dd94c7be5ba9af0a5708789dc2aae1c7d592fde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61821fa8_f74ca753",
+        "filename": "chrome/test/data/webui/sys_internals/sys_internals_browsertest.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-01T04:18:10Z",
+      "side": 1,
+      "message": "Optional: I think that doc is out of date. At the very least, nothing else in Chrome does it this way. history_list_test.js:237 uses a done and just has an assertEquals() before it.\n\nI\u0027ll leave this one up to you.",
+      "parentUuid": "57b2441c_2916b22c",
       "revId": "4dd94c7be5ba9af0a5708789dc2aae1c7d592fde",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
