@@ -209,6 +209,8 @@ class CORE_EXPORT Animation final : public EventTargetWithInlineData,
 
   void InvalidateKeyframeEffect(const TreeScope&);
 
+  bool CouldBeCompositedButNot() const { return could_be_composited_but_not_; }
+
   DECLARE_VIRTUAL_TRACE();
 
  protected:
@@ -369,6 +371,14 @@ class CORE_EXPORT Animation final : public EventTargetWithInlineData,
   bool state_is_being_updated_;
 
   bool effect_suppressed_;
+
+  // crbug.com/758439: In order to have better animation targeting metrics, we'd
+  // like to track whether there are main-thread animations which might be
+  // composited. This variable is initially false, it is set to be true after
+  // the call to "CheckCanStartAnimationOnCompositor" according to its return
+  // value. In other words, this bit is true only for an animation that hits
+  // the "Experiment group" for the experiment described in crbug.com/754471.
+  bool could_be_composited_but_not_ = false;
 
   FRIEND_TEST_ALL_PREFIXES(AnimationAnimationTest,
                            NoCompositeWithoutCompositedElementId);

@@ -52,6 +52,11 @@ class SchedulerClient {
   virtual void ScheduledActionBeginMainFrameNotExpectedUntil(
       base::TimeTicks time) = 0;
 
+  // Functions used for reporting anmation targeting UMA, crbug.com/758439.
+  virtual size_t GetNumberOfCompositedAnimations() const = 0;
+  virtual size_t GetNumberOfMainThreadAnimations() const = 0;
+  virtual size_t GetNumberOfMainThreadCouldBeCompositedAnimations() const = 0;
+
  protected:
   virtual ~SchedulerClient() {}
 };

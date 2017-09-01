@@ -5,6 +5,7 @@
 #include "cc/animation/animation_host.h"
 
 #include "cc/animation/animation_id_provider.h"
+#include "cc/animation/animation_player.h"
 #include "cc/animation/animation_timeline.h"
 #include "cc/test/animation_test_common.h"
 #include "cc/test/animation_timelines_test_common.h"
