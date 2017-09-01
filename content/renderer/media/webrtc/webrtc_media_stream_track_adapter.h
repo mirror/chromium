@@ -43,7 +43,7 @@ class CONTENT_EXPORT WebRtcMediaStreamTrackAdapter
   static scoped_refptr<WebRtcMediaStreamTrackAdapter> CreateRemoteTrackAdapter(
       PeerConnectionDependencyFactory* factory,
       const scoped_refptr<base::SingleThreadTaskRunner>& main_thread,
-      webrtc::MediaStreamTrackInterface* webrtc_track);
+      scoped_refptr<webrtc::MediaStreamTrackInterface> webrtc_track);
   // Must be called before all external references are released (i.e. before
   // destruction). Invoke on the main thread. Disposing may finish
   // asynchronously using the webrtc signaling thread and the main thread. After
@@ -88,9 +88,9 @@ class CONTENT_EXPORT WebRtcMediaStreamTrackAdapter
   // Initialization of remote tracks starts on the webrtc signaling thread and
   // finishes on the main thread.
   void InitializeRemoteAudioTrack(
-      webrtc::AudioTrackInterface* webrtc_audio_track);
+      scoped_refptr<webrtc::AudioTrackInterface> webrtc_audio_track);
   void InitializeRemoteVideoTrack(
-      webrtc::VideoTrackInterface* webrtc_video_track);
+      scoped_refptr<webrtc::VideoTrackInterface> webrtc_video_track);
   void FinalizeRemoteTrackInitializationOnMainThread();
   void EnsureTrackIsInitialized();
 
