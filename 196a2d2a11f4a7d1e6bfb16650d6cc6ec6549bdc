@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "adc876a9_559f7818",
+        "filename": "chrome/test/data/extensions/api_test/networking_private/chromeos/test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-01T14:42:22Z",
+      "side": 1,
+      "message": "Why not just have\nfunction listenForChanges(changes) {\n  ...\n  chrome.networkingPrivate.onNetworksChanged.removeListener(listenForChanges);\n}\nthis.start \u003d function () {\n  chrome.networkingPrivate.onNetworksChanged.addListener(listenForChanges);\n}\n\nand not bother with assigning it as a property of |this|, and also avoid the need for |self|?",
+      "revId": "196a2d2a11f4a7d1e6bfb16650d6cc6ec6549bdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c73f447_dbccd953",
         "filename": "chrome/test/data/extensions/api_test/networking_private/test.js",
         "patchSetId": 4
@@ -65,6 +82,40 @@
         "endLine": 870,
         "endChar": 4
       },
+      "revId": "196a2d2a11f4a7d1e6bfb16650d6cc6ec6549bdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab0be753_28d31b12",
+        "filename": "extensions/browser/api/networking_private/networking_private_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-01T14:42:22Z",
+      "side": 1,
+      "message": "Why CHECK() after EXTENSION_FUNCTION_VALIDATE()?",
+      "revId": "196a2d2a11f4a7d1e6bfb16650d6cc6ec6549bdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6baa281d_fc978dc8",
+        "filename": "extensions/common/api/networking_onc.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 975,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-01T14:42:22Z",
+      "side": 1,
+      "message": "Does it make sense to add this to the public API?  (You\u0027ll know better than I, just checking)",
       "revId": "196a2d2a11f4a7d1e6bfb16650d6cc6ec6549bdc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
