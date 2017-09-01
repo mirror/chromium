@@ -47,6 +47,7 @@ public class SiteSettingsPreferences extends PreferenceFragment
     static final String NOTIFICATIONS_KEY = "notifications";
     static final String POPUPS_KEY = "popups";
     static final String PROTECTED_CONTENT_KEY = "protected_content";
+    static final String SOUND_KEY = "sound";
     static final String STORAGE_KEY = "use_storage";
     static final String TRANSLATE_KEY = "translate";
     static final String USB_KEY = "usb";
@@ -101,6 +102,8 @@ public class SiteSettingsPreferences extends PreferenceFragment
             return ContentSettingsType.CONTENT_SETTINGS_TYPE_POPUPS;
         } else if (PROTECTED_CONTENT_KEY.equals(key)) {
             return ContentSettingsType.CONTENT_SETTINGS_TYPE_PROTECTED_MEDIA_IDENTIFIER;
+        } else if (SOUND_KEY.equals(key)) {
+            return ContentSettingsType.CONTENT_SETTINGS_TYPE_SOUND;
         }
         return -1;
     }
@@ -120,6 +123,7 @@ public class SiteSettingsPreferences extends PreferenceFragment
             getPreferenceScreen().removePreference(findPreference(MICROPHONE_KEY));
             getPreferenceScreen().removePreference(findPreference(NOTIFICATIONS_KEY));
             getPreferenceScreen().removePreference(findPreference(POPUPS_KEY));
+            getPreferenceScreen().removePreference(findPreference(SOUND_KEY));
             getPreferenceScreen().removePreference(findPreference(STORAGE_KEY));
             getPreferenceScreen().removePreference(findPreference(TRANSLATE_KEY));
             getPreferenceScreen().removePreference(findPreference(USB_KEY));
@@ -171,6 +175,7 @@ public class SiteSettingsPreferences extends PreferenceFragment
             websitePrefs.add(MICROPHONE_KEY);
             websitePrefs.add(NOTIFICATIONS_KEY);
             websitePrefs.add(POPUPS_KEY);
+            websitePrefs.add(SOUND_KEY);
         }
 
         // Initialize the summary and icon for all preferences that have an
@@ -200,6 +205,8 @@ public class SiteSettingsPreferences extends PreferenceFragment
                 checked = PrefServiceBridge.getInstance().popupsEnabled();
             } else if (PROTECTED_CONTENT_KEY.equals(prefName)) {
                 checked = PrefServiceBridge.getInstance().isProtectedMediaIdentifierEnabled();
+            } else if (SOUND_KEY.equals(prefName)) {
+                checked = PrefServiceBridge.getInstance().isSoundEnabled();
             }
 
             int contentType = keyToContentSettingsType(prefName);
