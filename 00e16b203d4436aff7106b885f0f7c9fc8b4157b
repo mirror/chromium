@@ -284,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "d2af16da_27a909c2",
+        "filename": "content/common/sandbox_linux/bpf_gpu_policy_linux.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1000985
+      },
+      "writtenOn": "2017-09-01T15:47:32Z",
+      "side": 1,
+      "message": "I don\u0027t think that\u0027s the case. The compiler is smart enough to eliminate the dead code resulting from a function as:\n\ninline bool UseVAAPI() {\n#if defined(USE_VAAPI)\n  return true;\n#else\n  return false;\n#endif\n}\n\nAll of it can be resolved at build time. This is just a compile-time check that doesn\u0027t expose the preprocessor outside of the function.\n\nIf you\u0027re still worried about it, I\u0027d ask you to at least remove the #ifdefs in PS10 around the TryDlopenVaLibs, use the \"(void) TryDlopenVaLibs\" form to prevent warnings for unused functions, and only keep the ifdefs around the *call* to TryDloṕenVaLibs, and not the definition. The definition itself does not have any compile-time dependencies on valib.",
+      "parentUuid": "6549e295_fe0491aa",
+      "range": {
+        "startLine": 308,
+        "startChar": 0,
+        "endLine": 308,
+        "endChar": 24
+      },
+      "revId": "00e16b203d4436aff7106b885f0f7c9fc8b4157b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad1c8333_a09bd3e0",
         "filename": "content/common/sandbox_linux/bpf_gpu_policy_linux.cc",
         "patchSetId": 7
