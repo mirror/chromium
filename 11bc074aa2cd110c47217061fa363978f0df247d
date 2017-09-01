@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "509cfb35_6c66aa4c",
+        "filename": "chromecast/renderer/media/key_systems_cast.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-09-01T19:20:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e539794d_873a73ab",
+      "range": {
+        "startLine": 139,
+        "startChar": 61,
+        "endLine": 139,
+        "endChar": 62
+      },
+      "revId": "11bc074aa2cd110c47217061fa363978f0df247d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e71fabf_59d4f5e6",
         "filename": "chromecast/renderer/media/key_systems_cast.cc",
         "patchSetId": 4
@@ -36,6 +60,24 @@
       "writtenOn": "2017-08-31T00:05:27Z",
       "side": 1,
       "message": "The level of if/defs makes the file really hard to read. Maybe we can have some functions help wrap some platform-specific logic, e.g. AddCmaKeySystems() and AddAndroidKeySystems(). But I am not sure how much better that\u0027ll make.",
+      "revId": "11bc074aa2cd110c47217061fa363978f0df247d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80002edc_0b78e6f0",
+        "filename": "chromecast/renderer/media/key_systems_cast.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-09-01T19:20:30Z",
+      "side": 1,
+      "message": "Split the logic into two functions. I\u0027ll move the logic out to different files in next patch.",
+      "parentUuid": "4e71fabf_59d4f5e6",
       "revId": "11bc074aa2cd110c47217061fa363978f0df247d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -110,6 +152,30 @@
       "revId": "11bc074aa2cd110c47217061fa363978f0df247d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bd63b12_f11f384c",
+        "filename": "components/cdm/renderer/android_key_systems.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-09-01T19:20:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "153161e5_a9b708d1",
+      "range": {
+        "startLine": 26,
+        "startChar": 32,
+        "endLine": 26,
+        "endChar": 45
+      },
+      "revId": "11bc074aa2cd110c47217061fa363978f0df247d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
