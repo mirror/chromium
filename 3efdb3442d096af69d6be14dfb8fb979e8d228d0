@@ -73,6 +73,23 @@
     },
     {
       "key": {
+        "uuid": "0e94125e_21f85519",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-01T15:59:31Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we fix this first? Then, we can simply use the pending frame \u0026 current frame for cross fade, which doesn\u0027t require these logic?",
+      "revId": "3efdb3442d096af69d6be14dfb8fb979e8d228d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1362aa18_679b5821",
         "filename": "components/exo/shell_surface.h",
         "patchSetId": 5
@@ -156,6 +173,24 @@
       "side": 1,
       "message": "Let\u0027s do it right from the start. I think it would be relatively easy to implement on the Android side by using a round-trip (wl_display_roundtrip). That\u0027s of course not ideal performance wise but it would be a good start. Example from client side:\n\nMaximizeWindow() {\n  shell_set_maximized();\n  wl_display_round_trip(); // will result in a configure event with maximize state and a serial\n  configure_ack(serial_from_above);\n  commit();\n}",
       "parentUuid": "ba4c667e_1698fd9d",
+      "revId": "3efdb3442d096af69d6be14dfb8fb979e8d228d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d653119_0de6a236",
+        "filename": "components/exo/shell_surface.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-01T15:59:31Z",
+      "side": 1,
+      "message": "Note that alt-+ may not result in state change in Android, and Android still have the final decision that should happen. (we can reduce such chance by sending more info to server, but we can\u0027t eliminate 100%).\n\nAlso, if you\u0027re planning to remove remote shell, please coordinate with skuhne@ and also android team. Our current (future) upstream plan is to rely on Android to implement window state change, and I want to make sure it won\u0027t cause a problem in the future.",
+      "parentUuid": "27582e6e_24ca7afd",
       "revId": "3efdb3442d096af69d6be14dfb8fb979e8d228d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
