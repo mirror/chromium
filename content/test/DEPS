@@ -23,6 +23,7 @@ include_rules = [
   "+services/device/generic_sensor/public/cpp",
   "+ui/base/resource/data_pack.h",
   "+ui/base/resource/resource_bundle.h",
+  "+ui/base/resource/resource_handle.h",
   "!v8/include/v8.h",
 ]
 

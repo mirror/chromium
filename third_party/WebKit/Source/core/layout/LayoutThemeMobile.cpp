@@ -46,10 +46,6 @@ String LayoutThemeMobile::ExtraDefaultStyleSheet() {
          GetDataResourceAsASCIIString("themeChromiumAndroid.css");
 }
 
-String LayoutThemeMobile::ExtraMediaControlsStyleSheet() {
-  return GetDataResourceAsASCIIString("mediaControlsAndroid.css");
-}
-
 String LayoutThemeMobile::ExtraFullscreenStyleSheet() {
   return GetDataResourceAsASCIIString("fullscreenAndroid.css");
 }
