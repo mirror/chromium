@@ -1,0 +1,34 @@
+layer at (0,0) size 800x600 clip at (0,0) size 785x585 scrollWidth 2000 scrollHeight 2080
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 785x41 layerType: background only
+layer at (0,80) size 800x600 backgroundClip at (0,0) size 785x585 clip at (0,0) size 785x585
+  LayoutIFrame (positioned) zI: -1 {IFRAME} at (0,80) size 800x600
+    layer at (0,0) size 800x600
+      LayoutView at (0,0) size 800x600
+    layer at (0,0) size 800x600
+      LayoutBlockFlow {HTML} at (0,0) size 800x600
+        LayoutBlockFlow {BODY} at (8,8) size 784x584
+layer at (0,0) size 785x41 layerType: foreground only
+  LayoutBlockFlow {HTML} at (0,0) size 785x41
+    LayoutBlockFlow {BODY} at (0,0) size 785x41
+      LayoutBlockFlow (anonymous) at (0,0) size 785x41
+        LayoutInline {LABEL} at (0,0) size 82x19
+          LayoutBlockFlow {INPUT} at (4,3) size 13x13
+          LayoutText {#text} at (20,1) size 62x19
+            text run at (20,1) width 62: "Show test"
+        LayoutText {#text} at (82,1) size 4x19
+          text run at (82,1) width 4: " "
+        LayoutInline {LABEL} at (0,0) size 121x19
+          LayoutBlockFlow {INPUT} at (90,3) size 13x13
+          LayoutText {#text} at (106,1) size 101x19
+            text run at (106,1) width 101: "Use solid colors"
+        LayoutText {#text} at (207,1) size 4x19
+          text run at (207,1) width 4: " "
+        LayoutBR {BR} at (211,1) size 0x19
+        LayoutInline {SPAN} at (0,0) size 144x19
+          LayoutText {#text} at (0,21) size 144x19
+            text run at (0,21) width 144: "Expected Invalidations"
+        LayoutText {#text} at (0,0) size 0x0
+      LayoutBlockFlow {DIV} at (0,41) size 785x0
+layer at (0,80) size 2000x2000 backgroundClip at (0,0) size 785x585 clip at (0,0) size 785x585
+  LayoutHTMLCanvas (positioned) zI: 1 {CANVAS} at (0,80) size 2000x2000

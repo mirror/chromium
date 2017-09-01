@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<div id="grandparent"
+     style="position: absolute; will-change: transform;
+            top: 50px; left: 40px;
+            width: 100px; height: 100px; background-color: rgba(0, 0, 255, 0.5)">
+  <div id="child1"
+       style="position: relative; top: 20px; left: 20px;
+              width: 10px; height: 10px; background-color: red">
+  <div id="parent"
+       style="position: relative; will-change: transform;
+              top: 77px; left: 88px;
+              transform: scale(5) rotate(45deg);
+              width: 20px; height: 20px; background: yellow">
+    <div id="child2"
+         style="position: relative; top: 20px; left: 20px;
+                width: 10px; height: 10px; background-color: red">
+    </div>
+  </div>
+</div>
+<script src="resources/text-based-repaint.js"></script>
+<script>
+onload = runRepaintTest;
+function repaintTest() {
+  child1.style.backgroundColor = 'green';
+  child2.style.backgroundColor = 'green';
+}
+</script>
