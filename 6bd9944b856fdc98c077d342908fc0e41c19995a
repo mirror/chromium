@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5f7c525_589e3a80",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_coordinator.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-01T09:54:00Z",
+      "side": 1,
+      "message": "Rather than match strings defined in two places, can the promo define enum values that can be checked here instead?\n\nNot blocking, fine for a follow-up CL.",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 5
+      },
+      "revId": "6bd9944b856fdc98c077d342908fc0e41c19995a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
