@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "74180687_8e4001e9",
+        "filename": "chrome_elf/chrome_elf_x64.def",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-09-01T17:47:57Z",
+      "side": 1,
+      "message": "Doh! Sorry.",
+      "parentUuid": "a7b03c3e_2de1fae8",
+      "range": {
+        "startLine": 43,
+        "startChar": 1,
+        "endLine": 47,
+        "endChar": 21
+      },
+      "revId": "eb13aa9a9ce0fbc1d18f9502e898421ac1dab439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb9773ce_4e3408f3",
         "filename": "components/crash/content/app/crashpad_win.cc",
         "patchSetId": 2
