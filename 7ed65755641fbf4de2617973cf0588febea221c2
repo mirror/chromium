@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a346fff6_e3ac54b3",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-09-01T15:56:29Z",
+      "side": 1,
+      "message": "hacker_case",
+      "range": {
+        "startLine": 19,
+        "startChar": 47,
+        "endLine": 19,
+        "endChar": 77
+      },
+      "revId": "7ed65755641fbf4de2617973cf0588febea221c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee2d0ea3_24e10cd1",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-09-01T15:56:29Z",
+      "side": 1,
+      "message": "Should this be tested in its own test instead of in a subclass only?",
+      "revId": "7ed65755641fbf4de2617973cf0588febea221c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03311a76_b56abb70",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-09-01T15:56:29Z",
+      "side": 1,
+      "message": "I think if std::stoi gets an incorrect string value, it will throw an exception?\nCould we use something from our own //base/strings/string_number_conversions.h toolset instead, like base::StringToInt(...)?\nWe should also check the return value from that and not set the field_trial_time_delta_ if it fails.",
+      "range": {
+        "startLine": 64,
+        "startChar": 39,
+        "endLine": 64,
+        "endChar": 76
+      },
+      "revId": "7ed65755641fbf4de2617973cf0588febea221c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbb69b32_9ea780a0",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-09-01T15:56:29Z",
+      "side": 1,
+      "message": "I don\u0027t really understand this. Does this compile? It seems to be two ( and only one ) here?",
+      "range": {
+        "startLine": 27,
+        "startChar": 20,
+        "endLine": 30,
+        "endChar": 77
+      },
+      "revId": "7ed65755641fbf4de2617973cf0588febea221c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
