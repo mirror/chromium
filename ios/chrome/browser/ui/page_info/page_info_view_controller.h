@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef IOS_CHROME_BROWSER_UI_OMNIBOX_PAGE_INFO_VIEW_CONTROLLER_H_
-#define IOS_CHROME_BROWSER_UI_OMNIBOX_PAGE_INFO_VIEW_CONTROLLER_H_
+#ifndef IOS_CHROME_BROWSER_UI_PAGE_INFO_PAGE_INFO_VIEW_CONTROLLER_H_
+#define IOS_CHROME_BROWSER_UI_PAGE_INFO_PAGE_INFO_VIEW_CONTROLLER_H_
 
 #import <UIKit/UIKit.h>
 
@@ -11,8 +11,7 @@
 
 #include "base/mac/scoped_nsobject.h"
 #include "base/memory/weak_ptr.h"
-#include "ios/chrome/browser/ui/omnibox/page_info_model_observer.h"
-#import "ios/chrome/browser/ui/popup_menu/popup_menu_controller.h"
+#include "ios/chrome/browser/ui/page_info/page_info_model_observer.h"
 
 @class BidiContainerView;
 @protocol BrowserCommands;
@@ -66,4 +65,4 @@ class PageInfoModelBubbleBridge : public PageInfoModelObserver {
   DISALLOW_COPY_AND_ASSIGN(PageInfoModelBubbleBridge);
 };
 
-#endif  // IOS_CHROME_BROWSER_UI_OMNIBOX_PAGE_INFO_VIEW_CONTROLLER_H_
+#endif  // IOS_CHROME_BROWSER_UI_PAGE_INFO_PAGE_INFO_VIEW_CONTROLLER_H_
