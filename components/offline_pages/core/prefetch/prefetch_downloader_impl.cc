@@ -49,14 +49,14 @@ void PrefetchDownloaderImpl::SetPrefetchService(PrefetchService* service) {
   prefetch_service_ = service;
 }
 
+bool PrefetchDownloaderImpl::IsDownloadServiceReady() const {
+  return service_started_;
+}
+
 void PrefetchDownloaderImpl::StartDownload(
     const std::string& download_id,
     const std::string& download_location) {
-  if (!service_started_) {
-    pending_downloads_.push_back(
-        std::make_pair(download_id, download_location));
-    return;
-  }
+  DCHECK(service_started_);
 
   prefetch_service_->GetLogger()->RecordActivity(
       "Downloader: Start download of '" + download_location +
@@ -104,21 +104,6 @@ void PrefetchDownloaderImpl::StartDownload(
   download_service_->StartDownload(params);
 }
 
-void PrefetchDownloaderImpl::CancelDownload(const std::string& download_id) {
-  if (service_started_) {
-    download_service_->CancelDownload(download_id);
-    return;
-  }
-  for (auto iter = pending_downloads_.begin(); iter != pending_downloads_.end();
-       ++iter) {
-    if (iter->first == download_id) {
-      pending_downloads_.erase(iter);
-      return;
-    }
-  }
-  pending_cancellations_.push_back(download_id);
-}
-
 void PrefetchDownloaderImpl::OnDownloadServiceReady(
     const std::set<std::string>& outstanding_download_ids,
     const std::map<std::string, std::pair<base::FilePath, int64_t>>&
@@ -131,26 +116,15 @@ void PrefetchDownloaderImpl::OnDownloadServiceReady(
   PrefetchDispatcher* dispatcher = prefetch_service_->GetPrefetchDispatcher();
   if (dispatcher)
     dispatcher->CleanupDownloads(outstanding_download_ids, success_downloads);
-
-  for (const auto& entry : pending_downloads_)
-    StartDownload(entry.first, entry.second);
-  pending_downloads_.clear();
-
-  for (const auto& entry : pending_cancellations_)
-    download_service_->CancelDownload(entry);
-  pending_cancellations_.clear();
 }
 
 void PrefetchDownloaderImpl::OnDownloadServiceUnavailable() {
   prefetch_service_->GetLogger()->RecordActivity(
       "Downloader: Service unavailable.");
-  // TODO(jianli): Report UMA.
-}
 
-void PrefetchDownloaderImpl::OnDownloadServiceShutdown() {
-  prefetch_service_->GetLogger()->RecordActivity(
-      "Downloader: Service shutdown.");
-  service_started_ = false;
+  // Nothing can be done. The DownloadArchivesTask will not be triggered due to
+  // the fact that |service_started_| is false. The download service might get
+  // up next time when Chrome starts up.
 }
 
 void PrefetchDownloaderImpl::OnDownloadSucceeded(

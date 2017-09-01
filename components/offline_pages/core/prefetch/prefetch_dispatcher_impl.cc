@@ -27,6 +27,7 @@
 #include "components/offline_pages/core/prefetch/page_bundle_update_task.h"
 #include "components/offline_pages/core/prefetch/prefetch_background_task_handler.h"
 #include "components/offline_pages/core/prefetch/prefetch_configuration.h"
+#include "components/offline_pages/core/prefetch/prefetch_downloader.h"
 #include "components/offline_pages/core/prefetch/prefetch_gcm_handler.h"
 #include "components/offline_pages/core/prefetch/prefetch_importer.h"
 #include "components/offline_pages/core/prefetch/prefetch_network_request_factory.h"
@@ -137,6 +138,13 @@ void PrefetchDispatcherImpl::QueueReconcileTasks() {
       service_->GetPrefetchStore(),
       service_->GetPrefetchNetworkRequestFactory()));
 
+  if (needs_download_cleanup_) {
+    CreateDownloadCleanupTask(outstanding_download_ids_, success_downloads_);
+    needs_download_cleanup_ = false;
+    outstanding_download_ids_.clear();
+    success_downloads_.clear();
+  }
+
   // This task should be last, because it is least important for correct
   // operation of the system, and because any reconciliation tasks might
   // generate more entries in the FINISHED state that the finalization task
@@ -148,10 +156,12 @@ void PrefetchDispatcherImpl::QueueReconcileTasks() {
 void PrefetchDispatcherImpl::QueueActionTasks() {
   service_->GetLogger()->RecordActivity("Dispatcher: Adding action tasks.");
 
-  std::unique_ptr<Task> download_archives_task =
-      base::MakeUnique<DownloadArchivesTask>(service_->GetPrefetchStore(),
-                                             service_->GetPrefetchDownloader());
-  task_queue_.AddTask(std::move(download_archives_task));
+  if (service_->GetPrefetchDownloader()->IsDownloadServiceReady()) {
+    std::unique_ptr<Task> download_archives_task =
+        base::MakeUnique<DownloadArchivesTask>(
+            service_->GetPrefetchStore(), service_->GetPrefetchDownloader());
+    task_queue_.AddTask(std::move(download_archives_task));
+  }
 
   std::unique_ptr<Task> get_operation_task = base::MakeUnique<GetOperationTask>(
       service_->GetPrefetchStore(),
@@ -249,9 +259,14 @@ void PrefetchDispatcherImpl::CleanupDownloads(
     const std::set<std::string>& outstanding_download_ids,
     const std::map<std::string, std::pair<base::FilePath, int64_t>>&
         success_downloads) {
-  task_queue_.AddTask(base::MakeUnique<DownloadCleanupTask>(
-      service_->GetPrefetchDispatcher(), service_->GetPrefetchStore(),
-      outstanding_download_ids, success_downloads));
+  // Delay the task creation if the processing pipeline has not started.
+  if (background_task_) {
+    CreateDownloadCleanupTask(outstanding_download_ids, success_downloads);
+  } else {
+    needs_download_cleanup_ = true;
+    outstanding_download_ids_ = outstanding_download_ids;
+    success_downloads_ = success_downloads;
+  }
 }
 
 void PrefetchDispatcherImpl::DownloadCompleted(
@@ -300,6 +315,15 @@ void PrefetchDispatcherImpl::LogRequestResult(
         "Response for page: " + page.url +
         "; status=" + std::to_string(static_cast<int>(page.status)));
   }
+}
+
+void PrefetchDispatcherImpl::CreateDownloadCleanupTask(
+    const std::set<std::string>& outstanding_download_ids,
+    const std::map<std::string, std::pair<base::FilePath, int64_t>>&
+        success_downloads) {
+  task_queue_.AddTask(base::MakeUnique<DownloadCleanupTask>(
+      service_->GetPrefetchDispatcher(), service_->GetPrefetchStore(),
+      outstanding_download_ids, success_downloads));
 }
 
 }  // namespace offline_pages
