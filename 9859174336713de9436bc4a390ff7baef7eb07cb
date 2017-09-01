@@ -88,6 +88,24 @@
       "revId": "9859174336713de9436bc4a390ff7baef7eb07cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5990cb62_9f97ee42",
+        "filename": "net/cert/internal/system_trust_store.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1161769
+      },
+      "writtenOn": "2017-09-01T00:55:49Z",
+      "side": 1,
+      "message": "What you\u0027re suggesting is the goal, and what we have an OKR for: we want to provide a system service with an API for validating certs, rather than a file as is the case now.  It\u0027s the usual dilemma of being on our road map but not ready yet, and in the meantime we needed to unblock other consumers.  By instrumenting the file access during the transition, we should be able to catch all consumers and get them transitioned (but only as long as the number of consumers is still tractable, so there is some urgency).",
+      "parentUuid": "1fc53dac_ec869e5e",
+      "revId": "9859174336713de9436bc4a390ff7baef7eb07cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
