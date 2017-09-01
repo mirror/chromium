@@ -16,6 +16,24 @@
       "revId": "78853484ff522c20b73e40316893219965d3ae55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc487a3b_49124015",
+        "filename": "content/test/navigation_simulator_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-01T02:15:41Z",
+      "side": 1,
+      "message": "Lucas, could you include a stack trace and/or some details about in what way your new tests aren\u0027t working? That might make it a little easier to tell what\u0027s going on.",
+      "parentUuid": "da4c2d0b_01cb56d7",
+      "revId": "78853484ff522c20b73e40316893219965d3ae55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
