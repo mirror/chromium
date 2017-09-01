@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<script src="../resources/testharness.js"></script>
+<script src="../resources/testharnessreport.js"></script>
+<script src="file:///gen/layout_test_data/mojo/public/js/mojo_bindings.js"></script>
+<script src="file:///gen/third_party/WebKit/public/platform/reporting.mojom.js"></script>
+<script>
+// Mock implementation of ReportingServiceProxy.
+// |promise| property is always a promise for the next report to be queued.
+class MockReportingServiceProxy {
+  constructor() {
+    this.bindingSet = new mojo.BindingSet(content.mojom.ReportingServiceProxy);
+    this.resetPromise();
+  }
+
+  bind(handle) {
+    this.bindingSet.addBinding(this, handle);
+  }
+
+  resetPromise() {
+    this.promise = new Promise((resolve, reject) => {
+      this.resolve = resolve;
+    });
+  }
+
+  // Interface implementation.
+  async queueReport(url, group, type, body) {
+    this.resolve([url, group, type, body]);
+    this.resetPromise();
+  }
+}
+
+// Make an instance and have it receive the request.
+var proxy = new MockReportingServiceProxy();
+var interceptor = new MojoInterfaceInterceptor(
+    content.mojom.ReportingServiceProxy.name);
+interceptor.oninterfacerequest = e => proxy.bind(e.handle);
+interceptor.start();
+
+promise_test(async () => {
+  let promise = proxy.promise;
+
+  // Use a deprecated feature.
+  window.webkitStorageInfo;
+
+  // Ensure the report is generated and routed to the mojo interface.
+  let [url, group, type, body] = await promise;
+  assert_equals(group, "default");
+  assert_equals(type, "deprecation");
+  assert_true(url.url.endsWith(
+      "reporting-observer/reporting-api.html"));
+  assert_equals(typeof body.dictionaryValue.values.get("lineNumber").intValue,
+                "number");
+  assert_true(
+      body.dictionaryValue.values.get("sourceFile").stringValue.endsWith(
+          "reporting-observer/reporting-api.html"));
+  assert_equals(
+      typeof body.dictionaryValue.values.get("sourceFile").stringValue,
+      "string");
+}, "Deprecation report");
+</script>
