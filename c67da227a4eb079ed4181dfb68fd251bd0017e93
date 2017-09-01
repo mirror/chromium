@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8ae135d4_a007ac06",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 845,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-01T09:27:16Z",
+      "side": 1,
+      "message": "Thanks for the tip Sylvain!  Ramya will fix this in her CL.",
+      "parentUuid": "6c63ff8d_b5201ec6",
+      "range": {
+        "startLine": 845,
+        "startChar": 32,
+        "endLine": 845,
+        "endChar": 52
+      },
+      "revId": "c67da227a4eb079ed4181dfb68fd251bd0017e93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a57de454_502e54d0",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
         "patchSetId": 21
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "a3c722a2_0b995023",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 850,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-01T09:27:16Z",
+      "side": 1,
+      "message": "same as above.",
+      "parentUuid": "a57de454_502e54d0",
+      "range": {
+        "startLine": 850,
+        "startChar": 45,
+        "endLine": 850,
+        "endChar": 65
+      },
+      "revId": "c67da227a4eb079ed4181dfb68fd251bd0017e93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "804f5ada_0c3425c9",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
         "patchSetId": 21
@@ -62,6 +110,24 @@
       "revId": "c67da227a4eb079ed4181dfb68fd251bd0017e93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "922b133c_ff5cd49f",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 862,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-01T09:27:16Z",
+      "side": 1,
+      "message": "same as above.",
+      "parentUuid": "804f5ada_0c3425c9",
+      "revId": "c67da227a4eb079ed4181dfb68fd251bd0017e93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "b2f5391b_b15308b0",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-01T09:27:16Z",
+      "side": 1,
+      "message": "Fix this in crrev.com/c/647267",
+      "parentUuid": "427d7781_c233be98",
+      "revId": "c67da227a4eb079ed4181dfb68fd251bd0017e93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8425182_f597a2f3",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
         "patchSetId": 21
@@ -96,6 +180,24 @@
       "revId": "c67da227a4eb079ed4181dfb68fd251bd0017e93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39ff8455_fcf80b63",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-01T09:27:16Z",
+      "side": 1,
+      "message": "Same.",
+      "parentUuid": "d8425182_f597a2f3",
+      "revId": "c67da227a4eb079ed4181dfb68fd251bd0017e93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "385524d5_afd0cdbf",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-01T09:27:16Z",
+      "side": 1,
+      "message": "same.",
+      "parentUuid": "30a11221_927c342e",
+      "range": {
+        "startLine": 537,
+        "startChar": 12,
+        "endLine": 537,
+        "endChar": 40
+      },
+      "revId": "c67da227a4eb079ed4181dfb68fd251bd0017e93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0d97930_0e852d80",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
         "patchSetId": 21
@@ -145,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "15e2c31a_3a986b6c",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-01T09:27:16Z",
+      "side": 1,
+      "message": "same",
+      "parentUuid": "e0d97930_0e852d80",
+      "range": {
+        "startLine": 695,
+        "startChar": 14,
+        "endLine": 695,
+        "endChar": 52
+      },
+      "revId": "c67da227a4eb079ed4181dfb68fd251bd0017e93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4254029_bcfa94ff",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
         "patchSetId": 21
@@ -159,6 +309,24 @@
       "revId": "c67da227a4eb079ed4181dfb68fd251bd0017e93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47dac9a3_2a20fc05",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-01T09:27:16Z",
+      "side": 1,
+      "message": "same.",
+      "parentUuid": "c4254029_bcfa94ff",
+      "revId": "c67da227a4eb079ed4181dfb68fd251bd0017e93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
