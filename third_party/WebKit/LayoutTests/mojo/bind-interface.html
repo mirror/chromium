@@ -3,6 +3,7 @@
 <script src="../resources/testharnessreport.js"></script>
 <script src="file:///gen/layout_test_data/mojo/public/js/mojo_bindings.js"></script>
 <script src="file:///gen/content/test/data/mojo_layouttest_test.mojom.js"></script>
+<script src="resources/helpers.js"></script>
 <script>
 
 const kTestReply = "hehe got ya";
@@ -84,21 +85,46 @@ promise_test(() => {
 }, "can request interfaces at process scope");
 
 promise_test(() => {
+  let helperImpl = new TestHelperImpl;
+  let interceptor = new MojoInterfaceInterceptor(
+      content.mojom.MojoLayoutTestHelper.name, "process");
+  interceptor.oninterfacerequest = e => {
+    helperImpl.bindRequest(e.handle);
+  };
+  interceptor.start();
+
+  let helper = new content.mojom.MojoLayoutTestHelperPtr;
+  Mojo.bindInterface(content.mojom.MojoLayoutTestHelper.name,
+                     mojo.makeRequest(helper).handle,
+                     "process");
+  interceptor.stop();
+
+  return helper.reverse("doesn't matter").then(reply => {
+    assert_equals(reply.reversed, kTestReply);
+  });
+}, "can intercept interfaces at process scope");
+
+test(() => {
   const kTestInterfaceName = "foo::mojom::Ba1r";
   let a = new MojoInterfaceInterceptor(kTestInterfaceName);
   let b = new MojoInterfaceInterceptor(kTestInterfaceName);
   a.oninterfacerequest = () => {};
   b.oninterfacerequest = () => {};
   a.start();
-  try {
-    b.start();
-  } catch (e) {
-    return Promise.resolve();
-  } finally {
-    a.stop();
-  }
-  return Promise.reject();
+  assert_throws('InvalidModificationError', () => { b.start(); });
+  a.stop();
 }, "interface interceptors are mutually exclusive");
+
+test(() => {
+  const kTestInterfaceName = "foo::mojom::Ba1r";
+  let a = new MojoInterfaceInterceptor(kTestInterfaceName, "process");
+  let b = new MojoInterfaceInterceptor(kTestInterfaceName, "process");
+  a.oninterfacerequest = () => {};
+  b.oninterfacerequest = () => {};
+  a.start();
+  assert_throws('InvalidModificationError', () => { b.start(); });
+  a.stop();
+}, "process scope interface interceptors are mutually exclusive");
 
 test(async t => {
   const kTestInterfaceName = "foo::mojom::Bar";
