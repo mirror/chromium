@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8ee5a387_ceb888b7",
+        "filename": "cc/layers/layer_impl.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-09-01T18:49:20Z",
+      "side": 1,
+      "message": "I had this in one of the patches. Dana suggested to do it this way. She feels that the overriding is more expensive and it is clear by itself like this.",
+      "parentUuid": "bccf6713_f38a017e",
+      "revId": "0a33613f4120c370f8c14699a9b74451ef38009d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6c6bd084_26798818",
         "filename": "cc/layers/painted_scrollbar_layer_impl.cc",
         "patchSetId": 46
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-01T16:15:11Z",
       "side": 1,
       "message": "I don\u0027t think we need two SQS for track and thumb? Thumb should always be on top of track and so they could share a SQS? And in occlusion it\u0027s whether the track is opaque or not that counts?",
+      "revId": "0a33613f4120c370f8c14699a9b74451ef38009d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96f05326_0d1a5a81",
+        "filename": "cc/layers/painted_scrollbar_layer_impl.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-09-01T18:49:20Z",
+      "side": 1,
+      "message": "You are right! thumb is always on track, so they should share the same opaqueness!",
+      "parentUuid": "6c6bd084_26798818",
       "revId": "0a33613f4120c370f8c14699a9b74451ef38009d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8e721342_c7e95715",
+        "filename": "components/viz/common/quads/shared_quad_state.h",
+        "patchSetId": 46
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-09-01T18:49:20Z",
+      "side": 1,
+      "message": "update to are_contents_opaque",
+      "parentUuid": "40f552a3_78eb1030",
+      "revId": "0a33613f4120c370f8c14699a9b74451ef38009d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "de82828e_3c719c10",
         "filename": "services/viz/public/cpp/compositing/struct_traits_unittest.cc",
         "patchSetId": 46
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-01T16:15:11Z",
       "side": 1,
       "message": "Since this is unittest for transporting, try setting the bool to true to avoid the default value.",
+      "revId": "0a33613f4120c370f8c14699a9b74451ef38009d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "262d4e9d_d261f9f8",
+        "filename": "services/viz/public/cpp/compositing/struct_traits_unittest.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-09-01T18:49:20Z",
+      "side": 1,
+      "message": "good suggestion. Thanks. done.",
+      "parentUuid": "de82828e_3c719c10",
       "revId": "0a33613f4120c370f8c14699a9b74451ef38009d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -84,6 +156,24 @@
       "revId": "0a33613f4120c370f8c14699a9b74451ef38009d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bce96c8b_fdeb9872",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameResourceProvider.cpp",
+        "patchSetId": 46
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-09-01T18:49:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b502c431_f1c7f365",
+      "revId": "0a33613f4120c370f8c14699a9b74451ef38009d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
