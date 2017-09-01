@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "635a540c_54af75eb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-01T12:38:09Z",
+      "side": 1,
+      "message": "Please use Nullable from android.support.annotation package.",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 33
+      },
+      "revId": "ed801a9a74e6d9bd9ee6cc9da89627ee47b27b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b4408df_01bdc98e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-01T12:38:09Z",
+      "side": 1,
+      "message": "There are two problems here:\n1. getActivity will return null, because Fragment is not attached yet.\n2. Fragment can be reattached to another activity if it\u0027s instance is retained (see https://developer.android.com/reference/android/app/Fragment.html#setRetainInstance(boolean)). Indirectly retaining reference to Activity can create a leak here. This being said, this leak won\u0027t actually happen, because SigninManager gets application context from passed Context, but it\u0027s impossible to understand from reading this file only.\n\nIf you want to cache SigninManager instance here, please use ContextUtils.getApplicationContext(). I\u0027d keep the old approach with getting it whenever necessary, though.",
+      "range": {
+        "startLine": 55,
+        "startChar": 43,
+        "endLine": 55,
+        "endChar": 56
+      },
+      "revId": "ed801a9a74e6d9bd9ee6cc9da89627ee47b27b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "520876ce_b87a7b19",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-01T12:38:09Z",
+      "side": 1,
+      "message": "I find save/load naming a bit misleading here as it creates impression that you save preferences in persistent storage.",
+      "range": {
+        "startLine": 87,
+        "startChar": 8,
+        "endLine": 87,
+        "endChar": 23
+      },
+      "revId": "ed801a9a74e6d9bd9ee6cc9da89627ee47b27b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d9d7d2d_f94923b7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-01T12:38:09Z",
+      "side": 1,
+      "message": "The old ordering in this method was matching the ordering in XML file, so can you please keep it?",
+      "range": {
+        "startLine": 94,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 82
+      },
+      "revId": "ed801a9a74e6d9bd9ee6cc9da89627ee47b27b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3595a91c_c8b47a05",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-01T12:38:09Z",
+      "side": 1,
+      "message": "This line will add preferences to the end of the list and violate ordering specified in XML. This issue is a tricky one to solve, so let\u0027s discuss it offline whenever you have time.",
+      "range": {
+        "startLine": 185,
+        "startChar": 0,
+        "endLine": 185,
+        "endChar": 88
+      },
+      "revId": "ed801a9a74e6d9bd9ee6cc9da89627ee47b27b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "096253a9_59aee2a9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-01T12:38:09Z",
+      "side": 1,
+      "message": "Nit: no space here.",
+      "range": {
+        "startLine": 228,
+        "startChar": 31,
+        "endLine": 228,
+        "endChar": 32
+      },
+      "revId": "ed801a9a74e6d9bd9ee6cc9da89627ee47b27b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
