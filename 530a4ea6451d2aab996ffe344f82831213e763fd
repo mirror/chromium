@@ -319,6 +319,30 @@
     },
     {
       "key": {
+        "uuid": "bff40d8b_5d51c68b",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-09-01T20:12:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82513fd6_349bfd87",
+      "range": {
+        "startLine": 173,
+        "startChar": 25,
+        "endLine": 173,
+        "endChar": 0
+      },
+      "revId": "530a4ea6451d2aab996ffe344f82831213e763fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0cae9ba1_0c0a9623",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
         "patchSetId": 3
@@ -372,6 +396,24 @@
     },
     {
       "key": {
+        "uuid": "07962288_b07bd455",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-09-01T20:12:40Z",
+      "side": 1,
+      "message": "Removed backoff_entry-\u003eInformOfRequest(false).",
+      "parentUuid": "50599a5d_0e27399f",
+      "revId": "530a4ea6451d2aab996ffe344f82831213e763fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "77ed255b_02dca3df",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
         "patchSetId": 3
@@ -419,6 +461,24 @@
       "side": 1,
       "message": "- If while waiting for retry (via PostDelayedTask) we have a mdns event (or network change) came in that causes OpenChannel to be called, we would be starting a new BackoffEntry for that sink. This might be OK (since you could interpret such events as a \"reset\") but just want to make sure that\u0027s what you intended.\n- L253 only checks if there is an outstanding attempt to open channel, but not that there is already one open? This seems important especially since we may have overlapping BackoffEntries for a sink.",
       "parentUuid": "f880ac02_efb5e49c",
+      "revId": "530a4ea6451d2aab996ffe344f82831213e763fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd936543_808bc24d",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-09-01T20:12:40Z",
+      "side": 1,
+      "message": "Discussed this with Derek offline. Will leave it as is now.",
+      "parentUuid": "f22bee4d_c1cc9e37",
       "revId": "530a4ea6451d2aab996ffe344f82831213e763fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
