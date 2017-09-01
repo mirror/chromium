@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "27b08059_7c4d0329",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-09-01T05:21:54Z",
+      "side": 1,
+      "message": "Remove word",
+      "parentUuid": "1db52080_f8fe5316",
+      "revId": "fbc3904016884a365834b3dfb77e937db12afbd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9fab6ee9_89c0b654",
         "filename": "third_party/WebKit/Source/build/scripts/json5_generator.py",
         "patchSetId": 1
