@@ -52,6 +52,24 @@
       "revId": "62e17db2e0d2935a37e08f7250f859fee761a328",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90c4d0b8_87b09132",
+        "filename": "third_party/WebKit/Source/core/editing/VisiblePosition.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-09-01T03:06:22Z",
+      "side": 1,
+      "message": "\u003e Anyway, please make VP::IsValidFor(doc) to call PwA::IsValidFor(doc) to\ncall Pos::IsValidFor(doc).\n\nI think I did this already in the latest version of the CL. I\u0027m also checking dom_tree_version_ and style_version_, but I don\u0027t think that\u0027s right, since these fields only exist in DCHECK-enabled builds.\n\n\u003e PosInFlatTree::IsValidFor(doc) should traverse ancestros until document\nor null instead of PosInDOMTree::IsValidFor(doc) uses IsConnected().\n\nThis I still need to do.",
+      "parentUuid": "e39ea931_cbb07f9f",
+      "revId": "62e17db2e0d2935a37e08f7250f859fee761a328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72f182ad_0c670299",
+        "filename": "third_party/WebKit/Source/core/editing/VisiblePosition.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-09-01T03:06:22Z",
+      "side": 1,
+      "message": "Should I remove the dom_tree_version_ and style_version_ checks (since they only exist in DCHECK-enabled builds)?",
+      "revId": "1b6a430e8d6705c6c9ef6f8d05bbfb9b939e4757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
