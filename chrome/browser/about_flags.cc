@@ -3421,6 +3421,11 @@ const FeatureEntry kFeatureEntries[] = {
      FEATURE_VALUE_TYPE(base::kSyzyAsanDCheckIsFatalFeature)},
 #endif  // DCHECK_IS_ON() && defined(SYZYASAN)
 
+    {"enable-v8-context-snapshot", flag_descriptions::kV8ContextSnapshotName,
+     flag_descriptions::kV8ContextSnapshotDescription,
+     kOsDesktop,  // TODO(peria): Add Android support.
+     FEATURE_VALUE_TYPE(features::kV8ContextSnapshot)},
+
     // NOTE: Adding new command-line switches requires adding corresponding
     // entries to enum "LoginCustomFlags" in histograms/enums.xml. See note in
     // enums.xml and don't forget to run AboutFlagsHistogramTest unit test.

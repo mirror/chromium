@@ -22880,6 +22880,7 @@ uploading your change for review.  These are checked by presubmit scripts.
 </enum>
 
 <enum name="LoginCustomFlags">
+  <int value="-2234223592" label="V8ContextSnapshot:disabled"/>
   <int value="-2146613579" label="V8Future:disabled"/>
   <int value="-2143961262" label="D3DVsync:disabled"/>
   <int value="-2143328006"
