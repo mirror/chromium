@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f74370a_d56ca19c",
+        "filename": "content/browser/media/capture/aura_window_capture_machine.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-09-01T23:31:29Z",
+      "side": 1,
+      "message": "Not a blocker, just for my edification.  Why does this happen here instead of earlier in the start up?",
+      "revId": "e976bebbb829a60e8ffce2b082d3f108bac1d2c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
