@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca681889_546c4f30",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-01T20:10:05Z",
+      "side": 1,
+      "message": "Findbugs is warning that\n\nSIC_INNER_SHOULD_BE_STATIC: Should be a static inner class\n  In class org.chromium.chrome.browser.suggestions.SuggestionsBottomSheetContent$NtpTouchDelegate\n  At SuggestionsBottomSheetContent.java:[lines 414-455]",
+      "range": {
+        "startLine": 395,
+        "startChar": 4,
+        "endLine": 395,
+        "endChar": 17
+      },
+      "revId": "e47c5a59dadc7dfdfb5dc5cb90c0f4a1a17ef443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
