@@ -73,6 +73,7 @@ public class ChildProcessConnection {
     protected interface ChildServiceConnectionDelegate {
         void onServiceConnected(IBinder service);
         void onServiceDisconnected();
+        void logStatus();
     }
 
     @VisibleForTesting
@@ -112,6 +113,7 @@ public class ChildProcessConnection {
                 try {
                     TraceEvent.begin("ChildProcessConnection.ChildServiceConnectionImpl.bind");
                     mBound = mContext.bindService(mBindIntent, this, mBindFlags);
+                    mDelegate.logStatus();
                 } finally {
                     TraceEvent.end("ChildProcessConnection.ChildServiceConnectionImpl.bind");
                 }
@@ -124,6 +126,7 @@ public class ChildProcessConnection {
             if (mBound) {
                 mContext.unbindService(this);
                 mBound = false;
+                mDelegate.logStatus();
             }
         }
 
@@ -266,6 +269,14 @@ public class ChildProcessConnection {
                         onServiceDisconnectedOnLauncherThread();
                     }
                 });
+            }
+
+            @Override
+            public void logStatus() {
+android.util.Log.w("boliu", mServiceName.getClassName() +
+(mInitialBinding.isBound() ? " initial" : "") +
+(mStrongBinding.isBound() ? " strong" : "") +
+(mModerateBinding.isBound() ? " moderate" : ""));
             }
         };
 
