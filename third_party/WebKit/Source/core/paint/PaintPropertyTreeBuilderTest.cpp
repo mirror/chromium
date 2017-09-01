@@ -23,11 +23,12 @@ void PaintPropertyTreeBuilderTest::LoadTestData(const char* file_name) {
 const TransformPaintPropertyNode*
 PaintPropertyTreeBuilderTest::FramePreTranslation() {
   LocalFrameView* frame_view = GetDocument().View();
-  if (RuntimeEnabledFeatures::RootLayerScrollingEnabled())
+  if (RuntimeEnabledFeatures::RootLayerScrollingEnabled()) {
     return frame_view->GetLayoutView()
         ->FirstFragment()
         ->PaintProperties()
         ->PaintOffsetTranslation();
+  }
   return frame_view->PreTranslation();
 }
 
@@ -273,7 +274,6 @@ TEST_P(PaintPropertyTreeBuilderTest, FrameScrollingTraditional) {
   frame_view->UpdateAllLifecyclePhases();
   EXPECT_EQ(TransformationMatrix(), FramePreTranslation()->Matrix());
   EXPECT_TRUE(FramePreTranslation()->Parent()->IsRoot());
-
   EXPECT_EQ(TransformationMatrix().Translate(0, -100),
             FrameScrollTranslation()->Matrix());
   EXPECT_EQ(FramePreTranslation(), FrameScrollTranslation()->Parent());
@@ -705,7 +705,6 @@ TEST_P(PaintPropertyTreeBuilderTest, EffectNodesInSVG) {
       "    </text>"
       "  </g>"
       "</svg>");
-  LOG(ERROR) << "here";
   LayoutObject* group_with_opacity =
       GetLayoutObjectByElementId("groupWithOpacity");
   const ObjectPaintProperties* group_with_opacity_properties =
@@ -976,6 +975,7 @@ TEST_P(PaintPropertyTreeBuilderTest, SVGRootLocalToBorderBoxTransformNode) {
   LayoutObject& rect = *GetLayoutObjectByElementId("rect");
   const ObjectPaintProperties* rect_properties =
       rect.FirstFragment()->PaintProperties();
+  LOG(ERROR) << "properties: " << rect_properties;
   EXPECT_EQ(TransformationMatrix().Translate(17, 19),
             rect_properties->Transform()->Matrix());
   EXPECT_EQ(svg_properties->SvgLocalToBorderBoxTransform(),
