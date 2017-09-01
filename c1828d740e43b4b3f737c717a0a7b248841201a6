@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dad8d4ea_155432e2",
+        "filename": "chrome/installer/linux/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-01T00:27:20Z",
+      "side": 1,
+      "message": "This should go down to line 54.",
+      "revId": "c1828d740e43b4b3f737c717a0a7b248841201a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0ac1040_2fb37b0c",
+        "filename": "chrome/installer/linux/debian/check-package-constraints-satisfied.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-01T00:27:20Z",
+      "side": 1,
+      "message": "Maybe you can save a few chars with binary_path, etc?",
+      "revId": "c1828d740e43b4b3f737c717a0a7b248841201a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8344c41c_d72756a0",
+        "filename": "chrome/installer/linux/debian/check-package-constraints-satisfied.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-01T00:27:20Z",
+      "side": 1,
+      "message": "BTW, c/i/l/BUILD.gn pretends arm is a valid arch. Do you want to sys.exit(0) and pretend it\u0027s all good?",
+      "revId": "c1828d740e43b4b3f737c717a0a7b248841201a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18735379_24b7e7d1",
+        "filename": "chrome/installer/linux/debian/check-package-constraints-satisfied.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-01T00:27:20Z",
+      "side": 1,
+      "message": "How do we get empty |dep| values? (Too lazy to check)",
+      "revId": "c1828d740e43b4b3f737c717a0a7b248841201a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
