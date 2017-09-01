@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "2711cdb4_0693f550",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-01T18:52:33Z",
+      "side": 1,
+      "message": "We should never get an intent to launch an unsupported activity from Daydream. The idea is that if an intent through the launcher, we should always auto-present, otherwise we\u0027re in a state where we start CCT VR for auto-presentation but don\u0027t actually enter VR mode.",
+      "parentUuid": "969df389_b246c603",
+      "range": {
+        "startLine": 795,
+        "startChar": 12,
+        "endLine": 795,
+        "endChar": 18
+      },
+      "revId": "6cb65393de59b5423c0515544a2d9f4cb1f75936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7428e6b1_e4413b25",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
         "patchSetId": 3
@@ -82,6 +106,24 @@
       "writtenOn": "2017-09-01T18:06:00Z",
       "side": 1,
       "message": "why checking if activity is valid auto present activity no longer needed?",
+      "revId": "6cb65393de59b5423c0515544a2d9f4cb1f75936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed757761_4ec102f9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 810,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-01T18:52:33Z",
+      "side": 1,
+      "message": "For the same reason as above.",
+      "parentUuid": "7428e6b1_e4413b25",
       "revId": "6cb65393de59b5423c0515544a2d9f4cb1f75936",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
