@@ -253,14 +253,14 @@ Response StorageHandler::TrackCacheStorageForOrigin(const std::string& origin) {
     return Response::InternalError();
 
   GURL origin_url(origin);
-  if (!origin_url.is_valid())
-    return Response::InvalidParams(origin + " is not a valid URL");
+  if (origin_url.is_valid()) {
+    BrowserThread::PostTask(
+        BrowserThread::IO, FROM_HERE,
+        base::BindOnce(&CacheStorageObserver::TrackOriginOnIOThread,
+                       base::Unretained(GetCacheStorageObserver()),
+                       url::Origin(origin_url)));
+  }
 
-  BrowserThread::PostTask(
-      BrowserThread::IO, FROM_HERE,
-      base::BindOnce(&CacheStorageObserver::TrackOriginOnIOThread,
-                     base::Unretained(GetCacheStorageObserver()),
-                     url::Origin(origin_url)));
   return Response::OK();
 }
 
@@ -270,14 +270,14 @@ Response StorageHandler::UntrackCacheStorageForOrigin(
     return Response::InternalError();
 
   GURL origin_url(origin);
-  if (!origin_url.is_valid())
-    return Response::InvalidParams(origin + " is not a valid URL");
+  if (origin_url.is_valid()) {
+    BrowserThread::PostTask(
+        BrowserThread::IO, FROM_HERE,
+        base::BindOnce(&CacheStorageObserver::UntrackOriginOnIOThread,
+                       base::Unretained(GetCacheStorageObserver()),
+                       url::Origin(origin_url)));
+  }
 
-  BrowserThread::PostTask(
-      BrowserThread::IO, FROM_HERE,
-      base::BindOnce(&CacheStorageObserver::UntrackOriginOnIOThread,
-                     base::Unretained(GetCacheStorageObserver()),
-                     url::Origin(origin_url)));
   return Response::OK();
 }
 

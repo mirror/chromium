@@ -36,7 +36,7 @@ class StorageHandler : public DevToolsDomainHandler,
   void GetUsageAndQuota(
       const String& origin,
       std::unique_ptr<GetUsageAndQuotaCallback> callback) override;
-  // Ignores all double calls to track an origin.
+  // Ignores all double calls to track an origin and invalid urls.
   Response TrackCacheStorageForOrigin(const std::string& origin) override;
   Response UntrackCacheStorageForOrigin(const std::string& origin) override;
 
