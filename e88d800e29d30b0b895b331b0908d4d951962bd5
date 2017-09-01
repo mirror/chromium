@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "cc820aeb_a3aeef81",
+        "filename": "third_party/WebKit/Source/core/editing/EditingTestBase.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-01T00:14:02Z",
+      "side": 1,
+      "message": "Add a message like the following would be helpful.\n\nDCHECK(selection.IsCaret()) \u003c\u003c \"|sample_text| should contain a caret marker \u0027|\u0027.\";",
+      "revId": "e88d800e29d30b0b895b331b0908d4d951962bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5453413_dc25470b",
+        "filename": "third_party/WebKit/Source/core/editing/EditingTestBase.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-01T00:14:02Z",
+      "side": 1,
+      "message": "It\u0027s hard to understand what\u0027s the argument, and what this function does. Please add a comment.\n\nSame for the following three functions.",
+      "revId": "e88d800e29d30b0b895b331b0908d4d951962bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c7fb7b57_20a5cce1",
         "filename": "third_party/WebKit/Source/core/editing/SelectionSample.cpp",
         "patchSetId": 6
@@ -13,6 +47,125 @@
       "writtenOn": "2017-08-31T23:18:45Z",
       "side": 1,
       "message": "Does the passed-in HTML have to contain some selection?",
+      "revId": "e88d800e29d30b0b895b331b0908d4d951962bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8aafef4b_67c8c55a",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionSample.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-01T00:14:02Z",
+      "side": 1,
+      "message": "Do you handle Comment nodes and ProcessingInstruction nodes in this path?",
+      "revId": "e88d800e29d30b0b895b331b0908d4d951962bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f55996ac_8adfd0d5",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionSample.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-01T00:14:02Z",
+      "side": 1,
+      "message": "Do you drop namespace prefix of |attribute| intentionally?",
+      "revId": "e88d800e29d30b0b895b331b0908d4d951962bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3305cc62_16d86238",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionSample.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-01T00:14:02Z",
+      "side": 1,
+      "message": "If an element has \"id\" attribute and \"xml:id\" attribute, sorting result may be unpredictable.",
+      "revId": "e88d800e29d30b0b895b331b0908d4d951962bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60568ba2_1536c28d",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionSample.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-01T00:14:02Z",
+      "side": 1,
+      "message": "LowerASCII() is problematic for non-HTML elements.  e.g. SVG\u0027s \u003cfeBlend\u003e element is converted to \u003cfeblend\u003e.\nWhy don\u0027t you use |element.TagQName().ToString()|?",
+      "revId": "e88d800e29d30b0b895b331b0908d4d951962bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41f1a857_5ffd9e11",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionSample.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-01T00:14:02Z",
+      "side": 1,
+      "message": "This function doesn\u0027t handle Comment nodes and ProcessingInstruction nodes correctly.",
+      "revId": "e88d800e29d30b0b895b331b0908d4d951962bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca86d17a_98536f0d",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionSample.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-01T00:14:02Z",
+      "side": 1,
+      "message": "Non-const argument for \u0027Parse\u0027 function is unusual. You should add a comment how the specified DOM tree is modified.",
+      "revId": "e88d800e29d30b0b895b331b0908d4d951962bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ddbc31a_8ea5a9dd",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionSample.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-01T00:14:02Z",
+      "side": 1,
+      "message": "IMO, the function name should be \u0027Serialize\u0027.  \u0027ToString\u0027 is redundant.",
       "revId": "e88d800e29d30b0b895b331b0908d4d951962bd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
