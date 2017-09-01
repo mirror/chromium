@@ -95,7 +95,8 @@ class SigninManager : public SigninManagerBase,
   // Sign a user out, removing the preference, erasing all keys
   // associated with the user, and canceling all auth in progress.
   virtual void SignOut(signin_metrics::ProfileSignout signout_source_metric,
-                       signin_metrics::SignoutDelete signout_delete_metric);
+                       signin_metrics::SignoutDelete signout_delete_metric,
+                       bool revoke_all_tokens);
 
   // On platforms where SigninManager is responsible for dealing with
   // invalid username policy updates, we need to check this during
@@ -151,7 +152,8 @@ class SigninManager : public SigninManagerBase,
 
   // The sign out process which is started by SigninClient::PreSignOut()
   virtual void DoSignOut(signin_metrics::ProfileSignout signout_source_metric,
-                         signin_metrics::SignoutDelete signout_delete_metric);
+                         signin_metrics::SignoutDelete signout_delete_metric,
+                         bool revoke_all_tokens);
 
  private:
   enum SigninType {

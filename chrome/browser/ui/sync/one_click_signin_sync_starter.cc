@@ -110,6 +110,7 @@ OneClickSigninSyncStarter::OneClickSigninSyncStarter(
       continue_url_(continue_url),
       sync_setup_completed_callback_(sync_setup_completed_callback),
       first_account_added_to_cookie_(false),
+      revoke_all_tokens_on_cancel_signin_(true),
       weak_pointer_factory_(this) {
   DCHECK(profile);
   DCHECK(web_contents || continue_url.is_empty());
@@ -145,6 +146,7 @@ OneClickSigninSyncStarter::OneClickSigninSyncStarter(
           GURL() /* continue_url */,
           callback) {
   DCHECK(signin::IsAccountConsistencyDiceEnabled());
+  revoke_all_tokens_on_cancel_signin_ = false;
 }
 
 void OneClickSigninSyncStarter::OnBrowserRemoved(Browser* browser) {
@@ -382,7 +384,8 @@ void OneClickSigninSyncStarter::CompleteInitForNewProfile(
       // we have called Initialize() with the new profile, as otherwise this
       // object will get freed when the signin on the old profile is cancelled.
       old_signin_manager->SignOut(signin_metrics::TRANSFER_CREDENTIALS,
-                                  signin_metrics::SignoutDelete::IGNORE_METRIC);
+                                  signin_metrics::SignoutDelete::IGNORE_METRIC,
+                                  true /* revoke_all_tokens */);
 
       if (!dm_token_.empty()) {
         // Load policy for the just-created profile - once policy has finished
@@ -415,9 +418,10 @@ void OneClickSigninSyncStarter::CompleteInitForNewProfile(
 }
 
 void OneClickSigninSyncStarter::CancelSigninAndDelete() {
-  SigninManagerFactory::GetForProfile(profile_)
-      ->SignOut(signin_metrics::ABORT_SIGNIN,
-                signin_metrics::SignoutDelete::IGNORE_METRIC);
+  SigninManagerFactory::GetForProfile(profile_)->SignOut(
+      signin_metrics::ABORT_SIGNIN,
+      signin_metrics::SignoutDelete::IGNORE_METRIC,
+      revoke_all_tokens_on_cancel_signin_);
   // The statement above results in a call to SigninFailed() which will free
   // this object, so do not refer to the OneClickSigninSyncStarter object
   // after this point.

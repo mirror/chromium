@@ -832,7 +832,8 @@ void ProfileChooserView::ButtonPressed(views::Button* sender,
           browser_sync::ProfileSyncService::STOP_FROM_OPTIONS);
     SigninManagerFactory::GetForProfile(browser_->profile())
         ->SignOut(signin_metrics::USER_CLICKED_SIGNOUT_SETTINGS,
-                  signin_metrics::SignoutDelete::IGNORE_METRIC);
+                  signin_metrics::SignoutDelete::IGNORE_METRIC,
+                  true /* revoke_all_tokens */);
     ShowViewFromMode(profiles::BUBBLE_VIEW_MODE_GAIA_SIGNIN);
   } else if (sender == sync_error_signout_button_) {
     chrome::ShowSettingsSubPage(browser_, chrome::kSignOutSubPage);

@@ -45,7 +45,7 @@ constexpr int kCloseDirectlyTimer = 60;
 void Signout(SigninManager* signin_manager) {
   signin_manager->SignOut(
       signin_metrics::AUTHENTICATION_FAILED_WITH_FORCE_SIGNIN,
-      signin_metrics::SignoutDelete::KEEPING);
+      signin_metrics::SignoutDelete::KEEPING, true /* revoke_all_tokens */);
 }
 
 bool IsMatchingBrowser(Browser* browser, Profile* profile) {

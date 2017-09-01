@@ -303,7 +303,8 @@ void DiceResponseHandler::ProcessDiceSignoutHeader(
       VLOG(1) << "[Dice] Signing out all accounts.";
       RecordDiceResponseHeader(kSignoutPrimary);
       signin_manager_->SignOut(signin_metrics::SERVER_FORCED_DISABLE,
-                               signin_metrics::SignoutDelete::IGNORE_METRIC);
+                               signin_metrics::SignoutDelete::IGNORE_METRIC,
+                               true);
       // Cancel all Dice token fetches currently in flight.
       token_fetchers_.clear();
       return;

@@ -152,16 +152,18 @@ void SigninManager::HandleAuthError(const GoogleServiceAuthError& error) {
 
 void SigninManager::SignOut(
     signin_metrics::ProfileSignout signout_source_metric,
-    signin_metrics::SignoutDelete signout_delete_metric) {
-  client_->PreSignOut(
-      base::Bind(&SigninManager::DoSignOut, base::Unretained(this),
-                 signout_source_metric, signout_delete_metric),
-      signout_source_metric);
+    signin_metrics::SignoutDelete signout_delete_metric,
+    bool revoke_all_tokens) {
+  client_->PreSignOut(base::Bind(&SigninManager::DoSignOut,
+                                 base::Unretained(this), signout_source_metric,
+                                 signout_delete_metric, revoke_all_tokens),
+                      signout_source_metric);
 }
 
 void SigninManager::DoSignOut(
     signin_metrics::ProfileSignout signout_source_metric,
-    signin_metrics::SignoutDelete signout_delete_metric) {
+    signin_metrics::SignoutDelete signout_delete_metric,
+    bool revoke_all_tokens) {
   DCHECK(IsInitialized());
 
   signin_metrics::LogSignout(signout_source_metric, signout_delete_metric);
@@ -210,9 +212,11 @@ void SigninManager::DoSignOut(
   // Revoke all tokens before sending signed_out notification, because there
   // may be components that don't listen for token service events when the
   // profile is not connected to an account.
-  LOG(WARNING) << "Revoking refresh token on server. Reason: sign out, "
-               << "IsSigninAllowed: " << IsSigninAllowed();
-  token_service_->RevokeAllCredentials();
+  if (revoke_all_tokens) {
+    LOG(WARNING) << "Revoking all refresh tokens on server. Reason: sign out, "
+                 << "IsSigninAllowed: " << IsSigninAllowed();
+    token_service_->RevokeAllCredentials();
+  }
 
   for (auto& observer : observer_list_)
     observer.GoogleSignedOut(account_id, username);
@@ -242,7 +246,8 @@ void SigninManager::Initialize(PrefService* local_state) {
     // User is signed in, but the username is invalid - the administrator must
     // have changed the policy since the last signin, so sign out the user.
     SignOut(signin_metrics::SIGNIN_PREF_CHANGED_DURING_SIGNIN,
-            signin_metrics::SignoutDelete::IGNORE_METRIC);
+            signin_metrics::SignoutDelete::IGNORE_METRIC,
+            true /* revoke_all_tokens */);
   }
 
   if (account_tracker_service()->GetMigrationState() ==
@@ -265,7 +270,8 @@ void SigninManager::OnGoogleServicesUsernamePatternChanged() {
     // Signed in user is invalid according to the current policy so sign
     // the user out.
     SignOut(signin_metrics::GOOGLE_SERVICE_NAME_PATTERN_CHANGED,
-            signin_metrics::SignoutDelete::IGNORE_METRIC);
+            signin_metrics::SignoutDelete::IGNORE_METRIC,
+            true /* revoke_all_tokens */);
   }
 }
 
@@ -276,7 +282,8 @@ bool SigninManager::IsSigninAllowed() const {
 void SigninManager::OnSigninAllowedPrefChanged() {
   if (!IsSigninAllowed() && (IsAuthenticated() || AuthInProgress()))
     SignOut(signin_metrics::SIGNOUT_PREF_CHANGED,
-            signin_metrics::SignoutDelete::IGNORE_METRIC);
+            signin_metrics::SignoutDelete::IGNORE_METRIC,
+            true /* revoke_all_tokens */);
 }
 
 // static

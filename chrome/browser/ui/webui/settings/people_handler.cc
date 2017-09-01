@@ -539,8 +539,9 @@ void PeopleHandler::HandleStopSyncing(const base::ListValue* args) {
     signin_metrics::SignoutDelete delete_metric =
         delete_profile ? signin_metrics::SignoutDelete::DELETED
                        : signin_metrics::SignoutDelete::KEEPING;
-    SigninManagerFactory::GetForProfile(profile_)
-        ->SignOut(signin_metrics::USER_CLICKED_SIGNOUT_SETTINGS, delete_metric);
+    SigninManagerFactory::GetForProfile(profile_)->SignOut(
+        signin_metrics::USER_CLICKED_SIGNOUT_SETTINGS, delete_metric,
+        true /* revoke_all_tokens */);
   }
 
   if (delete_profile) {
@@ -603,9 +604,10 @@ void PeopleHandler::CloseSyncSetup() {
           // initial setup.
           // TODO(rsimha): Revisit this for M30. See http://crbug.com/252049.
           if (sync_service->IsFirstSetupInProgress()) {
-            SigninManagerFactory::GetForProfile(profile_)
-                ->SignOut(signin_metrics::ABORT_SIGNIN,
-                          signin_metrics::SignoutDelete::IGNORE_METRIC);
+            SigninManagerFactory::GetForProfile(profile_)->SignOut(
+                signin_metrics::ABORT_SIGNIN,
+                signin_metrics::SignoutDelete::IGNORE_METRIC,
+                true /* revoke_all_tokens */);
           }
 #endif
         }

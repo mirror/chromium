@@ -1147,7 +1147,8 @@ void ProfileSyncService::OnActionableError(const SyncProtocolError& error) {
       // clear.
       static_cast<SigninManager*>(signin_->GetOriginal())
           ->SignOut(signin_metrics::SERVER_FORCED_DISABLE,
-                    signin_metrics::SignoutDelete::IGNORE_METRIC);
+                    signin_metrics::SignoutDelete::IGNORE_METRIC,
+                    true /* revoke_all_tokens */);
 #endif
       break;
     case syncer::STOP_SYNC_FOR_DISABLED_ACCOUNT:
