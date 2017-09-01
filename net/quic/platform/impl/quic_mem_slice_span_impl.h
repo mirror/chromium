@@ -18,7 +18,7 @@ class QUIC_EXPORT_PRIVATE QuicMemSliceSpanImpl {
  public:
   explicit QuicMemSliceSpanImpl(
       const std::vector<scoped_refptr<IOBuffer>>& buffers,
-      const std::vector<size_t>& lengths);
+      const std::vector<int>& lengths);
 
   QuicMemSliceSpanImpl(const QuicMemSliceSpanImpl& other);
   QuicMemSliceSpanImpl& operator=(const QuicMemSliceSpanImpl& other);
@@ -35,7 +35,7 @@ class QUIC_EXPORT_PRIVATE QuicMemSliceSpanImpl {
 
  private:
   const std::vector<scoped_refptr<IOBuffer>>* buffers_;
-  const std::vector<size_t>* lengths_;
+  const std::vector<int>* lengths_;
 };
 
 }  // namespace net
