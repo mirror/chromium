@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5b9bb90_1477390f",
+        "filename": "chrome/android/webapk/shell_apk/res/layout/host_browser_list_item.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-01T21:35:40Z",
+      "side": 1,
+      "message": "The English text is not left aligned if you set android:layout_width\u003d\"wrap_content\"",
+      "revId": "137d81aa2046b75d143a37a85292937bf2484d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7270387_d8f28a6a",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-01T21:35:40Z",
+      "side": 1,
+      "message": "Maybe rename DIALOG_TEXT_PADDING to DIALOG_CONTENT_PADDING because it is more accurate?",
+      "revId": "137d81aa2046b75d143a37a85292937bf2484d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
