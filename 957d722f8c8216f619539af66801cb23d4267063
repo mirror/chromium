@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4936463c_61302d47",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-01T02:11:09Z",
+      "side": 0,
+      "message": "Sorry for misleading, I\u0027m saying below. VP canonicalization is still\nneeded for some cases. HitTest yields visible position but\ncanonicalized.\n\nconst PositionInFlatTreeWithAffinity\u0026 position_to_use \u003d\n        visible_hit_pos.IsNull()\n          ? CreateVisiblePosition(\n                PositionInFlatTree::FirstPositionInOrBeforeNode(inner_node))\n.ToPositionWithAffinity()\n          : visible_hit_pos.ToPositionWithAffinity();\n\n....\n  if (has_editable_style \u0026\u0026 event.Event().FromTouch()) {\n// We may want to use CreateVP(position_to_use).DeepEquivalent()),\n// but to keep current behavior at this time.\n    frame_-\u003eGetTextSuggestionController().HandlePotentialMisspelledWordTap(\n        position_to_use.GetPosition());\n  }",
+      "revId": "957d722f8c8216f619539af66801cb23d4267063",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
