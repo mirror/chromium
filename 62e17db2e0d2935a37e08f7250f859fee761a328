@@ -34,6 +34,24 @@
       "revId": "62e17db2e0d2935a37e08f7250f859fee761a328",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e39ea931_cbb07f9f",
+        "filename": "third_party/WebKit/Source/core/editing/VisiblePosition.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-01T02:02:24Z",
+      "side": 1,
+      "message": "Usage of VP::IsValid() is very limited. We can\u0027t use it everywhere at this\ntime. In the future, we should use it like EphemeralRange and\nSelectionInTempalte. But, now is not at time to do so.\n\nVP::IsValidFor(doc) and VS::IsValidFor(doc) are short term solution.\nIn the perfect world, we don\u0027t need to have them, since our code\nwill not allow to use VP and VS once DOM tree/style changed.\n\nAnyway, please make VP::IsValidFor(doc) to call PwA::IsValidFor(doc) to\ncall Pos::IsValidFor(doc).\n\nPosInFlatTree::IsValidFor(doc) should traverse ancestros until document\nor null instead of PosInDOMTree::IsValidFor(doc) uses IsConnected().\n\nWe\u0027ll replace PosIn{Flat,DOM}Tree::IsConnected/IsOrphan() to\nIsValidFor(doc). Because Pos::IsConnected() isn\u0027t detect whether\nPosition is moved to another document or not.\n\n[1] http://crbug.com/761173 PositionTemplate::IsConnected/IsOrphan don\u0027t\nwork for flat tree",
+      "parentUuid": "d3a2dd70_ad6e8e47",
+      "revId": "62e17db2e0d2935a37e08f7250f859fee761a328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
