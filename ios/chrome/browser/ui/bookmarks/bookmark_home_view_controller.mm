@@ -124,8 +124,7 @@ const CGFloat kMenuWidth = 264;
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  if (!base::FeatureList::IsEnabled(
-          bookmark_new_generation::features::kBookmarkNewGeneration)) {
+  if (!base::FeatureList::IsEnabled(kBookmarkNewGeneration)) {
     self.navigationBar =
         [[BookmarkNavigationBar alloc] initWithFrame:CGRectZero];
     [self.navigationBar setEditTarget:self
@@ -145,8 +144,7 @@ const CGFloat kMenuWidth = 264;
 #pragma mark - Protected
 
 - (void)loadBookmarkViews {
-  if (base::FeatureList::IsEnabled(
-          bookmark_new_generation::features::kBookmarkNewGeneration)) {
+  if (base::FeatureList::IsEnabled(kBookmarkNewGeneration)) {
     // Set up new UI view. TODO(crbug.com/695749): Polish UI according to mocks.
     _containerView = [[UIView alloc] initWithFrame:self.view.bounds];
     [_containerView setAutoresizingMask:UIViewAutoresizingFlexibleWidth |
@@ -318,8 +316,7 @@ const CGFloat kMenuWidth = 264;
 #pragma mark - BookmarkPromoControllerDelegate
 
 - (void)promoStateChanged:(BOOL)promoEnabled {
-  if (base::FeatureList::IsEnabled(
-          bookmark_new_generation::features::kBookmarkNewGeneration)) {
+  if (base::FeatureList::IsEnabled(kBookmarkNewGeneration)) {
     [self.bookmarksTableView promoStateChangedAnimated:YES];
   } else {
     [self.folderView promoStateChangedAnimated:YES];
@@ -913,8 +910,7 @@ const CGFloat kMenuWidth = 264;
 }
 
 - (void)updateViewConstraints {
-  if (base::FeatureList::IsEnabled(
-          bookmark_new_generation::features::kBookmarkNewGeneration)) {
+  if (base::FeatureList::IsEnabled(kBookmarkNewGeneration)) {
     NSDictionary* views = @{
       @"tableView" : self.bookmarksTableView,
       @"contextBar" : self.contextBar,
