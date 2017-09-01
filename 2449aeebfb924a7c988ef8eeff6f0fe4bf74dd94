@@ -141,6 +141,24 @@
       "revId": "2449aeebfb924a7c988ef8eeff6f0fe4bf74dd94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f8f113e_2176cf93",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-09-01T00:49:56Z",
+      "side": 1,
+      "message": "we need to revert setting of the url here and cherrypick into the 62 branch, as this has the potential to break all page load metrics.\n\nif the fix is more complex than removing this line we will need to revert this change and cherrypick that.",
+      "parentUuid": "a445f2d2_9cd7148b",
+      "revId": "2449aeebfb924a7c988ef8eeff6f0fe4bf74dd94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
