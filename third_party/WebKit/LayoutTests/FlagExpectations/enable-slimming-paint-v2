@@ -1909,6 +1909,24 @@ crbug.com/738613 paint/invalidation/selection/selection-within-composited-scroll
 # Subsequence under-invalidation of scroller related to ScrollHitTest.
 crbug.com/738613 compositing/overflow/overflow-scroll-with-pointer-events-toggle.html [ Failure Crash ]
 
+# Failures due to no scroll node with overflow:hidden.
+Bug(none) paint/invalidation/compositing/clipped-layer-size-change.html [ Failure ]
+Bug(none) paint/invalidation/table-overflow-hidden-in-overflow-hidden-scrolled.html [ Failure ]
+Bug(none) paint/invalidation/overflow-hidden-in-overflow-hidden-scrolled.html [ Failure ]
+Bug(none) compositing/squashing/squash-overflow-hidden-scrolltop.html [ Failure ]
+Bug(none) paint/invalidation/svg/scroll-hit-test.xhtml [ Failure ]
+Bug(none) paint/invalidation/scroll-in-clipped-layer.html [ Failure ]
+Bug(none) paint/invalidation/scroll-in-transformed-layer.html [ Failure ]
+Bug(none) paint/invalidation/scroll-with-transformed-parent-layer.html [ Failure ]
+
+# Failures due to sticky invalidation.
+Bug(none) compositing/overflow/composited-nested-sticky-deep.html [ Failure ]
+Bug(none) compositing/overflow/composited-nested-sticky-left.html [ Failure ]
+Bug(none) compositing/overflow/composited-nested-sticky-table.html [ Failure ]
+Bug(none) compositing/overflow/composited-nested-sticky-top.html [ Failure ]
+Bug(none) compositing/overflow/mixed-composited-nested-sticky-overflow-scroller.html [ Failure ]
+Bug(none) compositing/overflow/non-composited-sticky-element-in-main-thread-scrolled-composited-ancestor.html [ Failure ]
+
 # See comment regarding this test in NeverFixTests. It also fails for other
 # reasons, in particular that the composited layerization algorithm provides
 # different results.
