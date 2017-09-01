@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ec098c4_326c0a05",
+        "filename": "net/quic/chromium/quic_chromium_client_stream.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-09-01T14:15:19Z",
+      "side": 1,
+      "message": "Sweet!!",
+      "range": {
+        "startLine": 553,
+        "startChar": 27,
+        "endLine": 553,
+        "endChar": 0
+      },
+      "revId": "b41cf3732d8f75e77bc23403e4307c345ce14ee0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
