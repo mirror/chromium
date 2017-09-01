@@ -1135,7 +1135,8 @@ void ReplaceSelectionCommand::DoApply(EditingState* editing_state) {
   const VisibleSelection selection = EndingVisibleSelection();
   DCHECK(!selection.IsNone());
   DCHECK(selection.Start().AnchorNode());
-  if (!selection.IsNonOrphanedCaretOrRange() || !selection.Start().AnchorNode())
+  if (selection.IsNone() || selection.Start().IsOrphan() ||
+      selection.End().IsOrphan() || !selection.Start().AnchorNode())
     return;
 
   if (!selection.RootEditableElement())
