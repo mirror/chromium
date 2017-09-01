@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d81d83d8_0e0bb523",
+        "filename": "ios/chrome/browser/passwords/password_tab_helper.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-01T15:59:15Z",
+      "side": 1,
+      "message": "There was a mail thread recently that people like MakeUnique more.",
+      "range": {
+        "startLine": 25,
+        "startChar": 46,
+        "endLine": 25,
+        "endChar": 56
+      },
+      "revId": "b61f3e3091bf58b243a43c203c1708120ddeaf0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c9cfc2e_28f4b4a3",
+        "filename": "ios/chrome/browser/passwords/password_tab_helper.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-01T15:59:15Z",
+      "side": 1,
+      "message": "Is it critical to destroy everything here and not in the destructor? WebStateUserData would kill the object very soon anyway.\nIf not then we don\u0027t need WebStateObserver.",
+      "range": {
+        "startLine": 61,
+        "startChar": 24,
+        "endLine": 61,
+        "endChar": 41
+      },
+      "revId": "b61f3e3091bf58b243a43c203c1708120ddeaf0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
