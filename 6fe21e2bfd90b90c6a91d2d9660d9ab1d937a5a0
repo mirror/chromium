@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3053d315_4c176b92",
+        "filename": "chrome/browser/win/jumplist.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-01T07:41:18Z",
+      "side": 1,
+      "message": "should this also reset top_sites_has_pending_notification_ so that notifications there are also ignored in this \"skip cycle\"?\n\nperhaps:\n      // Forget about any prior TopSites notifications as well.\n      top_sites_has_pending_notification_ \u003d false;\n\nonce updates_to_skip_ hits zero, should the next ProcessNotifications() pull data from every source that had a skipped notification? for example, after updates_to_skip_ hits zero, should the next tab closure result in updating both recently closed and top sites if a top sites notification had previously been \"skipped\"?",
+      "revId": "6fe21e2bfd90b90c6a91d2d9660d9ab1d937a5a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96b10c39_885e5c5f",
+        "filename": "chrome/browser/win/jumplist.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-01T07:41:18Z",
+      "side": 1,
+      "message": "if you make the change i suggest above, then i think a comment here like:\n  // There is no need to reset tab_restore_has_pending_notification_ since it is unconditionally false at this point.\n  DCHECK(!tab_restore_has_pending_notification_);",
+      "revId": "6fe21e2bfd90b90c6a91d2d9660d9ab1d937a5a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
