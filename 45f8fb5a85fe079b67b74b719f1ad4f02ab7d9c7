@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "154322c8_d3757ebe",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-09-01T09:27:51Z",
+      "side": 1,
+      "message": "Ah, sorry, I misunderstood your previous point!\n\nWe can\u0027t use IsArcPlayStoreEnabledForProfile:\nIt calls IsArcAllowedForProfile, which calls IsArcMigrationAllowedForProfile if the user\u0027s cryptohome is ecryptfs.\n\nActually, I think this is fine:\nThe only purpose of this function is to check if arc migration would be allowed according to policy - that\u0027s why I renamed it to include \"ByPolicy\". For managed users, kArcEnabled is set by policy - they can\u0027t change it themselves. I\u0027ve improved the comment to make this more clear.\n\nThe only use of this function is in IsArcAllowedForProfile as one of the checks:\nIf ARC is allowed for the profile but we would need to migrate, check if we may migrate according to policy. In effect, this is used to decide if the user sohuld see a \"Play Store\" icon and then get a notification that upon re-login, ARC may be enabled (because we\u0027d migrate).\n\nI think this function is only exported arc_util.h for testing purposes from _unittest.",
+      "parentUuid": "89b3133b_e18a21cd",
+      "range": {
+        "startLine": 182,
+        "startChar": 11,
+        "endLine": 182,
+        "endChar": 62
+      },
+      "revId": "45f8fb5a85fe079b67b74b719f1ad4f02ab7d9c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b9b7e9a8_a3318770",
         "filename": "chrome/browser/chromeos/arc/arc_util_unittest.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "45f8fb5a85fe079b67b74b719f1ad4f02ab7d9c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1d86c72_a56f317c",
+        "filename": "chrome/browser/chromeos/arc/arc_util_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-09-01T09:27:51Z",
+      "side": 1,
+      "message": "Ah, no trailing underscores! Done. To make the constructor less awkward, I actually deleted it and use list {} initializers in INSTANTIATE_TEST_CASE_P.",
+      "parentUuid": "b9b7e9a8_a3318770",
+      "range": {
+        "startLine": 620,
+        "startChar": 7,
+        "endLine": 620,
+        "endChar": 28
+      },
+      "revId": "45f8fb5a85fe079b67b74b719f1ad4f02ab7d9c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a8714f35_5086e78e",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1070,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-09-01T09:27:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a30a983_c76d53fc",
+      "range": {
+        "startLine": 1070,
+        "startChar": 26,
+        "endLine": 1070,
+        "endChar": 40
+      },
+      "revId": "45f8fb5a85fe079b67b74b719f1ad4f02ab7d9c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "476359c6_c849f37b",
         "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "45f8fb5a85fe079b67b74b719f1ad4f02ab7d9c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25040ed5_44bbca60",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1074,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-09-01T09:27:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "476359c6_c849f37b",
+      "range": {
+        "startLine": 1074,
+        "startChar": 14,
+        "endLine": 1074,
+        "endChar": 24
+      },
+      "revId": "45f8fb5a85fe079b67b74b719f1ad4f02ab7d9c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
