@@ -70,6 +70,24 @@
       "revId": "9859174336713de9436bc4a390ff7baef7eb07cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fc53dac_ec869e5e",
+        "filename": "net/cert/internal/system_trust_store.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-09-01T00:42:30Z",
+      "side": 1,
+      "message": "To be clear: I don\u0027t want to hold up the \u0027good enough\u0027 for the \u0027perfect\u0027 - but did want to make sure to capture the direction things are moving in.\n\nWe don\u0027t use the OS-provided root certs, we use the OS-provided APIs. The distinction is actually important enough, because the OS-provided APIs ensure that the OS-provided restrictions are applied.\n\nWith Fuschia, using a .pem bundle like it is means there is fundamentally no OS-provided restriction (or the ability to express it). It also means that there\u0027s no way for Fuschia to make informed decisions about the impact of additions/removals, because it won\u0027t be able to deterministically rely on the APIs (or how they\u0027re implemented). This would be certainly true for Chrome (because of the libboringssl vs static linking), and suggests a more systemic thing. Aaron had reached out in March to discuss this, but I wasn\u0027t sure if we\u0027d followed up on the e-mail thread.\n\nOne of the open questions from the email was trying to understand the update/consumption story, to figure out what the risks would be, and that\u0027s why it\u0027s hard to evaluate this as-is. I didn\u0027t want to shoot-down this CL, so much as capture some of the nuance and questions - to figure out what the path forward is (both MVP and longer-term), and how we can hopefully figure out how to make //net folks own more of that work (or at least figure out what our inertia risk is to landing as-is)",
+      "parentUuid": "545a9aa9_7ada3762",
+      "revId": "9859174336713de9436bc4a390ff7baef7eb07cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
