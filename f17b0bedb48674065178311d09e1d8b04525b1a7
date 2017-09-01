@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "1154c8f2_f0bcd0c3",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 1618,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-09-01T21:11:54Z",
+      "side": 1,
+      "message": "SGTM. The second option is cute, but not very readable :)",
+      "parentUuid": "cdf2fbcd_5f308bc6",
+      "range": {
+        "startLine": 1618,
+        "startChar": 21,
+        "endLine": 1618,
+        "endChar": 35
+      },
+      "revId": "f17b0bedb48674065178311d09e1d8b04525b1a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b8d1799_a43e75f2",
         "filename": "remoting/host/linux/linux_me2me_host.py",
         "patchSetId": 4
@@ -178,6 +202,30 @@
       "side": 1,
       "message": "wait could return before the timeout is reached if another child process exits in the meantime. E.g., maybe only the host died and we want to relaunch it it 60 seconds, but before that time elapses the session exits. Now, instead of waiting the remaining time and trying to start the host, we want (according to the previous logic, here) to initiate tear down and stop the X server, too, and then relaunch everything.\n\nIt wouldn\u0027t be enough to call desktop.shutdown_all_procs() everywhere I\u0027m setting tear_down \u003d True; the entire contents of the \"if tear_down:\" block would have to be duplicated.\n\nIn general, the code was a giant mess of a while True loop before. In implementing this change, I cleaned it up some and fixed several instances of poor behavior. It could surely be cleaned up further, but I\u0027m not sure that that\u0027s in scope for this bug. The changes I\u0027ve made are already more extensive than I was expecting, and I intentionally avoided rewriting the whole thing.",
       "parentUuid": "29d3748a_025ed894",
+      "range": {
+        "startLine": 1656,
+        "startChar": 48,
+        "endLine": 1656,
+        "endChar": 0
+      },
+      "revId": "f17b0bedb48674065178311d09e1d8b04525b1a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dccf3bad_88363901",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 1656,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-09-01T21:11:54Z",
+      "side": 1,
+      "message": "Fair enough. I agree that you haven\u0027t made anything worse here and we should keep the bug scope small. Thanks for keeping me on point :) How about moving the log line to just before we call wait?",
+      "parentUuid": "fb10e5c7_6e66ccd7",
       "range": {
         "startLine": 1656,
         "startChar": 48,
@@ -290,6 +338,24 @@
     },
     {
       "key": {
+        "uuid": "1130d6df_788bade4",
+        "filename": "remoting/host/remoting_me2me_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-09-01T21:11:54Z",
+      "side": 1,
+      "message": "Nope. I think it\u0027s fine to leave this undocumented, and I\u0027m inclined to say we should get rid of command-line help altogether in a follow-up as a way of making things consistent.",
+      "parentUuid": "bce0b1e2_0f66c901",
+      "revId": "f17b0bedb48674065178311d09e1d8b04525b1a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5f3c8ba_ec544984",
         "filename": "remoting/host/remoting_me2me_host.cc",
         "patchSetId": 4
@@ -334,6 +400,30 @@
       "revId": "f17b0bedb48674065178311d09e1d8b04525b1a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af81486b_e83029db",
+        "filename": "remoting/host/remoting_me2me_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 924,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-09-01T21:11:54Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "41533895_c18ce27e",
+      "range": {
+        "startLine": 924,
+        "startChar": 31,
+        "endLine": 924,
+        "endChar": 0
+      },
+      "revId": "f17b0bedb48674065178311d09e1d8b04525b1a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -404,6 +494,24 @@
       "revId": "f17b0bedb48674065178311d09e1d8b04525b1a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80ad0aa1_b4d64163",
+        "filename": "remoting/resources/remoting_strings.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 1131,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-09-01T21:11:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d340bfa2_f0f5e783",
+      "revId": "f17b0bedb48674065178311d09e1d8b04525b1a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
