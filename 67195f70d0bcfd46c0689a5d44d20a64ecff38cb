@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "5e280766_34cb8a80",
+        "filename": "content/browser/devtools/protocol/emulation_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-09-01T11:05:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1cf6b756_2f4a82d5",
+      "revId": "67195f70d0bcfd46c0689a5d44d20a64ecff38cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f032a14_9ade2ee1",
         "filename": "headless/lib/browser/headless_devtools_manager_delegate.cc",
         "patchSetId": 5
@@ -77,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "5c8a3dcc_259b2d95",
+        "filename": "headless/lib/browser/headless_devtools_manager_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-09-01T11:05:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f032a14_9ade2ee1",
+      "range": {
+        "startLine": 111,
+        "startChar": 22,
+        "endLine": 111,
+        "endChar": 26
+      },
+      "revId": "67195f70d0bcfd46c0689a5d44d20a64ecff38cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b7348bc_f22ca1d0",
         "filename": "headless/lib/browser/headless_devtools_manager_delegate.cc",
         "patchSetId": 5
@@ -91,6 +133,24 @@
       "revId": "67195f70d0bcfd46c0689a5d44d20a64ecff38cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f708bf5a_85a2d2cb",
+        "filename": "headless/lib/browser/headless_devtools_manager_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-09-01T11:05:48Z",
+      "side": 1,
+      "message": "Sounds like a good idea. I\u0027d prefer to do this separately though - this is already a huge patch.. added a todo.",
+      "parentUuid": "6b7348bc_f22ca1d0",
+      "revId": "67195f70d0bcfd46c0689a5d44d20a64ecff38cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -165,6 +225,30 @@
     },
     {
       "key": {
+        "uuid": "e87e91c5_6b661cf0",
+        "filename": "headless/lib/browser/headless_devtools_manager_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-09-01T11:05:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10e4fc5a_269e193d",
+      "range": {
+        "startLine": 741,
+        "startChar": 2,
+        "endLine": 741,
+        "endChar": 19
+      },
+      "revId": "67195f70d0bcfd46c0689a5d44d20a64ecff38cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "506d25c7_e1cbd916",
         "filename": "headless/lib/browser/headless_web_contents_impl.cc",
         "patchSetId": 5
@@ -185,6 +269,30 @@
       "revId": "67195f70d0bcfd46c0689a5d44d20a64ecff38cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb05aed2_57917c99",
+        "filename": "headless/lib/browser/headless_web_contents_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-09-01T11:05:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "506d25c7_e1cbd916",
+      "range": {
+        "startLine": 168,
+        "startChar": 1,
+        "endLine": 168,
+        "endChar": 2
+      },
+      "revId": "67195f70d0bcfd46c0689a5d44d20a64ecff38cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -423,6 +531,30 @@
       "side": 1,
       "message": "Right, yeah, I was just alluding to the fact that there\u0027s a race here and you actually might not see an error even if you fail to wait for this event.",
       "parentUuid": "ad3faf0c_33db5759",
+      "range": {
+        "startLine": 3881,
+        "startChar": 197,
+        "endLine": 3881,
+        "endChar": 201
+      },
+      "revId": "67195f70d0bcfd46c0689a5d44d20a64ecff38cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6d89425a_0be0bf6e",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 3881,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-09-01T11:05:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47110301_64907755",
       "range": {
         "startLine": 3881,
         "startChar": 197,
