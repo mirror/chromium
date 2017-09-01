@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "ae7e798d_af3db929",
+        "filename": "tools/battor_agent/battor_agent.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-09-01T21:11:27Z",
+      "side": 1,
+      "message": "I started looking at this and realized that it works poorly. The current SamplesToString function takes as input the BattOrSample results extracted from *battor_eeprom and calibration_frame_, and it also takes as input BattOrSampleConverter::MinSample() and BattOrSampleConverter::MaxSample(), battor_eeprom_-\u003esd_sample_rate, battor_eeprom_-\u003elow_gain, calibration_frame_, and clock_sync_marker_.\n\nSo, if we give the user a std::vector\u003cBattOrSample\u003e then they don\u0027t have enough information to print the detailed report that we use.\n\nSo...\n\nI could call OnStopTracingComplete with an object that contains all of the information needed to create a report - all of the items listed above. I think that this option breaks encapsulation too much by forcing us to create what is almost a copy of the BattOrAgent object.\n\nOr I could split up SamplesToString() into SamplesToDetailed() and SamplesToSummary() (to clean up the code) and then package both results into BattOrResults which is then passed to OnStopTracingComplete.\n\nOr, BattOrResults could include the detailed summary and the std::vector\u003cBattOrSample\u003e and samples per second. That would give clients enough information to generate a power summary, without breaking encapsulation as much.",
+      "parentUuid": "b7e74d4d_a40c6af8",
+      "revId": "495f5e59f6d3cb11a83f3ee39974f968f2cfa48a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4b2101a_6d7d4454",
         "filename": "tools/battor_agent/battor_agent.cc",
         "patchSetId": 4
