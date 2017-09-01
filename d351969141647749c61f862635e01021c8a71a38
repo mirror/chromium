@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d09d7f7_ac09b326",
+        "filename": "chrome/browser/chromeos/arc/accessibility/ax_tree_source_arc.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-01T19:16:04Z",
+      "side": 1,
+      "message": "Is it possible to handle tables also?\nThose are just 2-dimensional collections.\n\nRow and column headers have is_heading set on them.",
+      "revId": "d351969141647749c61f862635e01021c8a71a38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af35fc08_b7aac429",
+        "filename": "chrome/browser/chromeos/arc/accessibility/ax_tree_source_arc.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-01T19:16:04Z",
+      "side": 1,
+      "message": "nit: needs braces {}",
+      "revId": "d351969141647749c61f862635e01021c8a71a38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68a2cc90_d7c55a17",
+        "filename": "chrome/browser/chromeos/arc/accessibility/ax_tree_source_arc.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-01T19:16:04Z",
+      "side": 1,
+      "message": "nit: needs braces {}",
+      "revId": "d351969141647749c61f862635e01021c8a71a38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
