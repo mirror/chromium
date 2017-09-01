@@ -80,7 +80,6 @@ class ExclusiveAccessManager {
   ExclusiveAccessContext* const exclusive_access_context_;
   FullscreenController fullscreen_controller_;
   MouseLockController mouse_lock_controller_;
-  base::OneShotTimer hold_timer_;
 
   DISALLOW_COPY_AND_ASSIGN(ExclusiveAccessManager);
 };

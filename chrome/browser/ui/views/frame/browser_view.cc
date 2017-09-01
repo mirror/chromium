@@ -81,6 +81,7 @@
 #include "chrome/browser/ui/views/location_bar/zoom_bubble_view.h"
 #include "chrome/browser/ui/views/new_back_shortcut_bubble.h"
 #include "chrome/browser/ui/views/omnibox/omnibox_view_views.h"
+#include "chrome/browser/ui/views/press_and_hold_esc_tracker.h"
 #include "chrome/browser/ui/views/profiles/profile_indicator_icon.h"
 #include "chrome/browser/ui/views/status_bubble_views.h"
 #include "chrome/browser/ui/views/tabs/browser_tab_strip_controller.h"
@@ -2654,6 +2655,21 @@ void BrowserView::HideDownloadShelf() {
   StatusBubble* status_bubble = GetStatusBubble();
   if (status_bubble)
     status_bubble->Hide();
+}
+
+void BrowserView::StartTrackingPressAndHoldEsc(
+    const base::Closure& done_callback) {
+  if (!press_and_hold_esc_tracker_) {
+    press_and_hold_esc_tracker_.reset(new PressAndHoldEscTracker(GetWidget()));
+  }
+  press_and_hold_esc_tracker_->StartTracking(done_callback);
+}
+
+void BrowserView::CancelTrackingPressAndHoldEsc() {
+  if (!press_and_hold_esc_tracker_) {
+    return;
+  }
+  press_and_hold_esc_tracker_->CancelTracking();
 }
 
 ///////////////////////////////////////////////////////////////////////////////

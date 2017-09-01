@@ -58,6 +58,7 @@ class FullscreenControlHost;
 class InfoBarContainerView;
 class LocationBarView;
 class NewBackShortcutBubble;
+class PressAndHoldEscTracker;
 class StatusBubbleViews;
 class TabStrip;
 class ToolbarView;
@@ -451,6 +452,9 @@ class BrowserView : public BrowserWindow,
   content::WebContents* GetActiveWebContents() override;
   void HideDownloadShelf() override;
   void UnhideDownloadShelf() override;
+  void StartTrackingPressAndHoldEsc(
+      const base::Closure& done_callback) override;
+  void CancelTrackingPressAndHoldEsc() override;
 
   // ExclusiveAccessBubbleViewsContext overrides
   ExclusiveAccessManager* GetExclusiveAccessManager() override;
@@ -724,6 +728,8 @@ class BrowserView : public BrowserWindow,
   std::unique_ptr<BrowserWindowHistogramHelper> histogram_helper_;
 
   std::unique_ptr<FullscreenControlHost> fullscreen_control_host_;
+
+  std::unique_ptr<PressAndHoldEscTracker> press_and_hold_esc_tracker_;
 
   mutable base::WeakPtrFactory<BrowserView> activate_modal_dialog_factory_{
       this};
