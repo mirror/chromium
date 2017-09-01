@@ -118,6 +118,30 @@
       "revId": "0789733b912fd82a41b67436156afa0c38f38956",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "22f8743c_8a762b4a",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-09-01T01:07:27Z",
+      "side": 1,
+      "message": "As the original author of this class and the tab capture API, looks good: Each OffscreenTab instance creates and owns its WebContents and Profile instance, and these are deleted by the destructor. There shouldn\u0027t be an issue with leaking these Profiles, AFAICT.",
+      "parentUuid": "a71b571f_64d41c7d",
+      "range": {
+        "startLine": 558,
+        "startChar": 7,
+        "endLine": 558,
+        "endChar": 67
+      },
+      "revId": "0789733b912fd82a41b67436156afa0c38f38956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
