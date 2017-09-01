@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a29a064_c9d007ba",
+        "filename": "ios/chrome/app/spotlight/spotlight_util.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-09-01T17:05:24Z",
+      "side": 1,
+      "message": "thakis@ I\u0027m not sure what this does for the caller of GetURLForSpotlightItemID (also in this CL) that used to have an availability check.  The compiler seemed to want this here, and not there (ios/chrome/app/application_delegate/user_activity_handler.mm)",
+      "revId": "6424ce958fc29a1795d057545c5dbb8fbdeefe5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
