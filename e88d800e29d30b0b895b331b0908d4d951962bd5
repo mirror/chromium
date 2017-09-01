@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "149d963a_c50cce23",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionSample.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-01T09:32:45Z",
+      "side": 1,
+      "message": "Yes. If caller doesn\u0027t need to have a selection, they should use\nEditingTestBase::SetBodyContent().",
+      "parentUuid": "c7fb7b57_20a5cce1",
+      "revId": "e88d800e29d30b0b895b331b0908d4d951962bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8aafef4b_67c8c55a",
         "filename": "third_party/WebKit/Source/core/editing/SelectionSample.cpp",
         "patchSetId": 6
@@ -64,6 +82,24 @@
       "writtenOn": "2017-09-01T00:14:02Z",
       "side": 1,
       "message": "Do you handle Comment nodes and ProcessingInstruction nodes in this path?",
+      "revId": "e88d800e29d30b0b895b331b0908d4d951962bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e640568_f5bd1a0d",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionSample.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-01T09:32:45Z",
+      "side": 1,
+      "message": "Since we can put selection markers into Comment and PI, we don\u0027t need\nto distinguish among Text, Comment and PI.",
+      "parentUuid": "8aafef4b_67c8c55a",
       "revId": "e88d800e29d30b0b895b331b0908d4d951962bd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +123,24 @@
     },
     {
       "key": {
+        "uuid": "70114a10_7da22dab",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionSample.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-01T09:32:45Z",
+      "side": 1,
+      "message": "No. \nChanged to use Attribute::GetName() -\u003e const QualifiedName\u0026",
+      "parentUuid": "f55996ac_8adfd0d5",
+      "revId": "e88d800e29d30b0b895b331b0908d4d951962bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3305cc62_16d86238",
         "filename": "third_party/WebKit/Source/core/editing/SelectionSample.cpp",
         "patchSetId": 6
@@ -98,6 +152,24 @@
       "writtenOn": "2017-09-01T00:14:02Z",
       "side": 1,
       "message": "If an element has \"id\" attribute and \"xml:id\" attribute, sorting result may be unpredictable.",
+      "revId": "e88d800e29d30b0b895b331b0908d4d951962bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7187f174_068ab065",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionSample.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-01T09:32:45Z",
+      "side": 1,
+      "message": "Done. Use Attribute::GetName()",
+      "parentUuid": "3305cc62_16d86238",
       "revId": "e88d800e29d30b0b895b331b0908d4d951962bd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +193,24 @@
     },
     {
       "key": {
+        "uuid": "128772b3_e9c1148f",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionSample.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-01T09:32:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60568ba2_1536c28d",
+      "revId": "e88d800e29d30b0b895b331b0908d4d951962bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41f1a857_5ffd9e11",
         "filename": "third_party/WebKit/Source/core/editing/SelectionSample.cpp",
         "patchSetId": 6
@@ -132,6 +222,41 @@
       "writtenOn": "2017-09-01T00:14:02Z",
       "side": 1,
       "message": "This function doesn\u0027t handle Comment nodes and ProcessingInstruction nodes correctly.",
+      "revId": "e88d800e29d30b0b895b331b0908d4d951962bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "398f1131_574c2f56",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionSample.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-01T09:32:45Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "41f1a857_5ffd9e11",
+      "revId": "e88d800e29d30b0b895b331b0908d4d951962bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "433afd16_0c5e59e7",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionSample.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-01T09:32:45Z",
+      "side": 1,
+      "message": "We use ElementCannotHaveEndTag(const Node\u0026) instead of listed tag qnames up.\n(^_^;)",
       "revId": "e88d800e29d30b0b895b331b0908d4d951962bd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +314,24 @@
     },
     {
       "key": {
+        "uuid": "359dc6d3_44794786",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionSampleTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-01T09:32:45Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "3c306e03_6883bba4",
+      "revId": "e88d800e29d30b0b895b331b0908d4d951962bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1fe2d3bb_c06882b1",
         "filename": "third_party/WebKit/Source/core/editing/SelectionSampleTest.cpp",
         "patchSetId": 6
@@ -206,6 +349,24 @@
     },
     {
       "key": {
+        "uuid": "ad604f2d_1963cd93",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionSampleTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-01T09:32:45Z",
+      "side": 1,
+      "message": "I have no intention to align with assert_selection() except for\nselection marker symbols.\n\nI prefer shorter notation and don\u0027t prefer to have |selection_| in\nEditingTestBase since it introduces some setter members for |selection_|.\n\nTEST_F(VisibleUnitsWordTest, StartOfWord) {\n  SetBodyAndSelectionFromSample(\"..|..\");\n  SetSelectionFromPosition(StartOfWord(GetSelection().Base());\n  EXPECT_EQ(\"..|..\", GetSelectionSampleText());\n}",
+      "parentUuid": "1fe2d3bb_c06882b1",
+      "revId": "e88d800e29d30b0b895b331b0908d4d951962bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5867e355_073fb549",
         "filename": "third_party/WebKit/Source/core/editing/SelectionSampleTest.cpp",
         "patchSetId": 6
@@ -217,6 +378,30 @@
       "writtenOn": "2017-08-31T23:18:45Z",
       "side": 1,
       "message": "This looks so hacky... Do we really want such \"feature\"?",
+      "range": {
+        "startLine": 104,
+        "startChar": 1,
+        "endLine": 112,
+        "endChar": 77
+      },
+      "revId": "e88d800e29d30b0b895b331b0908d4d951962bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebd80a9d_b25b6805",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionSampleTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-01T09:32:45Z",
+      "side": 1,
+      "message": "The main motivation is editing code sometimes use a position TABLE@0.\nBut, we can\u0027t put Text node as children of TABLE.\n\nImplementing selection markers in comment node is zero cost except for\nadding test.",
+      "parentUuid": "5867e355_073fb549",
       "range": {
         "startLine": 104,
         "startChar": 1,
