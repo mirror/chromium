@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11256627_6b8950e7",
+        "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-01T21:56:10Z",
+      "side": 1,
+      "message": "GpuProcessHost::Get should only be called from the IO thread - this is the UI thread.\n\nCreateOverlayCandidateValidator is called from EstablishedGpuChannel which has a valid GpuChannelHost which has the GPUInfo - can we get the workaround from there instead?",
+      "revId": "77d0fcf2c53deceaeb377c2d2908e6e855d495e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
