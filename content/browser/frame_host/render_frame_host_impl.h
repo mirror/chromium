@@ -662,6 +662,11 @@ class CONTENT_EXPORT RenderFrameHostImpl
     return stream_handle_.get();
   }
 
+  // Exposed so that tests can swap out the implementation and intercept calls.
+  mojo::AssociatedBinding<mojom::FrameHost>& frame_host_binding_for_testing() {
+    return frame_host_associated_binding_;
+  }
+
  protected:
   friend class RenderFrameHostFactory;
 
@@ -731,7 +736,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
   void OnDidFailLoadWithError(const GURL& url,
                               int error_code,
                               const base::string16& error_description);
-  void OnDidCommitProvisionalLoad(const IPC::Message& msg);
   void OnUpdateState(const PageState& state);
   void OnBeforeUnloadACK(
       bool proceed,
@@ -839,6 +843,9 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // mojom::FrameHost
   void CreateNewWindow(mojom::CreateNewWindowParamsPtr params,
                        CreateNewWindowCallback callback) override;
+  void DidCommitProvisionalLoad(
+      std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params>
+          validated_params) override;
 
   void RunCreateWindowCompleteCallback(CreateNewWindowCallback callback,
                                        mojom::CreateNewWindowReplyPtr reply,
