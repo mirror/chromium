@@ -124,8 +124,8 @@ def main():
   parser.add_argument('--test-launcher-jobs',
                       type=int,
                       help='Sets the number of parallel test jobs.')
-  parser.add_argument('--test_launcher_summary_output',
-                      help='Currently ignored for 2-sided roll.')
+  parser.add_argument('--test-launcher-summary-output',
+                      help='Where the test launcher will output its json.')
   parser.add_argument('child_args', nargs='*',
                       help='Arguments for the test process.')
   parser.add_argument('-d', '--device', action='store_true', default=False,
@@ -183,6 +183,10 @@ def main():
         os.path.join(args.output_directory, args.test_launcher_filter_file))
     runtime_deps.append(('test_filter_file', test_launcher_filter_file))
     child_args.append('--test-launcher-filter-file=/system/test_filter_file')
+
+  if args.test_launcher_summary_output:
+    child_args.append('--test-launcher-summary-output=' +
+                      args.test_launcher_summary_output)
 
   try:
     bootfs = BuildBootfs(args.output_directory, runtime_deps, args.exe_name,
