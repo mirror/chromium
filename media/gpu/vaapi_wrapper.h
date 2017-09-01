@@ -304,6 +304,9 @@ class MEDIA_GPU_EXPORT VaapiWrapper
                                std::vector<VAConfigAttrib>& required_attribs,
                                gfx::Size* resolution);
 
+  // Return the version string to append to libva library
+  static std::string GetVaVersionString();
+
   // Destroys a |va_surface| created using CreateUnownedSurface.
   void DestroyUnownedSurface(VASurfaceID va_surface_id);
 
