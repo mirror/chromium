@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98d76327_c9a078a0",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_journey_logger_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-09-01T12:25:02Z",
+      "side": 1,
+      "message": "_profile1 or _profile2?",
+      "range": {
+        "startLine": 52,
+        "startChar": 38,
+        "endLine": 52,
+        "endChar": 47
+      },
+      "revId": "240ac9d0a0d4116aaf58be5e8accec663712c47e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
