@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "d50f4c79_fcc3777a",
+        "filename": "content/browser/renderer_host/database_message_filter.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-01T04:17:49Z",
+      "side": 1,
+      "message": "I guess what I\u0027m saying is that we\u0027re already doing the thread switching (that\u0027s what OverrideTaskRunnerForMessage does)--so there\u0027s no reason to do it before the thread switch rather than after. And if we do it after, then we don\u0027t need to post two tasks anyway. Since this is the CL that introduces the additional cleanup task, we should try to consolidate this logic (even if it\u0027s going to change in a followup, the followup change will end up making pretty much the same change).",
+      "parentUuid": "8ebe2d56_d7bb4392",
+      "revId": "c4d499b4798a8dcb9a962fb906335ad4d078b293",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4bfeac8a_3c9355ea",
         "filename": "content/child/web_database_impl.h",
         "patchSetId": 16
