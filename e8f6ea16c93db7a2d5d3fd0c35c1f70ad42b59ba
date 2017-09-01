@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "5d936ef9_9b5ed9b4",
+        "filename": "extensions/browser/api/metrics_private/metrics_private_api.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-01T21:03:52Z",
+      "side": 1,
+      "message": "Thanks.",
+      "parentUuid": "8b8943fa_a11584c1",
+      "range": {
+        "startLine": 141,
+        "startChar": 2,
+        "endLine": 142,
+        "endChar": 52
+      },
+      "revId": "e8f6ea16c93db7a2d5d3fd0c35c1f70ad42b59ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "679a0a52_6c1a44b6",
         "filename": "extensions/browser/api/metrics_private/metrics_private_api.cc",
         "patchSetId": 5

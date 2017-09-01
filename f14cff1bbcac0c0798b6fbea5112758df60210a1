@@ -16,6 +16,24 @@
       "revId": "f14cff1bbcac0c0798b6fbea5112758df60210a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6965f4a_8bb4f59d",
+        "filename": "chrome/browser/resources/settings/route.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-01T21:03:52Z",
+      "side": 1,
+      "message": "It\u0027s actually logging a hash value, so how much is logged doesn\u0027t change. Though \"chrome://settings\" can be added later when processing the data.\n\nDone.",
+      "parentUuid": "038a4727_ec78f622",
+      "revId": "f14cff1bbcac0c0798b6fbea5112758df60210a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
