@@ -8,6 +8,7 @@ from common import TestDriver
 from common import IntegrationTest
 from decorators import NotAndroid
 from decorators import ChromeVersionEqualOrAfterM
+from decorators import NotAndroid
 import json
 
 class Smoke(IntegrationTest):
@@ -68,7 +69,7 @@ class Smoke(IntegrationTest):
         'ParseTiming.NavigationToParseStart')
       self.assertGreater(num_chrome_proxy_request_headers, 0)
 
-  # Ensure pageload metric pingback with DataSaver.
+  # Ensure pageload metric pingback with DataSaver has the variations header.
   def testPingback(self):
     with TestDriver() as t:
       t.AddChromeArg('--enable-spdy-proxy-auth')
@@ -85,6 +86,20 @@ class Smoke(IntegrationTest):
       self.assertEqual(1, attempted['count'])
       succeeded = t.GetHistogram('DataReductionProxy.Pingback.Succeeded')
       self.assertEqual(1, succeeded['count'])
+
+  # Ensure pageload metric pingback with DataSaver.
+  @NotAndroid
+  def testPingbackHasVariations(self):
+    with TestDriver() as t:
+      t.AddChromeArg('--enable-spdy-proxy-auth')
+      t.AddChromeArg('--enable-data-reduction-proxy-force-pingback')
+      t.AddChromeArg('--log-net-log=chrome.netlog.json')
+      # Force set the variations ID, so they are send along with the pingback
+      # request.
+      t.AddChromeArg('--force-variation-ids=42')
+      t.LoadURL('http://check.googlezip.net/test.html')
+      t.LoadURL('http://check.googlezip.net/test.html')
+      t.SleepUntilHistogramHasEntry("DataReductionProxy.Pingback.Succeeded")
 
     # Look for the request made to data saver pingback server.
     with open('chrome.netlog.json') as data_file:
