@@ -8,6 +8,7 @@
 #include "base/callback.h"
 #include "base/files/file_path.h"
 #include "base/logging.h"
+#include "base/metrics/histogram_macros.h"
 #include "components/offline_pages/core/prefetch/prefetch_dispatcher.h"
 #include "components/offline_pages/core/prefetch/prefetch_types.h"
 #include "components/offline_pages/core/prefetch/store/prefetch_store.h"
@@ -18,6 +19,8 @@
 namespace offline_pages {
 namespace {
 
+// Updates a prefetch item after its download was started. Returns true if a row
+// was successfully updated.
 bool UpdatePrefetchItemOnDownloadSuccessSync(const std::string& guid,
                                              const base::FilePath& file_path,
                                              int64_t file_size,
@@ -34,9 +37,21 @@ bool UpdatePrefetchItemOnDownloadSuccessSync(const std::string& guid,
   statement.BindString(3, guid);
   statement.BindInt(4, static_cast<int>(PrefetchItemState::DOWNLOADING));
 
-  return statement.Run();
+  if (!statement.Run())
+    return false;
+
+  if (db->GetLastChangeCount() > 0) {
+    // Reports downloaded file size in KiB (accepting values up to 100 MiB).
+    UMA_HISTOGRAM_COUNTS_100000("OfflinePages.Prefetching.DownloadedFileSize",
+                                file_size / 1024);
+    return true;
+  }
+
+  return false;
 }
 
+// Updates a prefetch item after its download initialization has failed. Returns
+// true if a row was successfully updated.
 bool UpdatePrefetchItemOnDownloadErrorSync(const std::string& guid,
                                            sql::Connection* db) {
   static const char kSql[] =
@@ -50,7 +65,7 @@ bool UpdatePrefetchItemOnDownloadErrorSync(const std::string& guid,
   statement.BindString(2, guid);
   statement.BindInt(3, static_cast<int>(PrefetchItemState::DOWNLOADING));
 
-  return statement.Run();
+  return statement.Run() && db->GetLastChangeCount() > 0;
 }
 
 }  // namespace
@@ -85,10 +100,10 @@ void DownloadCompletedTask::Run() {
   }
 }
 
-void DownloadCompletedTask::OnPrefetchItemUpdated(bool success) {
+void DownloadCompletedTask::OnPrefetchItemUpdated(bool row_was_updated) {
   // No further action can be done if the database fails to be updated. The
   // cleanup task should eventually kick in to clean this up.
-  if (success)
+  if (row_was_updated)
     prefetch_dispatcher_->SchedulePipelineProcessing();
 
   TaskComplete();
