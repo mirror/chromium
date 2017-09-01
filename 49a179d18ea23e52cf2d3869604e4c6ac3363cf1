@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d251571_a059cb93",
+        "filename": "third_party/WebKit/Source/core/timing/CustomPerformanceEntry.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-09-01T18:25:47Z",
+      "side": 1,
+      "message": "Add a link to the explainer here, and mention that this will have |detail| added in a followup patch. It\u0027s probably worth linking the bug too.",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 9
+      },
+      "revId": "49a179d18ea23e52cf2d3869604e4c6ac3363cf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc133b4f_ebe7660f",
+        "filename": "third_party/WebKit/Source/core/timing/Performance.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-09-01T18:25:47Z",
+      "side": 1,
+      "message": "Add a link to the explainer here, and mention that this will have |detail| added in a followup patch. It\u0027s probably worth linking the bug too.",
+      "range": {
+        "startLine": 49,
+        "startChar": 20,
+        "endLine": 49,
+        "endChar": 0
+      },
+      "revId": "49a179d18ea23e52cf2d3869604e4c6ac3363cf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1af1682_83a99196",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-09-01T18:25:47Z",
+      "side": 1,
+      "message": "This will always be true, won\u0027t it?",
+      "range": {
+        "startLine": 181,
+        "startChar": 12,
+        "endLine": 181,
+        "endChar": 49
+      },
+      "revId": "49a179d18ea23e52cf2d3869604e4c6ac3363cf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
