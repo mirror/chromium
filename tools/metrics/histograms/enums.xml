@@ -1124,6 +1124,11 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="17" label="Window Exit Presentation Mode"/>
 </enum>
 
+<enum name="AppListAppLaunched">
+  <int value="0" label="Not a suggested app"/>
+  <int value="1" label="Suggested app"/>
+</enum>
+
 <enum name="AppListDoodleAction">
   <int value="0" label="DOODLE_SHOWN"/>
   <int value="1" label="DOODLE_CLICKED"/>
