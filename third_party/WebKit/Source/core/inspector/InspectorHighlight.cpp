@@ -4,7 +4,7 @@
 
 #include "core/inspector/InspectorHighlight.h"
 
-#include "core/dom/PseudoElement.h"
+#include "core/css/PseudoElement.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/geometry/DOMRect.h"
 #include "core/layout/LayoutBox.h"

@@ -25,8 +25,8 @@
 #ifndef FirstLetterPseudoElement_h
 #define FirstLetterPseudoElement_h
 
+#include "core/css/PseudoElement.h"
 #include "core/dom/Document.h"
-#include "core/dom/PseudoElement.h"
 #include "platform/wtf/text/WTFString.h"
 
 namespace blink {

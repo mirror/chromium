@@ -23,9 +23,9 @@
 
 #include <memory>
 #include "core/HTMLNames.h"
+#include "core/css/PseudoElement.h"
 #include "core/dom/Element.h"
 #include "core/dom/ElementTraversal.h"
-#include "core/dom/PseudoElement.h"
 #include "core/html/HTMLOListElement.h"
 #include "core/layout/CounterNode.h"
 #include "core/layout/LayoutListItem.h"

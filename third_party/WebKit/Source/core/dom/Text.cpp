@@ -24,9 +24,9 @@
 
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/SVGNames.h"
+#include "core/css/FirstLetterPseudoElement.h"
 #include "core/css/resolver/StyleResolver.h"
 #include "core/dom/ExceptionCode.h"
-#include "core/dom/FirstLetterPseudoElement.h"
 #include "core/dom/LayoutTreeBuilder.h"
 #include "core/dom/LayoutTreeBuilderTraversal.h"
 #include "core/dom/NodeComputedStyle.h"

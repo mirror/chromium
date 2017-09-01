@@ -22,7 +22,7 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include "core/dom/FirstLetterPseudoElement.h"
+#include "core/css/FirstLetterPseudoElement.h"
 
 #include "core/css/StyleChangeReason.h"
 #include "core/dom/Element.h"

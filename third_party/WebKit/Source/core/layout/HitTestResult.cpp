@@ -23,8 +23,8 @@
 
 #include "core/HTMLNames.h"
 #include "core/InputTypeNames.h"
+#include "core/css/PseudoElement.h"
 #include "core/dom/FlatTreeTraversal.h"
-#include "core/dom/PseudoElement.h"
 #include "core/dom/ShadowRoot.h"
 #include "core/editing/EditingUtilities.h"
 #include "core/editing/FrameSelection.h"

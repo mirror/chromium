@@ -24,9 +24,9 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "core/dom/PseudoElement.h"
+#include "core/css/PseudoElement.h"
 
-#include "core/dom/FirstLetterPseudoElement.h"
+#include "core/css/FirstLetterPseudoElement.h"
 #include "core/frame/UseCounter.h"
 #include "core/layout/LayoutObject.h"
 #include "core/layout/LayoutQuote.h"
