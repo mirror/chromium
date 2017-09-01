@@ -55,6 +55,42 @@
     },
     {
       "key": {
+        "uuid": "be027ea2_737cae44",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-09-01T20:33:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74814969_d895da8e",
+      "revId": "1a002c60638c638d4752b0719ad43235640c2293",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e9f552ff_05fe6d5b",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-09-01T20:33:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74814969_d895da8e",
+      "revId": "1a002c60638c638d4752b0719ad43235640c2293",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c3912ba_06827d7d",
         "filename": "ash/system/bluetooth/bluetooth_power_controller.h",
         "patchSetId": 1
