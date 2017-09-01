@@ -397,11 +397,17 @@ are declared in build/common.gypi.
           <message name="IDS_CONTENT_CONTEXT_OPENLINKNEWTAB" desc="The name of the Open Link in New Tab command in the content area context menu">
             Open link in new &amp;tab
           </message>
+          <message name="IDS_CONTENT_CONTEXT_OPENLINKNEWTAB_INAPP" desc="The name of the Open Link in new Chrome Tab command in the content area context menu when in an app">
+            Open link in new Chrome &amp;tab
+          </message>
           <message name="IDS_CONTENT_CONTEXT_OPENLINKNEWWINDOW" desc="The name of the Open Link in New Window command in the content area context menu">
             Open link in new &amp;window
           </message>
           <message name="IDS_CONTENT_CONTEXT_OPENLINKOFFTHERECORD" desc="The name of the open a link in incognito window command">
             Open link in inco&amp;gnito window
+          </message>
+          <message name="IDS_CONTENT_CONTEXT_OPENLINKOFFTHERECORD_INAPP" desc="The name of the open a link in Chrome incognito window command when in an app">
+            Open link in Chrome inco&amp;gnito window
           </message>
           <message name="IDS_CONTENT_CONTEXT_OPENLINKINPROFILES" desc="The name of the open a link as a different user context menu">
             Open link as
@@ -411,6 +417,9 @@ are declared in build/common.gypi.
           </message>
           <message name="IDS_CONTENT_CONTEXT_OPENLINKBOOKMARKAPP" desc="The name of the Open Link in App command in the content area context menu">
             Open link in <ph name="APP">$1<ex>Gmail App</ex></ph>
+          </message>
+          <message name="IDS_CONTENT_CONTEXT_OPENLINKBOOKMARKAPP_SAMEAPP" desc="The name of the Open Link in new App window command when in the app">
+            Open link in new <ph name="APP">$1<ex>Gmail App</ex> window</ph>
           </message>
 
           <message name="IDS_CONTENT_CONTEXT_SAVELINKAS" desc="The name of the Save Link As command in the content area context menu">
@@ -595,11 +604,17 @@ are declared in build/common.gypi.
           <message name="IDS_CONTENT_CONTEXT_OPENLINKNEWTAB" desc="In Title Case: The name of the Open Link in New Tab command in the content area context menu">
             Open Link in New &amp;Tab
           </message>
+          <message name="IDS_CONTENT_CONTEXT_OPENLINKNEWTAB_INAPP" desc="In Title Case: The name of the Open Link in new Chrome Tab command in the content area context menu when in an app">
+            Open Link in New Chrome &amp;tab
+          </message>
           <message name="IDS_CONTENT_CONTEXT_OPENLINKNEWWINDOW" desc="In Title Case: The name of the Open Link in New Window command in the content area context menu">
             Open Link in New &amp;Window
           </message>
           <message name="IDS_CONTENT_CONTEXT_OPENLINKOFFTHERECORD" desc="In Title Case: The name of the open a link in incognito window command">
             Open Link in Inco&amp;gnito Window
+          </message>
+          <message name="IDS_CONTENT_CONTEXT_OPENLINKOFFTHERECORD_INAPP" desc="In Title Case: The name of the open a link in Chrome incognito window command when in an app">
+            Open Link in Chrome Inco&amp;gnito Window
           </message>
           <message name="IDS_CONTENT_CONTEXT_OPENLINKINPROFILES" desc="In Title Case: The name of the open a link as a different user context menu">
             Open Link as
@@ -609,6 +624,9 @@ are declared in build/common.gypi.
           </message>
           <message name="IDS_CONTENT_CONTEXT_OPENLINKBOOKMARKAPP" desc="In Title Case: The name of the Open Link in App command in the content area context menu">
             Open Link in <ph name="APP">$1<ex>Gmail App</ex></ph>
+          </message>
+          <message name="IDS_CONTENT_CONTEXT_OPENLINKBOOKMARKAPP_SAMEAPP" desc="In Title Case: The name of the Open Link in new App window command in the content area context menu when in the app">
+            Open Link in new <ph name="APP">$1<ex>Gmail App</ex></ph> Window
           </message>
 
           <message name="IDS_CONTENT_CONTEXT_SAVELINKAS" desc="In Title Case: The name of the Save Link As command in the content area context menu">
