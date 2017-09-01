@@ -41,6 +41,9 @@ class ServiceWorkerHandler : public DevToolsDomainHandler,
   Response StartWorker(const std::string& scope_url) override;
   Response SkipWaiting(const std::string& scope_url) override;
   Response StopWorker(const std::string& version_id) override;
+  void StopWorkersForOrigin(
+      const std::string& scope_url,
+      std::unique_ptr<StopWorkersForOriginCallback> callback) override;
   Response UpdateRegistration(const std::string& scope_url) override;
   Response InspectWorker(const std::string& version_id) override;
   Response SetForceUpdateOnPageLoad(bool force_update_on_page_load) override;

@@ -96,6 +96,16 @@ void StopServiceWorkerOnIO(scoped_refptr<ServiceWorkerContextWrapper> context,
   }
 }
 
+void ResponseToStopWorkersForOrigin(
+    std::unique_ptr<ServiceWorkerHandler::StopWorkersForOriginCallback>
+        callback,
+    bool success) {
+  if (!success)
+    callback->sendFailure(Response::Error("Unable to stop service workers"));
+  else
+    callback->sendSuccess();
+}
+
 void GetDevToolsRouteInfoOnIO(
     scoped_refptr<ServiceWorkerContextWrapper> context,
     int64_t version_id,
@@ -251,6 +261,16 @@ Response ServiceWorkerHandler::StopWorker(const std::string& version_id) {
   BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
                           base::BindOnce(&StopServiceWorkerOnIO, context_, id));
   return Response::OK();
+}
+
+void ServiceWorkerHandler::StopWorkersForOrigin(
+    const std::string& scope_url,
+    std::unique_ptr<StopWorkersForOriginCallback> callback) {
+  if (!enabled_ || !context_)
+    callback->sendFailure(Response::Error("Unable to stop service workers"));
+  context_->StopAllServiceWorkersForOrigin(
+      GURL(scope_url).GetOrigin(),
+      base::BindOnce(&ResponseToStopWorkersForOrigin, base::Passed(&callback)));
 }
 
 Response ServiceWorkerHandler::UpdateRegistration(

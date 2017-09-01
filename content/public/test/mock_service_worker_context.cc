@@ -19,4 +19,10 @@ void MockServiceWorkerContext::StartActiveWorkerForPattern(
   NOTREACHED() << "No mock for StartActiveWorkerForPattern";
 }
 
+void MockServiceWorkerContext::StopAllServiceWorkersForOrigin(
+    const GURL&,
+    ServiceWorkerContext::ResultOnceCallback) {
+  NOTREACHED() << "No mock for StopAllServiceWorkersForOrigin";
+}
+
 }  // namespace content
