@@ -22,6 +22,30 @@
       "revId": "b68f5bbcb2ca08f8e4511619d09313ca1a2ce7b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be669b14_4df57afd",
+        "filename": "chrome/renderer/net/net_error_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-01T04:42:21Z",
+      "side": 1,
+      "message": "it\u0027s very similar to json, but seems to be slightly different according to examples and other definitions.\nhttps://cs.chromium.org/chromium/src/tools/traffic_annotation/sample_traffic_annotation.cc",
+      "parentUuid": "b68164f1_c5ca31d6",
+      "range": {
+        "startLine": 96,
+        "startChar": 39,
+        "endLine": 96,
+        "endChar": 0
+      },
+      "revId": "b68f5bbcb2ca08f8e4511619d09313ca1a2ce7b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
