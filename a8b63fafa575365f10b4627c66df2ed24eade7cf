@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "222261f5_f0f3c395",
+        "filename": "content/public/test/mock_render_process_host.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-09-01T00:45:17Z",
+      "side": 1,
+      "message": "phajdan.jr@ Does the updated implementation work for you, or do you have additional comments?\n\ntdresser@ Are you ok with the updated implementation or do you still prefer the |AssertionResult| version?\n\nThanks!",
+      "parentUuid": "b0f37e08_29e5e27b",
+      "range": {
+        "startLine": 484,
+        "startChar": 4,
+        "endLine": 484,
+        "endChar": 10
+      },
+      "revId": "a8b63fafa575365f10b4627c66df2ed24eade7cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bd53de38_03aec451",
         "filename": "content/public/test/mock_render_process_host.cc",
         "patchSetId": 13
