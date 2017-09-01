@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8199f08a_3fd8b3e3",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-01T23:42:16Z",
+      "side": 1,
+      "message": "can you move this into UpdateResource()? and add a DCHECK(needs_update_resource_) to the top of that function?",
+      "revId": "24585a771f79814deea529388a56dc39f9f2fa67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49de81a6_c6fd3431",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-01T23:42:16Z",
+      "side": 1,
+      "message": "should we also set current_resource_* here? this way I think there\u0027s also no need to add GetBufferSize...",
+      "revId": "24585a771f79814deea529388a56dc39f9f2fa67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
