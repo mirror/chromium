@@ -273,13 +273,12 @@ static CSSValue* ConsumeFontVariantList(CSSParserTokenRange& range) {
 }
 
 const CSSValue* CSSPropertyParser::ParseSingleValue(
-    CSSPropertyID unresolved_property,
-    CSSPropertyID current_shorthand) {
+    CSSPropertyID unresolved_property) {
   DCHECK(context_);
   // FIXME(meade): This function can be deleted now that everything is handled
   // in the CSSPropertyAPI classes.
   return CSSPropertyParserHelpers::ParseLonghandViaAPI(
-      unresolved_property, current_shorthand, *context_, range_);
+      unresolved_property, CSSPropertyInvalid, *context_, range_);
 }
 
 static CSSIdentifierValue* ConsumeFontDisplay(CSSParserTokenRange& range) {
