@@ -30,8 +30,9 @@ class MockFrameHost : public mojom::FrameHost {
     return std::move(last_commit_params_);
   }
 
-  void Bind(mojo::ScopedInterfaceEndpointHandle handle) {
-    binding_.Bind(mojom::FrameHostAssociatedRequest(std::move(handle)));
+  service_manager::mojom::InterfaceProviderRequest
+  TakeLastInterfaceProviderRequest() {
+    return std::move(last_interface_provider_request_);
   }
 
  protected:
@@ -50,16 +51,24 @@ class MockFrameHost : public mojom::FrameHost {
     return true;
   }
 
+  void BindInterfaceProviderForInitialEmptyDocument(
+      service_manager::mojom::InterfaceProviderRequest request) override {
+    last_interface_provider_request_ = std::move(request);
+  }
+
   void DidCommitProvisionalLoad(
-      std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params> params)
-      override {
+      std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params> params,
+      service_manager::mojom::InterfaceProviderRequest request) override {
     last_commit_params_ = std::move(params);
+    last_interface_provider_request_ = std::move(request);
   }
 
  private:
   mojo::AssociatedBinding<mojom::FrameHost> binding_;
   std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params>
       last_commit_params_;
+  service_manager::mojom::InterfaceProviderRequest
+      last_interface_provider_request_;
 
   DISALLOW_COPY_AND_ASSIGN(MockFrameHost);
 };
@@ -151,6 +160,11 @@ std::unique_ptr<blink::WebURLLoader> TestRenderFrame::CreateURLLoader(
 std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params>
 TestRenderFrame::TakeLastCommitParams() {
   return mock_frame_host_->TakeLastCommitParams();
+}
+
+service_manager::mojom::InterfaceProviderRequest
+TestRenderFrame::TakeLastInterfaceProviderRequest() {
+  return mock_frame_host_->TakeLastInterfaceProviderRequest();
 }
 
 mojom::FrameHost* TestRenderFrame::GetFrameHost() {
