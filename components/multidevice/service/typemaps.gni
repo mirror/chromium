@@ -1,0 +1,2 @@
+typemaps =
+    [ "//components/multidevice/service/public/interfaces/device_sync.mojom" ]
