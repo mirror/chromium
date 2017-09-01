@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8ebe2d56_d7bb4392",
+        "filename": "content/browser/renderer_host/database_message_filter.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-09-01T01:41:27Z",
+      "side": 1,
+      "message": "Once this CL is submitted my next task is to mojofy the DatabaseHostMsg_* messages - do you think that I can TODO your suggestion here to be addressed during that change? My assumption is as I can specify a task runner for the interface we won\u0027t need to switch threads like this to execute the cleanup tasks?",
+      "parentUuid": "3a3efb9a_dc9e6a8d",
+      "revId": "c4d499b4798a8dcb9a962fb906335ad4d078b293",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4bfeac8a_3c9355ea",
         "filename": "content/child/web_database_impl.h",
         "patchSetId": 16
@@ -30,6 +48,30 @@
       "writtenOn": "2017-08-31T06:55:11Z",
       "side": 1,
       "message": "Does it still compile if you omit this parameter? It\u0027s not needed, and I think most Mojo interface impls don\u0027t specify it in their binding callback.",
+      "range": {
+        "startLine": 31,
+        "startChar": 21,
+        "endLine": 31,
+        "endChar": 59
+      },
+      "revId": "c4d499b4798a8dcb9a962fb906335ad4d078b293",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "173ab511_9730266c",
+        "filename": "content/child/web_database_impl.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-09-01T01:41:27Z",
+      "side": 1,
+      "message": "No it doesn\u0027t compile because render_thread_impl is using BinderRegistryWithArgs\u003cBindSourceInfo\u003e. It was simpler to do this then setup another registry.\n\nNote I was using EmbeddedWorkerInstanceClientImpl as prior art for doing it this way, but it was recently removed in https://chromium-review.googlesource.com/c/chromium/src/+/618077.\n\nIf you feel strongly enough I can try and setup another registry instead - WDYT?",
+      "parentUuid": "4bfeac8a_3c9355ea",
       "range": {
         "startLine": 31,
         "startChar": 21,
