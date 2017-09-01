@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ffbdcae6_e784acc8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-09-01T02:59:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b7a5363_96764438",
+      "range": {
+        "startLine": 10,
+        "startChar": 57,
+        "endLine": 10,
+        "endChar": 59
+      },
+      "revId": "00e16b203d4436aff7106b885f0f7c9fc8b4157b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83061ef6_de7da0a5",
         "filename": "/COMMIT_MSG",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "00e16b203d4436aff7106b885f0f7c9fc8b4157b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71c8110d_ee159ea7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-09-01T02:59:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83061ef6_de7da0a5",
+      "range": {
+        "startLine": 11,
+        "startChar": 53,
+        "endLine": 11,
+        "endChar": 57
+      },
+      "revId": "00e16b203d4436aff7106b885f0f7c9fc8b4157b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c2fc8a1f_95117e3d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-09-01T02:59:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19b5d4a1_97220e7e",
+      "range": {
+        "startLine": 14,
+        "startChar": 12,
+        "endLine": 14,
+        "endChar": 27
+      },
+      "revId": "00e16b203d4436aff7106b885f0f7c9fc8b4157b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ea3381c_dd4f6c89",
         "filename": "/COMMIT_MSG",
         "patchSetId": 7
@@ -91,6 +163,30 @@
       "revId": "00e16b203d4436aff7106b885f0f7c9fc8b4157b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "187b4ab2_f0af45ea",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-09-01T02:59:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ea3381c_dd4f6c89",
+      "range": {
+        "startLine": 17,
+        "startChar": 7,
+        "endLine": 18,
+        "endChar": 10
+      },
+      "revId": "00e16b203d4436aff7106b885f0f7c9fc8b4157b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "fefb859a_96088d91",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-09-01T02:59:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3776619_953b70f2",
+      "range": {
+        "startLine": 19,
+        "startChar": 15,
+        "endLine": 19,
+        "endChar": 25
+      },
+      "revId": "00e16b203d4436aff7106b885f0f7c9fc8b4157b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de9124ca_83b73a5f",
         "filename": "content/common/sandbox_linux/bpf_gpu_policy_linux.cc",
         "patchSetId": 7
@@ -128,6 +248,30 @@
       "writtenOn": "2017-08-31T14:59:59Z",
       "side": 1,
       "message": "Can we turn this into a IfUseVAAPI() function()?",
+      "range": {
+        "startLine": 308,
+        "startChar": 0,
+        "endLine": 308,
+        "endChar": 24
+      },
+      "revId": "00e16b203d4436aff7106b885f0f7c9fc8b4157b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6549e295_fe0491aa",
+        "filename": "content/common/sandbox_linux/bpf_gpu_policy_linux.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-09-01T02:59:31Z",
+      "side": 1,
+      "message": "We have a compile-time dependency on vaapi, so although we can turn this into such a function we will still need this #if somewhere in the end.\n\nHowever, looking at these functions more closely I see room for refactoring and simplification. This would be a whole different change though, so I would prefer to address this separately if you don\u0027t mind.",
+      "parentUuid": "de9124ca_83b73a5f",
       "range": {
         "startLine": 308,
         "startChar": 0,
@@ -157,6 +301,24 @@
     },
     {
       "key": {
+        "uuid": "f0a13acb_c7530b47",
+        "filename": "content/common/sandbox_linux/bpf_gpu_policy_linux.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-09-01T02:59:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ad1c8333_a09bd3e0",
+      "revId": "00e16b203d4436aff7106b885f0f7c9fc8b4157b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f04a94c7_61243cec",
         "filename": "content/common/sandbox_linux/bpf_gpu_policy_linux.cc",
         "patchSetId": 7
@@ -168,6 +330,30 @@
       "writtenOn": "2017-08-31T14:59:59Z",
       "side": 1,
       "message": "This is not very clear.\n\nthe libva (library?) will want to dlopen() \u003cwhat\u003e there (where\u0027s there?)",
+      "range": {
+        "startLine": 316,
+        "startChar": 32,
+        "endLine": 316,
+        "endChar": 67
+      },
+      "revId": "00e16b203d4436aff7106b885f0f7c9fc8b4157b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b77bb64_7e74a6b8",
+        "filename": "content/common/sandbox_linux/bpf_gpu_policy_linux.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-09-01T02:59:31Z",
+      "side": 1,
+      "message": "Sorry, it is not obvious indeed.\n\nThe current behavior is that libva.so.1 will try and dlopen /usr/lib64/va/drivers/i965_drv_video.so. Since we want to host two versions of libva, this will be moved to /usr/lib64/va-XXXX/drivers/i965_drv_video.so where XXXX is the libva version.\n\nHowever, we still need to account for the case where Chromium is running on a system where the dual-libva scheme has not yet landed (if only for the transition period during which the ChromeOS patches have not landed yet). In this case, libva.so.1 will attempt to open the old path (/usr/lib64/va/drivers/i965_drv_video.so).\n\nThis is why we are keeping both paths here.",
+      "parentUuid": "f04a94c7_61243cec",
       "range": {
         "startLine": 316,
         "startChar": 32,
@@ -197,6 +383,24 @@
     },
     {
       "key": {
+        "uuid": "282f417a_33f2a6b5",
+        "filename": "content/common/sandbox_linux/bpf_gpu_policy_linux.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-09-01T02:59:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "47e0a2e0_a84cb201",
+      "revId": "00e16b203d4436aff7106b885f0f7c9fc8b4157b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00d29a52_1a9f3d8d",
         "filename": "content/common/sandbox_linux/bpf_gpu_policy_linux.cc",
         "patchSetId": 7
@@ -208,6 +412,24 @@
       "writtenOn": "2017-09-01T00:27:18Z",
       "side": 1,
       "message": "Did we miss attempting to open a non-versioned libva.so.1 as well?",
+      "revId": "00e16b203d4436aff7106b885f0f7c9fc8b4157b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7a86fd1_141a3273",
+        "filename": "content/common/sandbox_linux/bpf_gpu_policy_linux.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-09-01T02:59:31Z",
+      "side": 1,
+      "message": "No, since this patch also changes the path we use for dlopen in vaapi_wrapper (see the change in vaapi_wrapper.cc). After this patch, we do not open libva.so.1 anymore.",
+      "parentUuid": "00d29a52_1a9f3d8d",
       "revId": "00e16b203d4436aff7106b885f0f7c9fc8b4157b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -231,6 +453,24 @@
     },
     {
       "key": {
+        "uuid": "b3f982cc_cc774016",
+        "filename": "content/common/sandbox_linux/bpf_gpu_policy_linux.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-09-01T02:59:31Z",
+      "side": 1,
+      "message": "That would make sense indeed. Let me see if I can get a status for dlopen and turn this into a function like you suggested above.",
+      "parentUuid": "5d2fd5f7_e503b28b",
+      "revId": "00e16b203d4436aff7106b885f0f7c9fc8b4157b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ec2085be_01da1a03",
         "filename": "media/gpu/vaapi_wrapper.cc",
         "patchSetId": 7
@@ -242,6 +482,24 @@
       "writtenOn": "2017-09-01T00:27:18Z",
       "side": 1,
       "message": "Would it perhaps be possible to have a common method for constructing paths based on version string passed, to avoid any copy-paste,etc. errors in the future, used both from here and the sandbox code please?",
+      "revId": "00e16b203d4436aff7106b885f0f7c9fc8b4157b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0228616d_a5ab7b3c",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1140,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-09-01T02:59:31Z",
+      "side": 1,
+      "message": "I wanted to have this initially - and that\u0027s why GetVaVersionString() is public. However the CQ precheck forbids any link between the sandbox and media/gpu (see the \"visibility\" property of media/gpu/BUILD.gn, so I have to fall back to duplicating this part of the code.",
+      "parentUuid": "ec2085be_01da1a03",
       "revId": "00e16b203d4436aff7106b885f0f7c9fc8b4157b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
