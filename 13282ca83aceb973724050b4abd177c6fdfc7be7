@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "660ad14a_9ffae22d",
+        "filename": "ppapi/proxy/platform_verification_private_resource.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-09-01T01:05:09Z",
+      "side": 1,
+      "message": "Since it\u0027s not related to the problem I didn\u0027t want to touch it. However, it makes sense to fix it at the same time, so done.",
+      "parentUuid": "c5e1fe16_88000725",
+      "revId": "13282ca83aceb973724050b4abd177c6fdfc7be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e4dd350_7ff9a602",
         "filename": "ppapi/proxy/platform_verification_private_resource.cc",
         "patchSetId": 2
