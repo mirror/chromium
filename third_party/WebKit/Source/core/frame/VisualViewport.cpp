@@ -372,7 +372,7 @@ void VisualViewport::CreateLayerTree() {
 
   inner_viewport_scroll_layer_->PlatformLayer()->SetScrollable(size_);
   if (MainFrame()) {
-    if (Document* document = MainFrame()->GetDocument()) {
+    if (MainFrame()->GetDocument()) {
       inner_viewport_scroll_layer_->SetElementId(
           CompositorElementIdFromUniqueObjectId(unique_id_));
     }

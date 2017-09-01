@@ -30,9 +30,7 @@ static void PaintDecorationsExceptLineThrough(
   // text-underline-position may flip underline and overline.
   ResolvedUnderlinePosition underline_position =
       decoration_info.underline_position;
-  bool flip_underline_and_overline = false;
   if (underline_position == ResolvedUnderlinePosition::kOver) {
-    flip_underline_and_overline = true;
     underline_position = ResolvedUnderlinePosition::kUnder;
   }
 
