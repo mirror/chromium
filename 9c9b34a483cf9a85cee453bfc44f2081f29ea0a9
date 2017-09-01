@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17316010_958ab19b",
+        "filename": "cc/scheduler/scheduler_state_machine.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-09-01T13:31:58Z",
+      "side": 1,
+      "message": "Please update the contents of these comments too -- they still talk about forcing activations.",
+      "range": {
+        "startLine": 261,
+        "startChar": 5,
+        "endLine": 261,
+        "endChar": 10
+      },
+      "revId": "9c9b34a483cf9a85cee453bfc44f2081f29ea0a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
