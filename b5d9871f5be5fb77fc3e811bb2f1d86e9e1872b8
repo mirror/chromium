@@ -22,6 +22,30 @@
       "revId": "b5d9871f5be5fb77fc3e811bb2f1d86e9e1872b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc57ee5e_b4835077",
+        "filename": "base/strings/string_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 881,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-09-01T18:43:33Z",
+      "side": 1,
+      "message": "This syntax is the only one that works, since it\u0027s using struct initialization.",
+      "parentUuid": "e6cf0d94_530dd4e8",
+      "range": {
+        "startLine": 881,
+        "startChar": 45,
+        "endLine": 881,
+        "endChar": 46
+      },
+      "revId": "b5d9871f5be5fb77fc3e811bb2f1d86e9e1872b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
