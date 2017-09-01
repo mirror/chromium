@@ -24,6 +24,7 @@ not require project configuration.
 1. Install latest Qt Creator
 2. under chromium/src `gn gen out/Default --ide=qtcreator`
 3. qtcreator out/Default/qtcreator_project/all.creator
+4. Help - Plugins - check ClangCodeModel for enable std completion
 
 It takes 3 minutes to parsing C++ files in my workstation!!! And It will not 
 block you while parsing.
