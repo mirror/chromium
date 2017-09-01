@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "df8f0ff3_68708616",
+        "filename": "ash/wm/window_state.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-01T11:28:17Z",
+      "side": 1,
+      "message": "I don\u0027t mean for exo specifically but in general. Shouldn\u0027t the new surface ids be allocated by the client as a result of the bounds changing instead of here?",
+      "parentUuid": "90a2a65e_be392f7d",
+      "revId": "3efdb3442d096af69d6be14dfb8fb979e8d228d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1362aa18_679b5821",
         "filename": "components/exo/shell_surface.h",
         "patchSetId": 5
@@ -101,6 +119,24 @@
       "writtenOn": "2017-09-01T11:23:28Z",
       "side": 1,
       "message": "All right, I read the documentation again, and the configure from xdg-shell is actually synchronized. So yeah, it should work.\n\nHowever, we don\u0027t have it implemented on Android side yet. And it may be a lot of work. So the question is whether we want this CL first, and move to the standard protocol later, or we don\u0027t want it at all?",
+      "parentUuid": "aa36cedd_6033b331",
+      "revId": "3efdb3442d096af69d6be14dfb8fb979e8d228d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba4c667e_1698fd9d",
+        "filename": "components/exo/shell_surface.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-01T11:28:17Z",
+      "side": 1,
+      "message": "the standard wayland protocol has excellent support for this in the form of acks. it will also handle compositor driven state changes correctly. e.g. what if you press Alt-+ to maximize the window.\n\nI\u0027d like to abandon remote-shell eventually. It\u0027s not going to happen in a day but the more we rely on it the harder it will be.",
       "parentUuid": "aa36cedd_6033b331",
       "revId": "3efdb3442d096af69d6be14dfb8fb979e8d228d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
