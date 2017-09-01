@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "53684afc_95c3b25b",
+        "filename": "components/sync_bookmarks/bookmark_model_associator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-09-01T16:52:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb17c676_dcf2ee4f",
+      "range": {
+        "startLine": 280,
+        "startChar": 5,
+        "endLine": 280,
+        "endChar": 33
+      },
+      "revId": "26d5685b80e243475a8aa0a3dd909bdd0e6a6e66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7a69534_a13df7e0",
         "filename": "components/sync_bookmarks/bookmark_model_associator.cc",
         "patchSetId": 4
@@ -59,6 +83,30 @@
       "writtenOn": "2017-09-01T03:11:45Z",
       "side": 1,
       "message": "nit: Maybe this could be sizeof(base::char16) for clarity, then maybe the above comment isn\u0027t even necessary.\n\nAlternatively, you could add a new overload of base::Hash that takes a base::string16 alongside the existing std::string overload.",
+      "range": {
+        "startLine": 283,
+        "startChar": 48,
+        "endLine": 283,
+        "endChar": 49
+      },
+      "revId": "26d5685b80e243475a8aa0a3dd909bdd0e6a6e66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f346776_485f50f2",
+        "filename": "components/sync_bookmarks/bookmark_model_associator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-09-01T16:52:03Z",
+      "side": 1,
+      "message": "I added the string16 version",
+      "parentUuid": "f7a69534_a13df7e0",
       "range": {
         "startLine": 283,
         "startChar": 48,
@@ -100,6 +148,24 @@
       "side": 1,
       "message": "Hmm. I assume Hash wouldn\u0027t ever change, since it would potentially break existing user data. There isn\u0027t any clear explanation in the comments for hash.h that says \"SuperFastHash will never change, but Hash might, so use SuperFastHash if you need a stable hash.\", and therefore, I assume people are using them interchangeably (not purposefully).\n\nI think the suggestion in that thread of naming it after the year is reasonable. I think they do that in the Google codebase as a way of versioning hashes. So we could call it Hash2017 (or Hash2012 which is when it was last edited). I don\u0027t share isherman@\u0027s concern that using a hash whose date is \u003c the current year will feel \"funky\".\n\nPractically, though, base::Hash has not changed (other than minor tweaks to the code) since initial.commit so I\u0027d say it\u0027s fairly stable. Path of least resistance is to keep the old name (and merge SuperFastHash -\u003e Hash), and then if someone adds a better algorithm, call it Hash2019 and update as many references to Hash as feasible.",
       "parentUuid": "0837dba9_18076282",
+      "revId": "26d5685b80e243475a8aa0a3dd909bdd0e6a6e66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e792d4eb_b791b780",
+        "filename": "content/browser/bluetooth/bluetooth_metrics.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-09-01T16:52:03Z",
+      "side": 1,
+      "message": "I wise hash.h had mentioned that! I will give it a new name and make the difference clear. I think it would be nice to be able to theoretically change Hash.",
+      "parentUuid": "15613a43_a8fd05ee",
       "revId": "26d5685b80e243475a8aa0a3dd909bdd0e6a6e66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
