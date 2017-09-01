@@ -16,6 +16,24 @@
       "revId": "b8473ca2b05c738216fd58ba8ee9e675c4c2dc99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d29b9fa9_d378626c",
+        "filename": "content/renderer/browser_plugin/browser_plugin.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-09-01T00:47:43Z",
+      "side": 1,
+      "message": "Sorry, I meant to say there were tests failing for other reasons that I fixed but I also addressed this. I\u0027ve removed this line. Note that this code path is deprecated and the OOPIF team is actively working on getting rid of BrowserPlugin. \u003cwebview\u003e on OOPIF is already on Finch trial. PDF Viewer is switching over soon too.\n\nI\u0027m waiting on Ken\u0027s opinion (on the OOPIF team) on this too.",
+      "parentUuid": "6136f6c4_fc7869c0",
+      "revId": "b8473ca2b05c738216fd58ba8ee9e675c4c2dc99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
