@@ -45,6 +45,7 @@
 #include "content/browser/compositor/software_browser_compositor_output_surface.h"
 #include "content/browser/gpu/compositor_util.h"
 #include "content/browser/gpu/gpu_data_manager_impl.h"
+#include "content/browser/gpu/gpu_process_host.h"
 #include "content/browser/renderer_host/render_widget_host_impl.h"
 #include "content/common/gpu_stream_constants.h"
 #include "content/public/common/content_switches.h"
@@ -91,7 +92,6 @@
 #include "components/viz/service/display_embedder/compositor_overlay_candidate_validator_mac.h"
 #include "content/browser/compositor/gpu_output_surface_mac.h"
 #include "content/browser/compositor/software_output_device_mac.h"
-#include "gpu/config/gpu_driver_bug_workaround_type.h"
 #include "ui/base/cocoa/remote_layer_api.h"
 #include "ui/base/ui_base_switches.h"
 #elif defined(OS_ANDROID)
@@ -322,10 +322,13 @@ CreateOverlayCandidateValidator(gfx::AcceleratedWidget widget) {
   if (ui::RemoteLayerAPISupported()) {
     static bool overlays_disabled_at_command_line =
         IsCALayersDisabledFromCommandLine();
-    const bool ca_layers_disabled =
-        overlays_disabled_at_command_line ||
-        GpuDataManagerImpl::GetInstance()->IsDriverBugWorkaroundActive(
-            gpu::DISABLE_OVERLAY_CA_LAYERS);
+    bool ca_layers_disabled = overlays_disabled_at_command_line;
+    if (!ca_layers_disabled) {
+      auto* gpu_process_host = GpuProcessHost::Get(
+          GpuProcessHost::GPU_PROCESS_KIND_SANDBOXED, false);
+      ca_layers_disabled =
+          gpu_process_host && gpu_process_host->disable_overlay_ca_layers();
+    }
     validator.reset(
         new viz::CompositorOverlayCandidateValidatorMac(ca_layers_disabled));
   }
