@@ -22,6 +22,30 @@
       "revId": "45ed8d2222a46f16d378fecd9bfaf027ccd9d40f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d377464a_fcb0e8ee",
+        "filename": "third_party/WebKit/PerformanceTests/ImageDecoder/ImageDecoderHarness.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-09-01T21:27:43Z",
+      "side": 1,
+      "message": "I believe I updated this as you want. But I may not have completely understood. You don\u0027t mean in ../resources, right (since it wouldn\u0027t be shared outside the image decoder tests)?",
+      "parentUuid": "17663042_677b7810",
+      "range": {
+        "startLine": 1,
+        "startChar": 63,
+        "endLine": 1,
+        "endChar": 0
+      },
+      "revId": "45ed8d2222a46f16d378fecd9bfaf027ccd9d40f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
