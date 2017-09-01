@@ -132,6 +132,10 @@
       status: "experimental",
     },
     {
+      name: "BufferedFlagForPerformanceObserver",
+      status: "experimental",
+    },
+    {
       name: "Canvas2dFixedRenderingMode",
       status: "test",
     },
