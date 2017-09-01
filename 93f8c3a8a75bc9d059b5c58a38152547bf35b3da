@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "916ccd60_53e477d3",
+        "filename": "ios/clean/chrome/browser/DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-01T07:00:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43a83055_c9b6d8a5",
+      "range": {
+        "startLine": 7,
+        "startChar": 4,
+        "endLine": 7,
+        "endChar": 23
+      },
+      "revId": "93f8c3a8a75bc9d059b5c58a38152547bf35b3da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2812035_c7e3df81",
         "filename": "ios/clean/chrome/browser/ui/recent_tabs/BUILD.gn",
         "patchSetId": 3
