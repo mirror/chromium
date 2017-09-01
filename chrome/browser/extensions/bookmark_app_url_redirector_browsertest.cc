@@ -134,12 +134,13 @@ class BookmarkAppUrlRedirectorBrowserTest : public ExtensionBrowserTest {
 
   // Navigates the active tab to the launching page.
   void NavigateToLaunchingPage() {
-    GURL launching_page_url =
-        embedded_test_server()->GetURL(kLaunchingPagePath);
-    ui_test_utils::UrlLoadObserver url_observer(
-        launching_page_url, content::NotificationService::AllSources());
-    ui_test_utils::NavigateToURL(browser(), launching_page_url);
-    url_observer.Wait();
+    // We use "localhost" as the host of the launching page, so that it has a
+    // different origin than that the of the app. The resolved URL of the
+    // launching page would have the same host as that of the app, but the
+    // URLs used in our NavigationThrottle are not resolved.
+    ui_test_utils::NavigateToURL(
+        browser(),
+        embedded_test_server()->GetURL("localhost", kLaunchingPagePath));
   }
 
   // Checks that, after running |action|, the initial tab's window doesn't have
@@ -288,6 +289,25 @@ IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest, OutOfScopeUrlSelf) {
       base::Bind(&ClickLinkAndWait,
                  browser()->tab_strip_model()->GetActiveWebContents(),
                  out_of_scope_url, LinkTarget::SELF));
+}
+
+// Tests that clicking links inside a website for an installed app doesn't open
+// a new browser window.
+IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest,
+                       InWebsiteNavigation) {
+  InstallTestBookmarkApp();
+
+  // Navigate to app's page. Shouldn't open a new window.
+  ui_test_utils::NavigateToURL(browser(),
+                               embedded_test_server()->GetURL(kAppUrlPath));
+  ASSERT_EQ(browser(), chrome::FindLastActive());
+
+  const GURL in_scope_url = embedded_test_server()->GetURL(kInScopeUrlPath);
+  TestTabActionDoesNotOpenAppWindow(
+      in_scope_url,
+      base::Bind(&ClickLinkAndWait,
+                 browser()->tab_strip_model()->GetActiveWebContents(),
+                 in_scope_url, LinkTarget::SELF));
 }
 
 // Tests that clicking links inside the app doesn't open new browser windows.
