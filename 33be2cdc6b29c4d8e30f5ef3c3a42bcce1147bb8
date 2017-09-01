@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c10828c_3222aae6",
+        "filename": "components/translate/core/browser/translate_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-09-01T01:21:15Z",
+      "side": 1,
+      "message": "Clarify this returns empty unless a certain feature is enabled\n// get from ULP if ULP feature is enabled",
+      "range": {
+        "startLine": 485,
+        "startChar": 2,
+        "endLine": 485,
+        "endChar": 31
+      },
+      "revId": "33be2cdc6b29c4d8e30f5ef3c3a42bcce1147bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61f8d451_7c554c46",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-09-01T01:21:15Z",
+      "side": 1,
+      "message": "Code looks equivalent to me but I think we don\u0027t understand this logic.\n\nOnce we understand it, maybe the comment needs to be shorter :). Or maybe it\u0027s  not too long enough ...",
+      "range": {
+        "startLine": 500,
+        "startChar": 2,
+        "endLine": 501,
+        "endChar": 57
+      },
+      "revId": "33be2cdc6b29c4d8e30f5ef3c3a42bcce1147bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
