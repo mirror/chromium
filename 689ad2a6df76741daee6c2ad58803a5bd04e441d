@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "648b7e0e_e196f21e",
+        "filename": "media/gpu/android/fake_codec_allocator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-01T14:25:51Z",
+      "side": 1,
+      "message": "please drop trailing _ if it\u0027s meant to be accessed externally, or move to private.",
+      "revId": "689ad2a6df76741daee6c2ad58803a5bd04e441d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ba477e1_bb2a7b8c",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-01T14:25:51Z",
+      "side": 1,
+      "message": "i think that putting this at the end of ReleaseCodec() makes some amount of sense.  not sure if it has unintended side-effects though.",
+      "revId": "689ad2a6df76741daee6c2ad58803a5bd04e441d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
