@@ -67,10 +67,6 @@ void TextTrackCue::SetTrack(TextTrack* track) {
   track_ = track;
 }
 
-Node* TextTrackCue::Owner() const {
-  return track_ ? track_->Owner() : 0;
-}
-
 void TextTrackCue::setId(const AtomicString& id) {
   if (id_ == id)
     return;

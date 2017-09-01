@@ -38,11 +38,11 @@ namespace blink {
 
 class CueTimeline;
 class ExceptionState;
-class HTMLMediaElement;
 class TextTrack;
 class TextTrackCue;
 class TextTrackCueList;
 class TextTrackList;
+class TextTrackListOwner;
 
 class CORE_EXPORT TextTrack : public EventTargetWithInlineData,
                               public TrackBase {
@@ -93,8 +93,7 @@ class CORE_EXPORT TextTrack : public EventTargetWithInlineData,
   TextTrackCueList* cues();
   TextTrackCueList* activeCues();
 
-  HTMLMediaElement* MediaElement() const;
-  Node* Owner() const;
+  TextTrackListOwner* Owner() const;
 
   void addCue(TextTrackCue*);
   void removeCue(TextTrackCue*, ExceptionState&);

@@ -37,6 +37,7 @@
 #include "core/html/HTMLElement.h"
 #include "core/html/media/MediaControls.h"
 #include "core/html/track/TextTrack.h"
+#include "core/html/track/TextTrackList.h"
 #include "platform/Supplementable.h"
 #include "platform/WebTaskRunner.h"
 #include "platform/audio/AudioSourceProvider.h"
@@ -81,6 +82,7 @@ class CORE_EXPORT HTMLMediaElement
       public Supplementable<HTMLMediaElement>,
       public ActiveScriptWrappable<HTMLMediaElement>,
       public SuspendableObject,
+      public TextTrackListOwner,
       private WebMediaPlayerClient {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(HTMLMediaElement);
@@ -224,7 +226,7 @@ class CORE_EXPORT HTMLMediaElement
                           ExceptionState&);
 
   TextTrackList* textTracks();
-  CueTimeline& GetCueTimeline();
+  CueTimeline* GetCueTimeline() override;
 
   void addTextTrack(TextTrack*);
   void RemoveTextTrack(TextTrack*);
@@ -246,7 +248,7 @@ class CORE_EXPORT HTMLMediaElement
   double LastSeekTime() const { return last_seek_time_; }
   void TextTrackReadyStateChanged(TextTrack*);
 
-  void TextTrackModeChanged(TextTrack*);
+  void TextTrackModeChanged(TextTrack*) override;
   void DisableAutomaticTextTrackSelection();
 
   // EventTarget function.

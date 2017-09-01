@@ -26,24 +26,38 @@
 #ifndef TextTrackList_h
 #define TextTrackList_h
 
+#include "core/dom/ExecutionContext.h"
 #include "core/dom/events/EventListener.h"
 #include "core/dom/events/EventTarget.h"
-#include "core/html/HTMLMediaElement.h"
 #include "platform/Timer.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/RefPtr.h"
 #include "platform/wtf/Vector.h"
 
 namespace blink {
-
+class CueTimeline;
 class MediaElementEventQueue;
 class TextTrack;
+
+class CORE_EXPORT TextTrackListOwner : public GarbageCollectedMixin {
+ public:
+  TextTrackListOwner(ExecutionContext* context) : context_(context) {}
+
+  ExecutionContext* GetExecutionContext() { return context_; }
+  virtual void TextTrackModeChanged(TextTrack*) = 0;
+  virtual CueTimeline* GetCueTimeline() = 0;
+
+  DEFINE_INLINE_VIRTUAL_TRACE() { visitor->Trace(context_); }
+
+ private:
+  Member<ExecutionContext> context_;
+};
 
 class CORE_EXPORT TextTrackList final : public EventTargetWithInlineData {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
-  static TextTrackList* Create(HTMLMediaElement* owner) {
+  static TextTrackList* Create(TextTrackListOwner* owner) {
     return new TextTrackList(owner);
   }
   ~TextTrackList() override;
@@ -66,7 +80,7 @@ class CORE_EXPORT TextTrackList final : public EventTargetWithInlineData {
   DEFINE_ATTRIBUTE_EVENT_LISTENER(change);
   DEFINE_ATTRIBUTE_EVENT_LISTENER(removetrack);
 
-  HTMLMediaElement* Owner() const;
+  TextTrackListOwner* Owner() const;
 
   void ScheduleChangeEvent();
   void RemoveAllInbandTracks();
@@ -78,7 +92,7 @@ class CORE_EXPORT TextTrackList final : public EventTargetWithInlineData {
   DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
  private:
-  explicit TextTrackList(HTMLMediaElement*);
+  explicit TextTrackList(TextTrackListOwner*);
 
   void ScheduleTrackEvent(const AtomicString& event_name, TextTrack*);
 
@@ -87,7 +101,7 @@ class CORE_EXPORT TextTrackList final : public EventTargetWithInlineData {
 
   void InvalidateTrackIndexesAfterTrack(TextTrack*);
 
-  Member<HTMLMediaElement> owner_;
+  Member<TextTrackListOwner> owner_;
 
   Member<MediaElementEventQueue> async_event_queue_;
 
