@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15d3d065_4eccc3d4",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 9539,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-01T16:32:08Z",
+      "side": 1,
+      "message": "Naming convention is DeviceXXXX (so, DeviceNativePrinters)",
+      "range": {
+        "startLine": 9539,
+        "startChar": 15,
+        "endLine": 9539,
+        "endChar": 35
+      },
+      "revId": "f072989b9ace649ca70233b2ad5caefa24ba4b53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e74c8ba6_14ed7b90",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 9550,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-01T16:32:08Z",
+      "side": 1,
+      "message": "Will you actually get support for these in M62? If not, maybe change this to M63.",
+      "range": {
+        "startLine": 9550,
+        "startChar": 24,
+        "endLine": 9550,
+        "endChar": 33
+      },
+      "revId": "f072989b9ace649ca70233b2ad5caefa24ba4b53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b873e39_0e4d3484",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 9578,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-01T16:32:08Z",
+      "side": 1,
+      "message": "Change all these to use DeviceXXXX naming convention.",
+      "range": {
+        "startLine": 9578,
+        "startChar": 22,
+        "endLine": 9578,
+        "endChar": 52
+      },
+      "revId": "f072989b9ace649ca70233b2ad5caefa24ba4b53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
