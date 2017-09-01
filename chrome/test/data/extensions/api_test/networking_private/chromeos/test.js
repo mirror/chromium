@@ -59,7 +59,7 @@ var privateHelpers = {
     chrome.networkingPrivate.onNetworksChanged.addListener(
         this.onNetworkChange);
   },
-  listListener: function(expected, done) {
+  networkListChangedListener: function(expected, done) {
     var self = this;
     this.listenForChanges = function(list) {
       assertEq(expected, list);
@@ -67,10 +67,31 @@ var privateHelpers = {
           self.listenForChanges);
       done();
     };
+    this.start = function() {
+      chrome.networkingPrivate.onNetworkListChanged.addListener(
+          this.listenForChanges);
+    };
   },
-  watchForCaptivePortalState: function(expectedGuid,
-                                       expectedState,
-                                       done) {
+  networksChangedListener: function(guid, test, done) {
+    var self = this;
+    this.listenForChanges = function(changes) {
+      for (let c of changes) {
+        if (c != guid)
+          continue;
+        chrome.networkingPrivate.onNetworksChanged.removeListener(
+            self.listenForChanges);
+        chrome.networkingPrivate.getProperties(guid, function(result) {
+          if (test(result))
+            done();
+        });
+      }
+    };
+    this.start = function() {
+      chrome.networkingPrivate.onNetworksChanged.addListener(
+          this.listenForChanges);
+    };
+  },
+  watchForCaptivePortalState: function(expectedGuid, expectedState, done) {
     var self = this;
     this.onPortalDetectionCompleted = function(guid, state) {
       assertEq(expectedGuid, guid);
@@ -509,10 +530,21 @@ var availableTests = [
                     'stub_vpn2_guid',
                     'stub_wifi2_guid'];
     var done = chrome.test.callbackAdded();
-    var listener = new privateHelpers.listListener(expected, done);
-    chrome.networkingPrivate.onNetworkListChanged.addListener(
-      listener.listenForChanges);
+    var listener =
+        new privateHelpers.networkListChangedListener(expected, done);
+    listener.start();
     chrome.networkingPrivate.requestNetworkScan();
+  },
+  function requestNetworkScanCellular() {
+    var done = chrome.test.callbackAdded();
+    var listener = new privateHelpers.networksChangedListener(
+        kCellularGuid, function(result) {
+          var cellular = result.Cellular;
+          return cellular && cellular.FoundNetworks &&
+              cellular.FoundNetworks[0].Status == 'available';
+        }, done);
+    listener.start();
+    chrome.networkingPrivate.requestNetworkScan('Cellular');
   },
   function getProperties() {
     chrome.networkingPrivate.getProperties(
@@ -803,9 +835,9 @@ var availableTests = [
                     'stub_wifi1_guid',
                     'stub_vpn2_guid'];
     var done = chrome.test.callbackAdded();
-    var listener = new privateHelpers.listListener(expected, done);
-    chrome.networkingPrivate.onNetworkListChanged.addListener(
-      listener.listenForChanges);
+    var listener =
+        new privateHelpers.networkListChangedListener(expected, done);
+    listener.start();
     var network = 'stub_wifi2_guid';
     chrome.networkingPrivate.startConnect(network, networkCallbackPass());
   },
