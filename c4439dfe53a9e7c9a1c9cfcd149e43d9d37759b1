@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7288c4b5_361d4918",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-09-01T15:27:32Z",
+      "side": 1,
+      "message": "Mostly done. I had to leave them in a few places for now, since AnimationPlayer::element_animations() is called in many places outside the class - largely just as a bool check, but some tests actually use the value. I\u0027ll update those in the ElementAnimations follow-up.",
+      "parentUuid": "a7bf9d93_2a6a9050",
+      "range": {
+        "startLine": 133,
+        "startChar": 25,
+        "endLine": 133,
+        "endChar": 43
+      },
+      "revId": "c4439dfe53a9e7c9a1c9cfcd149e43d9d37759b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9134343e_cd61433f",
         "filename": "cc/animation/animation_player.cc",
         "patchSetId": 9
@@ -39,6 +63,24 @@
       "revId": "c4439dfe53a9e7c9a1c9cfcd149e43d9d37759b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74f38e36_328a7ce2",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-09-01T15:27:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9134343e_cd61433f",
+      "revId": "c4439dfe53a9e7c9a1c9cfcd149e43d9d37759b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "9064035f_f8936a72",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-09-01T15:27:32Z",
+      "side": 1,
+      "message": "Done, but it isn\u0027t very clean given the requirements to check the AH.",
+      "parentUuid": "aab7092d_7eeafd0d",
+      "range": {
+        "startLine": 214,
+        "startChar": 22,
+        "endLine": 214,
+        "endChar": 40
+      },
+      "revId": "c4439dfe53a9e7c9a1c9cfcd149e43d9d37759b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb332b77_d3e7a273",
         "filename": "cc/animation/animation_player.cc",
         "patchSetId": 9
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "c84abda5_32ab7854",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-09-01T15:27:32Z",
+      "side": 1,
+      "message": "Ack; I am assuming you don\u0027t require any change here currently.",
+      "parentUuid": "eb332b77_d3e7a273",
+      "range": {
+        "startLine": 243,
+        "startChar": 25,
+        "endLine": 243,
+        "endChar": 47
+      },
+      "revId": "c4439dfe53a9e7c9a1c9cfcd149e43d9d37759b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dae80bfc_02865b22",
         "filename": "cc/animation/animation_player.h",
         "patchSetId": 9
@@ -108,6 +198,30 @@
       "revId": "c4439dfe53a9e7c9a1c9cfcd149e43d9d37759b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b57fddaa_129d0f85",
+        "filename": "cc/animation/animation_player.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-09-01T15:27:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dae80bfc_02865b22",
+      "range": {
+        "startLine": 154,
+        "startChar": 11,
+        "endLine": 154,
+        "endChar": 51
+      },
+      "revId": "c4439dfe53a9e7c9a1c9cfcd149e43d9d37759b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -148,6 +262,24 @@
       "revId": "c4439dfe53a9e7c9a1c9cfcd149e43d9d37759b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e6fd87a_9c7c916a",
+        "filename": "cc/animation/animation_ticker.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-09-01T15:27:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90f95601_0684b7d3",
+      "revId": "c4439dfe53a9e7c9a1c9cfcd149e43d9d37759b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
