@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0c69c148_3569facc",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-01T06:23:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d683bc38_e4363537",
+      "revId": "577300c672bd417cf3800e5cf4f9089b0f04c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6383437_f30387a1",
         "filename": "content/browser/service_worker/service_worker_provider_host.cc",
         "patchSetId": 9
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "331276f9_52349c2a",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-01T06:23:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6383437_f30387a1",
+      "revId": "577300c672bd417cf3800e5cf4f9089b0f04c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1714c80e_48dff11f",
         "filename": "content/browser/service_worker/service_worker_provider_host.cc",
         "patchSetId": 9
@@ -50,6 +86,24 @@
       "revId": "577300c672bd417cf3800e5cf4f9089b0f04c46e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5e75f73_6cf0c2c6",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 910,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-01T06:23:35Z",
+      "side": 1,
+      "message": "Done. If |dispatcher_host_| has destroyed I think it should match bellowing case of ServiceWorkerErrorType::kAbort, so merged this condition with !IsContextAlive().",
+      "parentUuid": "1714c80e_48dff11f",
+      "revId": "577300c672bd417cf3800e5cf4f9089b0f04c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "bdf5c660_bb6ce203",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 932,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-01T06:23:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41b6032b_2ecdc98a",
+      "revId": "577300c672bd417cf3800e5cf4f9089b0f04c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b1f680a_f124df61",
         "filename": "content/browser/service_worker/service_worker_provider_host.cc",
         "patchSetId": 9
@@ -102,6 +174,24 @@
       "revId": "577300c672bd417cf3800e5cf4f9089b0f04c46e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36ec26cc_180afa0c",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 933,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-01T06:23:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b1f680a_f124df61",
+      "revId": "577300c672bd417cf3800e5cf4f9089b0f04c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +218,30 @@
     },
     {
       "key": {
+        "uuid": "ad90b42a_23cea402",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 938,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-01T06:23:35Z",
+      "side": 1,
+      "message": "Done. Agree that the register request from a non-window client should be reported as a bad message.",
+      "parentUuid": "78988ef7_8f4afde5",
+      "range": {
+        "startLine": 938,
+        "startChar": 30,
+        "endLine": 938,
+        "endChar": 63
+      },
+      "revId": "577300c672bd417cf3800e5cf4f9089b0f04c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9fc4796_fd6f8b9c",
         "filename": "content/browser/service_worker/service_worker_provider_host.cc",
         "patchSetId": 9
@@ -142,6 +256,24 @@
       "revId": "577300c672bd417cf3800e5cf4f9089b0f04c46e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62c5f0b6_3144f2a3",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 984,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-01T06:23:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9fc4796_fd6f8b9c",
+      "revId": "577300c672bd417cf3800e5cf4f9089b0f04c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -162,6 +294,24 @@
     },
     {
       "key": {
+        "uuid": "5c9f2a4c_ceaaf840",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-01T06:23:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e71483bd_3a1e3dff",
+      "revId": "577300c672bd417cf3800e5cf4f9089b0f04c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22bbd402_3d4a7e44",
         "filename": "content/child/service_worker/service_worker_provider_context.cc",
         "patchSetId": 9
@@ -176,6 +326,24 @@
       "revId": "577300c672bd417cf3800e5cf4f9089b0f04c46e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "320062fc_a5dcd590",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-01T06:23:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22bbd402_3d4a7e44",
+      "revId": "577300c672bd417cf3800e5cf4f9089b0f04c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -202,6 +370,30 @@
     },
     {
       "key": {
+        "uuid": "71838a1e_cf8f86d2",
+        "filename": "content/child/service_worker/service_worker_provider_context.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-01T06:23:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d55d7e8_5b1ce73b",
+      "range": {
+        "startLine": 137,
+        "startChar": 63,
+        "endLine": 137,
+        "endChar": 68
+      },
+      "revId": "577300c672bd417cf3800e5cf4f9089b0f04c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a57443aa_c85ab241",
         "filename": "content/child/service_worker/service_worker_provider_context.h",
         "patchSetId": 9
@@ -225,6 +417,30 @@
     },
     {
       "key": {
+        "uuid": "7cded836_bc3ec36b",
+        "filename": "content/child/service_worker/service_worker_provider_context.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-01T06:23:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a57443aa_c85ab241",
+      "range": {
+        "startLine": 165,
+        "startChar": 28,
+        "endLine": 165,
+        "endChar": 30
+      },
+      "revId": "577300c672bd417cf3800e5cf4f9089b0f04c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37d06a6d_1b770f4d",
         "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
         "patchSetId": 9
@@ -239,6 +455,24 @@
       "revId": "577300c672bd417cf3800e5cf4f9089b0f04c46e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b21907a_2f258590",
+        "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-01T06:23:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37d06a6d_1b770f4d",
+      "revId": "577300c672bd417cf3800e5cf4f9089b0f04c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -259,6 +493,24 @@
     },
     {
       "key": {
+        "uuid": "b10fff2b_26db5a43",
+        "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-01T06:23:35Z",
+      "side": 1,
+      "message": "Done and Thanks! This also helped to find out a missing error case handler! In case that container_host() is already nullptr, we still need to run callbacks-\u003eOnError().",
+      "parentUuid": "b7090c63_e8c9060a",
+      "revId": "577300c672bd417cf3800e5cf4f9089b0f04c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3502ae58_bffbd207",
         "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
         "patchSetId": 9
@@ -273,6 +525,24 @@
       "revId": "577300c672bd417cf3800e5cf4f9089b0f04c46e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffd8071d_9ed70693",
+        "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-01T06:23:35Z",
+      "side": 1,
+      "message": "Done. I think putting ErrorTypeToString() into ServiceWorkerUtils is proper as it may be used later generally.\nGot it that we\u0027d better to keep related codes inside the TRACE sentence.",
+      "parentUuid": "3502ae58_bffbd207",
+      "revId": "577300c672bd417cf3800e5cf4f9089b0f04c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -293,6 +563,24 @@
     },
     {
       "key": {
+        "uuid": "4da400f2_8540cc4e",
+        "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-01T06:23:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "850a4430_9ab36445",
+      "revId": "577300c672bd417cf3800e5cf4f9089b0f04c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "969f36d8_b3effc6d",
         "filename": "content/common/service_worker/service_worker_types.mojom",
         "patchSetId": 9
@@ -307,6 +595,24 @@
       "revId": "577300c672bd417cf3800e5cf4f9089b0f04c46e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0632c37f_c696ccaa",
+        "filename": "content/common/service_worker/service_worker_types.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-01T06:23:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "969f36d8_b3effc6d",
+      "revId": "577300c672bd417cf3800e5cf4f9089b0f04c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
