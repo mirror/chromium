@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2284bc62_e51d227f",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-09-01T20:07:18Z",
+      "side": 1,
+      "message": "UkmEntryBuilder is deprecated.\n\nUse the codegen builder from \n#include \"services/metrics/public/cpp/ukm_builders.h\"\n\nukm::builders::Document.OutliveTimeAfterShutdown(ukm_source_id_)\n  .SetGCCount(outlive_time_count)\n  .Record(ukm_recorder);",
+      "range": {
+        "startLine": 328,
+        "startChar": 6,
+        "endLine": 330,
+        "endChar": 56
+      },
+      "revId": "111509e4949dacff6c3d3c21aea9d89c23ec431d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
