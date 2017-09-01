@@ -22,6 +22,30 @@
       "revId": "1d95e433dc5c89c260b569e803018af4acf3b02e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbae451a_0a1ffdd9",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 1462,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-09-01T18:22:11Z",
+      "side": 1,
+      "message": "No, and that\u0027s the point. They might not be equal, e.g., if options.config is a relative or contains symlinks, in which case we want to exec to use the normalized version.",
+      "parentUuid": "620998e6_9fe59715",
+      "range": {
+        "startLine": 1462,
+        "startChar": 37,
+        "endLine": 1462,
+        "endChar": 0
+      },
+      "revId": "1d95e433dc5c89c260b569e803018af4acf3b02e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
