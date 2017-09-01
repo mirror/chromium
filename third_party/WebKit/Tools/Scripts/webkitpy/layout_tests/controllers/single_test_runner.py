@@ -315,10 +315,25 @@ class SingleTestRunner(object):
 
     def _compare_text(self, expected_text, actual_text):
         failures = []
-        if (expected_text and actual_text and
-                # Assuming expected_text is already normalized.
-                self._port.do_text_results_differ(expected_text, self._get_normalized_output_text(actual_text))):
-            failures.append(test_failures.FailureTextMismatch())
+        if expected_text and actual_text:
+            normalized_actual_text = self._get_normalized_output_text(actual_text)
+            # Assuming expected_text is already normalized.
+            if self._port.do_text_results_differ(expected_text, normalized_actual_text):
+                if self._port.do_text_results_differ(
+                        self._remove_white_spaces_and_newlines(expected_text),
+                        self._remove_white_spaces_and_newlines(normalized_actual_text)):
+                    failures.append(test_failures.FailureTextMismatch())
+                else:
+                    if not self._port.do_text_results_differ(
+                            self._remove_white_spaces(expected_text),
+                            self._remove_white_spaces(normalized_actual_text)):
+                        failures.append(test_failures.FailureWhiteSpaceOnlyTextMismatch())
+                    elif not self._port.do_text_results_differ(
+                            self._remove_newlines(expected_text),
+                            self._remove_newlines(normalized_actual_text)):
+                        failures.append(test_failures.FailureLineBreakOnlyTextMismatch())
+                    else:
+                        failures.append(test_failures.FailureWhiteSpacePlusLineBreakTextMismatch())
         elif actual_text and not expected_text:
             failures.append(test_failures.FailureMissingResult())
         return failures
@@ -341,6 +356,15 @@ class SingleTestRunner(object):
         # "\r\r\n", when, in fact, we wanted to compare the text output with
         # the normalized text expectation files.
         return output.replace('\r\r\n', '\r\n').replace('\r\n', '\n')
+
+    def _remove_white_spaces(self, text):
+        return text.replace(' ', '').replace('\t', '')
+
+    def _remove_newlines(self, text):
+        return text.replace('\n', '')
+
+    def _remove_white_spaces_and_newlines(self, text):
+        return self._remove_newlines(self._remove_white_spaces(text))
 
     # FIXME: This function also creates the image diff. Maybe that work should
     # be handled elsewhere?
