@@ -192,11 +192,6 @@ const char kNTPHelpURL[] = "https://support.google.com/chrome/?p=ios_new_tab";
       [[ContentSuggestionsHeaderSynchronizer alloc]
           initWithCollectionController:self.suggestionsViewController
                       headerController:self.headerController];
-
-  self.suggestionsViewController.headerSynchronizer =
-      self.headerCollectionInteractionHandler;
-  self.headerController.collectionSynchronizer =
-      self.headerCollectionInteractionHandler;
 }
 
 - (void)stop {
