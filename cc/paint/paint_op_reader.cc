@@ -25,7 +25,7 @@ bool IsValidPaintShaderType(PaintShader::Type type) {
 }
 
 bool IsValidSkShaderTileMode(SkShader::TileMode mode) {
-  return mode < SkShader::kTileModeCount;
+  return mode < static_cast<SkShader::TileMode>(SkShader::kTileModeCount);
 }
 
 bool IsValidPaintShaderScalingBehavior(PaintShader::ScalingBehavior behavior) {
