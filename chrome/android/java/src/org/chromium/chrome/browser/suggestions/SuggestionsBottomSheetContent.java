@@ -294,7 +294,7 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
             return;
         }
 
-        final String url = mSheet.getActiveTab().getUrl();
+        final String url = removeURLAnchor(mSheet.getActiveTab().getUrl());
 
         // Do nothing if there are already suggestions in the carousel for the current context.
         if (TextUtils.equals(url, mSuggestionsCarousel.getCurrentCarouselContextUrl())) return;
@@ -315,6 +315,15 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
                         Toast.makeText(mRecyclerView.getContext(), text, Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    private static String removeURLAnchor(String url) {
+        if (url.contains("#")) {
+            int anchorIndex = url.indexOf("#");
+            url = url.substring(0, anchorIndex);
+        }
+
+        return url;
     }
 
     private void updateSearchProviderHasLogo() {
