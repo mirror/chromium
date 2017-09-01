@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11bb9a6b_e556e8d8",
+        "filename": "ash/system/power/power_event_observer_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-01T04:55:46Z",
+      "side": 1,
+      "message": "nit: checks",
+      "range": {
+        "startLine": 212,
+        "startChar": 27,
+        "endLine": 212,
+        "endChar": 33
+      },
+      "revId": "e1888eb4dc7e274946826db1ccab2bbfe611bade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67d6eb7a_37e361c7",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 764,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-01T04:55:46Z",
+      "side": 1,
+      "message": "nit: checks",
+      "range": {
+        "startLine": 764,
+        "startChar": 27,
+        "endLine": 764,
+        "endChar": 33
+      },
+      "revId": "e1888eb4dc7e274946826db1ccab2bbfe611bade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
