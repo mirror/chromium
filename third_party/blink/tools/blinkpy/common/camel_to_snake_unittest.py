@@ -6,6 +6,7 @@ import unittest
 
 from blinkpy.common.camel_to_snake import convert
 
+
 class TestCamelToSnake(unittest.TestCase):
 
     def test_convert(self):

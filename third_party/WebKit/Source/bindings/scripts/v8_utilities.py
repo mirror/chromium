@@ -31,12 +31,18 @@
 Design doc: http://www.chromium.org/developers/design-documents/idl-compiler
 """
 
+import os
 import re
+import sys
 
 from idl_types import IdlTypeBase
 import idl_types
 from idl_definitions import Exposure, IdlInterface, IdlAttribute
 from v8_globals import includes
+
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..', '..', '..', '..',
+                             'third_party', 'blink', 'tools'))
+from blinkpy.common import camel_to_snake
 
 ACRONYMS = [
     'CSSOM',  # must come *before* CSS to match full acronym
@@ -111,6 +117,10 @@ def uncapitalize(name):
         if name.startswith(acronym):
             return name.replace(acronym, acronym.lower())
     return name[0].lower() + name[1:]
+
+
+def to_snake_case(name):
+    return camel_to_snake.convert(name)
 
 
 def runtime_enabled_function(name):

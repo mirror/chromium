@@ -3,7 +3,6 @@
 # found in the LICENSE file.
 
 import re
-import sys
 
 
 def convert(name):
