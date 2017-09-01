@@ -149,6 +149,7 @@ class TestSSLErrorHandlerDelegate : public SSLErrorHandler::Delegate {
                               const net::SSLInfo& ssl_info)
       : profile_(profile),
         captive_portal_checked_(false),
+        os_reports_captive_portal_(false),
         suggested_url_exists_(false),
         suggested_url_checked_(false),
         ssl_interstitial_shown_(false),
@@ -197,9 +198,11 @@ class TestSSLErrorHandlerDelegate : public SSLErrorHandler::Delegate {
 
   void set_suggested_url_exists() { suggested_url_exists_ = true; }
   void set_non_overridable_error() { is_overridable_error_ = false; }
+  void set_os_reports_captive_portal() { os_reports_captive_portal_ = true; }
 
   void ClearSeenOperations() {
     captive_portal_checked_ = false;
+    os_reports_captive_portal_ = false;
     suggested_url_exists_ = false;
     suggested_url_checked_ = false;
     ssl_interstitial_shown_ = false;
@@ -213,6 +216,10 @@ class TestSSLErrorHandlerDelegate : public SSLErrorHandler::Delegate {
  private:
   void CheckForCaptivePortal() override {
     captive_portal_checked_ = true;
+  }
+
+  bool DoesOSReportCaptivePortal() override {
+    return os_reports_captive_portal_;
   }
 
   bool GetSuggestedUrl(const std::vector<std::string>& dns_names,
@@ -256,6 +263,7 @@ class TestSSLErrorHandlerDelegate : public SSLErrorHandler::Delegate {
 
   Profile* profile_;
   bool captive_portal_checked_;
+  bool os_reports_captive_portal_;
   bool suggested_url_exists_;
   bool suggested_url_checked_;
   bool ssl_interstitial_shown_;
@@ -433,7 +441,9 @@ class SSLErrorAssistantTest : public ChromeRenderViewHostTestHarness {
 
     RunCaptivePortalTest();
 
-    // Timer should start for captive portal detection.
+#if !defined(OS_ANDROID)
+    // On non-Android platforms (except for iOS where this code is disabled),
+    // timer should start for captive portal detection.
     EXPECT_TRUE(error_handler()->IsTimerRunningForTesting());
     EXPECT_TRUE(delegate()->captive_portal_checked());
     EXPECT_FALSE(delegate()->ssl_interstitial_shown());
@@ -443,10 +453,30 @@ class SSLErrorAssistantTest : public ChromeRenderViewHostTestHarness {
     base::RunLoop().RunUntilIdle();
 
     EXPECT_FALSE(error_handler()->IsTimerRunningForTesting());
+
+    // Captive portal should be checked on non-Android platforms.
     EXPECT_TRUE(delegate()->captive_portal_checked());
     EXPECT_TRUE(delegate()->ssl_interstitial_shown());
     EXPECT_FALSE(delegate()->captive_portal_interstitial_shown());
     EXPECT_FALSE(delegate()->suggested_url_checked());
+#else
+    // On Android there is no custom captive portal detection logic, so the
+    // timer should not start and an SSL interstitial should be shown
+    // immediately.
+    EXPECT_FALSE(error_handler()->IsTimerRunningForTesting());
+    EXPECT_FALSE(delegate()->captive_portal_checked());
+    EXPECT_TRUE(delegate()->ssl_interstitial_shown());
+    EXPECT_FALSE(delegate()->captive_portal_interstitial_shown());
+    EXPECT_FALSE(delegate()->suggested_url_checked());
+
+    base::RunLoop().RunUntilIdle();
+
+    EXPECT_FALSE(error_handler()->IsTimerRunningForTesting());
+    EXPECT_FALSE(delegate()->captive_portal_checked());
+    EXPECT_TRUE(delegate()->ssl_interstitial_shown());
+    EXPECT_FALSE(delegate()->captive_portal_interstitial_shown());
+    EXPECT_FALSE(delegate()->suggested_url_checked());
+#endif
 
     // Check that the histogram for the captive portal cert was recorded.
     histograms.ExpectTotalCount(SSLErrorHandler::GetHistogramNameForTesting(),
@@ -819,6 +849,29 @@ TEST_F(SSLErrorHandlerNameMismatchTest,
 
 #endif  // BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
 
+#if !defined(OS_IOS)
+// Test that a captive portal interstitial is shown if the OS reports a portal.
+// This is only enabled on non-iOS platforms.
+TEST_F(SSLErrorHandlerNameMismatchTest, OSReportsCaptivePortal) {
+  base::HistogramTester histograms;
+  delegate()->set_os_reports_captive_portal();
+
+  EXPECT_FALSE(error_handler()->IsTimerRunningForTesting());
+  error_handler()->StartHandlingError();
+  EXPECT_FALSE(error_handler()->IsTimerRunningForTesting());
+  EXPECT_FALSE(delegate()->captive_portal_checked());
+  EXPECT_FALSE(delegate()->ssl_interstitial_shown());
+  EXPECT_TRUE(delegate()->captive_portal_interstitial_shown());
+
+  histograms.ExpectTotalCount(SSLErrorHandler::GetHistogramNameForTesting(), 2);
+  histograms.ExpectBucketCount(SSLErrorHandler::GetHistogramNameForTesting(),
+                               SSLErrorHandler::HANDLE_ALL, 1);
+  histograms.ExpectBucketCount(
+      SSLErrorHandler::GetHistogramNameForTesting(),
+      SSLErrorHandler::SHOW_CAPTIVE_PORTAL_INTERSTITIAL_OVERRIDABLE, 1);
+}
+#endif
+
 TEST_F(SSLErrorHandlerNameMismatchTest,
        ShouldShowSSLInterstitialOnTimerExpiredWhenSuggestedUrlExists) {
   base::HistogramTester histograms;
@@ -1024,7 +1077,8 @@ TEST_F(SSLErrorHandlerDateInvalidTest, TimeQueryHangs) {
   ASSERT_TRUE(test_server()->ShutdownAndWaitUntilComplete());
 }
 
-#if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
+// CaptivePortalCertificateList feature is enabled on all platforms except iOS.
+#if !defined(OS_IOS)
 
 // Tests that a certificate marked as a known captive portal certificate causes
 // the captive portal interstitial to be shown.
@@ -1153,8 +1207,9 @@ TEST_F(SSLErrorAssistantTest, CaptivePortal_DisabledByBuild) {
       SSLErrorHandler::SHOW_SSL_INTERSTITIAL_OVERRIDABLE, 1);
 }
 
-#endif  // BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
+#endif  // defined(OS_IOS)
 
+// MITM Software interstitial is enabled on all platforms except iOS.
 #if !defined(OS_IOS)
 
 // Tests that if a certificate matches the issuer common name regex of a MITM
