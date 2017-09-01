@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e979bd32_cb0efbdc",
+        "filename": "ash/shelf/app_list_shelf_item_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-09-01T23:34:42Z",
+      "side": 1,
+      "message": "Thanks, learned sth new. Sorry forgot to check the logic here, I think we can use display_id here directly. Updated.",
+      "parentUuid": "03a8c8c8_4b8a5673",
+      "revId": "a674e71b38c72f2d7a9025130a4d8d0867c18aa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bffb9674_3dd6870b",
         "filename": "ash/shelf/shelf_layout_manager.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-01T16:03:16Z",
       "side": 1,
       "message": "This seems wrong. The code seems to be recording a \"toggle\" only if the app list is already visible and is being shown again? I know you didn\u0027t write this code, but can you file a bug and/or follow up with newcomer@ on this? (He\u0027s listed as the histogram owner.)",
+      "revId": "a674e71b38c72f2d7a9025130a4d8d0867c18aa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76acf76a_3727d2f3",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1118,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-09-01T23:34:42Z",
+      "side": 1,
+      "message": "Oh, yes. I think maybe we can just remove the UMA here directly. Since |CanStartFullscreenAppListDrag| means the app list is not opened / visible yet. So this if here will never be executed. But let me add newcomer@ to this cl to take a look. Thanks.",
+      "parentUuid": "bffb9674_3dd6870b",
       "revId": "a674e71b38c72f2d7a9025130a4d8d0867c18aa5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c40cbbf4_295c8086",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1124,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-09-01T23:34:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "436f4983_ea788ff4",
+      "revId": "a674e71b38c72f2d7a9025130a4d8d0867c18aa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f4c3656_81967d8b",
         "filename": "ash/wm/overview/window_selector_unittest.cc",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "a674e71b38c72f2d7a9025130a4d8d0867c18aa5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6780e3ad_361dff45",
+        "filename": "ash/wm/overview/window_selector_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-09-01T23:34:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f4c3656_81967d8b",
+      "revId": "a674e71b38c72f2d7a9025130a4d8d0867c18aa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
