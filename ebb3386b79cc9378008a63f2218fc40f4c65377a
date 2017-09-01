@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc429f1c_2b9ccc9e",
+        "filename": "chrome/browser/resources/print_preview/metrics.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-01T18:13:28Z",
+      "side": 0,
+      "message": "Can you also mark this histogram obsolete in histograms.xml?",
+      "range": {
+        "startLine": 149,
+        "startChar": 27,
+        "endLine": 149,
+        "endChar": 28
+      },
+      "revId": "ebb3386b79cc9378008a63f2218fc40f4c65377a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0023ed65_4b4425ac",
+        "filename": "chrome/browser/resources/print_preview/no_destinations_promo.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-01T18:13:28Z",
+      "side": 0,
+      "message": "Can we also remove the addition of these strings in print_preview_ui.cc (see [1]) and their declarations in chrome/app/generated_resources.grd ([2])?\n[1] https://cs.chromium.org/chromium/src/chrome/browser/ui/webui/print_preview/print_preview_ui.cc?l\u003d340\n[2] https://cs.chromium.org/chromium/src/chrome/app/generated_resources.grd?l\u003d6741",
+      "range": {
+        "startLine": 4,
+        "startChar": 14,
+        "endLine": 4,
+        "endChar": 31
+      },
+      "revId": "ebb3386b79cc9378008a63f2218fc40f4c65377a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
