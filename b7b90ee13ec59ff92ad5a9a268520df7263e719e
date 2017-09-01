@@ -94,6 +94,30 @@
       "revId": "b7b90ee13ec59ff92ad5a9a268520df7263e719e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4792cba5_6edb4e50",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1265,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-09-01T17:09:37Z",
+      "side": 1,
+      "message": "Maybe add a TODO for that there? Just in case it won\u0027t be you who\u0027ll whitelist?",
+      "parentUuid": "f53e3746_a9c6363b",
+      "range": {
+        "startLine": 1265,
+        "startChar": 12,
+        "endLine": 1265,
+        "endChar": 21
+      },
+      "revId": "b7b90ee13ec59ff92ad5a9a268520df7263e719e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
