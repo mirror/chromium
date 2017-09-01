@@ -106,6 +106,24 @@
       "revId": "61ce2094d074d022b294441e57ff5ac001026476",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "257e8d62_57d8a6df",
+        "filename": "media/gpu/android_video_decode_accelerator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-01T00:39:25Z",
+      "side": 1,
+      "message": "Hmm, this is what I was referring to:\n\n$ cat test.cc\nenum class B : int {\n BLAH \u003d 0,\n BLAH2 \u003d 1\n};\n\nenum class C {\n BLAH \u003d 0,\n BLAH2 \u003d 1\n};\nint main() {\n  int b \u003d B::BLAH;\n  int c \u003d C::BLAH;\n  return 0;\n}\n\ndalecurtis@xorax /tmp $ clang++ --std\u003dc++11 test.cc \ntest.cc:18:7: error: cannot initialize a variable of type \u0027int\u0027 with an rvalue of type \u0027B\u0027\n  int a \u003d B::BLAH;\n      ^   ~~~~~~~\ntest.cc:19:7: error: cannot initialize a variable of type \u0027int\u0027 with an rvalue of type \u0027C\u0027\n  int b \u003d C::BLAH;\n\nI expected B::BLAH to allow implicit conversion, but it doesn\u0027t so I guess no matter what you do, if you use an enum class you still need a static_cast\u003cint\u003e. That\u0027s more about type conversion then it is the underlying the backing type though, so sorry for the confusion. It seems you can still set values per the UMA style guide like you thought though.",
+      "parentUuid": "72390a78_1393dbf7",
+      "revId": "61ce2094d074d022b294441e57ff5ac001026476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
