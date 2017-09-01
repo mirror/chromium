@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c274def_a425f07c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-01T12:46:04Z",
+      "side": 1,
+      "message": "Here is another way to do this, that will be consistent with the rest of Chrome: compare the URLs using UrlUtilities#urlsMatchIgnoringFragments.\n\nIn general for things like this, it is very likely somewhere else in Chrome someone wrote that code, and it will be tested and reviewed already. Think about checking code search for utility classes you can reuse.",
+      "range": {
+        "startLine": 320,
+        "startChar": 26,
+        "endLine": 320,
+        "endChar": 41
+      },
+      "revId": "d4d477d02ca034fc2943e21babcdb37908ea1006",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
