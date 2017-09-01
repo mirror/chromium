@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "374902a6_2eb38d4f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-09-01T13:03:42Z",
+      "side": 1,
+      "message": "nit: would this be more readable as |if (transitionFraction \u003d\u003d 0.0f)| ?",
+      "range": {
+        "startLine": 383,
+        "startChar": 29,
+        "endLine": 383,
+        "endChar": 45
+      },
+      "revId": "73fc1255a65418b94dcd1c335a27fe98b2ff36a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e308b160_92b2e497",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-09-01T13:03:42Z",
+      "side": 1,
+      "message": "nit: no need for |else| here and below as the conditions all return.",
+      "range": {
+        "startLine": 438,
+        "startChar": 14,
+        "endLine": 438,
+        "endChar": 18
+      },
+      "revId": "73fc1255a65418b94dcd1c335a27fe98b2ff36a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
