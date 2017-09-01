@@ -217,6 +217,7 @@
 #include "chromeos/audio/cras_audio_handler.h"
 #include "chromeos/chromeos_switches.h"
 #include "chromeos/cryptohome/cryptohome_parameters.h"
+#include "components/arc/arc_prefs.h"
 #include "components/arc/arc_session_runner.h"
 #include "components/arc/arc_util.h"
 #include "components/arc/test/fake_arc_session.h"
@@ -4276,8 +4277,9 @@ class ArcPolicyTest : public PolicyTest {
         base::MakeUnique<arc::ArcSessionRunner>(
             base::Bind(arc::FakeArcSession::Create)));
 
-    browser()->profile()->GetPrefs()->SetBoolean(prefs::kArcSignedIn, true);
-    browser()->profile()->GetPrefs()->SetBoolean(prefs::kArcTermsAccepted,
+    browser()->profile()->GetPrefs()->SetBoolean(arc::prefs::kArcSignedIn,
+                                                 true);
+    browser()->profile()->GetPrefs()->SetBoolean(arc::prefs::kArcTermsAccepted,
                                                  true);
   }
 
@@ -4299,7 +4301,7 @@ class ArcPolicyTest : public PolicyTest {
     UpdateProviderPolicy(policies);
     if (browser()) {
       const PrefService* const prefs = browser()->profile()->GetPrefs();
-      EXPECT_EQ(prefs->GetBoolean(prefs::kArcEnabled), enabled);
+      EXPECT_EQ(prefs->GetBoolean(arc::prefs::kArcEnabled), enabled);
     }
   }
 
@@ -4314,7 +4316,7 @@ IN_PROC_BROWSER_TEST_F(ArcPolicyTest, ArcEnabled) {
 
   // ARC is switched off by default.
   EXPECT_TRUE(arc_session_manager->IsSessionStopped());
-  EXPECT_FALSE(pref->GetBoolean(prefs::kArcEnabled));
+  EXPECT_FALSE(pref->GetBoolean(arc::prefs::kArcEnabled));
 
   // Enable ARC.
   SetArcEnabledByPolicy(true);
@@ -4330,12 +4332,12 @@ IN_PROC_BROWSER_TEST_F(ArcPolicyTest, ArcBackupRestoreEnabled) {
   PrefService* const pref = browser()->profile()->GetPrefs();
 
   // ARC Backup & Restore is switched off by default.
-  EXPECT_FALSE(pref->GetBoolean(prefs::kArcBackupRestoreEnabled));
-  EXPECT_FALSE(pref->IsManagedPreference(prefs::kArcBackupRestoreEnabled));
+  EXPECT_FALSE(pref->GetBoolean(arc::prefs::kArcBackupRestoreEnabled));
+  EXPECT_FALSE(pref->IsManagedPreference(arc::prefs::kArcBackupRestoreEnabled));
 
   // Switch on ARC Backup & Restore in the user prefs.
-  pref->SetBoolean(prefs::kArcBackupRestoreEnabled, true);
-  EXPECT_TRUE(pref->GetBoolean(prefs::kArcBackupRestoreEnabled));
+  pref->SetBoolean(arc::prefs::kArcBackupRestoreEnabled, true);
+  EXPECT_TRUE(pref->GetBoolean(arc::prefs::kArcBackupRestoreEnabled));
 
   // Disable ARC Backup & Restore through the policy.
   PolicyMap policies;
@@ -4343,16 +4345,16 @@ IN_PROC_BROWSER_TEST_F(ArcPolicyTest, ArcBackupRestoreEnabled) {
                POLICY_SCOPE_USER, POLICY_SOURCE_CLOUD,
                base::MakeUnique<base::Value>(false), nullptr);
   UpdateProviderPolicy(policies);
-  EXPECT_FALSE(pref->GetBoolean(prefs::kArcBackupRestoreEnabled));
-  EXPECT_TRUE(pref->IsManagedPreference(prefs::kArcBackupRestoreEnabled));
+  EXPECT_FALSE(pref->GetBoolean(arc::prefs::kArcBackupRestoreEnabled));
+  EXPECT_TRUE(pref->IsManagedPreference(arc::prefs::kArcBackupRestoreEnabled));
 
   // Enable ARC Backup & Restore through the policy.
   policies.Set(key::kArcBackupRestoreEnabled, POLICY_LEVEL_MANDATORY,
                POLICY_SCOPE_USER, POLICY_SOURCE_CLOUD,
                base::MakeUnique<base::Value>(true), nullptr);
   UpdateProviderPolicy(policies);
-  EXPECT_TRUE(pref->GetBoolean(prefs::kArcBackupRestoreEnabled));
-  EXPECT_TRUE(pref->IsManagedPreference(prefs::kArcBackupRestoreEnabled));
+  EXPECT_TRUE(pref->GetBoolean(arc::prefs::kArcBackupRestoreEnabled));
+  EXPECT_TRUE(pref->IsManagedPreference(arc::prefs::kArcBackupRestoreEnabled));
 }
 
 // Test ArcLocationServiceEnabled policy and its interplay with the
@@ -4374,12 +4376,13 @@ IN_PROC_BROWSER_TEST_F(ArcPolicyTest, ArcLocationServiceEnabled) {
   test_default_geo_policy_values.emplace_back(3);  // 'AskGeolocation'
 
   // The pref is switched off by default.
-  EXPECT_FALSE(pref->GetBoolean(prefs::kArcLocationServiceEnabled));
-  EXPECT_FALSE(pref->IsManagedPreference(prefs::kArcLocationServiceEnabled));
+  EXPECT_FALSE(pref->GetBoolean(arc::prefs::kArcLocationServiceEnabled));
+  EXPECT_FALSE(
+      pref->IsManagedPreference(arc::prefs::kArcLocationServiceEnabled));
 
   // Switch on the pref in the user prefs.
-  pref->SetBoolean(prefs::kArcLocationServiceEnabled, true);
-  EXPECT_TRUE(pref->GetBoolean(prefs::kArcLocationServiceEnabled));
+  pref->SetBoolean(arc::prefs::kArcLocationServiceEnabled, true);
+  EXPECT_TRUE(pref->GetBoolean(arc::prefs::kArcLocationServiceEnabled));
 
   for (const auto& test_policy_value : test_policy_values) {
     for (const auto& test_default_geo_policy_value :
@@ -4406,7 +4409,7 @@ IN_PROC_BROWSER_TEST_F(ArcPolicyTest, ArcLocationServiceEnabled) {
           !(should_be_disabled_by_policy ||
             should_be_disabled_by_default_geo_policy);
       EXPECT_EQ(expected_pref_value,
-                pref->GetBoolean(prefs::kArcLocationServiceEnabled))
+                pref->GetBoolean(arc::prefs::kArcLocationServiceEnabled))
           << "ArcLocationServiceEnabled policy is set to " << test_policy_value
           << "DefaultGeolocationSetting policy is set to "
           << test_default_geo_policy_value;
@@ -4415,8 +4418,9 @@ IN_PROC_BROWSER_TEST_F(ArcPolicyTest, ArcLocationServiceEnabled) {
           test_policy_value.is_bool() ||
           (test_default_geo_policy_value.is_int() &&
            test_default_geo_policy_value.GetInt() == 2);
-      EXPECT_EQ(expected_pref_managed,
-                pref->IsManagedPreference(prefs::kArcLocationServiceEnabled))
+      EXPECT_EQ(
+          expected_pref_managed,
+          pref->IsManagedPreference(arc::prefs::kArcLocationServiceEnabled))
           << "ArcLocationServiceEnabled policy is set to " << test_policy_value
           << "DefaultGeolocationSetting policy is set to "
           << test_default_geo_policy_value;
