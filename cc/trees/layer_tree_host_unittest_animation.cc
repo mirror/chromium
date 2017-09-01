@@ -1922,54 +1922,5 @@ class LayerTreeHostAnimationTestSetPotentiallyAnimatingOnLacDestruction
 MULTI_THREAD_TEST_F(
     LayerTreeHostAnimationTestSetPotentiallyAnimatingOnLacDestruction);
 
-// Check that we invalidate property trees on AnimationPlayer::SetNeedsCommit.
-class LayerTreeHostAnimationTestRebuildPropertyTreesOnAnimationSetNeedsCommit
-    : public LayerTreeHostAnimationTest {
- public:
-  void SetupTree() override {
-    LayerTreeHostAnimationTest::SetupTree();
-    layer_ = FakePictureLayer::Create(&client_);
-    layer_->SetBounds(gfx::Size(4, 4));
-    client_.set_bounds(layer_->bounds());
-    layer_tree_host()->root_layer()->AddChild(layer_);
-
-    AttachPlayersToTimeline();
-
-    player_->AttachElement(layer_tree_host()->root_layer()->element_id());
-    player_child_->AttachElement(layer_->element_id());
-  }
-
-  void BeginTest() override { PostSetNeedsCommitToMainThread(); }
-
-  void DidCommit() override {
-    if (layer_tree_host()->SourceFrameNumber() == 1 ||
-        layer_tree_host()->SourceFrameNumber() == 2)
-      PostSetNeedsCommitToMainThread();
-  }
-
-  void UpdateLayerTreeHost() override {
-    if (layer_tree_host()->SourceFrameNumber() == 1) {
-      EXPECT_FALSE(layer_tree_host()->property_trees()->needs_rebuild);
-      AddAnimatedTransformToPlayer(player_child_.get(), 1.0, 5, 5);
-    }
-
-    EXPECT_TRUE(layer_tree_host()->property_trees()->needs_rebuild);
-  }
-
-  void DrawLayersOnThread(LayerTreeHostImpl* host_impl) override {
-    if (host_impl->active_tree()->source_frame_number() >= 2)
-      EndTest();
-  }
-
-  void AfterTest() override {}
-
- private:
-  scoped_refptr<Layer> layer_;
-  FakeContentLayerClient client_;
-};
-
-MULTI_THREAD_TEST_F(
-    LayerTreeHostAnimationTestRebuildPropertyTreesOnAnimationSetNeedsCommit);
-
 }  // namespace
 }  // namespace cc
