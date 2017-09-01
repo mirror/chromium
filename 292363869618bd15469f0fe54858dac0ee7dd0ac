@@ -22,6 +22,30 @@
       "revId": "292363869618bd15469f0fe54858dac0ee7dd0ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39befe31_d7438d74",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-09-01T20:52:36Z",
+      "side": 1,
+      "message": "Fixed. How did you realize this?",
+      "parentUuid": "a4b0ac1c_e9358507",
+      "range": {
+        "startLine": 12,
+        "startChar": 69,
+        "endLine": 12,
+        "endChar": 70
+      },
+      "revId": "292363869618bd15469f0fe54858dac0ee7dd0ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
