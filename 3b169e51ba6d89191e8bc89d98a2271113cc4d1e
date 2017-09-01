@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f23e7c92_15666ebc",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_utilities.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-09-01T06:17:52Z",
+      "side": 1,
+      "message": "We also have name_style_converter.py. Can we share the code?",
+      "revId": "3b169e51ba6d89191e8bc89d98a2271113cc4d1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
