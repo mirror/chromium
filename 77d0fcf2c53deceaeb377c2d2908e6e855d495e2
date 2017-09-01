@@ -16,6 +16,24 @@
       "revId": "77d0fcf2c53deceaeb377c2d2908e6e855d495e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79165743_87a2883a",
+        "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-09-01T22:53:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11256627_6b8950e7",
+      "revId": "77d0fcf2c53deceaeb377c2d2908e6e855d495e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
