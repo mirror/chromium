@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "945e85fd_e33c8e36",
+        "filename": "chrome/browser/resources/md_extensions/navigation_helper.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-01T20:07:44Z",
+      "side": 1,
+      "message": "While we\u0027re here, we should add type.",
+      "revId": "79a55e3e92e840fc5204d124b0dcb1c4db40d1c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc897789_59cf0713",
+        "filename": "chrome/browser/resources/md_extensions/sidebar.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-01T20:07:44Z",
+      "side": 1,
+      "message": "!PageState",
+      "revId": "79a55e3e92e840fc5204d124b0dcb1c4db40d1c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41484b26_08971a16",
+        "filename": "chrome/browser/resources/md_extensions/sidebar.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-01T20:07:44Z",
+      "side": 1,
+      "message": "Doesn\u0027t this.selected_ \u003d selected work?  (i.e., this.\u003cfoo\u003e works for top-level paths?)",
+      "revId": "79a55e3e92e840fc5204d124b0dcb1c4db40d1c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
