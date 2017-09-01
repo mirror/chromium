@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2bc131c0_ee49d827",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-09-01T19:20:22Z",
+      "side": 1,
+      "message": "This line and the above DCHECK are at odds with the TODO about uploaded_image sometimes being null.  Previously we were silently ignoring failed uploads, and now this will crash.\n\nI added some comments to http://crbug.com/740737 about this, but I think if the gpu process goes away then uploading the image can fail here, and the gpu decode cache needs to handle that gracefully.",
+      "revId": "2740c0d62c4b7f81dbe70b08a3c9caa0ce6436a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
