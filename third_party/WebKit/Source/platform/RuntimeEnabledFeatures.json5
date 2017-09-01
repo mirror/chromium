@@ -1097,7 +1097,7 @@
     },
     {
       name: "VisibilityCollapseRow",
-      status: "stable",
+      status: "experimental",
     },
     {
       name: "VisualViewportAPI",
