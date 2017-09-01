@@ -51,6 +51,14 @@ const CGFloat kMenuWidth = 264;
 
 // The spacer between title and done button on the navigation bar.
 const CGFloat kSpacer = 50;
+
+typedef NS_ENUM(NSInteger, BookmarksContextBarState) {
+  BookmarksContextBarDefault,
+  BookmarksContextBarBeginSelection,
+  BookmarksContextBarSingleSelection,
+  BookmarksContextBarMultipleSelection,
+  BookmarksContextBarSingleFolderSelection,
+};
 }
 
 @interface BookmarkHomeViewController ()<
@@ -411,6 +419,28 @@ const CGFloat kSpacer = 50;
 
 - (void)bookmarkTableViewDismissPromo:(BookmarkTableView*)view {
   [self.bookmarkPromoController hidePromoCell];
+}
+
+- (void)bookmarkTableView:(BookmarkTableView*)view
+        selectedEditNodes:
+            (const std::set<const bookmarks::BookmarkNode*>&)nodes {
+  if (nodes.size() == 0) {
+    [self setContextBarState:BookmarksContextBarBeginSelection];
+    return;
+  }
+  if (nodes.size() == 1) {
+    const bookmarks::BookmarkNode* node = *nodes.begin();
+    if (node->is_url()) {
+      [self setContextBarState:BookmarksContextBarSingleSelection];
+    } else if (node->is_folder()) {
+      [self setContextBarState:BookmarksContextBarSingleFolderSelection];
+    }
+    return;
+  }
+  if (nodes.size() > 1) {
+    [self setContextBarState:BookmarksContextBarMultipleSelection];
+    return;
+  }
 }
 
 #pragma mark - BookmarkFolderViewControllerDelegate
@@ -867,18 +897,15 @@ const CGFloat kSpacer = 50;
   self.contextBar.delegate = self;
   [self.contextBar setTranslatesAutoresizingMaskIntoConstraints:NO];
 
-  // TODO(crbug.com/695749): Check if we need to create new strings for the
-  // context bar buttons.
   [self.contextBar setButtonVisibility:YES forButton:ContextBarLeadingButton];
-  [self.contextBar
-      setButtonTitle:l10n_util::GetNSStringWithFixup(
-                         IDS_IOS_BOOKMARK_NEW_GROUP_EDITOR_CREATE_TITLE)
-           forButton:ContextBarLeadingButton];
+  [self.contextBar setButtonTitle:l10n_util::GetNSString(
+                                      IDS_IOS_BOOKMARK_CONTEXT_BAR_NEW_FOLDER)
+                        forButton:ContextBarLeadingButton];
 
   [self.contextBar setButtonVisibility:YES forButton:ContextBarTrailingButton];
-  [self.contextBar setButtonTitle:l10n_util::GetNSStringWithFixup(
-                                      IDS_IOS_BOOKMARK_ACTION_SELECT)
-                        forButton:ContextBarTrailingButton];
+  [self.contextBar
+      setButtonTitle:l10n_util::GetNSString(IDS_IOS_BOOKMARK_CONTEXT_BAR_SELECT)
+           forButton:ContextBarTrailingButton];
 
   [_containerView addSubview:self.contextBar];
 }
@@ -935,7 +962,7 @@ const CGFloat kSpacer = 50;
 - (UIBarButtonItem*)customizedDoneButton {
   UIBarButtonItem* doneButton = [[UIBarButtonItem alloc]
       initWithTitle:l10n_util::GetNSString(IDS_IOS_NAVIGATION_BAR_DONE_BUTTON)
-                        .uppercaseString
+                        .localizedUppercaseString
               style:UIBarButtonItemStylePlain
              target:self
              action:@selector(navigationBarCancel:)];
@@ -1038,9 +1065,88 @@ const CGFloat kSpacer = 50;
 - (void)centerButtonClicked {
   // TODO(crbug.com/695749): Implement the button action here.
 }
-// Called when the trailing button is clicked.
+// Called when the trailing button, "Select" or "Cancel" is clicked.
 - (void)trailingButtonClicked {
-  // TODO(crbug.com/695749): Implement the button action here.
+  // Toggle edit mode.
+  [self.bookmarksTableView setEditing:!self.bookmarksTableView.editing];
+  [self setContextBarState:BookmarksContextBarBeginSelection];
+}
+
+#pragma mark - ContextBarStates
+
+- (void)setContextBarState:(BookmarksContextBarState)state {
+  switch (state) {
+    case BookmarksContextBarDefault:
+      [self setBookmarksContextBarButtonsDefaultState];
+      break;
+    case BookmarksContextBarBeginSelection:
+      if (self.bookmarksTableView.editing) {
+        [self setBookmarksContextBarSelectionStartState];
+      } else {
+        [self setBookmarksContextBarButtonsDefaultState];
+      }
+      break;
+    case BookmarksContextBarSingleSelection:
+    case BookmarksContextBarMultipleSelection:
+      [self setBookmarksContextBarSelectionStartState];
+      [self.contextBar setButtonEnabled:YES forButton:ContextBarCenterButton];
+      [self.contextBar setButtonEnabled:YES forButton:ContextBarLeadingButton];
+      break;
+    case BookmarksContextBarSingleFolderSelection:
+      [self setBookmarksContextBarSelectionStartState];
+      [self.contextBar setButtonTitle:l10n_util::GetNSString(
+                                          IDS_IOS_BOOKMARK_CONTEXT_BAR_EDIT)
+                            forButton:ContextBarCenterButton];
+      [self.contextBar setButtonEnabled:YES forButton:ContextBarCenterButton];
+      [self.contextBar setButtonEnabled:YES forButton:ContextBarLeadingButton];
+    default:
+      break;
+  }
+}
+
+- (void)setBookmarksContextBarButtonsDefaultState {
+  // Set New Folder button
+  [self.contextBar setButtonTitle:l10n_util::GetNSString(
+                                      IDS_IOS_BOOKMARK_CONTEXT_BAR_NEW_FOLDER)
+                        forButton:ContextBarLeadingButton];
+  [self.contextBar setButtonVisibility:YES forButton:ContextBarLeadingButton];
+  [self.contextBar setButtonEnabled:YES forButton:ContextBarLeadingButton];
+  [self.contextBar setButtonStyle:ContextBarButtonStyleDefault
+                        forButton:ContextBarLeadingButton];
+
+  // Set Center button to invisible.
+  [self.contextBar setButtonVisibility:NO forButton:ContextBarCenterButton];
+
+  // Set Select button.
+  [self.contextBar
+      setButtonTitle:l10n_util::GetNSString(IDS_IOS_BOOKMARK_CONTEXT_BAR_SELECT)
+           forButton:ContextBarTrailingButton];
+  [self.contextBar setButtonVisibility:YES forButton:ContextBarTrailingButton];
+  [self.contextBar setButtonEnabled:YES forButton:ContextBarTrailingButton];
+}
+
+- (void)setBookmarksContextBarSelectionStartState {
+  // Disabled Delete button.
+  [self.contextBar
+      setButtonTitle:l10n_util::GetNSString(IDS_IOS_BOOKMARK_CONTEXT_BAR_DELETE)
+           forButton:ContextBarLeadingButton];
+  [self.contextBar setButtonVisibility:YES forButton:ContextBarLeadingButton];
+  [self.contextBar setButtonEnabled:NO forButton:ContextBarLeadingButton];
+  [self.contextBar setButtonStyle:ContextBarButtonStyleDelete
+                        forButton:ContextBarLeadingButton];
+
+  // Disabled More button.
+  [self.contextBar
+      setButtonTitle:l10n_util::GetNSString(IDS_IOS_BOOKMARK_CONTEXT_BAR_MORE)
+           forButton:ContextBarCenterButton];
+  [self.contextBar setButtonVisibility:YES forButton:ContextBarCenterButton];
+  [self.contextBar setButtonEnabled:NO forButton:ContextBarCenterButton];
+
+  // Enabled Cancel button.
+  [self.contextBar setButtonTitle:l10n_util::GetNSString(IDS_CANCEL)
+                        forButton:ContextBarTrailingButton];
+  [self.contextBar setButtonVisibility:YES forButton:ContextBarTrailingButton];
+  [self.contextBar setButtonEnabled:YES forButton:ContextBarTrailingButton];
 }
 
 @end
