@@ -23330,7 +23330,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-1136509631" label="ssl-interstitial-v1"/>
   <int value="-1132704128" label="AndroidPaymentAppsFilter:disabled"/>
   <int value="-1127996427" label="enable-files-details-panel"/>
-  <int value="-1126217973" label="IdleTimeSpellChecking:disabled"/>
   <int value="-1125133283" label="disable-threaded-scrolling"/>
   <int value="-1119700637" label="ui-disable-partial-swap"/>
   <int value="-1112782121" label="AndroidSigninPromos:disabled"/>
@@ -23361,7 +23360,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-1039555838" label="GamepadExtensions:enabled"/>
   <int value="-1034344165" label="V8NoTurbo:disabled"/>
   <int value="-1033738911" label="enable-mac-views-dialogs"/>
-  <int value="-1029920490" label="IdleTimeSpellChecking:enabled"/>
   <int value="-1028733699" label="MacViewsWebUIDialogs:disabled"/>
   <int value="-1027022706" label="ContentSuggestionsVideoOverlay:disabled"/>
   <int value="-1022971520" label="enable-search-button-in-omnibox-for-str"/>
