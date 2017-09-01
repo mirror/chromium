@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "253172e1_7a4ae178",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-09-01T20:32:57Z",
+      "side": 1,
+      "message": "The inclusion of this file should verify if the current_cpu is 64bits no?\n\nPlus, it will fail to build for Android@ARM (because we include the NEON code, generating a linker error).",
+      "revId": "4197315b2976174ed746488f328b98220728d814",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cb7b62a_9dd68440",
+        "filename": "third_party/zlib/inffast.c",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-09-01T20:32:57Z",
+      "side": 1,
+      "message": "In this case, a cleaner approach is to remove this file from sources lists and replace it for inffast64.c (like we do for ARM).\n\nPlus, no need to patch the original file.",
+      "revId": "4197315b2976174ed746488f328b98220728d814",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41e252b7_6afc72f8",
+        "filename": "third_party/zlib/inffast.c",
+        "patchSetId": 7
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-09-01T20:32:57Z",
+      "side": 1,
+      "message": "Not sure if I\u0027m following it. If we are going be using inffast64.c, do we need this changes?\n\nMaybe a left over from before introducing the new file in \u0027contrib/inffast64\u0027?",
+      "revId": "4197315b2976174ed746488f328b98220728d814",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6102bbf_9626906d",
+        "filename": "third_party/zlib/inffast.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-09-01T20:32:57Z",
+      "side": 1,
+      "message": "As the macro is defined unconditionally in BUILD.gn, won\u0027t we end up with a INFLATE_FAST_MIN_LEFT of 264 for aarch64 *while* including the NEON code for that platform?\n\nSee: https://cs.chromium.org/chromium/src/third_party/zlib/BUILD.gn?l\u003d78",
+      "revId": "4197315b2976174ed746488f328b98220728d814",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
