@@ -21,14 +21,14 @@ extern "C" {
 
 // This function may be invoked across module boundaries to request a single
 // crash report upload. See CrashUploadListCrashpad.
-void RequestSingleCrashUploadImpl(const char* local_id);
+void RequestSingleCrashUploadExportThunk(const char* local_id);
 
 // This function may be invoked across module boundaries to retrieve the crash
 // list. It copies up to |report_count| reports into |reports| and returns the
 // number of reports available. If the return value is less than or equal to
 // |reports_size|, then |reports| contains all the available reports.
-size_t GetCrashReportsImpl(crash_reporter::Report* reports,
-                           size_t reports_size);
+size_t GetCrashReportsExportThunk(crash_reporter::Report* reports,
+                                  size_t reports_size);
 
 // Crashes the process after generating a dump for the provided exception. Note
 // that the crash reporter should be initialized before calling this function
@@ -36,7 +36,7 @@ size_t GetCrashReportsImpl(crash_reporter::Report* reports,
 // NOTE: This function is used by SyzyASAN to invoke a crash. If you change the
 // the name or signature of this function you will break SyzyASAN instrumented
 // releases of Chrome. Please contact syzygy-team@chromium.org before doing so!
-int CrashForException(EXCEPTION_POINTERS* info);
+int CrashForExceptionExportThunk(EXCEPTION_POINTERS* info);
 
 // This function is used in chrome_metrics_services_manager_client.cc to trigger
 // changes to the upload-enabled state. This is done when the metrics services
@@ -45,19 +45,19 @@ int CrashForException(EXCEPTION_POINTERS* info);
 // be consistent with
 // crash_reporter::GetCrashReporterClient()->GetCollectStatsConsent(), but it's
 // not enforced to avoid blocking startup code on synchronizing them.
-void SetUploadConsentImpl(bool consent);
+void SetUploadConsentExportThunk(bool consent);
 
 // NOTE: This function is used by SyzyASAN to annotate crash reports. If you
 // change the name or signature of this function you will break SyzyASAN
 // instrumented releases of Chrome. Please contact syzygy-team@chromium.org
 // before doing so! See also http://crbug.com/567781.
-void SetCrashKeyValueImpl(const wchar_t* key, const wchar_t* value);
+void SetCrashKeyValueExportThunk(const wchar_t* key, const wchar_t* value);
 
-void ClearCrashKeyValueImpl(const wchar_t* key);
+void ClearCrashKeyValueExportThunk(const wchar_t* key);
 
-void SetCrashKeyValueImplEx(const char* key, const char* value);
+void SetCrashKeyValueExExportThunk(const char* key, const char* value);
 
-void ClearCrashKeyValueImplEx(const char* key);
+void ClearCrashKeyValueExExportThunk(const char* key);
 
 // Injects a thread into a remote process to dump state when there is no crash.
 // |serialized_crash_keys| is a nul terminated string in the address space of
@@ -65,17 +65,19 @@ void ClearCrashKeyValueImplEx(const char* key);
 // Keys and values are separated by ':', and key/value pairs are separated by
 // ','. All keys should be previously registered as crash keys.
 // This method is used solely to classify hung input.
-HANDLE InjectDumpForHungInput(HANDLE process, void* serialized_crash_keys);
+HANDLE InjectDumpForHungInputExportThunk(HANDLE process,
+                                         void* serialized_crash_keys);
 
 // Injects a thread into a remote process to dump state when there is no crash.
 // This method provides |reason| which will interpreted as an integer and logged
 // as a crash key.
-HANDLE InjectDumpForHungInputNoCrashKeys(HANDLE process, int reason);
+HANDLE InjectDumpForHungInputNoCrashKeysExportThunk(HANDLE process, int reason);
 
 #if defined(ARCH_CPU_X86_64)
 // V8 support functions.
-void RegisterNonABICompliantCodeRange(void* start, size_t size_in_bytes);
-void UnregisterNonABICompliantCodeRange(void* start);
+void RegisterNonABICompliantCodeRangeExportThunk(void* start,
+                                                 size_t size_in_bytes);
+void UnregisterNonABICompliantCodeRangeExportThunk(void* start);
 #endif  // defined(ARCH_CPU_X86_64)
 
 }  // extern "C"

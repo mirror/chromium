@@ -22,11 +22,11 @@ namespace {
 
 void SetCrashKeyValueTrampoline(const base::StringPiece& key,
                                 const base::StringPiece& value) {
-  SetCrashKeyValueImplEx(key.data(), value.data());
+  SetCrashKeyValueExExportThunk(key.data(), value.data());
 }
 
 void ClearCrashKeyValueTrampoline(const base::StringPiece& key) {
-  ClearCrashKeyValueImplEx(key.data());
+  ClearCrashKeyValueExExportThunk(key.data());
 }
 
 }  // namespace
