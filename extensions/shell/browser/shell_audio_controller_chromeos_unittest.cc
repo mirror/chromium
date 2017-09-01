@@ -10,6 +10,7 @@
 
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
+#include "base/test/scoped_task_environment.h"
 #include "chromeos/audio/audio_device.h"
 #include "chromeos/audio/audio_devices_pref_handler.h"
 #include "chromeos/audio/cras_audio_handler.h"
@@ -72,6 +73,7 @@ class ShellAudioControllerTest : public testing::Test {
     ASSERT_TRUE(false) << "Didn't find ID " << id;
   }
 
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
   chromeos::FakeCrasAudioClient* audio_client_;  // Not owned.
   chromeos::CrasAudioHandler* audio_handler_;  // Not owned.
   std::unique_ptr<ShellAudioController> controller_;
