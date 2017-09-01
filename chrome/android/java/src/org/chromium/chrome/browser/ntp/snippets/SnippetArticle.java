@@ -27,9 +27,6 @@ public class SnippetArticle implements OfflinableSuggestion {
     /** The canonical publisher name (e.g., New York Times). */
     public final String mPublisher;
 
-    /** The snippet preview text. */
-    public final String mPreviewText;
-
     /** The URL of this article. This may be an AMP url. */
     public final String mUrl;
 
@@ -85,13 +82,12 @@ public class SnippetArticle implements OfflinableSuggestion {
      * Creates a SnippetArticleListItem object that will hold the data.
      */
     public SnippetArticle(int category, String idWithinCategory, String title, String publisher,
-            String previewText, String url, long publishTimestamp, float score, long fetchTimestamp,
+            String url, long publishTimestamp, float score, long fetchTimestamp,
             boolean isVideoSuggestion) {
         mCategory = category;
         mIdWithinCategory = idWithinCategory;
         mTitle = title;
         mPublisher = publisher;
-        mPreviewText = previewText;
         mUrl = url;
         mPublishTimestampMilliseconds = publishTimestamp;
         mScore = score;
