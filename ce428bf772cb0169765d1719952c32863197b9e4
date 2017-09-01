@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a30c5a48_9bcfc797",
+        "filename": "content/public/test/mock_render_process_host.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2017-09-01T10:35:16Z",
+      "side": 1,
+      "message": "Did you consider \"continue\" here? It may be worth trying all messages, and not break at the first error. Up to you.",
+      "range": {
+        "startLine": 488,
+        "startChar": 6,
+        "endLine": 488,
+        "endChar": 11
+      },
+      "revId": "ce428bf772cb0169765d1719952c32863197b9e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
