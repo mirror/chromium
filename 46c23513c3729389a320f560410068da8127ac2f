@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74a9d4e5_66c9c62a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-01T13:02:17Z",
+      "side": 1,
+      "message": "(I am not too familiar with the memlog architecture so this comment might be just noise)\nA trick I used in the past to avoid if(nullptr-check) is to replace the implementation used with a dummy noop implementation.\nSpecifically in this case I wonder if instead of tearing down the g_send_buffers you could just replace the g_sender_pipe, something like:\n\nvoid StopAllocatorShimLessDangerous() {\n  auto dummy_pipe \u003d MakeUnique\u003cMemlogSenderPipe\u003e(ScopedPlatformFile(\"/dev/null\"))\n  ReleaseStore(g_sender_pipe, dummy_pipe.release())\n  // Other threads will either see the old (valid*) sender_pipe or the newly initialized one\n}\n\n* this still leaves open the problem of releasing immediately after the pipe in \n~MemlogClient(). But maybe a PostDelayedTask(std::move(memlog_sender_pipe_)), while horrifying, should be enough to make this extremely unlikely to race and still avoid a Lock.",
+      "range": {
+        "startLine": 15,
+        "startChar": 21,
+        "endLine": 16,
+        "endChar": 55
+      },
+      "revId": "46c23513c3729389a320f560410068da8127ac2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
