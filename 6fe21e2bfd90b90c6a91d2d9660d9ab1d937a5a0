@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "fc4b6fcd_b9ba4a8a",
+        "filename": "chrome/browser/win/jumplist.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-01T20:57:00Z",
+      "side": 1,
+      "message": "\u003e I think it\u0027s okay not to reset top_sites_has_pending_notification_ here.\n\u003e 1) If the next notification is from TopSites, then this flag is set to true regardless of its previous value. So not resetting the top_sites flag doesn\u0027t make a difference here.\n\u003e 2) If the next notification is from TabRestore, then both top_sites and tab_restore flags are now true. This means both categories will be updated. This is equivalent to \"delay-n-coalesce\". So not resetting the top_sites flag doesn\u0027t make a difference here neither.\n\nThe delay-n-coalesce behavior makes sense. I can\u0027t think of a reason why it\u0027s bad. On the other hand, I don\u0027t think it\u0027s obvious from reading the code. It\u0027s also not symmetrical, is it? If the first notification after updates_to_skip_ hits zero is from TopSites, ProcessNotifications will not pull data from the tab restore service, will it?\n\n\u003e I think given the huge amount of notifications we get from both services,\n\nIt sounds like we get a lot of spurious notifications from TopSites due to bugs there. That\u0027s no good, and I hope it gets fixed. If it were fixed, would we still get a huge amount of notifications from it? Do we get a huge amount of notifications from TabRestore? Closing tabs isn\u0027t so frequent, is it?\n\n\u003e we don\u0027t need to actively poll the data when updates_to_skip_ hits zero. Skipping next N-2 updates rather than N should have similar effect to the \"active pull\". The value of N (now 10) doesn\u0027t affect much if it\u0027s within a range IMO, so I think we are good here.\n\nThe bottom line is that we want the jumplist to be useful. Since kUpdatesToSkipUnderHeavyLoad is 10, doesn\u0027t that potentially mean that I\u0027d have to close 10 tabs before the jumplist updates (forgetting about the flaws in TopSites notifications)? Can we do better?",
+      "parentUuid": "acf4d34f_fe2b1566",
+      "revId": "6fe21e2bfd90b90c6a91d2d9660d9ab1d937a5a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "96b10c39_885e5c5f",
         "filename": "chrome/browser/win/jumplist.cc",
         "patchSetId": 8
