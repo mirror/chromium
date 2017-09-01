@@ -166,6 +166,24 @@
     },
     {
       "key": {
+        "uuid": "6fd0a6e6_1b5f0e98",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-01T22:49:58Z",
+      "side": 1,
+      "message": "I mainly didn\u0027t like \"SetNew\", which seems to imply that we\u0027re passing in a value to set.  Perhaps Bryan\u0027s suggestion of a method like UpdateForCommittedDocument might be sufficient here.",
+      "parentUuid": "4097912d_7fcf28fa",
+      "revId": "226edbeebeabc4dd604fb21e1ece7bc699236205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f4bfd7d0_b6e237ae",
         "filename": "content/browser/frame_host/render_frame_host_impl.h",
         "patchSetId": 7

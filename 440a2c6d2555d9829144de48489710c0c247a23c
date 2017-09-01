@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "137be6a1_4c93d17c",
+        "filename": "content/browser/frame_host/navigator_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-01T22:49:58Z",
+      "side": 1,
+      "message": "I like the idea of keeping the doc ID update internal to RFHI.  It\u0027s a bit odd that RFHI::OnDidCommitProvisionalLoad is the only caller of this method and we call back into another method only for this one case, but I suppose that\u0027s true of SetLastCommittedOrigin as well.  Maybe we can make that internal as well, exposing a single UpdateForCommittedDocument instead.",
+      "parentUuid": "43951ff5_85e57baa",
+      "revId": "440a2c6d2555d9829144de48489710c0c247a23c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f2de65e_43b8ae49",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 8
@@ -171,6 +189,24 @@
       "side": 1,
       "message": "Based on creis+dcheng\u0027s comments leaving this as is.\n\nPossibly one route for this in the future would be to add another kind of ID for DocumentContent or something, but that\u0027s a separate issue.",
       "parentUuid": "c67e3370_9fa7762e",
+      "revId": "440a2c6d2555d9829144de48489710c0c247a23c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3b082e52_22ab800d",
+        "filename": "content/public/browser/render_frame_host.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-01T22:49:58Z",
+      "side": 1,
+      "message": "Personally, I\u0027m not sure why Blink doesn\u0027t create a new Document for document.write and wouldn\u0027t mind seeing that behavior change.  (It seems like it would be more sensible and closer to the spec.)  It sounds like that\u0027s not in the plans for Blink, though, and we can discuss it separately without holding up this CL for it.  Agreed with keeping the comment as is for now.",
+      "parentUuid": "c980903a_f06b817e",
       "revId": "440a2c6d2555d9829144de48489710c0c247a23c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
