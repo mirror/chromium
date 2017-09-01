@@ -459,7 +459,9 @@ void TypingCommand::CloseTyping(LocalFrame* frame) {
 }
 
 void TypingCommand::DoApply(EditingState* editing_state) {
-  if (!EndingVisibleSelection().IsNonOrphanedCaretOrRange())
+  if (EndingVisibleSelection().IsNone() ||
+      EndingVisibleSelection().Start().IsOrphan() ||
+      EndingVisibleSelection().End().IsOrphan())
     return;
 
   if (command_type_ == kDeleteKey) {
