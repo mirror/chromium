@@ -59,7 +59,8 @@ class VIZ_SERVICE_EXPORT FrameSinkManagerImpl : public SurfaceObserver,
   void SetLocalClient(mojom::FrameSinkManagerClient* client);
 
   // mojom::FrameSinkManager implementation:
-  void RegisterFrameSinkId(const FrameSinkId& frame_sink_id) override;
+  void RegisterFrameSinkId(const FrameSinkId& frame_sink_id,
+                           const std::string& label) override;
   void InvalidateFrameSinkId(const FrameSinkId& frame_sink_id) override;
   void CreateRootCompositorFrameSink(
       const FrameSinkId& frame_sink_id,
