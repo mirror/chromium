@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "caad4c5a_50af843e",
+        "filename": "components/exo/buffer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-01T19:41:00Z",
+      "side": 0,
+      "message": "I\u0027d like to keep this in some form.",
+      "revId": "a3213bd435a735f1f1a22f9ce92c00d5e4f82b20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

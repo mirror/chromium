@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5767f888_a84241e9",
+        "filename": "components/exo/buffer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-01T19:41:00Z",
+      "side": 1,
+      "message": "why do we need this? I don\u0027t think we should ever keep around the resources but release them as soon as possible and recreate them as needed.",
+      "revId": "802d759bba49c0d6dcd76acc2b12224e43134a0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92959df5_28e51a7c",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-01T19:41:00Z",
+      "side": 1,
+      "message": "this is unnecessary but also, I don\u0027t think this if-statement should be here at all",
+      "range": {
+        "startLine": 527,
+        "startChar": 6,
+        "endLine": 527,
+        "endChar": 29
+      },
+      "revId": "802d759bba49c0d6dcd76acc2b12224e43134a0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e8cbc50_0d847412",
+        "filename": "components/exo/surface.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-01T19:41:00Z",
+      "side": 1,
+      "message": "how about ResourcesLost?",
+      "range": {
+        "startLine": 208,
+        "startChar": 7,
+        "endLine": 208,
+        "endChar": 20
+      },
+      "revId": "802d759bba49c0d6dcd76acc2b12224e43134a0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
