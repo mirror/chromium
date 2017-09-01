@@ -546,6 +546,29 @@
     },
     {
       "key": {
+        "uuid": "43500dd6_f7633698",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1231409
+      },
+      "writtenOn": "2017-09-01T14:16:37Z",
+      "side": 1,
+      "message": "I think it may be useful to keep this function generic, and not tie this to ImageFrameGenerator destruction logic only, we may decide to evict an entry based on memory pressure etc or some other hint in cc as well (that was the original intention of the code).wdyt ?",
+      "range": {
+        "startLine": 688,
+        "startChar": 57,
+        "endLine": 688,
+        "endChar": 0
+      },
+      "revId": "ca870be415b96930d0b8ce1e9f2d921287570d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e493134f_1e64c587",
         "filename": "cc/tiles/gpu_image_decode_cache_unittest.cc",
         "patchSetId": 6
@@ -562,6 +585,29 @@
         "startChar": 0,
         "endLine": 1742,
         "endChar": 2
+      },
+      "revId": "ca870be415b96930d0b8ce1e9f2d921287570d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "703737c7_4ea7fb7a",
+        "filename": "cc/tiles/gpu_image_decode_cache_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1742,
+      "author": {
+        "id": 1231409
+      },
+      "writtenOn": "2017-09-01T14:16:37Z",
+      "side": 1,
+      "message": "why shouldnt we test code which reside in cc, here as well ?\nAs commented in the implementation, isn\u0027t it good to avoid eviction exclusively controlled by blink ?",
+      "range": {
+        "startLine": 1742,
+        "startChar": 2,
+        "endLine": 1742,
+        "endChar": 0
       },
       "revId": "ca870be415b96930d0b8ce1e9f2d921287570d3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
