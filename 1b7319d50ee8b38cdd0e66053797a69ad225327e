@@ -46,6 +46,23 @@
       "revId": "1b7319d50ee8b38cdd0e66053797a69ad225327e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d4d575a_61dcb1f4",
+        "filename": "third_party/WebKit/Source/core/editing/Position.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-09-01T22:51:24Z",
+      "side": 1,
+      "message": "I think I\u0027m doing something MSVC doesn\u0027t like here...is there a way to do this correctly as a member function with two different implementations for the different template params? Or do we just need to add a function outside the class (similar to FromPositionInDOMTree())?",
+      "revId": "1b7319d50ee8b38cdd0e66053797a69ad225327e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
