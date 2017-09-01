@@ -60,8 +60,15 @@ bool DocumentAnimations::NeedsAnimationTimingUpdate(const Document& document) {
 }
 
 void DocumentAnimations::UpdateAnimationTimingIfNeeded(Document& document) {
-  if (NeedsAnimationTimingUpdate(document))
+  if (NeedsAnimationTimingUpdate(document)) {
     UpdateAnimationTiming(document, kTimingUpdateOnDemand);
+    document.View()->GetCompositorAnimationHost()->SetMainThreadAnimationsCount(
+        document.Timeline().PendingAnimationsCount());
+    document.View()
+        ->GetCompositorAnimationHost()
+        ->SetMainThreadCompositableAnimationsCount(
+            document.Timeline().MainThreadCompositableAnimationsCount());
+  }
 }
 
 void DocumentAnimations::UpdateAnimations(

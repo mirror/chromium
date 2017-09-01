@@ -368,12 +368,13 @@ CompositorAnimations::CheckCanStartElementOnCompositor(
       }
     }
   } else {
+    // TODO(xidachen): update this logic for SPv2.
     bool paints_into_own_backing =
         target_element.GetLayoutObject() &&
         target_element.GetLayoutObject()->GetCompositingState() ==
             kPaintsIntoOwnBacking;
     if (!paints_into_own_backing) {
-      return FailureCode::NonActionable(
+      return FailureCode::NotPaintIntoOwnBacking(
           "Element does not paint into own backing");
     }
   }

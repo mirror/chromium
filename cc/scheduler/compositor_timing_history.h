@@ -76,7 +76,10 @@ class CC_EXPORT CompositorTimingHistory {
   void WillDraw();
   void DidDraw(bool used_new_active_tree,
                bool main_thread_missed_last_deadline,
-               base::TimeTicks impl_frame_time);
+               base::TimeTicks impl_frame_time,
+               size_t composited_animations_count,
+               size_t main_thread_animations_count,
+               size_t main_thread_compositable_animations_count);
   void DidSubmitCompositorFrame();
   void DidReceiveCompositorFrameAck();
   void WillInvalidateOnImplSide();
