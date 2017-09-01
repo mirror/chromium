@@ -18,9 +18,8 @@
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/observer_list_threadsafe.h"
-#include "base/task_runner.h"
-#include "base/task_runner_util.h"
-#include "base/threading/worker_pool.h"
+#include "base/task_scheduler/post_task.h"
+#include "base/threading/scoped_blocking_call.h"
 #include "crypto/scoped_nss_types.h"
 #include "net/base/net_errors.h"
 #include "net/cert/cert_database.h"
@@ -101,11 +100,13 @@ void NSSCertDatabase::ListCerts(
 
   // base::Passed will NULL out |certs|, so cache the underlying pointer here.
   CertificateList* raw_certs = certs.get();
-  GetSlowTaskRunner()->PostTaskAndReply(
-      FROM_HERE, base::Bind(&NSSCertDatabase::ListCertsImpl,
-                            base::Passed(crypto::ScopedPK11Slot()),
-                            base::Unretained(raw_certs)),
-      base::Bind(callback, base::Passed(&certs)));
+  base::PostTaskWithTraitsAndReply(
+      FROM_HERE,
+      {base::MayBlock(), base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
+      base::BindOnce(&NSSCertDatabase::ListCertsImpl,
+                     base::Passed(crypto::ScopedPK11Slot()),
+                     base::Unretained(raw_certs)),
+      base::BindOnce(callback, base::Passed(&certs)));
 }
 
 void NSSCertDatabase::ListCertsInSlot(const ListCertsCallback& callback,
@@ -115,12 +116,14 @@ void NSSCertDatabase::ListCertsInSlot(const ListCertsCallback& callback,
 
   // base::Passed will NULL out |certs|, so cache the underlying pointer here.
   CertificateList* raw_certs = certs.get();
-  GetSlowTaskRunner()->PostTaskAndReply(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE,
-      base::Bind(&NSSCertDatabase::ListCertsImpl,
-                 base::Passed(crypto::ScopedPK11Slot(PK11_ReferenceSlot(slot))),
-                 base::Unretained(raw_certs)),
-      base::Bind(callback, base::Passed(&certs)));
+      {base::MayBlock(), base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
+      base::BindOnce(
+          &NSSCertDatabase::ListCertsImpl,
+          base::Passed(crypto::ScopedPK11Slot(PK11_ReferenceSlot(slot))),
+          base::Unretained(raw_certs)),
+      base::BindOnce(callback, base::Passed(&certs)));
 }
 
 #if defined(OS_CHROMEOS)
@@ -382,8 +385,9 @@ bool NSSCertDatabase::DeleteCertAndKey(X509Certificate* cert) {
 void NSSCertDatabase::DeleteCertAndKeyAsync(
     const scoped_refptr<X509Certificate>& cert,
     const DeleteCertCallback& callback) {
-  base::PostTaskAndReplyWithResult(
-      GetSlowTaskRunner().get(), FROM_HERE,
+  base::PostTaskWithTraitsAndReplyWithResult(
+      FROM_HERE,
+      {base::MayBlock(), base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
       base::Bind(&NSSCertDatabase::DeleteCertAndKeyImpl, cert),
       base::Bind(&NSSCertDatabase::NotifyCertRemovalAndCallBack,
                  weak_factory_.GetWeakPtr(), callback));
@@ -407,14 +411,16 @@ void NSSCertDatabase::RemoveObserver(Observer* observer) {
   observer_list_->RemoveObserver(observer);
 }
 
-void NSSCertDatabase::SetSlowTaskRunnerForTest(
-    const scoped_refptr<base::TaskRunner>& task_runner) {
-  slow_task_runner_for_test_ = task_runner;
-}
-
 // static
 void NSSCertDatabase::ListCertsImpl(crypto::ScopedPK11Slot slot,
                                     CertificateList* certs) {
+  // The PK11 and CERT functions below may reenter //net via extension hooks. If
+  // the reentered code needs to synchronously wait for a task to run but the
+  // thread pool in which that task must run doesn't have enough threads to
+  // schedule it, a deadlock occurs. To prevent that, the
+  // base::ScopedBlockingCall below increments the thread pool capacity.
+  base::ScopedBlockingCall scoped_blocking_call(base::BlockingType::WILL_BLOCK);
+
   certs->clear();
 
   CERTCertList* cert_list = NULL;
@@ -437,12 +443,6 @@ void NSSCertDatabase::ListCertsImpl(crypto::ScopedPK11Slot slot,
   CERT_DestroyCertList(cert_list);
 }
 
-scoped_refptr<base::TaskRunner> NSSCertDatabase::GetSlowTaskRunner() const {
-  if (slow_task_runner_for_test_.get())
-    return slow_task_runner_for_test_;
-  return base::WorkerPool::GetTaskRunner(true /*task is slow*/);
-}
-
 void NSSCertDatabase::NotifyCertRemovalAndCallBack(
     const DeleteCertCallback& callback,
     bool success) {
@@ -458,6 +458,13 @@ void NSSCertDatabase::NotifyObserversCertDBChanged() {
 // static
 bool NSSCertDatabase::DeleteCertAndKeyImpl(
     scoped_refptr<X509Certificate> cert) {
+  // The PK11, SECKEY and SEC functions below may reenter //net via extension
+  // hooks. If the reentered code needs to synchronously wait for a task to run
+  // but the thread pool in which that task must run doesn't have enough threads
+  // to schedule it, a deadlock occurs. To prevent that, the
+  // base::ScopedBlockingCall below increments the thread pool capacity.
+  base::ScopedBlockingCall scoped_blocking_call(base::BlockingType::WILL_BLOCK);
+
   // For some reason, PK11_DeleteTokenCertAndKey only calls
   // SEC_DeletePermCertificate if the private key is found.  So, we check
   // whether a private key exists before deciding which function to call to

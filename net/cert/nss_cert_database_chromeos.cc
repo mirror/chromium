@@ -16,6 +16,8 @@
 #include "base/location.h"
 #include "base/stl_util.h"
 #include "base/task_runner.h"
+#include "base/task_scheduler/post_task.h"
+#include "base/threading/scoped_blocking_call.h"
 #include "net/cert/x509_certificate.h"
 
 namespace net {
@@ -49,10 +51,12 @@ void NSSCertDatabaseChromeOS::ListCerts(
 
   // base::Pased will NULL out |certs|, so cache the underlying pointer here.
   CertificateList* raw_certs = certs.get();
-  GetSlowTaskRunner()->PostTaskAndReply(
-      FROM_HERE, base::Bind(&NSSCertDatabaseChromeOS::ListCertsImpl,
-                            profile_filter_, base::Unretained(raw_certs)),
-      base::Bind(callback, base::Passed(&certs)));
+  base::PostTaskWithTraitsAndReply(
+      FROM_HERE,
+      {base::MayBlock(), base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
+      base::BindOnce(&NSSCertDatabaseChromeOS::ListCertsImpl, profile_filter_,
+                     base::Unretained(raw_certs)),
+      base::BindOnce(callback, base::Passed(&certs)));
 }
 
 crypto::ScopedPK11Slot NSSCertDatabaseChromeOS::GetSystemSlot() const {
@@ -80,9 +84,20 @@ void NSSCertDatabaseChromeOS::ListCertsImpl(
   NSSCertDatabase::ListCertsImpl(crypto::ScopedPK11Slot(), certs);
 
   size_t pre_size = certs->size();
-  base::EraseIf(*certs,
-                NSSProfileFilterChromeOS::CertNotAllowedForProfilePredicate(
-                    profile_filter));
+
+  {
+    // The predicate below calls PK11 functions which may reenter //net via
+    // extension hooks. If the reentered code needs to synchronously wait for a
+    // task to run but the thread pool in which that task must run doesn't have
+    // enough threads to schedule it, a deadlock occurs. To prevent that, the
+    // base::ScopedBlockingCall below increments the thread pool capacity.
+    base::ScopedBlockingCall scoped_blocking_call(
+        base::BlockingType::WILL_BLOCK);
+    base::EraseIf(*certs,
+                  NSSProfileFilterChromeOS::CertNotAllowedForProfilePredicate(
+                      profile_filter));
+  }
+
   DVLOG(1) << "filtered " << pre_size - certs->size() << " of " << pre_size
            << " certs";
 }
