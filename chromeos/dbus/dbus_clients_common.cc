@@ -11,6 +11,7 @@
 #include "chromeos/dbus/cryptohome_client.h"
 #include "chromeos/dbus/dbus_client_implementation_type.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
+#include "chromeos/dbus/device_off_hours_client.h"
 #include "chromeos/dbus/fake_cras_audio_client.h"
 #include "chromeos/dbus/fake_cryptohome_client.h"
 #include "chromeos/dbus/fake_gsm_sms_client.h"
@@ -111,6 +112,9 @@ DBusClientsCommon::DBusClientsCommon(bool use_real_clients) {
   else
     system_clock_client_.reset(new FakeSystemClockClient);
 
+  if (use_real_clients)
+    device_off_hours_client_.reset(DeviceOffHoursClient::Create());
+
   update_engine_client_.reset(UpdateEngineClient::Create(client_impl_type));
 }
 
@@ -122,6 +126,7 @@ void DBusClientsCommon::Initialize(dbus::Bus* system_bus) {
   biod_client_->Init(system_bus);
   cras_audio_client_->Init(system_bus);
   cryptohome_client_->Init(system_bus);
+  device_off_hours_client_->Init(system_bus);
   gsm_sms_client_->Init(system_bus);
   modem_messaging_client_->Init(system_bus);
   permission_broker_client_->Init(system_bus);

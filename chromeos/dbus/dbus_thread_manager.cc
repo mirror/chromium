@@ -24,6 +24,7 @@
 #include "chromeos/dbus/dbus_clients_browser.h"
 #include "chromeos/dbus/dbus_clients_common.h"
 #include "chromeos/dbus/debug_daemon_client.h"
+#include "chromeos/dbus/device_off_hours_client.h"
 #include "chromeos/dbus/easy_unlock_client.h"
 #include "chromeos/dbus/gsm_sms_client.h"
 #include "chromeos/dbus/image_burner_client.h"
@@ -150,6 +151,11 @@ CryptohomeClient* DBusThreadManager::GetCryptohomeClient() {
 
 DebugDaemonClient* DBusThreadManager::GetDebugDaemonClient() {
   return clients_browser_ ? clients_browser_->debug_daemon_client_.get()
+                          : nullptr;
+}
+
+DeviceOffHoursClient* DBusThreadManager::GetDeviceOffHoursClient() {
+  return clients_browser_ ? clients_common_->device_off_hours_client_.get()
                           : nullptr;
 }
 
@@ -352,6 +358,12 @@ void DBusThreadManagerSetter::SetCryptohomeClient(
 void DBusThreadManagerSetter::SetDebugDaemonClient(
     std::unique_ptr<DebugDaemonClient> client) {
   DBusThreadManager::Get()->clients_browser_->debug_daemon_client_ =
+      std::move(client);
+}
+
+void DBusThreadManagerSetter::SetDeviceOffHoursClient(
+    std::unique_ptr<DeviceOffHoursClient> client) {
+  DBusThreadManager::Get()->clients_common_->device_off_hours_client_ =
       std::move(client);
 }
 

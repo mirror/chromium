@@ -481,6 +481,8 @@ source_set("chromeos") {
     "dbus/chrome_display_power_service_provider_delegate.h",
     "dbus/chrome_proxy_resolution_service_provider_delegate.cc",
     "dbus/chrome_proxy_resolution_service_provider_delegate.h",
+    "dbus/device_off_hours_provider.cc",
+    "dbus/device_off_hours_provider.h",
     "dbus/kiosk_info_service_provider.cc",
     "dbus/kiosk_info_service_provider.h",
     "dbus/screen_lock_service_provider.cc",
@@ -1659,6 +1661,7 @@ static_library("test_support") {
     "//skia",
     "//testing/gmock",
     "//testing/gtest",
+    "//third_party/icu",
   ]
 }
 

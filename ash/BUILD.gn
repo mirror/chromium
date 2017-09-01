@@ -431,6 +431,8 @@ component("ash") {
     "system/night_light/time_of_day.h",
     "system/night_light/tray_night_light.cc",
     "system/night_light/tray_night_light.h",
+    "system/off_hours/tray_off_hours_session_limit.cc",
+    "system/off_hours/tray_off_hours_session_limit.h",
     "system/overview/overview_button_tray.cc",
     "system/overview/overview_button_tray.h",
     "system/palette/common_palette_tool.cc",

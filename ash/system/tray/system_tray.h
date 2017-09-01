@@ -29,6 +29,7 @@ class TrayCast;
 class TrayEnterprise;
 class TrayNetwork;
 class TrayNightLight;
+class TrayOffHoursSessionLimit;
 class TrayScale;
 class TraySessionLengthLimit;
 class TraySupervisedUser;
@@ -216,6 +217,7 @@ class ASH_EXPORT SystemTray : public TrayBackgroundView {
   TrayCast* tray_cast_ = nullptr;
   TrayEnterprise* tray_enterprise_ = nullptr;
   TrayNetwork* tray_network_ = nullptr;
+  TrayOffHoursSessionLimit* tray_off_hours_session_limit_ = nullptr;
   TrayTiles* tray_tiles_ = nullptr;
   TrayScale* tray_scale_ = nullptr;
   TraySessionLengthLimit* tray_session_length_limit_ = nullptr;

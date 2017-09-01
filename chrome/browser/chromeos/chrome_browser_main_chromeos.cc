@@ -46,6 +46,7 @@
 #include "chrome/browser/chromeos/dbus/chrome_console_service_provider_delegate.h"
 #include "chrome/browser/chromeos/dbus/chrome_display_power_service_provider_delegate.h"
 #include "chrome/browser/chromeos/dbus/chrome_proxy_resolution_service_provider_delegate.h"
+#include "chrome/browser/chromeos/dbus/device_off_hours_provider.h"
 #include "chrome/browser/chromeos/dbus/kiosk_info_service_provider.h"
 #include "chrome/browser/chromeos/dbus/screen_lock_service_provider.h"
 #include "chrome/browser/chromeos/display/quirks_manager_delegate_impl.h"
@@ -302,6 +303,9 @@ class DBusServices {
     // |kiosk_info_service_| instead: http://crbug.com/703229
     service_providers.push_back(base::MakeUnique<KioskInfoService>(
         kLibCrosServiceInterface, kGetKioskAppRequiredPlatforVersion));
+
+    service_providers.push_back(base::MakeUnique<DeviceOffHoursProvider>());
+
     cros_dbus_service_ = CrosDBusService::Create(
         kLibCrosServiceName, dbus::ObjectPath(kLibCrosServicePath),
         std::move(service_providers));

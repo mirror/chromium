@@ -237,7 +237,7 @@ void GLImageNativePixmap::Flush() {
       EGL_NONE,
   };
   if (!eglImageFlushExternalEXT(display, egl_image_, attribs)) {
-    LOG(ERROR) << "Failed to flush rendering";
+    //    LOG(ERROR) << "Failed to flush rendering";
     return;
   }
 }
