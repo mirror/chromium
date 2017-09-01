@@ -241,6 +241,7 @@ class OneClickSigninSyncStarter : public SigninTracker::Observer,
   ConfirmationRequired confirmation_required_;
   GURL current_url_;
   GURL continue_url_;
+  bool revoke_all_tokens_on_cancel_signin_;
 
   // Callback executed when sync setup succeeds or fails.
   Callback sync_setup_completed_callback_;
