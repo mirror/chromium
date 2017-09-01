@@ -22,6 +22,30 @@
       "revId": "b3ed838c0bb79ed0c45be6fb9ea19d9742efdbad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "761d0bd2_da49601d",
+        "filename": "chrome/browser/resources/chromeos/login/arc_terms_of_service.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-01T17:01:13Z",
+      "side": 1,
+      "message": "Not necessary because we already have enableButtons_ call in the hosting screen that does the same thing. A bit surprised this does not work though.",
+      "parentUuid": "4d722af8_2d7ed386",
+      "range": {
+        "startLine": 44,
+        "startChar": 9,
+        "endLine": 44,
+        "endChar": 30
+      },
+      "revId": "b3ed838c0bb79ed0c45be6fb9ea19d9742efdbad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
