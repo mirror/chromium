@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e4f11677_b21aae31",
+        "filename": "base/trace_event/memory_dump_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1149089
+      },
+      "writtenOn": "2017-09-01T21:13:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4eb4ff8e_0b4f3db4",
+      "range": {
+        "startLine": 144,
+        "startChar": 49,
+        "endLine": 145,
+        "endChar": 56
+      },
+      "revId": "9ab7a770eef095f2fdb0e8a99e16815ccade6898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a884722_7330388e",
         "filename": "base/trace_event/memory_dump_manager.h",
         "patchSetId": 5
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "428357b5_dc2f33e1",
+        "filename": "base/trace_event/memory_dump_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1149089
+      },
+      "writtenOn": "2017-09-01T21:13:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a884722_7330388e",
+      "revId": "9ab7a770eef095f2fdb0e8a99e16815ccade6898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7987c10_1ce10a36",
         "filename": "base/trace_event/memory_dump_manager_unittest.cc",
         "patchSetId": 5
@@ -53,6 +95,30 @@
       "writtenOn": "2017-08-31T17:37:28Z",
       "side": 1,
       "message": "can this be part of one of the previous tests?\nJust 3 lines at the start of EnableHeapProfilingPseudoStack should be okay.\nBut I am fine with this.",
+      "range": {
+        "startLine": 910,
+        "startChar": 30,
+        "endLine": 910,
+        "endChar": 64
+      },
+      "revId": "9ab7a770eef095f2fdb0e8a99e16815ccade6898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15d9dfb9_681e91e0",
+        "filename": "base/trace_event/memory_dump_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 910,
+      "author": {
+        "id": 1149089
+      },
+      "writtenOn": "2017-09-01T21:13:15Z",
+      "side": 1,
+      "message": "It requires fresh-created MemoryDumpManager.",
+      "parentUuid": "d7987c10_1ce10a36",
       "range": {
         "startLine": 910,
         "startChar": 30,
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "b66c3166_b41f9741",
+        "filename": "base/trace_event/memory_dump_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 912,
+      "author": {
+        "id": 1149089
+      },
+      "writtenOn": "2017-09-01T21:13:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c82d5c08_f22a399a",
+      "range": {
+        "startLine": 912,
+        "startChar": 2,
+        "endLine": 912,
+        "endChar": 31
+      },
+      "revId": "9ab7a770eef095f2fdb0e8a99e16815ccade6898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25fe7ff7_8c0daab4",
         "filename": "base/trace_event/memory_dump_manager_unittest.cc",
         "patchSetId": 5
@@ -102,6 +192,24 @@
       "revId": "9ab7a770eef095f2fdb0e8a99e16815ccade6898",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfc1ecf5_bafd63ef",
+        "filename": "base/trace_event/memory_dump_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 954,
+      "author": {
+        "id": 1149089
+      },
+      "writtenOn": "2017-09-01T21:13:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25fe7ff7_8c0daab4",
+      "revId": "9ab7a770eef095f2fdb0e8a99e16815ccade6898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -125,6 +233,30 @@
       "revId": "9ab7a770eef095f2fdb0e8a99e16815ccade6898",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "540bbf09_8c0e684e",
+        "filename": "base/trace_event/memory_dump_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 964,
+      "author": {
+        "id": 1149089
+      },
+      "writtenOn": "2017-09-01T21:13:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "45d5923b_19c1ac4b",
+      "range": {
+        "startLine": 963,
+        "startChar": 2,
+        "endLine": 964,
+        "endChar": 69
+      },
+      "revId": "9ab7a770eef095f2fdb0e8a99e16815ccade6898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
