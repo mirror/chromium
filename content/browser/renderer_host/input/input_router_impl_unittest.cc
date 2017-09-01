@@ -126,6 +126,12 @@ class MockInputRouterImplClient : public InputRouterImplClient {
     return &widget_input_handler_;
   }
 
+  void OnImeCompositionRangeChanged(
+      const gfx::Range& range,
+      const std::vector<gfx::Rect>& character_bounds) override {}
+
+  void OnImeCancelComposition() override {}
+
   std::vector<MockWidgetInputHandler::DispatchedEvent>
   GetAndResetDispatchedEvents() {
     return widget_input_handler_.GetAndResetDispatchedEvents();
@@ -429,16 +435,13 @@ class InputRouterImplTest : public testing::Test {
         ViewHostMsg_HasTouchEventHandlers(0, has_handlers));
   }
 
-  void OnSetTouchAction(cc::TouchAction touch_action) {
-    input_router_->OnMessageReceived(
-        InputHostMsg_SetTouchAction(0, touch_action));
-  }
+  void CancelTouchTimeout() { input_router_->CancelTouchTimeout(); }
 
   void OnSetWhiteListedTouchAction(cc::TouchAction white_listed_touch_action,
                                    uint32_t unique_touch_event_id,
                                    InputEventAckState ack_result) {
-    input_router_->OnMessageReceived(InputHostMsg_SetWhiteListedTouchAction(
-        0, white_listed_touch_action, unique_touch_event_id, ack_result));
+    input_router_->SetWhiteListedTouchAction(white_listed_touch_action,
+                                             unique_touch_event_id, ack_result);
   }
 
   DispatchedEvents GetAndResetDispatchedEvents() {
@@ -1236,7 +1239,6 @@ TEST_F(InputRouterImplTest, TouchAckTimeoutConfigured) {
   SendTouchEvent();
   DispatchedEvents touch_press_event2 = GetAndResetDispatchedEvents();
   EXPECT_EQ(1U, touch_press_event2.size());
-  OnSetTouchAction(cc::kTouchActionPanY);
   EXPECT_TRUE(TouchEventTimeoutEnabled());
   ReleaseTouchPoint(0);
   SendTouchEvent();
@@ -1250,7 +1252,7 @@ TEST_F(InputRouterImplTest, TouchAckTimeoutConfigured) {
   PressTouchPoint(1, 1);
   SendTouchEvent();
   DispatchedEvents touch_press_event3 = GetAndResetDispatchedEvents();
-  OnSetTouchAction(cc::kTouchActionNone);
+  CancelTouchTimeout();
   EXPECT_FALSE(TouchEventTimeoutEnabled());
   ReleaseTouchPoint(0);
   SendTouchEvent();
@@ -1284,9 +1286,10 @@ TEST_F(InputRouterImplTest,
   EXPECT_EQ(1U, dispatched_events.size());
 
   // kTouchActionNone should disable the timeout.
-  OnSetTouchAction(cc::kTouchActionNone);
-  CallCallback(std::move(dispatched_events.at(0).callback_),
-               INPUT_EVENT_ACK_STATE_CONSUMED);
+  CancelTouchTimeout();
+  CallCallbackWithTouchAction(std::move(dispatched_events.at(0).callback_),
+                              INPUT_EVENT_ACK_STATE_CONSUMED,
+                              cc::kTouchActionNone);
   EXPECT_EQ(1U, disposition_handler_->GetAndResetAckCount());
   EXPECT_FALSE(TouchEventTimeoutEnabled());
 
@@ -1337,7 +1340,7 @@ TEST_F(InputRouterImplTest, TouchActionResetBeforeEventReachesRenderer) {
   SendTouchEvent();
   DispatchedEvents touch_press_event1 = GetAndResetDispatchedEvents();
   EXPECT_EQ(1U, touch_press_event1.size());
-  OnSetTouchAction(cc::kTouchActionNone);
+  CancelTouchTimeout();
   MoveTouchPoint(0, 50, 50);
   SendTouchEvent();
   DispatchedEvents touch_move_event1 = GetAndResetDispatchedEvents();
@@ -1361,8 +1364,9 @@ TEST_F(InputRouterImplTest, TouchActionResetBeforeEventReachesRenderer) {
   DispatchedEvents touch_release_event2 = GetAndResetDispatchedEvents();
   EXPECT_EQ(1U, touch_release_event2.size());
 
-  CallCallback(std::move(touch_press_event1.at(0).callback_),
-               INPUT_EVENT_ACK_STATE_CONSUMED);
+  CallCallbackWithTouchAction(std::move(touch_press_event1.at(0).callback_),
+                              INPUT_EVENT_ACK_STATE_CONSUMED,
+                              cc::kTouchActionNone);
   CallCallback(std::move(touch_move_event1.at(0).callback_),
                INPUT_EVENT_ACK_STATE_CONSUMED);
 
@@ -1413,9 +1417,10 @@ TEST_F(InputRouterImplTest, TouchActionResetWhenTouchHasNoConsumer) {
   SendTouchEvent();
   DispatchedEvents touch_move_event1 = GetAndResetDispatchedEvents();
   EXPECT_EQ(1U, touch_move_event1.size());
-  OnSetTouchAction(cc::kTouchActionNone);
-  CallCallback(std::move(touch_press_event1.at(0).callback_),
-               INPUT_EVENT_ACK_STATE_CONSUMED);
+  CancelTouchTimeout();
+  CallCallbackWithTouchAction(std::move(touch_press_event1.at(0).callback_),
+                              INPUT_EVENT_ACK_STATE_CONSUMED,
+                              cc::kTouchActionNone);
   CallCallback(std::move(touch_move_event1.at(0).callback_),
                INPUT_EVENT_ACK_STATE_CONSUMED);
 
@@ -1471,15 +1476,16 @@ TEST_F(InputRouterImplTest, TouchActionResetWhenTouchHandlerRemoved) {
   SendTouchEvent();
   MoveTouchPoint(0, 50, 50);
   SendTouchEvent();
-  OnSetTouchAction(cc::kTouchActionNone);
+  CancelTouchTimeout();
   ReleaseTouchPoint(0);
   SendTouchEvent();
   DispatchedEvents dispatched_events = GetAndResetDispatchedEvents();
   EXPECT_EQ(3U, dispatched_events.size());
 
   // Ensure we have touch-action:none, suppressing scroll events.
-  CallCallback(std::move(dispatched_events.at(0).callback_),
-               INPUT_EVENT_ACK_STATE_CONSUMED);
+  CallCallbackWithTouchAction(std::move(dispatched_events.at(0).callback_),
+                              INPUT_EVENT_ACK_STATE_CONSUMED,
+                              cc::kTouchActionNone);
   EXPECT_EQ(0U, GetAndResetDispatchedEvents().size());
   CallCallback(std::move(dispatched_events.at(1).callback_),
                INPUT_EVENT_ACK_STATE_NOT_CONSUMED);
@@ -1553,11 +1559,12 @@ TEST_F(InputRouterImplTest, DoubleTapGestureDependsOnFirstTap) {
   // Sequence 1.
   PressTouchPoint(1, 1);
   SendTouchEvent();
-  OnSetTouchAction(cc::kTouchActionNone);
+  CancelTouchTimeout();
   DispatchedEvents dispatched_events = GetAndResetDispatchedEvents();
   EXPECT_EQ(1U, dispatched_events.size());
-  CallCallback(std::move(dispatched_events.at(0).callback_),
-               INPUT_EVENT_ACK_STATE_CONSUMED);
+  CallCallbackWithTouchAction(std::move(dispatched_events.at(0).callback_),
+                              INPUT_EVENT_ACK_STATE_CONSUMED,
+                              cc::kTouchActionNone);
 
   ReleaseTouchPoint(0);
   SendTouchEvent();
@@ -1627,11 +1634,12 @@ TEST_F(InputRouterImplRafAlignedTouchDisabledTest,
   // Sequence 1.
   PressTouchPoint(1, 1);
   SendTouchEvent();
-  OnSetTouchAction(cc::kTouchActionNone);
+  CancelTouchTimeout();
   DispatchedEvents dispatched_events = GetAndResetDispatchedEvents();
   EXPECT_EQ(1U, dispatched_events.size());
-  CallCallback(std::move(dispatched_events.at(0).callback_),
-               INPUT_EVENT_ACK_STATE_CONSUMED);
+  CallCallbackWithTouchAction(std::move(dispatched_events.at(0).callback_),
+                              INPUT_EVENT_ACK_STATE_CONSUMED,
+                              cc::kTouchActionNone);
 
   ReleaseTouchPoint(0);
   SendTouchEvent();
@@ -1818,7 +1826,7 @@ void InputRouterImplTest::OverscrollDispatch() {
   overscroll.latest_overscroll_delta = gfx::Vector2dF(-7, 0);
   overscroll.current_fling_velocity = gfx::Vector2dF(-1, 0);
 
-  input_router_->OnMessageReceived(InputHostMsg_DidOverscroll(0, overscroll));
+  input_router_->DidOverscroll(overscroll);
   DidOverscrollParams client_overscroll = client_->GetAndResetOverscroll();
   EXPECT_EQ(overscroll.accumulated_overscroll,
             client_overscroll.accumulated_overscroll);
