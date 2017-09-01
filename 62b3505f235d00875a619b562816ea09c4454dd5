@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "4486f7e6_05e15459",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1474,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-09-01T12:50:17Z",
+      "side": 1,
+      "message": "I sent a heads-up to the Speed team to make sure this is not breaking anything.",
+      "parentUuid": "c4fd5bda_85c53337",
+      "revId": "62b3505f235d00875a619b562816ea09c4454dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c53b3d60_a7ba089a",
         "filename": "content/common/frame_messages_forward.h",
         "patchSetId": 7
@@ -243,6 +261,24 @@
     },
     {
       "key": {
+        "uuid": "fa0bf5b6_79d8ccab",
+        "filename": "content/renderer/render_frame_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-09-01T12:50:17Z",
+      "side": 1,
+      "message": "... and reverted because of deadlocks, which are now documented in the overriding method.",
+      "parentUuid": "1addce1c_bbd71b1e",
+      "revId": "62b3505f235d00875a619b562816ea09c4454dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89befd0e_2ad9d305",
         "filename": "content/test/did_commit_provisional_load_interceptor.h",
         "patchSetId": 7
@@ -308,6 +344,24 @@
       "side": 1,
       "message": "The InterceptorForTesting landed as part of the CL to enforce localStorage origin restrictions. I\u0027m following it up with even improved version of it in https://chromium-review.googlesource.com/c/chromium/src/+/644187/, so I think we can avoid adding test hooks in the main code at least on the browser side in browser tests.",
       "parentUuid": "cbd37901_35786735",
+      "revId": "62b3505f235d00875a619b562816ea09c4454dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e260aa68_8587be7f",
+        "filename": "content/test/did_commit_provisional_load_interceptor.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-09-01T12:50:17Z",
+      "side": 1,
+      "message": "Woohoo, thanks a lot, Nasko, this is great! I especially love the fact that you can use this mechanism to inject the test implementation regardless of whether or not an InterfaceRequest is already bound.\n\nCurrently, my CL duplicates for AssociatedBinding what you did for Binding. Let me know if you want to add that to your CL instead.",
+      "parentUuid": "b0ffeb97_9185ca46",
       "revId": "62b3505f235d00875a619b562816ea09c4454dd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -382,6 +436,24 @@
       "revId": "62b3505f235d00875a619b562816ea09c4454dd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb704aa9_bbcf0e2d",
+        "filename": "content/test/test_render_frame.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-09-01T12:50:17Z",
+      "side": 1,
+      "message": "Because of the deadlocks, as per Ken\u0027s suggestions I reverted to the earlier solution where we are directly returning the Mock, and not binding it. I also described the reasons in a comment.",
+      "parentUuid": "f9b03fb0_6044951b",
+      "revId": "62b3505f235d00875a619b562816ea09c4454dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
