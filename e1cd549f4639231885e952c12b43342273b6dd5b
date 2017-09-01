@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09befaaf_5512a565",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-01T11:43:57Z",
+      "side": 1,
+      "message": "nit: It\u0027s \"kArcTransitionMigrationRequired\" now.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 26
+      },
+      "revId": "e1cd549f4639231885e952c12b43342273b6dd5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
