@@ -33,6 +33,24 @@
       "revId": "299c6636cd45339ac6b0063d989e6ee01f7fe3e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc10e5bf_02926bc1",
+        "filename": "components/safe_browsing/password_protection/password_protection_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-09-01T00:07:09Z",
+      "side": 1,
+      "message": "Done. And I shortened the consts, since they were getting wordy.",
+      "parentUuid": "2bfe5394_1ae5143b",
+      "revId": "299c6636cd45339ac6b0063d989e6ee01f7fe3e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
