@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0d24b00_6c55ac21",
+        "filename": "chrome/browser/resources/settings/route.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-09-01T18:41:37Z",
+      "side": 1,
+      "message": "Was it supposed to be \u0027chrome://\u0027? Also, isn\u0027t this missing the \"settings\" host?\n\nIs it worth using the URL class in JS? https://developer.mozilla.org/en-US/docs/Web/API/URL/URL\n\nHere and below",
+      "revId": "1ed908d9eba654dcb79e20c5bede8127987f9867",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ad88875_5aee9b4c",
+        "filename": "chrome/browser/resources/settings/route.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-09-01T18:41:37Z",
+      "side": 1,
+      "message": "CreatedForPath now seems like a misnomer. Should we use: VisitedPath?",
+      "revId": "1ed908d9eba654dcb79e20c5bede8127987f9867",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
