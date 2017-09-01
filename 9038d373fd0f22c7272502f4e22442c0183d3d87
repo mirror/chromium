@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d9db94b_18cd753c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-01T23:37:29Z",
+      "side": 1,
+      "message": "We don\u0027t expect the panel to be null here, right? Maybe we should assert, so that local builds that hit this fail, and return early so official builds don\u0027t crash.",
+      "range": {
+        "startLine": 418,
+        "startChar": 8,
+        "endLine": 418,
+        "endChar": 41
+      },
+      "revId": "9038d373fd0f22c7272502f4e22442c0183d3d87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
