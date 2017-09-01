@@ -22,6 +22,30 @@
       "revId": "c40ce92b0ce8f664be0095808a06aa20d6af340a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b06c768_a9bc78dc",
+        "filename": "tools/binary_size/libsupersize/main.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-01T19:13:57Z",
+      "side": 1,
+      "message": "Fixed it up anyways.",
+      "parentUuid": "50fa7f24_c5371f10",
+      "range": {
+        "startLine": 58,
+        "startChar": 11,
+        "endLine": 58,
+        "endChar": 16
+      },
+      "revId": "c40ce92b0ce8f664be0095808a06aa20d6af340a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
