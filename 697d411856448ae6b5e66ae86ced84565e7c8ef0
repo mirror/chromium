@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4102aba_d07bf8d0",
+        "filename": "ios/chrome/browser/ui/content_suggestions/ntp_home_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-09-01T18:01:52Z",
+      "side": 1,
+      "message": "Is this run on both content suggestions ntp and normal ntp?",
+      "revId": "697d411856448ae6b5e66ae86ced84565e7c8ef0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "920ade08_09acfff9",
+        "filename": "ios/chrome/browser/ui/content_suggestions/ntp_home_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-09-01T18:01:52Z",
+      "side": 1,
+      "message": "Note that if the control for the promo is changed to use chrome://flags and the feature API, this will not work anymore.",
+      "revId": "697d411856448ae6b5e66ae86ced84565e7c8ef0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c859c9e6_3cc1a520",
+        "filename": "ios/chrome/browser/ui/content_suggestions/ntp_home_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-09-01T18:01:52Z",
+      "side": 1,
+      "message": "You should not need to set any prefs here. Setting the NSUserDefaults will cause promo to be set up.\n\nNow, prefs are written the first time the promo is shown. This means that if you run the test again on the same target, without deleting the app on device/simulator, the promo will not show and the test will fail. See comment below for how to fix.",
+      "revId": "697d411856448ae6b5e66ae86ced84565e7c8ef0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96d801c5_59632f8e",
+        "filename": "ios/chrome/browser/ui/content_suggestions/ntp_home_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-09-01T18:01:52Z",
+      "side": 1,
+      "message": "You can clear the pref to reset by calling NotificationPromo::migrateUserPrefs, defined in notification_promo.h",
+      "revId": "697d411856448ae6b5e66ae86ced84565e7c8ef0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
