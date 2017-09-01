@@ -166,6 +166,9 @@ void PaintTiming::SetFirstPaint(double stamp) {
   if (first_paint_ != 0.0)
     return;
   first_paint_ = stamp;
+  Performance* performance = GetPerformanceInstance(GetFrame());
+  if (performance)
+    performance->AddFirstPaintTiming(first_paint_swap_);
   RegisterNotifySwapTime(PaintEvent::kFirstPaint);
 }
 
@@ -174,6 +177,9 @@ void PaintTiming::SetFirstContentfulPaint(double stamp) {
     return;
   SetFirstPaint(stamp);
   first_contentful_paint_ = stamp;
+  Performance* performance = GetPerformanceInstance(GetFrame());
+  if (performance)
+    performance->AddFirstContentfulPaintTiming(first_contentful_paint_swap_);
   RegisterNotifySwapTime(PaintEvent::kFirstContentfulPaint);
 }
 
@@ -234,9 +240,6 @@ void PaintTiming::SetFirstPaintSwap(double stamp) {
   DCHECK_EQ(first_paint_swap_, 0.0);
   first_paint_swap_ = stamp;
   probe::paintTiming(GetSupplementable(), "firstPaint", first_paint_swap_);
-  Performance* performance = GetPerformanceInstance(GetFrame());
-  if (performance)
-    performance->AddFirstPaintTiming(first_paint_swap_);
   ReportSwapTimeDeltaHistogram(first_paint_, first_paint_swap_);
   NotifyPaintTimingChanged();
 }
@@ -246,9 +249,6 @@ void PaintTiming::SetFirstContentfulPaintSwap(double stamp) {
   first_contentful_paint_swap_ = stamp;
   probe::paintTiming(GetSupplementable(), "firstContentfulPaint",
                      first_contentful_paint_swap_);
-  Performance* performance = GetPerformanceInstance(GetFrame());
-  if (performance)
-    performance->AddFirstContentfulPaintTiming(first_contentful_paint_swap_);
   if (GetFrame())
     GetFrame()->Loader().Progress().DidFirstContentfulPaint();
   ReportSwapTimeDeltaHistogram(first_contentful_paint_,
