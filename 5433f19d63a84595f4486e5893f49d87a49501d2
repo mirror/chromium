@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dcc0a6af_33715535",
+        "filename": "ios/clean/chrome/browser/ui/ntp/ntp_home_coordinator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-01T12:35:23Z",
+      "side": 1,
+      "message": "I don\u0027t know if those calls should be done in |start|. They need the headerCoordinator to be started but they don\u0027t interact with its VC.",
+      "range": {
+        "startLine": 148,
+        "startChar": 0,
+        "endLine": 148,
+        "endChar": 72
+      },
+      "revId": "5433f19d63a84595f4486e5893f49d87a49501d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
