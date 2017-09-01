@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c7e8cb2_a2f2d079",
+        "filename": "components/exo/display.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-01T10:10:38Z",
+      "side": 1,
+      "message": "please at least limit this to \"remote_shell_version \u003e\u003d 8\". e.g. add a \"bool scaled_by_default_device_scale_factor\" to this function. we should also update the remote shell xml so it explains that default DSF will now be applied to the shell surface so if that\u0027s the scale for the surface hierarchy that the client wants to use then set_scale request is not needed.\n\nIn general, I think changing the behavior for existing clients without giving them a chance to explicitly transition to the new behavior is bad practice. I understand that arc should be calling this with the same value already so it should be the same but I don\u0027t think we should exploit that and in case there\u0027s a difference on some device then it will be easier to understand if that change in behavior doesn\u0027t happen until the client is updated. An interface version bump is the least we can do.",
+      "revId": "df065021ed8b972361d1c83d78be1faba45d6aec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
