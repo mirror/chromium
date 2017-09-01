@@ -94,6 +94,29 @@
     },
     {
       "key": {
+        "uuid": "a317d388_212fe537",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-01T23:53:36Z",
+      "side": 1,
+      "message": "nit: s/Preference Screen/PreferenceScreen",
+      "range": {
+        "startLine": 137,
+        "startChar": 17,
+        "endLine": 137,
+        "endChar": 18
+      },
+      "revId": "ed801a9a74e6d9bd9ee6cc9da89627ee47b27b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3595a91c_c8b47a05",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
         "patchSetId": 4
@@ -117,6 +140,53 @@
     },
     {
       "key": {
+        "uuid": "0662a1d4_6b41e90b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-01T23:53:36Z",
+      "side": 1,
+      "message": "This should add the preference based on its \"order\", with ties being broken by putting preferences in alphabetical order. Right now our ordering comes from XML. We should check whether Preference objects retain their order when added/removed from the PreferenceScreen (we can check via Preference#getOrder()).\n\nIf they don\u0027t retain their order from XML, we can try adding android:order to the preferences in main_preferences.xml and see if that makes the ordering sticky.",
+      "parentUuid": "3595a91c_c8b47a05",
+      "range": {
+        "startLine": 185,
+        "startChar": 0,
+        "endLine": 185,
+        "endChar": 88
+      },
+      "revId": "ed801a9a74e6d9bd9ee6cc9da89627ee47b27b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20b87a2a_44458488",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-01T23:53:36Z",
+      "side": 1,
+      "message": "Can we save all preferences in a LinkedHashMap? That would keep a consistent ordering while allowing for fast lookups. Or just a regular HashMap if all we need is look ups and not in-order iteration.",
+      "range": {
+        "startLine": 197,
+        "startChar": 0,
+        "endLine": 201,
+        "endChar": 9
+      },
+      "revId": "ed801a9a74e6d9bd9ee6cc9da89627ee47b27b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "096253a9_59aee2a9",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
         "patchSetId": 4
@@ -133,6 +203,29 @@
         "startChar": 31,
         "endLine": 228,
         "endChar": 32
+      },
+      "revId": "ed801a9a74e6d9bd9ee6cc9da89627ee47b27b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d79b91d_22a00c46",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-01T23:53:36Z",
+      "side": 1,
+      "message": "I didn\u0027t know you could declare Runnables this way, very interesting.",
+      "range": {
+        "startLine": 228,
+        "startChar": 27,
+        "endLine": 228,
+        "endChar": 51
       },
       "revId": "ed801a9a74e6d9bd9ee6cc9da89627ee47b27b1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
