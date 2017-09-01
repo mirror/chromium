@@ -63,9 +63,12 @@ class UnitTestPlatformDelegate {
   // Returns command line for child GTest process based on the command line
   // of current process. |test_names| is a vector of test full names
   // (e.g. "A.B"), |output_file| is path to the GTest XML output file.
+  // |additional_temporary_file| is filled out if the command line was written
+  // to a response file, and that file will need to be cleaned up.
   virtual CommandLine GetCommandLineForChildGTestProcess(
       const std::vector<std::string>& test_names,
-      const base::FilePath& output_file) = 0;
+      const base::FilePath& output_file,
+      base::FilePath* additional_temporary_file) = 0;
 
   // Returns wrapper to use for child GTest process. Empty string means
   // no wrapper.

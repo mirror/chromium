@@ -126,22 +126,22 @@ class DefaultUnitTestPlatformDelegate : public UnitTestPlatformDelegate {
 
   CommandLine GetCommandLineForChildGTestProcess(
       const std::vector<std::string>& test_names,
-      const base::FilePath& output_file) override {
+      const base::FilePath& output_file,
+      base::FilePath* command_line_file) override {
     CommandLine new_cmd_line(*CommandLine::ForCurrentProcess());
 
     CHECK(temp_dir_.IsValid() || temp_dir_.CreateUniqueTempDir());
-    FilePath temp_file;
-    CHECK(CreateTemporaryFileInDir(temp_dir_.GetPath(), &temp_file));
+    CHECK(CreateTemporaryFileInDir(temp_dir_.GetPath(), command_line_file));
     std::string long_flags(
         std::string("--") + kGTestFilterFlag + "=" +
         JoinString(test_names, ":"));
     CHECK_EQ(static_cast<int>(long_flags.size()),
-             WriteFile(temp_file,
+             WriteFile(*command_line_file,
                        long_flags.data(),
                        static_cast<int>(long_flags.size())));
 
     new_cmd_line.AppendSwitchPath(switches::kTestLauncherOutput, output_file);
-    new_cmd_line.AppendSwitchPath(kGTestFlagfileFlag, temp_file);
+    new_cmd_line.AppendSwitchPath(kGTestFlagfileFlag, *command_line_file);
     new_cmd_line.AppendSwitch(kSingleProcessTestsFlag);
 
     return new_cmd_line;
@@ -409,6 +409,7 @@ struct GTestCallbackState {
   std::vector<std::string> test_names;
   int launch_flags;
   FilePath output_file;
+  FilePath command_line_file;
 };
 
 void GTestCallback(
@@ -429,8 +430,14 @@ void GTestCallback(
         callback_state.launch_flags);
   }
 
+  if (!callback_state.command_line_file.empty()) {
+    LOG(ERROR) << "zippy " << callback_state.command_line_file;
+    CHECK(DeleteFile(callback_state.command_line_file, false));
+  }
+
   // The temporary file's directory is also temporary.
-  DeleteFile(callback_state.output_file.DirName(), true);
+  LOG(ERROR) << "zappy " << callback_state.output_file.DirName();
+  CHECK(DeleteFile(callback_state.output_file.DirName(), true));
 }
 
 void SerialGTestCallback(
@@ -532,10 +539,11 @@ void RunUnitTestsSerially(
   base::FilePath output_file;
   CHECK(platform_delegate->CreateTemporaryFile(&output_file));
 
+  base::FilePath command_line_file;
   std::vector<std::string> current_test_names;
   current_test_names.push_back(test_name);
   CommandLine cmd_line(platform_delegate->GetCommandLineForChildGTestProcess(
-      current_test_names, output_file));
+      current_test_names, output_file, &command_line_file));
 
   GTestCallbackState callback_state;
   callback_state.test_launcher = test_launcher;
@@ -543,6 +551,7 @@ void RunUnitTestsSerially(
   callback_state.test_names = current_test_names;
   callback_state.launch_flags = launch_flags;
   callback_state.output_file = output_file;
+  callback_state.command_line_file = command_line_file;
 
   TestLauncher::LaunchOptions launch_options;
   launch_options.flags = launch_flags;
@@ -567,8 +576,9 @@ void RunUnitTestsBatch(
   base::FilePath output_file;
   CHECK(platform_delegate->CreateTemporaryFile(&output_file));
 
+  base::FilePath command_line_file;
   CommandLine cmd_line(platform_delegate->GetCommandLineForChildGTestProcess(
-      test_names, output_file));
+      test_names, output_file, &command_line_file));
 
   // Adjust the timeout depending on how many tests we're running
   // (note that e.g. the last batch of tests will be smaller).
@@ -585,6 +595,7 @@ void RunUnitTestsBatch(
   callback_state.test_names = test_names;
   callback_state.launch_flags = launch_flags;
   callback_state.output_file = output_file;
+  callback_state.command_line_file = command_line_file;
 
   TestLauncher::LaunchOptions options;
   options.flags = launch_flags;
