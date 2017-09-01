@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f056997f_b7c48c3d",
+        "filename": "services/shape_detection/public/interfaces/status.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-01T21:25:08Z",
+      "side": 1,
+      "message": "Is this an error you have observed in the wild? This failure more likely indicates a bug in Blink than something the page author can fix.",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 16
+      },
+      "revId": "2b91b6c4a26ba5cdea2c33d69a75a554f6a7d352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
