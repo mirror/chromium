@@ -70,6 +70,30 @@
       "revId": "6498f7e81aea225605fea50c7203d9e7bd215787",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "930d0db2_e05e8086",
+        "filename": "components/ntp_snippets/mock_content_suggestions_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-01T08:47:26Z",
+      "side": 1,
+      "message": "I am not a C++ expert but I am not sure to see how to transform it into a pointer and have it kept alive on an asynchronous call.",
+      "parentUuid": "6a9445f7_b8e214a8",
+      "range": {
+        "startLine": 60,
+        "startChar": 37,
+        "endLine": 60,
+        "endChar": 38
+      },
+      "revId": "6498f7e81aea225605fea50c7203d9e7bd215787",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
