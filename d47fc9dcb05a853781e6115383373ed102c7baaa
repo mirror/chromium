@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99751671_67209dba",
+        "filename": "chrome/browser/extensions/api/language_settings_private/language_settings_private_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-01T01:49:03Z",
+      "side": 1,
+      "message": "This function is called whenever the Settings page is opened. Unfortunately, it isn\u0027t related to when the Languages section is viewed.\n\nSpecifically, the function is called in \u003csettings-languages\u003e\u0027s attached() method [1] which fires when the page is loaded.\n\nAfter talking to Yana, it sounds like you want to log whenever the language list is shown in the UI. That list is inside the #languagesCollapse element [2]. So, you could log this histogram when that element is expanded.\n\nThe #languagesCollapse element is expanded when the |languagesOpened_| property changes to true. So you can add that property to languages_page.js and observe when it changes. When it changes, log the UMA histogram from JavaScript (example in [3]).\n\nIf you haven\u0027t worked on Polymer before... well, adding the property, observing it and calling chrome.send isn\u0027t trivial. Hopefully someone currently working on Settings (eg dschuyler) can help out with that bit.\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/resources/settings/languages_page/languages.js?type\u003dcs\u0026q\u003dgetlanguagelist\u0026sq\u003dpackage:chromium\u0026l\u003d184\n[2] https://cs.chromium.org/chromium/src/chrome/browser/resources/settings/languages_page/languages_page.html?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d99\n[3] https://cs.chromium.org/chromium/src/chrome/browser/resources/settings/people_page/lock_screen_constants.js?type\u003dcs\u0026q\u003d%22recordLockScreenProgress%22\u0026l\u003d41",
+      "range": {
+        "startLine": 173,
+        "startChar": 0,
+        "endLine": 173,
+        "endChar": 52
+      },
+      "revId": "d47fc9dcb05a853781e6115383373ed102c7baaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
