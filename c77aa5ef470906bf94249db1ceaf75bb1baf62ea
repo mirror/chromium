@@ -22,6 +22,30 @@
       "revId": "c77aa5ef470906bf94249db1ceaf75bb1baf62ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77255db9_1c2cc2dc",
+        "filename": "ash/wm/workspace/backdrop_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-09-01T00:31:12Z",
+      "side": 1,
+      "message": "I tried to move the logic to HasBackdrop(). Let me know if the logic looks reasonable to you.",
+      "parentUuid": "7f960b24_c0737b30",
+      "range": {
+        "startLine": 278,
+        "startChar": 32,
+        "endLine": 278,
+        "endChar": 43
+      },
+      "revId": "c77aa5ef470906bf94249db1ceaf75bb1baf62ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
