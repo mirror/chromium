@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "0f3edb34_78545adb",
+        "filename": "components/payments/core/payment_manifest_downloader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1202612
+      },
+      "writtenOn": "2017-09-01T20:34:41Z",
+      "side": 1,
+      "message": "This is the only message I\u0027m slightly unsure of. it\u0027s the term \"download HTTP headers\" that I\u0027m 100% ok with. Is this a failed HEAD request? If so could this just be \"Unable to make a HEAD request to ${source-\u003eGetURL()} for payment method manifest header\".",
+      "revId": "3539d2f7164790bbafae163a9ca6602332d4e14b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "06a176fe_d8de4b0c",
         "filename": "components/payments/core/payment_manifest_downloader.cc",
         "patchSetId": 1
