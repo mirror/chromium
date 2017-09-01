@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3973a345_6481d6dd",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 9539,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-09-01T21:59:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15d3d065_4eccc3d4",
+      "range": {
+        "startLine": 9539,
+        "startChar": 15,
+        "endLine": 9539,
+        "endChar": 35
+      },
+      "revId": "f072989b9ace649ca70233b2ad5caefa24ba4b53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e74c8ba6_14ed7b90",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "af9225b2_7476d93f",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 9550,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-09-01T21:59:16Z",
+      "side": 1,
+      "message": "We\u0027re trying to squeeze them in but I\u0027ll update it.  It\u0027ll still work if we happen to have support in 62.",
+      "parentUuid": "e74c8ba6_14ed7b90",
+      "range": {
+        "startLine": 9550,
+        "startChar": 24,
+        "endLine": 9550,
+        "endChar": 33
+      },
+      "revId": "f072989b9ace649ca70233b2ad5caefa24ba4b53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b873e39_0e4d3484",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "f072989b9ace649ca70233b2ad5caefa24ba4b53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4233a33_2257be0e",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 9578,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-09-01T21:59:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b873e39_0e4d3484",
+      "range": {
+        "startLine": 9578,
+        "startChar": 22,
+        "endLine": 9578,
+        "endChar": 52
+      },
+      "revId": "f072989b9ace649ca70233b2ad5caefa24ba4b53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
