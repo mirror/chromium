@@ -34,11 +34,12 @@ class Widget;
 }
 
 namespace ash {
+class OverviewWindowDragController;
+class SplitViewOverviewOverlay;
+class WindowGrid;
 class WindowSelectorDelegate;
 class WindowSelectorItem;
 class WindowSelectorTest;
-class WindowGrid;
-class OverviewWindowDragController;
 
 // The WindowSelector shows a grid of all of your windows, allowing to select
 // one by clicking or tapping on it.
@@ -90,6 +91,10 @@ class ASH_EXPORT WindowSelector : public display::DisplayObserver,
       const gfx::Rect& bounds,
       WindowSelectorItem* ignored_item);
 
+  // Called to show or hide the split view overview overlays. This will do
+  // nothing if split view is not enabled.
+  void SetSplitViewOverviewOverlayVisible(bool visible);
+
   // Removes the window selector item from the overview window grid.
   void RemoveWindowSelectorItem(WindowSelectorItem* item);
 
@@ -114,6 +119,11 @@ class ASH_EXPORT WindowSelector : public display::DisplayObserver,
   const std::vector<std::unique_ptr<WindowGrid>>& grid_list_for_testing()
       const {
     return grid_list_;
+  }
+
+  const std::vector<std::unique_ptr<SplitViewOverviewOverlay>>&
+  split_view_overview_overlays_for_testing() const {
+    return split_view_overview_overlays_;
   }
 
   // display::DisplayObserver:
@@ -182,6 +192,11 @@ class ASH_EXPORT WindowSelector : public display::DisplayObserver,
 
   // List of all the window overview grids, one for each root window.
   std::vector<std::unique_ptr<WindowGrid>> grid_list_;
+
+  // List of all the split view overlays, one for each root window. This will be
+  // empty if split view is not enabled.
+  std::vector<std::unique_ptr<SplitViewOverviewOverlay>>
+      split_view_overview_overlays_;
 
   // Tracks the index of the root window the selection widget is in.
   size_t selected_grid_index_;
