@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0c9f7dc_667ab30b",
+        "filename": "base/message_loop/incoming_task_queue.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-01T15:28:51Z",
+      "side": 1,
+      "message": "Doesn\u0027t this comment apply to |message_loop_lock_| as well? If it doesn\u0027t (e.g. PostPendingTaskLockRequired() only returns true to one caller), mention that in this comment. \n\nFrom my investigation, this (PostPendingTaskLockRequired() only returning true to one caller) doesn\u0027t appear to be true on Android (see always_schedule_work_ and AlwaysNotifyPump()).\n\nSo on Android, if ScheduleWork causes a context switch, it will be done while holding |message_loop_lock_| and that sounds bad for the reasons mentioned above.\n\nSounds like we need something that strictly blocks destruction but doesn\u0027t otherwise block multiple callers of PostTask.",
+      "revId": "c74f5d4d1fbc9cefb15ffe516b1c1d38d4008f3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d56d9d0c_b924a4de",
+        "filename": "base/message_loop/incoming_task_queue.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-01T15:28:51Z",
+      "side": 1,
+      "message": "Protected by |incoming_queue_lock_|.",
+      "revId": "c74f5d4d1fbc9cefb15ffe516b1c1d38d4008f3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
