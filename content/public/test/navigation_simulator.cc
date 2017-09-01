@@ -33,10 +33,12 @@ class NavigationThrottleCallbackRunner : public NavigationThrottle {
       NavigationHandle* handle,
       const base::Closure& on_will_start_request,
       const base::Closure& on_will_redirect_request,
+      const base::Closure& on_will_fail_request,
       const base::Closure& on_will_process_response)
       : NavigationThrottle(handle),
         on_will_start_request_(on_will_start_request),
         on_will_redirect_request_(on_will_redirect_request),
+        on_will_fail_request_(on_will_fail_request),
         on_will_process_response_(on_will_process_response) {}
 
   NavigationThrottle::ThrottleCheckResult WillStartRequest() override {
@@ -46,6 +48,11 @@ class NavigationThrottleCallbackRunner : public NavigationThrottle {
 
   NavigationThrottle::ThrottleCheckResult WillRedirectRequest() override {
     on_will_redirect_request_.Run();
+    return NavigationThrottle::PROCEED;
+  }
+
+  NavigationThrottle::ThrottleCheckResult WillFailRequest() override {
+    on_will_fail_request_.Run();
     return NavigationThrottle::PROCEED;
   }
 
@@ -61,6 +68,7 @@ class NavigationThrottleCallbackRunner : public NavigationThrottle {
  private:
   base::Closure on_will_start_request_;
   base::Closure on_will_redirect_request_;
+  base::Closure on_will_fail_request_;
   base::Closure on_will_process_response_;
 };
 
@@ -436,12 +444,14 @@ void NavigationSimulator::Fail(int error_code) {
 
   bool should_result_in_error_page = error_code != net::ERR_ABORTED;
   if (IsBrowserSideNavigationEnabled()) {
+    PrepareCompleteCallbackOnHandle();
     NavigationRequest* request = frame_tree_node_->navigation_request();
     CHECK(request);
     TestNavigationURLLoader* url_loader =
         static_cast<TestNavigationURLLoader*>(request->loader_for_testing());
     CHECK(url_loader);
     url_loader->SimulateError(error_code);
+    WaitForThrottleChecksComplete();
   } else {
     FrameHostMsg_DidFailProvisionalLoadWithError_Params error_params;
     error_params.error_code = error_code;
@@ -465,10 +475,14 @@ void NavigationSimulator::Fail(int error_code) {
     }
   }
 
-  if (should_result_in_error_page)
-    CHECK_EQ(0, num_did_finish_navigation_called_);
-  else
-    CHECK_EQ(1, num_did_finish_navigation_called_);
+  if (GetLastThrottleCheckResult() == NavigationThrottle::PROCEED) {
+    if (should_result_in_error_page)
+      CHECK_EQ(0, num_did_finish_navigation_called_);
+    else
+      CHECK_EQ(1, num_did_finish_navigation_called_);
+  } else {
+    FailFromThrottleCheck(GetLastThrottleCheckResult());
+  }
 }
 
 void NavigationSimulator::CommitErrorPage() {
@@ -649,6 +663,8 @@ void NavigationSimulator::DidStartNavigation(
                      weak_factory_.GetWeakPtr()),
           base::Bind(&NavigationSimulator::OnWillRedirectRequest,
                      weak_factory_.GetWeakPtr()),
+          base::Bind(&NavigationSimulator::OnWillFailRequest,
+                     weak_factory_.GetWeakPtr()),
           base::Bind(&NavigationSimulator::OnWillProcessResponse,
                      weak_factory_.GetWeakPtr())));
 
@@ -687,6 +703,10 @@ void NavigationSimulator::OnWillStartRequest() {
 
 void NavigationSimulator::OnWillRedirectRequest() {
   num_will_redirect_request_called_++;
+}
+
+void NavigationSimulator::OnWillFailRequest() {
+  num_will_fail_request_called_++;
 }
 
 void NavigationSimulator::OnWillProcessResponse() {

@@ -16,19 +16,26 @@
 #include "content/public/browser/navigation_throttle.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/test/cancelling_navigation_throttle.h"
+#include "content/public/test/test_browser_context.h"
 #include "content/test/test_render_frame_host.h"
 #include "content/test/test_render_view_host.h"
 #include "content/test/test_web_contents.h"
+#include "net/base/net_errors.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
 
 namespace content {
 
+namespace {
+enum InitiatedBy { INITIATED_BY_BROWSER, INITIATED_BY_RENDERER };
+}
+
 class NavigationSimulatorTest
     : public RenderViewHostImplTestHarness,
       public WebContentsObserver,
       public testing::WithParamInterface<
-          std::tuple<CancellingNavigationThrottle::CancelTime,
+          std::tuple<InitiatedBy,
+                     CancellingNavigationThrottle::CancelTime,
                      CancellingNavigationThrottle::ResultSynchrony>> {
  public:
   NavigationSimulatorTest() {}
@@ -38,13 +45,20 @@ class NavigationSimulatorTest
     RenderViewHostImplTestHarness::SetUp();
     contents()->GetMainFrame()->InitializeRenderFrameIfNeeded();
     Observe(RenderViewHostImplTestHarness::web_contents());
-    std::tie(cancel_time_, sync_) = GetParam();
-    simulator_ = NavigationSimulator::CreateRendererInitiated(
-        GURL("https://example.test"), main_rfh());
+    std::tie(initiated_by_, cancel_time_, sync_) = GetParam();
+    switch (initiated_by_) {
+      case INITIATED_BY_RENDERER:
+        simulator_ = NavigationSimulator::CreateRendererInitiated(
+            GURL("https://example.test"), main_rfh());
+      case INITIATED_BY_BROWSER:
+        simulator_ = NavigationSimulator::CreateBrowserInitiated(
+            GURL("https://example.test"),
+            RenderViewHostImplTestHarness::web_contents());
+    }
   }
 
   void TearDown() override {
-    EXPECT_TRUE(did_finish_navigation_);
+    EXPECT_EQ(expect_navigation_to_finish_, did_finish_navigation_);
     RenderViewHostImplTestHarness::TearDown();
   }
 
@@ -58,9 +72,11 @@ class NavigationSimulatorTest
     did_finish_navigation_ = true;
   }
 
+  InitiatedBy initiated_by_;
   CancellingNavigationThrottle::CancelTime cancel_time_;
   CancellingNavigationThrottle::ResultSynchrony sync_;
   std::unique_ptr<NavigationSimulator> simulator_;
+  bool expect_navigation_to_finish_ = false;
   bool did_finish_navigation_ = false;
 
  private:
@@ -71,8 +87,12 @@ class NavigationSimulatorTest
 // the navigation at various points in the flow, both synchronously and
 // asynchronously.
 TEST_P(NavigationSimulatorTest, Cancel) {
-  SCOPED_TRACE(::testing::Message() << "CancelTime: " << cancel_time_
+  SCOPED_TRACE(::testing::Message() << "InitiatedBy: " << initiated_by_
+                                    << " CancelTime: " << cancel_time_
                                     << " ResultSynchrony: " << sync_);
+
+  expect_navigation_to_finish_ = true;
+
   simulator_->Start();
   if (cancel_time_ == CancellingNavigationThrottle::WILL_START_REQUEST) {
     EXPECT_EQ(NavigationThrottle::CANCEL,
@@ -103,10 +123,31 @@ INSTANTIATE_TEST_CASE_P(
     CancelMethod,
     NavigationSimulatorTest,
     ::testing::Combine(
+        ::testing::Values(INITIATED_BY_BROWSER, INITIATED_BY_RENDERER),
         ::testing::Values(CancellingNavigationThrottle::WILL_START_REQUEST,
                           CancellingNavigationThrottle::WILL_REDIRECT_REQUEST,
                           CancellingNavigationThrottle::WILL_PROCESS_RESPONSE,
                           CancellingNavigationThrottle::NEVER),
+        ::testing::Values(CancellingNavigationThrottle::SYNCHRONOUS,
+                          CancellingNavigationThrottle::ASYNCHRONOUS)));
+
+// Create a class alias so that gtest doesn't run all tests with all parameters.
+typedef NavigationSimulatorTest NavigationSimulatorTestForFail;
+
+// Test canceling the simulated navigation.
+TEST_P(NavigationSimulatorTestForFail, CancelFail) {
+  simulator_->Start();
+  simulator_->Fail(net::ERR_CERT_DATE_INVALID);
+  EXPECT_EQ(NavigationThrottle::CANCEL,
+            simulator_->GetLastThrottleCheckResult());
+}
+
+INSTANTIATE_TEST_CASE_P(
+    CancelFail,
+    NavigationSimulatorTestForFail,
+    ::testing::Combine(
+        ::testing::Values(INITIATED_BY_BROWSER),
+        ::testing::Values(CancellingNavigationThrottle::WILL_FAIL_REQUEST),
         ::testing::Values(CancellingNavigationThrottle::SYNCHRONOUS,
                           CancellingNavigationThrottle::ASYNCHRONOUS)));
 
