@@ -263,6 +263,7 @@ ProfilingProcessHost* ProfilingProcessHost::Start(
   host->SetMode(mode);
   host->MakeConnector(connection);
   host->LaunchAsService();
+  host->ConfigureBackgroundProfilingTriggers();
   return host;
 }
 
@@ -271,6 +272,10 @@ ProfilingProcessHost* ProfilingProcessHost::GetInstance() {
   return base::Singleton<
       ProfilingProcessHost,
       base::LeakySingletonTraits<ProfilingProcessHost>>::get();
+}
+
+void ProfilingProcessHost::ConfigureBackgroundProfilingTriggers() {
+  background_triggers_.StartTimer();
 }
 
 void ProfilingProcessHost::RequestProcessDump(base::ProcessId pid,
