@@ -591,6 +591,30 @@
     },
     {
       "key": {
+        "uuid": "4b0e69d0_d77c96ed",
+        "filename": "extensions/browser/api/declarative_net_request/utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-09-01T01:07:01Z",
+      "side": 1,
+      "message": "It can but think the copy should be really cheap anyway due to Return Value optimization.",
+      "parentUuid": "dd480340_f0ade7b8",
+      "range": {
+        "startLine": 147,
+        "startChar": 0,
+        "endLine": 147,
+        "endChar": 73
+      },
+      "revId": "02520a48ae15e83f38be33d4ad2a29336f834c60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d3f3f6c_bb66225b",
         "filename": "extensions/browser/api/declarative_net_request/utils.cc",
         "patchSetId": 5
@@ -731,6 +755,30 @@
       "revId": "02520a48ae15e83f38be33d4ad2a29336f834c60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "012d09f6_d819837f",
+        "filename": "extensions/browser/api/declarative_net_request/utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-09-01T01:07:01Z",
+      "side": 1,
+      "message": "Marking as resolved.",
+      "parentUuid": "4d84e7d0_016d3432",
+      "range": {
+        "startLine": 156,
+        "startChar": 5,
+        "endLine": 156,
+        "endChar": 12
+      },
+      "revId": "02520a48ae15e83f38be33d4ad2a29336f834c60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

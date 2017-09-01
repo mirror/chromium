@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1419d8ca_9d1688f4",
+        "filename": "extensions/browser/api/declarative_net_request/parse_info.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-09-01T01:07:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b07f690_649492f6",
+      "range": {
+        "startLine": 22,
+        "startChar": 7,
+        "endLine": 22,
+        "endChar": 13
+      },
+      "revId": "8b28c21d5b73f0007265b3d71df8003aa25f16d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63dd1487_2d2445ab",
         "filename": "extensions/browser/api/declarative_net_request/utils.cc",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "8b28c21d5b73f0007265b3d71df8003aa25f16d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9907b52_2183e482",
+        "filename": "extensions/browser/api/declarative_net_request/utils.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-09-01T01:07:01Z",
+      "side": 1,
+      "message": "It seems some of these methods have been deprecated, using the proper methods now.",
+      "parentUuid": "63dd1487_2d2445ab",
+      "range": {
+        "startLine": 81,
+        "startChar": 4,
+        "endLine": 81,
+        "endChar": 10
+      },
+      "revId": "8b28c21d5b73f0007265b3d71df8003aa25f16d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
