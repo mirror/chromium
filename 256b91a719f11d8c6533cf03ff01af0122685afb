@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "214d596b_2476bac9",
+        "filename": "ios/chrome/common/physical_web/physical_web_scanner.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-09-01T17:17:10Z",
+      "side": 1,
+      "message": "rohitrao@ can you revisit this bug?",
+      "revId": "256b91a719f11d8c6533cf03ff01af0122685afb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
