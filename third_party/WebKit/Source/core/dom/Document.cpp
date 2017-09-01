@@ -3462,7 +3462,10 @@ bool Document::CanCreateHistoryEntry() const {
     return true;
   if (frame_->HasReceivedUserGesture())
     return true;
-  return ElapsedTime() >= kElapsedTimeForHistoryEntryWithoutUserGestureMS;
+  if (ElapsedTime() >= kElapsedTimeForHistoryEntryWithoutUserGestureMS)
+    return true;
+  UseCounter::Count(*this, WebFeature::kSuppressHistoryEntryWithoutUserGesture);
+  return false;
 }
 
 void Document::write(const SegmentedString& text,
