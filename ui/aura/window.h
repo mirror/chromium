@@ -455,6 +455,9 @@ class AURA_EXPORT Window : public ui::LayerDelegate,
   void ConvertEventToTarget(ui::EventTarget* target,
                             ui::LocatedEvent* event) override;
 
+  // Overridden from ui::LayerOwner:
+  std::unique_ptr<ui::Layer> RecreateLayer() override;
+
   // Updates the layer name based on the window's name and id.
   void UpdateLayerName();
 
