@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e684e25f_f8e606f9",
+        "filename": "ios/chrome/browser/ui/settings/settings_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-09-01T21:59:49Z",
+      "side": 1,
+      "message": "nit: can you alphabetize these?",
+      "range": {
+        "startLine": 62,
+        "startChar": 42,
+        "endLine": 62,
+        "endChar": 0
+      },
+      "revId": "250a4662833df948ecea4b6c28c3d90657c1c978",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45c9b086_dc1bd8d1",
+        "filename": "ios/chrome/test/earl_grey/chrome_matchers.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-09-01T21:59:49Z",
+      "side": 1,
+      "message": "Is this comment correct?",
+      "revId": "250a4662833df948ecea4b6c28c3d90657c1c978",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdd6bd99_76bac932",
+        "filename": "ios/chrome/test/earl_grey/chrome_matchers.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-09-01T21:59:49Z",
+      "side": 1,
+      "message": "Can we update chrome_earl_grey_ui.mm to use this when it looks for the settings collection view?",
+      "revId": "250a4662833df948ecea4b6c28c3d90657c1c978",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e3b0b74_924751c0",
+        "filename": "ios/chrome/test/earl_grey/chrome_matchers.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-09-01T21:59:49Z",
+      "side": 1,
+      "message": "nit: here, and in the next for the next 3\ns/Matcher for/Returns matcher for",
+      "revId": "250a4662833df948ecea4b6c28c3d90657c1c978",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39498573_6c374718",
+        "filename": "ios/chrome/test/earl_grey/chrome_matchers.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-09-01T21:59:49Z",
+      "side": 1,
+      "message": "Do we need grey_sufficientlyVisible? Should we use traitButton, since the name says that?\n(here and below)",
+      "revId": "250a4662833df948ecea4b6c28c3d90657c1c978",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
