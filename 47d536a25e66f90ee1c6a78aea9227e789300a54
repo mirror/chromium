@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fe31216_bc8fbdd5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-01T01:23:29Z",
+      "side": 1,
+      "message": "Since you probably have to wait for [1] to land anyway, update this to \"rNNNNNN switched ...\"",
+      "revId": "47d536a25e66f90ee1c6a78aea9227e789300a54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3be8ae5_7cb35b73",
+        "filename": "extensions/shell/installer/linux/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-01T01:23:29Z",
+      "side": 1,
+      "message": "Can the extensions installer code cope without the f-lock?",
+      "revId": "47d536a25e66f90ee1c6a78aea9227e789300a54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
