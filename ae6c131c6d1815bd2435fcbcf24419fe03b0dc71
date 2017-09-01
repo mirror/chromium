@@ -57,6 +57,24 @@
       "revId": "ae6c131c6d1815bd2435fcbcf24419fe03b0dc71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59c285dc_e4b82ce0",
+        "filename": "ash/wm/window_state.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-09-01T15:03:38Z",
+      "side": 1,
+      "message": "I\u0027ll file a bug so we don\u0027t forget.",
+      "parentUuid": "13f0ae33_0d308be5",
+      "revId": "ae6c131c6d1815bd2435fcbcf24419fe03b0dc71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
