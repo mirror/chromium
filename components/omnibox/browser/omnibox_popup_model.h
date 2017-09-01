@@ -114,10 +114,6 @@ class OmniboxPopupModel {
   // can be removed from history, and if so, remove it and update the popup.
   void TryDeletingCurrentItem();
 
-  // If |match| is from an extension, returns the extension icon; otherwise
-  // returns an empty Image.
-  gfx::Image GetIconIfExtensionMatch(const AutocompleteMatch& match) const;
-
   // Returns true if the destination URL of the match is bookmarked.
   bool IsStarredMatch(const AutocompleteMatch& match) const;
 
@@ -138,20 +134,28 @@ class OmniboxPopupModel {
   void SetAnswerBitmap(const SkBitmap& bitmap);
   const SkBitmap& answer_bitmap() const { return answer_bitmap_; }
 
+  // Gets the icon for the match index.
+  gfx::Image GetMatchIcon(size_t match_index, SkColor vector_icon_color) const;
+
   // The token value for selected_line_ and functions dealing with a "line
   // number" that indicates "no line".
   static const size_t kNoMatch;
 
  private:
-  void OnPageFaviconFetched(size_t match_index,
-                            const GURL& page_url,
-                            const gfx::Image& icon);
+  struct MatchIcon {
+    // An empty GURL means |custom_icon| is not a favicon.
+    GURL favicon_for_page_url;
+    gfx::Image custom_icon;
+  };
+
+  void SetMatchIconToNonFavicon(size_t match_index, const gfx::Image& icon);
+  void OnFaviconFetched(size_t match_index,
+                        const GURL& page_url,
+                        const gfx::Image& icon);
 
   SkBitmap answer_bitmap_;
 
-  // The GURLs track which pages' favicon is displayed for each match view.
-  // An empty GURL means no favicon is displayed for that match view.
-  std::vector<GURL> displayed_page_favicons_;
+  std::vector<MatchIcon> match_icons_;
   base::CancelableTaskTracker favicon_task_tracker_;
 
   OmniboxPopupView* view_;
