@@ -86,6 +86,30 @@
       "revId": "11bc074aa2cd110c47217061fa363978f0df247d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "153161e5_a9b708d1",
+        "filename": "components/cdm/renderer/android_key_systems.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-01T00:41:22Z",
+      "side": 1,
+      "message": "On Clank, MediaDrm and MediaCodec runs in the GPU process in general. However, the key system property query actually is handled in the browser process for Clank, where the CdmMessageFilterAndroid is actually a BrowserMessageFilter:\n\nhttps://cs.chromium.org/chromium/src/components/cdm/browser/cdm_message_filter_android.h?rcl\u003d388ccd2cdba7ea5e0e189fa71df59a3eec7d98bc\u0026l\u003d24",
+      "parentUuid": "b90bc81c_5e9bcef2",
+      "range": {
+        "startLine": 26,
+        "startChar": 32,
+        "endLine": 26,
+        "endChar": 45
+      },
+      "revId": "11bc074aa2cd110c47217061fa363978f0df247d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
