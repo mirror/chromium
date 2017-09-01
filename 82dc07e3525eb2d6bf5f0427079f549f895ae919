@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b6cf32b_f2d19633",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1023,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-01T06:05:58Z",
+      "side": 1,
+      "message": "Do we need this parameter?  Should we remove it from the API?",
+      "range": {
+        "startLine": 1023,
+        "startChar": 39,
+        "endLine": 1023,
+        "endChar": 60
+      },
+      "revId": "82dc07e3525eb2d6bf5f0427079f549f895ae919",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf3d7fea_49096446",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1035,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-01T06:05:58Z",
+      "side": 1,
+      "message": "Update comments on NORMAL/LOW in the public API to state what will happen in these cases.",
+      "range": {
+        "startLine": 1035,
+        "startChar": 71,
+        "endLine": 1035,
+        "endChar": 77
+      },
+      "revId": "82dc07e3525eb2d6bf5f0427079f549f895ae919",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f46bf53_d520b1cc",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1039,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-01T06:05:58Z",
+      "side": 1,
+      "message": "Should this be a specific return case?",
+      "range": {
+        "startLine": 1039,
+        "startChar": 6,
+        "endLine": 1039,
+        "endChar": 30
+      },
+      "revId": "82dc07e3525eb2d6bf5f0427079f549f895ae919",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "600cfefc_a726b57b",
+        "filename": "components/download/internal/navigation_monitor_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-01T06:05:58Z",
+      "side": 1,
+      "message": "?",
+      "range": {
+        "startLine": 24,
+        "startChar": 54,
+        "endLine": 24,
+        "endChar": 58
+      },
+      "revId": "82dc07e3525eb2d6bf5f0427079f549f895ae919",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c1049c2_a7f5a996",
+        "filename": "components/download/internal/navigation_monitor_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-01T06:05:58Z",
+      "side": 1,
+      "message": "If count isn\u0027t 0 return?",
+      "range": {
+        "startLine": 70,
+        "startChar": 2,
+        "endLine": 71,
+        "endChar": 32
+      },
+      "revId": "82dc07e3525eb2d6bf5f0427079f549f895ae919",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b257bc5_5bfea87e",
+        "filename": "components/download/internal/stats.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-01T06:05:58Z",
+      "side": 1,
+      "message": "Just pass the NavigationEffect in here?  Otherwise put that in the cc file.",
+      "range": {
+        "startLine": 173,
+        "startChar": 25,
+        "endLine": 175,
+        "endChar": 39
+      },
+      "revId": "82dc07e3525eb2d6bf5f0427079f549f895ae919",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
