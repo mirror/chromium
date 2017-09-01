@@ -14,15 +14,18 @@
     background: green;
 }
 .layer { transform: translateZ(0); }
+#target {
+ background: lightblue;
+}
 </style>
 
 <p>If no compositing were present, there should be two green squares below. Since some elements are composited, and therefore not fragmented, the output is different.</p>
 <div class="multicol">
     <div class="square"></div>
     <div class="square"></div>
-    <div class="layer"> <!-- from first to second column -->
-        <div class="square"></div>
-        <div class="square"></div>
+    <div id=target class="layer"> <!-- from first to second column -->
+        <div id=child1 class="square"></div>
+        <div id=child2 class="square"></div>
     </div>
     <div class="square"></div>
     <div class="layer"> <!-- from second to third column -->
