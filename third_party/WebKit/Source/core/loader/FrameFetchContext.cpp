@@ -768,8 +768,21 @@ void FrameFetchContext::AddClientHintsIfNecessary(
   if (!RuntimeEnabledFeatures::ClientHintsEnabled())
     return;
 
+  WebEnabledClientHints enabled_hints;
+  if (blink::RuntimeEnabledFeatures::ClientHintsPersistentEnabled() &&
+      GetContentSettingsClient()) {
+    GetContentSettingsClient()->GetAllowedClientHintsFromSource(request.Url(),
+                                                                &enabled_hints);
+    /*
+    String x = request.Url().GetString();
+    x.Truncate(20);
+    LO(WARNING) << "xxx url()=" << x;
+    */
+  }
+
   if (ShouldSendClientHint(mojom::WebClientHintsType::kDeviceMemory,
-                           hints_preferences)) {
+                           hints_preferences, enabled_hints)) {
+    //   LOG(WARNING) << "xxx ssch memory true";
     request.AddHTTPHeaderField(
         "Device-Memory",
         AtomicString(
@@ -777,11 +790,14 @@ void FrameFetchContext::AddClientHintsIfNecessary(
   }
 
   float dpr = GetDevicePixelRatio();
-  if (ShouldSendClientHint(mojom::WebClientHintsType::kDpr, hints_preferences))
+  if (ShouldSendClientHint(mojom::WebClientHintsType::kDpr, hints_preferences,
+                           enabled_hints)) {
+    //  LOG(WARNING) << "xxx ssch dpr true";
     request.AddHTTPHeaderField("DPR", AtomicString(String::Number(dpr)));
+  }
 
   if (ShouldSendClientHint(mojom::WebClientHintsType::kResourceWidth,
-                           hints_preferences)) {
+                           hints_preferences, enabled_hints)) {
     if (resource_width.is_set) {
       float physical_width = resource_width.width * dpr;
       request.AddHTTPHeaderField(
@@ -790,7 +806,7 @@ void FrameFetchContext::AddClientHintsIfNecessary(
   }
 
   if (ShouldSendClientHint(mojom::WebClientHintsType::kViewportWidth,
-                           hints_preferences) &&
+                           hints_preferences, enabled_hints) &&
       !IsDetached() && GetFrame()->View()) {
     request.AddHTTPHeaderField(
         "Viewport-Width",
@@ -1083,9 +1099,11 @@ float FrameFetchContext::GetDevicePixelRatio() const {
 
 bool FrameFetchContext::ShouldSendClientHint(
     mojom::WebClientHintsType type,
-    const ClientHintsPreferences& hints_preferences) const {
+    const ClientHintsPreferences& hints_preferences,
+    const WebEnabledClientHints& enabled_hints) const {
+  // LOG(WARNING) << "xxx ShouldSendClientHint type=" << static_cast<int>(type);
   return GetClientHintsPreferences().ShouldSend(type) ||
-         hints_preferences.ShouldSend(type);
+         hints_preferences.ShouldSend(type) || enabled_hints.IsEnabled(type);
 }
 
 void FrameFetchContext::ParseAndPersistClientHints(
