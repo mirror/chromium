@@ -55,7 +55,8 @@ bool IsTableLikeRole(ui::AXRole role) {
 
 bool IsContainerWithSelectableChildrenRole(ui::AXRole role) {
   switch (role) {
-    case ui::AX_ROLE_COMBO_BOX:
+    case ui::AX_ROLE_COMBO_BOX_GROUPING:
+    case ui::AX_ROLE_COMBO_BOX_MENU_BUTTON:
     case ui::AX_ROLE_GRID:
     case ui::AX_ROLE_LIST_BOX:
     case ui::AX_ROLE_MENU:
@@ -88,7 +89,7 @@ bool IsControl(ui::AXRole role) {
     case ui::AX_ROLE_BUTTON:
     case ui::AX_ROLE_CHECK_BOX:
     case ui::AX_ROLE_COLOR_WELL:
-    case ui::AX_ROLE_COMBO_BOX:
+    case ui::AX_ROLE_COMBO_BOX_MENU_BUTTON:
     case ui::AX_ROLE_DISCLOSURE_TRIANGLE:
     case ui::AX_ROLE_LIST_BOX:
     case ui::AX_ROLE_MENU:
@@ -108,6 +109,7 @@ bool IsControl(ui::AXRole role) {
     case ui::AX_ROLE_SWITCH:
     case ui::AX_ROLE_TAB:
     case ui::AX_ROLE_TEXT_FIELD:
+    case ui::AX_ROLE_TEXT_FIELD_WITH_COMBO_BOX:
     case ui::AX_ROLE_TOGGLE_BUTTON:
     case ui::AX_ROLE_TREE:
       return true;
@@ -133,7 +135,8 @@ bool IsMenuRelated(ui::AXRole role) {
 }
 
 bool IsEditField(ui::AXRole role) {
-  return role == ui::AX_ROLE_TEXT_FIELD || role == ui::AX_ROLE_SEARCH_BOX;
+  return role == ui::AX_ROLE_TEXT_FIELD || role == ui::AX_ROLE_SEARCH_BOX ||
+         role == ui::AX_ROLE_TEXT_FIELD_WITH_COMBO_BOX;
 }
 
 }  // namespace ui
