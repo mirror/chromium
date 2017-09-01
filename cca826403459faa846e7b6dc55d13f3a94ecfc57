@@ -16,6 +16,24 @@
       "revId": "cca826403459faa846e7b6dc55d13f3a94ecfc57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d2a3246_c8382980",
+        "filename": "chrome/browser/resources/md_extensions/sidebar.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-01T16:59:38Z",
+      "side": 1,
+      "message": "Sorry for the unclear inline comment - what I meant here by \"set by something\" is referring to the fact that once you click on an item in the nav, \u003cpaper-menu\u003e actually will update the \"selected\" attribute with the correct \"last-selected\" value. So essentially updateSelected is only run once - when the sidebar *opens* for the first time after a new page-load.\n\nI\u0027ll try to see if there\u0027s a good way to avoid using listType_.",
+      "parentUuid": "8d92df26_ca6f52c6",
+      "revId": "cca826403459faa846e7b6dc55d13f3a94ecfc57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
