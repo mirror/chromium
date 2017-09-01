@@ -14,6 +14,11 @@
 // to lock this position in place on various frame changes.
 @property(nonatomic, assign, getter=isScrolledToTop) BOOL scrolledToTop;
 
+// Synchronizer for the collection controller, allowing it to synchronize with
+// its header.
+@property(nonatomic, weak) id<ContentSuggestionsHeaderSynchronizing>
+    headerSynchronizer;
+
 - (UICollectionView*)collectionView;
 
 @end
