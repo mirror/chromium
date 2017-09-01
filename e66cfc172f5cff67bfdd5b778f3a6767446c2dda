@@ -56,6 +56,23 @@
       "revId": "e66cfc172f5cff67bfdd5b778f3a6767446c2dda",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e29b1357_0fdd2d14",
+        "filename": "chrome/browser/ui/views/find_bar_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-01T15:04:23Z",
+      "side": 1,
+      "message": "The 3-line comment here is a good example of what I\u0027m looking for. The code you\u0027re adding needs something similar that explains why it needs to be added. E.g.\n\n  // We need to account for the pixel scale factor of the gfx::Rect provided by XX. XX gives a rect with origin relative to (??? the page??? -- that\u0027s what the comment above suggests), and with using the pixel scale factor (of what?) (for both origin and size?). To position the Widget we need \u003cfoo coordinates\u003e so do \u003csomething\u003e to the origin and \u003csomething else\u003e to the size to ensure the rectangles can be correctly compared for overlap.",
+      "revId": "e66cfc172f5cff67bfdd5b778f3a6767446c2dda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
