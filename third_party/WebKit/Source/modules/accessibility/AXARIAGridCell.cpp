@@ -103,7 +103,8 @@ bool AXARIAGridCell::RowIndexRange(
     }
   }
 
-  // TODO should aria-rowspan be checked here? We also support it another way.
+  // ARIA cells not based on th/td can have an aria-rowspan, however that is not
+  // exposed here as this method only exposes physical coordinates, not virtual.
   row_range.second = 1;
   return true;
 }
@@ -130,7 +131,8 @@ bool AXARIAGridCell::ColumnIndexRange(
     }
   }
 
-  // TODO should aria-colspan be checked here? We also support it another way.
+  // ARIA cells not based on th/td can have an aria-colspan, however that is not
+  // exposed here as this method only exposes physical coordinates, not virtual.
   column_range.second = 1;
   return true;
 }
