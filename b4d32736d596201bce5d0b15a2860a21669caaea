@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3bf1d54_01ca7622",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-01T18:16:42Z",
+      "side": 1,
+      "message": "Can you file a new bug specifically for removing the bootstrap sandbox? I\u0027d like to be able to close out some bugs for it, as well as do a little more cleanup here. That new bug can then block 757577.",
+      "revId": "b4d32736d596201bce5d0b15a2860a21669caaea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
