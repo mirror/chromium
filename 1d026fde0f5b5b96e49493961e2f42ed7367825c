@@ -1,0 +1,389 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3f565b2_290f0bf6",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-01T18:01:35Z",
+      "side": 1,
+      "message": "Once you add the scoped_refptr\u003cnet::URLRequestContextGetter\u003e parameter I mentioned, it doesn\u0027t really make sense to call into the other constructor. Instead, like the comments in the .h file implied, we should diverge a bit with the two constructors.\n\nHere, initialize |managers_were_injected_| to false, and in the other constructor, initialize it to true. For the rest of the parameters, just initialize them with what is passed in. You still will want to use the same code in the body of the constructor below (i.e., both constructors will want to call gcm_manager_-\u003eStartListening(), set the status, and request the primary account). To share code, please move that to a common private function Initialize() and call it from both places, adding a TODO to move that code to the manager-less constructor once the other one is deleted.",
+      "range": {
+        "startLine": 20,
+        "startChar": 6,
+        "endLine": 26,
+        "endChar": 0
+      },
+      "revId": "1d026fde0f5b5b96e49493961e2f42ed7367825c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae85005f_7d4d7625",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-01T18:01:35Z",
+      "side": 1,
+      "message": "Once you have the primary account info, the two constructor paths diverge.\n\nIf you already have the managers, you do what you\u0027re doing here: check if enrollment is valid and enroll if it is invalid; otherwise, sync. However, please move this to a new function, since you\u0027ll want to share this with the other path.\n\nIf you do not already have the managers (i.e., managers_were_injected_ is false), you need to create them now. Transition to CREATING_CRYPTAUTH_MANAGERS and create them (you\u0027ll want to make a helper function for this). You couldn\u0027t create them before without the account info, so that\u0027s why you need to delay it to here instead of doing so in the constructor.\n\nYou\u0027ll need to add some creation helper functions, and I\u0027d recommend creating an anonymous namespace above to add the helper functions. Check out [1] to see how these are currently being constructed. With the combination of things passed to the constructor and the account info, you should have all you need to create them (this is why you needed to add the scoped_refptr\u003cnet::URLRequestContextGetter\u003e as a parameter in one case - it is needed to construct these managers).\n\nYou\u0027ll need to provide, for example, GetDeviceClassifierImpl() and GetGcmDeviceInfo(), as well as CryptAuthEnrollerFactoryImpl to get this done.\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/cryptauth/chrome_cryptauth_service.cc",
+      "range": {
+        "startLine": 106,
+        "startChar": 0,
+        "endLine": 106,
+        "endChar": 1
+      },
+      "revId": "1d026fde0f5b5b96e49493961e2f42ed7367825c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef2ef017_29728f26",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-01T18:01:35Z",
+      "side": 1,
+      "message": "Move this to the top of this function. It should be DCHECK()\u0027ed whether enrollment is valid or not.",
+      "range": {
+        "startLine": 107,
+        "startChar": 0,
+        "endLine": 107,
+        "endChar": 58
+      },
+      "revId": "1d026fde0f5b5b96e49493961e2f42ed7367825c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4570abc5_f51baf83",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-01T18:01:35Z",
+      "side": 1,
+      "message": "If enrollment is already valid, change to State::READY.",
+      "range": {
+        "startLine": 115,
+        "startChar": 0,
+        "endLine": 115,
+        "endChar": 1
+      },
+      "revId": "1d026fde0f5b5b96e49493961e2f42ed7367825c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b803f77f_32d17728",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-01T18:01:35Z",
+      "side": 1,
+      "message": "This is the initialization flow, so pass true.",
+      "range": {
+        "startLine": 116,
+        "startChar": 20,
+        "endLine": 116,
+        "endChar": 25
+      },
+      "revId": "1d026fde0f5b5b96e49493961e2f42ed7367825c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ababb9ab_8bf8f769",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-01T18:01:35Z",
+      "side": 1,
+      "message": "nit: No newline between these.",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 125,
+        "endChar": 1
+      },
+      "revId": "1d026fde0f5b5b96e49493961e2f42ed7367825c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7101ed9b_2ac85849",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-01T18:01:35Z",
+      "side": 1,
+      "message": "Please start listening when you transition to READY. In fact, you should add a new function which:\n\n*Sets State::READY.\n*Adds listeners.\n*Starts a sync.",
+      "range": {
+        "startLine": 140,
+        "startChar": 0,
+        "endLine": 140,
+        "endChar": 22
+      },
+      "revId": "1d026fde0f5b5b96e49493961e2f42ed7367825c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf1f3390_a021604d",
+        "filename": "components/multidevice/service/device_sync_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-01T18:01:35Z",
+      "side": 1,
+      "message": "nit: Please add descriptions of the two constructors and a TODO to eliminate the one which takes injected managers when MultiDevice service is done. (You\u0027ll understand more about this when you read through the rest of the comments).",
+      "range": {
+        "startLine": 30,
+        "startChar": 6,
+        "endLine": 30,
+        "endChar": 20
+      },
+      "revId": "1d026fde0f5b5b96e49493961e2f42ed7367825c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "125e182d_98af3ebb",
+        "filename": "components/multidevice/service/device_sync_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-01T18:01:35Z",
+      "side": 1,
+      "message": "This constructor creates its own CryptAuthEnrollmentManager and CryptAuthDeviceManager instances internally; when the MultiDevice service is complete, this will be the only constructor.",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 76
+      },
+      "revId": "1d026fde0f5b5b96e49493961e2f42ed7367825c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0095223_e79e5aed",
+        "filename": "components/multidevice/service/device_sync_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-01T18:01:35Z",
+      "side": 1,
+      "message": "For this constructor, please also take:\n\nscoped_refptr\u003cnet::URLRequestContextGetter\u003e request_context\n\nas a parameter. More explanation in the .cc file.",
+      "range": {
+        "startLine": 37,
+        "startChar": 2,
+        "endLine": 37,
+        "endChar": 16
+      },
+      "revId": "1d026fde0f5b5b96e49493961e2f42ed7367825c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35758f0f_3c7dd183",
+        "filename": "components/multidevice/service/device_sync_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-01T18:01:35Z",
+      "side": 1,
+      "message": "This constructor takes CryptAuthEnrollmentManager and CryptAuthDeviceManager as parameters. This constructor will be used while MultiDevice service is being built, since these manager objects will be shared with ChromeCryptAuthService in this interim state.",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 31
+      },
+      "revId": "1d026fde0f5b5b96e49493961e2f42ed7367825c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19a2ed45_e6548188",
+        "filename": "components/multidevice/service/device_sync_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-01T18:01:35Z",
+      "side": 1,
+      "message": "After this but before WAITING_FOR_KEY_GENERATION, add a CREATING_CRYPTAUTH_MANAGERS state. More details about this in the .cc file.",
+      "range": {
+        "startLine": 72,
+        "startChar": 4,
+        "endLine": 72,
+        "endChar": 31
+      },
+      "revId": "1d026fde0f5b5b96e49493961e2f42ed7367825c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13d0487d_8bc70571",
+        "filename": "components/multidevice/service/device_sync_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-01T18:01:35Z",
+      "side": 1,
+      "message": "Unfortunately, to support these two alternate constructors, we need to keep two sets of pointers: one set of raw pointers, and one set of unique_ptr\u003c\u003es.\n\nLet\u0027s do this:\n\n// Depending on which constructor is used, either the unique or raw pointers\n// will be defined, but not both. When using these pointers, do not\n// reference them directly; instead, use GetEnrollmentManager() and\n// GetDeviceManager();\nstd::unique_ptr\u003ccryptauth::CryptAuthEnrollmentManager\u003e enrollment_manager_;\nstd::unique_ptr\u003ccryptauth::CryptAuthDeviceManager\u003e device_manager_;\ncryptauth::CryptAuthEnrollmentManager* enrollment_manager_raw_ \u003d nullptr;\ncryptauth::CryptAuthDeviceManager* device_manager_raw_ \u003d nullptr;\n\nThen, add these two helper functions:\n\ncryptauth::CryptAuthEnrollmentManager* GetEnrollmentManager() {\n  if (enrollment_manager_) {\n    DCHECK(!enrollment_manager_raw_);\n    return enrollment_manager_.get();\n  }\n\n  DCHECK(enrollment_manager_raw_);\n  return enrollment_manager_raw_;\n}\n\ncryptauth::CryptAuthDeviceManager* GetDeviceManager() {\n  if (device_manager_) {\n    DCHECK(!device_manager_raw_);\n    return device_manager_.get();\n  }\n\n  DCHECK(device_manager_raw_);\n  return device_manager_raw_;\n}\n\nThen, within your class, just use Get{Enrollment|Device}Manager whenever you need to access these objects.",
+      "range": {
+        "startLine": 88,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 77
+      },
+      "revId": "1d026fde0f5b5b96e49493961e2f42ed7367825c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c67f59e_5a53fecf",
+        "filename": "components/multidevice/service/device_sync_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-01T18:01:35Z",
+      "side": 1,
+      "message": "nit: Please call this state_, since your enum is called State. Alternatively, you can change your enum name from State to Status. Either way, just be consistent.",
+      "range": {
+        "startLine": 98,
+        "startChar": 8,
+        "endLine": 98,
+        "endChar": 15
+      },
+      "revId": "1d026fde0f5b5b96e49493961e2f42ed7367825c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e8d02e3_c8849703",
+        "filename": "components/multidevice/service/device_sync_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-01T18:01:35Z",
+      "side": 1,
+      "message": "Let\u0027s add one bool here:\n\n// True when the constructor which takes the device/enrollment\n// managers as parameters is called; false otherwise.\nconst bool managers_were_injected_;\n\n...and the request context:\n\n// Null when |managers_were_injected_| is true; non-null otherwise.\nscoped_refptr\u003cnet::URLRequestContextGetter\u003e request_context_;",
+      "range": {
+        "startLine": 98,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 1
+      },
+      "revId": "1d026fde0f5b5b96e49493961e2f42ed7367825c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "030f9f49_4c6a9dca",
+        "filename": "components/multidevice/service/public/interfaces/DEPS",
+        "patchSetId": 8
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-01T18:01:35Z",
+      "side": 1,
+      "message": "Did presubmit tell you to add this before you could upload?",
+      "revId": "1d026fde0f5b5b96e49493961e2f42ed7367825c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5670cd0a_6c0d6cec",
+        "filename": "components/multidevice/service/public/interfaces/device_sync.typemap",
+        "patchSetId": 8
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-01T18:01:35Z",
+      "side": 1,
+      "message": "nit: This is on one line, but other ones are on multiple lines. Please be consistent.",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 101
+      },
+      "revId": "1d026fde0f5b5b96e49493961e2f42ed7367825c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
