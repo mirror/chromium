@@ -39,6 +39,24 @@
       "revId": "ae6c131c6d1815bd2435fcbcf24419fe03b0dc71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13f0ae33_0d308be5",
+        "filename": "ash/wm/window_state.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-09-01T14:33:07Z",
+      "side": 1,
+      "message": "That\u0027s a good point. Maybe make AllocateLocalSurfaceId() do nothing?",
+      "parentUuid": "991dfe5e_4e7d86ad",
+      "revId": "ae6c131c6d1815bd2435fcbcf24419fe03b0dc71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
