@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8b9988a9_a8b50be4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-09-01T18:04:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0bbae961_a49a4517",
+      "revId": "ce9151b8db76f9865f19ac2df4cfe72b9ffa3942",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cda027d4_eeec24e6",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_node.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-01T17:51:11Z",
       "side": 1,
       "message": "did you mean to add a DCHECK? Maybe better to add to NGLayoutResult (is there any case NGLayoutResult doesn\u0027t have a fragment)?",
+      "revId": "ce9151b8db76f9865f19ac2df4cfe72b9ffa3942",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7507de4c_7b9a1fd4",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_node.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-09-01T18:04:51Z",
+      "side": 1,
+      "message": "Removed, these ones are safe.\n\nYeah a NGLayoutResult which has been aborted (due to BfcOffset resolving) can have a null fragment (which you should never touch).",
+      "parentUuid": "cda027d4_eeec24e6",
       "revId": "ce9151b8db76f9865f19ac2df4cfe72b9ffa3942",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
