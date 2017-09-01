@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b66cea6a_bf0e14a6",
+        "filename": "chrome/browser/ui/views/try_chrome_dialog.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-01T07:52:44Z",
+      "side": 1,
+      "message": "nit: since these two bits can encode one invalid state (false, false), consider switching to an enum, which will make the code below easier to read. maybe:\nstruct ExperimentVariations {\n  enum CloseStyle {\n    kNoThanksButton,\n    kCloseX,\n    kNoThanksButtonAndCloseX,\n  };\n  ...\n  CloseStyle close_style;\n  ...\n};",
+      "revId": "399865e1e965d19790b98e35e83a32db5a9f515c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
