@@ -20,6 +20,7 @@
 namespace blink {
 
 class NGExclusionSpace;
+class LayoutBlock;
 
 class CORE_EXPORT NGFragmentBuilder final : public NGBaseFragmentBuilder {
   DISALLOW_NEW();
@@ -81,6 +82,8 @@ class CORE_EXPORT NGFragmentBuilder final : public NGBaseFragmentBuilder {
   // See layout part for builder interaction.
   NGFragmentBuilder& AddOutOfFlowChildCandidate(NGBlockNode,
                                                 const NGLogicalOffset&);
+
+  void AddOutOfFlowLegacyCandidate(NGBlockNode, const NGStaticPosition&);
 
   void GetAndClearOutOfFlowDescendantCandidates(
       Vector<NGOutOfFlowPositionedDescendant>* descendant_candidates);
@@ -149,6 +152,9 @@ class CORE_EXPORT NGFragmentBuilder final : public NGBaseFragmentBuilder {
   // This function should be called at most once for a given algorithm/baseline
   // type pair.
   void AddBaseline(NGBaselineRequest, LayoutUnit);
+
+  // Used by NGOutOfFlowLayoutPart for LegacyLayout compatibility.
+  LayoutBlock* LayoutContainer();
 
  private:
   // An out-of-flow positioned-candidate is a temporary data structure used

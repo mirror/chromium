@@ -306,7 +306,15 @@ void NGBlockNode::CopyFragmentDataToLayoutBox(
   }
 
   if (box_->IsLayoutBlock()) {
-    ToLayoutBlock(box_)->LayoutPositionedObjects(true);
+    ToLayoutBlock(box_)->LayoutPositionedObjects(false);
+    // Insert oof descendants into legacy
+    // for (auto child_fragment : physical_fragment->Children()) {
+    //   LayoutObject* child_layout = child_fragment->GetLayoutObject();
+    //   if (child_layout != box_ && child_layout->IsBox() &&
+    //   child_layout->StyleRef().HasOutOfFlowPosition()) {
+    //     ToLayoutBlock(box_)->InsertPositionedObject(ToLayoutBox(child_layout));
+    //   }
+    // }
     NGWritingMode writing_mode =
         FromPlatformWritingMode(Style().GetWritingMode());
     NGBoxFragment fragment(writing_mode, physical_fragment);

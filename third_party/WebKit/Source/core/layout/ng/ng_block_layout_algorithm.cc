@@ -402,7 +402,8 @@ RefPtr<NGLayoutResult> NGBlockLayoutAlgorithm::Layout() {
   // Only layout absolute and fixed children if we aren't going to revisit this
   // layout.
   if (unpositioned_floats_.IsEmpty()) {
-    NGOutOfFlowLayoutPart(ConstraintSpace(), Style(), &container_builder_)
+    NGOutOfFlowLayoutPart(ConstraintSpace(), Style(), &container_builder_,
+                          node_.IsAbsoluteContainer(), node_.IsFixedContainer())
         .Run();
   }
 

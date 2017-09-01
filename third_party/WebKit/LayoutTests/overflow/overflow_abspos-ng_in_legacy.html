@@ -1,0 +1,38 @@
+<!doctype html>
+<script src="../resources/testharness.js"></script>
+<script src="../resources/testharnessreport.js"></script>
+<style>
+
+#target {
+  width: 1000px;
+  height: 1000px;
+  background-color: rgba(0, 255, 0, 0.3);
+  position: absolute;
+  top: 7px;
+  left: 9px;
+}
+</style>
+<!-- container is initial containing block -->
+<div id="target"></div>
+<script>
+
+var container = document.scrollingElement;
+var target = document.querySelector('#target');
+
+test(function() {
+  var targetStyle = window.getComputedStyle(target);
+  assert_equals(container.scrollHeight,
+    target.offsetHeight + parseInt(targetStyle.top));
+  assert_equals(container.scrollWidth,
+    target.offsetWidth + parseInt(targetStyle.left));
+}, "absolute overflow");
+
+test(function() {
+  target.style.top = "20px";
+  var targetStyle = window.getComputedStyle(target);
+  assert_equals(container.scrollHeight,
+    target.offsetHeight + parseInt(targetStyle.top));
+  assert_equals(container.scrollWidth,
+    target.offsetWidth + parseInt(targetStyle.left));
+}, "absolute overflow, after target move");
+</script>

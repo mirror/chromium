@@ -4,6 +4,7 @@
 
 #include "core/layout/ng/ng_out_of_flow_layout_part.h"
 
+#include "core/layout/LayoutBlock.h"
 #include "core/layout/ng/ng_absolute_utils.h"
 #include "core/layout/ng/ng_block_node.h"
 #include "core/layout/ng/ng_box_fragment.h"
@@ -16,39 +17,26 @@
 
 namespace blink {
 
-namespace {
-
-// True if the container will contain an absolute descendant.
-bool IsContainingBlockForAbsoluteDescendant(
-    const ComputedStyle& container_style,
-    const ComputedStyle& descendant_style) {
-  EPosition position = descendant_style.GetPosition();
-  bool contains_fixed = container_style.CanContainFixedPositionObjects();
-  bool contains_absolute =
-      container_style.CanContainAbsolutePositionObjects() || contains_fixed;
-
-  return (contains_absolute && position == EPosition::kAbsolute) ||
-         (contains_fixed && position == EPosition::kFixed);
-}
-
-}  // namespace
-
 NGOutOfFlowLayoutPart::NGOutOfFlowLayoutPart(
     const NGConstraintSpace& container_space,
     const ComputedStyle& container_style,
-    NGFragmentBuilder* container_builder)
-    : container_style_(container_style), container_builder_(container_builder) {
+    NGFragmentBuilder* container_builder,
+    bool contains_absolute,
+    bool contains_fixed)
+    : container_style_(container_style),
+      container_builder_(container_builder),
+      contains_absolute_(contains_absolute),
+      contains_fixed_(contains_fixed) {
   NGWritingMode writing_mode(
       FromPlatformWritingMode(container_style_.GetWritingMode()));
 
   NGBoxStrut borders = ComputeBorders(container_space, container_style_);
   container_border_offset_ =
       NGLogicalOffset{borders.inline_start, borders.block_start};
+  NGPhysicalBoxStrut physical_borders =
+      borders.ConvertToPhysical(writing_mode, container_style_.Direction());
   container_border_physical_offset_ =
-      container_border_offset_.ConvertToPhysical(
-          writing_mode, container_style_.Direction(),
-          container_builder_->Size().ConvertToPhysical(writing_mode),
-          NGPhysicalSize());
+      NGPhysicalOffset(physical_borders.left, physical_borders.top);
 
   container_size_ = container_builder_->Size();
   container_size_.inline_size -= borders.InlineSum();
@@ -64,13 +52,17 @@ void NGOutOfFlowLayoutPart::Run() {
 
   while (descendant_candidates.size() > 0) {
     for (auto& candidate : descendant_candidates) {
-      if (IsContainingBlockForAbsoluteDescendant(container_style_,
-                                                 candidate.node.Style())) {
+      if (IsContainingBlockForDescendant(candidate.node.Style())) {
         NGLogicalOffset offset;
         RefPtr<NGLayoutResult> result = LayoutDescendant(
             candidate.node, candidate.static_position, &offset);
-        // TODO(atotic) Need to adjust size of overflow rect per spec.
+        // for (NGOutOfFlowPositionedDescendant unpositioned :
+        //      result->OutOfFlowPositionedDescendants()) {
+        //   container_builder_->AddOutOfFlowLegacyCandidate(unpositioned.node,
+        //   unpositioned.static_position);
+        // }
         container_builder_->AddChild(std::move(result), offset);
+        // container_builder_->LayoutContainer()->InsertPositionedObject(ToLayoutBox(candidate.node.GetLayoutObject()));
       } else {
         container_builder_->AddOutOfFlowDescendant(candidate);
       }
@@ -196,6 +188,13 @@ RefPtr<NGLayoutResult> NGOutOfFlowLayoutPart::GenerateFragment(
   RefPtr<NGConstraintSpace> space = builder.ToConstraintSpace(writing_mode);
 
   return descendant.Layout(*space);
+}
+
+bool NGOutOfFlowLayoutPart::IsContainingBlockForDescendant(
+    const ComputedStyle& descendant_style) {
+  EPosition position = descendant_style.GetPosition();
+  return (contains_absolute_ && position == EPosition::kAbsolute) ||
+         (contains_fixed_ && position == EPosition::kFixed);
 }
 
 }  // namespace blink
