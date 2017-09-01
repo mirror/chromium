@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bdcb0ac_610a6133",
+        "filename": "chrome/test/data/extensions/api_test/file_browser/recent_test/test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-09-01T05:01:02Z",
+      "side": 1,
+      "message": "Can we add an assert for the last modified time?",
+      "range": {
+        "startLine": 44,
+        "startChar": 29,
+        "endLine": 44,
+        "endChar": 34
+      },
+      "revId": "54738c07ef6dc9da37590864ccf26c6fc7eda085",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2312a7d8_d16298d1",
+        "filename": "ui/file_manager/file_manager/foreground/js/directory_contents.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-09-01T05:01:02Z",
+      "side": 1,
+      "message": "This looks hacky. Is it a temporary solution?",
+      "range": {
+        "startLine": 357,
+        "startChar": 16,
+        "endLine": 357,
+        "endChar": 36
+      },
+      "revId": "54738c07ef6dc9da37590864ccf26c6fc7eda085",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f958f4ae_1f2ab0a5",
+        "filename": "ui/file_manager/file_manager/foreground/js/metadata/external_metadata_provider.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-09-01T05:01:02Z",
+      "side": 1,
+      "message": "We\u0027re calling fileManagerPrivate.getEntryProperties just to override the fetched modificationTime here with modificationByMeTime. Also, the method name suggests it converts result, but we\u0027re overriding it. Is it a temporary solution for 61/62? I think this should be refactored, by eg. passing the proper modificationTime via getEntryProperties API, or introducing a new EntryProperty like modificationTimeByMe and moving the decision logic which one to use higher. WDYT?",
+      "range": {
+        "startLine": 108,
+        "startChar": 11,
+        "endLine": 108,
+        "endChar": 27
+      },
+      "revId": "54738c07ef6dc9da37590864ccf26c6fc7eda085",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
