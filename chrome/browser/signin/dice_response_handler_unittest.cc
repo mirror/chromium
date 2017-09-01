@@ -13,6 +13,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
 #include "chrome/test/base/testing_profile.h"
+#include "components/signin/core/browser/account_reconcilor.h"
 #include "components/signin/core/browser/account_tracker_service.h"
 #include "components/signin/core/browser/fake_signin_manager.h"
 #include "components/signin/core/browser/profile_oauth2_token_service.h"
@@ -101,10 +102,15 @@ class DiceResponseHandlerTest : public testing::Test {
                         &token_service_,
                         &account_tracker_service_,
                         nullptr),
+        account_reconcilor_(&token_service_,
+                            &signin_manager_,
+                            &signin_client_,
+                            nullptr),
         dice_response_handler_(&signin_client_,
                                &signin_manager_,
                                &token_service_,
-                               &account_tracker_service_) {
+                               &account_tracker_service_,
+                               &account_reconcilor_) {
     loop_.SetTaskRunner(task_runner_);
     DCHECK_EQ(task_runner_, base::ThreadTaskRunnerHandle::Get());
     signin_client_.SetURLRequestContext(request_context_getter_.get());
@@ -139,6 +145,7 @@ class DiceResponseHandlerTest : public testing::Test {
   ProfileOAuth2TokenService token_service_;
   AccountTrackerService account_tracker_service_;
   FakeSigninManager signin_manager_;
+  AccountReconcilor account_reconcilor_;
   DiceResponseHandler dice_response_handler_;
 };
 
