@@ -487,6 +487,64 @@ void ContentSettingsObserver::PersistClientHints(
                                     duration);
 }
 
+void ContentSettingsObserver::GetAllowedClientHintsFromSource(
+    const blink::WebURL& url,
+    blink::WebEnabledClientHints* client_hints) const {
+  LOG(WARNING) << "xxx cp0";
+  if (!content_setting_rules_)
+    return;
+  LOG(WARNING) << "xxx cp1";
+
+  if (!content::IsOriginSecure(GURL(url)))
+    return;
+  LOG(WARNING) << "xxx cp2";
+
+  const GURL hostname = GURL(url).GetOrigin();
+
+  for (auto it = content_setting_rules_->client_hints_rules.begin();
+       it != content_setting_rules_->client_hints_rules.end(); ++it) {
+    LOG(WARNING) << "xxx cp3";
+    // Look for an exact match since persisted client hints are disabled by
+    // default, and enabled only on per-host basis.
+    if (it->primary_pattern == ContentSettingsPattern::Wildcard() ||
+        !it->primary_pattern.Matches(hostname)) {
+      continue;
+    }
+
+    // Found an exact match.
+    DCHECK(ContentSettingsPattern::Wildcard() == it->secondary_pattern);
+    DCHECK(it->setting_value->is_dict());
+    const base::Value* expiration_time =
+        it->setting_value->FindPath({"expiration_time"});
+    DCHECK(expiration_time->is_double());
+
+    if (base::Time::Now().ToDoubleT() > expiration_time->GetDouble()) {
+      // The client hint is expired.
+      LOG(WARNING) << "xxx cp4";
+      return;
+    }
+
+    LOG(WARNING) << "xxx cp5";
+    const base::Value* list_value =
+        it->setting_value->FindPath({"client_hints"});
+    DCHECK(list_value->is_list());
+    const base::Value::ListStorage& client_hints_list = list_value->GetList();
+    for (size_t i = 0; i < client_hints_list.size(); ++i) {
+      DCHECK(client_hints_list[i].is_int());
+
+      // DCHECK(client_hints[i].is_int());
+      client_hints->SetIsEnabled(static_cast<blink::mojom::WebClientHintsType>(
+                                     client_hints_list[i].GetInt()),
+                                 true);
+    }
+    LOG(WARNING) << "xxx cp6";
+    // Match found for |url| and client hints have been set.
+    return;
+  }
+  // No match was found for |url|.
+  LOG(WARNING) << "xxx cp7";
+}
+
 void ContentSettingsObserver::DidNotAllowPlugins() {
   DidBlockContentType(CONTENT_SETTINGS_TYPE_PLUGINS);
 }
