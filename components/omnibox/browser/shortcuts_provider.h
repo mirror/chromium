@@ -37,7 +37,7 @@ class ShortcutsProvider : public AutocompleteProvider,
   friend class ShortcutsProviderTest;
   FRIEND_TEST_ALL_PREFIXES(ShortcutsProviderTest, CalculateScore);
 
-  typedef std::multimap<base::char16, base::string16> WordMap;
+  typedef std::vector<base::string16> WordList;
 
   ~ShortcutsProvider() override;
 
@@ -45,7 +45,7 @@ class ShortcutsProvider : public AutocompleteProvider,
   // with those characters, ordered lexicographically descending so that longer
   // words appear before their prefixes (if any) within a particular
   // equal_range().
-  static WordMap CreateWordMapForString(const base::string16& text);
+  static WordList CreateWordListForString(const base::string16& text);
 
   // Given |text| and a corresponding base set of classifications
   // |original_class|, adds ACMatchClassification::MATCH markers for all
@@ -63,13 +63,14 @@ class ShortcutsProvider : public AutocompleteProvider,
   // {{0, MATCH}, {2, NONE}, {12, MATCH}, {14, NONE}, {18, URL|MATCH},
   // {20, URL}, {37, NONE}}.
   //
-  // |find_words| should be as constructed by CreateWordMapForString(find_text).
+  // |find_words| should be as constructed by
+  // CreateWordListForString(find_text).
   //
   // |find_text| (and thus |find_words|) are expected to be lowercase.  |text|
   // will be lowercased in this function.
   static ACMatchClassifications ClassifyAllMatchesInString(
       const base::string16& find_text,
-      const WordMap& find_words,
+      const WordList& find_words,
       const base::string16& text,
       const ACMatchClassifications& original_class);
 
@@ -90,7 +91,7 @@ class ShortcutsProvider : public AutocompleteProvider,
       const AutocompleteInput& input,
       const base::string16& fixed_up_input_text,
       const base::string16 term_string,
-      const WordMap& terms_map);
+      const WordList& terms_map);
 
   // Returns iterator to first item in |shortcuts_map_| matching |keyword|.
   // Returns shortcuts_map_.end() if there are no matches.
