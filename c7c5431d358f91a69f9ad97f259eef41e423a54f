@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c15adc91_6187b720",
+        "filename": "components/safe_browsing/password_protection/password_protection_request.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-09-01T05:10:12Z",
+      "side": 1,
+      "message": "nit: typo and probably needs to be clearer.",
+      "range": {
+        "startLine": 141,
+        "startChar": 5,
+        "endLine": 141,
+        "endChar": 50
+      },
+      "revId": "c7c5431d358f91a69f9ad97f259eef41e423a54f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
