@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html>
+    <head>
+        <style type="text/css">
+         .chart {
+             shape-rendering: crispEdges;
+         }
+
+         .mini text {
+             font: 9px sans-serif;
+         }
+
+         .main text {
+             font: 12px sans-serif;
+         }
+
+         .miniItem {
+             /* fill: darksalmon; */
+             stroke-width: 6;
+         }
+
+         .mainItem {
+             fill: darkolivegreen;
+             fill-opacity: .7;
+             stroke-width: 6;
+         }
+
+         .brush .extent {
+             stroke: gray;
+             fill: dodgerblue;
+             fill-opacity: .365;
+         }
+        </style>
+    </head>
+    <body>
+        <script src="https://d3js.org/d3.v3.min.js"></script>
+        <script src="visualize.js"></script>
+        <input type="file" id="file-input" onchange="readFile(this.files)"/>
+        <p />
+    </body>
+</html>
