@@ -22,6 +22,30 @@
       "revId": "268d8240eb4c004f34b5a2b62278e547e483e08e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3e3d53c_d7a9088a",
+        "filename": "build/win/message_compiler.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-09-01T15:44:31Z",
+      "side": 1,
+      "message": "Ooooh thanks! That sounds possible, I\u0027ll give that a try. (I wonder why I couldn\u0027t repro this locally though, if that\u0027s it.)",
+      "parentUuid": "0b7b70ca_a7be5db4",
+      "range": {
+        "startLine": 43,
+        "startChar": 49,
+        "endLine": 43,
+        "endChar": 50
+      },
+      "revId": "268d8240eb4c004f34b5a2b62278e547e483e08e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
