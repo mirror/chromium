@@ -89,7 +89,9 @@ class LogoTracker : public net::URLFetcherDelegate {
   explicit LogoTracker(
       base::FilePath cached_logo_directory,
       scoped_refptr<net::URLRequestContextGetter> request_context_getter,
-      std::unique_ptr<LogoDelegate> delegate);
+      std::unique_ptr<LogoDelegate> delegate,
+      std::unique_ptr<LogoCache> logo_cache_for_testing,  // optional
+      std::unique_ptr<base::Clock> clock_for_testing);    // optional
 
   ~LogoTracker() override;
 
@@ -115,12 +117,6 @@ class LogoTracker : public net::URLFetcherDelegate {
   // Prevents |observer| from receiving future updates. This is safe to call
   // even when the observer is being notified of an update.
   void RemoveObserver(LogoObserver* observer);
-
-  // Overrides the cache used to store logos.
-  void SetLogoCacheForTests(std::unique_ptr<LogoCache> cache);
-
-  // Overrides the clock used to check the time.
-  void SetClockForTests(std::unique_ptr<base::Clock> clock);
 
  private:
 

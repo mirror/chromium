@@ -17,6 +17,7 @@
 #include "components/search_provider_logos/features.h"
 #include "components/search_provider_logos/fixed_logo_api.h"
 #include "components/search_provider_logos/google_logo_api.h"
+#include "components/search_provider_logos/logo_cache.h"
 #include "components/search_provider_logos/logo_tracker.h"
 #include "components/search_provider_logos/switches.h"
 #include "net/url_request/url_request_context_getter.h"
@@ -177,7 +178,8 @@ void LogoService::GetLogo(search_provider_logos::LogoObserver* observer) {
   if (!logo_tracker_) {
     logo_tracker_ = base::MakeUnique<LogoTracker>(
         cache_directory_, request_context_getter_,
-        base::MakeUnique<LogoDelegateImpl>(std::move(image_decoder_)));
+        base::MakeUnique<LogoDelegateImpl>(std::move(image_decoder_)),
+        std::move(logo_cache_for_test_), std::move(clock_for_test_));
   }
 
   if (use_fixed_logo) {
@@ -202,6 +204,14 @@ void LogoService::GetLogo(search_provider_logos::LogoObserver* observer) {
   }
 
   logo_tracker_->GetLogo(observer);
+}
+
+void LogoService::SetLogoCacheForTests(std::unique_ptr<LogoCache> cache) {
+  logo_cache_for_test_ = std::move(cache);
+}
+
+void LogoService::SetClockForTests(std::unique_ptr<base::Clock> clock) {
+  clock_for_test_ = std::move(clock);
 }
 
 }  // namespace search_provider_logos
