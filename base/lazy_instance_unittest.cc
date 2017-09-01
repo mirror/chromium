@@ -170,10 +170,14 @@ TEST(LazyInstanceTest, Alignment) {
       LAZY_INSTANCE_INITIALIZER;
   static LazyInstance<AlignedData<32>>::DestructorAtExit align32 =
       LAZY_INSTANCE_INITIALIZER;
+#if defined(COMPILER_GCC) && __BIGGEST_ALIGNMENT__ >= 4096
   static LazyInstance<AlignedData<4096>>::DestructorAtExit align4096 =
       LAZY_INSTANCE_INITIALIZER;
+#endif
 
   EXPECT_ALIGNED(align4.Pointer(), 4);
   EXPECT_ALIGNED(align32.Pointer(), 32);
+#if defined(COMPILER_GCC) && __BIGGEST_ALIGNMENT__ >= 4096
   EXPECT_ALIGNED(align4096.Pointer(), 4096);
+#endif
 }

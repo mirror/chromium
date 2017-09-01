@@ -6,6 +6,7 @@
 
 #include "base/at_exit.h"
 #include "base/memory/singleton.h"
+#include "build/build_config.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace base {
@@ -284,15 +285,23 @@ TEST_F(SingletonTest, Alignment) {
       AlignedTestSingleton<int32_t>::GetInstance();
   AlignedTestSingleton<AlignedData<32>>* align32 =
       AlignedTestSingleton<AlignedData<32>>::GetInstance();
+#if defined(COMPILER_GCC) && __BIGGEST_ALIGNMENT__ >= 128
   AlignedTestSingleton<AlignedData<128>>* align128 =
       AlignedTestSingleton<AlignedData<128>>::GetInstance();
+#endif  // defined(COMPILER_GCC) && __BIGGEST_ALIGNMENT__ >= 128
+#if defined(COMPILER_GCC) && __BIGGEST_ALIGNMENT__ >= 4096
   AlignedTestSingleton<AlignedData<4096>>* align4096 =
       AlignedTestSingleton<AlignedData<4096>>::GetInstance();
+#endif  // defined(COMPILER_GCC) && __BIGGEST_ALIGNMENT__ >= 4096
 
   EXPECT_ALIGNED(align4, 4);
   EXPECT_ALIGNED(align32, 32);
+#if defined(COMPILER_GCC) && __BIGGEST_ALIGNMENT__ >= 128
   EXPECT_ALIGNED(align128, 128);
+#endif  // defined(COMPILER_GCC) && __BIGGEST_ALIGNMENT__ >= 128
+#if defined(COMPILER_GCC) && __BIGGEST_ALIGNMENT__ >= 4096
   EXPECT_ALIGNED(align4096, 4096);
+#endif  // defined(COMPILER_GCC) && __BIGGEST_ALIGNMENT__ >= 4096
 }
 
 }  // namespace
