@@ -411,6 +411,30 @@
       "revId": "e88d800e29d30b0b895b331b0908d4d951962bd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e721e6b3_6c25e8f9",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionSampleTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-01T21:52:43Z",
+      "side": 1,
+      "message": "I\u0027m OK if it\u0027s just a workaround for TABLE@0, for now. We should still clean it up later by supporting selecting selection at TABLE@0 directly, or in general, at positions where text nodes are not allowed.\n\nIt is very confusing to have allow \"\u003ctable\u003e|\u003c/table\u003e\" as valid output but not valid input.",
+      "parentUuid": "ebd80a9d_b25b6805",
+      "range": {
+        "startLine": 104,
+        "startChar": 1,
+        "endLine": 112,
+        "endChar": 77
+      },
+      "revId": "e88d800e29d30b0b895b331b0908d4d951962bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
