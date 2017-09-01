@@ -513,7 +513,7 @@ TEST_P(ParameterizedScrollbarsTest, MouseOverCustomScrollbar) {
       "  left: 0;"
       "  height: 180px;"
       "  width: 180px;"
-      "  overflow-x: auto;"
+      "  overflow-y: auto;"
       "}"
       "::-webkit-scrollbar {"
       "  width: 8px;"

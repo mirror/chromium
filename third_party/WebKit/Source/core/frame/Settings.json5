@@ -609,6 +609,12 @@
       initial: false,
     },
 
+    // Forces Android Overlay Scrollbar for mobile emulator.
+    {
+      name: "forceAndroidOverlayScrollbar",
+      initial: false,
+    },
+
     // Compensates for poor text legibility on mobile devices. This value is
     // multiplied by the font scale factor when performing text autosizing of
     // websites that do not set an explicit viewport description.

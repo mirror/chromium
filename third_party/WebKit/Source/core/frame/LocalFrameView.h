@@ -911,6 +911,8 @@ class CORE_EXPORT LocalFrameView final
 
    protected:
     void DestroyScrollbar(ScrollbarOrientation) override;
+
+    LocalFrameView* ScrollableArea();
   };
 
   LocalFrameView* ParentFrameView() const;
