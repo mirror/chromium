@@ -70,6 +70,10 @@ Polymer({
     /** @private {function(!Event)} */
     this.boundOnHighlightItems_ = this.onHighlightItems_.bind(this);
     document.addEventListener('highlight-items', this.boundOnHighlightItems_);
+
+    Polymer.RenderStatus.afterNextRender(this, function() {
+      Polymer.IronA11yAnnouncer.requestAvailability();
+    });
   },
 
   detached: function() {
@@ -108,6 +112,10 @@ Polymer({
         this.splice.apply(this, [
           'displayedList_', splice.index, splice.removed.length
         ].concat(additions));
+      });
+
+      this.fire('iron-announce', {
+        text: loadTimeData.getStringF('listChanged', this.displayedList_.length)
       });
     }
   },
