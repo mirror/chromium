@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "823127f8_b25fd7ec",
+        "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
+        "patchSetId": 4
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-09-01T00:24:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9707f54_00d63ac2",
+      "revId": "5e70d4fad9f17f66b174bc41f329e318229a3879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82270a1a_13570386",
         "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "5e70d4fad9f17f66b174bc41f329e318229a3879",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0910e400_87972bc4",
+        "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
+        "patchSetId": 4
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-09-01T00:24:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82270a1a_13570386",
+      "revId": "5e70d4fad9f17f66b174bc41f329e318229a3879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "818d4b89_56ac7211",
+        "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
+        "patchSetId": 4
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-09-01T00:24:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c295f3cb_c5b80456",
+      "revId": "5e70d4fad9f17f66b174bc41f329e318229a3879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff57ccb9_47da1dcf",
         "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-31T22:40:07Z",
       "side": 1,
       "message": "Let\u0027s use \"Blue Coat .*\" here.",
+      "revId": "5e70d4fad9f17f66b174bc41f329e318229a3879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25269f35_4cb8bcd9",
+        "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
+        "patchSetId": 4
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-09-01T00:24:39Z",
+      "side": 1,
+      "message": "I went ahead and updated this, but I\u0027m a little concerned with how broad this is. It may lead to false positives!",
+      "parentUuid": "ff57ccb9_47da1dcf",
       "revId": "5e70d4fad9f17f66b174bc41f329e318229a3879",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "db970558_ae04d590",
+        "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
+        "patchSetId": 4
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-09-01T00:24:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38eb1651_804aaff6",
+      "revId": "5e70d4fad9f17f66b174bc41f329e318229a3879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b3791e3_ea2f084a",
         "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
         "patchSetId": 4
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "a958c18b_9cb368a5",
+        "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
+        "patchSetId": 4
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-09-01T00:24:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b3791e3_ea2f084a",
+      "revId": "5e70d4fad9f17f66b174bc41f329e318229a3879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7eb31925_d0e6dac0",
         "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
         "patchSetId": 4
@@ -115,6 +223,24 @@
       "writtenOn": "2017-08-31T22:40:07Z",
       "side": 1,
       "message": "Did you mean to delete SonicWall?",
+      "revId": "5e70d4fad9f17f66b174bc41f329e318229a3879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31aedbba_cf3866fe",
+        "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
+        "patchSetId": 4
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-09-01T00:24:39Z",
+      "side": 1,
+      "message": "It doesn\u0027t look like there ever was a SonicWall. Do you mean SmoothWall?",
+      "parentUuid": "7eb31925_d0e6dac0",
       "revId": "5e70d4fad9f17f66b174bc41f329e318229a3879",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
