@@ -155,7 +155,7 @@ BorderImages* GetBorderImages(BubbleBorder::Shadow shadow) {
   switch (shadow) {
     case BubbleBorder::NO_SHADOW:
     case BubbleBorder::NO_SHADOW_OPAQUE_BORDER:
-      set = new BorderImages(kNoShadowImages, kNoShadowArrows, 6, 7, 4);
+      set = new BorderImages(kNoShadowImages, kNoShadowArrows, 6, 7, 2);
       break;
     case BubbleBorder::BIG_SHADOW:
       set = new BorderImages(kBigShadowImages, kBigShadowArrows, 23, 9, 2);
@@ -310,7 +310,7 @@ int BubbleBorder::GetBorderThickness() const {
 }
 
 int BubbleBorder::GetBorderCornerRadius() const {
-  return UseMd() ? 3 : images_->corner_radius;
+  return UseMd() ? 2 : images_->corner_radius;
 }
 
 int BubbleBorder::GetArrowOffset(const gfx::Size& border_size) const {
