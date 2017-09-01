@@ -163,6 +163,10 @@
   margin-right: 12px;
 }
 
+.arc-tos-overlay-close-bottom[md-mode] {
+  display: none;
+}
+
 .step.arc-tos-loading #arc-tos-content {
   display: none;
 }
