@@ -27,6 +27,7 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+import copy
 import logging
 import signal
 import time
@@ -186,6 +187,7 @@ def summarize_results(port_obj, expectations, initial_results,
         actual = [keywords[result.type]]
         actual_types = [result.type]
         crash_sites = [result.crash_site]
+        all_failures = copy.copy(result.failures)
 
         if only_include_failing and result.type == test_expectations.SKIP:
             continue
@@ -210,6 +212,7 @@ def summarize_results(port_obj, expectations, initial_results,
                 actual.append(keywords[retry_result_type])
                 actual_types.append(retry_result_type)
                 crash_sites.append(retry_result.crash_site)
+                all_failures.extend(retry_result.failures)
                 if test_name in retry_attempt_results.unexpected_results_by_name:
                     if retry_result_type == test_expectations.PASS:
                         # The test failed unexpectedly at first, then passed
@@ -256,6 +259,10 @@ def summarize_results(port_obj, expectations, initial_results,
         crash_sites = [site for site in crash_sites if site]
         if len(crash_sites) > 0:
             test_dict['crash_site'] = crash_sites[0]
+
+        text_mismatch_special_class = test_failures.determine_text_mismatch_special_class(all_failures)
+        if text_mismatch_special_class:
+            test_dict['text_mismatch'] = text_mismatch_special_class
 
         def is_expected(actual_result):
             return expectations.matches_an_expected_result(test_name, actual_result,

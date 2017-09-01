@@ -261,6 +261,7 @@ TestResult(CRASH) + TextExpectation(Failure) => [ Failure <b>Crash</b> ]</pre>
       <option value="plain" selected>Plain text</option>
       <option value="expectation">TestExpectations</option>
       <option value="crashsite">Crash site</option>
+      <option value="textmismatch">Text mismatch</option>
     </select>
 </div>
 
@@ -406,6 +407,8 @@ let Report = {
         return {print: Report.printExpectation, summarize: Report.renderResultList};
       case "crashsite":
        return {print: Report.printCrashSite, summarize: Report.renderGroupCrashSite};
+      case "textmismatch":
+       return {print: Report.printTextMismatch, summarize: Report.renderGroupTextMismatch};
       case "plain":
       default:
         return {print: Report.printPlainTest, summarize: Report.renderResultList};
@@ -472,9 +475,9 @@ let Report = {
     traversal.html.push(html);
   },
 
-  printCrashSite: (test, path, traversal) => {
+  printWithKey: (test, path, traversal, key_title) => {
     let pathParser = new PathParser(path);
-    let key = test["crash_site"];
+    let key = test[key_title];
     let html = ""
       + "<input type='checkbox' class='rebaseline-checkbox' style='display:none'>"
       + pathParser.dir + "/"
@@ -482,6 +485,14 @@ let Report = {
       + pathParser.file + "</a>";
     html = "<div class='expect' tabindex='0' data-id='"+ test.expectId +"'><div class='details'></div>" + html + "</div>";
     traversal.html.push({key: key, html: html});
+  },
+
+  printCrashSite: (test, path, traversal) => {
+    Report.printWithKey(test, path, traversal, "crash_site");
+  },
+
+  printTextMismatch: (test, path, traversal) => {
+    Report.printWithKey(test, path, traversal, "text_mismatch");
   },
 
   indicateNone: function(report) {
@@ -502,13 +513,13 @@ let Report = {
     report.appendChild(pre);
   },
 
-  createContainerForCrashSite: function(report, key) {
+  createContainerForGroup: function(report, key, keyed_title, null_title) {
     let container = document.createElement("div");
     container.setAttribute("key", key);
     container.innerHTML = ""
       + "<br><b>"
-      + (key !== 'null' ? "### Crash site: " + key
-                        : "### Didn't crash")
+      + (key !== 'null' ? `### ${keyed_title}: ${key}`
+                        : `### ${null_title}`)
       + "</b>";
 
     // Ensure that the "didn't crash" container appears last.
@@ -519,7 +530,7 @@ let Report = {
     return container;
   },
 
-  renderGroupCrashSite: function(html) {
+  renderGroup: function(html, keyed_title, null_title) {
     let report = document.querySelector("#report");
     if (report.childNodes.length === 0 && html.length === 0) {
       Report.indicateNone(report);
@@ -528,11 +539,21 @@ let Report = {
 
     html.forEach(result => {
       let key = result.key || 'null';
-      let container = report.querySelector(`div[key="${key}"]`) || Report.createContainerForCrashSite(report, key);
+      let container =
+          report.querySelector(`div[key="${key}"]`) ||
+          Report.createContainerForGroup(report, key, keyed_title, null_title);
       let pre = document.createElement("div");
       pre.innerHTML = result.html;
       container.appendChild(pre);
     });
+  },
+
+  renderGroupCrashSite: function(html) {
+    Report.renderGroup(html, "Crash site", "Didn't crash");
+  },
+
+  renderGroupTextMismatch: function(html) {
+    Report.renderGroup(html, "Text mismatch failure", "Didn't find text mismatch");
   },
 
   getTestById: function(testId) {
