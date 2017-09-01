@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6481d935_af2810af",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkersView.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-09-01T16:26:30Z",
+      "side": 1,
+      "message": "These two declarations were added for the Closure compiler sake",
+      "revId": "4ec157b862553b570ab2d8f19cbbbd8ec7d790ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
