@@ -68,6 +68,23 @@
       "revId": "26d5685b80e243475a8aa0a3dd909bdd0e6a6e66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0837dba9_18076282",
+        "filename": "content/browser/bluetooth/bluetooth_metrics.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-09-01T03:21:37Z",
+      "side": 1,
+      "message": "See https://crbug.com/520284 for why we chose SuperFastHash instead of just Hash. Is base::Hash guaranteed to never change now?",
+      "revId": "26d5685b80e243475a8aa0a3dd909bdd0e6a6e66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
