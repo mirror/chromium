@@ -440,6 +440,8 @@ PaintResult PaintLayerPainter::PaintLayerContents(
     // https://groups.google.com/a/chromium.org/forum/#!topic/graphics-dev/81XuWFf-mxM
     if (fragment_policy == kForceSingleFragment ||
         RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
+      //   LOG(ERROR) << "force single: " << local_painting_info.root_layer << "
+      //   vs " << paint_layer_for_fragments;
       paint_layer_for_fragments->AppendSingleFragmentIgnoringPagination(
           layer_fragments, local_painting_info.root_layer,
           local_painting_info.paint_dirty_rect, kUncachedClipRects,
@@ -626,7 +628,6 @@ PaintResult PaintLayerPainter::PaintLayerContents(
     PaintChildClippingMaskForFragments(layer_fragments, context,
                                        local_painting_info, paint_flags);
   }
-
   if (subsequence_recorder)
     paint_layer_.SetPreviousPaintResult(result);
   return result;
@@ -656,10 +657,10 @@ bool PaintLayerPainter::AtLeastOneFragmentIntersectsDamageRect(
   if (&paint_layer_ == local_painting_info.root_layer &&
       (local_paint_flags & kPaintLayerPaintingOverflowContents))
     return true;
-
   for (PaintLayerFragment& fragment : fragments) {
     LayoutPoint new_offset_from_root =
         offset_from_root + fragment.pagination_offset;
+
     // Note that this really only works reliably on the first fragment. If the
     // layer has visible overflow and a subsequent fragment doesn't intersect
     // with the border box of the layer (i.e. only contains an overflow portion
@@ -728,11 +729,11 @@ PaintResult PaintLayerPainter::PaintLayerWithTransform(
   PaintLayer* parent_layer = paint_layer_.Parent();
 
   PaintResult result = kFullyPainted;
-  PaintLayer* pagination_layer = paint_layer_.EnclosingPaginationLayer();
+  // PaintLayer* pagination_layer = paint_layer_.EnclosingPaginationLayer();
   PaintLayerFragments layer_fragments;
   bool is_fixed_position_object_in_paged_media =
       this->IsFixedPositionObjectInPagedMedia();
-  if (!pagination_layer || is_fixed_position_object_in_paged_media) {
+  if (is_fixed_position_object_in_paged_media) {
     // We don't need to collect any fragments in the regular way here. We have
     // already calculated a clip rectangle for the ancestry if it was needed,
     // and clipping this layer is something that can be done further down the
@@ -742,29 +743,15 @@ PaintResult PaintLayerPainter::PaintLayerWithTransform(
     if (is_fixed_position_object_in_paged_media)
       RepeatFixedPositionObjectInPages(fragment, painting_info,
                                        layer_fragments);
-    else
-      layer_fragments.push_back(fragment);
   } else {
     ShouldRespectOverflowClipType respect_overflow_clip =
         ShouldRespectOverflowClip(paint_flags, paint_layer_.GetLayoutObject());
-    // Calculate the transformed bounding box in the current coordinate space,
-    // to figure out which fragmentainers (e.g. columns) we need to visit.
-    LayoutRect transformed_extent = PaintLayer::TransparencyClipBox(
-        &paint_layer_, pagination_layer,
-        PaintLayer::kPaintingTransparencyClipBox,
-        PaintLayer::kRootOfTransparencyClipBox,
-        painting_info.sub_pixel_accumulation,
-        painting_info.GetGlobalPaintFlags());
 
-    // FIXME: we don't check if paginationLayer is within
-    // paintingInfo.rootLayer
-    // here.
-    pagination_layer->CollectFragments(
+    paint_layer_.CollectFragmentsNew(
         layer_fragments, painting_info.root_layer,
         painting_info.paint_dirty_rect, kUncachedClipRects,
         PaintLayer::kUseGeometryMapper, kIgnorePlatformOverlayScrollbarSize,
-        respect_overflow_clip, nullptr, painting_info.sub_pixel_accumulation,
-        &transformed_extent);
+        respect_overflow_clip, nullptr, painting_info.sub_pixel_accumulation);
     // PaintLayer::collectFragments depends on the paint dirty rect in
     // complicated ways. For now, always assume a partially painted output
     // for fragmented content.
@@ -776,49 +763,29 @@ PaintResult PaintLayerPainter::PaintLayerWithTransform(
   if (layer_fragments.size() > 1)
     cache_skipper.emplace(context);
 
-  ClipRect ancestor_background_clip_rect;
-  if (!RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
-    if (painting_info.root_layer == &paint_layer_) {
-      // This works around a bug in squashed-layer painting.
-      // Squashed layers paint into a backing in its compositing container's
-      // space, but painting_info.root_layer points to the squashed layer
-      // itself, thus PaintLayerClipper would return a clip rect in the
-      // squashed layer's local space, instead of the backing's space.
-      // Fortunately, CompositedLayerMapping::DoPaintTask already applied
-      // appropriate ancestor clip for us, we can simply skip it.
-      DCHECK_EQ(paint_layer_.GetCompositingState(), kPaintsIntoGroupedBacking);
-      ancestor_background_clip_rect.SetRect(FloatClipRect());
-    } else if (parent_layer) {
-      // Calculate the clip rectangle that the ancestors establish.
-      ClipRectsContext clip_rects_context(painting_info.root_layer,
-                                          kUncachedClipRects,
-                                          kIgnorePlatformOverlayScrollbarSize,
-                                          painting_info.sub_pixel_accumulation);
-      if (ShouldRespectOverflowClip(paint_flags,
-                                    paint_layer_.GetLayoutObject()) ==
-          kIgnoreOverflowClip)
-        clip_rects_context.SetIgnoreOverflowClip();
-      paint_layer_.Clipper(PaintLayer::kUseGeometryMapper)
-          .CalculateBackgroundClipRect(clip_rects_context,
-                                       ancestor_background_clip_rect);
-    }
+  if (!RuntimeEnabledFeatures::SlimmingPaintV2Enabled() &&
+      painting_info.root_layer == &paint_layer_) {
+    DCHECK_EQ(paint_layer_.GetCompositingState(), kPaintsIntoGroupedBacking);
+    DCHECK_EQ(layer_fragments.size(), 0);
+    // This works around a bug in squashed-layer painting.
+    // Squashed layers paint into a backing in its compositing container's
+    // space, but painting_info.root_layer points to the squashed layer
+    // itself, thus PaintLayerClipper would return a clip rect in the
+    // squashed layer's local space, instead of the backing's space.
+    // Fortunately, CompositedLayerMapping::DoPaintTask already applied
+    // appropriate ancestor clip for us, we can simply skip it.
+    layer_fragments[0].background_rect.SetRect(FloatClipRect());
   }
 
   for (const auto& fragment : layer_fragments) {
     Optional<LayerClipRecorder> clip_recorder;
     if (parent_layer && !RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
-      ClipRect clip_rect_for_fragment(ancestor_background_clip_rect);
-      // A fixed-position object is repeated on every page instead of paginated,
-      // so we should apply the original ancestor clip rect.
-      if (!is_fixed_position_object_in_paged_media)
-        clip_rect_for_fragment.MoveBy(fragment.pagination_offset);
-      clip_rect_for_fragment.Intersect(fragment.background_rect);
-      if (NeedsToClip(painting_info, clip_rect_for_fragment, paint_flags)) {
-        clip_recorder.emplace(context, *parent_layer,
-                              DisplayItem::kClipLayerParent,
-                              clip_rect_for_fragment, painting_info.root_layer,
-                              fragment.pagination_offset, paint_flags,
-                              parent_layer->GetLayoutObject());
+      if (NeedsToClip(painting_info, fragment.background_rect, paint_flags)) {
+        clip_recorder.emplace(
+            context, *parent_layer, DisplayItem::kClipLayerParent,
+            fragment.background_rect, painting_info.root_layer,
+            fragment.pagination_offset, paint_flags,
+            parent_layer->GetLayoutObject());
       }
     }
     if (PaintFragmentByApplyingTransform(context, painting_info, paint_flags,
@@ -1064,7 +1031,9 @@ void PaintLayerPainter::PaintFragmentWithPhase(
   PaintInfo paint_info(context, PixelSnappedIntRect(new_cull_rect), phase,
                        painting_info.GetGlobalPaintFlags(), paint_flags,
                        &painting_info.root_layer->GetLayoutObject());
-
+  // LOG(ERROR) << "paintwithphase: cull_rect=" << new_cull_rect.ToString()
+  // << " visualrect: " <<
+  // paint_layer_.GetLayoutObject().VisualRect().ToString();
   paint_layer_.GetLayoutObject().Paint(paint_info, paint_offset);
 }
 
