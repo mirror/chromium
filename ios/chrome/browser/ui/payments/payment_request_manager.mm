@@ -295,6 +295,13 @@ struct PendingPaymentResponse {
 }
 
 - (void)stopTrackingWebState:(web::WebState*)webState {
+  for (const auto& paymentRequest :
+       _paymentRequestCache->GetPaymentRequests(_activeWebState)) {
+    if (paymentRequest->state() != payments::PaymentRequest::State::CLOSED) {
+      paymentRequest->journey_logger().SetAborted(
+          payments::JourneyLogger::ABORT_REASON_USER_NAVIGATION);
+    }
+  }
   // The lifetime of a PaymentRequest is tied to the WebState it is associated
   // with and the current URL. Therefore, PaymentRequest instances should get
   // destroyed when the WebState goes away.
@@ -484,6 +491,8 @@ struct PendingPaymentResponse {
              << base::SysNSStringToUTF16(errorMessage);
 
   paymentRequest->journey_logger().SetAborted(abortReason);
+  paymentRequest->set_updating(false);
+  paymentRequest->set_state(payments::PaymentRequest::State::CLOSED);
 
   [_paymentRequestJsManager
       rejectRequestPromiseWithErrorName:errorName
@@ -1013,6 +1022,9 @@ requestFullCreditCard:(const autofill::CreditCard&)creditCard
 
   [_paymentRequestCoordinator setCancellable:NO];
 
+  _pendingPaymentRequest->set_updating(false);
+  _pendingPaymentRequest->set_state(payments::PaymentRequest::State::CLOSED);
+
   [_paymentRequestJsManager
       resolveRequestPromiseWithPaymentResponse:paymentResponse
                              completionHandler:nil];
@@ -1027,13 +1039,19 @@ requestFullCreditCard:(const autofill::CreditCard&)creditCard
         (const web::LoadCommittedDetails&)load_details {
   // Reset any pending request.
   if (_pendingPaymentRequest) {
-    _pendingPaymentRequest->journey_logger().SetAborted(
-        payments::JourneyLogger::ABORT_REASON_MERCHANT_NAVIGATION);
     _pendingPaymentRequest = nullptr;
     [self resetIOSPaymentInstrumentLauncherDelegate];
   }
 
   [self dismissUIWithCallback:nil];
+
+  for (const auto& paymentRequest :
+       _paymentRequestCache->GetPaymentRequests(_activeWebState)) {
+    if (paymentRequest->state() != payments::PaymentRequest::State::CLOSED) {
+      paymentRequest->journey_logger().SetAborted(
+          payments::JourneyLogger::ABORT_REASON_USER_NAVIGATION);
+    }
+  }
 
   // The lifetime of a PaymentRequest is tied to the WebState it is associated
   // with and the current URL. Therefore, PaymentRequest instances should get
