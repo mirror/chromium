@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9327125b_7055d07a",
+        "filename": "chrome/browser/resources/settings/route.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-01T22:56:09Z",
+      "side": 1,
+      "message": "Did you want to add a histograms.xml entry for this new histogram?",
+      "range": {
+        "startLine": 558,
+        "startChar": 49,
+        "endLine": 558,
+        "endChar": 0
+      },
+      "revId": "6594359bc3ebe8a64c2cb078348c3dcc1f743657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
