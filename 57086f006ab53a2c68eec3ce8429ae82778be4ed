@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3c0d792_e6e3d2ec",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageFrameGenerator.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-01T17:18:14Z",
+      "side": 1,
+      "message": "Should this be CHECK, since it will cause memory corruption if false?",
+      "revId": "57086f006ab53a2c68eec3ce8429ae82778be4ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3379ed6_da7c12dc",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/ImageDecoder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-01T17:18:14Z",
+      "side": 1,
+      "message": "Bare constant considered harmful..",
+      "revId": "57086f006ab53a2c68eec3ce8429ae82778be4ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
