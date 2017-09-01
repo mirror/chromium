@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a6a0169e_f1078b49",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 764,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-09-01T00:14:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae161100_29500646",
+      "range": {
+        "startLine": 764,
+        "startChar": 22,
+        "endLine": 764,
+        "endChar": 60
+      },
+      "revId": "9421fb87fc1dd0cb733ff6dcddc553c90ca2e211",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "141aa5dc_315b4e96",
         "filename": "components/download/internal/controller_impl.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "ab0d6fa8_2f0acc06",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1004,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-09-01T00:14:35Z",
+      "side": 1,
+      "message": "Ack. Sounds better.",
+      "parentUuid": "141aa5dc_315b4e96",
+      "range": {
+        "startLine": 998,
+        "startChar": 2,
+        "endLine": 1004,
+        "endChar": 3
+      },
+      "revId": "9421fb87fc1dd0cb733ff6dcddc553c90ca2e211",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26f5c49a_87bb7d9e",
         "filename": "components/download/internal/navigation_monitor_impl.cc",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-31T18:12:06Z",
       "side": 1,
       "message": "Ah this builds on my comment in Xing\u0027s CL.  We need to ref count the start/stop navigations right?  We could have multi-window or contextual search or some feature loading content in a web contents.",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 70
+      },
+      "revId": "9421fb87fc1dd0cb733ff6dcddc553c90ca2e211",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe7d4b23_ebb64d67",
+        "filename": "components/download/internal/navigation_monitor_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-09-01T00:14:35Z",
+      "side": 1,
+      "message": "Yea, this CL handles the logic from various navigation events which builds based on Xing\u0027s CL. \n\nI changed the boolean to a counter to count how many navigations are active.\n\nWe will post a task with 30 sec when the counter drops to zero.\nWe will also schedule a backup task to resume downloads with 5 minutes, in case we never got the navigation finish signal.",
+      "parentUuid": "26f5c49a_87bb7d9e",
       "range": {
         "startLine": 30,
         "startChar": 0,
