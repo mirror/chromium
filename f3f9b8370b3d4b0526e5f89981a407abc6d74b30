@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63fc5ba9_360a8a83",
+        "filename": "chromeos/components/tether/tether_network_disconnection_handler.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-01T22:32:30Z",
+      "side": 0,
+      "message": "Please revert back to this wording. This is specifically for when we lose a Wi-Fi connection - not when we explicitly try to disconnect.",
+      "range": {
+        "startLine": 22,
+        "startChar": 11,
+        "endLine": 22,
+        "endChar": 33
+      },
+      "revId": "f3f9b8370b3d4b0526e5f89981a407abc6d74b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
