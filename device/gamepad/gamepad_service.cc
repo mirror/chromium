@@ -65,11 +65,21 @@ void GamepadService::ConsumerBecameActive(device::GamepadConsumer* consumer) {
   std::pair<ConsumerSet::iterator, bool> insert_result =
       consumers_.insert(consumer);
   insert_result.first->is_active = true;
-  if (!insert_result.first->did_observe_user_gesture &&
-      !gesture_callback_pending_) {
-    gesture_callback_pending_ = true;
-    provider_->RegisterForUserGesture(
-        base::Bind(&GamepadService::OnUserGesture, base::Unretained(this)));
+  if (!gesture_callback_pending_) {
+    if (!insert_result.first->did_observe_user_gesture) {
+      gesture_callback_pending_ = true;
+      provider_->RegisterForUserGesture(
+          base::Bind(&GamepadService::OnUserGesture, base::Unretained(this)));
+    } else {
+      Gamepads gamepads;
+      provider_->GetCurrentGamepadData(&gamepads);
+      for (unsigned i = 0; i < Gamepads::kItemsLengthCap; ++i) {
+        const Gamepad& gamepad = gamepads.items[i];
+        if (gamepad.connected) {
+          insert_result.first->consumer->OnGamepadConnected(i, gamepad);
+        }
+      }
+    }
   }
 
   if (num_active_consumers_++ == 0)
@@ -163,13 +173,6 @@ void GamepadService::OnUserGesture() {
     if (!it->did_observe_user_gesture && it->is_active) {
       const ConsumerInfo& info = *it;
       info.did_observe_user_gesture = true;
-      Gamepads gamepads;
-      provider_->GetCurrentGamepadData(&gamepads);
-      for (unsigned i = 0; i < Gamepads::kItemsLengthCap; ++i) {
-        const Gamepad& pad = gamepads.items[i];
-        if (pad.connected)
-          info.consumer->OnGamepadConnected(i, pad);
-      }
     }
   }
 }

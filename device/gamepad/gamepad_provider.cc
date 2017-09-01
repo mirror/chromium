@@ -269,6 +269,8 @@ void GamepadProvider::DoPoll() {
     gamepad_shared_buffer_->WriteEnd();
   }
 
+  CheckForUserGesture();
+
   if (ever_had_user_gesture_) {
     for (unsigned i = 0; i < Gamepads::kItemsLengthCap; ++i) {
       PadState& state = pad_states_.get()[i];
@@ -282,8 +284,6 @@ void GamepadProvider::DoPoll() {
       }
     }
   }
-
-  CheckForUserGesture();
 
   // Schedule our next interval of polling.
   ScheduleDoPoll();

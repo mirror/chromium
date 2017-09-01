@@ -51,6 +51,9 @@ class GamepadServiceTest : public testing::Test {
   ~GamepadServiceTest() override;
 
   void SetPadsConnected(bool connected);
+  void SimulateUserGesture();
+  void SimulatePageRefresh();
+  void ClearCounters();
   void WaitForData();
 
   int GetConnectedCounter() const {
@@ -75,10 +78,9 @@ class GamepadServiceTest : public testing::Test {
 GamepadServiceTest::GamepadServiceTest() {
   memset(&test_data_, 0, sizeof(test_data_));
 
-  // Set it so that we have user gesture.
+  // Configure the pad to have one button. We need our mock gamepad
+  // to have at least one input so we can simulate a user gesture.
   test_data_.items[0].buttons_length = 1;
-  test_data_.items[0].buttons[0].value = 1.f;
-  test_data_.items[0].buttons[0].pressed = true;
 }
 
 GamepadServiceTest::~GamepadServiceTest() {
@@ -101,29 +103,97 @@ void GamepadServiceTest::SetPadsConnected(bool connected) {
   fetcher_->SetTestData(test_data_);
 }
 
-void GamepadServiceTest::WaitForData() {
+void GamepadServiceTest::SimulateUserGesture() {
+  test_data_.items[0].buttons[0].value = 1.f;
+  test_data_.items[0].buttons[0].pressed = true;
+  fetcher_->SetTestData(test_data_);
+}
+
+void GamepadServiceTest::SimulatePageRefresh() {
+  service_->ConsumerBecameInactive(connection_listener_.get());
+  service_->ConsumerBecameActive(connection_listener_.get());
+}
+
+void GamepadServiceTest::ClearCounters() {
   connection_listener_->ClearCounters();
+}
+
+void GamepadServiceTest::WaitForData() {
   fetcher_->WaitForDataReadAndCallbacksIssued();
   base::RunLoop().RunUntilIdle();
 }
 
 TEST_F(GamepadServiceTest, ConnectionsTest) {
+  SimulateUserGesture();
   WaitForData();
   EXPECT_EQ(0, GetConnectedCounter());
   EXPECT_EQ(0, GetDisconnectedCounter());
 
+  ClearCounters();
   SetPadsConnected(true);
   WaitForData();
   EXPECT_EQ(kNumberOfGamepads, GetConnectedCounter());
   EXPECT_EQ(0, GetDisconnectedCounter());
 
+  ClearCounters();
   SetPadsConnected(false);
   WaitForData();
   EXPECT_EQ(0, GetConnectedCounter());
   EXPECT_EQ(kNumberOfGamepads, GetDisconnectedCounter());
 
+  ClearCounters();
   WaitForData();
   EXPECT_EQ(0, GetConnectedCounter());
+  EXPECT_EQ(0, GetDisconnectedCounter());
+}
+
+TEST_F(GamepadServiceTest, ConnectionThenGestureTest) {
+  WaitForData();
+  EXPECT_EQ(0, GetConnectedCounter());
+  EXPECT_EQ(0, GetDisconnectedCounter());
+
+  // No connection events are sent until a user gesture is seen.
+  ClearCounters();
+  SetPadsConnected(true);
+  WaitForData();
+  EXPECT_EQ(0, GetConnectedCounter());
+  EXPECT_EQ(0, GetDisconnectedCounter());
+
+  ClearCounters();
+  SimulateUserGesture();
+  WaitForData();
+  EXPECT_EQ(kNumberOfGamepads, GetConnectedCounter());
+  EXPECT_EQ(0, GetDisconnectedCounter());
+}
+
+TEST_F(GamepadServiceTest, RefreshTest) {
+  // No connection events are sent until a user gesture is seen.
+  SetPadsConnected(true);
+  WaitForData();
+  EXPECT_EQ(0, GetConnectedCounter());
+  EXPECT_EQ(0, GetDisconnectedCounter());
+
+  ClearCounters();
+  SimulatePageRefresh();
+  WaitForData();
+  EXPECT_EQ(0, GetConnectedCounter());
+  EXPECT_EQ(0, GetDisconnectedCounter());
+
+  // After a user gesture, the connection listener is notified about connected
+  // gamepads.
+  ClearCounters();
+  SimulateUserGesture();
+  WaitForData();
+  EXPECT_EQ(4, GetConnectedCounter());
+  EXPECT_EQ(0, GetDisconnectedCounter());
+
+  // After a refresh, if the gamepads were already connected (and we have seen
+  // a user gesture) then the connection listener is notified about connected
+  // gamepads.
+  ClearCounters();
+  SimulatePageRefresh();
+  WaitForData();
+  EXPECT_EQ(4, GetConnectedCounter());
   EXPECT_EQ(0, GetDisconnectedCounter());
 }
 
