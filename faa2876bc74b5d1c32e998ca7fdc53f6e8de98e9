@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3b306bd_afec08b9",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-01T08:54:58Z",
+      "side": 1,
+      "message": "could you write out std::unique_ptr\u003cServiceWorkerProviderHost\u003e?\n\nI only like auto when it\u0027s clear what the type is, here we don\u0027t know if it\u0027s a raw ptr or something.",
+      "revId": "faa2876bc74b5d1c32e998ca7fdc53f6e8de98e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b5c6f4e_1a8d217f",
+        "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-01T08:54:58Z",
+      "side": 1,
+      "message": "Not sure \"host render frame\" is a good error message for web devs.\n\nMaybe: \"Lost connection to the service worker system.\"",
+      "revId": "faa2876bc74b5d1c32e998ca7fdc53f6e8de98e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
