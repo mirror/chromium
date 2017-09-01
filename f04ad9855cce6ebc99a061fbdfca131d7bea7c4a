@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6aca4e4c_3e9a598f",
+        "filename": "chrome/test/data/webrtc/peerconnection_rtp.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-01T13:51:35Z",
+      "side": 1,
+      "message": "I filed a spec issue about this raciness: https://github.com/w3c/webrtc-pc/issues/1569",
+      "revId": "f04ad9855cce6ebc99a061fbdfca131d7bea7c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
