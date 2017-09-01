@@ -247,6 +247,10 @@ class AppsGridViewTest : public views::ViewsTestBase,
     EXPECT_TRUE(apps_grid_view_->IsSelectedView(GetItemViewAt(index)));
   }
 
+  size_t GetMaxFolderItems() const {
+    return test_with_fullscreen_ ? kMaxFolderItemsFullscreen : kMaxFolderItems;
+  }
+
   AppListView* app_list_view_ = nullptr;    // Owned by native widget.
   AppsGridView* apps_grid_view_ = nullptr;  // Owned by |app_list_view_|.
   ContentsView* contents_view_ = nullptr;   // Owned by |app_list_view_|.
@@ -458,8 +462,8 @@ TEST_P(AppsGridViewTest, MouseDragItemIntoFolder) {
 }
 
 TEST_P(AppsGridViewTest, MouseDragMaxItemsInFolder) {
-  // Create and add a folder with 15 items in it.
-  size_t kTotalItems = kMaxFolderItems - 1;
+  // Create and add a folder with |GetMaxFolderItems() - 1| items.
+  size_t kTotalItems = GetMaxFolderItems() - 1;
   model_->CreateAndPopulateFolderWithApps(kTotalItems);
   EXPECT_EQ(1u, model_->top_level_item_list()->item_count());
   EXPECT_EQ(AppListFolderItem::kItemType,
@@ -473,9 +477,9 @@ TEST_P(AppsGridViewTest, MouseDragMaxItemsInFolder) {
   model_->PopulateAppWithId(kTotalItems + 1);
   EXPECT_EQ(3u, model_->top_level_item_list()->item_count());
   EXPECT_EQ(folder_item->id(), model_->top_level_item_list()->item_at(0)->id());
-  EXPECT_EQ(model_->GetItemName(kMaxFolderItems - 1),
+  EXPECT_EQ(model_->GetItemName(GetMaxFolderItems() - 1),
             model_->top_level_item_list()->item_at(1)->id());
-  EXPECT_EQ(model_->GetItemName(kMaxFolderItems),
+  EXPECT_EQ(model_->GetItemName(GetMaxFolderItems()),
             model_->top_level_item_list()->item_at(2)->id());
 
   gfx::Point from = GetItemTileRectAt(0, 1).CenterPoint();
@@ -486,8 +490,8 @@ TEST_P(AppsGridViewTest, MouseDragMaxItemsInFolder) {
   apps_grid_view_->EndDrag(false);
   EXPECT_EQ(2u, model_->top_level_item_list()->item_count());
   EXPECT_EQ(folder_item->id(), model_->top_level_item_list()->item_at(0)->id());
-  EXPECT_EQ(kMaxFolderItems, folder_item->ChildItemCount());
-  EXPECT_EQ(model_->GetItemName(kMaxFolderItems),
+  EXPECT_EQ(GetMaxFolderItems(), folder_item->ChildItemCount());
+  EXPECT_EQ(model_->GetItemName(GetMaxFolderItems()),
             model_->top_level_item_list()->item_at(1)->id());
   test_api_->LayoutToIdealBounds();
 
@@ -496,7 +500,7 @@ TEST_P(AppsGridViewTest, MouseDragMaxItemsInFolder) {
   SimulateDrag(AppsGridView::MOUSE, from, to);
   apps_grid_view_->EndDrag(false);
   EXPECT_EQ(2u, model_->top_level_item_list()->item_count());
-  EXPECT_EQ(kMaxFolderItems, folder_item->ChildItemCount());
+  EXPECT_EQ(GetMaxFolderItems(), folder_item->ChildItemCount());
   test_api_->LayoutToIdealBounds();
 }
 
@@ -508,8 +512,8 @@ TEST_P(AppsGridViewTest, MouseDragMaxItemsInFolderWithMovement) {
   if (features::IsFullscreenAppListEnabled())
     return;
 
-  // Create and add a folder with 16 items in it.
-  size_t kTotalItems = kMaxFolderItems;
+  // Create and add a folder with |GetMaxFolderItems()| in it.
+  size_t kTotalItems = GetMaxFolderItems();
   model_->CreateAndPopulateFolderWithApps(kTotalItems);
   EXPECT_EQ(1u, model_->top_level_item_list()->item_count());
   EXPECT_EQ(AppListFolderItem::kItemType,
@@ -522,7 +526,7 @@ TEST_P(AppsGridViewTest, MouseDragMaxItemsInFolderWithMovement) {
   model_->PopulateAppWithId(kTotalItems);
   EXPECT_EQ(2u, model_->top_level_item_list()->item_count());
   EXPECT_EQ(folder_item->id(), model_->top_level_item_list()->item_at(0)->id());
-  EXPECT_EQ(model_->GetItemName(kMaxFolderItems),
+  EXPECT_EQ(model_->GetItemName(GetMaxFolderItems()),
             model_->top_level_item_list()->item_at(1)->id());
 
   AppListItemView* folder_view =
@@ -552,7 +556,7 @@ TEST_P(AppsGridViewTest, MouseDragMaxItemsInFolderWithMovement) {
 
   // The item should not have moved into the folder.
   EXPECT_EQ(2u, model_->top_level_item_list()->item_count());
-  EXPECT_EQ(kMaxFolderItems, folder_item->ChildItemCount());
+  EXPECT_EQ(GetMaxFolderItems(), folder_item->ChildItemCount());
   test_api_->LayoutToIdealBounds();
 }
 
