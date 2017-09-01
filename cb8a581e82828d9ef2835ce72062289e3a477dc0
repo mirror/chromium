@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "ab37a2be_1d2158d3",
+        "filename": "ui/views/bubble/tray_bubble_view.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-09-01T00:35:30Z",
+      "side": 1,
+      "message": "To add a comment, I don\u0027t think we need to handle other accelerators which are defined by the tray (and its widget).\n\nThis is a special case where we are rerouting an event from PreTarget stage. This is earlier than the time when OnKeyEvent is usually called. I don\u0027t expect that implementation of OnKeyEvent (or widget\u0027s accelerator) is expecting that it might be called by this special way.",
+      "parentUuid": "36094f1b_87a6a50e",
+      "range": {
+        "startLine": 160,
+        "startChar": 5,
+        "endLine": 161,
+        "endChar": 77
+      },
+      "revId": "cb8a581e82828d9ef2835ce72062289e3a477dc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8dadd2bb_bcba72a5",
         "filename": "ui/views/bubble/tray_bubble_view.cc",
         "patchSetId": 28
@@ -60,6 +84,30 @@
       "writtenOn": "2017-08-31T21:11:20Z",
       "side": 1,
       "message": "Is the bubble normally inactive?",
+      "range": {
+        "startLine": 167,
+        "startChar": 7,
+        "endLine": 168,
+        "endChar": 26
+      },
+      "revId": "cb8a581e82828d9ef2835ce72062289e3a477dc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5142a6d7_c5bbae15",
+        "filename": "ui/views/bubble/tray_bubble_view.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-09-01T00:35:30Z",
+      "side": 1,
+      "message": "Yes, TrayBubbleView is inactive by default. Also it\u0027s not activatable by default.",
+      "parentUuid": "8dadd2bb_bcba72a5",
       "range": {
         "startLine": 167,
         "startChar": 7,
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "a479be3d_71dd7088",
+        "filename": "ui/views/bubble/tray_bubble_view.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-09-01T00:35:30Z",
+      "side": 1,
+      "message": "As you commented, the reason I put this here is because MenuController::OnWillDispatchKeyEvent is doing so. Added a comment. While it might be a little weird, I think it should be fine to put this either before or after the ViewsDelegate as we are converting it to accelerator.",
+      "parentUuid": "4c8f81b8_c89a867e",
+      "range": {
+        "startLine": 177,
+        "startChar": 2,
+        "endLine": 179,
+        "endChar": 27
+      },
+      "revId": "cb8a581e82828d9ef2835ce72062289e3a477dc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ba31626c_6c4d2c54",
         "filename": "ui/views/bubble/tray_bubble_view.h",
         "patchSetId": 28
@@ -115,6 +187,30 @@
       "revId": "cb8a581e82828d9ef2835ce72062289e3a477dc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80ba19bc_23a1a509",
+        "filename": "ui/views/bubble/tray_bubble_view.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-09-01T00:35:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba31626c_6c4d2c54",
+      "range": {
+        "startLine": 215,
+        "startChar": 18,
+        "endLine": 215,
+        "endChar": 51
+      },
+      "revId": "cb8a581e82828d9ef2835ce72062289e3a477dc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
