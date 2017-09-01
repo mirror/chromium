@@ -70,6 +70,24 @@
       "revId": "2ab2b06e54f53fd8377deabfb6b23f1e270647a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "429299a3_ad841e28",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_benchmarks/webvr.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1116794
+      },
+      "writtenOn": "2017-09-01T20:08:17Z",
+      "side": 1,
+      "message": "Hi Ned, can you take another look?\n\nI renamed the benchmark name to xr.webvr.static based on the discussion with the team. We follow the pattern of xr.\u003cbrowse mode\u003e.\u003cstory\u003e for other benchmark names. The reason why we chose xr instead of vr is we probably will implement AR in future, so we would like to pick a name that is future proof.",
+      "parentUuid": "c7c355e4_26a45ddf",
+      "revId": "2ab2b06e54f53fd8377deabfb6b23f1e270647a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
