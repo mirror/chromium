@@ -257,11 +257,14 @@
 #include "platform/wtf/text/CharacterNames.h"
 #include "platform/wtf/text/StringBuffer.h"
 #include "platform/wtf/text/TextEncodingRegistry.h"
+#include "public/platform/InterfaceProvider.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebAddressSpace.h"
 #include "public/platform/WebPrerenderingSupport.h"
 #include "public/platform/modules/insecure_input/insecure_input_service.mojom-blink.h"
 #include "public/platform/site_engagement.mojom-blink.h"
+#include "services/metrics/public/cpp/mojo_ukm_recorder.h"
+#include "services/metrics/public/interfaces/ukm_interface.mojom-shared.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 
 #ifndef NDEBUG
@@ -311,12 +314,20 @@ class DocumentOutliveTimeReporter : public BlinkGCObserver {
     int outlive_time_count = GetOutliveTimeCount();
     if (outlive_time_count == 5 || outlive_time_count == 10) {
       const char* kUMAString = "Document.OutliveTimeAfterShutdown.GCCount";
+
       if (outlive_time_count == 5)
         UMA_HISTOGRAM_ENUMERATION(kUMAString, kGCCount5, kGCCountMax);
       else if (outlive_time_count == 10)
         UMA_HISTOGRAM_ENUMERATION(kUMAString, kGCCount10, kGCCountMax);
       else
         NOTREACHED();
+    }
+
+    if (outlive_time_count == 5 || outlive_time_count == 10 ||
+        outlive_time_count == 20 || outlive_time_count == 50) {
+      std::unique_ptr<ukm::UkmEntryBuilder> builder =
+          document_->CreateUkmBuilder("Document.OutliveTimeAfterShutdown");
+      builder->AddMetric("GCCount", outlive_time_count);
     }
   }
 
@@ -3560,6 +3571,9 @@ void Document::SetURL(const KURL& url) {
   access_entry_from_url_ = nullptr;
   UpdateBaseURL();
   GetContextFeatures().UrlDidChange(this);
+
+  if (ukm_recorder_)
+    ukm_recorder_->UpdateSourceURL(ukm_source_id_, url_);
 }
 
 KURL Document::ValidBaseElementURL() const {
@@ -6997,6 +7011,26 @@ void Document::RecordDeferredLoadReason(WouldLoadReason reason) {
        i <= static_cast<int>(reason); ++i)
     RecordLoadReasonToHistogram(static_cast<WouldLoadReason>(i));
   would_load_reason_ = reason;
+}
+
+ukm::UkmRecorder* Document::UkmRecorder() {
+  if (ukm_recorder_)
+    return ukm_recorder_.get();
+
+  ukm::mojom::UkmRecorderInterfacePtr interface;
+  Platform::Current()->GetInterfaceProvider()->GetInterface(
+      mojo::MakeRequest(&interface));
+  ukm_recorder_.reset(new ukm::MojoUkmRecorder(std::move(interface)));
+  ukm_source_id_ = ukm_recorder_->GetNewSourceID();
+  ukm_recorder_->UpdateSourceURL(ukm_source_id_, url_);
+  return ukm_recorder_.get();
+}
+
+std::unique_ptr<ukm::UkmEntryBuilder> Document::CreateUkmBuilder(
+    const char* event) {
+  ukm::UkmRecorder* ukm_recorder = UkmRecorder();
+  DCHECK(ukm_recorder);
+  return ukm_recorder->GetEntryBuilder(ukm_source_id_, event);
 }
 
 DEFINE_TRACE_WRAPPERS(Document) {
