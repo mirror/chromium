@@ -12,6 +12,12 @@ Polymer({
   behaviors: [SettingsBooleanControlBehavior],
 
   properties: {
+    /**
+     * Hide label when toggle is visually labeled elsewhere.
+     * |label| is still needed for a11y.
+     */
+    hideLabel: Boolean,
+
     elideLabel: {
       type: Boolean,
       reflectToAttribute: true,
@@ -29,6 +35,14 @@ Polymer({
   /** @override */
   focus: function() {
     this.$.control.focus();
+  },
+
+  /**
+   * TODO(hcarmona): Set label everywhere for a11y and remove this function.
+   * @return {boolean}
+   */
+  showLabel_: function() {
+    return this.label && !this.hideLabel;
   },
 
   /**
