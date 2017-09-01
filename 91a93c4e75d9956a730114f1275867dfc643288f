@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "5e0734d2_97d9ee92",
+        "filename": "content/public/browser/web_contents_view_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-09-01T17:54:42Z",
+      "side": 1,
+      "message": "Done, thanks for explaining it.",
+      "parentUuid": "21c6d844_8a2797d0",
+      "range": {
+        "startLine": 69,
+        "startChar": 16,
+        "endLine": 70,
+        "endChar": 44
+      },
+      "revId": "91a93c4e75d9956a730114f1275867dfc643288f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61f6e6ed_f4d546d5",
         "filename": "content/shell/browser/renderer_host/shell_render_widget_host_view_mac_delegate.mm",
         "patchSetId": 1
@@ -140,6 +164,30 @@
       "revId": "91a93c4e75d9956a730114f1275867dfc643288f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d32aab99_2b5e2611",
+        "filename": "content/shell/browser/renderer_host/shell_render_widget_host_view_mac_delegate.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-09-01T17:54:42Z",
+      "side": 1,
+      "message": "Done. I rolled this into a variable to avoid the static.",
+      "parentUuid": "61f6e6ed_f4d546d5",
+      "range": {
+        "startLine": 20,
+        "startChar": 26,
+        "endLine": 20,
+        "endChar": 36
+      },
+      "revId": "91a93c4e75d9956a730114f1275867dfc643288f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
