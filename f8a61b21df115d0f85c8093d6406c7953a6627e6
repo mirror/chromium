@@ -22,6 +22,30 @@
       "revId": "f8a61b21df115d0f85c8093d6406c7953a6627e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6ef60d8e_acd4e707",
+        "filename": "chromecast/public/media/decoder_config.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1230159
+      },
+      "writtenOn": "2017-09-01T00:28:06Z",
+      "side": 1,
+      "message": "Put kChannelAll back into the CL.",
+      "parentUuid": "05b66c46_3c0de149",
+      "range": {
+        "startLine": 320,
+        "startChar": 22,
+        "endLine": 320,
+        "endChar": 33
+      },
+      "revId": "f8a61b21df115d0f85c8093d6406c7953a6627e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
