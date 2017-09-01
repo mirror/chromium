@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "90a2a65e_be392f7d",
+        "filename": "ash/wm/window_state.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-09-01T11:04:46Z",
+      "side": 1,
+      "message": "Extracted to:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/647347",
+      "parentUuid": "a6e58c4a_800cdb06",
+      "revId": "3efdb3442d096af69d6be14dfb8fb979e8d228d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1362aa18_679b5821",
         "filename": "components/exo/shell_surface.h",
         "patchSetId": 5
