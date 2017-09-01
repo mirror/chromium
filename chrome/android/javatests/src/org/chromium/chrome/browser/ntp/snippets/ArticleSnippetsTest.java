@@ -229,7 +229,7 @@ public class ArticleSnippetsTest {
                 long timestamp = System.currentTimeMillis() - 5 * DateUtils.MINUTE_IN_MILLIS;
 
                 SnippetArticle download = new SnippetArticle(KnownCategories.DOWNLOADS, "id1",
-                        "test_image.jpg", "example.com", null, "http://example.com", timestamp, 10f,
+                        "test_image.jpg", "example.com", "http://example.com", timestamp, 10f,
                         timestamp, false);
                 download.setAssetDownloadData("asdf", filePath, "image/jpeg");
                 SuggestionsCategoryInfo categoryInfo =
@@ -297,7 +297,7 @@ public class ArticleSnippetsTest {
         @CategoryInt
         int minimalCategory = 1;
         SnippetArticle shortSnippet = new SnippetArticle(fullCategory, "id1", "Snippet",
-                "Publisher", "Preview Text", "www.google.com",
+                "Publisher", "www.google.com",
                 1466614774, // Publish timestamp
                 10f, // Score
                 1466634774, // Fetch timestamp
@@ -310,7 +310,7 @@ public class ArticleSnippetsTest {
         SnippetArticle longSnippet = new SnippetArticle(fullCategory, "id2",
                 new String(new char[20]).replace("\0", "Snippet "),
                 new String(new char[20]).replace("\0", "Publisher "),
-                new String(new char[80]).replace("\0", "Preview Text "), "www.google.com",
+                "www.google.com",
                 1466614074, // Publish timestamp
                 20f, // Score
                 1466634774, // Fetch timestamp
@@ -318,14 +318,14 @@ public class ArticleSnippetsTest {
 
         SnippetArticle minimalSnippet = new SnippetArticle(minimalCategory, "id3",
                 new String(new char[20]).replace("\0", "Bookmark "), "Publisher",
-                "This should not be displayed", "www.google.com",
+                "www.google.com",
                 1466614774, // Publish timestamp
                 10f, // Score
                 1466634774, // Fetch timestamp
                 false); // IsVideoSuggestion
 
         SnippetArticle minimalSnippet2 = new SnippetArticle(minimalCategory, "id4", "Bookmark",
-                "Publisher", "This should not be displayed", "www.google.com",
+                "Publisher", "www.google.com",
                 1466614774, // Publish timestamp
                 10f, // Score
                 1466634774, // Fetch timestamp
