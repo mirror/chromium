@@ -71,7 +71,8 @@ public class DownloadManagerUi implements OnMenuItemClickListener, SearchDelegat
         private ThumbnailProvider mThumbnailProvider;
 
         DownloadBackendProvider() {
-            mOfflinePageBridge = new OfflinePageDownloadBridge(Profile.getLastUsedProfile());
+            mOfflinePageBridge = new OfflinePageDownloadBridge(
+                    Profile.getLastUsedProfile().getOriginalProfile());
             mSelectionDelegate = new DownloadItemSelectionDelegate();
             mThumbnailProvider = new ThumbnailProviderImpl();
         }
@@ -79,11 +80,6 @@ public class DownloadManagerUi implements OnMenuItemClickListener, SearchDelegat
         @Override
         public DownloadDelegate getDownloadDelegate() {
             return DownloadManagerService.getDownloadManagerService();
-        }
-
-        @Override
-        public OfflinePageDownloadBridge getOfflinePageBridge() {
-            return mOfflinePageBridge;
         }
 
         @Override
@@ -98,7 +94,7 @@ public class DownloadManagerUi implements OnMenuItemClickListener, SearchDelegat
 
         @Override
         public void destroy() {
-            getOfflinePageBridge().destroy();
+            mOfflinePageBridge.destroy();
 
             mThumbnailProvider.destroy();
             mThumbnailProvider = null;
