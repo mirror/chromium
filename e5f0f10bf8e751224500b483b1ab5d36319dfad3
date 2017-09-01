@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "ac84e894_0374dba5",
+        "filename": "chrome/browser/renderer_context_menu/render_view_context_menu.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 996,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-09-01T03:36:50Z",
+      "side": 1,
+      "message": "Ah OK, you can\u0027t declare a variable in a sub-expression, but as a special case you can declare a variable in the top level of a conditional.\n\nAside from that, I\u0027m not really a fan of assignment to a variable in a conditional (it can be confused for equality checking).\n\nCould you just move the assignment outside, so you have \"const Extension* bookmark_app \u003d ...\", and then \"if (bookmark_app) {...}\"? It still means you can\u0027t combine them into a \u0026\u0026 condition, but at least then it doesn\u0027t *look like* it should be combined (because there are multiple statements within that outer if body).",
+      "parentUuid": "02bfbdf9_87d10643",
+      "range": {
+        "startLine": 996,
+        "startChar": 6,
+        "endLine": 996,
+        "endChar": 8
+      },
+      "revId": "e5f0f10bf8e751224500b483b1ab5d36319dfad3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bec542a2_3f640636",
         "filename": "chrome/browser/renderer_context_menu/render_view_context_menu.cc",
         "patchSetId": 5
@@ -128,6 +152,30 @@
       "revId": "e5f0f10bf8e751224500b483b1ab5d36319dfad3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "395d187b_ef864135",
+        "filename": "chrome/browser/renderer_context_menu/render_view_context_menu.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2201,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-09-01T03:36:50Z",
+      "side": 1,
+      "message": "Ack. Could you add a comment:\n// |bookmark_app| could be null if it has been uninstalled since the user opened the context menu.",
+      "parentUuid": "27577d54_41a5b704",
+      "range": {
+        "startLine": 2201,
+        "startChar": 7,
+        "endLine": 2201,
+        "endChar": 19
+      },
+      "revId": "e5f0f10bf8e751224500b483b1ab5d36319dfad3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
