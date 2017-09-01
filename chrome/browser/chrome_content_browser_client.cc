@@ -754,9 +754,7 @@ void CreateBudgetService(blink::mojom::BudgetServiceRequest request,
 bool GetDataSaverEnabledPref(const PrefService* prefs) {
   // Enable data saver only when data saver pref is enabled and not part of
   // "Disabled" group of "SaveDataHeader" experiment.
-  return prefs->GetBoolean(prefs::kDataSaverEnabled) &&
-         base::FieldTrialList::FindFullName("SaveDataHeader")
-             .compare("Disabled");
+  return true;
 }
 
 WebContents* GetWebContents(int render_process_id, int render_frame_id) {

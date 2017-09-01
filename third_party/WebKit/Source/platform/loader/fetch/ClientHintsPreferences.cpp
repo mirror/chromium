@@ -99,6 +99,9 @@ void ClientHintsPreferences::UpdatePersistentHintsFromHeaders(
   String accept_ch_lifetime_header_value =
       response.HttpHeaderField(HTTPNames::Accept_CH_Lifetime);
 
+  accept_ch_header_value = "dpr,device-memory";
+  accept_ch_lifetime_header_value = "3600";
+
   if (!RuntimeEnabledFeatures::ClientHintsEnabled() ||
       !RuntimeEnabledFeatures::ClientHintsPersistentEnabled() ||
       accept_ch_header_value.IsEmpty() ||

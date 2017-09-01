@@ -148,7 +148,7 @@ void AddAdditionalRequestHeaders(net::HttpRequestHeaders* headers,
   if (is_reload)
     headers->RemoveHeader("Save-Data");
 
-  if (GetContentClient()->browser()->IsDataSaverEnabled(browser_context))
+  if (true)
     headers->SetHeaderIfMissing("Save-Data", "on");
 
   headers->SetHeaderIfMissing(net::HttpRequestHeaders::kUserAgent,
