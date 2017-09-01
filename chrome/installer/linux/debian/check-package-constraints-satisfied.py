@@ -15,21 +15,24 @@ import sys
 
 import deb_version
 
-if len(sys.argv) != 4:
-  print 'Usage: %s /path/to/binary /path/to/sysroot arch' % sys.argv[0]
+if len(sys.argv) != 5:
+  print 'Usage: %s binary_path sysroot_path arch stamp_path' % sys.argv[0]
   sys.exit(1)
-
 binary = os.path.abspath(sys.argv[1])
 sysroot = os.path.abspath(sys.argv[2])
 arch = sys.argv[3]
+stamp = sys.argv[4]
 
 cmd = ['dpkg-shlibdeps']
-if arch == 'amd64':
+if arch == 'x64':
   cmd.extend(['-l%s/usr/lib/x86_64-linux-gnu' % sysroot,
               '-l%s/lib/x86_64-linux-gnu' % sysroot])
-elif arch == 'i386':
+elif arch == 'x86':
   cmd.extend(['-l%s/usr/lib/i386-linux-gnu' % sysroot,
               '-l%s/lib/i386-linux-gnu' % sysroot])
+elif arch == 'arm':
+  cmd.extend(['-l%s/usr/lib/arm-linux-gnueabihf' % sysroot,
+              '-l%s/lib/arm-linux-gnueabihf' % sysroot])
 else:
   print 'Unsupported architecture ' + arch
   sys.exit(1)
@@ -77,6 +80,8 @@ def get_package_and_version_requirement(dep):
 deps = stdout.replace('shlibs:Depends=', '').replace('\n', '').split(', ')
 package_requirements = {}
 for dep in deps:
+  if dep == '':
+    continue
   (package, requirement) = get_package_and_version_requirement(dep)
   package_requirements[package] = requirement
 
@@ -99,4 +104,7 @@ for distro in distro_package_versions:
       print >> sys.stderr, 'Dependency on package %s not satisfiable on %s' % (
           package, distro)
       ret_code = 1
+if ret_code == 0:
+  with open(stamp, 'a'):
+    os.utime(stamp, None)
 exit(ret_code)
