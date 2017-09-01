@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd8278a4_99fbf08d",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-01T15:42:56Z",
+      "side": 1,
+      "message": "You want to run the same callback on error?",
+      "revId": "1a002c60638c638d4752b0719ad43235640c2293",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c3912ba_06827d7d",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-01T15:42:56Z",
+      "side": 1,
+      "message": "It looks like |bluetooth_adapter_| never changes once it is set. Do you have to copy the pointer around?",
+      "revId": "1a002c60638c638d4752b0719ad43235640c2293",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e9d60ee_01993c1d",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-01T15:42:56Z",
+      "side": 1,
+      "message": "Are all these closures just generic callbacks, or do they do more or less the same thing each time? Is it possible to implement this as a state machine, rather than chaining all the callbacks together?",
+      "revId": "1a002c60638c638d4752b0719ad43235640c2293",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
