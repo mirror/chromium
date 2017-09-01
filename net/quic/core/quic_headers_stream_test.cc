@@ -1014,6 +1014,7 @@ TEST_P(QuicHeadersStreamTest, AckSentData) {
   EXPECT_CALL(session_,
               WritevData(headers_stream_, kHeadersStreamId, _, _, NO_FIN, _))
       .WillRepeatedly(Invoke(MockQuicSession::ConsumeAllData));
+  EXPECT_CALL(*connection_, CloseConnection(QUIC_INTERNAL_ERROR, _, _));
   InSequence s;
   QuicReferenceCountedPointer<MockAckListener> ack_listener1(
       new MockAckListener());
@@ -1061,12 +1062,10 @@ TEST_P(QuicHeadersStreamTest, AckSentData) {
   headers_stream_->OnStreamFrameAcked(frame1, QuicTime::Delta::Zero());
   headers_stream_->OnStreamFrameAcked(frame2, QuicTime::Delta::Zero());
   // Unsent data is acked.
-  if (!session_.save_data_before_consumption()) {
-    EXPECT_CALL(*connection_, CloseConnection(QUIC_INTERNAL_ERROR, _, _));
-    EXPECT_QUIC_BUG(
-        headers_stream_->OnStreamFrameAcked(frame3, QuicTime::Delta::Zero()),
-        "Unsent stream data is acked.");
-  }
+  EXPECT_CALL(*ack_listener2, OnPacketAcked(7, _));
+  EXPECT_QUIC_BUG(
+      headers_stream_->OnStreamFrameAcked(frame3, QuicTime::Delta::Zero()),
+      "Unsent stream data is acked.");
 }
 
 TEST_P(QuicHeadersStreamTest, FrameContainsMultipleHeaders) {
