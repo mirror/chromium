@@ -34,6 +34,24 @@
       "revId": "f8bf1f141495495175c0a1ed75924d925b912fd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "447b0f8d_0759531c",
+        "filename": "base/allocator/partition_allocator/address_space_randomization.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-01T14:34:28Z",
+      "side": 1,
+      "message": "How are these numbers getting chosen? Why wouldn\u0027t we use the same numbers as v8. In fact, shouldn\u0027t we be more careful about v8, since that actually maps executable code? Potentially leaking 32MB of kernel wired memory per renderer seems pretty high...but without more context, it\u0027s hard to say whether the tradeoff is reasonable or not.",
+      "parentUuid": "47a6e3a9_02840676",
+      "revId": "f8bf1f141495495175c0a1ed75924d925b912fd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
