@@ -52,6 +52,24 @@
       "revId": "78853484ff522c20b73e40316893219965d3ae55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f3606f5_25a84e32",
+        "filename": "content/test/navigation_simulator_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-09-01T12:23:53Z",
+      "side": 1,
+      "message": "Yes that sounds reasonable.",
+      "parentUuid": "6ff98c8b_cc500e47",
+      "revId": "78853484ff522c20b73e40316893219965d3ae55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
