@@ -16,6 +16,24 @@
       "revId": "66a1e590b32ecd213f4dac07ee2c4170947891d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84d181cf_8c89d0ad",
+        "filename": "components/viz/service/display/layer_quad.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-09-01T18:24:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67df8c58_e248098a",
+      "revId": "66a1e590b32ecd213f4dac07ee2c4170947891d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
