@@ -23,12 +23,12 @@ class PrefetchDownloader {
 
   virtual void SetPrefetchService(PrefetchService* service) = 0;
 
+  // Returned true if the download service is up.
+  virtual bool IsDownloadServiceReady() const = 0;
+
   // Starts to download an archive from |download_location|.
   virtual void StartDownload(const std::string& download_id,
                              const std::string& download_location) = 0;
-
-  // Cancels a previous scheduled download.
-  virtual void CancelDownload(const std::string& download_id) = 0;
 
   // Called when the download service is initialized and can accept the
   // downloads.
@@ -42,9 +42,6 @@ class PrefetchDownloader {
   // Called when the download service fails to initialize and should not be
   // used.
   virtual void OnDownloadServiceUnavailable() = 0;
-
-  // Called when the download service is tearing down.
-  virtual void OnDownloadServiceShutdown() = 0;
 
   // Called when a download is completed successfully. Note that the download
   // can be scheduled in previous sessions.
