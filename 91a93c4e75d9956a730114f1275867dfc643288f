@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b171f03e_c4c8be1c",
+        "filename": "chrome/browser/ui/cocoa/tab_contents/chrome_web_contents_view_delegate_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-09-01T17:34:05Z",
+      "side": 1,
+      "message": "Popups are like HTML selects boxes; they don\u0027t cause history navigation via the overscroll.",
+      "parentUuid": "5ddd4935_637b2215",
+      "range": {
+        "startLine": 40,
+        "startChar": 5,
+        "endLine": 41,
+        "endChar": 16
+      },
+      "revId": "91a93c4e75d9956a730114f1275867dfc643288f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5eb18ace_28267815",
         "filename": "content/public/browser/web_contents_view_delegate.h",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-01T17:30:45Z",
       "side": 1,
       "message": "You need to change the parallel C version too.",
+      "range": {
+        "startLine": 69,
+        "startChar": 16,
+        "endLine": 70,
+        "endChar": 44
+      },
+      "revId": "91a93c4e75d9956a730114f1275867dfc643288f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c2f0810_751145cb",
+        "filename": "content/public/browser/web_contents_view_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-09-01T17:34:05Z",
+      "side": 1,
+      "message": "Why does this even? Nobody calls it.",
+      "parentUuid": "5eb18ace_28267815",
       "range": {
         "startLine": 69,
         "startChar": 16,
