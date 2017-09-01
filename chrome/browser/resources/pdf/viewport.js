@@ -227,9 +227,9 @@ Viewport.prototype = {
    */
   resize_: function() {
     if (this.fittingType_ == Viewport.FittingType.FIT_TO_PAGE)
-      this.fitToPageInternal_(false);
+      this.fitToPageInternal_(false, false);
     else if (this.fittingType_ == Viewport.FittingType.FIT_TO_WIDTH)
-      this.fitToWidth();
+      this.fitToWidthInternal_(false);
     else
       this.updateViewport_();
   },
@@ -305,17 +305,20 @@ Viewport.prototype = {
 
   /**
    * @private
+   * @param {function} f Function to wrap
+   * @param {?boolean} opt_userInitiated Whether the zooming was triggered by a
+   *     user action. Defaults to false.
    * Used to wrap a function that might perform zooming on the viewport. This is
    * required so that we can notify the plugin that zooming is in progress
    * so that while zooming is taking place it can stop reacting to scroll events
    * from the viewport. This is to avoid flickering.
    */
-  mightZoom_: function(f) {
+  mightZoom_: function(f, opt_userInitiated) {
     this.beforeZoomCallback_();
     this.allowedToChangeZoom_ = true;
     f();
     this.allowedToChangeZoom_ = false;
-    this.afterZoomCallback_();
+    this.afterZoomCallback_(opt_userInitiated || false);
   },
 
   /**
@@ -562,9 +565,12 @@ Viewport.prototype = {
   },
 
   /**
+   * @param {boolean} userInitiated Whether this call was initiated by the
+   *     user clicking on the zoom toolbar button.
+   * @private
    * Zoom the viewport so that the page-width consumes the entire viewport.
    */
-  fitToWidth: function() {
+  fitToWidthInternal_: function(userInitiated) {
     this.mightZoom_(() => {
       this.fittingType_ = Viewport.FittingType.FIT_TO_WIDTH;
       if (!this.documentDimensions_)
@@ -575,7 +581,14 @@ Viewport.prototype = {
           this.computeFittingZoom_(this.documentDimensions_, true));
       var page = this.getMostVisiblePage();
       this.updateViewport_();
-    });
+    }, userInitiated);
+  },
+
+  /**
+   * Zoom the viewport so that the page-width consumes the entire viewport.
+   */
+  fitToWidth: function() {
+    this.fitToWidthInternal_(true);
   },
 
   /**
@@ -584,8 +597,10 @@ Viewport.prototype = {
    * @param {boolean} scrollToTopOfPage Set to true if the viewport should be
    *     scrolled to the top of the current page. Set to false if the viewport
    *     should remain at the current scroll position.
+   * @param {boolean} userInitiated Whether this call was initiated by the
+   *     user clicking on the zoom toolbar button.
    */
-  fitToPageInternal_: function(scrollToTopOfPage) {
+  fitToPageInternal_: function(scrollToTopOfPage, userInitiated) {
     this.mightZoom_(() => {
       this.fittingType_ = Viewport.FittingType.FIT_TO_PAGE;
       if (!this.documentDimensions_)
@@ -601,15 +616,17 @@ Viewport.prototype = {
         this.position = {x: 0, y: this.pageDimensions_[page].y * this.zoom};
       }
       this.updateViewport_();
-    });
+    }, userInitiated);
   },
 
   /**
    * Zoom the viewport so that a page consumes the entire viewport. Also scrolls
    * the viewport to the top of the current page.
+   * @param {boolean} opt_userInitiated Whether this fit to page was initiated
+   *     by the user. Defaults to false.
    */
-  fitToPage: function() {
-    this.fitToPageInternal_(true);
+  fitToPage: function(opt_userInitiated) {
+    this.fitToPageInternal_(true, opt_userInitiated || false);
   },
 
   /**
@@ -625,7 +642,7 @@ Viewport.prototype = {
       }
       this.setZoomInternal_(nextZoom);
       this.updateViewport_();
-    });
+    }, true);
   },
 
   /**
@@ -641,7 +658,7 @@ Viewport.prototype = {
       }
       this.setZoomInternal_(nextZoom);
       this.updateViewport_();
-    });
+    }, true);
   },
 
   /**
@@ -684,7 +701,7 @@ Viewport.prototype = {
       this.setPinchZoomInternal_(scaleDelta, frameToPluginCoordinate(e.center));
       this.updateViewport_();
       this.prevScale_ = e.startScaleRatio;
-    });
+    }, true);
   },
 
   pinchZoomStart: function(e) {
