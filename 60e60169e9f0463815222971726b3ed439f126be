@@ -34,6 +34,24 @@
       "revId": "60e60169e9f0463815222971726b3ed439f126be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c5beabd_bc566989",
+        "filename": "chrome/browser/ui/ash/palette_delegate_chromeos.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-01T14:36:12Z",
+      "side": 1,
+      "message": "OK.\n\noptional idea: Make the observer itself do the SetObserver() in its constructor and destructor. You\u0027ll still need the highlighter_controller() check in the dtor, but that would tightly tie SetObserver() to the lifetime of the object.",
+      "parentUuid": "cab07ed5_e6a350be",
+      "revId": "60e60169e9f0463815222971726b3ed439f126be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
