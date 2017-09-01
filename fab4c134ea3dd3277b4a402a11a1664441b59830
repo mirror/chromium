@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ffe05d6_dadbceb2",
+        "filename": "third_party/WebKit/Source/core/html/HTMLInputElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1723,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-09-01T20:37:38Z",
+      "side": 1,
+      "message": "This is always set to return false. Not sure it\u0027s good to just change it but I just wanted the code to work and send to get your suggestions :)",
+      "range": {
+        "startLine": 1723,
+        "startChar": 25,
+        "endLine": 1723,
+        "endChar": 44
+      },
+      "revId": "fab4c134ea3dd3277b4a402a11a1664441b59830",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
