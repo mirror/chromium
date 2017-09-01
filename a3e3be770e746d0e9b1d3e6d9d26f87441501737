@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bd832b2c_3a7a0bd9",
+        "filename": "third_party/WebKit/Source/core/layout/ng/geometry/ng_margin_strut.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1212644
+      },
+      "writtenOn": "2017-09-01T22:54:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd67c626_a07acbaa",
+      "revId": "a3e3be770e746d0e9b1d3e6d9d26f87441501737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63a82022_9ba67117",
         "filename": "third_party/WebKit/Source/core/layout/ng/geometry/ng_margin_strut.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "a3e3be770e746d0e9b1d3e6d9d26f87441501737",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6ee35b6_459e6cca",
+        "filename": "third_party/WebKit/Source/core/layout/ng/geometry/ng_margin_strut.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1212644
+      },
+      "writtenOn": "2017-09-01T22:54:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63a82022_9ba67117",
+      "revId": "a3e3be770e746d0e9b1d3e6d9d26f87441501737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a39062e3_088a1204",
+        "filename": "third_party/WebKit/Source/core/layout/ng/geometry/ng_margin_strut.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1212644
+      },
+      "writtenOn": "2017-09-01T22:54:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4087538_63669e2a",
+      "revId": "a3e3be770e746d0e9b1d3e6d9d26f87441501737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b404c1d7_c3faa936",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "8b9ccd7f_99674446",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1212644
+      },
+      "writtenOn": "2017-09-01T22:54:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b404c1d7_c3faa936",
+      "revId": "a3e3be770e746d0e9b1d3e6d9d26f87441501737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a7a6514_cd2dc6d8",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
         "patchSetId": 2
@@ -81,6 +153,24 @@
       "writtenOn": "2017-09-01T15:52:38Z",
       "side": 1,
       "message": "Yeah so that jsbin test I was trying to work out what all the different UAs do. It\u0027s all over the place ;)\n\nI think that Edge just ignores the last margin which was what I was trying to say here. But this is also good.\n\nThis comment could now be:\n\n\"\nIf we are a quirky container, we ignore any quirky margins and just consider normal margins to extend our size.\nOther UAs perform this calculation differently, e.g. by just ignoring the *last* quirky margin.\n\"\n\nOr something :)",
+      "revId": "a3e3be770e746d0e9b1d3e6d9d26f87441501737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d18ccb7_ed74ad26",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1212644
+      },
+      "writtenOn": "2017-09-01T22:54:48Z",
+      "side": 1,
+      "message": "https://html.spec.whatwg.org/multipage/rendering.html#margin-collapsing-quirks attempts to describe this, but it\u0027s too late in the week for me to successfully parse that document.  I\u0027ve added your comment plus a TODO to double check with the spec.",
+      "parentUuid": "6a7a6514_cd2dc6d8",
       "revId": "a3e3be770e746d0e9b1d3e6d9d26f87441501737",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
