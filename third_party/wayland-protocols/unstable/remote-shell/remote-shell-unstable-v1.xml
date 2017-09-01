@@ -38,7 +38,7 @@
     reset.
   </description>
 
-  <interface name="zcr_remote_shell_v1" version="7">
+  <interface name="zcr_remote_shell_v1" version="8">
     <description summary="remote_shell">
       The global interface that allows clients to turn a wl_surface into a
       "real window" which is remotely managed but can be stacked, activated
@@ -169,6 +169,15 @@
       </description>
       <arg name="layout_mode" type="uint"/>
     </event>
+
+    <!-- Version 8 additions -->
+
+    <event name="default_device_scale_factor" since="8">
+      <description summary="initialize scale configuration">
+	Sends the default device scale factor.
+      </description>
+      <arg name="scale" type="int" summary="DP to pixels ratio, in 16.16 fixed point format"/>
+    </event>
   </interface>
 
   <interface name="zcr_remote_surface_v1" version="7">
@@ -256,7 +265,7 @@
 
     <request name="set_scale">
       <description summary="set scale">
-	Set a scale factor that will be applied to surface and all descendants.
+	[Deprecated] Set a scale factor that will be applied to surface and all descendants.
       </description>
       <arg name="scale" type="fixed"/>
     </request>
