@@ -158,6 +158,8 @@ class CORE_TEMPLATE_CLASS_EXPORT PositionTemplate {
     return anchor_node_ && anchor_node_->isConnected();
   }
 
+  bool IsValidFor(const Document&) const;
+
   bool IsNull() const { return !anchor_node_; }
   bool IsNotNull() const { return anchor_node_; }
   bool IsOrphan() const { return anchor_node_ && !anchor_node_->isConnected(); }
@@ -219,6 +221,13 @@ class CORE_TEMPLATE_CLASS_EXPORT PositionTemplate {
   int offset_;
   PositionAnchorType anchor_type_;
 };
+
+template <>
+bool PositionTemplate<EditingStrategy>::IsValidFor(const Document&) const;
+
+template <>
+bool PositionTemplate<EditingInFlatTreeStrategy>::IsValidFor(
+    const Document&) const;
 
 extern template class CORE_EXTERN_TEMPLATE_EXPORT
     PositionTemplate<EditingStrategy>;
