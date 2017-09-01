@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43d27348_e028073d",
+        "filename": "content/shell/browser/shell_browser_main_parts.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-09-01T15:18:18Z",
+      "side": 1,
+      "message": "I think in content_shell the browser and GPU are in different processes. So it shouldn\u0027t require XInitThreads() unless --single-process or --in-process-gpu is added, in which case XInitThreads() was already called here:\n\nhttps://cs.chromium.org/chromium/src/content/browser/browser_main_loop.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d581\n\nWould the content_browsertests that need XInitThreads() have also hit that block of code and called XInitThreads()?",
+      "revId": "6c17add5be4806ba779deaf345225c551cec7542",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
