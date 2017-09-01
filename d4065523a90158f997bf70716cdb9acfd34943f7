@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd5b0e7a_e38c80c6",
+        "filename": "services/viz/public/interfaces/compositing/shared_quad_state.mojom",
+        "patchSetId": 52
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-09-01T21:34:09Z",
+      "side": 1,
+      "message": "Does this imply that opacity is only used if are_contents_opaque ? or if !are_contents_opaque ?\n\nIf so, maybe opacity works better as an optional parameter, with it meaing \"fully opaque\" if omitted.",
+      "range": {
+        "startLine": 28,
+        "startChar": 8,
+        "endLine": 28,
+        "endChar": 15
+      },
+      "revId": "d4065523a90158f997bf70716cdb9acfd34943f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
