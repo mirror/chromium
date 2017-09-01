@@ -69,6 +69,9 @@ bool DetectTextEncoding(const char* data,
       (hint_url.Protocol() != "file" && encoding == UTF8))
     return false;
 
+  if (encoding == UTF16LE || encoding == UTF16BE)
+    encoding = ASCII_7BIT;
+
   *detected_encoding = WTF::TextEncoding(MimeEncodingName(encoding));
   return true;
 }
