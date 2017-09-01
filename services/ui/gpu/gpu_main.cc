@@ -79,7 +79,7 @@ GpuMain::GpuMain(mojom::GpuMainRequest request)
   thread_options.message_loop_type = base::MessageLoop::TYPE_IO;
 #endif
 
-#if defined(OS_ANDROID) || defined(OS_CHROMEOS)
+#if defined(OS_LINUX)
   thread_options.priority = base::ThreadPriority::DISPLAY;
 #endif
   CHECK(gpu_thread_.StartWithOptions(thread_options));
@@ -89,7 +89,7 @@ GpuMain::GpuMain(mojom::GpuMainRequest request)
   // should be possible to use |main_task_runner_| for doing IO tasks.
   thread_options = base::Thread::Options(base::MessageLoop::TYPE_IO, 0);
   thread_options.priority = base::ThreadPriority::NORMAL;
-#if defined(OS_ANDROID) || defined(OS_CHROMEOS)
+#if defined(OS_LINUX)
   // TODO(reveman): Remove this in favor of setting it explicitly for each type
   // of process.
   thread_options.priority = base::ThreadPriority::DISPLAY;

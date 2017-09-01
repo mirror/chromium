@@ -1116,6 +1116,7 @@ void VaapiWrapper::PreSandboxInitialization() {
   if (drm_file.IsValid())
     GetDisplayState()->SetDrmFd(drm_file.GetPlatformFile());
 #endif
+  GetProfileInfos();  // dlopen all necessary libraries
 }
 
 // static
