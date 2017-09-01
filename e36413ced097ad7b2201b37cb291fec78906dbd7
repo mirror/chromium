@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0a5c90b_65060431",
+        "filename": "mojo/public/cpp/bindings/binding_set.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-01T18:27:09Z",
+      "side": 1,
+      "message": "I feel like it would be more intuitive to pass in a ImplPointerType to replace, even though it would be O(n). Of course, there would be a question of how to handle this if the templated type is something like unique_ptr.",
+      "revId": "e36413ced097ad7b2201b37cb291fec78906dbd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3a20d6e_81282cba",
+        "filename": "mojo/public/cpp/bindings/binding_set.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-01T18:27:09Z",
+      "side": 1,
+      "message": "Just curious, but should this be NOTREACHED? I feel like if we hit this in a test scenario, then the test probably won\u0027t work anyway.",
+      "revId": "e36413ced097ad7b2201b37cb291fec78906dbd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
