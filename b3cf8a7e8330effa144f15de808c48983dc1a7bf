@@ -16,6 +16,24 @@
       "revId": "b3cf8a7e8330effa144f15de808c48983dc1a7bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13ffa08d_a59945c0",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 980,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-01T05:26:58Z",
+      "side": 1,
+      "message": "Need we?  I really hate using these directives unless clang-format is horribly broken, and I just don\u0027t think it\u0027s horribly broken here.",
+      "parentUuid": "e8019f61_4607f5f5",
+      "revId": "b3cf8a7e8330effa144f15de808c48983dc1a7bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
