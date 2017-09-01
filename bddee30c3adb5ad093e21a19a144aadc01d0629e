@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8acb0866_8df9723b",
+        "filename": "build/config/coverage/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-09-01T20:48:20Z",
+      "side": 1,
+      "message": "Can you add documentation above this argument about what this does and how one should find out more. Format it this way and GN will know it\u0027s a docstring for showing in \"gn args --list\"\n\ndeclare_args() {\n  # This thing yada yada yada\n  use_clang_coverage \u003d false\n}",
+      "revId": "bddee30c3adb5ad093e21a19a144aadc01d0629e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
