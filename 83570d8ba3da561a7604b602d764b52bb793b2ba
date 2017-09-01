@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b9d254ce_968553a6",
+        "filename": "ios/build/bots/scripts/test_runner.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-09-01T03:15:04Z",
+      "side": 1,
+      "message": "Makes sense. I will rename it in next patch.",
+      "parentUuid": "005dcb39_396ff55c",
+      "revId": "83570d8ba3da561a7604b602d764b52bb793b2ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2594f07c_d1c3aa9f",
         "filename": "ios/build/bots/scripts/test_runner.py",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "b0ea51de_180e4a50",
+        "filename": "ios/build/bots/scripts/test_runner.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-09-01T03:15:04Z",
+      "side": 1,
+      "message": "Maybe just \u0027restart\u0027?",
+      "parentUuid": "2594f07c_d1c3aa9f",
+      "revId": "83570d8ba3da561a7604b602d764b52bb793b2ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a53a0c87_b9d913ef",
         "filename": "ios/build/bots/scripts/test_runner.py",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-01T01:51:43Z",
       "side": 1,
       "message": "This isn\u0027t reliable. I hope we don\u0027t get into a state where every test specifies --restart because then it will be blocking for an arbitrary amount of time, and there\u0027s a risk that it could cause a good device to get rebooted into a bad state.\n\nCan we plan to revert this CL once we figure out what\u0027s wrong with the few devices that keep going unavailable?",
+      "revId": "83570d8ba3da561a7604b602d764b52bb793b2ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19b14a32_cacee6ed",
+        "filename": "ios/build/bots/scripts/test_runner.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-09-01T03:15:04Z",
+      "side": 1,
+      "message": "I understand your concern and agree to revert this method in the future. Once the bug won\u0027t happen in official version, or got fixed, I can remove the logic. I can add a TODO for this method to remove it once the issue is not exist.\n\nSince this is a hacky method, I would set the \u0027--restart\u0027 option as invisible for test_runner, to avoid spread it to other usages.",
+      "parentUuid": "a53a0c87_b9d913ef",
       "revId": "83570d8ba3da561a7604b602d764b52bb793b2ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
