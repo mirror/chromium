@@ -362,6 +362,23 @@ by a child template that "extends" this file.
         >
             {{ self.supports_vr() }}
         </activity>
+        <!-- Note: VrMain is the main launcher for VR intents. It should be exported
+             the same way as other launchers (e.g ChromeLauncherActivity) using an
+             activity-alias, but there's a bug with activity-alias where the enableVrMode
+             attribute is not inherited from the activity it aliases (b/65271215).
+
+             This forces the system out of VR mode while transitioning to Chrome resulting in
+             flashes caused by screen brightness changes. These flashes can be jarring to the
+             user while they have their headsets on. So until the bug is fixed, we just export
+             this activity without an alias. -->
+        <activity android:name="com.google.android.apps.chrome.vr.VrMain"
+            android:theme="@android:style/Theme.NoDisplay"
+            android:exported="true"
+            android:enableVrMode="@string/gvr_vr_mode_component"
+            android:taskAffinity=""
+            android:excludeFromRecents="true">
+            {{ self.supports_vr() }}
+        </activity>
         {% endif %}
 
         <!-- ChromeTabbedActivity related -->

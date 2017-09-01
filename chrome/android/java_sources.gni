@@ -6,6 +6,7 @@ import("//components/offline_pages/features/features.gni")
 
 chrome_java_sources = [
   "java/src/com/google/android/apps/chrome/appwidget/bookmarks/BookmarkThumbnailWidgetProvider.java",
+  "java/src/com/google/android/apps/chrome/vr/VrMain.java",
   "java/src/org/chromium/chrome/browser/ActivityTabTaskDescriptionHelper.java",
   "java/src/org/chromium/chrome/browser/ActivityTaskDescriptionIconGenerator.java",
   "java/src/org/chromium/chrome/browser/AfterStartupTaskUtils.java",
@@ -1184,6 +1185,7 @@ chrome_java_sources = [
   "java/src/org/chromium/chrome/browser/util/UrlUtilities.java",
   "java/src/org/chromium/chrome/browser/util/ViewUtils.java",
   "java/src/org/chromium/chrome/browser/vr_shell/SeparateTaskCustomTabVrActivity.java",
+  "java/src/org/chromium/chrome/browser/vr_shell/ChromeLauncherVrActivity.java",
   "java/src/org/chromium/chrome/browser/vr_shell/VrCancelAnimationActivity.java",
   "java/src/org/chromium/chrome/browser/vr_shell/NonPresentingGvrContext.java",
   "java/src/org/chromium/chrome/browser/vr_shell/VrClassesWrapper.java",
