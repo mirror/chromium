@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57e527eb_3059384d",
+        "filename": "build/toolchain/win/midl.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-09-01T04:50:44Z",
+      "side": 1,
+      "message": "Maybe this doesn\u0027t need to build under nacl and doesn\u0027t need the regex here. The trybots will let me know in a few hours.",
+      "revId": "dfa2adb642a9eda9f1af4bd8e4e24dfb0f7b65d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
