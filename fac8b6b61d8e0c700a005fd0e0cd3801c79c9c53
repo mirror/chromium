@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c16f2679_f962071d",
+        "filename": "chrome/browser/apps/guest_view/web_view_interactive_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1228,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-09-01T18:47:37Z",
+      "side": 1,
+      "message": "There\u0027s no iframe in the guest - is this stale?",
+      "range": {
+        "startLine": 1228,
+        "startChar": 21,
+        "endLine": 1228,
+        "endChar": 27
+      },
+      "revId": "fac8b6b61d8e0c700a005fd0e0cd3801c79c9c53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
