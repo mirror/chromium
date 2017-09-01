@@ -14,6 +14,7 @@ import os
 import readline
 import subprocess
 import sys
+import types
 
 import archive
 import canned_queries
@@ -76,6 +77,7 @@ class _Session(object):
         'ShowExamples': self._ShowExamplesFunc,
         'canned_queries': canned_queries.CannedQueries(size_infos),
         'printed': self._printed_variables,
+        'models': models,
     }
     self._lazy_paths = lazy_paths
     self._size_infos = size_infos
@@ -327,6 +329,8 @@ class _Session(object):
         '  printed: List of objects passed to Print().',
     ]
     for key, value in self._variables.iteritems():
+      if isinstance(value, types.ModuleType):
+        continue
       if key.startswith('size_info'):
         lines.append('  {}: Loaded from {}'.format(key, value.size_path))
     lines.append('*' * 80)
