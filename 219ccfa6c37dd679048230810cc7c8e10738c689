@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "83add5f6_fc173b47",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/enable-slimming-paint-v2",
+        "patchSetId": 5
+      },
+      "lineNbr": 1070,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-01T19:17:45Z",
+      "side": 0,
+      "message": "We don\u0027t issue object paint invalidation for disappeared objects for SPv2:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/layout/LayoutObjectChildList.cpp?rcl\u003dd54ffb231375dbfadf75b8a90429909f9c4fda11\u0026l\u003d209\n\nThe object invalidations on SPv1 are issued together with raster invalidation. In theory we don\u0027t need to issue the invalidations because the object won\u0027t issue any new display items.",
+      "parentUuid": "97e000cb_9297c983",
+      "revId": "219ccfa6c37dd679048230810cc7c8e10738c689",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "27f126c6_608cbacb",
         "filename": "third_party/WebKit/LayoutTests/FlagExpectations/enable-slimming-paint-v2",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-01T18:48:32Z",
       "side": 0,
       "message": "This looks very different to me. Is the new one correct?",
+      "revId": "219ccfa6c37dd679048230810cc7c8e10738c689",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc7a586f_128aec9d",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/enable-slimming-paint-v2",
+        "patchSetId": 5
+      },
+      "lineNbr": 1073,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-01T19:17:45Z",
+      "side": 0,
+      "message": "The difference of raster invalidations are because SPv2 raster invalidation is based on painted result. For example, some SPv1 invalidations are for objects that actually paint nothing but we are not sure when we issued paint and raster invalidations. There are no raster invalidations for these objects because they produce no display items.\n\nThe difference of paint invalidation are because of different space of visual rects: composited layer for SPv1 and transform parent for SPv2. Some visual rect changes are not changes for SPv2.",
+      "parentUuid": "27f126c6_608cbacb",
       "revId": "219ccfa6c37dd679048230810cc7c8e10738c689",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -64,6 +100,24 @@
       "writtenOn": "2017-09-01T18:48:32Z",
       "side": 0,
       "message": "Do you know why this is different? It actually looks like different invalidation rects.",
+      "revId": "219ccfa6c37dd679048230810cc7c8e10738c689",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bbb0af2_133efb0e",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/enable-slimming-paint-v2",
+        "patchSetId": 5
+      },
+      "lineNbr": 1168,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-01T19:17:45Z",
+      "side": 0,
+      "message": "SPv2 composite more layers than SPv1. Now moved this into the \"Other extra layers\" group and deleted the new baselines.",
+      "parentUuid": "02721fac_99e56542",
       "revId": "219ccfa6c37dd679048230810cc7c8e10738c689",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
