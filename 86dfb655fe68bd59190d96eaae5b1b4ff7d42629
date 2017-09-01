@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72d73bbe_75463c92",
+        "filename": "chrome/browser/resources/chromeos/login/oobe_screen_oauth_enrollment.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-01T15:55:23Z",
+      "side": 1,
+      "message": "nit: gaiaParams.hl \u003d data.hl || \u0027\u0027;\n\njust in case data.hl is not set.",
+      "revId": "86dfb655fe68bd59190d96eaae5b1b4ff7d42629",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
