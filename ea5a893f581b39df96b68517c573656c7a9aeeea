@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "629b0d61_883754bb",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 1630,
+      "author": {
+        "id": 1000264
+      },
+      "writtenOn": "2017-09-01T21:57:07Z",
+      "side": 1,
+      "message": "Nit: Can you use underscores in the filenames to follow the Chromium style?",
+      "revId": "ea5a893f581b39df96b68517c573656c7a9aeeea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "69df28e6_e833c0dd",
+        "filename": "chrome/test/data/wasm/out-of-bounds.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000264
+      },
+      "writtenOn": "2017-09-01T21:57:07Z",
+      "side": 1,
+      "message": "Nit: add a copyright notice",
+      "revId": "ea5a893f581b39df96b68517c573656c7a9aeeea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "532265b7_2c28e513",
+        "filename": "chrome/test/data/wasm/wasm-constants.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000264
+      },
+      "writtenOn": "2017-09-01T21:57:07Z",
+      "side": 1,
+      "message": "Presumably most of this is copy+pasted from somewhere.  Where is it copied from?  Same for wasm-module-builder.js.",
+      "revId": "ea5a893f581b39df96b68517c573656c7a9aeeea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2614812e_6b406432",
+        "filename": "chrome/test/v8/wasm-trap-handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000264
+      },
+      "writtenOn": "2017-09-01T21:57:07Z",
+      "side": 1,
+      "message": "Is there a way to check that V8\u0027s fault handler actually got used?  Could the renderer process expose a count of the number of times the fault handler was invoked that the test could retrieve and check?",
+      "revId": "ea5a893f581b39df96b68517c573656c7a9aeeea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
