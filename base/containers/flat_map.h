@@ -6,6 +6,7 @@
 #define BASE_CONTAINERS_FLAT_MAP_H_
 
 #include <functional>
+#include <tuple>
 #include <utility>
 
 #include "base/containers/flat_tree.h"
@@ -105,8 +106,20 @@ struct GetKeyFromValuePairFirst {
 //   iterator             insert(const_iterator hint, value_type&&);
 //   void                 insert(InputIterator first, InputIterator last,
 //                               FlatContainerDupes);
+//   pair<iterator, bool> insert_or_assign(const key_type&, M&&);
+//   pair<iterator, bool> insert_or_assign(key_type&&, M&&);
+//   iterator             insert_or_assign(const_iterator hint, const key_type&,
+//                                         M&&);
+//   iterator             insert_or_assign(const_iterator hint, key_type&&,
+//                                         M&&);
 //   pair<iterator, bool> emplace(Args&&...);
 //   iterator             emplace_hint(const_iterator, Args&&...);
+//   pair<iterator, bool> try_emplace(const key_type&, Args&&...);
+//   pair<iterator, bool> try_emplace(key_type&&, Args&&...);
+//   iterator             try_emplace(const_iterator hint, const key_type&,
+//                                    Args&&...);
+//   iterator             try_emplace(const_iterator hint, key_type&&,
+//                                    Args&&...);
 //
 // Erase functions:
 //   iterator erase(iterator);
@@ -156,8 +169,11 @@ class flat_map : public ::base::internal::flat_tree<
       Compare>;
 
  public:
+  using key_type = Key;
   using mapped_type = Mapped;
   using value_type = typename tree::value_type;
+  using iterator = typename tree::iterator;
+  using const_iterator = typename tree::const_iterator;
 
   // --------------------------------------------------------------------------
   // Lifetime.
@@ -213,6 +229,24 @@ class flat_map : public ::base::internal::flat_tree<
 
   mapped_type& operator[](const Key& key);
   mapped_type& operator[](Key&& key);
+
+  template <class M>
+  std::pair<iterator, bool> insert_or_assign(const key_type& k, M&& obj);
+  template <class M>
+  std::pair<iterator, bool> insert_or_assign(key_type&& k, M&& obj);
+  template <class M>
+  iterator insert_or_assign(const_iterator hint, const key_type& k, M&& obj);
+  template <class M>
+  iterator insert_or_assign(const_iterator hint, key_type&& k, M&& obj);
+
+  template <class... Args>
+  std::pair<iterator, bool> try_emplace(const key_type& k, Args&&... args);
+  template <class... Args>
+  std::pair<iterator, bool> try_emplace(key_type&& k, Args&&... args);
+  template <class... Args>
+  iterator try_emplace(const_iterator hint, const key_type& k, Args&&... args);
+  template <class... Args>
+  iterator try_emplace(const_iterator hint, key_type&& k, Args&&... args);
 
   // --------------------------------------------------------------------------
   // General operations.
@@ -286,7 +320,7 @@ auto flat_map<Key, Mapped, Compare>::operator=(
 
 template <class Key, class Mapped, class Compare>
 auto flat_map<Key, Mapped, Compare>::operator[](const Key& key) -> Mapped& {
-  typename tree::iterator found = tree::lower_bound(key);
+  iterator found = tree::lower_bound(key);
   if (found == tree::end() || tree::key_comp()(key, found->first))
     found = tree::unsafe_emplace(found, key, Mapped());
   return found->second;
@@ -294,11 +328,110 @@ auto flat_map<Key, Mapped, Compare>::operator[](const Key& key) -> Mapped& {
 
 template <class Key, class Mapped, class Compare>
 auto flat_map<Key, Mapped, Compare>::operator[](Key&& key) -> Mapped& {
-  const Key& key_ref = key;
-  typename tree::iterator found = tree::lower_bound(key_ref);
+  iterator found = tree::lower_bound(key);
   if (found == tree::end() || tree::key_comp()(key, found->first))
     found = tree::unsafe_emplace(found, std::move(key), Mapped());
   return found->second;
+}
+
+template <class Key, class Mapped, class Compare>
+template <class M>
+auto flat_map<Key, Mapped, Compare>::insert_or_assign(const Key& key, M&& val)
+    -> std::pair<iterator, bool> {
+  iterator found = tree::lower_bound(key);
+  if (found == tree::end() || tree::key_comp()(key, found->first))
+    return {tree::unsafe_emplace(found, key, std::forward<M>(val)), true};
+
+  found->second = std::forward<M>(val);
+  return {found, false};
+}
+
+template <class Key, class Mapped, class Compare>
+template <class M>
+auto flat_map<Key, Mapped, Compare>::insert_or_assign(Key&& key, M&& val)
+    -> std::pair<iterator, bool> {
+  iterator found = tree::lower_bound(key);
+  if (found == tree::end() || tree::key_comp()(key, found->first))
+    return {tree::unsafe_emplace(found, std::move(key), std::forward<M>(val)),
+            true};
+
+  found->second = std::forward<M>(val);
+  return {found, false};
+}
+
+template <class Key, class Mapped, class Compare>
+template <class M>
+auto flat_map<Key, Mapped, Compare>::insert_or_assign(const_iterator hint,
+                                                      const Key& key,
+                                                      M&& val) -> iterator {
+  if ((hint == tree::end() || tree::key_comp()(key, hint->first)) &&
+      (hint == tree::begin() || tree::key_comp()(std::prev(hint)->first, key)))
+    return tree::unsafe_emplace(hint, key, std::forward<M>(val));
+  return insert_or_assign(key, std::forward<M>(val)).first;
+}
+
+template <class Key, class Mapped, class Compare>
+template <class M>
+auto flat_map<Key, Mapped, Compare>::insert_or_assign(const_iterator hint,
+                                                      Key&& key,
+                                                      M&& val) -> iterator {
+  if ((hint == tree::end() || tree::key_comp()(key, hint->first)) &&
+      (hint == tree::begin() || tree::key_comp()(std::prev(hint)->first, key)))
+    return tree::unsafe_emplace(hint, std::move(key), std::forward<M>(val));
+  return insert_or_assign(std::move(key), std::forward<M>(val)).first;
+}
+
+template <class Key, class Mapped, class Compare>
+template <class... Args>
+auto flat_map<Key, Mapped, Compare>::try_emplace(const Key& key, Args&&... args)
+    -> std::pair<iterator, bool> {
+  iterator found = tree::lower_bound(key);
+  if (found == tree::end() || tree::key_comp()(key, found->first))
+    return {tree::unsafe_emplace(
+                found, std::piecewise_construct, std::forward_as_tuple(key),
+                std::forward_as_tuple(std::forward<Args>(args)...)),
+            true};
+  return {found, false};
+}
+
+template <class Key, class Mapped, class Compare>
+template <class... Args>
+auto flat_map<Key, Mapped, Compare>::try_emplace(Key&& key, Args&&... args)
+    -> std::pair<iterator, bool> {
+  iterator found = tree::lower_bound(key);
+  if (found == tree::end() || tree::key_comp()(key, found->first))
+    return {tree::unsafe_emplace(
+                found, std::piecewise_construct,
+                std::forward_as_tuple(std::move(key)),
+                std::forward_as_tuple(std::forward<Args>(args)...)),
+            true};
+  return {found, false};
+}
+
+template <class Key, class Mapped, class Compare>
+template <class... Args>
+auto flat_map<Key, Mapped, Compare>::try_emplace(const_iterator hint,
+                                                 const Key& key,
+                                                 Args&&... args) -> iterator {
+  if ((hint == tree::end() || tree::key_comp()(key, hint->first)) &&
+      (hint == tree::begin() || tree::key_comp()(std::prev(hint)->first, key)))
+    return tree::unsafe_emplace(
+        hint, std::piecewise_construct, std::forward_as_tuple(key),
+        std::forward_as_tuple(std::forward<Args>(args)...));
+  return try_emplace(key, std::forward<Args>(args)...).first;
+}
+
+template <class Key, class Mapped, class Compare>
+template <class... Args>
+auto flat_map<Key, Mapped, Compare>::try_emplace(const_iterator hint,
+                                                 Key&& key,
+                                                 Args&&... args) -> iterator {
+  if ((hint == tree::end() || tree::key_comp()(key, hint->first)) &&
+      (hint == tree::begin() || tree::key_comp()(std::prev(hint)->first, key)))
+    return tree::unsafe_emplace(
+        hint, std::piecewise_construct, std::forward_as_tuple(std::move(key)),
+        std::forward_as_tuple(std::forward<Args>(args)...));
+  return try_emplace(std::move(key), std::forward<Args>(args)...).first;
 }
 
 // ----------------------------------------------------------------------------
