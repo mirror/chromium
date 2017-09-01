@@ -144,6 +144,8 @@ unsigned int TrackedObjectsTest::test_time_;
 
 TEST_F(TrackedObjectsTest, TaskStopwatchNoStartStop) {
   ThreadData::InitializeAndSetTrackingStatus(ThreadData::PROFILING_ACTIVE);
+  if (ThreadData::status() == ThreadData::DEACTIVATED)
+    return;
 
   // Check that creating and destroying a stopwatch without starting it doesn't
   // crash.
@@ -153,6 +155,8 @@ TEST_F(TrackedObjectsTest, TaskStopwatchNoStartStop) {
 TEST_F(TrackedObjectsTest, MinimalStartupShutdown) {
   // Minimal test doesn't even create any tasks.
   ThreadData::InitializeAndSetTrackingStatus(ThreadData::PROFILING_ACTIVE);
+  if (ThreadData::status() == ThreadData::DEACTIVATED)
+    return;
 
   EXPECT_FALSE(ThreadData::first());  // No activity even on this thread.
   ThreadData* data = ThreadData::Get();
@@ -186,6 +190,8 @@ TEST_F(TrackedObjectsTest, MinimalStartupShutdown) {
 
 TEST_F(TrackedObjectsTest, TinyStartupShutdown) {
   ThreadData::InitializeAndSetTrackingStatus(ThreadData::PROFILING_ACTIVE);
+  if (ThreadData::status() == ThreadData::DEACTIVATED)
+    return;
 
   // Instigate tracking on a single tracked object, on our thread.
   const char kFunction[] = "TinyStartupShutdown";
@@ -264,6 +270,8 @@ TEST_F(TrackedObjectsTest, TinyStartupShutdown) {
 
 TEST_F(TrackedObjectsTest, DeathDataTestRecordDurations) {
   ThreadData::InitializeAndSetTrackingStatus(ThreadData::PROFILING_ACTIVE);
+  if (ThreadData::status() == ThreadData::DEACTIVATED)
+    return;
 
   std::unique_ptr<DeathData> data(new DeathData());
   ASSERT_NE(data, nullptr);
@@ -305,6 +313,8 @@ TEST_F(TrackedObjectsTest, DeathDataTestRecordDurations) {
 
 TEST_F(TrackedObjectsTest, DeathDataTestRecordAllocations) {
   ThreadData::InitializeAndSetTrackingStatus(ThreadData::PROFILING_ACTIVE);
+  if (ThreadData::status() == ThreadData::DEACTIVATED)
+    return;
 
   std::unique_ptr<DeathData> data(new DeathData());
   ASSERT_NE(data, nullptr);
@@ -382,6 +392,8 @@ TEST_F(TrackedObjectsTest, DeathDataTestRecordAllocations) {
 
 TEST_F(TrackedObjectsTest, DeathDataTest2Phases) {
   ThreadData::InitializeAndSetTrackingStatus(ThreadData::PROFILING_ACTIVE);
+  if (ThreadData::status() == ThreadData::DEACTIVATED)
+    return;
 
   std::unique_ptr<DeathData> data(new DeathData());
   ASSERT_NE(data, nullptr);
@@ -498,6 +510,8 @@ TEST_F(TrackedObjectsTest, DeathDataTest2Phases) {
 
 TEST_F(TrackedObjectsTest, Delta) {
   ThreadData::InitializeAndSetTrackingStatus(ThreadData::PROFILING_ACTIVE);
+  if (ThreadData::status() == ThreadData::DEACTIVATED)
+    return;
 
   DeathDataSnapshot snapshot;
   snapshot.count = 10;
@@ -551,6 +565,8 @@ TEST_F(TrackedObjectsTest, Delta) {
 TEST_F(TrackedObjectsTest, DeactivatedBirthOnlyToSnapshotWorkerThread) {
   // Start in the deactivated state.
   ThreadData::InitializeAndSetTrackingStatus(ThreadData::DEACTIVATED);
+  if (ThreadData::status() == ThreadData::DEACTIVATED)
+    return;
 
   const char kFunction[] = "DeactivatedBirthOnlyToSnapshotWorkerThread";
   Location location(kFunction, kFile, kLineNumber, NULL);
@@ -573,6 +589,8 @@ TEST_F(TrackedObjectsTest, DeactivatedBirthOnlyToSnapshotWorkerThread) {
 TEST_F(TrackedObjectsTest, DeactivatedBirthOnlyToSnapshotMainThread) {
   // Start in the deactivated state.
   ThreadData::InitializeAndSetTrackingStatus(ThreadData::DEACTIVATED);
+  if (ThreadData::status() == ThreadData::DEACTIVATED)
+    return;
 
   const char kFunction[] = "DeactivatedBirthOnlyToSnapshotMainThread";
   Location location(kFunction, kFile, kLineNumber, NULL);
@@ -594,6 +612,8 @@ TEST_F(TrackedObjectsTest, DeactivatedBirthOnlyToSnapshotMainThread) {
 
 TEST_F(TrackedObjectsTest, BirthOnlyToSnapshotWorkerThread) {
   ThreadData::InitializeAndSetTrackingStatus(ThreadData::PROFILING_ACTIVE);
+  if (ThreadData::status() == ThreadData::DEACTIVATED)
+    return;
 
   const char kFunction[] = "BirthOnlyToSnapshotWorkerThread";
   Location location(kFunction, kFile, kLineNumber, NULL);
@@ -607,6 +627,8 @@ TEST_F(TrackedObjectsTest, BirthOnlyToSnapshotWorkerThread) {
 
 TEST_F(TrackedObjectsTest, BirthOnlyToSnapshotMainThread) {
   ThreadData::InitializeAndSetTrackingStatus(ThreadData::PROFILING_ACTIVE);
+  if (ThreadData::status() == ThreadData::DEACTIVATED)
+    return;
 
   const char kFunction[] = "BirthOnlyToSnapshotMainThread";
   Location location(kFunction, kFile, kLineNumber, NULL);
@@ -620,6 +642,8 @@ TEST_F(TrackedObjectsTest, BirthOnlyToSnapshotMainThread) {
 
 TEST_F(TrackedObjectsTest, LifeCycleToSnapshotMainThread) {
   ThreadData::InitializeAndSetTrackingStatus(ThreadData::PROFILING_ACTIVE);
+  if (ThreadData::status() == ThreadData::DEACTIVATED)
+    return;
 
   const char kFunction[] = "LifeCycleToSnapshotMainThread";
   Location location(kFunction, kFile, kLineNumber, NULL);
@@ -649,6 +673,8 @@ TEST_F(TrackedObjectsTest, LifeCycleToSnapshotMainThread) {
 
 TEST_F(TrackedObjectsTest, TwoPhases) {
   ThreadData::InitializeAndSetTrackingStatus(ThreadData::PROFILING_ACTIVE);
+  if (ThreadData::status() == ThreadData::DEACTIVATED)
+    return;
 
   const char kFunction[] = "TwoPhases";
   Location location(kFunction, kFile, kLineNumber, NULL);
@@ -752,6 +778,8 @@ TEST_F(TrackedObjectsTest, TwoPhases) {
 
 TEST_F(TrackedObjectsTest, ThreePhases) {
   ThreadData::InitializeAndSetTrackingStatus(ThreadData::PROFILING_ACTIVE);
+  if (ThreadData::status() == ThreadData::DEACTIVATED)
+    return;
 
   const char kFunction[] = "ThreePhases";
   Location location(kFunction, kFile, kLineNumber, NULL);
@@ -899,6 +927,8 @@ TEST_F(TrackedObjectsTest, ThreePhases) {
 
 TEST_F(TrackedObjectsTest, TwoPhasesSecondEmpty) {
   ThreadData::InitializeAndSetTrackingStatus(ThreadData::PROFILING_ACTIVE);
+  if (ThreadData::status() == ThreadData::DEACTIVATED)
+    return;
 
   const char kFunction[] = "TwoPhasesSecondEmpty";
   Location location(kFunction, kFile, kLineNumber, NULL);
@@ -965,6 +995,8 @@ TEST_F(TrackedObjectsTest, TwoPhasesSecondEmpty) {
 
 TEST_F(TrackedObjectsTest, TwoPhasesFirstEmpty) {
   ThreadData::InitializeAndSetTrackingStatus(ThreadData::PROFILING_ACTIVE);
+  if (ThreadData::status() == ThreadData::DEACTIVATED)
+    return;
 
   ThreadData::OnProfilingPhaseCompleted(0);
 
@@ -1029,6 +1061,8 @@ TEST_F(TrackedObjectsTest, TwoPhasesFirstEmpty) {
 // task is still running, or is queued).
 TEST_F(TrackedObjectsTest, LifeCycleMidDeactivatedToSnapshotMainThread) {
   ThreadData::InitializeAndSetTrackingStatus(ThreadData::PROFILING_ACTIVE);
+  if (ThreadData::status() == ThreadData::DEACTIVATED)
+    return;
 
   const char kFunction[] = "LifeCycleMidDeactivatedToSnapshotMainThread";
   Location location(kFunction, kFile, kLineNumber, NULL);
@@ -1065,6 +1099,8 @@ TEST_F(TrackedObjectsTest, LifeCycleMidDeactivatedToSnapshotMainThread) {
 TEST_F(TrackedObjectsTest, LifeCyclePreDeactivatedToSnapshotMainThread) {
   // Start in the deactivated state.
   ThreadData::InitializeAndSetTrackingStatus(ThreadData::DEACTIVATED);
+  if (ThreadData::status() == ThreadData::DEACTIVATED)
+    return;
 
   const char kFunction[] = "LifeCyclePreDeactivatedToSnapshotMainThread";
   Location location(kFunction, kFile, kLineNumber, NULL);
@@ -1103,6 +1139,8 @@ TEST_F(TrackedObjectsTest, LifeCyclePreDeactivatedToSnapshotMainThread) {
 
 TEST_F(TrackedObjectsTest, TwoLives) {
   ThreadData::InitializeAndSetTrackingStatus(ThreadData::PROFILING_ACTIVE);
+  if (ThreadData::status() == ThreadData::DEACTIVATED)
+    return;
 
   const char kFunction[] = "TwoLives";
   Location location(kFunction, kFile, kLineNumber, NULL);
@@ -1144,6 +1182,8 @@ TEST_F(TrackedObjectsTest, TwoLives) {
 
 TEST_F(TrackedObjectsTest, DifferentLives) {
   ThreadData::InitializeAndSetTrackingStatus(ThreadData::PROFILING_ACTIVE);
+  if (ThreadData::status() == ThreadData::DEACTIVATED)
+    return;
 
   // Use a well named thread.
   ThreadData::InitializeThreadContext(kMainThreadName);
@@ -1221,6 +1261,8 @@ TEST_F(TrackedObjectsTest, DifferentLives) {
 
 TEST_F(TrackedObjectsTest, TaskWithNestedExclusion) {
   ThreadData::InitializeAndSetTrackingStatus(ThreadData::PROFILING_ACTIVE);
+  if (ThreadData::status() == ThreadData::DEACTIVATED)
+    return;
 
   const char kFunction[] = "TaskWithNestedExclusion";
   Location location(kFunction, kFile, kLineNumber, NULL);
@@ -1256,6 +1298,8 @@ TEST_F(TrackedObjectsTest, TaskWithNestedExclusion) {
 
 TEST_F(TrackedObjectsTest, TaskWith2NestedExclusions) {
   ThreadData::InitializeAndSetTrackingStatus(ThreadData::PROFILING_ACTIVE);
+  if (ThreadData::status() == ThreadData::DEACTIVATED)
+    return;
 
   const char kFunction[] = "TaskWith2NestedExclusions";
   Location location(kFunction, kFile, kLineNumber, NULL);
@@ -1297,6 +1341,8 @@ TEST_F(TrackedObjectsTest, TaskWith2NestedExclusions) {
 
 TEST_F(TrackedObjectsTest, TaskWithNestedExclusionWithNestedTask) {
   ThreadData::InitializeAndSetTrackingStatus(ThreadData::PROFILING_ACTIVE);
+  if (ThreadData::status() == ThreadData::DEACTIVATED)
+    return;
 
   const char kFunction[] = "TaskWithNestedExclusionWithNestedTask";
   Location location(kFunction, kFile, kLineNumber, NULL);
@@ -1396,6 +1442,10 @@ TEST_F(TrackedObjectsTest, TaskWithNestedExclusionWithNestedTask) {
 // instantiated ThreadData instance is equal to the number of different
 // sanitized thread names used in the test.
 TEST_F(TrackedObjectsTest, ReuseRetiredThreadData) {
+  ThreadData::InitializeAndSetTrackingStatus(ThreadData::PROFILING_ACTIVE);
+  if (ThreadData::status() == ThreadData::DEACTIVATED)
+    return;
+
   const char* const kThreadNames[] = {"Foo%d", "Bar%d", "123Dummy%d",
                                       "456Dummy%d", "%d"};
   constexpr int kNumIterations = 10;
