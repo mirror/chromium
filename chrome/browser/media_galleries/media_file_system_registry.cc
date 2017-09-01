@@ -709,11 +709,7 @@ class MediaFileSystemRegistry::MediaFileSystemContextImpl
     // registration is needed, or having per-device-type handlers at the
     // next higher level.
     bool result = false;
-    if (StorageInfo::IsITunesDevice(device_id)) {
-      ImportedMediaGalleryRegistry* registry =
-          ImportedMediaGalleryRegistry::GetInstance();
-      result = registry->RegisterITunesFilesystemOnUIThread(fs_name, path);
-    } else if (StorageInfo::IsPicasaDevice(device_id)) {
+    if (StorageInfo::IsPicasaDevice(device_id)) {
       ImportedMediaGalleryRegistry* registry =
           ImportedMediaGalleryRegistry::GetInstance();
       result = registry->RegisterPicasaFilesystemOnUIThread(fs_name, path);

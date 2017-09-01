@@ -8,7 +8,6 @@
 #include "base/files/file_util.h"
 #include "base/logging.h"
 #include "build/build_config.h"
-#include "chrome/browser/media_galleries/fileapi/itunes_data_provider.h"
 #include "chrome/browser/media_galleries/fileapi/media_file_system_backend.h"
 #include "chrome/browser/media_galleries/fileapi/picasa_data_provider.h"
 #include "chrome/common/extensions/extension_constants.h"
@@ -80,43 +79,6 @@ bool ImportedMediaGalleryRegistry::RegisterPicasaFilesystemOnUIThread(
   return result;
 }
 
-bool ImportedMediaGalleryRegistry::RegisterITunesFilesystemOnUIThread(
-    const std::string& fs_name, const base::FilePath& library_xml_path) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  DCHECK(!library_xml_path.empty());
-
-  bool result = false;
-
-#if defined(OS_WIN) || defined(OS_MACOSX)
-  base::FilePath root = ImportedRoot();
-  if (root.empty())
-    return false;
-  result = ExternalMountPoints::GetSystemInstance()->RegisterFileSystem(
-      fs_name,
-      storage::kFileSystemTypeItunes,
-      storage::FileSystemMountOption(),
-      root.AppendASCII("itunes"));
-  if (!result)
-    return result;
-
-  itunes_fs_names_.insert(fs_name);
-
-  if (itunes_fs_names_.size() == 1) {
-    MediaFileSystemBackend::MediaTaskRunner()->PostTask(
-        FROM_HERE,
-        Bind(&ImportedMediaGalleryRegistry::RegisterITunesFileSystem,
-             base::Unretained(this), library_xml_path));
-#ifndef NDEBUG
-    itunes_xml_library_path_ = library_xml_path;
-  } else {
-    DCHECK_EQ(itunes_xml_library_path_.value(), library_xml_path.value());
-#endif
-  }
-#endif  // defined(OS_WIN) || defined(OS_MACOSX)
-
-  return result;
-}
-
 bool ImportedMediaGalleryRegistry::RevokeImportedFilesystemOnUIThread(
     const std::string& fs_name) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
@@ -127,16 +89,6 @@ bool ImportedMediaGalleryRegistry::RevokeImportedFilesystemOnUIThread(
       MediaFileSystemBackend::MediaTaskRunner()->PostTask(
           FROM_HERE,
           Bind(&ImportedMediaGalleryRegistry::RevokePicasaFileSystem,
-               base::Unretained(this)));
-    }
-    return ExternalMountPoints::GetSystemInstance()->RevokeFileSystem(fs_name);
-  }
-
-  if (itunes_fs_names_.erase(fs_name)) {
-    if (itunes_fs_names_.empty()) {
-      MediaFileSystemBackend::MediaTaskRunner()->PostTask(
-          FROM_HERE,
-          Bind(&ImportedMediaGalleryRegistry::RevokeITunesFileSystem,
                base::Unretained(this)));
     }
     return ExternalMountPoints::GetSystemInstance()->RevokeFileSystem(fs_name);
@@ -159,14 +111,6 @@ ImportedMediaGalleryRegistry::PicasaDataProvider() {
   DCHECK(GetInstance()->picasa_data_provider_);
   return GetInstance()->picasa_data_provider_.get();
 }
-
-// static
-itunes::ITunesDataProvider*
-ImportedMediaGalleryRegistry::ITunesDataProvider() {
-  MediaFileSystemBackend::AssertCurrentlyOnMediaSequence();
-  DCHECK(GetInstance()->itunes_data_provider_);
-  return GetInstance()->itunes_data_provider_.get();
-}
 #endif  // defined(OS_WIN) || defined(OS_MACOSX)
 
 ImportedMediaGalleryRegistry::ImportedMediaGalleryRegistry() {}
@@ -176,7 +120,6 @@ ImportedMediaGalleryRegistry::~ImportedMediaGalleryRegistry() {
     base::DeleteFile(imported_root_, false);
 #if defined(OS_WIN) || defined(OS_MACOSX)
   DCHECK_EQ(0U, picasa_fs_names_.size());
-  DCHECK_EQ(0U, itunes_fs_names_.size());
 #endif  // defined(OS_WIN) || defined(OS_MACOSX)
 }
 
@@ -192,19 +135,6 @@ void ImportedMediaGalleryRegistry::RevokePicasaFileSystem() {
   MediaFileSystemBackend::AssertCurrentlyOnMediaSequence();
   DCHECK(picasa_data_provider_);
   picasa_data_provider_.reset();
-}
-
-void ImportedMediaGalleryRegistry::RegisterITunesFileSystem(
-    const base::FilePath& xml_library_path) {
-  MediaFileSystemBackend::AssertCurrentlyOnMediaSequence();
-  DCHECK(!itunes_data_provider_);
-  itunes_data_provider_.reset(new itunes::ITunesDataProvider(xml_library_path));
-}
-
-void ImportedMediaGalleryRegistry::RevokeITunesFileSystem() {
-  MediaFileSystemBackend::AssertCurrentlyOnMediaSequence();
-  DCHECK(itunes_data_provider_);
-  itunes_data_provider_.reset();
 }
 #endif  // defined(OS_WIN) || defined(OS_MACOSX)
 
