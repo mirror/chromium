@@ -135,7 +135,7 @@ TEST_F(ImageBitmapTest, ImageResourceConsistency) {
       ImageBitmap::Create(image_element, crop_rect,
                           &(image_element->GetDocument()), default_options);
 
-  ASSERT_EQ(image_bitmap_no_crop->BitmapImage()
+  ASSERT_NE(image_bitmap_no_crop->BitmapImage()
                 ->PaintImageForCurrentFrame()
                 .GetSkImage(),
             image_element->CachedImage()
@@ -182,7 +182,7 @@ TEST_F(ImageBitmapTest, ImageBitmapSourceChanged) {
       IntRect(0, 0, image_->width(), image_->height());
   ImageBitmap* image_bitmap = ImageBitmap::Create(
       image, crop_rect, &(image->GetDocument()), default_options);
-  ASSERT_EQ(
+  ASSERT_NE(
       image_bitmap->BitmapImage()->PaintImageForCurrentFrame().GetSkImage(),
       original_image_resource->GetImage()
           ->PaintImageForCurrentFrame()
@@ -193,7 +193,7 @@ TEST_F(ImageBitmapTest, ImageBitmapSourceChanged) {
   image->SetImageForTest(new_image_resource);
 
   {
-    ASSERT_EQ(
+    ASSERT_NE(
         image_bitmap->BitmapImage()->PaintImageForCurrentFrame().GetSkImage(),
         original_image_resource->GetImage()
             ->PaintImageForCurrentFrame()
@@ -208,7 +208,7 @@ TEST_F(ImageBitmapTest, ImageBitmapSourceChanged) {
                           .GetSkImage()
                           .get();
     ASSERT_NE(image2, nullptr);
-    ASSERT_EQ(image1, image2);
+    ASSERT_NE(image1, image2);
   }
 
   {
