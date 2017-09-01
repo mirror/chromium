@@ -16,6 +16,24 @@
       "revId": "86dfb655fe68bd59190d96eaae5b1b4ff7d42629",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b914706a_a2c4c12d",
+        "filename": "chrome/browser/resources/chromeos/login/oobe_screen_oauth_enrollment.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-09-01T21:27:02Z",
+      "side": 1,
+      "message": "We do not want empty parameter to be added.\nThere is a check for this in authenticator.js:\n\n    if (data.hl)\n      url \u003d appendParam(url, \u0027hl\u0027, data.hl);",
+      "parentUuid": "72d73bbe_75463c92",
+      "revId": "86dfb655fe68bd59190d96eaae5b1b4ff7d42629",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
