@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4866659e_8c33f611",
+        "filename": "third_party/WebKit/LayoutTests/paint/invalidation/svg/resize-svg-invalidate-children.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-01T18:36:51Z",
+      "side": 1,
+      "message": "This test is modified because the original expectation doesn\u0027t apply to spv2. Dumping the layer tree helps us understand what happens.\n\nAlso add -expected.html to ensure correct painting and rasterization.",
+      "revId": "1cdd0d1567388a90ef9b89032c59a4fbafe652de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
