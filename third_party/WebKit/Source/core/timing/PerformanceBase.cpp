@@ -139,7 +139,21 @@ PerformanceEntryVector PerformanceBase::getEntriesByType(
   PerformanceEntryVector entries;
   PerformanceEntry::EntryType type =
       PerformanceEntry::ToEntryTypeEnum(entry_type);
+  // Unsupported for LongTask, TaskAttribution.
+  // Per the spec, these entries can only be accessed via Performance Observer.
+  if (type != PerformanceEntry::kLongTask &&
+      type != PerformanceEntry::kTaskAttribution &&
+      type != PerformanceEntry::kInvalid) {
+    AddBufferedEntriesByType(entries, type);
+    std::sort(entries.begin(), entries.end(),
+              PerformanceEntry::StartTimeCompareLessThan);
+  }
 
+  return entries;
+}
+
+void PerformanceBase::AddBufferedEntriesByType(PerformanceEntryVector& entries,
+                                               PerformanceEntryType type) {
   switch (type) {
     case PerformanceEntry::kResource:
       for (const auto& resource : resource_timing_buffer_)
@@ -173,9 +187,6 @@ PerformanceEntryVector PerformanceBase::getEntriesByType(
       if (first_contentful_paint_timing_)
         entries.push_back(first_contentful_paint_timing_);
       break;
-    // Unsupported for LongTask, TaskAttribution.
-    // Per the spec, these entries can only be accessed via
-    // Performance Observer. No separate buffer is maintained.
     case PerformanceEntry::kLongTask:
       break;
     case PerformanceEntry::kTaskAttribution:
@@ -183,10 +194,6 @@ PerformanceEntryVector PerformanceBase::getEntriesByType(
     case PerformanceEntry::kInvalid:
       break;
   }
-
-  std::sort(entries.begin(), entries.end(),
-            PerformanceEntry::StartTimeCompareLessThan);
-  return entries;
 }
 
 PerformanceEntryVector PerformanceBase::getEntriesByName(

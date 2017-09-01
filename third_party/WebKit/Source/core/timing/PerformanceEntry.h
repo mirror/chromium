@@ -55,6 +55,7 @@ class CORE_EXPORT PerformanceEntry
  public:
   virtual ~PerformanceEntry();
 
+  // The valid entry types should be consistent with AllValidEntryTypes().
   enum EntryType : PerformanceEntryType {
     kInvalid = 0,
     kNavigation = 1 << 0,
@@ -65,7 +66,9 @@ class CORE_EXPORT PerformanceEntry
     kResource = 1 << 5,
     kLongTask = 1 << 6,
     kTaskAttribution = 1 << 7,
-    kPaint = 1 << 8
+    kPaint = 1 << 8,
+    // Mark the end of enum.
+    kMaxEntryType = 1 << 9
   };
 
   String name() const;
@@ -93,6 +96,13 @@ class CORE_EXPORT PerformanceEntry
   }
 
   static PerformanceEntry::EntryType ToEntryTypeEnum(const String& entry_type);
+
+  static const Vector<PerformanceEntryType>& AllValidEntryTypes() {
+    CR_DEFINE_STATIC_LOCAL(Vector<PerformanceEntryType>, entry_types,
+                           ({kNavigation, kComposite, kMark, kMeasure, kRender,
+                             kResource, kLongTask, kTaskAttribution, kPaint}));
+    return entry_types;
+  }
 
   DEFINE_INLINE_VIRTUAL_TRACE() {}
 

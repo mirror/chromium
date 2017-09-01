@@ -99,6 +99,7 @@ class CORE_EXPORT PerformanceBase : public EventTargetWithInlineData {
   PerformanceEntryVector getEntriesByType(const String& entry_type);
   PerformanceEntryVector getEntriesByName(const String& name,
                                           const String& entry_type);
+  void AddBufferedEntriesByType(PerformanceEntryVector&, PerformanceEntryType);
 
   void clearResourceTimings();
   void setResourceTimingBufferSize(unsigned);

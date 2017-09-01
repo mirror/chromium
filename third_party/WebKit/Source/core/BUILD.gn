@@ -1657,6 +1657,7 @@ jumbo_source_set("unit_tests") {
     "testing/sim/SimWebViewClient.h",
     "timing/MemoryInfoTest.cpp",
     "timing/PerformanceBaseTest.cpp",
+    "timing/PerformanceEntryTest.cpp",
     "timing/PerformanceNavigationTimingTest.cpp",
     "timing/PerformanceObserverTest.cpp",
     "timing/PerformanceResourceTimingTest.cpp",
