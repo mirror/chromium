@@ -3530,6 +3530,12 @@
   "Linux Builder": {
     "additional_compile_targets": [
       "all"
+    ],
+    "scripts": [
+      {
+        "name": "check_network_annotations",
+        "script": "check_network_annotations.py"
+      }
     ]
   },
   "Linux Builder (dbg)": {
