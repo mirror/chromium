@@ -80,6 +80,10 @@ typedef NSAutoreleasePool AutoreleasePoolType;
 
 class BASE_EXPORT MessagePumpCFRunLoopBase : public MessagePump {
  public:
+  class ScopedMessagePumpAllowModalModes;
+  std::unique_ptr<ScopedMessagePumpAllowModalModes> ScopedAllowModalModes()
+      WARN_UNUSED_RESULT;
+
   // MessagePump:
   void Run(Delegate* delegate) override;
   void ScheduleWork() override;
@@ -93,7 +97,7 @@ class BASE_EXPORT MessagePumpCFRunLoopBase : public MessagePump {
 
   // Tasks will be pumped in the run loop modes described by |mode_mask|, which
   // maps bits to the index of an internal array of run loop mode identifiers.
-  explicit MessagePumpCFRunLoopBase(int mode_mask);
+  explicit MessagePumpCFRunLoopBase(int initial_mode_mask);
   ~MessagePumpCFRunLoopBase() override;
 
   // Subclasses should implement the work they need to do in MessagePump::Run
@@ -117,12 +121,18 @@ class BASE_EXPORT MessagePumpCFRunLoopBase : public MessagePump {
   // objects autoreleased by work to fall into the current autorelease pool.
   virtual AutoreleasePoolType* CreateAutoreleasePool();
 
-  // Invokes function(run_loop_, arg, mode) for all the modes in |mode_mask_|.
-  template <typename Argument>
-  void InvokeForEnabledModes(void function(CFRunLoopRef, Argument, CFStringRef),
-                             Argument argument);
+  // Enable and disable entries in |enabled_modes_| to match |mode_mask|.
+  void SetModeMask(int mode_mask);
+
+  // Get the current mode mask from |enabled_modes_|.
+  int GetModeMask() const;
 
  private:
+  class ScopedModeEnabler;
+
+  // The maximum number of run loop modes that can be monitored.
+  static constexpr int kNumModes = 4;
+
   // Marking timers as invalid at the right time helps significantly reduce
   // power use (see the comment in RunDelayedWorkTimer()), however there is no
   // public API for doing so. CFRuntime.h states that CFRuntimeBase, upon which
@@ -198,8 +208,8 @@ class BASE_EXPORT MessagePumpCFRunLoopBase : public MessagePump {
   // The thread's run loop.
   CFRunLoopRef run_loop_;
 
-  // Bitmask controlling the run loop modes in which posted tasks may run.
-  const int mode_mask_;
+  // The enabled modes. Posted tasks may run in any non-null entry.
+  std::unique_ptr<ScopedModeEnabler> enabled_modes_[kNumModes];
 
   // The timer, sources, and observers are described above alongside their
   // callbacks.
@@ -244,6 +254,20 @@ class BASE_EXPORT MessagePumpCFRunLoopBase : public MessagePump {
   bool delegateless_idle_work_;
 
   DISALLOW_COPY_AND_ASSIGN(MessagePumpCFRunLoopBase);
+};
+
+class BASE_EXPORT MessagePumpCFRunLoopBase::ScopedMessagePumpAllowModalModes {
+ public:
+  ~ScopedMessagePumpAllowModalModes() { pump_->SetModeMask(restore_); }
+
+ private:
+  friend class MessagePumpCFRunLoopBase;
+  ScopedMessagePumpAllowModalModes(MessagePumpCFRunLoopBase* pump, int mode);
+
+  MessagePumpCFRunLoopBase* const pump_;
+  const int restore_;
+
+  DISALLOW_COPY_AND_ASSIGN(ScopedMessagePumpAllowModalModes);
 };
 
 class BASE_EXPORT MessagePumpCFRunLoop : public MessagePumpCFRunLoopBase {
