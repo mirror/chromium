@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c527cdc_02cba765",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-09-01T16:49:20Z",
+      "side": 1,
+      "message": "nit: You might want to add a utility function somewhere in content/common that returns (cmdline-\u003eHasSwitch(switches::kIsRunningInMash) || cmdline.HasSwitch(switches::kEnableSurfaceSynchronization), rather than replicating this every time you need to know whether synchronization is turned on.",
+      "revId": "7caf2350f5a24d227adeaebe3e3a20190e57447d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
