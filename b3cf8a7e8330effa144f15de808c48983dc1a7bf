@@ -34,6 +34,24 @@
       "revId": "b3cf8a7e8330effa144f15de808c48983dc1a7bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad5e86df_1f069bf4",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 980,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-01T06:09:36Z",
+      "side": 1,
+      "message": "No, there\u0027s no strong need. It\u0027s not horribly broken, but it is less legible, especially the concatenated strings split onto different lines. I would have just left this as it was, ignoring the formatting warnings when uploading, but Mark reluctantly landed the \u0027git cl format\u0027 changes, and I just learned of this approach to restore some legibility. Why do you hate using those directives?",
+      "parentUuid": "13ffa08d_a59945c0",
+      "revId": "b3cf8a7e8330effa144f15de808c48983dc1a7bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
