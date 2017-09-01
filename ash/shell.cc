@@ -800,6 +800,7 @@ Shell::~Shell() {
   // These members access Shell in their destructors.
   wallpaper_controller_.reset();
   accessibility_delegate_.reset();
+  message_center_controller_.reset();
 
   // Balances the Install() in Initialize().
   views::FocusManagerFactory::Install(nullptr);
