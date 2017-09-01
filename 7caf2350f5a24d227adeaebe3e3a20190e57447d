@@ -16,6 +16,24 @@
       "revId": "7caf2350f5a24d227adeaebe3e3a20190e57447d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d4f25fe_de31d8f6",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-09-01T17:05:51Z",
+      "side": 1,
+      "message": "Actually this check is being done outside of content as well. I\u0027m not sure where to place it. We generally didn\u0027t want to place this in viz. I don\u0027t want to block this CL on that discussion, so I\u0027ll do this in a follow up CL.",
+      "parentUuid": "7c527cdc_02cba765",
+      "revId": "7caf2350f5a24d227adeaebe3e3a20190e57447d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
