@@ -39,9 +39,12 @@ CanvasRenderingContext::CanvasRenderingContext(
     : host_(host),
       color_params_(kLegacyCanvasColorSpace, kRGBA8CanvasPixelFormat),
       creation_attributes_(attrs) {
+  LOG(ERROR) << "HERE";
   if (CanvasColorParams::ColorCorrectRenderingEnabled()) {
+    LOG(ERROR) << "HERE";
     color_params_.SetCanvasColorSpace(kSRGBCanvasColorSpace);
     if (CanvasColorParams::ColorCorrectRenderingInAnyColorSpace()) {
+      LOG(ERROR) << "HERE";
       if (creation_attributes_.colorSpace() == kRec2020CanvasColorSpaceName)
         color_params_.SetCanvasColorSpace(kRec2020CanvasColorSpace);
       else if (creation_attributes_.colorSpace() == kP3CanvasColorSpaceName)
@@ -52,6 +55,7 @@ CanvasRenderingContext::CanvasRenderingContext(
       if (creation_attributes_.pixelFormat() == kF16CanvasPixelFormatName) {
         color_params_.SetCanvasPixelFormat(kF16CanvasPixelFormat);
       } else {
+        LOG(ERROR) << "HERE";
         color_params_.SetCanvasColorSpace(kSRGBCanvasColorSpace);
         color_params_.SetCanvasPixelFormat(kRGBA8CanvasPixelFormat);
       }
