@@ -2,9 +2,16 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-source_set("ui") {
+source_set("adaptor") {
   sources = [
-    "ui_types.h",
+    "application_commands_adaptor.h",
+    "application_commands_adaptor.mm",
+    "url_loader_adaptor.h",
+    "url_loader_adaptor.mm",
+  ]
+  deps = [
+    "//ios/chrome/browser/ui",
+    "//ios/web",
   ]
 
   configs += [ "//build/config/compiler:enable_arc" ]
