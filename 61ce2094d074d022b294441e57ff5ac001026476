@@ -88,6 +88,24 @@
       "revId": "61ce2094d074d022b294441e57ff5ac001026476",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72390a78_1393dbf7",
+        "filename": "media/gpu/android_video_decode_accelerator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-01T00:19:51Z",
+      "side": 1,
+      "message": "I\u0027m not sure what part of that page you were indicating, but I see there written \"Scoped enums gives you the ability to specify the underlying type of the enumeration, and for scoped enums, it defaults to int if you choose not to specify it.\"  What am I misunderstanding? \u003d)",
+      "parentUuid": "84c24334_6b3c8dce",
+      "revId": "61ce2094d074d022b294441e57ff5ac001026476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
