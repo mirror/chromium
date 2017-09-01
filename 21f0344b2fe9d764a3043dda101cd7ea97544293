@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "93c04593_9110d51d",
+        "filename": "content/browser/blob_storage/blob_dispatcher_host_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-09-01T21:00:45Z",
+      "side": 1,
+      "message": "I had it like this originally, but given that the reuse only happens after resetting the value (i.e. the new line i added in 436), I thought this more concise version is fine.\n\nI think correctness-wise, this is ok. but if you find it weird to read I can change it.",
+      "parentUuid": "00700a46_29779f2b",
+      "range": {
+        "startLine": 436,
+        "startChar": 2,
+        "endLine": 436,
+        "endChar": 10
+      },
+      "revId": "21f0344b2fe9d764a3043dda101cd7ea97544293",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fbbed335_a8846d90",
         "filename": "content/browser/blob_storage/blob_dispatcher_host_unittest.cc",
         "patchSetId": 6
