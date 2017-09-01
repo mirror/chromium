@@ -22,6 +22,30 @@
       "revId": "129ca5d68a29b52b2080714b0eac3a80f6695428",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e21f278_01588122",
+        "filename": "net/url_request/url_request_context.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-09-01T15:14:55Z",
+      "side": 1,
+      "message": "Thanks I\u0027ve routed the flag a different way.  I don\u0027t know what the status is of network-stack servicification,  it seemed a long way off last time I looked.\n\nWe don\u0027t have a design doc for this particular feature, but I\u0027ve added a bug which contains some more context. Let me know if that works for you.",
+      "parentUuid": "3881d7d5_5ea23a9e",
+      "range": {
+        "startLine": 293,
+        "startChar": 7,
+        "endLine": 293,
+        "endChar": 29
+      },
+      "revId": "129ca5d68a29b52b2080714b0eac3a80f6695428",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
