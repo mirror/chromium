@@ -114,7 +114,7 @@ QUIC_FLAG(bool, FLAGS_quic_enable_version_40, false)
 
 // In QUIC, QuicSession gets notified when stream frames are acked, discarded or
 // retransmitted.
-QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_use_stream_notifier2, false)
+QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_use_stream_notifier2, true)
 
 // When true, defaults to BBR congestion control instead of Cubic.
 QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_default_to_bbr, false)
@@ -156,7 +156,7 @@ QUIC_FLAG(bool, FLAGS_quic_restart_flag_quic_header_list_size, false)
 
 // When true, allows the LRTT connection option to cause QUIC BBR to exit
 // STARTUP when in recovery and there has been no bandwidth increase for 1RTT.
-QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_bbr_exit_startup_on_loss, false)
+QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_bbr_exit_startup_on_loss, true)
 
 // If true, application data is saved before consumption in QUIC.
 QUIC_FLAG(bool,
@@ -174,7 +174,7 @@ QUIC_FLAG(uint32_t, FLAGS_quic_send_buffer_max_data_slice_size, 4096u)
 // ack aggregation that prevent persistent standing queues.
 QUIC_FLAG(bool,
           FLAGS_quic_reloadable_flag_quic_bbr_ack_aggregation_bytes4,
-          false)
+          true)
 
 // Add 4 new ack decimation modes to QUIC that are entirely time based at 1/4
 // or 1/8 RTT.
