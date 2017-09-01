@@ -157,7 +157,9 @@ bool TextControlElement::IsPlaceholderEmpty() const {
 
 bool TextControlElement::PlaceholderShouldBeVisible() const {
   return SupportsPlaceholder() && IsEmptyValue() && IsEmptySuggestedValue() &&
-         !IsPlaceholderEmpty();
+         (!IsPlaceholderEmpty() ||
+          (PlaceholderElement() &&
+           !PlaceholderElement()->textContent(false).IsEmpty()));
 }
 
 HTMLElement* TextControlElement::PlaceholderElement() const {
