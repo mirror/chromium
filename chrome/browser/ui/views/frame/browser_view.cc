@@ -172,6 +172,8 @@
 #include "chrome/browser/ui/views/sync/one_click_signin_dialog_view.h"
 #endif
 
+#include "chrome/browser/ui/views/exit_fullscreen_fab_indicator.h"
+
 using base::TimeDelta;
 using base::UserMetricsAction;
 using content::NativeWebKeyboardEvent;
@@ -2147,6 +2149,13 @@ void BrowserView::InitViews() {
 
   frame_->OnBrowserViewInitViewsComplete();
   frame_->GetFrameView()->UpdateMinimumSize();
+
+  ExitFullscreenFabIndicator* ffvs =
+      new ExitFullscreenFabIndicator(GetWidget());
+  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      FROM_HERE,
+      base::Bind(&ExitFullscreenFabIndicator::Show, base::Unretained(ffvs)),
+      base::TimeDelta::FromSeconds(10));
 }
 
 void BrowserView::LoadingAnimationCallback() {
