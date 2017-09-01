@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4924152e_d5ae8d09",
+        "filename": "ui/gl/init/gl_factory_ozone.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-09-01T19:05:46Z",
+      "side": 1,
+      "message": "No {}",
+      "revId": "94f0e988cac8ac8f13e0a58b557b9f8881c60377",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08ab8ff6_0c9e55de",
+        "filename": "ui/ozone/public/gl_ozone.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-09-01T19:05:46Z",
+      "side": 1,
+      "message": "Can you add comments to the two method. What does the implementation need to do?",
+      "revId": "94f0e988cac8ac8f13e0a58b557b9f8881c60377",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
