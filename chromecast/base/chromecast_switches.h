@@ -30,6 +30,8 @@ extern const char kNoWifi[];
 // App switches
 extern const char kAllowHiddenMediaPlayback[];
 
+extern const char kAllowWebRTC[];
+
 // Switches to communicate app state information
 extern const char kLastLaunchedApp[];
 extern const char kPreviousApp[];
