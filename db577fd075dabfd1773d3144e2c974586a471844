@@ -22,6 +22,30 @@
       "revId": "db577fd075dabfd1773d3144e2c974586a471844",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fcc7a07_8389c012",
+        "filename": "ios/chrome/browser/ui/authentication/signin_earlgrey_utils.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-09-01T13:46:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "393c2d7b_cb655167",
+      "range": {
+        "startLine": 89,
+        "startChar": 67,
+        "endLine": 89,
+        "endChar": 75
+      },
+      "revId": "db577fd075dabfd1773d3144e2c974586a471844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
