@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e31ae188_3ec1b77d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 1649,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-01T18:51:16Z",
+      "side": 1,
+      "message": "nit: ;\n\nor, instead of the new sentence, simply use a different enum with values \"suggested app\" and \"not a suggested app\".",
+      "range": {
+        "startLine": 1649,
+        "startChar": 62,
+        "endLine": 1649,
+        "endChar": 63
+      },
+      "revId": "7cdeaf1354f6a815318920f98659d0df6a72d925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d775174_6cbdbbc5",
+        "filename": "ui/app_list/app_list_constants.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-01T18:51:16Z",
+      "side": 1,
+      "message": "It looks like the code was previously emitting a wrong histogram name, right?\n\nPlease add the histogram \"Apps.AppListPeekingToFullscreen\" to histograms.xml and mark it as obsolete\n\"Replaced with Apps.AppListPeekingToFullscreenSource on 9/2017\"\n\nAlternatively, simply rename the histograms.xml to the name currently in use.  (I guess this is probably a less good option because the word Source is probably useful in interpreting the name...)",
+      "range": {
+        "startLine": 209,
+        "startChar": 44,
+        "endLine": 209,
+        "endChar": 0
+      },
+      "revId": "7cdeaf1354f6a815318920f98659d0df6a72d925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
