@@ -121,7 +121,7 @@ const base::Feature kHeapCompaction{"HeapCompaction",
 // Note: The feature is implemented in Blink, and is independent to the
 // ENABLE_SPELLCHECK build flag defined in components/spellcheck.
 const base::Feature kIdleTimeSpellChecking{"IdleTimeSpellChecking",
-                                           base::FEATURE_DISABLED_BY_DEFAULT};
+                                           base::FEATURE_ENABLED_BY_DEFAULT};
 
 // Enable lazy initialization of the media controls.
 const base::Feature kLazyInitializeMediaControls{

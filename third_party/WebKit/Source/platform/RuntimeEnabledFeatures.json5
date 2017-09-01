@@ -504,7 +504,7 @@
     },
     {
       name: "IdleTimeSpellChecking",
-      status: "test",
+      status: "stable",
     },
     {
       name: "ImageCapture",
