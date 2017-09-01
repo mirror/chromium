@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e8680e7a_6c9a3052",
+        "filename": "content/network/cookie_manager_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-01T22:06:37Z",
+      "side": 1,
+      "message": "I think I answered this at top level--let me know if this is still unclear.",
+      "parentUuid": "576914f6_7333d6f2",
+      "revId": "8e7d98e850f4ddf5b94fa890aef76b4042b9bf75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c3a2c1f_1ddb4e9e",
         "filename": "content/network/cookie_manager_impl_unittest.cc",
         "patchSetId": 4
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "0faed9c9_e05dba1b",
+        "filename": "content/network/cookie_manager_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-01T22:06:37Z",
+      "side": 1,
+      "message": "Those booleans indicate the privileges of the source of the setter, i.e. whether it\u0027s allowed to set certain kinds of cookies.  For testing, unless I\"m testing what happens when setting a cookie from an insecure source, I just indicate full privileges.",
+      "parentUuid": "3c3a2c1f_1ddb4e9e",
+      "range": {
+        "startLine": 334,
+        "startChar": 16,
+        "endLine": 334,
+        "endChar": 17
+      },
+      "revId": "8e7d98e850f4ddf5b94fa890aef76b4042b9bf75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08dceafc_504f349d",
         "filename": "content/network/cookie_manager_impl_unittest.cc",
         "patchSetId": 4
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "370c531a_5bc6f571",
+        "filename": "content/network/cookie_manager_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-01T22:06:37Z",
+      "side": 1,
+      "message": "Done.  Note that I didn\u0027t annotate the privilege booleans (though I will if you want me to) as all they are saying is \"there are no restrictions on the cookies it\u0027s ok to set\"; at least here, there\u0027s no subtlety to in the context of the tests.",
+      "parentUuid": "08dceafc_504f349d",
+      "revId": "8e7d98e850f4ddf5b94fa890aef76b4042b9bf75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "205d023a_24b2c6e8",
         "filename": "content/network/cookie_manager_impl_unittest.cc",
         "patchSetId": 4
@@ -70,6 +130,24 @@
       "writtenOn": "2017-09-01T14:46:42Z",
       "side": 1,
       "message": "a nit on the comment:\nthe \"it\u0027s\" is a bit ambiguous. I think you are referring to the LastAccessDate(), but I first thought you meant the cookie is null.",
+      "revId": "8e7d98e850f4ddf5b94fa890aef76b4042b9bf75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "106cb50e_30cddc5c",
+        "filename": "content/network/cookie_manager_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-01T22:06:37Z",
+      "side": 1,
+      "message": "Good point.  Done.",
+      "parentUuid": "205d023a_24b2c6e8",
       "revId": "8e7d98e850f4ddf5b94fa890aef76b4042b9bf75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
