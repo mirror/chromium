@@ -199,8 +199,7 @@ class QuicHeadersStreamTest : public QuicTestWithParam<TestParamsTuple> {
     } else {
       consumed = data.total_length;
       char* buf = new char[consumed];
-      QuicDataWriter writer(consumed, buf, Perspective::IS_CLIENT,
-                            NETWORK_BYTE_ORDER);
+      QuicDataWriter writer(consumed, buf, NETWORK_BYTE_ORDER);
       headers_stream_->WriteStreamData(headers_stream_->stream_bytes_written(),
                                        consumed, &writer);
       saved_data_.append(buf, consumed);
@@ -216,8 +215,7 @@ class QuicHeadersStreamTest : public QuicTestWithParam<TestParamsTuple> {
       saved_data_.append(static_cast<char*>(iov[0].iov_base), consumed);
     } else {
       char* buf = new char[consumed];
-      QuicDataWriter writer(consumed, buf, Perspective::IS_CLIENT,
-                            NETWORK_BYTE_ORDER);
+      QuicDataWriter writer(consumed, buf, NETWORK_BYTE_ORDER);
       headers_stream_->WriteStreamData(headers_stream_->stream_bytes_written(),
                                        consumed, &writer);
       saved_data_.append(buf, consumed);

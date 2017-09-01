@@ -199,8 +199,7 @@ class QuicPacketCreatorTest : public QuicTestWithParam<TestParams> {
     EXPECT_EQ(stream_id, frame.stream_frame->stream_id);
     if (client_framer_.HasDataProducer()) {
       char buf[kMaxPacketSize];
-      QuicDataWriter writer(kMaxPacketSize, buf, Perspective::IS_CLIENT,
-                            HOST_BYTE_ORDER);
+      QuicDataWriter writer(kMaxPacketSize, buf, HOST_BYTE_ORDER);
       if (frame.stream_frame->data_length > 0) {
         producer_.WriteStreamData(stream_id, frame.stream_frame->offset,
                                   frame.stream_frame->data_length, &writer);
