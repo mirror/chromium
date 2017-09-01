@@ -34,6 +34,24 @@
       "revId": "9d2bad64d77ea439e8b4bc38b36a4d83bea7888e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "582eb572_6d96bc3a",
+        "filename": "chrome/browser/media/media_engagement_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-09-01T15:01:42Z",
+      "side": 1,
+      "message": "Just to add - the previous CL will wipe the data anyway, but just to make sure :)",
+      "parentUuid": "43c77364_77b1d0ef",
+      "revId": "9d2bad64d77ea439e8b4bc38b36a4d83bea7888e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
