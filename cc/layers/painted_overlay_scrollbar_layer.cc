@@ -7,7 +7,6 @@
 #include <algorithm>
 
 #include "base/auto_reset.h"
-#include "cc/base/math_util.h"
 #include "cc/layers/painted_overlay_scrollbar_layer_impl.h"
 #include "cc/paint/skia_paint_canvas.h"
 #include "cc/resources/ui_resource_bitmap.h"

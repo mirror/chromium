@@ -10,7 +10,6 @@
 
 #include "base/memory/ptr_util.h"
 #include "cc/base/filter_operations.h"
-#include "cc/base/math_util.h"
 #include "cc/layers/heads_up_display_layer_impl.h"
 #include "cc/layers/layer_impl.h"
 #include "cc/layers/render_surface_impl.h"
@@ -18,6 +17,7 @@
 #include "cc/trees/layer_tree_host_common.h"
 #include "cc/trees/layer_tree_impl.h"
 #include "ui/gfx/geometry/rect_conversions.h"
+#include "ui/gfx/math_util.h"
 
 namespace cc {
 
@@ -392,8 +392,9 @@ void DamageTracker::AccumulateDamageFromLayer(LayerImpl* layer) {
     damage_rect.Intersect(gfx::Rect(layer->bounds()));
 
     if (!damage_rect.IsEmpty()) {
-      gfx::Rect damage_rect_in_target_space = MathUtil::MapEnclosingClippedRect(
-          layer->DrawTransform(), damage_rect);
+      gfx::Rect damage_rect_in_target_space =
+          gfx::MathUtil::MapEnclosingClippedRect(layer->DrawTransform(),
+                                                 damage_rect);
       damage_for_this_update_.Union(damage_rect_in_target_space);
     }
   }
@@ -447,8 +448,9 @@ void DamageTracker::AccumulateDamageFromRenderSurface(
       // If there was damage, transform it to target space, and possibly
       // contribute its reflection if needed.
       const gfx::Transform& draw_transform = render_surface->draw_transform();
-      gfx::Rect damage_rect_in_target_space = MathUtil::MapEnclosingClippedRect(
-          draw_transform, damage_rect_in_local_space);
+      gfx::Rect damage_rect_in_target_space =
+          gfx::MathUtil::MapEnclosingClippedRect(draw_transform,
+                                                 damage_rect_in_local_space);
       damage_for_this_update_.Union(damage_rect_in_target_space);
     } else if (!is_valid_rect) {
       damage_for_this_update_.Union(surface_rect_in_target_space);

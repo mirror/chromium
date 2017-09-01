@@ -13,7 +13,6 @@
 #include "base/trace_event/trace_event.h"
 #include "base/trace_event/trace_event_argument.h"
 #include "base/values.h"
-#include "cc/base/math_util.h"
 #include "cc/quads/debug_border_draw_quad.h"
 #include "cc/quads/draw_quad.h"
 #include "cc/quads/largest_draw_quad.h"
@@ -28,6 +27,7 @@
 #include "components/viz/common/quads/copy_output_request.h"
 #include "components/viz/common/quads/shared_quad_state.h"
 #include "components/viz/common/traced_value.h"
+#include "ui/gfx/math_util.h"
 
 namespace {
 const size_t kDefaultNumSharedQuadStatesToReserve = 32;
@@ -214,8 +214,8 @@ void RenderPass::SetAll(uint64_t id,
 }
 
 void RenderPass::AsValueInto(base::trace_event::TracedValue* value) const {
-  MathUtil::AddToTracedValue("output_rect", output_rect, value);
-  MathUtil::AddToTracedValue("damage_rect", damage_rect, value);
+  gfx::MathUtil::AddToTracedValue("output_rect", output_rect, value);
+  gfx::MathUtil::AddToTracedValue("damage_rect", damage_rect, value);
 
   value->SetBoolean("has_transparent_background", has_transparent_background);
   value->SetBoolean("cache_render_pass", cache_render_pass);
