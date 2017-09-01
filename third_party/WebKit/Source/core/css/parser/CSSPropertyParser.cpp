@@ -50,9 +50,7 @@ void CSSPropertyParser::AddParsedProperty(CSSPropertyID resolved_property,
                                           bool important,
                                           bool implicit) {
   AddProperty(resolved_property, current_shorthand, value, important,
-              implicit ? IsImplicitProperty::kImplicit
-                       : IsImplicitProperty::kNotImplicit,
-              *parsed_properties_);
+              IsImplicitProperty::kNotImplicit, *parsed_properties_);
 }
 
 bool CSSPropertyParser::ParseValue(
