@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f58d2920_4939651a",
+        "filename": "chrome/browser/ui/views/find_bar_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-01T14:28:28Z",
+      "side": 1,
+      "message": "This guard shouldn\u0027t be needed. This is only used on mac with mac_views_browser changed to true, and I suspect that configuration needs this as well.\n\nNote OS_LINUX includes ChromeOS (here, as it did in the initial CL).",
+      "revId": "e66cfc172f5cff67bfdd5b778f3a6767446c2dda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68a9b42e_64b8ae14",
+        "filename": "chrome/browser/ui/views/find_bar_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-01T14:28:28Z",
+      "side": 1,
+      "message": "I think web_contents() can be null. See next comment",
+      "range": {
+        "startLine": 138,
+        "startChar": 30,
+        "endLine": 138,
+        "endChar": 44
+      },
+      "revId": "e66cfc172f5cff67bfdd5b778f3a6767446c2dda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2c45114_4f20542c",
+        "filename": "chrome/browser/ui/views/find_bar_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-01T14:28:28Z",
+      "side": 1,
+      "message": "This needs to go further down. Maybe to MoveWindowIfNecessary, or perhaps all the way to FindBarHost::GetWidgetPositionNative(..). Then we can just play with the rect there and not the entire FindNotificationDetails. Also it will be closer to existing comments like\n\n    // For comparison (with the Intersects function below) we need to account\n    // for the fact that we draw the Find widget relative to the Chrome frame,\n    // whereas the selection rect is relative to the page.\n\nwhich will give this manipulation more context.",
+      "revId": "e66cfc172f5cff67bfdd5b778f3a6767446c2dda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

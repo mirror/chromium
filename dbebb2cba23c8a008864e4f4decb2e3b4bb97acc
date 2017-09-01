@@ -34,6 +34,24 @@
       "revId": "dbebb2cba23c8a008864e4f4decb2e3b4bb97acc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b54355e2_e71eb89d",
+        "filename": "chrome/browser/ui/find_bar/find_tab_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-01T14:28:28Z",
+      "side": 1,
+      "message": "This doesn\u0027t really give the clarity I\u0027m after. We need to understand what\u0027s going on better. I\u0027ve given you lots of pointers, but you need to experiment until you fully understand the change you\u0027re proposing.\n\nThe way the rectangle is described needs to be clear in both what the origin is (e.g., screen origin, window origin, WebContents (web frame) origin, widget-frame origin), and what the pixel scale is (DIPs or backing store / device scale factor).",
+      "parentUuid": "d8e09ff0_db89c9d9",
+      "revId": "dbebb2cba23c8a008864e4f4decb2e3b4bb97acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
