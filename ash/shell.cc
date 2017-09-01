@@ -861,6 +861,7 @@ Shell::~Shell() {
   night_light_controller_ = nullptr;
   local_state_.reset();
   shell_delegate_.reset();
+  message_center_controller_.reset();
 
   for (auto& observer : shell_observers_)
     observer.OnShellDestroyed();
