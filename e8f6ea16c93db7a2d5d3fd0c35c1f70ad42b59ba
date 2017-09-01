@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cc500a27_e7c94928",
+        "filename": "extensions/browser/api/metrics_private/metrics_private_api.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-01T20:27:31Z",
+      "side": 1,
+      "message": "Went with const auto.\nDone",
+      "parentUuid": "41a90c2a_113e1805",
+      "range": {
+        "startLine": 141,
+        "startChar": 2,
+        "endLine": 142,
+        "endChar": 52
+      },
+      "revId": "e8f6ea16c93db7a2d5d3fd0c35c1f70ad42b59ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "679a0a52_6c1a44b6",
         "filename": "extensions/browser/api/metrics_private/metrics_private_api.cc",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2919dcc0_62248c53",
+        "filename": "extensions/browser/api/metrics_private/metrics_private_api.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-01T20:27:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "679a0a52_6c1a44b6",
+      "range": {
+        "startLine": 143,
+        "startChar": 36,
+        "endLine": 143,
+        "endChar": 42
+      },
+      "revId": "e8f6ea16c93db7a2d5d3fd0c35c1f70ad42b59ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82490941_81cb9a97",
         "filename": "extensions/browser/api/metrics_private/metrics_private_api.cc",
         "patchSetId": 5
@@ -68,6 +116,30 @@
       "revId": "e8f6ea16c93db7a2d5d3fd0c35c1f70ad42b59ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ea4edbb_c1048596",
+        "filename": "extensions/browser/api/metrics_private/metrics_private_api.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-01T20:27:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82490941_81cb9a97",
+      "range": {
+        "startLine": 144,
+        "startChar": 43,
+        "endLine": 144,
+        "endChar": 44
+      },
+      "revId": "e8f6ea16c93db7a2d5d3fd0c35c1f70ad42b59ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
