@@ -20,8 +20,8 @@ cr.define('extension_sidebar_tests', function() {
 
     setup(function() {
       var manager = document.querySelector('extensions-manager');
-      manager.$.drawer.openDrawer();
       sidebar = manager.$.sidebar;
+      sidebar.$.drawer.openDrawer();
     });
 
     test(assert(TestNames.LayoutAndClickHandlers), function() {
