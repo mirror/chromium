@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3817b5a_12203f72",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_journey_logger_egtest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-09-01T17:23:35Z",
+      "side": 1,
+      "message": "Should we have this check in -setUp instead? Is PaymentRequest checking that the device is 10.3+ before enabling it? If there\u0027s a chance it can throw a DOMException, maybe it\u0027s worth disabling it on devices \u003c 10.3 altogether?",
+      "revId": "bf109d53c85e6a3a2223fe8e71fbb3e908b408d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffb21131_db8c4857",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-09-01T17:23:35Z",
+      "side": 1,
+      "message": "Why not keep the LOG(ERROR) in abortPaymentRequest/abortPaymentRequestWithReason? All of these log messages use errorName/errorMessage that are being passed to the method, so that would avoid some duplication.",
+      "revId": "bf109d53c85e6a3a2223fe8e71fbb3e908b408d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
