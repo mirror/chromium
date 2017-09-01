@@ -67,6 +67,7 @@
 #include "core/html/forms/InputType.h"
 #include "core/html/forms/SearchInputType.h"
 #include "core/html/parser/HTMLParserIdioms.h"
+#include "core/html/shadow/ShadowElementNames.h"
 #include "core/layout/LayoutObject.h"
 #include "core/layout/LayoutTheme.h"
 #include "core/page/ChromeClient.h"
@@ -1069,14 +1070,38 @@ const String& HTMLInputElement::SuggestedValue() const {
 }
 
 void HTMLInputElement::SetSuggestedValue(const String& value) {
-  if (!input_type_->CanSetSuggestedValue())
-    return;
-  needs_to_update_view_value_ = true;
-  suggested_value_ = SanitizeValue(value);
-  SetNeedsStyleRecalc(
-      kSubtreeStyleChange,
-      StyleChangeReasonForTracing::Create(StyleChangeReason::kControlValue));
-  input_type_view_->UpdateView();
+  HTMLElement* placeholder = PlaceholderElement();
+
+  String new_placeholder_value = value;
+  if (value.IsEmpty()) {
+    // Get the placeholder value from the DOM.
+    const AtomicString& attribute_value = FastGetAttribute(placeholderAttr);
+
+    // If there is no placeholder value in the DOM, remove the placeholder from
+    // the ShadowDOM.
+    if (attribute_value.GetString().IsEmpty() && placeholder) {
+      UserAgentShadowRoot()->RemoveChild(placeholder);
+      return;
+    }
+
+    // Reset the ShadowDom placeholder value to reflect the DOM.
+    new_placeholder_value = attribute_value.GetString();
+  }
+
+  // If there is not already a placeholder element, create one in the ShadowDom.
+  if (!placeholder) {
+    HTMLDivElement* new_element = HTMLDivElement::Create(GetDocument());
+    placeholder = new_element;
+    placeholder->SetShadowPseudoId(AtomicString("-webkit-input-placeholder"));
+    placeholder->setAttribute(idAttr, ShadowElementNames::Placeholder());
+    placeholder->SetInlineStyleProperty(
+        CSSPropertyDisplay,
+        IsPlaceholderVisible() ? CSSValueBlock : CSSValueNone, true);
+    UserAgentShadowRoot()->InsertBefore(placeholder, InnerEditorElement());
+  }
+
+  // Set the new value in the ShadowDom placeholder.
+  placeholder->setTextContent(new_placeholder_value);
 }
 
 void HTMLInputElement::SetEditingValue(const String& value) {
@@ -1694,11 +1719,12 @@ void HTMLInputElement::SetPlaceholderVisibility(bool visible) {
 }
 
 bool HTMLInputElement::SupportsPlaceholder() const {
-  return input_type_->SupportsPlaceholder();
+  return true;
+  // return input_type_->SupportsPlaceholder();
 }
 
 void HTMLInputElement::UpdatePlaceholderText() {
-  return input_type_view_->UpdatePlaceholderText();
+  input_type_view_->UpdatePlaceholderText();
 }
 
 bool HTMLInputElement::SupportsAutocapitalize() const {
