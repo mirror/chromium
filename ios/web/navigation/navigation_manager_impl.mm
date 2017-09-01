@@ -181,6 +181,7 @@ void NavigationManagerImpl::GoToIndex(int index) {
       previous_item ? previous_item->GetUserAgentType() : UserAgentType::NONE;
 
   if (to_item_user_agent_type != UserAgentType::NONE &&
+      previous_item_user_agent_type != UserAgentType::NONE &&
       to_item_user_agent_type != previous_item_user_agent_type) {
     delegate_->WillChangeUserAgentType();
   }
