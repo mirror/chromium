@@ -156,6 +156,24 @@ id<GREYMatcher> PaymentRequestView();
 // Returns matcher for the error confirmation view for payment request.
 id<GREYMatcher> PaymentRequestErrorView();
 
+// Returns matcher for the Google Chrome cell on the main Settings screen.
+id<GREYMatcher> VoiceSearchButton();
+
+// Returns matcher for the settings main menu view.
+id<GREYMatcher> SettingsCollectionView();
+
+// Matcher for the clear browsing history cell on the clear browsing data panel.
+id<GREYMatcher> ClearBrowsingHistoryButton();
+
+// Matcher for the clear cookies cell on the clear browsing data panel.
+id<GREYMatcher> ClearCookiesButton();
+
+// Matcher for the clear cache cell on the clear browsing data panel.
+id<GREYMatcher> ClearCacheButton();
+
+// Matcher for the clear saved passwords cell on the clear browsing data panel.
+id<GREYMatcher> ClearSavedPasswordsButton();
+
 }  // namespace chrome_test_util
 
 #endif  // IOS_CHROME_TEST_EARL_GREY_CHROME_MATCHERS_H_
