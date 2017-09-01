@@ -22,6 +22,30 @@
       "revId": "b895c28db40bb61d8cf3c6d79e416d7217244691",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c575a57f_2876a096",
+        "filename": "components/metrics/metrics_state_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-01T18:43:32Z",
+      "side": 1,
+      "message": "\u003e Have you checked that the timing of this makes sense?\n\u003e \n\u003e kMetricsResetIds is set temporary and then used to reset client id on next session.\n\u003e \n\u003e See this code:\n\u003e \n\u003e https://cs.chromium.org/chromium/src/components/metrics/metrics_state_manager.cc?rcl\u003dba0aeefa9190a13567c764f237df5d86349e71a5\u0026l\u003d344\n\u003e \n\u003e Are you sure ProvidePreviousSessionData() runs before that code? If it doesn\u0027t, then you wouldn\u0027t be using state from the previous session correctly. (Or maybe that\u0027s OK and what we want, but if so we should think things through and provide the reasoning in a comment.)\n\nOh, does that mean IsClonedInstall is only set once, for the session following the detection of a cloned install?\n\nI had assumed that IsClonedInstall would be sticky, which is why I wanted to put it on every appropriate record.\n\nLooking closer at the code, it looks like we set the reset-client-id bit when we detect a cloned install, which causes us on the next sessions to:\n1) report that it is a cloned install\n2) clear the reset-client-id so following sessions are possibly not marked as cloned installs.  (I don\u0027t know how likely it is for the reset-client-id to be re-enabled during the length of this session.)\n\nIf generally we tend to mark sessions repeatedly as cloned installs, we should report this cloned install state for the previous sessions (stability) metrics too.  Is this assumption true?  I was hoping that gab@ would answer this question (the appropriateness of this), though I imagine you probably can too.  If not, then this code is unwanted / unneeded.\n\nNow, onto the question of whether the reset-client-id bit is valid at the time ProvidePreviousSessionData is called.  It looks like the bit is cleared in\nMetricsStateManager::ResetMetricsIDsIfNecessary()\nand recorded in\nClonedInstallDetector::SaveMachineId()\n\nThe latter is called asynchronously by\nMetricsStateManager::CheckForClonedInstall()\nwhich is called by\nChromeBrowserMainParts::StartMetricsRecording()\ni.e., very early in startup\n\nMeanwhile, the clearing is called in MetricsStateManager::MetricsStateManager(), i.e., even earlier.\n\nMy conclusion: it does look like there is a problem using the bit here only because we don\u0027t know if the asynchronous call to CheckForClonedInstall() has finished by the time the initial stability log is prepared and ProvidePreviousSessionData() is called.\n\nIf it hasn\u0027t finished, then we\u0027ll see the reset-client-id as false even if it should be true.  This means we won\u0027t record the UMA.IsClonedInstall bit even at times when it\u0027s likely appropriate.  If it has finished, then we\u0027ll record is cloned install for the previous session if the current session is detected as having a cloned install.\n\nIn other words, if you think that cloned install state tends to be persistent, then this changelist tends to tag the previous session (a.k.a. initial stability log) with the cloned install state, though doesn\u0027t do so consistently (depending on a race condition).  But tagging them sometimes seems better than what we currently do, so if my assumption is correct, then I still think this code is worth doing.",
+      "parentUuid": "f5a89667_3234a0be",
+      "range": {
+        "startLine": 72,
+        "startChar": 57,
+        "endLine": 72,
+        "endChar": 0
+      },
+      "revId": "b895c28db40bb61d8cf3c6d79e416d7217244691",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
