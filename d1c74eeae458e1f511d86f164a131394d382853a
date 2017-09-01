@@ -1,0 +1,308 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c691ca66_197ad1f5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-01T08:10:39Z",
+      "side": 1,
+      "message": "nit: a trailing space",
+      "range": {
+        "startLine": 9,
+        "startChar": 74,
+        "endLine": 9,
+        "endChar": 75
+      },
+      "revId": "d1c74eeae458e1f511d86f164a131394d382853a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4180f4ee_fafb6239",
+        "filename": "chrome/browser/chrome_service_worker_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-01T08:10:39Z",
+      "side": 1,
+      "message": "I think you don\u0027t need |result|.",
+      "range": {
+        "startLine": 54,
+        "startChar": 27,
+        "endLine": 54,
+        "endChar": 33
+      },
+      "revId": "d1c74eeae458e1f511d86f164a131394d382853a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f69f8334_b888d1d8",
+        "filename": "chrome/browser/chrome_service_worker_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-01T08:10:39Z",
+      "side": 1,
+      "message": "\"\u0026NoOpBoolCallback\" is recommended.",
+      "range": {
+        "startLine": 191,
+        "startChar": 53,
+        "endLine": 191,
+        "endChar": 69
+      },
+      "revId": "d1c74eeae458e1f511d86f164a131394d382853a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "894a8c81_62c00290",
+        "filename": "chrome/browser/chrome_service_worker_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-01T08:10:39Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 650,
+        "startChar": 53,
+        "endLine": 650,
+        "endChar": 69
+      },
+      "revId": "d1c74eeae458e1f511d86f164a131394d382853a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e752871_2b7c70a7",
+        "filename": "chrome/browser/chrome_service_worker_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-01T08:10:39Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 702,
+        "startChar": 53,
+        "endLine": 702,
+        "endChar": 69
+      },
+      "revId": "d1c74eeae458e1f511d86f164a131394d382853a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdae4710_f9bc36e3",
+        "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-01T08:10:39Z",
+      "side": 1,
+      "message": "StopWorkerBarrier*Callback* seems better to understand what kind of barrier this is.",
+      "range": {
+        "startLine": 44,
+        "startChar": 6,
+        "endLine": 44,
+        "endChar": 23
+      },
+      "revId": "d1c74eeae458e1f511d86f164a131394d382853a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcfc9f17_92fa5c21",
+        "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-01T08:10:39Z",
+      "side": 1,
+      "message": "OnStopWorkerFinished or OnWorkerStopped seems good.",
+      "range": {
+        "startLine": 65,
+        "startChar": 7,
+        "endLine": 65,
+        "endChar": 32
+      },
+      "revId": "d1c74eeae458e1f511d86f164a131394d382853a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dad072a_6b7b4938",
+        "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-01T08:10:39Z",
+      "side": 1,
+      "message": "I prefer decrementing in another line like the following because it\u0027s easier to understand and less error-prone.\n\n\u003d\u003d\n\n--counter_;\nif (counter \u003d\u003d 0) {\n  ...\n}",
+      "range": {
+        "startLine": 68,
+        "startChar": 8,
+        "endLine": 68,
+        "endChar": 18
+      },
+      "revId": "d1c74eeae458e1f511d86f164a131394d382853a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaf17180_ff89b30c",
+        "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-01T08:10:39Z",
+      "side": 1,
+      "message": "result?",
+      "range": {
+        "startLine": 69,
+        "startChar": 11,
+        "endLine": 69,
+        "endChar": 14
+      },
+      "revId": "d1c74eeae458e1f511d86f164a131394d382853a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32ba026a_4e95ac71",
+        "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-01T08:10:39Z",
+      "side": 1,
+      "message": "I don\u0027t think we need to start the counter from one because ServiceWorkerVersion::StopWorker doesn\u0027t call the callback synchronously and StopWorker is called on the IO thread.",
+      "range": {
+        "startLine": 81,
+        "startChar": 16,
+        "endLine": 81,
+        "endChar": 19
+      },
+      "revId": "d1c74eeae458e1f511d86f164a131394d382853a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3dc770f_f2d6991e",
+        "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-01T08:10:39Z",
+      "side": 1,
+      "message": "I think early return if it\u0027s not regular path seems better to understand.\n\nif (!...BrowserThread::IO)) {\n  ...\n  return;\n}\n// Do something",
+      "revId": "d1c74eeae458e1f511d86f164a131394d382853a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "917fe3d0_4a238ed9",
+        "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-01T08:10:39Z",
+      "side": 1,
+      "message": "I don\u0027t think we need it. Please see a comment at the member of StopWorkerBarrier.",
+      "revId": "d1c74eeae458e1f511d86f164a131394d382853a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df735757_4417a992",
+        "filename": "content/common/service_worker/service_worker_utils.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-01T08:10:39Z",
+      "side": 1,
+      "message": "Remove \"status\" seems okay",
+      "range": {
+        "startLine": 26,
+        "startChar": 39,
+        "endLine": 26,
+        "endChar": 46
+      },
+      "revId": "d1c74eeae458e1f511d86f164a131394d382853a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a269fb6_d7bc586d",
+        "filename": "content/public/test/mock_service_worker_context.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-01T08:10:39Z",
+      "side": 1,
+      "message": "A blank line is good for readability.",
+      "revId": "d1c74eeae458e1f511d86f164a131394d382853a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
