@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "434afd1d_e3f668c5",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceEntryTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-09-01T14:48:18Z",
+      "side": 1,
+      "message": "Why do you cast to a different type than type_enum?\n\nThese should probably match.",
+      "range": {
+        "startLine": 22,
+        "startChar": 31,
+        "endLine": 22,
+        "endChar": 34
+      },
+      "revId": "80aac660a982b2de3099c98f32060d72de8889fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
