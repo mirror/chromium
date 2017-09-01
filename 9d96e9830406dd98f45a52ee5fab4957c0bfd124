@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01b9165b_01db21ed",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-01T13:38:25Z",
+      "side": 1,
+      "message": "I can\u0027t access this in an Incognito tab - please ensure that it\u0027s open to all if you refer to it from CL descriptions.",
+      "revId": "9d96e9830406dd98f45a52ee5fab4957c0bfd124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
