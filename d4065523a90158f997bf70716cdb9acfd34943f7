@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "79a46cd1_541e4fd4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 52
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-09-01T21:45:09Z",
+      "side": 1,
+      "message": "nit: name change.",
+      "range": {
+        "startLine": 7,
+        "startChar": 17,
+        "endLine": 7,
+        "endChar": 26
+      },
+      "revId": "d4065523a90158f997bf70716cdb9acfd34943f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "22098bf7_c53769ce",
         "filename": "components/exo/surface.cc",
         "patchSetId": 52
