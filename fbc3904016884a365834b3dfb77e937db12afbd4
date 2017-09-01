@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc2cdd7c_82a17025",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-09-01T03:14:08Z",
+      "side": 1,
+      "message": "aliasfor -\u003e alias for",
+      "revId": "fbc3904016884a365834b3dfb77e937db12afbd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b08a4527_aa56959e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-09-01T03:14:08Z",
+      "side": 1,
+      "message": "s/work//",
+      "revId": "fbc3904016884a365834b3dfb77e937db12afbd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fab6ee9_89c0b654",
+        "filename": "third_party/WebKit/Source/build/scripts/json5_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-09-01T03:14:08Z",
+      "side": 1,
+      "message": "Make the error more descriptive. Suggest action.",
+      "revId": "fbc3904016884a365834b3dfb77e937db12afbd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30aaecc5_a726ceb3",
+        "filename": "third_party/WebKit/Source/build/scripts/json5_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-09-01T03:14:08Z",
+      "side": 1,
+      "message": "Make the error more descriptive. Suggest action.",
+      "revId": "fbc3904016884a365834b3dfb77e937db12afbd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
