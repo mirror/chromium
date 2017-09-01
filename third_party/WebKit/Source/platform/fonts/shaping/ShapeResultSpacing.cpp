@@ -22,8 +22,7 @@ ShapeResultSpacing<TextContainerType>::ShapeResultSpacing(
       has_spacing_(false),
       normalize_space_(false),
       allow_tabs_(false),
-      is_after_expansion_(false),
-      is_vertical_offset_(false) {}
+      is_after_expansion_(false) {}
 
 template <typename TextContainerType>
 bool ShapeResultSpacing<TextContainerType>::SetSpacing(
@@ -35,7 +34,6 @@ bool ShapeResultSpacing<TextContainerType>::SetSpacing(
 
   letter_spacing_ = font_description.LetterSpacing();
   word_spacing_ = font_description.WordSpacing();
-  is_vertical_offset_ = font_description.IsVerticalAnyUpright();
   DCHECK(!normalize_space_);
   allow_tabs_ = true;
   has_spacing_ = true;
@@ -73,7 +71,6 @@ void ShapeResultSpacing<TextRun>::SetSpacingAndExpansion(
   if (!has_spacing_)
     return;
 
-  is_vertical_offset_ = font_description.IsVerticalAnyUpright();
   normalize_space_ = text_.NormalizeSpace();
   allow_tabs_ = text_.AllowTabs();
 
@@ -138,8 +135,8 @@ float ShapeResultSpacing<TextContainerType>::NextExpansion() {
 }
 
 template <typename TextContainerType>
-float ShapeResultSpacing<TextContainerType>::ComputeSpacing(unsigned index,
-                                                            float& offset) {
+std::pair<float, float> ShapeResultSpacing<TextContainerType>::ComputeSpacing(
+    unsigned index) {
   DCHECK(has_spacing_);
   UChar32 character = text_[index];
   bool treat_as_space =
@@ -158,13 +155,13 @@ float ShapeResultSpacing<TextContainerType>::ComputeSpacing(unsigned index,
     spacing += word_spacing_;
 
   if (!HasExpansion())
-    return spacing;
+    return {spacing, .0f};
 
   if (treat_as_space)
-    return spacing + NextExpansion();
+    return {spacing + NextExpansion(), .0f};
 
   if (text_.Is8Bit() || text_justify_ != TextJustify::kAuto)
-    return spacing;
+    return {spacing, .0f};
 
   // isCJKIdeographOrSymbol() has expansion opportunities both before and
   // after each character.
@@ -174,21 +171,22 @@ float ShapeResultSpacing<TextContainerType>::ComputeSpacing(unsigned index,
     character = U16_GET_SUPPLEMENTARY(character, text_[index + 1]);
   if (!Character::IsCJKIdeographOrSymbol(character)) {
     is_after_expansion_ = false;
-    return spacing;
+    return {spacing, .0f};
   }
 
+  float offset = .0f;
   if (!is_after_expansion_) {
     // Take the expansion opportunity before this ideograph.
     float expand_before = NextExpansion();
     if (expand_before) {
-      offset += expand_before;
+      offset = expand_before;
       spacing += expand_before;
     }
     if (!HasExpansion())
-      return spacing;
+      return {spacing, offset};
   }
 
-  return spacing + NextExpansion();
+  return {spacing + NextExpansion(), offset};
 }
 
 // Instantiate the template class.
