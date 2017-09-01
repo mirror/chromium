@@ -150,7 +150,8 @@ class DisplayTest : public testing::Test {
     cc::CompositorFrame frame = test::MakeCompositorFrame();
     pass_list->swap(frame.render_pass_list);
 
-    support_->SubmitCompositorFrame(local_surface_id, std::move(frame));
+    support_->SubmitCompositorFrame(local_surface_id, std::move(frame),
+                                    nullptr);
   }
 
   FrameSinkManagerImpl manager_;
@@ -362,7 +363,8 @@ TEST_F(DisplayTest, DisplayDamaged) {
     pass_list.swap(frame.render_pass_list);
     frame.metadata.latency_info.push_back(ui::LatencyInfo());
 
-    support_->SubmitCompositorFrame(local_surface_id, std::move(frame));
+    support_->SubmitCompositorFrame(local_surface_id, std::move(frame),
+                                    nullptr);
     EXPECT_TRUE(scheduler_->damaged);
     EXPECT_FALSE(scheduler_->display_resized_);
     EXPECT_FALSE(scheduler_->has_new_root_surface);
@@ -393,7 +395,8 @@ TEST_F(DisplayTest, DisplayDamaged) {
     cc::CompositorFrame frame = test::MakeCompositorFrame();
     pass_list.swap(frame.render_pass_list);
 
-    support_->SubmitCompositorFrame(local_surface_id, std::move(frame));
+    support_->SubmitCompositorFrame(local_surface_id, std::move(frame),
+                                    nullptr);
     EXPECT_TRUE(scheduler_->damaged);
     EXPECT_FALSE(scheduler_->display_resized_);
     EXPECT_FALSE(scheduler_->has_new_root_surface);
@@ -482,7 +485,8 @@ TEST_F(DisplayTest, MaxLatencyInfoCap) {
     pass_list.swap(frame.render_pass_list);
     frame.metadata.latency_info.push_back(ui::LatencyInfo());
 
-    support_->SubmitCompositorFrame(local_surface_id, std::move(frame));
+    support_->SubmitCompositorFrame(local_surface_id, std::move(frame),
+                                    nullptr);
 
     display_->DrawAndSwap();
 

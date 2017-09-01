@@ -132,7 +132,7 @@ void HardwareRenderer::DrawGL(AwDrawGLInfo* draw_info) {
     }
 
     bool result = support_->SubmitCompositorFrame(
-        child_id_, std::move(*child_compositor_frame));
+        child_id_, std::move(*child_compositor_frame), nullptr);
     DCHECK(result);
   }
 

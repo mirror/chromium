@@ -33,7 +33,8 @@ TEST(SurfaceTest, SurfaceLifetime) {
 
   LocalSurfaceId local_surface_id(6, base::UnguessableToken::Create());
   SurfaceId surface_id(kArbitraryFrameSinkId, local_surface_id);
-  support->SubmitCompositorFrame(local_surface_id, test::MakeCompositorFrame());
+  support->SubmitCompositorFrame(local_surface_id, test::MakeCompositorFrame(),
+                                 nullptr);
   EXPECT_TRUE(surface_manager->GetSurfaceForId(surface_id));
   support->EvictCurrentSurface();
 
@@ -66,7 +67,7 @@ TEST(SurfaceTest, CopyRequestLifetime) {
   LocalSurfaceId local_surface_id(6, base::UnguessableToken::Create());
   SurfaceId surface_id(kArbitraryFrameSinkId, local_surface_id);
   cc::CompositorFrame frame = test::MakeCompositorFrame();
-  support->SubmitCompositorFrame(local_surface_id, std::move(frame));
+  support->SubmitCompositorFrame(local_surface_id, std::move(frame), nullptr);
   Surface* surface = surface_manager->GetSurfaceForId(surface_id);
   ASSERT_TRUE(!!surface);
 
@@ -87,7 +88,7 @@ TEST(SurfaceTest, CopyRequestLifetime) {
     frame.render_pass_list.back()->SetNew(i * 3 + start_id + 2,
                                           gfx::Rect(0, 0, 20, 20), gfx::Rect(),
                                           gfx::Transform());
-    support->SubmitCompositorFrame(local_surface_id, std::move(frame));
+    support->SubmitCompositorFrame(local_surface_id, std::move(frame), nullptr);
   }
 
   int last_pass_id = (max_frame - 1) * 3 + start_id + 2;

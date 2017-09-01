@@ -312,11 +312,11 @@ void SynchronousLayerTreeFrameSink::SubmitCompositorFrame(
         viz::SurfaceId(kChildFrameSinkId, child_local_surface_id_),
         cc::SurfaceDrawQuadType::PRIMARY, nullptr);
 
-    bool result = child_support_->SubmitCompositorFrame(child_local_surface_id_,
-                                                        std::move(frame));
+    bool result = child_support_->SubmitCompositorFrame(
+        child_local_surface_id_, std::move(frame), nullptr);
     DCHECK(result);
-    result = root_support_->SubmitCompositorFrame(root_local_surface_id_,
-                                                  std::move(embed_frame));
+    result = root_support_->SubmitCompositorFrame(
+        root_local_surface_id_, std::move(embed_frame), nullptr);
     DCHECK(result);
     display_->DrawAndSwap();
   } else {

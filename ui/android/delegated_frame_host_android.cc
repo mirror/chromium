@@ -89,8 +89,8 @@ void DelegatedFrameHostAndroid::SubmitCompositorFrame(
         viz::SurfaceId(frame_sink_id_, local_surface_id), 1.f, frame_size);
     has_transparent_background_ = root_pass->has_transparent_background;
 
-    bool result =
-        support_->SubmitCompositorFrame(local_surface_id, std::move(frame));
+    bool result = support_->SubmitCompositorFrame(local_surface_id,
+                                                  std::move(frame), nullptr);
     DCHECK(result);
 
     content_layer_ =
@@ -98,7 +98,8 @@ void DelegatedFrameHostAndroid::SubmitCompositorFrame(
                            surface_info_, !has_transparent_background_);
     view_->GetLayer()->AddChild(content_layer_);
   } else {
-    support_->SubmitCompositorFrame(local_surface_id, std::move(frame));
+    support_->SubmitCompositorFrame(local_surface_id, std::move(frame),
+                                    nullptr);
   }
 }
 

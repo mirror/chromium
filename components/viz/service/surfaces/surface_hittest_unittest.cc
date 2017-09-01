@@ -121,7 +121,7 @@ TEST_F(SurfaceHittestTest, Hittest_BadCompositorFrameDoesNotCrash) {
   LocalSurfaceId root_local_surface_id = root_allocator.GenerateId();
   SurfaceId root_surface_id(kRootFrameSink, root_local_surface_id);
   root_support().SubmitCompositorFrame(root_local_surface_id,
-                                       std::move(root_frame));
+                                       std::move(root_frame), nullptr);
 
   {
     SurfaceHittest hittest(nullptr, surface_manager());
@@ -146,7 +146,7 @@ TEST_F(SurfaceHittestTest, Hittest_SingleSurface) {
   LocalSurfaceId root_local_surface_id = root_allocator.GenerateId();
   SurfaceId root_surface_id(kRootFrameSink, root_local_surface_id);
   root_support().SubmitCompositorFrame(root_local_surface_id,
-                                       std::move(root_frame));
+                                       std::move(root_frame), nullptr);
   TestCase tests[] = {
       {root_surface_id, gfx::Point(100, 100), root_surface_id,
        gfx::Point(100, 100)},
@@ -179,7 +179,7 @@ TEST_F(SurfaceHittestTest, Hittest_ChildSurface) {
   LocalSurfaceId root_local_surface_id = root_allocator.GenerateId();
   SurfaceId root_surface_id(kRootFrameSink, root_local_surface_id);
   root_support().SubmitCompositorFrame(root_local_surface_id,
-                                       std::move(root_frame));
+                                       std::move(root_frame), nullptr);
 
   // Creates a child surface.
   cc::RenderPass* child_pass = nullptr;
@@ -196,7 +196,7 @@ TEST_F(SurfaceHittestTest, Hittest_ChildSurface) {
 
   // Submit the frame.
   child_support().SubmitCompositorFrame(child_local_surface_id,
-                                        std::move(child_frame));
+                                        std::move(child_frame), nullptr);
 
   TestCase tests[] = {{root_surface_id, gfx::Point(10, 10), root_surface_id,
                        gfx::Point(10, 10)},
@@ -221,7 +221,7 @@ TEST_F(SurfaceHittestTest, Hittest_ChildSurface) {
                      0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f),
       root_rect, child_rect, child_surface_id);
   root_support().SubmitCompositorFrame(root_local_surface_id,
-                                       std::move(root_frame));
+                                       std::move(root_frame), nullptr);
 
   // Verify that point (100, 100) no longer falls on the child surface.
   // Verify that the transform to the child surface's space has also shifted.
@@ -277,7 +277,7 @@ TEST_F(SurfaceHittestTest, Hittest_InvalidRenderPassDrawQuad) {
   LocalSurfaceId root_local_surface_id = root_allocator.GenerateId();
   SurfaceId root_surface_id(kRootFrameSink, root_local_surface_id);
   root_support().SubmitCompositorFrame(root_local_surface_id,
-                                       std::move(root_frame));
+                                       std::move(root_frame), nullptr);
 
   // Creates a child surface.
   cc::RenderPass* child_pass = nullptr;
@@ -294,7 +294,7 @@ TEST_F(SurfaceHittestTest, Hittest_InvalidRenderPassDrawQuad) {
 
   // Submit the frame.
   child_support().SubmitCompositorFrame(child_local_surface_id,
-                                        std::move(child_frame));
+                                        std::move(child_frame), nullptr);
 
   TestCase tests[] = {{root_surface_id, gfx::Point(10, 10), root_surface_id,
                        gfx::Point(10, 10)},
@@ -353,7 +353,7 @@ TEST_F(SurfaceHittestTest, Hittest_RenderPassDrawQuad) {
   LocalSurfaceId root_local_surface_id = root_allocator.GenerateId();
   SurfaceId root_surface_id(kRootFrameSink, root_local_surface_id);
   root_support().SubmitCompositorFrame(root_local_surface_id,
-                                       std::move(root_frame));
+                                       std::move(root_frame), nullptr);
 
   TestCase tests[] = {// These tests just miss the cc::RenderPassDrawQuad.
                       {root_surface_id, gfx::Point(49, 49), root_surface_id,
@@ -400,7 +400,7 @@ TEST_F(SurfaceHittestTest, Hittest_SingleSurface_WithInsetsDelegate) {
   LocalSurfaceId root_local_surface_id = root_allocator.GenerateId();
   SurfaceId root_surface_id(kRootFrameSink, root_local_surface_id);
   root_support().SubmitCompositorFrame(root_local_surface_id,
-                                       std::move(root_frame));
+                                       std::move(root_frame), nullptr);
 
   // Creates a child surface.
   cc::RenderPass* child_pass = nullptr;
@@ -417,7 +417,7 @@ TEST_F(SurfaceHittestTest, Hittest_SingleSurface_WithInsetsDelegate) {
 
   // Submit the frame.
   child_support().SubmitCompositorFrame(child_local_surface_id,
-                                        std::move(child_frame));
+                                        std::move(child_frame), nullptr);
 
   TestCase test_expectations_without_insets[] = {
       {root_surface_id, gfx::Point(55, 55), child_surface_id, gfx::Point(5, 5)},
