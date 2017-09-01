@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6cfab30_d41635e4",
+        "filename": "media/audio/audio_system_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-09-01T11:09:11Z",
+      "side": 1,
+      "message": "Do you think it\u0027s enough to just say it?\nOr I can enforce it by moving contstructor to private and introducing a factory class with a private Create() method, so that creation is possible for factory friends only.",
+      "revId": "3014f2665ae39b5a046f13a0ea698aeef11d7c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0b2fc22_15868a2f",
+        "filename": "media/audio/audio_system_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-09-01T11:09:11Z",
+      "side": 1,
+      "message": "This is not fancy, as well as including audio_system.h here.\nAnd also the fact that helper methods are supposed to have the same contract as\nAudioSystem methods (except threading restriction), but it\u0027s not expressed in the code.\n\nIt\u0027s an attempt to avoid extra classes, per Dale\u0027s request.",
+      "revId": "3014f2665ae39b5a046f13a0ea698aeef11d7c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
