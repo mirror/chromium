@@ -124,6 +124,24 @@
       "revId": "61ce2094d074d022b294441e57ff5ac001026476",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb022629_f7db46cb",
+        "filename": "media/gpu/android_video_decode_accelerator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-01T02:19:07Z",
+      "side": 1,
+      "message": "Ok, cool, thanks for checking that!  Also, FYI, as of a few months ago, the UMA_HISTOGRAM_ENUMERATION macro does some fancy schmancyness to allow clients to omit the static_cast while still doing some amount of type checking.  \u003d)",
+      "parentUuid": "257e8d62_57d8a6df",
+      "revId": "61ce2094d074d022b294441e57ff5ac001026476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
