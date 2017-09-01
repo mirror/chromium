@@ -802,6 +802,7 @@ public class VrShellDelegate
 
         if (instance == null) return;
         instance.onVrIntent();
+        // TODO(ymalik): Fix this.
         if (canAutopresent(activity, intent)) {
             instance.mAutopresentWebVr = true;
             if (!ChromeFeatureList.isEnabled(ChromeFeatureList.WEBVR_AUTOPRESENT)
