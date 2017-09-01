@@ -59,6 +59,8 @@ content::WebUIDataSource* CreateMdBookmarksUIHTMLSource(Profile* profile) {
                      IDS_MD_BOOKMARK_MANAGER_FOLDER_LABEL);
   AddLocalizedString(source, "itemsSelected",
                      IDS_MD_BOOKMARK_MANAGER_ITEMS_SELECTED);
+  AddLocalizedString(source, "listChanged",
+                     IDS_MD_BOOKMARK_MANAGER_FOLDER_LIST_CHANGED);
   AddLocalizedString(source, "menuAddBookmark",
                      IDS_MD_BOOKMARK_MANAGER_MENU_ADD_BOOKMARK);
   AddLocalizedString(source, "menuAddFolder",
