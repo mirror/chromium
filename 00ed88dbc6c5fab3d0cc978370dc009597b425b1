@@ -22,6 +22,30 @@
       "revId": "00ed88dbc6c5fab3d0cc978370dc009597b425b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f628d81c_8e726b79",
+        "filename": "chromeos/components/tether/initializer_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-09-01T22:17:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd28b8ea_455dfd38",
+      "range": {
+        "startLine": 145,
+        "startChar": 2,
+        "endLine": 145,
+        "endChar": 3
+      },
+      "revId": "00ed88dbc6c5fab3d0cc978370dc009597b425b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
