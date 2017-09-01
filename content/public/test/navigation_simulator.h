@@ -41,6 +41,14 @@ class NavigationSimulator : public WebContentsObserver {
       WebContents* web_contents,
       const GURL& url);
 
+  // Simulates going back. Returns the RenderFrameHost that committed
+  // the navigation.
+  static RenderFrameHost* GoBack(WebContents* web_contents);
+
+  // Simulates going forward. Returns the RenderFrameHost that committed
+  // the navigation.
+  static RenderFrameHost* GoForward(WebContents* web_contents);
+
   // Simulates a renderer-initiated navigation to |url| started in
   // |render_frame_host| from start to commit. Returns the RenderFramehost that
   // committed the navigation.
@@ -55,6 +63,18 @@ class NavigationSimulator : public WebContentsObserver {
   static RenderFrameHost* NavigateAndFailFromBrowser(WebContents* web_contents,
                                                      const GURL& url,
                                                      int net_error_code);
+
+  // Simulates going back and failing. Returns the RenderFrameHost that
+  // committed the error page for the navigation, or nullptr if the navigation
+  // error did not result in an error page.
+  static RenderFrameHost* GoBackAndFail(WebContents* web_contents,
+                                        int net_error_code);
+
+  // Simulates going forward and failing. Returns the RenderFrameHost that
+  // committed the error page for the navigation, or nullptr if the navigation
+  // error did not result in an error page.
+  static RenderFrameHost* GoForwardAndFail(WebContents* web_contents,
+                                           int net_error_code);
 
   // Simulates a failed renderer-initiated navigation to |url| started in
   // |render_frame_host| from start to commit. Returns the RenderFramehost that
@@ -165,6 +185,8 @@ class NavigationSimulator : public WebContentsObserver {
   // specified before calling |Start|.
   virtual void SetTransition(ui::PageTransition transition);
   virtual void SetHasUserGesture(bool has_user_gesture);
+  virtual void SetIsBackwardNavigation(bool is_backward_navigation);
+  virtual void SetIsForwardNavigation(bool is_forward_navigation);
 
   // The following parameters can change during redirects. They should be
   // specified before calling |Start| if they need to apply to the navigation to
@@ -282,6 +304,8 @@ class NavigationSimulator : public WebContentsObserver {
   bool same_document_ = false;
   Referrer referrer_;
   ui::PageTransition transition_;
+  bool is_backward_navigation_ = false;
+  bool is_forward_navigation_ = false;
   bool has_user_gesture_ = true;
 
   // These are used to sanity check the content/public/ API calls emitted as
