@@ -4,6 +4,8 @@
     "service_manager:connector": {
       "provides": {
         "browser": [
+          "arc::mojom::VideoDecodeAcceleratorDeprecated",
+          "arc::mojom::VideoDecodeClientDepreacted",
           "arc::mojom::VideoDecodeAccelerator",
           "arc::mojom::VideoDecodeClient",
           "arc::mojom::VideoEncodeAccelerator",
