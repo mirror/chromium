@@ -43,9 +43,11 @@
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/navigation_handle.h"
+#include "content/public/browser/network_service_instance.h"
 #include "content/public/browser/render_widget_host_iterator.h"
 #include "content/public/browser/web_contents_delegate.h"
 #include "content/public/common/browser_side_navigation_policy.h"
+#include "content/public/common/content_features.h"
 
 #if defined(OS_ANDROID)
 #include "content/public/browser/render_widget_host_view.h"
@@ -771,8 +773,13 @@ void RenderFrameDevToolsAgentHost::MaybeReattachToRenderFrame() {
 void RenderFrameDevToolsAgentHost::GrantPolicy(RenderFrameHostImpl* host) {
   if (!host)
     return;
-  ChildProcessSecurityPolicyImpl::GetInstance()->GrantReadRawCookies(
-      host->GetProcess()->GetID());
+  if (base::FeatureList::IsEnabled(features::kNetworkService)) {
+    content::GetNetworkService()->SetRawHeadersAccess(
+        host->GetProcess()->GetID(), true);
+  } else {
+    ChildProcessSecurityPolicyImpl::GetInstance()->GrantReadRawCookies(
+        host->GetProcess()->GetID());
+  }
 }
 
 void RenderFrameDevToolsAgentHost::RevokePolicy(RenderFrameHostImpl* host) {
@@ -803,8 +810,13 @@ void RenderFrameDevToolsAgentHost::RevokePolicy(RenderFrameHostImpl* host) {
 
   // We are the last to disconnect from the renderer -> revoke permissions.
   if (!process_has_agents) {
-    ChildProcessSecurityPolicyImpl::GetInstance()->RevokeReadRawCookies(
-        process_host->GetID());
+    if (base::FeatureList::IsEnabled(features::kNetworkService)) {
+      content::GetNetworkService()->SetRawHeadersAccess(
+          host->GetProcess()->GetID(), false);
+    } else {
+      ChildProcessSecurityPolicyImpl::GetInstance()->RevokeReadRawCookies(
+          process_host->GetID());
+    }
   }
 }
 

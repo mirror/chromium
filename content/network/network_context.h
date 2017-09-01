@@ -85,6 +85,8 @@ class CONTENT_EXPORT NetworkContext : public mojom::NetworkContext {
   // Disables use of QUIC by the NetworkContext.
   void DisableQuic();
 
+  bool HasRawHeadersAccess(uint32_t process_id) const;
+
  private:
   NetworkContext();
 

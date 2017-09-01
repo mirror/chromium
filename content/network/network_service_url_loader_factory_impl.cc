@@ -29,8 +29,15 @@ void NetworkServiceURLLoaderFactoryImpl::CreateLoaderAndStart(
     const ResourceRequest& url_request,
     mojom::URLLoaderClientPtr client,
     const net::MutableNetworkTrafficAnnotationTag& traffic_annotation) {
+  bool report_raw_headers = false;
+  if (url_request.report_raw_headers) {
+    report_raw_headers = context_->HasRawHeadersAccess(process_id_);
+    if (!report_raw_headers)
+      LOG(ERROR) << "Denying raw headers request by process " << process_id_;
+  }
   new URLLoaderImpl(
-      context_, std::move(request), options, url_request, std::move(client),
+      context_, std::move(request), options, url_request, report_raw_headers,
+      std::move(client),
       static_cast<net::NetworkTrafficAnnotationTag>(traffic_annotation));
 }
 

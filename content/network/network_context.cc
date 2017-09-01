@@ -208,6 +208,10 @@ void NetworkContext::DisableQuic() {
   url_request_context_->http_transaction_factory()->GetSession()->DisableQuic();
 }
 
+bool NetworkContext::HasRawHeadersAccess(uint32_t process_id) const {
+  return network_service_ && network_service_->HasRawHeadersAccess(process_id);
+}
+
 void NetworkContext::Cleanup() {
   // The NetworkService is going away, so have to destroy the
   // net::URLRequestContext held by this NetworkContext.
