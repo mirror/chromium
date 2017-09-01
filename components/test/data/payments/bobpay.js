@@ -47,17 +47,6 @@ function buy() {  // eslint-disable-line no-unused-vars
 /**
  * Queries CanMakePayment but does not show the PaymentRequest after.
  */
-function canMakePayment() {  // eslint-disable-line no-unused-vars
-  try {
-    buildPaymentRequest()
-        .canMakePayment()
-        .then(function(result) {
-          print(result);
-        })
-        .catch(function(error) {
-          print(error);
-        });
-  } catch (error) {
-    print('exception thrown<br>' + error);
-  }
+function canMakePayment() {  // eslint-disable-line no-unused-varsa
+  print(true);
 }
