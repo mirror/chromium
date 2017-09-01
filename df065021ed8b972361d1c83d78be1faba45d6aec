@@ -16,6 +16,24 @@
       "revId": "df065021ed8b972361d1c83d78be1faba45d6aec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d5efcd2_ae784bbd",
+        "filename": "components/exo/display.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-01T15:17:04Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "2c7e8cb2_a2f2d079",
+      "revId": "df065021ed8b972361d1c83d78be1faba45d6aec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
