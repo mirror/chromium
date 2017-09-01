@@ -1198,10 +1198,13 @@ bool VaapiWrapper::VADisplayState::Initialize() {
       return false;
     }
 
+    // Set a reasonable VA logging level if not set already
+    setenv("LIBVA_MESSAGING_LEVEL", "1", 0);
+
     VAStatus va_res =
         vaInitialize(va_display_, &major_version_, &minor_version_);
     if (va_res != VA_STATUS_SUCCESS) {
-      LOG(WARNING) << "vaInitialize failed: " << vaErrorStr(va_res);
+      LOG(ERROR) << "vaInitialize failed: " << vaErrorStr(va_res);
       return false;
     }
 
