@@ -87,6 +87,24 @@
       "revId": "c74f5d4d1fbc9cefb15ffe516b1c1d38d4008f3c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b5f60d8_ee22007f",
+        "filename": "base/message_loop/incoming_task_queue.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-01T20:39:34Z",
+      "side": 1,
+      "message": "This is covered by the |incoming_queue_lock_| comment.",
+      "parentUuid": "d56d9d0c_b924a4de",
+      "revId": "c74f5d4d1fbc9cefb15ffe516b1c1d38d4008f3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
