@@ -32,6 +32,10 @@ const char kNoWifi[] = "no-wifi";
 // Allows media playback for hidden WebContents
 const char kAllowHiddenMediaPlayback[] = "allow-hidden-media-playback";
 
+// Allows WebRTC to access audio/video capture devices without asking user
+// for permissions.
+const char kAllowWebRTC[] = "allow-webrtc";
+
 // Pass the app id information to the renderer process, to be used for logging.
 // last-launched-app should be the app that just launched and is spawning the
 // renderer.
