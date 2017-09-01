@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90bafd77_007ee981",
+        "filename": "ash/wm/window_state.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-09-01T14:31:57Z",
+      "side": 1,
+      "message": "nit: while (!windows_.empty())",
+      "range": {
+        "startLine": 503,
+        "startChar": 2,
+        "endLine": 503,
+        "endChar": 25
+      },
+      "revId": "ae6c131c6d1815bd2435fcbcf24419fe03b0dc71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "991dfe5e_4e7d86ad",
+        "filename": "ash/wm/window_state.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-09-01T14:31:57Z",
+      "side": 1,
+      "message": "Question for fsamuel: Why do we store and allocate LocalSurfaceIds for all windows? Unless the window has a LayerTreeFrameSinkLocal then we can\u0027t use the LocalSurfaceId and it\u0027s wasted memory/computation.",
+      "revId": "ae6c131c6d1815bd2435fcbcf24419fe03b0dc71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
