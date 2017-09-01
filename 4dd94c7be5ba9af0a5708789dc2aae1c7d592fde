@@ -534,6 +534,24 @@
       "revId": "4dd94c7be5ba9af0a5708789dc2aae1c7d592fde",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66715735_6f8e3adc",
+        "filename": "chrome/test/data/webui/sys_internals/sys_internals_browsertest.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1230199
+      },
+      "writtenOn": "2017-09-01T04:37:00Z",
+      "side": 1,
+      "message": "I think this is ok.\nIf we don\u0027t catch the error, when some error be raised and the test crash, because it is asynchronous test, the test won\u0027t stop until timeout. This may waste time.",
+      "parentUuid": "61821fa8_f74ca753",
+      "revId": "4dd94c7be5ba9af0a5708789dc2aae1c7d592fde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
