@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "85629016_6317b498",
+        "filename": "ash/wm/window_state.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-01T17:11:39Z",
+      "side": 1,
+      "message": "wm::RecreateLayers should probably take care of re-allocating new local-surface-id as needed?",
+      "revId": "ae6c131c6d1815bd2435fcbcf24419fe03b0dc71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d0607b6_979cc239",
+        "filename": "ash/wm/window_state.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-01T17:11:39Z",
+      "side": 1,
+      "message": "Local variables shouldn\u0027t end with _\n\nUse a recursive function to do this instead.",
+      "revId": "ae6c131c6d1815bd2435fcbcf24419fe03b0dc71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "90bafd77_007ee981",
         "filename": "ash/wm/window_state.cc",
         "patchSetId": 1
