@@ -60,6 +60,24 @@
     },
     {
       "key": {
+        "uuid": "e4cf452e_fc2c909a",
+        "filename": "chrome/test/data/extensions/api_test/networking_private/chromeos/test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-01T20:58:40Z",
+      "side": 1,
+      "message": "Sorry, not sure why I missed this.\n\nI was looking to avoid a major re-factor while making an incremental step forward towards something more readable. I guess I failed?",
+      "parentUuid": "59604fa8_9348d2e2",
+      "revId": "196a2d2a11f4a7d1e6bfb16650d6cc6ec6549bdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c73f447_dbccd953",
         "filename": "chrome/test/data/extensions/api_test/networking_private/test.js",
         "patchSetId": 4
