@@ -16,7 +16,9 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "chrome/browser/browser_process.h"
 #include "chrome/browser/local_discovery/service_discovery_client_impl.h"
+#include "components/net_log/chrome_net_log.h"
 #include "content/public/browser/browser_thread.h"
 #include "net/dns/mdns_client.h"
 #include "net/socket/datagram_server_socket.h"
@@ -133,7 +135,8 @@ class SocketFactory : public net::MDnsSocketFactory {
       DCHECK(interfaces_[i].second == net::ADDRESS_FAMILY_IPV4 ||
              interfaces_[i].second == net::ADDRESS_FAMILY_IPV6);
       std::unique_ptr<net::DatagramServerSocket> socket(
-          CreateAndBindMDnsSocket(interfaces_[i].second, interfaces_[i].first));
+          CreateAndBindMDnsSocket(interfaces_[i].second, interfaces_[i].first,
+                                  g_browser_process->net_log()));
       if (socket)
         sockets->push_back(std::move(socket));
     }
