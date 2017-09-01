@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f7518f7_8d7e4cac",
+        "filename": "ios/chrome/app/application_delegate/user_activity_handler.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-09-01T17:14:46Z",
+      "side": 0,
+      "message": "thakis@ and here, confused why compiler wants this",
+      "revId": "2f3be9b8cb16c72fcdb0b463af0be3b1b49151cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
