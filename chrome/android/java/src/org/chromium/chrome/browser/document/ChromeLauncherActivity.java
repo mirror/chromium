@@ -15,7 +15,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.provider.Browser;
-import android.support.annotation.Nullable;
 import android.support.customtabs.CustomTabsIntent;
 import android.text.TextUtils;
 
@@ -204,9 +203,7 @@ public class ChromeLauncherActivity extends Activity
 
         // Check if we should launch the ChromeTabbedActivity.
         if (!mIsCustomTabIntent && !FeatureUtilities.isDocumentMode(this)) {
-            Bundle options = null;
-            if (isVrIntent) options = VrIntentUtils.getVrIntentOptions(this);
-            launchTabbedMode(options);
+            launchTabbedMode();
             finish();
             return;
         }
@@ -414,7 +411,7 @@ public class ChromeLauncherActivity extends Activity
      * Handles launching a {@link ChromeTabbedActivity}.
      */
     @SuppressLint("InlinedApi")
-    private void launchTabbedMode(@Nullable Bundle options) {
+    private void launchTabbedMode() {
         maybePrefetchDnsInBackground();
 
         Intent newIntent = new Intent(getIntent());
@@ -438,7 +435,7 @@ public class ChromeLauncherActivity extends Activity
         // This system call is often modified by OEMs and not actionable. http://crbug.com/619646.
         StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskWrites();
         try {
-            startActivity(newIntent, options);
+            startActivity(newIntent);
         } catch (SecurityException ex) {
             if (isContentScheme) {
                 Toast.makeText(

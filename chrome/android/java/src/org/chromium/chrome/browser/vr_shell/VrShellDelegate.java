@@ -769,6 +769,7 @@ public class VrShellDelegate
         // Autopresent intents are only expected from trusted first party apps while
         // we're not in vr.
         assert !mInVr;
+        mNeedsAnimationCancel = true;
         mDonSucceeded = true;
         // We assume that the user is already in VR mode when launched for auto-presentation.
         mInVrAtChromeLaunch = true;
@@ -783,26 +784,15 @@ public class VrShellDelegate
         mVrDaydreamApi.launchVrHomescreen();
     }
 
-    private void onVrIntent() {
-        // We assume that when we get a VR intent, we're in the headset.
-        mNeedsAnimationCancel = true;
-    }
-
-    private static boolean canAutopresent(ChromeActivity activity, Intent intent) {
-        return activitySupportsAutopresentation(activity)
-                && VrIntentUtils.getHandlerInstance().isTrustedDaydreamIntent(intent);
-    }
-
     /**
      * This is called every time ChromeActivity gets a new intent.
      */
     public static void onNewIntentWithNative(ChromeActivity activity, Intent intent) {
         if (!VrIntentUtils.isVrIntent(intent)) return;
         VrShellDelegate instance = getInstance(activity);
-
         if (instance == null) return;
-        instance.onVrIntent();
-        if (canAutopresent(activity, intent)) {
+        if (VrIntentUtils.getHandlerInstance().isTrustedDaydreamIntent(intent)) {
+            assert activitySupportsAutopresentation(activity);
             instance.mAutopresentWebVr = true;
             if (!ChromeFeatureList.isEnabled(ChromeFeatureList.WEBVR_AUTOPRESENT)
                     || !isVrShellEnabled(instance.mVrSupportLevel)) {
@@ -817,7 +807,7 @@ public class VrShellDelegate
      * This is called when ChromeTabbedActivity gets a new intent before native is initialized.
      */
     public static void maybeHandleVrIntentPreNative(ChromeActivity activity, Intent intent) {
-        if (canAutopresent(activity, intent)) {
+        if (VrIntentUtils.getHandlerInstance().isTrustedDaydreamIntent(intent)) {
             // We add a black overlay view so that we can show black while the VR UI is loading.
             // Note that this alone isn't sufficient to prevent 2D UI from showing when
             // auto-presenting WebVR. See comment about the custom animation in {@link
