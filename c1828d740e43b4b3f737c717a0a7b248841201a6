@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "1690e210_aa4ba88f",
+        "filename": "chrome/installer/linux/debian/check-package-constraints-satisfied.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-01T01:17:51Z",
+      "side": 1,
+      "message": "I actually don\u0027t remember who added that. We can leave it as is and worry about it later.",
+      "parentUuid": "2fa6c016_462c8519",
+      "revId": "c1828d740e43b4b3f737c717a0a7b248841201a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18735379_24b7e7d1",
         "filename": "chrome/installer/linux/debian/check-package-constraints-satisfied.py",
         "patchSetId": 6
@@ -136,6 +154,24 @@
       "side": 1,
       "message": "If there are no dependencies, there will just be a single dep \"\"",
       "parentUuid": "18735379_24b7e7d1",
+      "revId": "c1828d740e43b4b3f737c717a0a7b248841201a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0727ebd1_c34d5bf3",
+        "filename": "chrome/installer/linux/debian/check-package-constraints-satisfied.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-01T01:17:51Z",
+      "side": 1,
+      "message": "Then should there just be a single check, instead of a check within every iteration of the loop?\n\nif deps:\n  for dep in deps:\n    (package, requirement) \u003d get_package_and_version_requirement(dep)\n    package_requirements[package] \u003d requirement",
+      "parentUuid": "62927c15_06e279e4",
       "revId": "c1828d740e43b4b3f737c717a0a7b248841201a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
