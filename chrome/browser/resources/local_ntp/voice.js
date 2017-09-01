@@ -868,7 +868,7 @@ let text = {};
  * ID for the link shown in error output.
  * @const
  */
-text.ERROR_LINK_ID = 'voice-text-area';
+text.ERROR_LINK_ID = 'voice-text-link';
 
 
 /**
@@ -969,7 +969,7 @@ text.SUPPORT_LINK_BASE_ =
 text.init = function() {
   text.final_ = $(text.FINAL_TEXT_AREA_ID_);
   text.interim_ = $(text.INTERIM_TEXT_AREA_ID_);
-  text.clear();
+  text.reset();
 };
 
 
@@ -993,21 +993,22 @@ text.updateTextArea = function(interimText, opt_finalText) {
 
 
 /**
- * Sets the text view to the initializing state.
+ * Sets the text view to the initializing state. The initializing message
+ * shown while waiting for permission is not displayed immediately, but after
+ * a short timeout. The reason for this is that the "Waiting..." message would
+ * still appear ("blink") every time a user opens Voice Search, even if they
+ * have already granted and persisted microphone permission for the NTP,
+ * and could therefore directly proceed to the "Speak now" message.
  */
 text.showInitializingMessage = function() {
-  const displayMessage = function() {
-    if (text.interim_.innerText == '') {
-      text.updateTextArea(speech.messages.waiting);
-    }
-  };
-
   text.interim_.textContent = '';
   text.final_.textContent = '';
 
-  // We give the interface some time to get the permission. Once permission
-  // is obtained, the ready message is displayed, in which case the
-  // initializing message won't be shown.
+  const displayMessage = function() {
+    if (text.interim_.textContent == '') {
+      text.updateTextArea(speech.messages.waiting);
+    }
+  };
   text.initializingTimer_ =
       window.setTimeout(displayMessage, text.INITIALIZING_TIMEOUT_MS_);
 };
@@ -1097,9 +1098,9 @@ text.getErrorLink_ = function(error) {
 
 
 /**
- * Clears the text elements.
+ * Resets the text module's state.
  */
-text.clear = function() {
+text.reset = function() {
   text.cancelListeningTimeout();
   window.clearTimeout(text.initializingTimer_);
 
@@ -1152,7 +1153,9 @@ text.getTextClassName_ = function() {
  */
 text.startListeningMessageAnimation_ = function() {
   const animateListeningText = function() {
-    if (text.interim_.innerText == speech.messages.ready) {
+    // TODO(oskopek): Substitute the fragile string comparison with a correct
+    // state condition.
+    if (text.interim_.textContent == speech.messages.ready) {
       text.updateTextArea(speech.messages.listening);
       text.interim_.classList.add(text.LISTENING_ANIMATION_CLASS_);
     }
@@ -1462,7 +1465,7 @@ view.hide = function() {
   view.stopMicrophoneAnimations_();
   view.hideView_();
   view.isNoMatchShown_ = false;
-  text.clear();
+  text.reset();
 };
 
 
