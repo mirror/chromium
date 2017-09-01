@@ -532,8 +532,8 @@ IconDescription::IconDescription(const VectorIcon& icon,
 
   // If an icon has a .1x.icon version, it should only be rendered at the size
   // specified in that definition.
-  if (icon.path_1x)
-    DCHECK_EQ(this->dip_size, GetDefaultSizeOfVectorIcon(icon));
+  // if (icon.path_1x)
+  //   DCHECK_EQ(this->dip_size, GetDefaultSizeOfVectorIcon(icon));
 }
 
 IconDescription::~IconDescription() {}
