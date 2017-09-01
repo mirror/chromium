@@ -22,6 +22,7 @@
 #include "base/run_loop.h"
 #include "content/browser/child_process_security_policy_impl.h"
 #include "content/browser/loader/mojo_async_resource_handler.h"
+#include "content/browser/loader/mojo_pipe_writer.h"
 #include "content/browser/loader/navigation_resource_throttle.h"
 #include "content/browser/loader/resource_dispatcher_host_impl.h"
 #include "content/browser/loader/resource_message_filter.h"
@@ -101,7 +102,7 @@ class URLLoaderFactoryImplTest : public ::testing::TestWithParam<size_t> {
         kChildId);
 
     resource_message_filter_->InitializeForTest();
-    MojoAsyncResourceHandler::SetAllocationSizeForTesting(GetParam());
+    MojoPipeWriter::SetAllocationSizeForTesting(GetParam());
     rdh_.SetLoaderDelegate(&loader_deleate_);
 
     URLLoaderFactoryImpl::Create(
@@ -122,8 +123,8 @@ class URLLoaderFactoryImplTest : public ::testing::TestWithParam<size_t> {
     resource_message_filter_->OnChannelClosing();
     rdh_.CancelRequestsForProcess(resource_message_filter_->child_id());
     base::RunLoop().RunUntilIdle();
-    MojoAsyncResourceHandler::SetAllocationSizeForTesting(
-        MojoAsyncResourceHandler::kDefaultAllocationSize);
+    MojoPipeWriter::SetAllocationSizeForTesting(
+        MojoPipeWriter::kDefaultAllocationSize);
     thread_bundle_.reset(nullptr);
   }
 
