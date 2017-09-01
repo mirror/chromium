@@ -16,6 +16,24 @@
       "revId": "6c17add5be4806ba779deaf345225c551cec7542",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83deae37_8b04e5f4",
+        "filename": "content/shell/browser/shell_browser_main_parts.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1186495
+      },
+      "writtenOn": "2017-09-01T15:40:19Z",
+      "side": 1,
+      "message": "Not sure about that, but tests suggest you\u0027re right, i.e. pass without this line, so I removed it. Thanks!",
+      "parentUuid": "43d27348_e028073d",
+      "revId": "6c17add5be4806ba779deaf345225c551cec7542",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
