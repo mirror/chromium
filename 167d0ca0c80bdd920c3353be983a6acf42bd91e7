@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abe5ab16_51b0d372",
+        "filename": "third_party/WebKit/PerformanceTests/ImageDecoder/decode-gif.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-09-01T23:15:25Z",
+      "side": 1,
+      "message": "The old tests (which this replaces) also only tested one image per format.\n\nI would love to expand our corpus. But\n1.) That would be a separate patch, and\n2.) It is difficult for me to convince people that is a priority.",
+      "revId": "167d0ca0c80bdd920c3353be983a6acf42bd91e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa7275d3_43092f98",
+        "filename": "third_party/WebKit/PerformanceTests/ImageDecoder/resources/image_decoder_runner.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-09-01T23:15:25Z",
+      "side": 1,
+      "message": "I want to add a comment for the reviewers (I had to learn about this when writing this test):\n\nThis call to addRunTestEndMarker() signals PerfTestRunner to check its iterationCount and call done if it has hit the end. That is why the if (!isDone) comes next.\n\nThis async test harness requires the test itself to iterate. But it provides the call to done.",
+      "revId": "167d0ca0c80bdd920c3353be983a6acf42bd91e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
