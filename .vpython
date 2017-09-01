@@ -24,9 +24,3 @@
 
 python_version: "2.7"
 
-# Used by:
-#   third_party/catapult
-wheel: <
-  name: "infra/python/wheels/psutil/${platform}_${py_python}_${py_abi}"
-  version: "version:5.2.2"
->
