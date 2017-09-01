@@ -27,9 +27,11 @@ class CORE_EXPORT NGOutOfFlowLayoutPart {
   STACK_ALLOCATED();
 
  public:
-  NGOutOfFlowLayoutPart(const NGConstraintSpace& contianer_space,
+  NGOutOfFlowLayoutPart(const NGConstraintSpace& container_space,
                         const ComputedStyle& container_style,
-                        NGFragmentBuilder* container_builder);
+                        NGFragmentBuilder* container_builder,
+                        bool contains_absolute,
+                        bool contains_fixed);
   void Run();
 
  private:
@@ -42,8 +44,12 @@ class CORE_EXPORT NGOutOfFlowLayoutPart {
       const Optional<LayoutUnit>& block_estimate,
       const NGAbsolutePhysicalPosition node_position);
 
+  bool IsContainingBlockForDescendant(const ComputedStyle& descendant_style);
+
   const ComputedStyle& container_style_;
   NGFragmentBuilder* container_builder_;
+  bool contains_absolute_;
+  bool contains_fixed_;
 
   NGLogicalOffset container_border_offset_;
   NGPhysicalOffset container_border_physical_offset_;

@@ -71,7 +71,9 @@ RefPtr<NGLayoutResult> NGColumnLayoutAlgorithm::Layout() {
 
   container_builder_.SetOverflowSize(overflow);
 
-  NGOutOfFlowLayoutPart(ConstraintSpace(), Style(), &container_builder_).Run();
+  NGOutOfFlowLayoutPart(ConstraintSpace(), Style(), &container_builder_,
+                        node_.IsAbsoluteContainer(), node_.IsFixedContainer())
+      .Run();
 
   // TODO(mstensho): Propagate baselines.
 

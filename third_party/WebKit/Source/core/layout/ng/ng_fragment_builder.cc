@@ -4,6 +4,7 @@
 
 #include "core/layout/ng/ng_fragment_builder.h"
 
+#include "core/layout/LayoutBlock.h"
 #include "core/layout/ng/ng_block_break_token.h"
 #include "core/layout/ng/ng_block_node.h"
 #include "core/layout/ng/ng_break_token.h"
@@ -108,16 +109,46 @@ NGFragmentBuilder& NGFragmentBuilder::SetBfcOffset(const NGBfcOffset& offset) {
 NGFragmentBuilder& NGFragmentBuilder::AddOutOfFlowChildCandidate(
     NGBlockNode child,
     const NGLogicalOffset& child_offset) {
-  DCHECK(child);
-
-  oof_positioned_candidates_.push_back(NGOutOfFlowPositionedCandidate{
-      NGOutOfFlowPositionedDescendant{
-          child, NGStaticPosition::Create(WritingMode(), Direction(),
-                                          NGPhysicalOffset())},
-      child_offset});
-
+  NGOutOfFlowPositionedDescendant descendant{
+      child,
+      NGStaticPosition::Create(WritingMode(), Direction(), NGPhysicalOffset())};
+  oof_positioned_candidates_.push_back(
+      NGOutOfFlowPositionedCandidate{descendant, child_offset});
   child.SaveStaticOffsetForLegacy(child_offset);
   return *this;
+}
+
+void NGFragmentBuilder::AddOutOfFlowLegacyCandidate(
+    NGBlockNode node,
+    const NGStaticPosition& static_position) {
+  NGOutOfFlowPositionedDescendant descendant{node, static_position};
+  // Need 0,0 physical coordinates as child offset. Because offset
+  // is stored as logical, must convert physical 0,0 to logical.
+  NGLogicalOffset zero_offset;
+  switch (WritingMode()) {
+    case kHorizontalTopBottom:
+      if (IsLtr(Direction()))
+        zero_offset = NGLogicalOffset();
+      else
+        zero_offset = NGLogicalOffset(size_.inline_size, LayoutUnit());
+      break;
+    case kVerticalRightLeft:
+    case kSidewaysRightLeft:
+      if (IsLtr(Direction()))
+        zero_offset = NGLogicalOffset(LayoutUnit(), size_.block_size);
+      else
+        zero_offset = NGLogicalOffset(size_.inline_size, size_.block_size);
+      break;
+    case kVerticalLeftRight:
+    case kSidewaysLeftRight:
+      if (IsLtr(Direction()))
+        zero_offset = NGLogicalOffset();
+      else
+        zero_offset = NGLogicalOffset(size_.inline_size, LayoutUnit());
+      break;
+  }
+  oof_positioned_candidates_.push_back(
+      NGOutOfFlowPositionedCandidate{descendant, zero_offset});
 }
 
 void NGFragmentBuilder::GetAndClearOutOfFlowDescendantCandidates(
@@ -137,7 +168,7 @@ void NGFragmentBuilder::GetAndClearOutOfFlowDescendantCandidates(
     NGStaticPosition builder_relative_position;
     builder_relative_position.type = candidate.descendant.static_position.type;
     builder_relative_position.offset =
-        child_offset + candidate.descendant.static_position.offset;
+        candidate.descendant.static_position.offset + child_offset;
 
     descendant_candidates->push_back(NGOutOfFlowPositionedDescendant{
         candidate.descendant.node, builder_relative_position});
@@ -209,6 +240,10 @@ RefPtr<NGLayoutResult> NGFragmentBuilder::ToBoxFragment() {
       std::move(fragment), oof_positioned_descendants_, unpositioned_floats_,
       std::move(exclusion_space_), bfc_offset_, end_margin_strut_,
       NGLayoutResult::kSuccess));
+}
+
+LayoutBlock* NGFragmentBuilder::LayoutContainer() {
+  return ToLayoutBlock(layout_object_);
 }
 
 RefPtr<NGLayoutResult> NGFragmentBuilder::Abort(
