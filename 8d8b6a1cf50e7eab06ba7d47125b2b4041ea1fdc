@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8ef477b3_5b6b6267",
+        "filename": "chrome/browser/vr/elements/ui_texture.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-09-01T20:07:33Z",
+      "side": 1,
+      "message": "It is for bypassing the DCHECK failure in texture_element.cc in test\nhttps://cs.chromium.org/chromium/src/chrome/browser/vr/elements/textured_element.cc?rcl\u003d032dc1de66b689147a48e22fea0965256d1933d8\u0026l\u003d52",
+      "parentUuid": "1a7f74eb_9728b090",
+      "revId": "8d8b6a1cf50e7eab06ba7d47125b2b4041ea1fdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "27b8d4d1_e78743d5",
         "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-01T13:34:06Z",
       "side": 1,
       "message": "Should this test instead be in ui_scene_unittest.cc, or even ui_element_unittest.cc as scene is going away?  It doesn\u0027t seem to relate to the scene manager.",
+      "revId": "8d8b6a1cf50e7eab06ba7d47125b2b4041ea1fdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40be4eba_1d523531",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-09-01T20:07:33Z",
+      "side": 1,
+      "message": "will address in a follow up CL.",
+      "parentUuid": "27b8d4d1_e78743d5",
       "revId": "8d8b6a1cf50e7eab06ba7d47125b2b4041ea1fdc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ec6834b5_33c3100d",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-09-01T20:07:33Z",
+      "side": 1,
+      "message": "I might understand you wrong. But if I don\u0027t create a Grid element here, how do I make sure that I tested the overrided Render function in that element?",
+      "parentUuid": "28c05f26_7cddc0dd",
+      "revId": "8d8b6a1cf50e7eab06ba7d47125b2b4041ea1fdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3fd3c5d1_a6b1ad46",
         "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
         "patchSetId": 3
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "fa0d1769_3937f0fd",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-09-01T20:07:33Z",
+      "side": 1,
+      "message": "will address in a follow up CL",
+      "parentUuid": "3fd3c5d1_a6b1ad46",
+      "revId": "8d8b6a1cf50e7eab06ba7d47125b2b4041ea1fdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9bab902d_55de3ce0",
         "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
         "patchSetId": 3
@@ -81,6 +153,24 @@
       "writtenOn": "2017-09-01T13:34:06Z",
       "side": 1,
       "message": "Even though it might not save many lines (or even add lines), you could push your two (or more) test elements into a vector, and have a helper method that calls render (and maybe other methods if needed) on all of them at once.",
+      "revId": "8d8b6a1cf50e7eab06ba7d47125b2b4041ea1fdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d9ec8ec_6f7b5624",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-09-01T20:07:33Z",
+      "side": 1,
+      "message": "will address in a follow up CL",
+      "parentUuid": "9bab902d_55de3ce0",
       "revId": "8d8b6a1cf50e7eab06ba7d47125b2b4041ea1fdc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
