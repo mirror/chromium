@@ -14,6 +14,7 @@
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/numerics/safe_conversions.h"
+#include "base/strings/stringprintf.h"
 #include "base/sys_info.h"
 #include "build/build_config.h"
 
@@ -1121,13 +1122,15 @@ void VaapiWrapper::PreSandboxInitialization() {
 // static
 bool VaapiWrapper::PostSandboxInitialization() {
   StubPathMap paths;
+  const std::string version_string(
+      base::StringPrintf("%02d%02d", VA_MINOR_VERSION, VA_MICRO_VERSION));
 
-  paths[kModuleVa].push_back("libva.so.1");
+  paths[kModuleVa].push_back("libva.so.1." + version_string + ".0");
 
 #if defined(USE_X11)
-  paths[kModuleVa_x11].push_back("libva-x11.so.1");
+  paths[kModuleVa_x11].push_back("libva-x11.so.1." + version_string + ".0");
 #elif defined(USE_OZONE)
-  paths[kModuleVa_drm].push_back("libva-drm.so.1");
+  paths[kModuleVa_drm].push_back("libva-drm.so.1." + version_string + ".0");
 #endif
 
   return InitializeStubs(paths);

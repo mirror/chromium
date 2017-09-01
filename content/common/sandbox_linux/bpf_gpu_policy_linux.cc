@@ -37,6 +37,10 @@
 #include "sandbox/linux/system_headers/linux_syscalls.h"
 #include "services/service_manager/embedder/set_process_title.h"
 
+#if BUILDFLAG(USE_VAAPI)
+#include <va/va_version.h>
+#endif
+
 using sandbox::arch_seccomp_data;
 using sandbox::bpf_dsl::Allow;
 using sandbox::bpf_dsl::ResultExpr;
@@ -282,6 +286,55 @@ ResultExpr GpuProcessPolicy::EvaluateSyscall(int sysno) const {
   }
 }
 
+#if BUILDFLAG(USE_VAAPI)
+static bool TryDlopenVaLibs(const std::string& version = std::string()) {
+  std::string vaDriverPrefix;
+  std::string I965DrvVideoPath;
+  std::string vaLibSuffix;
+  void* p;
+  bool ret = true;
+
+  if (IsArchitectureX86_64())
+    vaDriverPrefix = "/usr/lib64/";
+  else
+    vaDriverPrefix = "/usr/lib/";
+
+  vaDriverPrefix += (version.empty() ? "va" : "va-" + version) + "/drivers/";
+
+  I965DrvVideoPath = vaDriverPrefix + "i965_drv_video.so";
+  // We use this library as an indicator that the VA libs are using the
+  // versioned naming scheme
+  p = dlopen(I965DrvVideoPath.c_str(), RTLD_NOW | RTLD_GLOBAL | RTLD_NODELETE);
+  if (p == NULL)
+    ret = false;
+
+  if (IsArchitectureX86_64()) {
+    std::string I965HybridDrvVideoPath;
+
+    I965HybridDrvVideoPath = vaDriverPrefix + "hybrid_drv_video.so";
+    dlopen(I965HybridDrvVideoPath.c_str(),
+           RTLD_NOW | RTLD_GLOBAL | RTLD_NODELETE);
+  }
+
+  // These libraries are always opened with full version
+  if (!version.empty()) {
+    vaLibSuffix = "." + version + ".0";
+
+    dlopen(std::string("libva.so.1" + vaLibSuffix).c_str(),
+           RTLD_NOW | RTLD_GLOBAL | RTLD_NODELETE);
+#if defined(USE_OZONE)
+    dlopen(std::string("libva-drm.so.1" + vaLibSuffix).c_str(),
+           RTLD_NOW | RTLD_GLOBAL | RTLD_NODELETE);
+#elif defined(USE_X11)
+    dlopen(std::string("libva-x11.so.1" + vaLibSuffix).c_str(),
+           RTLD_NOW | RTLD_GLOBAL | RTLD_NODELETE);
+#endif
+  }
+
+  return ret;
+}
+#endif
+
 bool GpuProcessPolicy::PreSandboxHook() {
   // Warm up resources needed by the policy we're about to enable and
   // eventually start a broker process.
@@ -300,24 +353,14 @@ bool GpuProcessPolicy::PreSandboxHook() {
     // inside the sandbox, so preload them now.
     if (IsAcceleratedVaapiVideoEncodeEnabled() ||
         IsAcceleratedVideoDecodeEnabled()) {
-      const char* I965DrvVideoPath = NULL;
-      const char* I965HybridDrvVideoPath = NULL;
+#if BUILDFLAG(USE_VAAPI)
+      const std::string va_version(
+          base::StringPrintf("%02d%02d", VA_MINOR_VERSION, VA_MICRO_VERSION));
 
-      if (IsArchitectureX86_64()) {
-        I965DrvVideoPath = "/usr/lib64/va/drivers/i965_drv_video.so";
-        I965HybridDrvVideoPath = "/usr/lib64/va/drivers/hybrid_drv_video.so";
-      } else if (IsArchitectureI386()) {
-        I965DrvVideoPath = "/usr/lib/va/drivers/i965_drv_video.so";
-      }
-
-      dlopen(I965DrvVideoPath, RTLD_NOW | RTLD_GLOBAL | RTLD_NODELETE);
-      if (I965HybridDrvVideoPath)
-        dlopen(I965HybridDrvVideoPath, RTLD_NOW | RTLD_GLOBAL | RTLD_NODELETE);
-      dlopen("libva.so.1", RTLD_NOW | RTLD_GLOBAL | RTLD_NODELETE);
-#if defined(USE_OZONE)
-      dlopen("libva-drm.so.1", RTLD_NOW | RTLD_GLOBAL | RTLD_NODELETE);
-#elif defined(USE_X11)
-      dlopen("libva-x11.so.1", RTLD_NOW | RTLD_GLOBAL | RTLD_NODELETE);
+      // Only open non-versioned libraries if the versioned ones cannot be
+      // found
+      if (!TryDlopenVaLibs(va_version))
+        TryDlopenVaLibs();
 #endif
     }
   }
