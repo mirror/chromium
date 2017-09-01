@@ -102,7 +102,7 @@ class SurfaceAggregatorPerfTest : public testing::Test {
 
       frame.render_pass_list.push_back(std::move(pass));
       child_supports[i]->SubmitCompositorFrame(local_surface_id,
-                                               std::move(frame));
+                                               std::move(frame), nullptr);
     }
 
     auto root_support = CompositorFrameSinkSupport::Create(
@@ -131,7 +131,8 @@ class SurfaceAggregatorPerfTest : public testing::Test {
       frame.render_pass_list.push_back(std::move(pass));
 
       root_support->SubmitCompositorFrame(
-          LocalSurfaceId(num_surfaces + 1, kArbitraryToken), std::move(frame));
+          LocalSurfaceId(num_surfaces + 1, kArbitraryToken), std::move(frame),
+          nullptr);
 
       cc::CompositorFrame aggregated = aggregator_->Aggregate(
           SurfaceId(FrameSinkId(1, num_surfaces + 1),

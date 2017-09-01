@@ -83,7 +83,8 @@ TEST_F(SurfaceAggregatorPixelTest, DrawSimpleFrame) {
 
   LocalSurfaceId root_local_surface_id = allocator_.GenerateId();
   SurfaceId root_surface_id(support_->frame_sink_id(), root_local_surface_id);
-  support_->SubmitCompositorFrame(root_local_surface_id, std::move(root_frame));
+  support_->SubmitCompositorFrame(root_local_surface_id, std::move(root_frame),
+                                  nullptr);
 
   SurfaceAggregator aggregator(manager_.surface_manager(),
                                resource_provider_.get(), true);
@@ -135,7 +136,7 @@ TEST_F(SurfaceAggregatorPixelTest, DrawSimpleAggregatedFrame) {
     root_frame.render_pass_list.push_back(std::move(pass));
 
     support_->SubmitCompositorFrame(root_local_surface_id,
-                                    std::move(root_frame));
+                                    std::move(root_frame), nullptr);
   }
 
   {
@@ -156,7 +157,7 @@ TEST_F(SurfaceAggregatorPixelTest, DrawSimpleAggregatedFrame) {
     child_frame.render_pass_list.push_back(std::move(pass));
 
     child_support->SubmitCompositorFrame(child_local_surface_id,
-                                         std::move(child_frame));
+                                         std::move(child_frame), nullptr);
   }
 
   SurfaceAggregator aggregator(manager_.surface_manager(),
@@ -232,7 +233,7 @@ TEST_F(SurfaceAggregatorPixelTest, DrawAggregatedFrameWithSurfaceTransforms) {
     root_frame.render_pass_list.push_back(std::move(pass));
 
     support_->SubmitCompositorFrame(root_local_surface_id,
-                                    std::move(root_frame));
+                                    std::move(root_frame), nullptr);
   }
 
   {
@@ -261,7 +262,7 @@ TEST_F(SurfaceAggregatorPixelTest, DrawAggregatedFrameWithSurfaceTransforms) {
     child_frame.render_pass_list.push_back(std::move(pass));
 
     left_support->SubmitCompositorFrame(left_child_local_id,
-                                        std::move(child_frame));
+                                        std::move(child_frame), nullptr);
   }
 
   {
@@ -290,7 +291,7 @@ TEST_F(SurfaceAggregatorPixelTest, DrawAggregatedFrameWithSurfaceTransforms) {
     child_frame.render_pass_list.push_back(std::move(pass));
 
     right_support->SubmitCompositorFrame(right_child_local_id,
-                                         std::move(child_frame));
+                                         std::move(child_frame), nullptr);
   }
 
   SurfaceAggregator aggregator(manager_.surface_manager(),

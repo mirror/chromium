@@ -82,8 +82,8 @@ void LayerTreeFrameSinkLocal::SubmitCompositorFrame(cc::CompositorFrame frame) {
 
   DCHECK(local_surface_id_.is_valid());
 
-  bool result =
-      support_->SubmitCompositorFrame(local_surface_id_, std::move(frame));
+  bool result = support_->SubmitCompositorFrame(local_surface_id_,
+                                                std::move(frame), nullptr);
   DCHECK(result);
 }
 
