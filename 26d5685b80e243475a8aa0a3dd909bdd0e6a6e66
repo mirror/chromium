@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9f34150_1bba2a95",
+        "filename": "chrome/profiling/backtrace.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-09-01T03:11:45Z",
+      "side": 1,
+      "message": "This is better as addrs.data().",
+      "range": {
+        "startLine": 23,
+        "startChar": 20,
+        "endLine": 23,
+        "endChar": 29
+      },
+      "revId": "26d5685b80e243475a8aa0a3dd909bdd0e6a6e66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb17c676_dcf2ee4f",
+        "filename": "components/sync_bookmarks/bookmark_model_associator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-09-01T03:11:45Z",
+      "side": 1,
+      "message": "This no longer happens explicitly, so please change the comment.",
+      "range": {
+        "startLine": 280,
+        "startChar": 5,
+        "endLine": 280,
+        "endChar": 33
+      },
+      "revId": "26d5685b80e243475a8aa0a3dd909bdd0e6a6e66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7a69534_a13df7e0",
+        "filename": "components/sync_bookmarks/bookmark_model_associator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-09-01T03:11:45Z",
+      "side": 1,
+      "message": "nit: Maybe this could be sizeof(base::char16) for clarity, then maybe the above comment isn\u0027t even necessary.\n\nAlternatively, you could add a new overload of base::Hash that takes a base::string16 alongside the existing std::string overload.",
+      "range": {
+        "startLine": 283,
+        "startChar": 48,
+        "endLine": 283,
+        "endChar": 49
+      },
+      "revId": "26d5685b80e243475a8aa0a3dd909bdd0e6a6e66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
