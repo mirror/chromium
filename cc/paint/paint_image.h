@@ -46,10 +46,7 @@ class CC_PAINT_EXPORT PaintImage {
 
   class CC_PAINT_EXPORT FrameKey {
    public:
-    FrameKey(Id paint_image_id,
-             ContentId content_id,
-             size_t frame_index,
-             gfx::Rect subset_rect);
+    FrameKey(ContentId content_id, size_t frame_index, gfx::Rect subset_rect);
     bool operator==(const FrameKey& other) const;
     bool operator!=(const FrameKey& other) const;
 
@@ -57,7 +54,6 @@ class CC_PAINT_EXPORT PaintImage {
     std::string ToString() const;
 
    private:
-    Id paint_image_id_;
     ContentId content_id_;
     size_t frame_index_;
     // TODO(khushalsagar): Remove this when callers take care of subsetting.
