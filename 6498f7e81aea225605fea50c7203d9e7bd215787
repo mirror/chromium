@@ -118,6 +118,30 @@
       "revId": "6498f7e81aea225605fea50c7203d9e7bd215787",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7d9938c_57ecdabb",
+        "filename": "components/ntp_snippets/mock_content_suggestions_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-09-01T09:08:00Z",
+      "side": 1,
+      "message": "The reference also does not extend live-time. (only const references can do this in certain circumstances).\n\nSo if you capture the callback somewhere, you need to move-it in to a local FetchDoneCallback. E.g. (not tested)\n\nFetchDoneCallback captured_callback;\nEXPECT_CALL(foo, FetchMock(_, _, _)\n    .WillOnce(testing::Invoke([\u0026captured_callback](const Category\u0026,\n                                                   const std::set\u003cstd::string\u003e\u0026,\n                                                   FetchDoneCallback* callback) {\n  captured_callback \u003d std::move(*callback);}));",
+      "parentUuid": "930d0db2_e05e8086",
+      "range": {
+        "startLine": 60,
+        "startChar": 37,
+        "endLine": 60,
+        "endChar": 38
+      },
+      "revId": "6498f7e81aea225605fea50c7203d9e7bd215787",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
