@@ -139,6 +139,24 @@
       "revId": "e1cc417bfce15e6b35bb158dc6b16f31f8459016",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5fe06ba4_ca58462e",
+        "filename": "content/browser/service_worker/service_worker_database.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1010,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-01T05:51:17Z",
+      "side": 1,
+      "message": "Ah, I see. I assumed |CreateUserDataKeyPrefix(registration_id)| is longer than |prefix| :)",
+      "parentUuid": "26271cd9_45b148aa",
+      "revId": "e1cc417bfce15e6b35bb158dc6b16f31f8459016",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
