@@ -333,6 +333,30 @@
     },
     {
       "key": {
+        "uuid": "9afef58f_f4ddd4cd",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 970,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-09-01T01:12:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6ccebae_1c7ccc57",
+      "range": {
+        "startLine": 970,
+        "startChar": 18,
+        "endLine": 970,
+        "endChar": 0
+      },
+      "revId": "43dbf6970f835bfbab8f815ed0e4285f88e524cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b61b33c9_3cf456c9",
         "filename": "remoting/host/linux/linux_me2me_host.py",
         "patchSetId": 7
@@ -448,6 +472,30 @@
       "revId": "43dbf6970f835bfbab8f815ed0e4285f88e524cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "930775fb_04c0270f",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 985,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-09-01T01:12:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "20bea717_c2d6702d",
+      "range": {
+        "startLine": 985,
+        "startChar": 53,
+        "endLine": 985,
+        "endChar": 0
+      },
+      "revId": "43dbf6970f835bfbab8f815ed0e4285f88e524cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -613,6 +661,30 @@
       "revId": "43dbf6970f835bfbab8f815ed0e4285f88e524cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35dae382_a5535b56",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-09-01T01:12:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9364fc44_d03b2f5a",
+      "range": {
+        "startLine": 86,
+        "startChar": 47,
+        "endLine": 86,
+        "endChar": 0
+      },
+      "revId": "43dbf6970f835bfbab8f815ed0e4285f88e524cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

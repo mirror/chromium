@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "619e2d9f_9fa9eb7f",
+        "filename": "remoting/host/linux/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-09-01T01:12:07Z",
+      "side": 1,
+      "message": "I switched to copying the needed libraries as well for a component build. That also works with having remoting_user_session_wrapper.sh simulate setuid, while LD_LIBRARY_PATH does not.",
+      "parentUuid": "be831991_85d53f70",
+      "revId": "a6c830687cc2df7b9d8cd8b1f3c70fd34d6d23ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a7ee1b8_43d49fb0",
         "filename": "remoting/host/linux/linux_me2me_host.py",
         "patchSetId": 1
@@ -69,6 +87,24 @@
       "revId": "a6c830687cc2df7b9d8cd8b1f3c70fd34d6d23ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78bb79a3_12f2e3f9",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-09-01T01:12:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a1f5bb93_b0b5a4b4",
+      "revId": "a6c830687cc2df7b9d8cd8b1f3c70fd34d6d23ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +157,24 @@
       "revId": "a6c830687cc2df7b9d8cd8b1f3c70fd34d6d23ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db25266f_b1d0b523",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 917,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-09-01T01:12:07Z",
+      "side": 1,
+      "message": "Discussed offline and determined to be okay with some changes to improve readability (done).",
+      "parentUuid": "4e2577ba_a8897af2",
+      "revId": "a6c830687cc2df7b9d8cd8b1f3c70fd34d6d23ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -207,6 +261,24 @@
       "revId": "a6c830687cc2df7b9d8cd8b1f3c70fd34d6d23ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "457ac361_6cf0c417",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1454,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-09-01T01:12:07Z",
+      "side": 1,
+      "message": "This was changed to check the path (but not the contents) of the config file and moved to occur earlier in another CL.",
+      "parentUuid": "7cf0b1d8_23022ded",
+      "revId": "a6c830687cc2df7b9d8cd8b1f3c70fd34d6d23ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -367,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "353a3c14_eaf125b5",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-09-01T01:12:07Z",
+      "side": 1,
+      "message": "Filed as crbug.com/761206",
+      "parentUuid": "1122868a_f54c37ee",
+      "revId": "a6c830687cc2df7b9d8cd8b1f3c70fd34d6d23ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9c02779_578f5ff8",
         "filename": "remoting/host/linux/remoting_user_session.cc",
         "patchSetId": 1
@@ -381,6 +471,24 @@
       "revId": "a6c830687cc2df7b9d8cd8b1f3c70fd34d6d23ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4acba83d_03da58c1",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-09-01T01:12:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a9c02779_578f5ff8",
+      "revId": "a6c830687cc2df7b9d8cd8b1f3c70fd34d6d23ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -436,6 +544,24 @@
     },
     {
       "key": {
+        "uuid": "c3ef2f9c_1b94e6ac",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-09-01T01:12:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ed4b6d62_2e4d44dc",
+      "revId": "a6c830687cc2df7b9d8cd8b1f3c70fd34d6d23ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "350ecd29_822b0ade",
         "filename": "remoting/host/linux/remoting_user_session.cc",
         "patchSetId": 1
@@ -450,6 +576,24 @@
       "revId": "a6c830687cc2df7b9d8cd8b1f3c70fd34d6d23ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "495c664a_9e19f93e",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 764,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-09-01T01:12:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "350ecd29_822b0ade",
+      "revId": "a6c830687cc2df7b9d8cd8b1f3c70fd34d6d23ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
