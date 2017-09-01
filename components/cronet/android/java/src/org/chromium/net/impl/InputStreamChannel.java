@@ -28,6 +28,9 @@ final class InputStreamChannel implements ReadableByteChannel {
     }
 
     static ReadableByteChannel wrap(InputStream inputStream) {
+        if (inputStream == null) {
+            return null;
+        }
         if (inputStream instanceof FileInputStream) {
             return ((FileInputStream) inputStream).getChannel();
         }

@@ -768,7 +768,7 @@ final class JavaUrlRequest extends UrlRequestBase {
                 mExecutor.execute(errorSetting(new CheckedRunnable() {
                     @Override
                     public void run() throws Exception {
-                        int read = mResponseChannel.read(buffer);
+                        int read = mResponseChannel == null ? -1 : mResponseChannel.read(buffer);
                         processReadResult(read, buffer);
                     }
                 }));
@@ -780,7 +780,9 @@ final class JavaUrlRequest extends UrlRequestBase {
         if (read != -1) {
             mCallbackAsync.onReadCompleted(mUrlResponseInfo, buffer);
         } else {
-            mResponseChannel.close();
+            if (mResponseChannel != null) {
+                mResponseChannel.close();
+            }
             if (mState.compareAndSet(State.READING, State.COMPLETE)) {
                 fireDisconnect();
                 mCallbackAsync.onSucceeded(mUrlResponseInfo);
