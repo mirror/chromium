@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fd876b7_1bfa4287",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-01T15:45:30Z",
+      "side": 1,
+      "message": "Was this discussed anywhere? What\u0027s the rationale behind this?",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 4
+      },
+      "revId": "e24d13a2915e45a771a1b770983e5f666b71a46a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
