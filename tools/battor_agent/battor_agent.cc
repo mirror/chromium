@@ -3,7 +3,10 @@
 // found in the LICENSE file.
 #include "tools/battor_agent/battor_agent.h"
 
+#include <algorithm>
 #include <iomanip>
+#include <numeric>
+#include <vector>
 
 #include "base/bind.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -11,6 +14,42 @@
 #include "tools/battor_agent/battor_sample_converter.h"
 
 using std::vector;
+
+#include <windows.h> // Defines macros used by TraceLoggingProvider.h
+#include <TraceLoggingProvider.h>  // The native TraceLogging API
+
+// Work around incompatibility between TraceLoggingProvider.h and /utf-8
+// https://developercommunity.visualstudio.com/content/problem/85934/traceloggingproviderh-is-incompatible-with-utf-8.html
+#undef _TlgPragmaUtf8Begin
+#undef _TlgPragmaUtf8End
+#define _TlgPragmaUtf8Begin
+#define _TlgPragmaUtf8End
+
+// Forward-declare the g_hMyComponentProvider variable that you will use for tracing in this component
+TRACELOGGING_DECLARE_PROVIDER(g_hMyProvider);
+
+// GUID generated with EtwGuid.exe as described here:
+// https://blogs.msdn.microsoft.com/dcook/2015/09/08/etw-provider-names-and-guids/
+// >EtwGuid.exe Chrome.Battor
+// Provider can be recorded using *Chrome.Battor syntax and it will show up in
+// UIforETW's default Randomascii Chrome and Multi Events view.
+TRACELOGGING_DEFINE_PROVIDER(
+    g_hMyProvider,
+    "Chrome.Battor",
+    // {c58f1405-1112-54dc-adf1-b8acb8c050ec}
+    (0xc58f1405, 0x1112, 0x54dc, 0xad, 0xf1, 0xb8, 0xac, 0xb8, 0xc0, 0x50, 0xec));
+
+class TraceLoggingRegistrar {
+ public:
+  TraceLoggingRegistrar() {
+    // Register the provider
+    TraceLoggingRegister(g_hMyProvider);
+  }
+  ~TraceLoggingRegistrar() {
+    // Stop TraceLogging and unregister the provider
+    TraceLoggingUnregister(g_hMyProvider);
+  }
+} g_trace_logging_singleton;
 
 namespace battor {
 
@@ -401,6 +440,7 @@ void BattOrAgent::PerformAction(Action action) {
       return;
     case Action::READ_INIT_ACK:
       connection_->ReadMessage(BATTOR_MESSAGE_TYPE_CONTROL_ACK);
+      TraceLoggingWrite(g_hMyProvider, "Battor started");
       return;
     case Action::SEND_SET_GAIN:
       // Set the BattOr's gain. Setting the gain tells the BattOr the range of
@@ -421,6 +461,7 @@ void BattOrAgent::PerformAction(Action action) {
     case Action::SEND_EEPROM_REQUEST:
       // Read the BattOr's EEPROM to get calibration information that's required
       // to convert the raw samples to accurate ones.
+      TraceLoggingWrite(g_hMyProvider, "Battor stopping");
       SendControlMessage(BATTOR_CONTROL_MESSAGE_TYPE_READ_EEPROM,
                          sizeof(BattOrEEPROM), 0);
       return;
@@ -577,14 +618,16 @@ void BattOrAgent::CompleteCommand(BattOrError error) {
   num_command_attempts_ = 0;
 }
 
-std::string BattOrAgent::SamplesToString() {
+BattorResults BattOrAgent::SamplesToString() {
   if (calibration_frame_.empty() || samples_.empty() || !battor_eeprom_)
-    return "";
+    return BattorResults();
 
   BattOrSampleConverter converter(*battor_eeprom_, calibration_frame_);
 
   std::stringstream trace_stream;
   trace_stream << std::fixed;
+  std::stringstream trace_summary;
+  trace_summary << std::fixed;
 
   // Create a header that indicates the BattOr's parameters for these samples.
   BattOrSample min_sample = converter.MinSample();
@@ -597,6 +640,53 @@ std::string BattOrAgent::SamplesToString() {
                << max_sample.current_mA << "] mA" << std::endl
                << "# sample_rate " << battor_eeprom_->sd_sample_rate << " Hz"
                << ", gain " << battor_eeprom_->low_gain << "x" << std::endl;
+
+  // Scan through the sample data to summarize it. Report on average power and
+  // second-by-second power including min-second, max-second, and median second.
+  double total_power = 0.0;
+  const size_t samples_per_second = 10000;
+  int second_number = 0;
+  std::vector<double> power_by_seconds;
+  for (size_t i = 0; i < samples_.size(); i += samples_per_second) {
+    size_t loop_count = samples_.size() - i;
+    if (loop_count > samples_per_second)
+      loop_count = samples_per_second;
+
+    double second_power = 0.0;
+    for (size_t j = i; j < i + loop_count; ++j) {
+      BattOrSample sample = converter.ToSample(samples_[i], i);
+      double sample_power = sample.current_mA * sample.voltage_mV;
+      total_power += sample_power;
+      second_power += sample_power;
+    }
+    if (loop_count == samples_per_second) {
+      // Calculate power for one second in Watts - divide by 1e6 to convert from microWatts
+      second_power /= (samples_per_second * 1e6);
+      trace_summary << "Second " << std::setw(2) << second_number << " average power: " <<
+        std::setprecision(2) << std::setw(5) << second_power << " W" << std::endl;
+      ++second_number;
+      power_by_seconds.push_back(second_power);
+    }
+  }
+  // Calculate average power in Watts - divide by 1e6 to convert from microWatts
+  double average_power_W = total_power / samples_.size() / 1e6;
+  trace_summary << "Average power: " << std::setprecision(2) << average_power_W << " W" << std::endl;
+  std::sort(power_by_seconds.begin(), power_by_seconds.end());
+  if (power_by_seconds.size() >= 3) {
+    trace_summary <<
+      "Summary of power-by-seconds:" << std::endl <<
+      "Minimum: " << std::setw(5) << std::setprecision(2) << power_by_seconds[0] << std::endl <<
+      "Median:  " << std::setw(5) << std::setprecision(2) << power_by_seconds[power_by_seconds.size() / 2] << std::endl <<
+      "Maximum: " << std::setw(5) << std::setprecision(2) << power_by_seconds[power_by_seconds.size() - 1] << std::endl;
+  } else {
+    trace_summary << "Too short a trace to generate per-second summary.";
+  }
+  /*size_t half_count = power_by_seconds.size() / 2;
+  if (half_count > 2) {
+    double low_average = std::accumulate(&power_by_seconds[0], &power_by_seconds[half_count], 0.0) / half_count;
+    trace_summary << "Low average power: " << std::setprecision(2) << low_average << " W" << std::endl;
+  }*/
+  //return BattorResults("", trace_stream.str());
 
   // Create a string representation of the BattOr samples.
   for (size_t i = 0; i < samples_.size(); i++) {
@@ -614,7 +704,7 @@ std::string BattOrAgent::SamplesToString() {
     trace_stream << std::endl;
   }
 
-  return trace_stream.str();
+  return BattorResults(trace_summary.str(), trace_stream.str());
 }
 
 void BattOrAgent::SetActionTimeout(uint16_t timeout_seconds) {

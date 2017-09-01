@@ -200,6 +200,7 @@ class BattOrAgentBin : public BattOrAgent::Listener {
 
     if (cmd == "StartTracing") {
       StartTracing();
+      s_tracing = true;
     } else if (cmd.find("StopTracing") != std::string::npos) {
       std::vector<std::string> tokens = TokenizeString(cmd);
 
@@ -289,8 +290,9 @@ class BattOrAgentBin : public BattOrAgent::Listener {
         base::Bind(&BattOrAgent::StopTracing, base::Unretained(agent_.get())));
   }
 
-  void OnStopTracingComplete(const std::string& trace,
+  void OnStopTracingComplete(const BattorResults& results,
                              BattOrError error) override {
+    std::string output_file = trace_output_file_;
     if (error == BATTOR_ERROR_NONE) {
       if (trace_output_file_.empty()) {
         if (interactive_) {
@@ -308,6 +310,14 @@ class BattOrAgentBin : public BattOrAgent::Listener {
         trace_stream << trace;
         trace_stream.close();
       }
+
+      std::ofstream trace_stream(output_file);
+      if (!trace_stream.is_open()) {
+        std::cout << "Tracing output file could not be opened." << endl;
+        exit(1);
+      }
+      trace_stream << results.GetDetails();
+      trace_stream.close();
       std::cout << "Done." << endl;
     } else {
       HandleError(error);
