@@ -17,7 +17,7 @@
   z-index: 5;
 }
 
-#popup-overlay[md-mode] {
+.popup-overlay[md-mode] {
   background: rgba(0, 0, 0, .5);
 }
 
