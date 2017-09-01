@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "f8c03182_a379ab2d",
+        "filename": "content/browser/presentation/presentation_service_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-01T09:39:54Z",
+      "side": 1,
+      "message": "A connection error means the message pipe was closed. This only happens if:\n- the other process dies\n- message validation failed\n- the other end of the message pipe was intentionally closed\n\nSo usually you would only do this if you need to clean up some state (perhaps the interface impl was keeping some objects alive for the other end of the message pipe and no longer needs to do that)",
+      "parentUuid": "b261e292_8eed79dd",
+      "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "31e96d7d_c5cb0767",
         "filename": "content/browser/presentation/presentation_service_impl.cc",
         "patchSetId": 17
@@ -113,6 +131,24 @@
       "side": 1,
       "message": "Done. SetReceiver should only be called once because I chose to tie the Mojo PresentationReceiver to the Blink PresentationReceiver (of which there is only one per frame).\n\nThings are a bit in flux right now because the Presentation API is only partially onion-souped as it is. But it will become a lot clearer once the effort is completed.",
       "parentUuid": "31e96d7d_c5cb0767",
+      "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20b797b4_bd5b4e95",
+        "filename": "content/browser/presentation/presentation_service_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-01T09:39:54Z",
+      "side": 1,
+      "message": "I alluded to this in the other review (about trying to keep the state machine of interface as simple as possible, especially when it involves relationships with other interfaces).\n\nNote that as this is renderer called, a malicious renderer could certainly call this more than once (or call it in a case where it\u0027s not a main frame or the receiver delegate isn\u0027t set). I would recommend explicitly checking error conditions and calling mojo::ReportBadMessage() instead of silently ignoring errors.",
+      "parentUuid": "173e9322_1604046f",
       "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -224,6 +260,30 @@
       "side": 1,
       "message": "Done. How can you tell? (say, if I am creating a ReceiverPresentationConnection, that receiver-\u003eGetFrame() returns non-null)",
       "parentUuid": "d08d3d54_0ab86cb9",
+      "range": {
+        "startLine": 158,
+        "startChar": 47,
+        "endLine": 158,
+        "endChar": 59
+      },
+      "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f8f556e_0e2f7c43",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-01T09:39:54Z",
+      "side": 1,
+      "message": "I was probably wrong here, but it\u0027s hard for me to tell for sure. I think I was based on this being created by PresentationReceiver, which always starts out with a non-null frame--but in a context that gets detached, that would no longer be true.",
+      "parentUuid": "d643010c_247fef05",
       "range": {
         "startLine": 158,
         "startChar": 47,
@@ -423,6 +483,24 @@
     },
     {
       "key": {
+        "uuid": "fca06884_b4e29c59",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationController.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-01T09:39:54Z",
+      "side": 1,
+      "message": "I was hoping you would tell me, I\u0027m not familiar with the presentation API spec. \u003d)\n\nA Document is detached when its not displayed in a Frame that\u0027s in the DOM. One way to get this is by removing an iframe from the DOM, but there are other ways. In those cases, GetFrame()-\u003eClient() would be null. It\u0027s possible to get cases where JS still has a reference to the window object of a detached document and can invoke APIs. Thus, if JS can reach this, we need to be robust against that.\n\n(I would prefer that all objects that want to reset interface pointers on context destroyed do it with their own ContextLifecycleObserver, rather than trying to broadcast it from a custom observer callback; this makes the eventual cleanup easier)",
+      "parentUuid": "ffbf1023_6df0f6b7",
+      "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7a12b1b_6a00cfbc",
         "filename": "third_party/WebKit/Source/modules/presentation/PresentationReceiver.cpp",
         "patchSetId": 17
@@ -587,6 +665,24 @@
       "side": 1,
       "message": "Done. This class is still needed so that PresentationDispatcher can signal Blink\u0027s PresentationReceiver on certain events (such as frame finished loading / frame closing). It is expected this class will no longer be needed when PresentationReceiver can listen for these signals itself.",
       "parentUuid": "4bb776aa_5c41bc8a",
+      "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbf43b83_c5a82d1d",
+        "filename": "third_party/WebKit/public/platform/modules/presentation/WebPresentationReceiver.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-01T09:39:54Z",
+      "side": 1,
+      "message": "I don\u0027t quite understand the layering here to be honest, but I guess maybe it made more sense in the past.\n\nTo sum up my concerns about this interface, the layering issue is this:\n- Blink generates events about frame loaded or detached\n- These signals are sent to //content/renderer\n- In response, Blink calls methods on WebPresentationReceiver\n- Only to get plumbed back into Blink\n\nThere\u0027s really no reason this should have round trip like this into //content/renderer. Please add a TODO to remove this interface since all these notifications can already be observed directly from Blink.",
+      "parentUuid": "dd33eba6_4008bc40",
       "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

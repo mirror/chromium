@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68072a5c_b4f8e2fb",
+        "filename": "third_party/WebKit/public/platform/modules/presentation/WebPresentationClient.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-01T09:39:54Z",
+      "side": 1,
+      "message": "This is far too vague: like the mojo class, this really needs to document the expected state transitions for a controller vs a receiver browsing context. Also, some information about how the expected transition looks for 1-UA vs 2-UA would be helpful.\n\n(I\u0027m assuming SetReceiver is only used in 1-UA mode, and I\u0027m still not 100% sure after scrolling back and forth through the spec and doing a bunch of code search tracing)",
+      "range": {
+        "startLine": 29,
+        "startChar": 75,
+        "endLine": 30,
+        "endChar": 8
+      },
+      "revId": "8f9ba56ebd83a4e35fd5ee714a47d3ad450fa35d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1600995_18cda5ba",
+        "filename": "third_party/WebKit/public/platform/modules/presentation/presentation.mojom",
+        "patchSetId": 18
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-01T09:39:54Z",
+      "side": 1,
+      "message": "Please document this interface: it\u0027s implemented in the renderer, right? Why is it needed, and what is it used to communicate? It also has different roles now based on 1-UA or 2-UA, so please mention that as well.",
+      "revId": "8f9ba56ebd83a4e35fd5ee714a47d3ad450fa35d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10b3624f_89475ec3",
+        "filename": "third_party/WebKit/public/platform/modules/presentation/presentation.mojom",
+        "patchSetId": 18
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-01T09:39:54Z",
+      "side": 1,
+      "message": "Please document this interface (something about this is the service provided by the browser process to coordinate a presentation). But it needs something more than this, since there are multiple PresentationServices, and it seems like different PresentationServices actually need to communicate to implement the presentation APIs. Ideally, the comment would discuss 1-UA vs 2-UA, as well as providing a high-level architecture of how the modes are set up: the interface setup is a non-trivial state machine involving SetClient / SetReceiver, and this would help provide insight into the \"why\" of this interface.\n\n(I\u0027m pretty sure I understood this at one point, but it\u0027s been awhile since I\u0027ve reviewed the design, and I basically don\u0027t have any of the context paged in at this point)",
+      "revId": "8f9ba56ebd83a4e35fd5ee714a47d3ad450fa35d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f10838d_f20da3d8",
+        "filename": "third_party/WebKit/public/platform/modules/presentation/presentation.mojom",
+        "patchSetId": 18
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-01T09:39:54Z",
+      "side": 1,
+      "message": "To be honest, I\u0027m still pretty confused by this comment. It explains the \"what\" of the interface, but doesn\u0027t really mention the \"why\".\n\nWhy does a PresentationReceiver in the renderer need to be asynchronously notified of the receiver presentation connection becoming available? What does that mean? Can it happen more than once? Is it because we need to wait for the renderer to be initialized past a certain point before we can configure the receiver browsing context?",
+      "revId": "8f9ba56ebd83a4e35fd5ee714a47d3ad450fa35d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -34,6 +34,24 @@
       "revId": "6c0e76236671f219294dcb5330590de58f79d396",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2f31cbd_fe80169b",
+        "filename": "content/browser/presentation/presentation_service_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-01T09:39:54Z",
+      "side": 0,
+      "message": "Yes, I think you\u0027re right that RenderFrameDeleted is redundant now as well (though I wouldn\u0027t even bother calling Reset()--the class is going away as soon as the dtor finishes, so why bother mutating all that state anyway)",
+      "parentUuid": "37af180f_03554ab5",
+      "revId": "6c0e76236671f219294dcb5330590de58f79d396",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
