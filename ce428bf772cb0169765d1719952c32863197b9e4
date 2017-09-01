@@ -22,6 +22,30 @@
       "revId": "ce428bf772cb0169765d1719952c32863197b9e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97d14781_b973575e",
+        "filename": "content/public/test/mock_render_process_host.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-09-01T18:53:32Z",
+      "side": 1,
+      "message": "Yes I think we can change it to \"continue\" later if required by tests. However current tests don\u0027t expect non-InputMsg_HandleInputEvent messages, and I assume we don\u0027t want to loose constrains at the moment so unexpected messages could be detected.",
+      "parentUuid": "a30c5a48_9bcfc797",
+      "range": {
+        "startLine": 488,
+        "startChar": 6,
+        "endLine": 488,
+        "endChar": 11
+      },
+      "revId": "ce428bf772cb0169765d1719952c32863197b9e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
