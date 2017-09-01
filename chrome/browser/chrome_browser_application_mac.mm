@@ -9,6 +9,7 @@
 #include "base/debug/crash_logging.h"
 #include "base/logging.h"
 #include "base/mac/call_with_eh_frame.h"
+#import "base/message_loop/message_pump_mac.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/sys_string_conversions.h"
 #include "base/trace_event/trace_event.h"
@@ -300,6 +301,11 @@ void CancelTerminate() {
 
 - (BOOL)isCyclingWindows {
   return cyclingWindows_;
+}
+
+- (NSModalResponse)runModalForWindow:(NSWindow*)window {
+  auto scopedModal = base::MessagePumpCFRunLoopBase::ScopedAllowModalModes();
+  return [super runModalForWindow:window];
 }
 
 @end
