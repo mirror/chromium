@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3dcde5ac_4d922dab",
+        "filename": "services/resource_coordinator/coordination_unit/metrics_collector_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-01T04:37:24Z",
+      "side": 1,
+      "message": "For future reference, it\u0027s easier to just mark the entire test fixture as disabled by #defining MAYBE_MetricsCollectorTest and having that resolve to MetricsCollectorTest / DISABLED_MetricsCollectorTest as appropriate.",
+      "revId": "37aa0bf248beedd3c8b3c4f7b17071bdfa6cf2f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
