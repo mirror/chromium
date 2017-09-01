@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e435356e_7c114905",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-09-01T18:15:32Z",
+      "side": 1,
+      "message": "For now, yes, we don\u0027t care about the error. I discussed with rkc@ that SetPowered should never fail, if it ever fails the priority should be to fix the lower level fail instead of handling it at the upper level. So we may handle the error in the future but it\u0027s lower priority for now.",
+      "parentUuid": "dd8278a4_99fbf08d",
+      "revId": "1a002c60638c638d4752b0719ad43235640c2293",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c3912ba_06827d7d",
         "filename": "ash/system/bluetooth/bluetooth_power_controller.h",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "b1cc88ef_a9158dc7",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-09-01T18:15:32Z",
+      "side": 1,
+      "message": "Actually no, we don\u0027t need to copy the pointer around. I was doing it because I thought it would make it clear that the tasks that can be queued to pending_bluetooth_tasks should be tasks that need bluetooth adapter pointer. If you think this does more confusion than clarify I can remove it.",
+      "parentUuid": "2c3912ba_06827d7d",
+      "revId": "1a002c60638c638d4752b0719ad43235640c2293",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e9d60ee_01993c1d",
         "filename": "ash/system/bluetooth/bluetooth_power_controller.h",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-01T15:42:56Z",
       "side": 1,
       "message": "Are all these closures just generic callbacks, or do they do more or less the same thing each time? Is it possible to implement this as a state machine, rather than chaining all the callbacks together?",
+      "revId": "1a002c60638c638d4752b0719ad43235640c2293",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abc83b27_71d2d857",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-09-01T18:15:32Z",
+      "side": 1,
+      "message": "Right now the only callback is just bluetooth power controller scheduling the next task.\n\nImplementing it as a state machine sounds neat. Is there already code in Chrome that does something similar that I can use the pattern from?",
+      "parentUuid": "2e9d60ee_01993c1d",
       "revId": "1a002c60638c638d4752b0719ad43235640c2293",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
