@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8e99e7e9_89d834fb",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 869,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-09-01T18:00:47Z",
+      "side": 1,
+      "message": "Thanks. Changed as advised.",
+      "parentUuid": "a216fa8b_67de1bc5",
+      "revId": "3d0d2e71edac7c9a2fb4faae1e4a9f60e0783c3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "09833cc6_42c2cf1d",
         "filename": "ui/compositor/layer.h",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "3d0d2e71edac7c9a2fb4faae1e4a9f60e0783c3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0394d7a9_64aa953e",
+        "filename": "ui/compositor/layer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-09-01T18:00:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09833cc6_42c2cf1d",
+      "revId": "3d0d2e71edac7c9a2fb4faae1e4a9f60e0783c3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
