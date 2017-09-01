@@ -522,6 +522,25 @@ const GoogleConfigParams kGoogleConfigs[] = {
     {"ad.doubleclick.net", false, false, false},
     {"drive.google.com", false, false, false},
     {"redirector.googlevideo.com", false, false, false},
+
+    // Third-party origins, for prototyping before Network Error Logging is
+    // ready.
+    {"wistia.com", true, true, false},
+    {"wistia.net", true, true, false},
+    {"wistia.land", true, true, false},
+    {"embedwistia-a.akamaihd.net", true, true, false},
+    {"wayfair.co.uk", true, true, false},
+    {"dwellstudio.com", true, true, false},
+    {"csnstores.com", true, true, false},
+    {"jossandmain.com", true, true, false},
+    {"secure.img2.wfcdn.com", true, true, false},
+    {"secure.img3.wfcdn.com", true, true, false},
+    {"birchlane.com", true, true, false},
+    {"allmodern.com", true, true, false},
+    {"perigold.com", true, true, false},
+    {"wayfairsupply.com", true, true, false},
+    {"wayfair.ca", true, true, false},
+    {"wayfair.de", true, true, false},
 };
 
 const char* const kGoogleStandardCollectors[] = {
