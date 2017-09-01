@@ -117,6 +117,30 @@
       "revId": "3e72f902953e2e499fd48df509280efb92dc9749",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf231ccd_d37f4e9b",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-01T10:42:46Z",
+      "side": 1,
+      "message": "Yes, CellWithMatcher is doing a search through the collection.",
+      "parentUuid": "4bf71809_eb0c8331",
+      "range": {
+        "startLine": 232,
+        "startChar": 2,
+        "endLine": 232,
+        "endChar": 10
+      },
+      "revId": "3e72f902953e2e499fd48df509280efb92dc9749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
