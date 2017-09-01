@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b028989d_2464f09a",
+        "filename": "build/config/BUILDCONFIG.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-09-01T03:00:18Z",
+      "side": 1,
+      "message": "The only reason anything should be here is if targets need to remove it in some specific cases. That doesn\u0027t seem to be happening here so it should be a sub-config of \"compiler\" or something.\n\nAlso: just call this \"//build/config/coverage\" (don\u0027t duplicate the target name).",
+      "revId": "348e5cedb5f97e0e04158c81d7246c7744bde69a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
