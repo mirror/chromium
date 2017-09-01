@@ -16,6 +16,24 @@
       "revId": "9529a6ae15007abd5f99de7d32a59eddaf999960",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ecaaec6_7e962ba0",
+        "filename": "cc/resources/resource_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-09-01T01:45:44Z",
+      "side": 0,
+      "message": "Seems I mistakenly understand this MemoryDumpManager. Revert this part.",
+      "parentUuid": "e828f3a8_a795fabe",
+      "revId": "9529a6ae15007abd5f99de7d32a59eddaf999960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

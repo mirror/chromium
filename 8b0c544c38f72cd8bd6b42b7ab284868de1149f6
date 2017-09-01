@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "08446b5b_dfc701fb",
+        "filename": "cc/resources/resource_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-09-01T01:45:44Z",
+      "side": 1,
+      "message": "DisplayResourceProvider::DeleteAndReturnUnusedResourcesToChild will access this.",
+      "parentUuid": "044034ea_7d4819a5",
+      "revId": "8b0c544c38f72cd8bd6b42b7ab284868de1149f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1e8af16c_0bf67fe6",
         "filename": "cc/resources/resource_provider.h",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "8b0c544c38f72cd8bd6b42b7ab284868de1149f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a13fd9e8_e4fadff0",
+        "filename": "cc/resources/resource_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-09-01T01:45:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e8af16c_0bf67fe6",
+      "revId": "8b0c544c38f72cd8bd6b42b7ab284868de1149f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
