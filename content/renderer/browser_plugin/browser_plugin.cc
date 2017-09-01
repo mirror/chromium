@@ -144,9 +144,10 @@ void BrowserPlugin::OnSetChildFrameSurface(
   if (!attached())
     return;
 
-  if (!compositing_helper_) {
-    compositing_helper_ = ChildFrameCompositingHelper::CreateForBrowserPlugin(
-        weak_ptr_factory_.GetWeakPtr());
+  if (!compositing_helper_.get()) {
+    compositing_helper_.reset(
+        ChildFrameCompositingHelper::CreateForBrowserPlugin(
+            weak_ptr_factory_.GetWeakPtr()));
     if (enable_surface_synchronization_) {
       // We wait until there is a single CompositorFrame guaranteed to be
       // available and ready for display in the display compositor before using
@@ -230,9 +231,9 @@ void BrowserPlugin::Detach() {
 
   attached_ = false;
   guest_crashed_ = false;
-  if (compositing_helper_) {
+  if (compositing_helper_.get()) {
     compositing_helper_->OnContainerDestroy();
-    compositing_helper_ = nullptr;
+    compositing_helper_.reset();
   }
 
   BrowserPluginManager::Get()->Send(
@@ -255,9 +256,10 @@ void BrowserPlugin::OnAdvanceFocus(int browser_plugin_instance_id,
 void BrowserPlugin::OnGuestGone(int browser_plugin_instance_id) {
   guest_crashed_ = true;
 
-  if (!compositing_helper_) {
-    compositing_helper_ = ChildFrameCompositingHelper::CreateForBrowserPlugin(
-        weak_ptr_factory_.GetWeakPtr());
+  if (!compositing_helper_.get()) {
+    compositing_helper_.reset(
+        ChildFrameCompositingHelper::CreateForBrowserPlugin(
+            weak_ptr_factory_.GetWeakPtr()));
   }
   compositing_helper_->ChildFrameGone();
 }
@@ -327,7 +329,7 @@ void BrowserPlugin::ViewRectsChanged(const gfx::Rect& view_rect) {
   bool rect_size_changed = view_rect_.size() != view_rect.size();
   if (rect_size_changed || !local_surface_id_.is_valid()) {
     local_surface_id_ = local_surface_id_allocator_.GenerateId();
-    if (compositing_helper_ && enable_surface_synchronization_ &&
+    if (compositing_helper_.get() && enable_surface_synchronization_ &&
         frame_sink_id_.is_valid()) {
       RenderWidget* render_widget =
           RenderFrameImpl::FromWebFrame(Container()->GetDocument().GetFrame())

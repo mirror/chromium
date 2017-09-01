@@ -234,7 +234,8 @@ void RenderFrameProxy::ResendFrameRects() {
 }
 
 void RenderFrameProxy::WillBeginCompositorFrame() {
-  if (compositing_helper_ && compositing_helper_->surface_id().is_valid()) {
+  if (compositing_helper_.get() &&
+      compositing_helper_->surface_id().is_valid()) {
     FrameHostMsg_HittestData_Params params;
     params.surface_id = compositing_helper_->surface_id();
     params.ignored_for_hittest = web_frame_->IsIgnoredForHitTest();
@@ -341,7 +342,7 @@ void RenderFrameProxy::OnDeleteProxy() {
 }
 
 void RenderFrameProxy::OnChildFrameProcessGone() {
-  if (compositing_helper_)
+  if (compositing_helper_.get())
     compositing_helper_->ChildFrameGone();
 }
 
@@ -355,9 +356,9 @@ void RenderFrameProxy::OnSetChildFrameSurface(
   if (!web_frame()->Parent())
     return;
 
-  if (!compositing_helper_) {
-    compositing_helper_ =
-        ChildFrameCompositingHelper::CreateForRenderFrameProxy(this);
+  if (!compositing_helper_.get()) {
+    compositing_helper_.reset(
+        ChildFrameCompositingHelper::CreateForRenderFrameProxy(this));
     if (enable_surface_synchronization_) {
       // We wait until there is a single CompositorFrame guaranteed to be
       // available and ready for display in the display compositor before using
@@ -550,7 +551,7 @@ void RenderFrameProxy::FrameRectsChanged(const blink::WebRect& frame_rect) {
   gfx::Rect rect = frame_rect;
   if (frame_rect_.size() != rect.size() || !local_surface_id_.is_valid()) {
     local_surface_id_ = local_surface_id_allocator_.GenerateId();
-    if (compositing_helper_ && enable_surface_synchronization_ &&
+    if (compositing_helper_.get() && enable_surface_synchronization_ &&
         frame_sink_id_.is_valid()) {
       float device_scale_factor =
           render_widget()->GetOriginalDeviceScaleFactor();
