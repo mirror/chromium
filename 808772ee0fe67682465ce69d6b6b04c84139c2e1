@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "71e79ae8_0eb4aff6",
+        "filename": "third_party/WebKit/LayoutTests/fast/dom/focus-with-scroll-options.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-09-01T18:55:10Z",
+      "side": 1,
+      "message": "This is same as ScrollIntoView test. Remove element after the tests finish is for manual test to know the test is finished.",
+      "parentUuid": "255c5d49_78ef4cb2",
+      "revId": "808772ee0fe67682465ce69d6b6b04c84139c2e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4de71c7e_2660dcc9",
         "filename": "third_party/WebKit/LayoutTests/fast/dom/focus-with-scroll-options.html",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-01T15:40:29Z",
       "side": 1,
       "message": "Shouldn\u0027t we wait for the window.scrollTo(0, 0) to happen?",
+      "revId": "808772ee0fe67682465ce69d6b6b04c84139c2e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d3925ca_3d1bf439",
+        "filename": "third_party/WebKit/LayoutTests/fast/dom/focus-with-scroll-options.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-09-01T18:55:10Z",
+      "side": 1,
+      "message": "scrollTo should be instant.",
+      "parentUuid": "4de71c7e_2660dcc9",
       "revId": "808772ee0fe67682465ce69d6b6b04c84139c2e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c7ce3ebb_f362c947",
+        "filename": "third_party/WebKit/LayoutTests/fast/dom/focus-with-scroll-options.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-09-01T18:55:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11a3a58a_061749eb",
+      "revId": "808772ee0fe67682465ce69d6b6b04c84139c2e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f1849f2_f8ce8f17",
         "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
         "patchSetId": 7
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "69a3436f_38d0a07e",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 2871,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-09-01T18:55:10Z",
+      "side": 1,
+      "message": "FocusOptions.perventScroll has default value to be false. If the feature is not enabled, it will be false. it should be same. \nI changed it to check FocusOptionsEnabled first.",
+      "parentUuid": "7f1849f2_f8ce8f17",
+      "revId": "808772ee0fe67682465ce69d6b6b04c84139c2e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4df18fe_ca58bbc8",
         "filename": "third_party/WebKit/Source/core/editing/FrameSelection.cpp",
         "patchSetId": 7
@@ -84,6 +156,24 @@
       "revId": "808772ee0fe67682465ce69d6b6b04c84139c2e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cfb61c0_3f29c4d0",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 971,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-09-01T18:55:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4df18fe_ca58bbc8",
+      "revId": "808772ee0fe67682465ce69d6b6b04c84139c2e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
