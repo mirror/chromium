@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da291438_a5fc0ce3",
+        "filename": "media/capture/content/capture_resolution_chooser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-09-01T20:59:50Z",
+      "side": 1,
+      "message": "Would frames of different shapes ever result in this not being true?  ala landscape versus portrait, or do we not need to worry about that?",
+      "revId": "39f151faa6e915f7fd936f2c501cc021e11fa472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14d35e24_e26c1495",
+        "filename": "media/capture/content/capture_resolution_chooser.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-09-01T20:59:50Z",
+      "side": 1,
+      "message": "Any reason in particular to swap these, just wondering?",
+      "range": {
+        "startLine": 78,
+        "startChar": 12,
+        "endLine": 78,
+        "endChar": 27
+      },
+      "revId": "39f151faa6e915f7fd936f2c501cc021e11fa472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17672b09_b5b3cf9e",
+        "filename": "media/capture/content/video_capture_oracle.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-09-01T20:59:50Z",
+      "side": 1,
+      "message": "What prevents this being set very low, or is that fine?  I thought I saw that this was supposed to limit the amount of changes that go on so preventing it from being too low seems desirable.",
+      "revId": "39f151faa6e915f7fd936f2c501cc021e11fa472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "709c6fb6_ba1037ba",
+        "filename": "media/capture/content/video_capture_oracle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-09-01T20:59:50Z",
+      "side": 1,
+      "message": "The 1000000 / 5 was a little confusing to me (perhaps because I haven\u0027t dealt with time delta\u0027s much).  Wouldn\u0027t this be more straightforward to hard code the result directly or is there a preference to always base these kind of things off a calculation from seconds?",
+      "revId": "39f151faa6e915f7fd936f2c501cc021e11fa472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1bc1585_1628a5cc",
+        "filename": "media/capture/video_capture_types.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-09-01T20:59:50Z",
+      "side": 1,
+      "message": "Wasn\u0027t this defined somewhere else?  Do we repeat it here to avoid a dependency?",
+      "revId": "39f151faa6e915f7fd936f2c501cc021e11fa472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
