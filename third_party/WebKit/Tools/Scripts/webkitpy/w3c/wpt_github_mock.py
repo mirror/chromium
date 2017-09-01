@@ -10,7 +10,7 @@ class MockWPTGitHub(object):
     # Some unused arguments may be included to match the real class's API.
     # pylint: disable=unused-argument
 
-    def __init__(self, pull_requests, unsuccessful_merge_index=-1, create_pr_fail_index=-1):
+    def __init__(self, pull_requests, unsuccessful_merge_index=-1, create_pr_fail_index=-1, merged_index=-1):
         self.pull_requests = pull_requests
         self.calls = []
         self.pull_requests_created = []
@@ -18,10 +18,17 @@ class MockWPTGitHub(object):
         self.unsuccessful_merge_index = unsuccessful_merge_index
         self.create_pr_index = 0
         self.create_pr_fail_index = create_pr_fail_index
+        self.merged_index = merged_index
 
     def all_pull_requests(self, limit=30):
         self.calls.append('all_pull_requests')
         return self.pull_requests
+
+    def is_pr_merged(self, number):
+        for index, pr in enumerate(self.pull_requests):
+            if pr.number == number:
+                return index == self.merged_index
+        return False
 
     def merge_pull_request(self, number):
         self.calls.append('merge_pull_request')

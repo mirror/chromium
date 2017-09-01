@@ -91,6 +91,14 @@ class WPTGitHubTest(unittest.TestCase):
         with self.assertRaises(GitHubError):
             self.wpt_github.all_pull_requests()
 
+    def test_is_pr_merged(self):
+        self.wpt_github.host.web.responses = [
+            {'status_code': 204},
+            {'status_code': 404},
+        ]
+        self.assertTrue(self.wpt_github.is_pr_merged(1234))
+        self.assertFalse(self.wpt_github.is_pr_merged(5678))
+
     def test_merge_pull_request_throws_merge_error_on_405(self):
         self.wpt_github.host.web.responses = [
             {'status_code': 200},
