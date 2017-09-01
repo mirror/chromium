@@ -127,6 +127,24 @@
       "revId": "6cb65393de59b5423c0515544a2d9f4cb1f75936",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b314cb24_f1ec4ade",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 810,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-09-01T20:01:55Z",
+      "side": 1,
+      "message": "I should probably rephrase my question. I guess I don\u0027t quite understand why we don\u0027t need to check activitySupportsAutopresentation(activity) here like we used to do. Is it because of the new code path make this checking not necessary? Since VrShellDelegate is quite complex and delicate, it would be good to keep it the old way unless we absolutely know what we are changing. So just want to confirm with you that this is intended.",
+      "parentUuid": "ed757761_4ec102f9",
+      "revId": "6cb65393de59b5423c0515544a2d9f4cb1f75936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
