@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0f31de1f_1adadc37",
+        "filename": "chrome/browser/resources/pdf/pdf.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-01T02:18:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5a76cbd_292f9413",
+      "revId": "649b5a72d23d119dfae0d5b1d56e2d92fb3984a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3733c291_e9fb7f4b",
         "filename": "chrome/browser/resources/pdf/viewport.js",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "649b5a72d23d119dfae0d5b1d56e2d92fb3984a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39f10c42_2cd98c52",
+        "filename": "chrome/browser/resources/pdf/viewport.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-01T02:18:06Z",
+      "side": 1,
+      "message": "Done - requires some extra plumbing. Let me know if you think it is better this way.",
+      "parentUuid": "3733c291_e9fb7f4b",
+      "revId": "649b5a72d23d119dfae0d5b1d56e2d92fb3984a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e07fca05_d264bd31",
+        "filename": "chrome/browser/resources/pdf/viewport.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-01T02:18:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64767f8d_b0fca583",
+      "revId": "649b5a72d23d119dfae0d5b1d56e2d92fb3984a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dbf48366_439dc728",
         "filename": "chrome/browser/resources/pdf/viewport.js",
         "patchSetId": 5
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-31T22:16:07Z",
       "side": 1,
       "message": "Should this default to true like fitToWidth?",
+      "revId": "649b5a72d23d119dfae0d5b1d56e2d92fb3984a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d4f69ec_c05ab134",
+        "filename": "chrome/browser/resources/pdf/viewport.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-01T02:18:06Z",
+      "side": 1,
+      "message": "No, because this can get called due to automatic resizing. fitToWidth is only ever called due to the button being clicked.",
+      "parentUuid": "dbf48366_439dc728",
       "revId": "649b5a72d23d119dfae0d5b1d56e2d92fb3984a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "8b21e85f_c6b5fc00",
+        "filename": "pdf/out_of_process_instance.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-01T02:18:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06456814_172f627f",
+      "revId": "649b5a72d23d119dfae0d5b1d56e2d92fb3984a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "750e1069_d3ab9fdf",
         "filename": "pdf/out_of_process_instance.cc",
         "patchSetId": 5
@@ -101,6 +191,24 @@
       "revId": "649b5a72d23d119dfae0d5b1d56e2d92fb3984a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4bbf1d3_5de77422",
+        "filename": "pdf/out_of_process_instance.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-01T02:18:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "750e1069_d3ab9fdf",
+      "revId": "649b5a72d23d119dfae0d5b1d56e2d92fb3984a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "11d2856f_02ca27c2",
+        "filename": "pdf/out_of_process_instance.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1832,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-01T02:18:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2cc91604_ee8ce80c",
+      "revId": "649b5a72d23d119dfae0d5b1d56e2d92fb3984a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a620b752_6583234c",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 5
@@ -135,6 +261,24 @@
       "revId": "649b5a72d23d119dfae0d5b1d56e2d92fb3984a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f74d8815_11b0b0e2",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 31161,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-01T02:18:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a620b752_6583234c",
+      "revId": "649b5a72d23d119dfae0d5b1d56e2d92fb3984a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
