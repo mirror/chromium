@@ -28,7 +28,6 @@
 
 #if defined(OS_WIN)
 #include "chrome/common/extensions/wifi_credentials_getter.mojom.h"
-#include "chrome/utility/media_galleries/itunes_pref_parser_win.h"
 #include "components/wifi/wifi_service.h"
 #endif  // defined(OS_WIN)
 
@@ -203,11 +202,6 @@ void ExtensionsHandler::ExposeInterfacesToBrowser(
 bool ExtensionsHandler::OnMessageReceived(const IPC::Message& message) {
   bool handled = true;
   IPC_BEGIN_MESSAGE_MAP(ExtensionsHandler, message)
-#if defined(OS_WIN)
-    IPC_MESSAGE_HANDLER(ChromeUtilityMsg_ParseITunesPrefXml,
-                        OnParseITunesPrefXml)
-#endif  // defined(OS_WIN)
-
 #if defined(OS_WIN) || defined(OS_MACOSX)
     IPC_MESSAGE_HANDLER(ChromeUtilityMsg_ParseITunesLibraryXmlFile,
                         OnParseITunesLibraryXmlFile)
@@ -222,17 +216,6 @@ bool ExtensionsHandler::OnMessageReceived(const IPC::Message& message) {
 
   return handled;
 }
-
-#if defined(OS_WIN)
-void ExtensionsHandler::OnParseITunesPrefXml(
-    const std::string& itunes_xml_data) {
-  base::FilePath library_path(
-      itunes::FindLibraryLocationInPrefXml(itunes_xml_data));
-  content::UtilityThread::Get()->Send(
-      new ChromeUtilityHostMsg_GotITunesDirectory(library_path));
-  content::UtilityThread::Get()->ReleaseProcess();
-}
-#endif  // defined(OS_WIN)
 
 #if defined(OS_WIN) || defined(OS_MACOSX)
 void ExtensionsHandler::OnParseITunesLibraryXmlFile(
