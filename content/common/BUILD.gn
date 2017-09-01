@@ -327,6 +327,8 @@ source_set("common") {
     "service_worker/service_worker_status_code.h",
     "service_worker/service_worker_types.cc",
     "service_worker/service_worker_types.h",
+    "service_worker/service_worker_url_loader_helper.cc",
+    "service_worker/service_worker_url_loader_helper.h",
     "service_worker/service_worker_utils.cc",
     "service_worker/service_worker_utils.h",
     "site_isolation_policy.cc",
