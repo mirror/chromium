@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbe055ff_82c241df",
+        "filename": "content/renderer/media_recorder/vpx_encoder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-09-01T18:18:48Z",
+      "side": 1,
+      "message": "Instead of changing the code, perhaps we should change the test,\nwhere I believe the problem is in accessing NumFramesInEncode() \nat line [1].\n\nWe could replace observing VideoFrame\u0027s dtor [2] with observing\nOnEncodedVideo() instead (a la [3]), and then test that \n|video_frame| [4] has been released. emircan@ WDYT?\n\n\n\n[1] https://cs.chromium.org/chromium/src/content/renderer/media_recorder/video_track_recorder_unittest.cc?q\u003dVideoTrackRecorderTest\u0026sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d346\n[2] https://cs.chromium.org/chromium/src/content/renderer/media_recorder/video_track_recorder_unittest.cc?q\u003dVideoTrackRecorderTest\u0026sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d341\n[3] https://cs.chromium.org/chromium/src/content/renderer/media_recorder/video_track_recorder_unittest.cc?q\u003dVideoTrackRecorderTest\u0026sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d324\n[4] https://cs.chromium.org/chromium/src/content/renderer/media_recorder/video_track_recorder_unittest.cc?q\u003dVideoTrackRecorderTest\u0026sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d337",
+      "range": {
+        "startLine": 135,
+        "startChar": 2,
+        "endLine": 135,
+        "endChar": 7
+      },
+      "revId": "4ce6168adf814089564bd846f3eb58dea2f334ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
