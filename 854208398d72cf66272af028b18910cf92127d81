@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47780eda_93aefa80",
+        "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000313
+      },
+      "writtenOn": "2017-09-01T04:37:10Z",
+      "side": 1,
+      "message": "nit: can you fix this sentence?",
+      "revId": "854208398d72cf66272af028b18910cf92127d81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e86693e_cbc7fb5b",
+        "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000313
+      },
+      "writtenOn": "2017-09-01T04:37:10Z",
+      "side": 1,
+      "message": "\"just associate\" ?",
+      "revId": "854208398d72cf66272af028b18910cf92127d81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
