@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "bac0c4aa_380882a2",
+        "filename": "components/data_reduction_proxy/content/browser/content_lofi_decider.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-01T04:07:22Z",
+      "side": 1,
+      "message": "We might be able to reduce what\u0027s in it (I think lite pages might be able to be removed), but the lofis are partially implemented in blink, so we\u0027d need a way to communicate to blink and make sure child frames are consistent with the previews type. I\u0027m not sure if there is a good alternative.",
+      "parentUuid": "65441582_4d5387cd",
+      "revId": "338ec7ae51257b627aaccef816c5c03aef1bd0b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60a69d4c_d92b36ce",
         "filename": "third_party/WebKit/public/platform/WebURLRequest.h",
         "patchSetId": 10
