@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6d4e76ad_3321c2e7",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-01T18:04:54Z",
+      "side": 1,
+      "message": "Yes. All static data members need storage, no exception for constexpr http://en.cppreference.com/w/cpp/language/static#Static_data_members. I get a linker error if I remove this.",
+      "parentUuid": "c67bf586_6d4270de",
+      "revId": "17e5d61852e01dd8c086de0e206223cd28997259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff689da2_5f7d3427",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-01T15:10:53Z",
       "side": 1,
       "message": "no new line",
+      "revId": "17e5d61852e01dd8c086de0e206223cd28997259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5c89fc2_ef6e7fe4",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-01T18:04:54Z",
+      "side": 1,
+      "message": "MayBlockScopeEntered/WillBlockScopeEntered are not part of the BlockingObserver interface.\n\nI don\u0027t think there would be much value in moving the switch/case from this file to scoped_blocking_call.cc and replacing BlockingScopeEntered -\u003e MayBlockScopeEntered+WillBlockScopeEntered in the BlockingObserver interface. It\u0027s an implementation detail that SchedulerWorkerPoolImpl behaves differently for different BlockingTypes (BlockingScopeExited doesn\u0027t need the distinction).",
+      "parentUuid": "ff689da2_5f7d3427",
       "revId": "17e5d61852e01dd8c086de0e206223cd28997259",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "9f4890c0_dee9fd25",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-01T18:04:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c81419a_8bbc43c2",
+      "range": {
+        "startLine": 127,
+        "startChar": 14,
+        "endLine": 127,
+        "endChar": 30
+      },
+      "revId": "17e5d61852e01dd8c086de0e206223cd28997259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed97c51d_c834dbd0",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 6
@@ -73,6 +133,24 @@
       "revId": "17e5d61852e01dd8c086de0e206223cd28997259",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97d7ff58_653d5c2d",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-01T18:04:54Z",
+      "side": 1,
+      "message": "Added:\n  // This value is smaller than |kBlockedWorkersPollPeriod|\n  // because we hope than when multiple workers block around the same time, a\n  // single AdjustWorkerCapacity() call will perform all the necessary capacity\n  // adjustments.",
+      "parentUuid": "ed97c51d_c834dbd0",
+      "revId": "17e5d61852e01dd8c086de0e206223cd28997259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "8728d339_defd7ea7",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-01T18:04:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8c49ca1_f4196403",
+      "range": {
+        "startLine": 778,
+        "startChar": 9,
+        "endLine": 778,
+        "endChar": 74
+      },
+      "revId": "17e5d61852e01dd8c086de0e206223cd28997259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "caee863e_9f44f828",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
         "patchSetId": 6
@@ -113,6 +215,24 @@
       "revId": "17e5d61852e01dd8c086de0e206223cd28997259",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f6210b0_d4484085",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-01T18:04:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "caee863e_9f44f828",
+      "revId": "17e5d61852e01dd8c086de0e206223cd28997259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "c7cf191c_f894a80e",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-01T18:04:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5eecb1e6_90b3c6ab",
+      "range": {
+        "startLine": 255,
+        "startChar": 38,
+        "endLine": 255,
+        "endChar": 39
+      },
+      "revId": "17e5d61852e01dd8c086de0e206223cd28997259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "945e275c_40495db5",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
         "patchSetId": 6
@@ -150,6 +294,24 @@
       "writtenOn": "2017-09-01T15:10:53Z",
       "side": 1,
       "message": "I\u0027d assume you depend on sequencing here? Given this is already a sequence might as well store a SequencedTaskRunner?",
+      "revId": "17e5d61852e01dd8c086de0e206223cd28997259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66bf3d4f_011dce4f",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-01T18:04:54Z",
+      "side": 1,
+      "message": "|polling_worker_capacity_| guarantees that we only post one task at a time to this TaskRunner, so the code doesn\u0027t depend on sequencing. I think it\u0027s best to to have stronger requirements than what is really needed.",
+      "parentUuid": "945e275c_40495db5",
       "revId": "17e5d61852e01dd8c086de0e206223cd28997259",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -179,6 +341,30 @@
     },
     {
       "key": {
+        "uuid": "e963b39e_182306dc",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-01T18:04:54Z",
+      "side": 1,
+      "message": "git cl format removes it when I try to add it.",
+      "parentUuid": "92e956e3_0a83be52",
+      "range": {
+        "startLine": 65,
+        "startChar": 53,
+        "endLine": 65,
+        "endChar": 54
+      },
+      "revId": "17e5d61852e01dd8c086de0e206223cd28997259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b470437_778ace7b",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
         "patchSetId": 6
@@ -193,6 +379,24 @@
       "revId": "17e5d61852e01dd8c086de0e206223cd28997259",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72ca4aa6_95ec1eb5",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-01T18:04:54Z",
+      "side": 1,
+      "message": "Yes. Removed this function.",
+      "parentUuid": "1b470437_778ace7b",
+      "revId": "17e5d61852e01dd8c086de0e206223cd28997259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -213,6 +417,24 @@
     },
     {
       "key": {
+        "uuid": "e547b983_3dd942bf",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-01T18:04:54Z",
+      "side": 1,
+      "message": "n/a",
+      "parentUuid": "059f20d7_b2fae159",
+      "revId": "17e5d61852e01dd8c086de0e206223cd28997259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c25b324f_a8e10459",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
         "patchSetId": 6
@@ -224,6 +446,24 @@
       "writtenOn": "2017-09-01T15:10:53Z",
       "side": 1,
       "message": "Still need this?",
+      "revId": "17e5d61852e01dd8c086de0e206223cd28997259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7902dee1_e4d1b6bd",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 868,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-01T18:04:54Z",
+      "side": 1,
+      "message": "Both in the MAY_BLOCK and WILL_BLOCK cases we may end up with more workers than needed. This is because we don\u0027t keep track of whether a worker was woken up for each sequence in the PQ.\n\nMAY_BLOCK\n\nInitial capacity \u003d 4\nInitial num workers \u003d 1\n\nT1 Post blocking task. PQ size \u003d 1. Capacity \u003d 4. Num workers \u003d 2*.\nT1 Post blocking task. PQ size \u003d 2. Capacity \u003d 4. Num workers \u003d 3*.\nT2 Run MAY_BLOCK. PQ size \u003d 1. Capacity \u003d 4. Num workers \u003d 3.\nT3 Run MAY_BLOCK. PQ size \u003d 0. Capacity \u003d 4. Num workers \u003d 3.\nT1 Post blocking task. PQ size \u003d 1. Capacity \u003d 4. Num workers \u003d 4*.\nT1 Post blocking task. PQ size \u003d 2. Capacity \u003d 4. Num workers \u003d 4.\nST AdjustWorkerCapacity\n  New capacity \u003d 6 (because of the 2 MAY_BLOCK calls).\n  New num workers \u003d 7 (1 per sequence in the PQ + 1 idle).\n!! We have 7 workers, but we only needed 5 (1 per task + 1 idle).\n\nWILL_BLOCK\n\nT1 Post blocking task. PQ size \u003d 1. Capacity \u003d 4. Num workers \u003d 2*.\nT1 Post blocking task. PQ size \u003d 2. Capacity \u003d 4. Num workers \u003d 3*.\nT1 Post blocking task. PQ size \u003d 3. Capacity \u003d 4. Num workers \u003d 4*.\nT1 Post blocking task. PQ size \u003d 4. Capacity \u003d 4. Num workers \u003d 4.\nT2 Run WILL_BLOCK. PQ size \u003d 3. Capacity \u003d 5. Num workers \u003d 5*.\nT3 Run WILL_BLOCK. PQ size \u003d 2. Capacity \u003d 6. Num workers \u003d 6*.\n!! We have 7 workers, but we only needed 5 (1 per task + 1 idle).\n\n* wake up a worker + create an idle one.\n** PQ is non-empty + capacity not reached \u003d create a worker.",
+      "parentUuid": "c25b324f_a8e10459",
       "revId": "17e5d61852e01dd8c086de0e206223cd28997259",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
