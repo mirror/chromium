@@ -102,9 +102,6 @@ using chrome_test_util::SecondarySignInButton;
 
 + (void)assertSignedOut {
   [[GREYUIThreadExecutor sharedInstance] drainUntilIdle];
-
-  ios::ChromeBrowserState* browser_state =
-      chrome_test_util::GetOriginalBrowserState();
   GREYAssertFalse(ios::SigninManagerFactory::GetForBrowserState(browser_state)
                       ->IsAuthenticated(),
                   @"Unexpected signed in user");

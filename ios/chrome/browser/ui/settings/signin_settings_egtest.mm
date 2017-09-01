@@ -95,7 +95,7 @@ id<GREYMatcher> NavigationBarDoneButton() {
       assertWithMatcher:grey_interactable()];
 }
 
-// Tests that the sign-in promo should not be shown after been shown 5 times.
+// Tests that the sign-in promo should not be shown after been shown 19 times.
 - (void)testAutomaticSigninPromoDismiss {
   const int displayedCount = 4;
   ios::ChromeBrowserState* browser_state =
