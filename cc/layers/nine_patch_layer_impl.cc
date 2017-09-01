@@ -55,7 +55,10 @@ void NinePatchLayerImpl::AppendQuads(
   quad_generator_.CheckGeometryLimitations();
   viz::SharedQuadState* shared_quad_state =
       render_pass->CreateAndAppendSharedQuadState();
-  PopulateSharedQuadState(shared_quad_state);
+  bool is_contents_opaque =
+      contents_opaque() ||
+      layer_tree_impl()->IsUIResourceOpaque(ui_resource_id_);
+  PopulateSharedQuadState(shared_quad_state, is_contents_opaque);
 
   AppendDebugBorderQuad(render_pass, bounds(), shared_quad_state,
                         append_quads_data);
