@@ -80,9 +80,6 @@ class OmniboxResultView : public views::View,
   // class, this is the height of one line of text.
   virtual int GetTextHeight() const;
 
-  // Returns the display width required for the match contents.
-  int GetMatchContentsWidth() const;
-
   // Stores the image in a local data member and schedules a repaint.
   void SetAnswerImage(const gfx::ImageSkia& image);
 
