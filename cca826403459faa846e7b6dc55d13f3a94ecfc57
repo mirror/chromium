@@ -34,6 +34,24 @@
       "revId": "cca826403459faa846e7b6dc55d13f3a94ecfc57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b91333c0_699a14b6",
+        "filename": "chrome/browser/resources/md_extensions/sidebar.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-01T18:12:58Z",
+      "side": 1,
+      "message": "Uploaded a new patch as discussed offline, PTAL.",
+      "parentUuid": "9d2a3246_c8382980",
+      "revId": "cca826403459faa846e7b6dc55d13f3a94ecfc57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
