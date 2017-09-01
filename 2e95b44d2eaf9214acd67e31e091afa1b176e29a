@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed5ab633_c6821882",
+        "filename": "sql/connection.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-01T19:36:56Z",
+      "side": 1,
+      "message": "codesearch says this method is not called anywhere. I imagine that\u0027s why nobody noticed the typo before. How about deleting it instead of fixing the name?",
+      "revId": "2e95b44d2eaf9214acd67e31e091afa1b176e29a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "329f9d3b_dac13a15",
+        "filename": "sql/meta_table.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-01T19:36:56Z",
+      "side": 1,
+      "message": "Nit: metadata is a word",
+      "revId": "2e95b44d2eaf9214acd67e31e091afa1b176e29a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf41abc1_c9a2da2d",
+        "filename": "sql/meta_table.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-01T19:36:56Z",
+      "side": 1,
+      "message": "The metadata table also records a bit of history about past attempts of mmap()ing the database, so we don\u0027t keep trying to mmap() broken databases.",
+      "revId": "2e95b44d2eaf9214acd67e31e091afa1b176e29a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00e58a0e_b83baa63",
+        "filename": "sql/meta_table.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-01T19:36:56Z",
+      "side": 1,
+      "message": "nit: extra space before must",
+      "revId": "2e95b44d2eaf9214acd67e31e091afa1b176e29a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "765a96a8_743f1f47",
+        "filename": "sql/meta_table.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-01T19:36:56Z",
+      "side": 1,
+      "message": "nit: extra space before new",
+      "revId": "2e95b44d2eaf9214acd67e31e091afa1b176e29a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
