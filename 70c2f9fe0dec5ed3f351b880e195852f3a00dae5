@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6a61ff0_dd4b9de0",
+        "filename": "net/http/http_network_transaction_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 6296,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-09-01T15:30:14Z",
+      "side": 1,
+      "message": "|request| has to outlive |trans|, otherwise ~HttpNetworkTransaction() crashes on ASAN builds.  (Local variables are destructed in reverse construction order.)",
+      "range": {
+        "startLine": 6296,
+        "startChar": 18,
+        "endLine": 6296,
+        "endChar": 25
+      },
+      "revId": "70c2f9fe0dec5ed3f351b880e195852f3a00dae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6340f6c2_df8465d5",
+        "filename": "net/http/http_network_transaction_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 6310,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-09-01T15:30:14Z",
+      "side": 1,
+      "message": "HTTP/2 mandates header keys to be all lowercase.",
+      "range": {
+        "startLine": 6310,
+        "startChar": 21,
+        "endLine": 6310,
+        "endChar": 37
+      },
+      "revId": "70c2f9fe0dec5ed3f351b880e195852f3a00dae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "961c4fe3_784488da",
+        "filename": "net/http/http_network_transaction_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 6377,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-09-01T15:30:14Z",
+      "side": 1,
+      "message": "SequencedSocketData guarantees order between reads and writes: this was missing previously, making this unittest totally bogus.",
+      "range": {
+        "startLine": 6377,
+        "startChar": 2,
+        "endLine": 6377,
+        "endChar": 21
+      },
+      "revId": "70c2f9fe0dec5ed3f351b880e195852f3a00dae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
