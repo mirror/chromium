@@ -89,13 +89,14 @@ void PaintedScrollbarLayerImpl::AppendQuads(
   bool premultipled_alpha = true;
   bool flipped = false;
   bool nearest_neighbor = false;
+  bool contents_opaque_thumb = false;
   gfx::PointF uv_top_left(0.f, 0.f);
   gfx::PointF uv_bottom_right(1.f, 1.f);
 
   viz::SharedQuadState* shared_quad_state =
       render_pass->CreateAndAppendSharedQuadState();
   PopulateScaledSharedQuadState(shared_quad_state, internal_contents_scale_,
-                                internal_contents_scale_);
+                                internal_contents_scale_, contents_opaque());
 
   AppendDebugBorderQuad(render_pass, internal_content_bounds_,
                         shared_quad_state, append_quads_data);
