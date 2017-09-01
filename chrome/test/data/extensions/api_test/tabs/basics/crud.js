@@ -7,9 +7,11 @@ var firstWindowId;
 chrome.test.runTests([
   function getSelected() {
     chrome.tabs.getSelected(null, pass(function(tab) {
-      assertEq(location.href, tab.url);
-      assertEq(location.href, tab.title);
+      // Do this first, or a failure in one of the below assertions will make
+      // all other tests fail too.
       firstWindowId = tab.windowId;
+      assertEq(location.href, tab.url);
+      assertEq(document.title, tab.title);
     }));
   },
 

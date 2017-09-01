@@ -18,6 +18,7 @@
 #include "base/macros.h"
 #include "base/observer_list.h"
 #include "base/process/process.h"
+#include "base/timer/timer.h"
 #include "base/values.h"
 #include "build/build_config.h"
 #include "content/browser/frame_host/frame_tree.h"
@@ -1263,6 +1264,7 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
                                         int history_length);
 
   // Helper functions for sending notifications.
+  void NotifyEffectiveTitleChanged();
   void NotifyViewSwapped(RenderViewHost* old_host, RenderViewHost* new_host);
   void NotifyFrameSwapped(RenderFrameHost* old_host, RenderFrameHost* new_host);
   void NotifyDisconnected();
@@ -1393,6 +1395,10 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
   // "waiting" or "loading."
   bool waiting_for_response_;
 
+  // This timer is started when the page is first marked as "waiting" and lasts
+  // 4 seconds. If it's still running, the "waiting" state was entered recently.
+  base::OneShotTimer initial_load_timer_;
+
   // The current load state and the URL associated with it.
   net::LoadStateWithParam load_state_;
   base::string16 load_state_host_;
@@ -1416,8 +1422,11 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
 
   // Data for current page -----------------------------------------------------
 
-  // When a title cannot be taken from any entry, this title will be used.
-  base::string16 page_title_when_no_navigation_entry_;
+  // Tracks the last known page title. During a page load when the title has not
+  // yet been loaded, this will still reflect the previous page's title, if any.
+  // When a title cannot be taken from any entry or a new page is not done
+  // loading, this title will be used.
+  mutable base::string16 last_page_title_;
 
   // When a navigation occurs, we record its contents MIME type. It can be
   // used to check whether we can do something for some special contents.

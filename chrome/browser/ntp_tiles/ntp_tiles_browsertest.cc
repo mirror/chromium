@@ -34,6 +34,21 @@ std::string PrintTile(const std::string& title,
          testing::PrintToString(static_cast<int>(source));
 }
 
+MATCHER_P2(UrlContainsTitle,
+           url,
+           source,
+           PrintTile("derived from URL", url, source)) {
+  return arg.url == GURL(url) &&
+         base::UTF8ToUTF16(arg.url.spec()).find(arg.title) != std::string::npos;
+}
+
+MATCHER_P2(MatchesUrlAndSource,
+           url,
+           source,
+           PrintTile("any title", url, source)) {
+  return arg.url == GURL(url) && arg.source == source;
+}
+
 MATCHER_P3(MatchesTile, title, url, source, PrintTile(title, url, source)) {
   return arg.title == base::ASCIIToUTF16(title) && arg.url == GURL(url) &&
          arg.source == source;
@@ -89,6 +104,26 @@ class NTPTilesTest : public InProcessBrowserTest {
   std::unique_ptr<ntp_tiles::MostVisitedSites> most_visited_sites_;
 };
 
+// Tests that the title isn't empty even if the site doesn't set one.
+IN_PROC_BROWSER_TEST_F(NTPTilesTest, NonEmptyTitle) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+  const GURL page_url = embedded_test_server()->GetURL("/defaultresponse");
+
+  ui_test_utils::NavigateToURLWithDisposition(
+      browser(), page_url, WindowOpenDisposition::CURRENT_TAB,
+      ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
+
+  MostVisitedSitesWaiter waiter;
+
+  // This call will call SyncWithHistory(), which means the new URL will be in
+  // the next set of tiles that the waiter retrieves.
+  most_visited_sites_->SetMostVisitedURLsObserver(&waiter, /*num_sites=*/8);
+
+  NTPTilesVector tiles = waiter.WaitForTiles();
+  EXPECT_THAT(tiles, Contains(UrlContainsTitle(page_url.spec().c_str(),
+                                               TileSource::TOP_SITES)));
+}
+
 // Tests that after navigating to a URL, ntp tiles will include the URL.
 // Flaky on Windows bots (http://crbug.com/746088).
 #if defined(OS_WIN)
@@ -119,7 +154,7 @@ IN_PROC_BROWSER_TEST_F(NTPTilesTest, LoadURL) {
 // include the correct URL.
 IN_PROC_BROWSER_TEST_F(NTPTilesTest, ServerRedirect) {
   ASSERT_TRUE(embedded_test_server()->Start());
-  GURL final_url = embedded_test_server()->GetURL("/defaultresponse");
+  GURL final_url = embedded_test_server()->GetURL("/simple.html");
   GURL first_url =
       embedded_test_server()->GetURL("/server-redirect?" + final_url.spec());
 
@@ -131,12 +166,13 @@ IN_PROC_BROWSER_TEST_F(NTPTilesTest, ServerRedirect) {
 
   NTPTilesVector tiles = waiter.WaitForTiles();
 
-  // TopSites uses the start of the redirect chain, so verify the first URL
-  // is listed, but not the final URL.
-  EXPECT_THAT(tiles, Contains(MatchesTile("", first_url.spec().c_str(),
+  // TopSites uses the URL from the start of the redirect chain (title from the
+  // end), so verify the first URL is listed, but not the final URL. See related
+  // crbug.com/567132
+  EXPECT_THAT(tiles, Contains(MatchesTile("OK", first_url.spec().c_str(),
                                           TileSource::TOP_SITES)));
-  EXPECT_THAT(tiles, Not(Contains(MatchesTile("", final_url.spec().c_str(),
-                                              TileSource::TOP_SITES))));
+  EXPECT_THAT(tiles, Not(Contains(MatchesUrlAndSource(final_url.spec().c_str(),
+                                                      TileSource::TOP_SITES))));
 }
 
 // Tests usage of MostVisitedSites mimicking Chrome Home, where an observer is
