@@ -80,24 +80,21 @@ class MockMediaStreamRequester : public MediaStreamRequester {
                void(int render_frame_id,
                     int page_request_id,
                     const std::string& label,
-                    const StreamDeviceInfoArray& audio_devices,
-                    const StreamDeviceInfoArray& video_devices));
+                    const MediaStreamDevices& audio_devices,
+                    const MediaStreamDevices& video_devices));
   MOCK_METHOD3(StreamGenerationFailed,
       void(int render_frame_id,
            int page_request_id,
            content::MediaStreamRequestResult result));
-  MOCK_METHOD3(DeviceStopped, void(int render_frame_id,
-                                   const std::string& label,
-                                   const StreamDeviceInfo& device));
-  MOCK_METHOD4(DevicesEnumerated, void(int render_frame_id,
-                                       int page_request_id,
-                                       const std::string& label,
-                                       const StreamDeviceInfoArray& devices));
-  MOCK_METHOD4(DeviceOpened, void(int render_frame_id,
-                                  int page_request_id,
-                                  const std::string& label,
-                                  const StreamDeviceInfo& device_info));
-  MOCK_METHOD1(DevicesChanged, void(MediaStreamType type));
+  MOCK_METHOD3(DeviceStopped,
+               void(int render_frame_id,
+                    const std::string& label,
+                    const MediaStreamDevice& device));
+  MOCK_METHOD4(DeviceOpened,
+               void(int render_frame_id,
+                    int page_request_id,
+                    const std::string& label,
+                    const MediaStreamDevice& device));
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MockMediaStreamRequester);
