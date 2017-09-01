@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41df3f38_dbb95a26",
+        "filename": "third_party/WebKit/LayoutTests/device_orientation/motion/add-during-dispatch.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-01T18:33:14Z",
+      "side": 1,
+      "message": "Wrapping this listener in test.step_func() is difficult because you need to be able to unregister the listener. Still, if you are calling assert methods the test framework needs to know about it. You can do:\n\ntest.step(() \u003d\u003e {\n  checkMotion(event, motionData);\n});",
+      "range": {
+        "startLine": 19,
+        "startChar": 4,
+        "endLine": 19,
+        "endChar": 35
+      },
+      "revId": "b6970d200a42d76a91d6c3aaa3e3423f0d9e6d5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee9cf75c_72a19bf3",
+        "filename": "third_party/WebKit/LayoutTests/device_orientation/motion/fire-last-event.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-01T18:33:14Z",
+      "side": 1,
+      "message": "This needs to be inside a test step.",
+      "range": {
+        "startLine": 22,
+        "startChar": 4,
+        "endLine": 22,
+        "endChar": 36
+      },
+      "revId": "b6970d200a42d76a91d6c3aaa3e3423f0d9e6d5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c96cf4e_839e344b",
+        "filename": "third_party/WebKit/LayoutTests/device_orientation/motion/optional-event-properties.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-01T18:33:14Z",
+      "side": 1,
+      "message": "assert_unreached",
+      "range": {
+        "startLine": 46,
+        "startChar": 4,
+        "endLine": 46,
+        "endChar": 15
+      },
+      "revId": "b6970d200a42d76a91d6c3aaa3e3423f0d9e6d5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7da54ac8_2b54481c",
+        "filename": "third_party/WebKit/LayoutTests/device_orientation/motion/optional-event-properties.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-01T18:33:14Z",
+      "side": 1,
+      "message": "assert_unreached",
+      "range": {
+        "startLine": 59,
+        "startChar": 4,
+        "endLine": 59,
+        "endChar": 15
+      },
+      "revId": "b6970d200a42d76a91d6c3aaa3e3423f0d9e6d5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67df34f6_291e58b2",
+        "filename": "third_party/WebKit/LayoutTests/device_orientation/motion/optional-event-properties.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-01T18:33:14Z",
+      "side": 1,
+      "message": "assert_unreached",
+      "range": {
+        "startLine": 72,
+        "startChar": 4,
+        "endLine": 72,
+        "endChar": 15
+      },
+      "revId": "b6970d200a42d76a91d6c3aaa3e3423f0d9e6d5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c65696de_b496ffdb",
+        "filename": "third_party/WebKit/LayoutTests/device_orientation/motion/optional-event-properties.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-01T18:33:14Z",
+      "side": 1,
+      "message": "assert_unreached",
+      "range": {
+        "startLine": 85,
+        "startChar": 4,
+        "endLine": 85,
+        "endChar": 15
+      },
+      "revId": "b6970d200a42d76a91d6c3aaa3e3423f0d9e6d5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d1e9107_ceedb553",
+        "filename": "third_party/WebKit/LayoutTests/device_orientation/motion/optional-event-properties.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-01T18:33:14Z",
+      "side": 1,
+      "message": "assert_unreached",
+      "range": {
+        "startLine": 98,
+        "startChar": 4,
+        "endLine": 98,
+        "endChar": 15
+      },
+      "revId": "b6970d200a42d76a91d6c3aaa3e3423f0d9e6d5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2c21fb0_8a622606",
+        "filename": "third_party/WebKit/LayoutTests/device_orientation/motion/optional-event-properties.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-01T18:33:14Z",
+      "side": 1,
+      "message": "assert_unreached",
+      "range": {
+        "startLine": 111,
+        "startChar": 4,
+        "endLine": 111,
+        "endChar": 15
+      },
+      "revId": "b6970d200a42d76a91d6c3aaa3e3423f0d9e6d5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
