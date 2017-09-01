@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "59604fa8_9348d2e2",
+        "filename": "chrome/test/data/extensions/api_test/networking_private/chromeos/test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-01T20:04:30Z",
+      "side": 1,
+      "message": "Missed this comment?",
+      "parentUuid": "adc876a9_559f7818",
+      "revId": "196a2d2a11f4a7d1e6bfb16650d6cc6ec6549bdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c73f447_dbccd953",
         "filename": "chrome/test/data/extensions/api_test/networking_private/test.js",
         "patchSetId": 4
