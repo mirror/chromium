@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc2ffe4d_13e2e0d7",
+        "filename": "content/shell/browser/shell_browser_main_parts.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-09-01T15:42:36Z",
+      "side": 1,
+      "message": "This isn\u0027t necessary without the call to XInitThreads().",
+      "revId": "ee8f1ef7dfa026fa47f12a6e4e3682b441a732dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
