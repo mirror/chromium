@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1cb1a30a_059c664a",
+        "filename": "media/gpu/android/codec_wrapper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-01T15:01:39Z",
+      "side": 1,
+      "message": "it would be nice to verify that that this isn\u0027t called twice in NO_KEY.\n\nhowever, that means moving |waiting_for_key_| here.  makes OnKeyAdded a little weird -- would call through to MCW::OnKeyAdded or similar.  would also need bool MCW::IsWaitingForKey().\n\nhrm, actually, that kind of makes sense -- it\u0027s part of the codec state, not the thing using it.  WDYT?",
+      "revId": "2c292cac780da4ca065e8fa06b3b0782d9b741f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96da5bd4_3296a35b",
+        "filename": "media/gpu/android/codec_wrapper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-01T15:01:39Z",
+      "side": 1,
+      "message": "nifty.",
+      "revId": "2c292cac780da4ca065e8fa06b3b0782d9b741f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "54181f16_13a7ebc2",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-01T15:01:39Z",
+      "side": 1,
+      "message": "hrm, it would be nice to have a reduced version of MediaCodecStatus (MediaCodecWrapperStatus?) that matches the integer values of MediaCodecStatus, but excludes those that MCW can\u0027t produce.  then we could have a switch and get \"missing case\" checks.\n\ndon\u0027t know if it\u0027s worth it.  seems a little weird that it currently (effectively) prevents using a switch on the output.",
+      "revId": "2c292cac780da4ca065e8fa06b3b0782d9b741f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "794b3c26_e8e6db82",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-01T15:01:39Z",
+      "side": 1,
+      "message": "s/else//",
+      "revId": "2c292cac780da4ca065e8fa06b3b0782d9b741f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b18df8e4_8aafcd55",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-01T15:01:39Z",
+      "side": 1,
+      "message": "DCHECK(!eos_decode_cb_)?",
+      "revId": "2c292cac780da4ca065e8fa06b3b0782d9b741f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4c5d3ad_504542d8",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-01T15:01:39Z",
+      "side": 1,
+      "message": "can this happen?",
+      "revId": "2c292cac780da4ca065e8fa06b3b0782d9b741f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
