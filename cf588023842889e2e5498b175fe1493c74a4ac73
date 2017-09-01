@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba69f4c1_ba2bbb85",
+        "filename": "components/component_updater/component_updater_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-09-01T17:44:51Z",
+      "side": 1,
+      "message": "Can you instead use?:\n\nif (component_state \u0026\u0026 !component_state-\u003elast_check.is_null()) {",
+      "range": {
+        "startLine": 281,
+        "startChar": 22,
+        "endLine": 281,
+        "endChar": 0
+      },
+      "revId": "cf588023842889e2e5498b175fe1493c74a4ac73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
