@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1187622f_f7347147",
+        "filename": "chrome/browser/chromeos/platform_keys/platform_keys_nss.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 707,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-09-01T19:51:13Z",
+      "side": 1,
+      "message": "yep. CERT_NewTempCertificate does look up any existing certs in the DB first, despite the name.",
+      "parentUuid": "e116e949_f8061258",
+      "revId": "c4e50f3f6a3c6c241c7ab55758d07e5ad55ccbba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dcdf97ca_b9b4fb48",
         "filename": "chrome/browser/chromeos/platform_keys/platform_keys_nss.cc",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "c4e50f3f6a3c6c241c7ab55758d07e5ad55ccbba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aedafe3e_baa53e92",
+        "filename": "chrome/browser/chromeos/platform_keys/platform_keys_nss.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 865,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-09-01T19:51:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dcdf97ca_b9b4fb48",
+      "revId": "c4e50f3f6a3c6c241c7ab55758d07e5ad55ccbba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -56,6 +92,30 @@
       "revId": "c4e50f3f6a3c6c241c7ab55758d07e5ad55ccbba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f6a0572_90b36817",
+        "filename": "net/cert/x509_util_nss.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-09-01T19:51:13Z",
+      "side": 1,
+      "message": "Ack, I\u0027ll leave that for a later cleanup.",
+      "parentUuid": "e143e709_99439725",
+      "range": {
+        "startLine": 314,
+        "startChar": 26,
+        "endLine": 314,
+        "endChar": 46
+      },
+      "revId": "c4e50f3f6a3c6c241c7ab55758d07e5ad55ccbba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
