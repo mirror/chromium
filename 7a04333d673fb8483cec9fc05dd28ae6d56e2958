@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "3107412c_a8f29627",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-01T13:35:33Z",
+      "side": 1,
+      "message": "This would cause database corruption for anyone running this code before it\u0027s done, right? I think that means for you.",
+      "revId": "7a04333d673fb8483cec9fc05dd28ae6d56e2958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d201b4e_f8daa7ea",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-01T13:35:33Z",
+      "side": 1,
+      "message": "Why don\u0027t you continue to use size_t?",
+      "revId": "7a04333d673fb8483cec9fc05dd28ae6d56e2958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93a15982_af6ce2ba",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-01T13:35:33Z",
+      "side": 1,
+      "message": "nit: Please name it the same as the method it pretends to be (the other similar methods in this fixture do the same). Yay wrapping.",
+      "revId": "7a04333d673fb8483cec9fc05dd28ae6d56e2958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "626ad5ce_c1208d51",
         "filename": "content/browser/background_fetch/background_fetch_data_manager_unittest.cc",
         "patchSetId": 5
