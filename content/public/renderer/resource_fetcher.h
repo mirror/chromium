@@ -38,8 +38,9 @@ class CONTENT_EXPORT ResourceFetcher {
 
   // This will be called asynchronously after the URL has been fetched,
   // successfully or not.  If there is a failure, response and data will both be
-  // empty.  |response| and |data| are both valid until the URLFetcher instance
-  // is destroyed.
+  // empty.  |response| and |data| are both valid until the ResourceFetcher
+  // instance is destroyed.  The callback will not be called if ResourceFetcher
+  // instance is destroyed before completion or cancellation.
   typedef base::Callback<void(const blink::WebURLResponse& response,
                               const std::string& data)> Callback;
 
@@ -57,7 +58,8 @@ class CONTENT_EXPORT ResourceFetcher {
                          const std::string& value) = 0;
 
   // DEPRECATED: Starts the request using the specified frame.  Calls |callback|
-  // when done.
+  // when done.  If ResourceFetcher instance is destructed without completion or
+  // cancellation, |callback| will be disposed without being called.
   virtual void Start(blink::WebLocalFrame* frame,
                      blink::WebURLRequest::RequestContext request_context,
                      const Callback& callback) = 0;
@@ -76,7 +78,9 @@ class CONTENT_EXPORT ResourceFetcher {
   // timeout.  Must be called after a request is started.
   virtual void SetTimeout(const base::TimeDelta& timeout) = 0;
 
-  // Manually cancel the request.
+  // DEPRECATED: Manually cancel the request.  Calls |callback| with a null
+  // WebURLResponse.  New code should not use this method, but just destruct the
+  // instance to abort.
   virtual void Cancel() = 0;
 };
 
