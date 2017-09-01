@@ -9,7 +9,7 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/time/time.h"
 #include "base/version.h"
-#include "components/data_reduction_proxy/core/common/lofi_decider.h"
+#include "components/data_reduction_proxy/core/common/previews_decider.h"
 #include "components/data_reduction_proxy/core/common/version.h"
 #include "net/base/net_errors.h"
 #include "net/base/url_util.h"

@@ -24,7 +24,7 @@
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_headers.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_params.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_util.h"
-#include "components/data_reduction_proxy/core/common/lofi_decider.h"
+#include "components/data_reduction_proxy/core/common/previews_decider.h"
 #include "net/base/load_flags.h"
 #include "net/base/mime_util.h"
 #include "net/http/http_request_headers.h"
@@ -311,6 +311,13 @@ void DataReductionProxyNetworkDelegate::OnBeforeURLRequestInternal(
   if (data_reduction_proxy_io_data_ &&
       (request->load_flags() & net::LOAD_MAIN_FRAME_DEPRECATED)) {
     data_reduction_proxy_io_data_->SetLoFiModeActiveOnMainFrame(false);
+  }
+
+  if (data_reduction_proxy_io_data_ &&
+      data_reduction_proxy_io_data_->lofi_decider() &&
+      data_reduction_proxy_io_data_->IsEnabled()) {
+    data_reduction_proxy_io_data_->lofi_decider()->MaybeApplyAMPPreview(
+        request, new_url, data_reduction_proxy_io_data_->previews_decider());
   }
 }
 

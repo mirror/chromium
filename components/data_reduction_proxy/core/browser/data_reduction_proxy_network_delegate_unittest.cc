@@ -43,7 +43,7 @@
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_pref_names.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_server.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_switches.h"
-#include "components/data_reduction_proxy/core/common/lofi_decider.h"
+#include "components/data_reduction_proxy/core/common/previews_decider.h"
 #include "components/data_reduction_proxy/proto/client_config.pb.h"
 #include "components/previews/core/previews_decider.h"
 #include "components/previews/core/previews_experiments.h"
@@ -203,14 +203,14 @@ const Client kClient = Client::CHROME_QNX;
 const Client kClient = Client::UNKNOWN;
 #endif
 
-class TestLoFiDecider : public LoFiDecider {
+class TestPreviewsDecider : public PreviewsDecider {
  public:
-  TestLoFiDecider()
+  TestPreviewsDecider()
       : should_be_client_lofi_(false),
         should_be_client_lofi_auto_reload_(false),
         should_request_lofi_resource_(false),
         ignore_is_using_data_reduction_proxy_check_(false) {}
-  ~TestLoFiDecider() override {}
+  ~TestPreviewsDecider() override {}
 
   bool IsUsingLoFi(const net::URLRequest& request) const override {
     return should_request_lofi_resource_;
@@ -256,6 +256,11 @@ class TestLoFiDecider : public LoFiDecider {
       return header_value == lite_page_directive();
     }
     return false;
+  }
+
+  void MaybeApplyAMPPreview(net::URLRequest* request,
+                            GURL* new_url) const override {
+    return;
   }
 
   void RemoveAcceptTransformHeader(
@@ -379,7 +384,8 @@ class DataReductionProxyNetworkDelegateTest : public testing::Test {
     context_->set_client_socket_factory(mock_socket_factory_.get());
     test_context_->AttachToURLRequestContext(context_storage_.get());
 
-    std::unique_ptr<TestLoFiDecider> lofi_decider(new TestLoFiDecider());
+    std::unique_ptr<TestPreviewsDecider> lofi_decider(
+        new TestPreviewsDecider());
     lofi_decider_ = lofi_decider.get();
     test_context_->io_data()->set_lofi_decider(std::move(lofi_decider));
 
@@ -847,7 +853,7 @@ class DataReductionProxyNetworkDelegateTest : public testing::Test {
     return test_context_->io_data();
   }
 
-  TestLoFiDecider* lofi_decider() const { return lofi_decider_; }
+  TestPreviewsDecider* lofi_decider() const { return lofi_decider_; }
 
   net::TestNetworkQualityEstimator* test_network_quality_estimator() {
     return &test_network_quality_estimator_;
@@ -864,7 +870,7 @@ class DataReductionProxyNetworkDelegateTest : public testing::Test {
   std::unique_ptr<net::TestURLRequestContext> context_;
   std::unique_ptr<net::URLRequestContextStorage> context_storage_;
 
-  TestLoFiDecider* lofi_decider_;
+  TestPreviewsDecider* lofi_decider_;
   TestLoFiUIService* lofi_ui_service_;
   std::unique_ptr<DataReductionProxyTestContext> test_context_;
   net::TestNetworkQualityEstimator test_network_quality_estimator_;
@@ -1992,13 +1998,14 @@ class DataReductionProxyNetworkDelegateClientLoFiTest : public testing::Test {
         drp_test_context()->settings()->GetTotalHttpContentLengthSaved();
   }
 
-  void SetUpLoFiDecider(bool is_client_lofi_image,
-                        bool is_client_lofi_auto_reload) const {
-    std::unique_ptr<TestLoFiDecider> lofi_decider(new TestLoFiDecider());
+  void SetUpPreviewsDecider(bool is_client_lofi_image,
+                            bool is_client_lofi_auto_reload) const {
+    std::unique_ptr<TestPreviewsDecider> lofi_decider(
+        new TestPreviewsDecider());
     lofi_decider->SetIsUsingClientLoFi(is_client_lofi_image);
     lofi_decider->SetIsClientLoFiAutoReload(is_client_lofi_auto_reload);
     drp_test_context_->io_data()->set_lofi_decider(
-        std::unique_ptr<LoFiDecider>(std::move(lofi_decider)));
+        std::unique_ptr<PreviewsDecider>(std::move(lofi_decider)));
   }
 
   int64_t GetSavings() const {
@@ -2087,8 +2094,8 @@ TEST_F(DataReductionProxyNetworkDelegateClientLoFiTest, DataSavingsNonDRP) {
 
   for (const auto& test : tests) {
     Reset();
-    SetUpLoFiDecider(test.is_client_lofi_image,
-                     test.is_client_lofi_auto_reload);
+    SetUpPreviewsDecider(test.is_client_lofi_image,
+                         test.is_client_lofi_auto_reload);
 
     std::string response_body(test.response_length, 'a');
     net::MockRead reads[] = {net::MockRead(test.headers),
@@ -2112,7 +2119,7 @@ TEST_F(DataReductionProxyNetworkDelegateClientLoFiTest, DataSavingsNonDRP) {
 TEST_F(DataReductionProxyNetworkDelegateClientLoFiTest, DataSavingsThroughDRP) {
   Reset();
   drp_test_context()->EnableDataReductionProxyWithSecureProxyCheckSuccess();
-  SetUpLoFiDecider(true, false);
+  SetUpPreviewsDecider(true, false);
 
   const char kHeaders[] =
       "HTTP/1.1 206 Partial Content\r\n"

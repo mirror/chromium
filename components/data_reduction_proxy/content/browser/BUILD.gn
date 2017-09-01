@@ -4,10 +4,10 @@
 
 static_library("browser") {
   sources = [
-    "content_lofi_decider.cc",
-    "content_lofi_decider.h",
     "content_lofi_ui_service.cc",
     "content_lofi_ui_service.h",
+    "content_previews_decider.cc",
+    "content_previews_decider.h",
     "content_resource_type_provider.cc",
     "content_resource_type_provider.h",
   ]
@@ -25,8 +25,8 @@ static_library("browser") {
 source_set("unit_tests") {
   testonly = true
   sources = [
-    "content_lofi_decider_unittest.cc",
     "content_lofi_ui_service_unittest.cc",
+    "content_previews_decider_unittest.cc",
     "content_resource_type_provider_unittest.cc",
   ]
 

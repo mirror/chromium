@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "components/data_reduction_proxy/content/browser/content_lofi_decider.h"
+#include "components/data_reduction_proxy/content/browser/content_previews_decider.h"
 
 #include <stddef.h>
 #include <memory>
@@ -90,7 +90,6 @@ class ContentLoFiDeciderTest : public testing::Test {
     data_reduction_proxy_network_delegate_->InitIODataAndUMA(
         test_context_->io_data(), test_context_->io_data()->bypass_stats());
 
-
     std::unique_ptr<data_reduction_proxy::ContentLoFiDecider>
         data_reduction_proxy_lofi_decider(
             new data_reduction_proxy::ContentLoFiDecider());
@@ -157,8 +156,9 @@ class ContentLoFiDeciderTest : public testing::Test {
     }
 
     data_reduction_proxy_network_delegate_->NotifyBeforeStartTransaction(
-        request, base::Bind(&ContentLoFiDeciderTest::DelegateStageDone,
-                            base::Unretained(this)),
+        request,
+        base::Bind(&ContentLoFiDeciderTest::DelegateStageDone,
+                   base::Unretained(this)),
         headers);
     data_reduction_proxy_network_delegate_->NotifyBeforeSendHeaders(
         request, data_reduction_proxy_info, proxy_retry_info, headers);
