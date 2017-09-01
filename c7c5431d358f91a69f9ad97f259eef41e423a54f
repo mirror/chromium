@@ -22,6 +22,30 @@
       "revId": "c7c5431d358f91a69f9ad97f259eef41e423a54f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6356b9f_fe0bb79b",
+        "filename": "components/safe_browsing/password_protection/password_protection_request.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-09-01T16:50:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c15adc91_6187b720",
+      "range": {
+        "startLine": 141,
+        "startChar": 5,
+        "endLine": 141,
+        "endChar": 50
+      },
+      "revId": "c7c5431d358f91a69f9ad97f259eef41e423a54f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
