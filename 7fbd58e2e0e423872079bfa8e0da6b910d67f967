@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4af127cd_3b2c2682",
+        "filename": "net/http/http_request_headers.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-01T13:12:26Z",
+      "side": 1,
+      "message": "Btw I added this line (NET_EXPORT) here in order to fix the linker error after this file was reviewed, please let me know if this looks problematic.",
+      "revId": "7fbd58e2e0e423872079bfa8e0da6b910d67f967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
