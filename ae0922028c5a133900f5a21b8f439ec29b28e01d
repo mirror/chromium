@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afa35d79_6c2ca8be",
+        "filename": "third_party/WebKit/public/platform/modules/payments/payment_app.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-01T18:12:16Z",
+      "side": 1,
+      "message": "One question: This looks like it runs in the browser, based on chrome/browser/payments/payments_manager.cc. If so, should this comment be updated?",
+      "range": {
+        "startLine": 37,
+        "startChar": 26,
+        "endLine": 37,
+        "endChar": 40
+      },
+      "revId": "ae0922028c5a133900f5a21b8f439ec29b28e01d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
