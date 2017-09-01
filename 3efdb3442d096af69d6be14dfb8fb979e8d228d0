@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a6e58c4a_800cdb06",
+        "filename": "ash/wm/window_state.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-09-01T10:46:26Z",
+      "side": 1,
+      "message": "I don\u0027t think it should be done by exo. It\u0027s not only exo which uses frame sinks. I\u0027m extracting to a separate CL right now.",
+      "parentUuid": "29d71e73_be63234f",
+      "revId": "3efdb3442d096af69d6be14dfb8fb979e8d228d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1362aa18_679b5821",
         "filename": "components/exo/shell_surface.h",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-01T09:51:14Z",
       "side": 1,
       "message": "hm, can we make this work using standard configure event flow instead (using a synchronous round-trip if needed)? I really like us to cut down on arc specific logic that we have to maintain in exo/chrome and move towards a model where more code is shared with regular clients and upstream interfaces clearly define expected behavior.",
+      "revId": "3efdb3442d096af69d6be14dfb8fb979e8d228d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa36cedd_6033b331",
+        "filename": "components/exo/shell_surface.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-09-01T10:46:26Z",
+      "side": 1,
+      "message": "Are we going to abandon the zcr_remote_surface_v1_interface protocol? It gives as a guarantee that window state changes are part of commits, which is very helpful and imho neat.\n\nAs for using configure, I\u0027m not sure if it\u0027s that helpful here. Per documentation \"client must make an ack_configure request *sometime before* the commit request\". So, when we have a surface commit we can either be committing a surface for the new or old window state. And we want to fire the animation just before we get the new frame. What I want to say is I\u0027m skeptical if the standard Wayland protocol gives as any mechanism to do a reliable crossfade animation without heuristics.",
+      "parentUuid": "1362aa18_679b5821",
       "revId": "3efdb3442d096af69d6be14dfb8fb979e8d228d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
