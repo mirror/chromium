@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef55b292_0fd7fbb2",
+        "filename": "ui/gl/init/gl_factory_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-01T01:30:08Z",
+      "side": 1,
+      "message": "for context, this hack is for webview to create GLNonOwnedContext on android\u0027s render thread. corresponds to this code: https://cs.chromium.org/chromium/src/android_webview/browser/aw_gl_surface.cc?rcl\u003d416174f07b4d1d930fee687ddd0eae67fbc24ee1\u0026l\u003d34",
+      "revId": "ea6b8b897a2c4f045532463632088bcf37e0e727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
