@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b5ebfde_3a860158",
+        "filename": "content/browser/renderer_host/input/legacy_input_router_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-01T04:31:56Z",
+      "side": 1,
+      "message": "I think this should be NOTREACHED(), right?",
+      "revId": "b269c020b6bba5f2712dd7ad71bf491b6c23f5ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6f45880_a7d1983b",
+        "filename": "content/common/input/input_handler.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-01T04:31:56Z",
+      "side": 1,
+      "message": "Nit: document this interface as well please",
+      "revId": "b269c020b6bba5f2712dd7ad71bf491b6c23f5ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0789a8d_1a25f01e",
+        "filename": "content/common/widget.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-01T04:31:56Z",
+      "side": 1,
+      "message": "Nit: exposed",
+      "range": {
+        "startLine": 9,
+        "startChar": 13,
+        "endLine": 9,
+        "endChar": 19
+      },
+      "revId": "b269c020b6bba5f2712dd7ad71bf491b6c23f5ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
