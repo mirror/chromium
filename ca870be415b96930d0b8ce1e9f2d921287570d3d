@@ -176,6 +176,30 @@
     },
     {
       "key": {
+        "uuid": "c569b361_df9a266f",
+        "filename": "cc/paint/paint_image_destruction_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-01T18:57:58Z",
+      "side": 1,
+      "message": "\u003e \u003e The use of the singleton was because I was relying on the destruction of the ImageFrameGenerator to clear the cache, which can be destroyed on any thread and wouldn\u0027t have access to the compositor. And it was a safe place to ensure that the image is not being referenced on the main thread or any cached recordings so we can definitely discard it.\n\u003e \n\u003e TBH, I\u0027m not too worried about threading here, since the caches are already thread aware, so if you make the image destruction function be thread safe (which you did), it doesn\u0027t really matter what thread executes that, right? Maybe there is a cache destruction race?\n\nYou\u0027re right, for the cache it shouldn\u0027t matter what thread it runs on. Just access to the cache to run the callback would need to be handled.\n\n\u003e \n\u003e \u003e \n\u003e \u003e We would have multiple compositors sharing it but I think we could also have multiple compositors sharing the same image. The ResourceCache should provide the same ImageResource for an image.\n\u003e \n\u003e Would that be using the same ImageFrameGenerator?\n\nI just tried to validate my assumption by opening multiple tabs with the same page, which I think should render in the same process but I see different resources for them for the same URL. I assumed since the MemoryCache (https://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/loader/fetch/MemoryCache.h) was a singleton in a process, we would get the same resource. Not sure what exactly is going on here.\n\n\u003e \n\u003e \u003e \n\u003e \u003e But enne@ also mentioned that it wasn\u0027t great to have the threading semantics here where we are getting notifications from any thread (because the generator can be destroyed on any thread) in this class that are getting posted back to the compositor thread using the ObserverList. The alternate would be to tie this with an object on the main thread that can get to the compositor and send a list of such images with a commit. But I\u0027m not clear on where to do that right now and if there is an object that I can clearly bound the decode\u0027s lifetime with. If this doesn\u0027t look like the right approach to do this, I can revisit once I have explored the alternatives in more detail.\n\u003e \n\u003e Your alternative would work, but I\u0027m unclear why we need to tie this to the main thread. We could opaquely tie this to any object on any thread via some sort of destruction callback that is updatable, right?\n\u003e \n\u003e What I mean to say is that this destruction is going to be observed by the compositor caches only and do state modifications if that image exists, so we don\u0027t really need to observe any destruction unless the cache observed the generator existence in the first place, right? If the cache observed the generator existence though, it can create a new destruction callback for that image and set it on the PaintImageGenerator (if the image is backed by one). Then it\u0027s really the PaintImageGenerator that can have the destruction callback and you avoid singletons. (I\u0027m not considering the case of multiple compositors sharing the same generator here if that\u0027s possible, but in theory it\u0027s extendable to that via a list of destruction callbacks). I\u0027m not necessarily saying this approach is better, but it seems to be more targeted than a singleton and addresses the direct case of caches observing image destruction. It\u0027s something to consider.\n\nThat\u0027s a really good point and was actually the alternative I had started with. You can put a list of callbacks on the generator or it can keep the latest one. I think the list is better. But I can\u0027t give it a callback with a weak ptr to the cache since it will have to be posted back to the thread on which the ptrs are invalidated. The idea I had there was to keep a static map.\n\nbase::flat_map\u003cCacheId, ImageDecodeCache*\u003e s_cache_map_.\n\nAnd protected access to it with a lock. The cache adds and removes itself to the map. And the opaque destruction callback added to the generator has the cache_id. When the callback runs, it can check if the cache still exists in the map to forward it to the cache. Does that sound better?",
+      "parentUuid": "401efdb0_bf9078fd",
+      "range": {
+        "startLine": 10,
+        "startChar": 30,
+        "endLine": 10,
+        "endChar": 71
+      },
+      "revId": "ca870be415b96930d0b8ce1e9f2d921287570d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58521ed7_8a2886d2",
         "filename": "cc/paint/paint_image_destruction_tracker.cc",
         "patchSetId": 6
@@ -572,6 +596,30 @@
     },
     {
       "key": {
+        "uuid": "f025a49c_efe25c61",
+        "filename": "cc/paint/paint_image_generator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-01T18:57:58Z",
+      "side": 1,
+      "message": "Thanks for pointing this out. I now realize that having the PaintImage::Id on the FrameKey is unnecessary. I\u0027m going to first have a patch to remove it which should eliminate a ton of complexity here.",
+      "parentUuid": "bfd3ffd9_3880d424",
+      "range": {
+        "startLine": 71,
+        "startChar": 22,
+        "endLine": 71,
+        "endChar": 51
+      },
+      "revId": "ca870be415b96930d0b8ce1e9f2d921287570d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9b6f3160_c6b448ac",
         "filename": "cc/tiles/gpu_image_decode_cache.cc",
         "patchSetId": 6
@@ -736,6 +784,30 @@
     },
     {
       "key": {
+        "uuid": "734b245a_054cdbb6",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-01T18:57:58Z",
+      "side": 1,
+      "message": "The paint_image_id is unnecessary (https://chromium-review.googlesource.com/c/chromium/src/+/646959 should remove it from the FrameKey). The content_id exists in the generator but it is dependent on the frame index.",
+      "parentUuid": "24fcb174_110fd617",
+      "range": {
+        "startLine": 688,
+        "startChar": 57,
+        "endLine": 688,
+        "endChar": 0
+      },
+      "revId": "ca870be415b96930d0b8ce1e9f2d921287570d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e493134f_1e64c587",
         "filename": "cc/tiles/gpu_image_decode_cache_unittest.cc",
         "patchSetId": 6
@@ -794,6 +866,30 @@
       "side": 1,
       "message": "Yes. I forgot to mention in the general comment, but we do need test coverage for the new functionality (whether we change this test or write new ones doesn\u0027t really matter)",
       "parentUuid": "703737c7_4ea7fb7a",
+      "range": {
+        "startLine": 1742,
+        "startChar": 2,
+        "endLine": 1742,
+        "endChar": 0
+      },
+      "revId": "ca870be415b96930d0b8ce1e9f2d921287570d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6d2c74e_2f68d9ce",
+        "filename": "cc/tiles/gpu_image_decode_cache_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1742,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-01T18:57:58Z",
+      "side": 1,
+      "message": "I wasn\u0027t planning on landing it this way. :) Was just trying to do some perf testing. I\u0027ll update this test for the new functionality.",
+      "parentUuid": "8e6debd9_847c380f",
       "range": {
         "startLine": 1742,
         "startChar": 2,
