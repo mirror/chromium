@@ -17,8 +17,6 @@ test(function(t) {
 }, "Make sure that Accessibility Object Model is enabled");
 </script>
 
-<button id="target1">Target</button>
-
 <script>
 function enableAccessibilityEventsPermission() {
   return new Promise(function(resolve, reject) {
@@ -32,7 +30,11 @@ function enableAccessibilityEventsPermission() {
     });
   });
 }
+</script>
 
+<button id="target1">Target</button>
+
+<script>
 async_test(function(t) {
   enableAccessibilityEventsPermission().then(function() {
     var target1 = document.getElementById("target1");
