@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6da1283_4b71c94b",
+        "filename": "content/public/browser/web_contents.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-01T00:00:57Z",
+      "side": 1,
+      "message": "Does the new comment and the deprecation make sense?  Maybe we should instead rename GetRenderProcessHost() to GetMainFrameProcess()?\n\nDo you think Charlie should also take a look?",
+      "range": {
+        "startLine": 244,
+        "startChar": 0,
+        "endLine": 249,
+        "endChar": 70
+      },
+      "revId": "bc13b35e59cb02db7f07d3b5b47101635bcd2806",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
