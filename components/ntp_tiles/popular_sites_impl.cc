@@ -107,6 +107,11 @@ std::string GetVariationVersion() {
                                             "version");
 }
 
+std::string GetVariationDirectory() {
+  return variations::GetVariationParamValue(kPopularSitesFieldTrialName,
+                                            "directory");
+}
+
 PopularSites::SitesVector ParseSiteList(const base::ListValue& list) {
   PopularSites::SitesVector sites;
   for (size_t i = 0; i < list.GetSize(); i++) {
@@ -313,6 +318,9 @@ GURL PopularSitesImpl::GetURLToFetch() {
 std::string PopularSitesImpl::GetDirectoryToFetch() {
   std::string directory =
       prefs_->GetString(ntp_tiles::prefs::kPopularSitesOverrideDirectory);
+
+  if (directory.empty())
+    directory = GetVariationDirectory();
 
   if (directory.empty())
     directory = kPopularSitesDefaultDirectory;
