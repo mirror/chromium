@@ -189,6 +189,23 @@
     },
     {
       "key": {
+        "uuid": "1fe2d3bb_c06882b1",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionSampleTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-09-01T01:53:25Z",
+      "side": 1,
+      "message": "It is hard to recognize AsSelection() sets body.innerHTML.\nIf you want to do as assert_selection,\n I prefer following code:\nTEST_F(SelectionSampleTest, Test1) {\n SetBodyAndSelectionFromSample(\"\u003cdiv\u003e^foo\u003cspan\u003ebar|\u003c/span\u003ebaz\u003c/div\u003e\");\n // Some editing, selection test code.\n // Selection().SetSelection(/* blah blah blah */);\n EXPECT_EQ(\"\u003cdiv\u003e\u003cspan\u003e|bar^\u003c/span\u003ebaz\u003c/div\u003e\",  GetSelectionSample());\n}",
+      "revId": "e88d800e29d30b0b895b331b0908d4d951962bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5867e355_073fb549",
         "filename": "third_party/WebKit/Source/core/editing/SelectionSampleTest.cpp",
         "patchSetId": 6
