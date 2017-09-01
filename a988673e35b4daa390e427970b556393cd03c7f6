@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64bff3c8_c7e001b7",
+        "filename": "content/common/sandbox_linux/sandbox_seccomp_bpf_linux.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-01T18:38:53Z",
+      "side": 1,
+      "message": "I would prefer if we didn\u0027t do that here. It can be quite slow (we have to scan the PCI bus) and we\u0027ve already done it at the point we get here. Right now it\u0027s done in the browser process and the PCI ids are passed to the GPU process via command line, although this will actually move to the GPU process initialization (but still before we get here).\n\nIf you look at GpuInit::InitializeAndStartSandbox, we generate a \"preliminary\" GpuInfo (which contains the PCI ids) from the command line. My suggestion is to forward this GpuInfo (or at least the PCI ids) to ContentSandboxHelper::EnsureSandboxInitialized and from there through to here.",
+      "revId": "a988673e35b4daa390e427970b556393cd03c7f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
