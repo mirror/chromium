@@ -259,7 +259,7 @@ void InlineTextBoxPainter::Paint(const PaintInfo& paint_info,
                                  const LayoutPoint& paint_offset) {
   if (!ShouldPaintTextBox(paint_info))
     return;
-
+  //  LOG(ERROR) << "painting text box";
   DCHECK(!ShouldPaintSelfOutline(paint_info.phase) &&
          !ShouldPaintDescendantOutlines(paint_info.phase));
 
