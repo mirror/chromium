@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e12fa03a_cae80dae",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-01T09:21:57Z",
+      "side": 1,
+      "message": "Some copy mechanism should stay at least as a private method, otherwise writing the constructors for array and map is gonna be very painful. \n\nThis could either be |Clone| or a private copy constructor.",
+      "parentUuid": "ba92788e_904f5e59",
+      "revId": "4f2b1267bc0d87fc46d91a535bb5768b81419a9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "237c82b9_98e8b7eb",
         "filename": "content/browser/webauth/cbor/cbor_values.h",
         "patchSetId": 13

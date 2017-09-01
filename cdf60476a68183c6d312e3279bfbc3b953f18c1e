@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "6661e385_86a3c4f6",
+        "filename": "content/browser/webauth/cbor/cbor_values.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-01T09:21:57Z",
+      "side": 1,
+      "message": "This does not overwrite existing values, which may or may not be what you want. Example:\n\nMapValue map;\nmap.Insert(\"key\", \"foo\"); // Inserts {\"key\", \"foo\"} in the map\nmap.Insert(\"key\", \"bar\"); // This is a no-op, the map still contains {\"key\", \"foo\"}\n\nIn case you want overwriting, simply use operator[]:\n(*map_value_)[std::move(key)] \u003d CBORValue(string);\n\nIn case you don\u0027t, the current implementation (after replacing std::unique_ptr\u003cCBORValue\u003e with CBORValue) is fine. However, unless you expect to often insert keys in sorted order, the regular emplace without a hint is probably better.",
+      "range": {
+        "startLine": 179,
+        "startChar": 2,
+        "endLine": 180,
+        "endChar": 75
+      },
+      "revId": "cdf60476a68183c6d312e3279bfbc3b953f18c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af5795af_71f34d51",
+        "filename": "content/browser/webauth/cbor/cbor_values.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-01T09:21:57Z",
+      "side": 1,
+      "message": "This looks like a bug, but should be irrelevant once all Inserts are unified.",
+      "range": {
+        "startLine": 194,
+        "startChar": 46,
+        "endLine": 194,
+        "endChar": 50
+      },
+      "revId": "cdf60476a68183c6d312e3279bfbc3b953f18c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6409a76c_7c9725d3",
         "filename": "content/browser/webauth/cbor/cbor_values.h",
         "patchSetId": 16
@@ -36,6 +82,162 @@
     },
     {
       "key": {
+        "uuid": "045784a3_ecefef73",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-01T09:21:57Z",
+      "side": 1,
+      "message": "+1 to move assignment operator. Also you should declare the move operations |noexcept|, due to performance benefits when using vectors. An std::vector uses |move_if_noexcept| (http://en.cppreference.com/w/cpp/utility/move_if_noexcept) when it\u0027s reallocating. Only if move operations are declared noexcept this results in a move instead of a copy.",
+      "parentUuid": "c09032a5_7488c37d",
+      "revId": "cdf60476a68183c6d312e3279bfbc3b953f18c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d27a717_2e604e9f",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-01T09:21:57Z",
+      "side": 1,
+      "message": "Nit: You could use dcheng@s recently introduced base::span for this, which basically is a StringPiece for arrays. It would allow you to pass in raw C-arrays without converting them to vectors on the client side. But this is certainly not required, more nice to have.",
+      "range": {
+        "startLine": 50,
+        "startChar": 21,
+        "endLine": 50,
+        "endChar": 48
+      },
+      "revId": "cdf60476a68183c6d312e3279bfbc3b953f18c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd0a1aff_73263ec4",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-01T09:21:57Z",
+      "side": 1,
+      "message": "Same here wrt base::span.",
+      "range": {
+        "startLine": 52,
+        "startChar": 21,
+        "endLine": 52,
+        "endChar": 50
+      },
+      "revId": "cdf60476a68183c6d312e3279bfbc3b953f18c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f89231c5_6733158e",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-01T09:21:57Z",
+      "side": 1,
+      "message": "Style Guide Nit: Since these are inline, they should be in unix_hacker_style, that is is_none() instead of isNone, etc.",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 52
+      },
+      "revId": "cdf60476a68183c6d312e3279bfbc3b953f18c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1948b1e_f3bb30ea",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-01T09:21:57Z",
+      "side": 1,
+      "message": "base::StringPieces should be passed by value, so either return |const std::string\u0026| or a |base::StringPiece|.",
+      "range": {
+        "startLine": 72,
+        "startChar": 2,
+        "endLine": 72,
+        "endChar": 26
+      },
+      "revId": "cdf60476a68183c6d312e3279bfbc3b953f18c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fca96fd7_05aaffc3",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-01T09:21:57Z",
+      "side": 1,
+      "message": "You might want to add non-const overloads for these so that clients can modify the underlying containers.",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 80
+      },
+      "revId": "cdf60476a68183c6d312e3279bfbc3b953f18c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f017cb7_580d7e90",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-01T09:21:57Z",
+      "side": 1,
+      "message": "This needs to be an std::string, the Value should own its content.",
+      "range": {
+        "startLine": 83,
+        "startChar": 28,
+        "endLine": 83,
+        "endChar": 45
+      },
+      "revId": "cdf60476a68183c6d312e3279bfbc3b953f18c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f0d4eb88_86f97939",
         "filename": "content/browser/webauth/cbor/cbor_values.h",
         "patchSetId": 16
@@ -52,6 +254,145 @@
         "startChar": 41,
         "endLine": 86,
         "endChar": 51
+      },
+      "revId": "cdf60476a68183c6d312e3279bfbc3b953f18c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f041a461_0051beac",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-01T09:21:57Z",
+      "side": 1,
+      "message": "We currently do this for base::Values due to legacy code relying on pointer stability. However, this should not apply here (you just introduce the code), so a |base::flat_map\u003cstd::string, CBORValue\u003e| should be better.",
+      "parentUuid": "f0d4eb88_86f97939",
+      "range": {
+        "startLine": 86,
+        "startChar": 41,
+        "endLine": 86,
+        "endChar": 51
+      },
+      "revId": "cdf60476a68183c6d312e3279bfbc3b953f18c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcbced6f_31a5113f",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-01T09:21:57Z",
+      "side": 1,
+      "message": "I would advise against having a subclass for this. Otherwise you could create Map Values on which you cannot perform an insert action, e.g. in the following way:\n\nCBORValue map(CBORValue::Type::MAP);\nmap.Insert(\"foo\", ...); // does not compile\n\nThe reason why we currently still have base::DictionaryValue and base::ListValue in addition to base::Value is legacy code. However, all APIs of those subclasses are deprecated and in the process of being removed. Once they are all gone, DictionaryValue and ListValue disappear as well.",
+      "range": {
+        "startLine": 97,
+        "startChar": 21,
+        "endLine": 97,
+        "endChar": 29
+      },
+      "revId": "cdf60476a68183c6d312e3279bfbc3b953f18c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e91b1e68_662adcf1",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-01T09:21:57Z",
+      "side": 1,
+      "message": "All of these can be replace by a singled |Insert(std::string key, CBORValue)|. Clients can then call map.Insert(key, CBORValue(...))| instead of the corresponding map.Insert(key, ...) overload.\n\nFurthermore, in case you decide to provide a non-const accessor to the map, you might not need an Insert function at all.\n\nInstead of map.Insert(key, string) clients could use map.GetMap()[key] \u003d string.\n\nFor base::Value we currently don\u0027t do this, as we\u0027re still backed by unique_ptrs there. Even if that is changed, we might not do it due to binary size concerns. Exposing List and Map like this can lead to a lot of inlining of templated code, which given base::Value\u0027s widespread usage can have significant impact on the resulting binary size. dcheng@ did some analysis in the past wrt using base::StringPiece instead of std::string, so he probably has more insight into this.\n\nHere however I don\u0027t expect extremely wide usage, so that the binary size concern does not really apply.",
+      "range": {
+        "startLine": 106,
+        "startChar": 0,
+        "endLine": 118,
+        "endChar": 45
+      },
+      "revId": "cdf60476a68183c6d312e3279bfbc3b953f18c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7f270bb_3988abee",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-01T09:21:57Z",
+      "side": 1,
+      "message": "missing return;",
+      "range": {
+        "startLine": 30,
+        "startChar": 4,
+        "endLine": 30,
+        "endChar": 5
+      },
+      "revId": "cdf60476a68183c6d312e3279bfbc3b953f18c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd90e34c_f450b390",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-01T09:21:57Z",
+      "side": 1,
+      "message": "I\u0027m not familiar with what the code should do, but this looks like a bug to me. Should this be |GetNumUintBytes(value)| followed by SetUint(value) instead, given that the second param to StartItem is a size?",
+      "range": {
+        "startLine": 35,
+        "startChar": 42,
+        "endLine": 35,
+        "endChar": 47
+      },
+      "revId": "cdf60476a68183c6d312e3279bfbc3b953f18c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9add009c_a9c0e664",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-01T09:21:57Z",
+      "side": 1,
+      "message": "Use encoded_cbor_-\u003eback() instead. Maybe also add a DCHECK that encoded_cbor_ is non-empty?",
+      "range": {
+        "startLine": 91,
+        "startChar": 2,
+        "endLine": 91,
+        "endChar": 46
       },
       "revId": "cdf60476a68183c6d312e3279bfbc3b953f18c1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
