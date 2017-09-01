@@ -156,9 +156,11 @@ function FileSelectionHandler(
   util.addEventListenerToBackgroundComponent(
       assert(fileOperationManager), 'entries-changed',
       this.onFileSelectionChanged.bind(this));
-  // Register evnets to update file selections.
+  // Register events to update file selections.
   directoryModel.addEventListener(
       'directory-changed', this.onFileSelectionChanged.bind(this));
+  directoryModel.getFileList().addEventListener(
+      'splice', this.onSpliceEvent.bind(this));
 }
 
 /**
@@ -242,12 +244,23 @@ FileSelectionHandler.prototype.onFileSelectionChanged = function() {
 };
 
 /**
- * Calculates async selection stats and updates secondary UI elements.
- *
- * @param {FileSelection} selection The selection object.
- * @private
+ * When files get deleted, make sure to be in single-select mode.
  */
-FileSelectionHandler.prototype.updateFileSelectionAsync_ = function(selection) {
+FileSelectionHandler.prototype.onSpliceEvent =
+    function(e) {
+  if (e.removed.length > 0 && e.added.length < 1) {
+    this.directoryModel_.getFileListSelection().setCheckSelectMode(false);
+  }
+}
+
+    /**
+     * Calculates async selection stats and updates secondary UI elements.
+     *
+     * @param {FileSelection} selection The selection object.
+     * @private
+     */
+    FileSelectionHandler.prototype.updateFileSelectionAsync_ = function(
+        selection) {
   if (this.selection !== selection)
     return;
 
