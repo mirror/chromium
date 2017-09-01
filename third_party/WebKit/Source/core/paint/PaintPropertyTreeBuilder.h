@@ -144,8 +144,16 @@ class PaintPropertyTreeBuilder {
       const LayoutBoxModelObject&,
       PaintPropertyTreeBuilderFragmentContext&,
       const LayoutObject* container_for_absolute_position);
+  ALWAYS_INLINE static void GetPaintOffsetTranslation(
+      const LayoutObject&,
+      PaintPropertyTreeBuilderFragmentContext&,
+      ObjectPaintProperties&,
+      IntPoint& paint_offset_translation,
+      bool& has_paint_offset_translation);
   ALWAYS_INLINE static void UpdatePaintOffsetTranslation(
-      const LayoutBoxModelObject&,
+      const LayoutObject&,
+      const IntPoint& paint_offset_translation,
+      bool has_paint_offset_translation,
       PaintPropertyTreeBuilderFragmentContext&,
       ObjectPaintProperties&,
       bool& force_subtree_update);
@@ -155,7 +163,9 @@ class PaintPropertyTreeBuilder {
       ObjectPaintProperties*,
       bool& is_actually_needed,
       PaintPropertyTreeBuilderFragmentContext&,
-      bool& force_subtree_update);
+      bool& force_subtree_update,
+      IntPoint& paint_offset_translation,
+      bool& has_paint_offset_translation);
   ALWAYS_INLINE static void UpdateTransform(
       const LayoutObject&,
       ObjectPaintProperties&,
