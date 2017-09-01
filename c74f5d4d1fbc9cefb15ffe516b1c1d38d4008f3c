@@ -105,6 +105,24 @@
       "revId": "c74f5d4d1fbc9cefb15ffe516b1c1d38d4008f3c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30c0b25f_305552b2",
+        "filename": "base/message_loop/incoming_task_queue.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-01T21:14:18Z",
+      "side": 1,
+      "message": "Fixed up all of the declarations here:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/648452",
+      "parentUuid": "5b5f60d8_ee22007f",
+      "revId": "c74f5d4d1fbc9cefb15ffe516b1c1d38d4008f3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
