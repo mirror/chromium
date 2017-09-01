@@ -926,6 +926,7 @@ TEST(JourneyLoggerTest, RecordJourneyStatsHistograms_TwoPaymentRequests) {
 // the Payment Request.
 TEST(JourneyLoggerTest,
      RecordJourneyStatsHistograms_CheckoutFunnelUkm_UserAborted) {
+  using UkmEntry = ukm::builders::PaymentRequest_CheckoutEvents;
   ukm::TestAutoSetUkmRecorder ukm_recorder;
   char test_url[] = "http://www.google.com/";
 
@@ -953,17 +954,16 @@ TEST(JourneyLoggerTest,
   ASSERT_EQ(1U, ukm_recorder.entries_count());
   const ukm::mojom::UkmEntry* entry = ukm_recorder.GetEntry(0);
   EXPECT_EQ(source->id(), entry->source_id);
-  EXPECT_EQ(base::HashMetricName(internal::kUKMCheckoutEventsEntryName),
-            entry->event_hash);
+  EXPECT_EQ(base::HashMetricName(UkmEntry::kEntryName), entry->event_hash);
 
-  const ukm::mojom::UkmMetric* status_metric = ukm::TestUkmRecorder::FindMetric(
-      entry, internal::kUKMCompletionStatusMetricName);
+  const ukm::mojom::UkmMetric* status_metric =
+      ukm::TestUkmRecorder::FindMetric(entry, UkmEntry::kCompletionStatusName);
   ASSERT_NE(nullptr, status_metric);
   EXPECT_EQ(JourneyLogger::COMPLETION_STATUS_USER_ABORTED,
             status_metric->value);
 
   const ukm::mojom::UkmMetric* step_metric =
-      ukm::TestUkmRecorder::FindMetric(entry, internal::kUKMEventsMetricName);
+      ukm::TestUkmRecorder::FindMetric(entry, UkmEntry::kEventsName);
   ASSERT_NE(nullptr, step_metric);
   EXPECT_EQ(JourneyLogger::EVENT_SHOWN | JourneyLogger::EVENT_PAY_CLICKED |
                 JourneyLogger::EVENT_REQUEST_SHIPPING |
@@ -976,6 +976,7 @@ TEST(JourneyLoggerTest,
 // completes the Payment Request.
 TEST(JourneyLoggerTest,
      RecordJourneyStatsHistograms_CheckoutFunnelUkm_Completed) {
+  using UkmEntry = ukm::builders::PaymentRequest_CheckoutEvents;
   ukm::TestAutoSetUkmRecorder ukm_recorder;
   char test_url[] = "http://www.google.com/";
 
@@ -1001,16 +1002,15 @@ TEST(JourneyLoggerTest,
   ASSERT_EQ(1U, ukm_recorder.entries_count());
   const ukm::mojom::UkmEntry* entry = ukm_recorder.GetEntry(0);
   EXPECT_EQ(source->id(), entry->source_id);
-  EXPECT_EQ(base::HashMetricName(internal::kUKMCheckoutEventsEntryName),
-            entry->event_hash);
+  EXPECT_EQ(base::HashMetricName(UkmEntry::kEntryName), entry->event_hash);
 
-  const ukm::mojom::UkmMetric* status_metric = ukm::TestUkmRecorder::FindMetric(
-      entry, internal::kUKMCompletionStatusMetricName);
+  const ukm::mojom::UkmMetric* status_metric =
+      ukm::TestUkmRecorder::FindMetric(entry, UkmEntry::kCompletionStatusName);
   ASSERT_NE(nullptr, status_metric);
   EXPECT_EQ(JourneyLogger::COMPLETION_STATUS_COMPLETED, status_metric->value);
 
   const ukm::mojom::UkmMetric* step_metric =
-      ukm::TestUkmRecorder::FindMetric(entry, internal::kUKMEventsMetricName);
+      ukm::TestUkmRecorder::FindMetric(entry, UkmEntry::kEventsName);
   ASSERT_NE(nullptr, step_metric);
   EXPECT_EQ(JourneyLogger::EVENT_SHOWN | JourneyLogger::EVENT_REQUEST_SHIPPING |
                 JourneyLogger::EVENT_REQUEST_PAYER_EMAIL |
