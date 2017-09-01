@@ -93,6 +93,30 @@
       "revId": "cbfe70981f2cac3862fc59ab57b0209855554683",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f93f4b2f_6417b1af",
+        "filename": "content/network/network_context.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-09-01T17:51:48Z",
+      "side": 1,
+      "message": "Similar tasks (simple backend doing recovery with index corrupt) have been noticed to take a minute or two on non-trivial portion of Macs --- though as it\u0027s on startup, the I/O may be oversubscribed, but it\u0027s a surprisingly heavy thing.\n\n(Macs on Stable would use the blockfile backend, which has a lot fewer files, but canary/dev would have a pretty even split between backends)",
+      "parentUuid": "d67c7a17_85e72342",
+      "range": {
+        "startLine": 252,
+        "startChar": 2,
+        "endLine": 252,
+        "endChar": 9
+      },
+      "revId": "cbfe70981f2cac3862fc59ab57b0209855554683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
