@@ -18,7 +18,6 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/profiler/scoped_tracker.h"
 #include "base/sha1.h"
-#include "base/threading/worker_pool.h"
 #include "base/time/time.h"
 #include "base/trace_event/trace_event.h"
 #include "base/values.h"
@@ -54,7 +53,7 @@ class NetLogCaptureMode;
 // fundamentally doing the same verification. CertVerifierJob is similarly
 // thread-unsafe and lives on the origin thread.
 //
-// To do the actual work, CertVerifierJob posts a task to WorkerPool
+// To do the actual work, CertVerifierJob posts a task to TaskScheduler
 // (PostTaskAndReply), and on completion notifies all requests attached to it.
 //
 // Cancellation:
@@ -215,10 +214,9 @@ class CertVerifierJob {
 
   const CertVerifier::RequestParams& key() const { return key_; }
 
-  // Posts a task to the worker pool to do the verification. Once the
-  // verification has completed on the worker thread, it will call
-  // OnJobCompleted() on the origin thread.
-  bool Start(const scoped_refptr<CertVerifyProc>& verify_proc,
+  // Posts a task to TaskScheduler to do the verification. Once the verification
+  // has completed, it will call OnJobCompleted() on the origin thread.
+  void Start(const scoped_refptr<CertVerifyProc>& verify_proc,
              const scoped_refptr<CRLSet>& crl_set) {
     // Owned by the bound reply callback.
     std::unique_ptr<ResultHelper> owned_result(new ResultHelper());
@@ -227,15 +225,16 @@ class CertVerifierJob {
     // is gotten before calling base::Passed().
     auto* result = owned_result.get();
 
-    return base::WorkerPool::PostTaskAndReply(
+    base::PostTaskWithTraitsAndReply(
         FROM_HERE,
-        base::Bind(&DoVerifyOnWorkerThread, verify_proc, key_.certificate(),
-                   key_.hostname(), key_.ocsp_response(), key_.flags(), crl_set,
-                   key_.additional_trust_anchors(), &result->error,
-                   &result->result),
-        base::Bind(&CertVerifierJob::OnJobCompleted,
-                   weak_ptr_factory_.GetWeakPtr(), base::Passed(&owned_result)),
-        true /* task is slow */);
+        {base::MayBlock(), base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
+        base::BindOnce(&DoVerifyOnWorkerThread, verify_proc, key_.certificate(),
+                       key_.hostname(), key_.ocsp_response(), key_.flags(),
+                       crl_set, key_.additional_trust_anchors(), &result->error,
+                       &result->result),
+        base::BindOnce(&CertVerifierJob::OnJobCompleted,
+                       weak_ptr_factory_.GetWeakPtr(),
+                       base::Passed(&owned_result)));
   }
 
   ~CertVerifierJob() {
@@ -359,11 +358,7 @@ int MultiThreadedCertVerifier::Verify(const RequestParams& params,
     std::unique_ptr<CertVerifierJob> new_job =
         base::MakeUnique<CertVerifierJob>(params, net_log.net_log(), this);
 
-    if (!new_job->Start(verify_proc_, crl_set)) {
-      // TODO(wtc): log to the NetLog.
-      LOG(ERROR) << "CertVerifierJob couldn't be started.";
-      return ERR_INSUFFICIENT_RESOURCES;  // Just a guess.
-    }
+    new_job->Start(verify_proc_, crl_set);
 
     job = new_job.get();
     inflight_[job] = std::move(new_job);
