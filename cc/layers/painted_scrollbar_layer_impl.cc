@@ -89,16 +89,15 @@ void PaintedScrollbarLayerImpl::AppendQuads(
   bool premultipled_alpha = true;
   bool flipped = false;
   bool nearest_neighbor = false;
+  bool contents_opaque_thumb = false;
   gfx::PointF uv_top_left(0.f, 0.f);
   gfx::PointF uv_bottom_right(1.f, 1.f);
 
-  viz::SharedQuadState* shared_quad_state =
+  viz::SharedQuadState* shared_quad_state_thumb =
       render_pass->CreateAndAppendSharedQuadState();
-  PopulateScaledSharedQuadState(shared_quad_state, internal_contents_scale_,
-                                internal_contents_scale_);
-
-  AppendDebugBorderQuad(render_pass, internal_content_bounds_,
-                        shared_quad_state, append_quads_data);
+  PopulateScaledSharedQuadState(
+      shared_quad_state_thumb, internal_contents_scale_,
+      internal_contents_scale_, contents_opaque_thumb);
 
   gfx::Rect thumb_quad_rect = ComputeThumbQuadRect();
   gfx::Rect scaled_thumb_quad_rect =
@@ -120,7 +119,7 @@ void PaintedScrollbarLayerImpl::AppendQuads(
                              thumb_opacity_};
     TextureDrawQuad* quad =
         render_pass->CreateAndAppendDrawQuad<TextureDrawQuad>();
-    quad->SetNew(shared_quad_state, scaled_thumb_quad_rect,
+    quad->SetNew(shared_quad_state_thumb, scaled_thumb_quad_rect,
                  scaled_visible_thumb_quad_rect, needs_blending,
                  thumb_resource_id, premultipled_alpha, uv_top_left,
                  uv_bottom_right, SK_ColorTRANSPARENT, opacity, flipped,
@@ -128,6 +127,13 @@ void PaintedScrollbarLayerImpl::AppendQuads(
     ValidateQuadResources(quad);
   }
 
+  viz::SharedQuadState* shared_quad_state_track =
+      render_pass->CreateAndAppendSharedQuadState();
+  PopulateScaledSharedQuadState(shared_quad_state_track,
+                                internal_contents_scale_,
+                                internal_contents_scale_, contents_opaque());
+  AppendDebugBorderQuad(render_pass, internal_content_bounds_,
+                        shared_quad_state_track, append_quads_data);
   gfx::Rect track_quad_rect(bounds());
   gfx::Rect scaled_track_quad_rect(internal_content_bounds_);
   gfx::Rect visible_track_quad_rect =
@@ -140,7 +146,7 @@ void PaintedScrollbarLayerImpl::AppendQuads(
     const float opacity[] = {1.0f, 1.0f, 1.0f, 1.0f};
     TextureDrawQuad* quad =
         render_pass->CreateAndAppendDrawQuad<TextureDrawQuad>();
-    quad->SetNew(shared_quad_state, scaled_track_quad_rect,
+    quad->SetNew(shared_quad_state_track, scaled_track_quad_rect,
                  scaled_visible_track_quad_rect, needs_blending,
                  track_resource_id, premultipled_alpha, uv_top_left,
                  uv_bottom_right, SK_ColorTRANSPARENT, opacity, flipped,
