@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "8b8943fa_a11584c1",
+        "filename": "extensions/browser/api/metrics_private/metrics_private_api.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-01T20:33:31Z",
+      "side": 1,
+      "message": "Normal style is to use \u003d instead of initializing with (). I don\u0027t find it useful to mark locals like this const but that\u0027s up to you.",
+      "parentUuid": "cc500a27_e7c94928",
+      "range": {
+        "startLine": 141,
+        "startChar": 2,
+        "endLine": 142,
+        "endChar": 52
+      },
+      "revId": "e8f6ea16c93db7a2d5d3fd0c35c1f70ad42b59ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "679a0a52_6c1a44b6",
         "filename": "extensions/browser/api/metrics_private/metrics_private_api.cc",
         "patchSetId": 5
