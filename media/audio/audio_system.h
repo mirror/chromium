@@ -13,7 +13,6 @@
 #include "media/base/media_export.h"
 
 namespace media {
-class AudioManager;
 
 // Provides asynchronous interface to access audio device information
 class MEDIA_EXPORT AudioSystem {
@@ -37,8 +36,6 @@ class MEDIA_EXPORT AudioSystem {
   // Callback may receive invalid parameters, it means the specified device is
   // not found. This is best-effort: valid parameters do not guarantee existence
   // of the device.
-  // TODO(olka,tommi): fix all AudioManager implementations to return invalid
-  // parameters if the device is not found.
   virtual void GetInputStreamParameters(const std::string& device_id,
                                         OnAudioParamsCallback on_params_cb) = 0;
 
@@ -47,8 +44,6 @@ class MEDIA_EXPORT AudioSystem {
   // Callback may receive invalid parameters, it means the specified device is
   // not found. This is best-effort: valid parameters do not guarantee existence
   // of the device.
-  // TODO(olka,tommi): fix all AudioManager implementations to return invalid
-  // parameters if the device is not found.
   virtual void GetOutputStreamParameters(
       const std::string& device_id,
       OnAudioParamsCallback on_params_cb) = 0;
