@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "09fe8798_587a24f2",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-09-01T20:40:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6aa9f13_f08c02e3",
+      "range": {
+        "startLine": 574,
+        "startChar": 9,
+        "endLine": 574,
+        "endChar": 0
+      },
+      "revId": "f17b0bedb48674065178311d09e1d8b04525b1a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d842fe3_803dde44",
         "filename": "remoting/host/linux/linux_me2me_host.py",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "f17b0bedb48674065178311d09e1d8b04525b1a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdf2fbcd_5f308bc6",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 1618,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-09-01T20:40:02Z",
+      "side": 1,
+      "message": "After some research, I don\u0027t think there\u0027s a common rule in Python. Some people like to use _ (which is just a normal identifier in Python), while other\u0027s avoid it because it\u0027s given a special meaning by both the interactive interpreter (contains the result of the last statement), and gettext ( _(\"Some string\") is used to look up a translation). Some people use __ to avoid that confusion, while others do _name to signify that a local variable is unused (but this clashes with the private member convention).\n\nPersonally, I\u0027d probably pick one of these two:\nfor inhibitor, _ in all_inhibitors: # We don\u0027t use gettext\nfor inhibitor in (i[0] for i in all_inhibitors): # Avoids creating an extra variable altogether.\n\nI went with the first one for now.",
+      "parentUuid": "4d842fe3_803dde44",
+      "range": {
+        "startLine": 1618,
+        "startChar": 21,
+        "endLine": 1618,
+        "endChar": 35
+      },
+      "revId": "f17b0bedb48674065178311d09e1d8b04525b1a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "020441bc_a981d434",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 1654,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-09-01T20:40:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b8d1799_a43e75f2",
+      "range": {
+        "startLine": 1654,
+        "startChar": 19,
+        "endLine": 1654,
+        "endChar": 22
+      },
+      "revId": "f17b0bedb48674065178311d09e1d8b04525b1a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29d3748a_025ed894",
         "filename": "remoting/host/linux/linux_me2me_host.py",
         "patchSetId": 4
@@ -82,6 +154,30 @@
       "writtenOn": "2017-09-01T17:40:50Z",
       "side": 1,
       "message": "I find this code hard to follow. You\u0027re not actually waiting here, although this would seem the logical place to do so (wouldn\u0027t it mean you don\u0027t need an else, and can simply restart everything when waitpid returns?)\n\nThe way this is structured as a big while True loop that maintains state seems rather error prone. For example, could you simply call desktop.shutdown_all_procs() everywhere you\u0027re currently setting tear_down \u003d True and get rid of that variable?",
+      "range": {
+        "startLine": 1656,
+        "startChar": 48,
+        "endLine": 1656,
+        "endChar": 0
+      },
+      "revId": "f17b0bedb48674065178311d09e1d8b04525b1a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb10e5c7_6e66ccd7",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 1656,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-09-01T20:40:02Z",
+      "side": 1,
+      "message": "wait could return before the timeout is reached if another child process exits in the meantime. E.g., maybe only the host died and we want to relaunch it it 60 seconds, but before that time elapses the session exits. Now, instead of waiting the remaining time and trying to start the host, we want (according to the previous logic, here) to initiate tear down and stop the X server, too, and then relaunch everything.\n\nIt wouldn\u0027t be enough to call desktop.shutdown_all_procs() everywhere I\u0027m setting tear_down \u003d True; the entire contents of the \"if tear_down:\" block would have to be duplicated.\n\nIn general, the code was a giant mess of a while True loop before. In implementing this change, I cleaned it up some and fixed several instances of poor behavior. It could surely be cleaned up further, but I\u0027m not sure that that\u0027s in scope for this bug. The changes I\u0027ve made are already more extensive than I was expecting, and I intentionally avoided rewriting the whole thing.",
+      "parentUuid": "29d3748a_025ed894",
       "range": {
         "startLine": 1656,
         "startChar": 48,
@@ -114,6 +210,30 @@
       "revId": "f17b0bedb48674065178311d09e1d8b04525b1a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32c0d439_a6658dd5",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 1695,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-09-01T20:40:02Z",
+      "side": 1,
+      "message": "I know the difference between these, I swear!\n\nFixed.",
+      "parentUuid": "1885f1b3_47ba5c47",
+      "range": {
+        "startLine": 1695,
+        "startChar": 39,
+        "endLine": 1695,
+        "endChar": 43
+      },
+      "revId": "f17b0bedb48674065178311d09e1d8b04525b1a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -152,6 +272,24 @@
     },
     {
       "key": {
+        "uuid": "bce0b1e2_0f66c901",
+        "filename": "remoting/host/remoting_me2me_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-09-01T20:40:02Z",
+      "side": 1,
+      "message": "Well, the Python script will actually output a nice usage message if you pass it --help. It seems kind of hit-or-miss whether a given command-line option is in the usage message for the host. E.g., --audio-pipe-name is in it, but --enable-vp9 is not. I left --report-offline-reason out because --signal-parent isn\u0027t included, and they seemed to be of about equivalent \"internalness\". I wasn\u0027t sure if there was a more general principal in play.",
+      "parentUuid": "06865c24_b7b0bf81",
+      "revId": "f17b0bedb48674065178311d09e1d8b04525b1a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c5f3c8ba_ec544984",
         "filename": "remoting/host/remoting_me2me_host.cc",
         "patchSetId": 4
@@ -163,6 +301,30 @@
       "writtenOn": "2017-09-01T17:40:50Z",
       "side": 1,
       "message": "Add a comment clarifying that this will be called on successful offline-reason reporting?\n\nBetter still, if you have an explicit state for that (or if it can be inferred from the state and the report_offline_reason_ member), log something like \"Offline reason saved.\"",
+      "range": {
+        "startLine": 924,
+        "startChar": 31,
+        "endLine": 924,
+        "endChar": 0
+      },
+      "revId": "f17b0bedb48674065178311d09e1d8b04525b1a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41533895_c18ce27e",
+        "filename": "remoting/host/remoting_me2me_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 924,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-09-01T20:40:02Z",
+      "side": 1,
+      "message": "The offline reason code already logs a message stating whether it was successful. I figured that in general, we don\u0027t want to say the host is ready to receive connections if it happens to be in *any* other state, such as if the host decided to shut down for a different reason before the signaling finished connecting.",
+      "parentUuid": "c5f3c8ba_ec544984",
       "range": {
         "startLine": 924,
         "startChar": 31,
