@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "945b4c6f_c211d4a1",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 871,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-01T22:59:41Z",
+      "side": 1,
+      "message": "when do you reset this region? it\u0027d be really bad to keep sending this each time...",
+      "range": {
+        "startLine": 871,
+        "startChar": 26,
+        "endLine": 871,
+        "endChar": 48
+      },
+      "revId": "c2bbf34ae16c980ebfdf0659cd912c5b0e7db880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "113c51f8_6c910811",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 911,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-01T22:59:41Z",
+      "side": 1,
+      "message": "are these checks needed and correct?",
+      "range": {
+        "startLine": 908,
+        "startChar": 2,
+        "endLine": 911,
+        "endChar": 11
+      },
+      "revId": "c2bbf34ae16c980ebfdf0659cd912c5b0e7db880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "921cf5ce_8a59051b",
+        "filename": "ui/compositor/layer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-01T22:59:41Z",
+      "side": 1,
+      "message": "deferred",
+      "range": {
+        "startLine": 618,
+        "startChar": 13,
+        "endLine": 618,
+        "endChar": 22
+      },
+      "revId": "c2bbf34ae16c980ebfdf0659cd912c5b0e7db880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20847f3f_d1228b9a",
+        "filename": "ui/compositor/scoped_layer_animation_settings.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-01T22:59:41Z",
+      "side": 1,
+      "message": "why should CacheRenderSurfaceObserver be setting this? Shouldn\u0027t we have a DeferredPaintSurfaceObserver so it\u0027s possible to use this without caching?",
+      "revId": "c2bbf34ae16c980ebfdf0659cd912c5b0e7db880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
