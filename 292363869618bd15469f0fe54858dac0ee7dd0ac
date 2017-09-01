@@ -46,6 +46,30 @@
       "revId": "292363869618bd15469f0fe54858dac0ee7dd0ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "352f56f4_d068db49",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-01T21:13:59Z",
+      "side": 1,
+      "message": "\"Commit Message\" is also expandable as diffs of other files. Trailing white space is marked red. :)",
+      "parentUuid": "39befe31_d7438d74",
+      "range": {
+        "startLine": 12,
+        "startChar": 69,
+        "endLine": 12,
+        "endChar": 70
+      },
+      "revId": "292363869618bd15469f0fe54858dac0ee7dd0ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
