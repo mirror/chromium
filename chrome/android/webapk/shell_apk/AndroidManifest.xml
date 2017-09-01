@@ -24,6 +24,13 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            {{#share_template}}
+            <intent-filter>
+              <action android:name="android.intent.action.SEND" />
+              <category android:name="android.intent.category.DEFAULT" />
+              <data android:mimeType="text/plain" />
+            </intent-filter>
+            {{/share_template}}
             {{#intent_filters}}
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"></action>
@@ -34,6 +41,9 @@
             {{/intent_filters}}
         </activity>
         <meta-data android:name="org.chromium.webapk.shell_apk.shellApkVersion" android:value="{{{shell_apk_version}}}" />
+        {{#share_template}}
+        <meta-data android:name="org.chromium.webapk.shell_apk.shareTemplate" android:value="{{{share_template}}}" />
+        {{/share_template}}
         {{#bound_webapk}}
         <meta-data android:name="org.chromium.webapk.shell_apk.runtimeHost" android:value="{{{runtime_host}}}" />
         <meta-data android:name="org.chromium.webapk.shell_apk.runtimeHostApplicationName" android:value="{{{runtime_host_application_name}}}" />
