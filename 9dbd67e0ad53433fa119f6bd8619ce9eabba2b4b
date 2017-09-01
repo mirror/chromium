@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f27dc2c7_8035e9b6",
+        "filename": "chrome/common/extensions/manifest_handlers/settings_overrides_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-01T14:34:57Z",
+      "side": 1,
+      "message": "This is probably sufficient for this patch, but I wonder if we should add a\n// TODO(catmullings): Ideally, we wouldn\u0027t be using custom code to format URLs here, since we have a number of methods that do that more universally.\n\nAnd then we should follow up with srahim@ (at some point, it\u0027s not urgent) to figure out what the most useful way to present these URLs is.",
+      "revId": "9dbd67e0ad53433fa119f6bd8619ce9eabba2b4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
