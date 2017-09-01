@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5bb6d247_f0555cdc",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-09-01T22:46:30Z",
+      "side": 1,
+      "message": "It strikes me that crash site and text mismatch type aren\u0027t so much different formats as they are different groupings (besides the default directory grouping). Would it make sense to have a separate dropdown or radio selection, or would that overcomplicate the UI?",
+      "revId": "5d4d6079ac4243b6d873509e3c318ca2b22296d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f30e0624_2e0ca536",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/controllers/single_test_runner.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-09-01T22:46:30Z",
+      "side": 1,
+      "message": "This function is getting pretty deeply nested, and I have a feeling that it could be simplified; also, it looks like this function maybe always returns a list with either 0 or 1 elements.\n\nPerhaps it could be changed to something like:\n\n    def _compare_text(self, expected, actual):\n        if not (expected and actual):\n            return []\n        actual \u003d self._get_normalized_output_text(actual)\n        failure \u003d self._text_failure_type(expected, actual)\n        return [failure] if failure else []\n\n    def _text_failure_type(self, expected, actual):\n        if not self._port.do_text_results_differ(expected, actual):\n            return None\n        # if they differ after removing spaces, return appropriate value\n        # if they differ after removing newlines and spaces, return another value\n        # return general text diff failure type\n\nWhat do you think?",
+      "revId": "5d4d6079ac4243b6d873509e3c318ca2b22296d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bb2ecf0_56112cad",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/controllers/single_test_runner.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-09-01T22:46:30Z",
+      "side": 1,
+      "message": "Whitespace (or \"white space\") usually refers to any kind of space character including carriage return, vertical space, non-breaking space, form feed, etc.\nhttps://en.wikipedia.org/wiki/Whitespace_character\n\nWhat do you think about adding a general character-removing function (maybe inside _compare_text) like:\n\n    def remove(text, chars):\n        for char in chars:\n            text \u003d text.replace(char, \u0027\u0027)\n        return text\n\nAnd then when you use it in _compare_text, you might use it like:\n\n    if not self._port.do_text_results_differ(remove(expected_text, \u0027 \\t\u0027),\n                                             remove(normalized_actual_text, \u0027 \\t\u0027)):\n        ...\n\nIf you think it makes it easier to read you could also extract a `differs` function that takes a list of chars.",
+      "range": {
+        "startLine": 360,
+        "startChar": 0,
+        "endLine": 367,
+        "endChar": 69
+      },
+      "revId": "5d4d6079ac4243b6d873509e3c318ca2b22296d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
