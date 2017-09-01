@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "fa205dad_55760366",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-09-01T20:33:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f78e2539_ac604a53",
+      "revId": "1a002c60638c638d4752b0719ad43235640c2293",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e9d60ee_01993c1d",
         "filename": "ash/system/bluetooth/bluetooth_power_controller.h",
         "patchSetId": 1
@@ -158,6 +176,24 @@
       "revId": "1a002c60638c638d4752b0719ad43235640c2293",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0362c43_93a951f2",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-09-01T20:33:38Z",
+      "side": 1,
+      "message": "I removed the callbacks with direct RunNextPendingTask.",
+      "parentUuid": "7eb407f3_96a21823",
+      "revId": "1a002c60638c638d4752b0719ad43235640c2293",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
