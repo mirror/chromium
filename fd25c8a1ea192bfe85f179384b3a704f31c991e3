@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc00658d_3c7f9e3c",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 964,
+      "author": {
+        "id": 1200434
+      },
+      "writtenOn": "2017-09-01T16:49:57Z",
+      "side": 1,
+      "message": "Wow, this is interesting. I didn\u0027t realize this signal was never plumbed back into Blink.\n\nShould this be plumbed through RenderFrameImpl instead? Then you won\u0027t need code in WebViewImpl -- just check if it\u0027s IsMainFrame, grab GetWebFrame and go.",
+      "revId": "fd25c8a1ea192bfe85f179384b3a704f31c991e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
