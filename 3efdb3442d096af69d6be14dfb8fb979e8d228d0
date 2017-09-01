@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29d71e73_be63234f",
+        "filename": "ash/wm/window_state.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-01T09:51:14Z",
+      "side": 1,
+      "message": "is this something that exo code should be doing? either way, looks like a fix that should separate from the rest of this CL",
+      "revId": "3efdb3442d096af69d6be14dfb8fb979e8d228d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1362aa18_679b5821",
+        "filename": "components/exo/shell_surface.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-01T09:51:14Z",
+      "side": 1,
+      "message": "hm, can we make this work using standard configure event flow instead (using a synchronous round-trip if needed)? I really like us to cut down on arc specific logic that we have to maintain in exo/chrome and move towards a model where more code is shared with regular clients and upstream interfaces clearly define expected behavior.",
+      "revId": "3efdb3442d096af69d6be14dfb8fb979e8d228d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
