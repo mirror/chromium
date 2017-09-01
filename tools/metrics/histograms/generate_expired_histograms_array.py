@@ -15,7 +15,7 @@ import extract_histograms
 import merge_xml
 
 _SCRIPT_NAME = "generate_expired_histograms_array.py"
-_HASH_DATATYPE = "unit64_t"
+_HASH_DATATYPE = "uint64_t"
 _HEADER = """// Generated from {script_name}. Do not edit!
 
 #ifndef {include_guard}
