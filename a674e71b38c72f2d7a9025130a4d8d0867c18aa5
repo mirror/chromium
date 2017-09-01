@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03a8c8c8_4b8a5673",
+        "filename": "ash/shelf/app_list_shelf_item_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-01T16:03:16Z",
+      "side": 1,
+      "message": "I think this should just use |display_id|. (This might have been a bug in the old code -- I\u0027m pretty sure we want the app list to show up on the same display as the app list button that the user clicked. It\u0027s possible the old code happened to work because clicking on the button set the RootWindowForNewWindows as a side effect.)\n\nYou should be able to try this out using the Ctrl-Shift-D ash debug shortcut and clicking on the app list button on each display.",
+      "revId": "a674e71b38c72f2d7a9025130a4d8d0867c18aa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bffb9674_3dd6870b",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1118,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-01T16:03:16Z",
+      "side": 1,
+      "message": "This seems wrong. The code seems to be recording a \"toggle\" only if the app list is already visible and is being shown again? I know you didn\u0027t write this code, but can you file a bug and/or follow up with newcomer@ on this? (He\u0027s listed as the histogram owner.)",
+      "revId": "a674e71b38c72f2d7a9025130a4d8d0867c18aa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "436f4983_ea788ff4",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1124,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-01T16:03:16Z",
+      "side": 1,
+      "message": "This should use shelf_widget_-\u003eGetNativeWindow()",
+      "revId": "a674e71b38c72f2d7a9025130a4d8d0867c18aa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f4c3656_81967d8b",
+        "filename": "ash/wm/overview/window_selector_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-01T16:03:16Z",
+      "side": 1,
+      "message": "nit: I think you can call GetPrimaryDisplay().id() here",
+      "revId": "a674e71b38c72f2d7a9025130a4d8d0867c18aa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
