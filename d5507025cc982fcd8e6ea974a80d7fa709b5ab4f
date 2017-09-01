@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "2b4d66f8_50939b56",
+        "filename": "chrome/browser/resources/settings/languages_page/languages_page.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-01T16:46:48Z",
+      "side": 1,
+      "message": "nit: CONST_LIKE_THIS",
+      "range": {
+        "startLine": 21,
+        "startChar": 6,
+        "endLine": 21,
+        "endChar": 35
+      },
+      "revId": "d5507025cc982fcd8e6ea974a80d7fa709b5ab4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc912606_92d51fd5",
+        "filename": "chrome/browser/resources/settings/languages_page/languages_page.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-01T16:46:48Z",
+      "side": 1,
+      "message": "add @private, like above (no need to add @type though)",
+      "revId": "d5507025cc982fcd8e6ea974a80d7fa709b5ab4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e5b2893f_3ae4b7ff",
         "filename": "chrome/browser/resources/settings/languages_page/languages_page.js",
         "patchSetId": 6
@@ -46,6 +86,52 @@
       "revId": "d5507025cc982fcd8e6ea974a80d7fa709b5ab4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "96dc584c_863415fa",
+        "filename": "chrome/browser/resources/settings/languages_page/languages_page.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-01T16:46:48Z",
+      "side": 1,
+      "message": "In Chromium JS we put the underscore at the end of @private functions, not the beginning.",
+      "range": {
+        "startLine": 545,
+        "startChar": 2,
+        "endLine": 545,
+        "endChar": 27
+      },
+      "revId": "d5507025cc982fcd8e6ea974a80d7fa709b5ab4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7add9a32_42874b67",
+        "filename": "chrome/browser/resources/settings/languages_page/languages_page.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-01T16:46:48Z",
+      "side": 1,
+      "message": "no need for \u003d\u003d true/false. just:\n\n  if (!oldVal \u0026\u0026 newVal) {",
+      "range": {
+        "startLine": 546,
+        "startChar": 0,
+        "endLine": 546,
+        "endChar": 44
+      },
+      "revId": "d5507025cc982fcd8e6ea974a80d7fa709b5ab4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
