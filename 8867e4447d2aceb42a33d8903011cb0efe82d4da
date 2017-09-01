@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fcf7e593_414b583e",
+        "filename": "ash/system/web_notification/web_notification_tray.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-09-01T02:39:49Z",
+      "side": 1,
+      "message": "HideAndDelete() internally deletes WebNotificationImage after the animation is finished, so this is correct.",
+      "parentUuid": "82c56ae8_b8645425",
+      "revId": "8867e4447d2aceb42a33d8903011cb0efe82d4da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e3f22f6_24650610",
         "filename": "ash/system/web_notification/web_notification_tray_unittest.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "8867e4447d2aceb42a33d8903011cb0efe82d4da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5163a18b_00b635aa",
+        "filename": "ash/system/web_notification/web_notification_tray_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-09-01T02:39:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e3f22f6_24650610",
+      "revId": "8867e4447d2aceb42a33d8903011cb0efe82d4da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "de3e0e3f_385d8cb9",
+        "filename": "ash/system/web_notification/web_notification_tray_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-09-01T02:39:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fa29fb4_5a16fe49",
+      "revId": "8867e4447d2aceb42a33d8903011cb0efe82d4da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3eaa5468_0b18918c",
         "filename": "ash/system/web_notification/web_notification_tray_unittest.cc",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "8867e4447d2aceb42a33d8903011cb0efe82d4da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f28de8ac_8846cc14",
+        "filename": "ash/system/web_notification/web_notification_tray_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-09-01T02:39:49Z",
+      "side": 1,
+      "message": "Thank you!",
+      "parentUuid": "3eaa5468_0b18918c",
+      "revId": "8867e4447d2aceb42a33d8903011cb0efe82d4da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
