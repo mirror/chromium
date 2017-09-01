@@ -16,6 +16,9 @@ namespace sql {
 class Connection;
 class Statement;
 
+// Creates and manages a table to store generic meta data. The two main features
+// provided are an interface for storing multi-typed key-value data and a set of
+// helper methods to assist in database schema version control.
 class SQL_EXPORT MetaTable {
  public:
   MetaTable();
@@ -51,12 +54,13 @@ class SQL_EXPORT MetaTable {
   static bool GetMmapStatus(Connection* db, int64_t* status);
   static bool SetMmapStatus(Connection* db, int64_t status);
 
-  // Initializes the MetaTableHelper, creating the meta table if necessary. For
-  // new tables, it will initialize the version number to |version| and the
-  // compatible version number to |compatible_version|.  Versions must be
-  // greater than 0 to distinguish missing versions (see GetVersionNumber()).
-  // If there was no meta table (proxy for a fresh database), mmap status is set
-  // to |kMmapSuccess|.
+  // Initializes the MetaTableHelper, providing the |Connection| pointer and
+  // creating the meta table if necessary.  Must be called before any other
+  // non-static methods. For  new tables, it will initialize the version number
+  // to |version| and the compatible version number to |compatible_version|.
+  // Versions must be greater than 0 to distinguish missing versions (see
+  // GetVersionNumber()). If there was no meta table (proxy for a fresh
+  // database), mmap status is set to |kMmapSuccess|.
   bool Init(Connection* db, int version, int compatible_version);
 
   // Resets this MetaTable object, making another call to Init() possible.
