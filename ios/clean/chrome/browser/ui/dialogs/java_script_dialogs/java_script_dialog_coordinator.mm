@@ -4,6 +4,7 @@
 
 #import "ios/clean/chrome/browser/ui/dialogs/java_script_dialogs/java_script_dialog_coordinator.h"
 
+#import "ios/chrome/browser/overlays/overlay_service.h"
 #import "ios/chrome/browser/ui/browser_list/browser.h"
 #import "ios/chrome/browser/ui/commands/command_dispatcher.h"
 #import "ios/chrome/browser/ui/coordinators/browser_coordinator+internal.h"
@@ -11,7 +12,6 @@
 #import "ios/clean/chrome/browser/ui/dialogs/dialog_coordinator+subclassing.h"
 #import "ios/clean/chrome/browser/ui/dialogs/java_script_dialogs/java_script_dialog_mediator.h"
 #import "ios/clean/chrome/browser/ui/dialogs/java_script_dialogs/java_script_dialog_request.h"
-#import "ios/clean/chrome/browser/ui/overlays/overlay_service.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."

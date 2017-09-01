@@ -6,6 +6,8 @@
 
 #include "base/mac/foundation_util.h"
 #include "base/memory/ptr_util.h"
+#import "ios/chrome/browser/overlays/overlay_service.h"
+#import "ios/chrome/browser/overlays/overlay_service_factory.h"
 #import "ios/chrome/browser/ui/browser_list/browser.h"
 #import "ios/chrome/browser/ui/commands/command_dispatcher.h"
 #import "ios/chrome/browser/ui/coordinators/browser_coordinator+internal.h"
@@ -15,8 +17,6 @@
 #import "ios/clean/chrome/browser/ui/dialogs/http_auth_dialogs/http_auth_dialog_coordinator.h"
 #import "ios/clean/chrome/browser/ui/dialogs/http_auth_dialogs/http_auth_dialog_request.h"
 #import "ios/clean/chrome/browser/ui/dialogs/java_script_dialogs/java_script_dialog_overlay_presenter.h"
-#import "ios/clean/chrome/browser/ui/overlays/overlay_service.h"
-#import "ios/clean/chrome/browser/ui/overlays/overlay_service_factory.h"
 #import "ios/clean/chrome/browser/ui/web_contents/web_contents_mediator.h"
 #import "ios/clean/chrome/browser/ui/web_contents/web_contents_view_controller.h"
 #include "ios/web/public/navigation_manager.h"

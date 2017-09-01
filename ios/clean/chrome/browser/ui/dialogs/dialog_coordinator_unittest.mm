@@ -6,6 +6,7 @@
 
 #import "base/mac/foundation_util.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
+#import "ios/chrome/browser/overlays/test_helpers/overlay_coordinator_test.h"
 #import "ios/chrome/browser/ui/browser_list/browser.h"
 #import "ios/chrome/browser/ui/coordinators/browser_coordinator+internal.h"
 #import "ios/clean/chrome/browser/ui/dialogs/dialog_button_configuration.h"
@@ -16,7 +17,6 @@
 #import "ios/clean/chrome/browser/ui/dialogs/dialog_text_field_configuration.h"
 #import "ios/clean/chrome/browser/ui/dialogs/dialog_view_controller.h"
 #import "ios/clean/chrome/browser/ui/dialogs/test_helpers/test_dialog_mediator.h"
-#import "ios/clean/chrome/browser/ui/overlays/test_helpers/overlay_coordinator_test.h"
 #include "ios/web/public/test/fakes/test_browser_state.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/gtest_mac.h"

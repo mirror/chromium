@@ -17,11 +17,11 @@ source_set("dialog_coordinator_support") {
   deps = [
     ":dialogs_ui",
     "//base",
+    "//ios/chrome/browser/overlays",
     "//ios/chrome/browser/ui/browser_list",
     "//ios/chrome/browser/ui/commands",
     "//ios/chrome/browser/ui/coordinators",
     "//ios/clean/chrome/browser/ui/commands",
-    "//ios/clean/chrome/browser/ui/overlays",
   ]
 }
 
@@ -69,12 +69,12 @@ source_set("unit_tests") {
     "//base",
     "//base/test:test_support",
     "//ios/chrome/browser/browser_state",
+    "//ios/chrome/browser/overlays/test",
     "//ios/chrome/browser/ui/browser_list",
     "//ios/chrome/browser/ui/coordinators",
     "//ios/chrome/browser/web_state_list",
     "//ios/chrome/test/base",
     "//ios/clean/chrome/browser/ui/dialogs/test_helpers",
-    "//ios/clean/chrome/browser/ui/overlays/test_helpers",
     "//ios/web",
     "//ios/web/public/test",
     "//ios/web/public/test/fakes",
