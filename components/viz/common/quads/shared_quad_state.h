@@ -36,6 +36,7 @@ class VIZ_COMMON_EXPORT SharedQuadState {
               const gfx::Rect& visible_layer_rect,
               const gfx::Rect& clip_rect,
               bool is_clipped,
+              bool are_contents_opaque,
               float opacity,
               SkBlendMode blend_mode,
               int sorting_context_id);
@@ -51,6 +52,8 @@ class VIZ_COMMON_EXPORT SharedQuadState {
   // This rect lives in the target content space.
   gfx::Rect clip_rect;
   bool is_clipped;
+  // Indicated whether the quads' content is opaque.
+  bool are_contents_opaque;
   float opacity;
   SkBlendMode blend_mode;
   int sorting_context_id;
