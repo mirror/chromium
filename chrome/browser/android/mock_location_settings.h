@@ -25,6 +25,9 @@ class MockLocationSettings : public LocationSettings {
   static bool HasShownLocationSettingsDialog();
   static void ClearHasShownLocationSettingsDialog();
 
+  static void SetAsyncLocationSettingsDialog();
+  static void ResolveAsyncLocationSettingsDialog();
+
   // LocationSettings implementation:
   bool HasAndroidLocationPermission() override;
   bool CanPromptForAndroidLocationPermission(
@@ -43,6 +46,9 @@ class MockLocationSettings : public LocationSettings {
   static bool location_settings_dialog_enabled_;
   static bool has_shown_location_settings_dialog_;
   static LocationSettingsDialogOutcome location_settings_dialog_outcome_;
+  static bool resolve_location_settings_dialog_async_;
+  static LocationSettingsDialogOutcomeCallback
+      location_settings_dialog_callback_;
 
   DISALLOW_COPY_AND_ASSIGN(MockLocationSettings);
 };
