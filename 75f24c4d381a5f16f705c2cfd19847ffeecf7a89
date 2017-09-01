@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "23644b00_3418abb4",
+        "filename": "components/download/content/public/download_navigation_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-09-01T01:56:56Z",
+      "side": 1,
+      "message": "I tested it a little bit on https://notepad-plus-plus.org/download/v7.3.1.html, and pretty suprised the actual call sequence.\n\nCall sequence of these functions seems to be:\nDidStartLoading \u003d\u003d\u003e DidStartNavigation \u003d\u003d\u003e DidFinishNavigation \u003d\u003d\u003e DidStartNavigation \u003d\u003d\u003e ....(10-20 navigation events pair) \u003d\u003d\u003e DidStopLoading.\n\n\nI guess probably each ajax request will be reflected as a navigation event pair which renders only some part of the page, like an ad.\n\nMaybe the loading pair is better, so we don\u0027t get 20 calls per page loading.\n\nAnd DidStopLoading is called before WebContentsDestroyed when we close the tab, so I only leave the loading event pair here.\n\nAlso, there are DidFinishLoad/DidFailLoad which ties to RenderFrameHost, I assume that\u0027s for different purpose, and DidStartLoading/DidStopLoading should also be called.\n\nIn general, DidStartLoading/DidStopLoading seems what we want here. And it seems to be safe to do counting based on them.",
+      "parentUuid": "b2ecb255_60543130",
+      "revId": "75f24c4d381a5f16f705c2cfd19847ffeecf7a89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "03527e55_9221c0e0",
         "filename": "components/download/internal/navigation_monitor_impl.cc",
         "patchSetId": 3
@@ -57,6 +75,30 @@
       "revId": "75f24c4d381a5f16f705c2cfd19847ffeecf7a89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a35ed848_3c53245d",
+        "filename": "components/download/internal/navigation_monitor_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-09-01T01:56:56Z",
+      "side": 1,
+      "message": "Done, change this to SetObserver, so removed this DCHECK.",
+      "parentUuid": "03527e55_9221c0e0",
+      "range": {
+        "startLine": 16,
+        "startChar": 43,
+        "endLine": 16,
+        "endChar": 47
+      },
+      "revId": "75f24c4d381a5f16f705c2cfd19847ffeecf7a89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -83,6 +125,30 @@
     },
     {
       "key": {
+        "uuid": "cab843bb_e85b1d3a",
+        "filename": "components/download/internal/navigation_monitor_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-09-01T01:56:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8c5fa05_eaaaf7fd",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 23
+      },
+      "revId": "75f24c4d381a5f16f705c2cfd19847ffeecf7a89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f820511c_3acce320",
         "filename": "components/download/internal/navigation_monitor_impl.cc",
         "patchSetId": 3
@@ -106,6 +172,30 @@
     },
     {
       "key": {
+        "uuid": "959a782c_37ba355d",
+        "filename": "components/download/internal/navigation_monitor_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-09-01T01:56:56Z",
+      "side": 1,
+      "message": "Ack, talked offline, Shakti has added that change in his CL. I\u0027ll leave this function untouched for now.\n\nWe discussed the counting previously, there is a concern that WebContentObserver seems complex and some complete calls may or may not be called. This may introduce bugs or propagate the bugs from WebContentObserver to us.",
+      "parentUuid": "f820511c_3acce320",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 22,
+        "endChar": 40
+      },
+      "revId": "75f24c4d381a5f16f705c2cfd19847ffeecf7a89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7afa480_408fd73e",
         "filename": "components/download/public/navigation_monitor.h",
         "patchSetId": 3
@@ -126,6 +216,30 @@
       "revId": "75f24c4d381a5f16f705c2cfd19847ffeecf7a89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15f062d4_1ad6b8a1",
+        "filename": "components/download/public/navigation_monitor.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-09-01T01:56:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7afa480_408fd73e",
+      "range": {
+        "startLine": 16,
+        "startChar": 2,
+        "endLine": 17,
+        "endChar": 10
+      },
+      "revId": "75f24c4d381a5f16f705c2cfd19847ffeecf7a89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
