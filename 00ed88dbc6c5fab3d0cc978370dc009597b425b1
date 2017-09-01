@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd28b8ea_455dfd38",
+        "filename": "chromeos/components/tether/initializer_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-01T17:06:46Z",
+      "side": 1,
+      "message": "Ah, I think I realized what could be going wrong! Before this line, add this:\n\n\n// Delete top-level disconnection classes; if a connection is active,\n// this will trigger a disconnection.\nnetwork_connection_handler_tether_delegate_.reset();\ntether_disconnector_.reset();\n\n// If a connection was active, |disconnect_tethering_request_sender_|\n// will have a pending disconnection request.\n\n\nThen, remove the reset() calls I mentioned above from StartAsynchronousShutdown(). In combination with your fix for HasPendingRequests(), this should fix the \"disabling Tether\" issue.",
+      "range": {
+        "startLine": 145,
+        "startChar": 2,
+        "endLine": 145,
+        "endChar": 3
+      },
+      "revId": "00ed88dbc6c5fab3d0cc978370dc009597b425b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
