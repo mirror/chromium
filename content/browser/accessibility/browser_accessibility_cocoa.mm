@@ -804,7 +804,8 @@ NSString* const NSAccessibilityRequiredAttributeChrome = @"AXRequired";
 - (NSArray*)columnHeaders {
   if (![self instanceActive])
     return nil;
-  if (!ui::IsTableLikeRole(browserAccessibility_->GetRole())) {
+  if (!ui::IsTableLikeRole(browserAccessibility_->GetRole()) &&
+      ![[self role] isEqualToString:NSAccessibilityCellRole]) {
     return nil;
   }
 
@@ -1604,7 +1605,8 @@ NSString* const NSAccessibilityRequiredAttributeChrome = @"AXRequired";
 - (NSArray*)rowHeaders {
   if (![self instanceActive])
     return nil;
-  if (!ui::IsTableLikeRole(browserAccessibility_->GetRole())) {
+  if (!ui::IsTableLikeRole(browserAccessibility_->GetRole()) &&
+      ![[self role] isEqualToString:NSAccessibilityCellRole]) {
     return nil;
   }
 
@@ -2733,6 +2735,8 @@ NSString* const NSAccessibilityRequiredAttributeChrome = @"AXRequired";
     [ret addObjectsFromArray:@[
       NSAccessibilityColumnIndexRangeAttribute,
       NSAccessibilityRowIndexRangeAttribute,
+      NSAccessibilityColumnHeaderUIElementsAttribute,
+      NSAccessibilityRowHeaderUIElementsAttribute,
       NSAccessibilityARIAColumnIndexAttribute,
       NSAccessibilityARIARowIndexAttribute,
       @"AXSortDirection",
