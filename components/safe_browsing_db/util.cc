@@ -50,7 +50,8 @@ ThreatMetadata::~ThreatMetadata() {}
 bool ThreatMetadata::operator==(const ThreatMetadata& other) const {
   return threat_pattern_type == other.threat_pattern_type &&
          api_permissions == other.api_permissions &&
-         population_id == other.population_id;
+         population_id == other.population_id &&
+         experimental == other.experimental;
 }
 
 bool ThreatMetadata::operator!=(const ThreatMetadata& other) const {

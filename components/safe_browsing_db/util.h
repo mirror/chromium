@@ -47,6 +47,7 @@ enum class ThreatPatternType : int {
 // Metadata that was returned by a GetFullHash call. This is the parsed version
 // of the PB (from Pver3, or Pver4 local) or JSON (from Pver4 via GMSCore).
 // Some fields are only applicable to certain lists.
+// Note: when updating this struct, make sure you update operator==.
 struct ThreatMetadata {
   ThreatMetadata();
   ThreatMetadata(const ThreatMetadata& other);
