@@ -16,6 +16,24 @@
       "revId": "957d722f8c8216f619539af66801cb23d4267063",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e903822c_fd5aa729",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-09-01T05:46:53Z",
+      "side": 0,
+      "message": "Updated",
+      "parentUuid": "4936463c_61302d47",
+      "revId": "957d722f8c8216f619539af66801cb23d4267063",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
