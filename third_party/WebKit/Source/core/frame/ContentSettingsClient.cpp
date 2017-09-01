@@ -58,6 +58,17 @@ bool ContentSettingsClient::AllowScriptFromSource(bool enabled_per_settings,
   return enabled_per_settings;
 }
 
+void ContentSettingsClient::GetAllowedClientHintsFromSource(
+    const KURL& url,
+    WebEnabledClientHints* client_hints) {
+  LOG(WARNING)
+      << "xxx ContentSettingsClient::GetAllowedClientHintsFromSource cp0";
+  if (client_)
+    client_->GetAllowedClientHintsFromSource(url, client_hints);
+  LOG(WARNING)
+      << "xxx ContentSettingsClient::GetAllowedClientHintsFromSource cp1";
+}
+
 bool ContentSettingsClient::AllowImage(bool enabled_per_settings,
                                        const KURL& image_url) {
   if (client_)
