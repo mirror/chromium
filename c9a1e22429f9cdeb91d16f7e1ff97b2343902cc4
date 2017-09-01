@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6fee3061_70023c66",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field_paste_delegate.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-09-01T13:36:19Z",
+      "side": 1,
+      "message": "I think by documentation (https://developer.apple.com/documentation/foundation/nsitemprovidercompletionhandler?language\u003dobjc) you should have an NSURL* argument.",
+      "range": {
+        "startLine": 31,
+        "startChar": 31,
+        "endLine": 31,
+        "endChar": 52
+      },
+      "revId": "c9a1e22429f9cdeb91d16f7e1ff97b2343902cc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
