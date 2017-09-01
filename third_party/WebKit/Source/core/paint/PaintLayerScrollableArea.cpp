@@ -87,6 +87,7 @@
 #include "platform/graphics/paint/DrawingRecorder.h"
 #include "platform/scroll/ScrollAnimatorBase.h"
 #include "platform/scroll/ScrollbarTheme.h"
+#include "platform/scroll/ScrollbarThemeOverlay.h"
 #include "platform/wtf/CheckedNumeric.h"
 #include "public/platform/Platform.h"
 
@@ -1225,37 +1226,54 @@ static inline const LayoutObject& ScrollbarStyleSource(
 }
 
 bool PaintLayerScrollableArea::NeedsScrollbarReconstruction() const {
+  if (!HasScrollbar())
+    return false;
+
   const LayoutObject& style_source = ScrollbarStyleSource(Box());
   bool should_use_custom =
       style_source.IsBox() &&
       style_source.StyleRef().HasPseudoStyle(kPseudoIdScrollbar);
-  bool has_any_scrollbar = HasScrollbar();
 
-  bool did_scrollbar_theme_changed = false;
-
+  // Native Scrollbar <-> Custom Scrollbar.
   if (HasHorizontalScrollbar() &&
       HorizontalScrollbar()->IsCustomScrollbar() != should_use_custom)
-    did_scrollbar_theme_changed = true;
+    return true;
 
   if (HasVerticalScrollbar() &&
       VerticalScrollbar()->IsCustomScrollbar() != should_use_custom)
-    did_scrollbar_theme_changed = true;
+    return true;
 
-  bool did_custom_scrollbar_owner_changed = false;
-
+  // Custom Scrollbar owner change.
   if (HasHorizontalScrollbar() && HorizontalScrollbar()->IsCustomScrollbar()) {
     if (style_source != ToLayoutScrollbar(HorizontalScrollbar())->StyleSource())
-      did_custom_scrollbar_owner_changed = true;
+      return true;
   }
 
   if (HasVerticalScrollbar() && VerticalScrollbar()->IsCustomScrollbar()) {
     if (style_source != ToLayoutScrollbar(VerticalScrollbar())->StyleSource())
-      did_custom_scrollbar_owner_changed = true;
+      return true;
   }
 
-  return has_any_scrollbar &&
-         (did_scrollbar_theme_changed ||
-          (should_use_custom && did_custom_scrollbar_owner_changed));
+  // Should use custom scrollbar and nothing should change.
+  if (should_use_custom)
+    return false;
+
+  // Check native scrollbar theme change.
+  ScrollbarTheme* current_theme = &ScrollbarTheme::GetTheme();
+  if (Page* page = Box().GetFrame()->LocalFrameRoot().GetPage()) {
+    if (page->GetSettings().GetForceAndroidOverlayScrollbar())
+      current_theme = &ScrollbarThemeOverlay::MobileTheme();
+  }
+
+  if (HasVerticalScrollbar() &&
+      current_theme != &VerticalScrollbar()->GetTheme())
+    return true;
+
+  if (HasHorizontalScrollbar() &&
+      current_theme != &HorizontalScrollbar()->GetTheme())
+    return true;
+
+  return false;
 }
 
 void PaintLayerScrollableArea::ComputeScrollbarExistence(
@@ -2127,9 +2145,21 @@ Scrollbar* PaintLayerScrollableArea::ScrollbarManager::CreateScrollbar(
       scrollbar_size = LayoutTheme::GetTheme().ScrollbarControlSizeForPart(
           style_source.StyleRef().Appearance());
     }
+
+    ScrollbarTheme* theme = &ScrollbarTheme::GetTheme();
+    if (Page* page =
+            ScrollableArea()->Box().GetFrame()->LocalFrameRoot().GetPage()) {
+      if (page->GetSettings().GetForceAndroidOverlayScrollbar())
+        theme = &ScrollbarThemeOverlay::MobileTheme();
+    }
+
+    LOG(ERROR) << ScrollbarTheme::MockScrollbarsEnabled() << ","
+               << theme->IsMockTheme();
+
     scrollbar = Scrollbar::Create(
         ScrollableArea(), orientation, scrollbar_size,
-        &ScrollableArea()->Box().GetFrame()->GetPage()->GetChromeClient());
+        &ScrollableArea()->Box().GetFrame()->GetPage()->GetChromeClient(),
+        theme);
   }
   ScrollableArea()->Box().GetDocument().View()->AddScrollbar(scrollbar);
   return scrollbar;
