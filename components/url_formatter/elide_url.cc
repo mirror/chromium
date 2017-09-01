@@ -72,11 +72,17 @@ base::string16 ElideComponentizedPath(
   for (size_t i = url_path_number_of_elements - 1; i > 0; --i) {
     base::string16 elided_path = BuildPathFromComponents(
         url_path_prefix, url_path_elements, url_filename, i);
-    if (available_pixel_width >= gfx::GetStringWidthF(elided_path, font_list))
+    if (available_pixel_width >= gfx::GetStringWidthF(elided_path, font_list)) {
+      LOG(INFO) << "Can fit elided path: " << elided_path;
+      LOG(INFO) << "Returning elided \"" << elided_path + url_query << "\"";
       return gfx::ElideText(elided_path + url_query, font_list,
                        available_pixel_width, gfx::ELIDE_TAIL);
+    } else {
+      LOG(INFO) << "Cannot fit elided path: " << elided_path;
+    }
   }
 
+  LOG(INFO) << "Returning empty string";
   return base::string16();
 }
 
@@ -155,6 +161,7 @@ namespace url_formatter {
 base::string16 ElideUrl(const GURL& url,
                         const gfx::FontList& font_list,
                         float available_pixel_width) {
+  LOG(INFO) << "ElideUrl()";
   // Get a formatted string and corresponding parsing of the url.
   url::Parsed parsed;
   const base::string16 url_string = url_formatter::FormatUrl(
@@ -281,6 +288,7 @@ base::string16 ElideUrl(const GURL& url,
       gfx::GetStringWidthF(kEllipsisAndSlash, font_list);
 
   // Check with both subdomain and domain.
+  LOG(INFO) << "Eliding path with domain and subdomain...";
   if (url_path_number_of_elements > 0) {
     base::string16 elided_path = ElideComponentizedPath(
         url_subdomain + url_domain, url_path_elements, url_filename, url_query,
@@ -301,6 +309,7 @@ base::string16 ElideUrl(const GURL& url,
     else
       url_elided_domain = url_domain;
 
+    LOG(INFO) << "Eliding path with only domain...";
     if (url_path_number_of_elements > 0) {
       base::string16 elided_path = ElideComponentizedPath(
           url_elided_domain, url_path_elements, url_filename, url_query,
@@ -321,12 +330,15 @@ base::string16 ElideUrl(const GURL& url,
               kPixelWidthDotsTrailer +
               gfx::GetStringWidthF(base::ASCIIToUTF16("UV"), font_list) <
           available_pixel_width) {
+    LOG(INFO) << "Building default string 1";
     final_elided_url_string += BuildPathFromComponents(
         base::string16(), url_path_elements, url_filename, 1);
   } else {
+    LOG(INFO) << "Building default string 2";
     final_elided_url_string += url_path;
   }
 
+  LOG(INFO) << "Returned the default case";
   return gfx::ElideText(final_elided_url_string, font_list,
                         available_pixel_width, gfx::ELIDE_TAIL);
 }
