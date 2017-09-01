@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8434fec1_4ea9e8df",
+        "filename": "content/browser/renderer_host/database_message_filter.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-01T04:45:45Z",
+      "side": 1,
+      "message": "(See below first)\n\nthen this can just directly check observer_added_ and reset / remove it if needed on the db tracker task runner.",
+      "revId": "8a005c8cd04322b013cffd46bec906adf40cc01d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16af8c3a_fdacfbfd",
+        "filename": "content/browser/renderer_host/database_message_filter.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-01T04:45:45Z",
+      "side": 1,
+      "message": "Rather than checking this here, we can do it directly in OnDatbaseOpened right? Which by virtue of the task runner redirection below, already happens? (I\u0027m wondering what I\u0027m missing)",
+      "revId": "8a005c8cd04322b013cffd46bec906adf40cc01d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
