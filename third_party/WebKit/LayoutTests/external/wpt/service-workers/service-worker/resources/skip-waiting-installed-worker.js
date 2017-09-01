@@ -21,9 +21,9 @@ self.addEventListener('message', function(event) {
             return;
           }
 
-          if (self.state === 'activating') {
+          if (self.state !== 'activating') {
             port.postMessage(
-                'FAIL: Promise should be resolved before worker is activated');
+                'FAIL: Promise should be resolved after worker is activated');
             return;
           }
 
