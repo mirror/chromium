@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "8e31349a_8fd39adc",
+        "filename": "cc/paint/paint_image.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-09-02T23:08:38Z",
+      "side": 1,
+      "message": "IIUC the pixels read here will, by virtue of n32info having a color space assigned, be color converted into |color_space|.",
+      "revId": "57086f006ab53a2c68eec3ce8429ae82778be4ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdc2c9f5_8f7b01aa",
+        "filename": "cc/paint/paint_image.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-09-02T23:08:38Z",
+      "side": 1,
+      "message": "IICTUC (that\u0027s \"continue to understand correctly\"), the *info for readPixels should not have a makeColorSpace applied to it. It happens to do nothing, but the type of color conversion that would be done is, I think, not the desired one.\n\nAnd I also think that the n32info argument to installPixels can avoid having a color space.",
+      "revId": "57086f006ab53a2c68eec3ce8429ae82778be4ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d3c0d792_e6e3d2ec",
         "filename": "third_party/WebKit/Source/platform/graphics/ImageFrameGenerator.cpp",
         "patchSetId": 4
