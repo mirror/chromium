@@ -4,7 +4,6 @@
 
 package org.chromium.android_webview;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -237,10 +236,9 @@ public abstract class AwContentsClient {
     }
 
     /**
-     * Type adaptation class for FileChooserParams.
+     * Type adaptation class for {@link android.webkit.FileChooserParams}.
      */
-    @SuppressLint("NewApi")  // WebChromeClient.FileChooserParams requires API level 21.
-    public static class FileChooserParamsImpl extends WebChromeClient.FileChooserParams {
+    public static class FileChooserParamsImpl {
         private int mMode;
         private String mAcceptTypes;
         private String mTitle;
@@ -260,12 +258,10 @@ public abstract class AwContentsClient {
             return mAcceptTypes;
         }
 
-        @Override
         public int getMode() {
             return mMode;
         }
 
-        @Override
         public String[] getAcceptTypes() {
             if (mAcceptTypes == null) {
                 return new String[0];
@@ -273,22 +269,18 @@ public abstract class AwContentsClient {
             return mAcceptTypes.split(";");
         }
 
-        @Override
         public boolean isCaptureEnabled() {
             return mCapture;
         }
 
-        @Override
         public CharSequence getTitle() {
             return mTitle;
         }
 
-        @Override
         public String getFilenameHint() {
             return mDefaultFilename;
         }
 
-        @Override
         public Intent createIntent() {
             String mimeType = "*/*";
             if (mAcceptTypes != null && !mAcceptTypes.trim().isEmpty()) {
