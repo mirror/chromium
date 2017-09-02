@@ -34,6 +34,24 @@
       "revId": "bcbca5321782e576080f33ea4dbd0562e55194d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c08e52e_6131b89b",
+        "filename": "chrome/browser/printing/print_preview_dialog_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-02T02:16:48Z",
+      "side": 0,
+      "message": "Just tested that out and that does work and is much simpler, thank you. I have a CL with that change in PrintPreviewDialogController here: https://chromium-review.googlesource.com/c/chromium/src/+/648265\nI can update the test there, or you can do it in this CL, let me know which is easier for you.\n\nRE: transition type, that was the transition type we saw on the gmail fragment navigation, and we didn\u0027t see user-initiated navigations (which should close print preview) with the same type, hence the check.",
+      "parentUuid": "9860bb2f_8ff8ab25",
+      "revId": "bcbca5321782e576080f33ea4dbd0562e55194d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
