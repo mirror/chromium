@@ -18,6 +18,7 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/stringprintf.h"
 #include "base/time/default_tick_clock.h"
+#include "base/time/tick_clock.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "ui/chromeos/accelerometer/accelerometer_util.h"
 #include "ui/events/devices/input_device_manager.h"
@@ -122,12 +123,12 @@ void TabletPowerButtonController::TestApi::SendKeyEvent(ui::KeyEvent* event) {
 }
 
 TabletPowerButtonController::TabletPowerButtonController(
-    LockStateController* controller,
-    PowerButtonDisplayController* display_controller)
-    : tick_clock_(new base::DefaultTickClock()),
-      controller_(controller),
-      display_controller_(display_controller),
+    PowerButtonDisplayController* display_controller,
+    base::TickClock* tick_clock)
+    : display_controller_(display_controller),
+      tick_clock_(tick_clock),
       accelerometer_scoped_observer_(this) {
+  controller_ = Shell::Get()->lock_state_controller();
   chromeos::DBusThreadManager::Get()->GetPowerManagerClient()->AddObserver(
       this);
   Shell::Get()->tablet_mode_controller()->AddObserver(this);
@@ -166,7 +167,7 @@ void TabletPowerButtonController::OnPowerButtonEvent(
       force_off_on_button_up_ = false;
     }
 
-    last_button_down_time_ = tick_clock_->NowTicks();
+    last_button_down_time_ = timestamp;
     screen_off_when_power_button_down_ =
         display_controller_->screen_state() !=
         PowerButtonDisplayController::ScreenState::ON;
@@ -178,7 +179,7 @@ void TabletPowerButtonController::OnPowerButtonEvent(
       return;
 
     const base::TimeTicks previous_up_time = last_button_up_time_;
-    last_button_up_time_ = tick_clock_->NowTicks();
+    last_button_up_time_ = timestamp;
 
     if (max_accelerometer_samples_) {
       base::TimeDelta duration = last_button_up_time_ - last_button_down_time_;
@@ -229,6 +230,7 @@ void TabletPowerButtonController::OnAccelerometerUpdated(
 
 void TabletPowerButtonController::SuspendDone(
     const base::TimeDelta& sleep_duration) {
+  LOG(ERROR) << "i am called...";
   last_resume_time_ = tick_clock_->NowTicks();
 }
 
@@ -242,12 +244,6 @@ void TabletPowerButtonController::OnTabletModeEnded() {
   shutdown_timer_.Stop();
   if (controller_->CanCancelShutdownAnimation())
     controller_->CancelShutdownAnimation();
-}
-
-void TabletPowerButtonController::SetTickClockForTesting(
-    std::unique_ptr<base::TickClock> tick_clock) {
-  DCHECK(tick_clock);
-  tick_clock_ = std::move(tick_clock);
 }
 
 void TabletPowerButtonController::ParseSpuriousPowerButtonSwitches(

@@ -14,7 +14,6 @@
 #include "ash/shutdown_controller.h"
 #include "ash/shutdown_reason.h"
 #include "ash/test/ash_test_base.h"
-#include "ash/test_screenshot_delegate.h"
 #include "ash/test_shell_delegate.h"
 #include "ash/wm/lock_state_controller_test_api.h"
 #include "ash/wm/power_button_controller.h"
@@ -102,10 +101,7 @@ class LockStateControllerTest : public AshTestBase {
   }
 
  protected:
-  void GenerateMouseMoveEvent() {
-    ui::test::EventGenerator generator(Shell::GetPrimaryRootWindow());
-    generator.MoveMouseTo(10, 10);
-  }
+  void GenerateMouseMoveEvent() { GetEventGenerator().MoveMouseTo(10, 10); }
 
   int NumShutdownRequests() {
     return test_shutdown_controller_.num_shutdown_requests() +
@@ -294,14 +290,6 @@ class LockStateControllerTest : public AshTestBase {
 
   void ReleaseLockButton() {
     power_button_controller_->OnLockButtonEvent(false, base::TimeTicks::Now());
-  }
-
-  void PressVolumeDown() {
-    GetEventGenerator().PressKey(ui::VKEY_VOLUME_DOWN, ui::EF_NONE);
-  }
-
-  void ReleaseVolumeDown() {
-    GetEventGenerator().ReleaseKey(ui::VKEY_VOLUME_DOWN, ui::EF_NONE);
   }
 
   void SystemLocks() {
@@ -1023,56 +1011,6 @@ TEST_F(LockStateControllerTest, TestHiddenWallpaperLockUnlock) {
   ExpectUnlockAfterUIDestroyedAnimationFinished();
 
   ExpectUnlockedState();
-}
-
-TEST_F(LockStateControllerTest, Screenshot) {
-  // TODO: fails because of no screenshot in mash. http://crbug.com/698033.
-  if (Shell::GetAshConfig() == Config::MASH)
-    return;
-
-  TestScreenshotDelegate* delegate = GetScreenshotDelegate();
-  delegate->set_can_take_screenshot(true);
-
-  EnableTabletMode(false);
-
-  // Screenshot handling should not be active when not in tablet mode.
-  ASSERT_EQ(0, delegate->handle_take_screenshot_count());
-  PressVolumeDown();
-  PressPowerButton();
-  ReleasePowerButton();
-  ReleaseVolumeDown();
-  EXPECT_EQ(0, delegate->handle_take_screenshot_count());
-
-  EnableTabletMode(true);
-
-  // Pressing power alone does not take a screenshot.
-  PressPowerButton();
-  ReleasePowerButton();
-  EXPECT_EQ(0, delegate->handle_take_screenshot_count());
-
-  // Press & release volume then pressing power does not take a screenshot.
-  ASSERT_EQ(0, delegate->handle_take_screenshot_count());
-  PressVolumeDown();
-  ReleaseVolumeDown();
-  PressPowerButton();
-  ReleasePowerButton();
-  EXPECT_EQ(0, delegate->handle_take_screenshot_count());
-
-  // Pressing power and then volume does not take a screenshot.
-  ASSERT_EQ(0, delegate->handle_take_screenshot_count());
-  PressPowerButton();
-  ReleasePowerButton();
-  PressVolumeDown();
-  ReleaseVolumeDown();
-  EXPECT_EQ(0, delegate->handle_take_screenshot_count());
-
-  // Holding volume down and pressing power takes a screenshot.
-  ASSERT_EQ(0, delegate->handle_take_screenshot_count());
-  PressVolumeDown();
-  PressPowerButton();
-  ReleasePowerButton();
-  ReleaseVolumeDown();
-  EXPECT_EQ(1, delegate->handle_take_screenshot_count());
 }
 
 }  // namespace ash

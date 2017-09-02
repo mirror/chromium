@@ -13,7 +13,9 @@
 #include "ash/session/test_session_controller_client.h"
 #include "ash/shell.h"
 #include "ash/shell_test_api.h"
+#include "ash/system/power/power_button_screenshot_controller.h"
 #include "ash/test/ash_test_base.h"
+#include "ash/test_screenshot_delegate.h"
 #include "ash/test_shell_delegate.h"
 #include "ash/wm/lock_state_controller.h"
 #include "ash/wm/lock_state_controller_test_api.h"
@@ -69,26 +71,30 @@ class TabletPowerButtonControllerTest : public AshTestBase {
     base::CommandLine::ForCurrentProcess()->AppendSwitch(
         switches::kAshEnableTabletMode);
     AshTestBase::SetUp();
+    power_button_controller_ = Shell::Get()->power_button_controller();
+    tick_clock_ = new base::SimpleTestTickClock;
+    power_button_controller_->SetTickClockForTesting(
+        std::unique_ptr<base::TickClock>(tick_clock_));
     // Trigger an accelerometer update so that |tablet_controller_| can be
     // initialized.
     SendAccelerometerUpdate(kSidewaysVector, kUpVector);
-    tablet_controller_ = Shell::Get()
-                             ->power_button_controller()
-                             ->tablet_power_button_controller_for_test();
+    tablet_controller_ =
+        power_button_controller_->tablet_power_button_controller_for_test();
 
     lock_state_controller_ = Shell::Get()->lock_state_controller();
-    test_api_ = base::MakeUnique<TabletPowerButtonController::TestApi>(
+    test_api_ = std::make_unique<TabletPowerButtonController::TestApi>(
         tablet_controller_);
     lock_state_test_api_ =
-        base::MakeUnique<LockStateControllerTestApi>(lock_state_controller_);
-    tick_clock_ = new base::SimpleTestTickClock;
-    tablet_controller_->SetTickClockForTesting(
-        std::unique_ptr<base::TickClock>(tick_clock_));
+        std::make_unique<LockStateControllerTestApi>(lock_state_controller_);
     shell_delegate_ =
         static_cast<TestShellDelegate*>(Shell::Get()->shell_delegate());
     generator_ = &AshTestBase::GetEventGenerator();
     power_manager_client_->SendBrightnessChanged(kNonZeroBrightness, false);
     EXPECT_FALSE(GetBacklightsForcedOff());
+
+    // Advance a long duration from initialized last resume time in
+    // |tablet_controller_| to avoid cross interference.
+    tick_clock_->Advance(base::TimeDelta::FromMilliseconds(5000));
   }
 
   void TearDown() override {
@@ -105,8 +111,13 @@ class TabletPowerButtonControllerTest : public AshTestBase {
   void ResetPowerButtonController() {
     test_api_ = nullptr;
     tablet_controller_ = nullptr;
+    power_button_controller_ = nullptr;
     ShellTestApi shell_test_api;
     shell_test_api.ResetPowerButtonControllerForTest();
+
+    power_button_controller_ = Shell::Get()->power_button_controller();
+    tablet_controller_ =
+        power_button_controller_->tablet_power_button_controller_for_test();
   }
 
   // Sends an update with screen and keyboard accelerometer readings to
@@ -121,7 +132,9 @@ class TabletPowerButtonControllerTest : public AshTestBase {
     update->Set(chromeos::ACCELEROMETER_SOURCE_ATTACHED_KEYBOARD, keyboard.x(),
                 keyboard.y(), keyboard.z());
 
-    Shell::Get()->power_button_controller()->OnAccelerometerUpdated(update);
+    power_button_controller_->OnAccelerometerUpdated(update);
+    tablet_controller_ =
+        power_button_controller_->tablet_power_button_controller_for_test();
 
     if (test_api_ && test_api_->IsObservingAccelerometerReader(
                          chromeos::AccelerometerReader::GetInstance()))
@@ -129,11 +142,11 @@ class TabletPowerButtonControllerTest : public AshTestBase {
   }
 
   void PressPowerButton() {
-    tablet_controller_->OnPowerButtonEvent(true, base::TimeTicks::Now());
+    power_manager_client_->SendPowerButtonEvent(true, tick_clock_->NowTicks());
   }
 
   void ReleasePowerButton() {
-    tablet_controller_->OnPowerButtonEvent(false, base::TimeTicks::Now());
+    power_manager_client_->SendPowerButtonEvent(false, tick_clock_->NowTicks());
   }
 
   void UnlockScreen() {
@@ -175,9 +188,14 @@ class TabletPowerButtonControllerTest : public AshTestBase {
         TouchscreenEnabledSource::GLOBAL);
   }
 
+  void EnsureNonRepeatedForcingOff() {
+    tick_clock_->Advance(base::TimeDelta::FromMilliseconds(600));
+  }
+
   // Ownership is passed on to chromeos::DBusThreadManager.
   chromeos::FakePowerManagerClient* power_manager_client_ = nullptr;
 
+  PowerButtonController* power_button_controller_ = nullptr;  // Not owned.
   LockStateController* lock_state_controller_ = nullptr;      // Not owned.
   TabletPowerButtonController* tablet_controller_ = nullptr;  // Not owned.
   std::unique_ptr<TabletPowerButtonController::TestApi> test_api_;
@@ -250,6 +268,7 @@ TEST_F(TabletPowerButtonControllerTest,
   EXPECT_FALSE(GetBacklightsForcedOff());
 
   // Test again when backlights is forced off.
+  EnsureNonRepeatedForcingOff();
   PressPowerButton();
   ReleasePowerButton();
   power_manager_client_->SendBrightnessChanged(0, false);
@@ -355,6 +374,7 @@ TEST_F(TabletPowerButtonControllerTest, ConvertibleOnLaptopMode) {
   EXPECT_FALSE(GetBacklightsForcedOff());
 
   // Regular mouse event should SetBacklightsForcedOff(false).
+  EnsureNonRepeatedForcingOff();
   PressPowerButton();
   ReleasePowerButton();
   power_manager_client_->SendBrightnessChanged(0, false);
@@ -364,6 +384,7 @@ TEST_F(TabletPowerButtonControllerTest, ConvertibleOnLaptopMode) {
   EXPECT_FALSE(GetBacklightsForcedOff());
 
   // Synthesized mouse event should not SetBacklightsForcedOff(false).
+  EnsureNonRepeatedForcingOff();
   PressPowerButton();
   ReleasePowerButton();
   power_manager_client_->SendBrightnessChanged(0, false);
@@ -432,6 +453,7 @@ TEST_F(TabletPowerButtonControllerTest, DisableTouchscreenWhileForcedOff) {
 
   EnableTabletMode(false);
   // KeyEvent on laptop mode when screen is off.
+  EnsureNonRepeatedForcingOff();
   PressPowerButton();
   ReleasePowerButton();
   power_manager_client_->SendBrightnessChanged(0, false);
@@ -442,6 +464,7 @@ TEST_F(TabletPowerButtonControllerTest, DisableTouchscreenWhileForcedOff) {
   EXPECT_TRUE(GetGlobalTouchscreenEnabled());
 
   // MouseEvent on laptop mode when screen is off.
+  EnsureNonRepeatedForcingOff();
   PressPowerButton();
   ReleasePowerButton();
   power_manager_client_->SendBrightnessChanged(0, false);
@@ -518,10 +541,6 @@ TEST_F(TabletPowerButtonControllerTest,
 
 // Tests that repeated power button releases are ignored (crbug.com/675291).
 TEST_F(TabletPowerButtonControllerTest, IgnoreRepeatedPowerButtonReleases) {
-  // Advance a long duration from initialized last resume time in
-  // |tablet_controller_| to avoid cross interference.
-  tick_clock_->Advance(base::TimeDelta::FromMilliseconds(2000));
-
   // Set backlights forced off for starting point.
   PressPowerButton();
   ReleasePowerButton();
@@ -566,6 +585,7 @@ TEST_F(TabletPowerButtonControllerTest, LidEventsStopForcingOff) {
   // Pressing/releasing power button again to set backlights forced off. This is
   // for testing purpose. In real life, powerd would not repond to this event
   // with lid closed state.
+  EnsureNonRepeatedForcingOff();
   PressPowerButton();
   ReleasePowerButton();
   ASSERT_TRUE(GetBacklightsForcedOff());
@@ -600,14 +620,10 @@ TEST_F(TabletPowerButtonControllerTest, SyncTouchscreenEnabled) {
 TEST_F(TabletPowerButtonControllerTest, EnableOnAccelerometerUpdate) {
   ASSERT_TRUE(tablet_controller_);
   ResetPowerButtonController();
-  EXPECT_FALSE(Shell::Get()
-                   ->power_button_controller()
-                   ->tablet_power_button_controller_for_test());
+  EXPECT_FALSE(tablet_controller_);
 
   SendAccelerometerUpdate(kSidewaysVector, kSidewaysVector);
-  EXPECT_TRUE(Shell::Get()
-                  ->power_button_controller()
-                  ->tablet_power_button_controller_for_test());
+  EXPECT_TRUE(tablet_controller_);
 
   // If clamshell-like power button behavior is requested via a flag, the
   // TabletPowerButtonController shouldn't be initialized in response to
@@ -616,9 +632,7 @@ TEST_F(TabletPowerButtonControllerTest, EnableOnAccelerometerUpdate) {
       switches::kForceClamshellPowerButton);
   ResetPowerButtonController();
   SendAccelerometerUpdate(kSidewaysVector, kSidewaysVector);
-  EXPECT_FALSE(Shell::Get()
-                   ->power_button_controller()
-                   ->tablet_power_button_controller_for_test());
+  EXPECT_FALSE(tablet_controller_);
 }
 
 TEST_F(TabletPowerButtonControllerTest, IgnoreSpuriousEventsForAcceleration) {
@@ -768,6 +782,93 @@ TEST_F(TabletPowerButtonControllerTest, TouchscreenEnabledClamshell) {
   base::RunLoop().RunUntilIdle();
   SendAccelerometerUpdate(kSidewaysVector, kSidewaysVector);
   EXPECT_TRUE(GetGlobalTouchscreenEnabled());
+}
+
+class PowerButtonScreenshotControllerTest
+    : public TabletPowerButtonControllerTest {
+ public:
+  PowerButtonScreenshotControllerTest() = default;
+  ~PowerButtonScreenshotControllerTest() override = default;
+
+  void SetUp() override {
+    TabletPowerButtonControllerTest::SetUp();
+
+    screenshot_delegate_ = GetScreenshotDelegate();
+    screenshot_delegate_->set_can_take_screenshot(true);
+
+    screenshot_controller_ =
+        power_button_controller_->power_button_screenshot_controller_for_test();
+
+    EnableTabletMode(true);
+  }
+
+ protected:
+  void PressVolumeDown() {
+    generator_->PressKey(ui::VKEY_VOLUME_DOWN, ui::EF_NONE);
+  }
+
+  void ReleaseVolumeDown() {
+    generator_->ReleaseKey(ui::VKEY_VOLUME_DOWN, ui::EF_NONE);
+  }
+
+  void PressVolumeUp() {
+    generator_->PressKey(ui::VKEY_VOLUME_UP, ui::EF_NONE);
+  }
+
+  void ReleaseVolumeUp() {
+    generator_->ReleaseKey(ui::VKEY_VOLUME_UP, ui::EF_NONE);
+  }
+
+  int GetScreenshotCount() const {
+    return screenshot_delegate_->handle_take_screenshot_count();
+  }
+
+  TestScreenshotDelegate* screenshot_delegate_;             // Not owned.
+  PowerButtonScreenshotController* screenshot_controller_;  // Not owned.
+
+  DISALLOW_COPY_AND_ASSIGN(PowerButtonScreenshotControllerTest);
+};
+
+TEST_F(PowerButtonScreenshotControllerTest, Basic) {
+  // TODO: fails because of no screenshot in mash (crbug.com/698033).
+  if (Shell::GetAshConfig() == Config::MASH)
+    return;
+
+  // Tests that pressing power button alone does not take a screenshot.
+  PressPowerButton();
+  ReleasePowerButton();
+  EXPECT_EQ(0, GetScreenshotCount());
+
+  // Tests that pressing power button and volume down simultaneously takes a
+  // screenshot, but the pressing order doesn't matter.
+  PressVolumeDown();
+  PressPowerButton();
+  ReleaseVolumeDown();
+  ReleasePowerButton();
+  EXPECT_EQ(1, GetScreenshotCount());
+
+  PressPowerButton();
+  PressVolumeDown();
+  ReleasePowerButton();
+  ReleaseVolumeDown();
+  EXPECT_EQ(2, GetScreenshotCount());
+
+  // Tests that press & release volume down then pressing power button does not
+  // take a screenshot.
+  PressVolumeDown();
+  ReleaseVolumeDown();
+  PressPowerButton();
+  ReleasePowerButton();
+  EXPECT_EQ(2, GetScreenshotCount());
+
+  // Tests that screenshot handling should not be active when not in tablet
+  // mode.
+  EnableTabletMode(false);
+  PressVolumeDown();
+  PressPowerButton();
+  ReleaseVolumeDown();
+  ReleasePowerButton();
+  EXPECT_EQ(2, GetScreenshotCount());
 }
 
 }  // namespace ash
