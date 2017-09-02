@@ -18,6 +18,7 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/stringprintf.h"
 #include "base/time/default_tick_clock.h"
+#include "base/time/tick_clock.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "ui/chromeos/accelerometer/accelerometer_util.h"
 #include "ui/events/devices/input_device_manager.h"
@@ -122,11 +123,11 @@ void TabletPowerButtonController::TestApi::SendKeyEvent(ui::KeyEvent* event) {
 }
 
 TabletPowerButtonController::TabletPowerButtonController(
-    LockStateController* controller,
-    PowerButtonDisplayController* display_controller)
-    : tick_clock_(new base::DefaultTickClock()),
-      controller_(controller),
+    PowerButtonDisplayController* display_controller,
+    base::TickClock* tick_clock)
+    : lock_state_controller_(Shell::Get()->lock_state_controller()),
       display_controller_(display_controller),
+      tick_clock_(tick_clock),
       accelerometer_scoped_observer_(this) {
   chromeos::DBusThreadManager::Get()->GetPowerManagerClient()->AddObserver(
       this);
@@ -166,7 +167,7 @@ void TabletPowerButtonController::OnPowerButtonEvent(
       force_off_on_button_up_ = false;
     }
 
-    last_button_down_time_ = tick_clock_->NowTicks();
+    last_button_down_time_ = timestamp;
     screen_off_when_power_button_down_ =
         display_controller_->screen_state() !=
         PowerButtonDisplayController::ScreenState::ON;
@@ -178,7 +179,7 @@ void TabletPowerButtonController::OnPowerButtonEvent(
       return;
 
     const base::TimeTicks previous_up_time = last_button_up_time_;
-    last_button_up_time_ = tick_clock_->NowTicks();
+    last_button_up_time_ = timestamp;
 
     if (max_accelerometer_samples_) {
       base::TimeDelta duration = last_button_up_time_ - last_button_down_time_;
@@ -188,8 +189,8 @@ void TabletPowerButtonController::OnPowerButtonEvent(
 
     // When power button is released, cancel shutdown animation whenever it is
     // still cancellable.
-    if (controller_->CanCancelShutdownAnimation())
-      controller_->CancelShutdownAnimation();
+    if (lock_state_controller_->CanCancelShutdownAnimation())
+      lock_state_controller_->CancelShutdownAnimation();
 
     // Ignore the event if it comes too soon after the last one.
     if (timestamp - previous_up_time <=
@@ -234,20 +235,14 @@ void TabletPowerButtonController::SuspendDone(
 
 void TabletPowerButtonController::OnTabletModeStarted() {
   shutdown_timer_.Stop();
-  if (controller_->CanCancelShutdownAnimation())
-    controller_->CancelShutdownAnimation();
+  if (lock_state_controller_->CanCancelShutdownAnimation())
+    lock_state_controller_->CancelShutdownAnimation();
 }
 
 void TabletPowerButtonController::OnTabletModeEnded() {
   shutdown_timer_.Stop();
-  if (controller_->CanCancelShutdownAnimation())
-    controller_->CancelShutdownAnimation();
-}
-
-void TabletPowerButtonController::SetTickClockForTesting(
-    std::unique_ptr<base::TickClock> tick_clock) {
-  DCHECK(tick_clock);
-  tick_clock_ = std::move(tick_clock);
+  if (lock_state_controller_->CanCancelShutdownAnimation())
+    lock_state_controller_->CancelShutdownAnimation();
 }
 
 void TabletPowerButtonController::ParseSpuriousPowerButtonSwitches(
@@ -367,7 +362,7 @@ void TabletPowerButtonController::StartShutdownTimer() {
 }
 
 void TabletPowerButtonController::OnShutdownTimeout() {
-  controller_->StartShutdownAnimation(ShutdownReason::POWER_BUTTON);
+  lock_state_controller_->StartShutdownAnimation(ShutdownReason::POWER_BUTTON);
 }
 
 void TabletPowerButtonController::LockScreenIfRequired() {
@@ -375,8 +370,8 @@ void TabletPowerButtonController::LockScreenIfRequired() {
   if (session_controller->ShouldLockScreenAutomatically() &&
       session_controller->CanLockScreen() &&
       !session_controller->IsUserSessionBlocked() &&
-      !controller_->LockRequested()) {
-    controller_->LockWithoutAnimation();
+      !lock_state_controller_->LockRequested()) {
+    lock_state_controller_->LockWithoutAnimation();
   }
 }
 
