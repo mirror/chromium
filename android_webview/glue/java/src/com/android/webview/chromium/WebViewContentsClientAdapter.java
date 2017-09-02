@@ -40,6 +40,7 @@ import android.webkit.WebViewClient;
 
 import com.android.webview.chromium.WebViewDelegateFactory.WebViewDelegate;
 
+import org.chromium.android_webview.AwConsoleMessage;
 import org.chromium.android_webview.AwContents;
 import org.chromium.android_webview.AwContentsClient;
 import org.chromium.android_webview.AwContentsClientBridge;
@@ -384,13 +385,13 @@ class WebViewContentsClientAdapter extends AwContentsClient {
      * @see AwContentsClient#onConsoleMessage(android.webkit.ConsoleMessage)
      */
     @Override
-    public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
+    public boolean onConsoleMessage(AwConsoleMessage consoleMessage) {
         try {
             TraceEvent.begin("WebViewContentsClientAdapter.onConsoleMessage");
             boolean result;
             if (mWebChromeClient != null) {
                 if (TRACE) Log.d(TAG, "onConsoleMessage: " + consoleMessage.message());
-                result = mWebChromeClient.onConsoleMessage(consoleMessage);
+                result = mWebChromeClient.onConsoleMessage(fromAwConsoleMessage(consoleMessage));
             } else {
                 result = false;
             }
@@ -1344,6 +1345,35 @@ class WebViewContentsClientAdapter extends AwContentsClient {
         @Override
         public void deny() {
             mAwPermissionRequest.deny();
+        }
+    }
+
+    private static ConsoleMessage fromAwConsoleMessage(AwConsoleMessage value) {
+        if (value == null) {
+            return null;
+        }
+        return new ConsoleMessage(value.message(), value.sourceId(), value.lineNumber(),
+                fromAwMessageLevel(value.messageLevel()));
+    }
+
+    private static ConsoleMessage.MessageLevel fromAwMessageLevel(
+            AwConsoleMessage.MessageLevel value) {
+        if (value == null) {
+            return null;
+        }
+        switch (value) {
+            case TIP:
+                return ConsoleMessage.MessageLevel.TIP;
+            case LOG:
+                return ConsoleMessage.MessageLevel.LOG;
+            case WARNING:
+                return ConsoleMessage.MessageLevel.WARNING;
+            case ERROR:
+                return ConsoleMessage.MessageLevel.ERROR;
+            case DEBUG:
+                return ConsoleMessage.MessageLevel.DEBUG;
+            default:
+                throw new IllegalArgumentException("Unsupported value: " + value);
         }
     }
 }
