@@ -20,7 +20,6 @@ import android.os.Message;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.ClientCertRequest;
-import android.webkit.ConsoleMessage;
 import android.webkit.DownloadListener;
 import android.webkit.GeolocationPermissions;
 import android.webkit.JsDialogHelper;
@@ -40,6 +39,7 @@ import android.webkit.WebViewClient;
 
 import com.android.webview.chromium.WebViewDelegateFactory.WebViewDelegate;
 
+import org.chromium.android_webview.AwConsoleMessage;
 import org.chromium.android_webview.AwContents;
 import org.chromium.android_webview.AwContentsClient;
 import org.chromium.android_webview.AwContentsClientBridge;
@@ -383,13 +383,14 @@ class WebViewContentsClientAdapter extends AwContentsClient {
      * @see AwContentsClient#onConsoleMessage(android.webkit.ConsoleMessage)
      */
     @Override
-    public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
+    public boolean onConsoleMessage(AwConsoleMessage consoleMessage) {
         try {
             TraceEvent.begin("WebViewContentsClientAdapter.onConsoleMessage");
             boolean result;
             if (mWebChromeClient != null) {
                 if (TRACE) Log.d(TAG, "onConsoleMessage: " + consoleMessage.message());
-                result = mWebChromeClient.onConsoleMessage(consoleMessage);
+                result = mWebChromeClient.onConsoleMessage(
+                        Converters.fromAwConsoleMessage(consoleMessage));
             } else {
                 result = false;
             }
