@@ -7,6 +7,7 @@
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #import "ios/chrome/browser/ui/browser_list/browser_list.h"
+#import "ios/chrome/browser/web_state_helper_data_source/browser_web_state_delegate_helper.h"
 #import "ios/chrome/browser/web_state_helper_data_source/web_state_user_data_creation_helper.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -58,4 +59,6 @@ void BrowserWebStateHelperDataSourceImpl::AttachHelpers(Browser* browser) {
   DCHECK(browser);
   browser->AddWebStateHelper(
       base::MakeUnique<WebStateUserDataCreationHelper>());
+  browser->AddWebStateHelper(
+      base::MakeUnique<BrowserWebStateDelegateHelper>(browser));
 }

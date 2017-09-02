@@ -9,6 +9,10 @@ source_set("web_state_helper_data_source") {
   ]
 
   sources = [
+    "browser_web_state_delegate.h",
+    "browser_web_state_delegate.mm",
+    "browser_web_state_delegate_helper.h",
+    "browser_web_state_delegate_helper.mm",
     "browser_web_state_helper_data_source_factory.mm",
     "browser_web_state_helper_data_source_impl.h",
     "browser_web_state_helper_data_source_impl.mm",
@@ -22,6 +26,7 @@ source_set("web_state_helper_data_source") {
     "//components/keyed_service/ios",
     "//ios/chrome/browser/browser_state",
     "//ios/chrome/browser/find_in_page",
+    "//ios/chrome/browser/overlays",
     "//ios/chrome/browser/sessions",
     "//ios/chrome/browser/sessions:serialisation",
     "//ios/chrome/browser/ssl",
@@ -30,6 +35,9 @@ source_set("web_state_helper_data_source") {
     "//ios/chrome/browser/ui/commands",
     "//ios/chrome/browser/web",
     "//ios/chrome/browser/web_state_list",
+    "//ios/clean/chrome/browser/ui/dialogs/context_menu",
+    "//ios/clean/chrome/browser/ui/dialogs/http_auth_dialogs",
+    "//ios/clean/chrome/browser/ui/dialogs/java_script_dialogs",
     "//ios/web",
   ]
 
