@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba159e68_603de2b8",
+        "filename": "chrome/browser/chromeos/eol_notification.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-02T00:13:44Z",
+      "side": 1,
+      "message": "MCDS needs this to be a valid url.",
+      "range": {
+        "startLine": 32,
+        "startChar": 35,
+        "endLine": 32,
+        "endChar": 47
+      },
+      "revId": "f6617bde2fc223c2fb86349cfb84dccf50a9ccec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b99eb2e_e0df52a3",
+        "filename": "chrome/browser/chromeos/eol_notification.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-02T00:13:44Z",
+      "side": 1,
+      "message": "from reading the NDS header it seems like this id should match the notification_id, but the MCDS needs it to be the delegate id.\n\nThere are way too many IDs floating around in notifications.",
+      "range": {
+        "startLine": 78,
+        "startChar": 38,
+        "endLine": 78,
+        "endChar": 42
+      },
+      "revId": "f6617bde2fc223c2fb86349cfb84dccf50a9ccec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f69db73e_fb42cc79",
+        "filename": "chrome/browser/chromeos/eol_notification.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-02T00:13:44Z",
+      "side": 1,
+      "message": "is this id ever not the same as notification.tag?",
+      "range": {
+        "startLine": 169,
+        "startChar": 38,
+        "endLine": 169,
+        "endChar": 56
+      },
+      "revId": "f6617bde2fc223c2fb86349cfb84dccf50a9ccec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
