@@ -41,6 +41,7 @@ import org.chromium.android_webview.ErrorCodeConversionHelper;
 import org.chromium.android_webview.SafeBrowsingAction;
 import org.chromium.android_webview.test.TestAwContentsClient.OnReceivedError2Helper;
 import org.chromium.android_webview.test.util.GraphicsTestUtils;
+import org.chromium.base.Callback;
 import org.chromium.base.LocaleUtils;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.CallbackHelper;
@@ -246,10 +247,10 @@ public class SafeBrowsingTest {
 
         @Override
         public void onSafeBrowsingHit(AwWebResourceRequest request, int threatType,
-                ValueCallback<AwSafeBrowsingResponse> callback) {
+                Callback<AwSafeBrowsingResponse> callback) {
             mLastRequest = request;
             mLastThreatType = threatType;
-            callback.onReceiveValue(new AwSafeBrowsingResponse(mAction, mReporting));
+            callback.onResult(new AwSafeBrowsingResponse(mAction, mReporting));
         }
 
         public AwWebResourceRequest getLastRequest() {
@@ -339,8 +340,12 @@ public class SafeBrowsingTest {
 
     private void evaluateJavaScriptOnInterstitialOnUiThread(
             final String script, final ValueCallback<String> callback) {
+        /* clang-format off */
         ThreadUtils.runOnUiThread(
-                () -> mAwContents.evaluateJavaScriptOnInterstitialForTesting(script, callback));
+                ()-> mAwContents.evaluateJavaScriptOnInterstitialForTesting(
+                    script,
+                    value -> callback.onReceiveValue(value)));
+        /* clang-format on */
     }
 
     private void waitForInterstitialToLoad() throws Exception {
