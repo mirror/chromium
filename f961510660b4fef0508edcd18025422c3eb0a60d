@@ -16,6 +16,24 @@
       "revId": "f961510660b4fef0508edcd18025422c3eb0a60d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60a4c22d_87750f7d",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-09-02T01:08:56Z",
+      "side": 0,
+      "message": "Yes, I did (it\u0027s already been removed in another CL, this is just cleanup so I didn\u0027t have to do two CLs).",
+      "parentUuid": "95cd49aa_b197479f",
+      "revId": "f961510660b4fef0508edcd18025422c3eb0a60d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
