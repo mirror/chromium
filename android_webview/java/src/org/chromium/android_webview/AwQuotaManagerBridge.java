@@ -5,7 +5,6 @@
 package org.chromium.android_webview;
 
 import android.util.SparseArray;
-import android.webkit.ValueCallback;
 
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.annotations.CalledByNative;
@@ -55,16 +54,15 @@ public class AwQuotaManagerBridge {
     // The Java callbacks are saved here. An incrementing callback id is generated for each saved
     // callback and is passed to the native side to identify callback.
     private int mNextId;
-    private SparseArray<ValueCallback<Origins>> mPendingGetOriginCallbacks;
-    private SparseArray<ValueCallback<Long>> mPendingGetQuotaForOriginCallbacks;
-    private SparseArray<ValueCallback<Long>> mPendingGetUsageForOriginCallbacks;
+    private SparseArray<AwValueCallback<Origins>> mPendingGetOriginCallbacks;
+    private SparseArray<AwValueCallback<Long>> mPendingGetQuotaForOriginCallbacks;
+    private SparseArray<AwValueCallback<Long>> mPendingGetUsageForOriginCallbacks;
 
     private AwQuotaManagerBridge(long nativeAwQuotaManagerBridge) {
         mNativeAwQuotaManagerBridge = nativeAwQuotaManagerBridge;
-        mPendingGetOriginCallbacks =
-                new SparseArray<ValueCallback<Origins>>();
-        mPendingGetQuotaForOriginCallbacks = new SparseArray<ValueCallback<Long>>();
-        mPendingGetUsageForOriginCallbacks = new SparseArray<ValueCallback<Long>>();
+        mPendingGetOriginCallbacks = new SparseArray<AwValueCallback<Origins>>();
+        mPendingGetQuotaForOriginCallbacks = new SparseArray<AwValueCallback<Long>>();
+        mPendingGetUsageForOriginCallbacks = new SparseArray<AwValueCallback<Long>>();
         nativeInit(mNativeAwQuotaManagerBridge);
     }
 
@@ -102,7 +100,7 @@ public class AwQuotaManagerBridge {
      * Implements WebStorage.getOrigins. Get the per origin usage and quota of APIs 2-5 in
      * aggregate.
      */
-    public void getOrigins(ValueCallback<Origins> callback) {
+    public void getOrigins(AwValueCallback<Origins> callback) {
         int callbackId = getNextId();
         assert mPendingGetOriginCallbacks.get(callbackId) == null;
         mPendingGetOriginCallbacks.put(callbackId, callback);
@@ -113,7 +111,7 @@ public class AwQuotaManagerBridge {
      * Implements WebStorage.getQuotaForOrigin. Get the quota of APIs 2-5 in aggregate for given
      * origin.
      */
-    public void getQuotaForOrigin(String origin, ValueCallback<Long> callback) {
+    public void getQuotaForOrigin(String origin, AwValueCallback<Long> callback) {
         int callbackId = getNextId();
         assert mPendingGetQuotaForOriginCallbacks.get(callbackId) == null;
         mPendingGetQuotaForOriginCallbacks.put(callbackId, callback);
@@ -124,7 +122,7 @@ public class AwQuotaManagerBridge {
      * Implements WebStorage.getUsageForOrigin. Get the usage of APIs 2-5 in aggregate for given
      * origin.
      */
-    public void getUsageForOrigin(String origin, ValueCallback<Long> callback) {
+    public void getUsageForOrigin(String origin, AwValueCallback<Long> callback) {
         int callbackId = getNextId();
         assert mPendingGetUsageForOriginCallbacks.get(callbackId) == null;
         mPendingGetUsageForOriginCallbacks.put(callbackId, callback);
