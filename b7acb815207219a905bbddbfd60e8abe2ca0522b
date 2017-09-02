@@ -235,6 +235,30 @@
       "revId": "b7acb815207219a905bbddbfd60e8abe2ca0522b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5126aafc_ebb3fd88",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1932,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-02T20:40:30Z",
+      "side": 1,
+      "message": "The 2nd part of your suggestion is being done in Read() by checking if auth_response_.headers.get() and if true, letting the state machine read from the network in that case and removing the transaction from the entry.\nI think the first part of adding another state is a good enhancement, but possibly for another CL. I could add that enhancement to the issue that I have created crbug.com/740947",
+      "parentUuid": "97bfe108_9b71816f",
+      "range": {
+        "startLine": 1931,
+        "startChar": 0,
+        "endLine": 1932,
+        "endChar": 14
+      },
+      "revId": "b7acb815207219a905bbddbfd60e8abe2ca0522b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
