@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0684a350_22486596",
+        "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-09-02T23:21:37Z",
+      "side": 1,
+      "message": "Might prefer to say \"overlay_ca_layers_blacklisted\" instead, since that makes it more clear where the disable was from.",
+      "revId": "910ab17ccc84f26b89417cd5cf4690a9af327d2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
