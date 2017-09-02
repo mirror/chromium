@@ -12,6 +12,7 @@
 <link rel="import" href="../settings_shared_css.html">
 <link rel="import" href="android_apps_browser_proxy.html">
 <link rel="import" href="android_apps_subpage.html">
+<link rel="import" href="android_arc_enable_button.html">
 
 <dom-module id="settings-android-apps-page">
   <template>
@@ -40,13 +41,8 @@
             </template>
             <template is="dom-if" if="[[!androidAppsInfo.playStoreEnabled]]">
               <div class="separator"></div>
-              <paper-button id="enable" class="secondary-button"
-                  disabled="[[isEnforced_(prefs.arc.enabled)]]"
-                  on-tap="onEnableTap_"
-                  aria-label="$i18n{androidAppsPageTitle}"
-                  aria-describedby="secondaryText">
-                $i18n{androidAppsEnable}
-              </paper-button>
+              <android-arc-enable-button prefs="{{prefs}}">
+              </android-arc-enable-button>
             </template>
           </div>
         </template>

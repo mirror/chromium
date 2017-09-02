@@ -38,20 +38,6 @@ Polymer({
     },
   },
 
-  /**
-   * @param {!Event} event
-   * @private
-   */
-  onEnableTap_: function(event) {
-    this.setPrefValue('arc.enabled', true);
-    event.stopPropagation();
-  },
-
-  /** @return {boolean} */
-  isEnforced_: function(pref) {
-    return pref.enforcement == chrome.settingsPrivate.Enforcement.ENFORCED;
-  },
-
   /** @private */
   onSubpageTap_: function() {
     if (this.androidAppsInfo.playStoreEnabled)

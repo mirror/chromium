@@ -1074,6 +1074,12 @@
                    type="chrome_html"
                    preprocess="true"
                    allowexternalscript="true" />
+        <structure name="IDR_SETTINGS_ANDROID_ARC_ENABLE_BUTTON_HTML"
+                   file="android_apps_page/android_arc_enable_button.html"
+                   type="chrome_html" />
+        <structure name="IDR_SETTINGS_ANDROID_ARC_ENABLE_BUTTON_JS"
+                   file="android_apps_page/android_arc_enable_button.js"
+                   type="chrome_html" />
         <structure name="IDR_SETTINGS_ANDROID_APPS_BROWSER_PROXY_HTML"
                    file="android_apps_page/android_apps_browser_proxy.html"
                    type="chrome_html"

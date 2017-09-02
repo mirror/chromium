@@ -162,7 +162,14 @@
         <template is="dom-if" if="[[showPage_(pageVisibility.search)]]" restamp>
           <settings-section page-title="$i18n{searchPageTitle}"
               section="search">
+<if expr="chromeos">
+            <settings-search-page prefs="{{prefs}}"
+                android-apps-info="[[androidAppsInfo]]">
+            </settings-search-page>
+</if>
+<if expr="not chromeos">
             <settings-search-page prefs="{{prefs}}"></settings-search-page>
+</if>
           </settings-section>
         </template>
 <if expr="chromeos">
