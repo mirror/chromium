@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "18aa54c4_d7325303",
+        "filename": "sql/meta_table.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-02T02:17:16Z",
+      "side": 1,
+      "message": "TBH I just looked at this one comment, saw it uses one space before period, and used that to inform my application of the rule saying we should match the style of the code surrounding our change.\n\nI agree that Chromium code doesn\u0027t have a consistent approach to spacing before periods, and I\u0027m just trying to maintain some semblance of internal consistency in the files that I own. Thank you for your understanding! :)",
+      "parentUuid": "ee0febce_103be6f4",
+      "revId": "2e95b44d2eaf9214acd67e31e091afa1b176e29a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "765a96a8_743f1f47",
         "filename": "sql/meta_table.h",
         "patchSetId": 1
