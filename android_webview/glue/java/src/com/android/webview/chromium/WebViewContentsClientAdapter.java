@@ -7,6 +7,7 @@ package com.android.webview.chromium;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -1104,7 +1105,8 @@ class WebViewContentsClientAdapter extends AwContentsClient {
 
             // Invoke the new callback introduced in Lollipop. If the app handles
             // it, we're done here.
-            if (mWebChromeClient.onShowFileChooser(mWebView, callbackAdapter, fileChooserParams)) {
+            if (mWebChromeClient.onShowFileChooser(
+                        mWebView, callbackAdapter, fromAwFileChooserParams(fileChooserParams))) {
                 return;
             }
 
