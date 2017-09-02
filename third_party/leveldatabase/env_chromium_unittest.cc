@@ -17,6 +17,7 @@
 #include "base/test/test_suite.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/leveldatabase/env_chromium.h"
+#include "third_party/leveldatabase/src/helpers/memenv/memenv.h"
 #include "third_party/leveldatabase/src/include/leveldb/db.h"
 
 #define FPL FILE_PATH_LITERAL
@@ -343,6 +344,15 @@ TEST_F(ChromiumEnvDBTrackerTest, OpenDBTracking) {
   // Databases returned by OpenDB() should be tracked.
   ASSERT_EQ(1u, visited_dbs.size());
   ASSERT_EQ(db.get(), *visited_dbs.begin());
+}
+
+TEST_F(ChromiumEnvDBTrackerTest, IsMemEnv) {
+  Env* env = leveldb::Env::Default();
+  ASSERT_TRUE(env != nullptr);
+  EXPECT_FALSE(leveldb_env::IsMemEnv(env));
+
+  std::unique_ptr<leveldb::Env> memenv(leveldb::NewMemEnv(env));
+  EXPECT_TRUE(leveldb_env::IsMemEnv(memenv.get()));
 }
 
 int main(int argc, char** argv) { return base::TestSuite(argc, argv).Run(); }

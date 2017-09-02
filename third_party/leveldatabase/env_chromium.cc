@@ -1349,12 +1349,37 @@ leveldb::Status OpenDB(const leveldb_env::Options& options,
                        const std::string& name,
                        std::unique_ptr<leveldb::DB>* dbptr) {
   DBTracker::TrackedDB* tracked_db = nullptr;
-  leveldb::Status status =
-      DBTracker::GetInstance()->OpenDatabase(options, name, &tracked_db);
-  if (status.ok()) {
+  leveldb::Status s;
+  if (options.env && IsMemEnv(options.env)) {
+    // Zero size cache to prevent cache hits.
+    static leveldb::Cache* s_empty_cache = leveldb::NewLRUCache(0);
+    Options mem_options = options;
+    mem_options.block_cache = s_empty_cache;
+    mem_options.compression = leveldb::CompressionType::kNoCompression;
+    mem_options.paranoid_checks = false;  // We assume no RAM errors.
+    mem_options.write_buffer_size = 0;    // minimum size.
+    // TODO(pwnall, cmumford): Figure out if it makes sense to disable the Bloom
+    // filter for in-memory databases. Seeks are cheap here, and we'd save the
+    // RAM used to store the filter blocks.
+    s = DBTracker::GetInstance()->OpenDatabase(mem_options, name, &tracked_db);
+  } else {
+    s = DBTracker::GetInstance()->OpenDatabase(options, name, &tracked_db);
+  }
+  if (s.ok()) {
     dbptr->reset(tracked_db);
   }
-  return status;
+  return s;
+}
+
+bool IsMemEnv(leveldb::Env* env) {
+  DCHECK(env);
+  // a MemEnv *always* returns Status::OK() so if it succeeds with a known
+  // invalid filename then it's a MemEnv.
+  if (!env->CreateDir("\0").ok())
+    return false;
+
+  env->DeleteDir("\0");
+  return true;
 }
 
 }  // namespace leveldb_env
