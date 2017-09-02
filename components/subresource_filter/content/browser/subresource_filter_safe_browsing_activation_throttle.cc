@@ -118,7 +118,8 @@ content::NavigationThrottle::ThrottleCheckResult
 SubresourceFilterSafeBrowsingActivationThrottle::WillRedirectRequest() {
   CheckCurrentUrl();
   DCHECK(!database_client_ || !check_results_.empty());
-  return content::NavigationThrottle::ThrottleCheckResult::PROCEED;
+  return content::NavigationThrottle::ThrottleCheckResult(
+      content::NavigationThrottle::ThrottleCheckAction::PROCEED);
 }
 
 content::NavigationThrottle::ThrottleCheckResult
@@ -127,12 +128,14 @@ SubresourceFilterSafeBrowsingActivationThrottle::WillProcessResponse() {
   // No need to defer the navigation if the check already happened.
   if (!database_client_ || check_results_.back().finished) {
     NotifyResult();
-    return content::NavigationThrottle::ThrottleCheckResult::PROCEED;
+    return content::NavigationThrottle::ThrottleCheckResult(
+        content::NavigationThrottle::ThrottleCheckAction::PROCEED);
   }
   CHECK(!deferring_);
   deferring_ = true;
   defer_time_ = base::TimeTicks::Now();
-  return content::NavigationThrottle::ThrottleCheckResult::DEFER;
+  return content::NavigationThrottle::ThrottleCheckResult(
+      content::NavigationThrottle::ThrottleCheckAction::DEFER);
 }
 
 const char*
