@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa5b77d8_5acb117b",
+        "filename": "third_party/WebKit/Source/core/frame/Navigator.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-02T06:31:48Z",
+      "side": 1,
+      "message": "Unused.",
+      "revId": "5211d70e9fe0966f59a603c021d0f09aa017ddea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1735d3d_fb141e19",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorEmulationAgent.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-02T06:31:48Z",
+      "side": 1,
+      "message": "You don\u0027t have to go through DevToolsEmulator here. Just modify settings directly.",
+      "revId": "5211d70e9fe0966f59a603c021d0f09aa017ddea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ef376de_4f86b41c",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 1086,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-02T06:31:48Z",
+      "side": 1,
+      "message": "There must be a typo here :)",
+      "range": {
+        "startLine": 1086,
+        "startChar": 48,
+        "endLine": 1086,
+        "endChar": 71
+      },
+      "revId": "5211d70e9fe0966f59a603c021d0f09aa017ddea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdb61561_13348fa8",
+        "filename": "third_party/WebKit/Source/core/page/ChromeClient.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-02T06:31:48Z",
+      "side": 1,
+      "message": "This one is unused now, right?",
+      "revId": "5211d70e9fe0966f59a603c021d0f09aa017ddea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
