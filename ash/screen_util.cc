@@ -51,11 +51,32 @@ gfx::Rect ScreenUtil::GetDisplayWorkAreaBoundsInParentForLockScreen(
 // static
 gfx::Rect ScreenUtil::GetDisplayBoundsWithShelf(aura::Window* window) {
   if (Shell::Get()->display_manager()->IsInUnifiedMode()) {
-    // In unified desktop mode, there is only one shelf in the first display.
-    const display::Display& first_display =
-        Shell::Get()->display_manager()->software_mirroring_display_list()[0];
-    gfx::SizeF size(first_display.size());
-    float scale = window->GetRootWindow()->bounds().height() / size.height();
+    // In unified desktop mode, there is only one shelf in the primary mirroing
+    // display.
+    const display::DisplayManager* display_manager =
+        Shell::Get()->display_manager();
+    const display::Display* first_display =
+        display_manager->GetPrimaryMirroringDisplayForUnifiedDesktop();
+    DCHECK(first_display);
+
+    // TODO(afakhry): Simplify this somehow.
+    const auto& unified_display_info = display_manager->GetDisplayInfo(
+        display::Screen::GetScreen()->GetPrimaryDisplay().id());
+    const int unified_logical_height =
+        window->GetRootWindow()->bounds().height();
+    const int unified_physical_height =
+        unified_display_info.bounds_in_native().height();
+    const float unified_height_scale =
+        unified_logical_height / static_cast<float>(unified_physical_height);
+
+    const int row_index =
+        display_manager->GetMirroringDisplayRowIndexInUnifiedMatrix(
+            first_display->id());
+    const int row_physical_height = display_manager->GetRowMaxHeight(row_index);
+    const int row_logical_height = row_physical_height * unified_height_scale;
+
+    gfx::SizeF size(first_display->size());
+    const float scale = row_logical_height / size.height();
     size.Scale(scale, scale);
     return gfx::Rect(gfx::ToCeiledSize(size));
   }

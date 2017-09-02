@@ -135,6 +135,49 @@ bool ContainsDisplayWithId(const std::vector<Display>& displays,
   return false;
 }
 
+// Returns a pointer to the ManagedDisplayInfo of the display with |id|, nullptr
+// if the corresponding info was not found.
+const ManagedDisplayInfo* FindInfoById(const DisplayInfoList& display_info_list,
+                                       int64_t id) {
+  const auto iter = std::find_if(
+      display_info_list.begin(), display_info_list.end(),
+      [id](const ManagedDisplayInfo& info) { return info.id() == id; });
+
+  if (iter == display_info_list.end())
+    return nullptr;
+
+  return &(*iter);
+}
+
+// Validates that all display IDs in the |matrix| are included in the
+// |display_info_list|, and all IDs in |display_info_list| exist in the
+// |matrix|.
+bool ValidateMatrixForDisplayInfoList(
+    const DisplayInfoList& display_info_list,
+    const UnifiedDesktopLayoutMatrix& matrix) {
+  std::vector<int64_t> matrix_ids;
+  for (const auto& row : matrix) {
+    for (const auto& id : row) {
+      matrix_ids.emplace_back(id);
+      if (!FindInfoById(display_info_list, id)) {
+        LOG(ERROR) << "Matrix has ID: " << id << " with no corresponding info "
+                   << "in the display info list.";
+        return false;
+      }
+    }
+  }
+
+  for (const auto& info : display_info_list) {
+    if (!base::ContainsValue(matrix_ids, info.id())) {
+      LOG(ERROR) << "Display info with ID: " << info.id() << " doesn't exist "
+                 << "in the layout matrix.";
+      return false;
+    }
+  }
+
+  return true;
+}
+
 }  // namespace
 
 using std::string;
@@ -291,6 +334,40 @@ void DisplayManager::SetLayoutForCurrentDisplays(
 
   if (delegate_)
     delegate_->PostDisplayConfigurationChange();
+}
+
+void DisplayManager::SetUnifiedDesktopMatrix(
+    const UnifiedDesktopLayoutMatrix& matrix) {
+  current_matrix_ = matrix;
+  SetDefaultMultiDisplayModeForCurrentDisplays(UNIFIED);
+}
+
+const Display* DisplayManager::GetPrimaryMirroringDisplayForUnifiedDesktop()
+    const {
+  if (!IsInUnifiedMode())
+    return nullptr;
+
+  return &software_mirroring_display_list_[0];
+}
+
+int DisplayManager::GetMirroringDisplayRowIndexInUnifiedMatrix(
+    int64_t display_id) const {
+  DCHECK(IsInUnifiedMode());
+
+  return mirroring_display_id_to_unified_matrix_row_.at(display_id);
+}
+
+int DisplayManager::GetRowMaxHeight(int row_index) const {
+  DCHECK(IsInUnifiedMode());
+
+  return unified_display_rows_heights_[row_index];
+}
+
+gfx::Size DisplayManager::GetUnifiedDesktopMatrixDimensions() const {
+  if (current_matrix_.empty() || current_matrix_[0].empty())
+    return gfx::Size();
+
+  return gfx::Size(current_matrix_[0].size(), current_matrix_.size());
 }
 
 const Display& DisplayManager::GetDisplayForId(int64_t display_id) const {
@@ -1224,109 +1301,204 @@ void DisplayManager::CreateSoftwareMirroringDisplayInfo(
       display_info_list->erase(iter);
       break;
     }
-    case UNIFIED: {
-      if (display_info_list->size() == 1)
-        return;
-      // TODO(oshima): Currently, all displays are laid out horizontally,
-      // from left to right. Allow more flexible layouts, such as
-      // right to left, or vertical layouts.
-      gfx::Rect unified_bounds;
-      software_mirroring_display_list_.clear();
-      // 1st Pass. Find the max size.
-      int max_height = std::numeric_limits<int>::min();
-
-      int default_height = 0;
-      float default_device_scale_factor = 1.0f;
-      for (auto& info : *display_info_list) {
-        max_height = std::max(max_height, info.size_in_pixel().height());
-        if (!default_height || Display::IsInternalDisplayId(info.id())) {
-          default_height = info.size_in_pixel().height();
-          default_device_scale_factor = info.device_scale_factor();
-        }
-      }
-
-      ManagedDisplayInfo::ManagedDisplayModeList display_mode_list;
-      std::set<std::pair<float, float>> dsf_scale_list;
-
-      // 2nd Pass. Compute the unified display size.
-      for (auto& info : *display_info_list) {
-        InsertAndUpdateDisplayInfo(info);
-        gfx::Point origin(unified_bounds.right(), 0);
-        float scale =
-            info.size_in_pixel().height() / static_cast<float>(max_height);
-        // The display is scaled to fit the unified desktop size.
-        Display display = CreateMirroringDisplayFromDisplayInfoById(
-            info.id(), origin, 1.0f / scale);
-        unified_bounds.Union(display.bounds());
-
-        dsf_scale_list.insert(
-            std::make_pair(info.device_scale_factor(), scale));
-      }
-
-      ManagedDisplayInfo info(kUnifiedDisplayId, "Unified Desktop", false);
-
-      scoped_refptr<ManagedDisplayMode> native_mode(new ManagedDisplayMode(
-          unified_bounds.size(), 60.0f, false, true, 1.0, 1.0));
-      ManagedDisplayInfo::ManagedDisplayModeList modes =
-          CreateUnifiedManagedDisplayModeList(native_mode, dsf_scale_list);
-
-      // Find the default mode.
-      auto iter = std::find_if(
-          modes.begin(), modes.end(),
-          [default_height, default_device_scale_factor](
-              const scoped_refptr<ManagedDisplayMode>& mode) {
-            return mode->size().height() == default_height &&
-                   mode->device_scale_factor() == default_device_scale_factor;
-          });
-
-      scoped_refptr<ManagedDisplayMode> dm(*iter);
-      *iter = make_scoped_refptr(new ManagedDisplayMode(
-          dm->size(), dm->refresh_rate(), dm->is_interlaced(),
-          true /* native */, dm->ui_scale(), dm->device_scale_factor()));
-
-      info.SetManagedDisplayModes(modes);
-      info.set_device_scale_factor(dm->device_scale_factor());
-      info.SetBounds(gfx::Rect(dm->size()));
-
-      // Forget the configured resolution if the original unified
-      // desktop resolution has changed.
-      if (display_info_.count(kUnifiedDisplayId) != 0 &&
-          GetMaxNativeSize(display_info_[kUnifiedDisplayId]) !=
-              unified_bounds.size()) {
-        display_modes_.erase(kUnifiedDisplayId);
-      }
-
-      // 3rd Pass. Set the selected mode, then recompute the mirroring
-      // display size.
-      scoped_refptr<ManagedDisplayMode> mode =
-          GetSelectedModeForDisplayId(kUnifiedDisplayId);
-      if (mode && FindDisplayMode(info, mode) != info.display_modes().end()) {
-        info.set_device_scale_factor(mode->device_scale_factor());
-        info.SetBounds(gfx::Rect(mode->size()));
-      } else {
-        display_modes_.erase(kUnifiedDisplayId);
-      }
-
-      int unified_display_height = info.size_in_pixel().height();
-      gfx::Point origin;
-      for (auto& info : *display_info_list) {
-        float display_scale = info.size_in_pixel().height() /
-                              static_cast<float>(unified_display_height);
-        Display display = CreateMirroringDisplayFromDisplayInfoById(
-            info.id(), origin, 1.0f / display_scale);
-        origin.Offset(display.size().width(), 0);
-        display.UpdateWorkAreaFromInsets(gfx::Insets());
-        software_mirroring_display_list_.push_back(display);
-      }
-
-      display_info_list->clear();
-      display_info_list->push_back(info);
-      InsertAndUpdateDisplayInfo(info);
+    case UNIFIED:
+      CreateUnifiedDesktopDisplayInfo(display_info_list);
       break;
-    }
+
     case EXTENDED:
       break;
   }
+}
+
+void DisplayManager::CreateUnifiedDesktopDisplayInfo(
+    DisplayInfoList* display_info_list) {
+  if (display_info_list->size() == 1)
+    return;
+
+  if (current_matrix_.empty() || current_matrix_[0].empty() ||
+      !ValidateMatrixForDisplayInfoList(*display_info_list, current_matrix_)) {
+    // Recreate the default matrix where displays are laid out horizontally from
+    // left to right.
+    current_matrix_.clear();
+    current_matrix_.resize(1);
+    for (const auto& info : *display_info_list)
+      current_matrix_[0].emplace_back(info.id());
+  }
+
+  software_mirroring_display_list_.clear();
+  mirroring_display_id_to_unified_matrix_row_.clear();
+  unified_display_rows_heights_.clear();
+
+  gfx::Rect unified_bounds;
+  const size_t row_size = current_matrix_.size();
+  const size_t column_size = current_matrix_[0].size();
+
+  gfx::Size default_mode_bounds;
+  float default_device_scale_factor = 1.0f;
+
+  // 1.1 - Find the maximum height per each row.
+  std::vector<int> rows_max_heights;
+  rows_max_heights.reserve(row_size);
+  for (const auto& row : current_matrix_) {
+    int max_height = std::numeric_limits<int>::min();
+    for (const auto& id : row) {
+      const ManagedDisplayInfo* info = FindInfoById(*display_info_list, id);
+      DCHECK(info);
+
+      max_height = std::max(max_height, info->size_in_pixel().height());
+      if (default_mode_bounds.IsEmpty() || Display::IsInternalDisplayId(id)) {
+        default_mode_bounds = info->size_in_pixel();
+        default_device_scale_factor = info->device_scale_factor();
+      }
+    }
+    rows_max_heights.emplace_back(max_height);
+  }
+
+  // 1.2 - Find the maximum width per each column.
+  std::vector<int> columns_max_widths;
+  columns_max_widths.resize(column_size);
+  for (size_t j = 0; j < column_size; ++j) {
+    int max_width = std::numeric_limits<int>::min();
+    for (size_t i = 0; i < row_size; ++i) {
+      const auto& id = current_matrix_[i][j];
+      const ManagedDisplayInfo* info = FindInfoById(*display_info_list, id);
+      DCHECK(info);
+
+      max_width = std::max(max_width, info->size_in_pixel().width());
+    }
+    columns_max_widths[j] = max_width;
+  }
+
+  // 2 - Compute the unified display size by computing the unified display size
+  //     of each row and then getting the union of all rows.
+  std::set<std::pair<float, float>> dsf_scale_list;
+  int last_bottom = 0;
+  for (size_t i = 0; i < row_size; ++i) {
+    const auto& row = current_matrix_[i];
+    const int max_row_height = rows_max_heights[i];
+    int last_right = 0;
+    int column_bottom = 0;
+    gfx::Rect row_displays_bounds;
+    for (size_t j = 0; j < column_size; ++j) {
+      const auto& id = row[j];
+      const int max_column_width = columns_max_widths[j];
+      const ManagedDisplayInfo* info = FindInfoById(*display_info_list, id);
+      DCHECK(info);
+
+      InsertAndUpdateDisplayInfo(*info);
+      const float scale = info->size_in_pixel().GetArea() /
+                          static_cast<float>(max_row_height * max_column_width);
+
+      const gfx::Point origin(last_right, last_bottom);
+      // The display is scaled to fit the unified desktop size.
+      Display display =
+          CreateMirroringDisplayFromDisplayInfoById(id, origin, 1.0f / scale);
+
+      const auto& display_bounds = display.bounds();
+      row_displays_bounds.Union(display_bounds);
+      dsf_scale_list.emplace(info->device_scale_factor(), scale);
+      software_mirroring_display_list_.emplace_back(display);
+
+      last_right = display_bounds.right();
+      column_bottom = display_bounds.bottom();
+    }
+
+    unified_bounds.Union(row_displays_bounds);
+    last_bottom = column_bottom;
+  }
+
+  // 3 - Create the Unified display info and its modes.
+  ManagedDisplayInfo unified_display_info(kUnifiedDisplayId, "Unified Desktop",
+                                          false /* has_overscan */);
+  scoped_refptr<ManagedDisplayMode> native_mode =
+      base::MakeRefCounted<ManagedDisplayMode>(unified_bounds.size(), 60.0f,
+                                               false, true, 1.0, 1.0);
+  ManagedDisplayInfo::ManagedDisplayModeList modes =
+      CreateUnifiedManagedDisplayModeList(native_mode, dsf_scale_list);
+
+  // Find the default mode.
+  auto iter = std::find_if(
+      modes.begin(), modes.end(),
+      [default_mode_bounds, default_device_scale_factor](
+          const scoped_refptr<ManagedDisplayMode>& mode) {
+        return (mode->size().height() == default_mode_bounds.height() ||
+                mode->size().width() == default_mode_bounds.width()) &&
+               mode->device_scale_factor() == default_device_scale_factor;
+      });
+  DCHECK(iter != modes.end());
+
+  if (iter != modes.end()) {
+    scoped_refptr<ManagedDisplayMode> default_mode(*iter);
+    *iter = base::MakeRefCounted<ManagedDisplayMode>(
+        default_mode->size(), default_mode->refresh_rate(),
+        default_mode->is_interlaced(), true /* native */,
+        default_mode->ui_scale(), default_mode->device_scale_factor());
+    unified_display_info.set_device_scale_factor(
+        default_mode->device_scale_factor());
+    unified_display_info.SetBounds(gfx::Rect(default_mode->size()));
+  }
+
+  unified_display_info.SetManagedDisplayModes(modes);
+
+  // Forget the configured resolution if the original unified desktop resolution
+  // has changed.
+  if (display_info_.count(kUnifiedDisplayId) != 0 &&
+      GetMaxNativeSize(display_info_[kUnifiedDisplayId]) !=
+          unified_bounds.size()) {
+    display_modes_.erase(kUnifiedDisplayId);
+  }
+
+  // 4 - Set the selected mode.
+  scoped_refptr<ManagedDisplayMode> selected_mode =
+      GetSelectedModeForDisplayId(kUnifiedDisplayId);
+  if (selected_mode && FindDisplayMode(unified_display_info, selected_mode) !=
+                           unified_display_info.display_modes().end()) {
+    unified_display_info.set_device_scale_factor(
+        selected_mode->device_scale_factor());
+    unified_display_info.SetBounds(gfx::Rect(selected_mode->size()));
+  } else {
+    display_modes_.erase(kUnifiedDisplayId);
+  }
+
+  const float unified_bounds_scale_x =
+      unified_display_info.size_in_pixel().width() /
+      static_cast<float>(unified_bounds.size().width());
+  const float unified_bounds_scale_y =
+      unified_display_info.size_in_pixel().height() /
+      static_cast<float>(unified_bounds.size().height());
+
+  // 5 - Now that we know the final unified display bounds, update the displays
+  //     in the |software_mirroring_display_list_| list so that they have the
+  //     correct bounds.
+  DCHECK_EQ(row_size * column_size, software_mirroring_display_list_.size());
+  last_bottom = 0;
+  for (size_t i = 0; i < row_size; ++i) {
+    int last_right = 0;
+    int column_bottom = 0;
+    int max_height = std::numeric_limits<int>::min();
+    for (size_t j = 0; j < column_size; ++j) {
+      Display& current_display =
+          software_mirroring_display_list_[i * column_size + j];
+      gfx::SizeF scaled_size(current_display.bounds().size());
+      scaled_size.Scale(unified_bounds_scale_x, unified_bounds_scale_y);
+      const gfx::Point origin(last_right, last_bottom);
+      current_display.set_bounds(
+          gfx::Rect(origin, gfx::ToFlooredSize(scaled_size)));
+      current_display.UpdateWorkAreaFromInsets(gfx::Insets());
+      const gfx::Rect display_bounds = current_display.bounds();
+      max_height = std::max(max_height, display_bounds.height());
+      last_right = display_bounds.right();
+      column_bottom = display_bounds.bottom();
+      mirroring_display_id_to_unified_matrix_row_[current_display.id()] = i;
+    }
+
+    unified_display_rows_heights_.emplace_back(max_height);
+    last_bottom = column_bottom;
+  }
+
+  display_info_list->clear();
+  display_info_list->emplace_back(unified_display_info);
+  InsertAndUpdateDisplayInfo(unified_display_info);
 }
 
 Display* DisplayManager::FindDisplayForId(int64_t id) {
