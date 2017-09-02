@@ -151,4 +151,42 @@ final class Converters {
             }
         };
     }
+
+    public static android.webkit.WebChromeClient.FileChooserParams fromAwFileChooserParams(
+            final org.chromium.android_webview.AwContentsClient.FileChooserParams value) {
+        if (value == null) {
+            return null;
+        }
+        return new android.webkit.WebChromeClient.FileChooserParams() {
+            @Override
+            public int getMode() {
+                return value.getMode();
+            }
+
+            @Override
+            public String[] getAcceptTypes() {
+                return value.getAcceptTypes();
+            }
+
+            @Override
+            public boolean isCaptureEnabled() {
+                return value.isCaptureEnabled();
+            }
+
+            @Override
+            public CharSequence getTitle() {
+                return value.getTitle();
+            }
+
+            @Override
+            public String getFilenameHint() {
+                return value.getFilenameHint();
+            }
+
+            @Override
+            public Intent createIntent() {
+                return value.createIntent();
+            }
+        };
+    }
 }
