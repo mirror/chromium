@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc8d312b_a4dafc6a",
+        "filename": "chrome/android/webapk/shell_apk/shell_apk_version.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-02T04:16:49Z",
+      "side": 1,
+      "message": "What\u0027s the plan for versioning this on the server? For instance, when we update the shell version to get Xi\u0027s dialog polish we don\u0027t want all WebAPK users to get your WebShare changes",
+      "revId": "867702dd6b571979b725dbea68291b8c3eaf0043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3473f14e_302bcc0f",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/MainActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-02T04:16:49Z",
+      "side": 1,
+      "message": "Why the log message?",
+      "revId": "867702dd6b571979b725dbea68291b8c3eaf0043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e09a1356_594f4350",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/MainActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-02T04:16:49Z",
+      "side": 1,
+      "message": "Can you move initializing |mSource |to right after line 103? That way computing |mSource| is all in the same place.",
+      "revId": "867702dd6b571979b725dbea68291b8c3eaf0043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74b4b011_b307f870",
+        "filename": "chrome/android/webapk/shell_apk/unbound_manifest_config.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-02T04:16:49Z",
+      "side": 1,
+      "message": "Given that the AndroidManifest.xml is populated by the WebAPK server (as opposed to the Web Manifest author) I think that it makes most sense for this field to be absolute. The WebAPK server can do all of the appropriate validation.",
+      "revId": "867702dd6b571979b725dbea68291b8c3eaf0043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -260,6 +260,24 @@
     },
     {
       "key": {
+        "uuid": "85789622_67813c2f",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/MainActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-02T04:16:49Z",
+      "side": 1,
+      "message": "Fair enough",
+      "parentUuid": "7491d08d_0315c9e5",
+      "revId": "3fb3dfe5f07e28376e94f103fbfb3c7cf95849d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "33ce08ec_571a54cd",
         "filename": "chrome/android/webapk/shell_apk/unbound_manifest_config.json",
         "patchSetId": 1
