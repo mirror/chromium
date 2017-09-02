@@ -255,7 +255,7 @@ class SubresourceFilterSafeBrowsingActivationThrottleTest
     auto simulator = content::NavigationSimulator::CreateRendererInitiated(
         GURL("https://example.test/disallowed.html"), subframe);
     simulator->Commit();
-    return simulator->GetLastThrottleCheckResult() ==
+    return simulator->GetLastThrottleCheckResult().action ==
                    content::NavigationThrottle::PROCEED
                ? simulator->GetFinalRenderFrameHost()
                : nullptr;
@@ -280,7 +280,7 @@ class SubresourceFilterSafeBrowsingActivationThrottleTest
         content::NavigationSimulator::CreateRendererInitiated(first_url, rfh);
     navigation_simulator_->Start();
     auto result = navigation_simulator_->GetLastThrottleCheckResult();
-    if (result == content::NavigationThrottle::CANCEL)
+    if (result.action == content::NavigationThrottle::CANCEL)
       navigation_simulator_.reset();
     return result;
   }
@@ -289,7 +289,7 @@ class SubresourceFilterSafeBrowsingActivationThrottleTest
       const GURL& new_url) {
     navigation_simulator_->Redirect(new_url);
     auto result = navigation_simulator_->GetLastThrottleCheckResult();
-    if (result == content::NavigationThrottle::CANCEL)
+    if (result.action == content::NavigationThrottle::CANCEL)
       navigation_simulator_.reset();
     return result;
   }
@@ -310,16 +310,17 @@ class SubresourceFilterSafeBrowsingActivationThrottleTest
 
   void SimulateStartAndExpectProceed(const GURL& first_url) {
     EXPECT_EQ(content::NavigationThrottle::PROCEED,
-              SimulateStart(first_url, main_rfh()));
+              SimulateStart(first_url, main_rfh()).action);
   }
 
   void SimulateRedirectAndExpectProceed(const GURL& new_url) {
-    EXPECT_EQ(content::NavigationThrottle::PROCEED, SimulateRedirect(new_url));
+    EXPECT_EQ(content::NavigationThrottle::PROCEED,
+              SimulateRedirect(new_url).action);
   }
 
   void SimulateCommitAndExpectProceed() {
     EXPECT_EQ(content::NavigationThrottle::PROCEED,
-              SimulateCommit(navigation_simulator()));
+              SimulateCommit(navigation_simulator()).action);
   }
 
   void ConfigureForMatch(const GURL& url,
@@ -1144,25 +1145,25 @@ TEST_P(SubresourceFilterSafeBrowsingActivationThrottleTestWithCancelling,
       SimulateStart(url, main_rfh());
   if (cancel_time() ==
       content::CancellingNavigationThrottle::WILL_START_REQUEST) {
-    EXPECT_EQ(content::NavigationThrottle::CANCEL, result);
+    EXPECT_EQ(content::NavigationThrottle::CANCEL, result.action);
     tester().ExpectTotalCount(kSafeBrowsingNavigationDelay, 0);
     return;
   }
-  EXPECT_EQ(content::NavigationThrottle::PROCEED, result);
+  EXPECT_EQ(content::NavigationThrottle::PROCEED, result.action);
 
   result = SimulateRedirect(GURL(kRedirectURL));
   if (cancel_time() ==
       content::CancellingNavigationThrottle::WILL_REDIRECT_REQUEST) {
-    EXPECT_EQ(content::NavigationThrottle::CANCEL, result);
+    EXPECT_EQ(content::NavigationThrottle::CANCEL, result.action);
     tester().ExpectTotalCount(kSafeBrowsingNavigationDelay, 0);
     return;
   }
-  EXPECT_EQ(content::NavigationThrottle::PROCEED, result);
+  EXPECT_EQ(content::NavigationThrottle::PROCEED, result.action);
 
   base::RunLoop().RunUntilIdle();
 
   result = SimulateCommit(navigation_simulator());
-  EXPECT_EQ(content::NavigationThrottle::CANCEL, result);
+  EXPECT_EQ(content::NavigationThrottle::CANCEL, result.action);
   tester().ExpectTotalCount(kSafeBrowsingNavigationDelay, 0);
 }
 

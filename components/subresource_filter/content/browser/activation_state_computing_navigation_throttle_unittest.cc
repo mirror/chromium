@@ -122,19 +122,19 @@ class ActivationStateComputingNavigationThrottleTest
     ASSERT_TRUE(navigation_simulator_);
     navigation_simulator_->Start();
     EXPECT_EQ(content::NavigationThrottle::PROCEED,
-              navigation_simulator_->GetLastThrottleCheckResult());
+              navigation_simulator_->GetLastThrottleCheckResult().action);
   }
 
   void SimulateRedirectAndExpectToProceed(const GURL& new_url) {
     navigation_simulator_->Redirect(new_url);
     EXPECT_EQ(content::NavigationThrottle::PROCEED,
-              navigation_simulator_->GetLastThrottleCheckResult());
+              navigation_simulator_->GetLastThrottleCheckResult().action);
   }
 
   void SimulateCommitAndExpectToProceed() {
     navigation_simulator_->Commit();
     EXPECT_EQ(content::NavigationThrottle::PROCEED,
-              navigation_simulator_->GetLastThrottleCheckResult());
+              navigation_simulator_->GetLastThrottleCheckResult().action);
   }
 
   void NotifyPageActivation(ActivationState state) {

@@ -106,23 +106,23 @@ class SubframeNavigationFilteringThrottleTest
   void SimulateStartAndExpectResult(
       content::NavigationThrottle::ThrottleCheckResult expect_result) {
     navigation_simulator_->Start();
-    EXPECT_EQ(expect_result,
-              navigation_simulator_->GetLastThrottleCheckResult());
+    EXPECT_EQ(expect_result.action,
+              navigation_simulator_->GetLastThrottleCheckResult().action);
   }
 
   void SimulateRedirectAndExpectResult(
       const GURL& new_url,
       content::NavigationThrottle::ThrottleCheckResult expect_result) {
     navigation_simulator_->Redirect(new_url);
-    EXPECT_EQ(expect_result,
-              navigation_simulator_->GetLastThrottleCheckResult());
+    EXPECT_EQ(expect_result.action,
+              navigation_simulator_->GetLastThrottleCheckResult().action);
   }
 
   void SimulateCommitAndExpectResult(
       content::NavigationThrottle::ThrottleCheckResult expect_result) {
     navigation_simulator_->Commit();
-    EXPECT_EQ(expect_result,
-              navigation_simulator_->GetLastThrottleCheckResult());
+    EXPECT_EQ(expect_result.action,
+              navigation_simulator_->GetLastThrottleCheckResult().action);
   }
 
   void SimulateCommitErrorPage() {
