@@ -28,3 +28,7 @@ Browser::Browser(ios::ChromeBrowserState* browser_state)
 }
 
 Browser::~Browser() = default;
+
+void Browser::AddWebStateHelper(std::unique_ptr<BrowserWebStateHelper> helper) {
+  web_state_list_delegate_->AddWebStateHelper(std::move(helper));
+}
