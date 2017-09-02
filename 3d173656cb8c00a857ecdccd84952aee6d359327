@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4d84e0d8_14776040",
+        "filename": "extensions/browser/api/declarative_net_request/constants.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-09-02T00:41:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2abe1f39_5c7726f7",
+      "range": {
+        "startLine": 57,
+        "startChar": 71,
+        "endLine": 57,
+        "endChar": 0
+      },
+      "revId": "3d173656cb8c00a857ecdccd84952aee6d359327",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f39b077_fd6c72a9",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-01T06:19:30Z",
       "side": 1,
       "message": "Is this histogram the sum of the one below plus persist time?  Or are some extensions indexed sans persistence, and others both indexed and persisted?",
+      "range": {
+        "startLine": 20854,
+        "startChar": 50,
+        "endLine": 20854,
+        "endChar": 74
+      },
+      "revId": "3d173656cb8c00a857ecdccd84952aee6d359327",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98e1ff5b_3b5d6679",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 20854,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-09-02T00:41:17Z",
+      "side": 1,
+      "message": "This is sum of below + persist time.",
+      "parentUuid": "0f39b077_fd6c72a9",
       "range": {
         "startLine": 20854,
         "startChar": 50,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1f5a8411_a5dd8c7f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 20862,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-09-02T00:41:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e454410d_07ac2db2",
+      "range": {
+        "startLine": 20862,
+        "startChar": 69,
+        "endLine": 20862,
+        "endChar": 79
+      },
+      "revId": "3d173656cb8c00a857ecdccd84952aee6d359327",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c244c931_719eba26",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 9
@@ -91,6 +163,30 @@
       "revId": "3d173656cb8c00a857ecdccd84952aee6d359327",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8d01053_553eb02f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 20874,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-09-02T00:41:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c244c931_719eba26",
+      "range": {
+        "startLine": 20874,
+        "startChar": 45,
+        "endLine": 20874,
+        "endChar": 55
+      },
+      "revId": "3d173656cb8c00a857ecdccd84952aee6d359327",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,54 @@
     },
     {
       "key": {
+        "uuid": "50f190e8_40b35bc6",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 20878,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-09-02T00:41:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9201446_d1eeeed0",
+      "range": {
+        "startLine": 20878,
+        "startChar": 70,
+        "endLine": 20878,
+        "endChar": 0
+      },
+      "revId": "3d173656cb8c00a857ecdccd84952aee6d359327",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "867eef77_f588c760",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 20878,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-09-02T00:41:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9201446_d1eeeed0",
+      "range": {
+        "startLine": 20878,
+        "startChar": 70,
+        "endLine": 20878,
+        "endChar": 0
+      },
+      "revId": "3d173656cb8c00a857ecdccd84952aee6d359327",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d896961f_8856fc48",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 9
@@ -137,6 +281,30 @@
       "revId": "3d173656cb8c00a857ecdccd84952aee6d359327",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c3c86b8_17083d02",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 20885,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-09-02T00:41:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d896961f_8856fc48",
+      "range": {
+        "startLine": 20885,
+        "startChar": 20,
+        "endLine": 20885,
+        "endChar": 30
+      },
+      "revId": "3d173656cb8c00a857ecdccd84952aee6d359327",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
