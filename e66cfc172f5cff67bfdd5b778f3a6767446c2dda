@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "562736d4_ab97de44",
+        "filename": "chrome/browser/ui/views/find_bar_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1239649
+      },
+      "writtenOn": "2017-09-02T08:14:25Z",
+      "side": 1,
+      "message": "Why is that a problem?",
+      "parentUuid": "f58d2920_4939651a",
+      "revId": "e66cfc172f5cff67bfdd5b778f3a6767446c2dda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "68a9b42e_64b8ae14",
         "filename": "chrome/browser/ui/views/find_bar_host.cc",
         "patchSetId": 9
@@ -30,6 +48,30 @@
       "writtenOn": "2017-09-01T14:28:28Z",
       "side": 1,
       "message": "I think web_contents() can be null. See next comment",
+      "range": {
+        "startLine": 138,
+        "startChar": 30,
+        "endLine": 138,
+        "endChar": 44
+      },
+      "revId": "e66cfc172f5cff67bfdd5b778f3a6767446c2dda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b8fe2e5_a0d1e1eb",
+        "filename": "chrome/browser/ui/views/find_bar_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1239649
+      },
+      "writtenOn": "2017-09-02T08:14:25Z",
+      "side": 1,
+      "message": "And I suppose there is no use for actually converting anything in that case, since there is no content to search? Or are there any other cases?",
+      "parentUuid": "68a9b42e_64b8ae14",
       "range": {
         "startLine": 138,
         "startChar": 30,
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "bfe72a40_ef273184",
+        "filename": "chrome/browser/ui/views/find_bar_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1239649
+      },
+      "writtenOn": "2017-09-02T08:14:25Z",
+      "side": 1,
+      "message": "I like the idea of putting it in GetWidgetPositionNative, seems like just the place.",
+      "parentUuid": "d2c45114_4f20542c",
+      "revId": "e66cfc172f5cff67bfdd5b778f3a6767446c2dda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e29b1357_0fdd2d14",
         "filename": "chrome/browser/ui/views/find_bar_host.cc",
         "patchSetId": 9
@@ -70,6 +130,24 @@
       "writtenOn": "2017-09-01T15:04:23Z",
       "side": 1,
       "message": "The 3-line comment here is a good example of what I\u0027m looking for. The code you\u0027re adding needs something similar that explains why it needs to be added. E.g.\n\n  // We need to account for the pixel scale factor of the gfx::Rect provided by XX. XX gives a rect with origin relative to (??? the page??? -- that\u0027s what the comment above suggests), and with using the pixel scale factor (of what?) (for both origin and size?). To position the Widget we need \u003cfoo coordinates\u003e so do \u003csomething\u003e to the origin and \u003csomething else\u003e to the size to ensure the rectangles can be correctly compared for overlap.",
+      "revId": "e66cfc172f5cff67bfdd5b778f3a6767446c2dda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99bfa254_f2b2b1d4",
+        "filename": "chrome/browser/ui/views/find_bar_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1239649
+      },
+      "writtenOn": "2017-09-02T08:14:25Z",
+      "side": 1,
+      "message": "I am a tad unclear on some of the terms used in graphics. Does \"root frame coordinates\" imply that pixel measurements are used, or I should explicitly specify DIPs/pixels?",
+      "parentUuid": "e29b1357_0fdd2d14",
       "revId": "e66cfc172f5cff67bfdd5b778f3a6767446c2dda",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
