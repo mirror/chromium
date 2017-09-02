@@ -53,7 +53,13 @@ Polymer({
       value: function() {
         return loadTimeData.getBoolean('enableVoiceInteraction');
       },
-    }
+    },
+
+    /** @private */
+    shouldShowAndroidApps: Boolean,
+
+    /** @private */
+    androidAppsInfo: Object,
     // </if>
   },
 
@@ -123,7 +129,8 @@ Polymer({
   /** @private */
   onGoogleAssistantTap_: function() {
     assert(this.voiceInteractionFeatureEnabled_);
-    settings.navigateTo(settings.routes.GOOGLE_ASSISTANT);
+    if (this.androidAppsInfo.playStoreEnabled)
+      settings.navigateTo(settings.routes.GOOGLE_ASSISTANT);
   },
   // </if>
 
@@ -211,12 +218,12 @@ Polymer({
 
   /**
    * @param {boolean} featureAvailable
-   * @param {boolean} arcEnabled
+   * @param {boolean} shouldShowAndroidApps
    * @return {boolean}
    * @private
    */
-  showAssistantSection_: function(featureAvailable, arcEnabled) {
-    return featureAvailable && arcEnabled;
+  showAssistantSection_: function(featureAvailable, shouldShowAndroidApps) {
+    return featureAvailable && shouldShowAndroidApps;
   },
   // </if>
 
