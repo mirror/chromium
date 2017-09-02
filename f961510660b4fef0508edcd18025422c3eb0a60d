@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95cd49aa_b197479f",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001426
+      },
+      "writtenOn": "2017-09-02T00:36:57Z",
+      "side": 0,
+      "message": "Did you mean to delete this?  I thought we were only working on chromium.gpu.fyi here.\nOtherwise lgtm.",
+      "revId": "f961510660b4fef0508edcd18025422c3eb0a60d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
