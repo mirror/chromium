@@ -15,6 +15,7 @@ import shutil
 import signal
 import subprocess
 import sys
+import uuid
 
 
 DIR_SOURCE_ROOT = os.path.abspath(
@@ -55,6 +56,21 @@ def _DumpFile(dry_run, name, description):
   with open(name) as f:
     sys.stdout.write(f.read())
   print '-' * 80
+
+
+def _GetSummaryOutput(target_file):
+  ls = subprocess.check_output([os.path.join(SDK_ROOT, 'tools', 'netls'),
+                                '--nowait'])
+  mo = re.search(r'device ([a-z]+-[a-z]+-[a-z]+-[a-z]+)', ls)
+  if not mo:
+    print 'Failed to retrieve summary, couldn\'t get device name.'
+    return
+  node_name = mo.group(1)
+  _RunAndCheck(False,
+      [os.path.join(SDK_ROOT, 'tools', 'netcp'),
+       node_name + ':/tmp/summary_output.json',
+       target_file])
+  print 'Retrieved summary output to', target_file
 
 
 def _MakeTargetImageName(common_prefix, output_directory, location):
@@ -159,8 +175,7 @@ def ReadRuntimeDeps(deps_path, output_directory):
     result.append((target_path, abs_path))
   return result
 
-def BuildBootfs(output_directory, runtime_deps, bin_name, child_args,
-                dry_run, power_off):
+def BuildBootfs(output_directory, runtime_deps, bin_name, child_args, dry_run):
   # |runtime_deps| already contains (target, source) pairs for the runtime deps,
   # so we can initialize |file_mapping| from it directly.
   file_mapping = dict(runtime_deps)
@@ -182,15 +197,8 @@ def BuildBootfs(output_directory, runtime_deps, bin_name, child_args,
   for arg in child_args:
     autorun_file.write(' "%s"' % arg);
   autorun_file.write('\n')
-  autorun_file.write('echo Process terminated.\n')
-
-  if power_off:
-    # If shutdown of QEMU happens too soon after the program finishes, log
-    # statements from the end of the run will be lost, so sleep for a bit before
-    # shutting down. When running on device don't power off so the output and
-    # system can be inspected.
-    autorun_file.write('msleep 3000\n')
-    autorun_file.write('dm poweroff\n')
+  termination_string = 'Process terminated %s.' % uuid.uuid4().hex
+  autorun_file.write('echo ' + termination_string + '\n')
 
   autorun_file.flush()
   os.chmod(autorun_file.name, 0750)
@@ -224,8 +232,9 @@ def BuildBootfs(output_directory, runtime_deps, bin_name, child_args,
        '--target=system', manifest_file.name]) != 0:
     return None
 
-  # Return both the name of the bootfs file, and the filename mapping.
-  return (bootfs_name, symbols_mapping)
+  # Return (the name of the bootfs file, the filename mapping, a string
+  #         denoting the end of the autorun).
+  return (bootfs_name, symbols_mapping, termination_string)
 
 
 def _SymbolizeEntries(entries):
@@ -329,8 +338,8 @@ def _SymbolizeBacktrace(backtrace, file_mapping):
   return map(lambda entry: symbolized[entry['frame_id']], backtrace)
 
 
-def RunFuchsia(bootfs_and_manifest, use_device, dry_run):
-  bootfs, bootfs_manifest = bootfs_and_manifest
+def RunFuchsia(bootfs_info, use_device, dry_run, test_launcher_summary_output):
+  bootfs, bootfs_manifest, termination_string = bootfs_info
   kernel_path = os.path.join(SDK_ROOT, 'kernel', 'magenta.bin')
 
   if use_device:
@@ -351,11 +360,16 @@ def RunFuchsia(bootfs_and_manifest, use_device, dry_run):
       '-enable-kvm',
       '-cpu', 'host,migratable=no',
 
+      # This is used for netboot protocol commands so that commands can be run
+      # from the host after boot (in particular, netcp.)
+      '-netdev', 'type=tap,ifname=qemu,script=no,downscript=no,id=net0',
+      '-device', 'e1000,netdev=net0',
+
       # Configure virtual network. It is used in the tests to connect to
       # testserver running on the host.
-      '-netdev', 'user,id=net0,net=%s,dhcpstart=%s,host=%s' %
+      '-netdev', 'user,id=net1,net=%s,dhcpstart=%s,host=%s' %
           (GUEST_NET, GUEST_IP_ADDRESS, HOST_IP_ADDRESS),
-      '-device', 'e1000,netdev=net0',
+      '-device', 'e1000,netdev=net1',
 
       # Use stdio for the guest OS only; don't attach the QEMU interactive
       # monitor.
@@ -404,6 +418,14 @@ def RunFuchsia(bootfs_and_manifest, use_device, dry_run):
       break
     if 'SUCCESS: all tests passed.' in line:
       success = True
+
+    if termination_string in line:
+      # If this string is seen, the target process is done: copy the results
+      # file back if desired and start shutdown.
+      if test_launcher_summary_output:
+        _GetSummaryOutput(test_launcher_summary_output)
+      netruncmd_path = os.path.join(SDK_ROOT, 'tools', 'netruncmd')
+      _RunAndCheck(dry_run, [netruncmd_path, ':', 'dm poweroff'])
 
     # If the line is not from QEMU then don't try to process it.
     matched = qemu_prefix.match(line)
