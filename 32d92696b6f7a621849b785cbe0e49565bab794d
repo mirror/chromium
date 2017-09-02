@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a8006fe_f6b53030",
+        "filename": "chrome/browser/vr/elements/viewport_aware_root.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-02T04:20:50Z",
+      "side": 1,
+      "message": "I think there\u0027s fmod() for this, but I\u0027ve never used it.  Should be something like fmod(angle, 360), then add 360 if you don\u0027t want a negative angle.\n\nI assume this code isn\u0027t strictly necessary, but you just want to keep the angle small if the user happens to be spinning on a chair, right?",
+      "revId": "32d92696b6f7a621849b785cbe0e49565bab794d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd5ff1ea_5ca0a9b6",
+        "filename": "chrome/browser/vr/elements/viewport_aware_root_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-02T04:20:50Z",
+      "side": 1,
+      "message": "frame_duration",
+      "range": {
+        "startLine": 138,
+        "startChar": 26,
+        "endLine": 138,
+        "endChar": 30
+      },
+      "revId": "32d92696b6f7a621849b785cbe0e49565bab794d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f62bf12_bec65bb2",
+        "filename": "chrome/browser/vr/elements/viewport_aware_root_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-02T04:20:50Z",
+      "side": 1,
+      "message": "60 should probably be a kFramesPerSecond at module-level.",
+      "range": {
+        "startLine": 138,
+        "startChar": 69,
+        "endLine": 138,
+        "endChar": 73
+      },
+      "revId": "32d92696b6f7a621849b785cbe0e49565bab794d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23c00f75_50fbcf06",
+        "filename": "chrome/browser/vr/elements/viewport_aware_root_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-02T04:20:50Z",
+      "side": 1,
+      "message": "s/animation/animate/",
+      "range": {
+        "startLine": 177,
+        "startChar": 56,
+        "endLine": 177,
+        "endChar": 65
+      },
+      "revId": "32d92696b6f7a621849b785cbe0e49565bab794d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
