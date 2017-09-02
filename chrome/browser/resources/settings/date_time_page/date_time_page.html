@@ -52,10 +52,10 @@
       </template>
       <template is="dom-if" restamp
           if="[[prefs.cros.flags.per_user_timezone_enabled.value]]">
-        <settings-toggle-button class="first"
+        <settings-toggle-button class="first" hide-label
             pref="{{prefs.settings.resolve_timezone_by_geolocation}}"
             id="timeZoneAutoDetect"
-            aria-labelledby="timezoneGeolocateToggleLabel">
+            label="$i18n{timeZoneGeolocation}">
         </settings-toggle-button>
       </template>
     </div>
