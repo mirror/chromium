@@ -46,6 +46,30 @@
       "revId": "46f2f6f0b422096a0ad6cfa5be0e92a88e46316f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd042f48_f59048f2",
+        "filename": "content/browser/web_contents/web_contents_view_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-09-02T00:08:59Z",
+      "side": 1,
+      "message": "The sole use of WebContentsDelegate::ContentsMouseEvent in Chrome code is basically only to move the status bubble around.\n\nI wouldn\u0027t mind dropping this argument.",
+      "parentUuid": "78ebf5cf_0ed3b08b",
+      "range": {
+        "startLine": 534,
+        "startChar": 21,
+        "endLine": 534,
+        "endChar": 39
+      },
+      "revId": "46f2f6f0b422096a0ad6cfa5be0e92a88e46316f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
