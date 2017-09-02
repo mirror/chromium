@@ -41,4 +41,38 @@ final class Converters {
                 throw new IllegalArgumentException("Unsupported value: " + value);
         }
     }
+
+    public static org.chromium.android_webview.AwSettings.PluginState toAwPluginState(
+            android.webkit.WebSettings.PluginState value) {
+        if (value == null) {
+            return null;
+        }
+        switch (value) {
+            case OFF:
+                return org.chromium.android_webview.AwSettings.PluginState.OFF;
+            case ON:
+                return org.chromium.android_webview.AwSettings.PluginState.ON;
+            case ON_DEMAND:
+                return org.chromium.android_webview.AwSettings.PluginState.ON_DEMAND;
+            default:
+                throw new IllegalArgumentException("Unsupported value: " + value);
+        }
+    }
+
+    public static android.webkit.WebSettings.PluginState fromAwPluginState(
+            org.chromium.android_webview.AwSettings.PluginState value) {
+        if (value == null) {
+            return null;
+        }
+        switch (value) {
+            case OFF:
+                return android.webkit.WebSettings.PluginState.OFF;
+            case ON:
+                return android.webkit.WebSettings.PluginState.ON;
+            case ON_DEMAND:
+                return android.webkit.WebSettings.PluginState.ON_DEMAND;
+            default:
+                throw new IllegalArgumentException("Unsupported value: " + value);
+        }
+    }
 }
