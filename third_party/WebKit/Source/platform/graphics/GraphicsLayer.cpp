@@ -561,31 +561,35 @@ class GraphicsLayer::LayersAsJSONArray {
 
   void Walk(const GraphicsLayer& layer,
             int parent_transform_id,
-            const FloatPoint& parent_offset) {
-    FloatPoint offset = parent_offset;
-    int transform_id = parent_transform_id;
-    std::unique_ptr<JSONObject> transform_json;
+            const FloatPoint& parent_position) {
+    FloatPoint position = parent_position + layer.position_;
+    int transform_id = 0;
     if (!layer.transform_.IsIdentity() || layer.rendering_context3d_) {
-      transform_json = JSONObject::Create();
+      auto transform_json = JSONObject::Create();
       transform_id = next_transform_id_++;
       transform_json->SetInteger("id", transform_id);
       if (parent_transform_id)
         transform_json->SetInteger("parent", parent_transform_id);
-      layer.AddTransformJSONProperties(*transform_json, rendering_context_map_);
-      transforms_json_->PushObject(std::move(transform_json));
 
-      offset = FloatPoint();
+      // Bake layer position into transform.
+      auto transform =
+          TransformationMatrix().Translate(position.X(), position.Y()) *
+          layer.transform_;
+      position = FloatPoint();
+
+      layer.AddTransformJSONProperties(transform, *transform_json,
+                                       rendering_context_map_);
+      transforms_json_->PushObject(std::move(transform_json));
     }
 
     auto json =
-        layer.LayerAsJSONInternal(flags_, rendering_context_map_, offset);
+        layer.LayerAsJSONInternal(flags_, rendering_context_map_, position);
     if (transform_id)
       json->SetInteger("transform", transform_id);
     layers_json_->PushObject(std::move(json));
 
-    offset += layer.position_;
     for (auto& child : layer.children_)
-      Walk(*child, transform_id, offset);
+      Walk(*child, transform_id, position);
   }
 
  private:
@@ -610,7 +614,7 @@ std::unique_ptr<JSONObject> GraphicsLayer::LayerTreeAsJSON(
 std::unique_ptr<JSONObject> GraphicsLayer::LayerAsJSONInternal(
     LayerTreeFlags flags,
     RenderingContextMap& rendering_context_map,
-    const FloatPoint& offset) const {
+    const FloatPoint& position) const {
   std::unique_ptr<JSONObject> json = JSONObject::Create();
 
   if (flags & kLayerTreeIncludesDebugInfo)
@@ -618,7 +622,6 @@ std::unique_ptr<JSONObject> GraphicsLayer::LayerAsJSONInternal(
 
   json->SetString("name", DebugName());
 
-  FloatPoint position = offset + position_;
   if (position != FloatPoint())
     json->SetArray("position", PointAsJSONArray(position));
 
@@ -663,7 +666,7 @@ std::unique_ptr<JSONObject> GraphicsLayer::LayerAsJSONInternal(
   }
 
   if (flags & kOutputAsLayerTree)
-    AddTransformJSONProperties(*json, rendering_context_map);
+    AddTransformJSONProperties(transform_, *json, rendering_context_map);
 
   if (flags & kLayerTreeIncludesPaintInvalidations)
     GetRasterInvalidationTrackingMap().AsJSON(this, json.get());
@@ -727,8 +730,8 @@ std::unique_ptr<JSONObject> GraphicsLayer::LayerAsJSONInternal(
 
   if (mask_layer_) {
     std::unique_ptr<JSONArray> mask_layer_json = JSONArray::Create();
-    mask_layer_json->PushObject(
-        mask_layer_->LayerAsJSONInternal(flags, rendering_context_map));
+    mask_layer_json->PushObject(mask_layer_->LayerAsJSONInternal(
+        flags, rendering_context_map, mask_layer_->position_));
     json->SetArray("maskLayer", std::move(mask_layer_json));
   }
 
@@ -737,7 +740,8 @@ std::unique_ptr<JSONObject> GraphicsLayer::LayerAsJSONInternal(
         JSONArray::Create();
     contents_clipping_mask_layer_json->PushObject(
         contents_clipping_mask_layer_->LayerAsJSONInternal(
-            flags, rendering_context_map));
+            flags, rendering_context_map,
+            contents_clipping_mask_layer_->position_));
     json->SetArray("contentsClippingMaskLayer",
                    std::move(contents_clipping_mask_layer_json));
   }
@@ -749,7 +753,7 @@ std::unique_ptr<JSONObject> GraphicsLayer::LayerTreeAsJSONInternal(
     LayerTreeFlags flags,
     RenderingContextMap& rendering_context_map) const {
   std::unique_ptr<JSONObject> json =
-      LayerAsJSONInternal(flags, rendering_context_map);
+      LayerAsJSONInternal(flags, rendering_context_map, position_);
 
   if (children_.size()) {
     std::unique_ptr<JSONArray> children_json = JSONArray::Create();
@@ -764,10 +768,11 @@ std::unique_ptr<JSONObject> GraphicsLayer::LayerTreeAsJSONInternal(
 }
 
 void GraphicsLayer::AddTransformJSONProperties(
+    const TransformationMatrix& transform,
     JSONObject& json,
     RenderingContextMap& rendering_context_map) const {
-  if (!transform_.IsIdentity())
-    json.SetArray("transform", TransformAsJSONArray(transform_));
+  if (!transform.IsIdentity())
+    json.SetArray("transform", TransformAsJSONArray(transform));
 
   if (!transform_.IsIdentityOrTranslation())
     json.SetArray("origin", PointAsJSONArray(transform_origin_));

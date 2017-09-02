@@ -104,6 +104,8 @@ class PLATFORM_EXPORT ContentLayerClientImpl : public cc::ContentLayerClient {
                                    PaintInvalidationReason);
   void InvalidateRasterForWholeLayer();
 
+  int GenerateTransformJSON(LayerAsJSONContext&) const;
+
   scoped_refptr<cc::PictureLayer> cc_picture_layer_;
   scoped_refptr<cc::DisplayItemList> cc_display_item_list_;
   gfx::Rect layer_bounds_;

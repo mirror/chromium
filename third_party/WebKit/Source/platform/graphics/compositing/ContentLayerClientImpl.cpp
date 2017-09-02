@@ -38,31 +38,48 @@ ContentLayerClientImpl::TrackedRasterInvalidations() const {
   return raster_invalidation_tracking_info_->tracking.invalidations;
 }
 
-static int GetTransformId(const TransformPaintPropertyNode* transform,
-                          ContentLayerClientImpl::LayerAsJSONContext& context) {
+static int GetTransformId(
+    const TransformPaintPropertyNode* transform,
+    const ContentLayerClientImpl::LayerAsJSONContext& context) {
   if (!transform)
     return 0;
 
   auto it = context.transform_id_map.find(transform);
-  if (it != context.transform_id_map.end())
-    return it->value;
+  return it == context.transform_id_map.end() ? 0 : it->value;
+}
 
-  if ((transform->Matrix().IsIdentity() && !transform->RenderingContextId()) ||
-      // Don't output scroll translations in transform tree.
-      transform->ScrollNode()) {
-    context.transform_id_map.Set(transform, 0);
-    return 0;
+int ContentLayerClientImpl::GenerateTransformJSON(
+    LayerAsJSONContext& context) const {
+  const auto* transform = layer_state_.Transform();
+  int transform_id = GetTransformId(transform, context);
+  if (transform_id)
+    return transform_id;
+
+  auto matrix = transform->Matrix();
+  int parent_id = 0;
+  // Find the parent transform with an id, and bake all transforms without id
+  // into matrix.
+  for (const auto* parent = transform->Parent(); parent;
+       parent = parent->Parent()) {
+    parent_id = GetTransformId(parent, context);
+    if (parent_id)
+      break;
+    matrix = parent->Matrix() * matrix;
   }
 
-  int parent_id = GetTransformId(transform->Parent(), context);
+  if (matrix.IsIdentity() && !transform->RenderingContextId()) {
+    context.transform_id_map.Set(transform, 0);
+    return parent_id;
+  }
+
   auto json = JSONObject::Create();
-  int transform_id = context.next_transform_id++;
+  transform_id = context.next_transform_id++;
   json->SetInteger("id", transform_id);
   if (parent_id)
     json->SetInteger("parent", parent_id);
 
   if (!transform->Matrix().IsIdentity())
-    json->SetArray("transform", TransformAsJSONArray(transform->Matrix()));
+    json->SetArray("transform", TransformAsJSONArray(matrix));
 
   if (!transform->Matrix().IsIdentityOrTranslation())
     json->SetArray("origin", PointAsJSONArray(transform->Origin()));
@@ -128,7 +145,7 @@ std::unique_ptr<JSONObject> ContentLayerClientImpl::LayerAsJSON(
       raster_invalidation_tracking_info_)
     raster_invalidation_tracking_info_->tracking.AsJSON(json.get());
 
-  if (int transform_id = GetTransformId(layer_state_.Transform(), context))
+  if (int transform_id = GenerateTransformJSON(context))
     json->SetInteger("transform", transform_id);
 
   return json;
