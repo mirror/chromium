@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f26f734b_6fb1e408",
+        "filename": "content/browser/service_manager/service_manager_context.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-02T00:14:07Z",
+      "side": 1,
+      "message": "nit: Some comments would help here and for StartServiceInUtilityProcess.",
+      "revId": "a292c305f0400b041a28b9a658776df44270520b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45764ccc_596dca73",
+        "filename": "content/browser/service_manager/service_manager_context.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-02T00:14:07Z",
+      "side": 1,
+      "message": "You probably want to move this to the manifest since your moved the \"unsandboxed\" info into the manifest.",
+      "revId": "a292c305f0400b041a28b9a658776df44270520b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
