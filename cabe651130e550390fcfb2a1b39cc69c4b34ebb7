@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46be1e84_5e3e118a",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-02T17:55:48Z",
+      "side": 1,
+      "message": "Will\n     // Ensures that newly-appeared and disappeared paintings are updated. \n     ObjectPaintInvalidator(Box()).SlowSetPaintingLayerNeedsRepaint();\n     Box().SetNeedsPaintPropertyUpdate();\nwork?",
+      "revId": "cabe651130e550390fcfb2a1b39cc69c4b34ebb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
