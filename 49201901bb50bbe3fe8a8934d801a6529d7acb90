@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "346479ac_b261a86b",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_benchmarks/webvr.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-02T15:45:22Z",
+      "side": 1,
+      "message": "Nit: call this class XrWebVrStatic?",
+      "revId": "49201901bb50bbe3fe8a8934d801a6529d7acb90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
