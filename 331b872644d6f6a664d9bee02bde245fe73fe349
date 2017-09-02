@@ -16,6 +16,24 @@
       "revId": "331b872644d6f6a664d9bee02bde245fe73fe349",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cd00c60_6bcc85e3",
+        "filename": "chrome/browser/ui/browser_command_controller_interactive_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-09-02T04:42:45Z",
+      "side": 1,
+      "message": "Sorry for the late response Michael.\nYes, I think testing the behavior here, even it\u0027s wrong, it\u0027s not proper. I will put the page into a standalone HTML file: I assume it should resolve the issue, since fullscreen keyboard lock page needs to be loaded synchronously to ensure the test pass.\n\nI may add another test case into chrome/test/base/uit_test_utils_test.cc (though I hate the test of test utils) to cover the wrong behavior.",
+      "parentUuid": "75f5ed90_00c013c3",
+      "revId": "331b872644d6f6a664d9bee02bde245fe73fe349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
