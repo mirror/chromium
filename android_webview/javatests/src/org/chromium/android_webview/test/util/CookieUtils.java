@@ -5,11 +5,11 @@
 package org.chromium.android_webview.test.util;
 
 import android.app.Instrumentation;
-import android.webkit.ValueCallback;
 
 import org.junit.Assert;
 
 import org.chromium.android_webview.AwCookieManager;
+import org.chromium.base.Callback;
 import org.chromium.base.test.util.CallbackHelper;
 
 /**
@@ -23,9 +23,9 @@ public class CookieUtils {
     /**
      * A CallbackHelper for use with setCookie/removeXXXCookie.
      */
-    public static class TestValueCallback<T> implements ValueCallback<T> {
+    public static class TestValueCallback<T> implements Callback<T> {
         /**
-         * We only have one intresting method on ValueCallback: onReceiveValue.
+         * We only have one intresting method on Callback: onResult.
          */
         public static class OnReceiveValueHelper<T> extends CallbackHelper {
             private T mValue;
@@ -52,7 +52,7 @@ public class CookieUtils {
         }
 
         @Override
-        public void onReceiveValue(T value) {
+        public void onResult(T value) {
             mOnReceiveValueHelper.notifyCalled(value);
         }
 
