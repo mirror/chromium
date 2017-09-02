@@ -8,7 +8,6 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.MediumTest;
 import android.test.MoreAsserts;
 import android.util.Pair;
-import android.webkit.ValueCallback;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -23,6 +22,7 @@ import org.chromium.android_webview.AwSettings;
 import org.chromium.android_webview.test.util.CookieUtils;
 import org.chromium.android_webview.test.util.CookieUtils.TestValueCallback;
 import org.chromium.android_webview.test.util.JSUtils;
+import org.chromium.base.Callback;
 import org.chromium.base.test.util.Feature;
 import org.chromium.content.browser.test.util.JavaScriptUtils;
 import org.chromium.content_public.browser.WebContents;
@@ -735,19 +735,17 @@ public class CookieManagerTest {
     }
 
     private void setCookieOnUiThread(final String url, final String cookie,
-            final ValueCallback<Boolean> callback) throws Throwable {
+            final Callback<Boolean> callback) throws Throwable {
         InstrumentationRegistry.getInstrumentation().runOnMainSync(
                 () -> mCookieManager.setCookie(url, cookie, callback));
     }
 
-    private void removeSessionCookiesOnUiThread(final ValueCallback<Boolean> callback)
-            throws Throwable {
+    private void removeSessionCookiesOnUiThread(final Callback<Boolean> callback) throws Throwable {
         InstrumentationRegistry.getInstrumentation().runOnMainSync(
                 () -> mCookieManager.removeSessionCookies(callback));
     }
 
-    private void removeAllCookiesOnUiThread(final ValueCallback<Boolean> callback)
-            throws Throwable {
+    private void removeAllCookiesOnUiThread(final Callback<Boolean> callback) throws Throwable {
         InstrumentationRegistry.getInstrumentation().runOnMainSync(
                 () -> mCookieManager.removeAllCookies(callback));
     }

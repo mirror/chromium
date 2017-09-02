@@ -51,13 +51,14 @@ final class WebStorageAdapter extends WebStorage {
             mFactory.addTask(new Runnable() {
                 @Override
                 public void run() {
-                    mQuotaManagerBridge.getOrigins(awOriginsCallback);
+                    mQuotaManagerBridge.getOrigins(
+                            Converters.wrapAsChromiumCallback(awOriginsCallback));
                 }
 
             });
             return;
         }
-        mQuotaManagerBridge.getOrigins(awOriginsCallback);
+        mQuotaManagerBridge.getOrigins(Converters.wrapAsChromiumCallback(awOriginsCallback));
     }
 
     @Override
@@ -66,13 +67,14 @@ final class WebStorageAdapter extends WebStorage {
             mFactory.addTask(new Runnable() {
                 @Override
                 public void run() {
-                    mQuotaManagerBridge.getUsageForOrigin(origin, callback);
+                    mQuotaManagerBridge.getUsageForOrigin(
+                            origin, Converters.wrapAsChromiumCallback(callback));
                 }
 
             });
             return;
         }
-        mQuotaManagerBridge.getUsageForOrigin(origin, callback);
+        mQuotaManagerBridge.getUsageForOrigin(origin, Converters.wrapAsChromiumCallback(callback));
     }
 
     @Override
@@ -81,13 +83,14 @@ final class WebStorageAdapter extends WebStorage {
             mFactory.addTask(new Runnable() {
                 @Override
                 public void run() {
-                    mQuotaManagerBridge.getQuotaForOrigin(origin, callback);
+                    mQuotaManagerBridge.getQuotaForOrigin(
+                            origin, Converters.wrapAsChromiumCallback(callback));
                 }
 
             });
             return;
         }
-        mQuotaManagerBridge.getQuotaForOrigin(origin, callback);
+        mQuotaManagerBridge.getQuotaForOrigin(origin, Converters.wrapAsChromiumCallback(callback));
     }
 
     @Override
