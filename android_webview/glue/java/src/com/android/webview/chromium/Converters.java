@@ -124,4 +124,18 @@ final class Converters {
                 throw new IllegalArgumentException("Unsupported value: " + value);
         }
     }
+
+    public static android.webkit.GeolocationPermissions.Callback
+            fromAwGeolocationPermissionsCallback(
+            final org.chromium.android_webview.AwGeolocationPermissions.Callback callback) {
+        if (callback == null) {
+            return null;
+        }
+        return new android.webkit.GeolocationPermissions.Callback() {
+            @Override
+            public void invoke(String origin, boolean allow, boolean retain) {
+                callback.invoke(origin, allow, retain);
+            }
+        };
+    }
 }
