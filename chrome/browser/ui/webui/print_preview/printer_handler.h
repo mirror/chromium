@@ -20,10 +20,18 @@ class RefCountedBytes;
 class Value;
 }
 
+namespace content {
+class WebContents;
+}
+
 class Profile;
 
 namespace gfx {
 class Size;
+}
+
+namespace printing {
+class StickySettings;
 }
 
 // Wrapper around PrinterProviderAPI to be used by print preview.
@@ -35,7 +43,7 @@ class PrinterHandler {
   using GetPrintersCallback =
       base::Callback<void(const base::ListValue& printers, bool done)>;
   using GetCapabilityCallback =
-      base::Callback<void(const base::DictionaryValue& capability)>;
+      base::Callback<void(std::unique_ptr<base::DictionaryValue> settings)>;
   using PrintCallback =
       base::Callback<void(bool success, const base::Value& error)>;
   using GetPrinterInfoCallback =
@@ -44,6 +52,12 @@ class PrinterHandler {
   // Creates an instance of a PrinterHandler for extension printers.
   static std::unique_ptr<PrinterHandler> CreateForExtensionPrinters(
       Profile* profile);
+
+  // Creates an instance of a PrinterHandler for PDF printer.
+  static std::unique_ptr<PrinterHandler> CreateForPdfPrinter(
+      Profile* profile,
+      content::WebContents* preview_web_contents,
+      printing::StickySettings* sticky_settings);
 
 #if BUILDFLAG(ENABLE_SERVICE_DISCOVERY)
   // Creates an instance of a PrinterHandler for privet printers.

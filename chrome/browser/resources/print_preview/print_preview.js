@@ -599,9 +599,12 @@ cr.define('print_preview', function() {
         assert(
             destination.id ==
             print_preview.Destination.GooglePromotedId.SAVE_AS_PDF);
-        // Save as PDF resolves when file selection is completed or cancelled.
+        // Save as PDF resolves when PDF is saved or file selection is
+        // cancelled.
+        this.previewArea_.showCustomMessage(
+            loadTimeData.getString('printingToPDFInProgress'));
         whenPrintDone.then(
-            this.onFileSelectionComplete_.bind(this),
+            this.close_.bind(this, false),
             this.onFileSelectionCancel_.bind(this));
       }
 
@@ -747,22 +750,9 @@ cr.define('print_preview', function() {
           this.uiState_ == PrintPreviewUiState_.FILE_SELECTION,
           'File selection cancelled when not in file-selection state: ' +
               this.uiState_);
+      this.previewArea_.removeCustomMessage();
       this.setIsEnabled_(true);
       this.uiState_ = PrintPreviewUiState_.READY;
-    },
-
-    /**
-     * Called from the native layer when save-to-pdf file selection is complete.
-     * @private
-     */
-    onFileSelectionComplete_: function() {
-      assert(
-          this.uiState_ == PrintPreviewUiState_.FILE_SELECTION,
-          'File selection completed when not in file-selection state: ' +
-              this.uiState_);
-      this.previewArea_.showCustomMessage(
-          loadTimeData.getString('printingToPDFInProgress'));
-      this.uiState_ = PrintPreviewUiState_.PRINTING;
     },
 
     /**

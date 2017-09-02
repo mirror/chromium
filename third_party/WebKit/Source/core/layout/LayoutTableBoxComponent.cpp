@@ -42,8 +42,8 @@ bool LayoutTableBoxComponent::DoCellsHaveDirtyWidth(
 void LayoutTableBoxComponent::MutableForPainting::UpdatePaintResult(
     PaintResult paint_result,
     const CullRect& paint_rect) {
-  DCHECK_EQ(layout_object_.GetDocument().Lifecycle().GetState(),
-            DocumentLifecycle::LifecycleState::kInPaint);
+  // DCHECK_EQ(layout_object_.GetDocument().Lifecycle().GetState(),
+  //          DocumentLifecycle::LifecycleState::kInPaint);
 
   // A table row or section may paint large background display item which
   // contains paint operations of the background in each contained cell.

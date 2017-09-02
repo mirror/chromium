@@ -301,7 +301,10 @@ void ExtensionPrinterHandler::WrapGetPrintersCallback(
 void ExtensionPrinterHandler::WrapGetCapabilityCallback(
     const PrinterHandler::GetCapabilityCallback& callback,
     const base::DictionaryValue& capability) {
-  callback.Run(capability);
+  std::unique_ptr<base::DictionaryValue> capabilities =
+      base::MakeUnique<base::DictionaryValue>();
+  capabilities->MergeDictionary(&capability);
+  callback.Run(std::move(capabilities));
 }
 
 void ExtensionPrinterHandler::WrapPrintCallback(
