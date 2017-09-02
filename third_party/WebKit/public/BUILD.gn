@@ -861,6 +861,7 @@ mojom("android_mojo_bindings") {
     "platform/modules/mediasession/media_session.mojom",
     "platform/modules/payments/payment_request.mojom",
     "platform/modules/webshare/webshare.mojom",
+    "web/unhandled_tap_info.mojom",
   ]
   public_deps = [
     "//mojo/common:common_custom_types",

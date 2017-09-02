@@ -65,6 +65,7 @@
           "blink::mojom::MediaDownloadInProductHelp",
           "blink::mojom::ShareService",
           "blink::mojom::TextSuggestionHost",
+          "blink::mojom::UnhandledTapInfo",
           "bluetooth::mojom::AdapterFactory",
           "chrome::mojom::OpenSearchDocumentDescriptionHandler",
           "chrome::mojom::PrerenderCanceler",
