@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24c8aed3_e4aef399",
+        "filename": "chrome/browser/resources/settings/clear_browsing_data_dialog/clear_browsing_data_dialog_tabs.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-02T01:18:37Z",
+      "side": 1,
+      "message": "i18n for BASIC and ADVANCED",
+      "revId": "bbc914dd9a429eb1afc24f415f1e893db14e9fcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5d1021b_a9b3bbe6",
+        "filename": "chrome/browser/resources/settings/clear_browsing_data_dialog/clear_browsing_data_dialog_tabs.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-02T01:18:37Z",
+      "side": 1,
+      "message": "In other languages (c++, javascript) a comment on a line should have two spaces between the code and the comment. Other HTML in settings uses two spaces, so let\u0027s do it here as well.\n\nAlso, comment should begin with a capital and end with a period (and not be all caps).",
+      "revId": "bbc914dd9a429eb1afc24f415f1e893db14e9fcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "895013a8_4e935717",
+        "filename": "chrome/browser/resources/settings/clear_browsing_data_dialog/clear_browsing_data_dialog_tabs.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-02T01:18:37Z",
+      "side": 1,
+      "message": "2 spaces before comment.",
+      "revId": "bbc914dd9a429eb1afc24f415f1e893db14e9fcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c6fbc84_4a76c779",
+        "filename": "chrome/browser/resources/settings/clear_browsing_data_dialog/clear_browsing_data_dialog_tabs.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-02T01:18:37Z",
+      "side": 1,
+      "message": "Please use hidden$\u003d\"[[...]]\" for pieces that are text-only. I.e. not an HTML element with shadow-dom and so on.\n\n(There\u0027s a trade-off here, we use a dom-if template if the contents \u0027outweigh\u0027 the dom-if. For small things like divs, spans, or text content, the dom-if template is too large and heavy a tool for the job).",
+      "revId": "bbc914dd9a429eb1afc24f415f1e893db14e9fcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a959666_58728482",
+        "filename": "chrome/browser/resources/settings/clear_browsing_data_dialog/clear_browsing_data_dialog_tabs.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-02T01:18:37Z",
+      "side": 1,
+      "message": "Rather than using a subLabelHtml variable, please use $i18nPolymer{} to get the localized strings.\n\nSee\nhttps://cs.chromium.org/chromium/src/chrome/browser/resources/settings/site_settings_page/site_settings_page.html?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d254\nhttps://cs.chromium.org/chromium/src/chrome/browser/resources/settings/site_settings_page/site_settings_page.js?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d141",
+      "revId": "bbc914dd9a429eb1afc24f415f1e893db14e9fcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a11ae4a8_37598305",
+        "filename": "chrome/browser/resources/settings/settings_vars_css.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-02T01:18:37Z",
+      "side": 1,
+      "message": "If (only if) these are only used in one file, go ahead and define them in that file. If the number of places they are used is greater than one, then define them at a higher level.",
+      "revId": "bbc914dd9a429eb1afc24f415f1e893db14e9fcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6293f9c_74cf628e",
+        "filename": "chrome/browser/ui/webui/settings/settings_clear_browsing_data_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-02T01:18:37Z",
+      "side": 1,
+      "message": "Does this TODO need to be updated?\nIt looks like the code it was referring to is moving out from under the comment.",
+      "revId": "bbc914dd9a429eb1afc24f415f1e893db14e9fcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
