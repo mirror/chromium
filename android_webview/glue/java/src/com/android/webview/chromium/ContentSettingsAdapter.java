@@ -393,7 +393,7 @@ public class ContentSettingsAdapter extends android.webkit.WebSettings {
 
     @Override
     public synchronized void setPluginState(PluginState state) {
-        mAwSettings.setPluginState(state);
+        mAwSettings.setPluginState(Converters.toAwPluginState(state));
     }
 
     @Override
@@ -474,7 +474,7 @@ public class ContentSettingsAdapter extends android.webkit.WebSettings {
 
     @Override
     public synchronized PluginState getPluginState() {
-        return mAwSettings.getPluginState();
+        return Converters.fromAwPluginState(mAwSettings.getPluginState());
     }
 
     @Override

@@ -14,7 +14,6 @@ import android.provider.Settings;
 import android.support.annotation.IntDef;
 import android.util.Log;
 import android.webkit.WebSettings;
-import android.webkit.WebSettings.PluginState;
 
 import org.chromium.base.BuildInfo;
 import org.chromium.base.ThreadUtils;
@@ -140,6 +139,9 @@ public class AwSettings {
     /* See {@link android.webkit.WebSettings}. */
     public static final int NARROW_COLUMNS = 2;
     public static final int TEXT_AUTOSIZING = 3;
+
+    /* See {@link android.webkit.WebSettings}. */
+    public enum PluginState { ON, ON_DEMAND, OFF }
 
     // Protects access to settings global fields.
     private static final Object sGlobalContentSettingsLock = new Object();
