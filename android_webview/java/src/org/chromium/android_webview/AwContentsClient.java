@@ -21,7 +21,6 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.ConsoleMessage;
 import android.webkit.GeolocationPermissions;
-import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 
 import org.chromium.android_webview.permission.AwPermissionRequest;
@@ -121,7 +120,7 @@ public abstract class AwContentsClient {
      */
     public abstract boolean hasWebViewClient();
 
-    public abstract void getVisitedHistory(ValueCallback<String[]> callback);
+    public abstract void getVisitedHistory(AwValueCallback<String[]> callback);
 
     public abstract void doUpdateVisitedHistory(String url, boolean isReload);
 
@@ -143,7 +142,7 @@ public abstract class AwContentsClient {
     public abstract void onReceivedHttpAuthRequest(AwHttpAuthHandler handler,
             String host, String realm);
 
-    public abstract void onReceivedSslError(ValueCallback<Boolean> callback, SslError error);
+    public abstract void onReceivedSslError(AwValueCallback<Boolean> callback, SslError error);
 
     public abstract void onReceivedClientCertRequest(
             final AwContentsClientBridge.ClientCertificateRequestCallback callback,
@@ -297,7 +296,7 @@ public abstract class AwContentsClient {
         }
     }
 
-    public abstract void showFileChooser(ValueCallback<String[]> uploadFilePathsCallback,
+    public abstract void showFileChooser(AwValueCallback<String[]> uploadFilePathsCallback,
             FileChooserParamsImpl fileChooserParams);
 
     public abstract void onGeolocationPermissionsShowPrompt(String origin,
@@ -370,7 +369,7 @@ public abstract class AwContentsClient {
             AwWebResourceRequest request, AwWebResourceError error);
 
     protected abstract void onSafeBrowsingHit(AwWebResourceRequest request, int threatType,
-            ValueCallback<AwSafeBrowsingResponse> callback);
+            AwValueCallback<AwSafeBrowsingResponse> callback);
 
     public abstract void onReceivedHttpError(AwWebResourceRequest request,
             AwWebResourceResponse response);

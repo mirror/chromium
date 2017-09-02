@@ -19,7 +19,6 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.ConsoleMessage;
 import android.webkit.URLUtil;
-import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.widget.FrameLayout;
 
@@ -224,7 +223,7 @@ class AwWebContentsDelegateAdapter extends AwWebContentsDelegate {
         AwContentsClient.FileChooserParamsImpl params = new AwContentsClient.FileChooserParamsImpl(
                 modeFlags, acceptTypes, title, defaultFilename, capture);
 
-        mContentsClient.showFileChooser(new ValueCallback<String[]>() {
+        mContentsClient.showFileChooser(new AwValueCallback<String[]>() {
             boolean mCompleted;
             @Override
             public void onReceiveValue(String[] results) {
