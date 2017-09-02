@@ -22,6 +22,30 @@
       "revId": "9038d373fd0f22c7272502f4e22442c0183d3d87",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80402f4b_d74ae42f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-09-02T00:01:19Z",
+      "side": 1,
+      "message": "Good idea.  Done.",
+      "parentUuid": "5d9db94b_18cd753c",
+      "range": {
+        "startLine": 418,
+        "startChar": 8,
+        "endLine": 418,
+        "endChar": 41
+      },
+      "revId": "9038d373fd0f22c7272502f4e22442c0183d3d87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
