@@ -9,7 +9,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.SystemClock;
-import android.webkit.ValueCallback;
 
 import org.chromium.base.VisibleForTesting;
 
@@ -79,10 +78,10 @@ public class AwContentsClientCallbackHelper {
     private static class OnSafeBrowsingHitInfo {
         final AwContentsClient.AwWebResourceRequest mRequest;
         final int mThreatType;
-        final ValueCallback<AwSafeBrowsingResponse> mCallback;
+        final AwValueCallback<AwSafeBrowsingResponse> mCallback;
 
         OnSafeBrowsingHitInfo(AwContentsClient.AwWebResourceRequest request, int threatType,
-                ValueCallback<AwSafeBrowsingResponse> callback) {
+                AwValueCallback<AwSafeBrowsingResponse> callback) {
             mRequest = request;
             mThreatType = threatType;
             mCallback = callback;
@@ -293,7 +292,7 @@ public class AwContentsClientCallbackHelper {
     }
 
     public void postOnSafeBrowsingHit(AwContentsClient.AwWebResourceRequest request, int threatType,
-            ValueCallback<AwSafeBrowsingResponse> callback) {
+            AwValueCallback<AwSafeBrowsingResponse> callback) {
         OnSafeBrowsingHitInfo info = new OnSafeBrowsingHitInfo(request, threatType, callback);
         mHandler.sendMessage(mHandler.obtainMessage(MSG_ON_SAFE_BROWSING_HIT, info));
     }
