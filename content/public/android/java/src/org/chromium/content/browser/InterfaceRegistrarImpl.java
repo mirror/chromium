@@ -16,6 +16,9 @@ import org.chromium.media.mojom.AndroidOverlayProvider;
 import org.chromium.mojo.system.impl.CoreImpl;
 import org.chromium.services.service_manager.InterfaceRegistry;
 
+//import org.chromium.blink.mojom.UnhandledTapNotifierService;
+//import org.chromium.chrome.browser.contextualsearch.UnhandledTapNotifierServiceImpl;
+
 @JNINamespace("content")
 class InterfaceRegistrarImpl {
 
@@ -62,6 +65,10 @@ class InterfaceRegistrarImpl {
             registry.addInterface(AndroidOverlayProvider.MANAGER,
                     new AndroidOverlayProviderImpl.Factory(applicationContext));
             // TODO(avayvod): Register the PresentationService implementation here.
+            System.out.println("ctxs ContentContextInterfaceRegistrar registry addInterface!");
+//            registry.addInterface(
+//                     UnhandledTapNotifierService.MANAGER, 
+//                     new UnhandledTapNotifierServiceImpl.Factory(null));
         }
     }
 }

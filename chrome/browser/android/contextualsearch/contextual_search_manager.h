@@ -11,13 +11,17 @@
 #include "base/task/cancelable_task_tracker.h"
 #include "chrome/browser/android/contextualsearch/contextual_search_context.h"
 #include "chrome/browser/android/contextualsearch/contextual_search_delegate.h"
-#include "components/contextual_search/browser/contextual_search_js_api_handler.h"
+#include "components/contextual_search/browser/contextual_search_api_handler.h"
+
+
+//#include "components/contextual_search/browser/contextual_search_unhandled_tap_service_impl.h"
+
 
 // Manages the native extraction and request logic for Contextual Search,
 // and interacts with the Java ContextualSearchManager for UX.
 // Most of the work is done by the associated ContextualSearchDelegate.
 class ContextualSearchManager
-    : public contextual_search::ContextualSearchJsApiHandler {
+    : public contextual_search::ContextualSearchApiHandler {
  public:
   // Constructs a native manager associated with the Java manager.
   ContextualSearchManager(JNIEnv* env,
@@ -78,11 +82,16 @@ class ContextualSearchManager
       size_t start_offset,
       size_t end_offset);
 
+  // TODO(donnd): !!!!!!!!!!!!!!!
+  void ShowUnhandledTapUIIfNeeded() override;
+
   // Our global reference to the Java ContextualSearchManager.
   base::android::ScopedJavaGlobalRef<jobject> java_manager_;
 
   // The delegate we're using the do the real work.
   std::unique_ptr<ContextualSearchDelegate> delegate_;
+
+//  std::unique_ptr<contextual_search::ContextualSearchUnhandledTapServiceImpl> unhandled_tap_service_;
 
   DISALLOW_COPY_AND_ASSIGN(ContextualSearchManager);
 };
