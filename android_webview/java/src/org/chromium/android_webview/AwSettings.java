@@ -13,7 +13,6 @@ import android.provider.Settings;
 import android.support.annotation.IntDef;
 import android.util.Log;
 import android.webkit.WebSettings;
-import android.webkit.WebSettings.PluginState;
 
 import org.chromium.base.BuildInfo;
 import org.chromium.base.ThreadUtils;
@@ -138,6 +137,9 @@ public class AwSettings {
         // Lazy Holder pattern
         private static final String sInstance = nativeGetDefaultUserAgent();
     }
+
+    /* See {@link android.webkit.WebSettings}. */
+    public enum PluginState { ON, ON_DEMAND, OFF }
 
     // Protects access to settings global fields.
     private static final Object sGlobalContentSettingsLock = new Object();

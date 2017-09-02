@@ -425,7 +425,22 @@ public class ContentSettingsAdapter extends android.webkit.WebSettings {
 
     @Override
     public synchronized void setPluginState(PluginState state) {
-        mAwSettings.setPluginState(state);
+        if (state == null) {
+            mAwSettings.setPluginState(null);
+        }
+        switch (state) {
+            case OFF:
+                mAwSettings.setPluginState(AwSettings.PluginState.OFF);
+                return;
+            case ON:
+                mAwSettings.setPluginState(AwSettings.PluginState.ON);
+                return;
+            case ON_DEMAND:
+                mAwSettings.setPluginState(AwSettings.PluginState.ON_DEMAND);
+                return;
+            default:
+                throw new IllegalArgumentException("Unsupported value: " + state);
+        }
     }
 
     @Override
@@ -506,7 +521,20 @@ public class ContentSettingsAdapter extends android.webkit.WebSettings {
 
     @Override
     public synchronized PluginState getPluginState() {
-        return mAwSettings.getPluginState();
+        AwSettings.PluginState value = mAwSettings.getPluginState();
+        if (value == null) {
+            return null;
+        }
+        switch (value) {
+            case OFF:
+                return PluginState.OFF;
+            case ON:
+                return PluginState.ON;
+            case ON_DEMAND:
+                return PluginState.ON_DEMAND;
+            default:
+                throw new IllegalArgumentException("Unsupported value: " + value);
+        }
     }
 
     @Override
