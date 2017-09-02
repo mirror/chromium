@@ -1103,7 +1103,8 @@ class WebViewContentsClientAdapter extends AwContentsClient {
 
             // Invoke the new callback introduced in Lollipop. If the app handles
             // it, we're done here.
-            if (mWebChromeClient.onShowFileChooser(mWebView, callbackAdapter, fileChooserParams)) {
+            if (mWebChromeClient.onShowFileChooser(mWebView, callbackAdapter,
+                        Converters.fromAwFileChooserParams(fileChooserParams))) {
                 return;
             }
 
