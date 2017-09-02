@@ -31,8 +31,8 @@
     <output filename="remoting/resources/es.pak" lang="es" type="data_package"/>
     <output filename="remoting/resources/et.pak" lang="et" type="data_package"/>
     <output filename="remoting/resources/fa.pak" lang="fa" type="data_package"/>
-    <if expr="not _official_build">
-      <!-- We don't need to generate the fake-bidi locale for official builds. -->
+    <if expr="not is_ios or not _official_build">
+      <!-- The fake-bidi locale isn't accepted by the app store. -->
       <output filename="remoting/resources/fake-bidi.pak" lang="fake-bidi" type="data_package"/>
     </if>
     <output filename="remoting/resources/fi.pak" lang="fi" type="data_package"/>
