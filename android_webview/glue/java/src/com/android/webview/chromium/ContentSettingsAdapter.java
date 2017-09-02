@@ -182,12 +182,12 @@ public class ContentSettingsAdapter extends android.webkit.WebSettings {
 
     @Override
     public void setDefaultZoom(ZoomDensity zoom) {
-        mAwSettings.setDefaultZoom(zoom);
+        mAwSettings.setDefaultZoom(Converters.toAwZoomDensity(zoom));
     }
 
     @Override
     public ZoomDensity getDefaultZoom() {
-        return mAwSettings.getDefaultZoom();
+        return Converters.fromAwZoomDensity(mAwSettings.getDefaultZoom());
     }
 
     @Override
