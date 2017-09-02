@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66828663_8cacecba",
+        "filename": "ui/compositor/compositor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-09-02T23:17:54Z",
+      "side": 1,
+      "message": "// Using CoreAnimation to composite requires using GpuMemoryBuffers, which\n// require zero copy.",
+      "revId": "c22d9fa1a8055bf823645c05e7cad0cddf07f900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
