@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b7178a4_04198ddc",
+        "filename": "third_party/WebKit/LayoutTests/inspector/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-02T06:15:37Z",
+      "side": 0,
+      "message": "Do we have this in http/tests/devtools?",
+      "revId": "d3001ace9790bb1caaf8e6d2c09ecefee78bace2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

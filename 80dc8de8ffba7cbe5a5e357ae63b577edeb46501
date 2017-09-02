@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb2e9f9d_5e27ef8f",
+        "filename": "third_party/WebKit/LayoutTests/SlowTests",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-02T06:15:37Z",
+      "side": 1,
+      "message": "Are you going these ones to devtools as well?",
+      "revId": "80dc8de8ffba7cbe5a5e357ae63b577edeb46501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
