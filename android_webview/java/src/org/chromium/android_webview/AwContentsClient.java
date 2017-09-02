@@ -19,7 +19,6 @@ import android.provider.Browser;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
-import android.webkit.WebChromeClient;
 
 import org.chromium.android_webview.permission.AwPermissionRequest;
 import org.chromium.base.Callback;
@@ -57,6 +56,14 @@ public abstract class AwContentsClient {
 
     public AwContentsClient() {
         this(Looper.myLooper());
+    }
+
+    /**
+     *
+     * See {@link android.webkit.WebChromeClient}. */
+    public interface CustomViewCallback {
+        /* See {@link android.webkit.WebChromeClient}. */
+        public void onCustomViewHidden();
     }
 
     // Alllow injection of the callback thread, for testing.
@@ -373,7 +380,7 @@ public abstract class AwContentsClient {
     public abstract void onReceivedHttpError(AwWebResourceRequest request,
             AwWebResourceResponse response);
 
-    public abstract void onShowCustomView(View view, WebChromeClient.CustomViewCallback callback);
+    public abstract void onShowCustomView(View view, CustomViewCallback callback);
 
     public abstract void onHideCustomView();
 
