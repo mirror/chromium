@@ -29,6 +29,8 @@ class ScopedOverviewAnimationSettings {
                                   aura::Window* window);
   ~ScopedOverviewAnimationSettings();
   void AddObserver(ui::ImplicitAnimationObserver* observer);
+  void CacheRenderSurface();
+  void DeferPaint();
 
  private:
   // The managed animation settings.
