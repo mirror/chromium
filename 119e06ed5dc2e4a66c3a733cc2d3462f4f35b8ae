@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27f740fa_e5485b26",
+        "filename": "components/policy/core/common/cloud/signing_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-09-02T02:46:38Z",
+      "side": 1,
+      "message": "Nit: I think {} is shorter than \u003d default and does the same thing.",
+      "revId": "119e06ed5dc2e4a66c3a733cc2d3462f4f35b8ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
