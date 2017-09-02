@@ -94,4 +94,34 @@ final class Converters {
         }
         return value -> callback.onReceiveValue(value);
     }
+
+    public static android.webkit.ConsoleMessage fromAwConsoleMessage(
+            org.chromium.android_webview.AwConsoleMessage value) {
+        if (value == null) {
+            return null;
+        }
+        return new android.webkit.ConsoleMessage(value.message(), value.sourceId(),
+                value.lineNumber(), fromAwMessageLevel(value.messageLevel()));
+    }
+
+    private static android.webkit.ConsoleMessage.MessageLevel fromAwMessageLevel(
+            org.chromium.android_webview.AwConsoleMessage.MessageLevel value) {
+        if (value == null) {
+            return null;
+        }
+        switch (value) {
+            case TIP:
+                return android.webkit.ConsoleMessage.MessageLevel.TIP;
+            case LOG:
+                return android.webkit.ConsoleMessage.MessageLevel.LOG;
+            case WARNING:
+                return android.webkit.ConsoleMessage.MessageLevel.WARNING;
+            case ERROR:
+                return android.webkit.ConsoleMessage.MessageLevel.ERROR;
+            case DEBUG:
+                return android.webkit.ConsoleMessage.MessageLevel.DEBUG;
+            default:
+                throw new IllegalArgumentException("Unsupported value: " + value);
+        }
+    }
 }
