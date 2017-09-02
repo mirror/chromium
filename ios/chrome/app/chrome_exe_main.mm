@@ -32,11 +32,11 @@ void StartCrashController() {
 
 void SetTextDirectionIfPseudoRTLEnabled() {
   @autoreleasepool {
-    NSUserDefaults* standard_defaults = [NSUserDefaults standardUserDefaults];
-    if ([standard_defaults boolForKey:@"EnablePseudoRTL"]) {
-      NSDictionary* pseudoDict = @{@"YES" : @"AppleTextDirection"};
-      [standard_defaults registerDefaults:pseudoDict];
-    }
+      NSUserDefaults* standard_defaults = [NSUserDefaults standardUserDefaults];
+          if ([standard_defaults boolForKey:@"EnablePseudoRTL"]) {
+            NSDictionary* pseudoDict = @{@"YES" : @"AppleTextDirection"};
+            [standard_defaults registerDefaults:pseudoDict];
+          }
   }
 }
 
