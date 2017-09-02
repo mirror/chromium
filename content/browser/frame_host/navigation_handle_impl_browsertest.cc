@@ -156,11 +156,11 @@ class TestNavigationThrottleInstaller : public WebContentsObserver {
   }
 
   void Continue(NavigationThrottle::ThrottleCheckResult result) {
-    ASSERT_NE(NavigationThrottle::DEFER, result);
-    if (result == NavigationThrottle::PROCEED)
+    ASSERT_NE(NavigationThrottle::DEFER, result.action);
+    if (result.action == NavigationThrottle::PROCEED)
       navigation_throttle()->ResumeNavigation();
     else
-      navigation_throttle()->CancelNavigation(result);
+      navigation_throttle()->CancelNavigation(result.action);
   }
 
   int will_start_called() { return will_start_called_; }
@@ -764,12 +764,13 @@ IN_PROC_BROWSER_TEST_F(NavigationHandleImplBrowserTest,
   };
 
   for (const auto& test_case : kTestCases) {
-    SCOPED_TRACE(::testing::Message() << test_case.will_start_result << ", "
-                                      << test_case.will_redirect_result << ", "
-                                      << test_case.deferred_block);
+    SCOPED_TRACE(::testing::Message()
+                 << test_case.will_start_result.action << ", "
+                 << test_case.will_redirect_result.action << ", "
+                 << test_case.deferred_block);
 
     if (!IsBrowserSideNavigationEnabled() &&
-        test_case.will_redirect_result ==
+        test_case.will_redirect_result.action ==
             NavigationThrottle::BLOCK_REQUEST_AND_COLLAPSE) {
       continue;
     }
