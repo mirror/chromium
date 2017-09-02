@@ -6,6 +6,7 @@
 
 #include "base/allocator/partition_allocator/page_allocator.h"
 #include "base/allocator/partition_allocator/spin_lock.h"
+#include "base/lazy_instance.h"
 #include "build/build_config.h"
 
 #if defined(OS_WIN)
@@ -28,13 +29,14 @@ namespace {
 // This is the same PRNG as used by tcmalloc for mapping address randomness;
 // see http://burtleburtle.net/bob/rand/smallprng.html
 struct ranctx {
-  subtle::SpinLock lock;
-  bool initialized;
   uint32_t a;
   uint32_t b;
   uint32_t c;
   uint32_t d;
 };
+
+base::LazyInstance<subtle::SpinLock>::Leaky lock = LAZY_INSTANCE_INITIALIZER;
+bool initialized = false;
 
 #define rot(x, k) (((x) << (k)) | ((x) >> (32 - (k))))
 
@@ -50,9 +52,9 @@ uint32_t ranvalInternal(ranctx* x) {
 #undef rot
 
 uint32_t ranval(ranctx* x) {
-  subtle::SpinLock::Guard guard(x->lock);
-  if (UNLIKELY(!x->initialized)) {
-    x->initialized = true;
+  subtle::SpinLock::Guard guard(lock.Get());
+  if (UNLIKELY(!initialized)) {
+    initialized = true;
     char c;
     uint32_t seed = static_cast<uint32_t>(reinterpret_cast<uintptr_t>(&c));
     uint32_t pid;

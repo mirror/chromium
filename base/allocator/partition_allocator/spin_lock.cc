@@ -57,25 +57,59 @@
 namespace base {
 namespace subtle {
 
+SpinLock::SpinLock() {
+  lock_.store(UNLOCKED, std::memory_order_release);
+}
+
+SpinLock::~SpinLock() {
+  intptr_t current = lock_.load(std::memory_order_acquire);
+  if (UNLIKELY(IsEvent(current))) {
+    WaitableEvent* event = reinterpret_cast<WaitableEvent*>(current);
+    delete event;
+  }
+}
+
+// static
+bool SpinLock::IsEvent(intptr_t current) {
+  return current != UNLOCKED && current != LOCKED && current != CONTENDED;
+}
+
 void SpinLock::LockSlow() {
   // The value of |kYieldProcessorTries| is cargo culted from TCMalloc, Windows
-  // critical section defaults, and various other recommendations.
-  // TODO(jschuh): Further tuning may be warranted.
+  // critical section defaults, and various other recommendations. TODO(jschuh):
+  // Further tuning may be warranted.
   static const int kYieldProcessorTries = 1000;
-  do {
-    do {
-      for (int count = 0; count < kYieldProcessorTries; ++count) {
-        // Let the processor know we're spinning.
-        YIELD_PROCESSOR;
-        if (!lock_.load(std::memory_order_relaxed) &&
-            LIKELY(!lock_.exchange(true, std::memory_order_acquire)))
-          return;
-      }
 
-      // Give the OS a chance to schedule something on this core.
-      YIELD_THREAD;
-    } while (lock_.load(std::memory_order_relaxed));
-  } while (UNLIKELY(lock_.exchange(true, std::memory_order_acquire)));
+  // Spin until the lock becomes an event:
+  intptr_t current;
+  do {
+    for (int count = 0; count < kYieldProcessorTries; ++count) {
+      // Let the processor know we're spinning.
+      YIELD_PROCESSOR;
+      current = lock_.load(std::memory_order_acquire);
+      DCHECK_NE(UNLOCKED, current);
+      if (LOCKED == current) {
+        lock_.exchange(CONTENDED, std::memory_order_acquire);
+      }
+    }
+
+    // Give the OS a chance to schedule something on this core.
+    YIELD_THREAD;
+  } while (!IsEvent(current));
+
+  DCHECK(IsEvent(current));
+  base::WaitableEvent* event = reinterpret_cast<base::WaitableEvent*>(current);
+  event->Wait();
+}
+
+void SpinLock::UnlockSlow() {
+  DCHECK_EQ(CONTENDED, lock_.load(std::memory_order_relaxed));
+
+  WaitableEvent* event =
+      new WaitableEvent(WaitableEvent::ResetPolicy::AUTOMATIC,
+                        WaitableEvent::InitialState::NOT_SIGNALED);
+  lock_.store(reinterpret_cast<intptr_t>(event), std::memory_order_release);
+  event->Signal();
 }
 
 }  // namespace subtle

@@ -66,6 +66,7 @@
 #include "base/allocator/partition_allocator/spin_lock.h"
 #include "base/bits.h"
 #include "base/compiler_specific.h"
+#include "base/lazy_instance.h"
 #include "base/logging.h"
 #include "base/sys_byteorder.h"
 #include "build/build_config.h"
@@ -312,7 +313,7 @@ struct BASE_EXPORT PartitionRootBase {
   int16_t global_empty_page_ring_index;
   uintptr_t inverted_self;
 
-  static subtle::SpinLock gInitializedLock;
+  static base::LazyInstance<subtle::SpinLock>::Leaky gInitializedLock;
   static bool gInitialized;
   // gSeedPage is used as a sentinel to indicate that there is no page
   // in the active page list. We can use nullptr, but in that case we need
