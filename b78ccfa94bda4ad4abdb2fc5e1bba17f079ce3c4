@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bf9113ac_dd8fd94d",
+        "filename": "chrome/browser/ui/cocoa/location_bar/location_bar_view_mac.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-09-02T03:43:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1db7731e_45dd9306",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 12
+      },
+      "revId": "b78ccfa94bda4ad4abdb2fc5e1bba17f079ce3c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e2ada24_99cf247f",
         "filename": "chrome/browser/ui/cocoa/location_bar/location_bar_view_mac_unittest.mm",
         "patchSetId": 8
@@ -36,6 +60,24 @@
       "writtenOn": "2017-09-01T22:19:09Z",
       "side": 1,
       "message": "no explicit here, but rather on line 99",
+      "revId": "b78ccfa94bda4ad4abdb2fc5e1bba17f079ce3c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4747535a_befae67f",
+        "filename": "chrome/browser/ui/cocoa/location_bar/location_bar_view_mac_unittest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-09-02T03:43:45Z",
+      "side": 1,
+      "message": "*facepalm* Done, thanks",
+      "parentUuid": "3e2ada24_99cf247f",
       "revId": "b78ccfa94bda4ad4abdb2fc5e1bba17f079ce3c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -56,6 +98,24 @@
       "revId": "b78ccfa94bda4ad4abdb2fc5e1bba17f079ce3c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d83953c4_29d6c86b",
+        "filename": "chrome/browser/ui/cocoa/location_bar/page_info_bubble_decoration.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-09-02T03:43:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85b2fc21_e2396125",
+      "revId": "b78ccfa94bda4ad4abdb2fc5e1bba17f079ce3c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
