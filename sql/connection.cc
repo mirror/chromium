@@ -1170,7 +1170,7 @@ bool Connection::Raze() {
   return true;
 }
 
-bool Connection::RazeWithTimout(base::TimeDelta timeout) {
+bool Connection::RazeWithTimeout(base::TimeDelta timeout) {
   if (!db_) {
     DLOG_IF(FATAL, !poisoned_) << "Cannot raze null db";
     return false;
