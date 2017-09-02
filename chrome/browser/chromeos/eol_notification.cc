@@ -5,9 +5,9 @@
 #include "chrome/browser/chromeos/eol_notification.h"
 
 #include "chrome/app/vector_icons/vector_icons.h"
-#include "chrome/browser/browser_process.h"
 #include "chrome/browser/notifications/notification.h"
-#include "chrome/browser/notifications/notification_ui_manager.h"
+#include "chrome/browser/notifications/notification_display_service.h"
+#include "chrome/browser/notifications/notification_display_service_factory.h"
 #include "chrome/browser/ui/browser_navigator.h"
 #include "chrome/browser/ui/browser_navigator_params.h"
 #include "chrome/common/pref_names.h"
@@ -29,7 +29,7 @@ using l10n_util::GetStringUTF16;
 namespace chromeos {
 namespace {
 
-const char kEolNotificationId[] = "eol";
+const char kEolNotificationId[] = "chrome://eol";
 const char kDelegateId[] = "eol_delegate";
 const SkColor kButtonIconColor = SkColorSetRGB(150, 150, 152);
 const SkColor kNotificationIconColor = SkColorSetRGB(219, 68, 55);
@@ -74,7 +74,8 @@ void EolNotificationDelegate::ButtonClick(int button_index) {
     default:
       NOTREACHED();
   }
-  CancelNotification();
+  NotificationDisplayServiceFactory::GetForProfile(profile_)->Close(
+      NotificationCommon::PERSISTENT, id());
 }
 
 std::string EolNotificationDelegate::id() const {
@@ -89,25 +90,15 @@ void EolNotificationDelegate::OpenMoreInfoPage() {
   chrome::Navigate(&params);
 }
 
-void EolNotificationDelegate::CancelNotification() {
-  // Clean up the notification
-  g_browser_process->notification_ui_manager()->CancelById(
-      id(), NotificationUIManager::GetProfileID(profile_));
-}
-
 }  // namespace
 
-EolNotification::EolNotification(Profile* profile)
-    : profile_(profile),
-      status_(update_engine::EndOfLifeStatus::kSupported),
-      weak_factory_(this) {}
+EolNotification::EolNotification(Profile* profile) : profile_(profile) {}
 
 EolNotification::~EolNotification() {}
 
 void EolNotification::CheckEolStatus() {
   UpdateEngineClient* update_engine_client =
       DBusThreadManager::Get()->GetUpdateEngineClient();
-
   // Request the Eol Status.
   update_engine_client->GetEolStatus(
       base::Bind(&EolNotification::OnEolStatus, weak_factory_.GetWeakPtr()));
@@ -162,8 +153,9 @@ void EolNotification::Update() {
           : gfx::Image(CreateVectorIcon(kEolIcon, kNotificationIconColor)),
       message_center::NotifierId(message_center::NotifierId::SYSTEM_COMPONENT,
                                  kEolNotificationId),
-      GetStringUTF16(IDS_EOL_NOTIFICATION_DISPLAY_SOURCE), GURL(),
-      kEolNotificationId, data, new EolNotificationDelegate(profile_));
+      GetStringUTF16(IDS_EOL_NOTIFICATION_DISPLAY_SOURCE),
+      GURL(kEolNotificationId), kEolNotificationId, data,
+      new EolNotificationDelegate(profile_));
   if (MessageCenter::IsNewStyleNotificationEnabled()) {
     notification.set_accent_color(
         message_center::kSystemNotificationColorCriticalWarning);
@@ -172,7 +164,9 @@ void EolNotification::Update() {
         message_center::kSystemNotificationColorCriticalWarning)));
     notification.set_vector_small_image(kNotificationEndOfSupportIcon);
   }
-  g_browser_process->notification_ui_manager()->Add(notification, profile_);
+
+  NotificationDisplayServiceFactory::GetForProfile(profile_)->Display(
+      NotificationCommon::PERSISTENT, kEolNotificationId, notification);
 }
 
 }  // namespace chromeos

@@ -38,10 +38,11 @@ class EolNotification final {
   Profile* const profile_;
 
   // Device EndOfLife status.
-  update_engine::EndOfLifeStatus status_;
+  update_engine::EndOfLifeStatus status_ =
+      update_engine::EndOfLifeStatus::kSupported;
 
   // Factory of callbacks.
-  base::WeakPtrFactory<EolNotification> weak_factory_;
+  base::WeakPtrFactory<EolNotification> weak_factory_{this};
 
   DISALLOW_COPY_AND_ASSIGN(EolNotification);
 };
