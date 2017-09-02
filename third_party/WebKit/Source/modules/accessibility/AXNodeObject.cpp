@@ -986,12 +986,6 @@ Element* AXNodeObject::MouseButtonListener() const {
 
   for (Element* element = ToElement(node); element;
        element = element->parentElement()) {
-    // It's a pretty common practice to put click listeners on the body or
-    // document, but that's almost never what the user wants when clicking on an
-    // accessible element.
-    if (isHTMLBodyElement(element))
-      break;
-
     if (element->HasEventListeners(EventTypeNames::click) ||
         element->HasEventListeners(EventTypeNames::mousedown) ||
         element->HasEventListeners(EventTypeNames::mouseup) ||
@@ -999,7 +993,7 @@ Element* AXNodeObject::MouseButtonListener() const {
       return element;
   }
 
-  return 0;
+  return nullptr;
 }
 
 AccessibilityRole AXNodeObject::RemapAriaRoleDueToParent(
