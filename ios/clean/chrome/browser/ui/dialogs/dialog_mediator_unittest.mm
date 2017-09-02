@@ -5,6 +5,7 @@
 #import "ios/clean/chrome/browser/ui/dialogs/dialog_mediator.h"
 
 #import "base/mac/foundation_util.h"
+#import "ios/chrome/browser/overlays/test_helpers/test_overlay_queue.h"
 #import "ios/chrome/browser/ui/coordinators/browser_coordinator+internal.h"
 #import "ios/clean/chrome/browser/ui/dialogs/dialog_button_configuration.h"
 #import "ios/clean/chrome/browser/ui/dialogs/dialog_button_style.h"
@@ -16,7 +17,6 @@
 #import "ios/clean/chrome/browser/ui/dialogs/test_helpers/dialog_test_util.h"
 #import "ios/clean/chrome/browser/ui/dialogs/test_helpers/test_dialog_mediator.h"
 #import "ios/clean/chrome/browser/ui/dialogs/test_helpers/test_dialog_view_controller.h"
-#import "ios/clean/chrome/browser/ui/overlays/test_helpers/test_overlay_queue.h"
 #include "ios/web/public/test/fakes/test_browser_state.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/gtest_mac.h"

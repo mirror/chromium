@@ -4,8 +4,8 @@
 
 #import "ios/clean/chrome/browser/ui/dialogs/http_auth_dialogs/http_auth_dialog_coordinator.h"
 
+#import "ios/chrome/browser/overlays/test_helpers/overlay_coordinator_test.h"
 #import "ios/clean/chrome/browser/ui/dialogs/http_auth_dialogs/http_auth_dialog_request.h"
-#import "ios/clean/chrome/browser/ui/overlays/test_helpers/overlay_coordinator_test.h"
 #import "ios/web/public/test/fakes/test_web_state.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/gtest_mac.h"

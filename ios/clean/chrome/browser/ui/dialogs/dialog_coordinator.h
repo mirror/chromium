@@ -7,7 +7,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "ios/clean/chrome/browser/ui/overlays/overlay_coordinator.h"
+#import "ios/chrome/browser/overlays/overlay_coordinator.h"
 
 // A coordinator that displays dialog UI.  This class is meant to be subclassed,
 // and subclasses are expected to implement the interface in the
