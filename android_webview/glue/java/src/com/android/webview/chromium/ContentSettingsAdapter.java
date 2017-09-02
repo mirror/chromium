@@ -233,12 +233,12 @@ public class ContentSettingsAdapter extends android.webkit.WebSettings {
 
     @Override
     public synchronized void setLayoutAlgorithm(LayoutAlgorithm l) {
-        mAwSettings.setLayoutAlgorithm(l);
+        mAwSettings.setLayoutAlgorithm(Converters.toAwLayoutAlgorithm(l));
     }
 
     @Override
     public synchronized LayoutAlgorithm getLayoutAlgorithm() {
-        return mAwSettings.getLayoutAlgorithm();
+        return Converters.fromAwLayoutAlgorithm(mAwSettings.getLayoutAlgorithm());
     }
 
     @Override
