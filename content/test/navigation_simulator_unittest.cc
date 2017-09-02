@@ -102,27 +102,27 @@ TEST_P(NavigationSimulatorTest, Cancel) {
   simulator_->Start();
   if (cancel_time_ == CancellingNavigationThrottle::WILL_START_REQUEST) {
     EXPECT_EQ(NavigationThrottle::CANCEL,
-              simulator_->GetLastThrottleCheckResult());
+              simulator_->GetLastThrottleCheckResult().action);
     return;
   }
   EXPECT_EQ(NavigationThrottle::PROCEED,
-            simulator_->GetLastThrottleCheckResult());
+            simulator_->GetLastThrottleCheckResult().action);
   simulator_->Redirect(GURL("https://example.redirect"));
   if (cancel_time_ == CancellingNavigationThrottle::WILL_REDIRECT_REQUEST) {
     EXPECT_EQ(NavigationThrottle::CANCEL,
-              simulator_->GetLastThrottleCheckResult());
+              simulator_->GetLastThrottleCheckResult().action);
     return;
   }
   EXPECT_EQ(NavigationThrottle::PROCEED,
-            simulator_->GetLastThrottleCheckResult());
+            simulator_->GetLastThrottleCheckResult().action);
   simulator_->Commit();
   if (cancel_time_ == CancellingNavigationThrottle::WILL_PROCESS_RESPONSE) {
     EXPECT_EQ(NavigationThrottle::CANCEL,
-              simulator_->GetLastThrottleCheckResult());
+              simulator_->GetLastThrottleCheckResult().action);
     return;
   }
   EXPECT_EQ(NavigationThrottle::PROCEED,
-            simulator_->GetLastThrottleCheckResult());
+            simulator_->GetLastThrottleCheckResult().action);
 }
 
 INSTANTIATE_TEST_CASE_P(
@@ -145,7 +145,7 @@ TEST_P(NavigationSimulatorTestCancelFail, CancelFail) {
   simulator_->Start();
   simulator_->Fail(net::ERR_CERT_DATE_INVALID);
   EXPECT_EQ(NavigationThrottle::CANCEL,
-            simulator_->GetLastThrottleCheckResult());
+            simulator_->GetLastThrottleCheckResult().action);
 }
 
 INSTANTIATE_TEST_CASE_P(
