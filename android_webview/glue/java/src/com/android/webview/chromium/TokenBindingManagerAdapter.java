@@ -79,20 +79,20 @@ public class TokenBindingManagerAdapter extends TokenBindingService {
                 callback.onReceiveValue(key);
             }
         };
-        mTokenBindingManager.getKey(origin, null, newCallback);
+        mTokenBindingManager.getKey(origin, null, Converters.wrapAsAwValueCallback(newCallback));
     }
 
     @Override
     public void deleteKey(Uri origin,
                           ValueCallback<Boolean> callback) {
         startChromiumEngine();
-        mTokenBindingManager.deleteKey(origin, callback);
+        mTokenBindingManager.deleteKey(origin, Converters.wrapAsAwValueCallback(callback));
     }
 
     @Override
     public void deleteAllKeys(ValueCallback<Boolean> callback) {
         startChromiumEngine();
-        mTokenBindingManager.deleteAllKeys(callback);
+        mTokenBindingManager.deleteAllKeys(Converters.wrapAsAwValueCallback(callback));
     }
 
     private void startChromiumEngine() {

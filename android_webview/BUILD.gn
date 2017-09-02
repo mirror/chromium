@@ -843,6 +843,7 @@ android_library("android_webview_java") {
   ]
   deps = [
     ":android_webview_commandline_java",
+    ":android_webview_common_java",
     ":android_webview_crash_services_java",
     ":android_webview_platform_services_java",
     ":resources",
@@ -942,6 +943,7 @@ android_library("android_webview_platform_services_java") {
       [ "java/src/org/chromium/android_webview/PlatformServiceBridge.java" ]
 
   deps = [
+    ":android_webview_common_java",
     "//base:base_java",
   ]
 }
@@ -964,6 +966,7 @@ android_library("android_webview_crash_services_java") {
   ]
   deps = [
     ":android_webview_commandline_java",
+    ":android_webview_common_java",
     ":android_webview_platform_services_java",
     "//base:base_java",
     "//components/background_task_scheduler:background_task_scheduler_java",
@@ -971,6 +974,10 @@ android_library("android_webview_crash_services_java") {
   ]
 
   srcjar_deps = [ ":crash_receiver_aidl" ]
+}
+
+android_library("android_webview_common_java") {
+  java_files = [ "java/src/org/chromium/android_webview/AwValueCallback.java" ]
 }
 
 android_aidl("crash_receiver_aidl") {
