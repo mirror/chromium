@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbce8a08_6456d548",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-filter-test-expected.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-02T06:13:18Z",
+      "side": 1,
+      "message": "Why this one is visible? Does it have log-source.js url?",
+      "revId": "8e47a3ab9ca28efe0c622017b3c7bd964831baf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "054a62f3_fddbf3f6",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-02T06:13:18Z",
+      "side": 1,
+      "message": "This line is redundant.",
+      "revId": "8e47a3ab9ca28efe0c622017b3c7bd964831baf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
