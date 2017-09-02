@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "15f0c2e3_317415f7",
+        "filename": "sql/connection.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-02T00:07:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed5ab633_c6821882",
+      "revId": "2e95b44d2eaf9214acd67e31e091afa1b176e29a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "329f9d3b_dac13a15",
         "filename": "sql/meta_table.h",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "2e95b44d2eaf9214acd67e31e091afa1b176e29a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21cd9cce_53f423c9",
+        "filename": "sql/meta_table.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-02T00:07:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "329f9d3b_dac13a15",
+      "revId": "2e95b44d2eaf9214acd67e31e091afa1b176e29a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "968785ad_45120443",
+        "filename": "sql/meta_table.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-02T00:07:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf41abc1_c9a2da2d",
+      "revId": "2e95b44d2eaf9214acd67e31e091afa1b176e29a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00e58a0e_b83baa63",
         "filename": "sql/meta_table.h",
         "patchSetId": 1
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "ee0febce_103be6f4",
+        "filename": "sql/meta_table.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-02T00:07:18Z",
+      "side": 1,
+      "message": "I find double-space-after-period weird too but it is common in Chromium code. As this file was half using that, half using single spaces I switched all to the latter.\n\nMy slight OCD also made me re-indent all paragraphs that were not fully using 80 char lines.",
+      "parentUuid": "00e58a0e_b83baa63",
+      "revId": "2e95b44d2eaf9214acd67e31e091afa1b176e29a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "765a96a8_743f1f47",
         "filename": "sql/meta_table.h",
         "patchSetId": 1
@@ -84,6 +156,24 @@
       "revId": "2e95b44d2eaf9214acd67e31e091afa1b176e29a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8acac42_c08793c6",
+        "filename": "sql/meta_table.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-02T00:07:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "765a96a8_743f1f47",
+      "revId": "2e95b44d2eaf9214acd67e31e091afa1b176e29a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
