@@ -4,7 +4,9 @@
 
 #include "platform/graphics/ColorBehavior.h"
 
+#include "base/lazy_instance.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/synchronization/lock.h"
 #include "platform/graphics/BitmapImageMetrics.h"
 #include "platform/wtf/SpinLock.h"
 #include "third_party/skia/include/core/SkICC.h"
@@ -16,7 +18,10 @@ namespace blink {
 namespace {
 
 // The output device color space is global and shared across multiple threads.
-SpinLock g_target_color_space_lock;
+// TODO(palmer): Pick one
+base::LazyInstance<SpinLock>::Leaky g_target_color_space_lock =
+    LAZY_INSTANCE_INITIALIZER;
+// base::Lock g_target_color_space_lock;
 gfx::ColorSpace* g_target_color_space = nullptr;
 
 }  // namespace
@@ -26,7 +31,8 @@ void ColorBehavior::SetGlobalTargetColorProfile(
     const gfx::ICCProfile& profile) {
   // Take a lock around initializing and accessing the global device color
   // profile.
-  SpinLock::Guard guard(g_target_color_space_lock);
+  SpinLock::Guard guard(g_target_color_space_lock.Get());
+  // base::AutoLock guard(g_target_color_space_lock);
 
   // Layout tests expect that only the first call will take effect.
   if (g_target_color_space)
@@ -49,7 +55,8 @@ void ColorBehavior::SetGlobalTargetColorSpaceForTesting(
     const gfx::ColorSpace& color_space) {
   // Take a lock around initializing and accessing the global device color
   // profile.
-  SpinLock::Guard guard(g_target_color_space_lock);
+  SpinLock::Guard guard(g_target_color_space_lock.Get());
+  // base::AutoLock guard(g_target_color_space_lock);
 
   delete g_target_color_space;
   g_target_color_space = new gfx::ColorSpace(color_space);
@@ -59,7 +66,8 @@ void ColorBehavior::SetGlobalTargetColorSpaceForTesting(
 const gfx::ColorSpace& ColorBehavior::GlobalTargetColorSpace() {
   // Take a lock around initializing and accessing the global device color
   // profile.
-  SpinLock::Guard guard(g_target_color_space_lock);
+  SpinLock::Guard guard(g_target_color_space_lock.Get());
+  // base::AutoLock guard(g_target_color_space_lock);
 
   // Initialize the output device profile to sRGB if it has not yet been
   // initialized.

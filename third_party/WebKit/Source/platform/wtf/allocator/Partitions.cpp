@@ -33,6 +33,7 @@
 #include "base/allocator/partition_allocator/oom.h"
 #include "base/allocator/partition_allocator/page_allocator.h"
 #include "base/debug/alias.h"
+#include "base/lazy_instance.h"
 #include "platform/wtf/allocator/PartitionAllocator.h"
 
 namespace WTF {
@@ -40,25 +41,29 @@ namespace WTF {
 const char* const Partitions::kAllocatedObjectPoolName =
     "partition_alloc/allocated_objects";
 
-base::subtle::SpinLock Partitions::initialization_lock_;
+base::LazyInstance<base::subtle::SpinLock>::Leaky
+    Partitions::initialization_lock_ = LAZY_INSTANCE_INITIALIZER;
 bool Partitions::initialized_ = false;
 
-base::PartitionAllocatorGeneric Partitions::fast_malloc_allocator_;
-base::PartitionAllocatorGeneric Partitions::array_buffer_allocator_;
-base::PartitionAllocatorGeneric Partitions::buffer_allocator_;
+PartitionAllocatorGenericLazy Partitions::fast_malloc_allocator_ =
+    LAZY_INSTANCE_INITIALIZER;
+PartitionAllocatorGenericLazy Partitions::array_buffer_allocator_ =
+    LAZY_INSTANCE_INITIALIZER;
+PartitionAllocatorGenericLazy Partitions::buffer_allocator_ =
+    LAZY_INSTANCE_INITIALIZER;
 base::SizeSpecificPartitionAllocator<1024> Partitions::layout_allocator_;
 Partitions::ReportPartitionAllocSizeFunction Partitions::report_size_function_ =
     nullptr;
 
 void Partitions::Initialize(
     ReportPartitionAllocSizeFunction report_size_function) {
-  base::subtle::SpinLock::Guard guard(initialization_lock_);
+  base::subtle::SpinLock::Guard guard(initialization_lock_.Get());
 
   if (!initialized_) {
     base::PartitionAllocGlobalInit(&Partitions::HandleOutOfMemory);
-    fast_malloc_allocator_.init();
-    array_buffer_allocator_.init();
-    buffer_allocator_.init();
+    fast_malloc_allocator_.Get().init();
+    array_buffer_allocator_.Get().init();
+    buffer_allocator_.Get().init();
     layout_allocator_.init();
     report_size_function_ = report_size_function;
     initialized_ = true;

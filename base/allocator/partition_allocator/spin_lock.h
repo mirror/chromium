@@ -11,6 +11,7 @@
 
 #include "base/base_export.h"
 #include "base/compiler_specific.h"
+#include "base/synchronization/waitable_event.h"
 
 // Spinlock is a simple spinlock class based on the standard CPU primitive of
 // atomic increment and decrement of an int at a given memory address. These are
@@ -28,22 +29,41 @@ class SpinLock {
  public:
   using Guard = std::lock_guard<SpinLock>;
 
+  enum LockState { UNLOCKED = 0, LOCKED = -1, CONTENDED = -2 };
+
+  BASE_EXPORT SpinLock();
+
+  BASE_EXPORT ~SpinLock();
+
   ALWAYS_INLINE void lock() {
-    static_assert(sizeof(lock_) == sizeof(int),
-                  "int and lock_ are different sizes");
-    if (LIKELY(!lock_.exchange(true, std::memory_order_acquire)))
+    static_assert(sizeof(lock_) == sizeof(intptr_t),
+                  "intptr_t and lock_ are different sizes");
+    intptr_t current = lock_.load(std::memory_order_acquire);
+    if (LIKELY(current == UNLOCKED)) {
+      lock_.store(LOCKED, std::memory_order_release);
       return;
-    LockSlow();
+    }
+    LockSlow(current);
   }
 
-  ALWAYS_INLINE void unlock() { lock_.store(false, std::memory_order_release); }
+  ALWAYS_INLINE void unlock() {
+    intptr_t current = lock_.load(std::memory_order_acquire);
+    DCHECK_NE(UNLOCKED, current);
+    if (LIKELY(current == LOCKED)) {
+      lock_.store(UNLOCKED, std::memory_order_release);
+      return;
+    }
+    UnlockSlow(current);
+  }
 
  private:
-  // This is called if the initial attempt to acquire the lock fails. It's
-  // slower, but has a much better scheduling and power consumption behavior.
-  BASE_EXPORT void LockSlow();
+  // |lock| and |unlock| need to be small, so that they can also be inlined for
+  // maximum speed. If we have to fall back to using |base::WaitableEvent|, they
+  // call these utility routines.
+  BASE_EXPORT void LockSlow(intptr_t current);
+  BASE_EXPORT void UnlockSlow(intptr_t current);
 
-  std::atomic_int lock_;
+  std::atomic_intptr_t lock_;
 };
 
 }  // namespace subtle

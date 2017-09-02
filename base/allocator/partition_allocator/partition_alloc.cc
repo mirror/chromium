@@ -9,6 +9,7 @@
 #include "base/allocator/partition_allocator/oom.h"
 #include "base/allocator/partition_allocator/spin_lock.h"
 #include "base/compiler_specific.h"
+#include "base/lazy_instance.h"
 
 // Two partition pages are used as guard / metadata page so make sure the super
 // page size is bigger.
@@ -40,7 +41,8 @@ static_assert(base::kMaxSystemPagesPerSlotSpan < (1 << 8),
 
 namespace base {
 
-subtle::SpinLock PartitionRootBase::gInitializedLock;
+base::LazyInstance<subtle::SpinLock>::Leaky
+    PartitionRootBase::gInitializedLock = LAZY_INSTANCE_INITIALIZER;
 bool PartitionRootBase::gInitialized = false;
 PartitionPage PartitionRootBase::gSeedPage;
 PartitionBucket PartitionRootBase::gPagedBucket;
@@ -96,7 +98,7 @@ static uint8_t PartitionBucketNumSystemPages(size_t size) {
 static void PartitionAllocBaseInit(PartitionRootBase* root) {
   DCHECK(!root->initialized);
   {
-    subtle::SpinLock::Guard guard(PartitionRootBase::gInitializedLock);
+    subtle::SpinLock::Guard guard(PartitionRootBase::gInitializedLock.Get());
     if (!PartitionRootBase::gInitialized) {
       PartitionRootBase::gInitialized = true;
       // We mark the seed page as free to make sure it is skipped by our
