@@ -18,6 +18,14 @@
 #define BASE_NUMERICS_UNLIKELY(x) (x)
 #endif
 
+#if (defined(__GNUC__) || defined(__clang__)) && defined(NDEBUG)
+#define BASE_NUMERICS_ALWAYS_INLINE inline __attribute__((__always_inline__))
+#elif defined(_MSC_VER) && defined(NDEBUG)
+#define BASE_NUMERICS_ALWAYS_INLINE __forceinline
+#else
+#define BASE_NUMERICS_ALWAYS_INLINE inline
+#endif
+
 namespace base {
 namespace internal {
 
@@ -109,20 +117,36 @@ constexpr bool MustTreatAsConstexpr(const T v) {
   return !CanDetectCompileTimeConstant() || IsCompileTimeConstant(v);
 }
 
-// Forces a crash, like a CHECK(false). Used for numeric boundary errors.
-// Also used in a constexpr template to trigger a compilation failure on
-// an error condition.
-struct CheckOnFailure {
-  template <typename T>
-  static T HandleFailure() {
+// Forces a crash, like a CHECK(false) and provides a hint to the optimizer that
+// this is a terminal code path in release builds.
+#if defined(NDEBUG)
+[[noreturn]]
+#endif
+BASE_NUMERICS_ALWAYS_INLINE void ForceCrash() {
 #if defined(_MSC_VER)
     __debugbreak();
-#elif defined(__GNUC__) || defined(__clang__)
-    __builtin_trap();
+#if defined(NDEBUG) && defined(__clang__)
+    // Clang needs this to treat __debugbreak() as terminal.
+    __builtin_unreachable();
+#endif
+#elif defined(__GNUC__)
+  __builtin_trap();
 #else
     ((void)(*(volatile char*)0 = 0));
 #endif
+}
+
+// Behaves like a CHECK(false), but returns a default value so it can be used
+// with the ternary operator in C++11 constexpr functions, either crashing on
+// failure or triggering a compilation failure on an error condition.
+struct CheckOnFailure {
+  template <typename T>
+  BASE_NUMERICS_ALWAYS_INLINE static T HandleFailure() {
+    ForceCrash();
+#if !defined(NDEBUG)
+    // Clang warns on unreachable code if this is not present.
     return T();
+#endif
   }
 };
 
