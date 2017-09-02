@@ -309,6 +309,11 @@ cr.define('print_preview', function() {
       this.showMessage_(print_preview.PreviewAreaMessageId_.CUSTOM, message);
     },
 
+    /** Removes the message and overlay to show the preview. */
+    removeCustomMessage: function() {
+      this.setOverlayVisible_(false);
+    },
+
     /** @override */
     enterDocument: function() {
       print_preview.Component.prototype.enterDocument.call(this);
