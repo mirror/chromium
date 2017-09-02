@@ -124,7 +124,7 @@ TEST_F(PDFIFrameNavigationThrottleTest, InterceptPDFOnly) {
 
   ASSERT_NE(nullptr, throttle);
   ASSERT_EQ(content::NavigationThrottle::CANCEL_AND_IGNORE,
-            throttle->WillProcessResponse());
+            throttle->WillProcessResponse().action);
 
   // Verify that we PROCEED for other mime types.
   // Blank mime type
@@ -135,7 +135,7 @@ TEST_F(PDFIFrameNavigationThrottleTest, InterceptPDFOnly) {
 
   ASSERT_NE(nullptr, throttle);
   ASSERT_EQ(content::NavigationThrottle::PROCEED,
-            throttle->WillProcessResponse());
+            throttle->WillProcessResponse().action);
 
   // HTML
   header = GetHeaderWithMimeType("text/html");
@@ -147,7 +147,7 @@ TEST_F(PDFIFrameNavigationThrottleTest, InterceptPDFOnly) {
 
   ASSERT_NE(nullptr, throttle);
   ASSERT_EQ(content::NavigationThrottle::PROCEED,
-            throttle->WillProcessResponse());
+            throttle->WillProcessResponse().action);
 
   // PNG
   header = GetHeaderWithMimeType("image/png");
@@ -159,7 +159,7 @@ TEST_F(PDFIFrameNavigationThrottleTest, InterceptPDFOnly) {
 
   ASSERT_NE(nullptr, throttle);
   ASSERT_EQ(content::NavigationThrottle::PROCEED,
-            throttle->WillProcessResponse());
+            throttle->WillProcessResponse().action);
 }
 
 #if BUILDFLAG(ENABLE_PLUGINS)
@@ -189,6 +189,6 @@ TEST_F(PDFIFrameNavigationThrottleTest, CancelOnlyIfPDFViewerIsDisabled) {
 
   ASSERT_NE(nullptr, throttle);
   ASSERT_EQ(content::NavigationThrottle::CANCEL_AND_IGNORE,
-            throttle->WillProcessResponse());
+            throttle->WillProcessResponse().action);
 }
 #endif

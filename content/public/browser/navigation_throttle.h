@@ -16,7 +16,7 @@ class CONTENT_EXPORT NavigationThrottle {
  public:
   // This is returned to the NavigationHandle to allow the navigation to
   // proceed, or to cancel it.
-  enum ThrottleCheckResult {
+  enum ThrottleCheckAction {
     // The action proceeds. This can either mean the navigation continues (e.g.
     // for WillStartRequest) or that the navigation halts (e.g. for
     // WillFailRequest).
@@ -52,6 +52,11 @@ class CONTENT_EXPORT NavigationThrottle {
     // embedding restrictions like 'X-Frame-Options'). This result will only
     // be returned from WillProcessResponse.
     BLOCK_RESPONSE,
+  };
+
+  struct ThrottleCheckResult {
+    ThrottleCheckAction action;
+    ThrottleCheckResult(ThrottleCheckAction action) : action(action){};
   };
 
   NavigationThrottle(NavigationHandle* navigation_handle);
