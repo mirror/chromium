@@ -12,16 +12,15 @@ import android.os.Message;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.webkit.ConsoleMessage;
-import android.webkit.GeolocationPermissions;
-import android.webkit.ValueCallback;
-import android.webkit.WebChromeClient;
 
+import org.chromium.android_webview.AwConsoleMessage;
 import org.chromium.android_webview.AwContentsClient;
 import org.chromium.android_webview.AwContentsClientBridge;
+import org.chromium.android_webview.AwGeolocationPermissions;
 import org.chromium.android_webview.AwHttpAuthHandler;
 import org.chromium.android_webview.AwRenderProcessGoneDetail;
 import org.chromium.android_webview.AwSafeBrowsingResponse;
+import org.chromium.android_webview.AwValueCallback;
 import org.chromium.android_webview.AwWebResourceResponse;
 import org.chromium.android_webview.JsPromptResultReceiver;
 import org.chromium.android_webview.JsResultReceiver;
@@ -62,8 +61,7 @@ public class NullContentsClient extends AwContentsClient {
     }
 
     @Override
-    public void getVisitedHistory(ValueCallback<String[]> callback) {
-    }
+    public void getVisitedHistory(AwValueCallback<String[]> callback) {}
 
     @Override
     public void doUpdateVisitedHistory(String url, boolean isReload) {
@@ -89,7 +87,7 @@ public class NullContentsClient extends AwContentsClient {
     }
 
     @Override
-    public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
+    public boolean onConsoleMessage(AwConsoleMessage consoleMessage) {
         return false;
     }
 
@@ -99,7 +97,7 @@ public class NullContentsClient extends AwContentsClient {
     }
 
     @Override
-    public void onReceivedSslError(ValueCallback<Boolean> callback, SslError error) {
+    public void onReceivedSslError(AwValueCallback<Boolean> callback, SslError error) {
         callback.onReceiveValue(false);
     }
 
@@ -116,14 +114,12 @@ public class NullContentsClient extends AwContentsClient {
     }
 
     @Override
-    public void showFileChooser(ValueCallback<String[]> uploadFilePathsCallback,
-            FileChooserParamsImpl fileChooserParams) {
-    }
+    public void showFileChooser(AwValueCallback<String[]> uploadFilePathsCallback,
+            FileChooserParamsImpl fileChooserParams) {}
 
     @Override
-    public void onGeolocationPermissionsShowPrompt(String origin,
-            GeolocationPermissions.Callback callback) {
-    }
+    public void onGeolocationPermissionsShowPrompt(
+            String origin, AwGeolocationPermissions.Callback callback) {}
 
     @Override
     public void onGeolocationPermissionsHidePrompt() {
@@ -185,7 +181,7 @@ public class NullContentsClient extends AwContentsClient {
 
     @Override
     public void onSafeBrowsingHit(AwWebResourceRequest request, int threatType,
-            ValueCallback<AwSafeBrowsingResponse> callback) {
+            AwValueCallback<AwSafeBrowsingResponse> callback) {
         callback.onReceiveValue(new AwSafeBrowsingResponse(SafeBrowsingAction.SHOW_INTERSTITIAL,
                 /* reporting */ true));
     }
@@ -233,8 +229,7 @@ public class NullContentsClient extends AwContentsClient {
     }
 
     @Override
-    public void onShowCustomView(View view, WebChromeClient.CustomViewCallback callback) {
-    }
+    public void onShowCustomView(View view, AwContentsClient.CustomViewCallback callback) {}
 
     @Override
     public void onHideCustomView() {

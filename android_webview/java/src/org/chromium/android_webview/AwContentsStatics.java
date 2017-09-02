@@ -7,7 +7,6 @@ package org.chromium.android_webview;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.net.Uri;
-import android.webkit.ValueCallback;
 
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.annotations.CalledByNative;
@@ -97,13 +96,13 @@ public class AwContentsStatics {
 
     @CalledByNative
     private static void safeBrowsingWhitelistAssigned(
-            ValueCallback<Boolean> callback, boolean success) {
+            AwValueCallback<Boolean> callback, boolean success) {
         if (callback == null) return;
         callback.onReceiveValue(success);
     }
 
     public static void setSafeBrowsingWhitelist(
-            List<String> urls, ValueCallback<Boolean> callback) {
+            List<String> urls, AwValueCallback<Boolean> callback) {
         String[] urlArray = urls.toArray(new String[urls.size()]);
         if (callback == null) {
             callback = b -> {
@@ -114,11 +113,11 @@ public class AwContentsStatics {
 
     @SuppressWarnings("unchecked")
     @TargetApi(19)
-    public static void initSafeBrowsing(Context context, final ValueCallback<Boolean> callback) {
+    public static void initSafeBrowsing(Context context, AwValueCallback<Boolean> callback) {
         // Wrap the callback to make sure we always invoke it on the UI thread, as guaranteed by the
         // API.
         final Context appContext = context.getApplicationContext();
-        ValueCallback<Boolean> wrapperCallback = b -> {
+        AwValueCallback<Boolean> wrapperCallback = b -> {
             if (callback != null) {
                 ThreadUtils.runOnUiThread(() -> callback.onReceiveValue(b));
             }
@@ -126,8 +125,8 @@ public class AwContentsStatics {
 
         try {
             Class cls = Class.forName(sSafeBrowsingWarmUpHelper);
-            Method m =
-                    cls.getDeclaredMethod("warmUpSafeBrowsing", Context.class, ValueCallback.class);
+            Method m = cls.getDeclaredMethod(
+                    "warmUpSafeBrowsing", Context.class, AwValueCallback.class);
             m.invoke(null, appContext, wrapperCallback);
         } catch (ReflectiveOperationException e) {
             wrapperCallback.onReceiveValue(false);
@@ -169,7 +168,7 @@ public class AwContentsStatics {
     private static native boolean nativeGetSafeBrowsingEnabledByManifest();
     private static native void nativeSetSafeBrowsingEnabledByManifest(boolean enable);
     private static native void nativeSetSafeBrowsingWhitelist(
-            String[] urls, ValueCallback<Boolean> callback);
+            String[] urls, AwValueCallback<Boolean> callback);
     private static native void nativeSetCheckClearTextPermitted(boolean permitted);
     private static native String nativeFindAddress(String addr);
 }
