@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "10dac70b_6ec87026",
+        "filename": "components/offline_pages/core/prefetch/download_completed_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-09-02T00:02:56Z",
+      "side": 1,
+      "message": "nit: comment is not right",
+      "revId": "e5f28212ef2cfb4ec00512a9ff3f487830f56b44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c3bbedf_330ac8a8",
+        "filename": "components/offline_pages/core/prefetch/download_completed_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-09-02T00:02:56Z",
+      "side": 1,
+      "message": "nit: comment is not right",
+      "revId": "e5f28212ef2cfb4ec00512a9ff3f487830f56b44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bf3378f8_e1a837b7",
         "filename": "components/offline_pages/core/prefetch/download_completed_task.cc",
         "patchSetId": 6
@@ -13,6 +47,23 @@
       "writtenOn": "2017-09-01T23:46:04Z",
       "side": 1,
       "message": "This now feels like a part that can be also removed and made a part of another patch, if needed. In many other tasks, we don\u0027t track whether or not actual row update happens. Here, for example, a download may finish right after the item was expired, which would be ok.",
+      "revId": "e5f28212ef2cfb4ec00512a9ff3f487830f56b44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a92dfbb6_1ad2bd62",
+        "filename": "components/offline_pages/core/prefetch/prefetch_downloader_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-09-02T00:02:56Z",
+      "side": 1,
+      "message": "nit: comment is a bit hard to understand. How about:\n  Treat the non-accepted download as a failure to simplify the flow since this should rarely happen. The UMA Download.Service.Request.StartResult.OfflinePage tracks this and we may revisit the decision.",
       "revId": "e5f28212ef2cfb4ec00512a9ff3f487830f56b44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
