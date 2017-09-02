@@ -108,6 +108,7 @@ source_set("browser_state_impl") {
     "//ios/chrome/browser/translate",
     "//ios/chrome/browser/ui/browser_list",
     "//ios/chrome/browser/undo",
+    "//ios/chrome/browser/web_state_helper_data_source",
     "//ios/net",
     "//ios/public/provider/chrome/browser",
     "//ios/public/provider/chrome/browser/signin",

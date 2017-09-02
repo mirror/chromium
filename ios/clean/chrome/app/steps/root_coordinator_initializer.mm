@@ -11,6 +11,8 @@
 #import "ios/chrome/browser/ui/browser_list/browser_list_session_service.h"
 #import "ios/chrome/browser/ui/browser_list/browser_list_session_service_factory.h"
 #import "ios/chrome/browser/ui/coordinators/browser_coordinator+internal.h"
+#import "ios/chrome/browser/web_state_helper_data_source/browser_web_state_helper_data_source.h"
+#import "ios/chrome/browser/web_state_helper_data_source/browser_web_state_helper_data_source_factory.h"
 #import "ios/chrome/browser/web_state_list/web_state_list.h"
 #import "ios/chrome/browser/web_state_list/web_state_opener.h"
 #import "ios/clean/chrome/app/steps/step_context.h"
@@ -37,13 +39,17 @@
 
 - (void)runFeature:(NSString*)feature withContext:(id<StepContext>)context {
   _rootCoordinator = [[RootCoordinator alloc] init];
-  [_rootCoordinator
-      setBrowser:BrowserList::FromBrowserState(context.browserState)
-                     ->CreateNewBrowser()];
+  BrowserList* browserList =
+      BrowserList::FromBrowserState(context.browserState);
+  [_rootCoordinator setBrowser:browserList->CreateNewBrowser()];
 
   BrowserListSessionService* service =
       BrowserListSessionServiceFactory::GetForBrowserState(
           context.browserState);
+
+  BrowserWebStateHelperDataSourceFactory::GetInstance()
+      ->GetForBrowserState(context.browserState)
+      ->ProvideHelpersToBrowsers(browserList);
 
   if (!service || !service->RestoreSession()) {
     WebStateList& webStateList = _rootCoordinator.browser->web_state_list();

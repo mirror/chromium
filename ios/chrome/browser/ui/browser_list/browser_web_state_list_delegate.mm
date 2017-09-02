@@ -5,42 +5,16 @@
 #import "ios/chrome/browser/ui/browser_list/browser_web_state_list_delegate.h"
 
 #include "base/logging.h"
-#import "ios/chrome/browser/find_in_page/find_tab_helper.h"
-#import "ios/chrome/browser/sessions/ios_chrome_session_tab_helper.h"
-#import "ios/chrome/browser/ssl/ios_security_state_tab_helper.h"
 #import "ios/chrome/browser/ui/browser_list/browser.h"
-#import "ios/chrome/browser/web/tab_id_tab_helper.h"
 #import "ios/chrome/browser/web_state_list/web_state_list.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
 #endif
 
-namespace {
-// BrowserWebStateHelper subclass that creates WebStateUserData objects.
-// TODO(crbug.com/761537): Move to separate service to remove these dependencies
-// from the browser_list target.
-class WebStateUserDataCreatorHelper : public BrowserWebStateHelper {
- public:
-  explicit WebStateUserDataCreatorHelper() = default;
-  ~WebStateUserDataCreatorHelper() override = default;
-
- private:
-  // BrowserWebStateHelper:
-  void OnWebStateAdded(web::WebState* web_state) override {
-    FindTabHelper::CreateForWebState(web_state, nil);
-    IOSChromeSessionTabHelper::CreateForWebState(web_state);
-    IOSSecurityStateTabHelper::CreateForWebState(web_state);
-    TabIdTabHelper::CreateForWebState(web_state);
-  }
-};
-}  // namespace
-
 BrowserWebStateListDelegate::BrowserWebStateListDelegate(Browser* browser)
     : browser_(browser) {
   DCHECK(browser_);
-  web_state_helpers_.push_back(
-      base::MakeUnique<WebStateUserDataCreatorHelper>());
 }
 
 BrowserWebStateListDelegate::~BrowserWebStateListDelegate() = default;
