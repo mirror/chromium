@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d76646ae_1c857814",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 20879,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-02T01:03:56Z",
+      "side": 1,
+      "message": "nit: units\u003d\"rules\"",
+      "range": {
+        "startLine": 20879,
+        "startChar": 4,
+        "endLine": 20879,
+        "endChar": 27
+      },
+      "revId": "90f16a69ef13be94e301032e50e005608c8efe7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
