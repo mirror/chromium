@@ -20857,10 +20857,12 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     Time taken to index and persist to disk, the deserialized json rules
     provided by an extension manifest for the Declarative Net Request API. This
-    is emitted whenever an extension's json ruleset is successfully indexed and
-    persisted. This may happen when a packed extension is installed, an unpacked
-    extension is loaded, an extension's ruleset is re-indexed due to corruption,
-    etc.
+    includes the time recorded in
+    Extensions.DeclarativeNetRequest.IndexRulesTime together with the time taken
+    to persist the ruleset to disk. This is emitted whenever an extension's json
+    ruleset is successfully indexed and persisted. This may happen when a packed
+    extension is installed, an unpacked extension is loaded, an extension's
+    ruleset is re-indexed due to corruption, etc.
   </summary>
 </histogram>
 
@@ -20876,7 +20878,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Extensions.DeclarativeNetRequest.ManifestRulesCount"
-    units="Number of rules">
+    units="rules">
   <owner>karandeepb@chromium.org</owner>
   <summary>
     The number of indexed declarative rules provided by an extension manifest
