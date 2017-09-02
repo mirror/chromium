@@ -10890,6 +10890,21 @@
       }
     ]
   },
+  "Jumbo Linux": {
+    "additional_compile_targets": [
+      "all"
+    ]
+  },
+  "Jumbo Mac": {
+    "additional_compile_targets": [
+      "all"
+    ]
+  },
+  "Jumbo Win": {
+    "additional_compile_targets": [
+      "all"
+    ]
+  },
   "Linux ARM": {
     "gtest_tests": [
       {
