@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "12e0a74c_84e72fc2",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 871,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-09-02T00:10:35Z",
+      "side": 1,
+      "message": "I need to clear at here. Did in earlier patch at another place, but forget to add it here.",
+      "parentUuid": "945b4c6f_c211d4a1",
+      "range": {
+        "startLine": 871,
+        "startChar": 26,
+        "endLine": 871,
+        "endChar": 48
+      },
+      "revId": "c2bbf34ae16c980ebfdf0659cd912c5b0e7db880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "113c51f8_6c910811",
         "filename": "ui/compositor/layer.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-01T22:59:41Z",
       "side": 1,
       "message": "are these checks needed and correct?",
+      "range": {
+        "startLine": 908,
+        "startChar": 2,
+        "endLine": 911,
+        "endChar": 11
+      },
+      "revId": "c2bbf34ae16c980ebfdf0659cd912c5b0e7db880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a08f4b1_c51e90b6",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 911,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-09-02T00:10:35Z",
+      "side": 1,
+      "message": "To be more conservative to make sure the parent and children layers has the same paint_defferred status, I will remove the checks.\n\nThe code here is similar to SuppressPaint() above.\n\nWe may not need to check delegate_. If delegate_ is null, it will not call delegate_-\u003eOnPaintLayer in PaintContentsToDisplayList. So we can return earlier? Unless in this situation it will be wrong: parent\u0027s delegate_ is null, but child_ has non-null delegate_. So we should not return here. In this case, looks like SuppressPaint\u0027s code is wrong too.\n\nIf paint_defferred_ \u003d\u003d deferred, we do not need to continue. Looks right but what if child_ was set paint_deferred_ true first, and parent set paint_deferred_ false later. If parent original paint_deferred_ is false, then we return earlier at here, the child_ will not be set to paint_deferred_ false. Maybe we should make the child_ sync with parent, so we should not return earlier.",
+      "parentUuid": "113c51f8_6c910811",
       "range": {
         "startLine": 908,
         "startChar": 2,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "eacb6726_b60381ca",
+        "filename": "ui/compositor/layer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-09-02T00:10:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "921cf5ce_8a59051b",
+      "range": {
+        "startLine": 618,
+        "startChar": 13,
+        "endLine": 618,
+        "endChar": 22
+      },
+      "revId": "c2bbf34ae16c980ebfdf0659cd912c5b0e7db880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20847f3f_d1228b9a",
         "filename": "ui/compositor/scoped_layer_animation_settings.cc",
         "patchSetId": 3
@@ -82,6 +154,24 @@
       "writtenOn": "2017-09-01T22:59:41Z",
       "side": 1,
       "message": "why should CacheRenderSurfaceObserver be setting this? Shouldn\u0027t we have a DeferredPaintSurfaceObserver so it\u0027s possible to use this without caching?",
+      "revId": "c2bbf34ae16c980ebfdf0659cd912c5b0e7db880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5f8dbc1_44a2e278",
+        "filename": "ui/compositor/scoped_layer_animation_settings.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-09-02T00:10:35Z",
+      "side": 1,
+      "message": "I plan to delete all the code related to cache in overview mode. Here is a full example you can download the patch and play the cache in overview mode. But if it is ok with you, I can keep the changes. But we need to change how we cache before you land your trilinear code.\n\nI added the DeferredPaintObserver in the cl as well. But if you prefer, I can move them to another cl.",
+      "parentUuid": "20847f3f_d1228b9a",
       "revId": "c2bbf34ae16c980ebfdf0659cd912c5b0e7db880",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
