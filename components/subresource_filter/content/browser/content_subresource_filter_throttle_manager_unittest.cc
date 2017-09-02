@@ -198,8 +198,8 @@ class ContentSubresourceFilterThrottleManagerTest
     navigation_simulator_->Start();
     content::NavigationThrottle::ThrottleCheckResult result =
         navigation_simulator_->GetLastThrottleCheckResult();
-    EXPECT_EQ(expect_result, result);
-    if (result != content::NavigationThrottle::PROCEED)
+    EXPECT_EQ(expect_result.action, result.action);
+    if (result.action != content::NavigationThrottle::PROCEED)
       navigation_simulator_.reset();
   }
 
@@ -209,8 +209,8 @@ class ContentSubresourceFilterThrottleManagerTest
     navigation_simulator_->Redirect(new_url);
     content::NavigationThrottle::ThrottleCheckResult result =
         navigation_simulator_->GetLastThrottleCheckResult();
-    EXPECT_EQ(expect_result, result);
-    if (result != content::NavigationThrottle::PROCEED)
+    EXPECT_EQ(expect_result.action, result.action);
+    if (result.action != content::NavigationThrottle::PROCEED)
       navigation_simulator_.reset();
   }
 
@@ -220,10 +220,10 @@ class ContentSubresourceFilterThrottleManagerTest
     navigation_simulator_->Commit();
     content::NavigationThrottle::ThrottleCheckResult result =
         navigation_simulator_->GetLastThrottleCheckResult();
-    EXPECT_EQ(expect_result, result);
+    EXPECT_EQ(expect_result.action, result.action);
 
     auto scoped_simulator = std::move(navigation_simulator_);
-    if (result == content::NavigationThrottle::PROCEED)
+    if (result.action == content::NavigationThrottle::PROCEED)
       return scoped_simulator->GetFinalRenderFrameHost();
     return nullptr;
   }

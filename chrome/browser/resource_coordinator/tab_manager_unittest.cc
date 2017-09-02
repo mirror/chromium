@@ -180,19 +180,19 @@ class TabManagerTest : public ChromeRenderViewHostTestHarness {
       NavigationThrottle::ThrottleCheckResult result3,
       size_t loading_slots) {
     // First tab starts navigation right away because there is no tab loading.
-    EXPECT_EQ(content::NavigationThrottle::PROCEED, result1);
+    EXPECT_EQ(content::NavigationThrottle::PROCEED, result1.action);
     switch (loading_slots) {
       case 1:
-        EXPECT_EQ(content::NavigationThrottle::DEFER, result2);
-        EXPECT_EQ(content::NavigationThrottle::DEFER, result3);
+        EXPECT_EQ(content::NavigationThrottle::DEFER, result2.action);
+        EXPECT_EQ(content::NavigationThrottle::DEFER, result3.action);
         break;
       case 2:
-        EXPECT_EQ(content::NavigationThrottle::PROCEED, result2);
-        EXPECT_EQ(content::NavigationThrottle::DEFER, result3);
+        EXPECT_EQ(content::NavigationThrottle::PROCEED, result2.action);
+        EXPECT_EQ(content::NavigationThrottle::DEFER, result3.action);
         break;
       case 3:
-        EXPECT_EQ(content::NavigationThrottle::PROCEED, result2);
-        EXPECT_EQ(content::NavigationThrottle::PROCEED, result3);
+        EXPECT_EQ(content::NavigationThrottle::PROCEED, result2.action);
+        EXPECT_EQ(content::NavigationThrottle::PROCEED, result3.action);
         break;
       default:
         NOTREACHED();
@@ -230,9 +230,9 @@ class TabManagerWithExperimentDisabledTest : public TabManagerTest {
                             NavigationThrottle::ThrottleCheckResult result2,
                             NavigationThrottle::ThrottleCheckResult result3,
                             size_t loading_slots) override {
-    EXPECT_EQ(content::NavigationThrottle::PROCEED, result1);
-    EXPECT_EQ(content::NavigationThrottle::PROCEED, result2);
-    EXPECT_EQ(content::NavigationThrottle::PROCEED, result3);
+    EXPECT_EQ(content::NavigationThrottle::PROCEED, result1.action);
+    EXPECT_EQ(content::NavigationThrottle::PROCEED, result2.action);
+    EXPECT_EQ(content::NavigationThrottle::PROCEED, result3.action);
   }
 
  private:
@@ -1030,7 +1030,7 @@ TEST_F(TabManagerTest, PauseAndResumeBackgroundTabOpening) {
 
   // Start background tab opening session.
   EXPECT_EQ(content::NavigationThrottle::PROCEED,
-            tab_manager->MaybeThrottleNavigation(throttle1_.get()));
+            tab_manager->MaybeThrottleNavigation(throttle1_.get()).action);
   tab_manager->GetWebContentsData(contents1_)
       ->DidStartNavigation(nav_handle1_.get());
   EXPECT_TRUE(tab_manager->IsInBackgroundTabOpeningSession());
@@ -1054,7 +1054,7 @@ TEST_F(TabManagerTest, PauseAndResumeBackgroundTabOpening) {
   // TabManager cannot enter BackgroundTabOpening session when it is in paused
   // mode.
   EXPECT_EQ(content::NavigationThrottle::DEFER,
-            tab_manager->MaybeThrottleNavigation(throttle2_.get()));
+            tab_manager->MaybeThrottleNavigation(throttle2_.get()).action);
   EXPECT_TRUE(tab_manager->IsNavigationDelayedForTest(nav_handle2_.get()));
   EXPECT_FALSE(tab_manager->IsInBackgroundTabOpeningSession());
   EXPECT_FALSE(
@@ -1194,7 +1194,7 @@ TEST_F(TabManagerTest, SessionRestoreBeforeBackgroundTabOpeningSession) {
   // Do not enter BackgroundTabOpening session if the background tab is in
   // session restore.
   EXPECT_EQ(content::NavigationThrottle::PROCEED,
-            tab_manager->MaybeThrottleNavigation(throttle1_.get()));
+            tab_manager->MaybeThrottleNavigation(throttle1_.get()).action);
   EXPECT_FALSE(tab_manager->IsInBackgroundTabOpeningSession());
   EXPECT_FALSE(
       tab_manager->stats_collector()->is_in_background_tab_opening_session());
@@ -1202,13 +1202,13 @@ TEST_F(TabManagerTest, SessionRestoreBeforeBackgroundTabOpeningSession) {
   // Enter BackgroundTabOpening session when there are background tabs not in
   // session restore, though the first background tab can still proceed.
   EXPECT_EQ(content::NavigationThrottle::PROCEED,
-            tab_manager->MaybeThrottleNavigation(throttle2_.get()));
+            tab_manager->MaybeThrottleNavigation(throttle2_.get()).action);
   EXPECT_TRUE(tab_manager->IsInBackgroundTabOpeningSession());
   EXPECT_TRUE(
       tab_manager->stats_collector()->is_in_background_tab_opening_session());
 
   EXPECT_EQ(content::NavigationThrottle::DEFER,
-            tab_manager->MaybeThrottleNavigation(throttle3_.get()));
+            tab_manager->MaybeThrottleNavigation(throttle3_.get()).action);
   EXPECT_TRUE(tab_manager->IsInBackgroundTabOpeningSession());
   EXPECT_TRUE(
       tab_manager->stats_collector()->is_in_background_tab_opening_session());
@@ -1233,13 +1233,13 @@ TEST_F(TabManagerTest, SessionRestoreAfterBackgroundTabOpeningSession) {
 
   // Start background tab opening session.
   EXPECT_EQ(content::NavigationThrottle::PROCEED,
-            tab_manager->MaybeThrottleNavigation(throttle1_.get()));
+            tab_manager->MaybeThrottleNavigation(throttle1_.get()).action);
   EXPECT_TRUE(tab_manager->IsInBackgroundTabOpeningSession());
   EXPECT_TRUE(
       tab_manager->stats_collector()->is_in_background_tab_opening_session());
 
   EXPECT_EQ(content::NavigationThrottle::DEFER,
-            tab_manager->MaybeThrottleNavigation(throttle2_.get()));
+            tab_manager->MaybeThrottleNavigation(throttle2_.get()).action);
   EXPECT_TRUE(tab_manager->IsInBackgroundTabOpeningSession());
   EXPECT_TRUE(
       tab_manager->stats_collector()->is_in_background_tab_opening_session());
@@ -1255,7 +1255,7 @@ TEST_F(TabManagerTest, SessionRestoreAfterBackgroundTabOpeningSession) {
   // restore.
   tab_manager->GetWebContentsData(contents3_)->SetIsInSessionRestore(false);
   EXPECT_EQ(content::NavigationThrottle::DEFER,
-            tab_manager->MaybeThrottleNavigation(throttle3_.get()));
+            tab_manager->MaybeThrottleNavigation(throttle3_.get()).action);
 
   // The background tab opening session ends after existing tracked tabs have
   // finished loading.

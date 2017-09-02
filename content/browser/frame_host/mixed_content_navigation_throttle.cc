@@ -129,15 +129,15 @@ MixedContentNavigationThrottle::~MixedContentNavigationThrottle() {}
 
 ThrottleCheckResult MixedContentNavigationThrottle::WillStartRequest() {
   bool should_block = ShouldBlockNavigation(false);
-  return should_block ? ThrottleCheckResult::CANCEL
-                      : ThrottleCheckResult::PROCEED;
+  return should_block ? ThrottleCheckResult(ThrottleCheckAction::CANCEL)
+                      : ThrottleCheckResult(ThrottleCheckAction::PROCEED);
 }
 
 ThrottleCheckResult MixedContentNavigationThrottle::WillRedirectRequest() {
   // Upon redirects the same checks are to be executed as for requests.
   bool should_block = ShouldBlockNavigation(true);
-  return should_block ? ThrottleCheckResult::CANCEL
-                      : ThrottleCheckResult::PROCEED;
+  return should_block ? ThrottleCheckResult(ThrottleCheckAction::CANCEL)
+                      : ThrottleCheckResult(ThrottleCheckAction::PROCEED);
 }
 
 ThrottleCheckResult MixedContentNavigationThrottle::WillProcessResponse() {
@@ -146,7 +146,7 @@ ThrottleCheckResult MixedContentNavigationThrottle::WillProcessResponse() {
   // attained security level of the connection. For instance, does it use an
   // outdated protocol? The implementation should be based off
   // MixedContentChecker::handleCertificateError. See https://crbug.com/576270.
-  return ThrottleCheckResult::PROCEED;
+  return ThrottleCheckResult(ThrottleCheckAction::PROCEED);
 }
 
 const char* MixedContentNavigationThrottle::GetNameForLogging() {

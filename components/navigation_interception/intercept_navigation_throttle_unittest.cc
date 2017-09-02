@@ -101,7 +101,7 @@ TEST_F(InterceptNavigationThrottleTest,
   NavigationThrottle::ThrottleCheckResult result =
       SimulateWillStart(GURL(kTestUrl), GURL(kTestUrl), false);
 
-  EXPECT_EQ(NavigationThrottle::PROCEED, result);
+  EXPECT_EQ(NavigationThrottle::PROCEED, result.action);
 }
 
 TEST_F(InterceptNavigationThrottleTest,
@@ -114,7 +114,7 @@ TEST_F(InterceptNavigationThrottleTest,
   NavigationThrottle::ThrottleCheckResult result =
       SimulateWillStart(GURL(kTestUrl), GURL(kTestUrl), false);
 
-  EXPECT_EQ(NavigationThrottle::CANCEL_AND_IGNORE, result);
+  EXPECT_EQ(NavigationThrottle::CANCEL_AND_IGNORE, result.action);
 }
 
 TEST_F(InterceptNavigationThrottleTest, CallbackIsPostFalseForGet) {
@@ -127,7 +127,7 @@ TEST_F(InterceptNavigationThrottleTest, CallbackIsPostFalseForGet) {
   NavigationThrottle::ThrottleCheckResult result =
       SimulateWillStart(GURL(kTestUrl), GURL(kTestUrl), false);
 
-  EXPECT_EQ(NavigationThrottle::PROCEED, result);
+  EXPECT_EQ(NavigationThrottle::PROCEED, result.action);
 }
 
 TEST_F(InterceptNavigationThrottleTest, CallbackIsPostTrueForPost) {
@@ -139,7 +139,7 @@ TEST_F(InterceptNavigationThrottleTest, CallbackIsPostTrueForPost) {
   NavigationThrottle::ThrottleCheckResult result =
       SimulateWillStart(GURL(kTestUrl), GURL(kTestUrl), true);
 
-  EXPECT_EQ(NavigationThrottle::PROCEED, result);
+  EXPECT_EQ(NavigationThrottle::PROCEED, result.action);
 }
 
 TEST_F(InterceptNavigationThrottleTest,
@@ -156,7 +156,7 @@ TEST_F(InterceptNavigationThrottleTest,
       .WillOnce(Return(false));
   NavigationThrottle::ThrottleCheckResult result = Simulate302();
 
-  EXPECT_EQ(NavigationThrottle::PROCEED, result);
+  EXPECT_EQ(NavigationThrottle::PROCEED, result.action);
 }
 
 }  // namespace navigation_interception

@@ -99,8 +99,10 @@ IN_PROC_BROWSER_TEST_F(FormSubmissionBrowserTest,
     std::unique_ptr<NavigationThrottle> throttle =
         FormSubmissionThrottle::MaybeCreateThrottleFor(handle.get());
     ASSERT_TRUE(throttle);
-    EXPECT_EQ(test.start_expectation, throttle->WillStartRequest());
-    EXPECT_EQ(test.redirect_expectation, throttle->WillRedirectRequest());
+    EXPECT_EQ(test.start_expectation.action,
+              throttle->WillStartRequest().action);
+    EXPECT_EQ(test.redirect_expectation.action,
+              throttle->WillRedirectRequest().action);
   }
 }
 
@@ -139,8 +141,9 @@ IN_PROC_BROWSER_TEST_F(FormSubmissionBrowserTest,
   std::unique_ptr<NavigationThrottle> throttle =
       FormSubmissionThrottle::MaybeCreateThrottleFor(handle.get());
   ASSERT_TRUE(throttle);
-  EXPECT_EQ(NavigationThrottle::PROCEED, throttle->WillStartRequest());
-  EXPECT_EQ(NavigationThrottle::PROCEED, throttle->WillRedirectRequest());
+  EXPECT_EQ(NavigationThrottle::PROCEED, throttle->WillStartRequest().action);
+  EXPECT_EQ(NavigationThrottle::PROCEED,
+            throttle->WillRedirectRequest().action);
 }
 
 }  // namespace content

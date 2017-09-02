@@ -112,7 +112,7 @@ TEST_F(FlashDownloadInterceptionTest, NavigationThrottleCancelsNavigation) {
       FlashDownloadInterception::MaybeCreateThrottleFor(handle.get());
   EXPECT_NE(nullptr, throttle);
   ASSERT_EQ(NavigationThrottle::CANCEL_AND_IGNORE,
-            throttle->WillStartRequest());
+            throttle->WillStartRequest().action);
 }
 
 TEST_F(FlashDownloadInterceptionTest, OnlyInterceptOnDetectContentSetting) {

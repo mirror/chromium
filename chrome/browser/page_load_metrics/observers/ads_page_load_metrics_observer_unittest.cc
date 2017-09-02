@@ -722,7 +722,7 @@ TEST_F(AdsPageLoadMetricsObserverTest, FilterAds_DoNotLogMetrics) {
   simulator->Commit();
 
   EXPECT_NE(content::NavigationThrottle::PROCEED,
-            simulator->GetLastThrottleCheckResult());
+            simulator->GetLastThrottleCheckResult().action);
 
   NavigateMainFrame(kNonAdUrl);
   TestHistograms(histogram_tester(), std::vector<ExpectedFrameBytes>(),
