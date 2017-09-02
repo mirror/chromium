@@ -6,7 +6,6 @@ package org.chromium.android_webview;
 
 import android.os.Handler;
 import android.os.Looper;
-import android.webkit.ValueCallback;
 
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
@@ -75,8 +74,8 @@ public final class AwCookieManager {
      * @param value The value for set-cookie: in http response header.
      * @param callback A callback called with the success status after the cookie is set.
      */
-    public void setCookie(final String url, final String value,
-            final ValueCallback<Boolean> callback) {
+    public void setCookie(
+            final String url, final String value, final AwValueCallback<Boolean> callback) {
         try {
             nativeSetCookie(url, value, CookieCallback.convert(callback));
         } catch (IllegalStateException e) {
@@ -102,7 +101,7 @@ public final class AwCookieManager {
      * The value of the callback is true iff at least one cookie was removed.
      * @param callback A callback called after the cookies (if any) are removed.
      */
-    public void removeSessionCookies(ValueCallback<Boolean> callback) {
+    public void removeSessionCookies(AwValueCallback<Boolean> callback) {
         try {
             nativeRemoveSessionCookies(CookieCallback.convert(callback));
         } catch (IllegalStateException e) {
@@ -116,7 +115,7 @@ public final class AwCookieManager {
      * The value of the callback is true iff at least one cookie was removed.
      * @param callback A callback called after the cookies (if any) are removed.
      */
-    public void removeAllCookies(ValueCallback<Boolean> callback) {
+    public void removeAllCookies(AwValueCallback<Boolean> callback) {
         try {
             nativeRemoveAllCookies(CookieCallback.convert(callback));
         } catch (IllegalStateException e) {
@@ -170,24 +169,24 @@ public final class AwCookieManager {
     }
 
     /**
-     * CookieCallback is a bridge that knows how to call a ValueCallback on its original thread.
-     * We need to arrange for the users ValueCallback#onReceiveValue to be called on the original
+     * CookieCallback is a bridge that knows how to call a AwValueCallback on its original thread.
+     * We need to arrange for the users AwValueCallback#onReceiveValue to be called on the original
      * thread after the work is done. When the API is called we construct a CookieCallback which
      * remembers the handler of the current thread. Later the native code uses
      * invokeBooleanCookieCallback to call CookieCallback#onReceiveValue which posts a Runnable
-     * on the handler of the original thread which in turn calls ValueCallback#onReceiveValue.
+     * on the handler of the original thread which in turn calls AwValueCallback#onReceiveValue.
      */
     private static class CookieCallback<T> {
-        ValueCallback<T> mCallback;
+        AwValueCallback<T> mCallback;
         Handler mHandler;
 
-        public CookieCallback(ValueCallback<T> callback, Handler handler) {
+        public CookieCallback(AwValueCallback<T> callback, Handler handler) {
             mCallback = callback;
             mHandler = handler;
         }
 
-        public static <T> CookieCallback<T> convert(ValueCallback<T> callback) throws
-                IllegalStateException {
+        public static <T> CookieCallback<T> convert(AwValueCallback<T> callback)
+                throws IllegalStateException {
             if (callback == null) return null;
             if (Looper.myLooper() == null) {
                 throw new IllegalStateException("CookieCallback.convert should be called on "

@@ -46,6 +46,7 @@ import org.chromium.android_webview.AwContentsClientBridge;
 import org.chromium.android_webview.AwHttpAuthHandler;
 import org.chromium.android_webview.AwRenderProcessGoneDetail;
 import org.chromium.android_webview.AwSafeBrowsingResponse;
+import org.chromium.android_webview.AwValueCallback;
 import org.chromium.android_webview.AwWebResourceResponse;
 import org.chromium.android_webview.JsPromptResultReceiver;
 import org.chromium.android_webview.JsResultReceiver;
@@ -216,12 +217,12 @@ class WebViewContentsClientAdapter extends AwContentsClient {
      * @see AwContentsClient#getVisitedHistory.
      */
     @Override
-    public void getVisitedHistory(ValueCallback<String[]> callback) {
+    public void getVisitedHistory(AwValueCallback<String[]> callback) {
         try {
             TraceEvent.begin("WebViewContentsClientAdapter.getVisitedHistory");
             if (mWebChromeClient != null) {
                 if (TRACE) Log.d(TAG, "getVisitedHistory");
-                mWebChromeClient.getVisitedHistory(callback);
+                mWebChromeClient.getVisitedHistory(Converters.wrapAsValueCallback(callback));
             }
         } finally {
             TraceEvent.end("WebViewContentsClientAdapter.getVisitedHistory");
@@ -635,7 +636,7 @@ class WebViewContentsClientAdapter extends AwContentsClient {
 
     @Override
     public void onSafeBrowsingHit(AwWebResourceRequest request, int threatType,
-            ValueCallback<AwSafeBrowsingResponse> callback) {
+            AwValueCallback<AwSafeBrowsingResponse> callback) {
         // TODO(ntfschr): invoke the WebViewClient method once the next SDK rolls
         callback.onReceiveValue(new AwSafeBrowsingResponse(SafeBrowsingAction.SHOW_INTERSTITIAL,
                 /* reporting */ true));
@@ -936,7 +937,7 @@ class WebViewContentsClientAdapter extends AwContentsClient {
     }
 
     @Override
-    public void onReceivedSslError(final ValueCallback<Boolean> callback, SslError error) {
+    public void onReceivedSslError(final AwValueCallback<Boolean> callback, SslError error) {
         try {
             TraceEvent.begin("WebViewContentsClientAdapter.onReceivedSslError");
             SslErrorHandler handler = new SslErrorHandler() {
@@ -1068,7 +1069,7 @@ class WebViewContentsClientAdapter extends AwContentsClient {
     }
 
     @Override
-    public void showFileChooser(final ValueCallback<String[]> uploadFileCallback,
+    public void showFileChooser(final AwValueCallback<String[]> uploadFileCallback,
             final AwContentsClient.FileChooserParamsImpl fileChooserParams) {
         try {
             TraceEvent.begin("WebViewContentsClientAdapter.showFileChooser");
