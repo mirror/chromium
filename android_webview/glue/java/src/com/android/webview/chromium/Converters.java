@@ -138,4 +138,17 @@ final class Converters {
             }
         };
     }
+
+    public static android.webkit.WebChromeClient.CustomViewCallback fromAwCustomViewCallback(
+            final org.chromium.android_webview.AwContentsClient.CustomViewCallback callback) {
+        if (callback == null) {
+            return null;
+        }
+        return new android.webkit.WebChromeClient.CustomViewCallback() {
+            @Override
+            public void onCustomViewHidden() {
+                callback.onCustomViewHidden();
+            }
+        };
+    }
 }

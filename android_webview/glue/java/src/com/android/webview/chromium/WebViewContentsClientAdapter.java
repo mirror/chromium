@@ -1156,7 +1156,7 @@ class WebViewContentsClientAdapter extends AwContentsClient {
             TraceEvent.begin("WebViewContentsClientAdapter.onShowCustomView");
             if (mWebChromeClient != null) {
                 if (TRACE) Log.d(TAG, "onShowCustomView");
-                mWebChromeClient.onShowCustomView(view, cb);
+                mWebChromeClient.onShowCustomView(view, Converters.fromAwCustomViewCallback(cb));
             }
         } finally {
             TraceEvent.end("WebViewContentsClientAdapter.onShowCustomView");
