@@ -4,7 +4,6 @@
 
 package org.chromium.android_webview;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -237,10 +236,9 @@ public abstract class AwContentsClient {
     }
 
     /**
-     * Type adaptation class for FileChooserParams.
+     * Type adaptation class for {@link android.webkit.FileChooserParams}.
      */
-    @SuppressLint("NewApi")  // WebChromeClient.FileChooserParams requires API level 21.
-    public static class FileChooserParamsImpl extends WebChromeClient.FileChooserParams {
+    public static class FileChooserParamsImpl {
         private int mMode;
         private String mAcceptTypes;
         private String mTitle;
