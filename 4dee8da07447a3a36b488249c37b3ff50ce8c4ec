@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91bae16e_8a0ff714",
+        "filename": "testing/buildbot/chromium.fyi.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 10893,
+      "author": {
+        "id": 1151126
+      },
+      "writtenOn": "2017-09-02T01:54:45Z",
+      "side": 1,
+      "message": "nit: better to have small difference to baseline builder in name?\nI suggest to have \"Jumbo Linux x64\".",
+      "range": {
+        "startLine": 10893,
+        "startChar": 9,
+        "endLine": 10893,
+        "endChar": 14
+      },
+      "revId": "4dee8da07447a3a36b488249c37b3ff50ce8c4ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbaf3998_0b1b1169",
+        "filename": "testing/buildbot/chromium.fyi.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 10903,
+      "author": {
+        "id": 1151126
+      },
+      "writtenOn": "2017-09-02T01:54:45Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "4dee8da07447a3a36b488249c37b3ff50ce8c4ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfde171b_b12b3d87",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 2
+      },
+      "lineNbr": 1854,
+      "author": {
+        "id": 1151126
+      },
+      "writtenOn": "2017-09-02T01:54:45Z",
+      "side": 1,
+      "message": "why false?\nstart from default configuration?",
+      "range": {
+        "startLine": 1854,
+        "startChar": 34,
+        "endLine": 1854,
+        "endChar": 39
+      },
+      "revId": "4dee8da07447a3a36b488249c37b3ff50ce8c4ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
