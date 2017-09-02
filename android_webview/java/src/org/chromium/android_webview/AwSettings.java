@@ -11,9 +11,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.Process;
 import android.provider.Settings;
+import android.support.annotation.IntDef;
 import android.util.Log;
 import android.webkit.WebSettings;
-import android.webkit.WebSettings.LayoutAlgorithm;
 import android.webkit.WebSettings.PluginState;
 
 import org.chromium.base.BuildInfo;
@@ -22,6 +22,9 @@ import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.content_public.browser.WebContents;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 /**
  * Stores Android WebView specific settings that does not need to be synced to WebKit.
@@ -49,7 +52,8 @@ public class AwSettings {
     // Lock to protect all settings.
     private final Object mAwSettingsLock = new Object();
 
-    private LayoutAlgorithm mLayoutAlgorithm = LayoutAlgorithm.NARROW_COLUMNS;
+    @LayoutAlgorithm
+    private int mLayoutAlgorithm = NARROW_COLUMNS;
     private int mTextSizePercent = 100;
     private String mStandardFontFamily = "sans-serif";
     private String mFixedFontFamily = "monospace";
@@ -120,6 +124,22 @@ public class AwSettings {
         // Lazy Holder pattern
         private static final String sInstance = nativeGetDefaultUserAgent();
     }
+
+    /* See {@link android.webkit.WebSettings}. */
+    // Note: These must match LayoutAlgorithm in Settings.h in WebCore.
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({NORMAL,
+            /* See {@link android.webkit.WebSettings}. */
+            SINGLE_COLUMN,
+            /* See {@link android.webkit.WebSettings}. */
+            NARROW_COLUMNS, TEXT_AUTOSIZING})
+    public @interface LayoutAlgorithm {}
+    public static final int NORMAL = 0;
+    /* See {@link android.webkit.WebSettings}. */
+    public static final int SINGLE_COLUMN = 1;
+    /* See {@link android.webkit.WebSettings}. */
+    public static final int NARROW_COLUMNS = 2;
+    public static final int TEXT_AUTOSIZING = 3;
 
     // Protects access to settings global fields.
     private static final Object sGlobalContentSettingsLock = new Object();
@@ -1181,7 +1201,7 @@ public class AwSettings {
     /**
      * See {@link android.webkit.WebSettings#setLayoutAlgorithm}.
      */
-    public void setLayoutAlgorithm(LayoutAlgorithm l) {
+    public void setLayoutAlgorithm(@LayoutAlgorithm int l) {
         if (TRACE) Log.d(LOGTAG, "setLayoutAlgorithm=" + l);
         synchronized (mAwSettingsLock) {
             if (mLayoutAlgorithm != l) {
@@ -1194,7 +1214,8 @@ public class AwSettings {
     /**
      * See {@link android.webkit.WebSettings#getLayoutAlgorithm}.
      */
-    public LayoutAlgorithm getLayoutAlgorithm() {
+    @LayoutAlgorithm
+    public int getLayoutAlgorithm() {
         synchronized (mAwSettingsLock) {
             return mLayoutAlgorithm;
         }
@@ -1209,7 +1230,7 @@ public class AwSettings {
     @CalledByNative
     private boolean getTextAutosizingEnabledLocked() {
         assert Thread.holdsLock(mAwSettingsLock);
-        return mLayoutAlgorithm == LayoutAlgorithm.TEXT_AUTOSIZING;
+        return mLayoutAlgorithm == TEXT_AUTOSIZING;
     }
 
     /**
