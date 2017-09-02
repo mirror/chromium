@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1997e42_990f3f66",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-02T00:40:46Z",
+      "side": 1,
+      "message": "Some changes in this CL are about category being undefined. Would it be reasonable to define an empty protected content category outside of chromeos?\n\nAnother option would be to check for chromeos where these exceptions are being made.\n\ni.e. I\u0027d like to steer away from allowing category to be sometimes undefined.",
+      "revId": "121be5b5da8f2c4d6b097e5ee563ad5b9b5e5d57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b6ac94f_35992896",
+        "filename": "chrome/test/data/webui/settings/site_details_tests.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-02T00:40:46Z",
+      "side": 1,
+      "message": "Does this formatting change if \ngit cl format --js\nis run on this CL?\n(if so, go with the automated format).",
+      "revId": "121be5b5da8f2c4d6b097e5ee563ad5b9b5e5d57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2b914bf_06296aba",
+        "filename": "chrome/test/data/webui/settings/test_site_settings_prefs_browser_proxy.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-02T00:40:46Z",
+      "side": 1,
+      "message": "I\u0027d normally expect line 414 to be indented +4 spaces in from line 413.\nHow does git cl format --js format this?\n\nSee:\nhttps://google.github.io/styleguide/jsguide.html#formatting-indent",
+      "revId": "121be5b5da8f2c4d6b097e5ee563ad5b9b5e5d57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
