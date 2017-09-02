@@ -18,7 +18,6 @@ import android.support.test.filters.MediumTest;
 import android.support.test.filters.SmallTest;
 import android.view.WindowManager;
 import android.webkit.JavascriptInterface;
-import android.webkit.ValueCallback;
 import android.webkit.WebSettings;
 
 import org.junit.After;
@@ -30,6 +29,7 @@ import org.junit.runner.RunWith;
 import org.chromium.android_webview.AwContents;
 import org.chromium.android_webview.AwSettings;
 import org.chromium.android_webview.AwSettings.LayoutAlgorithm;
+import org.chromium.android_webview.AwValueCallback;
 import org.chromium.android_webview.AwWebResourceResponse;
 import org.chromium.android_webview.test.AwTestBase.TestDependencyFactory;
 import org.chromium.android_webview.test.TestAwContentsClient.DoUpdateVisitedHistoryHelper;
@@ -2850,7 +2850,7 @@ public class AwSettingsTest {
     public void testAllowMixedMode() throws Throwable {
         final TestAwContentsClient contentClient = new TestAwContentsClient() {
             @Override
-            public void onReceivedSslError(ValueCallback<Boolean> callback, SslError error) {
+            public void onReceivedSslError(AwValueCallback<Boolean> callback, SslError error) {
                 callback.onReceiveValue(true);
             }
         };
