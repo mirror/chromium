@@ -18,6 +18,7 @@ class InterfaceRegistrar {
     static void createInterfaceRegistryForContext(int nativeHandle) {
         // Note: The bindings code manages the lifetime of this object, so it
         // is not necessary to hold on to a reference to it explicitly.
+        System.out.println("ctxs shape detection registry!" ); 
         InterfaceRegistry registry = InterfaceRegistry.create(
                 CoreImpl.getInstance().acquireNativeHandle(nativeHandle).toMessagePipeHandle());
         registry.addInterface(BarcodeDetection.MANAGER, new BarcodeDetectionImpl.Factory());

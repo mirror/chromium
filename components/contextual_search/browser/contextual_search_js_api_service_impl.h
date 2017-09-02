@@ -6,7 +6,7 @@
 #define COMPONENTS_CONTEXTUAL_SEARCH_BROWSER_CONTEXTUAL_SEARCH_JS_API_SERVICE_IMPL_H_
 
 #include "base/macros.h"
-#include "components/contextual_search/browser/contextual_search_js_api_handler.h"
+#include "components/contextual_search/browser/contextual_search_api_handler.h"
 #include "components/contextual_search/common/contextual_search_js_api_service.mojom.h"
 
 namespace contextual_search {
@@ -16,22 +16,22 @@ class ContextualSearchJsApiServiceImpl
     : public mojom::ContextualSearchJsApiService {
  public:
   explicit ContextualSearchJsApiServiceImpl(
-      ContextualSearchJsApiHandler* contextual_search_js_api_handler);
+      ContextualSearchApiHandler* contextual_search_api_handler);
   ~ContextualSearchJsApiServiceImpl() override;
 
   // Mojo ContextualSearchApiService implementation.
   void HandleSetCaption(const std::string& message, bool does_answer) override;
 
  private:
-  // The UI handler for calls through the JavaScript API.
-  ContextualSearchJsApiHandler* contextual_search_js_api_handler_;
+  // The handler for calls through the Contextual Search mojo service API.
+  ContextualSearchApiHandler* contextual_search_api_handler_;
 
   DISALLOW_COPY_AND_ASSIGN(ContextualSearchJsApiServiceImpl);
 };
 
 // static
 void CreateContextualSearchJsApiService(
-    ContextualSearchJsApiHandler* contextual_search_js_api_handler,
+    ContextualSearchApiHandler* contextual_search_api_handler,
     mojom::ContextualSearchJsApiServiceRequest request);
 
 }  // namespace contextual_search

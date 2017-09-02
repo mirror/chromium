@@ -15,6 +15,8 @@ static_library("browser") {
   sources = [
     "browser/contextual_search_js_api_service_impl.cc",
     "browser/contextual_search_js_api_service_impl.h",
+    "browser/contextual_search_unhandled_tap_service_impl.cc",
+    "browser/contextual_search_unhandled_tap_service_impl.h",
     "browser/ctr_aggregator.cc",
     "browser/ctr_aggregator.h",
     "browser/weekly_activity_storage.cc",
