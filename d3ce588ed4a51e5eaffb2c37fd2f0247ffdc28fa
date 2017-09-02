@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a22b438d_2ee3ed6a",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1324,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-02T01:36:03Z",
+      "side": 1,
+      "message": "It\u0027s not possible to move this up. The problem is that in cases\nwhere there is a paint offset change and also a paint offset translation,\nthe check in UpdateForObjectLocationAndSize for whether paint offset\nchanged can always return false, because the whole paint offset is\nabsorbed into the translation. Further, we don\u0027t know whether the\npaint offset translation is changed or not until it is allocated later\non on line 1318 above.",
+      "revId": "d3ce588ed4a51e5eaffb2c37fd2f0247ffdc28fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
