@@ -22,6 +22,29 @@
       "revId": "20a2b9730b6736129d4d736aa7934837f32f3609",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c196b69e_c45f2ec7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/elements/ElementsPanel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-02T06:05:06Z",
+      "side": 1,
+      "message": "Not sure this will work as expected. For example, I work with Elements, switch to Console and then reload. Nothing is selected, but then as I switch to Elements back, some \"random\" (meaning I was working with it long ago, now it\u0027s just random for me) node is selected.\n\nLet me play with the patch first.",
+      "range": {
+        "startLine": 342,
+        "startChar": 40,
+        "endLine": 342,
+        "endChar": 60
+      },
+      "revId": "20a2b9730b6736129d4d736aa7934837f32f3609",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
