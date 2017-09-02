@@ -16,6 +16,24 @@
       "revId": "9dbd67e0ad53433fa119f6bd8619ce9eabba2b4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c1e8c83_5bc64d0a",
+        "filename": "chrome/common/extensions/manifest_handlers/settings_overrides_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-09-02T00:32:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f27dc2c7_8035e9b6",
+      "revId": "9dbd67e0ad53433fa119f6bd8619ce9eabba2b4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
