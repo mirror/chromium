@@ -124,8 +124,8 @@ def main():
   parser.add_argument('--test-launcher-jobs',
                       type=int,
                       help='Sets the number of parallel test jobs.')
-  parser.add_argument('--test_launcher_summary_output',
-                      help='Currently ignored for 2-sided roll.')
+  parser.add_argument('--test-launcher-summary-output',
+                      help='Where the test launcher will output its json.')
   parser.add_argument('child_args', nargs='*',
                       help='Arguments for the test process.')
   parser.add_argument('-d', '--device', action='store_true', default=False,
@@ -184,6 +184,9 @@ def main():
     runtime_deps.append(('test_filter_file', test_launcher_filter_file))
     child_args.append('--test-launcher-filter-file=/system/test_filter_file')
 
+  if args.test_launcher_summary_output:
+    child_args.append('--test-launcher-summary-output=/tmp/summary_output.json')
+
   try:
     bootfs = BuildBootfs(args.output_directory, runtime_deps, args.exe_name,
                          child_args, args.dry_run, power_off=not args.device)
@@ -197,6 +200,11 @@ def main():
     # case some tests failed.
     if spawning_server:
       spawning_server.Stop()
+
+    if args.test_launcher_summary_output:
+      # TODO(scottmg): Copy /tmp/summary_output.json to
+      # target_launcher_summary_output location on this machine.
+      pass
 
 
 if __name__ == '__main__':
