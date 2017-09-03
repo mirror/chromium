@@ -31,7 +31,7 @@ const char kUserImageInfo[] = "user_image_info";
 const char kImageIndex[] = "image_index";
 
 bool IsIndexSupported(int index) {
-  return default_user_image::IsInCurrentImageSet(index) ||
+  return (index >= 0 && index < default_user_image::kDefaultImagesCount) ||
          (index == user_manager::User::USER_IMAGE_PROFILE);
 }
 
