@@ -11,6 +11,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/timer/timer.h"
 #include "build/build_config.h"
+#include "chrome/browser/browser_process.h"
 #include "chrome/browser/page_load_metrics/metrics_web_contents_observer.h"
 #include "chrome/browser/page_load_metrics/observers/aborts_page_load_metrics_observer.h"
 #include "chrome/browser/page_load_metrics/observers/ads_page_load_metrics_observer.h"
@@ -45,6 +46,7 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/search/search.h"
 #include "components/rappor/rappor_service_impl.h"
+#include "components/ukm/content/source_url_recorder_web_contents_observer.h"
 #include "content/public/browser/web_contents.h"
 #include "url/gurl.h"
 
@@ -181,6 +183,11 @@ bool PageLoadMetricsEmbedder::IsNewTabPageUrl(const GURL& url) {
 
 void InitializePageLoadMetricsForWebContents(
     content::WebContents* web_contents) {
+  // Page load metrics depends on UKM source URLs being recorded, so make sure
+  // the SourceUrlRecorderWebContentsObserver has been instantiated as well.
+  ukm::SourceUrlRecorderWebContentsObserver::CreateForWebContents(
+      web_contents, g_browser_process->ukm_recorder());
+
   page_load_metrics::MetricsWebContentsObserver::CreateForWebContents(
       web_contents, base::MakeUnique<PageLoadMetricsEmbedder>(web_contents));
 }
