@@ -9,8 +9,9 @@
 #include <atomic>
 
 #include "base/allocator/partition_allocator/address_space_randomization.h"
-#include "base/allocator/partition_allocator/spin_lock.h"
+#include "base/allocator/partition_allocator/event_lock.h"
 #include "base/base_export.h"
+#include "base/lazy_instance.h"
 #include "base/logging.h"
 #include "build/build_config.h"
 
@@ -60,7 +61,8 @@ namespace base {
 namespace {
 
 // We may reserve / release address space on different threads.
-subtle::SpinLock s_reserveLock;
+base::LazyInstance<subtle::EventLock>::Leaky s_reserveLock =
+    LAZY_INSTANCE_INITIALIZER;
 // We only support a single block of reserved address space.
 void* s_reservation_address = nullptr;
 size_t s_reservation_size = 0;
@@ -342,7 +344,7 @@ bool ReserveAddressSpace(size_t size) {
            kPageAllocationGranularityOffsetMask));
   if (mem != nullptr) {
     {
-      base::subtle::SpinLock::Guard guard(s_reserveLock);
+      base::subtle::EventLock::Guard guard(s_reserveLock.Get());
       if (s_reservation_address == nullptr) {
         s_reservation_address = mem;
         s_reservation_size = size;
@@ -356,7 +358,7 @@ bool ReserveAddressSpace(size_t size) {
 }
 
 void ReleaseReservation() {
-  base::subtle::SpinLock::Guard guard(s_reserveLock);
+  base::subtle::EventLock::Guard guard(s_reserveLock.Get());
   if (s_reservation_address != nullptr) {
     FreePages(s_reservation_address, s_reservation_size);
     s_reservation_address = nullptr;
