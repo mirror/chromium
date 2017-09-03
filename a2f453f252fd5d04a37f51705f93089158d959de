@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "33d063ff_14b0abde",
+        "filename": "content/browser/frame_host/navigator_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-09-03T20:09:06Z",
+      "side": 1,
+      "message": "Do we want to allocate a new document id on same-document navigations? I don\u0027t think we do. Blink does not allocate a new document in this case.",
+      "revId": "a2f453f252fd5d04a37f51705f93089158d959de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ef27a60_82d0fdc1",
         "filename": "content/browser/frame_host/render_frame_host_impl.h",
         "patchSetId": 9
