@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98debbda_d7a0eb30",
+        "filename": "third_party/WebKit/Source/build/scripts/json5_generator.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-03T23:36:02Z",
+      "side": 1,
+      "message": "Could this be done with \"return any(...)\" ?",
+      "revId": "3ce0822e36e3be699e3df610c35eab3d8f5ff92c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cb024b4_5f823e49",
+        "filename": "third_party/WebKit/Source/build/scripts/json5_generator.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-03T23:36:02Z",
+      "side": 1,
+      "message": "Before, you could specifiy valid_values: [1, 2, 3]. Now it seems like 1, 2, 3 would be treated as regexes? Maybe we should only check regex if the valid_type is \u0027str\u0027.",
+      "revId": "3ce0822e36e3be699e3df610c35eab3d8f5ff92c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb5a240f_b90a7fe9",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-03T23:36:02Z",
+      "side": 1,
+      "message": "nit: how about:\n\n   if property_[\u0027field_template\u0027] in alias_dictionary:\n     ...\n\n   assert not property_[\u0027field_template\u0027].startswith(\u0027\u003c\u0027), property_[\u0027field_template\u0027] + \" is not a valid alias for field \u0027\" + property_[\u0027name\u0027] + \"\u0027\".\n\nor something.",
+      "revId": "3ce0822e36e3be699e3df610c35eab3d8f5ff92c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2d10600_918c61a0",
+        "filename": "third_party/WebKit/Source/core/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-03T23:36:02Z",
+      "side": 1,
+      "message": "nit: CSSFieldAlias -\u003e ComputedStyleFieldAliases",
+      "revId": "3ce0822e36e3be699e3df610c35eab3d8f5ff92c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46cc53b6_59e544cd",
+        "filename": "third_party/WebKit/Source/core/css/CSSFieldAlias.json5",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-03T23:36:02Z",
+      "side": 1,
+      "message": "Maybe a comment describing what this file does?",
+      "revId": "3ce0822e36e3be699e3df610c35eab3d8f5ff92c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
