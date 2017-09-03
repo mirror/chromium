@@ -16,6 +16,24 @@
       "revId": "910ab17ccc84f26b89417cd5cf4690a9af327d2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e5331f0_25025469",
+        "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-09-03T15:51:38Z",
+      "side": 1,
+      "message": "Unfortunately it is not from blacklisting, but from driver bug workarounds. I can add a comment here though to clarify.",
+      "parentUuid": "0684a350_22486596",
+      "revId": "910ab17ccc84f26b89417cd5cf4690a9af327d2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
