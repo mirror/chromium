@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d727a4a8_d45055c7",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_surfaceless.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1195270
+      },
+      "writtenOn": "2017-09-03T18:10:14Z",
+      "side": 1,
+      "message": "rather than \"external\", could you just save \"a device\"? I would imagine that this could be the case for devices that do not have explicit synchronization on the main screen. If this cannot be the case, disregard my comment :)",
+      "range": {
+        "startLine": 98,
+        "startChar": 42,
+        "endLine": 98,
+        "endChar": 50
+      },
+      "revId": "297ba5f1e5ee512c334ecbff1b546afec3874f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
