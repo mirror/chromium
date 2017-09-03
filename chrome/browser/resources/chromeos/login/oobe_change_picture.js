@@ -36,6 +36,12 @@ Polymer({
       value: false,
     },
 
+    /** Specifies the selected image index. */
+    selectedImageIndex: {
+      type: Number,
+      observer: 'selectedImageIndexChanged_',
+    },
+
     /** Specifies the selected image URL, used to specify the initial image. */
     selectedImageUrl: {
       type: String,
@@ -51,6 +57,15 @@ Polymer({
       value: function() {
         return [];
       },
+    },
+
+    /**
+     * The index of the first default image to use in the selection list.
+     * @private
+     */
+    firstDefaultImageIndex: {
+      type: Number,
+      observer: 'firstDefaultImageIndexChanged_',
     },
 
     /**
@@ -87,6 +102,16 @@ Polymer({
   },
 
   /**
+   * setProfileImageUrl is called possibly after sync.
+   * @param {string} imageUrl
+   * @param {boolean} selected
+   */
+  setProfileImageUrl: function(imageUrl, selected) {
+    var pictureList = /** @type {CrPictureListElement} */ (this.$.pictureList);
+    pictureList.setProfileImageUrl(imageUrl, selected);
+  },
+
+  /**
    * @return {string}
    * @private
    */
@@ -96,14 +121,35 @@ Polymer({
   },
 
   /**
+   * selectedImageIndex is set by the host initially and possibly after sync.
+   * @param {number} selectedImageIndex
+   * @private
+   */
+  selectedImageIndexChanged_: function(selectedImageIndex) {
+    this.selectedImageIndex = selectedImageIndex;
+  },
+
+  /**
    * selectedImageUrl is set by the host initially and possibly after sync.
    * @param {string} selectedImageUrl
    * @private
    */
   selectedImageUrlChanged_: function(selectedImageUrl) {
     var pictureList = /** @type {CrPictureListElement} */ (this.$.pictureList);
-    pictureList.setSelectedImageUrl(selectedImageUrl);
+    if (this.selectedImageIndex >= this.firstDefaultImageIndex)
+      pictureList.setSelectedImageUrl(selectedImageUrl);
+    else
+      pictureList.setOldImageUrl(selectedImageUrl, this.selectedImageIndex);
     pictureList.setFocus();
+  },
+
+  /**
+   * firstDefaultImageIndex is set by the host initially.
+   * @param {number} firstDefaultImageIndex
+   * @private
+   */
+  firstDefaultImageIndexChanged_: function(firstDefaultImageIndex) {
+    this.firstDefaultImageIndex = firstDefaultImageIndex;
   },
 
   /**
@@ -124,7 +170,12 @@ Polymer({
         this.sendSelectImage_(image.dataset.type, '');
         break;
       case CrPicture.SelectionTypes.OLD:
-        this.sendSelectImage_(image.dataset.type, '');
+        var imageIndex = image.dataset.imageIndex;
+        if (imageIndex !== undefined && imageIndex >= 0 && image.src)
+          this.sendSelectImage_(
+              CrPicture.SelectionTypes.DEFAULT, image.dataset.url);
+        else
+          this.sendSelectImage_(image.dataset.type, '');
         break;
       case CrPicture.SelectionTypes.DEFAULT:
         this.sendSelectImage_(image.dataset.type, image.dataset.url);
@@ -202,5 +253,15 @@ Polymer({
   getImageType_: function(selectedItem) {
     return (selectedItem && selectedItem.dataset.type) ||
         CrPicture.SelectionTypes.NONE;
+  },
+
+  /**
+   * @param {!Array<!settings.DefaultImage>} defaultImages
+   * @param {number} firstDefaultImageIndex
+   * @return {!Array<!settings.DefaultImage>}
+   * @private
+   */
+  getDefaultImages_: function(defaultImages, firstDefaultImageIndex) {
+    return defaultImages.slice(firstDefaultImageIndex);
   },
 });
