@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf601f75_a62ca41f",
+        "filename": "ui/gl/extension_set.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-09-03T16:25:37Z",
+      "side": 1,
+      "message": "The other option is to extend base::flat_set\u003cbase::StringPiece\u003e to be ExtensionSet, so you can have a constructor taking const base::StringPiece\u0026, thus no need to expose MakeExtensionSet. Also, you can make HasExtenion member functions.\n\nThat said, it\u0027s no big deal, the current implementation is OK too. It just won\u0027t be my first choice.",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 18
+      },
+      "revId": "5e1f0da4fae0082ec3fa262752b025d8a964c0c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "570be403_c2c91b10",
+        "filename": "ui/gl/gl_context.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-09-03T16:25:37Z",
+      "side": 1,
+      "message": "It\u0027s unfortunate we have to maintain a copy of extensions here and also in RealGLAPI (for disabled extensions purpose). I thought about it a bit, but it seems there is no easy way to combine these two.",
+      "revId": "5e1f0da4fae0082ec3fa262752b025d8a964c0c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
