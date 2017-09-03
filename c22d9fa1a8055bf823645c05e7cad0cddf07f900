@@ -16,6 +16,24 @@
       "revId": "c22d9fa1a8055bf823645c05e7cad0cddf07f900",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06b0e328_621b0bf4",
+        "filename": "ui/compositor/compositor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-03T02:38:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66828663_8cacecba",
+      "revId": "c22d9fa1a8055bf823645c05e7cad0cddf07f900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
