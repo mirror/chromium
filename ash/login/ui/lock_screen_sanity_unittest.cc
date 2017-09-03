@@ -10,11 +10,32 @@
 #include "ash/shell.h"
 #include "base/run_loop.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "ui/base/ime/chromeos/mock_input_method_manager.h"
 #include "ui/events/test/event_generator.h"
 #include "ui/views/focus/focus_manager.h"
 
 using ::testing::_;
-using LockScreenSanityTest = ash::LoginTestBase;
+using chromeos::input_method::InputMethodManager;
+using chromeos::input_method::MockInputMethodManager;
+
+class LockScreenSanityTest : public ash::LoginTestBase {
+ protected:
+  LockScreenSanityTest() = default;
+  ~LockScreenSanityTest() override = default;
+
+  // LoginTestBase:
+  void SetUp() override {
+    LoginTestBase::SetUp();
+    InputMethodManager::Initialize(new MockInputMethodManager);
+  }
+
+  void TearDown() override {
+    InputMethodManager::Shutdown();
+    LoginTestBase::TearDown();
+  }
+
+  DISALLOW_COPY_AND_ASSIGN(LockScreenSanityTest);
+};
 
 namespace ash {
 
