@@ -51,6 +51,7 @@ namespace {
 constexpr const char kContextKeyIsCameraPresent[] = "isCameraPresent";
 constexpr const char kContextKeyProfilePictureDataURL[] =
     "profilePictureDataURL";
+constexpr const char kContextKeySelectedImageIndex[] = "selectedImageIndex";
 constexpr const char kContextKeySelectedImageURL[] = "selectedImageURL";
 
 // Time histogram suffix for profile image download.
@@ -216,6 +217,7 @@ void UserImageScreen::Show() {
   view_->Show();
 
   selected_image_ = GetUser()->image_index();
+  GetContextEditor().SetInteger(kContextKeySelectedImageIndex, selected_image_);
   GetContextEditor().SetString(
       kContextKeySelectedImageURL,
       default_user_image::GetDefaultImageUrl(selected_image_));
@@ -250,6 +252,8 @@ void UserImageScreen::OnDecodeImageFailed() {
 }
 
 void UserImageScreen::OnUserImageChanged(const user_manager::User& user) {
+  GetContextEditor().SetInteger(kContextKeySelectedImageIndex,
+                                GetUser()->image_index());
   GetContextEditor().SetString(
       kContextKeySelectedImageURL,
       default_user_image::GetDefaultImageUrl(GetUser()->image_index()));
