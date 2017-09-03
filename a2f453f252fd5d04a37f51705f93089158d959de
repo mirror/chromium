@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8b7cd280_222291bb",
+        "filename": "content/browser/frame_host/navigator_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-09-03T20:20:08Z",
+      "side": 1,
+      "message": "More detail: I don\u0027t think we want to track same-document navigations in UKM at this time, so ignoring them when allocating new doc ids seems correct both from a blink document state standpoint, and from a UKM standpoint. None of page load metrics wants to track info about same-doc navs for example. Going forward, we might want to track these in UKM, but for now I think it\u0027s correct for us to ignore them.",
+      "parentUuid": "33d063ff_14b0abde",
+      "revId": "a2f453f252fd5d04a37f51705f93089158d959de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ef27a60_82d0fdc1",
         "filename": "content/browser/frame_host/render_frame_host_impl.h",
         "patchSetId": 9
