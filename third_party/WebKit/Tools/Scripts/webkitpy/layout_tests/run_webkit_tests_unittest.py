@@ -969,7 +969,7 @@ class RunTest(unittest.TestCase, StreamTestingMixin):
         self.assertEqual(stdout.getvalue(), '')
         self.assertTrue('unsupported platform' in stderr.getvalue())
 
-    def test_build_check(self):
+    def disabled_test_build_check(self):
         # By using a port_name for a different platform than the one
         # we're running on, the build check should always fail because
         # the binary should not be present.
