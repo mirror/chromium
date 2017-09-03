@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f9a15c8_929d6723",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-03T23:47:33Z",
+      "side": 1,
+      "message": "Don\u0027t need to PseudoId and VerticalAlign as they are stored as bitfields.",
+      "revId": "adf245b7e2d635d670b7b8f5dbfb0db4a8225204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4804083b_6694d9c6",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-03T23:47:33Z",
+      "side": 1,
+      "message": "maybe manual_functions -\u003e custom_functions\nsince \"custom\" is the convention that means \"handwritten\"",
+      "revId": "adf245b7e2d635d670b7b8f5dbfb0db4a8225204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f1c438b_bd181bbc",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-03T23:47:33Z",
+      "side": 1,
+      "message": "maybe just size \u003d 1 if type_name \u003d\u003d \u0027bool\u0027 else property_[\u0027field_size\u0027]\nsince field_size is None by default I think.",
+      "revId": "adf245b7e2d635d670b7b8f5dbfb0db4a8225204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ff1a05d_a621b978",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-03T23:47:33Z",
+      "side": 1,
+      "message": "in -\u003e \u003d\u003d",
+      "revId": "adf245b7e2d635d670b7b8f5dbfb0db4a8225204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8fe92f4_bbaf7b2c",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-03T23:47:33Z",
+      "side": 1,
+      "message": "lol nice catch",
+      "revId": "adf245b7e2d635d670b7b8f5dbfb0db4a8225204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14b0a8dd_7d890e13",
+        "filename": "third_party/WebKit/Source/build/scripts/templates/ComputedStyleBase.h.tmpl",
+        "patchSetId": 3
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-03T23:47:33Z",
+      "side": 1,
+      "message": "We probably shouldn\u0027t be generating unnecessary internal getters and setters for the sake of compile times and binary size. e.g. we should only generate internal getter if there\u0027s no public getter.",
+      "revId": "adf245b7e2d635d670b7b8f5dbfb0db4a8225204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82a9a56a_d2a2f478",
+        "filename": "third_party/WebKit/Source/build/scripts/templates/fields/base.tmpl",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-03T23:47:33Z",
+      "side": 1,
+      "message": "Hmm, I remember you had an \"array\" idea for implementing this nicely. Could we try to implement that idea?",
+      "revId": "adf245b7e2d635d670b7b8f5dbfb0db4a8225204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

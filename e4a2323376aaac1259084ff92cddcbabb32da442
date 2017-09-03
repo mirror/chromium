@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22212be6_820b78f8",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-03T23:47:33Z",
+      "side": 0,
+      "message": "yay!",
+      "revId": "e4a2323376aaac1259084ff92cddcbabb32da442",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
