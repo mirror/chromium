@@ -43,7 +43,7 @@ class PythonCheckerTest(unittest.TestCase):
         self.assertEqual(checker._handle_style_error,
                          _mock_handle_style_error)
 
-    def test_check(self):
+    def disabled_test_check(self):
         """Test check() method."""
         errors = []
 

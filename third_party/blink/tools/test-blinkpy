@@ -31,32 +31,16 @@
 import os
 import sys
 
-from webkitpy.common import path_finder
-path_finder.add_typ_dir_to_sys_path()
+THIS_DIR = os.path.abspath(os.path.dirname(__file__))
+if not THIS_DIR in sys.path:
+    sys.path.insert(0, THIS_DIR)
+
+TYP_DIR = os.path.normpath(os.path.join(THIS_DIR, '..', '..', 'typ'))
+if not TYP_DIR in sys.path:
+    sys.path.insert(0, TYP_DIR)
 
 import typ
 
 
-def main():
-    skip = []
-    if sys.platform == 'win32':
-        # These test fail on win32. We could annotate some of these in
-        # class-level skips, but we don't support package/module-level skips.
-        # bugs.webkit.org/show_bug.cgi?id=54526 .
-        skip = [
-            'webkitpy.common.checkout.*',
-            'webkitpy.common.config.*',
-            'webkitpy.tool.*',
-            'webkitpy.w3c.*',
-            'webkitpy.layout_tests.layout_package.bot_test_expectations_unittest.*',
-        ]
-
-    return typ.main(top_level_dir=path_finder.get_scripts_dir(),
-                    skip=skip,
-                    path=[path_finder.get_webkitpy_thirdparty_dir(),
-                          path_finder.get_blink_tools_dir()],
-                    win_multiprocessing='spawn')
-
-
 if __name__ == "__main__":
-    main()
+   sys.exit(typ.main(top_level_dir=THIS_DIR))
