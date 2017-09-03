@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a75d2ba6_09fbb74a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-09-03T16:26:59Z",
+      "side": 1,
+      "message": "Please correct the indentation here.",
+      "range": {
+        "startLine": 16,
+        "startChar": 45,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "84010a1deef21723a28549a170f56497db3962e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86eb856b_26509af9",
+        "filename": "cc/output/vulkan_renderer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-09-03T16:26:59Z",
+      "side": 1,
+      "message": "remove the extra blank line here.",
+      "revId": "84010a1deef21723a28549a170f56497db3962e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c28393cb_cb4d34ef",
+        "filename": "cc/output/vulkan_renderer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-09-03T16:26:59Z",
+      "side": 1,
+      "message": "This header inclusion can be moved to the .cc file since there\u0027s already a forward declaration at l.16.",
+      "revId": "84010a1deef21723a28549a170f56497db3962e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
