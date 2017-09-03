@@ -6,6 +6,7 @@ include_rules = [
   "+components/flags_ui",
   "+components/toolbar",
   "+components/ui_metrics",
+  "+components/ukm",
   "+components/url_formatter",
   "+components/version_ui",
   "+components/webapks_ui",

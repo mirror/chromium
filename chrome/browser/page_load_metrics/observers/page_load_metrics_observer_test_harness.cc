@@ -10,6 +10,7 @@
 #include "base/bind_helpers.h"
 #include "base/memory/ptr_util.h"
 #include "chrome/test/base/testing_browser_process.h"
+#include "components/ukm/content/source_url_recorder_web_contents_observer.h"
 #include "content/public/browser/global_request_id.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/referrer.h"
@@ -30,6 +31,10 @@ void PageLoadMetricsObserverTestHarness::SetUp() {
   ChromeRenderViewHostTestHarness::SetUp();
   TestingBrowserProcess::GetGlobal()->SetUkmRecorder(&test_ukm_recorder_);
   SetContents(CreateTestWebContents());
+  // Page load metrics depends on UKM source URLs being recorded, so make sure
+  // the SourceUrlRecorderWebContentsObserver has been instantiated as well.
+  ukm::SourceUrlRecorderWebContentsObserver::CreateForWebContents(
+      web_contents(), g_browser_process->ukm_recorder());
   NavigateAndCommit(GURL("http://www.google.com"));
   tester_ = base::MakeUnique<PageLoadMetricsObserverTester>(
       web_contents(),
