@@ -33,6 +33,10 @@ class COMPONENTS_PREFS_EXPORT PrefNotifierImpl : public PrefNotifier {
   void AddPrefObserver(const std::string& path, PrefObserver* observer);
   void RemovePrefObserver(const std::string& path, PrefObserver* observer);
 
+  // These observers are called for any pref changes.
+  void AddAnyPrefObserver(PrefObserver* observer);
+  void RemoveAnyPrefObserver(PrefObserver* observer);
+
   // We run the callback once, when initialization completes. The bool
   // parameter will be set to true for successful initialization,
   // false for unsuccessful.
@@ -66,6 +70,9 @@ class COMPONENTS_PREFS_EXPORT PrefNotifierImpl : public PrefNotifier {
 
   PrefObserverMap pref_observers_;
   PrefInitObserverList init_observers_;
+
+  // Observers for changes to any preference.
+  PrefObserverList any_pref_observers_;
 
   base::ThreadChecker thread_checker_;
 

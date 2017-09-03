@@ -359,6 +359,14 @@ void PrefService::RemovePrefObserver(const std::string& path,
   pref_notifier_->RemovePrefObserver(path, obs);
 }
 
+void PrefService::AddAnyPrefObserver(PrefObserver* obs) {
+  pref_notifier_->AddAnyPrefObserver(obs);
+}
+
+void PrefService::RemoveAnyPrefObserver(PrefObserver* obs) {
+  pref_notifier_->RemoveAnyPrefObserver(obs);
+}
+
 void PrefService::AddPrefInitObserver(base::Callback<void(bool)> obs) {
   pref_notifier_->AddInitObserver(obs);
 }

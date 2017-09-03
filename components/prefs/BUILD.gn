@@ -4,6 +4,8 @@
 
 component("prefs") {
   sources = [
+    "any_pref_changed_registrar.cc",
+    "any_pref_changed_registrar.h",
     "base_prefs_export.h",
     "command_line_pref_store.cc",
     "command_line_pref_store.h",

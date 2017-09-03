@@ -352,6 +352,7 @@ class COMPONENTS_PREFS_EXPORT PrefService {
   // avoid the storage overhead of the registrar, so its base class must be
   // declared as a friend, too.
   friend class PrefChangeRegistrar;
+  friend class AnyPrefChangedRegistrar;
   friend class subtle::PrefMemberBase;
 
   // These are protected so they can only be accessed by the friend
@@ -365,6 +366,10 @@ class COMPONENTS_PREFS_EXPORT PrefService {
   // Virtual for testing.
   virtual void AddPrefObserver(const std::string& path, PrefObserver* obs);
   virtual void RemovePrefObserver(const std::string& path, PrefObserver* obs);
+
+  // For use by the AnyPrefChangedRegistrar.
+  void AddAnyPrefObserver(PrefObserver* obs);
+  void RemoveAnyPrefObserver(PrefObserver* obs);
 
   // Sends notification of a changed preference. This needs to be called by
   // a ScopedUserPrefUpdate or ScopedDictionaryPrefUpdate if a DictionaryValue
