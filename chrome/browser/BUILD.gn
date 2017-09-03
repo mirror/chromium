@@ -1657,6 +1657,7 @@ split_static_library("browser") {
     "//components/translate/core/browser",
     "//components/translate/core/common",
     "//components/ukm:observers",
+    "//components/ukm:source_url_recorder_web_contents_observer",
     "//components/ukm:ukm_interface",
     "//components/ukm/debug_page",
     "//components/undo",
