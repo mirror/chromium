@@ -51,17 +51,11 @@ def main():
             'webkitpy.layout_tests.layout_package.bot_test_expectations_unittest.*',
         ]
 
-    ret = typ.main(top_level_dir=path_finder.get_scripts_dir(),
-                   skip=skip,
-                   path=[path_finder.get_webkitpy_thirdparty_dir()],
-                   win_multiprocessing='spawn')
-    if ret:
-        sys.exit(ret)
-    path_finder.add_blink_tools_dir_to_sys_path()
-    sys.exit(typ.main(top_level_dir=path_finder.get_blink_tools_dir(),
-                      skip=[],
-                      path=[],
-                      win_multiprocessing='spawn'))
+    return typ.main(top_level_dirs=[path_finder.get_scripts_dir(),
+                                    path_finder.get_blink_tools_dir()],
+                    skip=skip,
+                    path=[path_finder.get_webkitpy_thirdparty_dir()])
+
 
 if __name__ == "__main__":
     main()
