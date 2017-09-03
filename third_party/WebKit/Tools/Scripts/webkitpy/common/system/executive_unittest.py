@@ -108,6 +108,7 @@ class ExecutiveTest(unittest.TestCase):
         to Executive.run* methods, and they will return unicode()
         objects by default unless decode_output=False
         """
+        os.environ['LANG'] = 'en_US.UTF-8'
         unicode_tor_input = u"WebKit \u2661 Tor Arne Vestb\u00F8!"
         if sys.platform == 'win32':
             encoding = 'mbcs'
