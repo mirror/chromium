@@ -1602,3 +1602,5 @@ IN_PROC_BROWSER_TEST_F(SessionRestorePageLoadMetricsBrowserTest,
   ASSERT_NO_FATAL_FAILURE(WaitForTabsToLoad(new_browser));
   ExpectFirstPaintMetricsTotalCount(1);
 }
+
+// TODO(bmcquade): add tests to verify expected UKM logging
