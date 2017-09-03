@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "11e78ca0_ac21d92c",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/make_css_property_api_headers.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-09-03T23:53:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d36046a0_3376b904",
+      "revId": "a7756a3458c78d7f1eaa9ddc60fc2b0fbfa4f86b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb72df16_984aa44f",
         "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/make_css_property_api_headers.py",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "a7756a3458c78d7f1eaa9ddc60fc2b0fbfa4f86b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "932aabba_dd5a85e5",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/make_css_property_api_headers.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-09-03T23:53:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb72df16_984aa44f",
+      "revId": "a7756a3458c78d7f1eaa9ddc60fc2b0fbfa4f86b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
