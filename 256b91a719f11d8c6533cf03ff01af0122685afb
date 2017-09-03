@@ -2,6 +2,109 @@
   "comments": [
     {
       "key": {
+        "uuid": "863f7fb5_7df41dca",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 1134,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-09-03T22:29:47Z",
+      "side": 1,
+      "message": "change this to `(is_mac || is_ios)` instead of duplicating the flag name.",
+      "range": {
+        "startLine": 1134,
+        "startChar": 9,
+        "endLine": 1134,
+        "endChar": 14
+      },
+      "revId": "256b91a719f11d8c6533cf03ff01af0122685afb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b50a994_ac1b9cbe",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 1338,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-09-03T22:29:47Z",
+      "side": 1,
+      "message": "Now that I\u0027m down here: Somewhat weird to unconditionally add the flag and then to also add -Wno after it in non-chromium code. How about adding the flag in chromium_code for iOS, and then you don\u0027t need to add -Wno (I think?)",
+      "range": {
+        "startLine": 1338,
+        "startChar": 30,
+        "endLine": 1338,
+        "endChar": 31
+      },
+      "revId": "256b91a719f11d8c6533cf03ff01af0122685afb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b6eadfd_69de47e1",
+        "filename": "ios/chrome/app/spotlight/spotlight_util.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-09-03T22:29:47Z",
+      "side": 1,
+      "message": "On Mac, we use `API_AVAILABLE(macos(10.10))` like Apple recommends. Does `API_AVAILABLE(ios(10.0))` not work?",
+      "range": {
+        "startLine": 197,
+        "startChar": 4,
+        "endLine": 197,
+        "endChar": 17
+      },
+      "revId": "256b91a719f11d8c6533cf03ff01af0122685afb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba3f291f_a61819c3",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-09-03T22:29:47Z",
+      "side": 1,
+      "message": "Please make this:\n  NSDictionary* options \u003d nil;\n  if (@available(iOS 10, *))\n    options \u003d @{ UIAPplicaitonOpenURLPtionUniversalLinksONLY: @YES };\n  [[UIApplicaoitn sharedApplication] openURL:url\n                                     options:options\n                           completionHandler:^(BOOL success) {\n                           ...\n    }];\n\n\n...or is openURL:options:completionHandler: iOS 10+-only too? If so, how did this not crash with the old code?",
+      "revId": "256b91a719f11d8c6533cf03ff01af0122685afb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1baf2894_08949c6a",
+        "filename": "ios/chrome/browser/physical_web/physical_web_initial_state_recorder.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-09-03T22:29:47Z",
+      "side": 1,
+      "message": "The CBManagerState change in the new SDK is so sucky :-( We did https://chromium-review.googlesource.com/c/chromium/src/+/587510/5/device/bluetooth/bluetooth_adapter_mac.mm#43 on Mac (and see discussion on bug linked from that CL). But if this is the only place, this is fine too.",
+      "revId": "256b91a719f11d8c6533cf03ff01af0122685afb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "214d596b_2476bac9",
         "filename": "ios/chrome/common/physical_web/physical_web_scanner.mm",
         "patchSetId": 4
