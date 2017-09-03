@@ -16,6 +16,24 @@
       "revId": "ce2fb9abf58dd09b2ed64d885707188dc73802ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97eac47f_b5d7a882",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 965,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-03T10:16:58Z",
+      "side": 1,
+      "message": "Ah big thanks for pointing out this! Addressed and PTAnL at ps#12.",
+      "parentUuid": "07923e6e_8be55921",
+      "revId": "ce2fb9abf58dd09b2ed64d885707188dc73802ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
