@@ -4,6 +4,22 @@
 
 import("//testing/test.gni")
 
+# Url-Keyed Metrics components that depend on content.
+static_library("content") {
+  sources = [
+    "content/source_url_recorder_web_contents_observer.cc",
+    "content/source_url_recorder_web_contents_observer.h",
+  ]
+
+  deps = [
+    "//base",
+    "//content/public/browser",
+    "//services/metrics/public/cpp:metrics_cpp",
+    "//services/metrics/public/interfaces",
+    "//url",
+  ]
+}
+
 # The Url-Keyed Metrics (UKM) service is responsible for gathering and
 # uploading reports that contain fine grained performance metrics including
 # URLs for top-level navigations.
