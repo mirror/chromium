@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "f153d364_77a5ff52",
+        "filename": "chrome/browser/ui/views/find_bar_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-03T02:36:04Z",
+      "side": 1,
+      "message": "Is changing it on ChromeOS is intentional? - the CL description only mentions Linux and Windows. (i.e. could this change be _breaking_ the behaviour of ChromeOS? ChromeOS hidpi support is quite mature - does it have the same bug?)",
+      "parentUuid": "562736d4_ab97de44",
+      "revId": "e66cfc172f5cff67bfdd5b778f3a6767446c2dda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "68a9b42e_64b8ae14",
         "filename": "chrome/browser/ui/views/find_bar_host.cc",
         "patchSetId": 9
@@ -72,6 +90,30 @@
       "side": 1,
       "message": "And I suppose there is no use for actually converting anything in that case, since there is no content to search? Or are there any other cases?",
       "parentUuid": "68a9b42e_64b8ae14",
+      "range": {
+        "startLine": 138,
+        "startChar": 30,
+        "endLine": 138,
+        "endChar": 44
+      },
+      "revId": "e66cfc172f5cff67bfdd5b778f3a6767446c2dda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f8bd8b7_47aec5e2",
+        "filename": "chrome/browser/ui/views/find_bar_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-03T02:36:04Z",
+      "side": 1,
+      "message": "I\u0027m not sure of the cases where web contents can be null, but checks elsewhere in this file suggest it can be (and dereferencing it here would crash then). The result message is asynchronous, so there\u0027s probably cases where the browser process destroys the webcontents between starting a search and getting a result.",
+      "parentUuid": "7b8fe2e5_a0d1e1eb",
       "range": {
         "startLine": 138,
         "startChar": 30,

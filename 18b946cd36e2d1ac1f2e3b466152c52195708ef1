@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d09fb3b6_262ab57b",
+        "filename": "chrome/browser/ui/views/find_bar_host.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-03T02:36:04Z",
+      "side": 1,
+      "message": "nit: remove added blank line",
+      "revId": "18b946cd36e2d1ac1f2e3b466152c52195708ef1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a01baa2a_e2da5767",
+        "filename": "chrome/browser/ui/views/find_bar_host.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-03T02:36:04Z",
+      "side": 1,
+      "message": "find_bar_controller_-\u003eweb_contents()",
+      "revId": "18b946cd36e2d1ac1f2e3b466152c52195708ef1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0111beb5_d8143ed1",
+        "filename": "chrome/browser/ui/views/find_bar_host.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-03T02:36:04Z",
+      "side": 1,
+      "message": "This can be removed - it is redundant with the check in FindBarHost::MoveWindowIfNecessary() (in the earlier CL it was before that check).",
+      "revId": "18b946cd36e2d1ac1f2e3b466152c52195708ef1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b472cf3_cd0e4ea9",
+        "filename": "chrome/browser/ui/views/find_bar_host.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-03T02:36:04Z",
+      "side": 1,
+      "message": "web_contents-\u003eGetViewBounds()",
+      "range": {
+        "startLine": 373,
+        "startChar": 6,
+        "endLine": 373,
+        "endChar": 42
+      },
+      "revId": "18b946cd36e2d1ac1f2e3b466152c52195708ef1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
