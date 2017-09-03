@@ -117,6 +117,7 @@ class EncodedViewTest : public testing::Test {
     for (uint8_t i = 0; i < buffer_.size(); ++i) {
       buffer_[i] = i;
     }
+
     TestDisassembler disasm({2, TypeTag(0), PoolTag(0)},
                             {{1, 0}, {8, 1}, {10, 2}},
                             {4, TypeTag(1), PoolTag(0)}, {{3, 3}},
@@ -139,6 +140,9 @@ class EncodedViewTest : public testing::Test {
 
 TEST_F(EncodedViewTest, Unlabeled) {
   EncodedView encoded_view(image_index_);
+
+  encoded_view.UpdateLabels(PoolTag(0), {0, 0, 0, 0}, 1);
+  encoded_view.UpdateLabels(PoolTag(1), {0, 0}, 1);
 
   std::vector<size_t> expected = {
       0,                                     // raw
@@ -169,9 +173,8 @@ TEST_F(EncodedViewTest, Unlabeled) {
 TEST_F(EncodedViewTest, Labeled) {
   EncodedView encoded_view(image_index_);
 
-  OrderedLabelManager label_manager0;
-  label_manager0.InsertOffsets({0, 2});
-  image_index_.LabelTargets(PoolTag(0), label_manager0);
+  encoded_view.UpdateLabels(PoolTag(0), {0, 2, 1, 2}, 3);
+  encoded_view.UpdateLabels(PoolTag(1), {0, 0}, 1);
 
   std::vector<size_t> expected = {
       0,                                     // raw
