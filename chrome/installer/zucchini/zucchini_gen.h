@@ -17,8 +17,8 @@ namespace zucchini {
 class Disassembler;
 class EquivalenceMap;
 class ImageIndex;
-class OrderedLabelManager;
 class PatchElementWriter;
+class UnorderedLabelManager;
 
 // Creates an ImageIndex and initializes it with references from |disasm|.
 // Returns nullopt on error.
@@ -38,21 +38,20 @@ std::vector<offset_t> MakeNewTargetsFromEquivalenceMap(
 // targets in a new vector. |new_references| must be sorted in ascending order.
 std::vector<offset_t> FindExtraTargets(
     const std::vector<Reference>& new_references,
-    const EquivalenceMap& equivalences);
+    const UnorderedLabelManager& new_label_manager,
+    const EquivalenceMap& equivalence_map);
 
 // Creates an EquivalenceMap from "old" image to "new" image and returns the
-// result. The params |*_image_index|:
+// result. |*_image_index|:
 // - Provide "old" and "new" raw image data and references.
-// - Mediate Label matching, which links references between "old" and "new", and
-//   guides EquivalenceMap construction.
+// - Mediate Label matching, which link references between "old" and "new", and
+//   guide EquivalenceMap construction.
 // |*_image_index| is assumed to hold targets as *unmarked* offsets. These are
 // also temporarily modified during Label matching -- that's why they're passed
 // by pointer. Meanwhile, |old_label_manager| contains labels for
 // |old_image_index|.
-EquivalenceMap CreateEquivalenceMap(
-    const std::vector<OrderedLabelManager>& old_label_managers,
-    ImageIndex* old_image_index,
-    ImageIndex* new_image_index);
+EquivalenceMap CreateEquivalenceMap(const ImageIndex& old_image_index,
+                                    const ImageIndex& new_image_index);
 
 // Writes equivalences from |equivalence_map|, and extra data from |new_image|
 // found in gaps between equivalences to |patch_writer|.

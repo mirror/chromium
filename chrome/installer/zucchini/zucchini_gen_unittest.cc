@@ -6,6 +6,7 @@
 
 #include <stdint.h>
 
+#include <utility>
 #include <vector>
 
 #include "chrome/installer/zucchini/equivalence_map.h"
@@ -28,11 +29,13 @@ constexpr offset_t kReferenceSize = 2;
 // The result is populated with |refs0| and |refs1|. |a| is expected to be a
 // string literal valid for the lifetime of the object.
 ImageIndex MakeImageIndexForTesting(const char* a,
-                                    const std::vector<Reference>& refs0,
-                                    const std::vector<Reference>& refs1) {
-  TestDisassembler disasm({kReferenceSize, TypeTag(0), PoolTag(0)}, refs0,
-                          {kReferenceSize, TypeTag(1), PoolTag(0)}, refs1,
-                          {kReferenceSize, TypeTag(2), PoolTag(1)}, {});
+                                    std::vector<Reference>&& refs0,
+                                    std::vector<Reference>&& refs1) {
+  TestDisassembler disasm(
+      {kReferenceSize, TypeTag(0), PoolTag(0)}, std::move(refs0),
+      {kReferenceSize, TypeTag(1), PoolTag(0)}, std::move(refs1),
+      {kReferenceSize, TypeTag(2), PoolTag(1)}, {});
+
   ImageIndex image_index(
       ConstBufferView(reinterpret_cast<const uint8_t*>(a), std::strlen(a)));
 
