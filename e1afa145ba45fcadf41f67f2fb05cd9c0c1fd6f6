@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fdc0586e_be1b6448",
+        "filename": "content/browser/service_worker/service_worker_database.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-03T05:41:12Z",
+      "side": 1,
+      "message": "nit: \"none\" -\u003e \"not\" here too, I think",
+      "range": {
+        "startLine": 222,
+        "startChar": 64,
+        "endLine": 222,
+        "endChar": 70
+      },
+      "revId": "e1afa145ba45fcadf41f67f2fb05cd9c0c1fd6f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
