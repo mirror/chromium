@@ -460,7 +460,7 @@ TEST_F(TextureUploadPerfTest, upload) {
   formats.push_back(GL_RGBA);
 
   if (!gl_context_->GetVersionInfo()->is_es3) {
-    // Used by default for ResourceProvider::yuv_resource_format_.
+    // Used by default for viz::ResourceProvider::yuv_resource_format_.
     formats.push_back(GL_LUMINANCE);
   }
 
@@ -470,7 +470,7 @@ TEST_F(TextureUploadPerfTest, upload) {
                               gl_context_->HasExtension("GL_ARB_texture_rg");
 
   if (has_texture_rg) {
-    // Used as ResourceProvider::yuv_resource_format_ if
+    // Used as viz::ResourceProvider::yuv_resource_format_ if
     // {ARB,EXT}_texture_rg are available.
     formats.push_back(GL_RED);
   }

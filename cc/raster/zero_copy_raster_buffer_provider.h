@@ -17,16 +17,18 @@ namespace trace_event {
 class ConvertableToTraceFormat;
 }
 }
+namespace viz {
+class LayerTreeResourceProvider;
+}
 
 namespace cc {
-class LayerTreeResourceProvider;
 
 class CC_EXPORT ZeroCopyRasterBufferProvider : public RasterBufferProvider {
  public:
   ~ZeroCopyRasterBufferProvider() override;
 
   static std::unique_ptr<RasterBufferProvider> Create(
-      LayerTreeResourceProvider* resource_provider,
+      viz::LayerTreeResourceProvider* resource_provider,
       viz::ResourceFormat preferred_tile_format);
 
   // Overridden from RasterBufferProvider:
@@ -42,20 +44,21 @@ class CC_EXPORT ZeroCopyRasterBufferProvider : public RasterBufferProvider {
   bool CanPartialRasterIntoProvidedResource() const override;
   bool IsResourceReadyToDraw(viz::ResourceId id) const override;
   uint64_t SetReadyToDrawCallback(
-      const ResourceProvider::ResourceIdArray& resource_ids,
+      const viz::ResourceProvider::ResourceIdArray& resource_ids,
       const base::Closure& callback,
       uint64_t pending_callback_id) const override;
   void Shutdown() override;
 
  protected:
-  ZeroCopyRasterBufferProvider(LayerTreeResourceProvider* resource_provider,
-                               viz::ResourceFormat preferred_tile_format);
+  ZeroCopyRasterBufferProvider(
+      viz::LayerTreeResourceProvider* resource_provider,
+      viz::ResourceFormat preferred_tile_format);
 
  private:
   std::unique_ptr<base::trace_event::ConvertableToTraceFormat> StateAsValue()
       const;
 
-  LayerTreeResourceProvider* resource_provider_;
+  viz::LayerTreeResourceProvider* resource_provider_;
   viz::ResourceFormat preferred_tile_format_;
 
   DISALLOW_COPY_AND_ASSIGN(ZeroCopyRasterBufferProvider);
