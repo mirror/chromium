@@ -611,6 +611,10 @@ void ArcSupportHost::OnMessage(const base::DictionaryValue& message) {
       NOTREACHED();
       return;
     }
+    // TODO(https://crbug.com/756144): Remove once reason for crash has been
+    // determined.
+    if (!auth_delegate_)
+      LOG(ERROR) << "auth_delegate_ is NULL, error: " << error_message;
     auth_delegate_->OnAuthFailed(error_message);
   } else if (event == kEventOnAgreed) {
     DCHECK(tos_delegate_);

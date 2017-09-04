@@ -424,6 +424,7 @@ class ActiveDirectoryAuthPage {
         (details) => this.onAuthViewErrorOccurred_(details), requestFilter);
 
     this.deviceManagementUrlPrefix_ = null;
+    this.process_events_ = false;
 
     container.querySelector('#button-active-directory-auth-cancel')
         .addEventListener('click', () => this.onCancel_());
@@ -437,8 +438,18 @@ class ActiveDirectoryAuthPage {
    *        SAML service provider.
    */
   setUrls(federationUrl, deviceManagementUrlPrefix) {
+    // TODO(https://crbug.com/756144): Remove when fixed.
+    console.info('Setting Active Directory authentication URLs.');
     this.authView_.src = federationUrl;
     this.deviceManagementUrlPrefix_ = deviceManagementUrlPrefix;
+  }
+
+  /**
+   * Toggles onCompleted and onErrorOccurred event processing.
+   * @param {boolean} enabled Process (true) or ignore (false) events.
+   */
+  enableEventProcessing(enabled) {
+    this.process_events_ = enabled;
   }
 
   /**
@@ -447,11 +458,15 @@ class ActiveDirectoryAuthPage {
    * @param {!Object} details Event parameters.
    */
   onAuthViewCompleted_(details) {
+    if (!this.process_events_)
+      return;
     // See if we hit the device management server. This should happen at the
     // end of the SAML flow. Before that, we're on the Active Directory
     // Federation Services server.
     if (this.deviceManagementUrlPrefix_ &&
         details.url.startsWith(this.deviceManagementUrlPrefix_)) {
+      // Once we hit the final URL, stop processing further events.
+      this.process_events_ = false;
       // Did it actually work?
       if (details.statusCode == 200) {
         // 'code' is unused, but it needs to be there.
@@ -470,13 +485,18 @@ class ActiveDirectoryAuthPage {
    * @param {!Object} details Event parameters.
    */
   onAuthViewErrorOccurred_(details) {
+    if (!this.process_events_)
+      return;
     // Retry triggers net::ERR_ABORTED, so ignore it.
     if (details.error == 'net::ERR_ABORTED')
       return;
+    // Stop processing further events on first error.
+    this.process_events_ = false;
     sendNativeMessage(
         'onAuthFailed', {errorMessage: 'Error occurred: ' + details.error});
   }
 
+  /** Called when the "CANCEL" button is clicked. */
   onCancel_() {
     closeWindow();
   }
@@ -622,6 +642,8 @@ function showPage(pageDivId) {
   if (pageDivId == 'terms') {
     termsPage.onShow();
   }
+  var processActiveDirectoryEvents = (pageDivId == 'active-directory-auth');
+  activeDirectoryAuthPage.enableEventProcessing(processActiveDirectoryEvents);
 
   // Start progress bar animation for the page that has the dynamic progress
   // bar. 'error' page has the static progress bar that no need to be animated.
@@ -853,6 +875,9 @@ chrome.app.runtime.onLaunched.addListener(function() {
 
   var onWindowClosed = function() {
     appWindow = null;
+
+    // Turn off event processing.
+    activeDirectoryAuthPage.enableEventProcessing(false);
 
     // Notify to Chrome.
     sendNativeMessage('onWindowClosed');
