@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "84be78f9_dfea875e",
+        "filename": "ios/chrome/browser/ssl/ios_ssl_error_handler.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-09-04T08:17:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66dd6738_b30d2b8a",
+      "revId": "5e2ded4e830b87afa4451c12b3b1b1da96badd8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25b275fa_8cc237f6",
         "filename": "ios/chrome/browser/ssl/ios_ssl_error_handler.mm",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "5e2ded4e830b87afa4451c12b3b1b1da96badd8f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4effff6_c1175e34",
+        "filename": "ios/chrome/browser/ssl/ios_ssl_error_handler.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-09-04T08:17:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25b275fa_8cc237f6",
+      "revId": "5e2ded4e830b87afa4451c12b3b1b1da96badd8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
