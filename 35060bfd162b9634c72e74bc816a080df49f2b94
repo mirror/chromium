@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "367fd12c_6a7a7f7e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-sandboxed-iframe-denied.htm",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-09-04T09:19:03Z",
+      "side": 1,
+      "message": "const",
+      "revId": "35060bfd162b9634c72e74bc816a080df49f2b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a0d397f_ed39e89c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-sandboxed-iframe-denied.htm",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-09-04T09:19:03Z",
+      "side": 1,
+      "message": "yeah, this is nice!",
+      "revId": "35060bfd162b9634c72e74bc816a080df49f2b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47cba6a3_eb5126c6",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-sandboxed-iframe-denied.htm",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-09-04T09:19:03Z",
+      "side": 1,
+      "message": "shouldn\u0027t this be HTTP_ORIGIN to do the same as the old file?",
+      "revId": "35060bfd162b9634c72e74bc816a080df49f2b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97e66567_2c70d59c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-sandboxed-iframe-denied.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-09-04T09:19:03Z",
+      "side": 1,
+      "message": "it looks a little confusing that the test case if expecting FAIL from this file though I understand the intention and it\u0027s nice that you check the existence.\n\nusing this opportunity, let\u0027s make helper files as independent as possible from the expectation of the test case file.\n\ni.e. how about just making this helper say \"Loaded\" (to response.content)?",
+      "revId": "35060bfd162b9634c72e74bc816a080df49f2b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
