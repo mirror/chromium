@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0256555_e45a67fe",
+        "filename": "ios/chrome/browser/browser_state/chrome_browser_state.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-09-04T15:49:18Z",
+      "side": 1,
+      "message": "Well, I guess the comment is wrong. Not so safe after all…",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 67
+      },
+      "revId": "18789d35ad01a3bce0bc71359aa9514d775a6193",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4194f8ce_be49b316",
+        "filename": "ios/chrome/browser/browsing_data/cache_counter_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-09-04T15:49:18Z",
+      "side": 1,
+      "message": "Why is this not done in setup instead of the constructor? Usually the creation of object in support of tests is always done in setup…",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 58
+      },
+      "revId": "18789d35ad01a3bce0bc71359aa9514d775a6193",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b90156b_cbba2ebe",
+        "filename": "ios/chrome/browser/signin/gaia_auth_fetcher_ios_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-09-04T15:49:18Z",
+      "side": 1,
+      "message": "Here as well, why change from setup to the constructor?",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 24
+      },
+      "revId": "18789d35ad01a3bce0bc71359aa9514d775a6193",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4e4cdcd_5b0b2f2f",
+        "filename": "ios/chrome/browser/ui/coordinators/browser_coordinator_test.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-09-04T15:49:18Z",
+      "side": 1,
+      "message": "Good catch.",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 36
+      },
+      "revId": "18789d35ad01a3bce0bc71359aa9514d775a6193",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
