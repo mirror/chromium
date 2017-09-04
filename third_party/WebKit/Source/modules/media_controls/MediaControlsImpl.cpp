@@ -74,6 +74,14 @@
 #include "platform/EventDispatchForbiddenScope.h"
 #include "platform/RuntimeEnabledFeatures.h"
 
+namespace {
+
+bool IsModern() {
+  return blink::RuntimeEnabledFeatures::ModernMediaControlsEnabled();
+}
+
+}  // namespace.
+
 namespace blink {
 
 namespace {
@@ -269,6 +277,7 @@ MediaControlsImpl::MediaControlsImpl(HTMLMediaElement& media_element)
       toggle_closed_captions_button_(nullptr),
       text_track_list_(nullptr),
       overflow_list_(nullptr),
+      media_button_panel_(nullptr),
       cast_button_(nullptr),
       fullscreen_button_(nullptr),
       download_button_(nullptr),
@@ -343,33 +352,39 @@ MediaControlsImpl* MediaControlsImpl::Create(HTMLMediaElement& media_element,
 // |    (-webkit-media-controls-overlay-enclosure)
 // | +-MediaControlOverlayPlayButtonElement
 // | |    (-webkit-media-controls-overlay-play-button)
-// | | {if mediaControlsOverlayPlayButtonEnabled}
+// | | {if mediaControlsOverlayPlayButtonEnabled or
+// | |  if ModernMediaControls is enabled}
 // | \-MediaControlCastButtonElement
 // |     (-internal-media-controls-overlay-cast-button)
 // \-MediaControlPanelEnclosureElement
 //   |    (-webkit-media-controls-enclosure)
 //   \-MediaControlPanelElement
 //     |    (-webkit-media-controls-panel)
-//     +-MediaControlPlayButtonElement
-//     |    (-webkit-media-controls-play-button)
-//     +-MediaControlCurrentTimeDisplayElement
-//     |    (-webkit-media-controls-current-time-display)
-//     +-MediaControlRemainingTimeDisplayElement
-//     |    (-webkit-media-controls-time-remaining-display)
-//     +-MediaControlTimelineElement
-//     |    (-webkit-media-controls-timeline)
-//     +-MediaControlMuteButtonElement
-//     |    (-webkit-media-controls-mute-button)
-//     +-MediaControlVolumeSliderElement
-//     |    (-webkit-media-controls-volume-slider)
-//     +-MediaControlFullscreenButtonElement
-//     |    (-webkit-media-controls-fullscreen-button)
-//     +-MediaControlDownloadButtonElement
-//     |    (-internal-media-controls-download-button)
-//     +-MediaControlToggleClosedCaptionsButtonElement
-//     |    (-webkit-media-controls-toggle-closed-captions-button)
-//     \-MediaControlCastButtonElement
-//         (-internal-media-controls-cast-button)
+//     +-HTMLDivElement
+//     |  |  (-internal-media-controls-button-panel)
+//     |  |  Note: Only present when ModernMediaControls
+//     |  |  feature is enabled. Otherwise, contents
+//     |  |  are directly attached to parent element.
+//     |  +-MediaControlPlayButtonElement
+//     |  |   (-webkit-media-controls-play-button)
+//     |  +-MediaControlCurrentTimeDisplayElement
+//     |  |    (-webkit-media-controls-current-time-display)
+//     |  +-MediaControlRemainingTimeDisplayElement
+//     |  |    (-webkit-media-controls-time-remaining-display)
+//     |  +-MediaControlMuteButtonElement
+//     |  |    (-webkit-media-controls-mute-button)
+//     |  +-MediaControlVolumeSliderElement
+//     |  |    (-webkit-media-controls-volume-slider)
+//     |  +-MediaControlFullscreenButtonElement
+//     |  |    (-webkit-media-controls-fullscreen-button)
+//     |  +-MediaControlDownloadButtonElement
+//     |  |    (-internal-media-controls-download-button)
+//     |  +-MediaControlToggleClosedCaptionsButtonElement
+//     |  |    (-webkit-media-controls-toggle-closed-captions-button)
+//     |  +-MediaControlCastButtonElement
+//     |    (-internal-media-controls-cast-button)
+//     \-MediaControlTimelineElement
+//          (-webkit-media-controls-timeline)
 // +-MediaControlTextTrackListElement
 // |    (-internal-media-controls-text-track-list)
 // | {for each renderable text track}
@@ -384,7 +399,8 @@ MediaControlsImpl* MediaControlsImpl::Create(HTMLMediaElement& media_element,
 void MediaControlsImpl::InitializeControls() {
   overlay_enclosure_ = new MediaControlOverlayEnclosureElement(*this);
 
-  if (RuntimeEnabledFeatures::MediaControlsOverlayPlayButtonEnabled()) {
+  if (RuntimeEnabledFeatures::MediaControlsOverlayPlayButtonEnabled() ||
+      IsModern()) {
     overlay_play_button_ = new MediaControlOverlayPlayButtonElement(*this);
     overlay_enclosure_->AppendChild(overlay_play_button_);
   }
@@ -400,39 +416,50 @@ void MediaControlsImpl::InitializeControls() {
 
   panel_ = new MediaControlPanelElement(*this);
 
+  // If using the modern media controls, the buttons should belong to a
+  // seperate button panel.
+  Element* button_panel = panel_;
+  if (IsModern()) {
+    media_button_panel_ = HTMLDivElement::Create(GetDocument());
+    media_button_panel_->SetShadowPseudoId(
+        "-internal-media-controls-button-panel");
+    panel_->AppendChild(media_button_panel_);
+    button_panel = media_button_panel_;
+  }
+
   play_button_ = new MediaControlPlayButtonElement(*this);
-  panel_->AppendChild(play_button_);
+  button_panel->AppendChild(play_button_);
 
   current_time_display_ = new MediaControlCurrentTimeDisplayElement(*this);
   current_time_display_->SetIsWanted(true);
-  panel_->AppendChild(current_time_display_);
+  button_panel->AppendChild(current_time_display_);
 
   duration_display_ = new MediaControlRemainingTimeDisplayElement(*this);
-  panel_->AppendChild(duration_display_);
+  button_panel->AppendChild(duration_display_);
 
   timeline_ = new MediaControlTimelineElement(*this);
   panel_->AppendChild(timeline_);
 
   mute_button_ = new MediaControlMuteButtonElement(*this);
-  panel_->AppendChild(mute_button_);
+  button_panel->AppendChild(mute_button_);
 
   volume_slider_ = new MediaControlVolumeSliderElement(*this);
-  panel_->AppendChild(volume_slider_);
+  button_panel->AppendChild(volume_slider_);
   if (PreferHiddenVolumeControls(GetDocument()))
     volume_slider_->SetIsWanted(false);
 
   fullscreen_button_ = new MediaControlFullscreenButtonElement(*this);
-  panel_->AppendChild(fullscreen_button_);
+  button_panel->AppendChild(fullscreen_button_);
 
   download_button_ = new MediaControlDownloadButtonElement(*this);
-  panel_->AppendChild(download_button_);
+  button_panel->AppendChild(download_button_);
 
   cast_button_ = new MediaControlCastButtonElement(*this, false);
-  panel_->AppendChild(cast_button_);
+  button_panel->AppendChild(cast_button_);
 
   toggle_closed_captions_button_ =
       new MediaControlToggleClosedCaptionsButtonElement(*this);
-  panel_->AppendChild(toggle_closed_captions_button_);
+  button_panel->AppendChild(toggle_closed_captions_button_);
 
   enclosure_->AppendChild(panel_);
 
@@ -442,7 +469,7 @@ void MediaControlsImpl::InitializeControls() {
   AppendChild(text_track_list_);
 
   overflow_menu_ = new MediaControlOverflowMenuButtonElement(*this);
-  panel_->AppendChild(overflow_menu_);
+  button_panel->AppendChild(overflow_menu_);
 
   overflow_list_ = new MediaControlOverflowMenuListElement(*this);
   AppendChild(overflow_list_);
@@ -1058,6 +1085,10 @@ void MediaControlsImpl::ComputeWhichControlsFit() {
   // This might be better suited for a layout, but since JS media controls
   // won't benefit from that anwyay, we just do it here like JS will.
 
+  // TODO(beccahughes): Update this for modern controls.
+  if (IsModern())
+    return;
+
   // Controls that we'll hide / show, in order of decreasing priority.
   MediaControlElementBase* elements[] = {
       // Exclude m_overflowMenu; we handle it specially.
@@ -1277,6 +1308,7 @@ DEFINE_TRACE(MediaControlsImpl) {
   visitor->Trace(orientation_lock_delegate_);
   visitor->Trace(rotate_to_fullscreen_delegate_);
   visitor->Trace(download_iph_manager_);
+  visitor->Trace(media_button_panel_);
   MediaControls::Trace(visitor);
   HTMLDivElement::Trace(visitor);
 }
