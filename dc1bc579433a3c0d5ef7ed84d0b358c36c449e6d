@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "956ae48d_e815c2d5",
+        "filename": "third_party/WebKit/LayoutTests/shadow-dom/focus-navigation-slot-nested-fallback.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1238298
+      },
+      "writtenOn": "2017-09-04T05:56:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4891e378_e89f5a6e",
+      "revId": "dc1bc579433a3c0d5ef7ed84d0b358c36c449e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a8ab0ce_6d16f4ee",
         "filename": "third_party/WebKit/LayoutTests/shadow-dom/focus-navigation-slot-nested-fallback.html",
         "patchSetId": 2
