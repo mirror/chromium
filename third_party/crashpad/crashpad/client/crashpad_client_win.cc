@@ -50,6 +50,12 @@
 
 namespace crashpad {
 
+bool __cdecl SafeTerminateProcess(void *,unsigned int) {
+  return true;
+}
+
+void __cdecl CaptureContext(struct _CONTEXT *) {}
+
 namespace {
 
 // This handle is never closed. This is used to signal to the server that a dump
