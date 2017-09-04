@@ -54,6 +54,16 @@ gaia::ListedAccount AccountForId(const std::string& account_id) {
 
 }  // namespace
 
+AccountReconcilor::AccountReconcilorLock::AccountReconcilorLock(
+    AccountReconcilor* reconcilor)
+    : reconcilor_(reconcilor) {
+  DCHECK(reconcilor_);
+  reconcilor_->IncrementLockCount();
+}
+
+AccountReconcilor::AccountReconcilorLock::~AccountReconcilorLock() {
+  reconcilor_->DecrementLockCount();
+}
 
 AccountReconcilor::AccountReconcilor(
     ProfileOAuth2TokenService* token_service,
@@ -70,7 +80,8 @@ AccountReconcilor::AccountReconcilor(
       is_reconcile_started_(false),
       first_execution_(true),
       error_during_last_reconcile_(false),
-      chrome_accounts_changed_(false) {
+      chrome_accounts_changed_(false),
+      account_reconcilor_lock_count_(0) {
   VLOG(1) << "AccountReconcilor::AccountReconcilor";
 }
 
@@ -509,5 +520,21 @@ void AccountReconcilor::OnAddAccountToCookieCompleted(
       error_during_last_reconcile_ = true;
     CalculateIfReconcileIsDone();
     ScheduleStartReconcileIfChromeAccountsChanged();
+  }
+}
+
+void AccountReconcilor::IncrementLockCount() {
+  DCHECK_GE(account_reconcilor_lock_count_, 0);
+  if (account_reconcilor_lock_count_ == 0) {
+    // TODO: block it.
+  }
+  ++account_reconcilor_lock_count_;
+}
+
+void AccountReconcilor::DecrementLockCount() {
+  DCHECK_GT(account_reconcilor_lock_count_, 0);
+  --account_reconcilor_lock_count_;
+  if (account_reconcilor_lock_count_ == 0) {
+    // TODO: unblock it.
   }
 }
