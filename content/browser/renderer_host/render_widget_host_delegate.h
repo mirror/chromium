@@ -281,6 +281,8 @@ class CONTENT_EXPORT RenderWidgetHostDelegate {
   // Returns true if there is context menu shown on page.
   virtual bool IsShowingContextMenuOnPage() const;
 
+  virtual void OnPagesSuspended(){};
+
  protected:
   virtual ~RenderWidgetHostDelegate() {}
 };

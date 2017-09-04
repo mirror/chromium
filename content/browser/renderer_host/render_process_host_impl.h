@@ -214,6 +214,7 @@ class CONTENT_EXPORT RenderProcessHostImpl
   bool IsKeepAliveRefCountDisabled() override;
   void PurgeAndSuspend() override;
   void Resume() override;
+  void ResumePages() override;
   mojom::Renderer* GetRendererInterface() override;
   resource_coordinator::ResourceCoordinatorInterface*
   GetProcessResourceCoordinator() override;
@@ -446,6 +447,7 @@ class CONTENT_EXPORT RenderProcessHostImpl
 
   // mojom::RendererHost
   void GetBlobURLLoaderFactory(mojom::URLLoaderFactoryRequest request) override;
+  void OnPagesSuspended() override;
 
   void BindRouteProvider(mojom::RouteProviderAssociatedRequest request);
 

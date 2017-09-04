@@ -14,6 +14,7 @@
 #include "chrome/browser/android/banners/app_banner_manager_android.h"
 #include "chrome/browser/android/feature_utilities.h"
 #include "chrome/browser/android/hung_renderer_infobar_delegate.h"
+#include "chrome/browser/android/near_oom_infobar_delegate.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/file_select_helper.h"
 #include "chrome/browser/infobars/infobar_service.h"
@@ -413,6 +414,15 @@ void TabWebContentsDelegateAndroid::RequestAppBannerFromDevTools(
       banners::AppBannerManagerAndroid::FromWebContents(web_contents);
   DCHECK(manager);
   manager->RequestAppBanner(web_contents->GetLastCommittedURL(), true);
+}
+
+void TabWebContentsDelegateAndroid::OnPagesSuspended(
+    WebContents* web_contents) {
+  LOG(ERROR) << "TabWebContentsDelegateAndroid::OnPagesSuspended";
+  InfoBarService* infobar_service =
+      InfoBarService::FromWebContents(web_contents);
+  NearOomInfoBarDelegate::Create(infobar_service,
+                                 web_contents->GetRenderProcessHost());
 }
 
 }  // namespace android

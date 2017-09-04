@@ -562,6 +562,8 @@ class CONTENT_EXPORT WebContentsDelegate {
   virtual void AdjustPreviewsStateForNavigation(PreviewsState* previews_state) {
   }
 
+  virtual void OnPagesSuspended(WebContents* web_contents) {}
+
  protected:
   virtual ~WebContentsDelegate();
 

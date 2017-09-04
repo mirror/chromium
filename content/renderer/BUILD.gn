@@ -37,6 +37,8 @@ target(link_target_type, "renderer") {
     "accessibility/render_accessibility_impl.h",
     "android/disambiguation_popup_helper.cc",
     "android/disambiguation_popup_helper.h",
+    "android/near_oom_monitor.cc",
+    "android/near_oom_monitor.h",
     "android/renderer_date_time_picker.cc",
     "android/renderer_date_time_picker.h",
     "android/synchronous_compositor_filter.cc",

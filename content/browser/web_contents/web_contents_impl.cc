@@ -6039,6 +6039,10 @@ bool WebContentsImpl::IsShowingContextMenuOnPage() const {
   return showing_context_menu_;
 }
 
+void WebContentsImpl::OnPagesSuspended() {
+  delegate_->OnPagesSuspended(this);
+}
+
 void WebContentsImpl::NotifyPreferencesChanged() {
   std::set<RenderViewHost*> render_view_host_set;
   for (FrameTreeNode* node : frame_tree_.Nodes()) {

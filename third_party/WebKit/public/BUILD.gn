@@ -560,6 +560,7 @@ source_set("blink_headers") {
     "web/WebOptionElement.h",
     "web/WebPageImportanceSignals.h",
     "web/WebPagePopup.h",
+    "web/WebPageSuspender.h",
     "web/WebPepperSocket.h",
     "web/WebPepperSocketClient.h",
     "web/WebPerformance.h",

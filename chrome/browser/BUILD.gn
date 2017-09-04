@@ -2873,6 +2873,8 @@ split_static_library("browser") {
       "android/metrics/variations_session.cc",
       "android/mojo/chrome_interface_registrar_android.cc",
       "android/mojo/chrome_interface_registrar_android.h",
+      "android/near_oom_infobar_delegate.cc",
+      "android/near_oom_infobar_delegate.h",
       "android/net/external_estimate_provider_android.cc",
       "android/net/external_estimate_provider_android.h",
       "android/ntp/android_content_suggestions_notifier.cc",

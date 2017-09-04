@@ -84,6 +84,8 @@ class TabWebContentsDelegateAndroid
   void RequestAppBannerFromDevTools(
       content::WebContents* web_contents) override;
 
+  void OnPagesSuspended(content::WebContents* web_contents) override;
+
  private:
   // NotificationObserver implementation.
   void Observe(int type,

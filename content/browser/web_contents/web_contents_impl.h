@@ -741,6 +741,8 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
   void DidReceiveCompositorFrame() override;
   bool IsShowingContextMenuOnPage() const override;
 
+  void OnPagesSuspended() override;
+
   // RenderFrameHostManager::Delegate ------------------------------------------
 
   bool CreateRenderViewForRenderManager(

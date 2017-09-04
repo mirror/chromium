@@ -62,6 +62,10 @@
 #include "third_party/WebKit/public/platform/mac/WebScrollbarTheme.h"
 #endif
 
+#if defined(OS_ANDROID)
+#include "content/renderer/android/near_oom_monitor.h"
+#endif
+
 class SkBitmap;
 struct WorkerProcessMsg_CreateWorker_Params;
 
@@ -578,6 +582,7 @@ class CONTENT_EXPORT RenderThreadImpl
                              const std::string& highlight_text_color,
                              const std::string& highlight_color) override;
   void PurgePluginListCache(bool reload_pages) override;
+  void ResumePages() override;
 
   void OnMemoryPressure(
       base::MemoryPressureListener::MemoryPressureLevel memory_pressure_level);
@@ -712,6 +717,7 @@ class CONTENT_EXPORT RenderThreadImpl
 #if defined(OS_ANDROID)
   scoped_refptr<SynchronousCompositorFilter> sync_compositor_message_filter_;
   scoped_refptr<StreamTextureFactory> stream_texture_factory_;
+  std::unique_ptr<NearOomMonitor> near_oom_monitor_;
 #endif
 
   scoped_refptr<ui::ContextProviderCommandBuffer> shared_main_thread_contexts_;

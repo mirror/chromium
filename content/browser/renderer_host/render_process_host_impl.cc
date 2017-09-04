@@ -1978,6 +1978,13 @@ void RenderProcessHostImpl::GetBlobURLLoaderFactory(
       std::move(request));
 }
 
+void RenderProcessHostImpl::OnPagesSuspended() {
+  LOG(ERROR) << "RenderProcessHostImpl::OnPagesSuspended";
+  for (auto* widget : widgets_) {
+    widget->delegate()->OnPagesSuspended();
+  }
+}
+
 void RenderProcessHostImpl::CreateMusGpuRequest(ui::mojom::GpuRequest request) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   if (!gpu_client_)
@@ -2106,6 +2113,10 @@ void RenderProcessHostImpl::PurgeAndSuspend() {
 
 void RenderProcessHostImpl::Resume() {
   Send(new ChildProcessMsg_Resume());
+}
+
+void RenderProcessHostImpl::ResumePages() {
+  renderer_interface_->ResumePages();
 }
 
 mojom::Renderer* RenderProcessHostImpl::GetRendererInterface() {

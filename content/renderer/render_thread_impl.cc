@@ -874,6 +874,8 @@ void RenderThreadImpl::Init(
       media::MediaCodecUtil::IsMediaCodecAvailable()) {
     media::EnablePlatformDecoderSupport();
   }
+  near_oom_monitor_ = NearOomMonitor::Create();
+  near_oom_monitor_->Start();
 #endif
 
   memory_pressure_listener_.reset(new base::MemoryPressureListener(
@@ -2300,6 +2302,12 @@ void RenderThreadImpl::PurgePluginListCache(bool reload_pages) {
     observer.PluginListChanged();
 #else
   NOTREACHED();
+#endif
+}
+
+void RenderThreadImpl::ResumePages() {
+#if defined(OS_ANDROID)
+  near_oom_monitor_->ResumeIfNeeded();
 #endif
 }
 
