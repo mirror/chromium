@@ -8,23 +8,6 @@
 #include "base/files/file_util.h"
 #include "base/logging.h"
 
-namespace {
-
-// OSCrypt has a setting that determines whether a backend will be used.
-// The presense of this file in the file system means that the backend
-// should be ignored. It's absence means we should use the backend.
-constexpr const char kPreferenceFileName[] = "Disable Local Encryption";
-
-bool ReadBackendUse(const base::FilePath& user_data_dir, bool* use) {
-  if (user_data_dir.empty())
-    return false;
-  base::FilePath pref_path = user_data_dir.Append(kPreferenceFileName);
-  *use = !base::PathExists(pref_path);
-  return true;
-}
-
-}  // namespace
-
 namespace os_crypt {
 
 SelectedLinuxBackend SelectBackend(const std::string& type,
@@ -69,23 +52,6 @@ SelectedLinuxBackend SelectBackend(const std::string& type,
 
   NOTREACHED();
   return SelectedLinuxBackend::BASIC_TEXT;
-}
-
-bool WriteBackendUse(const base::FilePath& user_data_dir, bool use) {
-  if (user_data_dir.empty())
-    return false;
-  base::FilePath pref_path = user_data_dir.Append(kPreferenceFileName);
-  if (use)
-    return base::DeleteFile(pref_path, false);
-  FILE* f = base::OpenFile(pref_path, "w");
-  return f != nullptr && base::CloseFile(f);
-}
-
-bool GetBackendUse(const base::FilePath& user_data_dir) {
-  bool setting;
-  if (ReadBackendUse(user_data_dir, &setting))
-    return setting;
-  return true;
 }
 
 }  // namespace os_crypt

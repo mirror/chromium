@@ -10,7 +10,6 @@
 #include <string>
 #include <utility>
 
-#include "base/files/file_path.h"
 #include "base/single_thread_task_runner.h"
 #include "base/task_scheduler/post_task.h"
 #include "build/build_config.h"
@@ -30,6 +29,7 @@
 #include "chrome/common/chrome_switches.h"
 #include "components/os_crypt/key_storage_config_linux.h"
 #include "components/os_crypt/os_crypt.h"
+#include "components/os_crypt/os_crypt_pref_names.h"
 #include "content/public/browser/browser_thread.h"
 #endif
 
@@ -73,10 +73,12 @@ void ChromeBrowserMainPartsLinux::PreProfileInit() {
   // OSCrypt may target keyring, which requires calls from the main thread.
   config->main_thread_runner = content::BrowserThread::GetTaskRunnerForThread(
       content::BrowserThread::UI);
-  // OSCrypt can be disabled in a special settings file.
-  config->should_use_preference =
+  // OSCrypt encryption can be disabled with a local preference.
+  config->should_use_disable_encryption_pref =
       parsed_command_line().HasSwitch(switches::kEnableEncryptionSelection);
-  chrome::GetDefaultUserDataDirectory(&config->user_data_path);
+  config->disable_encryption_pref =
+      g_browser_process->local_state()->GetBoolean(
+          os_crypt::prefs::kDisableEncryption);
   OSCrypt::SetConfig(std::move(config));
 #endif
 

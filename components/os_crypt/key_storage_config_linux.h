@@ -8,7 +8,6 @@
 #include <memory>
 #include <string>
 
-#include "base/files/file_path.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/single_thread_task_runner.h"
@@ -29,10 +28,11 @@ struct Config {
   // TODO(crbug/466975): Libsecret and KWallet don't need this. We can remove
   // this when we stop supporting keyring.
   scoped_refptr<base::SingleThreadTaskRunner> main_thread_runner;
-  // Controls whether preference on using or ignoring backends is used.
-  bool should_use_preference;
-  // Preferences are stored in a separate file in the user data directory.
-  base::FilePath user_data_path;
+  // Controls whether the preference on using or ignoring backends is used.
+  bool should_use_disable_encryption_pref;
+  // Controls whether OSCrypt will store and read an encryption key from the
+  // backends (Keyring, KWallet, etc)
+  bool disable_encryption_pref;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(Config);

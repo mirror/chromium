@@ -3,8 +3,6 @@
 // found in the LICENSE file.
 
 #include "components/os_crypt/key_storage_util_linux.h"
-#include "base/files/file_path.h"
-#include "base/files/file_util.h"
 #include "base/logging.h"
 #include "base/macros.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -12,51 +10,6 @@
 namespace {
 
 using namespace os_crypt;
-
-class KeyStorageUtilLinuxPreferenceTest : public testing::Test {
- public:
-  KeyStorageUtilLinuxPreferenceTest() = default;
-  ~KeyStorageUtilLinuxPreferenceTest() override = default;
-
-  void SetUp() override {
-    ASSERT_TRUE(base::CreateNewTempDirectory("", &fake_user_data_dir_));
-  }
-
-  void TearDown() override {
-    ASSERT_TRUE(base::DeleteFile(fake_user_data_dir_, true));
-  }
-
- protected:
-  base::FilePath fake_user_data_dir_;
-
- private:
-  DISALLOW_COPY_AND_ASSIGN(KeyStorageUtilLinuxPreferenceTest);
-};
-
-TEST_F(KeyStorageUtilLinuxPreferenceTest, FirstTimeDefaultsToTrue) {
-  EXPECT_TRUE(GetBackendUse(fake_user_data_dir_));
-}
-
-TEST_F(KeyStorageUtilLinuxPreferenceTest, SetToTrue) {
-  EXPECT_TRUE(WriteBackendUse(fake_user_data_dir_, true));
-  EXPECT_TRUE(GetBackendUse(fake_user_data_dir_));
-}
-
-TEST_F(KeyStorageUtilLinuxPreferenceTest, SetToFalse) {
-  EXPECT_TRUE(WriteBackendUse(fake_user_data_dir_, false));
-  EXPECT_FALSE(GetBackendUse(fake_user_data_dir_));
-}
-
-TEST_F(KeyStorageUtilLinuxPreferenceTest, MultipleWrites) {
-  EXPECT_TRUE(WriteBackendUse(fake_user_data_dir_, false));
-  EXPECT_FALSE(GetBackendUse(fake_user_data_dir_));
-
-  EXPECT_TRUE(WriteBackendUse(fake_user_data_dir_, true));
-  EXPECT_TRUE(GetBackendUse(fake_user_data_dir_));
-
-  EXPECT_TRUE(WriteBackendUse(fake_user_data_dir_, false));
-  EXPECT_FALSE(GetBackendUse(fake_user_data_dir_));
-}
 
 class KeyStorageUtilLinuxTest : public testing::Test {
  public:
@@ -109,4 +62,4 @@ TEST_F(KeyStorageUtilLinuxTest, IgnoreBackends) {
   EXPECT_EQ(selected, SelectedLinuxBackend::BASIC_TEXT);
 }
 
-}  // namespace os_crypt
+}  // namespace

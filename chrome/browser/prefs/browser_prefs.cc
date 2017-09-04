@@ -284,6 +284,10 @@
 #include "chrome/browser/ui/webui/settings/md_settings_ui.h"
 #endif
 
+#if defined(OS_LINUX) && !defined(OS_CHROMEOS)
+#include "components/os_crypt/os_crypt.h"
+#endif
+
 namespace {
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
@@ -451,6 +455,10 @@ void RegisterLocalState(PrefRegistrySimple* registry) {
 
 #if defined(TOOLKIT_VIEWS)
   RegisterBrowserViewLocalPrefs(registry);
+#endif
+
+#if defined(OS_LINUX) && !defined(OS_CHROMEOS)
+  OSCrypt::RegisterLocalPrefs(registry);
 #endif
 }
 

@@ -9,10 +9,6 @@
 
 #include "base/nix/xdg_util.h"
 
-namespace base {
-class FilePath;
-}
-
 namespace os_crypt {
 
 // The supported Linux backends for storing passwords.
@@ -35,13 +31,6 @@ enum class SelectedLinuxBackend {
 SelectedLinuxBackend SelectBackend(const std::string& type,
                                    bool use_backend,
                                    base::nix::DesktopEnvironment desktop_env);
-
-// Set the setting that disables using OS-level encryption. If |use| is true,
-// a backend will be used.
-bool WriteBackendUse(const base::FilePath& user_data_dir, bool use);
-
-// Decide whether the backend should be used based on the setting.
-bool GetBackendUse(const base::FilePath& user_data_dir);
 
 }  // namespace os_crypt
 

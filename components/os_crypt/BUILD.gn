@@ -80,7 +80,10 @@ static_library("os_crypt") {
       "key_storage_util_linux.cc",
       "key_storage_util_linux.h",
       "os_crypt_linux.cc",
+      "os_crypt_pref_names.cc",
+      "os_crypt_pref_names.h",
     ]
+    deps += [ "//components/prefs" ]
     defines = []
 
     if (use_gnome_keyring) {
