@@ -1,0 +1,145 @@
+//E R R O R !!!!!!!!!!!!!!!!!!
+/*
+Error(Unexpected "[" after keyword "attribute".)
+  PROPERTIES
+    PROD: Interface
+Error(Unexpected (.)
+  PROPERTIES
+    PROD: Definition
+  ExtAttributes()
+    ExtAttribute(XAttr)
+Error(Unexpected (.)
+  PROPERTIES
+    PROD: Definition
+*/
+interface I1 {
+    attribute [XAttr] Node attrib;
+};
+//before attribute->OK, after attribute-> NG
+
+//----------------
+
+/*
+Interface(I)
+  Operation(f1)
+    Arguments()
+      Error(Unexpected "[" after "<".)
+        PROPERTIES
+          PROD: ArgumentList
+    Type()
+      PrimitiveType(void)
+*/
+interface I {
+    void f1(sequence<[XAttr] long> arg);
+};
+
+/*
+Interface(I)
+  Operation(f2)
+    Arguments()
+      Error(Unexpected "[" after keyword "optional".)
+        PROPERTIES
+          PROD: ArgumentList
+    Type()
+      PrimitiveType(void)
+*/
+interface I {
+    void f2(optional [XAttr] long arg);
+};
+// oprional [XAttr] long arg: NG -> [XAttr] optional long arg: OK and [XAttr]'s parent node is argument-type node
+
+
+/*
+Error(Unexpected "[" after keyword "attribute".)
+  PROPERTIES
+    PROD: Interface
+Error(Unexpected long.)
+  PROPERTIES
+    PROD: Definition
+  ExtAttributes()
+    ExtAttribute(XAttr)
+Error(Unexpected long.)
+  PROPERTIES
+    PROD: Definition
+*/
+interface I {
+    attribute [XAttr] long attrib;
+};
+
+/*
+Error(Unexpected "[" after "<".)
+  PROPERTIES
+    PROD: Interface
+Error(Unexpected DOMString.)
+  PROPERTIES
+    PROD: Definition
+  ExtAttributes()
+    ExtAttribute(XAttr2)
+Error(Unexpected DOMString.)
+  PROPERTIES
+    PROD: Definition
+*/
+interface I {
+    maplike<[XAttr2] DOMString, [XAttr3] long>;
+};
+
+//------------------------------------------------
+//------------------------------------------------
+//------------------------------------------------
+//------------------------------------------------
+//------------------------------------------------
+//------------------------------------------------
+//------------------------------------------------
+//------------------------------------------------
+
+
+
+/*
+Interface(I0)
+  Attribute(attrib)
+    Type()
+      PrimitiveType(long)
+    ExtAttributes()
+      ExtAttribute(XAttr)
+*/
+interface I0 {
+    [XAttr] attribute long attrib;
+};
+//when [XAttr] is [Clamp] almost the same tree is made now.
+
+/*
+Interface(I2)
+  Operation(f)
+    Arguments()
+      Argument(attrib)
+        Type()
+          PrimitiveType(long)
+        ExtAttributes()
+          ExtAttribute(XAttr)
+    Type()
+      PrimitiveType(void)
+*/
+interface I2 {
+    void f([XAttr] long attrib);
+};
+
+/*
+Dictionary(D)
+  Key(member)
+    Type()
+      PrimitiveType(long)
+    ExtAttributes()
+      ExtAttribute(XAttr)
+*/
+dictionary D {
+    [XAttr] long member;
+};
+
+/*
+Typedef(xlong)
+  ExtAttributes()
+    ExtAttribute(XAttr)
+  Type()
+    PrimitiveType(long)
+*/
+typedef [XAttr] long xlong;
