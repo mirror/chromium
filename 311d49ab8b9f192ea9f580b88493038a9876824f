@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "db7a3a39_3204edc0",
+        "filename": "base/task_runner.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-04T15:26:27Z",
+      "side": 1,
+      "message": "It can be called in any thread. Commented. Also, added an example, too.",
+      "parentUuid": "13e190f8_3c1e4910",
+      "revId": "311d49ab8b9f192ea9f580b88493038a9876824f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d048018_2357ebc1",
         "filename": "base/task_runner.h",
         "patchSetId": 6
@@ -64,6 +82,30 @@
       "writtenOn": "2017-09-01T15:48:10Z",
       "side": 1,
       "message": "Not a fan of this name as PostTaskAndReply is also async.",
+      "range": {
+        "startLine": 142,
+        "startChar": 7,
+        "endLine": 142,
+        "endChar": 28
+      },
+      "revId": "311d49ab8b9f192ea9f580b88493038a9876824f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81efad9f_050ff940",
+        "filename": "base/task_runner.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-04T15:26:27Z",
+      "side": 1,
+      "message": "Yes, so I renamed from PostTaskAndReplyAsync to PostAsyncTaskAndReply, in the sense of that AsyncTask is a Task which may post another task to another thread/sequence.\n\nI\u0027m happy to rename, if you\u0027d like. Any recommendations?",
+      "parentUuid": "6d048018_2357ebc1",
       "range": {
         "startLine": 142,
         "startChar": 7,
@@ -141,6 +183,24 @@
       "revId": "311d49ab8b9f192ea9f580b88493038a9876824f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1e6fc2a_f769795e",
+        "filename": "content/public/browser/browser_thread.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-04T15:26:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea9fc4e7_31262876",
+      "revId": "311d49ab8b9f192ea9f580b88493038a9876824f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
