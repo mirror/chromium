@@ -22,6 +22,23 @@
       "revId": "d4d477d02ca034fc2943e21babcdb37908ea1006",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d495e819_ca46c21b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-09-04T12:58:54Z",
+      "side": 1,
+      "message": "Agree with Nicholas, existing functions should be used.\nHow about getting the anchor with: java.net.url getRef()\nChecking the protocol is http(s):  https://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/physicalweb/HttpRequest.java?l\u003d47",
+      "revId": "d4d477d02ca034fc2943e21babcdb37908ea1006",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
