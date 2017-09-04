@@ -107,10 +107,16 @@ class FaviconService : public KeyedService {
       const favicon_base::FaviconRawBitmapCallback& callback,
       base::CancelableTaskTracker* tracker) = 0;
 
-  virtual base::CancelableTaskTracker::TaskId GetFaviconForPageURL(
+  // Retrieves the favicon for |page_url| from the database. If
+  // |update_mappings_for_pages| is non-empty, mappings for each of those page
+  // URLs and their redirects will be updated to point to the same icon as
+  // |page_url|, provided that the lookup succeeded.
+  virtual base::CancelableTaskTracker::TaskId
+  GetFaviconForPageURLAndUpdateMappings(
       const GURL& page_url,
       int icon_types,
       int desired_size_in_dip,
+      const std::set<GURL>& update_mappings_for_pages,
       const favicon_base::FaviconResultsCallback& callback,
       base::CancelableTaskTracker* tracker) = 0;
 

@@ -366,10 +366,11 @@ class FakeFaviconService {
     return GetFaviconForPageOrIconURL(icon_url, callback, tracker);
   }
 
-  base::CancelableTaskTracker::TaskId GetFaviconForPageURL(
+  base::CancelableTaskTracker::TaskId GetFaviconForPageURLAndUpdateMappings(
       const GURL& page_url,
       int icon_types,
       int desired_size_in_dip,
+      const std::set<GURL>& update_mappings_for_pages,
       const favicon_base::FaviconResultsCallback& callback,
       base::CancelableTaskTracker* tracker) {
     return GetFaviconForPageOrIconURL(page_url, callback, tracker);
@@ -449,9 +450,10 @@ class MockFaviconServiceWithFake : public MockFaviconService {
     // Delegate the various methods that read from the DB.
     ON_CALL(*this, GetFavicon(_, _, _, _, _))
         .WillByDefault(Invoke(&fake_, &FakeFaviconService::GetFavicon));
-    ON_CALL(*this, GetFaviconForPageURL(_, _, _, _, _))
+    ON_CALL(*this, GetFaviconForPageURLAndUpdateMappings(_, _, _, _, _, _))
         .WillByDefault(
-            Invoke(&fake_, &FakeFaviconService::GetFaviconForPageURL));
+            Invoke(&fake_,
+                   &FakeFaviconService::GetFaviconForPageURLAndUpdateMappings));
     ON_CALL(*this, UpdateFaviconMappingsAndFetch(_, _, _, _, _, _))
         .WillByDefault(
             Invoke(&fake_, &FakeFaviconService::UpdateFaviconMappingsAndFetch));
@@ -594,6 +596,65 @@ TEST_F(FaviconHandlerTest, UpdateFaviconMappingsAndFetchWithMultipleURLs) {
   handler->OnUpdateCandidates(kDifferentPageURL,
                               {FaviconURL(kIconURL16x16, FAVICON, kEmptySizes)},
                               /*manifest_url=*/GURL());
+  base::RunLoop().RunUntilIdle();
+}
+
+// Test that GetFaviconForPageURLAndUpdateMappings() is called with the
+// appropriate parameters for the simplest case with one single page URL to
+// update mappings for (no known in-same-document navigation). This is important
+// in case there are redirects to udpate.
+TEST_F(FaviconHandlerTest, GetFaviconFromHistoryForPageAndUpdateMappings) {
+  EXPECT_CALL(
+      favicon_service_,
+      GetFaviconForPageURLAndUpdateMappings(
+          kPageURL, _, _,
+          /*update_mappings_for_pages=*/std::set<GURL>{kPageURL}, _, _));
+
+  std::unique_ptr<FaviconHandler> handler = base::MakeUnique<FaviconHandler>(
+      &favicon_service_, &delegate_, FaviconDriverObserver::NON_TOUCH_16_DIP);
+  handler->FetchFavicon(kPageURL, /*is_same_document=*/false);
+  base::RunLoop().RunUntilIdle();
+}
+
+// Test that GetFaviconForPageURLAndUpdateMappings() is called with the
+// appropriate parameters when there is data in the database for the page URL,
+// for the case where multiple page URLs exist due to a quick in-same-document
+// navigation (e.g. fragment navigation). FaviconService should be told to
+// propagate the mappings from the last page URL (lookup hit) to the rest of
+// the URLs.
+TEST_F(FaviconHandlerTest,
+       GetFaviconFromHistoryForPageAndUpdateMappingsWithMultipleURLs) {
+  const GURL kDifferentPageURL = GURL("http://www.google.com/other");
+
+  std::unique_ptr<FaviconHandler> handler = base::MakeUnique<FaviconHandler>(
+      &favicon_service_, &delegate_, FaviconDriverObserver::NON_TOUCH_16_DIP);
+  handler->FetchFavicon(kPageURL, /*is_same_document=*/false);
+  base::RunLoop().RunUntilIdle();
+
+  EXPECT_CALL(favicon_service_,
+              GetFaviconForPageURLAndUpdateMappings(
+                  kDifferentPageURL, _, _, /*update_mappings_for_pages=*/
+                  std::set<GURL>{kPageURL, kDifferentPageURL}, _, _));
+
+  handler->FetchFavicon(kDifferentPageURL, /*is_same_document=*/true);
+  base::RunLoop().RunUntilIdle();
+}
+
+// Test that GetFaviconForPageURLAndUpdateMappings() is called with the
+// appropriate parameters in incognito tabs, that is, that no mappings should be
+// updated.
+TEST_F(FaviconHandlerTest,
+       GetFaviconFromHistoryForPageAndUpdateMappingsInIncognito) {
+  ON_CALL(delegate_, IsOffTheRecord()).WillByDefault(Return(true));
+
+  EXPECT_CALL(
+      favicon_service_,
+      GetFaviconForPageURLAndUpdateMappings(
+          _, _, _, /*update_mappings_for_pages=*/std::set<GURL>(), _, _));
+
+  std::unique_ptr<FaviconHandler> handler = base::MakeUnique<FaviconHandler>(
+      &favicon_service_, &delegate_, FaviconDriverObserver::NON_TOUCH_16_DIP);
+  handler->FetchFavicon(kPageURL, /*is_same_document=*/false);
   base::RunLoop().RunUntilIdle();
 }
 

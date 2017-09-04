@@ -74,10 +74,11 @@ class FaviconServiceImpl : public FaviconService {
       int minimum_size_in_pixels,
       const favicon_base::FaviconRawBitmapCallback& callback,
       base::CancelableTaskTracker* tracker) override;
-  base::CancelableTaskTracker::TaskId GetFaviconForPageURL(
+  base::CancelableTaskTracker::TaskId GetFaviconForPageURLAndUpdateMappings(
       const GURL& page_url,
       int icon_types,
       int desired_size_in_dip,
+      const std::set<GURL>& update_mappings_for_pages,
       const favicon_base::FaviconResultsCallback& callback,
       base::CancelableTaskTracker* tracker) override;
   base::CancelableTaskTracker::TaskId UpdateFaviconMappingsAndFetch(
@@ -122,6 +123,7 @@ class FaviconServiceImpl : public FaviconService {
       const GURL& page_url,
       int icon_types,
       const std::vector<int>& desired_sizes_in_pixel,
+      const std::set<GURL>& update_mappings_for_pages,
       const favicon_base::FaviconResultsCallback& callback,
       base::CancelableTaskTracker* tracker);
 
@@ -145,6 +147,7 @@ class FaviconServiceImpl : public FaviconService {
       const std::vector<favicon_base::FaviconRawBitmapResult>&
           favicon_bitmap_results);
 
+  const std::set<GURL> kEmptyUrlSet;
   base::hash_set<MissingFaviconURLHash> missing_favicon_urls_;
   std::unique_ptr<FaviconClient> favicon_client_;
   history::HistoryService* history_service_;

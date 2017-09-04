@@ -438,8 +438,9 @@ void FaviconCache::OnPageFaviconUpdated(const GURL& page_url) {
   // desired_size_in_dip). Figure out a way to fetch all favicons we support.
   // See crbug.com/181068.
   base::CancelableTaskTracker::TaskId id =
-      favicon_service_->GetFaviconForPageURL(
+      favicon_service_->GetFaviconForPageURLAndUpdateMappings(
           page_url, SupportedFaviconTypes(), kMaxFaviconResolution,
+          std::set<GURL>(),
           base::Bind(&FaviconCache::OnFaviconDataAvailable,
                      weak_ptr_factory_.GetWeakPtr(), page_url),
           &cancelable_task_tracker_);

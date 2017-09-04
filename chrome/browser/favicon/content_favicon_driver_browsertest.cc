@@ -157,8 +157,9 @@ class ContentFaviconDriverTest : public InProcessBrowserTest {
     std::vector<favicon_base::FaviconRawBitmapResult> results;
     base::CancelableTaskTracker tracker;
     base::RunLoop loop;
-    favicon_service->GetFaviconForPageURL(
+    favicon_service->GetFaviconForPageURLAndUpdateMappings(
         url, icon_type, /*desired_size_in_dip=*/0,
+        /*update_mappings_for_pages=*/std::set<GURL>(),
         base::Bind(
             [](std::vector<favicon_base::FaviconRawBitmapResult>* save_results,
                base::RunLoop* loop,
@@ -304,6 +305,44 @@ IN_PROC_BROWSER_TEST_F(ContentFaviconDriverTest,
       "/favicon/page_with_meta_refresh_tag.html");
   GURL landing_url =
       embedded_test_server()->GetURL("/favicon/page_with_favicon.html");
+
+  PendingTaskWaiter waiter(web_contents(), landing_url);
+  ui_test_utils::NavigateToURLWithDisposition(
+      browser(), url, WindowOpenDisposition::CURRENT_TAB,
+      ui_test_utils::BROWSER_TEST_NONE);
+  waiter.Wait();
+
+  EXPECT_NE(nullptr,
+            GetFaviconForPageURL(url, favicon_base::FAVICON).bitmap_data);
+  EXPECT_NE(
+      nullptr,
+      GetFaviconForPageURL(landing_url, favicon_base::FAVICON).bitmap_data);
+}
+
+// Test that a page which uses a meta refresh tag to redirect gets associated
+// to the favicons listed in the landing page, for the case that the landing
+// page has been visited earlier (favicon cached). Similar behavior is expected
+// for server-side redirects although not covered in this test.
+IN_PROC_BROWSER_TEST_F(
+    ContentFaviconDriverTest,
+    AssociateIconWithInitialPageDespiteMetaRefreshTagAndLandingPageCached) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+  GURL url = embedded_test_server()->GetURL(
+      "/favicon/page_with_meta_refresh_tag.html");
+  GURL landing_url =
+      embedded_test_server()->GetURL("/favicon/page_with_favicon.html");
+
+  // Initial visit in order to populate the cache.
+  {
+    PendingTaskWaiter waiter(web_contents());
+    ui_test_utils::NavigateToURLWithDisposition(
+        browser(), landing_url, WindowOpenDisposition::CURRENT_TAB,
+        ui_test_utils::BROWSER_TEST_NONE);
+    waiter.Wait();
+  }
+  ASSERT_NE(
+      nullptr,
+      GetFaviconForPageURL(landing_url, favicon_base::FAVICON).bitmap_data);
 
   PendingTaskWaiter waiter(web_contents(), landing_url);
   ui_test_utils::NavigateToURLWithDisposition(

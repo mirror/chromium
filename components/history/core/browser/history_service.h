@@ -665,10 +665,15 @@ class HistoryService : public syncer::SyncableService, public KeyedService {
   // most one result for each entry in |desired_sizes|. If a favicon bitmap is
   // determined to be the best candidate for multiple |desired_sizes| there
   // will be fewer results.
-  base::CancelableTaskTracker::TaskId GetFaviconsForURL(
+  //
+  // If |update_mappings_for_pages| is non-empty, mappings for each of those
+  // page URLs and their redirects will be updated to point to the same icon as
+  // |page_url|, provided that the lookup succeeded.
+  base::CancelableTaskTracker::TaskId GetFaviconsForPageURLAndUpdateMappings(
       const GURL& page_url,
       int icon_types,
       const std::vector<int>& desired_sizes,
+      const std::set<GURL>& update_mappings_for_pages,
       const favicon_base::FaviconResultsCallback& callback,
       base::CancelableTaskTracker* tracker);
 

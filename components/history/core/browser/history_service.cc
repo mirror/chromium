@@ -520,21 +520,25 @@ base::CancelableTaskTracker::TaskId HistoryService::GetFavicon(
       base::Bind(&RunWithFaviconResults, callback, base::Owned(results)));
 }
 
-base::CancelableTaskTracker::TaskId HistoryService::GetFaviconsForURL(
+base::CancelableTaskTracker::TaskId
+HistoryService::GetFaviconsForPageURLAndUpdateMappings(
     const GURL& page_url,
     int icon_types,
     const std::vector<int>& desired_sizes,
+    const std::set<GURL>& update_mappings_for_pages,
     const favicon_base::FaviconResultsCallback& callback,
     base::CancelableTaskTracker* tracker) {
-  TRACE_EVENT0("browser", "HistoryService::GetFaviconsForURL");
+  TRACE_EVENT0("browser",
+               "HistoryService::GetFaviconsForPageURLAndUpdateMappings");
   DCHECK(backend_task_runner_) << "History service being called after cleanup";
   DCHECK(thread_checker_.CalledOnValidThread());
   std::vector<favicon_base::FaviconRawBitmapResult>* results =
       new std::vector<favicon_base::FaviconRawBitmapResult>();
   return tracker->PostTaskAndReply(
       backend_task_runner_.get(), FROM_HERE,
-      base::Bind(&HistoryBackend::GetFaviconsForURL, history_backend_, page_url,
-                 icon_types, desired_sizes, results),
+      base::Bind(&HistoryBackend::GetFaviconsForPageURLAndUpdateMappings,
+                 history_backend_, page_url, icon_types, desired_sizes,
+                 update_mappings_for_pages, results),
       base::Bind(&RunWithFaviconResults, callback, base::Owned(results)));
 }
 
