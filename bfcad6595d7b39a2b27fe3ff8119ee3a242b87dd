@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f0e62ef_f4a8b3f7",
+        "filename": "tools/idl_parser/idl_parser.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-09-04T05:04:06Z",
+      "side": 1,
+      "message": "Please use a temporary variable.",
+      "range": {
+        "startLine": 227,
+        "startChar": 6,
+        "endLine": 227,
+        "endChar": 10
+      },
+      "revId": "bfcad6595d7b39a2b27fe3ff8119ee3a242b87dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f10c11fb_fc538188",
+        "filename": "tools/idl_parser/lisabelle-test-result.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-09-04T05:04:06Z",
+      "side": 1,
+      "message": "Please remove this file.",
+      "revId": "bfcad6595d7b39a2b27fe3ff8119ee3a242b87dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
