@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0780443c_ec211bcd",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-04T05:59:39Z",
+      "side": 1,
+      "message": "I prefer just writing this body inline or having a ctor.",
+      "parentUuid": "15cc6299_2206ca56",
+      "revId": "fbad4722cebaaf5104cb37b43d22d44e73dc2a5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e5348ce5_0c83cd97",
         "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
         "patchSetId": 3
