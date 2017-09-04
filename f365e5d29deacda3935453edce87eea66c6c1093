@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "179e38ba_9717bc07",
+        "filename": "content/public/test/navigation_simulator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-09-04T16:07:12Z",
+      "side": 1,
+      "message": "Just remembered: you probably need to modify CommitErrorPage in a similar manner.",
+      "revId": "f365e5d29deacda3935453edce87eea66c6c1093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c330853_68a2d94f",
         "filename": "content/public/test/navigation_simulator.cc",
         "patchSetId": 4
