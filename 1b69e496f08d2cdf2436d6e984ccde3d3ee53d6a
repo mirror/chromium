@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0c0da5e7_ace06b9b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/encrypted-media/encrypted-media-default-feature-policy.https.sub.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-04T07:20:15Z",
+      "side": 1,
+      "message": "Ah thanks for pointing this out! I adjusted NeverFixTests so that this one test does get run (because I would really like the test coverage :)",
+      "parentUuid": "f3ba9137_d79b4200",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 15
+      },
+      "revId": "1b69e496f08d2cdf2436d6e984ccde3d3ee53d6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c68fd7c1_4d3f7126",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/encrypted-media/encrypted-media-default-feature-policy.https.sub.html",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "1b69e496f08d2cdf2436d6e984ccde3d3ee53d6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03fd7d70_b254c87a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/encrypted-media/encrypted-media-default-feature-policy.https.sub.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-04T07:20:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c68fd7c1_4d3f7126",
+      "range": {
+        "startLine": 16,
+        "startChar": 47,
+        "endLine": 16,
+        "endChar": 72
+      },
+      "revId": "1b69e496f08d2cdf2436d6e984ccde3d3ee53d6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f450743f_30777daf",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/resources/featurepolicy.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-04T07:20:15Z",
+      "side": 1,
+      "message": "Great :)",
+      "parentUuid": "a68ec170_07de76ce",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 60
+      },
+      "revId": "1b69e496f08d2cdf2436d6e984ccde3d3ee53d6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "887d93c7_b8afd81c",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/resources/featurepolicy.js",
         "patchSetId": 6
@@ -82,6 +154,30 @@
       "writtenOn": "2017-08-15T02:34:17Z",
       "side": 1,
       "message": "Curious -- is there a reason for the nested function statement here, rather than a function assignment or an arrow-function?",
+      "range": {
+        "startLine": 70,
+        "startChar": 2,
+        "endLine": 70,
+        "endChar": 10
+      },
+      "revId": "1b69e496f08d2cdf2436d6e984ccde3d3ee53d6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f3bc41a_0e96e62a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/resources/featurepolicy.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-04T07:20:15Z",
+      "side": 1,
+      "message": "No reason, I changed it (my JS knowledge isn\u0027t great - I\u0027m actually not sure what is more appropriate :P)",
+      "parentUuid": "887d93c7_b8afd81c",
       "range": {
         "startLine": 70,
         "startChar": 2,
@@ -141,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "fdf09a62_44f75525",
+        "filename": "third_party/WebKit/Source/modules/encryptedmedia/NavigatorRequestMediaKeySystemAccess.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-04T07:20:15Z",
+      "side": 1,
+      "message": "Unfortunately all the specs are inconsistent in what they return. SecurityError seems to be the most sensible/consistent value based on specs I have seen but if you folks think NotSupportedError is better from a spec standpoint, happy to change it to that.",
+      "parentUuid": "e097dc56_84bf8bba",
+      "range": {
+        "startLine": 283,
+        "startChar": 14,
+        "endLine": 283,
+        "endChar": 28
+      },
+      "revId": "1b69e496f08d2cdf2436d6e984ccde3d3ee53d6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50a93d1d_1706b2ff",
         "filename": "third_party/WebKit/Source/platform/RuntimeEnabledFeatures.json5",
         "patchSetId": 6
@@ -152,6 +272,24 @@
       "writtenOn": "2017-08-30T20:10:27Z",
       "side": 1,
       "message": "Please forgive my naive question, but why do we need this flag?\n\nCan we use FeaturePolicyExperimentalFeatures and FeaturePolicy (stable)?",
+      "revId": "1b69e496f08d2cdf2436d6e984ccde3d3ee53d6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9632c70e_fa98265c",
+        "filename": "third_party/WebKit/Source/platform/RuntimeEnabledFeatures.json5",
+        "patchSetId": 6
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-04T07:20:15Z",
+      "side": 1,
+      "message": "lunalu: Good question. I think I was thinking that it would be useful to have a separate flag for when we want to enable the feature (separately from all the other experimental features)? Though I\u0027m actually not as familiar with flipping feature flags in blink and any better suggestions are welcome :)",
+      "parentUuid": "50a93d1d_1706b2ff",
       "revId": "1b69e496f08d2cdf2436d6e984ccde3d3ee53d6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
