@@ -329,6 +329,7 @@ source_set("common") {
     "service_worker/service_worker_types.h",
     "service_worker/service_worker_utils.cc",
     "service_worker/service_worker_utils.h",
+    "shared_interface_ptr.h",
     "site_isolation_policy.cc",
     "site_isolation_policy.h",
     "speech_recognition_messages.h",
