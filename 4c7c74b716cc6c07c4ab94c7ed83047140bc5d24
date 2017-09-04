@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a50c7d68_ca4e545d",
+        "filename": "components/ntp_tiles/popular_sites_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-04T08:29:19Z",
+      "side": 1,
+      "message": "Huh, I didn\u0027t know we had this already!",
+      "revId": "4c7c74b716cc6c07c4ab94c7ed83047140bc5d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
