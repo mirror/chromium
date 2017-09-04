@@ -78,6 +78,26 @@ RenderFrameHost* NavigationSimulator::NavigateAndCommitFromBrowser(
 }
 
 // static
+RenderFrameHost* NavigationSimulator::GoBack(WebContents* web_contents) {
+  NavigationSimulator simulator(GURL(), true /* browser_initiated */,
+                                static_cast<WebContentsImpl*>(web_contents),
+                                nullptr);
+  simulator.SetIsBackNavigation(true);
+  simulator.Commit();
+  return simulator.GetFinalRenderFrameHost();
+}
+
+// static
+RenderFrameHost* NavigationSimulator::GoForward(WebContents* web_contents) {
+  NavigationSimulator simulator(GURL(), true /* browser_initiated */,
+                                static_cast<WebContentsImpl*>(web_contents),
+                                nullptr);
+  simulator.SetIsForwardNavigation(true);
+  simulator.Commit();
+  return simulator.GetFinalRenderFrameHost();
+}
+
+// static
 RenderFrameHost* NavigationSimulator::NavigateAndCommitFromDocument(
     const GURL& original_url,
     RenderFrameHost* render_frame_host) {
@@ -98,6 +118,20 @@ RenderFrameHost* NavigationSimulator::NavigateAndFailFromBrowser(
   NavigationSimulator simulator(url, true /* browser_initiated */,
                                 static_cast<WebContentsImpl*>(web_contents),
                                 nullptr);
+  simulator.Fail(net_error_code);
+  if (net_error_code == net::ERR_ABORTED)
+    return nullptr;
+  simulator.CommitErrorPage();
+  return simulator.GetFinalRenderFrameHost();
+}
+
+// static
+RenderFrameHost* NavigationSimulator::GoBackAndFail(WebContents* web_contents,
+                                                    int net_error_code) {
+  NavigationSimulator simulator(GURL(), true /* browser_initiated */,
+                                static_cast<WebContentsImpl*>(web_contents),
+                                nullptr);
+  simulator.SetIsBackNavigation(true);
   simulator.Fail(net_error_code);
   if (net_error_code == net::ERR_ABORTED)
     return nullptr;
@@ -386,8 +420,12 @@ void NavigationSimulator::Commit() {
   params.origin = url::Origin(navigation_url_);
   params.transition = transition_;
   params.should_update_history = true;
-  params.did_create_new_entry = !ui::PageTransitionCoreTypeIs(
-      transition_, ui::PAGE_TRANSITION_AUTO_SUBFRAME);
+  if (is_forward_navigation_ || is_back_navigation_) {
+    params.did_create_new_entry = false;
+  } else {
+    params.did_create_new_entry = !ui::PageTransitionCoreTypeIs(
+        transition_, ui::PAGE_TRANSITION_AUTO_SUBFRAME);
+  }
   params.gesture =
       has_user_gesture_ ? NavigationGestureUser : NavigationGestureAuto;
   params.contents_mime_type = "text/html";
@@ -567,6 +605,10 @@ void NavigationSimulator::CommitSameDocument() {
 void NavigationSimulator::SetTransition(ui::PageTransition transition) {
   CHECK_EQ(INITIALIZATION, state_)
       << "The transition cannot be set after the navigation has started";
+  CHECK_EQ(false, is_back_navigation_)
+      << "The transition cannot be specified for back navigations";
+  CHECK_EQ(false, is_forward_navigation_)
+      << "The transition cannot be specified for forward navigations";
   transition_ = transition;
 }
 
@@ -574,6 +616,26 @@ void NavigationSimulator::SetHasUserGesture(bool has_user_gesture) {
   CHECK_EQ(INITIALIZATION, state_) << "The has_user_gesture parameter cannot "
                                       "be set after the navigation has started";
   has_user_gesture_ = has_user_gesture;
+}
+
+void NavigationSimulator::SetIsBackNavigation(bool is_backward_navigation) {
+  CHECK_EQ(INITIALIZATION, state_) << "The backward attribute cannot "
+                                      "be set after the navigation has started";
+  CHECK(browser_initiated_) << "The backward attribute can only be set for "
+                               "browser-intiated navigations";
+  is_back_navigation_ = is_backward_navigation;
+  if (is_back_navigation_)
+    transition_ = ui::PAGE_TRANSITION_FORWARD_BACK;
+}
+
+void NavigationSimulator::SetIsForwardNavigation(bool is_forward_navigation) {
+  CHECK_EQ(INITIALIZATION, state_) << "The forward attribute cannot "
+                                      "be set after the navigation has started";
+  CHECK(browser_initiated_) << "The forward attribute can only be set for "
+                               "browser-intiated navigations";
+  is_forward_navigation_ = is_forward_navigation;
+  if (is_forward_navigation_)
+    transition_ = ui::PAGE_TRANSITION_FORWARD_BACK;
 }
 
 void NavigationSimulator::SetReferrer(const Referrer& referrer) {
@@ -694,8 +756,14 @@ void NavigationSimulator::OnWillProcessResponse() {
 }
 
 bool NavigationSimulator::SimulateBrowserInitiatedStart() {
-  web_contents_->GetController().LoadURL(navigation_url_, referrer_,
-                                         transition_, std::string());
+  if (is_back_navigation_) {
+    web_contents_->GetController().GoBack();
+  } else if (is_forward_navigation_) {
+    web_contents_->GetController().GoForward();
+  } else {
+    web_contents_->GetController().LoadURL(navigation_url_, referrer_,
+                                           transition_, std::string());
+  }
 
   // The navigation url might have been rewritten by the NavigationController.
   // Update it.
