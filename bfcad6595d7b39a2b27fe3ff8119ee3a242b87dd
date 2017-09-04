@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "d4f31e80_b468db61",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-04T05:10:02Z",
+      "side": 1,
+      "message": "fold comment lines. 80 columns?",
+      "range": {
+        "startLine": 9,
+        "startChar": 82,
+        "endLine": 9,
+        "endChar": 87
+      },
+      "revId": "bfcad6595d7b39a2b27fe3ff8119ee3a242b87dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ade26108_aaab1ab0",
+        "filename": "tools/idl_parser/idl_parser.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-04T05:10:02Z",
+      "side": 1,
+      "message": "I\u0027m not sure if it is common in IDL parser, but can we factor out the same logics?\n\n\nif len(p) \u003c\u003d 1:\n  return\n\nif len(p) \u003e 4:\n  ext_attr \u003d ListFromConcat(p[1], p[2])\n  def \u003d p[3]\n  defs \u003d p[4]\nelse:\n  ext_attr \u003d p[1]\n  def \u003d p[2]\n  defs \u003d p[3]\n\ndef.AddChildren(ext_attr)\np[0] \u003d ListFromConcat(def, defs)",
+      "revId": "bfcad6595d7b39a2b27fe3ff8119ee3a242b87dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f0e62ef_f4a8b3f7",
         "filename": "tools/idl_parser/idl_parser.py",
         "patchSetId": 3
@@ -19,6 +59,23 @@
         "endLine": 227,
         "endChar": 10
       },
+      "revId": "bfcad6595d7b39a2b27fe3ff8119ee3a242b87dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18c01ce9_19f907fa",
+        "filename": "tools/idl_parser/lisabelle-test-result.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-04T05:10:02Z",
+      "side": 1,
+      "message": "rename this file name, and update its content.\n- special comments should be /** ... */?\n- needless comments",
       "revId": "bfcad6595d7b39a2b27fe3ff8119ee3a242b87dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
