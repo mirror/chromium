@@ -350,7 +350,7 @@ class RemoveFlakesOMatic(object):
         message = ('Remove flaky TestExpectations for tests which appear non-flaky recently.\n\n'
                    'This change was made by the update-test-expectations script.\n\n'
                    'Recent test results history:\n%s\n\n'
-                   'BUG=%s') % (dashboard_url, bugs)
+                   'Bug:%s') % (dashboard_url, bugs)
         _log.info('Suggested commit description:\n' + message)
 
     def _flakiness_dashboard_url(self):
