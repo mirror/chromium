@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "c221c2ac_2a467755",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_selection.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-09-04T05:21:04Z",
+      "side": 1,
+      "message": "Seems FileListSelectionModel.prototype.onChangeEvent_ try to set it back to check-select mode, resulting in the flickering during the asynchronous file deletion.\nIs it possible to update this only when the last one is removed?",
+      "revId": "27f3d964ddfd75d313a7a658beeeb7434fee8480",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4fed8fa0_379bd5dd",
         "filename": "ui/file_manager/file_manager/foreground/js/file_selection.js",
         "patchSetId": 9
@@ -47,6 +64,23 @@
       "writtenOn": "2017-09-04T05:17:51Z",
       "side": 1,
       "message": "Append semicolon.",
+      "revId": "27f3d964ddfd75d313a7a658beeeb7434fee8480",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6404e38e_3b47de13",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_selection.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-09-04T05:21:04Z",
+      "side": 1,
+      "message": "Add a semicolon here because this is an assignment expression.",
       "revId": "27f3d964ddfd75d313a7a658beeeb7434fee8480",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
