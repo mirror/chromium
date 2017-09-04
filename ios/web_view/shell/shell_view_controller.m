@@ -7,6 +7,9 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 
 #import "ios/web_view/shell/shell_translation_delegate.h"
+#import "ios_internal/google_internal/piper/src/google3/googlemac/iPhone/Shared/SSOAuth/SSOConfiguration.h"
+#import "ios_internal/google_internal/piper/src/google3/googlemac/iPhone/Shared/SSOAuth/SSOIdentity.h"
+#import "ios_internal/google_internal/piper/src/google3/googlemac/iPhone/Shared/SSOAuth/SSOService.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -19,7 +22,8 @@ NSString* const kWebViewShellAddressFieldAccessibilityLabel = @"Address field";
 NSString* const kWebViewShellJavaScriptDialogTextFieldAccessibiltyIdentifier =
     @"WebViewShellJavaScriptDialogTextFieldAccessibiltyIdentifier";
 
-@interface ShellViewController ()<CWVNavigationDelegate,
+@interface ShellViewController ()<CWVAuthenticationControllerDelegate,
+                                  CWVNavigationDelegate,
                                   CWVUIDelegate,
                                   UITextFieldDelegate>
 // Container for |webView|.
@@ -44,7 +48,9 @@ NSString* const kWebViewShellJavaScriptDialogTextFieldAccessibiltyIdentifier =
 - (void)resetTranslateSettings;
 @end
 
-@implementation ShellViewController
+@implementation ShellViewController {
+  SSOService* _service;
+}
 
 @synthesize backButton = _backButton;
 @synthesize containerView = _containerView;
@@ -264,6 +270,25 @@ NSString* const kWebViewShellJavaScriptDialogTextFieldAccessibiltyIdentifier =
              forKeyPath:@"canGoForward"
                 options:NSKeyValueObservingOptionNew
                 context:nil];
+
+  NSString* clientID =
+      @"1005135349943-fo4kt6713ep4nq5ra0bkvoqf8covc62b.apps.googleusercontent."
+      @"com";
+  SSOConfiguration* ssoConfiguration =
+      [[SSOConfiguration alloc] initWithClientID:clientID];
+  ssoConfiguration.applicationIdentifier = @"com.google.chrome.ios";
+  _service = [[SSOService alloc] initWithConfiguration:ssoConfiguration];
+
+  //  _webView.authenticationController.delegate = self;
+  //  if (!_webView.authenticationController.currentIdentity) {
+  //    SSOIdentity* ssoIdentity =
+  //        [[_service identitiesSortedForDisplay] firstObject];
+  //    CWVIdentity* identity = [[CWVIdentity alloc] init];
+  //    identity.gaiaID = [ssoIdentity userID];
+  //    identity.userEmail = [ssoIdentity userEmail];
+  //    identity.userFullName = [ssoIdentity userFullName];
+  //    [_webView.authenticationController signInWithIdentity:identity];
+  //  }
 }
 
 - (void)removeWebView {
@@ -294,6 +319,37 @@ NSString* const kWebViewShellJavaScriptDialogTextFieldAccessibiltyIdentifier =
   }
 
   [_field setText:[[_webView visibleURL] absoluteString]];
+}
+
+#pragma mark CWVAuthenticationControllerDelegate
+
+- (void)authenticationController:(CWVAuthenticationController*)controller
+         getAccessTokenForGaiaID:(NSString*)gaiaID
+                        clientID:(NSString*)clientID
+                    clientSecret:(NSString*)clientSecret
+                          scopes:(NSArray<NSString*>*)scopes
+                        callback:
+                            (void (^)(NSString*, NSDate*, NSError*))callback {
+  SSOIdentity* identity = [[_service identities] objectForKey:gaiaID];
+  if (!identity) {
+    return;
+  }
+  [_service requestAccessTokenWithIdentity:identity
+                                    scopes:scopes
+                                  callback:callback];
+}
+
+- (NSArray<CWVIdentity*>*)authenticationControllerGetAllIdentities:
+    (CWVAuthenticationController*)controller {
+  NSMutableArray<CWVIdentity*>* identities = [NSMutableArray array];
+  for (SSOIdentity* ssoIdentity in [[_service identities] allValues]) {
+    CWVIdentity* identity = [[CWVIdentity alloc] init];
+    identity.gaiaID = [ssoIdentity userID];
+    identity.userEmail = [ssoIdentity userEmail];
+    identity.userFullName = [ssoIdentity userFullName];
+    [identities addObject:identity];
+  }
+  return [identities copy];
 }
 
 #pragma mark CWVUIDelegate methods

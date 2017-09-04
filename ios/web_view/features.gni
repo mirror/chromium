@@ -7,5 +7,5 @@ declare_args() {
   ios_web_view_include_cronet = false
 
   # Controls if features that require sync are included.
-  ios_web_view_enable_sync = false
+  ios_web_view_enable_sync = true
 }

@@ -2,14 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "ios/chrome/browser/signin/gaia_auth_fetcher_ios.h"
+#include "components/signin/ios/browser/gaia_auth_fetcher_ios.h"
 
 #include <memory>
 
 #include "base/ios/ios_util.h"
 #include "base/run_loop.h"
+#include "components/signin/ios/browser/gaia_auth_fetcher_ios_private.h"
 #include "google_apis/gaia/gaia_urls.h"
-#include "ios/chrome/browser/signin/gaia_auth_fetcher_ios_private.h"
 #include "ios/web/public/test/fakes/test_browser_state.h"
 #include "ios/web/public/test/test_web_thread_bundle.h"
 #include "net/url_request/test_url_fetcher_factory.h"

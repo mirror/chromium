@@ -6,10 +6,15 @@
 
 #include "base/base_paths.h"
 #include "base/path_service.h"
+#include "ios/web_view/cwv_web_view_features.h"
 #include "ios/web_view/internal/app/application_context.h"
 #include "ios/web_view/internal/translate/web_view_translate_service.h"
 #include "ui/base/l10n/l10n_util_mac.h"
 #include "ui/base/resource/resource_bundle.h"
+
+#if BUILDFLAG(IOS_WEB_VIEW_ENABLE_SYNC)
+#include "ios/web_view/internal/web_view_sync_initializer.h"
+#endif
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -43,6 +48,10 @@ void WebViewWebMainParts::PreCreateThreads() {
 
 void WebViewWebMainParts::PreMainMessageLoopRun() {
   WebViewTranslateService::GetInstance()->Initialize();
+
+#if BUILDFLAG(IOS_WEB_VIEW_ENABLE_SYNC)
+  WebViewSyncInitializer::InitializeFactories();
+#endif
 }
 
 void WebViewWebMainParts::PostMainMessageLoopRun() {

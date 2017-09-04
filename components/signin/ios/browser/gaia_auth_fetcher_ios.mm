@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "ios/chrome/browser/signin/gaia_auth_fetcher_ios.h"
+#include "components/signin/ios/browser/gaia_auth_fetcher_ios.h"
 
 #import <WebKit/WebKit.h>
 
@@ -12,7 +12,7 @@
 #import "base/mac/foundation_util.h"
 #include "base/mac/scoped_block.h"
 #include "base/strings/sys_string_conversions.h"
-#include "ios/chrome/browser/signin/gaia_auth_fetcher_ios_private.h"
+#include "components/signin/ios/browser/gaia_auth_fetcher_ios_private.h"
 #include "ios/web/public/browser_state.h"
 #import "ios/web/public/web_view_creation_util.h"
 #include "net/base/load_flags.h"
@@ -333,8 +333,7 @@ GaiaAuthFetcherIOS::GaiaAuthFetcherIOS(GaiaAuthConsumer* consumer,
   SetLogoutHeaders("Cookie: CHROME_CONNECTED=EXPIRED;");
 }
 
-GaiaAuthFetcherIOS::~GaiaAuthFetcherIOS() {
-}
+GaiaAuthFetcherIOS::~GaiaAuthFetcherIOS() {}
 
 void GaiaAuthFetcherIOS::CreateAndStartGaiaFetcher(
     const std::string& body,
