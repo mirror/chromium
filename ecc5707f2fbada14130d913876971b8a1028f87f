@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80a87888_292f98a1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-09-04T01:16:18Z",
+      "side": 1,
+      "message": "Mention in the CL description why the previous patch was reverted and what change makes this CL better.",
+      "revId": "ecc5707f2fbada14130d913876971b8a1028f87f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
