@@ -311,22 +311,22 @@
   {
     "prefix": "mojo-loading",
     "base": "webexposed",
-    "args": ["--enable-blink-features=LoadingWithMojo"]
+    "args": ["--disable-features=LoadingWithMojo"]
   },
   {
     "prefix": "mojo-loading",
     "base": "http/tests",
-    "args": ["--enable-blink-features=LoadingWithMojo"]
+    "args": ["--disable-features=LoadingWithMojo"]
   },
   {
     "prefix": "mojo-loading",
     "base": "css1",
-    "args": ["--enable-blink-features=LoadingWithMojo"]
+    "args": ["--disable-features=LoadingWithMojo"]
   },
   {
     "prefix": "mojo-loading",
     "base": "fast/table",
-    "args": ["--enable-blink-features=LoadingWithMojo"]
+    "args": ["--disable-features=LoadingWithMojo"]
   },
   {
     "prefix": "scalefactor150",
