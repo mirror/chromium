@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tests that sandboxed iframe does not have CORS XHR access to server with "Access-Control-Allow-Origin" set to its own origin</title>
+    <script src="/resources/testharness.js"></script>
+    <script src="/resources/testharnessreport.js"></script>
+    <script src="/common/get-host-info.sub.js"></script>
+    <script src="/common/utils.js"></script>
+  </head>
+  <body>
+    <script type="text/javascript">
+const uuid = token();
+const path = "/XMLHttpRequest/resources/access-control-sandboxed-iframe-denied-without-wildcard.py?token=" + uuid;
+
+async_test((test) => {
+  const xhr = new XMLHttpRequest;
+
+  // Reset token
+  xhr.open("GET", get_host_info().HTTP_REMOTE_ORIGIN +
+      "/XMLHttpRequest/resources/reset-token.py?token=" + uuid, false);
+  xhr.send();
+
+  // Set server's "Access-Control-Allow-Origin" to this origin
+  xhr.open("GET", get_host_info().HTTP_REMOTE_ORIGIN + path, false);
+  xhr.send();
+  assert_equals(xhr.status, 200);
+  assert_equals(xhr.responseText, "Origin set.");
+
+  window.addEventListener("message", test.step_func((evt) => {
+    if (evt.data == "ready") {
+      document.getElementById("frame").contentWindow.postMessage(
+          get_host_info().HTTP_REMOTE_ORIGIN + path + " FAIL", "*");
+    } else {
+      assert_equals(evt.data, "PASS: Exception thrown. Sandboxed iframe XHR access was successfully denied in 'send'.");
+      test.done();
+    }
+  }), false);
+});
+    </script>
+    <iframe id="frame" sandbox="allow-scripts" src="/XMLHttpRequest/resources/access-control-sandboxed-iframe.html">
+    </iframe>
+  </body>
+</html>
