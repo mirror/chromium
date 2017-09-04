@@ -25,7 +25,7 @@ namespace {
 const char kExampleId[] = "my-example-id";
 
 const size_t kUserDataKeysPerRegistration = 1u;  // Not including requests.
-const size_t kUserDataKeysPerRequest = 1u;
+const size_t kUserDataKeysPerRequest = 2u;
 
 }  // namespace
 
