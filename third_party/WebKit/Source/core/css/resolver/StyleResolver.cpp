@@ -365,8 +365,8 @@ void StyleResolver::MatchScopedRules(const Element& element,
 
 void StyleResolver::MatchAuthorRules(const Element& element,
                                      ElementRuleCollector& collector) {
-  if (GetDocument().GetShadowCascadeOrder() !=
-      ShadowCascadeOrder::kShadowCascadeV1) {
+  if (GetDocument().GetShadowCascadeOrder() ==
+      ShadowCascadeOrder::kShadowCascadeV0) {
     MatchAuthorRulesV0(element, collector);
     return;
   }
