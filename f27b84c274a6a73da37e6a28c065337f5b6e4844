@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5904414f_6375d6a1",
+        "filename": "chrome/browser/ui/webui/signin/signin_dice_internals_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-04T08:41:56Z",
+      "side": 1,
+      "message": "This comment seems wrong.\n\nAlso, should this be a NOTREACHED()?",
+      "range": {
+        "startLine": 68,
+        "startChar": 30,
+        "endLine": 68,
+        "endChar": 36
+      },
+      "revId": "f27b84c274a6a73da37e6a28c065337f5b6e4844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e92b28a_bb5dfea8",
+        "filename": "components/signin/core/browser/signin_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-04T08:41:56Z",
+      "side": 1,
+      "message": "Should we DCHECK that DIce is enabled here?",
+      "range": {
+        "startLine": 161,
+        "startChar": 20,
+        "endLine": 161,
+        "endChar": 47
+      },
+      "revId": "f27b84c274a6a73da37e6a28c065337f5b6e4844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7c55bc4_fe896dfb",
+        "filename": "components/signin/core/browser/signin_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-04T08:41:56Z",
+      "side": 1,
+      "message": "This comment is not very clear for me. What is a \"key\"?",
+      "range": {
+        "startLine": 95,
+        "startChar": 60,
+        "endLine": 95,
+        "endChar": 64
+      },
+      "revId": "f27b84c274a6a73da37e6a28c065337f5b6e4844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
