@@ -100,6 +100,7 @@ bool ChromeVirtualKeyboardDelegate::OnKeyboardLoaded() {
 }
 
 void ChromeVirtualKeyboardDelegate::SetHotrodKeyboard(bool enable) {
+  return;
   if (keyboard::GetHotrodKeyboardEnabled() == enable)
     return;
 
@@ -189,7 +190,7 @@ void ChromeVirtualKeyboardDelegate::OnHasInputDevices(
   // TODO(bshe): Consolidate a11y, hotrod and normal mode into a mode enum. See
   // crbug.com/529474.
   results->SetBoolean("a11ymode", keyboard::GetAccessibilityKeyboardEnabled());
-  results->SetBoolean("hotrodmode", keyboard::GetHotrodKeyboardEnabled());
+  results->SetBoolean("hotrodmode", true); // keyboard::GetHotrodKeyboardEnabled());
   std::unique_ptr<base::ListValue> features(new base::ListValue());
   features->AppendString(GenerateFeatureFlag(
       "floatingvirtualkeyboard", keyboard::IsFloatingVirtualKeyboardEnabled()));
