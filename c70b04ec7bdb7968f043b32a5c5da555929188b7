@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5c93559_79b45603",
+        "filename": "ios/chrome/browser/ui/bookmarks/bars/bookmark_context_bar.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-04T00:35:22Z",
+      "side": 1,
+      "message": "just curious why changed to underscore naming.",
+      "revId": "c70b04ec7bdb7968f043b32a5c5da555929188b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ee06ef6_d947df97",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-04T00:35:22Z",
+      "side": 1,
+      "message": "could we add TODO of the following if they are needed?\n- hide the Folder\u0027s right arrow when selecting?\n- disable \u0027select\u0027 if current folder is empty",
+      "revId": "c70b04ec7bdb7968f043b32a5c5da555929188b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "197fd12c_4297964b",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1084,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-04T00:35:22Z",
+      "side": 1,
+      "message": "could we...\n1. rename setBookmarksContextBarSelectionStartState as setBookmarksContextBarSelectionState\n2. pass state as an argument, i.e. [self setBookmarksContextBarSelectionState:state]\n3. let setBookmarksContextBarSelectionState determine if center/leading button is enabled?\n4. the setButtonEnabled lines in this function below can be removed\nwdyt?",
+      "revId": "c70b04ec7bdb7968f043b32a5c5da555929188b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eb87b95_429d1c88",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-04T00:35:22Z",
+      "side": 1,
+      "message": "some UI\u0027s accessibilityID is not visible on iOS 9 (like crbug.com/761349).\nif you haven\u0027t tried to run the egtests on iOS 9 yet, please test if they work.",
+      "range": {
+        "startLine": 66,
+        "startChar": 28,
+        "endLine": 66,
+        "endChar": 35
+      },
+      "revId": "c70b04ec7bdb7968f043b32a5c5da555929188b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
