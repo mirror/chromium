@@ -799,6 +799,11 @@ void StatusBubbleViews::Hide() {
     view_->Hide();
 }
 
+void StatusBubbleViews::MouseMoved(bool left_content) {
+  MouseMoved(display::Screen::GetScreen()->GetCursorScreenPoint(),
+             left_content);
+}
+
 void StatusBubbleViews::MouseMoved(const gfx::Point& location,
                                    bool left_content) {
   contains_mouse_ = !left_content;

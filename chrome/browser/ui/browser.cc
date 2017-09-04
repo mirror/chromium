@@ -1605,7 +1605,6 @@ void Browser::UpdateTargetURL(WebContents* source, const GURL& url) {
 }
 
 void Browser::ContentsMouseEvent(WebContents* source,
-                                 const gfx::Point& location,
                                  bool motion,
                                  bool exited) {
   exclusive_access_manager_->OnUserInput();
@@ -1615,7 +1614,7 @@ void Browser::ContentsMouseEvent(WebContents* source,
     return;
 
   if (source == tab_strip_model_->GetActiveWebContents()) {
-    GetStatusBubble()->MouseMoved(location, exited);
+    GetStatusBubble()->MouseMoved(exited);
     if (exited)
       GetStatusBubble()->SetURL(GURL());
   }

@@ -435,6 +435,11 @@ void StatusBubbleMac::SetFrameAvoidingMouse(
   [window_ setFrame:window_frame display:YES];
 }
 
+void StatusBubbleMac::MouseMoved(bool left_content) {
+  NSPoint location = [NSEvent mouseLocation];
+  MouseMoved(gfx::Point(location.x, location.y), left_content);
+}
+
 void StatusBubbleMac::MouseMoved(
     const gfx::Point& location, bool left_content) {
   if (!left_content)
