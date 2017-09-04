@@ -48,6 +48,16 @@ public class SignInPreference
     private final ProfileDataCache mProfileDataCache;
 
     /**
+     * Constructor for use in Java.
+     */
+    public SignInPreference(Context context) {
+        super(context);
+
+        int imageSize = context.getResources().getDimensionPixelSize(R.dimen.user_picture_size);
+        mProfileDataCache = new ProfileDataCache(context, Profile.getLastUsedProfile(), imageSize);
+    }
+
+    /**
      * Constructor for inflating from XML.
      */
     public SignInPreference(Context context, AttributeSet attrs) {
