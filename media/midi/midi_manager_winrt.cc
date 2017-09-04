@@ -29,7 +29,9 @@
 #include "base/threading/thread_checker.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/timer/timer.h"
+#include "base/win/com_base_util.h"
 #include "base/win/scoped_comptr.h"
+#include "base/win/scoped_hstring.h"
 #include "media/midi/midi_scheduler.h"
 
 namespace midi {
@@ -42,7 +44,9 @@ using namespace ABI::Windows::Devices::Midi;
 using namespace ABI::Windows::Foundation;
 using namespace ABI::Windows::Storage::Streams;
 
+using base::win::ComBaseUtil;
 using base::win::ScopedComPtr;
+using base::win::ScopedHString;
 using mojom::PortState;
 using mojom::Result;
 
@@ -60,110 +64,6 @@ std::ostream& operator<<(std::ostream& os, const PrintHr& phr) {
   return os;
 }
 
-// Provides access to functions in combase.dll which may not be available on
-// Windows 7. Loads functions dynamically at runtime to prevent library
-// dependencies.
-class CombaseFunctions {
- public:
-  CombaseFunctions() = default;
-
-  ~CombaseFunctions() {
-    if (combase_dll_)
-      ::FreeLibrary(combase_dll_);
-  }
-
-  bool LoadFunctions() {
-    combase_dll_ = ::LoadLibrary(L"combase.dll");
-    if (!combase_dll_)
-      return false;
-
-    get_factory_func_ = reinterpret_cast<decltype(&::RoGetActivationFactory)>(
-        ::GetProcAddress(combase_dll_, "RoGetActivationFactory"));
-    if (!get_factory_func_)
-      return false;
-
-    create_string_func_ = reinterpret_cast<decltype(&::WindowsCreateString)>(
-        ::GetProcAddress(combase_dll_, "WindowsCreateString"));
-    if (!create_string_func_)
-      return false;
-
-    delete_string_func_ = reinterpret_cast<decltype(&::WindowsDeleteString)>(
-        ::GetProcAddress(combase_dll_, "WindowsDeleteString"));
-    if (!delete_string_func_)
-      return false;
-
-    get_string_raw_buffer_func_ =
-        reinterpret_cast<decltype(&::WindowsGetStringRawBuffer)>(
-            ::GetProcAddress(combase_dll_, "WindowsGetStringRawBuffer"));
-    if (!get_string_raw_buffer_func_)
-      return false;
-
-    return true;
-  }
-
-  HRESULT RoGetActivationFactory(HSTRING class_id,
-                                 const IID& iid,
-                                 void** out_factory) {
-    DCHECK(get_factory_func_);
-    return get_factory_func_(class_id, iid, out_factory);
-  }
-
-  HRESULT WindowsCreateString(const base::char16* src,
-                              uint32_t len,
-                              HSTRING* out_hstr) {
-    DCHECK(create_string_func_);
-    return create_string_func_(src, len, out_hstr);
-  }
-
-  HRESULT WindowsDeleteString(HSTRING hstr) {
-    DCHECK(delete_string_func_);
-    return delete_string_func_(hstr);
-  }
-
-  const base::char16* WindowsGetStringRawBuffer(HSTRING hstr,
-                                                uint32_t* out_len) {
-    DCHECK(get_string_raw_buffer_func_);
-    return get_string_raw_buffer_func_(hstr, out_len);
-  }
-
- private:
-  HMODULE combase_dll_ = nullptr;
-
-  decltype(&::RoGetActivationFactory) get_factory_func_ = nullptr;
-  decltype(&::WindowsCreateString) create_string_func_ = nullptr;
-  decltype(&::WindowsDeleteString) delete_string_func_ = nullptr;
-  decltype(&::WindowsGetStringRawBuffer) get_string_raw_buffer_func_ = nullptr;
-};
-
-CombaseFunctions* GetCombaseFunctions() {
-  static CombaseFunctions* functions = new CombaseFunctions();
-  return functions;
-}
-
-// Scoped HSTRING class to maintain lifetime of HSTRINGs allocated with
-// WindowsCreateString().
-class ScopedHStringTraits {
- public:
-  static HSTRING InvalidValue() { return nullptr; }
-
-  static void Free(HSTRING hstr) {
-    GetCombaseFunctions()->WindowsDeleteString(hstr);
-  }
-};
-
-class ScopedHString : public base::ScopedGeneric<HSTRING, ScopedHStringTraits> {
- public:
-  explicit ScopedHString(const base::char16* str) : ScopedGeneric(nullptr) {
-    HSTRING hstr;
-    HRESULT hr = GetCombaseFunctions()->WindowsCreateString(
-        str, static_cast<uint32_t>(wcslen(str)), &hstr);
-    if (FAILED(hr))
-      VLOG(1) << "WindowsCreateString failed: " << PrintHr(hr);
-    else
-      reset(hstr);
-  }
-};
-
 // Factory functions that activate and create WinRT components. The caller takes
 // ownership of the returning ComPtr.
 template <typename InterfaceType, base::char16 const* runtime_class_id>
@@ -176,8 +76,8 @@ ScopedComPtr<InterfaceType> WrlStaticsFactory() {
     return com_ptr;
   }
 
-  HRESULT hr = GetCombaseFunctions()->RoGetActivationFactory(
-      class_id_hstring.get(), IID_PPV_ARGS(&com_ptr));
+  HRESULT hr = ComBaseUtil::RoGetActivationFactory(class_id_hstring.get(),
+                                                   IID_PPV_ARGS(&com_ptr));
   if (FAILED(hr)) {
     VLOG(1) << "RoGetActivationFactory failed: " << PrintHr(hr);
     com_ptr = nullptr;
@@ -190,7 +90,7 @@ std::string HStringToString(HSTRING hstr) {
   // Note: empty HSTRINGs are represent as nullptr, and instantiating
   // std::string with nullptr (in base::WideToUTF8) is undefined behavior.
   const base::char16* buffer =
-      GetCombaseFunctions()->WindowsGetStringRawBuffer(hstr, nullptr);
+      ComBaseUtil::WindowsGetStringRawBuffer(hstr, nullptr);
   if (buffer)
     return base::WideToUTF8(buffer);
   return std::string();
@@ -957,7 +857,12 @@ void MidiManagerWinrt::InitializeOnComThread() {
 
   com_thread_checker_.reset(new base::ThreadChecker);
 
-  if (!GetCombaseFunctions()->LoadFunctions()) {
+  std::vector<std::string> functions;
+  functions.push_back("RoGetActivationFactory");
+  functions.push_back("WindowsCreateString");
+  functions.push_back("WindowsDeleteString");
+  functions.push_back("WindowsGetStringRawBuffer");
+  if (!ComBaseUtil::PreloadFunctions(functions)) {
     VLOG(1) << "Failed loading functions from combase.dll: "
             << PrintHr(HRESULT_FROM_WIN32(GetLastError()));
     CompleteInitialization(Result::INITIALIZATION_ERROR);
