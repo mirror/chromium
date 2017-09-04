@@ -31,12 +31,10 @@ class ExternalProtocolDialog : public views::DialogDelegateView {
 
   // views::DialogDelegateView:
   gfx::Size CalculatePreferredSize() const override;
-  int GetDefaultDialogButton() const override;
   base::string16 GetDialogButtonLabel(ui::DialogButton button) const override;
   base::string16 GetWindowTitle() const override;
   bool Cancel() override;
   bool Accept() override;
-  bool Close() override;
   ui::ModalType GetModalType() const override;
 
  private:
