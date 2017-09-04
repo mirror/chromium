@@ -538,11 +538,7 @@ RefPtr<ComputedStyle> StyleResolver::StyleForViewport(Document& document) {
 
 void StyleResolver::AdjustComputedStyle(StyleResolverState& state,
                                         Element* element) {
-  DCHECK(state.LayoutParentStyle());
-  DCHECK(state.ParentStyle());
-  StyleAdjuster::AdjustComputedStyle(state.MutableStyleRef(),
-                                     *state.ParentStyle(),
-                                     *state.LayoutParentStyle(), element);
+  StyleAdjuster::AdjustComputedStyle(state, element);
 }
 
 // Start loading resources referenced by this style.
@@ -1941,6 +1937,7 @@ void StyleResolver::ApplyMatchedStandardProperties(
   DCHECK(!state.GetFontBuilder().FontDirty());
 }
 
+// static.
 bool StyleResolver::HasAuthorBackground(const StyleResolverState& state) {
   const CachedUAStyle* cached_ua_style = state.GetCachedUAStyle();
   if (!cached_ua_style)
