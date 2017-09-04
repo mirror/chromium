@@ -558,9 +558,18 @@ TEST_F(GenericSensorServiceTest, SuspendThenResumeTest) {
   }
 }
 
+// This test starts to time-out after somewhere between r499332-499336.
+#if defined(OS_ANDROID)
+#define MAYBE_MultipleClientsSuspendAndResumeTest \
+  DISABLED_MultipleClientsSuspendAndResumeTest
+#else
+#define MAYBE_MultipleClientsSuspendAndResumeTest \
+  MultipleClientsSuspendAndResumeTest
+#endif
+
 // Test suspend when there are more than one client. The suspended client won't
 // receive SensorReadingChanged() notification.
-TEST_F(GenericSensorServiceTest, MultipleClientsSuspendAndResumeTest) {
+TEST_F(GenericSensorServiceTest, MAYBE_MultipleClientsSuspendAndResumeTest) {
   mojom::SensorPtr sensor_1;
   auto client_1 = base::MakeUnique<TestSensorClient>(SensorType::AMBIENT_LIGHT);
   sensor_provider_->GetSensor(SensorType::AMBIENT_LIGHT,
