@@ -367,6 +367,24 @@
     },
     {
       "key": {
+        "uuid": "2615d8c1_3042f21a",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionSampleTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-09-04T02:11:43Z",
+      "side": 1,
+      "message": "No we don\u0027t need to have SelectionSample selection_ in EditingTestbase.\nYou can write with only SetBodyAndSelectionFromSample() and GetSelectionSampleText():\n  std::string DoStartOfWord(const std::string\u0026 selection_text) {\n    SetBodyAndSelectionFromSample(selection_text);\n    const Position position \u003d GetSelection().Base();\n    Seelction().SetSelection()(\n        SelectionInDOMTree::Builder()\n            .Collapse(\n                StartOfWord(CreateVisiblePosition(position)).DeepEquivalent())\n            .Build());\n    return GetSelectionSampleText();\n  }\nI want EditingTestBase as primitive as we can.",
+      "parentUuid": "ad604f2d_1963cd93",
+      "revId": "e88d800e29d30b0b895b331b0908d4d951962bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5867e355_073fb549",
         "filename": "third_party/WebKit/Source/core/editing/SelectionSampleTest.cpp",
         "patchSetId": 6
