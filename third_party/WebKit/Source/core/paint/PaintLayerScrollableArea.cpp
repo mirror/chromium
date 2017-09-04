@@ -409,6 +409,7 @@ void PaintLayerScrollableArea::UpdateScrollOffset(
   if (GetScrollOffset() == new_offset)
     return;
 
+  bool offset_was_zero = scroll_offset_.IsZero();
   scroll_offset_ = new_offset;
 
   LocalFrame* frame = Box().GetFrame();
@@ -457,32 +458,7 @@ void PaintLayerScrollableArea::UpdateScrollOffset(
       page->GetChromeClient().ClearToolTip(*frame);
   }
 
-  bool requires_paint_invalidation = true;
-
-  if (Box().View()->Compositor()->InCompositingMode()) {
-    bool only_scrolled_composited_layers =
-        ScrollsOverflow() && Layer()->IsAllScrollingContentComposited() &&
-        Box().Style()->BackgroundLayers().Attachment() !=
-            kLocalBackgroundAttachment;
-
-    if (UsesCompositedScrolling() || only_scrolled_composited_layers)
-      requires_paint_invalidation = false;
-  }
-
-  if (!requires_paint_invalidation && is_root_layer) {
-    // Some special invalidations for the root layer.
-    frame_view->InvalidateBackgroundAttachmentFixedObjects();
-    if (frame_view->HasViewportConstrainedObjects()) {
-      if (!frame_view->InvalidateViewportConstrainedObjects())
-        requires_paint_invalidation = true;
-    }
-  }
-
-  // Just schedule a full paint invalidation of our object.
-  // FIXME: This invalidation will be unnecessary in slimming paint phase 2.
-  if (requires_paint_invalidation) {
-    Box().SetShouldDoFullPaintInvalidationIncludingNonCompositingDescendants();
-  }
+  InvalidatePaintForScrollOffsetChange(offset_was_zero);
 
   // The scrollOffsetTranslation paint property depends on the scroll offset.
   // (see: PaintPropertyTreeBuilder.updateProperties(LocalFrameView&,...) and
@@ -520,6 +496,58 @@ void PaintLayerScrollableArea::UpdateScrollOffset(
     if (RuntimeEnabledFeatures::ScrollAnchoringEnabled())
       GetScrollAnchor()->Clear();
   }
+}
+
+void PaintLayerScrollableArea::InvalidatePaintForScrollOffsetChange(
+    bool offset_was_zero) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
+    if (ScrollsOverflow() && Box().Style()->BackgroundLayers().Attachment() ==
+                                 kLocalBackgroundAttachment) {
+      Box()
+          .SetShouldDoFullPaintInvalidationIncludingNonCompositingDescendants();
+      return;
+    }
+
+    // A scroll offset translation is still needed for non-scrolling overflow
+    // hidden and there is an optimization to only create this translation when
+    // scroll offset is non-zero (see: NeedsScrollOrScrollTranslation in
+    // PaintPropertyTreeBuilder.cpp). Because of this optimization, gaining or
+    // losing scroll offset can change whether a property exists and we have to
+    // invalidate paint to ensure this property gets picked up in BlockPainter.
+    if (!ScrollsOverflow() && (offset_was_zero || GetScrollOffset().IsZero())) {
+      Box()
+          .SetShouldDoFullPaintInvalidationIncludingNonCompositingDescendants();
+      return;
+    }
+
+    return;
+  }
+
+  bool requires_paint_invalidation = true;
+
+  LocalFrameView* frame_view = Box().GetFrameView();
+  bool is_root_layer = Layer()->IsRootLayer();
+  if (Box().View()->Compositor()->InCompositingMode()) {
+    bool only_scrolled_composited_layers =
+        ScrollsOverflow() && Layer()->IsAllScrollingContentComposited() &&
+        Box().Style()->BackgroundLayers().Attachment() !=
+            kLocalBackgroundAttachment;
+
+    if (UsesCompositedScrolling() || only_scrolled_composited_layers)
+      requires_paint_invalidation = false;
+  }
+
+  if (!requires_paint_invalidation && is_root_layer) {
+    // Some special invalidations for the root layer.
+    frame_view->InvalidateBackgroundAttachmentFixedObjects();
+    if (frame_view->HasViewportConstrainedObjects()) {
+      if (!frame_view->InvalidateViewportConstrainedObjects())
+        requires_paint_invalidation = true;
+    }
+  }
+
+  if (requires_paint_invalidation)
+    Box().SetShouldDoFullPaintInvalidationIncludingNonCompositingDescendants();
 }
 
 IntSize PaintLayerScrollableArea::ScrollOffsetInt() const {

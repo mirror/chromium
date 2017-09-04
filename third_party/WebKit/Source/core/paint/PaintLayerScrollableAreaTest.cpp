@@ -786,4 +786,98 @@ TEST_F(PaintLayerScrollableAreaTest, FloatOverflowInRtlContainer) {
   ASSERT_TRUE(scrollable_area);
   EXPECT_FALSE(scrollable_area->HasHorizontalScrollbar());
 }
+
+TEST_F(PaintLayerScrollableAreaTest,
+       SlimmingPaintV2OverflowHiddenScrollOffsetInvalidation) {
+  RuntimeEnabledFeatures::SetSlimmingPaintV2Enabled(true);
+
+  SetBodyInnerHTML(
+      "<style>"
+      "#scroller {"
+      "  overflow: hidden;"
+      "  height: 200px;"
+      "  width: 200px;"
+      "}"
+      "</style>"
+      "<div id='scroller'>"
+      "<div id='forceScroll' style='height: 2000px;'></div>"
+      "</div>");
+  GetDocument().View()->UpdateAllLifecyclePhases();
+
+  auto* scroller = GetLayoutObjectByElementId("scroller");
+  auto* scrollable_area = ToLayoutBoxModelObject(scroller)->GetScrollableArea();
+
+  const auto* properties = scroller->FirstFragment()->PaintProperties();
+
+  // No scroll offset translation is needed when scroll offset is zero.
+  EXPECT_EQ(nullptr, properties->ScrollTranslation());
+  EXPECT_EQ(FloatSize(0, 0), scrollable_area->GetScrollOffset());
+
+  // Going from zero scroll offset to non-zero may require a new paint property
+  // and should invalidate paint and paint properties.
+  scrollable_area->SetScrollOffset(ScrollOffset(0, 1), kProgrammaticScroll);
+  EXPECT_TRUE(scroller->ShouldDoFullPaintInvalidation());
+  EXPECT_TRUE(scroller->NeedsPaintPropertyUpdate());
+  GetDocument().View()->UpdateAllLifecyclePhases();
+
+  // A scroll offset translation is needed when scroll offset is non-zero.
+  EXPECT_EQ(FloatSize(0, 1), scrollable_area->GetScrollOffset());
+  EXPECT_NE(nullptr, properties->ScrollTranslation());
+
+  // Simply changing scroll offset does not require invalidating paint.
+  scrollable_area->SetScrollOffset(ScrollOffset(0, 2), kProgrammaticScroll);
+  EXPECT_FALSE(scroller->ShouldDoFullPaintInvalidation());
+  EXPECT_TRUE(scroller->NeedsPaintPropertyUpdate());
+  GetDocument().View()->UpdateAllLifecyclePhases();
+
+  // A scroll offset translation is needed when scroll offset is non-zero.
+  EXPECT_EQ(FloatSize(0, 2), scrollable_area->GetScrollOffset());
+  EXPECT_NE(nullptr, properties->ScrollTranslation());
+
+  // Going from nno-zero scroll offset to zero may require destroying a paint
+  // property and should invalidate paint and paint properties.
+  scrollable_area->SetScrollOffset(ScrollOffset(0, 0), kProgrammaticScroll);
+  EXPECT_TRUE(scroller->ShouldDoFullPaintInvalidation());
+  EXPECT_TRUE(scroller->NeedsPaintPropertyUpdate());
+  GetDocument().View()->UpdateAllLifecyclePhases();
+
+  // No scroll offset translation is needed when scroll offset is zero.
+  EXPECT_EQ(nullptr, properties->ScrollTranslation());
+  EXPECT_EQ(FloatSize(0, 0), scrollable_area->GetScrollOffset());
+}
+
+TEST_F(PaintLayerScrollableAreaTest, SlimmingPaintV2ScrollOffsetInvalidation) {
+  RuntimeEnabledFeatures::SetSlimmingPaintV2Enabled(true);
+
+  SetBodyInnerHTML(
+      "<style>"
+      "#scroller {"
+      "  overflow: scroll;"
+      "  height: 200px;"
+      "  width: 200px;"
+      "}"
+      "</style>"
+      "<div id='scroller'>"
+      "<div id='forceScroll' style='height: 2000px;'></div>"
+      "</div>");
+  GetDocument().View()->UpdateAllLifecyclePhases();
+
+  auto* scroller = GetLayoutObjectByElementId("scroller");
+  auto* scrollable_area = ToLayoutBoxModelObject(scroller)->GetScrollableArea();
+
+  const auto* properties = scroller->FirstFragment()->PaintProperties();
+
+  // Scroll offset translation is needed even when scroll offset is zero.
+  EXPECT_NE(nullptr, properties->ScrollTranslation());
+  EXPECT_EQ(FloatSize(0, 0), scrollable_area->GetScrollOffset());
+
+  // Programmatically changing the scroll offset should not require paint
+  // invalidation but should require a paint property update.
+  scrollable_area->SetScrollOffset(ScrollOffset(0, 1), kProgrammaticScroll);
+  EXPECT_FALSE(scroller->ShouldDoFullPaintInvalidation());
+  EXPECT_TRUE(scroller->NeedsPaintPropertyUpdate());
+  GetDocument().View()->UpdateAllLifecyclePhases();
+  EXPECT_EQ(FloatSize(0, 1), scrollable_area->GetScrollOffset());
+  EXPECT_NE(nullptr, properties->ScrollTranslation());
+}
 }
