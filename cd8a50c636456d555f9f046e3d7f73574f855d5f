@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "1ea0580f_c78295eb",
+        "filename": "content/public/test/navigation_simulator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-09-04T14:21:31Z",
+      "side": 1,
+      "message": "I see. Indeed this is a not a case we want to simulate here.",
+      "parentUuid": "75dd3b46_02da113d",
+      "revId": "cd8a50c636456d555f9f046e3d7f73574f855d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41a0d802_764b1948",
         "filename": "content/public/test/navigation_simulator.h",
         "patchSetId": 2
