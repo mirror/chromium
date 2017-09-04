@@ -1,75 +1,110 @@
-// Copyright 2016 The Chromium Authors. All rights reserved.
+// Copyright 2017 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
 #ifndef CHROME_GPU_GPU_ARC_VIDEO_DECODE_ACCELERATOR_H_
 #define CHROME_GPU_GPU_ARC_VIDEO_DECODE_ACCELERATOR_H_
 
-#include <memory>
+#include <map>
 #include <vector>
 
-#include "base/files/scoped_file.h"
-#include "base/macros.h"
 #include "base/threading/thread_checker.h"
-#include "chrome/gpu/arc_video_decode_accelerator.h"
 #include "components/arc/common/video_decode_accelerator.mojom.h"
-#include "components/arc/video_accelerator/video_accelerator.h"
 #include "gpu/command_buffer/service/gpu_preferences.h"
+#include "media/video/video_decode_accelerator.h"
 
 namespace chromeos {
 namespace arc {
 
-// GpuArcVideoDecodeAccelerator manages life-cycle and IPC message translation
-// for ArcVideoDecodeAccelerator.
-//
-// For each creation request from GpuArcVideoDecodeAcceleratorHost,
-// GpuArcVideoDecodeAccelerator will create a new IPC channel.
 class GpuArcVideoDecodeAccelerator
     : public ::arc::mojom::VideoDecodeAccelerator,
-      public ArcVideoDecodeAccelerator::Client {
+      public media::VideoDecodeAccelerator::Client {
  public:
   explicit GpuArcVideoDecodeAccelerator(
       const gpu::GpuPreferences& gpu_preferences);
   ~GpuArcVideoDecodeAccelerator() override;
 
  private:
-  // ArcVideoDecodeAccelerator::Client implementation.
-  void OnError(ArcVideoDecodeAccelerator::Result error) override;
-  void OnBufferDone(PortType port,
-                    uint32_t index,
-                    const BufferMetadata& metadata) override;
-  void OnFlushDone() override;
-  void OnResetDone() override;
-  void OnOutputFormatChanged(const VideoFormat& format) override;
+  // Implementation of media::VideoDecodeAccelerator::Client interface.
+  void ProvidePictureBuffers(uint32_t requested_num_of_buffers,
+                             media::VideoPixelFormat format,
+                             uint32_t textures_per_buffer,
+                             const gfx::Size& dimensions,
+                             uint32_t texture_target) override;
+  void PictureReady(const media::Picture& picture) override;
+  void DismissPictureBuffer(int32_t picture_buffer_id) override;
+  void NotifyEndOfBitstreamBuffer(int32_t bitstream_buffer_id) override;
+  void NotifyFlushDone() override;
+  void NotifyResetDone() override;
+  void NotifyError(media::VideoDecodeAccelerator::Error error) override;
 
   // ::arc::mojom::VideoDecodeAccelerator implementation.
-  void Initialize(::arc::mojom::VideoDecodeAcceleratorConfigPtr config,
+  void Initialize(media::VideoCodecProfile profile,
                   ::arc::mojom::VideoDecodeClientPtr client,
                   const InitializeCallback& callback) override;
-  void BindSharedMemory(::arc::mojom::PortType port,
-                        uint32_t index,
-                        mojo::ScopedHandle ashmem_handle,
-                        uint32_t offset,
-                        uint32_t length) override;
-  void BindDmabuf(::arc::mojom::PortType port,
-                  uint32_t index,
-                  mojo::ScopedHandle dmabuf_handle,
-                  std::vector<::arc::VideoFramePlane> planes) override;
-  void UseBuffer(::arc::mojom::PortType port,
-                 uint32_t index,
-                 ::arc::mojom::BufferMetadataPtr metadata) override;
-  void SetNumberOfOutputBuffers(uint32_t number) override;
-  void Flush() override;
-  void Reset() override;
+  void Decode(::arc::mojom::BitstreamBufferPtr bitstream_buffer) override;
+  void AssignPictureBuffers(uint32_t count) override;
+  void ImportBufferForPicture(int32_t picture_buffer_id,
+                              mojo::ScopedHandle dmabuf_handle,
+                              std::vector<::arc::VideoFramePlane> planes);
+  void ReusePictureBuffer(int32_t picture_buffer_id) override;
+  void Flush(const FlushCallback& callback) override;
+  void Reset(const ResetCallback& callback) override;
 
   base::ScopedFD UnwrapFdFromMojoHandle(mojo::ScopedHandle handle);
 
-  THREAD_CHECKER(thread_checker_);
+  // Return true if |planes| is valid for a dmabuf |fd|.
+  bool VerifyDmabuf(const base::ScopedFD& dmabuf_fd,
+                    const std::vector<::arc::VideoFramePlane>& planes) const;
+
+  // Run the next pending request.
+  // If the next pending request is Decode(), these pending Decode() are
+  // run until the first Flush or Reset are Run().
+  void RunNextPendingRequest();
+
+  // Run all the pending callbacks. This should be run when NotifyError
+  // is invoked.
+  void ClearPendingCallbacks();
+
+  // Global counter that keeps track the number of active clients (i.e., how
+  // many VDAs in use by this class).
+  // Since this class only works on the same thread, it's safe to access
+  // |client_count_| without lock.
+  static int client_count_;
+
+  // The variables for managing callbacks.
+  // VDA::Flush should not executed while VDA::Reset are being executed,
+  // and vice versa. When GAVDA::Reset (GAVDA::Flush) are called when
+  // VDA::Flush (VDA::Reset) are beging executed, it is stored once and
+  // will be executed after NotifyFlushDone (NotifyResetDone) are invoked.
+  // Stored Reset and Flush need to be executed in FIFO order.
+  // Decodes called after Reset have to be executed after Reset have completed.
+
+  // State is the current GAVDA Service status.
+  // DECODING - Default state.
+  // ERROR - GAVDA gets an error from VDA. All the pending functions
+  //         are canceled. The callbacks are returned with an error state.
+  // BUSY -  Reset() or Flush() are issued to VDA. GAVDA is waiting
+  //         that NotifyResetDone() or NotifyFlushDone() are invoked.
+  enum State : uint32_t {
+    DECODING,
+    ERROR,
+    BUSY,
+  };
+
+  State state_;
+  std::queue<base::Closure> pending_requests_;
+  ResetCallback reset_callback_;
+  FlushCallback flush_callback_;
 
   gpu::GpuPreferences gpu_preferences_;
-  std::unique_ptr<ArcVideoDecodeAccelerator> accelerator_;
+  std::unique_ptr<media::VideoDecodeAccelerator> vda_;
   ::arc::mojom::VideoDecodeClientPtr client_;
 
+  gfx::Size coded_size_;
+  media::VideoPixelFormat output_pixel_format_;
+
+  THREAD_CHECKER(thread_checker_);
   DISALLOW_COPY_AND_ASSIGN(GpuArcVideoDecodeAccelerator);
 };
 
