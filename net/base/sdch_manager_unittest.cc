@@ -19,8 +19,14 @@
 #include "base/trace_event/process_memory_dump.h"
 #include "base/trace_event/trace_event_argument.h"
 #include "net/base/sdch_observer.h"
+#include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
+
+using testing::Contains;
+using testing::Eq;
+using testing::ByRef;
+using base::trace_event::MemoryAllocatorDump;
 
 namespace net {
 
@@ -681,27 +687,21 @@ TEST_P(SdchManagerMemoryDumpTest, DumpMemoryStats) {
   const base::trace_event::MemoryAllocatorDump* dump = pmd->GetAllocatorDump(
       base::StringPrintf("net/sdch_manager_0x%" PRIxPTR,
                          reinterpret_cast<uintptr_t>(sdch_manager())));
-  std::unique_ptr<base::Value> raw_attrs =
-      dump->attributes_for_testing()->ToBaseValue();
-  base::DictionaryValue* attrs;
-  ASSERT_TRUE(raw_attrs->GetAsDictionary(&attrs));
-  base::DictionaryValue* size_attrs;
-  ASSERT_TRUE(attrs->GetDictionary(
-      base::trace_event::MemoryAllocatorDump::kNameSize, &size_attrs));
-  size_t offset = dictionary_text.find("\n\n") + 2;
-  std::string size;
-  ASSERT_TRUE(size_attrs->GetString("value", &size));
-  int actual_size;
-  ASSERT_TRUE(base::HexStringToInt(size, &actual_size));
-  EXPECT_EQ(dictionary_text.size() - offset, static_cast<size_t>(actual_size));
 
-  base::DictionaryValue* count_attrs;
-  ASSERT_TRUE(attrs->GetDictionary(
-      base::trace_event::MemoryAllocatorDump::kNameObjectCount, &count_attrs));
-  std::string count;
-  ASSERT_TRUE(count_attrs->GetString("value", &count));
-  // One dictionary.
-  EXPECT_EQ("1", count);
+  {
+    size_t expected_size =
+        dictionary_text.size() - dictionary_text.find("\n\n") - 2;
+    MemoryAllocatorDump::Entry expected(MemoryAllocatorDump::kNameSize,
+                                        MemoryAllocatorDump::kUnitsBytes,
+                                        expected_size);
+    EXPECT_THAT(dump->entries_for_testing(), Contains(Eq(ByRef(expected))));
+  }
+
+  {
+    MemoryAllocatorDump::Entry expected(MemoryAllocatorDump::kNameObjectCount,
+                                        MemoryAllocatorDump::kUnitsObjects, 1);
+    EXPECT_THAT(dump->entries_for_testing(), Contains(Eq(ByRef(expected))));
+  }
 
   sdch_manager()->RemoveObserver(&observer);
 }

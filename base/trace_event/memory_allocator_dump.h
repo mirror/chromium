@@ -8,6 +8,7 @@
 #include <stdint.h>
 
 #include <memory>
+#include <ostream>
 #include <string>
 
 #include "base/base_export.h"
@@ -124,14 +125,7 @@ class BASE_EXPORT MemoryAllocatorDump {
 
   const std::vector<Entry>& entries_for_testing() const { return entries_; }
 
-  // Decprecated testing method. Use entries_for_testing instead.
-  // TODO(hjd): Remove this and refactor callers to use entries_for_testing then
-  // inline DumpAttributes.
-  std::unique_ptr<TracedValue> attributes_for_testing() const;
-
  private:
-  void DumpAttributes(TracedValue* value) const;
-
   const std::string absolute_name_;
   ProcessMemoryDump* const process_memory_dump_;  // Not owned (PMD owns this).
   MemoryAllocatorDumpGuid guid_;
@@ -142,6 +136,10 @@ class BASE_EXPORT MemoryAllocatorDump {
 
   DISALLOW_COPY_AND_ASSIGN(MemoryAllocatorDump);
 };
+
+// This is required by gtest to print a readable output on test failures.
+void BASE_EXPORT PrintTo(const MemoryAllocatorDump::Entry& entry,
+                         std::ostream* out);
 
 }  // namespace trace_event
 }  // namespace base

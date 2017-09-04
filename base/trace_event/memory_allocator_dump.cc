@@ -80,8 +80,11 @@ void MemoryAllocatorDump::AddString(const char* name,
   entries_.emplace_back(name, units, value);
 }
 
-void MemoryAllocatorDump::DumpAttributes(TracedValue* value) const {
+void MemoryAllocatorDump::AsValueInto(TracedValue* value) const {
   std::string string_conversion_buffer;
+  value->BeginDictionaryWithCopiedName(absolute_name_);
+  value->SetString("guid", guid_.ToString());
+  value->BeginDictionary("attrs");
 
   for (const Entry& entry : entries_) {
     value->BeginDictionaryWithCopiedName(entry.name);
@@ -101,24 +104,10 @@ void MemoryAllocatorDump::DumpAttributes(TracedValue* value) const {
     }
     value->EndDictionary();
   }
-}
-
-void MemoryAllocatorDump::AsValueInto(TracedValue* value) const {
-  value->BeginDictionaryWithCopiedName(absolute_name_);
-  value->SetString("guid", guid_.ToString());
-  value->BeginDictionary("attrs");
-  DumpAttributes(value);
   value->EndDictionary();  // "attrs": { ... }
   if (flags_)
     value->SetInteger("flags", flags_);
   value->EndDictionary();  // "allocator_name/heap_subheap": { ... }
-}
-
-std::unique_ptr<TracedValue> MemoryAllocatorDump::attributes_for_testing()
-    const {
-  std::unique_ptr<TracedValue> attributes = base::MakeUnique<TracedValue>();
-  DumpAttributes(attributes.get());
-  return attributes;
 }
 
 MemoryAllocatorDump::Entry::Entry(Entry&& other) = default;
@@ -143,6 +132,21 @@ bool MemoryAllocatorDump::Entry::operator==(const Entry& rhs) const {
   }
   NOTREACHED();
   return false;
+}
+
+void PrintTo(const base::trace_event::MemoryAllocatorDump::Entry& entry,
+             std::ostream* out) {
+  switch (entry.entry_type) {
+    case MemoryAllocatorDump::Entry::EntryType::kUint64:
+      *out << "<Entry(\"" << entry.name << "\", \"" << entry.units << "\", "
+           << entry.value_uint64 << ")>";
+      return;
+    case MemoryAllocatorDump::Entry::EntryType::kString:
+      *out << "<Entry(\"" << entry.name << "\", \"" << entry.units << "\", \""
+           << entry.value_string << "\")>";
+      return;
+  }
+  NOTREACHED();
 }
 
 }  // namespace trace_event
