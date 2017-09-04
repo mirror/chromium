@@ -22,6 +22,30 @@
       "revId": "ab7f94864db328c1eda28ce2a2924bc66a6affdf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1083faaf_42a24398",
+        "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_panel_overlay_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-09-04T21:49:01Z",
+      "side": 1,
+      "message": "This state cannot be removed because that\u0027s a state by itself, except that the UI is not managed by the usual view (|_container|), but the |_signinPromoView|. The sign-in promo view doesn\u0027t in the design container.",
+      "parentUuid": "2b61b90d_0d0909d0",
+      "range": {
+        "startLine": 273,
+        "startChar": 0,
+        "endLine": 273,
+        "endChar": 31
+      },
+      "revId": "ab7f94864db328c1eda28ce2a2924bc66a6affdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
