@@ -116,7 +116,8 @@ class CONTENT_EXPORT ServiceWorkerContextWrapper
   void CountExternalRequestsForTest(
       const GURL& url,
       const CountExternalRequestsCallback& callback) override;
-  void StopAllServiceWorkersForOrigin(const GURL& origin) override;
+  void StopAllServiceWorkersForOrigin(const GURL& origin,
+                                      ResultOnceCallback callback) override;
   void ClearAllServiceWorkersForTest(const base::Closure& callback) override;
   bool StartingExternalRequest(int64_t service_worker_version_id,
                                const std::string& request_uuid) override;
@@ -294,6 +295,11 @@ class CONTENT_EXPORT ServiceWorkerContextWrapper
   void DidFindRegistrationForUpdate(
       ServiceWorkerStatusCode status,
       scoped_refptr<content::ServiceWorkerRegistration> registration);
+
+  void StopAllServiceWorkersForOriginOnIO(
+      const GURL& origin,
+      ResultOnceCallback callback,
+      scoped_refptr<base::SingleThreadTaskRunner> task_runner_for_callback);
 
   void StartServiceWorkerForNavigationHintOnIO(
       const GURL& document_url,
