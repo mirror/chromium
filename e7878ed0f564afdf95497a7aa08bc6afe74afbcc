@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6648b55_901b73e8",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/resources/skip-waiting-installed-worker.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-04T08:57:24Z",
+      "side": 1,
+      "message": "\"is not set\" -\u003e \"is set\", right?",
+      "revId": "e7878ed0f564afdf95497a7aa08bc6afe74afbcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

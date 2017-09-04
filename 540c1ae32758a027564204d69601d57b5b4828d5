@@ -209,6 +209,24 @@
       "revId": "540c1ae32758a027564204d69601d57b5b4828d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8f0e079_eaa2e023",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/resources/skip-waiting-installed-worker.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-04T08:57:24Z",
+      "side": 1,
+      "message": "Ah makes sense. Also, inside worker.js, it should be sufficient to just check that we got the \u0027activate\u0027 event, since that means we\u0027re now .active.",
+      "parentUuid": "2d867f75_8d85ff18",
+      "revId": "540c1ae32758a027564204d69601d57b5b4828d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
