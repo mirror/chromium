@@ -104,6 +104,10 @@
     cursor: pointer;
 }
 
+.spectrum-contrast-info[data-keyboard-focus="true"] {
+    outline-width: initial;
+}
+
 .spectrum-contrast-info.contrast-unknown .value {
     display: none;
 }
@@ -147,6 +151,7 @@
     color: #333;
     display: none;
     line-height: initial;
+    -webkit-user-select: text;
 }
 
 .spectrum-contrast-details div.toolbar {
@@ -196,10 +201,6 @@
 }
 .spectrum-contrast-details .contrast-thresholds div {
     margin: 0;
-}
-
-.contrast-link {
-    margin-left: 0.5em;
 }
 
 .contrast-link .mediumicon-info {
@@ -612,6 +613,11 @@ div.palette-preview {
 
 .swatch.contrast [is=ui-icon] {
     margin: -2px;
+}
+
+.swatch.contrast .hidden-text {
+    position: absolute;
+    clip: rect(0px, 0px, 0px, 0px);
 }
 
 button.background-color-picker {
