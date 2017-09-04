@@ -90,6 +90,14 @@ class TryChromeDialog : public views::ButtonListener {
                     DialogType dialog_type,
                     UsageType usage_type);
 
+  // Returns a screen rectangle that is fit to show the window, preferring to
+  // position the window centered "over" Chrome's taskbar icon. Falls back to
+  // ComputeWindowPosition if no taskbar icon can be found on the primary
+  // monitor or in case of any other error.
+  gfx::Rect ComputePopupBoundsOverTaskbar(DialogType dialog_type,
+                                          const gfx::Size& size,
+                                          bool is_RTL);
+
   // Returns a screen rectangle that is fit to show the window. In particular
   // it has the following properties: a) is visible and b) is attached to the
   // bottom of the working area. For LTR machines it returns a left side

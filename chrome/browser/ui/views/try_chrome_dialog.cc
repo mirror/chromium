@@ -11,6 +11,7 @@
 #include "chrome/app/vector_icons/vector_icons.h"
 #include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
 #include "chrome/browser/ui/views/harmony/chrome_typography.h"
+#include "chrome/browser/win/taskbar_icon_finder.h"
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
 #include "chrome/grit/theme_resources.h"
@@ -257,7 +258,8 @@ TryChromeDialog::Result TryChromeDialog::ShowDialog(
 
   // Padding between buttons and the edge of the view is via the border.
   gfx::Size preferred = layout->GetPreferredSize(root_view);
-  gfx::Rect pos = ComputePopupBounds(preferred, base::i18n::IsRTL());
+  gfx::Rect pos = ComputePopupBoundsOverTaskbar(dialog_type, preferred,
+                                                base::i18n::IsRTL());
   popup_->SetBounds(pos);
   layout->Layout(root_view);
 
@@ -287,6 +289,70 @@ TryChromeDialog::Result TryChromeDialog::ShowDialog(
       listener.Run(nullptr);
   }
   return result_;
+}
+
+gfx::Rect TryChromeDialog::ComputePopupBoundsOverTaskbar(DialogType dialog_type,
+                                                         const gfx::Size& size,
+                                                         bool is_RTL) {
+  // Get the bounding rectangle of the taskbar.
+  RECT temp_rect = {};
+  HWND taskbar = ::FindWindow(L"Shell_TrayWnd", nullptr);
+  if (!taskbar || !::GetWindowRect(taskbar, &temp_rect))
+    return ComputePopupBounds(size, is_RTL);
+  gfx::Rect taskbar_rect(temp_rect);
+
+  // Get the bounds and work area of the primary display.
+  constexpr POINT kOrigin = {};
+  MONITORINFO monitor_info = {};
+  monitor_info.cbSize = sizeof(monitor_info);
+  if (!::GetMonitorInfo(::MonitorFromPoint(kOrigin, MONITOR_DEFAULTTOPRIMARY),
+                        &monitor_info)) {
+    return ComputePopupBounds(size, is_RTL);
+  }
+  gfx::Rect monitor_rect(monitor_info.rcMonitor);
+
+  // Always position in the corner when running as a test.
+  if (dialog_type == DialogType::MODELESS_FOR_TEST)
+    return ComputePopupBounds(size, is_RTL);
+
+  // Get the bounding rectangle of Chrome's taskbar icon on the primary monitor.
+  gfx::Rect icon_rect = FindTaskbarIconModal();
+  if (icon_rect.IsEmpty())
+    return ComputePopupBounds(size, is_RTL);
+
+  // Center the window over/under/next to the taskbar icon, offset by 1/4 the
+  // height/width of the icon.
+  static constexpr int kOffsetDenominator = 4;
+  gfx::Rect result(size);
+
+  // Where is the taskbar? Assume that it's "wider" than it is "tall".
+  if (taskbar_rect.width() > taskbar_rect.height()) {
+    // Horizonal.
+    result.set_x(icon_rect.x() + icon_rect.width() / 2 - size.width() / 2);
+    int offset = icon_rect.height() / kOffsetDenominator;
+    if (taskbar_rect.y() < monitor_rect.y() + monitor_rect.height() / 2) {
+      // Top.
+      result.set_y(icon_rect.y() + icon_rect.height() + offset);
+    } else {
+      // Bottom.
+      result.set_y(icon_rect.y() - size.height() - offset);
+    }
+  } else {
+    // Vertical.
+    result.set_y(icon_rect.y() + icon_rect.height() / 2 - size.height() / 2);
+    int offset = icon_rect.width() / kOffsetDenominator;
+    if (taskbar_rect.x() < monitor_rect.x() + monitor_rect.width() / 2) {
+      // Left.
+      result.set_x(icon_rect.x() + icon_rect.width() + offset);
+    } else {
+      // Right.
+      result.set_x(icon_rect.x() - size.width() - offset);
+    }
+  }
+
+  // Make sure it doesn't spill out of the display.
+  result.AdjustToFit(gfx::Rect(monitor_info.rcWork));
+  return result;
 }
 
 gfx::Rect TryChromeDialog::ComputePopupBounds(const gfx::Size& size,
