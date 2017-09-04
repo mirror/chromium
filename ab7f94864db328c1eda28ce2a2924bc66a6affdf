@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b61b90d_0d0909d0",
+        "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_panel_overlay_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-09-04T15:13:28Z",
+      "side": 1,
+      "message": "I\u0027m curious what you DCHECK for if this should be NOTREACHED in any cases. I mean, DCHECK(true) would be as efficient no?\n\nAnd can you add documentation on the enum? I have no idea what those states are, and why this is now a NOTREACHED case. Can the entry in the enum be removed completely?",
+      "range": {
+        "startLine": 273,
+        "startChar": 0,
+        "endLine": 273,
+        "endChar": 31
+      },
+      "revId": "ab7f94864db328c1eda28ce2a2924bc66a6affdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
