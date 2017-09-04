@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0804aeaa_b3d81900",
+        "filename": "ios/chrome/browser/browser_state/chrome_browser_state.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-04T17:20:27Z",
+      "side": 1,
+      "message": "Removed the comment.",
+      "parentUuid": "b0256555_e45a67fe",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 67
+      },
+      "revId": "18789d35ad01a3bce0bc71359aa9514d775a6193",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4194f8ce_be49b316",
         "filename": "ios/chrome/browser/browsing_data/cache_counter_unittest.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "18789d35ad01a3bce0bc71359aa9514d775a6193",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a45d168_4957acea",
+        "filename": "ios/chrome/browser/browsing_data/cache_counter_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-04T17:20:27Z",
+      "side": 1,
+      "message": "From gtest FAQ:\n\n\u003e When you need to write per-test set-up and tear-down logic, you have the choice between using the test fixture constructor/destructor or SetUp()/TearDown(). The former is usually preferred (...)\n\nSince the initialisation cannot raise exception and does not call virtual method, I changed the code to use the preferred way to initialise the variable (constructor).\n\nhttps://github.com/google/googletest/blob/master/googletest/docs/FAQ.md#should-i-use-the-constructordestructor-of-the-test-fixture-or-the-set-uptear-down-function",
+      "parentUuid": "4194f8ce_be49b316",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 58
+      },
+      "revId": "18789d35ad01a3bce0bc71359aa9514d775a6193",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f54d5db5_9bf08c07",
+        "filename": "ios/chrome/browser/signin/gaia_auth_fetcher_ios_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-04T17:20:27Z",
+      "side": 1,
+      "message": "Same answer, this is what gtest FAQ recommends.",
+      "parentUuid": "0b90156b_cbba2ebe",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 24
+      },
+      "revId": "18789d35ad01a3bce0bc71359aa9514d775a6193",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4e4cdcd_5b0b2f2f",
         "filename": "ios/chrome/browser/ui/coordinators/browser_coordinator_test.h",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "18789d35ad01a3bce0bc71359aa9514d775a6193",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d55e3479_4cf4b9ff",
+        "filename": "ios/chrome/browser/ui/coordinators/browser_coordinator_test.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-04T17:20:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d4e4cdcd_5b0b2f2f",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 36
+      },
+      "revId": "18789d35ad01a3bce0bc71359aa9514d775a6193",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
