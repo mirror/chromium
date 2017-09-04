@@ -34,6 +34,24 @@
       "revId": "fc62fc3ea1d507b1d5495316fcfa59150f0aa097",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a024f72a_c0a4ac4c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-09-04T09:22:43Z",
+      "side": 1,
+      "message": "Thanks. lgtm",
+      "parentUuid": "54de2c7d_a61432bf",
+      "revId": "fc62fc3ea1d507b1d5495316fcfa59150f0aa097",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
