@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "d01a995b_e91c25a6",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webvtt/parsing/cue-text-parsing/dat/entities.dat",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-09-04T08:16:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9bf20111_c81211c5",
+      "range": {
+        "startLine": 150,
+        "startChar": 4,
+        "endLine": 150,
+        "endChar": 11
+      },
+      "revId": "c45ff065625e16d62d1499ac17be572acb4760ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c1e4ab3_df54e44e",
         "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTTokenizer.cpp",
         "patchSetId": 1
