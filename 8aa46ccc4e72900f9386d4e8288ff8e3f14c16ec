@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "1292e29e_2a9dfd84",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-04T05:11:11Z",
+      "side": 1,
+      "message": "Could you move this change to another patch since this change doesn\u0027t relate to fix the bug?",
+      "revId": "8aa46ccc4e72900f9386d4e8288ff8e3f14c16ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2fef8118_8e9317fc",
         "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
         "patchSetId": 8

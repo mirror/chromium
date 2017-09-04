@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2409cc3a_a2a4f9d7",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-04T05:11:11Z",
+      "side": 1,
+      "message": "Could you move this change into another patch? Since, this doesn\u0027t\nrelate to CF found issue.\n\nUpdateSelectionForMouseDownDispatchingSelectStart() returns false\nwhen JS calls Event#preventDefault() and other non-usual cases.",
+      "revId": "a7c68357629d656a004050f02e565585159ad042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
