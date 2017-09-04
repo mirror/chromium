@@ -477,6 +477,10 @@
       status: "stable",
     },
     {
+      name: "GetMatchedCSSRules",
+      status: "test",
+    },
+    {
       name: "GetUserMedia",
       status: "stable",
     },
