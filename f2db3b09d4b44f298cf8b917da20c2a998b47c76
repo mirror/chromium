@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ec6c3e74_d97a6d08",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_dictionary.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-04T03:13:47Z",
+      "side": 1,
+      "message": "That\u0027s right. We should do it in the future, and it will affects any generated code.  In this CL, I\u0027d like to limit the scope to unions and dictionaries.\nI added a TODO() comment to cpp_name().",
+      "parentUuid": "3d8deec7_e8d7b553",
+      "range": {
+        "startLine": 124,
+        "startChar": 55,
+        "endLine": 124,
+        "endChar": 63
+      },
+      "revId": "f2db3b09d4b44f298cf8b917da20c2a998b47c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "283e48cf_517d26fa",
         "filename": "third_party/WebKit/Source/bindings/scripts/v8_union.py",
         "patchSetId": 3
@@ -36,6 +60,24 @@
       "writtenOn": "2017-09-04T02:42:29Z",
       "side": 1,
       "message": "Looks like we should use cpp_name() here. Could you change this to call cpp_name() ?",
+      "revId": "f2db3b09d4b44f298cf8b917da20c2a998b47c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "add4981b_1a2186af",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_union.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-04T03:13:47Z",
+      "side": 1,
+      "message": "Done.  I had to add some code to cpp_name() because |member.extended_attributes| is None.",
+      "parentUuid": "283e48cf_517d26fa",
       "revId": "f2db3b09d4b44f298cf8b917da20c2a998b47c76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
