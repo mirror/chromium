@@ -109,6 +109,24 @@
     },
     {
       "key": {
+        "uuid": "38b4d3f9_79a619f9",
+        "filename": "components/drive/drive.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-09-04T05:25:19Z",
+      "side": 1,
+      "message": "OK, then let\u0027s use reserved.",
+      "parentUuid": "e57c8b0f_c3d6f0f9",
+      "revId": "a5fbeaa9462859352a98eb7b7d5785f9a4a448c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51198aa1_b3a8e720",
         "filename": "components/drive/resource_metadata_storage.cc",
         "patchSetId": 1
@@ -441,6 +459,24 @@
       "revId": "a5fbeaa9462859352a98eb7b7d5785f9a4a448c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48281689_88caccc6",
+        "filename": "components/drive/resource_metadata_storage_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-09-04T05:25:19Z",
+      "side": 1,
+      "message": "\u003e Regarding cherry-pick: I really feel hesitant about cherry-picking CLs like this. Messing up a user\u0027s persistent state results in having ugly cleanup logic like the one for crbug.com/374648. It\u0027s better to test the new code only on Dev channel as long as possible.\n\nYour concern about cherry-picking patches changing DB definitely makes sense. Given that we already passed M62 cut point, it might be better to consider other options. Let\u0027s talk offline later.\n\n\n\u003e Can\u0027t you add that feature to M62 without coverage on Drive?\n\nUnfortunately no -- Drive is the only source (among Drive, Downloads and ARC media) where \"last modified by me\" fix is needed.\n\n\n\u003e DeleteUnusedIDEntries is test against M37 DB.\n\u003e IIUC there is no need to add a test for v14-\u003ev15 because all beta/stable devices directly update from 13 to 15 when they receive M63 update.\n\nYour answer was not very clear to me, but I assume you meant (1) I can keep the name of DeleteUnusedIDEntries as-is and (2) I don\u0027t need to add an unit test case for the next change CL:641735. If I\u0027m wrong please let me know.",
+      "parentUuid": "44c9ddb3_3425baf5",
+      "revId": "a5fbeaa9462859352a98eb7b7d5785f9a4a448c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
