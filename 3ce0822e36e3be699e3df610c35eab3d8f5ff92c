@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "499ad2ad_8b5de691",
+        "filename": "third_party/WebKit/Source/build/scripts/json5_generator.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-09-04T00:37:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "98debbda_d7a0eb30",
+      "revId": "3ce0822e36e3be699e3df610c35eab3d8f5ff92c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3cb024b4_5f823e49",
         "filename": "third_party/WebKit/Source/build/scripts/json5_generator.py",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-03T23:36:02Z",
       "side": 1,
       "message": "Before, you could specifiy valid_values: [1, 2, 3]. Now it seems like 1, 2, 3 would be treated as regexes? Maybe we should only check regex if the valid_type is \u0027str\u0027.",
+      "revId": "3ce0822e36e3be699e3df610c35eab3d8f5ff92c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec95ed8a_57748385",
+        "filename": "third_party/WebKit/Source/build/scripts/json5_generator.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-09-04T00:37:09Z",
+      "side": 1,
+      "message": "yeah, I think check for type of str first would be safer. I was assuming is would be string",
+      "parentUuid": "3cb024b4_5f823e49",
       "revId": "3ce0822e36e3be699e3df610c35eab3d8f5ff92c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "dc75851b_baa81a31",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-09-04T00:37:09Z",
+      "side": 1,
+      "message": "maybe but I think now alias can start and end with anything not necessarily \"\u003c\", \"\u003e\" or do you want to enforec if alias then it must start with \"\u003c\" and end with \"\u003e\"",
+      "parentUuid": "cb5a240f_b90a7fe9",
+      "revId": "3ce0822e36e3be699e3df610c35eab3d8f5ff92c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2d10600_918c61a0",
         "filename": "third_party/WebKit/Source/core/BUILD.gn",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-03T23:36:02Z",
       "side": 1,
       "message": "nit: CSSFieldAlias -\u003e ComputedStyleFieldAliases",
+      "revId": "3ce0822e36e3be699e3df610c35eab3d8f5ff92c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "424df18e_b4da17c4",
+        "filename": "third_party/WebKit/Source/core/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-09-04T00:37:09Z",
+      "side": 1,
+      "message": "fine :v",
+      "parentUuid": "b2d10600_918c61a0",
       "revId": "3ce0822e36e3be699e3df610c35eab3d8f5ff92c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -84,6 +156,24 @@
       "revId": "3ce0822e36e3be699e3df610c35eab3d8f5ff92c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58c63d7e_3f432366",
+        "filename": "third_party/WebKit/Source/core/css/CSSFieldAlias.json5",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-09-04T00:37:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "46cc53b6_59e544cd",
+      "revId": "3ce0822e36e3be699e3df610c35eab3d8f5ff92c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
