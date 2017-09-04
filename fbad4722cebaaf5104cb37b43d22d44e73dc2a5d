@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15cc6299_2206ca56",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-04T05:35:40Z",
+      "side": 1,
+      "message": "Should this instead take a RRCompletionStatus as an out parameter, to avoid copying on the return? We seem to use const RRCompletionStatus\u0026 everywhere instead of passing by value.\n\nI\u0027ve seen this in a couple places... maybe RRCS just needs a ctor(net::Error) or ctor(net::Error, base::TimeTicks)?",
+      "revId": "fbad4722cebaaf5104cb37b43d22d44e73dc2a5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5348ce5_0c83cd97",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-04T05:35:40Z",
+      "side": 1,
+      "message": "also set completion_time to Now()?",
+      "revId": "fbad4722cebaaf5104cb37b43d22d44e73dc2a5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
