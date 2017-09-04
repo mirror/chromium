@@ -20,9 +20,11 @@
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/common/url_constants.h"
 #include "content/public/test/mock_render_process_host.h"
+#include "content/public/test/navigation_simulator.h"
 #include "content/public/test/web_contents_tester.h"
 
 using content::WebContents;
+using content::NavigationSimulator;
 using content::WebContentsObserver;
 
 namespace {
@@ -268,8 +270,7 @@ TEST_F(PrintPreviewDialogControllerUnitTest, CloseDialogOnNavigation) {
   EXPECT_FALSE(manager->PrintPreviewNow(web_contents->GetMainFrame(), false));
 
   // Navigate with back button or ALT+LEFT ARROW to a similar page.
-  nav_controller.GoBack();
-  CommitPendingLoad(&nav_controller);
+  NavigationSimulator::GoBack(web_contents);
   EXPECT_EQ(tiger, web_contents->GetLastCommittedURL());
   EXPECT_TRUE(manager->PrintPreviewNow(web_contents->GetMainFrame(), false));
 
@@ -288,10 +289,9 @@ TEST_F(PrintPreviewDialogControllerUnitTest, CloseDialogOnNavigation) {
   // Try to simulate Gmail navigation: Navigate to an existing page (via
   // Forward) but modify the navigation type while pending to look like an
   // address bar + typed transition (like Gmail auto navigation)
-  nav_controller.GoForward();
-  nav_controller.GetPendingEntry()->SetTransitionType(ui::PageTransitionFromInt(
-      ui::PAGE_TRANSITION_TYPED | ui::PAGE_TRANSITION_FROM_ADDRESS_BAR));
-  CommitPendingLoad(&nav_controller);
+  auto navigation =
+      NavigationSimulator::CreateBrowserInitiated(GURL(), web_contents);
+  navigation->CommitSameDocument();
 
   // Navigation successful
   EXPECT_EQ(tiger_barb, web_contents->GetLastCommittedURL());
