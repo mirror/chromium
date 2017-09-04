@@ -1,0 +1,843 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f87d9b3_40c4567b",
+        "filename": "chrome/browser/chromeos/policy/DEPS",
+        "patchSetId": 16
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-04T14:12:30Z",
+      "side": 1,
+      "message": "nit: Hmm, there\u0027s no src/unicode directory in the repository. Where\u0027s it coming from?\nOr perhaps you intended to use third_party/icu?",
+      "range": {
+        "startLine": 5,
+        "startChar": 2,
+        "endLine": 5,
+        "endChar": 12
+      },
+      "revId": "9a38538e801d24c760d2c199eb438802fc97f8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd3d7495_48ac4eee",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-04T14:12:30Z",
+      "side": 1,
+      "message": "nit: I believe, it\u0027s forbidden by our style guide to have global constants which are initialized with a result of a function. \"constexpr\" would be allowed, but in this case it won\u0027t work with methods like InMilliseconds().\nTherefore you\u0027ll have to move these constants inside the classes or functions that need them, or transform each constant into a small function.",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 78
+      },
+      "revId": "9a38538e801d24c760d2c199eb438802fc97f8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f2d94ea_fb2eb004",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-04T14:12:30Z",
+      "side": 1,
+      "message": "nit: Maybe add some DCHECKs for verifying that values belong to the expected ranges?\nThis will also suit as an additional documentation.",
+      "range": {
+        "startLine": 37,
+        "startChar": 8,
+        "endLine": 37,
+        "endChar": 62
+      },
+      "revId": "9a38538e801d24c760d2c199eb438802fc97f8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "002bb7a9_b6e218de",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-04T14:12:30Z",
+      "side": 1,
+      "message": "nit: The body of the constructor looks a bit heavy-weighted. I\u0027d suggest extracting the timezone conversion logic into a separate function. Perhaps, even rely on the client code to call that function, and leave only a single constructor with |day_of_week| and |milliseconds| - so that, conceptually, |WeeklyTime| becomes again a dumb container of the day and time.",
+      "range": {
+        "startLine": 41,
+        "startChar": 77,
+        "endLine": 41,
+        "endChar": 78
+      },
+      "revId": "9a38538e801d24c760d2c199eb438802fc97f8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d177e00_16eab5ae",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-04T14:12:30Z",
+      "side": 1,
+      "message": "Unlike with the GregorianCalendar variable below (see my comment on line 53), I believe there\u0027s no memory leak here, because icu::GregorianCalendar takes ownership of the passed time zone (although we\u0027ll have to double-check this).\nAnd to make this explicit for the future readers of the code, please follow the same approach as I recommended for GregorianCalendar - store TimeZone in std::unique_ptr (in this case, however, you\u0027ll have to use base::WrapUnique).",
+      "revId": "9a38538e801d24c760d2c199eb438802fc97f8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e723f925_08fbcc06",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-04T14:12:30Z",
+      "side": 1,
+      "message": "It\u0027s still unclear from the comment, between what is this delta, and why it\u0027s negated.",
+      "range": {
+        "startLine": 49,
+        "startChar": 7,
+        "endLine": 49,
+        "endChar": 37
+      },
+      "revId": "9a38538e801d24c760d2c199eb438802fc97f8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9aa620ea_1518d1da",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-04T14:12:30Z",
+      "side": 1,
+      "message": "nit: According to the Style guide, variable names must be lowercase and don\u0027t use abbreviations.\n(The same comment applies throughout this function.)",
+      "range": {
+        "startLine": 50,
+        "startChar": 8,
+        "endLine": 50,
+        "endChar": 15
+      },
+      "revId": "9a38538e801d24c760d2c199eb438802fc97f8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a6f1a3a_b80fa8b5",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-04T14:12:30Z",
+      "side": 1,
+      "message": "I believe, a memory leak is introduced here - you\u0027re instantiating a new object without deleting it later.\nEither you have to manually call \"delete\" on it, or, much better, use std::unique_ptr+base::MakeUnique to make it all handled automatically.",
+      "range": {
+        "startLine": 53,
+        "startChar": 4,
+        "endLine": 53,
+        "endChar": 30
+      },
+      "revId": "9a38538e801d24c760d2c199eb438802fc97f8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c1022c0_3aced926",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-04T14:12:30Z",
+      "side": 1,
+      "message": "What if GregorianCalendar construction returned an error? Even if you checked this and you\u0027re fine with suppressing errors, then please leave a comment explaining that.",
+      "range": {
+        "startLine": 54,
+        "startChar": 4,
+        "endLine": 54,
+        "endChar": 25
+      },
+      "revId": "9a38538e801d24c760d2c199eb438802fc97f8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28643783_7c55995a",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-04T14:12:30Z",
+      "side": 1,
+      "message": "nit: Is it safe to continue processing the supplied data in case of this error? Again, if you think yes, then please add a comment here with a reasoning.",
+      "range": {
+        "startLine": 57,
+        "startChar": 6,
+        "endLine": 57,
+        "endChar": 68
+      },
+      "revId": "9a38538e801d24c760d2c199eb438802fc97f8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "685f7100_39d97a13",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-04T14:12:30Z",
+      "side": 1,
+      "message": "It\u0027s unclear what are the ideas behind these calculations. I\u0027m not saying they\u0027re wrong, but some explanatory comment and/or restructuring the code into a bunch of smaller primitive functions will definitely help.",
+      "range": {
+        "startLine": 62,
+        "startChar": 20,
+        "endLine": 62,
+        "endChar": 65
+      },
+      "revId": "9a38538e801d24c760d2c199eb438802fc97f8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea670c09_bd365848",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-04T14:12:30Z",
+      "side": 1,
+      "message": "nit: This looks a bit cryptic. Probably, create a small helper function for obtaining the next day of week?",
+      "range": {
+        "startLine": 64,
+        "startChar": 19,
+        "endLine": 64,
+        "endChar": 53
+      },
+      "revId": "9a38538e801d24c760d2c199eb438802fc97f8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af56c0b5_bb58570a",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-04T14:12:30Z",
+      "side": 1,
+      "message": "nit: Is this code really used - isn\u0027t it a debug-only code?\nIf you plan to keep it forever, then it should be clear from the method name that it\u0027s not a machine readable format - e.g. \"ToDebugString\".",
+      "range": {
+        "startLine": 78,
+        "startChar": 2,
+        "endLine": 83,
+        "endChar": 3
+      },
+      "revId": "9a38538e801d24c760d2c199eb438802fc97f8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "351f1d14_35664187",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-04T14:12:30Z",
+      "side": 1,
+      "message": "nit: Better not using abbreviations in variable names - for instance, a name like \"other\" would work well here.",
+      "range": {
+        "startLine": 85,
+        "startChar": 36,
+        "endLine": 85,
+        "endChar": 38
+      },
+      "revId": "9a38538e801d24c760d2c199eb438802fc97f8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "383b69d5_2f6d9a66",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-04T14:12:30Z",
+      "side": 1,
+      "message": "nit: Such comparison of pairs may be coded simpler using std::tie.",
+      "range": {
+        "startLine": 91,
+        "startChar": 12,
+        "endLine": 93,
+        "endChar": 50
+      },
+      "revId": "9a38538e801d24c760d2c199eb438802fc97f8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2030814_ba68df23",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-04T14:12:30Z",
+      "side": 1,
+      "message": "nit: Do you really need so many comparators?\nThis class is only used in a single file, so we may sacrifice the convenience for brevity.\nIn principle, only \"\u003c\" is really necessary to derive all other operations from it; \"\u003d\u003d\" may be also useful as a performance gain.",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 107,
+        "endChar": 0
+      },
+      "revId": "9a38538e801d24c760d2c199eb438802fc97f8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65617115_caa1708c",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-04T14:12:30Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think that operator \"-\" is the right concept for this operation - it\u0027s non-obvious what the subtraction of weekly times means.\nTo avoid ambiguity, better make this a normal function.",
+      "range": {
+        "startLine": 112,
+        "startChar": 2,
+        "endLine": 112,
+        "endChar": 15
+      },
+      "revId": "9a38538e801d24c760d2c199eb438802fc97f8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7ebb2b5_3016a74a",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-04T14:12:30Z",
+      "side": 1,
+      "message": "Isn\u0027t this change of meaning introducing more problems?\nFor instance, how should the interval that encodes the whole Monday be represented - by [Mon 0; Tue 0) or maybe [Mon 0; Mon 86400000)? (it\u0027s not clearly documented anywhere what are the bounds for the data fields.)",
+      "range": {
+        "startLine": 132,
+        "startChar": 47,
+        "endLine": 132,
+        "endChar": 48
+      },
+      "revId": "9a38538e801d24c760d2c199eb438802fc97f8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d17bf071_60f208ef",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-04T14:12:30Z",
+      "side": 1,
+      "message": "nit: IntervalCoversWeeklyTime?",
+      "revId": "9a38538e801d24c760d2c199eb438802fc97f8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "384d9228_ad3eaf9a",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-04T14:12:30Z",
+      "side": 1,
+      "message": "Can\u0027t this mean \"whole week\"?",
+      "range": {
+        "startLine": 156,
+        "startChar": 6,
+        "endLine": 157,
+        "endChar": 17
+      },
+      "revId": "9a38538e801d24c760d2c199eb438802fc97f8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e99abfcd_4aab1102",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-04T14:12:30Z",
+      "side": 1,
+      "message": "nit: Omit \"else\" here.\nSee \nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#code-formatting",
+      "range": {
+        "startLine": 158,
+        "startChar": 4,
+        "endLine": 158,
+        "endChar": 8
+      },
+      "revId": "9a38538e801d24c760d2c199eb438802fc97f8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3fe24b3_74f378f7",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-04T14:12:30Z",
+      "side": 1,
+      "message": "nit: Unnecessary.",
+      "range": {
+        "startLine": 211,
+        "startChar": 2,
+        "endLine": 211,
+        "endChar": 44
+      },
+      "revId": "9a38538e801d24c760d2c199eb438802fc97f8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89f0d160_f26a2586",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-04T14:12:30Z",
+      "side": 1,
+      "message": "I\u0027m a bit concerned about duplicating the sign-in logic here in this class.\nOne problem is that the policy values aren\u0027t always trivially mapped to the resulting flags. For instance, the Guest mode state depends on two policies: BrowserGuestModeEnabled and BrowserGuestModeEnabled [1] (it\u0027s not happening on Chrome OS, but that\u0027s just a quick example).\nSecond problem is that as soon as something is changed/added in the Chrome OS login code, it\u0027s easy to miss mirroring the changes here.\n\nMaybe the sign-out should be handled somewhere around the sign-in logic, without any specific code here. But even then, you\u0027d have the analogous problem with showing a logout notification, which you planned to add later I guess?\n\nA lot of stuff to consider, unfortunately...\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/profiles/guest_mode_policy_handler.cc?l\u003d21",
+      "range": {
+        "startLine": 217,
+        "startChar": 3,
+        "endLine": 217,
+        "endChar": 73
+      },
+      "revId": "9a38538e801d24c760d2c199eb438802fc97f8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a489a331_9c1624a7",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-04T14:12:30Z",
+      "side": 1,
+      "message": "This won\u0027t work that simple in the multi sign-in case - in that case GetActiveUser() will point to only one of the users that are actually signed in simultaneously.",
+      "range": {
+        "startLine": 239,
+        "startChar": 2,
+        "endLine": 239,
+        "endChar": 32
+      },
+      "revId": "9a38538e801d24c760d2c199eb438802fc97f8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "698fd623_d0523b9d",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-04T14:12:30Z",
+      "side": 1,
+      "message": "The general guideline is to avoid the global variables at all costs.\nIt\u0027s tricky to follow which code reads from them and which writes to them, tricky to check whether these operations may overlap, etc.\nNormally all the data that some code needs should be passed to it as function parameters or as object members.",
+      "range": {
+        "startLine": 264,
+        "startChar": 0,
+        "endLine": 264,
+        "endChar": 60
+      },
+      "revId": "9a38538e801d24c760d2c199eb438802fc97f8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3cfb21c_555c9076",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-04T14:12:30Z",
+      "side": 1,
+      "message": "nit: Method comments should be only located in the .h file.",
+      "range": {
+        "startLine": 365,
+        "startChar": 0,
+        "endLine": 366,
+        "endChar": 33
+      },
+      "revId": "9a38538e801d24c760d2c199eb438802fc97f8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "262775cf_e6c07444",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-04T14:12:30Z",
+      "side": 1,
+      "message": "nit: Seems like it should be a DCHECK instead.",
+      "range": {
+        "startLine": 369,
+        "startChar": 4,
+        "endLine": 370,
+        "endChar": 34
+      },
+      "revId": "9a38538e801d24c760d2c199eb438802fc97f8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd7d5cd0_fc57c01f",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-04T14:12:30Z",
+      "side": 1,
+      "message": "nit: Is this needed?",
+      "range": {
+        "startLine": 377,
+        "startChar": 4,
+        "endLine": 377,
+        "endChar": 18
+      },
+      "revId": "9a38538e801d24c760d2c199eb438802fc97f8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f3f74af_ed14531f",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-04T14:12:30Z",
+      "side": 1,
+      "message": "nit: As Drew highlighted on the Doc, be careful here: this time doesn\u0027t advance when the device goes asleep. You\u0027d want to ensure that the timer is rescheduled and the current user is rechecked after the device wakes up.\nFor instance, in the |CloudPolicyRefreshScheduler| class this was tackled by listening to net::NetworkChangeNotifier::IPAddressObserver::OnIPAddressChanged().",
+      "range": {
+        "startLine": 381,
+        "startChar": 2,
+        "endLine": 381,
+        "endChar": 14
+      },
+      "revId": "9a38538e801d24c760d2c199eb438802fc97f8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e9e23cf_4a44bbe1",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-04T14:12:30Z",
+      "side": 1,
+      "message": "Wouldn\u0027t it be possible to stay on what is provided by base::Time? Not sure about all your requirements here, but base::Time::UTCExplode() will allow to access individual constituents of the time.",
+      "range": {
+        "startLine": 437,
+        "startChar": 21,
+        "endLine": 437,
+        "endChar": 27
+      },
+      "revId": "9a38538e801d24c760d2c199eb438802fc97f8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e6cefe4_581f416a",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-04T14:12:30Z",
+      "side": 1,
+      "message": "nit: Use range-based for.",
+      "range": {
+        "startLine": 442,
+        "startChar": 2,
+        "endLine": 442,
+        "endChar": 47
+      },
+      "revId": "9a38538e801d24c760d2c199eb438802fc97f8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5f6ef8c_c37f76c2",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-04T14:12:30Z",
+      "side": 1,
+      "message": "nit: No need to make another copy of data from |policies|. For instance, to achieve this you may change |policies| to be a unique_ptr.",
+      "range": {
+        "startLine": 466,
+        "startChar": 9,
+        "endLine": 466,
+        "endChar": 57
+      },
+      "revId": "9a38538e801d24c760d2c199eb438802fc97f8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff39e1fc_64a4d33d",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-04T14:12:30Z",
+      "side": 1,
+      "message": "nit: As you\u0027re not going to use the \"off_hours\" namespace for other symbols except this function, then please remove this namespace and just rename the function to contain the words \"OffHours\".",
+      "range": {
+        "startLine": 30,
+        "startChar": 39,
+        "endLine": 30,
+        "endChar": 64
+      },
+      "revId": "9a38538e801d24c760d2c199eb438802fc97f8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ca38d7f_8e6a66c0",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-04T14:12:30Z",
+      "side": 1,
+      "message": "nit: Better name it \"OnOffHoursModeMaybeChanged\".",
+      "range": {
+        "startLine": 46,
+        "startChar": 17,
+        "endLine": 46,
+        "endChar": 41
+      },
+      "revId": "9a38538e801d24c760d2c199eb438802fc97f8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "047ea846_2e91d498",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-04T14:12:30Z",
+      "side": 1,
+      "message": "nit: Better name it \"OnOffHoursControllerShutdown\" or \"OnOffHoursControllerShuttingDown\".",
+      "range": {
+        "startLine": 50,
+        "startChar": 17,
+        "endLine": 50,
+        "endChar": 43
+      },
+      "revId": "9a38538e801d24c760d2c199eb438802fc97f8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a71fb5d_d4010128",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-04T14:12:30Z",
+      "side": 1,
+      "message": "It\u0027s advisable to avoid using singletons whenever possible, because it\u0027s hard to reason about their lifetime - i.e. when they are created/destructed, and whether all other singletons it\u0027s using are alive for its whole lifetime. Making your object being owned by some other object greatly simplifies those considerations.\n\nBut finding the right place for the class would require putting some thoughts into this and looking for various options. I can\u0027t give a precise advice right off the top of my head.\nMaybe |DeviceSettingsService| could be a right class to own |DeviceOffHoursController| - because only |DeviceSettingsService| uses it directly?..\n\nIf you want, we may schedule some time offline to discuss the possibilities here.",
+      "range": {
+        "startLine": 61,
+        "startChar": 5,
+        "endLine": 61,
+        "endChar": 31
+      },
+      "revId": "9a38538e801d24c760d2c199eb438802fc97f8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18317f80_bd43824a",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-04T14:12:30Z",
+      "side": 1,
+      "message": "nit: base::TimeDelta is better suited for this job.",
+      "range": {
+        "startLine": 109,
+        "startChar": 5,
+        "endLine": 109,
+        "endChar": 35
+      },
+      "revId": "9a38538e801d24c760d2c199eb438802fc97f8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
