@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc2bd314_e49eb77c",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/run_webkit_tests_unittest.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 986,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-09-04T01:13:25Z",
+      "side": 0,
+      "message": "This test relied on real ports and having a copy of the LayoutTests present, because it tried to run the actual binaries and parses the TestExpectations before checking that the build would fail.\n\nThis isn\u0027t really a very good unittest, as a result, and isn\u0027t worth keeping around.",
+      "revId": "67cfc31a6b45ff8d9cc305889308760696ef5b56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
