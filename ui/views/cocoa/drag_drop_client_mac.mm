@@ -55,12 +55,21 @@
 
 @end
 
+namespace {
+
+// Provides the data for the drag and drop session.
+static base::scoped_nsobject<CocoaDragDropDataProvider> data_source_;
+
+// The drag and drop operation.
+static int operation_;
+
+}
+
 namespace views {
 
 DragDropClientMac::DragDropClientMac(BridgedNativeWidget* bridge,
                                      View* root_view)
     : drop_helper_(root_view),
-      operation_(0),
       bridge_(bridge),
       quit_closure_(base::Closure()) {
   DCHECK(bridge);
@@ -73,6 +82,7 @@ void DragDropClientMac::StartDragAndDrop(
     const ui::OSExchangeData& data,
     int operation,
     ui::DragDropTypes::DragEventSource source) {
+  DCHECK(!data_source_);
   data_source_.reset([[CocoaDragDropDataProvider alloc] initWithData:data]);
   operation_ = operation;
 
@@ -140,7 +150,6 @@ NSDragOperation DragDropClientMac::DragUpdate(id<NSDraggingInfo> sender) {
     operation_ = ui::DragDropTypes::NSDragOperationToDragOperation(
         [sender draggingSourceOperationMask]);
   }
-
   drag_operation = drop_helper_.OnDragOver(
       *[data_source_ data], LocationInView([sender draggingLocation]),
       operation_);

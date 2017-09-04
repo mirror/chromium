@@ -67,14 +67,8 @@ class VIEWS_EXPORT DragDropClientMac {
   // Converts the given NSPoint to the coordinate system in Views.
   gfx::Point LocationInView(NSPoint point) const;
 
-  // Provides the data for the drag and drop session.
-  base::scoped_nsobject<CocoaDragDropDataProvider> data_source_;
-
   // Used to handle drag and drop with Views.
   DropHelper drop_helper_;
-
-  // The drag and drop operation.
-  int operation_;
 
   // The bridge between the content view and the drag drop client.
   BridgedNativeWidget* bridge_;  // Weak. Owns |this|.
