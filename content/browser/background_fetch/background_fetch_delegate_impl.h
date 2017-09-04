@@ -9,7 +9,7 @@
 #include <string>
 
 #include "base/memory/weak_ptr.h"
-#include "content/browser/background_fetch/background_fetch_delegate.h"
+#include "content/public/browser/background_fetch_delegate.h"
 #include "content/public/browser/download_interrupt_reasons.h"
 
 namespace content {
