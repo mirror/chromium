@@ -264,15 +264,6 @@ locale.  The strings in this file are specific to iOS.
       <message name="IDS_IOS_TAB_SWITCHER_NO_TABS_TO_SYNC_PROMO" desc="The title of the paragraph IDS_OPEN_TABS_NO_SESSION_INSTRUCTIONS_IOS. The paragraph explains that tabs opened on other devices where the user is signed in will appear here, in the Tab Switcher. [iOS only]">
         Use Chromium Everywhere
       </message>
-      <message name="IDS_IOS_TAB_SWITCHER_SIGN_IN_ACCOUNT_BUTTON" desc="Title of the button to sign in. [Length: 20em] [iOS only]">
-          Sign in to Chromium
-      </message>
-      <message name="IDS_IOS_TAB_SWITCHER_SIGN_IN_ACCOUNT_PROMO" desc="The message explaining that signing in an account will allow presenting tabs from other devices. [iOS only]">
-        To get your tabs from your other devices, sign in to Chromium.
-      </message>
-      <message name="IDS_IOS_TAB_SWITCHER_SIGN_IN_ACCOUNT_TITLE" desc="Title of the paragraph explaining that signing in an account will allow presenting tabs from other devices. [Length: 20em] [iOS only]">
-          Sign in to Chromium
-      </message>
       <message name="IDS_IOS_TRANSLATE_INFOBAR_NEVER_MESSAGE" desc="Message for the Translate infobar to allow the user to opt out. [Length: 250em]">
         Would you like Chromium to offer to translate <ph name="LANGUAGE_NAME">$1<ex>French</ex></ph> pages from this site next time?
       </message>
