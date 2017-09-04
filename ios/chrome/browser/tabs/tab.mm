@@ -45,9 +45,8 @@
 #include "components/strings/grit/components_strings.h"
 #include "components/url_formatter/url_formatter.h"
 #include "ios/chrome/browser/application_context.h"
-#import "ios/chrome/browser/autofill/autofill_tab_helper.h"
 #import "ios/chrome/browser/autofill/form_input_accessory_view_controller.h"
-#import "ios/chrome/browser/autofill/form_suggestion_controller.h"
+#import "ios/chrome/browser/autofill/form_suggestion_tab_helper.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #include "ios/chrome/browser/chrome_url_constants.h"
 #import "ios/chrome/browser/crash_loop_detection_util.h"
@@ -215,9 +214,6 @@ class TabHistoryContext : public history::Context {
   // opening a URL in an external application.
   ExternalAppLauncher* _externalAppLauncher;
 
-  // Handles suggestions for form entry.
-  FormSuggestionController* _suggestionController;
-
   // Manages the input accessory view during form input.
   FormInputAccessoryViewController* _inputAccessoryViewController;
 
@@ -256,10 +252,6 @@ class TabHistoryContext : public history::Context {
 
 // Handles caching and retrieving of snapshots.
 @property(nonatomic, strong) SnapshotManager* snapshotManager;
-
-// Returns a list of FormSuggestionProviders to be queried for suggestions
-// in order of priority.
-- (NSArray*)suggestionProviders;
 
 // Returns a list of FormInputAccessoryViewProviders to be queried for an input
 // accessory view in order of priority.
@@ -436,9 +428,6 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
   if (experimental_flags::IsAutoReloadEnabled())
     _autoReloadBridge = [[AutoReloadBridge alloc] initWithTab:self];
 
-  _suggestionController = [[FormSuggestionController alloc]
-      initWithWebState:self.webState
-             providers:[self suggestionProviders]];
   _inputAccessoryViewController = [[FormInputAccessoryViewController alloc]
       initWithWebState:self.webState
              providers:[self accessoryViewProviders]];
@@ -461,16 +450,8 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
           ->GetAccessoryViewProvider();
   if (provider)
     [providers addObject:provider];
-  [providers addObject:[_suggestionController accessoryViewProvider]];
-  return providers;
-}
-
-- (NSArray*)suggestionProviders {
-  NSMutableArray* providers = [NSMutableArray array];
-  [providers addObject:PasswordTabHelper::FromWebState(self.webState)
-                           ->GetSuggestionProvider()];
-  [providers addObject:AutofillTabHelper::FromWebState(self.webState)
-                           ->GetSuggestionProvider()];
+  [providers addObject:FormSuggestionTabHelper::FromWebState(self.webState)
+                           ->GetAccessoryViewProvider()];
   return providers;
 }
 
@@ -862,8 +843,6 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
   _faviconDriverObserverBridge.reset();
   [_openInController detachFromWebController];
   _openInController = nil;
-  [_suggestionController detachFromWebState];
-  _suggestionController = nil;
   if (_fullScreenController)
     [self.webController removeObserver:_fullScreenController];
   [_fullScreenController invalidate];
