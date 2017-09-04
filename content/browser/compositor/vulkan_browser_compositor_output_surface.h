@@ -23,7 +23,7 @@ class VulkanBrowserCompositorOutputSurface
     : public BrowserCompositorOutputSurface {
  public:
   VulkanBrowserCompositorOutputSurface(
-      scoped_refptr<cc::VulkanContextProvider> context,
+      scoped_refptr<viz::VulkanContextProvider> context,
       const UpdateVSyncParametersCallback& update_vsync_parameters_callback);
 
   ~VulkanBrowserCompositorOutputSurface() override;
@@ -40,12 +40,16 @@ class VulkanBrowserCompositorOutputSurface
   unsigned GetOverlayTextureId() const override;
   gfx::BufferFormat GetOverlayBufferFormat() const override;
   bool SurfaceIsSuspendForRecycle() const override;
+  void SetDrawRectangle(const gfx::Rect& rect) override;
   void Reshape(const gfx::Size& size,
                float device_scale_factor,
                const gfx::ColorSpace& color_space,
-               bool has_alpha) override;
+               bool has_alpha,
+               bool use_stencil) override;
   uint32_t GetFramebufferCopyTextureFormat() override;
   void SwapBuffers(cc::OutputSurfaceFrame frame) override;
+
+  gpu::VulkanSurface* GetVulkanSurface() { return surface_.get(); }
 
  private:
   void SwapBuffersAck();

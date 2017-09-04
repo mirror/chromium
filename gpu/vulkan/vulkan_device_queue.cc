@@ -27,6 +27,8 @@ VulkanDeviceQueue::~VulkanDeviceQueue() {
 
 bool VulkanDeviceQueue::Initialize(uint32_t options) {
   VkInstance vk_instance = gpu::GetVulkanInstance();
+  vk_instance_ = vk_instance;
+
   if (VK_NULL_HANDLE == vk_instance)
     return false;
 

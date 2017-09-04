@@ -9,6 +9,7 @@ import("//build/config/sanitizers/sanitizers.gni")
 import("//printing/features/features.gni")
 import("//testing/test.gni")
 import("//third_party/skia/gn/shared_sources.gni")
+import("//gpu/vulkan/features.gni")
 
 if (current_cpu == "arm") {
   import("//build/config/arm.gni")
@@ -22,6 +23,9 @@ skia_support_pdf = !is_ios && (enable_basic_printing || enable_print_preview)
 
 declare_args() {
   skia_whitelist_serialized_typefaces = false
+  if (enable_vulkan) {
+    vulkan_sdk_path = getenv("VULKAN_SDK")
+  }
 }
 
 # External-facing config for dependent code.
@@ -41,9 +45,16 @@ config("skia_config") {
     "//third_party/skia/include/pdf",
     "//third_party/skia/include/pipe",
     "//third_party/skia/include/ports",
+    "//third_party/skia/include/private",
     "//third_party/skia/include/utils",
     "//third_party/skia/third_party/vulkan",
+    "//third_party/skia/src/core",
+    "//third_party/skia/src/gpu",
+    "//third_party/skia/src/image",
   ]
+  if (enable_vulkan) {
+    include_dirs += [ "$vulkan_sdk_path/include" ]
+  }
 
   if (!is_ios) {
     include_dirs += [ "//third_party/skia/include/codec" ]
@@ -58,12 +69,22 @@ config("skia_config") {
   if (!is_ios) {
     defines += [ "SK_HAS_JPEG_LIBRARY" ]
   }
+  if (enable_vulkan) {
+    libs = [ "vulkan" ]
+
+    lib_dirs = [ "$vulkan_sdk_path/lib" ]
+
+    defines += [ "SK_VULKAN=1" ]
+  }
 
   if (is_component_build) {
     defines += [
       "SKIA_DLL",
       "GR_GL_IGNORE_ES3_MSAA=0",
     ]
+    if (enable_vulkan) {
+      defines += [ "SK_VULKAN=1" ]
+    }
   }
 
   if (skia_support_gpu) {
@@ -71,6 +92,12 @@ config("skia_config") {
       "//third_party/skia/src/gpu",
       "//third_party/skia/src/sksl",
     ]
+    if (enable_vulkan) {
+      include_dirs += [
+        "//third_party/skia/include/gpu/vk/",
+        "//third_party/skia/src/gpu/vk/",
+      ]
+    }
     defines += [ "SK_SUPPORT_GPU=1" ]
   } else {
     defines += [ "SK_SUPPORT_GPU=0" ]
@@ -328,6 +355,9 @@ component("skia") {
     sources += skia_gpu_sources
     sources += skia_null_gpu_sources
     sources += skia_sksl_sources
+    if (enable_vulkan) {
+      sources += skia_vk_sources
+    }
   }
 
   # Remove unused util sources.
