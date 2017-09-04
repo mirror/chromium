@@ -8,7 +8,7 @@
 
 namespace content {
 
-ResourceRequestCompletionStatus::ResourceRequestCompletionStatus() {}
+ResourceRequestCompletionStatus::ResourceRequestCompletionStatus() = default;
 ResourceRequestCompletionStatus::ResourceRequestCompletionStatus(
     const ResourceRequestCompletionStatus& status) = default;
 
@@ -18,6 +18,11 @@ ResourceRequestCompletionStatus::ResourceRequestCompletionStatus(int64_t length)
       encoded_data_length(length),
       encoded_body_length(length) {}
 
-ResourceRequestCompletionStatus::~ResourceRequestCompletionStatus() {}
+ResourceRequestCompletionStatus::ResourceRequestCompletionStatus(
+    int error_code,
+    base::TimeTicks completion_time)
+    : error_code(error_code), completion_time(completion_time) {}
+
+ResourceRequestCompletionStatus::~ResourceRequestCompletionStatus() = default;
 
 }  // namespace content
