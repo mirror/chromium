@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a22dd70_0f322f33",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_coordinator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-04T15:43:31Z",
+      "side": 1,
+      "message": "This is code added just for compatibility between the two apps, so we should have some way to track code like this that needs to be removed once we are no longer maintaining the old app. Can you create a bug and add a TODO where this property is defined?",
+      "range": {
+        "startLine": 192,
+        "startChar": 33,
+        "endLine": 192,
+        "endChar": 48
+      },
+      "revId": "2c03718259da9edaea2dbc6b0531430dbbaaeed7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
