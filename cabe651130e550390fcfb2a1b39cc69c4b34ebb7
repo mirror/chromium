@@ -16,6 +16,24 @@
       "revId": "cabe651130e550390fcfb2a1b39cc69c4b34ebb7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9959b8e8_fc5d9594",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-09-04T23:16:47Z",
+      "side": 1,
+      "message": "I think we need to mark the box as needing paint invalidation because we want BlockPainter::PaintObject to use the newly-created transform paint property. Would marking the PaintLayer as needing repaint achieve the same goal?\n\nBtw, I found a bug in the above code. We should only do the extra invalidation for the overflow:hidden case and not in the more common ScrollsOverflow case. This exposed a bug in how we handle sticky positioning :(",
+      "parentUuid": "46be1e84_5e3e118a",
+      "revId": "cabe651130e550390fcfb2a1b39cc69c4b34ebb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
