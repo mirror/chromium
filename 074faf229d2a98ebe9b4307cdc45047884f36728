@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "7551d435_03b836ca",
+        "filename": "chrome/browser/chromeos/arc/accessibility/ax_tree_source_arc.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-09-04T10:59:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c7037e34_9f27f693",
+      "range": {
+        "startLine": 198,
+        "startChar": 2,
+        "endLine": 207,
+        "endChar": 3
+      },
+      "revId": "074faf229d2a98ebe9b4307cdc45047884f36728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73b1ec24_769e7c04",
         "filename": "components/arc/common/accessibility_helper.mojom",
         "patchSetId": 3
@@ -178,6 +202,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "73b1ec24_769e7c04",
+      "range": {
+        "startLine": 152,
+        "startChar": 0,
+        "endLine": 152,
+        "endChar": 13
+      },
+      "revId": "074faf229d2a98ebe9b4307cdc45047884f36728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "093f3e38_3acedf22",
+        "filename": "components/arc/common/accessibility_helper.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-09-04T10:59:42Z",
+      "side": 1,
+      "message": "I don\u0027t see [Extensible]s on enums for SpanType, SpanEntry, AccessibilitySelectionMode, AccessibilityRangeType in Patch set 6. Have you uploaded the latest diff?",
+      "parentUuid": "3b60322c_12b7690f",
       "range": {
         "startLine": 152,
         "startChar": 0,
