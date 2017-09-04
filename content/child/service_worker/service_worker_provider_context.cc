@@ -12,13 +12,13 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "content/child/child_thread_impl.h"
 #include "content/child/service_worker/service_worker_dispatcher.h"
-#include "content/child/service_worker/service_worker_event_dispatcher_holder.h"
 #include "content/child/service_worker/service_worker_handle_reference.h"
 #include "content/child/service_worker/service_worker_registration_handle_reference.h"
 #include "content/child/service_worker/service_worker_subresource_loader.h"
 #include "content/child/thread_safe_sender.h"
 #include "content/child/worker_thread_registry.h"
 #include "content/common/service_worker/service_worker_utils.h"
+#include "content/common/shared_interface_ptr.h"
 #include "content/public/child/child_url_loader_factory_getter.h"
 #include "content/public/common/url_loader_factory.mojom.h"
 #include "mojo/public/cpp/bindings/strong_associated_binding.h"
@@ -43,7 +43,8 @@ struct ServiceWorkerProviderContext::ControlleeState {
 
   // S13nServiceWorker:
   // Used when we create |subresource_loader_factory|.
-  scoped_refptr<ServiceWorkerEventDispatcherHolder> event_dispatcher;
+  scoped_refptr<SharedInterfacePtr<mojom::ServiceWorkerEventDispatcher>>
+      event_dispatcher;
   scoped_refptr<ChildURLLoaderFactoryGetter> default_loader_factory_getter;
 
   // Tracks feature usage for UseCounter.
@@ -154,9 +155,9 @@ void ServiceWorkerProviderContext::SetController(
   state->used_features = used_features;
   if (event_dispatcher_ptr_info.is_valid()) {
     CHECK(ServiceWorkerUtils::IsServicificationEnabled());
-    state->event_dispatcher =
-        base::MakeRefCounted<ServiceWorkerEventDispatcherHolder>(
-            std::move(event_dispatcher_ptr_info));
+    state->event_dispatcher = base::MakeRefCounted<
+        SharedInterfacePtr<mojom::ServiceWorkerEventDispatcher>>();
+    state->event_dispatcher->Bind(std::move(event_dispatcher_ptr_info));
     mojo::MakeStrongBinding(
         base::MakeUnique<ServiceWorkerSubresourceLoaderFactory>(
             state->event_dispatcher, state->default_loader_factory_getter,
