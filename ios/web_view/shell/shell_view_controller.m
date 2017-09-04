@@ -257,6 +257,7 @@ NSString* const kWebViewShellJavaScriptDialogTextFieldAccessibiltyIdentifier =
   _webView.UIDelegate = self;
   _translationDelegate = [[ShellTranslationDelegate alloc] init];
   _webView.translationController.delegate = _translationDelegate;
+  (void)_webView.autofillController;
 
   [_webView setAutoresizingMask:UIViewAutoresizingFlexibleWidth |
                                 UIViewAutoresizingFlexibleHeight];
@@ -306,6 +307,11 @@ NSString* const kWebViewShellJavaScriptDialogTextFieldAccessibiltyIdentifier =
 - (BOOL)textFieldShouldReturn:(UITextField*)field {
   NSURLRequest* request =
       [NSURLRequest requestWithURL:[NSURL URLWithString:[field text]]];
+  if ([field.text isEqualToString:@"form"]) {
+    request = [NSURLRequest
+        requestWithURL:[[NSBundle mainBundle] URLForResource:@"form_test"
+                                               withExtension:@"html"]];
+  }
   [_webView loadRequest:request];
   [field resignFirstResponder];
   [self updateToolbar];

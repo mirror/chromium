@@ -23,6 +23,7 @@
 #import "ios/web/public/web_state/web_state.h"
 #import "ios/web/public/web_state/web_state_delegate_bridge.h"
 #import "ios/web/public/web_state/web_state_observer_bridge.h"
+#import "ios/web_view/internal/autofill/cwv_autofill_controller_internal.h"
 #import "ios/web_view/internal/cwv_html_element_internal.h"
 #import "ios/web_view/internal/cwv_navigation_action_internal.h"
 #import "ios/web_view/internal/cwv_scroll_view_internal.h"
@@ -98,6 +99,7 @@ static NSString* gUserAgentProduct = nil;
 
 @implementation CWVWebView
 
+@synthesize autofillController = _autofillController;
 @synthesize canGoBack = _canGoBack;
 @synthesize canGoForward = _canGoForward;
 @synthesize configuration = _configuration;
@@ -326,6 +328,16 @@ static NSString* gUserAgentProduct = nil;
 - (web::JavaScriptDialogPresenter*)javaScriptDialogPresenterForWebState:
     (web::WebState*)webState {
   return _javaScriptDialogPresenter.get();
+}
+
+#pragma mark - Autofill
+
+- (CWVAutofillController*)autofillController {
+  if (!_autofillController) {
+    _autofillController = [[CWVAutofillController alloc] init];
+    _autofillController.webState = _webState.get();
+  }
+  return _autofillController;
 }
 
 #pragma mark - Translation

@@ -31,6 +31,7 @@ config("config") {
 # and CrNetChromeWebView frameworks.
 ios_web_view_public_headers = [
   "public/ChromeWebView.h",
+  "public/cwv_autofill_controller.h",
   "public/cwv_export.h",
   "public/cwv_html_element.h",
   "public/cwv_navigation_action.h",
@@ -120,6 +121,12 @@ ios_web_view_sources = [
 ios_web_view_sources += ios_web_view_public_headers
 if (ios_web_view_enable_sync) {
   ios_web_view_sources += [
+    "internal/autofill/cwv_autofill_controller_internal.h",
+    "internal/autofill/cwv_autofill_controller.mm",
+    "internal/autofill/web_view_personal_data_manager_factory.cc",
+    "internal/autofill/web_view_personal_data_manager_factory.h",
+    "internal/autofill/web_view_autofill_client.h",
+    "internal/autofill/web_view_autofill_client.mm",
     "internal/content_settings/web_view_cookie_settings_factory.cc",
     "internal/content_settings/web_view_cookie_settings_factory.h",
     "internal/content_settings/web_view_host_content_settings_map_factory.cc",
@@ -152,6 +159,8 @@ if (ios_web_view_enable_sync) {
     "internal/signin/web_view_signin_manager_factory.h",
     "internal/web_view_sync_initializer.cc",
     "internal/web_view_sync_initializer.h",
+    "internal/webdata_services/web_view_web_data_service_wrapper_factory.cc",
+    "internal/webdata_services/web_view_web_data_service_wrapper_factory.h",
   ]
 }
 
@@ -187,9 +196,14 @@ ios_web_view_deps = [
 ]
 if (ios_web_view_enable_sync) {
   ios_web_view_deps += [
+    "//components/autofill/core/browser",
+    "//components/autofill/core/common",
+    "//components/autofill/ios/browser",
     "//components/content_settings/core/browser",
     "//components/signin/core/browser",
     "//components/signin/ios/browser",
+    "//components/sync",
+    "//components/webdata_services",
   ]
 }
 

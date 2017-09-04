@@ -4,6 +4,7 @@
 
 #include "ios/web_view/internal/web_view_sync_initializer.h"
 
+#include "components/autofill/core/browser/autofill_manager.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
 #include "components/signin/core/browser/account_fetcher_service.h"
 #include "components/signin/core/browser/signin_manager_base.h"
@@ -53,6 +54,7 @@ void WebViewSyncInitializer::RegisterLocalPrefs(PrefRegistrySimple* registry) {
 void WebViewSyncInitializer::RegisterBrowserPrefs(
     user_prefs::PrefRegistrySyncable* registry) {
   HostContentSettingsMap::RegisterProfilePrefs(registry);
+  autofill::AutofillManager::RegisterProfilePrefs(registry);
 }
 
 }  // namespace ios_web_view
