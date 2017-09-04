@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f829db73_15d41c84",
+        "filename": "components/viz/common/quads/release_callback_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-09-04T13:49:10Z",
+      "side": 1,
+      "message": "nit: Maybe Antoine can answer this one...\"Impl\" here means Impl/Compositor thread which is super confusing in the viz directory. I don\u0027t have a better name for this right now, though.",
+      "revId": "3f8c83d4af14899fb0ac752d9d50e1498cc125e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
