@@ -12,6 +12,7 @@
 #include "build/build_config.h"
 #include "chrome/browser/browser_about_handler.h"
 #include "chrome/browser/chrome_notification_types.h"
+#include "chrome/browser/disposition_utils.h"
 #include "chrome/browser/prefs/incognito_mode_prefs.h"
 #include "chrome/browser/prerender/prerender_manager.h"
 #include "chrome/browser/prerender/prerender_manager_factory.h"
@@ -554,10 +555,12 @@ void Navigate(NavigateParams* params) {
         // Perform the actual navigation, tracking whether it came from the
         // renderer.
 
+        chrome::SetDisposition(params->target_contents, params->disposition);
         LoadURLInContents(params->target_contents, params->url, params);
       }
     }
   } else {
+    chrome::SetDisposition(params->target_contents, params->disposition);
     // |target_contents| was specified non-NULL, and so we assume it has already
     // been navigated appropriately. We need to do nothing more other than
     // add it to the appropriate tabstrip.
@@ -600,6 +603,7 @@ void Navigate(NavigateParams* params) {
     WebContents* target =
         params->browser->tab_strip_model()->GetWebContentsAt(singleton_index);
 
+    chrome::SetDisposition(target, params->disposition);
     if (target->IsCrashed()) {
       target->GetController().Reload(content::ReloadType::NORMAL, true);
     } else if (params->path_behavior == NavigateParams::IGNORE_AND_NAVIGATE &&

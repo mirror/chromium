@@ -8,6 +8,7 @@
 #include "base/bind.h"
 #include "base/feature_list.h"
 #include "base/logging.h"
+#include "chrome/browser/disposition_utils.h"
 #include "chrome/browser/prerender/prerender_contents.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser_finder.h"
@@ -34,16 +35,64 @@ using extensions::UrlHandlerInfo;
 
 namespace {
 
+std::string DispositionToString(WindowOpenDisposition disposition) {
+  switch (disposition) {
+    case WindowOpenDisposition::UNKNOWN:
+      return "Unknown";
+    case WindowOpenDisposition::CURRENT_TAB:
+      return "Current tab";
+    case WindowOpenDisposition::SINGLETON_TAB:
+      return "Singleton tab";
+    case WindowOpenDisposition::NEW_FOREGROUND_TAB:
+      return "New foreground tab";
+    case WindowOpenDisposition::NEW_BACKGROUND_TAB:
+      return "New background tab";
+    case WindowOpenDisposition::NEW_POPUP:
+      return "New popup";
+    case WindowOpenDisposition::NEW_WINDOW:
+      return "New window";
+    case WindowOpenDisposition::SAVE_TO_DISK:
+      return "Save to disk";
+    case WindowOpenDisposition::OFF_THE_RECORD:
+      return "Off the record";
+    case WindowOpenDisposition::IGNORE_ACTION:
+      return "Ignore action";
+  }
+  NOTREACHED();
+  return "unknown";
+}
+
 bool ShouldOverrideNavigation(
     const Extension* app,
     content::WebContents* source,
     const navigation_interception::NavigationParams& params) {
-  DVLOG(1) << "ShouldOverrideNavigation called for: " << params.url();
 
   ui::PageTransition transition_type = params.transition_type();
+  WindowOpenDisposition disposition = chrome::GetDisposition(source);
+  DVLOG(1) << "ShouldOverrideNavigation called for: " << params.url();
+  DVLOG(1) << "Disposition: " << DispositionToString(disposition);
+  DVLOG(1) << "Transition: "
+           << PageTransitionGetCoreTransitionString(transition_type);
+
   if (!(PageTransitionCoreTypeIs(transition_type, ui::PAGE_TRANSITION_LINK))) {
     DVLOG(1) << "Don't override: Transition type is "
              << PageTransitionGetCoreTransitionString(transition_type);
+    return false;
+  }
+
+  // CURRENT_TAB is used when clicking on links that just navigate the frame.
+  // FOREGROUND_TAB is used when clicking on links that open a new tab/window
+  // e.g. target=_blank links.
+  // NEW_WINDOW is used when pressing shift and clicking a link or when clicking
+  // "Open in new window" in the context menu. We want to intercept these
+  // navigations but only if they come from an app.
+  // TODO(crbug.com/758774): Don't intercept NEW_WINDOW navigations in regular
+  // websites.
+  if (disposition != WindowOpenDisposition::CURRENT_TAB &&
+      disposition != WindowOpenDisposition::NEW_FOREGROUND_TAB &&
+      disposition != WindowOpenDisposition::NEW_WINDOW) {
+    DVLOG(1) << "Don't override: Disposition is "
+             << DispositionToString(disposition);
     return false;
   }
 

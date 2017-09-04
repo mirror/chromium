@@ -334,6 +334,8 @@ split_static_library("browser") {
     "data_use_measurement/data_use_web_contents_observer.h",
     "defaults.cc",
     "defaults.h",
+    "disposition_utils.cc",
+    "disposition_utils.h",
     "dom_distiller/dom_distiller_service_factory.cc",
     "dom_distiller/dom_distiller_service_factory.h",
     "dom_distiller/lazy_dom_distiller_service.cc",
