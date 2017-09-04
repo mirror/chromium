@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html>
+    <head>
+        <style type="text/css">
+         .chart {
+             shape-rendering: crispEdges;
+         }
+
+         .mini text {
+             font: 9px sans-serif;
+         }
+
+         .main text {
+             font: 12px sans-serif;
+         }
+
+         .miniItem {
+             stroke-width: 6;
+         }
+
+         .mainItem {
+             stroke-width: 6;
+         }
+
+         .brush .extent {
+             stroke: gray;
+             fill: dodgerblue;
+             fill-opacity: .365;
+         }
+
+         .legend {
+             position: fixed;
+             bottom: 0;
+             color: #ffffff;
+             background-color: rgba(0, 0, 0, .8);
+             border-radius: 25px;
+             padding: 20px;
+             display: none;
+         }
+
+         .colors-legend {
+             border: solid;
+             position: fixed;
+             bottom: 0;
+             right: 0;
+             border-radius: 25px;
+             padding: 20px;
+         }
+
+         .legend-rectangle {
+             width: 2em;
+             height: 1em;
+         }
+        </style>
+    </head>
+    <body>
+        <center>
+            <h1>Code Segmentation and Residency</h1>
+        </center>
+        Code Page Data:
+        <input type="file" id="file-input" onchange="readFile(this.files, 'code_pages')">
+        Residency Data:
+        <input type="file" id="file-input" onchange="readFile(this.files, 'residency')">
+        <button type="button" onclick="go()">Go</button>
+        <p />
+        <div id="legend" class="legend">
+            <div id="legend-title"></div>
+            <p/>
+            <table id="legend-table"></table>
+        </div>
+        <div class="colors-legend">
+            <b>Components and colors</b>
+            <table id="colors-legend-table"></table>
+        </div>
+
+        <script src="https://d3js.org/d3.v3.min.js"></script>
+        <script src="visualize.js"></script>
+    </body>
+</html>
