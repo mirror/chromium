@@ -145,16 +145,7 @@ struct CONTENT_EXPORT MediaStreamDevice {
   base::Optional<CameraCalibration> camera_calibration;
 };
 
-class CONTENT_EXPORT MediaStreamDevices
-    : public std::vector<MediaStreamDevice> {
- public:
-  MediaStreamDevices();
-  MediaStreamDevices(size_t count, const MediaStreamDevice& value);
-
-  // Looks for a MediaStreamDevice based on its ID.
-  // Returns NULL if not found.
-  const MediaStreamDevice* FindById(const std::string& device_id) const;
-};
+using MediaStreamDevices = std::vector<MediaStreamDevice>;
 
 typedef std::map<MediaStreamType, MediaStreamDevices> MediaStreamDeviceMap;
 
