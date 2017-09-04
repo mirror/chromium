@@ -22,6 +22,30 @@
       "revId": "a9602cd100313c7a02c42f403450c4d724f8714b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57a9276d_bfed8b1e",
+        "filename": "chrome/browser/renderer_context_menu/render_view_context_menu.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-09-04T00:14:35Z",
+      "side": 1,
+      "message": "\u003e FYI this conflicts with https://chromium-review.googlesource.com/c/chromium/src/+/644288 .\n\u003e \n\u003e Two things in this comment.\n\u003e \n\u003e First, it\u0027s now wrong. The RenderViewContextMenuItem enum now lives in tools/metrics/histograms/enums.xml; please update this comment.\n\u003e \n\nDone\n\n\u003e Second, as per this comment, you need to make this parallel change to the xml file.\n\nDone.\n\nThanks for the pointer to the other CL. I\u0027ll keep an eye out and rebase if this lands after it.",
+      "parentUuid": "8a222661_76c47854",
+      "range": {
+        "startLine": 318,
+        "startChar": 7,
+        "endLine": 318,
+        "endChar": 78
+      },
+      "revId": "a9602cd100313c7a02c42f403450c4d724f8714b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
