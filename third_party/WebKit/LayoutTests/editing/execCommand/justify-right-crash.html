@@ -1,26 +1,38 @@
-<!DOCTYPE html>
-<html>
-<head>
+<!doctype html>
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<script src="../assert_selection.js"></script>
 <script>
-if (window.testRunner)
-    testRunner.dumpAsText();
-
-onload = function() {
-    // Insert "body" element into "div" element. Simple repetition of "body"
-    // element or renaming "body" to "div" doesn't reproduce bug.
-    var targetNode = document.getElementById('target');
-    targetNode.appendChild(document.body.cloneNode(true));
-
-    document.designMode = 'on';
-    document.execCommand('SelectAll');
-    document.execCommand('JustifyRight');
-    document.body.textContent = 'PASS if Blink doesn\'t crash.';
-};
+// This is a test for crbug.com/371139
+test(()=> assert_selection(
+  [
+  '<div contenteditable>',
+    '^<textarea></textarea>',
+    '<span></span>',
+    '<div style="display:inline-table">foo',
+      '<body>',
+        '<textarea></textarea>',
+        '<span></span>',
+        '<div id="target" style="display:inline-table">',
+          'foo|',
+        '</div>',
+      '</body>',
+    '</div>',
+  '</div>'
+  ],
+  "JustifyRight",
+  [
+  '<div contenteditable>',
+    '<div style="text-align: right;">',
+      '^<textarea></textarea>',
+      '<div style="display: inline-table;">',
+        'foo',
+        '<textarea></textarea>',
+        '<div id="target" style="display:inline-table">',
+          'foo|',
+        '</div>',
+      '</div>',
+    '</div>',
+  '</div>']),
+  "This JustifyRight the entire selected content.");
 </script>
-</head>
-<body>
-<textarea></textarea>
-<span></span>
-<div id="target" style="display:inline-table">foo</div>
-</body>
-</html>
