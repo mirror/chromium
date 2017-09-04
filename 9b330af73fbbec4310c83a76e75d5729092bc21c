@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91508b75_020a1991",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-04T14:05:15Z",
+      "side": 1,
+      "message": "I\u0027d make it if (username_width \u003e available_width)\n\nThe you can simplify the condition below as else if (password_width \u003e available_width)",
+      "range": {
+        "startLine": 235,
+        "startChar": 6,
+        "endLine": 235,
+        "endChar": 74
+      },
+      "revId": "9b330af73fbbec4310c83a76e75d5729092bc21c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
