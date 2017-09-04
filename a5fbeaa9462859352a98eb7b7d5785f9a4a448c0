@@ -477,6 +477,24 @@
       "revId": "a5fbeaa9462859352a98eb7b7d5785f9a4a448c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b403698c_b0f8486a",
+        "filename": "components/drive/resource_metadata_storage_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-04T09:10:02Z",
+      "side": 1,
+      "message": "Sorry for being unclear, what I meant was DeleteUnusedIDEntries should be renamed to IncompatibleDB_M37.\n\nBTW, I realized that only writing the milestone from which the tested DB version is used is not helpful enough.\nCould you put a comment like \"13 is the DB version which was used from M37 to M61\" somewhere in the test?",
+      "parentUuid": "48281689_88caccc6",
+      "revId": "a5fbeaa9462859352a98eb7b7d5785f9a4a448c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

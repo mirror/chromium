@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "475fb811_16968716",
+        "filename": "components/drive/resource_metadata_storage_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-04T09:10:02Z",
+      "side": 1,
+      "message": "No data except the changestamp.",
+      "range": {
+        "startLine": 442,
+        "startChar": 5,
+        "endLine": 442,
+        "endChar": 12
+      },
+      "revId": "cb739ba97f0740c3f27b5eaade3578632f555d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
