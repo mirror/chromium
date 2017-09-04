@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5d38310e_85408072",
+        "filename": "media/gpu/android/codec_wrapper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-09-04T07:39:06Z",
+      "side": 1,
+      "message": "I did consider this, but came to the conclusion that it\u0027s not a codec property as much as a property of our MediaCrypto (e.g., if you got NO_KEY, then created a new codec you\u0027d still get NO_KEY). And since we have a single MediaCrypto for the lifetime of MCVD, it makes sense to be at MCVDs level. \n\nIt\u0027s also safe to call this again before the key is added, it will get NO_KEY and safe the same input buffer again. So not calling this twice if you get NO_KEY is an \"optimization\" rather than a correctness thing.",
+      "parentUuid": "1cb1a30a_059c664a",
+      "revId": "2c292cac780da4ca065e8fa06b3b0782d9b741f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "96da5bd4_3296a35b",
         "filename": "media/gpu/android/codec_wrapper.cc",
         "patchSetId": 3
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "ad59928e_5b9fa371",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-09-04T07:39:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54181f16_13a7ebc2",
+      "revId": "2c292cac780da4ca065e8fa06b3b0782d9b741f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "794b3c26_e8e6db82",
         "filename": "media/gpu/android/media_codec_video_decoder.cc",
         "patchSetId": 3
@@ -67,6 +103,24 @@
       "revId": "2c292cac780da4ca065e8fa06b3b0782d9b741f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83b60dcc_00c11869",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-09-04T07:39:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "794b3c26_e8e6db82",
+      "revId": "2c292cac780da4ca065e8fa06b3b0782d9b741f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "b7adadc0_085b6de2",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-09-04T07:39:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b18df8e4_8aafcd55",
+      "revId": "2c292cac780da4ca065e8fa06b3b0782d9b741f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4c5d3ad_504542d8",
         "filename": "media/gpu/android/media_codec_video_decoder.cc",
         "patchSetId": 3
@@ -98,6 +170,24 @@
       "writtenOn": "2017-09-01T15:01:39Z",
       "side": 1,
       "message": "can this happen?",
+      "revId": "2c292cac780da4ca065e8fa06b3b0782d9b741f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc3ed5c9_4c262ea1",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-09-04T07:39:06Z",
+      "side": 1,
+      "message": "I think I just saw it and was worried it was a bug waiting to happen. My reasoning is that EnterTerminalState() should be safe to call from any state. (In the back of my mind I was imagining a future where we may call SetSurface() before Initialize() and SetSurface() may fail).\n\nI\u0027m still not sure of the right way to treat invariants like this one, where the proof of its safety are kind of non obvious and easy to break. I guess unit tests?",
+      "parentUuid": "f4c5d3ad_504542d8",
       "revId": "2c292cac780da4ca065e8fa06b3b0782d9b741f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
