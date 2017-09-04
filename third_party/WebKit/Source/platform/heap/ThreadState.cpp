@@ -125,6 +125,7 @@ ThreadState::ThreadState()
       invalidate_dead_objects_in_wrappers_marking_deque_(nullptr),
       perform_cleanup_(nullptr),
       wrapper_tracing_in_progress_(false),
+      idle_lazy_sweep_scheduled_(false),
 #if defined(ADDRESS_SANITIZER)
       asan_fake_stack_(__asan_get_current_fake_stack()),
 #endif
@@ -672,11 +673,20 @@ void ThreadState::ScheduleIdleGC() {
   SetGCState(kIdleGCScheduled);
 }
 
+void ThreadState::PerformIdleLazySweepTask(double deadline_seconds) {
+  idle_lazy_sweep_scheduled_ = false;
+  PerformIdleLazySweep(deadline_seconds);
+}
+
 void ThreadState::ScheduleIdleLazySweep() {
   // Some threads (e.g. PPAPI thread) don't have a scheduler.
   if (!Platform::Current()->CurrentThread()->Scheduler())
     return;
 
+  if (idle_lazy_sweep_scheduled_)
+    return;
+
+  idle_lazy_sweep_scheduled_ = true;
   Platform::Current()->CurrentThread()->Scheduler()->PostIdleTask(
       BLINK_FROM_HERE,
       WTF::Bind(&ThreadState::PerformIdleLazySweep, WTF::Unretained(this)));
@@ -1123,7 +1133,13 @@ void ThreadState::SafePoint(BlinkGC::StackState stack_state) {
   DCHECK(CheckThread());
   ThreadHeap::ReportMemoryUsageForTracing();
 
-  RunScheduledGC(stack_state);
+  if (gc_state_ == kSweeping) {
+    if (JudgeGCThreshold(kDefaultAllocatedObjectSizeThreshold / 2, 1024 * 1024,
+                         1.2))
+      PerformIdleLazySweep(MonotonicallyIncreasingTime() + 0.003);
+  } else {
+    RunScheduledGC(stack_state);
+  }
   stack_state_ = BlinkGC::kHeapPointersOnStack;
 }
 

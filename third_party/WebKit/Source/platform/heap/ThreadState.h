@@ -230,6 +230,7 @@ class PLATFORM_EXPORT ThreadState {
 
   void PerformIdleGC(double deadline_seconds);
   void PerformIdleLazySweep(double deadline_seconds);
+  void PerformIdleLazySweepTask(double deadline_seconds);
 
   void ScheduleIdleGC();
   void ScheduleIdleLazySweep();
@@ -717,6 +718,7 @@ class PLATFORM_EXPORT ThreadState {
   void (*invalidate_dead_objects_in_wrappers_marking_deque_)(v8::Isolate*);
   void (*perform_cleanup_)(v8::Isolate*);
   bool wrapper_tracing_in_progress_;
+  bool idle_lazy_sweep_scheduled_;
 
 #if defined(ADDRESS_SANITIZER)
   void* asan_fake_stack_;
