@@ -87,7 +87,6 @@ crbug.com/549742 [ Linux Mac ] virtual/gpu/fast/canvas/canvas-drawImage-video-im
 crbug.com/726075 [ Win ] compositing/3d-cube.html [ Failure ]
 crbug.com/726075 [ Win ] virtual/gpu/fast/canvas/2d.fillText.gradient.html [ Failure ]
 crbug.com/726075 [ Win ] external/wpt/webvtt/rendering/cues-with-video/processing-model/dom_override_remove_cue_while_paused.html [ Failure ]
-crbug.com/726075 [ Win Debug ] virtual/exotic-color-space/images/color-profile-border-fade.html [ Failure ]
 
 # Fails consistently on WebKit Mac10.10, WebKit Mac10.11 (retina) and mac10.10_blink_rel tryserver, but not on other Mac bots.
 crbug.com/614910 [ Mac ] virtual/gpu-rasterization/images/pixel-crack-image-background-webkit-transform-scale.html [ Pass Failure ]
@@ -717,8 +716,6 @@ crbug.com/636207 [ Win Debug ] fast/dom/HTMLImageElement/image-srcset-w-onerror.
 crbug.com/569139 fast/js/string-replace-2.html [ Failure ]
 crbug.com/569139 fast/js/regexp-caching.html [ Failure ]
 crbug.com/597221 fast/dom/Window/window-postmessage-clone-deep-array.html [ Failure ]
-crbug.com/498539 [ Win ] http/tests/devtools/tracing/decode-resize.html [ Failure Timeout ]
-crbug.com/667560 [ Win ] virtual/mojo-loading/http/tests/devtools/tracing/decode-resize.html [ Failure Timeout ]
 crbug.com/498539 http/tests/devtools/tracing/timeline-misc/timeline-bound-function.html [ Pass Failure ]
 crbug.com/667560 virtual/mojo-loading/http/tests/devtools/tracing/timeline-misc/timeline-bound-function.html [ Pass Failure ]
 crbug.com/498539 virtual/threaded/http/tests/devtools/tracing/timeline-misc/timeline-bound-function.html [ Pass Failure ]
@@ -1413,7 +1410,6 @@ crbug.com/509025 [ Mac10.10 ] virtual/rootlayerscrolls/scrollbars/short-scrollba
 crbug.com/621772 fast/forms/color/color-suggestion-picker-with-scrollbar-appearance.html [ Pass Failure ]
 crbug.com/652995 fast/forms/text/input-text-scroll-left-on-blur.html [ Pass Failure ]
 
-crbug.com/595483 [ Android ] editing/caret/caret-color.html [ Failure Crash ]
 crbug.com/595483 [ Android ] fast/invalid/009.html [ Failure Crash ]
 crbug.com/595483 [ Android ] fast/hidpi/clip-text-in-hidpi.html [ Failure Crash ]
 
@@ -1537,8 +1533,6 @@ crbug.com/611658 [ Win7 ] fast/forms/text/text-font-height-mismatch.html [ Failu
 crbug.com/611658 [ Win ] fast/text/emphasis-combined-text.html [ Failure ]
 
 crbug.com/611658 [ Win7 ] fast/writing-mode/english-lr-text.html [ Failure ]
-
-crbug.com/605059 [ Retina ] fast/text/international/rtl-negative-letter-spacing.html [ Failure ]
 
 crbug.com/610464 [ Linux Win7 Debug ] inspector/components/throttler.html [ Failure Pass ]
 crbug.com/654477 [ Linux Mac Win7 ] paint/invalidation/video-paint-invalidation.html [ Failure ]
@@ -2207,7 +2201,6 @@ crbug.com/626703 external/wpt/XMLHttpRequest/abort-after-stop.htm [ Timeout ]
 crbug.com/626703 external/wpt/XMLHttpRequest/event-readystatechange-loaded.htm [ Failure Timeout ]
 crbug.com/626703 external/wpt/XMLHttpRequest/open-url-redirected-worker-origin.htm [ Failure ]
 crbug.com/626703 external/wpt/XMLHttpRequest/preserve-ua-header-on-redirect.htm [ Failure ]
-crbug.com/626703 [ Linux ] external/wpt/XMLHttpRequest/send-content-type-string.htm [ Failure ]
 crbug.com/626703 external/wpt/XMLHttpRequest/send-entity-body-document.htm [ Failure ]
 crbug.com/626703 external/wpt/XMLHttpRequest/setrequestheader-header-allowed.htm [ Failure ]
 crbug.com/626703 virtual/service-worker-script-streaming/external/wpt/service-workers/service-worker/update-bytecheck.https.html [ Timeout ]
@@ -2843,13 +2836,10 @@ crbug.com/715718 [ Win ] external/wpt/css/css-flexbox-1/flex-minimum-width-flex-
 crbug.com/715718 [ Win ] external/wpt/css/css-flexbox-1/flex-minimum-width-flex-items-003.xht [ Failure Pass ]
 crbug.com/715718 [ Win ] external/wpt/css/css-flexbox-1/flexbox_flex-natural-mixed-basis-auto.html [ Failure Pass ]
 
-crbug.com/739367 [ Win ] virtual/service-worker-script-streaming/external/wpt/service-workers/service-worker/fetch-event-redirect.https.html [ Timeout ]
-
 # Feature Policy changes fullscreen behaviour, tests need updating
 crbug.com/718155 fullscreen/full-screen-iframe-not-allowed.html [ Failure ]
 crbug.com/718155 fullscreen/full-screen-restrictions.html [ Failure Timeout ]
 crbug.com/718155 media/video-controls-fullscreen-iframe-not-allowed.html [ Failure ]
-crbug.com/718155 virtual/android/fullscreen/full-screen-iframe-not-allowed.html [ Failure ]
 crbug.com/718155 virtual/android/fullscreen/full-screen-restrictions.html [ Failure Timeout ]
 
 # Feature Policy changes same-origin allowpaymentrequest behaviour, tests need updating
@@ -3075,7 +3065,6 @@ crbug.com/626703 [ Win7 ] external/wpt/domxpath/xml_xpath_runner.html [ Timeout 
 
 crbug.com/746128 [ Win7 Debug ] media/controls/video-enter-exit-fullscreen-without-hovering-doesnt-show-controls.html [ Failure ]
 crbug.com/746128 [ Win7 Debug ] virtual/new-remote-playback-pipeline/media/controls/video-enter-exit-fullscreen-without-hovering-doesnt-show-controls.html [ Failure ]
-crbug.com/746128 [ Win7 Debug ] virtual/new-remote-playback-pipeline/media/controls/controls-video-keynav.html [ Failure ]
 
 crbug.com/626703 [ Win7 ] external/wpt/html/semantics/embedded-content/the-img-element/decode/image-decode-path-changes.html [ Crash Pass ]
 
@@ -3089,8 +3078,6 @@ crbug.com/667560 [ Win7 Debug ] virtual/mojo-loading/http/tests/devtools/editor/
 crbug.com/749738 [ Win7 Debug ] virtual/mojo-loading/http/tests/devtools/console/console-format-es6.js [ Timeout ]
 
 # Sheriff failures 2017-07-28
-crbug.com/749738 [ Win7 Debug ] http/tests/devtools/console/console-format-es6-2.js [ Timeout ]
-crbug.com/749738 [ Win7 Debug ] virtual/mojo-loading/http/tests/devtools/console/console-format-es6-2.js [ Timeout ]
 crbug.com/749965 [ Win7 Debug ] media/controls/controls-video-keynav.html [ Failure ]
 
 # Sheriff failures 2017-08-04
