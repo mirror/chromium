@@ -36,6 +36,52 @@
     },
     {
       "key": {
+        "uuid": "df9fc2dc_7dfbaf9a",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/MainActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-09-04T05:33:47Z",
+      "side": 1,
+      "message": "This exception should only be thrown if the encoding string (\"UTF-8\") is not supported, which would be very bad. Is this a checked exception? If not, delete the catch. If so, assert in here as it\u0027s a programming error.",
+      "range": {
+        "startLine": 145,
+        "startChar": 17,
+        "endLine": 145,
+        "endChar": 45
+      },
+      "revId": "867702dd6b571979b725dbea68291b8c3eaf0043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a41b98d_b841de2e",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/MainActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-09-04T05:33:47Z",
+      "side": 1,
+      "message": "Can you use URI.resolve() instead of writing this custom logic?\n\nURL resolution is a well-defined algorithm (in the URL Standard, it\u0027s implicitly performed by URL Parser when supplied a base URL [1]), with many more edge cases than what you have here (e.g., if relativeSharePath starts with a \u0027/\u0027 then it should replace the manifest URL path, not append to it).\n\nJava\u0027s URI class has a built-in resolve method [2] that can do it. I\u0027m not sure why Android supplies their own Uri class (which doesn\u0027t seem to have resolve). You could either use Java\u0027s URI class, or perhaps find this algorithm implemented elsewhere in the Android library or the Chromium code base. But I don\u0027t think it\u0027s proper to have a hand-written implementation of this algorithm here in the WebAPK code.\n\n[1] https://url.spec.whatwg.org/#concept-url-parser\n[2] https://docs.oracle.com/javase/7/docs/api/java/net/URI.html#resolve(java.net.URI)",
+      "range": {
+        "startLine": 172,
+        "startChar": 19,
+        "endLine": 172,
+        "endChar": 35
+      },
+      "revId": "867702dd6b571979b725dbea68291b8c3eaf0043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e09a1356_594f4350",
         "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/MainActivity.java",
         "patchSetId": 3

@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "3624df92_43496966",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/MainActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-09-04T05:33:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9c9dfd97_46837904",
+      "range": {
+        "startLine": 93,
+        "startChar": 73,
+        "endLine": 93,
+        "endChar": 87
+      },
+      "revId": "3fb3dfe5f07e28376e94f103fbfb3c7cf95849d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ac92275_b58d5c21",
         "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/MainActivity.java",
         "patchSetId": 1
@@ -175,6 +199,24 @@
       "revId": "3fb3dfe5f07e28376e94f103fbfb3c7cf95849d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca5b582c_f1e2033f",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/MainActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-09-04T05:33:47Z",
+      "side": 1,
+      "message": "Ack (sorry I didn\u0027t see you asking for feedback).",
+      "parentUuid": "d526da63_8edbe5e7",
+      "revId": "3fb3dfe5f07e28376e94f103fbfb3c7cf95849d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -325,6 +367,24 @@
       "side": 1,
       "message": "this file is just a dictionary used to expand the webapk template. it allows us to make testing apks (notably the \"unbound_webapk\" and \"webapk\" targets) for local testing without using the server. So it doesn\u0027t need to be spec-compliant, it\u0027s just dictionary values for the shell_apks android manifest template and mirrors somewhat what the server may do.",
       "parentUuid": "9cf78535_dd8d4aa9",
+      "revId": "3fb3dfe5f07e28376e94f103fbfb3c7cf95849d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff3edc23_26ff4ef9",
+        "filename": "chrome/android/webapk/shell_apk/unbound_manifest_config.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-09-04T05:33:47Z",
+      "side": 1,
+      "message": "OK, but I think adding those extra fields will help you test more edge cases, won\u0027t it? Up to you whether to do this.",
+      "parentUuid": "2d84eee7_bf00ddd1",
       "revId": "3fb3dfe5f07e28376e94f103fbfb3c7cf95849d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
