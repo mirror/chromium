@@ -1150,7 +1150,8 @@ void InlineTextBoxPainter::PaintStyleableMarkerUnderline(
     const StyleableMarker& marker,
     const ComputedStyle& style,
     const Font& font) {
-  if (marker.UnderlineColor() == Color::kTransparent)
+  if (marker.IsNone() || (marker.UnderlineColor() == Color::kTransparent &&
+                          !marker.UseTextColor()))
     return;
 
   if (inline_text_box_.Truncation() == kCFullTruncation)
@@ -1188,7 +1189,13 @@ void InlineTextBoxPainter::PaintStyleableMarkerUnderline(
   if (marker.IsThick() && inline_text_box_.LogicalHeight() - baseline >= 2)
     line_thickness = 2;
 
-  context.SetStrokeColor(marker.UnderlineColor());
+  Color marker_color =
+      marker.UseTextColor()
+          ? inline_text_box_.GetLineLayoutItem().Style()->VisitedDependentColor(
+                CSSPropertyWebkitTextFillColor)
+          : marker.UnderlineColor();
+  context.SetStrokeColor(marker_color);
+
   context.SetStrokeThickness(line_thickness);
   context.DrawLineForText(
       FloatPoint(
