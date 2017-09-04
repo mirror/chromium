@@ -22,6 +22,30 @@
       "revId": "ab40cd2b11faeccdec7c76685bbe7080a1aae927",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b61033df_f84d8d0c",
+        "filename": "ios/clean/chrome/app/steps/provider_initializer.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-04T15:51:05Z",
+      "side": 1,
+      "message": "I think the WebUI controller factory is acting in the role of a \"provider\" here. The name still seems accurate to me.",
+      "parentUuid": "15bae561_b3b4f813",
+      "range": {
+        "startLine": 26,
+        "startChar": 34,
+        "endLine": 26,
+        "endChar": 49
+      },
+      "revId": "ab40cd2b11faeccdec7c76685bbe7080a1aae927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
