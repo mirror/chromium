@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f379443_a5b609c4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-09-04T15:17:10Z",
+      "side": 1,
+      "message": "starting/entering?",
+      "range": {
+        "startLine": 7,
+        "startChar": 21,
+        "endLine": 7,
+        "endChar": 26
+      },
+      "revId": "3f17d166b2b55632fadd382c65c9292d58f1e525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86207be4_34d670ff",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-09-04T15:17:10Z",
+      "side": 1,
+      "message": "Please use base::MakeUnique and #include \u003cmemory\u003e and \"base/memory/ptr_util.h\".",
+      "range": {
+        "startLine": 127,
+        "startChar": 36,
+        "endLine": 127,
+        "endChar": 58
+      },
+      "revId": "3f17d166b2b55632fadd382c65c9292d58f1e525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33f3eea5_2ec14dd9",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-09-04T15:17:10Z",
+      "side": 1,
+      "message": "According to the API doc[1], fullscreen_types is a bitfield and is treated as such in this function. Are you sure you want to check it with \u003d\u003d here?\n\n[1] https://cs.chromium.org/chromium/src/extensions/browser/app_window/native_app_window.h?rcl\u003d50e71c6c07a658505ee03889f08dad07c2a1a1b8\u0026l\u003d36",
+      "range": {
+        "startLine": 369,
+        "startChar": 12,
+        "endLine": 369,
+        "endChar": 28
+      },
+      "revId": "3f17d166b2b55632fadd382c65c9292d58f1e525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c688a513_af9edb14",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-09-04T15:17:10Z",
+      "side": 1,
+      "message": "IIUC, this should set *accelerator when returning true. Why do you need an AcceleratorProvider which returns true for everything?",
+      "range": {
+        "startLine": 445,
+        "startChar": 35,
+        "endLine": 445,
+        "endChar": 61
+      },
+      "revId": "3f17d166b2b55632fadd382c65c9292d58f1e525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de943f3e_6be0f920",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-09-04T15:17:10Z",
+      "side": 1,
+      "message": "What does this mean? Same for dummy.display.url below.",
+      "range": {
+        "startLine": 489,
+        "startChar": 18,
+        "endLine": 489,
+        "endChar": 44
+      },
+      "revId": "3f17d166b2b55632fadd382c65c9292d58f1e525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31c57934_43fe097f",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-09-04T15:17:10Z",
+      "side": 1,
+      "message": "Why is this callback unused? Because you know that you\u0027re calling UpdateContent and passing another callback there? If yes, please add a comment explaining this.",
+      "range": {
+        "startLine": 490,
+        "startChar": 6,
+        "endLine": 490,
+        "endChar": 39
+      },
+      "revId": "3f17d166b2b55632fadd382c65c9292d58f1e525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33de7b26_da5597e3",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-09-04T15:17:10Z",
+      "side": 1,
+      "message": "Why does the content have to be updated right after creating an ExclusiveAccessBubbleViews instance?",
+      "range": {
+        "startLine": 491,
+        "startChar": 28,
+        "endLine": 491,
+        "endChar": 41
+      },
+      "revId": "3f17d166b2b55632fadd382c65c9292d58f1e525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c629aca_8b8b5169",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 881,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-09-04T15:17:10Z",
+      "side": 1,
+      "message": "How does this relate to ChromeNativeAppWindowViewsAuraAsh::UpdateExclusiveAccessExitBubbleContent // when is which one used called?",
+      "range": {
+        "startLine": 881,
+        "startChar": 18,
+        "endLine": 881,
+        "endChar": 56
+      },
+      "revId": "3f17d166b2b55632fadd382c65c9292d58f1e525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
