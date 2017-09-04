@@ -72,9 +72,6 @@ bool IsViewCopyPasswordsEnabled();
 // Whether the Suggestions UI is enabled.
 bool IsSuggestionsUIEnabled();
 
-// Whether Sign-in promo is enabled.
-bool IsSigninPromoEnabled();
-
 // Whether a new version of FeedbackKit is the preferred feedback UI provider.
 bool IsNewFeedbackKitEnabled();
 
