@@ -155,6 +155,23 @@
       "revId": "167d0ca0c80bdd920c3353be983a6acf42bd91e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fa8f1a1_851e7ea1",
+        "filename": "tools/perf/benchmarks/blink_perf.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-09-04T13:27:55Z",
+      "side": 1,
+      "message": "noel@: do you want to also be the co-owner of this benchmark? It seems to me that you do care a lot about maintaining this.",
+      "revId": "167d0ca0c80bdd920c3353be983a6acf42bd91e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
