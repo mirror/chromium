@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "94411694_e0a5eb54",
+        "filename": "ios/chrome/browser/ui/bookmarks/bars/bookmark_context_bar.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-04T05:59:10Z",
+      "side": 1,
+      "message": "Thanks.",
+      "parentUuid": "cfb89daa_50eb3d5b",
+      "revId": "c70b04ec7bdb7968f043b32a5c5da555929188b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ee06ef6_d947df97",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
         "patchSetId": 3
@@ -90,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "b67f4a5a_8b4327ad",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-04T05:59:10Z",
+      "side": 1,
+      "message": "Thanks.  after discussion, let\u0027s see what we will do for the select button later.",
+      "parentUuid": "61be8a48_0ba1cb42",
+      "revId": "c70b04ec7bdb7968f043b32a5c5da555929188b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "197fd12c_4297964b",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
         "patchSetId": 3
@@ -122,6 +158,24 @@
       "revId": "c70b04ec7bdb7968f043b32a5c5da555929188b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f41e144d_4ac5f75b",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1084,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-04T05:59:10Z",
+      "side": 1,
+      "message": "Thanks.  I am persuaded by you.  Your approach makes more sense.  thanks.",
+      "parentUuid": "52d693bd_2b21b8fb",
+      "revId": "c70b04ec7bdb7968f043b32a5c5da555929188b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -160,6 +214,30 @@
       "side": 1,
       "message": "Thanks tested on iOS9, and it passes locally.",
       "parentUuid": "2eb87b95_429d1c88",
+      "range": {
+        "startLine": 66,
+        "startChar": 28,
+        "endLine": 66,
+        "endChar": 35
+      },
+      "revId": "c70b04ec7bdb7968f043b32a5c5da555929188b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d24ae89b_d0888dbe",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-04T05:59:10Z",
+      "side": 1,
+      "message": "Thanks.",
+      "parentUuid": "16483fca_62d3a479",
       "range": {
         "startLine": 66,
         "startChar": 28,
