@@ -53,6 +53,7 @@ source_set("content_widget") {
     "//ios/chrome/browser/ui/favicon:favicon_ui",
     "//ios/chrome/browser/ui/ntp:ntp_tile",
     "//ios/chrome/browser/ui/util:constraints_ui",
+    "//ios/chrome/common:highlight_button",
     "//ios/chrome/common/app_group",
   ]
 

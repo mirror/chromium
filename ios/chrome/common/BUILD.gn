@@ -31,6 +31,17 @@ source_set("common") {
   libs = [ "QuartzCore.framework" ]
 }
 
+source_set("highlight_button") {
+  sources = [
+    "highlight_button.h",
+    "highlight_button.mm",
+  ]
+
+  libs = [ "UIKit.framework" ]
+
+  configs += [ "//build/config/compiler:enable_arc" ]
+}
+
 source_set("unit_tests") {
   testonly = true
   sources = [

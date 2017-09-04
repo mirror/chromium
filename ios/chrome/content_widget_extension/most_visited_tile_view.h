@@ -7,11 +7,13 @@
 
 #import <UIKit/UIKit.h>
 
+#import "ios/chrome/common/highlight_button.h"
+
 @class FaviconViewNew;
 
 // View to display a Most Visited tile based on the suggestion.
 // It displays the favicon for this Most Visited suggestion and its title.
-@interface MostVisitedTileView : UIButton
+@interface MostVisitedTileView : HighlightButton
 
 // Returns the fixed width of a tile.
 + (CGFloat)tileWidth;
@@ -29,7 +31,6 @@
 
 // URL of the Most Visited.
 @property(nonatomic, strong, nullable) NSURL* URL;
-
 @end
 
 #endif  // IOS_CHROME_CONTENT_WIDGET_EXTENSION_MOST_VISITED_TILE_VIEW_H_
