@@ -101,35 +101,35 @@ void ObservationBuffer::GetPercentileForEachHostWithCounts(
   std::map<IPHash, std::vector<int32_t>> host_keyed_observations;
   for (const auto& observation : observations_) {
     // Look at only those observations which have a |host|.
-    if (!observation.host)
+    if (!observation.host())
       continue;
 
-    IPHash host = observation.host.value();
+    IPHash host = observation.host().value();
     if (host_filter && (host_filter->find(host) == host_filter->end()))
       continue;
 
     // Filter the observations recorded before |begin_timestamp|.
-    if (observation.timestamp < begin_timestamp)
+    if (observation.timestamp() < begin_timestamp)
       continue;
 
     // If the source of the observation is in the list of disallowed sources,
     // skip that observation.
     bool disallowed = false;
     for (const auto& disallowed_source : disallowed_observation_sources) {
-      if (disallowed_source == observation.source)
+      if (disallowed_source == observation.source())
         disallowed = true;
     }
     if (disallowed)
       continue;
 
     // Skip 0 values of RTT.
-    if (observation.value < 1)
+    if (observation.value() < 1)
       continue;
 
     // Create the map entry if it did not already exist. Does nothing if
     // |host| was seen before.
     host_keyed_observations.emplace(host, std::vector<int32_t>());
-    host_keyed_observations[host].push_back(observation.value);
+    host_keyed_observations[host].push_back(observation.value());
   }
 
   if (host_keyed_observations.empty())
@@ -148,6 +148,18 @@ void ObservationBuffer::GetPercentileForEachHostWithCounts(
   }
 }
 
+void ObservationBuffer::RemoveObservationsWithSource(
+    bool deleted_observation_sources[NETWORK_QUALITY_OBSERVATION_SOURCE_MAX]) {
+  observations_.erase(
+      std::remove_if(
+          observations_.begin(), observations_.end(),
+          [deleted_observation_sources](const Observation& observation) {
+            return deleted_observation_sources[static_cast<size_t>(
+                observation.source())];
+          }),
+      observations_.end());
+}
+
 void ObservationBuffer::ComputeWeightedObservations(
     const base::TimeTicks& begin_timestamp,
     const base::Optional<int32_t>& current_signal_strength,
@@ -162,24 +174,24 @@ void ObservationBuffer::ComputeWeightedObservations(
   base::TimeTicks now = tick_clock_->NowTicks();
 
   for (const auto& observation : observations_) {
-    if (observation.timestamp < begin_timestamp)
+    if (observation.timestamp() < begin_timestamp)
       continue;
     bool disallowed = false;
     for (const auto& disallowed_source : disallowed_observation_sources) {
-      if (disallowed_source == observation.source)
+      if (disallowed_source == observation.source())
         disallowed = true;
     }
     if (disallowed)
       continue;
-    base::TimeDelta time_since_sample_taken = now - observation.timestamp;
+    base::TimeDelta time_since_sample_taken = now - observation.timestamp();
     double time_weight =
         pow(weight_multiplier_per_second_, time_since_sample_taken.InSeconds());
 
     double signal_strength_weight = 1.0;
-    if (current_signal_strength && observation.signal_strength) {
+    if (current_signal_strength && observation.signal_strength()) {
       int32_t signal_strength_weight_diff =
           std::abs(current_signal_strength.value() -
-                   observation.signal_strength.value());
+                   observation.signal_strength().value());
       signal_strength_weight =
           pow(weight_multiplier_per_signal_level_, signal_strength_weight_diff);
     }
@@ -189,7 +201,7 @@ void ObservationBuffer::ComputeWeightedObservations(
     weight = std::max(DBL_MIN, std::min(1.0, weight));
 
     weighted_observations->push_back(
-        WeightedObservation(observation.value, weight));
+        WeightedObservation(observation.value(), weight));
     total_weight_observations += weight;
   }
 
