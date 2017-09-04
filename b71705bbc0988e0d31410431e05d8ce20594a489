@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "071e199d_ac1f8428",
+        "filename": "content/common/media/media_stream_options.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-04T08:49:59Z",
+      "side": 1,
+      "message": "this constructor should be explicit",
+      "range": {
+        "startLine": 73,
+        "startChar": 2,
+        "endLine": 73,
+        "endChar": 18
+      },
+      "revId": "b71705bbc0988e0d31410431e05d8ce20594a489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
