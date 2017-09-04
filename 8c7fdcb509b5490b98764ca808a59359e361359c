@@ -1,0 +1,378 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2926a203_f9ef3d6b",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-04T14:15:11Z",
+      "side": 1,
+      "message": "DependsOn to ProfilePolicyConnectorFactory is needed?",
+      "revId": "8c7fdcb509b5490b98764ca808a59359e361359c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17a40ad8_ae348669",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-04T14:15:11Z",
+      "side": 1,
+      "message": "Please use |context| passed to the ctor.",
+      "revId": "8c7fdcb509b5490b98764ca808a59359e361359c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40e5683a_ff787da3",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-04T14:15:11Z",
+      "side": 1,
+      "message": "You can keep context so that I think you can remove this var.",
+      "revId": "8c7fdcb509b5490b98764ca808a59359e361359c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "370278ac_23bea5c5",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-04T14:15:11Z",
+      "side": 1,
+      "message": "Could you comment why PostTask, instead of sychronous call?",
+      "revId": "8c7fdcb509b5490b98764ca808a59359e361359c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb40c609_94046e35",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-04T14:15:11Z",
+      "side": 1,
+      "message": "Can this be RAII?\n\nnit: s/NULL/nullptr/",
+      "revId": "8c7fdcb509b5490b98764ca808a59359e361359c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f98fe126_ea0a6836",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-04T14:15:11Z",
+      "side": 1,
+      "message": "nit: you can declare this in the for-stmt just below.",
+      "revId": "8c7fdcb509b5490b98764ca808a59359e361359c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3b32211_ad19b5a2",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-04T14:15:11Z",
+      "side": 1,
+      "message": "Unused.",
+      "revId": "8c7fdcb509b5490b98764ca808a59359e361359c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8f856a5_e6016571",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-04T14:15:11Z",
+      "side": 1,
+      "message": "I think you can std::move().",
+      "revId": "8c7fdcb509b5490b98764ca808a59359e361359c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d3cfb72_42672cda",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-04T14:15:11Z",
+      "side": 1,
+      "message": "No real implementation yet (I guess so as request_handle is unsued)?\nSecurity review often requires to provide concrete implementation.",
+      "revId": "8c7fdcb509b5490b98764ca808a59359e361359c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "622d4d14_b18f01c8",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-04T14:15:11Z",
+      "side": 1,
+      "message": "nit: You don\u0027t need move rcv_size.",
+      "revId": "8c7fdcb509b5490b98764ca808a59359e361359c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c768622a_f412a909",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-04T14:15:11Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "8c7fdcb509b5490b98764ca808a59359e361359c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77ed1f60_f7c4fdf6",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-04T14:15:11Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "8c7fdcb509b5490b98764ca808a59359e361359c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77eb76ac_d9aa3968",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-04T14:15:11Z",
+      "side": 1,
+      "message": "Does base::Value::DictItems() with enhanced for help to simplify this?",
+      "revId": "8c7fdcb509b5490b98764ca808a59359e361359c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e640469_a6c16536",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-04T14:15:11Z",
+      "side": 1,
+      "message": "nit: !permissions.empty().",
+      "revId": "8c7fdcb509b5490b98764ca808a59359e361359c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "948b4607_78d6feeb",
+        "filename": "components/arc/common/arc_bridge.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-04T14:15:11Z",
+      "side": 1,
+      "message": "For consistency, OnCertStoreInstanceReady() ?",
+      "revId": "8c7fdcb509b5490b98764ca808a59359e361359c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e371eea_485dce49",
+        "filename": "components/arc/common/arc_cert_store.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-04T14:15:11Z",
+      "side": 1,
+      "message": "Documents? Ditto for structs below.",
+      "revId": "8c7fdcb509b5490b98764ca808a59359e361359c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb59a61b_d54e3475",
+        "filename": "components/arc/common/arc_cert_store.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-04T14:15:11Z",
+      "side": 1,
+      "message": "// Next method ID: 2",
+      "revId": "8c7fdcb509b5490b98764ca808a59359e361359c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9a5d63b_23576787",
+        "filename": "components/arc/common/arc_cert_store.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-04T14:15:11Z",
+      "side": 1,
+      "message": "For consistency, s/Arc/",
+      "revId": "8c7fdcb509b5490b98764ca808a59359e361359c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3859cc5c_be8321fa",
+        "filename": "components/arc/common/arc_cert_store.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-04T14:15:11Z",
+      "side": 1,
+      "message": "Any documents?",
+      "revId": "8c7fdcb509b5490b98764ca808a59359e361359c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25bc1a03_83ed1289",
+        "filename": "components/arc/common/arc_cert_store.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-04T14:15:11Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "8c7fdcb509b5490b98764ca808a59359e361359c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1de7d1fd_9643ecc4",
+        "filename": "components/arc/common/arc_cert_store.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-04T14:15:11Z",
+      "side": 1,
+      "message": "// Next method ID: 2",
+      "revId": "8c7fdcb509b5490b98764ca808a59359e361359c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9876165_8a45f1fb",
+        "filename": "components/arc/common/arc_cert_store.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-04T14:15:11Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "8c7fdcb509b5490b98764ca808a59359e361359c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
