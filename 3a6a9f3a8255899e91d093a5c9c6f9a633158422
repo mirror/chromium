@@ -2,6 +2,63 @@
   "comments": [
     {
       "key": {
+        "uuid": "c21a92a2_7e0d7030",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/DocumentModuleScriptFetcher.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-09-04T03:46:58Z",
+      "side": 1,
+      "message": "DCHECK(fetcher);\nDCHECK(client);",
+      "revId": "3a6a9f3a8255899e91d093a5c9c6f9a633158422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e90a351_b9512736",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/DocumentModuleScriptFetcher.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-09-04T03:46:58Z",
+      "side": 1,
+      "message": "Great comment. Would you also note that DMSF is \"used to fetch module scripts used in main documents (that means, not worker nor worklets)\".",
+      "range": {
+        "startLine": 22,
+        "startChar": 3,
+        "endLine": 22,
+        "endChar": 30
+      },
+      "revId": "3a6a9f3a8255899e91d093a5c9c6f9a633158422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f262bb0c_95e6b0e9",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/DocumentModuleScriptFetcher.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-09-04T03:46:58Z",
+      "side": 1,
+      "message": "Should we manage client_ in ModuleScriptFetcher?",
+      "revId": "3a6a9f3a8255899e91d093a5c9c6f9a633158422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cef4a3bd_8198500f",
         "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleScriptFetcher.h",
         "patchSetId": 11
@@ -13,6 +70,40 @@
       "writtenOn": "2017-09-04T03:35:30Z",
       "side": 1,
       "message": "Hm... this comment looks outdated. I\u0027ll update this in the next patchset.",
+      "revId": "3a6a9f3a8255899e91d093a5c9c6f9a633158422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88aac00d_3cdc696b",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleScriptFetcher.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-09-04T03:46:58Z",
+      "side": 1,
+      "message": "why mixin?",
+      "revId": "3a6a9f3a8255899e91d093a5c9c6f9a633158422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2739b257_a9d0b2f2",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleScriptFetcher.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-09-04T03:46:58Z",
+      "side": 1,
+      "message": "why not const ref here and there?",
       "revId": "3a6a9f3a8255899e91d093a5c9c6f9a633158422",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
