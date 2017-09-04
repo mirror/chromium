@@ -10,6 +10,7 @@
 
 #include "base/time/time.h"
 #include "content/common/content_export.h"
+#include "net/base/net_errors.h"
 
 namespace content {
 
@@ -17,9 +18,14 @@ struct CONTENT_EXPORT ResourceRequestCompletionStatus {
   ResourceRequestCompletionStatus();
   ResourceRequestCompletionStatus(
       const ResourceRequestCompletionStatus& status);
-  explicit ResourceRequestCompletionStatus(int64_t length);
+
   // Sets error_code to net::OK, completition_time to base::TimeTicks::Now(),
   // and encoded_data_length = encoded_body_length = |length|;
+  explicit ResourceRequestCompletionStatus(int64_t length);
+
+  // Sets completition_time to base::TimeTicks::Now().
+  explicit ResourceRequestCompletionStatus(net::Error error_code);
+
   ~ResourceRequestCompletionStatus();
 
   // The error code.
