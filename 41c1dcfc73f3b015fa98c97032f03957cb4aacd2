@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a14a9ab8_fbe2fef8",
+        "filename": "third_party/WebKit/Source/core/html/HTMLInputElement.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1073,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-04T05:20:28Z",
+      "side": 1,
+      "message": "We should introduce help function to set content to placeholder element\nwith SetSuggetsedValue() and UpdatePlaceFolderText().",
+      "revId": "41c1dcfc73f3b015fa98c97032f03957cb4aacd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daf20dc9_e33729ea",
+        "filename": "third_party/WebKit/Source/core/html/HTMLInputElement.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1087,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-04T05:20:28Z",
+      "side": 1,
+      "message": "nit: s/ShadowDom/ShadowDOM/ as L1081",
+      "revId": "41c1dcfc73f3b015fa98c97032f03957cb4aacd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0226b7b2_317d3dc8",
+        "filename": "third_party/WebKit/Source/core/html/HTMLInputElement.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1091,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-04T05:20:28Z",
+      "side": 1,
+      "message": "nit: s/ShadowDom/ShadowDOM/ as L1081",
+      "revId": "41c1dcfc73f3b015fa98c97032f03957cb4aacd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0333016_36523574",
+        "filename": "third_party/WebKit/Source/core/html/HTMLInputElement.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1723,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-04T05:20:28Z",
+      "side": 1,
+      "message": "nit: We don\u0027t need to have this uncommented statement.",
+      "revId": "41c1dcfc73f3b015fa98c97032f03957cb4aacd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
