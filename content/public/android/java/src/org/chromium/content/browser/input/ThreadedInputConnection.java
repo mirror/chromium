@@ -432,7 +432,19 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
                 if (mPendingAccent != 0) {
                     finishComposingTextOnUiThread();
                 }
-                mImeAdapter.deleteSurroundingText(beforeLength, afterLength);
+                // mImeAdapter.deleteSurroundingText(beforeLength, afterLength);
+                int keycode = KeyEvent.KEYCODE_UNKNOWN;
+                if (beforeLength == 1 && afterLength == 0) {
+                    keycode = KeyEvent.KEYCODE_DEL;
+                } else {
+                    keycode = KeyEvent.KEYCODE_FORWARD_DEL;
+                }
+
+                if (keycode == KeyEvent.KEYCODE_UNKNOWN) {
+                    mImeAdapter.deleteSurroundingText(beforeLength, afterLength);
+                } else {
+                    mImeAdapter.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, keycode));
+                }
             }
         });
         return true;
