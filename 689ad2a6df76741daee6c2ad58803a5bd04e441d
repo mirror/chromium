@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f2175a0f_45664853",
+        "filename": "media/gpu/android/fake_codec_allocator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-09-04T01:19:19Z",
+      "side": 1,
+      "message": "Made private, thanks",
+      "parentUuid": "648b7e0e_e196f21e",
+      "revId": "689ad2a6df76741daee6c2ad58803a5bd04e441d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ba477e1_bb2a7b8c",
         "filename": "media/gpu/android/media_codec_video_decoder.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-01T14:25:51Z",
       "side": 1,
       "message": "i think that putting this at the end of ReleaseCodec() makes some amount of sense.  not sure if it has unintended side-effects though.",
+      "revId": "689ad2a6df76741daee6c2ad58803a5bd04e441d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22f903bd_3258f9cc",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-09-04T01:19:19Z",
+      "side": 1,
+      "message": "I think they\u0027re almost the same. The only other time ReleaseCodec() is called is from Flush(). Which shouldn\u0027t ever be called unless there\u0027s no drain anyway. \n\nThat being said, personally I think I find the current one more obvious: drains either complete normally, or when you enter a terminal state (with the one weird case of the timer timeout being hit also being an implicit terminal state).\n\nDoesn\u0027t sound like you feel strongly so I\u0027ll leave it for now I think",
+      "parentUuid": "3ba477e1_bb2a7b8c",
       "revId": "689ad2a6df76741daee6c2ad58803a5bd04e441d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
