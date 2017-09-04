@@ -179,7 +179,7 @@ class LayerTestCommon {
     LayerTreeFrameSink* layer_tree_frame_sink() const {
       return host_->host_impl()->layer_tree_frame_sink();
     }
-    ResourceProvider* resource_provider() const {
+    viz::ResourceProvider* resource_provider() const {
       return host_->host_impl()->resource_provider();
     }
     LayerImpl* root_layer_for_testing() const {

@@ -1,4 +1,31 @@
 specific_include_rules = {
+  "(display_resource_provider).*\.(cc|h)": [
+    "+gpu/command_buffer/client",
+    "+third_party/skia/include/gpu/GrBackendSurface.h",
+    "+cc/output/overlay_candidate.h",
+  ],
+  "(layer_tree_resource_provider).*\.(cc|h)": [
+    "+gpu/command_buffer/client",
+    "+gpu/GLES2/gl2extchromium.h",
+    "+gpu/command_buffer/client/gpu_memory_buffer_manager.h",
+  ],
+  "(resource_provider).*\.(cc|h)": [
+    "+cc/resources",
+    "+gpu/command_buffer/client",
+    "+gpu/GLES2/gl2extchromium.h",
+    "+skia/ext/texture_handle.h",
+    "+third_party/khronos/GLES2",
+    "+third_party/skia/include",
+    "+ui/gl/trace_util.h",
+  ],
+  "resource_provider_unittest\.cc": [
+    "+cc/test",
+    "+cc/trees",
+    "+third_party/khronos/GLES2",
+  ],
+  "single_release_callback_impl\.cc": [
+    "+cc/trees/blocking_task_runner.h",
+  ],
   # DEPS for GLHelper and friends which are in the root common/ directory.
   "(yuv_readback|gl_helper).*\.(cc|h)": [
     "+gpu/GLES2",
