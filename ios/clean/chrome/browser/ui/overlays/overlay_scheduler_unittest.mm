@@ -5,7 +5,10 @@
 #import "ios/clean/chrome/browser/ui/overlays/overlay_scheduler.h"
 
 #include "base/memory/ptr_util.h"
+#include "base/test/scoped_task_environment.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
+#include "ios/chrome/browser/browser_state/test_chrome_browser_state.h"
+#import "ios/chrome/browser/web_state_list/fake_web_state_list_delegate.h"
 #import "ios/chrome/browser/web_state_list/web_state_list.h"
 #import "ios/chrome/browser/web_state_list/web_state_opener.h"
 #import "ios/clean/chrome/browser/ui/commands/tab_grid_commands.h"
@@ -17,7 +20,6 @@
 #import "ios/clean/chrome/browser/ui/overlays/test_helpers/test_overlay_queue.h"
 #import "ios/clean/chrome/browser/ui/overlays/test_helpers/test_overlay_queue_observer.h"
 #import "ios/clean/chrome/browser/ui/overlays/web_state_overlay_queue.h"
-#include "ios/web/public/test/fakes/test_browser_state.h"
 #include "ios/web/public/test/fakes/test_web_state.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/gtest_mac.h"
@@ -49,24 +51,29 @@ class TestOverlaySchedulerObserver : public OverlaySchedulerObserver {
 // Test fixture for OverlayScheduler.
 class OverlaySchedulerTest : public PlatformTest {
  public:
-  OverlaySchedulerTest()
-      : PlatformTest(),
-        browser_(ios::ChromeBrowserState::FromBrowserState(&browser_state_)),
-        observer_(&browser_.web_state_list()) {
-    OverlayQueueManager::CreateForBrowser(&browser_);
-    OverlayScheduler::CreateForBrowser(&browser_);
+  OverlaySchedulerTest() {
+    TestChromeBrowserState::Builder builder;
+    browser_state_ = builder.Build();
+
+    delegate_ = std::make_unique<FakeWebStateListDelegate>();
+    browser_ = std::make_unique<Browser>(browser_state_.get(), delegate_.get());
+    observer_ = std::make_unique<TestOverlaySchedulerObserver>(
+        &(browser_->web_state_list()));
+
+    OverlayQueueManager::CreateForBrowser(browser());
+    OverlayScheduler::CreateForBrowser(browser());
     scheduler()->SetQueueManager(manager());
-    scheduler()->AddObserver(&observer_);
+    scheduler()->AddObserver(observer());
   }
 
   ~OverlaySchedulerTest() override {
-    scheduler()->RemoveObserver(&observer_);
+    scheduler()->RemoveObserver(observer());
     scheduler()->Disconnect();
   }
 
-  Browser* browser() { return &browser_; }
-  WebStateList* web_state_list() { return &browser_.web_state_list(); }
-  TestOverlaySchedulerObserver* observer() { return &observer_; }
+  Browser* browser() { return browser_.get(); }
+  WebStateList* web_state_list() { return &(browser_->web_state_list()); }
+  TestOverlaySchedulerObserver* observer() { return observer_.get(); }
   OverlayQueueManager* manager() {
     return OverlayQueueManager::FromBrowser(browser());
   }
@@ -75,9 +82,11 @@ class OverlaySchedulerTest : public PlatformTest {
   }
 
  private:
-  web::TestBrowserState browser_state_;
-  Browser browser_;
-  TestOverlaySchedulerObserver observer_;
+  base::test::ScopedTaskEnvironment environment_;
+  std::unique_ptr<ios::ChromeBrowserState> browser_state_;
+  std::unique_ptr<WebStateListDelegate> delegate_;
+  std::unique_ptr<Browser> browser_;
+  std::unique_ptr<TestOverlaySchedulerObserver> observer_;
   TestOverlayQueue queue_;
 };
 

@@ -12,6 +12,7 @@
 
 class Browser;
 class TestChromeBrowserState;
+class WebStateListDelegate;
 
 class BrowserCoordinatorTest : public PlatformTest {
  protected:
@@ -22,8 +23,9 @@ class BrowserCoordinatorTest : public PlatformTest {
 
  private:
   base::test::ScopedTaskEnvironment task_environment_;
-  std::unique_ptr<Browser> browser_;
   std::unique_ptr<TestChromeBrowserState> chrome_browser_state_;
+  std::unique_ptr<WebStateListDelegate> delegate_;
+  std::unique_ptr<Browser> browser_;
 };
 
 #endif  // IOS_CHROME_BROWSER_UI_COORDINATORS_BROWSER_COORDINATOR_TEST_H_

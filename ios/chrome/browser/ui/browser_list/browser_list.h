@@ -11,21 +11,23 @@
 #include "base/macros.h"
 #include "base/observer_list.h"
 #include "base/supports_user_data.h"
+#include "components/keyed_service/core/keyed_service.h"
 #include "ios/chrome/browser/ui/browser_list/browser.h"
 
 class BrowserListObserver;
+class WebStateListDelegate;
 
 namespace ios {
 class ChromeBrowserState;
 }
 
 // BrowserList attaches Browsers instance to a ChromeBrowserState.
-class BrowserList : public base::SupportsUserData::Data {
+class BrowserList : public KeyedService {
  public:
-  explicit BrowserList(ios::ChromeBrowserState* browser_state);
-  ~BrowserList() override;
+  BrowserList(ios::ChromeBrowserState* browser_state,
+              std::unique_ptr<WebStateListDelegate> delegate);
 
-  static BrowserList* FromBrowserState(ios::ChromeBrowserState* browser_state);
+  ~BrowserList() override;
 
   // Returns the number of Browsers in the BrowserList.
   int count() const { return static_cast<int>(browsers_.size()); }
@@ -54,6 +56,7 @@ class BrowserList : public base::SupportsUserData::Data {
 
  private:
   ios::ChromeBrowserState* browser_state_;
+  std::unique_ptr<WebStateListDelegate> delegate_;
   std::vector<std::unique_ptr<Browser>> browsers_;
   base::ObserverList<BrowserListObserver, true> observers_;
 

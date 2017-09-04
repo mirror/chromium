@@ -11,6 +11,8 @@
 #include "base/test/scoped_task_environment.h"
 #include "ios/chrome/browser/browser_state/test_chrome_browser_state.h"
 #import "ios/chrome/browser/ui/browser_list/browser_list_observer.h"
+#import "ios/chrome/browser/web_state_list/fake_web_state_list_delegate.h"
+#import "ios/chrome/browser/web_state_list/web_state_list_delegate.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/platform_test.h"
 
@@ -56,92 +58,85 @@ class BrowserListTest : public PlatformTest {
  public:
   BrowserListTest() {
     browser_state_ = TestChromeBrowserState::Builder().Build();
+    browser_list_ = std::make_unique<BrowserList>(
+        browser_state_.get(), std::make_unique<FakeWebStateListDelegate>());
   }
 
-  ios::ChromeBrowserState* browser_state() { return browser_state_.get(); }
+  BrowserList* browser_list() { return browser_list_.get(); }
 
  private:
   base::test::ScopedTaskEnvironment task_environment_;
   std::unique_ptr<ios::ChromeBrowserState> browser_state_;
+  std::unique_ptr<BrowserList> browser_list_;
 
   DISALLOW_COPY_AND_ASSIGN(BrowserListTest);
 };
 
-TEST_F(BrowserListTest, Initialisation) {
-  EXPECT_TRUE(BrowserList::FromBrowserState(browser_state()));
-}
-
 TEST_F(BrowserListTest, CreateBrowser) {
-  BrowserList* browser_list = BrowserList::FromBrowserState(browser_state());
-  EXPECT_EQ(0, browser_list->count());
+  EXPECT_EQ(0, browser_list()->count());
 
-  Browser* browser = browser_list->CreateNewBrowser();
-  ASSERT_EQ(1, browser_list->count());
-  EXPECT_EQ(browser, browser_list->GetBrowserAtIndex(0));
+  Browser* browser = browser_list()->CreateNewBrowser();
+  ASSERT_EQ(1, browser_list()->count());
+  EXPECT_EQ(browser, browser_list()->GetBrowserAtIndex(0));
 }
 
 TEST_F(BrowserListTest, CloseBrowser) {
-  BrowserList* browser_list = BrowserList::FromBrowserState(browser_state());
-  browser_list->CreateNewBrowser();
-  EXPECT_EQ(1, browser_list->count());
+  browser_list()->CreateNewBrowser();
+  EXPECT_EQ(1, browser_list()->count());
 
-  browser_list->CloseBrowserAtIndex(0);
-  EXPECT_EQ(0, browser_list->count());
+  browser_list()->CloseBrowserAtIndex(0);
+  EXPECT_EQ(0, browser_list()->count());
 }
 
 TEST_F(BrowserListTest, ContainsIndex) {
-  BrowserList* browser_list = BrowserList::FromBrowserState(browser_state());
-  EXPECT_EQ(0, browser_list->count());
-  EXPECT_FALSE(browser_list->ContainsIndex(-1));
-  EXPECT_FALSE(browser_list->ContainsIndex(0));
-  EXPECT_FALSE(browser_list->ContainsIndex(1));
+  EXPECT_EQ(0, browser_list()->count());
+  EXPECT_FALSE(browser_list()->ContainsIndex(-1));
+  EXPECT_FALSE(browser_list()->ContainsIndex(0));
+  EXPECT_FALSE(browser_list()->ContainsIndex(1));
 
-  browser_list->CreateNewBrowser();
-  EXPECT_EQ(1, browser_list->count());
-  EXPECT_FALSE(browser_list->ContainsIndex(-1));
-  EXPECT_TRUE(browser_list->ContainsIndex(0));
-  EXPECT_FALSE(browser_list->ContainsIndex(1));
+  browser_list()->CreateNewBrowser();
+  EXPECT_EQ(1, browser_list()->count());
+  EXPECT_FALSE(browser_list()->ContainsIndex(-1));
+  EXPECT_TRUE(browser_list()->ContainsIndex(0));
+  EXPECT_FALSE(browser_list()->ContainsIndex(1));
 
-  browser_list->CreateNewBrowser();
-  EXPECT_EQ(2, browser_list->count());
-  EXPECT_FALSE(browser_list->ContainsIndex(-1));
-  EXPECT_TRUE(browser_list->ContainsIndex(0));
-  EXPECT_TRUE(browser_list->ContainsIndex(1));
+  browser_list()->CreateNewBrowser();
+  EXPECT_EQ(2, browser_list()->count());
+  EXPECT_FALSE(browser_list()->ContainsIndex(-1));
+  EXPECT_TRUE(browser_list()->ContainsIndex(0));
+  EXPECT_TRUE(browser_list()->ContainsIndex(1));
 }
 
 TEST_F(BrowserListTest, GetIndexOfBrowser) {
-  BrowserList* browser_list = BrowserList::FromBrowserState(browser_state());
   EXPECT_EQ(BrowserList::kInvalidIndex,
-            browser_list->GetIndexOfBrowser(nullptr));
+            browser_list()->GetIndexOfBrowser(nullptr));
 
-  Browser* browser_0 = browser_list->CreateNewBrowser();
-  EXPECT_EQ(0, browser_list->GetIndexOfBrowser(browser_0));
-  EXPECT_EQ(browser_0, browser_list->GetBrowserAtIndex(0));
+  Browser* browser_0 = browser_list()->CreateNewBrowser();
+  EXPECT_EQ(0, browser_list()->GetIndexOfBrowser(browser_0));
+  EXPECT_EQ(browser_0, browser_list()->GetBrowserAtIndex(0));
 
-  Browser* browser_1 = browser_list->CreateNewBrowser();
-  EXPECT_EQ(1, browser_list->GetIndexOfBrowser(browser_1));
-  EXPECT_EQ(browser_1, browser_list->GetBrowserAtIndex(1));
+  Browser* browser_1 = browser_list()->CreateNewBrowser();
+  EXPECT_EQ(1, browser_list()->GetIndexOfBrowser(browser_1));
+  EXPECT_EQ(browser_1, browser_list()->GetBrowserAtIndex(1));
 
   // browser_0 is now invalid.
-  browser_list->CloseBrowserAtIndex(0);
+  browser_list()->CloseBrowserAtIndex(0);
   EXPECT_EQ(BrowserList::kInvalidIndex,
-            browser_list->GetIndexOfBrowser(browser_0));
-  EXPECT_EQ(0, browser_list->GetIndexOfBrowser(browser_1));
-  EXPECT_EQ(browser_1, browser_list->GetBrowserAtIndex(0));
+            browser_list()->GetIndexOfBrowser(browser_0));
+  EXPECT_EQ(0, browser_list()->GetIndexOfBrowser(browser_1));
+  EXPECT_EQ(browser_1, browser_list()->GetBrowserAtIndex(0));
 }
 
 TEST_F(BrowserListTest, Observer) {
-  BrowserList* browser_list = BrowserList::FromBrowserState(browser_state());
-
   BrowserListTestObserver observer;
   ScopedObserver<BrowserList, BrowserListObserver> scoped_observer(&observer);
-  scoped_observer.Add(browser_list);
+  scoped_observer.Add(browser_list());
 
   observer.ResetStatistics();
   ASSERT_FALSE(observer.browser_created_called());
   ASSERT_FALSE(observer.browser_removed_called());
 
-  browser_list->CreateNewBrowser();
+  browser_list()->CreateNewBrowser();
   EXPECT_TRUE(observer.browser_created_called());
   EXPECT_FALSE(observer.browser_removed_called());
 
@@ -149,7 +144,7 @@ TEST_F(BrowserListTest, Observer) {
   ASSERT_FALSE(observer.browser_created_called());
   ASSERT_FALSE(observer.browser_removed_called());
 
-  browser_list->CloseBrowserAtIndex(0);
+  browser_list()->CloseBrowserAtIndex(0);
   EXPECT_FALSE(observer.browser_created_called());
   EXPECT_TRUE(observer.browser_removed_called());
 }

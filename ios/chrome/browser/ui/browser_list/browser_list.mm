@@ -4,41 +4,24 @@
 
 #import "ios/chrome/browser/ui/browser_list/browser_list.h"
 
-#include <stdint.h>
+#include <memory>
 
 #include "base/logging.h"
-#include "base/memory/ptr_util.h"
-#include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #import "ios/chrome/browser/ui/browser_list/browser_list_observer.h"
+#import "ios/chrome/browser/web_state_list/web_state_list_delegate.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
 #endif
 
-namespace {
-const char kBrowserListKey = 0;
-}
-
-BrowserList::BrowserList(ios::ChromeBrowserState* browser_state)
-    : browser_state_(browser_state) {
+BrowserList::BrowserList(ios::ChromeBrowserState* browser_state,
+                         std::unique_ptr<WebStateListDelegate> delegate)
+    : browser_state_(browser_state), delegate_(std::move(delegate)) {
   DCHECK(browser_state_);
+  DCHECK(delegate_);
 }
 
 BrowserList::~BrowserList() = default;
-
-// static
-BrowserList* BrowserList::FromBrowserState(
-    ios::ChromeBrowserState* browser_state) {
-  base::SupportsUserData::Data* data =
-      browser_state->GetUserData(&kBrowserListKey);
-  if (!data) {
-    browser_state->SetUserData(&kBrowserListKey,
-                               base::MakeUnique<BrowserList>(browser_state));
-    data = browser_state->GetUserData(&kBrowserListKey);
-  }
-  DCHECK(data);
-  return static_cast<BrowserList*>(data);
-}
 
 int BrowserList::ContainsIndex(int index) const {
   return 0 <= index && index < count();
@@ -58,7 +41,8 @@ int BrowserList::GetIndexOfBrowser(const Browser* browser) const {
 }
 
 Browser* BrowserList::CreateNewBrowser() {
-  browsers_.push_back(base::MakeUnique<Browser>(browser_state_));
+  browsers_.push_back(
+      std::make_unique<Browser>(browser_state_, delegate_.get()));
   Browser* browser_created = browsers_.back().get();
   for (BrowserListObserver& observer : observers_)
     observer.OnBrowserCreated(this, browser_created);

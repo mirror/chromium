@@ -4,15 +4,19 @@
 
 #import "ios/clean/chrome/browser/ui/overlays/overlay_queue_manager.h"
 
+#include <memory>
+
 #include "base/memory/ptr_util.h"
+#include "base/test/scoped_task_environment.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
+#include "ios/chrome/browser/browser_state/test_chrome_browser_state.h"
 #import "ios/chrome/browser/ui/browser_list/browser.h"
+#import "ios/chrome/browser/web_state_list/fake_web_state_list_delegate.h"
 #import "ios/chrome/browser/web_state_list/web_state_list.h"
 #import "ios/chrome/browser/web_state_list/web_state_opener.h"
 #import "ios/clean/chrome/browser/ui/overlays/overlay_queue.h"
 #import "ios/clean/chrome/browser/ui/overlays/test_helpers/test_overlay_coordinator.h"
 #import "ios/clean/chrome/browser/ui/overlays/test_helpers/test_overlay_queue_manager_observer.h"
-#include "ios/web/public/test/fakes/test_browser_state.h"
 #include "ios/web/public/test/fakes/test_web_state.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/gtest_mac.h"
@@ -39,10 +43,12 @@ OverlayQueue* GetQueueForWebState(const std::set<OverlayQueue*>& queues,
 
 class OverlayQueueManagerTest : public PlatformTest {
  public:
-  OverlayQueueManagerTest()
-      : PlatformTest(),
-        browser_(ios::ChromeBrowserState::FromBrowserState(&browser_state_)) {
-    OverlayQueueManager::CreateForBrowser(&browser_);
+  OverlayQueueManagerTest() {
+    TestChromeBrowserState::Builder builder;
+    browser_state_ = builder.Build();
+    delegate_ = std::make_unique<FakeWebStateListDelegate>();
+    browser_ = std::make_unique<Browser>(browser_state_.get(), delegate_.get());
+    OverlayQueueManager::CreateForBrowser(browser_.get());
     manager()->AddObserver(&observer_);
   }
 
@@ -51,16 +57,18 @@ class OverlayQueueManagerTest : public PlatformTest {
     manager()->Disconnect();
   }
 
-  Browser* browser() { return &browser_; }
-  WebStateList* web_state_list() { return &browser_.web_state_list(); }
+  Browser* browser() { return browser_.get(); }
+  WebStateList* web_state_list() { return &(browser_->web_state_list()); }
   OverlayQueueManager* manager() {
     return OverlayQueueManager::FromBrowser(browser());
   }
   TestOverlayQueueManagerObserver* observer() { return &observer_; }
 
  private:
-  web::TestBrowserState browser_state_;
-  Browser browser_;
+  base::test::ScopedTaskEnvironment environment_;
+  std::unique_ptr<ios::ChromeBrowserState> browser_state_;
+  std::unique_ptr<WebStateListDelegate> delegate_;
+  std::unique_ptr<Browser> browser_;
   TestOverlayQueueManagerObserver observer_;
 };
 
