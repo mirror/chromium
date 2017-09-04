@@ -22,6 +22,30 @@
       "revId": "af7258370694e6517949ee3f2e885a07c606d230",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96d5a30c_1d3de186",
+        "filename": "ios/chrome/browser/web/external_app_launcher.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-09-04T19:56:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "06027923_dec6190d",
+      "range": {
+        "startLine": 127,
+        "startChar": 29,
+        "endLine": 127,
+        "endChar": 67
+      },
+      "revId": "af7258370694e6517949ee3f2e885a07c606d230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
