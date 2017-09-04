@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "99f86530_7d277f16",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-09-04T01:13:46Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8f9a15c8_929d6723",
+      "revId": "adf245b7e2d635d670b7b8f5dbfb0db4a8225204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4804083b_6694d9c6",
         "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "adf245b7e2d635d670b7b8f5dbfb0db4a8225204",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31f5bb67_f563c033",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-09-04T01:13:46Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4804083b_6694d9c6",
+      "revId": "adf245b7e2d635d670b7b8f5dbfb0db4a8225204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +101,24 @@
       "side": 1,
       "message": "yeah, before the code were None, so I thought something might be going on, I will try putting it as you said to see if anything change",
       "parentUuid": "5f1c438b_bd181bbc",
+      "revId": "adf245b7e2d635d670b7b8f5dbfb0db4a8225204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d8f19f7_912a455a",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-09-04T01:13:46Z",
+      "side": 1,
+      "message": "what if it is unsigned and there is no field_size?",
+      "parentUuid": "04f1e31d_0337d095",
       "revId": "adf245b7e2d635d670b7b8f5dbfb0db4a8225204",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
