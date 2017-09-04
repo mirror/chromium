@@ -260,11 +260,10 @@ bool TryDismissSyncConfirmationDialog(Browser* browser) {
   SigninViewController* signin_view_controller =
       browser->signin_view_controller();
   DCHECK_NE(signin_view_controller, nullptr);
-  SigninViewControllerDelegate* delegate = signin_view_controller->delegate();
-  if (delegate == nullptr)
+  if (!signin_view_controller->ShowsModalDialog())
     return false;
   content::WebContents* dialog_web_contents =
-      delegate->web_contents_for_testing();
+      signin_view_controller->GetModalDialogWebContentsForTesting();
   DCHECK_NE(dialog_web_contents, nullptr);
   std::string message;
   std::string js =
