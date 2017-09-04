@@ -13,11 +13,11 @@
 #include "cc/quads/stream_video_draw_quad.h"
 #include "cc/quads/texture_draw_quad.h"
 #include "cc/quads/yuv_video_draw_quad.h"
-#include "cc/resources/resource_provider.h"
-#include "cc/resources/single_release_callback_impl.h"
 #include "cc/trees/layer_tree_impl.h"
 #include "cc/trees/occlusion.h"
 #include "cc/trees/task_runner_provider.h"
+#include "components/viz/common/display/resource_provider.h"
+#include "components/viz/common/quads/single_release_callback_impl.h"
 #include "media/base/video_frame.h"
 #include "ui/gfx/color_space.h"
 
@@ -76,7 +76,7 @@ void VideoLayerImpl::DidBecomeActive() {
 }
 
 bool VideoLayerImpl::WillDraw(DrawMode draw_mode,
-                              ResourceProvider* resource_provider) {
+                              viz::ResourceProvider* resource_provider) {
   if (draw_mode == DRAW_MODE_RESOURCELESS_SOFTWARE)
     return false;
 
@@ -124,12 +124,12 @@ bool VideoLayerImpl::WillDraw(DrawMode draw_mode,
 
   DCHECK_EQ(external_resources.mailboxes.size(),
             external_resources.release_callbacks.size());
-  ResourceProvider::ResourceIdArray resource_ids;
+  viz::ResourceProvider::ResourceIdArray resource_ids;
   resource_ids.reserve(external_resources.mailboxes.size());
   for (size_t i = 0; i < external_resources.mailboxes.size(); ++i) {
     unsigned resource_id = resource_provider->CreateResourceFromTextureMailbox(
         external_resources.mailboxes[i],
-        SingleReleaseCallbackImpl::Create(
+        viz::SingleReleaseCallbackImpl::Create(
             external_resources.release_callbacks[i]),
         external_resources.read_lock_fences_enabled,
         external_resources.buffer_format);
@@ -328,7 +328,7 @@ void VideoLayerImpl::AppendQuads(RenderPass* render_pass,
   }
 }
 
-void VideoLayerImpl::DidDraw(ResourceProvider* resource_provider) {
+void VideoLayerImpl::DidDraw(viz::ResourceProvider* resource_provider) {
   LayerImpl::DidDraw(resource_provider);
 
   DCHECK(frame_.get());
