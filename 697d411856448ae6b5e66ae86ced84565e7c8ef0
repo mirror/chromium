@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b2605c5c_e3f42463",
+        "filename": "ios/chrome/browser/ui/content_suggestions/ntp_home_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-04T07:12:45Z",
+      "side": 1,
+      "message": "This is only on suggestions ntp.",
+      "parentUuid": "d4102aba_d07bf8d0",
+      "revId": "697d411856448ae6b5e66ae86ced84565e7c8ef0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "920ade08_09acfff9",
         "filename": "ios/chrome/browser/ui/content_suggestions/ntp_home_egtest.mm",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "697d411856448ae6b5e66ae86ced84565e7c8ef0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f23402e_7d5b6ad6",
+        "filename": "ios/chrome/browser/ui/content_suggestions/ntp_home_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-04T07:12:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "920ade08_09acfff9",
+      "revId": "697d411856448ae6b5e66ae86ced84565e7c8ef0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ff81b9a8_0557c7ce",
+        "filename": "ios/chrome/browser/ui/content_suggestions/ntp_home_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-04T07:12:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c859c9e6_3cc1a520",
+      "revId": "697d411856448ae6b5e66ae86ced84565e7c8ef0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96d801c5_59632f8e",
         "filename": "ios/chrome/browser/ui/content_suggestions/ntp_home_egtest.mm",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "697d411856448ae6b5e66ae86ced84565e7c8ef0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cd5f6b1_c5164f2e",
+        "filename": "ios/chrome/browser/ui/content_suggestions/ntp_home_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-04T07:12:45Z",
+      "side": 1,
+      "message": "Much easier, thanks!",
+      "parentUuid": "96d801c5_59632f8e",
+      "revId": "697d411856448ae6b5e66ae86ced84565e7c8ef0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
