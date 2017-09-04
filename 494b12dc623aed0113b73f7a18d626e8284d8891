@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "61156c36_3eaaf23e",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 982,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-09-04T14:40:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e0c71b3_9e9564e0",
+      "revId": "494b12dc623aed0113b73f7a18d626e8284d8891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27fabf6d_f4b99024",
         "filename": "chrome/browser/resources/local_ntp/voice.js",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d690d111_ca816b0d",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 1436,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-09-04T14:40:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27fabf6d_f4b99024",
+      "revId": "494b12dc623aed0113b73f7a18d626e8284d8891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50f4586d_debfcf54",
         "filename": "chrome/browser/resources/local_ntp/voice.js",
         "patchSetId": 4
@@ -50,6 +86,24 @@
       "revId": "494b12dc623aed0113b73f7a18d626e8284d8891",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a431ae4_fd52acd1",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 1455,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-09-04T14:40:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50f4586d_debfcf54",
+      "revId": "494b12dc623aed0113b73f7a18d626e8284d8891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

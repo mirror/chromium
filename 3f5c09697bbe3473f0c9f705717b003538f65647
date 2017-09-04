@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7a543a66_270f3376",
+        "filename": "chrome/test/data/local_ntp/voice_view_browsertest.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-09-04T14:40:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a6f9873_e3e92530",
+      "range": {
+        "startLine": 216,
+        "startChar": 64,
+        "endLine": 216,
+        "endChar": 0
+      },
+      "revId": "3f5c09697bbe3473f0c9f705717b003538f65647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5b06d26_719c5752",
         "filename": "chrome/test/data/local_ntp/voice_view_browsertest.js",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f8842932_c3ee10fa",
+        "filename": "chrome/test/data/local_ntp/voice_view_browsertest.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-09-04T14:40:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5b06d26_719c5752",
+      "range": {
+        "startLine": 358,
+        "startChar": 38,
+        "endLine": 358,
+        "endChar": 0
+      },
+      "revId": "3f5c09697bbe3473f0c9f705717b003538f65647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69b56b2d_c2ee0fcb",
         "filename": "chrome/test/data/local_ntp/voice_view_browsertest.js",
         "patchSetId": 5
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-01T08:37:33Z",
       "side": 1,
       "message": "Also check that the voice search view got hidden again?",
+      "range": {
+        "startLine": 408,
+        "startChar": 44,
+        "endLine": 408,
+        "endChar": 0
+      },
+      "revId": "3f5c09697bbe3473f0c9f705717b003538f65647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56603f40_74d1663f",
+        "filename": "chrome/test/data/local_ntp/voice_view_browsertest.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-09-04T14:40:50Z",
+      "side": 1,
+      "message": "Hmm. That is a really tempting change to make (to several of the tests here), but that will mean we need to stub out (and tie these tests to) the speech module. Currently, the onclick handler that gets called from onWindowClick_ is mocked and only sets the two (three) variables. WDYT?",
+      "parentUuid": "69b56b2d_c2ee0fcb",
       "range": {
         "startLine": 408,
         "startChar": 44,
