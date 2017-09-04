@@ -66,7 +66,9 @@ std::unique_ptr<EncodedLogo> GetLogoFromCacheOnFileThread(LogoCache* logo_cache,
 LogoTracker::LogoTracker(
     base::FilePath cached_logo_directory,
     scoped_refptr<net::URLRequestContextGetter> request_context_getter,
-    std::unique_ptr<LogoDelegate> delegate)
+    std::unique_ptr<LogoDelegate> delegate,
+    std::unique_ptr<LogoCache> logo_cache_for_testing,
+    std::unique_ptr<base::Clock> clock_for_testing)
     : is_idle_(true),
       is_cached_logo_valid_(false),
       logo_delegate_(std::move(delegate)),
@@ -77,7 +79,14 @@ LogoTracker::LogoTracker(
                   base::OnTaskRunnerDeleter(cache_task_runner_)),
       clock_(base::MakeUnique<base::DefaultClock>()),
       request_context_getter_(request_context_getter),
-      weak_ptr_factory_(this) {}
+      weak_ptr_factory_(this) {
+  if (logo_cache_for_testing) {
+    logo_cache_.reset(logo_cache_for_testing.release());
+  }
+  if (clock_for_testing) {
+    clock_ = std::move(clock_for_testing);
+  }
+}
 
 LogoTracker::~LogoTracker() {
   ReturnToIdle(kDownloadOutcomeNotTracked);
@@ -117,17 +126,6 @@ void LogoTracker::GetLogo(LogoObserver* observer) {
 
 void LogoTracker::RemoveObserver(LogoObserver* observer) {
   logo_observers_.RemoveObserver(observer);
-}
-
-void LogoTracker::SetLogoCacheForTests(std::unique_ptr<LogoCache> cache) {
-  DCHECK(cache);
-  // Call reset() and release() to keep the deleter of the |logo_cache_| member
-  // and run it on the old value.
-  logo_cache_.reset(cache.release());
-}
-
-void LogoTracker::SetClockForTests(std::unique_ptr<base::Clock> clock) {
-  clock_ = std::move(clock);
 }
 
 void LogoTracker::ReturnToIdle(int outcome) {
