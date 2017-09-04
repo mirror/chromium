@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "6984efb4_14be6c11",
+        "filename": "components/signin/core/browser/signin_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-04T09:35:52Z",
+      "side": 1,
+      "message": "Ah, so you are intending to update all the callers to use this function instead?\n\nWhat is going to be the final state? Who will use SignOut()?",
+      "parentUuid": "8579a515_99983e46",
+      "range": {
+        "startLine": 161,
+        "startChar": 20,
+        "endLine": 161,
+        "endChar": 47
+      },
+      "revId": "f27b84c274a6a73da37e6a28c065337f5b6e4844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7c55bc4_fe896dfb",
         "filename": "components/signin/core/browser/signin_manager.h",
         "patchSetId": 9
