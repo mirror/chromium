@@ -8,7 +8,7 @@
 #include <memory>
 
 #include "base/values.h"
-#include "chrome/browser/chromeos/policy/proto/chrome_device_policy.pb.h"
+#include "components/policy/proto/chrome_device_policy.pb.h"
 
 namespace policy {
 namespace off_hours {
