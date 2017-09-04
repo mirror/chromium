@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "f7a309fa_4bc87858",
+        "filename": "base/message_loop/incoming_task_queue.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-04T17:43:13Z",
+      "side": 1,
+      "message": "Well, that might be true, but I don\u0027t think the generic impl of incoming_task_queue.cc should rely on the existing platform-specific implementations.\n\nAnd re. \"Even if ScheduleWork did take a long time under contention, _all_ PostPendingTasks would block on any sync primitives used by the kernel, so having a read write lock will not help here as we\u0027ll just block later on.\"\n\nmaybe, but I\u0027d hope the kernel impl is smart enough to release its lock before forcing a context switch (re. issue documented by the comment above).\n\nCan we use some kind of semaphore scheme to lock the destruction only?",
+      "parentUuid": "75c14b4d_59a3ecba",
+      "revId": "c74f5d4d1fbc9cefb15ffe516b1c1d38d4008f3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d56d9d0c_b924a4de",
         "filename": "base/message_loop/incoming_task_queue.h",
         "patchSetId": 4
