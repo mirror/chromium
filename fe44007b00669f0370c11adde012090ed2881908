@@ -34,6 +34,24 @@
       "revId": "fe44007b00669f0370c11adde012090ed2881908",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "779381ad_770ada77",
+        "filename": "third_party/WebKit/Source/platform/RuntimeEnabledFeatures.json5",
+        "patchSetId": 1
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-04T08:58:02Z",
+      "side": 1,
+      "message": "With \"experimental\" status, site owners enabling the experimental web platform feature flag won\u0027t notice breakage of their sites until M65.\n\nWhy do we need such unusual feature removal process for this feature? If we need it, we should discuss it in the intent thread.",
+      "parentUuid": "f5aa7b73_c273fa72",
+      "revId": "fe44007b00669f0370c11adde012090ed2881908",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
