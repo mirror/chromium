@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cf6bd71e_6f3fa830",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/resources/skip-waiting-installed-worker.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-04T08:47:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55627799_ac271d07",
+      "revId": "540c1ae32758a027564204d69601d57b5b4828d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e960739_5804bfeb",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/resources/skip-waiting-installed-worker.js",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "540c1ae32758a027564204d69601d57b5b4828d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60606d89_e4f8103d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/resources/skip-waiting-installed-worker.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-04T08:47:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e960739_5804bfeb",
+      "revId": "540c1ae32758a027564204d69601d57b5b4828d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "07d6654a_23eb6bf0",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/resources/skip-waiting-installed-worker.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-04T08:47:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67e81f93_c63ac1f3",
+      "revId": "540c1ae32758a027564204d69601d57b5b4828d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf3ddccb_ffb4bc9b",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/resources/skip-waiting-installed-worker.js",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "540c1ae32758a027564204d69601d57b5b4828d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4edabe2_f700872a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/resources/skip-waiting-installed-worker.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-04T08:47:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf3ddccb_ffb4bc9b",
+      "revId": "540c1ae32758a027564204d69601d57b5b4828d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "968474ae_4bde5dd6",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/resources/skip-waiting-installed-worker.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-04T08:47:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b04bb897_b9103dec",
+      "revId": "540c1ae32758a027564204d69601d57b5b4828d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72b714c3_6838512f",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/resources/skip-waiting-installed-worker.js",
         "patchSetId": 1
@@ -98,6 +188,24 @@
       "writtenOn": "2017-09-01T05:24:49Z",
       "side": 1,
       "message": "we could also check:\n\n// This worker should be .active now\nself.registration.active.scriptURL is \u0027skip-waiting-installed-worker.js\u0027\n\n// But according to the spec, ServiceWorker#state is not set to \u0027activated\u0027 yet. There is still a task queued to do that, and the skipWaiting() promise resolves before that runs.\nself.registration.active.state \u003d\u003d \u0027activating\u0027",
+      "revId": "540c1ae32758a027564204d69601d57b5b4828d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d867f75_8d85ff18",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/resources/skip-waiting-installed-worker.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-04T08:47:09Z",
+      "side": 1,
+      "message": "There is the scriptURL check in skip-waiting-installed.https.html, do you think it\u0027s ok?",
+      "parentUuid": "72b714c3_6838512f",
       "revId": "540c1ae32758a027564204d69601d57b5b4828d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
