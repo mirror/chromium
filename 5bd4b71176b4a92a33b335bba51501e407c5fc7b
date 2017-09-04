@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3efeb765_e390e6e3",
+        "filename": "third_party/WebKit/LayoutTests/shadow-dom/focus-navigation-slot-nested-fallback.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-09-04T06:15:24Z",
+      "side": 1,
+      "message": "forgot to add closing \u003c/div\u003e.\n\nBTW, if I understand correctly, for web platform tests, testharness.js tries to\nput human-readable log in \u003cdiv id\u003d\"log\"\u003e\u003c/div\u003e but in the case of layout tests,\nyou don\u0027t have to have this.  Could you try removing this and see if it fails or not?",
+      "revId": "5bd4b71176b4a92a33b335bba51501e407c5fc7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c814eda9_334325ad",
+        "filename": "third_party/WebKit/LayoutTests/shadow-dom/focus-navigation-slot-nested-fallback.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-09-04T06:15:24Z",
+      "side": 1,
+      "message": "Maybe \"slot5 is in the fallback content of slot4, which has assigned nodes\" is\nclearer?",
+      "revId": "5bd4b71176b4a92a33b335bba51501e407c5fc7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79cd9f78_b28f9b65",
+        "filename": "third_party/WebKit/LayoutTests/shadow-dom/focus-navigation-slot-nested-fallback.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-09-04T06:15:24Z",
+      "side": 1,
+      "message": "nit: s/tetx/text/",
+      "revId": "5bd4b71176b4a92a33b335bba51501e407c5fc7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
