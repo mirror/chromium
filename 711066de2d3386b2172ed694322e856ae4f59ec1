@@ -22,6 +22,30 @@
       "revId": "711066de2d3386b2172ed694322e856ae4f59ec1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "646c139d_5d89abe5",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_fetcher_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-09-04T21:52:23Z",
+      "side": 1,
+      "message": "So... this is no longer true, right? Cookies are actually disallowed now.",
+      "parentUuid": "baf8631f_27895f9c",
+      "range": {
+        "startLine": 82,
+        "startChar": 25,
+        "endLine": 82,
+        "endChar": 30
+      },
+      "revId": "711066de2d3386b2172ed694322e856ae4f59ec1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
