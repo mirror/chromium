@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aadf8d2d_73d409fc",
+        "filename": "chrome/browser/printing/print_preview_dialog_controller_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-09-04T16:21:10Z",
+      "side": 1,
+      "message": "nit: the comment should be rewritten.",
+      "revId": "40abfb4e38d5639c0dee46575dbd2290d84d4155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39e7c52d_52c80857",
+        "filename": "content/public/test/navigation_simulator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-09-04T16:21:10Z",
+      "side": 1,
+      "message": "As explained in a late comment in the previous patchset, you should also modify CommitErrorPage in the same manner.",
+      "revId": "40abfb4e38d5639c0dee46575dbd2290d84d4155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
