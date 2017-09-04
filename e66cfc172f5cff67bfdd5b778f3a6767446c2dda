@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "2fb65b3c_7caa8e9f",
+        "filename": "chrome/browser/ui/views/find_bar_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1239649
+      },
+      "writtenOn": "2017-09-04T11:15:29Z",
+      "side": 1,
+      "message": "Not entirely sure about that one. Is there a way to check this without actually going through the hassle of istalling Chrome OS and building Chrome for it? If I understood your investigation correctly, macOS just doesn\u0027t use this code, using macOS-specific implementation, which doesn\u0027t happen in Chrome OS meaning that it would receive selection rect in pixels, and the whole process will be really similar to Win/Linux.",
+      "parentUuid": "f153d364_77a5ff52",
+      "revId": "e66cfc172f5cff67bfdd5b778f3a6767446c2dda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "68a9b42e_64b8ae14",
         "filename": "chrome/browser/ui/views/find_bar_host.cc",
         "patchSetId": 9
