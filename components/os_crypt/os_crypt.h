@@ -18,6 +18,8 @@
 class KeyStorageLinux;
 #endif  // defined(OS_LINUX) && !defined(OS_CHROMEOS) && defined(UNIT_TEST)
 
+class PrefRegistrySimple;
+
 namespace os_crypt {
 struct Config;
 }
@@ -29,6 +31,9 @@ struct Config;
 class OSCrypt {
  public:
 #if defined(OS_LINUX) && !defined(OS_CHROMEOS)
+  // Registers local preferences
+  static void RegisterLocalPrefs(PrefRegistrySimple* registry);
+
   // Set the configuration of OSCrypt.
   static void SetConfig(std::unique_ptr<os_crypt::Config> config);
 
