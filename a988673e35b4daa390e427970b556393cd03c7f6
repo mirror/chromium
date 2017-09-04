@@ -16,6 +16,24 @@
       "revId": "a988673e35b4daa390e427970b556393cd03c7f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a50b1511_b7718955",
+        "filename": "content/common/sandbox_linux/sandbox_seccomp_bpf_linux.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1163397
+      },
+      "writtenOn": "2017-09-04T09:22:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64bff3c8_c7e001b7",
+      "revId": "a988673e35b4daa390e427970b556393cd03c7f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
