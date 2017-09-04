@@ -637,6 +637,30 @@
     },
     {
       "key": {
+        "uuid": "7565f2a5_9b4bcd42",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-04T16:28:31Z",
+      "side": 1,
+      "message": "Also renamed SetNetworkReadOnly to ContinueInReadOnlyMode and places where it is sure to be headers_transaction, it is now invoking HeadersPhaseContinueWithoutEntryDoomEntry to be more clear of what\u0027s happening.",
+      "parentUuid": "3a9f6599_016fa3c2",
+      "range": {
+        "startLine": 363,
+        "startChar": 4,
+        "endLine": 363,
+        "endChar": 22
+      },
+      "revId": "ef15e96d7b6edc0b2cfff8f306a0aad7763ef90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c2749518_535389fa",
         "filename": "net/http/http_cache_transaction.cc",
         "patchSetId": 11
@@ -1025,6 +1049,30 @@
       "side": 1,
       "message": "DoNetworkReadComplete and DoNetworkReadCacheWriteComplete will not happen together for a single transaction. It will either use DoNetworkRead for all its Read calls or a combination of DoNetworkReadCacheWrite/DoCacheReadData",
       "parentUuid": "6cefa633_f727cb43",
+      "range": {
+        "startLine": 2120,
+        "startChar": 9,
+        "endLine": 2120,
+        "endChar": 41
+      },
+      "revId": "ef15e96d7b6edc0b2cfff8f306a0aad7763ef90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c18f34e1_80f65492",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 2120,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-04T16:28:31Z",
+      "side": 1,
+      "message": "I have also changed read_offset +\u003d position in  DoNetworkReadCacheWrite to only happen for non-partial cases.",
+      "parentUuid": "31967091_618d5630",
       "range": {
         "startLine": 2120,
         "startChar": 9,
@@ -1577,6 +1625,30 @@
     },
     {
       "key": {
+        "uuid": "d8292d0e_cbc0b699",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-04T16:28:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef9953bb_40bfc531",
+      "range": {
+        "startLine": 66,
+        "startChar": 6,
+        "endLine": 66,
+        "endChar": 18
+      },
+      "revId": "ef15e96d7b6edc0b2cfff8f306a0aad7763ef90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43c98984_65a2086e",
         "filename": "net/http/http_cache_writers.cc",
         "patchSetId": 11
@@ -1597,6 +1669,30 @@
       "revId": "ef15e96d7b6edc0b2cfff8f306a0aad7763ef90f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f27f9ed_f6648ffc",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-04T16:28:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43c98984_65a2086e",
+      "range": {
+        "startLine": 70,
+        "startChar": 21,
+        "endLine": 70,
+        "endChar": 27
+      },
+      "revId": "ef15e96d7b6edc0b2cfff8f306a0aad7763ef90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
