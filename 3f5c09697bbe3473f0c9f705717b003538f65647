@@ -140,6 +140,30 @@
       "revId": "3f5c09697bbe3473f0c9f705717b003538f65647",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f816627_ac150c3e",
+        "filename": "chrome/test/data/local_ntp/voice_view_browsertest.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-04T15:04:24Z",
+      "side": 1,
+      "message": "Ah, I didn\u0027t quite understand the implications of my suggestion...\nNo, I wouldn\u0027t rely on the speech module here. Reason: At this point, the view (which is what we\u0027re testing here, as isolated as possible) has done its part. It\u0027s the responsibility of speech to close the view or restart it or whatever. There should be a test for the speech module that makes sure that actually happens.",
+      "parentUuid": "56603f40_74d1663f",
+      "range": {
+        "startLine": 408,
+        "startChar": 44,
+        "endLine": 408,
+        "endChar": 0
+      },
+      "revId": "3f5c09697bbe3473f0c9f705717b003538f65647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
