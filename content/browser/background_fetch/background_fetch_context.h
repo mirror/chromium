@@ -17,10 +17,6 @@
 #include "content/public/browser/browser_thread.h"
 #include "third_party/WebKit/public/platform/modules/background_fetch/background_fetch.mojom.h"
 
-namespace net {
-class URLRequestContextGetter;
-}
-
 namespace url {
 class Origin;
 }
@@ -28,6 +24,7 @@ class Origin;
 namespace content {
 
 class BackgroundFetchDataManager;
+class BackgroundFetchDelegate;
 class BackgroundFetchDelegateProxy;
 class BackgroundFetchEventDispatcher;
 class BackgroundFetchJobController;
@@ -51,11 +48,6 @@ class CONTENT_EXPORT BackgroundFetchContext
   BackgroundFetchContext(
       BrowserContext* browser_context,
       const scoped_refptr<ServiceWorkerContextWrapper>& service_worker_context);
-
-  // Finishes initializing the Background Fetch context on the IO thread by
-  // setting the |request_context_getter|.
-  void InitializeOnIOThread(
-      scoped_refptr<net::URLRequestContextGetter> request_context_getter);
 
   // Starts a Background Fetch for the |registration_id|. The |requests| will be
   // asynchronously fetched. The |callback| will be invoked when the fetch has
@@ -117,10 +109,10 @@ class CONTENT_EXPORT BackgroundFetchContext
   // |this| is owned, indirectly, by the BrowserContext.
   BrowserContext* browser_context_;
 
-  scoped_refptr<net::URLRequestContextGetter> request_context_getter_;
-
   std::unique_ptr<BackgroundFetchDataManager> data_manager_;
   std::unique_ptr<BackgroundFetchEventDispatcher> event_dispatcher_;
+  std::unique_ptr<BackgroundFetchDelegate, BrowserThread::DeleteOnUIThread>
+      delegate_;
   std::unique_ptr<BackgroundFetchDelegateProxy> delegate_proxy_;
 
   // Map of the Background Fetch fetches that are currently in-progress.
