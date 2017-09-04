@@ -1,0 +1,37 @@
+<html>
+<body id="body">
+<script>
+    if (window.testRunner)
+        testRunner.dumpAsText();
+
+    function checkValue() {
+        if (!window.accessibilityController)
+            return;
+        
+        var aria = document.getElementById("slider");
+        aria.focus();
+        var focusedElement = accessibilityController.focusedElement;
+        var value = focusedElement.intValue;
+        var minValue = focusedElement.minValue;
+        var maxValue = focusedElement.maxValue;
+
+        var result = document.getElementById("result");
+        if (value == 50 && minValue == 0 && maxValue == 100)
+            result.innerText = "This test PASSES in DumpRenderTree. The default value is " + value + ", the default minValue is " 
+                + minValue + ", and the default maxValue is " + maxValue + ".";
+        else
+            result.innerText = "This test FAILS in DumpRenderTree. The default value, default minValue, and/or default maxValue of the range must be incorrect.";
+    }
+</script>
+
+<div>
+    <p>In accessibility, the following should be a progress indicator:</p>
+    <p><span tabindex="0" role="slider" id="slider">X</span></p>
+    <span id="result"></span>
+    <script>
+        checkValue();
+    </script>
+  </div>
+  
+ </body>
+</html>
