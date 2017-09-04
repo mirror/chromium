@@ -16,6 +16,24 @@
       "revId": "0bad7d357b031959d2a27b27bba4171ad00ebaf1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7463370_d3d54fe8",
+        "filename": "chrome/browser/media_galleries/fileapi/av_scanning_file_validator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-09-04T08:13:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10d24732_8a938dca",
+      "revId": "0bad7d357b031959d2a27b27bba4171ad00ebaf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
