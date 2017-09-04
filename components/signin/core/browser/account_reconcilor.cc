@@ -54,6 +54,16 @@ gaia::ListedAccount AccountForId(const std::string& account_id) {
 
 }  // namespace
 
+AccountReconcilor::AccountReconcilorLock::AccountReconcilorLock(
+    AccountReconcilor* reconcilor)
+    : reconcilor_(reconcilor) {
+  DCHECK(reconcilor_);
+  reconcilor_->IncrementLockCount();
+}
+
+AccountReconcilor::AccountReconcilorLock::~AccountReconcilorLock() {
+  reconcilor_->DecrementLockCount();
+}
 
 AccountReconcilor::AccountReconcilor(
     ProfileOAuth2TokenService* token_service,
@@ -70,7 +80,9 @@ AccountReconcilor::AccountReconcilor(
       is_reconcile_started_(false),
       first_execution_(true),
       error_during_last_reconcile_(false),
-      chrome_accounts_changed_(false) {
+      chrome_accounts_changed_(false),
+      account_reconcilor_lock_count_(0),
+      reconcile_on_unlock_(false) {
   VLOG(1) << "AccountReconcilor::AccountReconcilor";
 }
 
@@ -256,6 +268,12 @@ void AccountReconcilor::PerformLogoutAllAccountsAction() {
 }
 
 void AccountReconcilor::StartReconcile() {
+  if (IsReconcileBlocked()) {
+    // Reconcile is locked, it will be restarted when the lock count reaches 0.
+    reconcile_on_unlock_ = true;
+    return;
+  }
+
   reconcile_start_time_ = base::Time::Now();
 
   if (!IsProfileConnected() || !client_->AreSigninCookiesAllowed()) {
@@ -509,5 +527,40 @@ void AccountReconcilor::OnAddAccountToCookieCompleted(
       error_during_last_reconcile_ = true;
     CalculateIfReconcileIsDone();
     ScheduleStartReconcileIfChromeAccountsChanged();
+  }
+}
+
+void AccountReconcilor::IncrementLockCount() {
+  DCHECK_GE(account_reconcilor_lock_count_, 0);
+  ++account_reconcilor_lock_count_;
+  if (account_reconcilor_lock_count_ == 1)
+    OnBlockReconcile();
+}
+
+void AccountReconcilor::DecrementLockCount() {
+  DCHECK_GT(account_reconcilor_lock_count_, 0);
+  --account_reconcilor_lock_count_;
+  if (account_reconcilor_lock_count_ == 0)
+    OnUnblockReconcile();
+}
+
+bool AccountReconcilor::IsReconcileBlocked() const {
+  DCHECK_GE(account_reconcilor_lock_count_, 0);
+  return account_reconcilor_lock_count_ > 0;
+}
+
+void AccountReconcilor::OnBlockReconcile() {
+  DCHECK(IsReconcileBlocked());
+  if (is_reconcile_started_) {
+    AbortReconcile();
+    reconcile_on_unlock_ = true;
+  }
+}
+
+void AccountReconcilor::OnUnblockReconcile() {
+  DCHECK(!IsReconcileBlocked());
+  if (reconcile_on_unlock_) {
+    reconcile_on_unlock_ = false;
+    StartReconcile();
   }
 }

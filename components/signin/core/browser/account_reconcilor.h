@@ -37,6 +37,19 @@ class AccountReconcilor : public KeyedService,
                           public OAuth2TokenService::Observer,
                           public SigninManagerBase::Observer {
  public:
+  // When an instance of this class exists, the account reconcilor is suspended.
+  // It will automatically restart when all instances of AccountReconcilorLock
+  // have been destroyed.
+  class AccountReconcilorLock final {
+   public:
+    explicit AccountReconcilorLock(AccountReconcilor* reconcilor);
+    ~AccountReconcilorLock();
+
+   private:
+    AccountReconcilor* reconcilor_;
+    DISALLOW_COPY_AND_ASSIGN(AccountReconcilorLock);
+  };
+
   AccountReconcilor(ProfileOAuth2TokenService* token_service,
                     SigninManagerBase* signin_manager,
                     SigninClient* client,
@@ -63,10 +76,7 @@ class AccountReconcilor : public KeyedService,
   signin_metrics::AccountReconcilorState GetState();
 
  private:
-  bool IsRegisteredWithTokenService() const {
-    return registered_with_token_service_;
-  }
-
+  friend class AccountReconcilorLock;
   friend class AccountReconcilorTest;
   FRIEND_TEST_ALL_PREFIXES(AccountReconcilorTest, SigninManagerRegistration);
   FRIEND_TEST_ALL_PREFIXES(AccountReconcilorTest, Reauth);
@@ -101,6 +111,10 @@ class AccountReconcilor : public KeyedService,
                            AddAccountToCookieCompletedWithBogusAccount);
   FRIEND_TEST_ALL_PREFIXES(AccountReconcilorTest, NoLoopWithBadPrimary);
   FRIEND_TEST_ALL_PREFIXES(AccountReconcilorTest, WontMergeAccountsWithError);
+
+  bool IsRegisteredWithTokenService() const {
+    return registered_with_token_service_;
+  }
 
   // Register and unregister with dependent services.
   void RegisterWithSigninManager();
@@ -155,6 +169,13 @@ class AccountReconcilor : public KeyedService,
   void GoogleSignedOut(const std::string& account_id,
                        const std::string& username) override;
 
+  // AccountReconcilorLock related methods.
+  void IncrementLockCount();
+  void DecrementLockCount();
+  void OnBlockReconcile();
+  void OnUnblockReconcile();
+  bool IsReconcileBlocked() const;
+
   // The ProfileOAuth2TokenService associated with this reconcilor.
   ProfileOAuth2TokenService* token_service_;
 
@@ -195,6 +216,10 @@ class AccountReconcilor : public KeyedService,
   std::vector<std::string> chrome_accounts_;
   std::vector<std::string> add_to_cookie_;
   bool chrome_accounts_changed_;
+  // StartReconcile() is blocked while this is > 0.
+  int account_reconcilor_lock_count_;
+  // True if StartReconcile() should be started when the reconcilor is unlocked.
+  bool reconcile_on_unlock_;
 
   DISALLOW_COPY_AND_ASSIGN(AccountReconcilor);
 };
