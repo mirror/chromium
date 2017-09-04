@@ -81,6 +81,24 @@
       "revId": "d4d477d02ca034fc2943e21babcdb37908ea1006",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20221d98_b90005e1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-09-04T14:02:05Z",
+      "side": 1,
+      "message": "Rather not, URLUtil seems not the be used in chrome/browser.\nNote that parsing urls (coming from outside) is security-sensitive.\nAnother example for a protocol check: https://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/nfc/BeamCallback.java?l\u003d133",
+      "parentUuid": "b65902d9_f096ab02",
+      "revId": "d4d477d02ca034fc2943e21babcdb37908ea1006",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
