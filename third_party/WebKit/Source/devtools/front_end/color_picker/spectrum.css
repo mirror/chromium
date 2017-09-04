@@ -97,11 +97,16 @@
     bottom: 10px;
     color: white;
     border-radius: 2px;
+    border: 0;
     padding: 3px 3px 2px;
     background-color: rgba(255, 255, 255, 0.2);
     align-items: center;
     transition: right .05s ease-out, left .05s ease-out, bottom .05s ease-out, top .05s ease-out;
     cursor: pointer;
+}
+
+.spectrum-contrast-info[data-keyboard-focus="true"] {
+    outline-width: initial;
 }
 
 .spectrum-contrast-info.contrast-unknown .value {
@@ -147,6 +152,7 @@
     color: #333;
     display: none;
     line-height: initial;
+    -webkit-user-select: text;
 }
 
 .spectrum-contrast-details div.toolbar {
@@ -196,10 +202,6 @@
 }
 .spectrum-contrast-details .contrast-thresholds div {
     margin: 0;
-}
-
-.contrast-link {
-    margin-left: 0.5em;
 }
 
 .contrast-link .mediumicon-info {
@@ -612,6 +614,11 @@ div.palette-preview {
 
 .swatch.contrast [is=ui-icon] {
     margin: -2px;
+}
+
+.swatch.contrast .hidden-text {
+    position: absolute;
+    clip: rect(0px, 0px, 0px, 0px);
 }
 
 button.background-color-picker {
