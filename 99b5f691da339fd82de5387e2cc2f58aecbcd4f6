@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "7e55d386_c45bc630",
+        "filename": "third_party/WebKit/Source/core/editing/EditingTestBase.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-04T08:11:45Z",
+      "side": 1,
+      "message": "See my comment on AsSelection.",
+      "revId": "99b5f691da339fd82de5387e2cc2f58aecbcd4f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78a11e76_24b9612b",
+        "filename": "third_party/WebKit/Source/core/editing/EditingTestBase.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-04T08:11:45Z",
+      "side": 1,
+      "message": "Thanks you for adding a comment. But I still think the function name doesn\u0027t represent what it does well.\nThis function is disruptive against the document, but the name \u0027AsSelection()\u0027 doesn\u0027t look so.\nIt should be \u0027SetSelectionTextToBody\u0027 or something.",
+      "revId": "99b5f691da339fd82de5387e2cc2f58aecbcd4f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "913cb17f_e9a2cbf3",
         "filename": "third_party/WebKit/Source/core/editing/EditingTestBase.h",
         "patchSetId": 9
