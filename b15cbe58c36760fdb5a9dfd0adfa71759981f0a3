@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58fa5dfd_dcce4f86",
+        "filename": "components/search_provider_logos/logo_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-04T08:59:06Z",
+      "side": 1,
+      "message": "Do you also need to enable kUseDdljsonApi? It\u0027s not on by default yet.",
+      "range": {
+        "startLine": 335,
+        "startChar": 69,
+        "endLine": 335,
+        "endChar": 0
+      },
+      "revId": "b15cbe58c36760fdb5a9dfd0adfa71759981f0a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffdeb40e_8bbd11d8",
+        "filename": "components/search_provider_logos/logo_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-04T08:59:06Z",
+      "side": 1,
+      "message": "nit: doodle_url should return json, not a png. So I\u0027d either use .json or just leave out the file extension.",
+      "range": {
+        "startLine": 342,
+        "startChar": 65,
+        "endLine": 342,
+        "endChar": 0
+      },
+      "revId": "b15cbe58c36760fdb5a9dfd0adfa71759981f0a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37c4e52f_a63fd53d",
+        "filename": "components/search_provider_logos/logo_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-04T08:59:06Z",
+      "side": 1,
+      "message": "nit: Add a comment for each of the search engines? Or alternatively, new TemplateURLData instance with a name that explains?",
+      "revId": "b15cbe58c36760fdb5a9dfd0adfa71759981f0a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6387ca04_e82b7d03",
+        "filename": "components/search_provider_logos/logo_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-04T08:59:06Z",
+      "side": 1,
+      "message": "nit: Can at least some of these be private?",
+      "range": {
+        "startLine": 402,
+        "startChar": 46,
+        "endLine": 402,
+        "endChar": 0
+      },
+      "revId": "b15cbe58c36760fdb5a9dfd0adfa71759981f0a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "274cf5f7_6f775298",
+        "filename": "components/search_provider_logos/logo_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-04T08:59:06Z",
+      "side": 1,
+      "message": "Can\u0027t this also be \"\u003d std::move(..)\"?",
+      "range": {
+        "startLine": 84,
+        "startChar": 56,
+        "endLine": 84,
+        "endChar": 0
+      },
+      "revId": "b15cbe58c36760fdb5a9dfd0adfa71759981f0a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c20e2532_04ecadf2",
+        "filename": "components/search_provider_logos/logo_tracker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-04T08:59:06Z",
+      "side": 1,
+      "message": "Hm, could we get rid of the \"_for_testing\" and just always inject these?",
+      "revId": "b15cbe58c36760fdb5a9dfd0adfa71759981f0a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
