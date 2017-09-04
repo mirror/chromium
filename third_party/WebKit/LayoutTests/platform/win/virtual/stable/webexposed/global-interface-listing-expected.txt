@@ -7882,7 +7882,6 @@ interface webkitURL
     attribute gamepadController
     attribute gin
     attribute internals
-    attribute layoutTestController
     attribute length
     attribute location
     attribute opener
