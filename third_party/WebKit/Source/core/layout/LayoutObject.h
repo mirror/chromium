@@ -1443,10 +1443,9 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
   SelectionState GetSelectionState() const {
     return bitfields_.GetSelectionState();
   }
-  virtual void SetSelectionState(SelectionState state) {
+  void SetSelectionState(SelectionState state) {
     bitfields_.SetSelectionState(state);
   }
-  inline void SetSelectionStateIfNeeded(SelectionState);
   bool CanUpdateSelectionOnRootLineBoxes() const;
 
   // A single rectangle that encompasses all of the selected objects within this
@@ -2678,13 +2677,6 @@ inline bool LayoutObject::PreservesNewline() const {
     return false;
 
   return Style()->PreserveNewline();
-}
-
-inline void LayoutObject::SetSelectionStateIfNeeded(SelectionState state) {
-  if (GetSelectionState() == state)
-    return;
-
-  SetSelectionState(state);
 }
 
 inline void LayoutObject::SetHasBoxDecorationBackground(bool b) {
