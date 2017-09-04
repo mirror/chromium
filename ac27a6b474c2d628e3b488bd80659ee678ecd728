@@ -16,6 +16,24 @@
       "revId": "ac27a6b474c2d628e3b488bd80659ee678ecd728",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4fe16d7_8f5f07bd",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutThemeMac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1079,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-09-04T09:53:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d66e462_103b8d4b",
+      "revId": "ac27a6b474c2d628e3b488bd80659ee678ecd728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
