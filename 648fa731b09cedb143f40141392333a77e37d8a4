@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ad4ca5b_6812dc88",
+        "filename": "third_party/WebKit/Source/platform/heap/Heap.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-04T12:28:54Z",
+      "side": 1,
+      "message": "Don\u0027t put code that may have side effect in CHECK.",
+      "revId": "648fa731b09cedb143f40141392333a77e37d8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b336dd18_0aa3c2c3",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1557,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-04T12:28:54Z",
+      "side": 1,
+      "message": "I\u0027m fine with removing this.",
+      "revId": "648fa731b09cedb143f40141392333a77e37d8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acd2b9d8_0ec22831",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1571,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-04T12:28:54Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "648fa731b09cedb143f40141392333a77e37d8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "229450ed_4db79251",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1610,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-04T12:28:54Z",
+      "side": 1,
+      "message": "These 3 lines should be executed in MarkPhaseEpilogue().\n\nWe should return true here.",
+      "revId": "648fa731b09cedb143f40141392333a77e37d8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dda353aa_c713280e",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1615,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-04T12:28:54Z",
+      "side": 1,
+      "message": "We should return false here.",
+      "revId": "648fa731b09cedb143f40141392333a77e37d8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a8906e0_cf608ff7",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-04T12:28:54Z",
+      "side": 1,
+      "message": "total_object_size \u003d\u003e marked_object_size",
+      "revId": "648fa731b09cedb143f40141392333a77e37d8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a29621d_b3da7483",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 766,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-04T12:28:54Z",
+      "side": 1,
+      "message": "What do you think about putting GCData\u0027s members to Visitor?\n\nThen ThreadState can just hold a pointer to Visitor.",
+      "revId": "648fa731b09cedb143f40141392333a77e37d8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

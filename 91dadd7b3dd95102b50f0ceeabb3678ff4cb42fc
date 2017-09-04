@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "912572b6_397beb5c",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 862,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-04T12:28:54Z",
+      "side": 0,
+      "message": "Yeah, it\u0027s confusing to keep PostGC and MarkPhaseEpilogue. Would you try to remove PostGC in this CL?",
+      "revId": "91dadd7b3dd95102b50f0ceeabb3678ff4cb42fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
