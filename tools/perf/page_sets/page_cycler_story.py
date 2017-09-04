@@ -29,5 +29,6 @@ class PageCyclerStory(page.Page):
                            timeout_in_seconds=_NAVIGATION_TIMEOUT)
 
   def RunPageInteractions(self, action_runner):
-    util.WaitFor(action_runner.tab.HasReachedQuiescence,
-        _WEB_CONTENTS_TIMEOUT)
+    util.WaitFor((action_runner.tab.HasReachedQuiescence and
+                  action_runner.tab.IsServiceWorkerActivatedOrNotRegistered),
+                 _WEB_CONTENTS_TIMEOUT)
