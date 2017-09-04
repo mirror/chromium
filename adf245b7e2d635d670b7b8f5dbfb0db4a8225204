@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "6d0dbd06_2319c71f",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-04T01:28:21Z",
+      "side": 1,
+      "message": "None means don\u0027t store it as bit field, so field_size: 2 gives\n\n    unsigned foo : 2;\n\nand no field_size gives\n\n    unsigned foo;",
+      "parentUuid": "7d8f19f7_912a455a",
+      "revId": "adf245b7e2d635d670b7b8f5dbfb0db4a8225204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ff1a05d_a621b978",
         "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
         "patchSetId": 3
