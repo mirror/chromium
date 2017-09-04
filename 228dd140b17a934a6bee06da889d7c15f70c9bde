@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6f602e7_941969c0",
+        "filename": "tools/perf/perf_device_trigger.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-09-04T13:33:34Z",
+      "side": 1,
+      "message": "under one logical step",
+      "revId": "228dd140b17a934a6bee06da889d7c15f70c9bde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0bc7db1_d85d4795",
+        "filename": "tools/perf/perf_device_trigger.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-09-04T13:33:34Z",
+      "side": 1,
+      "message": "do not indent",
+      "revId": "228dd140b17a934a6bee06da889d7c15f70c9bde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1453b3fe_99f8ccc3",
+        "filename": "tools/perf/perf_device_trigger.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-09-04T13:33:34Z",
+      "side": 1,
+      "message": "two lines between file level symbols",
+      "revId": "228dd140b17a934a6bee06da889d7c15f70c9bde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf8f1626_db14c198",
+        "filename": "tools/perf/perf_device_trigger.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-09-04T13:33:34Z",
+      "side": 1,
+      "message": "using description\u003d__doc__ has the benefit of printing the file\u0027s docstring in the help page. You may want to format the docstring accordingly.",
+      "revId": "228dd140b17a934a6bee06da889d7c15f70c9bde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "838c7242_af32c987",
+        "filename": "tools/perf/perf_device_trigger.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-09-04T13:33:34Z",
+      "side": 1,
+      "message": "I\u0027d prefer:\n\n  ret \u003d subprocess.call()\n  if ret:\n    sys.stderr.write(\u0027Failed to trigger a task, aborting\\n\u0027)\n    return ret",
+      "revId": "228dd140b17a934a6bee06da889d7c15f70c9bde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a24edadd_0be949fe",
+        "filename": "tools/perf/perf_device_trigger.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-09-04T13:33:34Z",
+      "side": 1,
+      "message": "os.remove",
+      "range": {
+        "startLine": 90,
+        "startChar": 9,
+        "endLine": 90,
+        "endChar": 15
+      },
+      "revId": "228dd140b17a934a6bee06da889d7c15f70c9bde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
