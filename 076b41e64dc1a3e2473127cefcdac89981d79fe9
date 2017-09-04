@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a4407b4_5ecf68a8",
+        "filename": "chrome/browser/media/webrtc/media_stream_devices_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-04T15:09:18Z",
+      "side": 1,
+      "message": "I think using std::find_if would be a better choice, and more in line with the nature of this CL which is to use more standard constructs.",
+      "revId": "076b41e64dc1a3e2473127cefcdac89981d79fe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0952ca43_863f73b8",
+        "filename": "extensions/shell/browser/media_capture_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-04T15:09:18Z",
+      "side": 1,
+      "message": "using std::find_if and returning the iterator should be straightforward to use at callsites.\nAlso, this function should be in an anonymous namespace.",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 71
+      },
+      "revId": "076b41e64dc1a3e2473127cefcdac89981d79fe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
