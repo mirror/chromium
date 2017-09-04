@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81494c13_e8046814",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ReplaceSelectionCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1138,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-04T04:50:07Z",
+      "side": 1,
+      "message": "Let\u0027s use IsValidFor().\nAlso, !selection.Start().AnchorNode() \u003d\u003d selection.IsNone()\n\nHence, we can write\n\nif (selection.IsNone() || !selection.IsValidFor(GetDocument())\n  return;",
+      "revId": "ab0b36adc8aad8f03100650152f40b0761cc7b6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
