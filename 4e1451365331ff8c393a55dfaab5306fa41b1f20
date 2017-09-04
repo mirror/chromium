@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed4c157e_39072442",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-09-04T06:28:47Z",
+      "side": 1,
+      "message": "Could you add a comment including the URL of this algorithm?",
+      "revId": "4e1451365331ff8c393a55dfaab5306fa41b1f20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9568a3ff_c73617b1",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-09-04T06:28:47Z",
+      "side": 1,
+      "message": "DCHECK(target) is okay to assert non-null.",
+      "revId": "4e1451365331ff8c393a55dfaab5306fa41b1f20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "101b73cf_6221d702",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-09-04T06:28:47Z",
+      "side": 1,
+      "message": "You don\u0027t need explicit \"this-\u003e\" here.",
+      "range": {
+        "startLine": 376,
+        "startChar": 34,
+        "endLine": 376,
+        "endChar": 38
+      },
+      "revId": "4e1451365331ff8c393a55dfaab5306fa41b1f20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9311546f_dc89f94c",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-09-04T06:28:47Z",
+      "side": 1,
+      "message": "Could you come up with a better name?\n\n\"Init\" is often used in code for abbreviated form of the verb \"Initialize\",\nand InitSomething() is usually accepted, but in this case the intention is\n\"initial_target\"?\n\nIn general, Google C++ style recommends not to abbreviate words even for local\nvariables:\nhttps://google.github.io/styleguide/cppguide.html#General_Naming_Rules",
+      "revId": "4e1451365331ff8c393a55dfaab5306fa41b1f20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c10f316d_4b61a8d5",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-09-04T06:28:47Z",
+      "side": 1,
+      "message": "Can you add a brief comment why the following code doesn\u0027t literally follow the\nalgorithm written in the spec here?",
+      "revId": "4e1451365331ff8c393a55dfaab5306fa41b1f20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6b7904d_b6ec2a34",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-09-04T06:28:47Z",
+      "side": 1,
+      "message": "++rtarget_it, ++rthis_it\n\nGoogle C++ coding style:\nhttps://google.github.io/styleguide/cppguide.html#Preincrement_and_Predecrement",
+      "revId": "4e1451365331ff8c393a55dfaab5306fa41b1f20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13a46704_e227b3f0",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-09-04T06:28:47Z",
+      "side": 1,
+      "message": "You can write line 403-404 as\nreturn \u0026toShadowRoot(root).host();\n\nand toShadowRoot(root) implies DCHECK(root.IsShadowRoot()).",
+      "revId": "4e1451365331ff8c393a55dfaab5306fa41b1f20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
