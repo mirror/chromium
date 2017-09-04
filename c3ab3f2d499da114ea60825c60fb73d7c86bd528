@@ -16,6 +16,24 @@
       "revId": "c3ab3f2d499da114ea60825c60fb73d7c86bd528",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b49c6ef_fa679c0d",
+        "filename": "content/common/shared_interface_ptr.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-04T07:44:06Z",
+      "side": 1,
+      "message": "It doesn\u0027t, as the ctor is private.",
+      "parentUuid": "92578524_321494e6",
+      "revId": "c3ab3f2d499da114ea60825c60fb73d7c86bd528",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
