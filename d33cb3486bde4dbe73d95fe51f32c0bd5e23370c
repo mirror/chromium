@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20b4ec8d_515be82a",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-09-04T12:18:18Z",
+      "side": 1,
+      "message": "The TODO needs an owner: either a person TODO(username) or a bug TODO(https://crbug.com/123456)",
+      "range": {
+        "startLine": 227,
+        "startChar": 5,
+        "endLine": 227,
+        "endChar": 9
+      },
+      "revId": "d33cb3486bde4dbe73d95fe51f32c0bd5e23370c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
