@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "913cb17f_e9a2cbf3",
+        "filename": "third_party/WebKit/Source/core/editing/EditingTestBase.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-09-04T08:01:55Z",
+      "side": 1,
+      "message": "Please comment this doesn\u0027t update FlameSelection unlike assert_selection.js.",
+      "revId": "99b5f691da339fd82de5387e2cc2f58aecbcd4f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "681d3b9c_2455d774",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSample.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-09-04T08:01:55Z",
+      "side": 1,
+      "message": "If we won\u0027t use SelectionSample::Parse() except EditingTestBase::SetSelectionText(),\n please make Parse() private/local, define SelectionSample::SetSelectionText()\n and rename ToString() to GetSelectionText().\n because following code is easy to understand.\n{\n  Element* element;\n  SelectionInDOMTree selection \u003d \n     SelectionSample::SetSelectionText(element, \"\u003cdiv\u003e|bar^\u003c/div\u003e\");\n  EXPECT_EQ(SelectionSample::GetSelectionText(element, selection), \"\u003cdiv\u003e|bar^\u003c/div\u003e\");\n}",
+      "revId": "99b5f691da339fd82de5387e2cc2f58aecbcd4f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
