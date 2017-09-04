@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06027923_dec6190d",
+        "filename": "ios/chrome/browser/web/external_app_launcher.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-09-04T09:19:41Z",
+      "side": 1,
+      "message": "This makes the user experience much better.",
+      "range": {
+        "startLine": 127,
+        "startChar": 29,
+        "endLine": 127,
+        "endChar": 67
+      },
+      "revId": "af7258370694e6517949ee3f2e885a07c606d230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
