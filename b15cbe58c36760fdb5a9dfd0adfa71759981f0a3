@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "16c33a3a_46073fd3",
+        "filename": "components/search_provider_logos/logo_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-04T11:27:11Z",
+      "side": 1,
+      "message": "Ah, right.",
+      "parentUuid": "c9acbc24_a37dc8d7",
+      "range": {
+        "startLine": 335,
+        "startChar": 69,
+        "endLine": 335,
+        "endChar": 0
+      },
+      "revId": "b15cbe58c36760fdb5a9dfd0adfa71759981f0a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffdeb40e_8bbd11d8",
         "filename": "components/search_provider_logos/logo_service_unittest.cc",
         "patchSetId": 3
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "\u003e nit: doodle_url should return json, not a png. So I\u0027d either use .json or just leave out the file extension.\n\nFixed to json. (initially I wanted to use logo_url, but that\u0027s only enabled on Android)",
       "parentUuid": "ffdeb40e_8bbd11d8",
+      "range": {
+        "startLine": 342,
+        "startChar": 65,
+        "endLine": 342,
+        "endChar": 0
+      },
+      "revId": "b15cbe58c36760fdb5a9dfd0adfa71759981f0a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9680a084_a7fc631f",
+        "filename": "components/search_provider_logos/logo_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-04T11:27:11Z",
+      "side": 1,
+      "message": "Hm, doodle_url should also only be enabled on Android though.\nI suppose this is fine for now. Longer-term, we might have to rewrite the cross-platform-applicable tests in terms of Google, and make the third-party ones Android-only.",
+      "parentUuid": "30882dc7_72758626",
       "range": {
         "startLine": 342,
         "startChar": 65,
