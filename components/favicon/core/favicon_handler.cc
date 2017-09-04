@@ -289,10 +289,14 @@ void FaviconHandler::SetFavicon(const GURL& icon_url,
   // Associate the icon to all URLs in |page_urls_|, which contains page URLs
   // within the same site/document that have been considered to reliably share
   // the same icon candidates.
+  std::set<GURL> page_urls_to_save;
   for (const GURL& page_url : page_urls_) {
     if (ShouldSaveFavicon(page_url))
-      service_->SetFavicons(page_url, icon_url, icon_type, image);
+      page_urls_to_save.insert(page_url);
   }
+
+  if (!page_urls_to_save.empty())
+    service_->SetFavicons(page_urls_to_save, icon_url, icon_type, image);
 
   NotifyFaviconUpdated(icon_url, icon_type, image);
 }

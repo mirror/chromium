@@ -140,7 +140,7 @@ class IconCacherTestBase : public ::testing::Test {
                    favicon_base::IconType icon_type,
                    int width,
                    int height) {
-    favicon_service_.SetFavicons(url, icon_url, icon_type,
+    favicon_service_.SetFavicons(std::set<GURL>{url}, icon_url, icon_type,
                                  gfx::test::CreateImage(width, height));
   }
 
