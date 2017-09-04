@@ -146,7 +146,7 @@ void DistillCurrentPageAndView(content::WebContents* old_web_contents) {
   DCHECK(old_web_contents);
   // Create new WebContents.
   content::WebContents::CreateParams create_params(
-      old_web_contents->GetBrowserContext());
+      old_web_contents->GetBrowserContext(), WindowOpenDisposition::CURRENT_TAB);
   content::WebContents* new_web_contents =
       content::WebContents::Create(create_params);
   DCHECK(new_web_contents);

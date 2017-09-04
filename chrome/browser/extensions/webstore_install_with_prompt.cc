@@ -20,7 +20,7 @@ WebstoreInstallWithPrompt::WebstoreInstallWithPrompt(
     : WebstoreStandaloneInstaller(webstore_item_id, profile, callback),
       show_post_install_ui_(true),
       dummy_web_contents_(
-          WebContents::Create(WebContents::CreateParams(profile))),
+          WebContents::Create(WebContents::CreateParams(profile, WindowOpenDisposition::UNKNOWN))),
       parent_window_(NULL) {
   set_install_source(WebstoreInstaller::INSTALL_SOURCE_OTHER);
 }
@@ -33,7 +33,7 @@ WebstoreInstallWithPrompt::WebstoreInstallWithPrompt(
     : WebstoreStandaloneInstaller(webstore_item_id, profile, callback),
       show_post_install_ui_(true),
       dummy_web_contents_(
-          WebContents::Create(WebContents::CreateParams(profile))),
+          WebContents::Create(WebContents::CreateParams(profile, WindowOpenDisposition::UNKNOWN))),
       parent_window_(parent_window) {
   if (parent_window_)
     parent_window_tracker_ = NativeWindowTracker::Create(parent_window);

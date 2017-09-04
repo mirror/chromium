@@ -63,7 +63,8 @@ ImeWindow::ImeWindow(Profile* profile,
     site_instance = content::SiteInstance::CreateForURL(profile, gurl);
   }
   content::WebContents::CreateParams create_params(profile,
-                                                   std::move(site_instance));
+                                                   std::move(site_instance),
+                                                   WindowOpenDisposition::UNKNOWN);
   if (opener_render_frame_host) {
     create_params.opener_render_process_id =
         opener_render_frame_host->GetProcess()->GetID();

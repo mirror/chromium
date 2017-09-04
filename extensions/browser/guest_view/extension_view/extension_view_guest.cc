@@ -90,7 +90,8 @@ void ExtensionViewGuest::CreateWebContents(
 
   WebContents::CreateParams params(
       browser_context(),
-      content::SiteInstance::CreateForURL(browser_context(), extension_url_));
+      content::SiteInstance::CreateForURL(browser_context(), extension_url_),
+      WindowOpenDisposition::UNKNOWN);
   params.guest_delegate = this;
   callback.Run(WebContents::Create(params));
 }

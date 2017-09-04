@@ -204,7 +204,7 @@ void CreateTabSocketMojoServiceForContents(
 std::unique_ptr<HeadlessWebContentsImpl> HeadlessWebContentsImpl::Create(
     HeadlessWebContents::Builder* builder) {
   content::WebContents::CreateParams create_params(builder->browser_context_,
-                                                   nullptr);
+                                                   nullptr, WindowOpenDisposition::UNKNOWN);
   create_params.initial_size = builder->window_size_;
 
   std::unique_ptr<HeadlessWebContentsImpl> headless_web_contents =

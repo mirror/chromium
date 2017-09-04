@@ -358,7 +358,8 @@ void WebViewGuest::CreateWebContents(
   }
   WebContents::CreateParams params(
       owner_render_process_host->GetBrowserContext(),
-      std::move(guest_site_instance));
+      std::move(guest_site_instance),
+      WindowOpenDisposition::UNKNOWN);
   params.guest_delegate = this;
   WebContents* new_contents = WebContents::Create(params);
 

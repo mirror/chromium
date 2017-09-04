@@ -263,7 +263,7 @@ class BookmarkAppInstaller : public base::RefCounted<BookmarkAppInstaller>,
     // pathological cases where n renderers for n bookmark apps are spun up on
     // first sign-in to a new machine.
     web_contents_.reset(content::WebContents::Create(
-        content::WebContents::CreateParams(service_->profile())));
+        content::WebContents::CreateParams(service_->profile(), WindowOpenDisposition::UNKNOWN)));
     Observe(web_contents_.get());
 
     // Load about:blank so that the process actually starts.

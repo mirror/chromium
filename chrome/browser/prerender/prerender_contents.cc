@@ -456,7 +456,7 @@ WebContents* PrerenderContents::CreateWebContents(
   content::SessionStorageNamespaceMap session_storage_namespace_map;
   session_storage_namespace_map[std::string()] = session_storage_namespace;
   return WebContents::CreateWithSessionStorage(
-      WebContents::CreateParams(profile_), session_storage_namespace_map);
+      WebContents::CreateParams(profile_, WindowOpenDisposition::UNKNOWN), session_storage_namespace_map);
 }
 
 void PrerenderContents::NotifyPrerenderStart() {

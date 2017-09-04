@@ -172,7 +172,8 @@ void MimeHandlerViewGuest::CreateWebContents(
                                      0);
 
   WebContents::CreateParams params(browser_context(),
-                                   guest_site_instance.get());
+                                   guest_site_instance.get(),
+                                   WindowOpenDisposition::UNKNOWN);
   params.guest_delegate = this;
   callback.Run(WebContents::Create(params));
 

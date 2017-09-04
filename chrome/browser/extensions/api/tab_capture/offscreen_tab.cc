@@ -136,7 +136,7 @@ void OffscreenTab::Start(const GURL& start_url,
 
   // Create the WebContents to contain the off-screen tab's page.
   offscreen_tab_web_contents_.reset(
-      WebContents::Create(WebContents::CreateParams(profile_.get())));
+      WebContents::Create(WebContents::CreateParams(profile_.get(), WindowOpenDisposition::UNKNOWN)));
   offscreen_tab_web_contents_->SetDelegate(this);
   WebContentsObserver::Observe(offscreen_tab_web_contents_.get());
 

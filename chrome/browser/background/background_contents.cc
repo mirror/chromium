@@ -48,7 +48,7 @@ BackgroundContents::BackgroundContents(
   profile_ = Profile::FromBrowserContext(
       site_instance->GetBrowserContext());
 
-  WebContents::CreateParams create_params(profile_, std::move(site_instance));
+  WebContents::CreateParams create_params(profile_, std::move(site_instance), WindowOpenDisposition::UNKNOWN);
   create_params.opener_render_process_id =
       opener ? opener->GetProcess()->GetID() : MSG_ROUTING_NONE;
   create_params.opener_render_frame_id =

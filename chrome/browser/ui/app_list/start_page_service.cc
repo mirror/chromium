@@ -561,7 +561,7 @@ void StartPageService::WebUILoaded() {
 
 void StartPageService::LoadContents() {
   contents_.reset(content::WebContents::Create(
-      content::WebContents::CreateParams(profile_)));
+      content::WebContents::CreateParams(profile_, WindowOpenDisposition::UNKNOWN)));
   contents_delegate_.reset(new StartPageWebContentsDelegate(profile_));
   contents_->SetDelegate(contents_delegate_.get());
 

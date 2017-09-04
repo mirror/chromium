@@ -106,7 +106,8 @@ void ExtensionOptionsGuest::CreateWebContents(
   // WebContents, so we can use |extension_url| for creating the SiteInstance.
   WebContents::CreateParams params(
       browser_context(),
-      content::SiteInstance::CreateForURL(browser_context(), extension_url));
+      content::SiteInstance::CreateForURL(browser_context(), extension_url),
+      WindowOpenDisposition::UNKNOWN);
   params.guest_delegate = this;
   WebContents* wc = WebContents::Create(params);
   SetViewType(wc, VIEW_TYPE_EXTENSION_GUEST);

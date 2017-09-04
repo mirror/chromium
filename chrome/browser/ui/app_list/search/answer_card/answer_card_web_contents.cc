@@ -131,7 +131,7 @@ AnswerCardWebContents::AnswerCardWebContents(Profile* profile)
       web_contents_(
           content::WebContents::Create(content::WebContents::CreateParams(
               profile,
-              content::SiteInstance::Create(profile)))),
+              content::SiteInstance::Create(profile), WindowOpenDisposition::UNKNOWN))),
       profile_(profile) {
   content::RendererPreferences* renderer_prefs =
       web_contents_->GetMutableRendererPrefs();

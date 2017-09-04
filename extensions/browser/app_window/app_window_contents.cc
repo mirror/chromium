@@ -32,7 +32,8 @@ void AppWindowContentsImpl::Initialize(content::BrowserContext* context,
   url_ = url;
 
   content::WebContents::CreateParams create_params(
-      context, creator_frame->GetSiteInstance());
+      // TODO: check if what should be the appropriate disposition.
+      context, creator_frame->GetSiteInstance(), WindowOpenDisposition::CURRENT_TAB);
   create_params.opener_render_process_id = creator_frame->GetProcess()->GetID();
   create_params.opener_render_frame_id = creator_frame->GetRoutingID();
   web_contents_.reset(content::WebContents::Create(create_params));

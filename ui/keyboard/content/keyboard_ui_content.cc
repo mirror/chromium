@@ -310,7 +310,9 @@ content::WebContents* KeyboardUIContent::CreateWebContents() {
   content::BrowserContext* context = browser_context();
   return content::WebContents::Create(content::WebContents::CreateParams(
       context,
-      content::SiteInstance::CreateForURL(context, GetVirtualKeyboardUrl())));
+      content::SiteInstance::CreateForURL(context, GetVirtualKeyboardUrl()),
+      // TODO: Figure out appropriate disposition.
+      WindowOpenDisposition::UNKNOWN));
 }
 
 void KeyboardUIContent::LoadContents(const GURL& url) {

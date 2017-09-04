@@ -845,7 +845,7 @@ WebContents* TabManager::DiscardWebContentsAt(int index,
       old_contents->NeedToFireBeforeUnload());
 
   WebContents* null_contents =
-      WebContents::Create(WebContents::CreateParams(model->profile()));
+      WebContents::Create(WebContents::CreateParams(model->profile(), WindowOpenDisposition::UNKNOWN));
   // Copy over the state from the navigation controller to preserve the
   // back/forward history and to continue to display the correct title/favicon.
   //

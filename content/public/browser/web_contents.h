@@ -104,10 +104,10 @@ class WebContents : public PageNavigator,
                     public base::SupportsUserData {
  public:
   struct CONTENT_EXPORT CreateParams {
-    explicit CreateParams(BrowserContext* context);
+    explicit CreateParams(BrowserContext* context, WindowOpenDisposition disposition);
     CreateParams(const CreateParams& other);
     ~CreateParams();
-    CreateParams(BrowserContext* context, scoped_refptr<SiteInstance> site);
+    CreateParams(BrowserContext* context, scoped_refptr<SiteInstance> site, WindowOpenDisposition disposition);
 
     BrowserContext* browser_context;
 
@@ -115,6 +115,8 @@ class WebContents : public PageNavigator,
     // extra process swap if the first navigation is expected to require a
     // privileged process.
     scoped_refptr<SiteInstance> site_instance;
+
+    WindowOpenDisposition disposition;
 
     // The process id of the frame initiating the open.
     int opener_render_process_id;
@@ -219,6 +221,8 @@ class WebContents : public PageNavigator,
   // Returns the user browser context associated with this WebContents (via the
   // NavigationController).
   virtual content::BrowserContext* GetBrowserContext() const = 0;
+
+  virtual WindowOpenDisposition GetDisposition() const = 0;
 
   // Gets the URL that is currently being displayed, if there is one.
   // This method is deprecated. DO NOT USE! Pick either |GetVisibleURL| or

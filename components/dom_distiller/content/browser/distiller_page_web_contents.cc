@@ -120,7 +120,9 @@ void DistillerPageWebContents::DistillPageImpl(const GURL& url,
 
 void DistillerPageWebContents::CreateNewWebContents(const GURL& url) {
   // Create new WebContents to use for distilling the content.
-  content::WebContents::CreateParams create_params(browser_context_);
+  content::WebContents::CreateParams create_params(browser_context_,
+                                                   // TODO: Remove.
+                                                   WindowOpenDisposition::UNKNOWN);
   create_params.initially_hidden = true;
   content::WebContents* web_contents =
       content::WebContents::Create(create_params);

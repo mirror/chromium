@@ -25,6 +25,7 @@
 #include "extensions/common/extension.h"
 #include "extensions/common/extension_set.h"
 #include "net/url_request/url_request.h"
+#include "ui/base/window_open_disposition.h"
 
 using content::BrowserThread;
 using content::WebContents;
@@ -34,16 +35,49 @@ using extensions::UrlHandlerInfo;
 
 namespace {
 
+std::string DispositionToString(WindowOpenDisposition disposition) {
+  switch (disposition) {
+    case WindowOpenDisposition::UNKNOWN:
+      return "Unknown";
+    case WindowOpenDisposition::CURRENT_TAB:
+      return "Current tab";
+    case WindowOpenDisposition::SINGLETON_TAB:
+      return "Singleton tab";
+    case WindowOpenDisposition::NEW_FOREGROUND_TAB:
+      return "New foreground tab";
+    case WindowOpenDisposition::NEW_BACKGROUND_TAB:
+      return "New background tab";
+    case WindowOpenDisposition::NEW_POPUP:
+      return "New popup";
+    case WindowOpenDisposition::NEW_WINDOW:
+      return "New window";
+    case WindowOpenDisposition::SAVE_TO_DISK:
+      return "Save to disk";
+    case WindowOpenDisposition::OFF_THE_RECORD:
+      return "Off the record";
+    case WindowOpenDisposition::IGNORE_ACTION:
+      return "Ignore action";
+  }
+  NOTREACHED();
+  return "unknown";
+}
+
 bool ShouldOverrideNavigation(
     const Extension* app,
     content::WebContents* source,
     const navigation_interception::NavigationParams& params) {
   DVLOG(1) << "ShouldOverrideNavigation called for: " << params.url();
+  DVLOG(1) << "Disposition: " << DispositionToString(source->GetDisposition());
 
   ui::PageTransition transition_type = params.transition_type();
   if (!(PageTransitionCoreTypeIs(transition_type, ui::PAGE_TRANSITION_LINK))) {
     DVLOG(1) << "Don't override: Transition type is "
              << PageTransitionGetCoreTransitionString(transition_type);
+    return false;
+  }
+
+  if (source->GetDisposition() != WindowOpenDisposition::CURRENT_TAB ||
+      source->GetDisposition() != WindowOpenDisposition::NEW_WINDOW) {
     return false;
   }
 

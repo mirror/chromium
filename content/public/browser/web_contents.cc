@@ -11,13 +11,15 @@
 
 namespace content {
 
-WebContents::CreateParams::CreateParams(BrowserContext* context)
-    : CreateParams(context, nullptr) {}
+WebContents::CreateParams::CreateParams(BrowserContext* context, WindowOpenDisposition disposition)
+    : CreateParams(context, nullptr, disposition) {}
 
 WebContents::CreateParams::CreateParams(BrowserContext* context,
-                                        scoped_refptr<SiteInstance> site)
+                                        scoped_refptr<SiteInstance> site,
+                                        WindowOpenDisposition disposition)
     : browser_context(context),
       site_instance(std::move(site)),
+      disposition(disposition),
       opener_render_process_id(content::ChildProcessHost::kInvalidUniqueID),
       opener_render_frame_id(MSG_ROUTING_NONE),
       opener_suppressed(false),

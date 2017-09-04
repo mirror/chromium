@@ -366,7 +366,7 @@ content::WebContents* WebView::CreateWebContents(
 
   if (!contents) {
     content::WebContents::CreateParams create_params(
-        browser_context, NULL);
+        browser_context, NULL, WindowOpenDisposition::UNKNOWN);
     return content::WebContents::Create(create_params);
   }
 

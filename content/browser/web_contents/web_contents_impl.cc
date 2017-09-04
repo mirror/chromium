@@ -312,7 +312,7 @@ WebContents* WebContents::Create(const WebContents::CreateParams& params) {
 WebContents* WebContents::CreateWithSessionStorage(
     const WebContents::CreateParams& params,
     const SessionStorageNamespaceMap& session_storage_namespace_map) {
-  WebContentsImpl* new_contents = new WebContentsImpl(params.browser_context);
+  WebContentsImpl* new_contents = new WebContentsImpl(params.browser_context, params.disposition);
   new_contents->SetOpenerForNewContents(FindOpener(params),
                                         params.opener_suppressed);
 
@@ -493,9 +493,10 @@ WebContentsImpl::WebContentsTreeNode::inner_web_contents() const {
 
 // WebContentsImpl -------------------------------------------------------------
 
-WebContentsImpl::WebContentsImpl(BrowserContext* browser_context)
+WebContentsImpl::WebContentsImpl(BrowserContext* browser_context, WindowOpenDisposition disposition)
     : delegate_(NULL),
       controller_(this, browser_context),
+      disposition_(disposition),
       render_view_host_delegate_view_(NULL),
       created_with_opener_(false),
       frame_tree_(new NavigatorImpl(&controller_, this),
@@ -682,7 +683,7 @@ WebContentsImpl* WebContentsImpl::CreateWithOpener(
     const WebContents::CreateParams& params,
     FrameTreeNode* opener) {
   TRACE_EVENT0("browser", "WebContentsImpl::CreateWithOpener");
-  WebContentsImpl* new_contents = new WebContentsImpl(params.browser_context);
+  WebContentsImpl* new_contents = new WebContentsImpl(params.browser_context, params.disposition);
   new_contents->SetOpenerForNewContents(opener, params.opener_suppressed);
 
   // If the opener is sandboxed, a new popup must inherit the opener's sandbox
@@ -893,6 +894,10 @@ const NavigationControllerImpl& WebContentsImpl::GetController() const {
 
 BrowserContext* WebContentsImpl::GetBrowserContext() const {
   return controller_.GetBrowserContext();
+}
+
+WindowOpenDisposition WebContentsImpl::GetDisposition() const {
+  return disposition_;
 }
 
 const GURL& WebContentsImpl::GetURL() const {
@@ -1689,7 +1694,8 @@ WebContents* WebContentsImpl::Clone() {
   // We use our current SiteInstance since the cloned entry will use it anyway.
   // We pass our own opener so that the cloned page can access it if it was set
   // before.
-  CreateParams create_params(GetBrowserContext(), GetSiteInstance());
+  // TODO: pass appropriate disposition.
+  CreateParams create_params(GetBrowserContext(), GetSiteInstance(), WindowOpenDisposition::UNKNOWN);
   create_params.initial_size = GetContainerBounds().size();
   WebContentsImpl* tc =
       CreateWithOpener(create_params, frame_tree_.root()->opener());
@@ -2330,7 +2336,7 @@ void WebContentsImpl::CreateNewWindow(
 
   // Create the new web contents. This will automatically create the new
   // WebContentsView. In the future, we may want to create the view separately.
-  CreateParams create_params(GetBrowserContext(), site_instance.get());
+  CreateParams create_params(GetBrowserContext(), site_instance.get(), params.disposition);
   create_params.routing_id = render_view_route_id;
   create_params.main_frame_routing_id = main_frame_route_id;
   create_params.main_frame_widget_routing_id = main_frame_widget_route_id;

@@ -242,7 +242,9 @@ void AppViewGuest::CompleteCreateWebContents(
   WebContents::CreateParams params(
       browser_context(),
       content::SiteInstance::CreateForURL(browser_context(),
-                                          guest_extension->url()));
+                                          guest_extension->url()),
+      // TODO: Remove.
+      WindowOpenDisposition::UNKNOWN);
   params.guest_delegate = this;
   callback.Run(WebContents::Create(params));
 }

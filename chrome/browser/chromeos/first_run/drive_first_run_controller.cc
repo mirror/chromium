@@ -212,7 +212,8 @@ void DriveWebContentsManager::StartLoad() {
   started_ = true;
   const GURL url(endpoint_url_);
   content::WebContents::CreateParams create_params(
-        profile_, content::SiteInstance::CreateForURL(profile_, url));
+      profile_, content::SiteInstance::CreateForURL(profile_, url),
+      WindowOpenDisposition::UNKNOWN);
 
   web_contents_.reset(content::WebContents::Create(create_params));
   web_contents_->SetDelegate(this);

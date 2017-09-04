@@ -58,7 +58,8 @@ WebContents* CreateRestoredTab(
   session_storage_namespace_map[std::string()] = session_storage_namespace;
   WebContents::CreateParams create_params(
       browser->profile(),
-      tab_util::GetSiteInstanceForNewTab(browser->profile(), restore_url));
+      tab_util::GetSiteInstanceForNewTab(browser->profile(), restore_url),
+      WindowOpenDisposition::UNKNOWN);
   create_params.initially_hidden = initially_hidden;
   WebContents* base_web_contents =
       browser->tab_strip_model()->GetActiveWebContents();

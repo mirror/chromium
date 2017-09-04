@@ -32,7 +32,7 @@ void CustomLauncherPageContents::Initialize(content::BrowserContext* context,
                                             const GURL& url) {
   web_contents_.reset(
       content::WebContents::Create(content::WebContents::CreateParams(
-          context, content::SiteInstance::CreateForURL(context, url))));
+          context, content::SiteInstance::CreateForURL(context, url), WindowOpenDisposition::UNKNOWN)));
 
   web_contents_->GetMutableRendererPrefs()
       ->browser_handles_all_top_level_requests = true;

@@ -300,6 +300,7 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
   NavigationControllerImpl& GetController() override;
   const NavigationControllerImpl& GetController() const override;
   BrowserContext* GetBrowserContext() const override;
+  WindowOpenDisposition GetDisposition() const override;
   const GURL& GetURL() const override;
   const GURL& GetVisibleURL() const override;
   const GURL& GetLastCommittedURL() const override;
@@ -1016,7 +1017,7 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
   };
 
   // See WebContents::Create for a description of these parameters.
-  WebContentsImpl(BrowserContext* browser_context);
+  WebContentsImpl(BrowserContext* browser_context, WindowOpenDisposition disposition);
 
   // Add and remove observers for page navigation notifications. The order in
   // which notifications are sent to observers is undefined. Clients must be
@@ -1330,6 +1331,8 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
 
   // Handles the back/forward list and loading.
   NavigationControllerImpl controller_;
+
+  WindowOpenDisposition disposition_;
 
   // The corresponding view.
   std::unique_ptr<WebContentsView> view_;
