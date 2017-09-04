@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61631865_49e67f2a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-preflight-request-header-sorted.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-09-04T06:02:10Z",
+      "side": 1,
+      "message": "nice that you\u0027ve made this only happen for OPTIONS",
+      "revId": "a7a306edf5975bfaadf9fe47d91b9f0a5e1071d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
