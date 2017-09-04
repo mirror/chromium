@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "04f1e31d_0337d095",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-09-04T00:16:14Z",
+      "side": 1,
+      "message": "yeah, before the code were None, so I thought something might be going on, I will try putting it as you said to see if anything change",
+      "parentUuid": "5f1c438b_bd181bbc",
+      "revId": "adf245b7e2d635d670b7b8f5dbfb0db4a8225204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ff1a05d_a621b978",
         "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
         "patchSetId": 3
@@ -70,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "4f4b446e_e08da8d4",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-09-04T00:16:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0ff1a05d_a621b978",
+      "revId": "adf245b7e2d635d670b7b8f5dbfb0db4a8225204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8fe92f4_bbaf7b2c",
         "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
         "patchSetId": 3
@@ -81,6 +117,24 @@
       "writtenOn": "2017-09-03T23:47:33Z",
       "side": 1,
       "message": "lol nice catch",
+      "revId": "adf245b7e2d635d670b7b8f5dbfb0db4a8225204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ff9675f_bd19b38c",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-09-04T00:16:14Z",
+      "side": 1,
+      "message": "lol, was encountering is error and have no idea what type {} is.",
+      "parentUuid": "f8fe92f4_bbaf7b2c",
       "revId": "adf245b7e2d635d670b7b8f5dbfb0db4a8225204",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +158,24 @@
     },
     {
       "key": {
+        "uuid": "ca34fc65_4487be52",
+        "filename": "third_party/WebKit/Source/build/scripts/templates/ComputedStyleBase.h.tmpl",
+        "patchSetId": 3
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-09-04T00:16:14Z",
+      "side": 1,
+      "message": "since every property can now have the option of writing their own getter, setter, we are not sure whether they have public generated getter, setter. To accurately generate getter setter, we can check whether it is writing its own getter, setter or not.",
+      "parentUuid": "14b0a8dd_7d890e13",
+      "revId": "adf245b7e2d635d670b7b8f5dbfb0db4a8225204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "82a9a56a_d2a2f478",
         "filename": "third_party/WebKit/Source/build/scripts/templates/fields/base.tmpl",
         "patchSetId": 3
@@ -115,6 +187,24 @@
       "writtenOn": "2017-09-03T23:47:33Z",
       "side": 1,
       "message": "Hmm, I remember you had an \"array\" idea for implementing this nicely. Could we try to implement that idea?",
+      "revId": "adf245b7e2d635d670b7b8f5dbfb0db4a8225204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fd1898d_c1b0e0b0",
+        "filename": "third_party/WebKit/Source/build/scripts/templates/fields/base.tmpl",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-09-04T00:16:14Z",
+      "side": 1,
+      "message": "I dont remember I had an array idea :v, but whats wrong with this one.",
+      "parentUuid": "82a9a56a_d2a2f478",
       "revId": "adf245b7e2d635d670b7b8f5dbfb0db4a8225204",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
