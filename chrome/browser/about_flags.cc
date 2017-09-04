@@ -3229,11 +3229,7 @@ const FeatureEntry kFeatureEntries[] = {
 #endif  // defined(OS_MACOSX)
 
 #if defined(OS_CHROMEOS)
-    {"disable-new-virtual-keyboard-behavior",
-     flag_descriptions::kDisableNewVirtualKeyboardBehaviorName,
-     flag_descriptions::kDisableNewVirtualKeyboardBehaviorDescription, kOsCrOS,
-     SINGLE_DISABLE_VALUE_TYPE(switches::kDisableNewVirtualKeyboardBehavior)},
-    {"enable-per-user-timezone", flag_descriptions::kEnablePerUserTimezoneName,
+   {"enable-per-user-timezone", flag_descriptions::kEnablePerUserTimezoneName,
      flag_descriptions::kEnablePerUserTimezoneDescription, kOsCrOS,
      SINGLE_DISABLE_VALUE_TYPE(chromeos::switches::kDisablePerUserTimezone)},
 #endif  // OS_CHROMEOS

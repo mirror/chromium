@@ -34,7 +34,6 @@
 #include "ui/app_list/app_list_features.h"
 #include "ui/app_list/presenter/app_list.h"
 #include "ui/app_list/views/app_list_view.h"
-#include "ui/base/ui_base_switches.h"
 #include "ui/compositor/layer.h"
 #include "ui/compositor/layer_animation_observer.h"
 #include "ui/compositor/layer_animator.h"
@@ -468,10 +467,8 @@ void ShelfLayoutManager::OnKeyboardBoundsChanging(const gfx::Rect& new_bounds) {
   // If new window behavior flag enabled and in non-sticky mode, do not change
   // the work area.
   bool change_work_area =
-      (base::CommandLine::ForCurrentProcess()->HasSwitch(
-           ::switches::kDisableNewVirtualKeyboardBehavior) ||
-       (keyboard::KeyboardController::GetInstance() &&
-        keyboard::KeyboardController::GetInstance()->keyboard_locked()));
+      keyboard::KeyboardController::GetInstance() &&
+      keyboard::KeyboardController::GetInstance()->keyboard_locked();
 
   keyboard_bounds_ = new_bounds;
   LayoutShelfAndUpdateBounds(change_work_area);
