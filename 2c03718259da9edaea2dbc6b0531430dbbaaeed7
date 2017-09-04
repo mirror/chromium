@@ -22,6 +22,30 @@
       "revId": "2c03718259da9edaea2dbc6b0531430dbbaaeed7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c33d657_e62d68f5",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_coordinator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-04T16:01:46Z",
+      "side": 1,
+      "message": "I was thinking that something like that might be necessary.\nDone.",
+      "parentUuid": "7a22dd70_0f322f33",
+      "range": {
+        "startLine": 192,
+        "startChar": 33,
+        "endLine": 192,
+        "endChar": 48
+      },
+      "revId": "2c03718259da9edaea2dbc6b0531430dbbaaeed7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
