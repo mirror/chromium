@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14a00c67_7e2f58a0",
+        "filename": "device/hid/hid_usage_and_page.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-09-04T11:00:41Z",
+      "side": 1,
+      "message": "See https://cs.chromium.org/chromium/src/extensions/browser/api/hid/hid_apitest.cc?rcl\u003d8b27fba0270d402310586cc7afc5ee0562073483\u0026l\u003d43\n\nhid_apitest uses 0xFF00 and 0xFF01 for testing, which causes crash in hid_struct_traits.cc.",
+      "revId": "310c31816148222b68ec248b2f67fe00c8b30e39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
