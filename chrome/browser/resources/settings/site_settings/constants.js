@@ -33,6 +33,10 @@ settings.ContentSettingsTypes = {
   // <if expr="chromeos">
   PROTECTED_CONTENT: 'protectedContent',
   // </if>
+  // <if expr="not chromeos">
+  PROTECTED_CONTENT: null,
+  // </if>
+
   ADS: 'ads',
 };
 
