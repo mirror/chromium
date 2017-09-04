@@ -176,7 +176,8 @@ Element* InsertParagraphSeparatorCommand::CloneHierarchyUnderNewBlock(
 }
 
 void InsertParagraphSeparatorCommand::DoApply(EditingState* editing_state) {
-  if (!EndingVisibleSelection().IsNonOrphanedCaretOrRange())
+  if (EndingVisibleSelection().IsNone() ||
+      !EndingVisibleSelection().IsValidFor(GetDocument()))
     return;
 
   Position insertion_position = EndingVisibleSelection().Start();
