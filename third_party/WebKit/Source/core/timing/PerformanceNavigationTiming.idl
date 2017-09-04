@@ -10,9 +10,8 @@ enum NavigationType {
     "back_forward",
     "prerender"
 };
-[
-    RuntimeEnabled=PerformanceNavigationTiming2
-]  interface PerformanceNavigationTiming : PerformanceResourceTiming {
+
+interface PerformanceNavigationTiming : PerformanceResourceTiming {
     readonly attribute DOMHighResTimeStamp unloadEventStart;
     readonly attribute DOMHighResTimeStamp unloadEventEnd;
     readonly attribute DOMHighResTimeStamp domInteractive;

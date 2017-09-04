@@ -807,10 +807,6 @@
       status: "stable",
     },
     {
-      name: "PerformanceNavigationTiming2",
-      status: "stable",
-    },
-    {
       name: "PerformanceObserver",
       status: "stable",
     },

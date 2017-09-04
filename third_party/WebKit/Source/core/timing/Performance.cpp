@@ -143,8 +143,6 @@ PerformanceTiming* Performance::timing() const {
 }
 
 PerformanceNavigationTiming* Performance::CreateNavigationTimingInstance() {
-  if (!RuntimeEnabledFeatures::PerformanceNavigationTiming2Enabled())
-    return nullptr;
   if (!GetFrame())
     return nullptr;
   const DocumentLoader* document_loader =
