@@ -22,6 +22,8 @@
 #include "ui/events/keycodes/keyboard_codes.h"
 #include "ui/gfx/range/range.h"
 
+constexpr bool DEBUG = false;
+
 namespace arc {
 
 namespace {
@@ -279,6 +281,10 @@ void ArcImeService::OnCursorRectChangedWithSurroundingText(
     return;
   cursor_rect_ = rect;
 
+  if (DEBUG)
+    LOG(ERROR) << "AIS::OnCursorRectChanged: rect = "
+               << cursor_rect_.ToString();
+
   ui::InputMethod* const input_method = GetInputMethod();
   if (input_method)
     input_method->OnCaretBoundsChanged(this);
@@ -303,18 +309,26 @@ void ArcImeService::OnKeyboardClosed() {}
 
 void ArcImeService::SetCompositionText(
     const ui::CompositionText& composition) {
+  if (DEBUG)
+    LOG(ERROR) << "AIS::SetCompositionText: text = \"" << composition.text
+               << "\"";
   InvalidateSurroundingTextAndSelectionRange();
   has_composition_text_ = !composition.text.empty();
+  composition_text_ = composition.text;
   ime_bridge_->SendSetCompositionText(composition);
 }
 
 void ArcImeService::ConfirmCompositionText() {
+  if (DEBUG)
+    LOG(ERROR) << "AIS::ConfirmCompositionText";
   InvalidateSurroundingTextAndSelectionRange();
   has_composition_text_ = false;
   ime_bridge_->SendConfirmCompositionText();
 }
 
 void ArcImeService::ClearCompositionText() {
+  if (DEBUG)
+    LOG(ERROR) << "AIS::ClearCompositionText";
   InvalidateSurroundingTextAndSelectionRange();
   if (has_composition_text_) {
     has_composition_text_ = false;
@@ -323,6 +337,8 @@ void ArcImeService::ClearCompositionText() {
 }
 
 void ArcImeService::InsertText(const base::string16& text) {
+  if (DEBUG)
+    LOG(ERROR) << "AIS::InsertText: text = \"" << text << "\"";
   InvalidateSurroundingTextAndSelectionRange();
   has_composition_text_ = false;
   ime_bridge_->SendInsertText(text);
@@ -370,10 +386,13 @@ void ArcImeService::InsertChar(const ui::KeyEvent& event) {
 }
 
 ui::TextInputType ArcImeService::GetTextInputType() const {
+  // LOG(ERROR) << "AIS::GetTextInputType";
   return ime_type_;
 }
 
 gfx::Rect ArcImeService::GetCaretBounds() const {
+  if (DEBUG)
+    LOG(ERROR) << "AIS::GetCaretBounds";
   if (!focused_arc_window_)
     return gfx::Rect();
   aura::Window* window = focused_arc_window_;
@@ -397,21 +416,36 @@ gfx::Rect ArcImeService::GetCaretBounds() const {
 }
 
 bool ArcImeService::GetTextRange(gfx::Range* range) const {
-  if (!text_range_.IsValid())
+  return false;
+  if (!text_range_.IsValid()) {
+    if (DEBUG)
+      LOG(ERROR) << "AIS::GetTextRange: false";
     return false;
+  }
+  if (DEBUG)
+    LOG(ERROR) << "AIS::GetTextRange: range = " << text_range_.ToString();
   *range = text_range_;
   return true;
 }
 
 bool ArcImeService::GetSelectionRange(gfx::Range* range) const {
-  if (!selection_range_.IsValid())
+  return false;
+  if (!selection_range_.IsValid()) {
+    if (DEBUG)
+      LOG(ERROR) << "AIS::GetSelectionRange: false";
     return false;
+  }
+  if (DEBUG)
+    LOG(ERROR) << "AIS::GetSelectionRange: range = "
+               << selection_range_.ToString();
   *range = selection_range_;
   return true;
 }
 
 bool ArcImeService::GetTextFromRange(const gfx::Range& range,
                                      base::string16* text) const {
+  if (DEBUG)
+    LOG(ERROR) << "AIS::GetTextFromRange: range = " << range.ToString();
   // It's supposed that this method is called only from
   // InputMethod::OnCaretBoundsChanged(). In that method, the range obtained
   // from GetTextRange() is used as the argument of this method. To prevent an
@@ -440,15 +474,34 @@ int ArcImeService::GetTextInputFlags() const {
 }
 
 bool ArcImeService::CanComposeInline() const {
+  if (DEBUG)
+    LOG(ERROR) << "AIS::CanComposeInline";
   return true;
 }
 
 bool ArcImeService::GetCompositionCharacterBounds(
     uint32_t index, gfx::Rect* rect) const {
-  return false;
+  if (!has_composition_text_)
+    return false;
+  if (index >= composition_text_.size())
+    return false;
+  if (!focused_arc_window_)
+    return false;
+
+  *rect = gfx::ScaleToEnclosingRect(
+      cursor_rect_, 1 / focused_arc_window_->layer()->device_scale_factor());
+  const int width_for_a_character = rect->width() / composition_text_.size();
+  rect->set_x(index * width_for_a_character);
+  rect->set_width(width_for_a_character);
+  if (DEBUG)
+    LOG(ERROR) << "AIS::GetCompositionCharaceterBounds: index = " << index
+               << ", rect = " << rect->ToString();
+  return true;
 }
 
 bool ArcImeService::HasCompositionText() const {
+  if (DEBUG)
+    LOG(ERROR) << "AIS::HasCompositionText: " << has_composition_text_;
   return has_composition_text_;
 }
 

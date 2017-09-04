@@ -7,6 +7,8 @@
 #include <memory>
 #include <utility>
 
+#include "base/debug/stack_trace.h"
+
 #include "base/lazy_instance.h"
 #include "base/memory/ptr_util.h"
 #include "chrome/browser/chrome_notification_types.h"
@@ -34,6 +36,8 @@ ImeObserver::ImeObserver(const std::string& extension_id, Profile* profile)
     : extension_id_(extension_id), profile_(profile) {}
 
 void ImeObserver::OnActivate(const std::string& component_id) {
+  LOG(ERROR) << "input.ime.onActivate";
+
   if (extension_id_.empty() || !HasListener(input_ime::OnActivate::kEventName))
     return;
 
@@ -47,6 +51,8 @@ void ImeObserver::OnActivate(const std::string& component_id) {
 
 void ImeObserver::OnFocus(
     const IMEEngineHandlerInterface::InputContext& context) {
+  LOG(ERROR) << "input.ime.onFocus";
+
   if (extension_id_.empty() || !HasListener(input_ime::OnFocus::kEventName))
     return;
 
@@ -66,6 +72,8 @@ void ImeObserver::OnFocus(
 }
 
 void ImeObserver::OnBlur(int context_id) {
+  LOG(ERROR) << "input.ime.onBlur";
+
   if (extension_id_.empty() || !HasListener(input_ime::OnBlur::kEventName))
     return;
 
@@ -79,6 +87,8 @@ void ImeObserver::OnKeyEvent(
     const std::string& component_id,
     const InputMethodEngineBase::KeyboardEvent& event,
     IMEEngineHandlerInterface::KeyEventDoneCallback& key_data) {
+  LOG(ERROR) << "input.ime.onKeyEvent";
+
   if (extension_id_.empty())
     return;
 
@@ -118,6 +128,9 @@ void ImeObserver::OnKeyEvent(
 }
 
 void ImeObserver::OnReset(const std::string& component_id) {
+  LOG(ERROR) << "input.ime.onReset";
+  base::debug::StackTrace().Print();
+
   if (extension_id_.empty() || !HasListener(input_ime::OnReset::kEventName))
     return;
 
@@ -129,6 +142,8 @@ void ImeObserver::OnReset(const std::string& component_id) {
 }
 
 void ImeObserver::OnDeactivated(const std::string& component_id) {
+  LOG(ERROR) << "input.ime.onDeactivated";
+
   if (extension_id_.empty() ||
       !HasListener(input_ime::OnDeactivated::kEventName))
     return;
@@ -155,6 +170,8 @@ void ImeObserver::OnSurroundingTextChanged(const std::string& component_id,
                                            int cursor_pos,
                                            int anchor_pos,
                                            int offset_pos) {
+  LOG(ERROR) << "input.ime.onSurroundingTextChanged";
+
   if (extension_id_.empty() ||
       !HasListener(input_ime::OnSurroundingTextChanged::kEventName))
     return;
@@ -286,6 +303,8 @@ void InputImeEventRouterFactory::RemoveProfile(Profile* profile) {
 }
 
 ExtensionFunction::ResponseAction InputImeKeyEventHandledFunction::Run() {
+  LOG(ERROR) << "input.ime.keyEventHandled";
+
   std::unique_ptr<KeyEventHandled::Params> params(
       KeyEventHandled::Params::Create(*args_));
   InputImeEventRouter* event_router =
@@ -300,6 +319,8 @@ ExtensionFunction::ResponseAction InputImeKeyEventHandledFunction::Run() {
 }
 
 ExtensionFunction::ResponseAction InputImeSetCompositionFunction::Run() {
+  LOG(ERROR) << "input.ime.setComposition";
+
   InputImeEventRouter* event_router =
       GetInputImeEventRouter(Profile::FromBrowserContext(browser_context()));
   InputMethodEngineBase* engine =
@@ -348,6 +369,8 @@ ExtensionFunction::ResponseAction InputImeSetCompositionFunction::Run() {
 }
 
 ExtensionFunction::ResponseAction InputImeCommitTextFunction::Run() {
+  LOG(ERROR) << "input.ime.commitText";
+
   InputImeEventRouter* event_router =
       GetInputImeEventRouter(Profile::FromBrowserContext(browser_context()));
   InputMethodEngineBase* engine =
@@ -357,6 +380,10 @@ ExtensionFunction::ResponseAction InputImeCommitTextFunction::Run() {
         CommitText::Params::Create(*args_));
     const CommitText::Params::Parameters& params = parent_params->parameters;
     std::string error;
+
+    LOG(ERROR) << "InputImeCommitTextFunction: text = \"" << params.text
+               << "\"";
+
     if (!engine->CommitText(params.context_id, params.text.c_str(), &error)) {
       std::unique_ptr<base::ListValue> results =
           base::MakeUnique<base::ListValue>();
@@ -368,6 +395,8 @@ ExtensionFunction::ResponseAction InputImeCommitTextFunction::Run() {
 }
 
 ExtensionFunction::ResponseAction InputImeSendKeyEventsFunction::Run() {
+  LOG(ERROR) << "input.ime.sendKeyEvents";
+
   InputImeEventRouter* event_router =
       GetInputImeEventRouter(Profile::FromBrowserContext(browser_context()));
   InputMethodEngineBase* engine =

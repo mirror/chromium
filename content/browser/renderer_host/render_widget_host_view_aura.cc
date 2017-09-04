@@ -133,6 +133,8 @@ using blink::WebInputEvent;
 using blink::WebGestureEvent;
 using blink::WebTouchEvent;
 
+constexpr bool DEBUG = false;
+
 namespace content {
 
 namespace {
@@ -1193,6 +1195,8 @@ void RenderWidgetHostViewAura::UnlockMouse() {
 // RenderWidgetHostViewAura, ui::TextInputClient implementation:
 void RenderWidgetHostViewAura::SetCompositionText(
     const ui::CompositionText& composition) {
+  if (DEBUG)
+    LOG(ERROR) << "RWHVA::SetCompositionText: \"" << composition.text << "\"";
   if (!text_input_manager_ || !text_input_manager_->GetActiveWidget())
     return;
 
@@ -1206,6 +1210,8 @@ void RenderWidgetHostViewAura::SetCompositionText(
 }
 
 void RenderWidgetHostViewAura::ConfirmCompositionText() {
+  if (DEBUG)
+    LOG(ERROR) << "RWHVA::ConfirmCompositionText";
   if (text_input_manager_ && text_input_manager_->GetActiveWidget() &&
       has_composition_text_) {
     text_input_manager_->GetActiveWidget()->ImeFinishComposingText(false);
@@ -1214,6 +1220,8 @@ void RenderWidgetHostViewAura::ConfirmCompositionText() {
 }
 
 void RenderWidgetHostViewAura::ClearCompositionText() {
+  if (DEBUG)
+    LOG(ERROR) << "RWHVA::ClearCompositionText";
   if (text_input_manager_ && text_input_manager_->GetActiveWidget() &&
       has_composition_text_)
     text_input_manager_->GetActiveWidget()->ImeCancelComposition();
@@ -1221,6 +1229,9 @@ void RenderWidgetHostViewAura::ClearCompositionText() {
 }
 
 void RenderWidgetHostViewAura::InsertText(const base::string16& text) {
+  if (DEBUG)
+    LOG(ERROR) << "RWHVA::InsertText: text = \"" << text << "\"";
+
   DCHECK_NE(GetTextInputType(), ui::TEXT_INPUT_TYPE_NONE);
 
   if (text_input_manager_ && text_input_manager_->GetActiveWidget()) {
@@ -1234,6 +1245,8 @@ void RenderWidgetHostViewAura::InsertText(const base::string16& text) {
 }
 
 void RenderWidgetHostViewAura::InsertChar(const ui::KeyEvent& event) {
+  if (DEBUG)
+    LOG(ERROR) << "RWHVA::InsertChar";
   if (popup_child_host_view_ && popup_child_host_view_->NeedsInputGrab()) {
     popup_child_host_view_->InsertChar(event);
     return;
@@ -1250,29 +1263,38 @@ void RenderWidgetHostViewAura::InsertChar(const ui::KeyEvent& event) {
 }
 
 ui::TextInputType RenderWidgetHostViewAura::GetTextInputType() const {
+  // LOG(ERROR) << "RWHVA::GetTextInputType";
   if (text_input_manager_ && text_input_manager_->GetTextInputState())
     return text_input_manager_->GetTextInputState()->type;
   return ui::TEXT_INPUT_TYPE_NONE;
 }
 
 ui::TextInputMode RenderWidgetHostViewAura::GetTextInputMode() const {
+  if (DEBUG)
+    LOG(ERROR) << "RWHVA::GetTextInputMode";
   if (text_input_manager_ && text_input_manager_->GetTextInputState())
     return text_input_manager_->GetTextInputState()->mode;
   return ui::TEXT_INPUT_MODE_DEFAULT;
 }
 
 base::i18n::TextDirection RenderWidgetHostViewAura::GetTextDirection() const {
+  if (DEBUG)
+    LOG(ERROR) << "RWHVA::GetTextInputDirection";
   NOTIMPLEMENTED();
   return base::i18n::UNKNOWN_DIRECTION;
 }
 
 int RenderWidgetHostViewAura::GetTextInputFlags() const {
+  if (DEBUG)
+    LOG(ERROR) << "RWHVA::GetTextInputFlags";
   if (text_input_manager_ && text_input_manager_->GetTextInputState())
     return text_input_manager_->GetTextInputState()->flags;
   return 0;
 }
 
 bool RenderWidgetHostViewAura::CanComposeInline() const {
+  if (DEBUG)
+    LOG(ERROR) << "RWHVA::CanComposeInline";
   if (text_input_manager_ && text_input_manager_->GetTextInputState())
     return text_input_manager_->GetTextInputState()->can_compose_inline;
   return true;
@@ -1308,13 +1330,19 @@ gfx::Rect RenderWidgetHostViewAura::ConvertRectFromScreen(
 }
 
 gfx::Rect RenderWidgetHostViewAura::GetCaretBounds() const {
-  if (!text_input_manager_ || !text_input_manager_->GetActiveWidget())
+  if (!text_input_manager_ || !text_input_manager_->GetActiveWidget()) {
+    if (DEBUG)
+      LOG(ERROR) << "RWHVA::GetCaretBounds, empty";
     return gfx::Rect();
+  }
 
   const TextInputManager::SelectionRegion* region =
       text_input_manager_->GetSelectionRegion();
-  return ConvertRectToScreen(
+  gfx::Rect rect = ConvertRectToScreen(
       gfx::RectBetweenSelectionBounds(region->anchor, region->focus));
+  if (DEBUG)
+    LOG(ERROR) << "RWHVA::GetCaretBounds, bounds = " << rect.ToString();
+  return rect;
 }
 
 bool RenderWidgetHostViewAura::GetCompositionCharacterBounds(
@@ -1322,8 +1350,11 @@ bool RenderWidgetHostViewAura::GetCompositionCharacterBounds(
     gfx::Rect* rect) const {
   DCHECK(rect);
 
-  if (!text_input_manager_ || !text_input_manager_->GetActiveWidget())
+  if (!text_input_manager_ || !text_input_manager_->GetActiveWidget()) {
+    if (DEBUG)
+      LOG(ERROR) << "RWHVA::GetCompositionCharacterBounds, false";
     return false;
+  }
 
   const TextInputManager::CompositionRangeInfo* composition_range_info =
       text_input_manager_->GetCompositionRangeInfo();
@@ -1331,45 +1362,70 @@ bool RenderWidgetHostViewAura::GetCompositionCharacterBounds(
   if (index >= composition_range_info->character_bounds.size())
     return false;
   *rect = ConvertRectToScreen(composition_range_info->character_bounds[index]);
+  if (DEBUG)
+    LOG(ERROR) << "RWHVA::GetCompositionCharacterBounds, index = " << index
+               << ", range = " << rect->ToString();
   return true;
 }
 
 bool RenderWidgetHostViewAura::HasCompositionText() const {
+  if (DEBUG)
+    LOG(ERROR) << "RWHVA::HasCompositionText, " << has_composition_text_;
   return has_composition_text_;
 }
 
 bool RenderWidgetHostViewAura::GetTextRange(gfx::Range* range) const {
-  if (!text_input_manager_ || !GetFocusedWidget())
+  if (!text_input_manager_ || !GetFocusedWidget()) {
+    if (DEBUG)
+      LOG(ERROR) << "RWHVA::GetTextRange: false";
     return false;
+  }
 
   const TextInputManager::TextSelection* selection =
       text_input_manager_->GetTextSelection(GetFocusedWidget()->GetView());
-  if (!selection)
+  if (!selection) {
+    if (DEBUG)
+      LOG(ERROR) << "RWHVA::GetTextRange: no selection";
     return false;
+  }
 
   range->set_start(selection->offset());
   range->set_end(selection->offset() + selection->text().length());
+  if (DEBUG)
+    LOG(ERROR) << "RWHVA::GetTextRange: range = " << range->ToString()
+               << ", text = " << selection->text();
   return true;
 }
 
 bool RenderWidgetHostViewAura::GetCompositionTextRange(
     gfx::Range* range) const {
+  if (DEBUG)
+    LOG(ERROR) << "RWHVA::GetCompositionTextRange, not implemented";
   // TODO(suzhe): implement this method when fixing http://crbug.com/55130.
   NOTIMPLEMENTED();
   return false;
 }
 
 bool RenderWidgetHostViewAura::GetSelectionRange(gfx::Range* range) const {
-  if (!text_input_manager_ || !GetFocusedWidget())
+  if (DEBUG)
+    LOG(ERROR) << "RWHVA::GetSelectionRange";
+  if (!text_input_manager_ || !GetFocusedWidget()) {
+    LOG(ERROR) << "RWHVA::GetSelectionRange, false";
     return false;
+  }
 
   const TextInputManager::TextSelection* selection =
       text_input_manager_->GetTextSelection(GetFocusedWidget()->GetView());
-  if (!selection)
+  if (!selection) {
+    if (DEBUG)
+      LOG(ERROR) << "RWHVA::GetSelectionRange, no selection";
     return false;
+  }
 
   range->set_start(selection->range().start());
   range->set_end(selection->range().end());
+  if (DEBUG)
+    LOG(ERROR) << "RWHVA::GetSelectionRange, range = " << range->ToString();
   return true;
 }
 
@@ -1388,6 +1444,8 @@ bool RenderWidgetHostViewAura::DeleteRange(const gfx::Range& range) {
 bool RenderWidgetHostViewAura::GetTextFromRange(
     const gfx::Range& range,
     base::string16* text) const {
+  if (DEBUG)
+    LOG(ERROR) << "RWHVA::GetTextFromRange: range = " << range.ToString();
   if (!text_input_manager_ || !GetFocusedWidget())
     return false;
 

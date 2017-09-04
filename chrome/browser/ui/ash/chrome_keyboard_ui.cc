@@ -45,6 +45,8 @@ class AshKeyboardControllerObserver
 
   // KeyboardControllerObserver overrides:
   void OnKeyboardBoundsChanging(const gfx::Rect& bounds) override {
+    LOG(ERROR) << "virtualKeyboardPrivate.onBoundsChanged";
+
     extensions::EventRouter* router = extensions::EventRouter::Get(context_);
 
     if (!router->HasEventListener(
@@ -69,6 +71,8 @@ class AshKeyboardControllerObserver
   }
 
   void OnKeyboardClosed() override {
+    LOG(ERROR) << "virtualKeyboardPrivate.onKeyboardClosed";
+
     extensions::EventRouter* router = extensions::EventRouter::Get(context_);
 
     if (!router->HasEventListener(

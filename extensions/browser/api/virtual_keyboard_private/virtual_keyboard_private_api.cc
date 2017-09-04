@@ -49,6 +49,8 @@ VirtualKeyboardPrivateFunction::~VirtualKeyboardPrivateFunction() {}
 
 ExtensionFunction::ResponseAction
 VirtualKeyboardPrivateInsertTextFunction::Run() {
+  LOG(ERROR) << "virtualKeyboardPrivate.insertText";
+
   base::string16 text;
   EXTENSION_FUNCTION_VALIDATE(args_->GetString(0, &text));
   if (!delegate()->InsertText(text))
@@ -58,6 +60,8 @@ VirtualKeyboardPrivateInsertTextFunction::Run() {
 
 ExtensionFunction::ResponseAction
 VirtualKeyboardPrivateSendKeyEventFunction::Run() {
+  LOG(ERROR) << "virtualKeyboardPrivate.sendKeyEvent";
+
   std::unique_ptr<keyboard::SendKeyEvent::Params> params(
       keyboard::SendKeyEvent::Params::Create(*args_));
   EXTENSION_FUNCTION_VALIDATE(params);
@@ -73,6 +77,8 @@ VirtualKeyboardPrivateSendKeyEventFunction::Run() {
 
 ExtensionFunction::ResponseAction
 VirtualKeyboardPrivateHideKeyboardFunction::Run() {
+  LOG(ERROR) << "virtualKeyboardPrivate.hideKeyboard";
+
   if (!delegate()->HideKeyboard())
     return RespondNow(Error(kUnknownError));
   return RespondNow(NoArguments());
@@ -80,6 +86,8 @@ VirtualKeyboardPrivateHideKeyboardFunction::Run() {
 
 ExtensionFunction::ResponseAction
 VirtualKeyboardPrivateSetHotrodKeyboardFunction::Run() {
+  LOG(ERROR) << "virtualKeyboardPrivate.setHotrodKeyboard";
+
   bool enable = false;
   EXTENSION_FUNCTION_VALIDATE(args_->GetBoolean(0, &enable));
   delegate()->SetHotrodKeyboard(enable);
@@ -88,6 +96,8 @@ VirtualKeyboardPrivateSetHotrodKeyboardFunction::Run() {
 
 ExtensionFunction::ResponseAction
 VirtualKeyboardPrivateLockKeyboardFunction::Run() {
+  LOG(ERROR) << "virtualKeyboardPrivate.lockKeyboard";
+
   bool lock = false;
   EXTENSION_FUNCTION_VALIDATE(args_->GetBoolean(0, &lock));
   if (!delegate()->LockKeyboard(lock))
@@ -97,6 +107,8 @@ VirtualKeyboardPrivateLockKeyboardFunction::Run() {
 
 ExtensionFunction::ResponseAction
 VirtualKeyboardPrivateKeyboardLoadedFunction::Run() {
+  LOG(ERROR) << "virtualKeyboardPrivate.keyboardLoaded";
+
   if (!delegate()->OnKeyboardLoaded())
     return RespondNow(Error(kUnknownError));
   return RespondNow(NoArguments());
@@ -104,6 +116,8 @@ VirtualKeyboardPrivateKeyboardLoadedFunction::Run() {
 
 ExtensionFunction::ResponseAction
 VirtualKeyboardPrivateGetKeyboardConfigFunction::Run() {
+  LOG(ERROR) << "virtualKeyboardPrivate.getKeyboardConfig";
+
   delegate()->GetKeyboardConfig(base::Bind(
       &VirtualKeyboardPrivateGetKeyboardConfigFunction::OnKeyboardConfig,
       this));
@@ -117,6 +131,8 @@ void VirtualKeyboardPrivateGetKeyboardConfigFunction::OnKeyboardConfig(
 
 ExtensionFunction::ResponseAction
 VirtualKeyboardPrivateOpenSettingsFunction::Run() {
+  LOG(ERROR) << "virtualKeyboardPrivate.openSettings";
+
   if (!delegate()->IsLanguageSettingsEnabled() ||
       !delegate()->ShowLanguageSettings()) {
     return RespondNow(Error(kUnknownError));
@@ -125,6 +141,8 @@ VirtualKeyboardPrivateOpenSettingsFunction::Run() {
 }
 
 ExtensionFunction::ResponseAction VirtualKeyboardPrivateSetModeFunction::Run() {
+  LOG(ERROR) << "virtualKeyboardPrivate.setMode";
+
   std::unique_ptr<keyboard::SetMode::Params> params =
       keyboard::SetMode::Params::Create(*args_);
   EXTENSION_FUNCTION_VALIDATE(params);
@@ -135,6 +153,8 @@ ExtensionFunction::ResponseAction VirtualKeyboardPrivateSetModeFunction::Run() {
 
 ExtensionFunction::ResponseAction
 VirtualKeyboardPrivateSetKeyboardStateFunction::Run() {
+  LOG(ERROR) << "virtualKeyboardPrivate.setKeyboardState";
+
   std::unique_ptr<keyboard::SetKeyboardState::Params> params =
       keyboard::SetKeyboardState::Params::Create(*args_);
   EXTENSION_FUNCTION_VALIDATE(params);

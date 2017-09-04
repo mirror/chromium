@@ -144,6 +144,7 @@ class ArcImeService : public KeyedService,
   ui::TextInputType ime_type_;
   gfx::Rect cursor_rect_;
   bool has_composition_text_;
+  base::string16 composition_text_;
   gfx::Range text_range_;
   base::string16 text_in_range_;
   gfx::Range selection_range_;

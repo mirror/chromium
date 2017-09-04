@@ -28,6 +28,8 @@
 #include "ui/events/event.h"
 #include "ui/gfx/geometry/rect.h"
 
+constexpr bool DEBUG = false;
+
 namespace {
 ui::IMEEngineHandlerInterface* GetEngine() {
   return ui::IMEBridge::Get()->GetCurrentEngineHandler();
@@ -215,12 +217,17 @@ void InputMethodChromeOS::OnCaretBoundsChanged(const TextInputClient* client) {
       !client->GetSelectionRange(&selection_range)) {
     previous_surrounding_text_.clear();
     previous_selection_range_ = gfx::Range::InvalidRange();
+    if (DEBUG)
+      LOG(ERROR) << "IMEChromeOS::OnCaretBoundsChanged: cannot get range";
     return;
   }
 
   if (previous_selection_range_ == selection_range &&
-      previous_surrounding_text_ == surrounding_text)
+      previous_surrounding_text_ == surrounding_text) {
+    if (DEBUG)
+      LOG(ERROR) << "IMEChromeOS::OnCaretBoundsChanged: no change";
     return;
+  }
 
   previous_selection_range_ = selection_range;
   previous_surrounding_text_ = surrounding_text;
@@ -229,14 +236,25 @@ void InputMethodChromeOS::OnCaretBoundsChanged(const TextInputClient* client) {
     // TODO(nona): Ideally selection_range should not be invalid.
     // TODO(nona): If javascript changes the focus on page loading, even (0,0)
     //             can not be obtained. Need investigation.
+    if (DEBUG)
+      LOG(ERROR)
+          << "IMEChromeOS::OnCaretBoundsChanged: selection range is invalid";
     return;
   }
 
   // Here SetSurroundingText accepts relative position of |surrounding_text|, so
   // we have to convert |selection_range| from node coordinates to
   // |surrounding_text| coordinates.
-  if (!GetEngine())
+  if (!GetEngine()) {
+    if (DEBUG)
+      LOG(ERROR) << "IMEChromeOS::OnCaretBoundsChanged: no engine";
     return;
+  }
+
+  if (DEBUG)
+    LOG(ERROR) << "IMEChromeOS::SetSurroundingText: text = " << surrounding_text
+               << ", selection_range = " << selection_range.ToString()
+               << ", text_range = " << text_range.ToString();
   GetEngine()->SetSurroundingText(base::UTF16ToUTF8(surrounding_text),
                                   selection_range.start() - text_range.start(),
                                   selection_range.end() - text_range.start(),
@@ -462,8 +480,13 @@ bool InputMethodChromeOS::HasInputMethodResult() const {
 }
 
 void InputMethodChromeOS::CommitText(const std::string& text) {
+  if (DEBUG)
+    LOG(ERROR) << "InputMethodChromeOS::CommitText: text = " << text;
   if (text.empty())
     return;
+
+  if (DEBUG)
+    LOG(ERROR) << "InputMethodChromeOS::CommitText: text is not empty";
 
   // We need to receive input method result even if the text input type is
   // TEXT_INPUT_TYPE_NONE, to make sure we can always send correct
@@ -471,9 +494,17 @@ void InputMethodChromeOS::CommitText(const std::string& text) {
   if (!GetTextInputClient())
     return;
 
+  if (DEBUG)
+    LOG(ERROR) << "InputMethodChromeOS::CommitText: there is text input client";
+
   const base::string16 utf16_text = base::UTF8ToUTF16(text);
   if (utf16_text.empty())
     return;
+
+  if (DEBUG)
+    LOG(ERROR) << "InputMethodChromeOS::CommitText: utf16 text is not empty, "
+                  "utf16 = \""
+               << utf16_text << "\"";
 
   if (!CanComposeInline()) {
     // Hides the candidate window for preedit text.
@@ -487,8 +518,14 @@ void InputMethodChromeOS::CommitText(const std::string& text) {
   // If we are not handling key event, do not bother sending text result if the
   // focused text input client does not support text input.
   if (!handling_key_event_ && !IsTextInputTypeNone()) {
-    if (!SendFakeProcessKeyEvent(true))
+    if (DEBUG)
+      LOG(ERROR) << "InputMethodChromeOS::CommitText, !handling_key_event && "
+                    "!IsTextInputTypeNone";
+    if (!SendFakeProcessKeyEvent(true)) {
+      if (DEBUG)
+        LOG(ERROR) << "SendFakeProcessKeyEvent(true) is false";
       GetTextInputClient()->InsertText(utf16_text);
+    }
     SendFakeProcessKeyEvent(false);
     result_text_.clear();
   }

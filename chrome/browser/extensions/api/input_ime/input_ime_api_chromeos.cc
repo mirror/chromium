@@ -95,6 +95,8 @@ class ImeObserverChromeOS : public ui::ImeObserver {
         !HasListener(input_ime::OnInputContextUpdate::kEventName))
       return;
 
+    LOG(ERROR) << "ImeObserverChromeOS::OnInputContextUpdate";
+
     input_ime::InputContext context_value;
     context_value.context_id = context.id;
     context_value.type =
@@ -115,6 +117,8 @@ class ImeObserverChromeOS : public ui::ImeObserver {
     if (extension_id_.empty() ||
         !HasListener(input_ime::OnCandidateClicked::kEventName))
       return;
+
+    LOG(ERROR) << "ImeObserverChromeOS::OnCandidateClicked";
 
     input_ime::MouseButton button_enum = input_ime::MOUSE_BUTTON_NONE;
     switch (button) {
@@ -147,6 +151,8 @@ class ImeObserverChromeOS : public ui::ImeObserver {
         !HasListener(input_ime::OnMenuItemActivated::kEventName))
       return;
 
+    LOG(ERROR) << "ImeObserverChromeOS::OnMenuItemActivated";
+
     std::unique_ptr<base::ListValue> args(
         input_ime::OnMenuItemActivated::Create(component_id, menu_id));
 
@@ -157,9 +163,14 @@ class ImeObserverChromeOS : public ui::ImeObserver {
 
   void OnCompositionBoundsChanged(
       const std::vector<gfx::Rect>& bounds) override {
+    LOG(ERROR) << "ImeObserverChromeOS::OnCompositionBoundsChanged";
+
     if (extension_id_.empty() ||
         !HasListener(OnCompositionBoundsChanged::kEventName))
       return;
+
+    // for (const auto& bound : bounds)
+    //   LOG(ERROR) << "    bound = " << bound.ToString();
 
     // Note: this is a private API event.
     auto bounds_list = base::MakeUnique<base::ListValue>();
@@ -359,6 +370,8 @@ InputMethodEngineBase* InputImeEventRouter::GetActiveEngine(
 }
 
 ExtensionFunction::ResponseAction InputImeClearCompositionFunction::Run() {
+  LOG(ERROR) << "input.ime.clearComposition";
+
   InputMethodEngine* engine = GetActiveEngine(
       Profile::FromBrowserContext(browser_context()), extension_id());
   if (!engine) {
@@ -391,6 +404,8 @@ bool InputImeHideInputViewFunction::RunAsync() {
 
 ExtensionFunction::ResponseAction
 InputImeSetCandidateWindowPropertiesFunction::Run() {
+  LOG(ERROR) << "input.ime.setCandidateWindowProperties";
+
   std::unique_ptr<SetCandidateWindowProperties::Params> parent_params(
       SetCandidateWindowProperties::Params::Create(*args_));
   const SetCandidateWindowProperties::Params::Parameters&
@@ -463,6 +478,8 @@ InputImeSetCandidateWindowPropertiesFunction::Run() {
 }
 
 ExtensionFunction::ResponseAction InputImeSetCandidatesFunction::Run() {
+  LOG(ERROR) << "input.ime.setCandidate";
+
   InputMethodEngine* engine = GetActiveEngine(
       Profile::FromBrowserContext(browser_context()), extension_id());
   if (!engine) {
@@ -500,6 +517,8 @@ ExtensionFunction::ResponseAction InputImeSetCandidatesFunction::Run() {
 }
 
 ExtensionFunction::ResponseAction InputImeSetCursorPositionFunction::Run() {
+  LOG(ERROR) << "input.ime.setCursorPosition";
+
   InputMethodEngine* engine = GetActiveEngine(
       Profile::FromBrowserContext(browser_context()), extension_id());
   if (!engine) {
@@ -522,6 +541,8 @@ ExtensionFunction::ResponseAction InputImeSetCursorPositionFunction::Run() {
 }
 
 ExtensionFunction::ResponseAction InputImeSetMenuItemsFunction::Run() {
+  LOG(ERROR) << "input.ime.setMenuItems";
+
   std::unique_ptr<SetMenuItems::Params> parent_params(
       SetMenuItems::Params::Create(*args_));
   const SetMenuItems::Params::Parameters& params =
@@ -547,6 +568,8 @@ ExtensionFunction::ResponseAction InputImeSetMenuItemsFunction::Run() {
 }
 
 ExtensionFunction::ResponseAction InputImeUpdateMenuItemsFunction::Run() {
+  LOG(ERROR) << "input.ime.updateMenuItems";
+
   std::unique_ptr<UpdateMenuItems::Params> parent_params(
       UpdateMenuItems::Params::Create(*args_));
   const UpdateMenuItems::Params::Parameters& params =
@@ -572,6 +595,8 @@ ExtensionFunction::ResponseAction InputImeUpdateMenuItemsFunction::Run() {
 }
 
 ExtensionFunction::ResponseAction InputImeDeleteSurroundingTextFunction::Run() {
+  LOG(ERROR) << "input.ime.deleteSurroundingText";
+
   std::unique_ptr<DeleteSurroundingText::Params> parent_params(
       DeleteSurroundingText::Params::Create(*args_));
   const DeleteSurroundingText::Params::Parameters& params =
@@ -593,6 +618,8 @@ ExtensionFunction::ResponseAction InputImeDeleteSurroundingTextFunction::Run() {
 
 ExtensionFunction::ResponseAction
 InputMethodPrivateNotifyImeMenuItemActivatedFunction::Run() {
+  LOG(ERROR) << "inputMethodPrivate.notifyImeMenuItemActivated";
+
   chromeos::input_method::InputMethodDescriptor current_input_method =
       chromeos::input_method::InputMethodManager::Get()
           ->GetActiveIMEState()

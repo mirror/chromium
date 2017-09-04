@@ -189,6 +189,7 @@ bool InputMethodBase::SendFakeProcessKeyEvent(bool pressed) const {
 }
 
 void InputMethodBase::CommitText(const std::string& text) {
+  LOG(ERROR) << "InputMethodBase::CommitText: text = " << text;
   if (text.empty() || !GetTextInputClient() || IsTextInputTypeNone())
     return;
 
