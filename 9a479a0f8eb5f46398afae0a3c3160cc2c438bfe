@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35dc1926_808125f1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-09-04T05:21:22Z",
+      "side": 1,
+      "message": "nit: maybe you want to rewrite \"fails when DCHECK() is enabled\" to be exact :)\n\nGN has \"decheck_always_on\" flag to turn on DCHECK()s in release builds.",
+      "revId": "9a479a0f8eb5f46398afae0a3c3160cc2c438bfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3098021b_e2e0c538",
+        "filename": "third_party/WebKit/LayoutTests/shadow-dom/focus-navigation-slot-nested-fallback.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-09-04T05:21:22Z",
+      "side": 1,
+      "message": "You seem to have accidentally included this file in this CL.\nPlease remove this.",
+      "revId": "9a479a0f8eb5f46398afae0a3c3160cc2c438bfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
