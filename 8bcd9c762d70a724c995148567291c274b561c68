@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7797273d_e150230c",
+        "filename": "chrome/browser/android/mock_location_settings.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-04T12:24:14Z",
+      "side": 1,
+      "message": "Static non-POD variables are disallowed by the styleguide (https://google.github.io/styleguide/cppguide.html#Static_and_Global_Variables). You might be able to use a base::LazyInstance here?",
+      "range": {
+        "startLine": 17,
+        "startChar": 8,
+        "endLine": 17,
+        "endChar": 48
+      },
+      "revId": "8bcd9c762d70a724c995148567291c274b561c68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74fcf4e6_312b5bc8",
+        "filename": "chrome/browser/android/mock_location_settings.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-04T12:24:14Z",
+      "side": 1,
+      "message": "Before you add more private statics here, could you move all of these to an anonymous namespace in the .cc file instead?",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 54
+      },
+      "revId": "8bcd9c762d70a724c995148567291c274b561c68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
