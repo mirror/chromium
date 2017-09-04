@@ -1102,13 +1102,56 @@ test("views_unittests") {
   ]
 }
 
+# These targets are added as a dependency of browser interactive_ui_tests. They
+# must be source_set, otherwise the linker will drop the tests as dead code.
+source_set("views_interactive_ui_tests") {
+  testonly = true
+  sources = [
+    "corewm/desktop_capture_controller_unittest.cc",
+    "widget/desktop_aura/desktop_window_tree_host_x11_interactive_uitest.cc",
+    "widget/desktop_aura/x11_topmost_window_finder_interactive_uitest.cc",
+    "widget/widget_interactive_uitest.cc",
+  ]
+
+  if (is_win) {
+    sources += [ "accessibility/ax_system_caret_win_interactive_uitest.cc" ]
+  }
+  if (use_aura) {
+    sources += [ "widget/native_widget_aura_interactive_uitest.cc" ]
+  }
+  if (!use_x11) {
+    sources -= [
+      "widget/desktop_aura/desktop_window_tree_host_x11_interactive_uitest.cc",
+      "widget/desktop_aura/x11_topmost_window_finder_interactive_uitest.cc",
+    ]
+  }
+  if (is_chromeos || !use_aura) {
+    sources -= [ "corewm/desktop_capture_controller_unittest.cc" ]
+  }
+
+  deps = [
+    ":test_support",
+    ":views",
+    "//base",
+    "//base/test:test_support",
+    "//mojo/edk/system",
+    "//skia",
+    "//testing/gtest",
+    "//ui/aura",
+    "//ui/base:test_support",
+    "//ui/events:test_support",
+    "//ui/wm",
+  ]
+}
+
 if (is_mac) {
-  test("macviews_interactive_ui_tests") {
+  source_set("macviews_interactive_ui_tests") {
+    testonly = true
     sources = [
       "cocoa/bridged_native_widget_interactive_uitest.mm",
-      "run_all_unittests_main.cc",
       "widget/native_widget_mac_interactive_uitest.mm",
     ]
+
     deps = [
       ":test_support",
       ":views",
