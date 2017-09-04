@@ -33,6 +33,24 @@
       "revId": "69ef949903f287c7343efbe8b31cdf26b0d1ab64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edcbf32c_16f4b850",
+        "filename": "third_party/WebKit/Source/core/editing/markers/StyleableMarker.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-09-04T09:12:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "639dfcd4_c901012f",
+      "revId": "69ef949903f287c7343efbe8b31cdf26b0d1ab64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
