@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "462e9119_0977905f",
+        "filename": "content/browser/renderer_host/database_message_filter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-04T05:42:30Z",
+      "side": 1,
+      "message": "Re: idiomatic mojo.  I\u0027ve not seen a lot of this, but it is correct.\n\nYour goal is to remove eventually ditch DatabaseMessageFilter via Onion-Soup right?  In that case, this code is destined \u003e /dev/null soon-like.",
+      "revId": "e52560e3b61bb416bf9bc25e39439da46c2fc75a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
