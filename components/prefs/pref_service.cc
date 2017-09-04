@@ -108,6 +108,11 @@ void PrefService::CommitPendingWrite() {
   user_pref_store_->CommitPendingWrite();
 }
 
+void PrefService::CommitPendingWrite(base::OnceClosure done_callback) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  user_pref_store_->CommitPendingWrite(std::move(done_callback));
+}
+
 void PrefService::SchedulePendingLossyWrites() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   user_pref_store_->SchedulePendingLossyWrites();
