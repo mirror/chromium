@@ -58,6 +58,19 @@ using content::BrowserThread;
 
 namespace {
 
+// Finds a device in |devices| that has |device_id|, or NULL if not found.
+const content::MediaStreamDevice* FindDeviceById(
+    const content::MediaStreamDevices* devices,
+    const std::string& device_id) {
+  content::MediaStreamDevices::const_iterator iter = devices->begin();
+  for (; iter != devices->end(); ++iter) {
+    if (iter->id == device_id) {
+      return &(*iter);
+    }
+  }
+  return NULL;
+}
+
 // Returns true if the given ContentSettingsType is being requested in
 // |request|.
 bool ContentTypeIsRequested(ContentSettingsType type,
@@ -124,7 +137,7 @@ bool HasAvailableDevices(ContentSettingsType content_type,
   // Note: we check device_id before dereferencing devices. If the requested
   // device id is non-empty, then the corresponding device list must not be
   // NULL.
-  if (!device_id.empty() && !devices->FindById(device_id))
+  if (!device_id.empty() && !FindDeviceById(devices, device_id))
     return false;
 
   return true;

@@ -651,7 +651,8 @@ IN_PROC_BROWSER_TEST_P(MediaStreamDevicesControllerTest,
   content::MediaStreamDevice fake_video_device(
       content::MEDIA_DEVICE_VIDEO_CAPTURE, example_video_id(),
       example_video_id());
-  content::MediaStreamDevices video_devices(1, fake_video_device);
+  content::MediaStreamDevices video_devices(1);
+  video_devices[0] = fake_video_device;
   MediaCaptureDevicesDispatcher* dispatcher =
       MediaCaptureDevicesDispatcher::GetInstance();
   dispatcher->SetTestVideoCaptureDevices(video_devices);

@@ -23,8 +23,15 @@ namespace extensions {
 const MediaStreamDevice* GetRequestedDeviceOrDefault(
     const MediaStreamDevices& devices,
     const std::string& requested_device_id) {
-  if (!requested_device_id.empty())
-    return devices.FindById(requested_device_id);
+  if (!requested_device_id.empty()) {
+    content::MediaStreamDevices::const_iterator iter = devices.begin();
+    for (; iter != devices.end(); ++iter) {
+      if (iter->id == requested_device_id) {
+        return &(*iter);
+      }
+    }
+    return NULL;
+  }
 
   if (!devices.empty())
     return &devices[0];
