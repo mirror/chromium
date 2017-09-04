@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "733668c3_ff048565",
+        "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-09-04T11:03:47Z",
+      "side": 1,
+      "message": "I take it this is only necessary during internal drags, and not during native drags? Might be worthwhile to mention that here.",
+      "revId": "91672090bdf9c11ff303f5347c6c2c4bb5783077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9479784_196f1cb6",
+        "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-09-04T11:03:47Z",
+      "side": 1,
+      "message": "I don\u0027t think there\u0027s much point to pulling this out into a function? It\u0027s only used in one place, so it can just be inlined.",
+      "revId": "91672090bdf9c11ff303f5347c6c2c4bb5783077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b8063f7_7a4251d3",
+        "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1007,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-09-04T11:03:47Z",
+      "side": 1,
+      "message": "Any reason for these to be exported? They aren\u0027t used anywhere else.",
+      "range": {
+        "startLine": 1006,
+        "startChar": 0,
+        "endLine": 1007,
+        "endChar": 31
+      },
+      "revId": "91672090bdf9c11ff303f5347c6c2c4bb5783077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
