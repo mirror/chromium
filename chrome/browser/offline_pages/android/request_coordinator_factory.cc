@@ -62,15 +62,10 @@ KeyedService* RequestCoordinatorFactory::BuildServiceInstanceFor(
   OfflinePageModel* model =
       OfflinePageModelFactory::GetInstance()->GetForBrowserContext(context);
 
-  // Determines which offliner to use based on flag.
-  if (ShouldUseNewBackgroundLoader()) {
-    std::unique_ptr<LoadTerminationListenerImpl> load_termination_listener =
-        base::MakeUnique<LoadTerminationListenerImpl>();
-    offliner.reset(new BackgroundLoaderOffliner(
-        context, policy.get(), model, std::move(load_termination_listener)));
-  } else {
-    offliner.reset(new PrerenderingOffliner(context, policy.get(), model));
-  }
+  std::unique_ptr<LoadTerminationListenerImpl> load_termination_listener =
+      base::MakeUnique<LoadTerminationListenerImpl>();
+  offliner.reset(new BackgroundLoaderOffliner(
+      context, policy.get(), model, std::move(load_termination_listener)));
 
   scoped_refptr<base::SequencedTaskRunner> background_task_runner =
       base::CreateSequencedTaskRunnerWithTraits(
