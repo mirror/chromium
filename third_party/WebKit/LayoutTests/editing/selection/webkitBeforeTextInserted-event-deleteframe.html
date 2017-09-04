@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<title>Test that makes sure that crash should not be observed if events generated during insertText deletes a frame.</title>
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<iframe
+    sandbox="allow-scripts allow-same-origin"
+    src="resources/subframe-for-insertext.html">
+</iframe>
+<script>
+async_test(function(t) {
+    var iframe = document.querySelector("iframe");
+    iframe.onload = t.step_func_done(function() {
+        var iframedocument = iframe.contentDocument;
+	var test = iframedocument.getElementById('test');
+	test.addEventListener('webkitBeforeTextInserted', function(e) {
+	    iframe.parentNode.removeChild(iframe);
+	});
+        var selection = iframedocument.getSelection();
+        selection.collapse(test.firstChild, 3);
+        iframedocument.execCommand('insertText', false, 'x');
+	}, "Crash should not be observed if event generated during InsertText is handled. The handler of webkitBeforeTextInserted here removes the frame itself");
+});
+</script>

@@ -328,12 +328,23 @@ void TypingCommand::InsertText(
       CreateVisibleSelection(passed_selection_for_insertion);
 
   String new_text = text;
-  if (composition_type != kTextCompositionUpdate)
+  if (composition_type != kTextCompositionUpdate) {
+    SelectionInDOMTree::InvalidSelectionResetter resetter(
+        passed_selection_for_insertion);
     new_text = DispatchBeforeTextInsertedEvent(text, selection_for_insertion);
+    if (!document.GetFrame() ||
+        !(document.GetFrame()->GetDocument() == document))
+      return;
+  }
 
   if (composition_type == kTextCompositionConfirm) {
+    SelectionInDOMTree::InvalidSelectionResetter resetter(
+        passed_selection_for_insertion);
     if (DispatchTextInputEvent(frame, new_text) !=
         DispatchEventResult::kNotCanceled)
+      return;
+    if (!document.GetFrame() ||
+        !(document.GetFrame()->GetDocument() == document))
       return;
   }
 

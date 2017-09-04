@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<title>Test that checks for crash or failures if anchor/focus node gets disconnected by events during InsertText operation</title>
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<div id="sample" contenteditable="true" style="text-align:center;">
+  foo <br> bar
+<div id="end">baz</div>
+</div>
+<script>
+test(() => {
+    var selection = window.getSelection();
+    var sample = document.getElementById("sample");
+    selection.collapse(sample, 2);
+    selection.extend(document.getElementById("end"), 0);
+    sample.addEventListener('webkitBeforeTextInserted', function(e) {
+        // disconnect the node here
+        var focusNode =  selection.focusNode;
+        focusNode.parentNode.removeChild(focusNode);
+    });
+    document.execCommand('insertText', false, 'x');
+}, 'Crash or failures should not be observed if anchor/focus node gets disconnected by events generated during InsertText');
+</script>
