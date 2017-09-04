@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "1a99416b_344a46f9",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-04T01:24:29Z",
+      "side": 1,
+      "message": "The right arrow is hidden indeed when selecting.  You can ignore this one. thx.",
+      "parentUuid": "1ee06ef6_d947df97",
+      "revId": "c70b04ec7bdb7968f043b32a5c5da555929188b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "197fd12c_4297964b",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
         "patchSetId": 3
