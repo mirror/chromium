@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "ef16bc12_d5afd331",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-04T00:39:02Z",
+      "side": 1,
+      "message": "Hmm ok. It\u0027s just that if users put a dodgy alias, they will get a weird assert error at L383 I believe.",
+      "parentUuid": "dc75851b_baa81a31",
+      "revId": "3ce0822e36e3be699e3df610c35eab3d8f5ff92c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2d10600_918c61a0",
         "filename": "third_party/WebKit/Source/core/BUILD.gn",
         "patchSetId": 4
