@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5545009_6153d5a3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-sandboxed-iframe-denied-without-wildcard.htm",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-09-04T09:07:16Z",
+      "side": 1,
+      "message": "const",
+      "revId": "fefad88f2dce537722df33edac27cd0203460a54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50c985d0_bb10b869",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-sandboxed-iframe-denied-without-wildcard.htm",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-09-04T09:07:16Z",
+      "side": 1,
+      "message": "ideally, the description should explain what the test is checking without referring to the implementation details of the test case.\n\nso, please do so here instead of using |path| here. the description in \u003ctitle\u003e is good. let\u0027s copy it.",
+      "revId": "fefad88f2dce537722df33edac27cd0203460a54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
