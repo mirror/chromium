@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92578524_321494e6",
+        "filename": "content/common/shared_interface_ptr.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-04T07:37:41Z",
+      "side": 1,
+      "message": "does base::MakeRefCounted work?",
+      "revId": "c3ab3f2d499da114ea60825c60fb73d7c86bd528",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
