@@ -560,7 +560,15 @@ TEST_F(GenericSensorServiceTest, SuspendThenResumeTest) {
 
 // Test suspend when there are more than one client. The suspended client won't
 // receive SensorReadingChanged() notification.
-TEST_F(GenericSensorServiceTest, MultipleClientsSuspendAndResumeTest) {
+// Failing on Android Tests (dbg); see https://crbug.com/761742.
+#if defined(OS_ANDROID)
+#define MAYBE_MultipleClientsSuspendAndResumeTest \
+  DISABLED_MultipleClientsSuspendAndResumeTest
+#else
+#define MAYBE_MultipleClientsSuspendAndResumeTest \
+  MultipleClientsSuspendAndResumeTest
+#endif
+TEST_F(GenericSensorServiceTest, MAYBE_MultipleClientsSuspendAndResumeTest) {
   mojom::SensorPtr sensor_1;
   auto client_1 = base::MakeUnique<TestSensorClient>(SensorType::AMBIENT_LIGHT);
   sensor_provider_->GetSensor(SensorType::AMBIENT_LIGHT,
