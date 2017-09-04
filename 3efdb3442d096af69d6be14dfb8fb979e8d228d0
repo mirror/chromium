@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "8eed308c_46ff58ca",
+        "filename": "ash/wm/window_state.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-09-04T03:31:03Z",
+      "side": 1,
+      "message": "Window state may change without bounds changing, though it\u0027s a rare edge case. Window manager (here ash) may want to arbitrarily create copies of layers for animations in any moment. We could add a callback to ask the client to call aura::Window::AllocateLocalSurfaceId, but on the other hand I\u0027m not very sure if it\u0027s necessary for the client to know that we\u0027re doing a layer copy and involve it in the process. It\u0027s an implementation detail of the window manager, and wm can take care of reallocating the surface on it\u0027s own.\n\nAnyways, the new version of https://chromium-review.googlesource.com/c/chromium/src/+/647347 simplifies this logic slightly by asking the layer owner (here aura::window) to allocate a new surface id. Let\u0027s continue the discussion there if you have further questions on this part of the CL.",
+      "parentUuid": "df8f0ff3_68708616",
+      "revId": "3efdb3442d096af69d6be14dfb8fb979e8d228d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0e94125e_21f85519",
         "filename": "components/exo/shell_surface.cc",
         "patchSetId": 5
@@ -84,6 +102,24 @@
       "writtenOn": "2017-09-01T15:59:31Z",
       "side": 1,
       "message": "Shouldn\u0027t we fix this first? Then, we can simply use the pending frame \u0026 current frame for cross fade, which doesn\u0027t require these logic?",
+      "revId": "3efdb3442d096af69d6be14dfb8fb979e8d228d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dc93864_6e76e0b2",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-09-04T03:31:03Z",
+      "side": 1,
+      "message": "Well, I don\u0027t think the order of CLs matters that much. It\u0027s easier to verify fixing b/65271032 if this landed first. And the workaround for broken synchronization is just one line.",
+      "parentUuid": "0e94125e_21f85519",
       "revId": "3efdb3442d096af69d6be14dfb8fb979e8d228d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -191,6 +227,24 @@
       "side": 1,
       "message": "Note that alt-+ may not result in state change in Android, and Android still have the final decision that should happen. (we can reduce such chance by sending more info to server, but we can\u0027t eliminate 100%).\n\nAlso, if you\u0027re planning to remove remote shell, please coordinate with skuhne@ and also android team. Our current (future) upstream plan is to rely on Android to implement window state change, and I want to make sure it won\u0027t cause a problem in the future.",
       "parentUuid": "27582e6e_24ca7afd",
+      "revId": "3efdb3442d096af69d6be14dfb8fb979e8d228d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33099d14_f32a89f0",
+        "filename": "components/exo/shell_surface.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-09-04T03:31:03Z",
+      "side": 1,
+      "message": "David, do you suggest to use zcr configure event with zcr maximize/restore? We use zcr protocol for ARC surfaces at this moment.\n\nThe zcr protocol is client driven for window state changes and zcr maximize/restore events are called *after* the client changes the window state. The zcr configure event is not used for window states.\n\nWe could make zcr work with configure events for window state changes, but it\u0027s a large effort including major refactoring on Android side. It\u0027s tracked here crbug.com/699746.\n\nIf we can go with this CL, we can deliver animations to users right now easily and quickly. If your concern is about supporting other clients, then I can add support for animations to other protocols which use configuration for window states. Also, when crbug.com/699746 is fixed, we\u0027d use zcr configure for animations too. And in the long term ideally migrate to xdg entirely.",
+      "parentUuid": "6d653119_0de6a236",
       "revId": "3efdb3442d096af69d6be14dfb8fb979e8d228d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
