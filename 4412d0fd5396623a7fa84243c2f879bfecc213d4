@@ -34,6 +34,24 @@
       "revId": "4412d0fd5396623a7fa84243c2f879bfecc213d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e01d5944_82a350bf",
+        "filename": "third_party/WebKit/Source/core/css/resolver/stylerecalc.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-09-04T08:09:50Z",
+      "side": 1,
+      "message": "I was just about to propose moving it back to core/css before I saw this, but I\u0027m fine with either.",
+      "parentUuid": "1aca209c_cba7371c",
+      "revId": "4412d0fd5396623a7fa84243c2f879bfecc213d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
