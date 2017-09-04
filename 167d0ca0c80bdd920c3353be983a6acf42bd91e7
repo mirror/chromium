@@ -137,6 +137,24 @@
       "revId": "167d0ca0c80bdd920c3353be983a6acf42bd91e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f5e03f2_09bed839",
+        "filename": "tools/perf/benchmarks/blink_perf.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-09-04T13:26:59Z",
+      "side": 1,
+      "message": "People need to do this then file a subsequent bug for us to enable it on an appropriate set of bots to utilize the shards. This is a bit messy operation, hence typically handled by speed team.",
+      "parentUuid": "1729eb62_20b4bcf3",
+      "revId": "167d0ca0c80bdd920c3353be983a6acf42bd91e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
