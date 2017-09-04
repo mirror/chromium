@@ -1,0 +1,18 @@
+Tests for moving focus by pressing tab key across shadow boundaries.
+To manually test, press tab key sixteen times then shift+tab sixteen times.
+It should traverse focusable elements in the increasing numerical order and then in the reverse order.
+
+1. The slot node tabindex is 1.
+2. Assigned to slot5 whose tabindex is 2.
+3. The parent slot node's tabindex is 3. The slot node's tabindex matters. This element's tabindex comes after.
+4. The parent slot node's tabindex is 0. First.
+5. The parent slot node's tabindex is 0. Second.
+6. The parent slot node's tabindex is 0. First.
+7. The parent slot node's tabindex is 0. Second.
+6. The parent slot node's tabindex is 0. First.
+5. The parent slot node's tabindex is 0. Second.
+4. The parent slot node's tabindex is 0. First.
+3. The parent slot node's tabindex is 3. The slot node's tabindex matters. This element's tabindex comes after.
+2. Assigned to slot5 whose tabindex is 2.
+1. The slot node tabindex is 1.
+
