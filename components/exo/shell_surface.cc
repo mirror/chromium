@@ -445,6 +445,10 @@ void ShellSurface::Maximize() {
   widget_->Maximize();
 }
 
+void ShellSurface::MaximizeWithCommit() {
+  pending_window_state_ = ui::SHOW_STATE_MAXIMIZED;
+}
+
 void ShellSurface::Minimize() {
   TRACE_EVENT0("exo", "ShellSurface::Minimize");
 
@@ -467,6 +471,10 @@ void ShellSurface::Restore() {
   // maximized or minimized.
   ScopedConfigure scoped_configure(this, true);
   widget_->Restore();
+}
+
+void ShellSurface::RestoreWithCommit() {
+  pending_window_state_ = ui::SHOW_STATE_NORMAL;
 }
 
 void ShellSurface::SetFullscreen(bool fullscreen) {
@@ -748,6 +756,28 @@ std::unique_ptr<base::trace_event::TracedValue> ShellSurface::AsTracedValue()
 // SurfaceDelegate overrides:
 
 void ShellSurface::OnSurfaceCommit() {
+  // Fire pending window state changes, if any.
+  if (pending_window_state_ != ui::SHOW_STATE_DEFAULT) {
+    switch (pending_window_state_) {
+      case ui::SHOW_STATE_NORMAL: {
+        Restore();
+        break;
+      }
+      case ui::SHOW_STATE_MAXIMIZED: {
+        Maximize();
+        break;
+      }
+      case ui::SHOW_STATE_DEFAULT:
+      case ui::SHOW_STATE_FULLSCREEN:
+      case ui::SHOW_STATE_MINIMIZED:
+      case ui::SHOW_STATE_INACTIVE:
+      case ui::SHOW_STATE_END:
+        NOTREACHED();
+        break;
+    }
+    pending_window_state_ = ui::SHOW_STATE_DEFAULT;
+  }
+
   // When the shadow underlay is in surface coordinate space and the surface's
   // bounds have changed, shadow API requires that we synchronize the shadow
   // bounds change with the next frame, so we have to submit the next frame to a
@@ -978,22 +1008,17 @@ void ShellSurface::OnPreWindowStateTypeChange(
     ash::wm::WindowState* window_state,
     ash::wm::WindowStateType old_type) {
   ash::wm::WindowStateType new_type = window_state->GetStateType();
+  // Minimizing or unminimizing always animates, as it doesn't involve geometry
+  // change.
   if (old_type == ash::wm::WINDOW_STATE_TYPE_MINIMIZED ||
       new_type == ash::wm::WINDOW_STATE_TYPE_MINIMIZED) {
     return;
   }
 
-  if (ash::wm::IsMaximizedOrFullscreenOrPinnedWindowStateType(old_type) ||
-      ash::wm::IsMaximizedOrFullscreenOrPinnedWindowStateType(new_type)) {
-    // When transitioning in/out of maximized or fullscreen mode we need to
-    // make sure we have a configure callback before we allow the default
-    // cross-fade animations. The configure callback provides a mechanism for
-    // the client to inform us that a frame has taken the state change into
-    // account and without this cross-fade animations are unreliable.
-    // TODO(domlaskowski): For BoundsMode::CLIENT, the configure callback does
-    // not yet support window state changes. See crbug.com/699746.
-    if (configure_callback_.is_null() || bounds_mode_ == BoundsMode::CLIENT)
-      scoped_animations_disabled_.reset(new ScopedAnimationsDisabled(this));
+  if (pending_window_state_ == ui::SHOW_STATE_DEFAULT) {
+    // Disable animations involving geometry change if the window state change
+    // is not invoked by zcr remote shell.
+    scoped_animations_disabled_.reset(new ScopedAnimationsDisabled(this));
   }
 }
 
