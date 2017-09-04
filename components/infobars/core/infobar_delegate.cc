@@ -126,11 +126,6 @@ translate::TranslateInfoBarDelegate*
 }
 
 #if defined(OS_ANDROID)
-MediaStreamInfoBarDelegateAndroid*
-InfoBarDelegate::AsMediaStreamInfoBarDelegateAndroid() {
-  return nullptr;
-}
-
 offline_pages::OfflinePageInfoBarDelegate*
 InfoBarDelegate::AsOfflinePageInfoBarDelegate() {
   return nullptr;

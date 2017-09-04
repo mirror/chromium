@@ -47,8 +47,6 @@ void MediaStreamDevicePermissionContext::DecidePermission(
     const GURL& embedding_origin,
     bool user_gesture,
     const BrowserPermissionCallback& callback) {
-  DCHECK(base::FeatureList::IsEnabled(
-      features::kUsePermissionManagerForMediaRequests));
   PermissionContextBase::DecidePermission(web_contents, id, requesting_origin,
                                           embedding_origin, user_gesture,
                                           callback);
