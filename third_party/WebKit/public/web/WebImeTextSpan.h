@@ -48,12 +48,18 @@ struct WebImeTextSpan {
     kSuggestion,
   };
 
+  enum class Thickness {
+    kNone,
+    kThin,
+    kThick,
+  };
+
   WebImeTextSpan()
       : type(Type::kComposition),
         start_offset(0),
         end_offset(0),
-        underline_color(0),
-        thick(false),
+        underline_color(0x00000000),
+        thickness(Thickness::kThin),
         background_color(0),
         suggestion_highlight_color(0),
         suggestions(std::vector<std::string>()) {}
@@ -63,7 +69,7 @@ struct WebImeTextSpan {
       unsigned s,
       unsigned e,
       WebColor uc,
-      bool th,
+      Thickness th,
       WebColor bc,
       WebColor shc = 0,
       const std::vector<std::string>& su = std::vector<std::string>())
@@ -71,7 +77,7 @@ struct WebImeTextSpan {
         start_offset(s),
         end_offset(e),
         underline_color(uc),
-        thick(th),
+        thickness(th),
         background_color(bc),
         suggestion_highlight_color(shc),
         suggestions(su) {}
@@ -88,7 +94,7 @@ struct WebImeTextSpan {
   unsigned start_offset;
   unsigned end_offset;
   WebColor underline_color;
-  bool thick;
+  Thickness thickness;
   WebColor background_color;
   WebColor suggestion_highlight_color;
   std::vector<std::string> suggestions;

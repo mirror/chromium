@@ -32,13 +32,13 @@ TEST_F(SuggestionMarkerTest, ConstructorAndGetters) {
   EXPECT_EQ(suggestions, marker->Suggestions());
   EXPECT_EQ(Color::kTransparent, marker->SuggestionHighlightColor());
   EXPECT_EQ(Color::kDarkGray, marker->UnderlineColor());
-  EXPECT_FALSE(marker->IsThick());
+  EXPECT_FALSE(marker->HasThicknessThick());
   EXPECT_EQ(Color::kGray, marker->BackgroundColor());
 
   SuggestionMarker* marker2 = new SuggestionMarker(
       0, 1, Vector<String>(), Color::kBlack, Color::kDarkGray,
       StyleableMarker::Thickness::kThick, Color::kGray);
-  EXPECT_TRUE(marker2->IsThick());
+  EXPECT_TRUE(marker2->HasThicknessThick());
   EXPECT_EQ(marker2->SuggestionHighlightColor(), Color::kBlack);
 }
 
