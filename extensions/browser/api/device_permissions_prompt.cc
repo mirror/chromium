@@ -12,9 +12,10 @@
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
+#include "content/public/browser/browser_thread.h"
+#include "content/public/common/service_manager_connection.h"
 #include "device/base/device_client.h"
 #include "device/hid/hid_device_filter.h"
-#include "device/hid/hid_service.h"
 #include "device/hid/public/interfaces/hid.mojom.h"
 #include "device/usb/public/cpp/filter_utils.h"
 #include "device/usb/usb_device.h"
@@ -22,6 +23,11 @@
 #include "device/usb/usb_service.h"
 #include "extensions/browser/api/device_permissions_manager.h"
 #include "extensions/common/extension.h"
+#include "extensions/utility/scoped_callback_runner.h"
+#include "mojo/public/cpp/bindings/associated_binding.h"
+#include "mojo/public/cpp/bindings/interface_request.h"
+#include "services/device/public/interfaces/constants.mojom.h"
+#include "services/service_manager/public/cpp/connector.h"
 #include "ui/base/l10n/l10n_util.h"
 
 #if defined(OS_CHROMEOS)
@@ -30,7 +36,6 @@
 #endif  // defined(OS_CHROMEOS)
 
 using device::HidDeviceFilter;
-using device::HidService;
 using device::UsbDevice;
 using device::mojom::UsbDeviceFilterPtr;
 using device::UsbService;
@@ -176,7 +181,7 @@ class HidDeviceInfo : public DevicePermissionsPrompt::Prompt::DeviceInfo {
 };
 
 class HidDevicePermissionsPrompt : public DevicePermissionsPrompt::Prompt,
-                                   public device::HidService::Observer {
+                                   public device::mojom::HidObserver {
  public:
   HidDevicePermissionsPrompt(
       const Extension* extension,
@@ -185,9 +190,10 @@ class HidDevicePermissionsPrompt : public DevicePermissionsPrompt::Prompt,
       const std::vector<HidDeviceFilter>& filters,
       const DevicePermissionsPrompt::HidDevicesCallback& callback)
       : Prompt(extension, context, multiple),
+        initialized_(false),
         filters_(filters),
         callback_(callback),
-        service_observer_(this) {}
+        binding_(this) {}
 
  private:
   ~HidDevicePermissionsPrompt() override {}
@@ -198,12 +204,36 @@ class HidDevicePermissionsPrompt : public DevicePermissionsPrompt::Prompt,
     DevicePermissionsPrompt::Prompt::SetObserver(observer);
 
     if (observer) {
-      HidService* service = device::DeviceClient::Get()->GetHidService();
-      if (service && !service_observer_.IsObserving(service)) {
-        service->GetDevices(base::Bind(
-            &HidDevicePermissionsPrompt::OnDevicesEnumerated, this, service));
-      }
+      LazyInitialize();
     }
+  }
+
+  void LazyInitialize() {
+    if (initialized_) {
+      return;
+    }
+
+    DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+    DCHECK(content::ServiceManagerConnection::GetForProcess());
+
+    auto* connector =
+        content::ServiceManagerConnection::GetForProcess()->GetConnector();
+
+    connector->BindInterface(device::mojom::kServiceName,
+                             mojo::MakeRequest(&hid_manager_));
+
+    device::mojom::HidObserverAssociatedPtrInfo observer_info;
+    binding_.Bind(mojo::MakeRequest(&observer_info));
+
+    std::vector<device::mojom::HidDeviceInfoPtr> empty_devices;
+    hid_manager_->GetDevicesAndRegister(
+        std::move(observer_info),
+        ScopedCallbackRunner(
+            base::BindOnce(&HidDevicePermissionsPrompt::OnDevicesEnumerated,
+                           this),
+            std::move(empty_devices)));
+
+    initialized_ = true;
   }
 
   void Dismissed() override {
@@ -227,7 +257,9 @@ class HidDevicePermissionsPrompt : public DevicePermissionsPrompt::Prompt,
   }
 
   // device::HidService::Observer implementation:
-  void OnDeviceAdded(device::mojom::HidDeviceInfoPtr device) override {
+  void DeviceAdded(device::mojom::HidDeviceInfoPtr device) override {
+    DCHECK(device);
+
     if (HasUnprotectedCollections(*device) &&
         (filters_.empty() || HidDeviceFilter::MatchesAny(*device, filters_))) {
       auto device_info = base::MakeUnique<HidDeviceInfo>(std::move(device));
@@ -245,7 +277,9 @@ class HidDevicePermissionsPrompt : public DevicePermissionsPrompt::Prompt,
     }
   }
 
-  void OnDeviceRemoved(device::mojom::HidDeviceInfoPtr device) override {
+  void DeviceRemoved(device::mojom::HidDeviceInfoPtr device) override {
+    DCHECK(device);
+
     for (auto it = devices_.begin(); it != devices_.end(); ++it) {
       HidDeviceInfo* entry = static_cast<HidDeviceInfo*>((*it).get());
       if (entry->device()->guid == device->guid) {
@@ -260,12 +294,10 @@ class HidDevicePermissionsPrompt : public DevicePermissionsPrompt::Prompt,
   }
 
   void OnDevicesEnumerated(
-      HidService* service,
       std::vector<device::mojom::HidDeviceInfoPtr> devices) {
     for (auto& device : devices) {
-      OnDeviceAdded(std::move(device));
+      DeviceAdded(std::move(device));
     }
-    service_observer_.Add(service);
   }
 
   bool HasUnprotectedCollections(const device::mojom::HidDeviceInfo& device) {
@@ -277,9 +309,11 @@ class HidDevicePermissionsPrompt : public DevicePermissionsPrompt::Prompt,
     return false;
   }
 
+  bool initialized_;
   std::vector<HidDeviceFilter> filters_;
+  device::mojom::HidManagerPtr hid_manager_;
   DevicePermissionsPrompt::HidDevicesCallback callback_;
-  ScopedObserver<HidService, HidService::Observer> service_observer_;
+  mojo::AssociatedBinding<device::mojom::HidObserver> binding_;
 };
 
 }  // namespace

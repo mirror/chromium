@@ -75,6 +75,8 @@ EnumTraits<device::mojom::HidPage, device::HidUsageAndPage::Page>::ToMojom(
       return device::mojom::HidPage::PageArcade;
     case device::HidUsageAndPage::Page::kPageVendor:
       return device::mojom::HidPage::PageVendor;
+    case device::HidUsageAndPage::Page::kPageApiTest:
+      return device::mojom::HidPage::PageApiTest;
     case device::HidUsageAndPage::Page::kPageMediaCenter:
       return device::mojom::HidPage::PageMediaCenter;
   }
@@ -183,6 +185,9 @@ bool EnumTraits<device::mojom::HidPage, device::HidUsageAndPage::Page>::
       return true;
     case device::mojom::HidPage::PageVendor:
       *output = device::HidUsageAndPage::Page::kPageVendor;
+      return true;
+    case device::mojom::HidPage::PageApiTest:
+      *output = device::HidUsageAndPage::Page::kPageApiTest;
       return true;
     case device::mojom::HidPage::PageMediaCenter:
       *output = device::HidUsageAndPage::Page::kPageMediaCenter;

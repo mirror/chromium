@@ -13,12 +13,12 @@
 #include "base/memory/ref_counted.h"
 #include "base/scoped_observer.h"
 #include "base/threading/thread_checker.h"
-#include "device/hid/hid_service.h"
 #include "device/hid/public/interfaces/hid.mojom.h"
 #include "extensions/browser/browser_context_keyed_api_factory.h"
 #include "extensions/browser/event_router.h"
 #include "extensions/browser/extension_event_histogram_value.h"
 #include "extensions/common/api/hid.h"
+#include "mojo/public/cpp/bindings/associated_binding.h"
 
 namespace device {
 class HidDeviceFilter;
@@ -28,14 +28,16 @@ namespace extensions {
 
 class Extension;
 
-// This service maps devices enumerated by device::HidService to resource IDs
+// This class maps devices enumerated by device::HidManager to resource IDs
 // returned by the chrome.hid API.
 class HidDeviceManager : public BrowserContextKeyedAPI,
-                         public device::HidService::Observer,
+                         public device::mojom::HidObserver,
                          public EventRouter::Observer {
  public:
   typedef base::Callback<void(std::unique_ptr<base::ListValue>)>
       GetApiDevicesCallback;
+
+  using ConnectCallback = device::mojom::HidManager::ConnectCallback;
 
   explicit HidDeviceManager(content::BrowserContext* context);
   ~HidDeviceManager() override;
@@ -63,6 +65,8 @@ class HidDeviceManager : public BrowserContextKeyedAPI,
 
   const device::mojom::HidDeviceInfo* GetDeviceInfo(int resource_id);
 
+  void Connect(const std::string& device_guid, ConnectCallback callback);
+
   // Checks if |extension| has permission to open |device_info|. Set
   // |update_last_used| to update the timestamp in the DevicePermissionsManager.
   bool HasPermission(const Extension* extension,
@@ -72,7 +76,7 @@ class HidDeviceManager : public BrowserContextKeyedAPI,
   // Wait to perform an initial enumeration and register a HidService::Observer
   // until the first API customer makes a request or registers an event
   // listener.
-  void LazyInitialize();
+  virtual void LazyInitialize();
 
  private:
   friend class BrowserContextKeyedAPIFactory<HidDeviceManager>;
@@ -94,9 +98,9 @@ class HidDeviceManager : public BrowserContextKeyedAPI,
   // EventRouter::Observer:
   void OnListenerAdded(const EventListenerInfo& details) override;
 
-  // HidService::Observer:
-  void OnDeviceAdded(device::mojom::HidDeviceInfoPtr device) override;
-  void OnDeviceRemoved(device::mojom::HidDeviceInfoPtr device) override;
+  // device::mojom::HidObserver implementation:
+  void DeviceAdded(device::mojom::HidDeviceInfoPtr device) override;
+  void DeviceRemoved(device::mojom::HidDeviceInfoPtr device) override;
 
   // Builds a list of device info objects representing the currently enumerated
   // devices, taking into account the permissions held by the given extension
@@ -105,7 +109,6 @@ class HidDeviceManager : public BrowserContextKeyedAPI,
       const Extension* extension,
       const std::vector<device::HidDeviceFilter>& filters);
   void OnEnumerationComplete(
-      device::HidService* hid_service,
       std::vector<device::mojom::HidDeviceInfoPtr> devices);
 
   void DispatchEvent(events::HistogramValue histogram_value,
@@ -117,8 +120,8 @@ class HidDeviceManager : public BrowserContextKeyedAPI,
   content::BrowserContext* browser_context_ = nullptr;
   EventRouter* event_router_ = nullptr;
   bool initialized_ = false;
-  ScopedObserver<device::HidService, device::HidService::Observer>
-      hid_service_observer_;
+  device::mojom::HidManagerPtr hid_manager_;
+  mojo::AssociatedBinding<device::mojom::HidObserver> binding_;
   bool enumeration_ready_ = false;
   std::vector<std::unique_ptr<GetApiDevicesParams>> pending_enumerations_;
   int next_resource_id_ = 0;

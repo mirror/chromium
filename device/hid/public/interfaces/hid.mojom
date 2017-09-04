@@ -42,6 +42,7 @@ enum HidPage {
     PageCameraControl = 0x90,
     PageArcade = 0x91,
     PageVendor = 0xFF00,
+    PageApiTest = 0xFF01, // Only for HidApiTest.
     PageMediaCenter = 0xFFBC
 };
 
@@ -69,4 +70,48 @@ struct HidDeviceInfo {
   uint64 max_output_report_size;
   uint64 max_feature_report_size;
   string device_node;
+};
+
+interface HidObserver{
+  // Notifies the observer that a device is added.
+  DeviceAdded(HidDeviceInfo device_info);
+
+  // Notifies the observer that a device is being removed, called before
+  // removing the device from HidService. Observers should not depend on the
+  // order in which they are notified of the OnDeviceRemove event.
+  DeviceRemoved(HidDeviceInfo device_info);
+};
+
+interface HidManager {
+  // Enumerates available devices and register as an observer of HidManager.
+  // The implementation of HidManager guarantees that the returned callback
+  // will always be posted eariler than DeviceAdded() and DeviceRemoved().
+  GetDevicesAndRegister(associated HidObserver observer_info) =>
+                       (array<HidDeviceInfo> devices);
+
+  // Enumerates available devices only.
+  GetDevices() => (array<HidDeviceInfo> devices);
+
+  // Opens a connection to a device by given guid. The callback will be run
+  // with null on failure.
+  Connect(string device_guid) => (HidConnection? connection);
+};
+
+interface HidConnection {
+  // The report ID (or 0 if report IDs are not supported by the device) is
+  // always returned in the first byte of the buffer.
+  Read() => (bool success, array<uint8>? buffer);
+
+  // The report ID (or 0 if report IDs are not supported by the device) is
+  // always expected in the first byte of the buffer.
+  Write(array<uint8> buffer) => (bool success);
+
+  // The buffer will contain whatever report data was received from the device.
+  // This may include the report ID. The report ID is not stripped because a
+  // device may respond with other data in place of the report ID.
+  GetFeatureReport(uint8 report_id) => (bool success, array<uint8>? buffer);
+
+  // The report ID (or 0 if report IDs are not supported by the device) is
+  // always expected in the first byte of the buffer.
+  SendFeatureReport(array<uint8> buffer) => (bool success); 
 };
