@@ -606,3 +606,4 @@ void AudioInputRendererHost::AddExtensionsToPathAndEnableDebugRecordingForId(
 #endif  // BUILDFLAG(ENABLE_WEBRTC)
 
 }  // namespace content
+

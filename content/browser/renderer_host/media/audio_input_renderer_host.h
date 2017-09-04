@@ -267,3 +267,4 @@ class CONTENT_EXPORT AudioInputRendererHost
 }  // namespace content
 
 #endif  // CONTENT_BROWSER_RENDERER_HOST_MEDIA_AUDIO_INPUT_RENDERER_HOST_H_
+

@@ -200,3 +200,4 @@ class CONTENT_EXPORT SpeechRecognizerImpl
 }  // namespace content
 
 #endif  // CONTENT_BROWSER_SPEECH_SPEECH_RECOGNIZER_IMPL_H_
+

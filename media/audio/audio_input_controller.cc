@@ -704,3 +704,4 @@ AudioInputController::StreamType AudioInputController::ParamsToStreamType(
 }
 
 }  // namespace media
+

@@ -4110,3 +4110,4 @@ RenderProcessHostImpl::GetSharedBitmapAllocationNotifier() {
 }
 
 }  // namespace content
+
