@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cfb89daa_50eb3d5b",
+        "filename": "ios/chrome/browser/ui/bookmarks/bars/bookmark_context_bar.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-04T05:03:47Z",
+      "side": 1,
+      "message": "I see that this is the standard followed in most code. And this format looks better for an identifier than space separated strings :)",
+      "parentUuid": "c5c93559_79b45603",
+      "revId": "c70b04ec7bdb7968f043b32a5c5da555929188b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1ee06ef6_d947df97",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
         "patchSetId": 3
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "61be8a48_0ba1cb42",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-04T05:03:47Z",
+      "side": 1,
+      "message": "It\u0027s hidden already, as we discussed :)\nAlso disabling select if current folder is empty is not a requirement i think. User should be able to select an empty folder and make a new folder within it.",
+      "parentUuid": "1ee06ef6_d947df97",
+      "revId": "c70b04ec7bdb7968f043b32a5c5da555929188b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "197fd12c_4297964b",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
         "patchSetId": 3
@@ -65,6 +101,24 @@
       "writtenOn": "2017-09-04T00:35:22Z",
       "side": 1,
       "message": "could we...\n1. rename setBookmarksContextBarSelectionStartState as setBookmarksContextBarSelectionState\n2. pass state as an argument, i.e. [self setBookmarksContextBarSelectionState:state]\n3. let setBookmarksContextBarSelectionState determine if center/leading button is enabled?\n4. the setButtonEnabled lines in this function below can be removed\nwdyt?",
+      "revId": "c70b04ec7bdb7968f043b32a5c5da555929188b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52d693bd_2b21b8fb",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1084,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-04T05:03:47Z",
+      "side": 1,
+      "message": "I think this is the same thing I have done. \n- (void)setContextBarState:(BookmarksContextBarState)state method does exactly what you have asked. \n\"setBookmarksContextBarSelectionState determine if center/leading button is enabled\" : This means the button enabled / disabled code will move to this function from the current function. \nNot sure this will be any value add?\n\nAdding more comments to make this clearer",
+      "parentUuid": "197fd12c_4297964b",
       "revId": "c70b04ec7bdb7968f043b32a5c5da555929188b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -91,6 +145,30 @@
       "revId": "c70b04ec7bdb7968f043b32a5c5da555929188b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16483fca_62d3a479",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-04T05:03:47Z",
+      "side": 1,
+      "message": "Thanks tested on iOS9, and it passes locally.",
+      "parentUuid": "2eb87b95_429d1c88",
+      "range": {
+        "startLine": 66,
+        "startChar": 28,
+        "endLine": 66,
+        "endChar": 35
+      },
+      "revId": "c70b04ec7bdb7968f043b32a5c5da555929188b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
