@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a04745d7_3c6c9f53",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-04T17:39:33Z",
+      "side": 1,
+      "message": "pass `null` as currentUrl to #refresh in that case? Moves more responsibility to the Carousel :)",
+      "range": {
+        "startLine": 285,
+        "startChar": 0,
+        "endLine": 288,
+        "endChar": 9
+      },
+      "revId": "c7539f11fbf3501b7ef9ebf98c5c83c04c3090fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

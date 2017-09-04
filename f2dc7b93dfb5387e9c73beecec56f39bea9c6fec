@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "d4dc8a1d_2b7074db",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarousel.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-04T17:39:33Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "262d58f8_9624c6f6",
+      "range": {
+        "startLine": 51,
+        "startChar": 8,
+        "endLine": 51,
+        "endChar": 26
+      },
+      "revId": "f2dc7b93dfb5387e9c73beecec56f39bea9c6fec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a20c37c8_4fe5f359",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarousel.java",
         "patchSetId": 4
@@ -141,6 +165,30 @@
       "revId": "f2dc7b93dfb5387e9c73beecec56f39bea9c6fec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "329b2191_cdf52b07",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarousel.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-04T17:39:33Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e5aa1e82_6f05e22f",
+      "range": {
+        "startLine": 56,
+        "startChar": 16,
+        "endLine": 56,
+        "endChar": 28
+      },
+      "revId": "f2dc7b93dfb5387e9c73beecec56f39bea9c6fec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
