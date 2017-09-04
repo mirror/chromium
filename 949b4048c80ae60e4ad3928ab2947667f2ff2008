@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cdadc9e9_08ff713c",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_utilities.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-04T04:06:36Z",
+      "side": 1,
+      "message": "|definition_or_member.extended_attributes| can be referred for 3 times.\nCould you keep the local variable to hold it?",
+      "range": {
+        "startLine": 353,
+        "startChar": 7,
+        "endLine": 353,
+        "endChar": 47
+      },
+      "revId": "949b4048c80ae60e4ad3928ab2947667f2ff2008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
