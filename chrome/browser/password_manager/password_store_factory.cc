@@ -13,6 +13,7 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/rand_util.h"
 #include "build/build_config.h"
+#include "chrome/browser/browser_process.h"
 #include "chrome/browser/profiles/incognito_helpers.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/signin/signin_manager_factory.h"
@@ -23,6 +24,7 @@
 #include "chrome/common/chrome_switches.h"
 #include "components/browser_sync/profile_sync_service.h"
 #include "components/keyed_service/content/browser_context_dependency_manager.h"
+#include "components/os_crypt/os_crypt_pref_names.h"
 #include "components/os_crypt/os_crypt_switches.h"
 #include "components/password_manager/core/browser/http_data_cleaner.h"
 #include "components/password_manager/core/browser/login_database.h"
@@ -178,12 +180,9 @@ PasswordStoreFactory::BuildServiceInstanceFor(
 
   bool use_preference = base::CommandLine::ForCurrentProcess()->HasSwitch(
       switches::kEnableEncryptionSelection);
-  bool use_backend = true;
-  if (use_preference) {
-    base::FilePath user_data_dir;
-    chrome::GetDefaultUserDataDirectory(&user_data_dir);
-    use_backend = os_crypt::GetBackendUse(user_data_dir);
-  }
+  bool use_backend =
+      !use_preference || g_browser_process->local_state()->GetBoolean(
+                             os_crypt::prefs::kDisableEncryption);
 
   os_crypt::SelectedLinuxBackend selected_backend =
       os_crypt::SelectBackend(store_type, use_backend, desktop_env);

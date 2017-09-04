@@ -18,6 +18,8 @@
 class KeyStorageLinux;
 #endif  // defined(OS_LINUX) && !defined(OS_CHROMEOS) && defined(UNIT_TEST)
 
+class PrefRegistrySimple;
+
 namespace os_crypt {
 struct Config;
 }
@@ -34,6 +36,9 @@ class OSCrypt {
 
   // Returns true iff the real secret key (not hardcoded one) is available.
   static bool IsEncryptionAvailable();
+
+  // Registers local preferences
+  static void RegisterLocalPrefs(PrefRegistrySimple* registry);
 #endif  // defined(OS_LINUX) && !defined(OS_CHROMEOS)
 
   // Encrypt a string16. The output (second argument) is really an array of
