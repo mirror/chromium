@@ -107,8 +107,6 @@ void ServiceWorkerDispatcher::OnMessageReceived(const IPC::Message& msg) {
                         OnSetVersionAttributes)
     IPC_MESSAGE_HANDLER(ServiceWorkerMsg_UpdateFound,
                         OnUpdateFound)
-    IPC_MESSAGE_HANDLER(ServiceWorkerMsg_SetControllerServiceWorker,
-                        OnSetControllerServiceWorker)
     IPC_MESSAGE_HANDLER(ServiceWorkerMsg_MessageToDocument,
                         OnPostMessage)
     IPC_MESSAGE_HANDLER(ServiceWorkerMsg_CountFeature, OnCountFeature)
@@ -785,51 +783,6 @@ void ServiceWorkerDispatcher::OnUpdateFound(
       registrations_.find(registration_handle_id);
   if (found != registrations_.end())
     found->second->OnUpdateFound();
-}
-
-void ServiceWorkerDispatcher::OnSetControllerServiceWorker(
-    const ServiceWorkerMsg_SetControllerServiceWorker_Params& params) {
-  TRACE_EVENT2(
-      "ServiceWorker", "ServiceWorkerDispatcher::OnSetControllerServiceWorker",
-      "Thread ID", params.thread_id, "Provider ID", params.provider_id);
-
-  mojom::ServiceWorkerEventDispatcherPtrInfo event_dispatcher_ptr_info;
-  if (params.controller_event_dispatcher.is_valid()) {
-    // Chrome doesn't use interface versioning.
-    event_dispatcher_ptr_info = mojom::ServiceWorkerEventDispatcherPtrInfo(
-        mojo::ScopedMessagePipeHandle(params.controller_event_dispatcher),
-        0u /* version */);
-  }
-
-  // Adopt the reference sent from the browser process and pass it to the
-  // provider context if it exists.
-  std::unique_ptr<ServiceWorkerHandleReference> handle_ref =
-      Adopt(params.object_info);
-  ProviderContextMap::iterator provider =
-      provider_contexts_.find(params.provider_id);
-  if (provider != provider_contexts_.end()) {
-    provider->second->SetController(std::move(handle_ref), params.used_features,
-                                    std::move(event_dispatcher_ptr_info));
-  }
-
-  ProviderClientMap::iterator found =
-      provider_clients_.find(params.provider_id);
-  if (found != provider_clients_.end()) {
-    // Sync the controllee's use counter with the service worker's one.
-    for (uint32_t feature : params.used_features)
-      found->second->CountFeature(feature);
-
-    // Get the existing worker object or create a new one with a new reference
-    // to populate the .controller field.
-    scoped_refptr<WebServiceWorkerImpl> worker =
-        GetOrCreateServiceWorker(ServiceWorkerHandleReference::Create(
-            params.object_info, thread_safe_sender_.get()));
-    found->second->SetController(WebServiceWorkerImpl::CreateHandle(worker),
-                                 params.should_notify_controllerchange);
-    // You must not access |found| after setController() because it may fire the
-    // controllerchange event that may remove the provider client, for example,
-    // by detaching an iframe.
-  }
 }
 
 void ServiceWorkerDispatcher::OnPostMessage(

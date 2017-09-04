@@ -4,6 +4,23 @@
 
 module content.mojom;
 
+import "content/common/service_worker/service_worker_types.mojom";
+import "mojo/common/string16.mojom";
+
+struct SetControllerParams {
+  int32 thread_id;
+  int32 provider_id;
+  ServiceWorkerObjectInfo object_info;
+  bool should_notify_controllerchange;
+
+  // |used_features| is the set of features that the worker has used.
+  // The values must be from blink::UseCounter::Feature enum.
+  array<uint32> used_features;
+
+  // Mojo endpoint to dispatch events to the controller.
+  handle<message_pipe> controller_event_dispatcher;
+};
+
 // mojom::ServiceWorkerContainerHost is a browser-side interface. The renderer
 // process uses this interface to request the browser process to do operations
 // involving service worker registrations.
@@ -30,7 +47,7 @@ interface ServiceWorkerContainerHost {
 // to use this name.
 interface ServiceWorkerContainer {
   // TODO(xiaofeng.zhang): implement them.
-  // SetController();
+  SetController(SetControllerParams params);
   // ServiceWorkerStateChanged();
   // ServiceWorkerRegistrationUpdateFound();
   // PostMessage();

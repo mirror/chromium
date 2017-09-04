@@ -16,6 +16,7 @@
 #include "content/child/service_worker/service_worker_handle_reference.h"
 #include "content/child/service_worker/service_worker_registration_handle_reference.h"
 #include "content/child/service_worker/service_worker_subresource_loader.h"
+#include "content/child/service_worker/web_service_worker_impl.h"
 #include "content/child/thread_safe_sender.h"
 #include "content/child/worker_thread_registry.h"
 #include "content/common/service_worker/service_worker_utils.h"
@@ -134,10 +135,23 @@ void ServiceWorkerProviderContext::GetRegistration(
 }
 
 void ServiceWorkerProviderContext::SetController(
-    std::unique_ptr<ServiceWorkerHandleReference> controller,
-    const std::set<uint32_t>& used_features,
-    mojom::ServiceWorkerEventDispatcherPtrInfo event_dispatcher_ptr_info) {
+    mojom::SetControllerParamsPtr params) {
   DCHECK(main_thread_task_runner_->RunsTasksInCurrentSequence());
+
+  mojom::ServiceWorkerEventDispatcherPtrInfo event_dispatcher_ptr_info;
+  if (params->controller_event_dispatcher.is_valid()) {
+    // Chrome doesn't use interface versioning.
+    event_dispatcher_ptr_info = mojom::ServiceWorkerEventDispatcherPtrInfo(
+        std::move(params->controller_event_dispatcher), 0u /* version */);
+  }
+  ServiceWorkerDispatcher* dispatcher =
+      ServiceWorkerDispatcher::GetThreadSpecificInstance();
+
+  // Adopt the reference sent from the browser process and pass it to the
+  // provider context if it exists.
+  std::unique_ptr<ServiceWorkerHandleReference> controller =
+      dispatcher->Adopt(params->object_info);
+
   ControlleeState* state = controllee_state_.get();
   DCHECK(state);
   DCHECK(!state->controller ||
@@ -151,7 +165,9 @@ void ServiceWorkerProviderContext::SetController(
     }
   }
   state->controller = std::move(controller);
-  state->used_features = used_features;
+  std::set<uint32_t> features_temp(params->used_features.begin(),
+                                   params->used_features.end());
+  state->used_features = features_temp;
   if (event_dispatcher_ptr_info.is_valid()) {
     CHECK(ServiceWorkerUtils::IsServicificationEnabled());
     state->event_dispatcher =
@@ -163,6 +179,21 @@ void ServiceWorkerProviderContext::SetController(
             state->controller->url().GetOrigin()),
         mojo::MakeRequest(&state->subresource_loader_factory));
   }
+
+  // Sync the controllee's use counter with the service worker's one.
+  for (uint32_t feature : params->used_features)
+    provider_client_->CountFeature(feature);
+
+  // Get the existing worker object or create a new one with a new reference
+  // to populate the .controller field.
+  scoped_refptr<WebServiceWorkerImpl> worker =
+      dispatcher->GetOrCreateServiceWorker(ServiceWorkerHandleReference::Create(
+          params->object_info, dispatcher->thread_safe_sender()));
+  provider_client_->SetController(WebServiceWorkerImpl::CreateHandle(worker),
+                                  params->should_notify_controllerchange);
+  // You must not access |provider_client_| after setController() because it may
+  // fire the controllerchange event that may remove the provider client, for
+  // example, by detaching an iframe.
 }
 
 ServiceWorkerHandleReference* ServiceWorkerProviderContext::controller() {

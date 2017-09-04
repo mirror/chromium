@@ -863,21 +863,22 @@ void ServiceWorkerProviderHost::SendSetControllerServiceWorker(
     DCHECK_EQ(controller_.get(), version);
   }
 
-  ServiceWorkerMsg_SetControllerServiceWorker_Params params;
-  params.thread_id = render_thread_id_;
-  params.provider_id = provider_id();
-  params.object_info = GetOrCreateServiceWorkerHandle(version);
-  params.should_notify_controllerchange = notify_controllerchange;
+  mojom::SetControllerParamsPtr params;
+  params->thread_id = render_thread_id_;
+  params->provider_id = provider_id();
+  params->object_info = GetOrCreateServiceWorkerHandle(version);
+  params->should_notify_controllerchange = notify_controllerchange;
   if (version) {
-    params.used_features = version->used_features();
+    std::vector<uint32_t> used_features(version->used_features().begin(),
+                                        version->used_features().end());
+    params->used_features = used_features;
     if (ServiceWorkerUtils::IsServicificationEnabled()) {
-      params.controller_event_dispatcher =
+      params->controller_event_dispatcher =
           controller_event_dispatcher_->CreateEventDispatcherPtrInfo()
-              .PassHandle()
-              .release();
+              .PassHandle();
     }
   }
-  Send(new ServiceWorkerMsg_SetControllerServiceWorker(params));
+  container_->SetController(std::move(params));
 }
 
 }  // namespace content

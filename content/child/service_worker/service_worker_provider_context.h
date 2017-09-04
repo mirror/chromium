@@ -19,6 +19,8 @@
 #include "content/public/child/child_url_loader_factory_getter.h"
 #include "mojo/public/cpp/bindings/associated_binding.h"
 
+#include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerProviderClient.h"
+
 namespace base {
 class SingleThreadTaskRunner;
 }
@@ -77,6 +79,13 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
       ServiceWorkerDispatcher* dispatcher,
       scoped_refptr<ChildURLLoaderFactoryGetter> default_loader_factory_getter);
 
+  // Implementation of mojom::ServiceWorkerContainer.
+  void SetController(mojom::SetControllerParamsPtr params) override;
+
+  void set_provider_client(blink::WebServiceWorkerProviderClient* client) {
+    provider_client_ = client;
+  }
+
   int provider_id() const { return provider_id_; }
 
   // For service worker execution contexts. Sets the registration for
@@ -97,10 +106,6 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
 
   // For service worker clients. The controller for
   // ServiceWorkerContainer#controller.
-  void SetController(
-      std::unique_ptr<ServiceWorkerHandleReference> controller,
-      const std::set<uint32_t>& used_features,
-      mojom::ServiceWorkerEventDispatcherPtrInfo event_dispatcher_ptr_info);
   ServiceWorkerHandleReference* controller();
 
   // S13nServiceWorker:
@@ -158,6 +163,8 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
   // mojom::ServiceWorkerContainerHost that hosts this
   // mojom::ServiceWorkerContainer.
   mojom::ServiceWorkerContainerHostAssociatedPtr container_host_;
+
+  blink::WebServiceWorkerProviderClient* provider_client_;
 
   // Either |controllee_state_| or |controller_state_| is non-null.
   std::unique_ptr<ControlleeState> controllee_state_;
