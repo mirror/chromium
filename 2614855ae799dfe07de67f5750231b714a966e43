@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df2a40bb_179b85d1",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-sandboxed-iframe.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-09-04T08:53:46Z",
+      "side": 1,
+      "message": "this can be also const",
+      "revId": "2614855ae799dfe07de67f5750231b714a966e43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c17fcfc5_f6021a91",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-sandboxed-iframe.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-09-04T08:53:46Z",
+      "side": 1,
+      "message": "let\u0027s move this to inside the catch block.\n\nonError looks it\u0027s a function to be set to somewhere as an event handler. how about |result|?\n\nI also think that you could choose to just send a message representing what has happened here and leave comparison with expectations up to the user (the test case).",
+      "revId": "2614855ae799dfe07de67f5750231b714a966e43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
