@@ -33,8 +33,10 @@ std::unique_ptr<KeyStorageLinux> KeyStorageLinux::CreateService(
     const os_crypt::Config& config) {
 #if defined(USE_LIBSECRET) || defined(USE_KEYRING) || defined(USE_KWALLET)
   // Select a backend.
-  bool use_backend = !config.should_use_preference ||
-                     os_crypt::GetBackendUse(config.user_data_path);
+  bool use_backend = !config.should_use_disable_encryption_pref ||
+                     config.disable_encryption_pref;
+  if (!use_backend)
+    VLOG(1) << "OSCrypt preference is to not use a backend";
   std::unique_ptr<base::Environment> env(base::Environment::Create());
   base::nix::DesktopEnvironment desktop_env =
       base::nix::GetDesktopEnvironment(env.get());

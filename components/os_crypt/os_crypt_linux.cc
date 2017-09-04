@@ -17,6 +17,9 @@
 #include "base/synchronization/lock.h"
 #include "components/os_crypt/key_storage_config_linux.h"
 #include "components/os_crypt/key_storage_linux.h"
+#include "components/os_crypt/os_crypt_pref_names.h"
+#include "components/prefs/pref_registry_simple.h"
+#include "components/prefs/pref_service.h"
 #include "crypto/encryptor.h"
 #include "crypto/symmetric_key.h"
 
@@ -77,7 +80,7 @@ std::unique_ptr<KeyStorageLinux> CreateKeyStorage() {
 }
 
 // Pointer to a function that creates and returns the |KeyStorage| instance to
-// be used. The function maintains ownership of the pointer.
+// be used.
 std::unique_ptr<KeyStorageLinux> (*g_key_storage_provider)() =
     &CreateKeyStorage;
 
@@ -225,6 +228,11 @@ bool OSCrypt::DecryptString(const std::string& ciphertext,
     return false;
 
   return true;
+}
+
+// static
+void OSCrypt::RegisterLocalPrefs(PrefRegistrySimple* registry) {
+  registry->RegisterBooleanPref(os_crypt::prefs::kDisableEncryption, false);
 }
 
 // static
