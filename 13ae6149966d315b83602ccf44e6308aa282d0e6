@@ -46,6 +46,30 @@
       "revId": "13ae6149966d315b83602ccf44e6308aa282d0e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec405ed6_1671d019",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/fetch/api/response/response-cancel-stream.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-09-04T03:58:53Z",
+      "side": 1,
+      "message": "I think it\u0027s OK. As soon as all data is read |closedPromise| will be fulfilled.",
+      "parentUuid": "751ee14d_8446f603",
+      "range": {
+        "startLine": 66,
+        "startChar": 8,
+        "endLine": 66,
+        "endChar": 15
+      },
+      "revId": "13ae6149966d315b83602ccf44e6308aa282d0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
