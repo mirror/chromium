@@ -59,6 +59,11 @@ suite('SiteDetails', function() {
         unsandboxed_plugins: {
           setting: settings.ContentSetting.ASK,
         },
+        // <if expr="chromeos">
+        protectedContent: {
+          setting: settings.ContentSetting.ALLOW,
+        },
+        // </if>
       },
       exceptions: {
         auto_downloads: [
@@ -154,7 +159,7 @@ suite('SiteDetails', function() {
             embeddingOrigin: 'https://foo.com:443',
             origin: 'https://foo.com:443',
             setting: settings.ContentSetting.ALLOW,
-            source: 'default',
+            source: settings.SiteSettingSource.DEFAULT,
           },
         ],
         unsandboxed_plugins: [
@@ -165,6 +170,16 @@ suite('SiteDetails', function() {
             source: settings.SiteSettingSource.PREFERENCE,
           },
         ],
+        // <if expr="chromeos">
+        protectedContent: [
+          {
+            embeddingOrigin: 'https://foo.com:443',
+            origin: 'https://foo.com:443',
+            setting: settings.ContentSetting.ALLOW,
+            source: settings.SiteSettingSource.PREFERENCE,
+          },
+        ],
+        // </if>
       }
     };
 
@@ -218,6 +233,11 @@ suite('SiteDetails', function() {
         .then(() => {
           testElement.root.querySelectorAll('site-details-permission')
               .forEach((siteDetailsPermission) => {
+                // PROTECTED_CONTENT is only available on ChromeOS, and is null
+                // on other platforms.
+                if (siteDetailsPermission.category === null)
+                  return;
+
                 // Verify settings match the values specified in |prefs|.
                 var expectedSetting = settings.ContentSetting.ALLOW;
                 var expectedSource = settings.SiteSettingSource.PREFERENCE;
