@@ -9,7 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.ntp.cards.NewTabPageViewHolder;
 import org.chromium.chrome.browser.ntp.snippets.SnippetArticle;
 import org.chromium.chrome.browser.widget.displaystyle.DisplayStyleObserver;
@@ -33,12 +35,16 @@ public class ContextualSuggestionsCardViewHolder extends NewTabPageViewHolder {
 
     public ContextualSuggestionsCardViewHolder(
             ViewGroup recyclerView, UiConfig uiConfig, SuggestionsUiDelegate uiDelegate) {
-        super(LayoutInflater.from(recyclerView.getContext())
-                        .inflate(R.layout.contextual_suggestions_card, recyclerView, false));
+        super(getCardView(recyclerView));
 
         mUiConfig = uiConfig;
         mUiDelegate = uiDelegate;
         mSuggestionsBinder = new SuggestionsBinder(itemView, uiDelegate);
+
+        int startMargin = itemView.getResources().getDimensionPixelOffset(
+                R.dimen.contextual_carousel_space_between_cards);
+        ApiCompatibilityUtils.setMarginStart(
+                (ViewGroup.MarginLayoutParams) itemView.getLayoutParams(), startMargin);
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +66,14 @@ public class ContextualSuggestionsCardViewHolder extends NewTabPageViewHolder {
         mSuggestionsBinder.updateFieldsVisibility(/* showHeadline = */ true,
                 /* showDescription = */ false, /* showThumbnail = */ true,
                 /* showThumbnailVideoOverlay = */ false, /* headerMaxLines = */ 3);
+    }
+
+    private static View getCardView(ViewGroup recyclerView) {
+        int res = ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_MODERN_LAYOUT)
+                ? R.layout.content_suggestions_card_modern
+                : R.layout.new_tab_page_snippets_card_large_thumbnail;
+
+        return LayoutInflater.from(recyclerView.getContext()).inflate(res, recyclerView, false);
     }
 
     public void onBindViewHolder(SnippetArticle suggestion) {
