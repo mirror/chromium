@@ -41,7 +41,7 @@ class FindNotificationDetails {
  private:
   int request_id_;    // The find-in-page request whose results we're returning.
   int number_of_matches_;  // How many matches were found.
-  gfx::Rect selection_rect_;  // Where selection occurred (screen coordinate).
+  gfx::Rect selection_rect_;  // Where selection occurred (root frame coords).
   int active_match_ordinal_;  // The ordinal of the currently selected match.
   bool final_update_;  // Whether this is the last Find Result update.
 };

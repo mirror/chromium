@@ -15,6 +15,7 @@
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/render_widget_host.h"
 #include "content/public/browser/web_contents.h"
+#include "ui/display/screen.h"
 #include "ui/events/event.h"
 #include "ui/events/keycodes/keyboard_codes.h"
 #include "ui/views/focus/external_focus_tracker.h"
@@ -287,8 +288,9 @@ gfx::Rect FindBarHost::GetDialogPosition(gfx::Rect avoid_overlapping_rect) {
   // selection rect (if one was provided).
   if (!avoid_overlapping_rect.IsEmpty()) {
     // For comparison (with the Intersects function below) we need to account
-    // for the fact that we draw the Find widget relative to the Chrome frame,
-    // whereas the selection rect is relative to the page.
+    // for the fact that we draw the Find widget relative to the Chrome frame
+    // (and in screen pixels, not DIPs), whereas the selection rect is
+    // relative to the page.
     GetWidgetPositionNative(&avoid_overlapping_rect);
   }
 
@@ -350,8 +352,18 @@ void FindBarHost::OnVisibilityChanged() {
 // private:
 
 void FindBarHost::GetWidgetPositionNative(gfx::Rect* avoid_overlapping_rect) {
+  // We need to account for pixel factor of the screen. gfx::Rect is provided
+  // by WebKit and is given in pixels in root frame coordinates (relative to
+  // web content). To position the widget we need to transform it into DIPs
+  // relative to the main window. First, we need to scale the rect to DIPs, then
+  // we offset the origin so it would be counted from origin of the window.
+  content::WebContents* web_contents = find_bar_controller_->web_contents();
+
+  *avoid_overlapping_rect =
+      display::Screen::GetScreen()->ScreenToDIPRectInWindow(
+          web_contents->GetNativeView(), *avoid_overlapping_rect);
+
   gfx::Rect frame_rect = host()->GetTopLevelWidget()->GetWindowBoundsInScreen();
-  gfx::Rect webcontents_rect =
-      find_bar_controller_->web_contents()->GetViewBounds();
+  gfx::Rect webcontents_rect = web_contents->GetViewBounds();
   avoid_overlapping_rect->Offset(0, webcontents_rect.y() - frame_rect.y());
 }
