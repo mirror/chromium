@@ -16,6 +16,24 @@
       "revId": "fe44007b00669f0370c11adde012090ed2881908",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5aa7b73_c273fa72",
+        "filename": "third_party/WebKit/Source/platform/RuntimeEnabledFeatures.json5",
+        "patchSetId": 1
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-09-04T07:49:08Z",
+      "side": 1,
+      "message": "Yes, this is intentional.\nIf some sites are broken in Canary, we might want to tell site owners to test their sites by turning this flag on so that we can know the cause easily.",
+      "parentUuid": "7a1ed137_a8afa0dc",
+      "revId": "fe44007b00669f0370c11adde012090ed2881908",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
