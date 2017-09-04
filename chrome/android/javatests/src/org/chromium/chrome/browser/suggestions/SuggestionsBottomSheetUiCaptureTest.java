@@ -5,12 +5,9 @@
 package org.chromium.chrome.browser.suggestions;
 
 import android.support.test.InstrumentationRegistry;
-import android.support.test.espresso.Espresso;
-import android.support.test.espresso.action.ViewActions;
-import android.support.test.espresso.contrib.RecyclerViewActions;
-import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.filters.MediumTest;
 import android.support.test.uiautomator.UiDevice;
+import android.support.v7.widget.RecyclerView;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -20,22 +17,23 @@ import org.junit.runner.RunWith;
 import org.chromium.base.test.util.Feature;
 import org.chromium.base.test.util.Restriction;
 import org.chromium.base.test.util.ScreenShooter;
-import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ntp.NtpUiCaptureTestData;
+import org.chromium.chrome.browser.ntp.cards.ItemViewType;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet;
-import org.chromium.chrome.test.BottomSheetTestRule;
 import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
 import org.chromium.chrome.test.util.browser.suggestions.SuggestionsDependenciesRule;
+import org.chromium.content.browser.test.util.TestTouchUtils;
 import org.chromium.ui.test.util.UiRestriction;
 
 /**
- * Tests for the appearance of Article Snippets.
+ * Tests for the appearance of Article Suggestions.
  */
 @RunWith(ChromeJUnit4ClassRunner.class)
 @Restriction(UiRestriction.RESTRICTION_TYPE_PHONE) // ChromeHome is only enabled on phones
 public class SuggestionsBottomSheetUiCaptureTest {
     @Rule
-    public BottomSheetTestRule mActivityTestRule = new BottomSheetTestRule();
+    public SuggestionsBottomSheetTestRule mActivityRule = new SuggestionsBottomSheetTestRule();
+
     @Rule
     public SuggestionsDependenciesRule createSuggestions() {
         return new SuggestionsDependenciesRule(NtpUiCaptureTestData.createFactory());
@@ -48,11 +46,11 @@ public class SuggestionsBottomSheetUiCaptureTest {
 
     @Before
     public void setup() throws InterruptedException {
-        mActivityTestRule.startMainActivityOnBlankPage();
+        mActivityRule.startMainActivityOnBlankPage();
     }
 
     private void setSheetState(final int position) {
-        mActivityTestRule.setSheetState(position, false);
+        mActivityRule.setSheetState(position, false);
         waitForWindowUpdates();
     }
 
@@ -66,7 +64,7 @@ public class SuggestionsBottomSheetUiCaptureTest {
     @Test
     @MediumTest
     @Feature({"UiCatalogue"})
-    @ScreenShooter.Directory("Suggestions Bottom Sheet Position")
+    @ScreenShooter.Directory("SuggestionsBottomSheetPosition")
     public void testBottomSheetPosition() throws Exception {
         setSheetState(BottomSheet.SHEET_STATE_HALF);
         mScreenShooter.shoot("Half");
@@ -79,13 +77,15 @@ public class SuggestionsBottomSheetUiCaptureTest {
     @Test
     @MediumTest
     @Feature({"UiCatalogue"})
-    @ScreenShooter.Directory("Suggestions Context Menu")
-    public void testContextMenu() throws Exception {
+    @ScreenShooter.Directory("SuggestionsContextMenu")
+    public void testSuggestionContextMenu() throws Exception {
         // Needs to be "Full" to for this to work on small screens in landscape.
         setSheetState(BottomSheet.SHEET_STATE_FULL);
-        Espresso.onView(ViewMatchers.withId(R.id.recycler_view))
-                .perform(RecyclerViewActions.actionOnItemAtPosition(2, ViewActions.longClick()));
+        RecyclerView.ViewHolder suggestionViewHolder =
+                mActivityRule.scrollToFirstItemOfType(ItemViewType.SNIPPET);
+        TestTouchUtils.longClickView(
+                InstrumentationRegistry.getInstrumentation(), suggestionViewHolder.itemView);
         waitForWindowUpdates();
-        mScreenShooter.shoot("Context_menu");
+        mScreenShooter.shoot("ContextMenu");
     }
 }
