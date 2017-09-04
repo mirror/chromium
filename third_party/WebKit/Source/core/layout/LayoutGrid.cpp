@@ -144,28 +144,6 @@ void LayoutGrid::StyleDidChange(StyleDifference diff,
   if (!old_style)
     return;
 
-  const ComputedStyle& new_style = StyleRef();
-  if (diff.NeedsFullLayout() &&
-      (DefaultAlignmentChangedSize(kGridRowAxis, *old_style, new_style) ||
-       DefaultAlignmentChangedSize(kGridColumnAxis, *old_style, new_style))) {
-    // Style changes on the grid container implying stretching (to-stretch) or
-    // shrinking (from-stretch) require the affected items to be laid out again.
-    // These logic only applies to 'stretch' since the rest of the alignment
-    // values don't change the size of the box.
-    // In any case, the items' overrideSize will be cleared and recomputed (if
-    // necessary)  as part of the Grid layout logic, triggered by this style
-    // change.
-    for (LayoutBox* child = FirstInFlowChildBox(); child;
-         child = child->NextInFlowSiblingBox()) {
-      if (SelfAlignmentChangedSize(kGridRowAxis, *old_style, new_style,
-                                   *child) ||
-          SelfAlignmentChangedSize(kGridColumnAxis, *old_style, new_style,
-                                   *child)) {
-        child->SetNeedsLayout(LayoutInvalidationReason::kGridChanged);
-      }
-    }
-  }
-
   // FIXME: The following checks could be narrowed down if we kept track of
   // which type of grid items we have:
   // - explicit grid size changes impact negative explicitely positioned and
