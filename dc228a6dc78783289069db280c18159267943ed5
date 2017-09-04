@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e2ee5f9_82036106",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 1579,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-04T14:43:45Z",
+      "side": 1,
+      "message": "Can this be\nshouldRetry \u003d retryLinkClicked || (micIconClicked \u0026\u0026 view.isNoMatchShown_);\n?",
+      "revId": "dc228a6dc78783289069db280c18159267943ed5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "430dcc7b_c72c84d7",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 1581,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-04T14:43:45Z",
+      "side": 1,
+      "message": "And here just\nsupportLinkClicked\n?\nI.e. only check isNoMatchShown_ in the cases where it can actually happen, IMO that\u0027d make things a bit easier to follow.",
+      "revId": "dc228a6dc78783289069db280c18159267943ed5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

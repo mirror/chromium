@@ -34,6 +34,24 @@
       "revId": "5bd998ff74aa9b9d673a8dd5ea905d91e2369b19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67b67155_07d6ae31",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 1569,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-04T14:43:45Z",
+      "side": 1,
+      "message": "Hm, I don\u0027t think storing an enum instead of bool would help (or hurt) readability.\n\nDifferent IDs LG, thanks!",
+      "parentUuid": "81d49249_bbcea89c",
+      "revId": "5bd998ff74aa9b9d673a8dd5ea905d91e2369b19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
