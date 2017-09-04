@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc8763f9_50cc997a",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_selection.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-09-04T05:17:51Z",
+      "side": 1,
+      "message": "@param {Event} e Splice event.\n@private\n\nhttps://github.com/google/closure-compiler/wiki/Annotating-JavaScript-for-the-Closure-Compiler#param-type-varname-description",
+      "revId": "27f3d964ddfd75d313a7a658beeeb7434fee8480",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ea0f7a1_f9d36773",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_selection.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-09-04T05:17:51Z",
+      "side": 1,
+      "message": "onSpiceEvent_\n\nThis method is not used from outside, so mark this as private, with a trailing underscore.\nhttps://google.github.io/styleguide/javascriptguide.xml?showone\u003dNaming#Naming",
+      "revId": "27f3d964ddfd75d313a7a658beeeb7434fee8480",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fed8fa0_379bd5dd",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_selection.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-09-04T05:17:51Z",
+      "side": 1,
+      "message": "Append semicolon.",
+      "revId": "27f3d964ddfd75d313a7a658beeeb7434fee8480",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "434a47b6_dc204a40",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_selection.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-09-04T05:17:51Z",
+      "side": 1,
+      "message": "Can you fix the indent?\nTips: you can fun `git cl format --js` to auto-fix the indent.",
+      "range": {
+        "startLine": 256,
+        "startChar": 0,
+        "endLine": 263,
+        "endChar": 20
+      },
+      "revId": "27f3d964ddfd75d313a7a658beeeb7434fee8480",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
