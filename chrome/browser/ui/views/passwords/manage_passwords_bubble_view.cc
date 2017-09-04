@@ -419,13 +419,43 @@ void ManagePasswordsBubbleView::PendingView::CreateAndSetLayout() {
     if (!password_field_) {
       password_field_ = GeneratePasswordLabel(*password_form).release();
     }
-    layout->AddView(username_field_);
-    layout->AddView(password_field_);
-    // Add the eye icon if password selection feature is on.
-    if (column_type == TRIPLE_VIEW_COLUMN_SET) {
+
+    // TODO(https://crbug.com/761767): Remove when the grid layout bug is fixed.
+    int available_width;
+    if (column_type == DOUBLE_VIEW_COLUMN_SET) {
+      available_width =
+          kDesiredBubbleWidth - ChromeLayoutProvider::Get()->GetDistanceMetric(
+                                    views::DISTANCE_RELATED_CONTROL_HORIZONTAL);
+    } else {
       if (!password_view_button_) {
         password_view_button_ = GeneratePasswordViewButton(this).release();
       }
+      available_width = kDesiredBubbleWidth -
+                        password_view_button_->GetPreferredSize().width() -
+                        2 * ChromeLayoutProvider::Get()->GetDistanceMetric(
+                                views::DISTANCE_RELATED_CONTROL_HORIZONTAL);
+    }
+    int username_width = username_field_->GetPreferredSize().width();
+    int password_width = password_field_->GetPreferredSize().width();
+    if (username_width > available_width && password_width < available_width) {
+      layout->AddView(username_field_, 1, 1, views::GridLayout::FILL,
+                      views::GridLayout::FILL, available_width, 0);
+      layout->AddView(password_field_, 1, 1, views::GridLayout::FILL,
+                      views::GridLayout::FILL, 0, 0);
+    } else if (username_width < available_width &&
+               password_width > available_width) {
+      layout->AddView(username_field_, 1, 1, views::GridLayout::FILL,
+                      views::GridLayout::FILL, username_width, 0);
+      layout->AddView(password_field_, 1, 1, views::GridLayout::FILL,
+                      views::GridLayout::FILL, available_width - username_width,
+                      0);
+    } else {
+      layout->AddView(username_field_);
+      layout->AddView(password_field_);
+    }
+
+    // Add the eye icon if password selection feature is on.
+    if (column_type == TRIPLE_VIEW_COLUMN_SET) {
       layout->AddView(password_view_button_);
     }
     layout->AddPaddingRow(0,
