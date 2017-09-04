@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6abca702_0c226f32",
+        "filename": "content/common/service_worker/service_worker_loader_helpers.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-04T09:34:03Z",
+      "side": 1,
+      "message": "I feel it\u0027s a bit unclear if having helper methods here is really helpful for these three (i.e. SendStreamResponse, SendBlobResponse, SendErrorResponse), as they only have a few lines... maybe yes but maybe not?",
+      "revId": "e02b69fa1a5fc53ad05f1a0d38c37757ab36c5ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
