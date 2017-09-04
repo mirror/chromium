@@ -7,6 +7,7 @@
 
 #include "core/layout/ng/geometry/ng_bfc_offset.h"
 #include "core/layout/ng/geometry/ng_border_edges.h"
+#include "core/layout/ng/geometry/ng_logical_size.h"
 #include "core/layout/ng/inline/ng_baseline.h"
 #include "core/layout/ng/ng_base_fragment_builder.h"
 #include "core/layout/ng/ng_break_token.h"
@@ -181,7 +182,7 @@ class CORE_EXPORT NGFragmentBuilder final : public NGBaseFragmentBuilder {
   Vector<NGLogicalOffset> offsets_;
 
   bool did_break_;
-  LayoutUnit used_block_size_;
+  LayoutUnit used_block_size_{NGSizeIndefinite};
 
   Vector<RefPtr<NGBreakToken>> child_break_tokens_;
   RefPtr<NGBreakToken> last_inline_break_token_;

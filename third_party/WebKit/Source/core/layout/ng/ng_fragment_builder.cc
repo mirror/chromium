@@ -190,13 +190,14 @@ RefPtr<NGLayoutResult> NGFragmentBuilder::ToBoxFragment() {
     if (last_inline_break_token_) {
       DCHECK(!last_inline_break_token_->IsFinished());
       child_break_tokens_.push_back(std::move(last_inline_break_token_));
-      did_break_ = true;
     }
     if (did_break_) {
       break_token = NGBlockBreakToken::Create(node_, used_block_size_,
                                               child_break_tokens_);
     } else {
-      break_token = NGBlockBreakToken::Create(node_, used_block_size_);
+      LayoutUnit size = used_block_size_ == NGSizeIndefinite ? size_.block_size
+                                                             : used_block_size_;
+      break_token = NGBlockBreakToken::Create(node_, size);
     }
   }
 
