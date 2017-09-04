@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "092e2f6a_0b2573d2",
+        "filename": "ios/chrome/browser/ui/ntp/new_tab_page_bar_item.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-04T09:04:44Z",
+      "side": 1,
+      "message": "FYI, we should phase out namespaces; they should be reserved for keeping code from separate projects (net::, blink::, etc.) isolated, not for individual features within Chrome itself.",
+      "range": {
+        "startLine": 19,
+        "startChar": 43,
+        "endLine": 19,
+        "endChar": 51
+      },
+      "revId": "aa8ef4aa81eaa25fe6ca9bc303f0eaf3ef3d20a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
