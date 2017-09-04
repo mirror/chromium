@@ -98,15 +98,23 @@ unsigned ShapingLineBreaker::Hyphenate(unsigned offset,
   if (word_len <= Hyphenation::kMinimumSuffixLength)
     return 0;
 
-  // TODO(kojii): Check min-width?
-
   const String& text = GetText();
   if (backwards) {
-    return hyphenation_->LastHyphenLocation(
-        StringView(text, word_start, word_len), offset - word_start);
+    unsigned before_index = offset - word_start;
+    if (before_index <= Hyphenation::kMinimumPrefixLength)
+      return 0;
+    unsigned result = hyphenation_->LastHyphenLocation(
+        StringView(text, word_start, word_len), before_index);
+    DCHECK(!result || result < before_index);
+    return result;
   } else {
-    return hyphenation_->FirstHyphenLocation(
-        StringView(text, word_start, word_len), offset - word_start);
+    unsigned after_index = offset - word_start;
+    if (word_len - after_index <= Hyphenation::kMinimumSuffixLength)
+      return 0;
+    unsigned result = hyphenation_->FirstHyphenLocation(
+        StringView(text, word_start, word_len), after_index);
+    DCHECK(!result || result > after_index);
+    return result;
   }
 }
 
@@ -115,6 +123,12 @@ unsigned ShapingLineBreaker::Hyphenate(unsigned offset,
                                        bool backwards,
                                        bool* is_hyphenated) const {
   const String& text = GetText();
+  unsigned word_end = break_iterator_->NextBreakOpportunity(offset);
+  if (word_end == offset) {
+    DCHECK_EQ(offset, break_iterator_->PreviousBreakOpportunity(offset, start));
+    *is_hyphenated = false;
+    return word_end;
+  }
   unsigned previous_break_opportunity =
       break_iterator_->PreviousBreakOpportunity(offset, start);
   unsigned word_start = previous_break_opportunity;
@@ -122,16 +136,15 @@ unsigned ShapingLineBreaker::Hyphenate(unsigned offset,
     while (word_start < text.length() && text[word_start] == kSpaceCharacter)
       word_start++;
   }
-  unsigned word_end = break_iterator_->NextBreakOpportunity(offset + 1);
-
-  unsigned prefix_length = Hyphenate(offset, word_start, word_end, backwards);
-  if (!prefix_length) {
-    *is_hyphenated = false;
-    return backwards ? previous_break_opportunity : word_end;
+  if (offset > word_start) {
+    unsigned prefix_length = Hyphenate(offset, word_start, word_end, backwards);
+    if (prefix_length) {
+      *is_hyphenated = true;
+      return word_start + prefix_length;
+    }
   }
-
-  *is_hyphenated = true;
-  return word_start + prefix_length;
+  *is_hyphenated = false;
+  return backwards ? previous_break_opportunity : word_end;
 }
 
 unsigned ShapingLineBreaker::PreviousBreakOpportunity(
