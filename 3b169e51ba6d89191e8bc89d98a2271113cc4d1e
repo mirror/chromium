@@ -52,6 +52,24 @@
       "revId": "3b169e51ba6d89191e8bc89d98a2271113cc4d1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fc06c6a_aa9c8afd",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_utilities.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-04T02:33:49Z",
+      "side": 1,
+      "message": "Done.  Please take another look at this.",
+      "parentUuid": "623fd5b5_0730a865",
+      "revId": "3b169e51ba6d89191e8bc89d98a2271113cc4d1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
