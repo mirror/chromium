@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "e24e242a_18edd6a0",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_dictionary.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-04T03:22:32Z",
+      "side": 1,
+      "message": "Correction. This function is used for function names, C++ class names, etc. We shouldn\u0027t add to_snake_case. Maybe we should add v8_utilities.cpp_variable_name().",
+      "parentUuid": "ec6c3e74_d97a6d08",
+      "range": {
+        "startLine": 124,
+        "startChar": 55,
+        "endLine": 124,
+        "endChar": 63
+      },
+      "revId": "f2db3b09d4b44f298cf8b917da20c2a998b47c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "283e48cf_517d26fa",
         "filename": "third_party/WebKit/Source/bindings/scripts/v8_union.py",
         "patchSetId": 3
