@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "665faca0_046d9d2f",
+        "filename": "chrome/browser/ui/webui/signin/signin_dice_internals_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-04T09:10:36Z",
+      "side": 1,
+      "message": "Done.\n\nI prefer keeping it as a return as sign-out and this disable sync are 2 events that happen asynchronously so in some weird cases this NOTREACHED may be reached.",
+      "parentUuid": "5904414f_6375d6a1",
+      "range": {
+        "startLine": 68,
+        "startChar": 30,
+        "endLine": 68,
+        "endChar": 36
+      },
+      "revId": "f27b84c274a6a73da37e6a28c065337f5b6e4844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e92b28a_bb5dfea8",
         "filename": "components/signin/core/browser/signin_manager.cc",
         "patchSetId": 9
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "8579a515_99983e46",
+        "filename": "components/signin/core/browser/signin_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-04T09:10:36Z",
+      "side": 1,
+      "message": "No, this method will be called for all cases (even when DICE is disabled). This enforced that accounts should always be removed (the pre-DICE behavior). We need this is some cases.",
+      "parentUuid": "8e92b28a_bb5dfea8",
+      "range": {
+        "startLine": 161,
+        "startChar": 20,
+        "endLine": 161,
+        "endChar": 47
+      },
+      "revId": "f27b84c274a6a73da37e6a28c065337f5b6e4844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7c55bc4_fe896dfb",
         "filename": "components/signin/core/browser/signin_manager.h",
         "patchSetId": 9
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-04T08:41:56Z",
       "side": 1,
       "message": "This comment is not very clear for me. What is a \"key\"?",
+      "range": {
+        "startLine": 95,
+        "startChar": 60,
+        "endLine": 95,
+        "endChar": 64
+      },
+      "revId": "f27b84c274a6a73da37e6a28c065337f5b6e4844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a80f2956_e169f3cc",
+        "filename": "components/signin/core/browser/signin_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-04T09:10:36Z",
+      "side": 1,
+      "message": "I think you are right here - this comment is vague. I think this refers to the fact that all internal data concerning the authenticated accounts is removed (e.g. the preference for the authenticated account etc).\n\nI think this was left vague on purpose to avoid exposing additional information about the implementation of the SigninManager.\n\nI\u0027ll leave the comment as is based on the explanation above.",
+      "parentUuid": "f7c55bc4_fe896dfb",
       "range": {
         "startLine": 95,
         "startChar": 60,
