@@ -77,7 +77,9 @@ class CONTENT_EXPORT FrameTreeNode {
 
   FrameTreeNode* AddChild(std::unique_ptr<FrameTreeNode> child,
                           int process_id,
-                          int frame_routing_id);
+                          int frame_routing_id,
+                          service_manager::mojom::InterfaceProviderRequest
+                              initial_interfaces_request);
   void RemoveChild(FrameTreeNode* child);
 
   // Clears process specific-state in this node to prepare for a new process.

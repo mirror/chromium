@@ -3,7 +3,10 @@
 // found in the LICENSE file.
 
 #include <stdint.h>
+#include <tuple>
 
+#include "base/bind.h"
+#include "base/bind_helpers.h"
 #include "base/command_line.h"
 #include "base/debug/leak_annotations.h"
 #include "base/run_loop.h"
@@ -15,6 +18,7 @@
 #include "content/common/renderer.mojom.h"
 #include "content/common/view_messages.h"
 #include "content/public/common/previews_state.h"
+#include "content/public/renderer/content_renderer_client.h"
 #include "content/public/renderer/document_state.h"
 #include "content/public/test/frame_load_waiter.h"
 #include "content/public/test/render_view_test.h"
@@ -23,6 +27,11 @@
 #include "content/renderer/render_frame_impl.h"
 #include "content/renderer/render_view_impl.h"
 #include "content/test/fake_compositor_dependencies.h"
+#include "content/test/frame_host_test_interface.mojom.h"
+#include "content/test/test_render_frame.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
+#include "services/service_manager/public/interfaces/interface_provider.mojom.h"
+#include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/WebKit/public/platform/WebEffectiveConnectionType.h"
 #include "third_party/WebKit/public/platform/WebRuntimeFeatures.h"
@@ -37,13 +46,15 @@
 using blink::WebString;
 using blink::WebURLRequest;
 
-namespace {
-const int32_t kSubframeRouteId = 20;
-const int32_t kSubframeWidgetRouteId = 21;
-const int32_t kFrameProxyRouteId = 22;
-}  // namespace
-
 namespace content {
+
+namespace {
+
+constexpr int32_t kSubframeRouteId = 20;
+constexpr int32_t kSubframeWidgetRouteId = 21;
+constexpr int32_t kFrameProxyRouteId = 22;
+
+}  // namespace
 
 // RenderFrameImplTest creates a RenderFrameImpl that is a child of the
 // main frame, and has its own RenderWidget. This behaves like an out
@@ -75,11 +86,12 @@ class RenderFrameImplTest : public RenderViewTest {
         ->OnSwapOut(kFrameProxyRouteId, false, frame_replication_state);
 
     RenderFrameImpl::CreateFrame(
-        kSubframeRouteId, MSG_ROUTING_NONE, MSG_ROUTING_NONE,
+        kSubframeRouteId, nullptr, MSG_ROUTING_NONE, MSG_ROUTING_NONE,
         kFrameProxyRouteId, MSG_ROUTING_NONE, frame_replication_state,
         &compositor_deps_, widget_params, FrameOwnerProperties());
 
-    frame_ = RenderFrameImpl::FromRoutingID(kSubframeRouteId);
+    frame_ = static_cast<TestRenderFrame*>(
+        RenderFrameImpl::FromRoutingID(kSubframeRouteId));
     EXPECT_FALSE(frame_->is_main_frame_);
   }
 
@@ -101,11 +113,11 @@ class RenderFrameImplTest : public RenderViewTest {
     frame->effective_connection_type_ = type;
   }
 
-  RenderFrameImpl* GetMainRenderFrame() {
-    return static_cast<RenderFrameImpl*>(view_->GetMainRenderFrame());
+  TestRenderFrame* GetMainRenderFrame() {
+    return static_cast<TestRenderFrame*>(view_->GetMainRenderFrame());
   }
 
-  RenderFrameImpl* frame() { return frame_; }
+  TestRenderFrame* frame() { return frame_; }
 
   content::RenderWidget* frame_widget() const {
     return frame_->render_widget_.get();
@@ -120,7 +132,7 @@ class RenderFrameImplTest : public RenderViewTest {
 #endif
 
  private:
-  RenderFrameImpl* frame_;
+  TestRenderFrame* frame_;
   FakeCompositorDependencies compositor_deps_;
 };
 
@@ -583,6 +595,310 @@ TEST_F(RenderFrameImplTest, ShouldUseClientLoFiForRequest) {
               frame()->ShouldUseClientLoFiForRequest(request))
         << (&test - tests);
   }
+}
+
+// RenderFrameRemoteInterfacesTest ------------------------------------
+
+namespace {
+
+constexpr char kTestFirstURL[] = "http://foo.com/";
+constexpr char kTestSecondURL[] = "http://bar.com/";
+
+constexpr char kFrameEventDidCreateNewDocument[] = "did-create-new-document";
+constexpr char kFrameEventOnDemandInterfaceRequest[] = "on-demand";
+constexpr char kFrameEventWillCommitProvisionalLoad[] =
+    "will-commit-provisional-load";
+constexpr char kFrameEventDidCommitProvisionalLoad[] =
+    "did-commit-provisional-load";
+constexpr char kFrameEventDidCommitSameDocumentLoad[] =
+    "did-commit-same-document-load";
+
+using SourceAnnotation = std::tuple<GURL, std::string>;
+
+class MockSourceAnnotatedInterfaceImpl
+    : public mojom::SourceAnnotatedInterface {
+ public:
+  MockSourceAnnotatedInterfaceImpl() {}
+  ~MockSourceAnnotatedInterfaceImpl() override {}
+
+  void Bind(mojom::SourceAnnotatedInterfaceRequest request) {
+    bindings_.AddBinding(this, std::move(request));
+  }
+
+  const std::vector<SourceAnnotation>& request_sources() const {
+    return request_sources_;
+  }
+
+ protected:
+  void AnnotateSource(const GURL& url, const std::string& event) override {
+    request_sources_.emplace_back(url, event);
+  }
+
+ private:
+  mojo::BindingSet<mojom::SourceAnnotatedInterface> bindings_;
+  std::vector<SourceAnnotation> request_sources_;
+
+  DISALLOW_COPY_AND_ASSIGN(MockSourceAnnotatedInterfaceImpl);
+};
+
+class SourceAnnotatedInterfaceRequestIssuer : public RenderFrameObserver {
+ public:
+  SourceAnnotatedInterfaceRequestIssuer(RenderFrame* render_frame)
+      : RenderFrameObserver(render_frame) {}
+
+  void RequestInterfaceOnDemand() {
+    RequestInterfaceWithSourceAnnotation(kFrameEventOnDemandInterfaceRequest);
+  }
+
+ private:
+  void RequestInterfaceWithSourceAnnotation(const std::string& event) {
+    mojom::SourceAnnotatedInterfacePtr ptr;
+    render_frame()->GetRemoteInterfaces()->GetInterface(
+        mojo::MakeRequest(&ptr));
+
+    blink::WebDocument document = render_frame()->GetWebFrame()->GetDocument();
+    ptr->AnnotateSource(!document.IsNull() ? GURL(document.Url()) : GURL(),
+                        event);
+  }
+
+  // RenderFrameObserver:
+  void OnDestruct() override {}
+
+  // TODO(engedy): This should be DidCreateNewDocument, but that seems to be
+  // invoked before DCPL, which is... weird?
+  void DidCreateDocumentElement() override {
+    RequestInterfaceWithSourceAnnotation(kFrameEventDidCreateNewDocument);
+  }
+
+  void WillCommitProvisionalLoad() override {
+    RequestInterfaceWithSourceAnnotation(kFrameEventWillCommitProvisionalLoad);
+  }
+
+  void DidCommitProvisionalLoad(bool is_new_navigation,
+                                bool is_same_document_navigation) override {
+    RequestInterfaceWithSourceAnnotation(
+        is_same_document_navigation ? kFrameEventDidCommitSameDocumentLoad
+                                    : kFrameEventDidCommitProvisionalLoad);
+  }
+
+  DISALLOW_COPY_AND_ASSIGN(SourceAnnotatedInterfaceRequestIssuer);
+};
+
+// A simple testing implementation of InterfaceProvider that is capable of
+// binding requests for just one kind of interface.
+class TestSimpleInterfaceProviderImpl
+    : public service_manager::mojom::InterfaceProvider {
+ public:
+  using BinderCallback =
+      base::RepeatingCallback<void(mojo::ScopedMessagePipeHandle)>;
+
+  // The |interface_name| and the corresponding |binder| for the one kind of
+  // interface this provider can bind requests for.
+  TestSimpleInterfaceProviderImpl(const std::string interface_name,
+                                  BinderCallback binder)
+      : binding_(this), interface_name_(interface_name), binder_(binder) {}
+
+  void Bind(service_manager::mojom::InterfaceProviderRequest request) {
+    ASSERT_FALSE(binding_.is_bound());
+    binding_.Bind(std::move(request));
+  }
+
+ private:
+  // mojom::InterfaceProvider:
+  void GetInterface(const std::string& interface_name,
+                    mojo::ScopedMessagePipeHandle handle) override {
+    if (interface_name == interface_name_)
+      binder_.Run(std::move(handle));
+  }
+
+  mojo::Binding<service_manager::mojom::InterfaceProvider> binding_;
+
+  std::string interface_name_;
+  BinderCallback binder_;
+
+  DISALLOW_COPY_AND_ASSIGN(TestSimpleInterfaceProviderImpl);
+};
+
+// Expected that the specified InterfaceProvider |request| has
+// SourceAnnotatedInterfaceRequests pending from the |expected_sources|.
+void ExpectPendingInterfaceRequestsFromSources(
+    service_manager::mojom::InterfaceProviderRequest request,
+    std::vector<SourceAnnotation> expected_sources) {
+  MockSourceAnnotatedInterfaceImpl impl;
+  TestSimpleInterfaceProviderImpl provider(
+      mojom::SourceAnnotatedInterface::Name_,
+      base::Bind(
+          [](MockSourceAnnotatedInterfaceImpl* impl,
+             mojo::ScopedMessagePipeHandle handle) {
+            impl->Bind(
+                mojom::SourceAnnotatedInterfaceRequest(std::move(handle)));
+          },
+          base::Unretained(&impl)));
+
+  provider.Bind(std::move(request));
+  base::RunLoop().RunUntilIdle();
+  EXPECT_THAT(impl.request_sources(),
+              testing::UnorderedElementsAreArray(expected_sources));
+}
+
+using FrameCreatedCallback = base::RepeatingCallback<void(TestRenderFrame*)>;
+
+class FrameCreationObservingRendererClient : public ContentRendererClient {
+ public:
+  FrameCreationObservingRendererClient() {}
+  ~FrameCreationObservingRendererClient() override {}
+
+  void set_callback(FrameCreatedCallback callback) {
+    callback_ = std::move(callback);
+  }
+
+ protected:
+  void RenderFrameCreated(RenderFrame* render_frame) override {
+    ContentRendererClient::RenderFrameCreated(render_frame);
+    if (callback_)
+      callback_.Run(static_cast<TestRenderFrame*>(render_frame));
+  }
+
+ private:
+  FrameCreatedCallback callback_;
+
+  DISALLOW_COPY_AND_ASSIGN(FrameCreationObservingRendererClient);
+};
+
+}  // namespace
+
+class RenderFrameRemoteInterfacesTest : public RenderViewTest {
+ public:
+  RenderFrameRemoteInterfacesTest() {}
+  ~RenderFrameRemoteInterfacesTest() override {}
+
+ protected:
+  void SetUp() override {
+    RenderViewTest::SetUp();
+    LoadHTML("Nothing to see here.");
+  }
+
+  void TearDown() override {
+#if defined(LEAK_SANITIZER)
+    // Do this before shutting down V8 in RenderViewTest::TearDown().
+    // http://crbug.com/328552
+    __lsan_do_leak_check();
+#endif
+    RenderViewTest::TearDown();
+  }
+
+  void SetFrameCreatedCallback(FrameCreatedCallback callback) {
+    DCHECK(frame_creation_observer_);
+    frame_creation_observer_->set_callback(std::move(callback));
+  }
+
+  TestRenderFrame* GetMainRenderFrame() {
+    return static_cast<TestRenderFrame*>(view_->GetMainRenderFrame());
+  }
+
+  ContentRendererClient* CreateContentRendererClient() override {
+    frame_creation_observer_ = new FrameCreationObservingRendererClient();
+    return frame_creation_observer_;
+  }
+
+ private:
+  FrameCreationObservingRendererClient* frame_creation_observer_ = nullptr;
+
+  DISALLOW_COPY_AND_ASSIGN(RenderFrameRemoteInterfacesTest);
+};
+
+TEST_F(RenderFrameRemoteInterfacesTest, AvailableBeforeFirstCommittedLoad) {
+  using InterfaceProviderRequest =
+      service_manager::mojom::InterfaceProviderRequest;
+
+  InterfaceProviderRequest provider_request_for_initial_empty_document;
+  SetFrameCreatedCallback(base::Bind(
+      [](InterfaceProviderRequest* request, TestRenderFrame* frame) {
+        EXPECT_TRUE(frame->current_history_item().IsNull());
+
+        *request = frame->TakeLastInterfaceProviderRequest();
+        EXPECT_TRUE(request->is_pending());
+
+        SourceAnnotatedInterfaceRequestIssuer interface_requester(frame);
+        interface_requester.RequestInterfaceOnDemand();
+      },
+      base::Unretained(&provider_request_for_initial_empty_document)));
+
+  LoadHTMLWithUrlOverride("<iframe src=\"about:blank\"></iframe>",
+                          kTestFirstURL);
+
+  TestRenderFrame* child_frame =
+      static_cast<TestRenderFrame*>(RenderFrameImpl::FromWebFrame(
+          view_->GetMainRenderFrame()->GetWebFrame()->FirstChild()));
+  EXPECT_FALSE(child_frame->current_history_item().IsNull());
+
+  auto provider_request_for_first_document =
+      child_frame->TakeLastInterfaceProviderRequest();
+  ASSERT_TRUE(provider_request_for_first_document.is_pending());
+
+  ExpectPendingInterfaceRequestsFromSources(
+      std::move(provider_request_for_initial_empty_document),
+      {SourceAnnotation(GURL(), kFrameEventOnDemandInterfaceRequest)});
+
+  ExpectPendingInterfaceRequestsFromSources(
+      std::move(provider_request_for_first_document),
+      std::vector<SourceAnnotation>());
+}
+
+TEST_F(RenderFrameRemoteInterfacesTest, ReplacedOnNavigation) {
+  LoadHTMLWithUrlOverride("", kTestFirstURL);
+
+  auto provider_request_for_first_document =
+      GetMainRenderFrame()->TakeLastInterfaceProviderRequest();
+  ASSERT_TRUE(provider_request_for_first_document.is_pending());
+
+  SourceAnnotatedInterfaceRequestIssuer requester(GetMainRenderFrame());
+  requester.RequestInterfaceOnDemand();
+
+  LoadHTMLWithUrlOverride("", kTestSecondURL);
+
+  auto provider_request_for_second_document =
+      GetMainRenderFrame()->TakeLastInterfaceProviderRequest();
+  ASSERT_TRUE(provider_request_for_second_document.is_pending());
+
+  ExpectPendingInterfaceRequestsFromSources(
+      std::move(provider_request_for_first_document),
+      {SourceAnnotation(GURL(kTestFirstURL),
+                        kFrameEventOnDemandInterfaceRequest),
+       SourceAnnotation(GURL(kTestFirstURL),
+                        kFrameEventWillCommitProvisionalLoad)});
+
+  ExpectPendingInterfaceRequestsFromSources(
+      std::move(provider_request_for_second_document),
+      {SourceAnnotation(GURL(kTestSecondURL), kFrameEventDidCreateNewDocument),
+       SourceAnnotation(GURL(kTestSecondURL),
+                        kFrameEventDidCommitProvisionalLoad)});
+}
+
+TEST_F(RenderFrameRemoteInterfacesTest, ReusedOnSameDocumentNavigation) {
+  LoadHTMLWithUrlOverride("", kTestFirstURL);
+
+  auto provider_request =
+      GetMainRenderFrame()->TakeLastInterfaceProviderRequest();
+  ASSERT_TRUE(provider_request.is_pending());
+
+  SourceAnnotatedInterfaceRequestIssuer requester(GetMainRenderFrame());
+
+  OnSameDocumentNavigation(GetMainFrame(), true /* is_new_navigation */,
+                           true /* is_contenet_intiatied */);
+
+  auto provider_request_none =
+      GetMainRenderFrame()->TakeLastInterfaceProviderRequest();
+  EXPECT_FALSE(provider_request_none.is_pending());
+
+  requester.RequestInterfaceOnDemand();
+
+  ExpectPendingInterfaceRequestsFromSources(
+      std::move(provider_request),
+      {SourceAnnotation(GURL(kTestFirstURL),
+                        kFrameEventOnDemandInterfaceRequest),
+       SourceAnnotation(GURL(kTestFirstURL),
+                        kFrameEventDidCommitSameDocumentLoad)});
 }
 
 }  // namespace content

@@ -113,6 +113,7 @@
 #include "content/public/common/service_names.mojom.h"
 #include "content/public/common/url_constants.h"
 #include "content/public/common/url_utils.h"
+#include "device/geolocation/geolocation_context.h"
 #include "device/vr/features/features.h"
 #include "media/base/media_switches.h"
 #include "media/media_features.h"
@@ -473,16 +474,18 @@ RenderFrameHostImpl* RenderFrameHostImpl::FromOverlayRoutingToken(
   return it == g_token_frame_map.Get().end() ? nullptr : it->second;
 }
 
-RenderFrameHostImpl::RenderFrameHostImpl(SiteInstance* site_instance,
-                                         RenderViewHostImpl* render_view_host,
-                                         RenderFrameHostDelegate* delegate,
-                                         RenderWidgetHostDelegate* rwh_delegate,
-                                         FrameTree* frame_tree,
-                                         FrameTreeNode* frame_tree_node,
-                                         int32_t routing_id,
-                                         int32_t widget_routing_id,
-                                         bool hidden,
-                                         bool renderer_initiated_creation)
+RenderFrameHostImpl::RenderFrameHostImpl(
+    SiteInstance* site_instance,
+    RenderViewHostImpl* render_view_host,
+    RenderFrameHostDelegate* delegate,
+    RenderWidgetHostDelegate* rwh_delegate,
+    FrameTree* frame_tree,
+    FrameTreeNode* frame_tree_node,
+    int32_t routing_id,
+    service_manager::mojom::InterfaceProviderRequest initial_interfaces_request,
+    int32_t widget_routing_id,
+    bool hidden,
+    bool renderer_initiated_creation)
     : render_view_host_(render_view_host),
       delegate_(delegate),
       site_instance_(static_cast<SiteInstanceImpl*>(site_instance)),
@@ -510,10 +513,10 @@ RenderFrameHostImpl::RenderFrameHostImpl(SiteInstance* site_instance,
       has_selection_(false),
       is_audible_(false),
       last_navigation_previews_state_(PREVIEWS_UNSPECIFIED),
-      frame_host_interface_broker_binding_(this),
       frame_host_associated_binding_(this),
       waiting_for_init_(renderer_initiated_creation),
       has_focused_editable_element_(false),
+      document_scoped_interface_provider_binding_(this),
       weak_ptr_factory_(this) {
   frame_tree_->AddRenderViewHostRef(render_view_host_);
   GetProcess()->AddRoute(routing_id_, this);
@@ -538,7 +541,15 @@ RenderFrameHostImpl::RenderFrameHostImpl(SiteInstance* site_instance,
         frame_tree_node_->parent()->current_frame_host()->nav_entry_id());
   }
 
+  if (initial_interfaces_request.is_pending()) {
+    BindInterfaceProviderForNewDocument(std::move(initial_interfaces_request));
+  } else {
+    BindInterfaceProviderForNewDocument(
+        mojo::MakeRequest(&pending_initial_interfaces_));
+  }
+
   SetUpMojoIfNeeded();
+
   swapout_event_monitor_timeout_.reset(new TimeoutMonitor(base::Bind(
       &RenderFrameHostImpl::OnSwappedOut, weak_ptr_factory_.GetWeakPtr())));
   beforeunload_timeout_.reset(
@@ -1159,6 +1170,8 @@ bool RenderFrameHostImpl::CreateRenderFrame(int proxy_routing_id,
 
   mojom::CreateFrameParamsPtr params = mojom::CreateFrameParams::New();
   params->routing_id = routing_id_;
+  DCHECK(pending_initial_interfaces_.is_bound());
+  params->initial_interfaces = std::move(pending_initial_interfaces_);
   params->proxy_routing_id = proxy_routing_id;
   params->opener_routing_id = opener_routing_id;
   params->parent_routing_id = parent_routing_id;
@@ -1312,6 +1325,8 @@ void RenderFrameHostImpl::OnDidAddMessageToConsole(
 
 void RenderFrameHostImpl::OnCreateChildFrame(
     int new_routing_id,
+    service_manager::mojom::InterfaceProviderRequest
+        new_initial_interfaces_request,
     blink::WebTreeScopeType scope,
     const std::string& frame_name,
     const std::string& frame_unique_name,
@@ -1320,6 +1335,7 @@ void RenderFrameHostImpl::OnCreateChildFrame(
     const FrameOwnerProperties& frame_owner_properties) {
   // TODO(lukasza): Call ReceivedBadMessage when |frame_unique_name| is empty.
   DCHECK(!frame_unique_name.empty());
+  DCHECK(new_initial_interfaces_request.is_pending());
 
   // The RenderFrame corresponding to this host sent an IPC message to create a
   // child, but by the time we get here, it's possible for the host to have been
@@ -1329,7 +1345,8 @@ void RenderFrameHostImpl::OnCreateChildFrame(
     return;
 
   frame_tree_->AddFrame(frame_tree_node_, GetProcess()->GetID(), new_routing_id,
-                        scope, frame_name, frame_unique_name, sandbox_flags,
+                        std::move(new_initial_interfaces_request), scope,
+                        frame_name, frame_unique_name, sandbox_flags,
                         container_policy, frame_owner_properties);
 }
 
@@ -1477,7 +1494,8 @@ void RenderFrameHostImpl::OnDidFailLoadWithError(
 // notification containing parameters identifying the navigation.
 void RenderFrameHostImpl::DidCommitProvisionalLoad(
     std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params>
-        validated_params) {
+        validated_params,
+    service_manager::mojom::InterfaceProviderRequest request) {
   ScopedCommitStateResetter commit_state_resetter(this);
   RenderProcessHost* process = GetProcess();
 
@@ -1497,11 +1515,21 @@ void RenderFrameHostImpl::DidCommitProvisionalLoad(
   // navigating already and sent it before hearing the FrameMsg_Stop message.
   // Treat this as an implicit beforeunload ack to allow the pending navigation
   // to continue.
-  if (is_waiting_for_beforeunload_ack_ &&
-      unload_ack_is_for_navigation_ &&
+  if (is_waiting_for_beforeunload_ack_ && unload_ack_is_for_navigation_ &&
       !GetParent()) {
     base::TimeTicks approx_renderer_start_time = send_before_unload_start_time_;
     OnBeforeUnloadACK(true, approx_renderer_start_time, base::TimeTicks::Now());
+  }
+
+  if (request.is_pending()) {
+    // Replace the old binding if present, to ensure that no pending interface
+    // requests originating from the previous document be dispatched.
+    document_scoped_interface_provider_binding_.Close();
+    BindInterfaceProviderForNewDocument(std::move(request));
+  } else if (!validated_params->was_within_same_document) {
+    bad_message::ReceivedBadMessage(
+        process, bad_message::RFH_INTERFACE_PROVIDER_MISSING);
+    return;
   }
 
   // If we're waiting for an unload ack from this renderer and we receive a
@@ -2735,6 +2763,12 @@ void RenderFrameHostImpl::OnRequestOverlayRoutingToken() {
                                            *overlay_routing_token_));
 }
 
+service_manager::mojom::InterfaceProviderPtr
+RenderFrameHostImpl::TakePendingInitialInterfaces() {
+  DCHECK(pending_initial_interfaces_.is_bound());
+  return std::move(pending_initial_interfaces_);
+}
+
 void RenderFrameHostImpl::OnShowCreatedWindow(int pending_widget_routing_id,
                                               WindowOpenDisposition disposition,
                                               const gfx::Rect& initial_rect,
@@ -2858,6 +2892,26 @@ void RenderFrameHostImpl::CreateNewWindow(
   RunCreateWindowCompleteCallback(
       std::move(callback), std::move(reply), render_view_route_id,
       main_frame_route_id, main_frame_widget_route_id, cloned_namespace->id());
+}
+
+void RenderFrameHostImpl::BindInterfaceProviderForNewDocument(
+    service_manager::mojom::InterfaceProviderRequest request) {
+  document_scoped_interface_provider_binding_.Bind(
+      RouteThroughCapabilityFilter(std::move(request)));
+}
+
+service_manager::mojom::InterfaceProviderRequest
+RenderFrameHostImpl::RouteThroughCapabilityFilter(
+    service_manager::mojom::InterfaceProviderRequest request) {
+  service_manager::mojom::InterfaceProviderPtr filtered_provider;
+  auto filtered_request = mojo::MakeRequest(&filtered_provider);
+  service_manager::Connector* connector =
+      BrowserContext::GetConnectorFor(GetProcess()->GetBrowserContext());
+  DCHECK(connector);
+  connector->FilterInterfaces(mojom::kNavigation_FrameSpec,
+                              GetProcess()->GetChildIdentity(),
+                              std::move(request), std::move(filtered_provider));
+  return filtered_request;
 }
 
 void RenderFrameHostImpl::RunCreateWindowCompleteCallback(
@@ -3021,9 +3075,6 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
   registry_->AddInterface(
       base::Bind(&ForwardRequest<device::mojom::VibrationManager>,
                  device::mojom::kServiceName));
-
-  registry_->AddInterface(
-      base::Bind(&media::WatchTimeRecorder::CreateWatchTimeRecorderProvider));
 
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           cc::switches::kEnableGpuBenchmarking)) {
@@ -3405,11 +3456,7 @@ void RenderFrameHostImpl::SetUpMojoIfNeeded() {
   RegisterMojoInterfaces();
   mojom::FrameFactoryPtr frame_factory;
   BindInterface(GetProcess(), &frame_factory);
-
-  mojom::FrameHostInterfaceBrokerPtr broker_proxy;
-  frame_host_interface_broker_binding_.Bind(mojo::MakeRequest(&broker_proxy));
-  frame_factory->CreateFrame(routing_id_, MakeRequest(&frame_),
-                             std::move(broker_proxy));
+  frame_factory->CreateFrame(routing_id_, MakeRequest(&frame_));
 
   service_manager::mojom::InterfaceProviderPtr remote_interfaces;
   frame_->GetInterfaceProvider(mojo::MakeRequest(&remote_interfaces));
@@ -3427,8 +3474,9 @@ void RenderFrameHostImpl::InvalidateMojoConnection() {
   registry_.reset();
 
   frame_.reset();
-  frame_host_interface_broker_binding_.Close();
   frame_bindings_control_.reset();
+  frame_host_associated_binding_.Close();
+  document_scoped_interface_provider_binding_.Close();
 
   // Disconnect with ImageDownloader Mojo service in RenderFrame.
   mojo_image_downloader_.reset();
@@ -3736,17 +3784,6 @@ void RenderFrameHostImpl::FilesSelectedInChooser(
 
 bool RenderFrameHostImpl::HasSelection() {
   return has_selection_;
-}
-
-void RenderFrameHostImpl::GetInterfaceProvider(
-    service_manager::mojom::InterfaceProviderRequest interfaces) {
-  service_manager::Identity child_identity = GetProcess()->GetChildIdentity();
-  service_manager::Connector* connector =
-      BrowserContext::GetConnectorFor(GetProcess()->GetBrowserContext());
-  service_manager::mojom::InterfaceProviderPtr provider;
-  interface_provider_bindings_.AddBinding(this, mojo::MakeRequest(&provider));
-  connector->FilterInterfaces(mojom::kNavigation_FrameSpec, child_identity,
-                              std::move(interfaces), std::move(provider));
 }
 
 #if BUILDFLAG(USE_EXTERNAL_POPUP_MENU)
@@ -4072,6 +4109,10 @@ void RenderFrameHostImpl::BindNFCRequest(device::mojom::NFCRequest request) {
 void RenderFrameHostImpl::GetInterface(
     const std::string& interface_name,
     mojo::ScopedMessagePipeHandle interface_pipe) {
+  // NOTE: This method services requests on
+  // |document_scoped_interface_provider_binding_|. It is therefore safe to
+  // assume that every incoming interface request is coming from the currently
+  // committed navigation's document in the renderer.
   if (!registry_ ||
       !registry_->TryBindInterface(interface_name, &interface_pipe)) {
     delegate_->OnInterfaceRequest(this, interface_name, &interface_pipe);

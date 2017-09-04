@@ -598,7 +598,7 @@ RenderViewHostImpl* InterstitialPageImpl::CreateRenderViewHost() {
   // RenderViewHostImpl has-a RenderWidgetHostImpl. https://crbug.com/545684
   int32_t widget_routing_id = site_instance->GetProcess()->GetNextRoutingID();
   frame_tree_->root()->render_manager()->Init(
-      site_instance.get(), widget_routing_id, MSG_ROUTING_NONE,
+      site_instance.get(), widget_routing_id, MSG_ROUTING_NONE, nullptr,
       widget_routing_id, false);
   return frame_tree_->root()->current_frame_host()->render_view_host();
 }

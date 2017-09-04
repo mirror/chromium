@@ -122,6 +122,8 @@ class CONTENT_EXPORT FrameTree {
   bool AddFrame(FrameTreeNode* parent,
                 int process_id,
                 int new_routing_id,
+                service_manager::mojom::InterfaceProviderRequest
+                    new_initial_interfaces_request,
                 blink::WebTreeScopeType scope,
                 const std::string& frame_name,
                 const std::string& frame_unique_name,
