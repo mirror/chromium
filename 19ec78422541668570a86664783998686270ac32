@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a8b06ff8_0fe20b00",
+        "filename": "third_party/WebKit/Source/core/css/CSSDefaultStyleSheets.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-09-04T10:13:56Z",
+      "side": 1,
+      "message": "This CL address that: https://chromium-review.googlesource.com/c/chromium/src/+/628171",
+      "parentUuid": "d56a3984_662537c1",
+      "revId": "19ec78422541668570a86664783998686270ac32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5cfc7537_3994e7bb",
         "filename": "third_party/WebKit/Source/core/layout/LayoutThemeMobile.cpp",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "19ec78422541668570a86664783998686270ac32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d3efd72_6f1d48d0",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutThemeMobile.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-09-04T10:13:56Z",
+      "side": 1,
+      "message": "As above.",
+      "parentUuid": "5cfc7537_3994e7bb",
+      "revId": "19ec78422541668570a86664783998686270ac32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
