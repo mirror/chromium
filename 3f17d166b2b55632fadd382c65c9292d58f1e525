@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "93a7abee_340a3d59",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-09-04T19:44:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f379443_a5b609c4",
+      "range": {
+        "startLine": 7,
+        "startChar": 21,
+        "endLine": 7,
+        "endChar": 26
+      },
+      "revId": "3f17d166b2b55632fadd382c65c9292d58f1e525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86207be4_34d670ff",
         "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f4b401fd_95636bcb",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-09-04T19:44:08Z",
+      "side": 1,
+      "message": "Good one, thanks. Actually using std::make_unique as Chrome is in the process of transitioning away from base::MakeUnique (crbug.com/755727). \u003cmemory\u003e is included in the .h file.",
+      "parentUuid": "86207be4_34d670ff",
+      "range": {
+        "startLine": 127,
+        "startChar": 36,
+        "endLine": 127,
+        "endChar": 58
+      },
+      "revId": "3f17d166b2b55632fadd382c65c9292d58f1e525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33f3eea5_2ec14dd9",
         "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-04T15:17:10Z",
       "side": 1,
       "message": "According to the API doc[1], fullscreen_types is a bitfield and is treated as such in this function. Are you sure you want to check it with \u003d\u003d here?\n\n[1] https://cs.chromium.org/chromium/src/extensions/browser/app_window/native_app_window.h?rcl\u003d50e71c6c07a658505ee03889f08dad07c2a1a1b8\u0026l\u003d36",
+      "range": {
+        "startLine": 369,
+        "startChar": 12,
+        "endLine": 369,
+        "endChar": 28
+      },
+      "revId": "3f17d166b2b55632fadd382c65c9292d58f1e525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15cd1f7f_1dba7b8a",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-09-04T19:44:08Z",
+      "side": 1,
+      "message": "Good point, I\u0027ll switch over. I\u0027ve checked and it doesn\u0027t matter in the current configuration but that may change (the bitfield is never currently used as a bitfield). I\u0027ll keep this one open as I\u0027m wondering what the OWNERs opinion is here.",
+      "parentUuid": "33f3eea5_2ec14dd9",
       "range": {
         "startLine": 369,
         "startChar": 12,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "6b18c5a3_ff8d77a8",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-09-04T19:44:08Z",
+      "side": 1,
+      "message": "The ExclusiveAccessBubbleViews needs an AcceleratorProvider it in its implementation. During the constructor it does a call to here and records the accelerator used for command_id (as browser_fullscreen_exit_accelerator_). In ExclusiveAccessBubbleViews::UpdateViewContent it gets the actual text to be displayed in the toast, and there\u0027s a branch there that doesn\u0027t use this accelerator, and that\u0027s the branch I\u0027m using [1]. I can add a DCHECK somewhere to make sure that\u0027s the branch I\u0027m hitting.\n\nTrue is returned because there\u0027s a DCHECK in that constructor which gets triggered if I return false here.\n\nI\u0027m actually open to suggestions on handling this part differently, maybe the OWNER will have an idea, but I think this is good enough (I\u0027m basically fitting the bubble code to a bit different context than it was originally used in).\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/ui/views/exclusive_access_bubble_views.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d189",
+      "parentUuid": "c688a513_af9edb14",
+      "range": {
+        "startLine": 445,
+        "startChar": 35,
+        "endLine": 445,
+        "endChar": 61
+      },
+      "revId": "3f17d166b2b55632fadd382c65c9292d58f1e525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "de943f3e_6be0f920",
         "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
         "patchSetId": 1
@@ -105,6 +201,30 @@
       "writtenOn": "2017-09-04T15:17:10Z",
       "side": 1,
       "message": "What does this mean? Same for dummy.display.url below.",
+      "range": {
+        "startLine": 489,
+        "startChar": 18,
+        "endLine": 489,
+        "endChar": 44
+      },
+      "revId": "3f17d166b2b55632fadd382c65c9292d58f1e525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "176f4983_847831b4",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-09-04T19:44:08Z",
+      "side": 1,
+      "message": "I can basically pass in an empty GURL() in both calls, but there\u0027s a check inside UpdateContent that just returns from the function if the url and bubble_type are same as the last ones set [1], so I pass in two different dummy urls to pass the check.\n\nI\u0027m open to alternatives here.\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/ui/views/exclusive_access_bubble_views.cc?sq\u003dpackage:chromium\u0026l\u003d119",
+      "parentUuid": "de943f3e_6be0f920",
       "range": {
         "startLine": 489,
         "startChar": 18,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "09f62a5a_bd251f27",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-09-04T19:44:08Z",
+      "side": 1,
+      "message": "Basically I\u0027m not using bubble_first_hide_callback at all, just trying to do the proper thing and pass it somewhere further and that might as well be the UpdateContent call.\n\nBut now thinking about it a bit more I can \"disable\" that parameter completely since I don\u0027t need it (and if someone needs it in the future he can change the code to accomodate that). WDYT? (so the function signature will have the parameter but it won\u0027t be used inside this function) I think I\u0027d prefer that approach actually.",
+      "parentUuid": "31c57934_43fe097f",
+      "range": {
+        "startLine": 490,
+        "startChar": 6,
+        "endLine": 490,
+        "endChar": 39
+      },
+      "revId": "3f17d166b2b55632fadd382c65c9292d58f1e525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "33de7b26_da5597e3",
         "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
         "patchSetId": 1
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "aa5cee93_b965098f",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-09-04T19:44:08Z",
+      "side": 1,
+      "message": "The constructor by itself doesn\u0027t show the bubble/toast, UpdateContent needs to be called.",
+      "parentUuid": "33de7b26_da5597e3",
+      "range": {
+        "startLine": 491,
+        "startChar": 28,
+        "endLine": 491,
+        "endChar": 41
+      },
+      "revId": "3f17d166b2b55632fadd382c65c9292d58f1e525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8c629aca_8b8b5169",
         "filename": "chrome/browser/ui/views/frame/browser_view.cc",
         "patchSetId": 1
@@ -174,6 +342,30 @@
       "writtenOn": "2017-09-04T15:17:10Z",
       "side": 1,
       "message": "How does this relate to ChromeNativeAppWindowViewsAuraAsh::UpdateExclusiveAccessExitBubbleContent // when is which one used called?",
+      "range": {
+        "startLine": 881,
+        "startChar": 18,
+        "endLine": 881,
+        "endChar": 56
+      },
+      "revId": "3f17d166b2b55632fadd382c65c9292d58f1e525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aab7233f_8193f7b4",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 881,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-09-04T19:44:08Z",
+      "side": 1,
+      "message": "This file (browser_view) is used for the browser, and the other one (chrome_native_app_window_views_aura_ash) is used for Chrome apps.",
+      "parentUuid": "8c629aca_8b8b5169",
       "range": {
         "startLine": 881,
         "startChar": 18,
