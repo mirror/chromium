@@ -60,6 +60,24 @@
     },
     {
       "key": {
+        "uuid": "97b266d9_fb326b41",
+        "filename": "tools/idl_parser/idl_parser.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-04T05:42:07Z",
+      "side": 1,
+      "message": "Then it\u0027s OK to go with current code (PS8).\n\nNote: I wanted not to split code for tests and production. But this part is simple enough to check them identical by eyes.",
+      "parentUuid": "f1e8c6a2_c8b70a17",
+      "revId": "bfcad6595d7b39a2b27fe3ff8119ee3a242b87dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f0e62ef_f4a8b3f7",
         "filename": "tools/idl_parser/idl_parser.py",
         "patchSetId": 3
