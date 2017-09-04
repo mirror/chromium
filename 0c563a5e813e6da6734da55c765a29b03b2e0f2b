@@ -158,6 +158,24 @@
       "revId": "0c563a5e813e6da6734da55c765a29b03b2e0f2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfa1dbe6_052fb980",
+        "filename": "services/preferences/public/cpp/pref_service_main.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-09-04T02:33:20Z",
+      "side": 1,
+      "message": "It\u0027s a separate target from the client library. The embedder needs only a way to create the service (and shut it down). The rest of the implementation should not be visible.",
+      "parentUuid": "10bd6ac2_5d3df3ee",
+      "revId": "0c563a5e813e6da6734da55c765a29b03b2e0f2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
