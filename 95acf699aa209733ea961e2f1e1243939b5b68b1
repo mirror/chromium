@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1db05081_976ae208",
+        "filename": "testing/scripts/check_network_annotations.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-09-04T06:29:05Z",
+      "side": 1,
+      "message": "Please change this to tools/traffic_annotation/scripts/check_annotations.py",
+      "revId": "95acf699aa209733ea961e2f1e1243939b5b68b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae386862_b6ff4bc7",
+        "filename": "tools/traffic_annotation/check_annotations.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-09-04T06:29:05Z",
+      "side": 1,
+      "message": "Please move this file to tools/traffic_annotation/scripts/.",
+      "revId": "95acf699aa209733ea961e2f1e1243939b5b68b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
