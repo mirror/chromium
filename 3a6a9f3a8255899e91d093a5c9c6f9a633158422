@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cef4a3bd_8198500f",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleScriptFetcher.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-04T03:35:30Z",
+      "side": 1,
+      "message": "Hm... this comment looks outdated. I\u0027ll update this in the next patchset.",
+      "revId": "3a6a9f3a8255899e91d093a5c9c6f9a633158422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32f409e9_49f47e65",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/WorkletModuleScriptFetcher.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-04T03:35:30Z",
+      "side": 1,
+      "message": "Hm... this comment looks outdated. I\u0027ll update this in the next patchset.",
+      "revId": "3a6a9f3a8255899e91d093a5c9c6f9a633158422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
