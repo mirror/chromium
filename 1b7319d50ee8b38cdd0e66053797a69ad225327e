@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "d4552d16_ca35a837",
+        "filename": "third_party/WebKit/Source/core/editing/Position.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-04T05:03:50Z",
+      "side": 1,
+      "message": "Could you use ComputeContainerNode().IsConnected()?\nSince, ComputeContanerNode() isn\u0027t cheap. we could write:\n\nIsValidFor(doc) {\n  if (IsNull()) return true;\n  if (GetDocument() !\u003d document) return false;\n  return ComputeContanerNode().IsConnect();\n}",
+      "revId": "1b7319d50ee8b38cdd0e66053797a69ad225327e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7568ab92_0e9ee004",
         "filename": "third_party/WebKit/Source/core/editing/Position.cpp",
         "patchSetId": 7
@@ -66,6 +83,48 @@
     },
     {
       "key": {
+        "uuid": "815850c2_1167ecf1",
+        "filename": "third_party/WebKit/Source/core/editing/Position.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-04T05:03:50Z",
+      "side": 1,
+      "message": "+1 for Ryan. We should remove IsConnected() and IsOrphan(). They should be\nreplaced with IsValidFor().",
+      "parentUuid": "d6daf3a2_374d24eb",
+      "range": {
+        "startLine": 352,
+        "startChar": 0,
+        "endLine": 355,
+        "endChar": 52
+      },
+      "revId": "1b7319d50ee8b38cdd0e66053797a69ad225327e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfe90a68_5eb5ea6f",
+        "filename": "third_party/WebKit/Source/core/editing/Position.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-04T05:03:50Z",
+      "side": 1,
+      "message": "ShadowRoot isn\u0027t appeared in FlatTree. Thus, we can\u0027t write test it.\n\nSee \n\ntemplate \u003c\u003e\nbool CanBeAnchorNode\u003cEditingInFlatTreeStrategy\u003e(Node* node) {\n  return CanBeAnchorNode\u003cEditingStrategy\u003e(node) \u0026\u0026\n         node-\u003eCanParticipateInFlatTree();\n}",
+      "parentUuid": "e6c0f043_283eb6a3",
+      "revId": "1b7319d50ee8b38cdd0e66053797a69ad225327e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d4d575a_61dcb1f4",
         "filename": "third_party/WebKit/Source/core/editing/Position.h",
         "patchSetId": 7
@@ -77,6 +136,24 @@
       "writtenOn": "2017-09-01T22:51:24Z",
       "side": 1,
       "message": "I think I\u0027m doing something MSVC doesn\u0027t like here...is there a way to do this correctly as a member function with two different implementations for the different template params? Or do we just need to add a function outside the class (similar to FromPositionInDOMTree())?",
+      "revId": "1b7319d50ee8b38cdd0e66053797a69ad225327e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ae594d9_4791d50c",
+        "filename": "third_party/WebKit/Source/core/editing/Position.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-04T05:03:50Z",
+      "side": 1,
+      "message": "Try to follow PositionTemplate\u003c\u003cStrategy\u003e::CompareTo().\nWe use ComparePosition() to implement DOM version and Flat Tree version.",
+      "parentUuid": "5d4d575a_61dcb1f4",
       "revId": "1b7319d50ee8b38cdd0e66053797a69ad225327e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
