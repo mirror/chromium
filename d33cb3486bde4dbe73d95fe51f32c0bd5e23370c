@@ -22,6 +22,76 @@
       "revId": "d33cb3486bde4dbe73d95fe51f32c0bd5e23370c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4983f52d_7df2ac7e",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-04T13:29:10Z",
+      "side": 1,
+      "message": "Point to the new bug about GridLayout.",
+      "parentUuid": "20b4ec8d_515be82a",
+      "range": {
+        "startLine": 227,
+        "startChar": 5,
+        "endLine": 227,
+        "endChar": 9
+      },
+      "revId": "d33cb3486bde4dbe73d95fe51f32c0bd5e23370c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0832268_7ac35628",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-04T13:29:10Z",
+      "side": 1,
+      "message": "Would passing 0 here work?",
+      "range": {
+        "startLine": 244,
+        "startChar": 45,
+        "endLine": 244,
+        "endChar": 77
+      },
+      "revId": "d33cb3486bde4dbe73d95fe51f32c0bd5e23370c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5aeb7e34_a7fb2e12",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-04T13:29:10Z",
+      "side": 1,
+      "message": "const makes no sense here",
+      "range": {
+        "startLine": 37,
+        "startChar": 6,
+        "endLine": 37,
+        "endChar": 11
+      },
+      "revId": "d33cb3486bde4dbe73d95fe51f32c0bd5e23370c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
