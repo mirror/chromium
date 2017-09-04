@@ -7,6 +7,7 @@
 #include "core/dom/Document.h"
 #include "core/dom/Range.h"
 #include "core/dom/Text.h"
+#include "core/editing/testing/SelectionSample.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/html/HTMLElement.h"
 #include "core/testing/DummyPageHolder.h"
@@ -27,6 +28,42 @@ LocalFrame& EditingTestBase::GetFrame() const {
 
 FrameSelection& EditingTestBase::Selection() const {
   return GetFrame().Selection();
+}
+
+Position EditingTestBase::AsPosition(const std::string& selection_text) {
+  const SelectionInDOMTree selection = AsSelection(selection_text);
+  DCHECK(selection.IsCaret())
+      << "|selection_text| should contain a caret marker '|'";
+  return selection.Base();
+}
+
+SelectionInDOMTree EditingTestBase::AsSelection(
+    const std::string& selection_text) {
+  return SetSelectionText(GetDocument().body(), selection_text);
+}
+
+SelectionInDOMTree EditingTestBase::SetSelectionText(
+    HTMLElement* element,
+    const std::string& selection_text) {
+  element->setInnerHTML(String::FromUTF8(selection_text.c_str()),
+                        ASSERT_NO_EXCEPTION);
+  UpdateAllLifecyclePhases();
+  const SelectionInDOMTree selection = SelectionSample::Parse(element);
+  DCHECK(!selection.IsNone()) << "|selection_text| should container caret "
+                                 "marker '|' or selection marker '^' and "
+                                 "'|'.";
+  return selection;
+}
+
+std::string EditingTestBase::ToSelectionText(
+    const ContainerNode& root,
+    const SelectionInDOMTree& selection) const {
+  return SelectionSample::ToString(root, selection);
+}
+
+std::string EditingTestBase::ToSelectionText(
+    const SelectionInDOMTree& selection) const {
+  return ToSelectionText(*GetDocument().body(), selection);
 }
 
 void EditingTestBase::SetUp() {
