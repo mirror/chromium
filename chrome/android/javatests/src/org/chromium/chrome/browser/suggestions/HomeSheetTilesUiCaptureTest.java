@@ -4,12 +4,10 @@
 
 package org.chromium.chrome.browser.suggestions;
 
-import static org.chromium.base.test.util.ScalableTimeout.scaleTimeout;
 import static org.chromium.chrome.test.BottomSheetTestRule.ENABLE_CHROME_HOME;
+import static org.chromium.chrome.test.BottomSheetTestRule.waitForWindowUpdates;
 
-import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.MediumTest;
-import android.support.test.uiautomator.UiDevice;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -69,21 +67,9 @@ public class HomeSheetTilesUiCaptureTest {
                     + ChromeFeatureList.CHROME_HOME})
     @ScreenShooter.Directory("Tiles")
     public void testTiles() {
-        setSheetState(BottomSheet.SHEET_STATE_FULL);
+        mActivityTestRule.setSheetState(BottomSheet.SHEET_STATE_FULL, false);
+        waitForWindowUpdates();
         mScreenShooter.shoot(
                 "Tiles" + (FeatureUtilities.isChromeHomeModernEnabled() ? "_modern" : ""));
-    }
-
-    private void setSheetState(final int position) {
-        mActivityTestRule.setSheetState(position, false);
-        waitForWindowUpdates();
-    }
-
-    /** Wait for update to start and finish. */
-    private static void waitForWindowUpdates() {
-        final long maxWindowUpdateTimeMs = scaleTimeout(1000);
-        UiDevice device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
-        device.waitForWindowUpdate(null, maxWindowUpdateTimeMs);
-        device.waitForIdle(maxWindowUpdateTimeMs);
     }
 }

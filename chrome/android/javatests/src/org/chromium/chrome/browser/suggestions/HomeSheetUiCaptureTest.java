@@ -7,12 +7,10 @@ package org.chromium.chrome.browser.suggestions;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 
-import static org.chromium.base.test.util.ScalableTimeout.scaleTimeout;
 import static org.chromium.chrome.test.BottomSheetTestRule.ENABLE_CHROME_HOME;
+import static org.chromium.chrome.test.BottomSheetTestRule.waitForWindowUpdates;
 
-import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.MediumTest;
-import android.support.test.uiautomator.UiDevice;
 import android.support.v7.widget.RecyclerView;
 
 import org.junit.Before;
@@ -53,14 +51,12 @@ public class HomeSheetUiCaptureTest {
     @Rule
     public BottomSheetTestRule mActivityTestRule = new BottomSheetTestRule();
 
-    private FakeSuggestionsSource mSuggestionsSource;
-
     @Rule
     public SuggestionsDependenciesRule setupSuggestions() {
         SuggestionsDependenciesRule.TestFactory depsFactory = NtpUiCaptureTestData.createFactory();
-        mSuggestionsSource = new FakeSuggestionsSource();
-        NtpUiCaptureTestData.registerArticleSamples(mSuggestionsSource);
-        depsFactory.suggestionsSource = mSuggestionsSource;
+        FakeSuggestionsSource suggestionsSource = new FakeSuggestionsSource();
+        NtpUiCaptureTestData.registerArticleSamples(suggestionsSource);
+        depsFactory.suggestionsSource = suggestionsSource;
         return new SuggestionsDependenciesRule(depsFactory);
     }
 
@@ -82,7 +78,8 @@ public class HomeSheetUiCaptureTest {
     @ScreenShooter.Directory("SignInPromo")
     public void testSignInPromo() {
         // Needs to be "Full" to for this to work on small screens in landscape.
-        setSheetState(BottomSheet.SHEET_STATE_FULL);
+        mActivityTestRule.setSheetState(BottomSheet.SHEET_STATE_FULL, false);
+        waitForWindowUpdates();
 
         scrollToFirstItemOfType(ItemViewType.PROMO);
 
@@ -135,24 +132,11 @@ public class HomeSheetUiCaptureTest {
         RecyclerViewTestUtils.waitForView(recyclerView, position);
     }
 
-    private void setSheetState(final int position) {
-        mActivityTestRule.setSheetState(position, false);
-        waitForWindowUpdates();
-    }
-
     private SuggestionsRecyclerView getRecyclerView() {
         SuggestionsRecyclerView recyclerView =
                 mActivityTestRule.getBottomSheetContent().getContentView().findViewById(
                         R.id.recycler_view);
         assertNotNull(recyclerView);
         return recyclerView;
-    }
-
-    /** Wait for update to start and finish. */
-    private static void waitForWindowUpdates() {
-        final long maxWindowUpdateTimeMs = scaleTimeout(1000);
-        UiDevice device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
-        device.waitForWindowUpdate(null, maxWindowUpdateTimeMs);
-        device.waitForIdle(maxWindowUpdateTimeMs);
     }
 }
