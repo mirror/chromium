@@ -76,11 +76,19 @@ class CC_EXPORT CompositorTimingHistory {
   void WillDraw();
   void DidDraw(bool used_new_active_tree,
                bool main_thread_missed_last_deadline,
-               base::TimeTicks impl_frame_time);
+               base::TimeTicks impl_frame_time,
+               size_t composited_animations_count,
+               size_t main_thread_animations_count,
+               size_t main_thread_compositable_animations_count);
   void DidSubmitCompositorFrame();
   void DidReceiveCompositorFrameAck();
   void WillInvalidateOnImplSide();
   void SetTreePriority(TreePriority priority);
+  // To avoid hitting the DCHECK in DidDraw().
+  void SetDrawTestTimeForTesting() { draw_start_time_ = Now(); }
+  void SetActiveTreeMainFrameTimeForTesting() {
+    active_tree_main_frame_time_ = Now();
+  }
 
  protected:
   void DidBeginMainFrame(base::TimeTicks begin_main_frame_end_time);
