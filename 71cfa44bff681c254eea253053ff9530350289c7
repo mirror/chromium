@@ -16,6 +16,24 @@
       "revId": "71cfa44bff681c254eea253053ff9530350289c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9408842e_a20db516",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-04T05:06:58Z",
+      "side": 1,
+      "message": "Yea, I noticed that after recommending this comment... \"Callback for ServiceWorkerContext::RegisterServiceWorker\" sgtm",
+      "parentUuid": "22864f38_14b86482",
+      "revId": "71cfa44bff681c254eea253053ff9530350289c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
