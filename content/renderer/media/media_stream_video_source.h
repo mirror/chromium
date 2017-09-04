@@ -81,6 +81,8 @@ class CONTENT_EXPORT MediaStreamVideoSource : public MediaStreamSource {
   // Implementations must return the capture format if available.
   virtual base::Optional<media::VideoCaptureFormat> GetCurrentFormat() const;
 
+  void SetDeviceRotationDetection(bool enabled);
+
   base::WeakPtr<MediaStreamVideoSource> GetWeakPtr() {
     return weak_factory_.GetWeakPtr();
   }
@@ -136,6 +138,7 @@ class CONTENT_EXPORT MediaStreamVideoSource : public MediaStreamSource {
   // simply drop the references to the blink source and track which will lead
   // to this object being deleted.
   void FinalizeAddTrack();
+  void StartFrameMonitoring();
 
   State state_;
 
@@ -169,6 +172,10 @@ class CONTENT_EXPORT MediaStreamVideoSource : public MediaStreamSource {
 
   // This is used for tracking if all connected video sinks are secure.
   SecureDisplayLinkTracker<MediaStreamVideoTrack> secure_tracker_;
+
+  // This flag enables a heuristic to detect device rotation based on frame
+  // size.
+  bool enable_device_rotation_detection_ = false;
 
   // NOTE: Weak pointers must be invalidated before all other member variables.
   base::WeakPtrFactory<MediaStreamVideoSource> weak_factory_;

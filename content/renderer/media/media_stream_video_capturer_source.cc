@@ -181,6 +181,7 @@ MediaStreamVideoCapturerSource::MediaStreamVideoCapturerSource(
       capture_params_(capture_params) {
   SetStopCallback(stop_callback);
   SetDeviceInfo(device_info);
+  SetDeviceRotationDetection(true /* enabled */);
 }
 
 MediaStreamVideoCapturerSource::~MediaStreamVideoCapturerSource() {
@@ -238,6 +239,6 @@ MediaStreamVideoCapturerSource::GetMediaStreamDispatcherHost() {
         mojom::kBrowserServiceName, &dispatcher_host_);
   }
   return dispatcher_host_;
-};
+}
 
 }  // namespace content
