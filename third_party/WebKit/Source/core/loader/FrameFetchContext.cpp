@@ -67,6 +67,7 @@
 #include "core/timing/DOMWindowPerformance.h"
 #include "core/timing/Performance.h"
 #include "core/timing/PerformanceBase.h"
+#include "platform/HTTPNames.h"
 #include "platform/WebFrameScheduler.h"
 #include "platform/exported/WrappedResourceRequest.h"
 #include "platform/instrumentation/tracing/TracedValue.h"
@@ -341,8 +342,8 @@ WebCachePolicy FrameFetchContext::ResourceRequestCachePolicy(
   DCHECK(GetFrame());
   if (type == Resource::kMainResource) {
     const WebCachePolicy cache_policy = DetermineWebCachePolicy(
-        request.HttpMethod() == "POST" ? RequestMethod::kIsPost
-                                       : RequestMethod::kIsNotPost,
+        request.HttpMethod() == HTTPNames::POST ? RequestMethod::kIsPost
+                                                : RequestMethod::kIsNotPost,
         request.IsConditional() ? RequestType::kIsConditional
                                 : RequestType::kIsNotConditional,
         ResourceType::kIsMainResource, MasterDocumentLoader()->LoadType());
