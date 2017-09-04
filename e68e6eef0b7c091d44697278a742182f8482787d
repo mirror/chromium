@@ -139,6 +139,30 @@
       "revId": "e68e6eef0b7c091d44697278a742182f8482787d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4eb35388_f18905c3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/wasm/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-09-04T14:59:13Z",
+      "side": 1,
+      "message": "OK, I\u0027ll go ahead without a team for now, put please let me know!",
+      "parentUuid": "105c473a_3f726a04",
+      "range": {
+        "startLine": 1,
+        "startChar": 19,
+        "endLine": 1,
+        "endChar": 29
+      },
+      "revId": "e68e6eef0b7c091d44697278a742182f8482787d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
