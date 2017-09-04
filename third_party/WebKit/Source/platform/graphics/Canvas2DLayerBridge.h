@@ -111,7 +111,7 @@ class PLATFORM_EXPORT Canvas2DLayerBridge : public cc::TextureLayerClient,
   void SetFilterQuality(SkFilterQuality) override;
   void SetIsHidden(bool) override;
   void SetImageBuffer(ImageBuffer*) override;
-  void DidDraw(const FloatRect&) override;
+  void DidDraw() override;
   bool WritePixels(const SkImageInfo&,
                    const void* pixels,
                    size_t row_bytes,
@@ -268,7 +268,6 @@ class PLATFORM_EXPORT Canvas2DLayerBridge : public cc::TextureLayerClient,
   OpacityMode opacity_mode_;
   const IntSize size_;
   CanvasColorParams color_params_;
-  int recording_pixel_count_;
 
   // Each element in this vector represents an IOSurface backed texture that
   // is ready to be reused.

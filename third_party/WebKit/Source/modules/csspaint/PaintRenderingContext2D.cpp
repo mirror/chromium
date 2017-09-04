@@ -23,7 +23,7 @@ PaintRenderingContext2D::PaintRenderingContext2D(
   DCHECK(image_buffer_);
   image_buffer_->Canvas()->clear(has_alpha ? SK_ColorTRANSPARENT
                                            : SK_ColorBLACK);
-  image_buffer_->DidDraw(FloatRect(0, 0, Width(), Height()));
+  image_buffer_->DidDraw();
 
   image_buffer_->Canvas()->scale(zoom, zoom);
 }
@@ -64,7 +64,7 @@ AffineTransform PaintRenderingContext2D::BaseTransform() const {
 
 void PaintRenderingContext2D::DidDraw(const SkIRect& dirty_rect) {
   DCHECK(image_buffer_);
-  return image_buffer_->DidDraw(SkRect::Make(dirty_rect));
+  return image_buffer_->DidDraw();
 }
 
 void PaintRenderingContext2D::ValidateStateStack() const {

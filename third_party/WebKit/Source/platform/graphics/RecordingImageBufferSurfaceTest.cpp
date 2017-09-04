@@ -62,17 +62,17 @@ TEST_F(RecordingImageBufferSurfaceTest, testNoFallbackWithClear) {
 TEST_F(RecordingImageBufferSurfaceTest, testNonAnimatedCanvasUpdate) {
   // Acquire picture twice to simulate a static canvas: nothing drawn between
   // updates.
-  TestSurface()->DidDraw(FloatRect(0, 0, 1, 1));
+  TestSurface()->DidDraw();
   TestSurface()->GetRecord();
   TestSurface()->GetRecord();
   EXPECT_TRUE(TestSurface()->IsRecording());
 }
 
 TEST_F(RecordingImageBufferSurfaceTest, testAnimatedWithoutClear) {
-  TestSurface()->DidDraw(FloatRect(0, 0, 1, 1));
+  TestSurface()->DidDraw();
   TestSurface()->GetRecord();
   EXPECT_TRUE(TestSurface()->IsRecording());
-  TestSurface()->DidDraw(FloatRect(0, 0, 1, 1));
+  TestSurface()->DidDraw();
   TestSurface()->GetRecord();
   EXPECT_FALSE(TestSurface()->IsRecording());
 }
@@ -80,11 +80,11 @@ TEST_F(RecordingImageBufferSurfaceTest, testAnimatedWithoutClear) {
 TEST_F(RecordingImageBufferSurfaceTest, testAnimatedWithClear) {
   TestSurface()->GetRecord();
   TestSurface()->WillOverwriteCanvas();
-  TestSurface()->DidDraw(FloatRect(0, 0, 1, 1));
+  TestSurface()->DidDraw();
   TestSurface()->GetRecord();
   EXPECT_TRUE(TestSurface()->IsRecording());
   // Clear after use.
-  TestSurface()->DidDraw(FloatRect(0, 0, 1, 1));
+  TestSurface()->DidDraw();
   TestSurface()->WillOverwriteCanvas();
   TestSurface()->GetRecord();
   EXPECT_TRUE(TestSurface()->IsRecording());
@@ -97,7 +97,7 @@ TEST_F(RecordingImageBufferSurfaceTest, testClearRect) {
   Canvas()->drawRect(SkRect::MakeWH(TestSurface()->size().Width(),
                                     TestSurface()->size().Height()),
                      clear_flags);
-  TestSurface()->DidDraw(FloatRect(0, 0, 1, 1));
+  TestSurface()->DidDraw();
   TestSurface()->GetRecord();
   EXPECT_TRUE(TestSurface()->IsRecording());
 }

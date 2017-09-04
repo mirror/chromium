@@ -352,7 +352,7 @@ void HTMLCanvasElement::DidDraw(const FloatRect& rect) {
     dirty_rect_.Unite(rect);
   }
   if (Is2d() && GetImageBuffer())
-    GetImageBuffer()->DidDraw(rect);
+    GetImageBuffer()->DidDraw();
 }
 
 void HTMLCanvasElement::DidDraw() {

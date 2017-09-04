@@ -194,10 +194,10 @@ PassRefPtr<StaticBitmapImage> ImageBuffer::NewImageSnapshot(
   return surface_->NewImageSnapshot(hint, reason);
 }
 
-void ImageBuffer::DidDraw(const FloatRect& rect) const {
+void ImageBuffer::DidDraw() const {
   if (snapshot_state_ == kDidAcquireSnapshot)
     snapshot_state_ = kDrawnToAfterSnapshot;
-  surface_->DidDraw(rect);
+  surface_->DidDraw();
 }
 
 WebLayer* ImageBuffer::PlatformLayer() const {
