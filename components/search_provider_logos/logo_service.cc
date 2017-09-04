@@ -9,7 +9,10 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/metrics/field_trial_params.h"
+#include "base/task_runner_util.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "base/time/default_clock.h"
 #include "build/build_config.h"
 #include "components/image_fetcher/core/image_decoder.h"
 #include "components/search_engines/search_terms_data.h"
@@ -17,6 +20,7 @@
 #include "components/search_provider_logos/features.h"
 #include "components/search_provider_logos/fixed_logo_api.h"
 #include "components/search_provider_logos/google_logo_api.h"
+#include "components/search_provider_logos/logo_cache.h"
 #include "components/search_provider_logos/logo_tracker.h"
 #include "components/search_provider_logos/switches.h"
 #include "net/url_request/url_request_context_getter.h"
@@ -175,9 +179,30 @@ void LogoService::GetLogo(search_provider_logos::LogoObserver* observer) {
   const bool use_fixed_logo = !doodle_url.is_valid();
 
   if (!logo_tracker_) {
+    scoped_refptr<base::SequencedTaskRunner> cache_task_runner =
+        base::CreateSequencedTaskRunnerWithTraits(
+            {base::MayBlock(), base::TaskPriority::USER_VISIBLE,
+             base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN});
+
+    // Use deleter for cache_task_runner, regardless of which logo cache
+    // implemmentation is being used.
+    std::unique_ptr<LogoCache, base::OnTaskRunnerDeleter> logo_cache(
+        nullptr, base::OnTaskRunnerDeleter(cache_task_runner));
+    if (logo_cache_for_test_) {
+      logo_cache.reset(logo_cache_for_test_.release());
+    } else {
+      logo_cache.reset(new LogoCache(cache_directory_));
+    }
+
+    std::unique_ptr<base::Clock> clock = std::move(clock_for_test_);
+    if (!clock) {
+      clock = base::MakeUnique<base::DefaultClock>();
+    }
+
     logo_tracker_ = base::MakeUnique<LogoTracker>(
-        cache_directory_, request_context_getter_,
-        base::MakeUnique<LogoDelegateImpl>(std::move(image_decoder_)));
+        request_context_getter_,
+        base::MakeUnique<LogoDelegateImpl>(std::move(image_decoder_)),
+        std::move(cache_task_runner), std::move(logo_cache), std::move(clock));
   }
 
   if (use_fixed_logo) {
@@ -202,6 +227,14 @@ void LogoService::GetLogo(search_provider_logos::LogoObserver* observer) {
   }
 
   logo_tracker_->GetLogo(observer);
+}
+
+void LogoService::SetLogoCacheForTests(std::unique_ptr<LogoCache> cache) {
+  logo_cache_for_test_ = std::move(cache);
+}
+
+void LogoService::SetClockForTests(std::unique_ptr<base::Clock> clock) {
+  clock_for_test_ = std::move(clock);
 }
 
 }  // namespace search_provider_logos
