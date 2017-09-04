@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6e2a9694_c3939fc6",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-sandboxed-iframe-denied-without-wildcard.htm",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-09-04T09:16:01Z",
+      "side": 1,
+      "message": "Oops! Thanks for pointing that out!",
+      "parentUuid": "d5545009_6153d5a3",
+      "revId": "fefad88f2dce537722df33edac27cd0203460a54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50c985d0_bb10b869",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-sandboxed-iframe-denied-without-wildcard.htm",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "fefad88f2dce537722df33edac27cd0203460a54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a88ce34_301429b2",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-sandboxed-iframe-denied-without-wildcard.htm",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-09-04T09:16:01Z",
+      "side": 1,
+      "message": "Yeah, good call! I copied and pasted this from another test without thinking about it. :/ Thanks for noticing it and telling me about it!",
+      "parentUuid": "50c985d0_bb10b869",
+      "revId": "fefad88f2dce537722df33edac27cd0203460a54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
