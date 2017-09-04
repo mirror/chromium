@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "b267938c_ed5eaa9f",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-09-04T13:56:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4983f52d_7df2ac7e",
+      "range": {
+        "startLine": 227,
+        "startChar": 5,
+        "endLine": 227,
+        "endChar": 9
+      },
+      "revId": "d33cb3486bde4dbe73d95fe51f32c0bd5e23370c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0832268_7ac35628",
         "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
         "patchSetId": 1
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "94d2a5e1_0357931c",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-09-04T13:56:58Z",
+      "side": 1,
+      "message": "No, doesn\u0027t work. :(",
+      "parentUuid": "a0832268_7ac35628",
+      "range": {
+        "startLine": 244,
+        "startChar": 45,
+        "endLine": 244,
+        "endChar": 77
+      },
+      "revId": "d33cb3486bde4dbe73d95fe51f32c0bd5e23370c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5aeb7e34_a7fb2e12",
         "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.h",
         "patchSetId": 1
@@ -92,6 +140,30 @@
       "revId": "d33cb3486bde4dbe73d95fe51f32c0bd5e23370c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ad00f58_b1cbc4f6",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-09-04T13:56:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5aeb7e34_a7fb2e12",
+      "range": {
+        "startLine": 37,
+        "startChar": 6,
+        "endLine": 37,
+        "endChar": 11
+      },
+      "revId": "d33cb3486bde4dbe73d95fe51f32c0bd5e23370c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
