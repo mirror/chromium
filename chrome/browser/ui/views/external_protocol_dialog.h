@@ -31,13 +31,11 @@ class ExternalProtocolDialog : public views::DialogDelegate {
   ~ExternalProtocolDialog() override;
 
   // views::DialogDelegate methods:
-  int GetDefaultDialogButton() const override;
   base::string16 GetDialogButtonLabel(ui::DialogButton button) const override;
   base::string16 GetWindowTitle() const override;
   void DeleteDelegate() override;
   bool Cancel() override;
   bool Accept() override;
-  bool Close() override;
   views::View* GetContentsView() override;
   views::Widget* GetWidget() override;
   const views::Widget* GetWidget() const override;
