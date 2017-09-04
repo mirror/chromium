@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d8deec7_e8d7b553",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_dictionary.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-09-04T02:42:29Z",
+      "side": 1,
+      "message": "Maybe better to call to_snake_case() in cpp_name() ?",
+      "range": {
+        "startLine": 124,
+        "startChar": 55,
+        "endLine": 124,
+        "endChar": 63
+      },
+      "revId": "f2db3b09d4b44f298cf8b917da20c2a998b47c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "283e48cf_517d26fa",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_union.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-09-04T02:42:29Z",
+      "side": 1,
+      "message": "Looks like we should use cpp_name() here. Could you change this to call cpp_name() ?",
+      "revId": "f2db3b09d4b44f298cf8b917da20c2a998b47c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
