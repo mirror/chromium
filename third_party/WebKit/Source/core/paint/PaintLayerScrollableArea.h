@@ -225,6 +225,10 @@ class CORE_EXPORT PaintLayerScrollableArea final
   ~PaintLayerScrollableArea() override;
   void Dispose();
 
+  // Returns true if scrollbar existence changed.
+  bool SetHasHorizontalScrollbar(bool has_scrollbar);
+  bool SetHasVerticalScrollbar(bool has_scrollbar);
+
   bool HasHorizontalScrollbar() const { return HorizontalScrollbar(); }
   bool HasVerticalScrollbar() const { return VerticalScrollbar(); }
 
@@ -521,10 +525,6 @@ class CORE_EXPORT PaintLayerScrollableArea final
       bool& needs_horizontal_scrollbar,
       bool& needs_vertical_scrollbar,
       ComputeScrollbarExistenceOption = kDefault) const;
-
-  // Returns true iff scrollbar existence changed.
-  bool SetHasHorizontalScrollbar(bool has_scrollbar);
-  bool SetHasVerticalScrollbar(bool has_scrollbar);
 
   void UpdateScrollCornerStyle();
   LayoutSize MinimumSizeForResizing(float zoom_factor);

@@ -1227,11 +1227,17 @@ void LocalFrameView::UpdateLayout() {
         if (v_mode == kScrollbarAuto) {
           // This causes a vertical scrollbar to appear.
           SetVerticalScrollbarMode(kScrollbarAlwaysOn);
+          if (RuntimeEnabledFeatures::RootLayerScrollingEnabled())
+            GetLayoutView()->GetScrollableArea()->SetHasVerticalScrollbar(true);
         }
         // Set the initial hMode to AlwaysOff if we're auto.
         if (h_mode == kScrollbarAuto) {
           // This causes a horizontal scrollbar to disappear.
           SetHorizontalScrollbarMode(kScrollbarAlwaysOff);
+          if (RuntimeEnabledFeatures::RootLayerScrollingEnabled()) {
+            GetLayoutView()->GetScrollableArea()->SetHasHorizontalScrollbar(
+                false);
+          }
         }
 
         SetScrollbarModes(h_mode, v_mode);
