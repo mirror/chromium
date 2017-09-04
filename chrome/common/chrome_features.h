@@ -228,10 +228,6 @@ extern const base::Feature kTabsInCbd;
 
 extern const base::Feature kUseGoogleLocalNtp;
 
-extern const base::Feature kUseGroupedPermissionInfobars;
-
-extern const base::Feature kUsePermissionManagerForMediaRequests;
-
 #if !defined(OS_ANDROID)
 extern const base::Feature kVoiceSearchOnLocalNtp;
 #endif
