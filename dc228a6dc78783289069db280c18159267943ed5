@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7348adc6_ab98051f",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 1579,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-09-04T15:06:51Z",
+      "side": 1,
+      "message": "Wanted to make that change but totally forgot about it, thanks!",
+      "parentUuid": "3e2ee5f9_82036106",
+      "revId": "dc228a6dc78783289069db280c18159267943ed5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "430dcc7b_c72c84d7",
         "filename": "chrome/browser/resources/local_ntp/voice.js",
         "patchSetId": 12
@@ -33,6 +51,24 @@
       "revId": "dc228a6dc78783289069db280c18159267943ed5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cc87aad_3c767070",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 1581,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-09-04T15:06:51Z",
+      "side": 1,
+      "message": "I guess that makes sense as well.",
+      "parentUuid": "430dcc7b_c72c84d7",
+      "revId": "dc228a6dc78783289069db280c18159267943ed5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
