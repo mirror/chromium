@@ -144,6 +144,24 @@
     },
     {
       "key": {
+        "uuid": "924d5da9_c7b91674",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-09-04T08:35:35Z",
+      "side": 1,
+      "message": "That\u0027s correct. Yet we still want to disable crossfading if invoked from aura (alt+). That\u0027s why we need the next_Frame_is_good_for_crossfade_. I\u0027ll remove this if though as we just landed the ARC fix for the synchronization.",
+      "parentUuid": "0393b0df_6a2610c7",
+      "revId": "3efdb3442d096af69d6be14dfb8fb979e8d228d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "710da49f_d5aed81d",
         "filename": "components/exo/shell_surface.cc",
         "patchSetId": 5
@@ -155,6 +173,24 @@
       "writtenOn": "2017-09-04T08:25:13Z",
       "side": 1,
       "message": "we need to handle normal \u003c-\u003e fullscreen",
+      "revId": "3efdb3442d096af69d6be14dfb8fb979e8d228d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed624a89_6d511b42",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-09-04T08:35:35Z",
+      "side": 1,
+      "message": "We only animate fullscreen -\u003e normal in ash, but not normal -\u003e fullscreen. Not sure if it\u0027s on purpose. So I left fullscreen animation for a separate CL.",
+      "parentUuid": "710da49f_d5aed81d",
       "revId": "3efdb3442d096af69d6be14dfb8fb979e8d228d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
