@@ -43,6 +43,7 @@ struct HidUsageAndPage {
     kPageCameraControl = 0x90,
     kPageArcade = 0x91,
     kPageVendor = 0xFF00,
+    kPageApiTest = 0xFF01,  // Only for HidApiTest.
     kPageMediaCenter = 0xFFBC
   };
 
@@ -119,6 +120,7 @@ struct HidUsageAndPage {
     kGenericDesktopSystemDisplaySwap = 0xb6,
   };
 
+  HidUsageAndPage() {}
   HidUsageAndPage(uint16_t usage, Page usage_page)
       : usage(usage), usage_page(usage_page) {}
   ~HidUsageAndPage() {}
