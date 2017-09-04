@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "164c0039_3cb6b7b0",
+        "filename": "third_party/WebKit/Source/core/editing/EditingTestBase.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-04T07:38:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc820aeb_a3aeef81",
+      "revId": "e88d800e29d30b0b895b331b0908d4d951962bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5453413_dc25470b",
         "filename": "third_party/WebKit/Source/core/editing/EditingTestBase.h",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "e88d800e29d30b0b895b331b0908d4d951962bd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c43ad370_f722fc0f",
+        "filename": "third_party/WebKit/Source/core/editing/EditingTestBase.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-04T07:38:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5453413_dc25470b",
+      "revId": "e88d800e29d30b0b895b331b0908d4d951962bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "81ea4d0b_b02df1b9",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionSample.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-04T07:38:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "149d963a_c50cce23",
+      "revId": "e88d800e29d30b0b895b331b0908d4d951962bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8aafef4b_67c8c55a",
         "filename": "third_party/WebKit/Source/core/editing/SelectionSample.cpp",
         "patchSetId": 6
@@ -106,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "e9d6c839_99be1e11",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionSample.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-04T07:38:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e640568_f5bd1a0d",
+      "revId": "e88d800e29d30b0b895b331b0908d4d951962bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f55996ac_8adfd0d5",
         "filename": "third_party/WebKit/Source/core/editing/SelectionSample.cpp",
         "patchSetId": 6
@@ -135,6 +207,24 @@
       "side": 1,
       "message": "No. \nChanged to use Attribute::GetName() -\u003e const QualifiedName\u0026",
       "parentUuid": "f55996ac_8adfd0d5",
+      "revId": "e88d800e29d30b0b895b331b0908d4d951962bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ac8c1d84_bf1c7ee3",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionSample.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-04T07:38:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70114a10_7da22dab",
       "revId": "e88d800e29d30b0b895b331b0908d4d951962bd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -176,6 +266,24 @@
     },
     {
       "key": {
+        "uuid": "810928e1_70fb5f57",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionSample.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-04T07:38:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7187f174_068ab065",
+      "revId": "e88d800e29d30b0b895b331b0908d4d951962bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60568ba2_1536c28d",
         "filename": "third_party/WebKit/Source/core/editing/SelectionSample.cpp",
         "patchSetId": 6
@@ -205,6 +313,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "60568ba2_1536c28d",
+      "revId": "e88d800e29d30b0b895b331b0908d4d951962bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a03a0589_461e7f09",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionSample.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-04T07:38:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "128772b3_e9c1148f",
       "revId": "e88d800e29d30b0b895b331b0908d4d951962bd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -246,6 +372,24 @@
     },
     {
       "key": {
+        "uuid": "eda64d34_eb9ef05f",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionSample.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-04T07:38:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "398f1131_574c2f56",
+      "revId": "e88d800e29d30b0b895b331b0908d4d951962bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "433afd16_0c5e59e7",
         "filename": "third_party/WebKit/Source/core/editing/SelectionSample.cpp",
         "patchSetId": 6
@@ -260,6 +404,24 @@
       "revId": "e88d800e29d30b0b895b331b0908d4d951962bd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21a608ea_1e3e2e76",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionSample.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-04T07:38:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "433afd16_0c5e59e7",
+      "revId": "e88d800e29d30b0b895b331b0908d4d951962bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -280,6 +442,24 @@
     },
     {
       "key": {
+        "uuid": "ea83f4f4_ce3ae09a",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionSample.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-04T07:38:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca86d17a_98536f0d",
+      "revId": "e88d800e29d30b0b895b331b0908d4d951962bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ddbc31a_8ea5a9dd",
         "filename": "third_party/WebKit/Source/core/editing/SelectionSample.h",
         "patchSetId": 6
@@ -294,6 +474,24 @@
       "revId": "e88d800e29d30b0b895b331b0908d4d951962bd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7476c815_f6959bbb",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionSample.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-04T07:38:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ddbc31a_8ea5a9dd",
+      "revId": "e88d800e29d30b0b895b331b0908d4d951962bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -329,6 +527,24 @@
       "revId": "e88d800e29d30b0b895b331b0908d4d951962bd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e51c670a_971ee4b4",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionSampleTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-04T07:38:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "359dc6d3_44794786",
+      "revId": "e88d800e29d30b0b895b331b0908d4d951962bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -382,6 +598,24 @@
       "revId": "e88d800e29d30b0b895b331b0908d4d951962bd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fffc7603_09403806",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionSampleTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-04T07:38:26Z",
+      "side": 1,
+      "message": "It seems this is naming issue.\nYour proposal is:\nAsSelection() -\u003e SetBodyAndSelectionFromSample()\nToSelectionText() -\u003e GetSelectionSampleText().\n\nCould you explain about \"I want EditingTestBase as primitive as we can\"?\nI\u0027m not sure what \"primitive\" is.",
+      "parentUuid": "2615d8c1_3042f21a",
+      "revId": "e88d800e29d30b0b895b331b0908d4d951962bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -453,6 +687,30 @@
       "revId": "e88d800e29d30b0b895b331b0908d4d951962bd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "709d36cd_2b572f6b",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionSampleTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-04T07:38:26Z",
+      "side": 1,
+      "message": "I think to make \"\u003ctable\u003e|\u003c/table\u003e\" as valid input, we need to have own \nHTML parser.\n\nIf you get a good idea, please let me know. ;-)",
+      "parentUuid": "e721e6b3_6c25e8f9",
+      "range": {
+        "startLine": 104,
+        "startChar": 1,
+        "endLine": 112,
+        "endChar": 77
+      },
+      "revId": "e88d800e29d30b0b895b331b0908d4d951962bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
