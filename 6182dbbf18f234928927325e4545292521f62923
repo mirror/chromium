@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f547a0de_ec08e140",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-04T05:18:58Z",
+      "side": 1,
+      "message": "This helper will be more widely used when we implement this class more:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/618434",
+      "revId": "6182dbbf18f234928927325e4545292521f62923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
