@@ -495,6 +495,24 @@
       "revId": "a5fbeaa9462859352a98eb7b7d5785f9a4a448c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4c89c565_b43dfd14",
+        "filename": "components/drive/resource_metadata_storage_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-09-04T11:01:43Z",
+      "side": 1,
+      "message": "Thanks for clarification, done.",
+      "parentUuid": "b403698c_b0f8486a",
+      "revId": "a5fbeaa9462859352a98eb7b7d5785f9a4a448c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

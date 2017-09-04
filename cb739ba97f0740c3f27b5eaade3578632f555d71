@@ -22,6 +22,30 @@
       "revId": "cb739ba97f0740c3f27b5eaade3578632f555d71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98610d2d_69fda22f",
+        "filename": "components/drive/resource_metadata_storage_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-09-04T11:01:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "475fb811_16968716",
+      "range": {
+        "startLine": 442,
+        "startChar": 5,
+        "endLine": 442,
+        "endChar": 12
+      },
+      "revId": "cb739ba97f0740c3f27b5eaade3578632f555d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
