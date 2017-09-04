@@ -4,7 +4,9 @@
 
 #include "core/editing/Position.h"
 
+#include "core/dom/Text.h"
 #include "core/editing/EditingTestBase.h"
+#include "core/layout/LayoutText.h"
 
 namespace blink {
 
@@ -226,6 +228,31 @@ TEST_F(PositionTest, ToPositionInFlatTreeWithEmptyShadowRoot) {
 
   EXPECT_EQ(PositionInFlatTree(host, PositionAnchorType::kAfterChildren),
             ToPositionInFlatTree(Position(shadow_root, 0)));
+}
+
+TEST_F(PositionTest, ToPositionInFlatTreeDisconnected) {
+  SetBodyContent("<div id='host'></div>");
+  SetShadowContent("foo", "host");
+  Element* inner = GetDocument().createElement("div");
+  inner->setInnerHTML("bar");
+  GetDocument().QuerySelector("div")->appendChild(inner);
+  UpdateAllLifecyclePhases();
+  // <div id='host'>
+  //   #shadow-root
+  //     foo
+  //   <div id='inner' >bar</div>
+  // </div>
+
+  EXPECT_FALSE(inner->GetLayoutObject());
+  Position pos = {inner, 0};
+  PositionInFlatTree pos_flat = ToPositionInFlatTree(pos);
+  EXPECT_TRUE(pos_flat.IsNull());
+
+  Text* inner_text = ToText(inner->firstChild());
+  EXPECT_FALSE(inner_text->GetLayoutObject());
+  Position pos_text = {inner_text, 0};
+  PositionInFlatTree pos_text_flat = ToPositionInFlatTree(pos_text);
+  EXPECT_TRUE(pos_text_flat.IsNull());
 }
 
 }  // namespace blink
