@@ -38,6 +38,20 @@ enum class LinkTarget {
 
 namespace {
 
+// Returns a subframe in |web_contents|.
+content::RenderFrameHost* GetIframe(content::WebContents* web_contents) {
+  const auto all_frames = web_contents->GetAllFrames();
+  const content::RenderFrameHost* main_frame = web_contents->GetMainFrame();
+
+  DCHECK_EQ(2u, all_frames.size());
+  auto it = std::find_if(all_frames.begin(), all_frames.end(),
+                         [main_frame](content::RenderFrameHost* frame) {
+                           return main_frame != frame;
+                         });
+  DCHECK(it != all_frames.end());
+  return *it;
+}
+
 // Creates an <a> element, sets its href and target to |href| and |target|
 // respectively, adds it to the DOM, and clicks on it. Returns once the link
 // has loaded.
@@ -138,12 +152,7 @@ class BookmarkAppUrlRedirectorBrowserTest : public ExtensionBrowserTest {
 
   // Navigates the active tab to the launching page.
   void NavigateToLaunchingPage() {
-    GURL launching_page_url =
-        embedded_test_server()->GetURL(kLaunchingPagePath);
-    ui_test_utils::UrlLoadObserver url_observer(
-        launching_page_url, content::NotificationService::AllSources());
-    ui_test_utils::NavigateToURL(browser(), launching_page_url);
-    url_observer.Wait();
+    ui_test_utils::NavigateToURL(browser(), GetLaunchingPageURL());
   }
 
   // Checks that, after running |action|, the initial tab's window doesn't have
@@ -190,6 +199,14 @@ class BookmarkAppUrlRedirectorBrowserTest : public ExtensionBrowserTest {
   }
 
   void ResetFeatureList() { scoped_feature_list_.reset(); }
+
+  GURL GetLaunchingPageURL() {
+    // We use "localhost" as the host of the launching page, so that it has a
+    // different origin than that the of the app. The resolved URL of the
+    // launching page would have the same host as that of the app, but the
+    // URLs used in our NavigationThrottle are not resolved.
+    return embedded_test_server()->GetURL("localhost", kLaunchingPagePath);
+  }
 
  private:
   const Extension* test_bookmark_app_;
@@ -273,7 +290,7 @@ IN_PROC_BROWSER_TEST_P(BookmarkAppUrlRedirectorNavigationBrowserTest,
 // by the end of the navigation, the transition type is
 // PAGE_TRANSITION_AUTO_SUBFRAME/PAGE_TRANSITON_MANUAL_SUBFRAME.
 IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest,
-                       SubframeNavigation) {
+                       AutoSubframeNavigation) {
   InstallTestBookmarkApp();
   NavigateToLaunchingPage();
 
@@ -287,46 +304,71 @@ IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest,
                              "let iframe = document.createElement('iframe');"
                              "document.body.appendChild(iframe);"));
 
-  auto all_frames = initial_tab->GetAllFrames();
-  content::RenderFrameHost* main_frame = initial_tab->GetMainFrame();
-  ASSERT_EQ(2u, all_frames.size());
-  auto it = std::find_if(all_frames.begin(), all_frames.end(),
-                         [main_frame](content::RenderFrameHost* frame) {
-                           return main_frame != frame;
-                         });
-  ASSERT_NE(all_frames.end(), it);
-  content::RenderFrameHost* iframe = *it;
+  content::RenderFrameHost* iframe = GetIframe(initial_tab);
+
+  content::TestFrameNavigationObserver observer(iframe);
+  const GURL app_url = embedded_test_server()->GetURL(kAppUrlPath);
+  chrome::NavigateParams params(browser(), app_url, ui::PAGE_TRANSITION_LINK);
+  params.frame_tree_node_id = iframe->GetFrameTreeNodeId();
+  ui_test_utils::NavigateToURL(&params);
+  ASSERT_TRUE(ui::PageTransitionCoreTypeIs(observer.transition_type(),
+                                           ui::PAGE_TRANSITION_AUTO_SUBFRAME));
+
+  EXPECT_EQ(num_browsers, chrome::GetBrowserCount(profile()));
+  EXPECT_EQ(browser(), chrome::FindLastActive());
+  EXPECT_EQ(num_tabs, browser()->tab_strip_model()->count());
+
+  // When Site Isolation is enabled, navigating the iframe to a different
+  // origin causes the original iframe's RenderFrameHost to be deleted.
+  // So we retrieve the iframe's RenderFrameHost again.
+  EXPECT_EQ(app_url, GetIframe(initial_tab)->GetLastCommittedURL());
+}
+
+IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest,
+                       ManualSubframeNavigation) {
+  InstallTestBookmarkApp();
+  NavigateToLaunchingPage();
+
+  size_t num_browsers = chrome::GetBrowserCount(profile());
+  int num_tabs = browser()->tab_strip_model()->count();
+  content::WebContents* initial_tab =
+      browser()->tab_strip_model()->GetActiveWebContents();
+
+  ASSERT_TRUE(
+      content::ExecuteScript(initial_tab,
+                             "let iframe = document.createElement('iframe');"
+                             "document.body.appendChild(iframe);"));
 
   {
-    content::TestFrameNavigationObserver observer(iframe);
-    const GURL app_url = embedded_test_server()->GetURL(kAppUrlPath);
-    chrome::NavigateParams params(browser(), app_url, ui::PAGE_TRANSITION_LINK);
-    params.frame_tree_node_id = iframe->GetFrameTreeNodeId();
-    ui_test_utils::NavigateToURL(&params);
-    ASSERT_TRUE(ui::PageTransitionCoreTypeIs(
-        observer.transition_type(), ui::PAGE_TRANSITION_AUTO_SUBFRAME));
-
-    EXPECT_EQ(num_browsers, chrome::GetBrowserCount(profile()));
-    EXPECT_EQ(browser(), chrome::FindLastActive());
-    EXPECT_EQ(num_tabs, browser()->tab_strip_model()->count());
-    EXPECT_EQ(app_url, iframe->GetLastCommittedURL());
-  }
-
-  {
-    content::TestFrameNavigationObserver observer(iframe);
-    const GURL in_scope_url = embedded_test_server()->GetURL(kInScopeUrlPath);
-    chrome::NavigateParams params(browser(), in_scope_url,
+    // Navigate the iframe once, so that the next navigation is a
+    // MANUAL_SUBFRAME navigation.
+    content::RenderFrameHost* iframe = GetIframe(initial_tab);
+    chrome::NavigateParams params(browser(), GetLaunchingPageURL(),
                                   ui::PAGE_TRANSITION_LINK);
     params.frame_tree_node_id = iframe->GetFrameTreeNodeId();
     ui_test_utils::NavigateToURL(&params);
-    ASSERT_TRUE(ui::PageTransitionCoreTypeIs(
-        observer.transition_type(), ui::PAGE_TRANSITION_MANUAL_SUBFRAME));
-
-    EXPECT_EQ(num_browsers, chrome::GetBrowserCount(profile()));
-    EXPECT_EQ(browser(), chrome::FindLastActive());
-    EXPECT_EQ(num_tabs, browser()->tab_strip_model()->count());
-    EXPECT_EQ(in_scope_url, iframe->GetLastCommittedURL());
+    ASSERT_EQ(num_browsers, chrome::GetBrowserCount(profile()));
+    ASSERT_EQ(browser(), chrome::FindLastActive());
+    ASSERT_EQ(num_tabs, browser()->tab_strip_model()->count());
   }
+
+  content::RenderFrameHost* iframe = GetIframe(initial_tab);
+
+  content::TestFrameNavigationObserver observer(iframe);
+  const GURL app_url = embedded_test_server()->GetURL(kAppUrlPath);
+  chrome::NavigateParams params(browser(), app_url, ui::PAGE_TRANSITION_LINK);
+  params.frame_tree_node_id = iframe->GetFrameTreeNodeId();
+  ui_test_utils::NavigateToURL(&params);
+  ASSERT_TRUE(ui::PageTransitionCoreTypeIs(
+      observer.transition_type(), ui::PAGE_TRANSITION_MANUAL_SUBFRAME));
+
+  EXPECT_EQ(num_browsers, chrome::GetBrowserCount(profile()));
+  EXPECT_EQ(browser(), chrome::FindLastActive());
+  EXPECT_EQ(num_tabs, browser()->tab_strip_model()->count());
+  // When Site Isolation is enabled, navigating the iframe to a different
+  // origin causes the original iframe's RenderFrameHost to be deleted.
+  // So we retrieve the iframe's RenderFrameHost again.
+  EXPECT_EQ(app_url, GetIframe(initial_tab)->GetLastCommittedURL());
 }
 
 // Tests that clicking a link with target="_self" to the app's app_url opens the
@@ -369,6 +411,25 @@ IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest, OutOfScopeUrlSelf) {
       base::Bind(&ClickLinkAndWait,
                  browser()->tab_strip_model()->GetActiveWebContents(),
                  out_of_scope_url, LinkTarget::SELF));
+}
+
+// Tests that clicking links inside a website for an installed app doesn't open
+// a new browser window.
+IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest,
+                       InWebsiteNavigation) {
+  InstallTestBookmarkApp();
+
+  // Navigate to app's page. Shouldn't open a new window.
+  ui_test_utils::NavigateToURL(browser(),
+                               embedded_test_server()->GetURL(kAppUrlPath));
+  ASSERT_EQ(browser(), chrome::FindLastActive());
+
+  const GURL in_scope_url = embedded_test_server()->GetURL(kInScopeUrlPath);
+  TestTabActionDoesNotOpenAppWindow(
+      in_scope_url,
+      base::Bind(&ClickLinkAndWait,
+                 browser()->tab_strip_model()->GetActiveWebContents(),
+                 in_scope_url, LinkTarget::SELF));
 }
 
 // Tests that clicking links inside the app doesn't open new browser windows.
