@@ -144,6 +144,7 @@ void LogoTracker::ReturnToIdle(int outcome) {
 void LogoTracker::OnCachedLogoRead(std::unique_ptr<EncodedLogo> cached_logo) {
   DCHECK(!is_idle_);
 
+  NotifyEncodedLogoObservers(cached_logo.get(), /*from_cache=*/true);
   if (cached_logo) {
     logo_delegate_->DecodeUntrustedImage(
         cached_logo->encoded_image,
@@ -166,8 +167,7 @@ void LogoTracker::OnCachedLogoAvailable(const LogoMetadata& metadata,
   }
   is_cached_logo_valid_ = true;
   Logo* logo = cached_logo_.get();
-  for (auto& observer : logo_observers_)
-    observer.OnLogoAvailable(logo, true);
+  NotifyDecodedLogoObservers(logo, /*from_cache=*/true);
   FetchLogo();
 }
 
@@ -239,8 +239,10 @@ void LogoTracker::OnFreshLogoParsed(bool* parsing_failed,
                                     std::unique_ptr<EncodedLogo> logo) {
   DCHECK(!is_idle_);
 
-  if (logo)
+  if (logo) {
     logo->metadata.source_url = logo_url_;
+    NotifyEncodedLogoObservers(logo.get(), /*from_cache=*/false);
+  }
 
   if (!logo || !logo->encoded_image.get()) {
     OnFreshLogoAvailable(std::move(logo), *parsing_failed, from_http_cache,
@@ -303,14 +305,27 @@ void LogoTracker::OnFreshLogoAvailable(
     // Notify observers if a new logo was fetched, or if the new logo is NULL
     // but the cached logo was non-NULL.
     if (logo || cached_logo_) {
-      for (auto& observer : logo_observers_)
-        observer.OnLogoAvailable(logo.get(), false);
+      NotifyDecodedLogoObservers(logo.get(), /*from_cache=*/false);
       SetCachedLogo(std::move(encoded_logo));
     }
   }
 
   DCHECK_NE(kDownloadOutcomeNotTracked, download_outcome);
   ReturnToIdle(download_outcome);
+}
+
+void LogoTracker::NotifyDecodedLogoObservers(const Logo* logo,
+                                             bool from_cache) const {
+  for (auto& observer : logo_observers_) {
+    observer.OnLogoAvailable(logo, from_cache);
+  }
+}
+
+void LogoTracker::NotifyEncodedLogoObservers(const EncodedLogo* logo,
+                                             bool from_cache) const {
+  for (auto& observer : logo_observers_) {
+    observer.OnEncodedLogoAvailable(logo, from_cache);
+  }
 }
 
 void LogoTracker::OnURLFetchComplete(const net::URLFetcher* source) {

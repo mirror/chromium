@@ -65,6 +65,7 @@ struct EncodedLogo {
   // Metadata about the logo.
   LogoMetadata metadata;
 };
+using EncodedLogoCallback = base::OnceCallback<void(const EncodedLogo* logo)>;
 
 struct Logo {
   Logo();
@@ -75,6 +76,7 @@ struct Logo {
   // Metadata about the logo.
   LogoMetadata metadata;
 };
+using LogoCallback = base::OnceCallback<void(const Logo* logo)>;
 
 // Parses the response from the server and returns it as an EncodedLogo. Returns
 // null if the response is invalid.
