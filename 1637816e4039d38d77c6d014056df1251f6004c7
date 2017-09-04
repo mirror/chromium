@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63d5736f_04c8fdfb",
+        "filename": "chrome/android/java/res/layout/content_suggestions_card_modern.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-04T17:49:51Z",
+      "side": 1,
+      "message": "is that needed? I\u0027d expect the binder to set it already",
+      "range": {
+        "startLine": 35,
+        "startChar": 8,
+        "endLine": 35,
+        "endChar": 26
+      },
+      "revId": "1637816e4039d38d77c6d014056df1251f6004c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8c53a61_cbfd28d3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsCardViewHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-04T17:49:51Z",
+      "side": 1,
+      "message": "FeatureUtilities.isChromeHomeModernEnabled()",
+      "range": {
+        "startLine": 72,
+        "startChar": 18,
+        "endLine": 72,
+        "endChar": 90
+      },
+      "revId": "1637816e4039d38d77c6d014056df1251f6004c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
