@@ -45,6 +45,9 @@
 @property(nonatomic, weak) id<ContentSuggestionsMetricsRecording>
     metricsRecorder;
 
+// Whether this collection contains a toolbar.
+@property(nonatomic, assign) BOOL containsToolbar;
+
 - (void)setDataSource:(id<ContentSuggestionsDataSource>)dataSource;
 
 // Removes the entry at |indexPath|, from the collection and its model.
