@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd708379_3fd122da",
+        "filename": "third_party/WebKit/Source/core/html/forms/TextFieldInputType.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-04T04:07:08Z",
+      "side": 1,
+      "message": "We can remove the entire function. This just calls HandleFocusEvent() of the parent class.",
+      "revId": "55971753691f9e077d4b7474c19dc0718a060561",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
