@@ -112,6 +112,7 @@ VirtualKeyboardPrivateGetKeyboardConfigFunction::Run() {
 
 void VirtualKeyboardPrivateGetKeyboardConfigFunction::OnKeyboardConfig(
     std::unique_ptr<base::DictionaryValue> results) {
+  LOG(ERROR) << "KeyboardConfig results: " << *results;
   Respond(results ? OneArgument(std::move(results)) : Error(kUnknownError));
 }
 
@@ -144,7 +145,8 @@ VirtualKeyboardPrivateSetKeyboardStateFunction::Run() {
 }
 
 VirtualKeyboardAPI::VirtualKeyboardAPI(content::BrowserContext* context) {
-  delegate_ = ExtensionsAPIClient::Get()->CreateVirtualKeyboardDelegate();
+  delegate_ =
+      ExtensionsAPIClient::Get()->CreateVirtualKeyboardDelegate(context);
 }
 
 VirtualKeyboardAPI::~VirtualKeyboardAPI() {
