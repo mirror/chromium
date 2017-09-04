@@ -22,6 +22,30 @@
       "revId": "cf588023842889e2e5498b175fe1493c74a4ac73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17ba0e05_c4a20a56",
+        "filename": "components/component_updater/component_updater_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1241620
+      },
+      "writtenOn": "2017-09-04T05:39:28Z",
+      "side": 1,
+      "message": "Done.\n\nYour option is better.\nDidn\u0027t take notice that TimeTicks class has is_null() method.",
+      "parentUuid": "ba69f4c1_ba2bbb85",
+      "range": {
+        "startLine": 281,
+        "startChar": 22,
+        "endLine": 281,
+        "endChar": 0
+      },
+      "revId": "cf588023842889e2e5498b175fe1493c74a4ac73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
