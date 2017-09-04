@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d450f560_949eaf8f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/fetch/api/response/response-cancel-stream.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002340
+      },
+      "writtenOn": "2017-09-04T04:09:45Z",
+      "side": 1,
+      "message": "Extremely minor nitpick that you probably shouldn\u0027t fix:\n\nyou can use the shorthand notation here, ie. () \u003d\u003e reader.cancel()",
+      "range": {
+        "startLine": 64,
+        "startChar": 23,
+        "endLine": 64,
+        "endChar": 24
+      },
+      "revId": "fef736bde866461150141cc3256d768a72df57b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
