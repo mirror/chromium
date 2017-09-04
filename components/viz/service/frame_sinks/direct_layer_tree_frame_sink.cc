@@ -45,8 +45,10 @@ DirectLayerTreeFrameSink::DirectLayerTreeFrameSink(
     CompositorFrameSinkSupportManager* support_manager,
     FrameSinkManagerImpl* frame_sink_manager,
     Display* display,
-    scoped_refptr<VulkanContextProvider> vulkan_context_provider)
-    : LayerTreeFrameSink(std::move(vulkan_context_provider)),
+    scoped_refptr<VulkanContextProvider> vulkan_context_provider,
+    SharedBitmapManager* shared_bitmap_manager)
+    : LayerTreeFrameSink(std::move(vulkan_context_provider),
+                         shared_bitmap_manager),
       frame_sink_id_(frame_sink_id),
       support_manager_(support_manager),
       frame_sink_manager_(frame_sink_manager),
