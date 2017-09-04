@@ -242,13 +242,14 @@ remoting_localize("messages_localizing") {
   sources = [
     "host_messages.mc.jinja2",
   ]
-  locales = remoting_locales
+  # The mc file is only used for log messages, which don't need to be localized.
+  locales = [ "en" ]
   locale_dir = webapp_locale_dir
   encoding = "utf-16"
 
   # This target is funny. It only produces one file and the output doesn't
   # match the input. We want to generate remoting_host_messages.mc from
-  # host_messages.mg.jinja2. GN complains if it doesn't see a pattern in the
+  # host_messages.mc.jinja2. GN complains if it doesn't see a pattern in the
   # output, so the following pattern produces the name we want with a template
   # based on the input.
   #

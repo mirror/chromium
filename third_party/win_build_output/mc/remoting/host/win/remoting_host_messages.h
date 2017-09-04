@@ -48,6 +48,7 @@
 //
 // MessageText:
 //
+// Host
 //
 #define HOST_CATEGORY                    ((WORD)0x00000001L)
 
@@ -57,6 +58,7 @@
 //
 // MessageText:
 //
+// Client connected: %1.
 //
 #define MSG_HOST_CLIENT_CONNECTED        ((DWORD)0x40000001L)
 
@@ -65,6 +67,7 @@
 //
 // MessageText:
 //
+// Client disconnected: %1.
 //
 #define MSG_HOST_CLIENT_DISCONNECTED     ((DWORD)0x40000002L)
 
@@ -73,6 +76,7 @@
 //
 // MessageText:
 //
+// Access denied for client: %1.
 //
 #define MSG_HOST_CLIENT_ACCESS_DENIED    ((DWORD)0xC0000003L)
 
@@ -81,6 +85,7 @@
 //
 // MessageText:
 //
+// Channel IP for client: %1 ip='%2' host_ip='%3' channel='%4' connection='%5'.
 //
 #define MSG_HOST_CLIENT_ROUTING_CHANGED  ((DWORD)0x40000004L)
 
@@ -89,6 +94,7 @@
 //
 // MessageText:
 //
+// Host started for user: %1.
 //
 #define MSG_HOST_STARTED                 ((DWORD)0x40000005L)
 
