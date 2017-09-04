@@ -16,6 +16,24 @@
       "revId": "5bd998ff74aa9b9d673a8dd5ea905d91e2369b19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81d49249_bbcea89c",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 1569,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-09-04T14:28:35Z",
+      "side": 1,
+      "message": "Not sure we can get rid of isNoMatchShown_ yet. We still need it for the micIconClicked part of shouldRetry. WDYT about changing boolean isNoMatchShown_ to something like RecognitionError lastShownError_, does it help in terms of readability?\n\nI added separate IDs for the different links, PTAL.",
+      "parentUuid": "70f3d83f_7f31fb71",
+      "revId": "5bd998ff74aa9b9d673a8dd5ea905d91e2369b19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
