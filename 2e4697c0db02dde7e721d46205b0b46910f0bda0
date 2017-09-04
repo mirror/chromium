@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6384fb7f_6680841e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-preflight-request-headers-origin.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-09-04T04:43:33Z",
+      "side": 1,
+      "message": "let\u0027s use lower-cased request.headers.get(\"Access-Control-Request-Headers\") to make sure that the value of the ACRH header doesn\u0027t contain \"origin\" with any case using this opportunity",
+      "revId": "2e4697c0db02dde7e721d46205b0b46910f0bda0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
