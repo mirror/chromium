@@ -106,6 +106,8 @@ class AuraLinuxApplication
     return nullptr;
   }
 
+  int AXSystemCaretWin::GetIndexInParent() const { return -1; }
+
   ui::AXPlatformNode* GetFromNodeID(int32_t id) override { return nullptr; }
 
   gfx::AcceleratedWidget GetTargetForNativeAccessibilityEvent() override {
