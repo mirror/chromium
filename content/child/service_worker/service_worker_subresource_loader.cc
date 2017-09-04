@@ -8,7 +8,6 @@
 #include "base/callback.h"
 #include "base/strings/stringprintf.h"
 #include "base/threading/thread_task_runner_handle.h"
-#include "content/child/service_worker/service_worker_event_dispatcher_holder.h"
 #include "content/common/service_worker/service_worker_types.h"
 #include "content/common/service_worker/service_worker_utils.h"
 #include "content/public/child/child_url_loader_factory_getter.h"
@@ -40,7 +39,8 @@ ServiceWorkerSubresourceLoader::ServiceWorkerSubresourceLoader(
     const ResourceRequest& resource_request,
     mojom::URLLoaderClientPtr client,
     const net::MutableNetworkTrafficAnnotationTag& traffic_annotation,
-    scoped_refptr<ServiceWorkerEventDispatcherHolder> event_dispatcher,
+    scoped_refptr<SharedInterfacePtr<mojom::ServiceWorkerEventDispatcher>>
+        event_dispatcher,
     scoped_refptr<ChildURLLoaderFactoryGetter> default_loader_factory_getter,
     const GURL& controller_origin)
     : url_loader_client_(std::move(client)),
@@ -361,7 +361,8 @@ void ServiceWorkerSubresourceLoader::OnComplete(
 // ServiceWorkerSubresourceLoaderFactory ------------------------------------
 
 ServiceWorkerSubresourceLoaderFactory::ServiceWorkerSubresourceLoaderFactory(
-    scoped_refptr<ServiceWorkerEventDispatcherHolder> event_dispatcher,
+    scoped_refptr<SharedInterfacePtr<mojom::ServiceWorkerEventDispatcher>>
+        event_dispatcher,
     scoped_refptr<ChildURLLoaderFactoryGetter> default_loader_factory_getter,
     const GURL& controller_origin)
     : event_dispatcher_(std::move(event_dispatcher)),

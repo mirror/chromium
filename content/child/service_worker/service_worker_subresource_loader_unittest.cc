@@ -6,7 +6,7 @@
 
 #include "base/run_loop.h"
 #include "content/child/child_url_loader_factory_getter_impl.h"
-#include "content/child/service_worker/service_worker_event_dispatcher_holder.h"
+#include "content/common/shared_interface_ptr.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "content/public/test/test_url_loader_client.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
@@ -144,8 +144,8 @@ class ServiceWorkerSubresourceLoaderTest : public ::testing::Test {
     EXPECT_EQ(0, event_dispatcher_.fetch_event_count());
 
     ServiceWorkerSubresourceLoaderFactory loader_factory(
-        ServiceWorkerEventDispatcherHolder::CreateForTesting(
-            &event_dispatcher_),
+        SharedInterfacePtr<mojom::ServiceWorkerEventDispatcher>::
+            CreateForTesting(&event_dispatcher_),
         loader_factory_getter, request.url.GetOrigin());
     loader_factory.CreateLoaderAndStart(
         mojo::MakeRequest(&url_loader), 0, 0, mojom::kURLLoadOptionNone,
