@@ -74,6 +74,8 @@ void CreateTestPasswordForm(PasswordForm* form) {
       base::ASCIIToUTF16("Jerry_1"), base::ASCIIToUTF16("id1")));
   form->other_possible_usernames.push_back(PossibleUsernamePair(
       base::ASCIIToUTF16("Jerry_2"), base::ASCIIToUTF16("id2")));
+  form->other_possible_passwords.push_back(base::ASCIIToUTF16("pass1"));
+  form->other_possible_passwords.push_back(base::ASCIIToUTF16("pass2"));
   form->password_element = base::ASCIIToUTF16("password");
   form->password_value = base::ASCIIToUTF16("test");
   form->password_value_is_default = true;
@@ -177,6 +179,20 @@ void CheckEqualPasswordFormFillData(const PasswordFormFillData& expected,
       EXPECT_EQ(iter1->first.password, iter2->first.password);
       EXPECT_EQ(iter1->first.realm, iter2->first.realm);
       EXPECT_EQ(iter1->second, iter2->second);
+    }
+    ASSERT_EQ(iter1, end1);
+    ASSERT_EQ(iter2, end2);
+  }
+
+  {
+    EXPECT_EQ(expected.other_possible_passwords.size(),
+              actual.other_possible_passwords.size());
+    auto iter1 = expected.other_possible_passwords.begin();
+    auto end1 = expected.other_possible_passwords.end();
+    auto iter2 = actual.other_possible_passwords.begin();
+    auto end2 = actual.other_possible_passwords.end();
+    for (; iter1 != end1 && iter2 != end2; ++iter1, ++iter2) {
+      EXPECT_EQ(iter1, iter2);
     }
     ASSERT_EQ(iter1, end1);
     ASSERT_EQ(iter2, end2);

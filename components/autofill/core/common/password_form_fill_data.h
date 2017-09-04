@@ -66,6 +66,11 @@ struct PasswordFormFillData {
   // TODO(crbug/188908). Remove |other_possible_usernames| or launch.
   UsernamesCollection other_possible_usernames;
 
+  // A list of possible passwords in the case where we aren't completely sure
+  // which is the original password in a page with multiple password fields.
+  // This data is used in password selection experiment.
+  std::vector<base::string16> other_possible_passwords;
+
   // Tells us whether we need to wait for the user to enter a valid username
   // before we autofill the password. By default, this is off unless the
   // PasswordManager determined there is an additional risk associated with this
