@@ -420,8 +420,8 @@ video::-webkit-media-controls-volume-slider {
  */
 
 div.-internal-media-controls-segmented-track {
-    margin: 0 -18px 0 -18px;
     position: relative;
+    width: 100%;
 }
 
 div.-internal-media-controls-segmented-track .-internal-track-segment-background {
