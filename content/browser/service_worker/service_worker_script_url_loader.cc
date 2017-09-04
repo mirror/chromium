@@ -10,9 +10,18 @@
 #include "content/browser/service_worker/service_worker_version.h"
 #include "content/browser/url_loader_factory_getter.h"
 #include "content/public/common/resource_response.h"
-#include "storage/browser/blob/blob_storage_context.h"
 
 namespace content {
+
+namespace {
+
+ResourceRequestCompletionStatus NetErrorToCompletionStatus(net::Error error) {
+  ResourceRequestCompletionStatus status;
+  status.error_code = error;
+  return status;
+}
+
+}  // namespace
 
 ServiceWorkerScriptURLLoader::ServiceWorkerScriptURLLoader(
     int32_t routing_id,
@@ -22,7 +31,6 @@ ServiceWorkerScriptURLLoader::ServiceWorkerScriptURLLoader(
     mojom::URLLoaderClientPtr client,
     base::WeakPtr<ServiceWorkerContextCore> context,
     base::WeakPtr<ServiceWorkerProviderHost> provider_host,
-    base::WeakPtr<storage::BlobStorageContext> blob_storage_context,
     scoped_refptr<URLLoaderFactoryGetter> loader_factory_getter,
     const net::MutableNetworkTrafficAnnotationTag& traffic_annotation)
     : network_client_binding_(this),
@@ -50,24 +58,28 @@ void ServiceWorkerScriptURLLoader::OnReceiveResponse(
     const ResourceResponseHead& response_head,
     const base::Optional<net::SSLInfo>& ssl_info,
     mojom::DownloadedTempFilePtr downloaded_file) {
-  if (provider_host_) {
-    // We don't have complete info here, but fill in what we have now.
-    // At least we need headers and SSL info.
-    net::HttpResponseInfo response_info;
-    response_info.headers = response_head.headers;
-    if (ssl_info.has_value())
-      response_info.ssl_info = *ssl_info;
-    response_info.was_fetched_via_spdy = response_head.was_fetched_via_spdy;
-    response_info.was_alpn_negotiated = response_head.was_alpn_negotiated;
-    response_info.alpn_negotiated_protocol =
-        response_head.alpn_negotiated_protocol;
-    response_info.connection_info = response_head.connection_info;
-    response_info.socket_address = response_head.socket_address;
-
-    DCHECK(provider_host_->IsHostToRunningServiceWorker());
-    provider_host_->running_hosted_version()->SetMainScriptHttpResponseInfo(
-        response_info);
+  if (!provider_host_) {
+    OnComplete(NetErrorToCompletionStatus(net::ERROR_FAILED));
+    return;
   }
+
+  // We don't have complete info here, but fill in what we have now.
+  // At least we need headers and SSL info.
+  net::HttpResponseInfo response_info;
+  response_info.headers = response_head.headers;
+  if (ssl_info.has_value())
+    response_info.ssl_info = *ssl_info;
+  response_info.was_fetched_via_spdy = response_head.was_fetched_via_spdy;
+  response_info.was_alpn_negotiated = response_head.was_alpn_negotiated;
+  response_info.alpn_negotiated_protocol =
+      response_head.alpn_negotiated_protocol;
+  response_info.connection_info = response_head.connection_info;
+  response_info.socket_address = response_head.socket_address;
+
+  DCHECK(provider_host_->IsHostToRunningServiceWorker());
+  provider_host_->running_hosted_version()->SetMainScriptHttpResponseInfo(
+      response_info);
+
   forwarding_client_->OnReceiveResponse(response_head, ssl_info,
                                         std::move(downloaded_file));
 }
