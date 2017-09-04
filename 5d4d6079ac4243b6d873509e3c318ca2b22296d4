@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d7b3f00b_af1f2840",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-04T03:43:18Z",
+      "side": 1,
+      "message": "I don\u0027t have a good idea what the best UI should look like... And it doesn\u0027t look too bad to me :)\n\nMaybe we\u0027ll come back later when we have a clear idea.",
+      "parentUuid": "5bb6d247_f0555cdc",
+      "revId": "5d4d6079ac4243b6d873509e3c318ca2b22296d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f30e0624_2e0ca536",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/controllers/single_test_runner.py",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "afe192e7_366c986f",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/controllers/single_test_runner.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-04T03:43:18Z",
+      "side": 1,
+      "message": "Thanks for the suggestion.\n\nDone.",
+      "parentUuid": "f30e0624_2e0ca536",
+      "revId": "5d4d6079ac4243b6d873509e3c318ca2b22296d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6bb2ecf0_56112cad",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/controllers/single_test_runner.py",
         "patchSetId": 3
@@ -47,6 +83,30 @@
       "writtenOn": "2017-09-01T22:46:30Z",
       "side": 1,
       "message": "Whitespace (or \"white space\") usually refers to any kind of space character including carriage return, vertical space, non-breaking space, form feed, etc.\nhttps://en.wikipedia.org/wiki/Whitespace_character\n\nWhat do you think about adding a general character-removing function (maybe inside _compare_text) like:\n\n    def remove(text, chars):\n        for char in chars:\n            text \u003d text.replace(char, \u0027\u0027)\n        return text\n\nAnd then when you use it in _compare_text, you might use it like:\n\n    if not self._port.do_text_results_differ(remove(expected_text, \u0027 \\t\u0027),\n                                             remove(normalized_actual_text, \u0027 \\t\u0027)):\n        ...\n\nIf you think it makes it easier to read you could also extract a `differs` function that takes a list of chars.",
+      "range": {
+        "startLine": 360,
+        "startChar": 0,
+        "endLine": 367,
+        "endChar": 69
+      },
+      "revId": "5d4d6079ac4243b6d873509e3c318ca2b22296d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "736dd269_926220c7",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/controllers/single_test_runner.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-04T03:43:18Z",
+      "side": 1,
+      "message": "Changed some names:\n\n\"whitespace only\" \u003d\u003e \"spaces and tabs\"\n\"whitespace and newline\" \u003d\u003e \"spaces, tabs and newlines\"\n\nAlso added a character removal function.",
+      "parentUuid": "6bb2ecf0_56112cad",
       "range": {
         "startLine": 360,
         "startChar": 0,
