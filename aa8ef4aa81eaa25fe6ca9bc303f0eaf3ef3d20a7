@@ -22,6 +22,30 @@
       "revId": "aa8ef4aa81eaa25fe6ca9bc303f0eaf3ef3d20a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dce46fe0_31fa8f5f",
+        "filename": "ios/chrome/browser/ui/ntp/new_tab_page_bar_item.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-04T12:22:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "092e2f6a_0b2573d2",
+      "range": {
+        "startLine": 19,
+        "startChar": 43,
+        "endLine": 19,
+        "endChar": 51
+      },
+      "revId": "aa8ef4aa81eaa25fe6ca9bc303f0eaf3ef3d20a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
