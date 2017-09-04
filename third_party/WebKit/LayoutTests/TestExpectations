@@ -3650,3 +3650,6 @@ crbug.com/760967 [ Mac ] external/wpt/payment-request/payment-request-constructo
 crbug.com/760967 [ Mac ] external/wpt/payment-request/payment-request-ctor-pmi-handling.https.html [ Pass Failure ]
 
 crbug.com/760405 shadow-dom/crashes/css-focus-recalc.html [ Crash ]
+
+# Flaky
+crbug.com/747975 [ Linux ] virtual/mojo-loading/http/tests/media/video-buffered-range-contains-currentTime.html [ Failure Pass ]
