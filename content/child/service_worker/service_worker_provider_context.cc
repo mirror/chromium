@@ -20,9 +20,12 @@
 #include "content/common/service_worker/service_worker_utils.h"
 #include "content/common/shared_interface_ptr.h"
 #include "content/public/child/child_url_loader_factory_getter.h"
+#include "content/public/common/service_names.mojom.h"
 #include "content/public/common/url_loader_factory.mojom.h"
 #include "mojo/public/cpp/bindings/strong_associated_binding.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
+#include "services/service_manager/public/cpp/connector.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 
 namespace content {
 
@@ -43,8 +46,6 @@ struct ServiceWorkerProviderContext::ControlleeState {
 
   // S13nServiceWorker:
   // Used when we create |subresource_loader_factory|.
-  scoped_refptr<SharedInterfacePtr<mojom::ServiceWorkerEventDispatcher>>
-      event_dispatcher;
   scoped_refptr<ChildURLLoaderFactoryGetter> default_loader_factory_getter;
 
   // Tracks feature usage for UseCounter.
@@ -155,13 +156,19 @@ void ServiceWorkerProviderContext::SetController(
   state->used_features = used_features;
   if (event_dispatcher_ptr_info.is_valid()) {
     CHECK(ServiceWorkerUtils::IsServicificationEnabled());
-    state->event_dispatcher = base::MakeRefCounted<
+    auto event_dispatcher = base::MakeRefCounted<
         SharedInterfacePtr<mojom::ServiceWorkerEventDispatcher>>();
-    state->event_dispatcher->Bind(std::move(event_dispatcher_ptr_info));
+    event_dispatcher->Bind(std::move(event_dispatcher_ptr_info));
+    storage::mojom::BlobRegistryPtr blob_registry_ptr;
+    ChildThreadImpl::current()->GetConnector()->BindInterface(
+        mojom::kBrowserServiceName, mojo::MakeRequest(&blob_registry_ptr));
+    auto blob_registry =
+        base::MakeRefCounted<SharedInterfacePtr<storage::mojom::BlobRegistry>>(
+            std::move(blob_registry_ptr));
     mojo::MakeStrongBinding(
         base::MakeUnique<ServiceWorkerSubresourceLoaderFactory>(
-            state->event_dispatcher, state->default_loader_factory_getter,
-            state->controller->url().GetOrigin()),
+            std::move(event_dispatcher), state->default_loader_factory_getter,
+            state->controller->url().GetOrigin(), std::move(blob_registry)),
         mojo::MakeRequest(&state->subresource_loader_factory));
   }
 }

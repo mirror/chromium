@@ -146,7 +146,9 @@ class ServiceWorkerSubresourceLoaderTest : public ::testing::Test {
     ServiceWorkerSubresourceLoaderFactory loader_factory(
         SharedInterfacePtr<mojom::ServiceWorkerEventDispatcher>::
             CreateForTesting(&event_dispatcher_),
-        loader_factory_getter, request.url.GetOrigin());
+        loader_factory_getter, request.url.GetOrigin(),
+        SharedInterfacePtr<storage::mojom::BlobRegistry>::CreateForTesting(
+            nullptr /* TODO(kinuko): pass a mock registry */));
     loader_factory.CreateLoaderAndStart(
         mojo::MakeRequest(&url_loader), 0, 0, mojom::kURLLoadOptionNone,
         request, url_loader_client.CreateInterfacePtr(),
