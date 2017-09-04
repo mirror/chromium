@@ -801,8 +801,35 @@ ManagePasswordsBubbleView::UpdatePendingView::UpdatePendingView(
     layout->StartRow(0, DOUBLE_VIEW_COLUMN_SET);
     const autofill::PasswordForm* password_form =
         &parent_->model()->pending_password();
-    layout->AddView(GenerateUsernameLabel(*password_form).release());
-    layout->AddView(GeneratePasswordLabel(*password_form).release());
+    // TODO(https://crbug.com/761767): Remove this workaround once the grid
+    // layout bug is fixed.
+    std::unique_ptr<views::Label> username_label(
+        GenerateUsernameLabel(*password_form).release());
+    std::unique_ptr<views::Label> password_label(
+        GeneratePasswordLabel(*password_form).release());
+    int username_width = username_label->CalculatePreferredSize().width();
+    int password_width = password_label->CalculatePreferredSize().width();
+    int available_width =
+        kDesiredBubbleWidth - ChromeLayoutProvider::Get()->GetDistanceMetric(
+                                  views::DISTANCE_RELATED_CONTROL_HORIZONTAL);
+    if (username_width > available_width && password_width < available_width) {
+      layout->AddView(username_label.release(), 1, 1, views::GridLayout::FILL,
+                      views::GridLayout::FILL, available_width, 0);
+      layout->AddView(password_label.release(), 1, 1, views::GridLayout::FILL,
+                      views::GridLayout::FILL, 0, 0);
+    } else if (username_width < available_width &&
+               password_width > available_width) {
+      layout->AddView(username_label.release(), 1, 1, views::GridLayout::FILL,
+                      views::GridLayout::FILL, username_width, 0);
+      layout->AddView(password_label.release(), 1, 1, views::GridLayout::FILL,
+                      views::GridLayout::FILL, available_width - username_width,
+                      0);
+    } else {
+      layout->AddView(username_label.release(), 1, 1, views::GridLayout::FILL,
+                      views::GridLayout::FILL, 0, 0);
+      layout->AddView(password_label.release(), 1, 1, views::GridLayout::FILL,
+                      views::GridLayout::FILL, 0, 0);
+    }
   }
   layout->AddPaddingRow(
       0,
