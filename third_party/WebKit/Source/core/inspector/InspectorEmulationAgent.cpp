@@ -32,6 +32,7 @@ static const char kMaxTouchPoints[] = "maxTouchPoints";
 static const char kEmulatedMedia[] = "emulatedMedia";
 static const char kDefaultBackgroundColorOverrideRGBA[] =
     "defaultBackgroundColorOverrideRGBA";
+static const char kNavigatorPlatform[] = "navigatorPlatform";
 }
 
 InspectorEmulationAgent* InspectorEmulationAgent::Create(
@@ -71,6 +72,10 @@ void InspectorEmulationAgent::Restore() {
           Maybe<protocol::DOM::RGBA>(std::move(rgba)));
     }
   }
+  String navigator_platform;
+  state_->getString(EmulationAgentState::kNavigatorPlatform,
+                    &navigator_platform);
+  setNavigatorOverrides(navigator_platform);
 }
 
 Response InspectorEmulationAgent::disable() {
@@ -79,6 +84,7 @@ Response InspectorEmulationAgent::disable() {
   setEmulatedMedia(String());
   setCPUThrottlingRate(1);
   setDefaultBackgroundColorOverride(Maybe<protocol::DOM::RGBA>());
+  setNavigatorOverrides(String());
   return Response::OK();
 }
 
@@ -148,6 +154,14 @@ Response InspectorEmulationAgent::setVirtualTimePolicy(const String& policy,
         WTF::Bind(&InspectorEmulationAgent::VirtualTimeBudgetExpired,
                   WrapWeakPersistent(this)));
   }
+  return Response::OK();
+}
+
+Response InspectorEmulationAgent::setNavigatorOverrides(
+    const String& platform) {
+  state_->setString(EmulationAgentState::kNavigatorPlatform, platform);
+  GetWebViewImpl()->GetPage()->GetSettings().SetNavigatorPlatformOverride(
+      platform);
   return Response::OK();
 }
 
