@@ -40,6 +40,7 @@
 #include "base/win/process_startup_helper.h"
 #include "base/win/scoped_handle.h"
 #include "base/win/win_util.h"
+#if 0
 #include "chrome/chrome_watcher/chrome_watcher_main_api.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_paths.h"  // For chrome::DIR_LOGS
@@ -435,3 +436,9 @@ extern "C" int WatcherMain(const base::char16* registry_path,
 static_assert(
     std::is_same<decltype(&WatcherMain), ChromeWatcherMainFunction>::value,
     "WatcherMain() has wrong type");
+#endif
+extern "C" int WatcherMain(const base::char16* registry_path,
+                           HANDLE process_handle,
+                           DWORD main_thread_id,
+                           HANDLE on_initialized_event_handle,
+                           const base::char16* browser_data_directory) {return 0;}
