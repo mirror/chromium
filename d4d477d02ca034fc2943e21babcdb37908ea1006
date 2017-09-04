@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "52500ded_6775b432",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-09-04T13:41:17Z",
+      "side": 1,
+      "message": "Yeah, true. That\u0027s perfect! Thanks!",
+      "parentUuid": "3c274def_a425f07c",
+      "range": {
+        "startLine": 320,
+        "startChar": 26,
+        "endLine": 320,
+        "endChar": 41
+      },
+      "revId": "d4d477d02ca034fc2943e21babcdb37908ea1006",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d495e819_ca46c21b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
         "patchSetId": 3
@@ -36,6 +60,24 @@
       "writtenOn": "2017-09-04T12:58:54Z",
       "side": 1,
       "message": "Agree with Nicholas, existing functions should be used.\nHow about getting the anchor with: java.net.url getRef()\nChecking the protocol is http(s):  https://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/physicalweb/HttpRequest.java?l\u003d47",
+      "revId": "d4d477d02ca034fc2943e21babcdb37908ea1006",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b65902d9_f096ab02",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-09-04T13:41:17Z",
+      "side": 1,
+      "message": "how about https://cs.chromium.org/chromium/src/third_party/android_tools/sdk/sources/android-25/android/webkit/URLUtil.java?l\u003d248 ?",
+      "parentUuid": "d495e819_ca46c21b",
       "revId": "d4d477d02ca034fc2943e21babcdb37908ea1006",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
