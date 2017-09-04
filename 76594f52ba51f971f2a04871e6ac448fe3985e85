@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f1621e2_f3b06264",
+        "filename": "base/containers/flat_map.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-04T08:43:06Z",
+      "side": 1,
+      "message": "Here I omitted the |template \u003cclass M\u003e| prefix for brevity, similar to how it\u0027s done with |Args| in the already existing emplace methods. However, I can see how this might be confusing. What do you think?",
+      "range": {
+        "startLine": 109,
+        "startChar": 0,
+        "endLine": 114,
+        "endChar": 48
+      },
+      "revId": "76594f52ba51f971f2a04871e6ac448fe3985e85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8be00a5_0d453ba5",
+        "filename": "base/containers/flat_map.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-04T08:43:06Z",
+      "side": 1,
+      "message": "Here (and in the other hint based methods below) I only check whether the hint points to the element directly after the corresponding insert position, i.e. (hint - 1) \u003c key \u003c hint. Otherwise it just dispatches to the version without a hint. Given that we also overwrite existing elements, it might be worthwhile to check whether the element pointed to by hint is actually equivalent to key, that is check if !key_comp(hint-\u003efirst, key) and !key_comp(key, hint-\u003efirst). The standard does not really mandate anything regarding the hint, so we are more or less free to choose how we want to deal with it. What do you think?",
+      "range": {
+        "startLine": 367,
+        "startChar": 0,
+        "endLine": 368,
+        "endChar": 79
+      },
+      "revId": "76594f52ba51f971f2a04871e6ac448fe3985e85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
