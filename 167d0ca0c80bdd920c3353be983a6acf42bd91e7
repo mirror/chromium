@@ -19,6 +19,58 @@
     },
     {
       "key": {
+        "uuid": "f49befdc_bb12aec4",
+        "filename": "third_party/WebKit/PerformanceTests/ImageDecoder/decode-gif.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-04T12:54:44Z",
+      "side": 1,
+      "message": "\u003e The old tests (which this replaces) also only tested one image per format.\n\nNod, it was always this way.\n\n\u003e I would love to expand our corpus. But\n\u003e 1.) That would be a separate patch, and\n\u003e 2.) It is difficult for me to convince people that is a priority.\n\nSeparate patch, and would be a nice-to-have.  I have no clue whether the new fancy test harness could run a test that takes order 10-15 minutes, maybe even longer on Android.",
+      "parentUuid": "abe5ab16_51b0d372",
+      "revId": "167d0ca0c80bdd920c3353be983a6acf42bd91e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2040de94_0232aa16",
+        "filename": "third_party/WebKit/PerformanceTests/ImageDecoder/decode-webp.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-04T12:54:44Z",
+      "side": 1,
+      "message": "Could we add a test for loss-less webp while we are here?  I landed a new image called droids.loss-less.webp that you could use ...",
+      "revId": "167d0ca0c80bdd920c3353be983a6acf42bd91e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "182ea0c9_588589ff",
+        "filename": "third_party/WebKit/PerformanceTests/ImageDecoder/resources/image_decoder_runner.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-04T12:54:44Z",
+      "side": 1,
+      "message": "Curious: does this API do a main thread decode, or an off-main-thread decode?",
+      "revId": "167d0ca0c80bdd920c3353be983a6acf42bd91e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa7275d3_43092f98",
         "filename": "third_party/WebKit/PerformanceTests/ImageDecoder/resources/image_decoder_runner.js",
         "patchSetId": 4
@@ -30,6 +82,58 @@
       "writtenOn": "2017-09-01T23:15:25Z",
       "side": 1,
       "message": "I want to add a comment for the reviewers (I had to learn about this when writing this test):\n\nThis call to addRunTestEndMarker() signals PerfTestRunner to check its iterationCount and call done if it has hit the end. That is why the if (!isDone) comes next.\n\nThis async test harness requires the test itself to iterate. But it provides the call to done.",
+      "revId": "167d0ca0c80bdd920c3353be983a6acf42bd91e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50e92c1e_09bd46ab",
+        "filename": "third_party/WebKit/PerformanceTests/ImageDecoder/resources/image_decoder_runner.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-04T12:54:44Z",
+      "side": 1,
+      "message": "\u003e I want to add a comment for the reviewers (I had to learn about this when writing this test):\n\nThanks for the details.\n\n\u003e This call to addRunTestEndMarker() signals PerfTestRunner to check its iterationCount and call done if it has hit the end. That is why the if (!isDone) comes next.\n\nRight, a little tricky / obscure.  Would be nice if addRunTestEndMarker() returned false or something to signal that there are no more iterations. anyho, ...",
+      "parentUuid": "fa7275d3_43092f98",
+      "revId": "167d0ca0c80bdd920c3353be983a6acf42bd91e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccc5c263_45df9471",
+        "filename": "third_party/WebKit/PerformanceTests/ImageDecoder/resources/image_decoder_runner.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-04T12:54:44Z",
+      "side": 1,
+      "message": "Maybe use \"image.src \u003d imageFile + \"?\" + Math.random();\" here.\n\nOn bug, you mentioned this is set-src could stall at network-level during a test.  Possible work around is XHR the image data, extract a blob response, use the blob as the image.src ?",
+      "revId": "167d0ca0c80bdd920c3353be983a6acf42bd91e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1729eb62_20b4bcf3",
+        "filename": "tools/perf/benchmarks/blink_perf.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-04T12:54:44Z",
+      "side": 1,
+      "message": "This line looks to disable all the tests.  Not sure if that is what you wanted?",
       "revId": "167d0ca0c80bdd920c3353be983a6acf42bd91e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
