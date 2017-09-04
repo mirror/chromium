@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8827703d_9c2b0d76",
+        "filename": "headless/lib/headless_web_contents_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 970,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-09-04T15:22:01Z",
+      "side": 1,
+      "message": "Might want to do this in TearDown() to make sure it always happens.",
+      "range": {
+        "startLine": 970,
+        "startChar": 15,
+        "endLine": 970,
+        "endChar": 41
+      },
+      "revId": "7e4f553b406f0c23ba0430d9492569954b638414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "173dd717_aabf847b",
+        "filename": "headless/lib/headless_web_contents_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1016,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-09-04T15:22:01Z",
+      "side": 1,
+      "message": "This might become a change detector test and we don\u0027t particularly care what order things get loaded in when the scheduler is enabled. I\u0027d suggest either leaving this out or just comparing to a set instead of a vector.",
+      "range": {
+        "startLine": 1016,
+        "startChar": 24,
+        "endLine": 1016,
+        "endChar": 29
+      },
+      "revId": "7e4f553b406f0c23ba0430d9492569954b638414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aa5b3a5_1725ef83",
+        "filename": "headless/public/headless_browser.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-09-04T15:22:01Z",
+      "side": 1,
+      "message": "uber-nit: \"Caution:\"",
+      "range": {
+        "startLine": 82,
+        "startChar": 58,
+        "endLine": 82,
+        "endChar": 65
+      },
+      "revId": "7e4f553b406f0c23ba0430d9492569954b638414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
