@@ -45,12 +45,6 @@ bool ChromeWebViewPermissionHelperDelegate::OnMessageReceived(
     const IPC::Message& message,
     content::RenderFrameHost* render_frame_host) {
   IPC_BEGIN_MESSAGE_MAP(ChromeWebViewPermissionHelperDelegate, message)
-    IPC_MESSAGE_HANDLER(ChromeViewHostMsg_BlockedOutdatedPlugin,
-                        OnBlockedOutdatedPlugin)
-    IPC_MESSAGE_HANDLER(ChromeViewHostMsg_BlockedUnauthorizedPlugin,
-                        OnBlockedUnauthorizedPlugin)
-    IPC_MESSAGE_HANDLER(ChromeViewHostMsg_CouldNotLoadPlugin,
-                        OnCouldNotLoadPlugin)
     IPC_MESSAGE_HANDLER(ChromeViewHostMsg_RemovePluginPlaceholderHost,
                         OnRemovePluginPlaceholderHost)
     IPC_MESSAGE_HANDLER(ChromeViewHostMsg_OpenPDF, OnOpenPDF)
@@ -60,7 +54,7 @@ bool ChromeWebViewPermissionHelperDelegate::OnMessageReceived(
   return true;
 }
 
-void ChromeWebViewPermissionHelperDelegate::OnBlockedUnauthorizedPlugin(
+void ChromeWebViewPermissionHelperDelegate::BlockedUnauthorizedPlugin(
     const base::string16& name,
     const std::string& identifier) {
   const char kPluginName[] = "name";
@@ -80,13 +74,9 @@ void ChromeWebViewPermissionHelperDelegate::OnBlockedUnauthorizedPlugin(
       base::UserMetricsAction("WebView.Guest.PluginLoadRequest"));
 }
 
-void ChromeWebViewPermissionHelperDelegate::OnCouldNotLoadPlugin(
-    const base::FilePath& plugin_path) {
-}
-
-void ChromeWebViewPermissionHelperDelegate::OnBlockedOutdatedPlugin(
-    int placeholder_id,
-    const std::string& identifier) {
+void ChromeWebViewPermissionHelperDelegate::OnPluginAuthHostRequest(
+    chrome::mojom::PluginAuthHostAssociatedRequest request) {
+  plugin_host_bindings_.AddBinding(this, std::move(request));
 }
 
 void ChromeWebViewPermissionHelperDelegate::OnRemovePluginPlaceholderHost(
