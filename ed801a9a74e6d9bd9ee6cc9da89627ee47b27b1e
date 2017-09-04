@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7dc331a8_9050bdf5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-09-04T16:37:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "635a540c_54af75eb",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 33
+      },
+      "revId": "ed801a9a74e6d9bd9ee6cc9da89627ee47b27b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b4408df_01bdc98e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "ed801a9a74e6d9bd9ee6cc9da89627ee47b27b1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f84f4d02_66700cb6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-09-04T16:37:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b4408df_01bdc98e",
+      "range": {
+        "startLine": 55,
+        "startChar": 43,
+        "endLine": 55,
+        "endChar": 56
+      },
+      "revId": "ed801a9a74e6d9bd9ee6cc9da89627ee47b27b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d1449f33_621a5ed0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-09-04T16:37:18Z",
+      "side": 1,
+      "message": "This function got removed in the new implementation.",
+      "parentUuid": "520876ce_b87a7b19",
+      "range": {
+        "startLine": 87,
+        "startChar": 8,
+        "endLine": 87,
+        "endChar": 23
+      },
+      "revId": "ed801a9a74e6d9bd9ee6cc9da89627ee47b27b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d9d7d2d_f94923b7",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
         "patchSetId": 4
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "f1fcbe61_b56794c7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-09-04T16:37:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d9d7d2d_f94923b7",
+      "range": {
+        "startLine": 94,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 82
+      },
+      "revId": "ed801a9a74e6d9bd9ee6cc9da89627ee47b27b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a317d388_212fe537",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
         "patchSetId": 4
@@ -114,6 +210,30 @@
       "revId": "ed801a9a74e6d9bd9ee6cc9da89627ee47b27b1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2342cba_c89d4e0b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-09-04T16:37:18Z",
+      "side": 1,
+      "message": "The function got removed in the new implementation.",
+      "parentUuid": "a317d388_212fe537",
+      "range": {
+        "startLine": 137,
+        "startChar": 17,
+        "endLine": 137,
+        "endChar": 18
+      },
+      "revId": "ed801a9a74e6d9bd9ee6cc9da89627ee47b27b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -164,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "7d4a315a_37466605",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-09-04T16:37:18Z",
+      "side": 1,
+      "message": "After some offline discussions, Boris and I decided that maybe a more flexible way of loading preferences would be to remove the XML file altogether and add them programmatically. The preferences were, indeed, added in the same order as the one defined in the XML so there were no problems when it came to that but at the same time we weren\u0027t able to find a place in the documentation that stated the order will be maintained. We also think that changing the implementation altogether will provide a cleaner approach to the whole problem. What do you think of the current implementation (patch #6)?",
+      "parentUuid": "0662a1d4_6b41e90b",
+      "range": {
+        "startLine": 185,
+        "startChar": 0,
+        "endLine": 185,
+        "endChar": 88
+      },
+      "revId": "ed801a9a74e6d9bd9ee6cc9da89627ee47b27b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "20b87a2a_44458488",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
         "patchSetId": 4
@@ -184,6 +328,30 @@
       "revId": "ed801a9a74e6d9bd9ee6cc9da89627ee47b27b1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49a4e9cd_01d44beb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-09-04T16:37:18Z",
+      "side": 1,
+      "message": "This function got removed in the new implementation.",
+      "parentUuid": "20b87a2a_44458488",
+      "range": {
+        "startLine": 197,
+        "startChar": 0,
+        "endLine": 201,
+        "endChar": 9
+      },
+      "revId": "ed801a9a74e6d9bd9ee6cc9da89627ee47b27b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -230,6 +398,54 @@
       "revId": "ed801a9a74e6d9bd9ee6cc9da89627ee47b27b1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e79c4ef_19d04f7e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-09-04T16:37:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d79b91d_22a00c46",
+      "range": {
+        "startLine": 228,
+        "startChar": 27,
+        "endLine": 228,
+        "endChar": 51
+      },
+      "revId": "ed801a9a74e6d9bd9ee6cc9da89627ee47b27b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d9e41f12_6872ec1c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-09-04T16:37:18Z",
+      "side": 1,
+      "message": "The space is automatically added by \"git cl format\". After some offline discussion, replaced it with \u0027() -\u003e updatePreferences()\u0027 to bypass the weird formatting.",
+      "parentUuid": "096253a9_59aee2a9",
+      "range": {
+        "startLine": 228,
+        "startChar": 31,
+        "endLine": 228,
+        "endChar": 32
+      },
+      "revId": "ed801a9a74e6d9bd9ee6cc9da89627ee47b27b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
