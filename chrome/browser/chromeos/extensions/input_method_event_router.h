@@ -8,6 +8,7 @@
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "ui/base/ime/chromeos/input_method_manager.h"
+#include "ui/events/platform/platform_event_observer.h"
 
 namespace content {
 class BrowserContext;
@@ -17,7 +18,8 @@ namespace chromeos {
 
 // Event router class for the input method events.
 class ExtensionInputMethodEventRouter
-    : public input_method::InputMethodManager::Observer {
+    : public input_method::InputMethodManager::Observer,
+      public ui::PlatformEventObserver {
  public:
   explicit ExtensionInputMethodEventRouter(content::BrowserContext* context);
   ~ExtensionInputMethodEventRouter() override;
@@ -26,6 +28,10 @@ class ExtensionInputMethodEventRouter
   void InputMethodChanged(input_method::InputMethodManager* manager,
                           Profile* profile,
                           bool show_message) override;
+
+  // Implements ui::PlatformEventObserver
+  void WillProcessEvent(const ui::PlatformEvent& event) override {}
+  void DidProcessEvent(const ui::PlatformEvent& event) override;
 
  private:
   content::BrowserContext* context_;

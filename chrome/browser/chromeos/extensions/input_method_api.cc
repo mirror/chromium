@@ -60,6 +60,7 @@ namespace OnImeMenuListChanged =
     extensions::api::input_method_private::OnImeMenuListChanged;
 namespace OnImeMenuItemsChanged =
     extensions::api::input_method_private::OnImeMenuItemsChanged;
+namespace OnTouchEvent = extensions::api::input_method_private::OnTouchEvent;
 
 namespace {
 
@@ -312,6 +313,7 @@ InputMethodAPI::InputMethodAPI(content::BrowserContext* context)
       ->RegisterObserver(this, OnImeMenuListChanged::kEventName);
   EventRouter::Get(context_)
       ->RegisterObserver(this, OnImeMenuItemsChanged::kEventName);
+  EventRouter::Get(context_)->RegisterObserver(this, OnTouchEvent::kEventName);
   ExtensionFunctionRegistry* registry =
       ExtensionFunctionRegistry::GetInstance();
   registry->RegisterFunction<InputMethodPrivateGetInputMethodConfigFunction>();
@@ -345,10 +347,12 @@ void InputMethodAPI::Shutdown() {
 
 void InputMethodAPI::OnListenerAdded(
     const extensions::EventListenerInfo& details) {
-  if (details.event_name == OnChanged::kEventName &&
-      !input_method_event_router_.get()) {
-    input_method_event_router_.reset(
-        new chromeos::ExtensionInputMethodEventRouter(context_));
+  if (details.event_name == OnChanged::kEventName ||
+      details.event_name == OnTouchEvent::kEventName) {
+    if (!input_method_event_router_.get()) {
+      input_method_event_router_.reset(
+          new chromeos::ExtensionInputMethodEventRouter(context_));
+    }
   } else if (details.event_name == OnDictionaryChanged::kEventName ||
              details.event_name == OnDictionaryLoaded::kEventName) {
     if (!dictionary_event_router_.get()) {

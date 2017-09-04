@@ -32,6 +32,15 @@
           "checked": {"type": "boolean", "optional": true, "description": "Indicates this item should be drawn with a check."},
           "enabled": {"type": "boolean", "optional": true, "description": "Indicates this item is enabled."}
         }
+      },
+      {
+        "id": "Touch",
+        "type": "object",
+        "description": "Touch event in global screen coordinates.",
+        "properties": {
+          "x": {"type": "integer", "description": "X coordinate"},
+          "y": {"type": "integer", "description": "Y coordinate"}
+        }
       }
     ],
     "functions": [
@@ -52,7 +61,8 @@
                 "description": "The input method config object.",
                 "properties": {
                   "isPhysicalKeyboardAutocorrectEnabled": {"type": "boolean"},
-                  "isImeMenuActivated": {"type": "boolean"}
+                  "isImeMenuActivated": {"type": "boolean"},
+                  "isTouchKeyboardEnabled": {"type": "boolean"}
                 }
               }
             ]
@@ -345,6 +355,17 @@
               "$ref": "MenuItem"
             },
             "description": "MenuItems to add or update."
+          }
+        ]
+      }, {
+        "name": "onTouchEvent",
+        "type": "function",
+        "description": "Fired when touch event happens",
+        "parameters": [
+          {
+            "name": "touch",
+            "$ref": "Touch",
+            "description": "touch"
           }
         ]
       }
