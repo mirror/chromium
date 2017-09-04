@@ -255,7 +255,7 @@ TEST_F(LayoutSelectionTest,
           .Build());
   // This commit should not crash.
   Selection().CommitAppearanceIfNeeded();
-  TEST_NEXT(IsLayoutBlock, kNone, ShouldInvalidate);
+  TEST_NEXT(IsLayoutBlock, kStartAndEnd, ShouldInvalidate);
   TEST_NEXT(IsLayoutBlockFlow, kStartAndEnd, ShouldInvalidate);
   TEST_NEXT("div1", kStartAndEnd, ShouldInvalidate);
   TEST_NEXT(IsLayoutBlockFlow, kNone, ShouldInvalidate);
@@ -360,7 +360,7 @@ TEST_F(LayoutSelectionTest, FirstLetterUpdateSeletion) {
                                .SetBaseAndExtent({baz, 2}, {baz, 3})
                                .Build());
   Selection().CommitAppearanceIfNeeded();
-  TEST_NEXT(IsLayoutBlock, kNone, ShouldInvalidate);
+  TEST_NEXT(IsLayoutBlock, kStartAndEnd, ShouldInvalidate);
   TEST_NEXT(IsLayoutBlock, kNone, ShouldInvalidate);
   TEST_NEXT("foo", kNone, ShouldInvalidate);
   TEST_NEXT(IsLayoutBlock, kNone, ShouldInvalidate);
