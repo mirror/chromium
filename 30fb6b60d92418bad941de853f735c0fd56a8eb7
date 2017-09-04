@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fd26ba87_e412563c",
+        "filename": "components/search_provider_logos/logo_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-04T11:42:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cee25f19_105182bd",
+      "range": {
+        "startLine": 187,
+        "startChar": 23,
+        "endLine": 187,
+        "endChar": 40
+      },
+      "revId": "30fb6b60d92418bad941de853f735c0fd56a8eb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2296426_793ebd42",
         "filename": "components/search_provider_logos/logo_service.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "30fb6b60d92418bad941de853f735c0fd56a8eb7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd539866_5b79704b",
+        "filename": "components/search_provider_logos/logo_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-04T11:42:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e2296426_793ebd42",
+      "range": {
+        "startLine": 188,
+        "startChar": 7,
+        "endLine": 188,
+        "endChar": 22
+      },
+      "revId": "30fb6b60d92418bad941de853f735c0fd56a8eb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "dfc58e57_54b08110",
+        "filename": "components/search_provider_logos/logo_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-04T11:42:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2ccb4e5_c07cb7b2",
+      "range": {
+        "startLine": 190,
+        "startChar": 63,
+        "endLine": 190,
+        "endChar": 0
+      },
+      "revId": "30fb6b60d92418bad941de853f735c0fd56a8eb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8de757a_2da27e66",
         "filename": "components/search_provider_logos/logo_service_unittest.cc",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "30fb6b60d92418bad941de853f735c0fd56a8eb7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bba34710_1b97c7fb",
+        "filename": "components/search_provider_logos/logo_service_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-04T11:42:40Z",
+      "side": 1,
+      "message": "\u003e Out of curiosity: Any particular reason for using StringPiece? (It triggers bad memories for me...)\n\nI think the best advice is to use base::StringPiece when possible for function parameters, and to not use it elsewhere. In particular, these arguments are going to be passed to ASCIIToUTF16, which itself takes StringPiece.",
+      "parentUuid": "f8de757a_2da27e66",
+      "range": {
+        "startLine": 388,
+        "startChar": 52,
+        "endLine": 388,
+        "endChar": 0
+      },
+      "revId": "30fb6b60d92418bad941de853f735c0fd56a8eb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
