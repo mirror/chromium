@@ -423,6 +423,10 @@
       name: "FeaturePolicyExperimentalFeatures",
     },
     {
+      name: "FeaturePolicyForEncryptedMedia",
+      status: "experimental"
+    },
+    {
       name: "FetchRequestCache",
       status: "experimental",
     },
