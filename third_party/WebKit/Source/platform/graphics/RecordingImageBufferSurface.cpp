@@ -28,8 +28,6 @@ RecordingImageBufferSurface::RecordingImageBufferSurface(
     : ImageBufferSurface(size, opacity_mode, color_params),
       allow_fallback_(allow_fallback),
       image_buffer_(0),
-      current_frame_pixel_count_(0),
-      previous_frame_pixel_count_(0),
       frame_was_cleared_(true),
       did_record_draw_commands_in_current_frame_(false),
       current_frame_has_expensive_op_(false),
@@ -52,7 +50,6 @@ void RecordingImageBufferSurface::InitializeCurrentFrame() {
   }
   did_record_draw_commands_in_current_frame_ = false;
   current_frame_has_expensive_op_ = false;
-  current_frame_pixel_count_ = 0;
 }
 
 void RecordingImageBufferSurface::SetImageBuffer(ImageBuffer* image_buffer) {
@@ -296,7 +293,6 @@ void RecordingImageBufferSurface::WillOverwriteCanvas() {
   frame_was_cleared_ = true;
   previous_frame_.reset();
   previous_frame_has_expensive_op_ = false;
-  previous_frame_pixel_count_ = 0;
   if (did_record_draw_commands_in_current_frame_) {
     // Discard previous draw commands
     current_frame_->finishRecordingAsPicture();
@@ -304,14 +300,8 @@ void RecordingImageBufferSurface::WillOverwriteCanvas() {
   }
 }
 
-void RecordingImageBufferSurface::DidDraw(const FloatRect& rect) {
+void RecordingImageBufferSurface::DidDraw() {
   did_record_draw_commands_in_current_frame_ = true;
-  IntRect pixel_bounds = EnclosingIntRect(rect);
-  CheckedNumeric<int> pixel_count = pixel_bounds.Width();
-  pixel_count *= pixel_bounds.Height();
-  pixel_count += current_frame_pixel_count_;
-  current_frame_pixel_count_ =
-      pixel_count.ValueOrDefault(std::numeric_limits<int>::max());
 }
 
 bool RecordingImageBufferSurface::FinalizeFrameInternal(
@@ -347,7 +337,6 @@ bool RecordingImageBufferSurface::FinalizeFrameInternal(
 
   previous_frame_ = current_frame_->finishRecordingAsPicture();
   previous_frame_has_expensive_op_ = current_frame_has_expensive_op_;
-  previous_frame_pixel_count_ = current_frame_pixel_count_;
   InitializeCurrentFrame();
 
   frame_was_cleared_ = false;
@@ -375,18 +364,8 @@ bool RecordingImageBufferSurface::IsExpensiveToPaint() {
   if (fallback_surface_)
     return fallback_surface_->IsExpensiveToPaint();
 
-  CheckedNumeric<int> overdraw_limit_checked = size().Width();
-  overdraw_limit_checked *= size().Height();
-  overdraw_limit_checked *=
-      CanvasHeuristicParameters::kExpensiveOverdrawThreshold;
-  int overdraw_limit =
-      overdraw_limit_checked.ValueOrDefault(std::numeric_limits<int>::max());
-
   if (did_record_draw_commands_in_current_frame_) {
     if (current_frame_has_expensive_op_)
-      return true;
-
-    if (current_frame_pixel_count_ >= overdraw_limit)
       return true;
 
     if (frame_was_cleared_)
@@ -395,9 +374,6 @@ bool RecordingImageBufferSurface::IsExpensiveToPaint() {
 
   if (previous_frame_) {
     if (previous_frame_has_expensive_op_)
-      return true;
-
-    if (previous_frame_pixel_count_ >= overdraw_limit)
       return true;
   }
 

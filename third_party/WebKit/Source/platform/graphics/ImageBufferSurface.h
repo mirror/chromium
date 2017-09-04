@@ -64,7 +64,7 @@ class PLATFORM_EXPORT ImageBufferSurface {
   virtual PaintCanvas* Canvas() = 0;
   virtual void DisableDeferral(DisableDeferralReason) {}
   virtual void WillOverwriteCanvas() {}
-  virtual void DidDraw(const FloatRect& rect) {}
+  virtual void DidDraw() {}
   virtual bool IsValid() const = 0;
   virtual bool Restore() { return false; }
   virtual WebLayer* Layer() const { return 0; }

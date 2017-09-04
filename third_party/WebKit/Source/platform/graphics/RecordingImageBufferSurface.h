@@ -40,7 +40,7 @@ class PLATFORM_EXPORT RecordingImageBufferSurface : public ImageBufferSurface {
   void DisableDeferral(DisableDeferralReason) override;
   sk_sp<PaintRecord> GetRecord() override;
   void Flush(FlushReason) override;
-  void DidDraw(const FloatRect&) override;
+  void DidDraw() override;
   bool IsValid() const override { return true; }
   bool IsRecording() const override { return !fallback_surface_; }
   bool WritePixels(const SkImageInfo& orig_info,
@@ -107,7 +107,6 @@ class PLATFORM_EXPORT RecordingImageBufferSurface : public ImageBufferSurface {
   void FallBackToRasterCanvas(FallbackReason);
   void InitializeCurrentFrame();
   bool FinalizeFrameInternal(FallbackReason*);
-  int ApproximateOpCount();
 
   const AllowFallback allow_fallback_;
   std::unique_ptr<PaintRecorder> current_frame_;
@@ -115,8 +114,6 @@ class PLATFORM_EXPORT RecordingImageBufferSurface : public ImageBufferSurface {
   std::unique_ptr<UnacceleratedImageBufferSurface> fallback_surface_;
   ImageBuffer* image_buffer_;
   int initial_save_count_;
-  int current_frame_pixel_count_;
-  int previous_frame_pixel_count_;
   bool frame_was_cleared_;
   bool did_record_draw_commands_in_current_frame_;
   bool current_frame_has_expensive_op_;

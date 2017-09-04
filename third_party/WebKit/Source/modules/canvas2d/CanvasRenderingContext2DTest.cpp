@@ -524,40 +524,6 @@ TEST_F(CanvasRenderingContext2DTest, NoLayerPromotionByDefault) {
   EXPECT_TRUE(surface_ptr->IsRecording());
 }
 
-TEST_F(CanvasRenderingContext2DTest, NoLayerPromotionUnderOverdrawLimit) {
-  CreateContext(kNonOpaque);
-  auto surface = WTF::MakeUnique<RecordingImageBufferSurface>(
-      IntSize(10, 10), RecordingImageBufferSurface::kAllowFallback, kNonOpaque);
-  auto* surface_ptr = surface.get();
-  CanvasElement().CreateImageBufferUsingSurfaceForTesting(std::move(surface));
-
-  Context2d()->setGlobalAlpha(0.5f);  // To prevent overdraw optimization
-  for (int i = 0;
-       i < CanvasHeuristicParameters::kExpensiveOverdrawThreshold - 1; i++) {
-    Context2d()->fillRect(0, 0, 10, 10);
-  }
-
-  EXPECT_FALSE(CanvasElement().ShouldBeDirectComposited());
-  EXPECT_TRUE(surface_ptr->IsRecording());
-}
-
-TEST_F(CanvasRenderingContext2DTest, LayerPromotionOverOverdrawLimit) {
-  CreateContext(kNonOpaque);
-  auto surface = WTF::MakeUnique<RecordingImageBufferSurface>(
-      IntSize(10, 10), RecordingImageBufferSurface::kAllowFallback, kNonOpaque);
-  auto* surface_ptr = surface.get();
-  CanvasElement().CreateImageBufferUsingSurfaceForTesting(std::move(surface));
-
-  Context2d()->setGlobalAlpha(0.5f);  // To prevent overdraw optimization
-  for (int i = 0; i < CanvasHeuristicParameters::kExpensiveOverdrawThreshold;
-       i++) {
-    Context2d()->fillRect(0, 0, 10, 10);
-  }
-
-  EXPECT_TRUE(CanvasElement().ShouldBeDirectComposited());
-  EXPECT_TRUE(surface_ptr->IsRecording());
-}
-
 TEST_F(CanvasRenderingContext2DTest, NoLayerPromotionUnderImageSizeRatioLimit) {
   CreateContext(kNonOpaque);
   auto surface = WTF::MakeUnique<RecordingImageBufferSurface>(

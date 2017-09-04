@@ -433,7 +433,7 @@ class MockImageBuffer : public ImageBuffer {
 };
 
 void DrawSomething(Canvas2DLayerBridgePtr& bridge) {
-  bridge->DidDraw(FloatRect(0, 0, 1, 1));
+  bridge->DidDraw();
   bridge->FinalizeFrame();
   bridge->Flush(kFlushReasonUnknown);
 }
@@ -1124,7 +1124,7 @@ TEST_F(Canvas2DLayerBridgeTest, NoUnnecessaryFlushes) {
   ::testing::Mock::VerifyAndClearExpectations(&gl_);
 
   EXPECT_CALL(gl_, Flush()).Times(0);
-  bridge->DidDraw(FloatRect(0, 0, 1, 1));
+  bridge->DidDraw();
   EXPECT_TRUE(bridge->HasRecordedDrawCommands());
   ::testing::Mock::VerifyAndClearExpectations(&gl_);
 
@@ -1134,7 +1134,7 @@ TEST_F(Canvas2DLayerBridgeTest, NoUnnecessaryFlushes) {
   ::testing::Mock::VerifyAndClearExpectations(&gl_);
 
   EXPECT_CALL(gl_, Flush()).Times(0);
-  bridge->DidDraw(FloatRect(0, 0, 1, 1));
+  bridge->DidDraw();
   EXPECT_TRUE(bridge->HasRecordedDrawCommands());
   ::testing::Mock::VerifyAndClearExpectations(&gl_);
 
@@ -1150,7 +1150,7 @@ TEST_F(Canvas2DLayerBridgeTest, NoUnnecessaryFlushes) {
   ::testing::Mock::VerifyAndClearExpectations(&gl_);
 
   EXPECT_CALL(gl_, Flush()).Times(0);
-  bridge->DidDraw(FloatRect(0, 0, 1, 1));
+  bridge->DidDraw();
   EXPECT_TRUE(bridge->HasRecordedDrawCommands());
   ::testing::Mock::VerifyAndClearExpectations(&gl_);
 

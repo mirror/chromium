@@ -36,7 +36,6 @@
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/WebTaskRunner.h"
 #include "platform/graphics/AcceleratedStaticBitmapImage.h"
-#include "platform/graphics/CanvasHeuristicParameters.h"
 #include "platform/graphics/CanvasMetrics.h"
 #include "platform/graphics/GraphicsLayer.h"
 #include "platform/graphics/ImageBuffer.h"
@@ -245,7 +244,6 @@ void Canvas2DLayerBridge::StartRecording() {
   if (image_buffer_) {
     image_buffer_->ResetCanvas(canvas);
   }
-  recording_pixel_count_ = 0;
 }
 
 void Canvas2DLayerBridge::SetLoggerForTesting(std::unique_ptr<Logger> logger) {
@@ -1073,16 +1071,9 @@ WebLayer* Canvas2DLayerBridge::Layer() const {
   return layer_->Layer();
 }
 
-void Canvas2DLayerBridge::DidDraw(const FloatRect& rect) {
+void Canvas2DLayerBridge::DidDraw() {
   if (is_deferral_enabled_) {
     have_recorded_draw_commands_ = true;
-    IntRect pixel_bounds = EnclosingIntRect(rect);
-    recording_pixel_count_ += pixel_bounds.Width() * pixel_bounds.Height();
-    if (recording_pixel_count_ >=
-        (size_.Width() * size_.Height() *
-         CanvasHeuristicParameters::kExpensiveOverdrawThreshold)) {
-      DisableDeferral(kDisableDeferralReasonExpensiveOverdrawHeuristic);
-    }
   }
   did_draw_since_last_flush_ = true;
   did_draw_since_last_gpu_flush_ = true;

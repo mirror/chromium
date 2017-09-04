@@ -96,7 +96,7 @@ class PLATFORM_EXPORT ImageBuffer {
   }
   bool IsSurfaceValid() const;
   bool RestoreSurface() const;
-  void DidDraw(const FloatRect&) const;
+  void DidDraw() const;
   bool WasDrawnToAfterSnapshot() const {
     return snapshot_state_ == kDrawnToAfterSnapshot;
   }
