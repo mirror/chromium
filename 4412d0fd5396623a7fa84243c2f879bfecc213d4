@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc4e20b7_2cc423ef",
+        "filename": "third_party/WebKit/Source/core/css/resolver/stylerecalc.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-09-04T03:11:08Z",
+      "side": 1,
+      "message": "This file should move to core/style since it is talking about constants in ComputedStyleConstants which is in core/style",
+      "revId": "4412d0fd5396623a7fa84243c2f879bfecc213d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
