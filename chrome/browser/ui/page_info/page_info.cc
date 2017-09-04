@@ -451,7 +451,8 @@ void PageInfo::OpenSiteSettingsView() {
   if ((base::CommandLine::ForCurrentProcess()->HasSwitch(
            switches::kEnableSiteSettings) ||
        base::FeatureList::IsEnabled(features::kSiteDetails)) &&
-      !site_origin.unique()) {
+      !site_origin.unique() && !site_url().SchemeIsFile() &&
+      !site_url().SchemeIsFileSystem()) {
     std::string origin_string = site_origin.Serialize();
     url::RawCanonOutputT<char> percent_encoded_origin;
     url::EncodeURIComponent(origin_string.c_str(), origin_string.length(),
