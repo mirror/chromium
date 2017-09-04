@@ -284,33 +284,64 @@ class ServiceWorkerDispatcherHostTest : public testing::Test {
     dispatcher_host_->ipc_sink()->ClearMessages();
   }
 
-  void SendGetRegistration(int64_t provider_id, GURL document_url) {
-    dispatcher_host_->OnMessageReceived(
-        ServiceWorkerHostMsg_GetRegistration(
-            -1, -1, provider_id, document_url));
+  void SendGetRegistration(mojom::ServiceWorkerContainerHost* container_host,
+                           GURL document_url) {
+    container_host->GetRegistration(
+        document_url,
+        base::BindOnce(
+            [](blink::mojom::ServiceWorkerErrorType error,
+               const base::Optional<std::string>& error_msg,
+               const base::Optional<ServiceWorkerRegistrationObjectInfo>&
+                   registration,
+               const base::Optional<ServiceWorkerVersionAttributes>&
+                   attributes) {}));
     base::RunLoop().RunUntilIdle();
   }
 
-  void GetRegistration(int64_t provider_id,
+  void GetRegistration(mojom::ServiceWorkerContainerHost* container_host,
                        GURL document_url,
-                       uint32_t expected_message) {
-    SendGetRegistration(provider_id, document_url);
-    EXPECT_TRUE(dispatcher_host_->ipc_sink()->GetUniqueMessageMatching(
-        expected_message));
-    dispatcher_host_->ipc_sink()->ClearMessages();
+                       blink::mojom::ServiceWorkerErrorType expected) {
+    blink::mojom::ServiceWorkerErrorType result;
+    container_host->GetRegistration(
+        document_url,
+        base::BindOnce(
+            [](blink::mojom::ServiceWorkerErrorType* result,
+               blink::mojom::ServiceWorkerErrorType error,
+               const base::Optional<std::string>& error_msg,
+               const base::Optional<ServiceWorkerRegistrationObjectInfo>&
+                   registration,
+               const base::Optional<ServiceWorkerVersionAttributes>&
+                   attributes) { *result = error; },
+            &result));
+    base::RunLoop().RunUntilIdle();
+    EXPECT_EQ(expected, result);
   }
 
-  void SendGetRegistrations(int64_t provider_id) {
-    dispatcher_host_->OnMessageReceived(
-        ServiceWorkerHostMsg_GetRegistrations(-1, -1, provider_id));
+  void SendGetRegistrations(mojom::ServiceWorkerContainerHost* container_host) {
+    container_host->GetRegistrations(base::BindOnce(
+        [](blink::mojom::ServiceWorkerErrorType error,
+           const base::Optional<std::string>& error_msg,
+           const base::Optional<
+               std::vector<ServiceWorkerRegistrationObjectInfo>>& infos,
+           const base::Optional<std::vector<ServiceWorkerVersionAttributes>>&
+               attrs) {}));
     base::RunLoop().RunUntilIdle();
   }
 
-  void GetRegistrations(int64_t provider_id, uint32_t expected_message) {
-    SendGetRegistrations(provider_id);
-    EXPECT_TRUE(dispatcher_host_->ipc_sink()->GetUniqueMessageMatching(
-        expected_message));
-    dispatcher_host_->ipc_sink()->ClearMessages();
+  void GetRegistrations(mojom::ServiceWorkerContainerHost* container_host,
+                        blink::mojom::ServiceWorkerErrorType expected) {
+    blink::mojom::ServiceWorkerErrorType result;
+    container_host->GetRegistrations(base::BindOnce(
+        [](blink::mojom::ServiceWorkerErrorType* result,
+           blink::mojom::ServiceWorkerErrorType error,
+           const base::Optional<std::string>& error_msg,
+           const base::Optional<
+               std::vector<ServiceWorkerRegistrationObjectInfo>>& infos,
+           const base::Optional<std::vector<ServiceWorkerVersionAttributes>>&
+               attrs) { *result = error; },
+        &result));
+    base::RunLoop().RunUntilIdle();
+    EXPECT_EQ(expected, result);
   }
 
   void DispatchExtendableMessageEvent(
@@ -385,11 +416,11 @@ TEST_F(ServiceWorkerDispatcherHostTest,
   Register(remote_endpoint.host_ptr()->get(), GURL("https://www.example.com/"),
            GURL("https://www.example.com/bar"),
            blink::mojom::ServiceWorkerErrorType::kDisabled);
-  GetRegistration(kProviderId,
+  GetRegistration(remote_endpoint.host_ptr()->get(),
                   GURL("https://www.example.com/"),
-                  ServiceWorkerMsg_ServiceWorkerGetRegistrationError::ID);
-  GetRegistrations(kProviderId,
-                   ServiceWorkerMsg_ServiceWorkerGetRegistrationsError::ID);
+                  blink::mojom::ServiceWorkerErrorType::kDisabled);
+  GetRegistrations(remote_endpoint.host_ptr()->get(),
+                   blink::mojom::ServiceWorkerErrorType::kDisabled);
 
   // Add a registration into a live registration map so that Unregister() can
   // find it.
@@ -679,91 +710,72 @@ TEST_F(ServiceWorkerDispatcherHostTest, ProviderCreatedAndDestroyed) {
 
 TEST_F(ServiceWorkerDispatcherHostTest, GetRegistration_SameOrigin) {
   const int64_t kProviderId = 99;  // Dummy value
-  std::unique_ptr<ServiceWorkerProviderHost> host(
-      CreateServiceWorkerProviderHost(kProviderId));
-  host->SetDocumentUrl(GURL("https://www.example.com/foo"));
-  context()->AddProviderHost(std::move(host));
+  ServiceWorkerRemoteProviderEndpoint remote_endpoint =
+      PrepareServiceWorkerProviderHost(kProviderId,
+                                       GURL("https://www.example.com/foo"));
 
-  GetRegistration(kProviderId,
+  GetRegistration(remote_endpoint.host_ptr()->get(),
                   GURL("https://www.example.com/"),
-                  ServiceWorkerMsg_DidGetRegistration::ID);
+                  blink::mojom::ServiceWorkerErrorType::kNone);
 }
 
 TEST_F(ServiceWorkerDispatcherHostTest, GetRegistration_CrossOriginShouldFail) {
   const int64_t kProviderId = 99;  // Dummy value
-  std::unique_ptr<ServiceWorkerProviderHost> host(
-      CreateServiceWorkerProviderHost(kProviderId));
-  host->SetDocumentUrl(GURL("https://www.example.com/foo"));
-  context()->AddProviderHost(std::move(host));
+  ServiceWorkerRemoteProviderEndpoint remote_endpoint =
+      PrepareServiceWorkerProviderHost(kProviderId,
+                                       GURL("https://www.example.com/foo"));
 
-  SendGetRegistration(kProviderId, GURL("https://foo.example.com/"));
-  EXPECT_EQ(1, dispatcher_host_->bad_messages_received_count_);
+  ASSERT_TRUE(bad_messages_.empty());
+  SendGetRegistration(remote_endpoint.host_ptr()->get(),
+                      GURL("https://foo.example.com/"));
+  EXPECT_EQ(1u, bad_messages_.size());
 }
 
 TEST_F(ServiceWorkerDispatcherHostTest,
        GetRegistration_InvalidScopeShouldFail) {
   const int64_t kProviderId = 99;  // Dummy value
-  std::unique_ptr<ServiceWorkerProviderHost> host(
-      CreateServiceWorkerProviderHost(kProviderId));
-  host->SetDocumentUrl(GURL("https://www.example.com/foo"));
-  context()->AddProviderHost(std::move(host));
+  ServiceWorkerRemoteProviderEndpoint remote_endpoint =
+      PrepareServiceWorkerProviderHost(kProviderId,
+                                       GURL("https://www.example.com/foo"));
 
-  SendGetRegistration(kProviderId, GURL(""));
-  EXPECT_EQ(1, dispatcher_host_->bad_messages_received_count_);
+  ASSERT_TRUE(bad_messages_.empty());
+  SendGetRegistration(remote_endpoint.host_ptr()->get(), GURL(""));
+  EXPECT_EQ(1u, bad_messages_.size());
 }
 
 TEST_F(ServiceWorkerDispatcherHostTest,
        GetRegistration_NonSecureOriginShouldFail) {
   const int64_t kProviderId = 99;  // Dummy value
-  std::unique_ptr<ServiceWorkerProviderHost> host(
-      CreateServiceWorkerProviderHost(kProviderId));
-  host->SetDocumentUrl(GURL("http://www.example.com/foo"));
-  context()->AddProviderHost(std::move(host));
+  ServiceWorkerRemoteProviderEndpoint remote_endpoint =
+      PrepareServiceWorkerProviderHost(kProviderId,
+                                       GURL("http://www.example.com/foo"));
 
-  SendGetRegistration(kProviderId, GURL("http://www.example.com/"));
-  EXPECT_EQ(1, dispatcher_host_->bad_messages_received_count_);
-}
-
-TEST_F(ServiceWorkerDispatcherHostTest, GetRegistration_EarlyContextDeletion) {
-  helper_->ShutdownContext();
-
-  // Let the shutdown reach the simulated IO thread.
-  base::RunLoop().RunUntilIdle();
-
-  GetRegistration(-1,
-                  GURL(),
-                  ServiceWorkerMsg_ServiceWorkerGetRegistrationError::ID);
+  ASSERT_TRUE(bad_messages_.empty());
+  SendGetRegistration(remote_endpoint.host_ptr()->get(),
+                      GURL("http://www.example.com/"));
+  EXPECT_EQ(1u, bad_messages_.size());
 }
 
 TEST_F(ServiceWorkerDispatcherHostTest, GetRegistrations_SecureOrigin) {
   const int64_t kProviderId = 99;  // Dummy value
-  std::unique_ptr<ServiceWorkerProviderHost> host(
-      CreateServiceWorkerProviderHost(kProviderId));
-  host->SetDocumentUrl(GURL("https://www.example.com/foo"));
-  context()->AddProviderHost(std::move(host));
+  ServiceWorkerRemoteProviderEndpoint remote_endpoint =
+      PrepareServiceWorkerProviderHost(kProviderId,
+                                       GURL("https://www.example.com/foo"));
 
-  GetRegistrations(kProviderId, ServiceWorkerMsg_DidGetRegistrations::ID);
+  GetRegistrations(remote_endpoint.host_ptr()->get(),
+                   blink::mojom::ServiceWorkerErrorType::kNone);
 }
 
 TEST_F(ServiceWorkerDispatcherHostTest,
        GetRegistrations_NonSecureOriginShouldFail) {
   const int64_t kProviderId = 99;  // Dummy value
-  std::unique_ptr<ServiceWorkerProviderHost> host(
-      CreateServiceWorkerProviderHost(kProviderId));
-  host->SetDocumentUrl(GURL("http://www.example.com/foo"));
-  context()->AddProviderHost(std::move(host));
+  ServiceWorkerRemoteProviderEndpoint remote_endpoint =
+      PrepareServiceWorkerProviderHost(kProviderId,
+                                       GURL("http://www.example.com/foo"));
 
-  SendGetRegistrations(kProviderId);
-  EXPECT_EQ(1, dispatcher_host_->bad_messages_received_count_);
-}
-
-TEST_F(ServiceWorkerDispatcherHostTest, GetRegistrations_EarlyContextDeletion) {
-  helper_->ShutdownContext();
-
-  // Let the shutdown reach the simulated IO thread.
-  base::RunLoop().RunUntilIdle();
-
-  GetRegistrations(-1, ServiceWorkerMsg_ServiceWorkerGetRegistrationsError::ID);
+  ASSERT_TRUE(bad_messages_.empty());
+  SendGetRegistrations(remote_endpoint.host_ptr()->get());
+  EXPECT_EQ(1u, bad_messages_.size());
 }
 
 TEST_F(ServiceWorkerDispatcherHostTest, CleanupOnRendererCrash) {

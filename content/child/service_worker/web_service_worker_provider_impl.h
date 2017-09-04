@@ -39,12 +39,14 @@ class WebServiceWorkerProviderImpl : public blink::WebServiceWorkerProvider {
 
   // Corresponds to navigator.serviceWorker.register().
   void RegisterServiceWorker(
-      const blink::WebURL& pattern,
-      const blink::WebURL& script_url,
+      const blink::WebURL& web_pattern,
+      const blink::WebURL& web_script_url,
       std::unique_ptr<WebServiceWorkerRegistrationCallbacks>) override;
+  // Corresponds to navigator.serviceWorker.getRegistration().
   void GetRegistration(
-      const blink::WebURL& document_url,
+      const blink::WebURL& web_document_url,
       std::unique_ptr<WebServiceWorkerGetRegistrationCallbacks>) override;
+  // Corresponds to navigator.serviceWorker.getRegistrations().
   void GetRegistrations(
       std::unique_ptr<WebServiceWorkerGetRegistrationsCallbacks>) override;
   void GetRegistrationForReady(
@@ -66,6 +68,21 @@ class WebServiceWorkerProviderImpl : public blink::WebServiceWorkerProvider {
       const base::Optional<std::string>& error_msg,
       const base::Optional<ServiceWorkerRegistrationObjectInfo>& registration,
       const base::Optional<ServiceWorkerVersionAttributes>& attributes);
+
+  void OnDidGetRegistration(
+      std::unique_ptr<WebServiceWorkerGetRegistrationCallbacks> callbacks,
+      blink::mojom::ServiceWorkerErrorType error,
+      const base::Optional<std::string>& error_msg,
+      const base::Optional<ServiceWorkerRegistrationObjectInfo>& registration,
+      const base::Optional<ServiceWorkerVersionAttributes>& attributes);
+
+  void OnDidGetRegistrations(
+      std::unique_ptr<WebServiceWorkerGetRegistrationsCallbacks> callbacks,
+      blink::mojom::ServiceWorkerErrorType error,
+      const base::Optional<std::string>& error_msg,
+      const base::Optional<std::vector<ServiceWorkerRegistrationObjectInfo>>&
+          infos,
+      const base::Optional<std::vector<ServiceWorkerVersionAttributes>>& attrs);
 
   scoped_refptr<ThreadSafeSender> thread_safe_sender_;
   scoped_refptr<ServiceWorkerProviderContext> context_;

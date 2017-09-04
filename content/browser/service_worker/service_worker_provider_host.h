@@ -406,16 +406,33 @@ class CONTENT_EXPORT ServiceWorkerProviderHost
   void Register(const GURL& script_url,
                 const ServiceWorkerRegistrationOptions& options,
                 RegisterCallback callback) override;
+  void GetRegistration(const GURL& client_url,
+                       GetRegistrationCallback callback) override;
+  void GetRegistrations(GetRegistrationsCallback callback) override;
 
   // Callback for ServiceWorkerContextCore::RegisterServiceWorker().
   void RegistrationComplete(RegisterCallback callback,
                             ServiceWorkerStatusCode status,
                             const std::string& status_message,
                             int64_t registration_id);
+  // Callback for ServiceWorkerStorage::FindRegistrationForDocument().
+  void GetRegistrationComplete(
+      GetRegistrationCallback callback,
+      ServiceWorkerStatusCode status,
+      scoped_refptr<ServiceWorkerRegistration> registration);
+  // Callback for ServiceWorkerStorage::GetRegistrationsForOrigin().
+  void GetRegistrationsComplete(
+      GetRegistrationsCallback callback,
+      ServiceWorkerStatusCode status,
+      const std::vector<scoped_refptr<ServiceWorkerRegistration>>&
+          registrations);
 
   bool IsValidRegisterMessage(const GURL& script_url,
                               const ServiceWorkerRegistrationOptions& options,
                               std::string* out_error) const;
+  bool IsValidGetRegistrationMessage(const GURL& client_url,
+                                     std::string* out_error) const;
+  bool IsValidGetRegistrationsMessage(std::string* out_error) const;
 
   const std::string client_uuid_;
   const base::TimeTicks create_time_;
