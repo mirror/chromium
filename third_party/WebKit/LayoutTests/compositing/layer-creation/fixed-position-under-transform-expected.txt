@@ -8,10 +8,9 @@
     },
     {
       "name": "LayoutBlockFlow DIV id='transform'",
-      "position": [108, 113],
       "bounds": [256, 256],
       "contentsOpaque": true,
-      "transform": 1
+      "transform": 2
     },
     {
       "name": "LayoutBlockFlow (positioned) DIV id='overlap'",
@@ -24,6 +23,16 @@
   "transforms": [
     {
       "id": 1,
+      "transform": [
+        [1, 0, 0, 0],
+        [0, 1, 0, 0],
+        [0, 0, 1, 0],
+        [108, 113, 0, 1]
+      ]
+    },
+    {
+      "id": 2,
+      "parent": 1,
       "transform": [
         [1, 0, 0, 0],
         [0, 1, 0, 0],
