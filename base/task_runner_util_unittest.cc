@@ -66,6 +66,16 @@ void ExpectScopedFoo(std::unique_ptr<Foo, FooDeleter> foo) {
   EXPECT_FALSE(foo.get());
 }
 
+void AsyncTaskContinued(OnceCallback<void(int)> on_completed) {
+  std::move(on_completed).Run(42);
+}
+
+void AsyncTask(scoped_refptr<TaskRunner> task_runner,
+               OnceCallback<void(int)> on_completed) {
+  task_runner->PostTask(FROM_HERE,
+                        BindOnce(&AsyncTaskContinued, std::move(on_completed)));
+}
+
 }  // namespace
 
 TEST(TaskRunnerHelpersTest, PostTaskAndReplyWithResult) {
@@ -120,6 +130,56 @@ TEST(TaskRunnerHelpersTest, PostTaskAndReplyWithResultPassedFreeProc) {
 
   EXPECT_EQ(1, g_foo_destruct_count);
   EXPECT_EQ(1, g_foo_free_count);
+}
+
+TEST(TaskRunnerHelpersTest, PostAsyncTaskAndReply) {
+  int result = 0;
+
+  MessageLoop message_loop;
+  PostAsyncTaskAndReply(
+      message_loop.task_runner().get(), FROM_HERE,
+      BindOnce(&AsyncTask, message_loop.task_runner()),
+      BindOnce([](int* result, int value) { *result = value; },
+               Unretained(&result)));
+
+  RunLoop().RunUntilIdle();
+  EXPECT_EQ(42, result);
+}
+
+TEST(TaskRunnerHelpersTest, PostAsyncTaskAndReply_ImplicitConvert) {
+  double result = 0;
+
+  MessageLoop message_loop;
+  PostAsyncTaskAndReply(
+      message_loop.task_runner().get(), FROM_HERE,
+      BindOnce(&AsyncTask, message_loop.task_runner()),
+      BindOnce([](double* result, double value) { *result = value; },
+               Unretained(&result)));
+
+  RunLoop().RunUntilIdle();
+  EXPECT_EQ(42., result);
+}
+
+TEST(TaskRunnerHelpersTest, PostAsyncTaskAndReply_MultipleReturnValue) {
+  int result1 = 0;
+  double result2 = 0;
+
+  MessageLoop message_loop;
+  PostAsyncTaskAndReply(
+      message_loop.task_runner().get(), FROM_HERE,
+      BindOnce([](OnceCallback<void(int, double)> on_completed) {
+        std::move(on_completed).Run(1, 2.5);
+      }),
+      BindOnce(
+          [](int* result1, double* result2, int value1, double value2) {
+            *result1 = value1;
+            *result2 = value2;
+          },
+          Unretained(&result1), Unretained(&result2)));
+
+  RunLoop().RunUntilIdle();
+  EXPECT_EQ(1, result1);
+  EXPECT_EQ(2.5, result2);
 }
 
 }  // namespace base

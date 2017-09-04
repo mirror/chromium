@@ -59,6 +59,13 @@ void PostTaskAndReply(const tracked_objects::Location& from_here,
                              std::move(reply));
 }
 
+void PostAsyncTaskAndReply(const tracked_objects::Location& from_here,
+                           OnceCallback<void(OnceClosure)> task,
+                           OnceClosure reply) {
+  PostAsyncTaskWithTraitsAndReply(from_here, TaskTraits(), std::move(task),
+                                  std::move(reply));
+}
+
 void PostTaskWithTraits(const tracked_objects::Location& from_here,
                         const TaskTraits& traits,
                         OnceClosure task) {
@@ -83,6 +90,14 @@ void PostTaskWithTraitsAndReply(const tracked_objects::Location& from_here,
                                 OnceClosure task,
                                 OnceClosure reply) {
   PostTaskAndReplyTaskRunner(traits).PostTaskAndReply(
+      from_here, std::move(task), std::move(reply));
+}
+
+void PostAsyncTaskWithTraitsAndReply(const tracked_objects::Location& from_here,
+                                     const TaskTraits& traits,
+                                     OnceCallback<void(OnceClosure)> task,
+                                     OnceClosure reply) {
+  PostTaskAndReplyTaskRunner(traits).PostAsyncTaskAndReply(
       from_here, std::move(task), std::move(reply));
 }
 

@@ -133,6 +133,72 @@ class BASE_EXPORT TaskRunner
                         OnceClosure task,
                         OnceClosure reply);
 
+  // Similar to PostTaskAndReply, posts a |task| on the current TaskRunner,
+  // and on completion, |reply| is posted to the thread that called
+  // PostAsyncTaskAndReply().
+  // The difference is that |task| needs to take a callback, which should be
+  // called on completion. So, |task| can be asynchronous, and be completed
+  // on next message loop run.
+  // Note that the callback passed to |task| can be called at any thread.
+  // Also note that, if the callback passed to |task| is destroyed before
+  // it is called, a task to destroy |reply| is posted to the original thread.
+  // If it fails, it means the original thread/sequence is stopped beforehand,
+  // so there is few things to do. Here, leak the |reply|, including its bound
+  // arguments.
+  // Here is an example pseudo code:
+  //
+  // void RunSomethingOnTaskRunner(TaskRunner* task_runner) {
+  //   task_runner->PostAsyncTaskAndReply(
+  //       FROM_HERE,
+  //       base::BindOnce(&AsyncTask::Run),
+  //       base::BindOnce(&OnReply));
+  // }
+  //
+  // // Living on another thread.
+  // class AsyncTask {
+  //  public:
+  //   static void Run(OnceClosure on_completed) {
+  //     new AsyncTask().RunImpl(std::move(on_completed));
+  //   }
+  //
+  //   AsyncTask();
+  //   void RunImpl(OnceClosure on_completed) {
+  //     ... do some work ...
+  //     another_task_runner_->PostTaskAndReply(
+  //         FROM_HERE,
+  //         base::BindOnce(&DoAnotherThingOnAnotherThread),
+  //         base::BindOnce(&RunImplContinued,
+  //                        weak_ptr_factory_.GetWeakPtr(),
+  //                        std::move(on_completed)));
+  //   }
+  //
+  //   void RunImplContinued(OnceClosure on_completed) {
+  //     // Will run after DoAnotherThingOnAnotherThread is completed.
+  //     ... do some more work ...
+  //     ... and done the task, so reply to the original thread ...
+  //     delete this;
+  //     std::move(on_completed).Run();
+  //   }
+  // };
+  //
+  // void OnReply() {
+  //   ... called on the original thread ...
+  // }
+  //
+  // Some more practical example use cases:
+  // - On UI thread, it wants to do some network operations. Then,
+  //   post a task to IO thread. The network operation on IO thread is async.
+  //   When it is done, call |on_completed| callback on IO thread, so that
+  //   |reply| is called back on UI thread.
+  // - On IO thread, it wants to do some mojo communication.
+  //   Post a task to UI thread, and calls Mojo method. The operation is async.
+  //   On completion, a callback passed to Mojo method is called on UI thread,
+  //   and it calls |on_completed| callback. Finally, the following operation
+  //   is called on IO thread.
+  bool PostAsyncTaskAndReply(const tracked_objects::Location& from_here,
+                             OnceCallback<void(OnceClosure)> task,
+                             OnceClosure reply);
+
  protected:
   friend struct TaskRunnerTraits;
 

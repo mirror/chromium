@@ -5,6 +5,8 @@
 #ifndef BASE_TASK_SCHEDULER_POST_TASK_H_
 #define BASE_TASK_SCHEDULER_POST_TASK_H_
 
+#include <tuple>
+#include <type_traits>
 #include <utility>
 
 #include "base/base_export.h"
@@ -12,6 +14,7 @@
 #include "base/callback.h"
 #include "base/location.h"
 #include "base/memory/ref_counted.h"
+#include "base/optional.h"
 #include "base/post_task_and_reply_with_result_internal.h"
 #include "base/sequenced_task_runner.h"
 #include "base/single_thread_task_runner.h"
@@ -119,6 +122,33 @@ void PostTaskAndReplyWithResult(const tracked_objects::Location& from_here,
       OnceCallback<void(ReplyArgType)>(std::move(reply)));
 }
 
+// Similar to PostTaskAndReply, posts |task| to the TaskScheduler and posts
+// |reply| on the caller's execution context when |task| completes.
+// The difference is, |task| will take a callback on running, which should be
+// called when the conceptual |task| is finally completed.
+// Calling this is equivalent to calling PostAsyncTaskWithTraitsAndReply()
+// with plain TaskTraits. Can only be called when
+// SequencedTaskRunnerHandle::IsSet().
+BASE_EXPORT void PostAsyncTaskAndReply(
+    const tracked_objects::Location& from_here,
+    OnceCallback<void(OnceClosure)> task,
+    OnceClosure reply);
+
+// Variation of PostAsyncTaskAndReply() defined just above. This supports
+// passing values from |task| to |reply|. In this variation, a callback passed
+// to |task| takes arguments. On |task| completion, it needs to call the
+// callback with arguments. The passed arguments will be passed to the
+// |reply|.
+// Can only be called when SequencedTaskRunnerHandle::IsSet().
+template <typename... ReturnArgTypes, typename... ReplyArgTypes>
+void PostAsyncTaskAndReply(
+    const tracked_objects::Location& from_here,
+    OnceCallback<void(OnceCallback<void(ReturnArgTypes...)>)> task,
+    OnceCallback<void(ReplyArgTypes...)> reply) {
+  PostAsyncTaskAndReply(from_here, TaskTraits(), std::move(task),
+                        std::move(reply));
+}
+
 // Posts |task| with specific |traits| to the TaskScheduler.
 BASE_EXPORT void PostTaskWithTraits(const tracked_objects::Location& from_here,
                                     const TaskTraits& traits,
@@ -178,6 +208,40 @@ void PostTaskWithTraitsAndReplyWithResult(
   PostTaskWithTraitsAndReplyWithResult(
       from_here, traits, OnceCallback<TaskReturnType()>(std::move(task)),
       OnceCallback<void(ReplyArgType)>(std::move(reply)));
+}
+
+// Similar to PostTaskWithTraitsAndReply, posts |task| with specific |traits|
+// to the TaskScheduler and posts|reply| on the caller's execution context when
+// |task| completes.
+// The difference is, |task| will take a callback on running, which should be
+// called when the conceptual |task| is finally completed.
+// Can only be called when SequencedTaskRunnerHandle::IsSet().
+BASE_EXPORT void PostAsyncTaskWithTraitsAndReply(
+    const tracked_objects::Location& from_here,
+    const TaskTraits& traits,
+    OnceCallback<void(OnceClosure)> task,
+    OnceClosure reply);
+
+// Variation of PostAsyncTaskWithTraitsAndReply() defined just above. This
+// supports passing values from |task| to |reply|. In this variation,
+// a callback passed to |task| takes arguments. On |task| completion, it needs
+// to call the callback with arguments. The passed arguments will be passed to
+// the |reply|.
+// Can only be called when SequencedTaskRunnerHandle::IsSet().
+template <typename... ReturnArgTypes, typename... ReplyArgTypes>
+void PostAsyncTaskAndReply(
+    const tracked_objects::Location& from_here,
+    const TaskTraits& traits,
+    OnceCallback<void(OnceCallback<void(ReturnArgTypes...)>)> task,
+    OnceCallback<void(ReplyArgTypes...)> reply) {
+  using ReturnTuple = std::tuple<std::decay_t<ReturnArgTypes>...>;
+  auto* result = new Optional<ReturnTuple>();
+  return PostAsyncTaskAndReply(
+      from_here, traits,
+      BindOnce(&internal::AsyncTaskAdaptor<ReturnTuple, ReturnArgTypes...>,
+               std::move(task), Unretained(result)),
+      BindOnce(&internal::ReplyAsyncAdaptor<ReturnTuple, ReplyArgTypes...>,
+               std::move(reply), Owned(result)));
 }
 
 // Returns a TaskRunner whose PostTask invocations result in scheduling tasks

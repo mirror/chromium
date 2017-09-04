@@ -149,6 +149,18 @@ class CONTENT_EXPORT BrowserThread {
                                             std::move(task), std::move(reply));
   }
 
+  template <typename... ReturnArgType, typename... ReplyArgType>
+  static bool PostAsyncTaskAndReply(
+      ID identifier,
+      const tracked_objects::Location& from_here,
+      base::OnceCallback<void(base::OnceCallback<void(ReturnArgType...)>)> task,
+      base::OnceCallback<void(ReplyArgType...)> reply) {
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner =
+        GetTaskRunnerForThread(identifier);
+    return base::PostAsyncTaskAndReply(task_runner.get(), from_here,
+                                       std::move(task), std::move(reply));
+  }
+
   // Callback version of PostTaskAndReplyWithResult above.
   // Though RepeatingCallback is convertible to OnceCallback, we need this since
   // we cannot use template deduction and object conversion at once on the
