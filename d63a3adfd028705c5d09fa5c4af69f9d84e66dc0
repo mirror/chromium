@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a83b894f_4c8a420e",
+        "filename": "chrome/browser/ui/search/instant_extended_interactive_uitest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-05T15:05:21Z",
+      "side": 1,
+      "message": "Would be nice to escape this. What happens if it\u0027s got a single quote?",
+      "range": {
+        "startLine": 127,
+        "startChar": 8,
+        "endLine": 127,
+        "endChar": 13
+      },
+      "revId": "d63a3adfd028705c5d09fa5c4af69f9d84e66dc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
