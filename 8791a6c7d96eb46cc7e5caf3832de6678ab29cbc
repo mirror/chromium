@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "9e8395a6_d69b6ed5",
+        "filename": "content/browser/media/midi_host_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-05T06:21:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd7b6eb3_9cf34a35",
+      "revId": "8791a6c7d96eb46cc7e5caf3832de6678ab29cbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a555708_c6021199",
         "filename": "content/browser/media/midi_host_unittest.cc",
         "patchSetId": 2
@@ -50,6 +68,24 @@
       "revId": "8791a6c7d96eb46cc7e5caf3832de6678ab29cbc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3607eee2_73d48de2",
+        "filename": "content/browser/media/midi_host_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-05T06:21:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a555708_c6021199",
+      "revId": "8791a6c7d96eb46cc7e5caf3832de6678ab29cbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +140,24 @@
     },
     {
       "key": {
+        "uuid": "f9c62be8_5e1b8c75",
+        "filename": "media/midi/midi_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-05T06:21:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9116398_9146ae40",
+      "revId": "8791a6c7d96eb46cc7e5caf3832de6678ab29cbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "057612ae_2d4e6cb2",
         "filename": "media/midi/midi_manager_unittest.cc",
         "patchSetId": 2
@@ -118,6 +172,24 @@
       "revId": "8791a6c7d96eb46cc7e5caf3832de6678ab29cbc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30213de1_c9aeff1b",
+        "filename": "media/midi/midi_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-05T06:21:22Z",
+      "side": 1,
+      "message": "Agreed. Also let me replace existing other MakeUnique with allowed C++14 std::make_unique.",
+      "parentUuid": "057612ae_2d4e6cb2",
+      "revId": "8791a6c7d96eb46cc7e5caf3832de6678ab29cbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
