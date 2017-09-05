@@ -4,6 +4,7 @@
 
 #include "platform/scheduler/base/work_queue.h"
 
+#include "base/debug/crash_logging.h"
 #include "platform/scheduler/base/work_queue_sets.h"
 
 namespace blink {
@@ -108,6 +109,20 @@ void WorkQueue::ReloadEmptyImmediateQueue() {
 TaskQueueImpl::Task WorkQueue::TakeTaskFromWorkQueue() {
   DCHECK(work_queue_sets_);
   DCHECK(!work_queue_.empty());
+
+  static const char kBlinkSchedulerTaskFunctionNameKey[] =
+      "blink_scheduler_task_function_name";
+  static const char kBlinkSchedulerTaskFileNameKey[] =
+      "blink_scheduler_task_file_name";
+
+  if (!work_queue_.front().task) {
+    base::debug::SetCrashKeyValue(
+        kBlinkSchedulerTaskFunctionNameKey,
+        work_queue_.front().posted_from.function_name());
+    base::debug::SetCrashKeyValue(kBlinkSchedulerTaskFileNameKey,
+                                  work_queue_.front().posted_from.file_name());
+  }
+  CHECK(work_queue_.front().task);
 
   // Skip over canceled tasks, except for the last one since we always return
   // something.
