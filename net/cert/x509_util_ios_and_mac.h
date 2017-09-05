@@ -25,6 +25,15 @@ namespace x509_util {
 NET_EXPORT base::ScopedCFTypeRef<CFMutableArrayRef>
 CreateSecCertificateArrayForX509Certificate(X509Certificate* cert);
 
+// Returns a new CFMutableArrayRef containing this certificate and its
+// intermediate certificates in the form expected by Security.framework
+// and Keychain Services. Returns NULL if the certificate could not be
+// converted. If any intermediates could not be converted,
+// |*intermediate_errors| will contain the count.
+NET_EXPORT base::ScopedCFTypeRef<CFMutableArrayRef>
+CreateSecCertificateArrayForX509Certificate(X509Certificate* cert,
+                                            size_t* intermediate_errors);
+
 }  // namespace x509_util
 
 }  // namespace net

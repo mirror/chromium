@@ -250,12 +250,17 @@ int CertVerifyProcIOS::VerifyInternal(
   if (status)
     return NetErrorFromOSStatus(status);
 
+  size_t intermediate_errors;
   ScopedCFTypeRef<CFMutableArrayRef> cert_array(
-      x509_util::CreateSecCertificateArrayForX509Certificate(cert));
+      x509_util::CreateSecCertificateArrayForX509Certificate(
+          cert, &intermediate_errors));
   if (!cert_array) {
     verify_result->cert_status |= CERT_STATUS_INVALID;
     return ERR_CERT_INVALID;
   }
+  if (intermediate_errors)
+    LOG(WARNING) << intermediate_errors << " intermediates failed parsing.";
+
   ScopedCFTypeRef<SecTrustRef> trust_ref;
   SecTrustResultType trust_result = kSecTrustResultDeny;
   ScopedCFTypeRef<CFArrayRef> final_chain;

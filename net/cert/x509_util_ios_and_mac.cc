@@ -18,6 +18,18 @@ namespace x509_util {
 
 base::ScopedCFTypeRef<CFMutableArrayRef>
 CreateSecCertificateArrayForX509Certificate(X509Certificate* cert) {
+  size_t intermediate_errors;
+  base::ScopedCFTypeRef<CFMutableArrayRef> result(
+      CreateSecCertificateArrayForX509Certificate(cert, &intermediate_errors));
+  if (intermediate_errors)
+    return base::ScopedCFTypeRef<CFMutableArrayRef>();
+  return result;
+}
+
+base::ScopedCFTypeRef<CFMutableArrayRef>
+CreateSecCertificateArrayForX509Certificate(X509Certificate* cert,
+                                            size_t* intermediate_errors) {
+  *intermediate_errors = 0;
   base::ScopedCFTypeRef<CFMutableArrayRef> cert_list(
       CFArrayCreateMutable(kCFAllocatorDefault, 0, &kCFTypeArrayCallBacks));
   if (!cert_list)
@@ -36,8 +48,9 @@ CreateSecCertificateArrayForX509Certificate(X509Certificate* cert) {
         CreateSecCertificateFromBytes(CRYPTO_BUFFER_data(intermediate),
                                       CRYPTO_BUFFER_len(intermediate)));
     if (!sec_cert)
-      return base::ScopedCFTypeRef<CFMutableArrayRef>();
-    CFArrayAppendValue(cert_list, sec_cert);
+      (*intermediate_errors)++;
+    else
+      CFArrayAppendValue(cert_list, sec_cert);
   }
 #else
   X509Certificate::OSCertHandles intermediate_ca_certs =
