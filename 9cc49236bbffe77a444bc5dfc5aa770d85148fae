@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad747f09_69c75508",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSample.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-09-05T02:31:25Z",
+      "side": 1,
+      "message": "Could you comment \n\"// |node| can be removed from container\" ?",
+      "revId": "9cc49236bbffe77a444bc5dfc5aa770d85148fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85788c68_09c17c00",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSample.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-09-05T02:31:25Z",
+      "side": 1,
+      "message": "You insert twice here and at Parser::SetSelectionText.\nCould you remove this insertion?",
+      "revId": "9cc49236bbffe77a444bc5dfc5aa770d85148fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1716c6c0_2f68b273",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSampleTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-09-05T02:31:25Z",
+      "side": 1,
+      "message": "Since this is test for SelectionSampleTest ant not for EditingTestBase,\n using SelectionSample::SetSelectionText(GetDocument().body(), \"|\") is better\n though it is O.K. to introduce few shorthands to EditingTestBase.",
+      "revId": "9cc49236bbffe77a444bc5dfc5aa770d85148fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4df7814c_c2ec7412",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSampleTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-09-05T02:31:25Z",
+      "side": 1,
+      "message": "|EXPECT_EQ(\"\", GetDocument().body()-\u003einnerHTML())| is better.",
+      "revId": "9cc49236bbffe77a444bc5dfc5aa770d85148fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90f58a50_726b3476",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSampleTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-09-05T02:31:25Z",
+      "side": 1,
+      "message": "Could you insert \u003c/p\u003e at the end?",
+      "revId": "9cc49236bbffe77a444bc5dfc5aa770d85148fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
