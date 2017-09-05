@@ -12,7 +12,7 @@
 namespace content {
 
 VulkanBrowserCompositorOutputSurface::VulkanBrowserCompositorOutputSurface(
-    scoped_refptr<cc::VulkanContextProvider> context,
+    scoped_refptr<viz::VulkanContextProvider> context,
     const UpdateVSyncParametersCallback& update_vsync_parameters_callback)
     : BrowserCompositorOutputSurface(std::move(context),
                                      update_vsync_parameters_callback),
@@ -87,9 +87,16 @@ void VulkanBrowserCompositorOutputSurface::Reshape(
     const gfx::Size& size,
     float device_scale_factor,
     const gfx::ColorSpace& color_space,
-    bool has_alpha) {
+    bool has_alpha,
+    bool use_stencil) {
   NOTIMPLEMENTED();
 }
+
+void VulkanBrowserCompositorOutputSurface::SetDrawRectangle(
+    const gfx::Rect& rect) {
+  NOTREACHED();
+}
+
 
 uint32_t
 VulkanBrowserCompositorOutputSurface::GetFramebufferCopyTextureFormat() {
