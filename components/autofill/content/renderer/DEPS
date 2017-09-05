@@ -5,6 +5,7 @@ include_rules = [
   # Allow inclusion of WebKit API files.
   "+third_party/WebKit/public/platform",
   "+third_party/WebKit/public/web",
+  "+third_party/WebKit/webagents",
 ]
 
 specific_include_rules = {

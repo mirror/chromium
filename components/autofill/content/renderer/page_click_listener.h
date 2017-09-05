@@ -9,6 +9,10 @@ namespace blink {
 class WebFormControlElement;
 }
 
+namespace webagents {
+class Element;
+}
+
 namespace autofill {
 
 // Interface that should be implemented by classes interested in getting
@@ -24,6 +28,16 @@ class PageClickListener {
 
  protected:
   virtual ~PageClickListener() {}
+};
+
+class PageClickListenerWebagent {
+ public:
+  virtual void FormControlElementClickedWebagents(
+      const webagents::Element& element,
+      bool was_focused) = 0;
+
+ protected:
+  virtual ~PageClickListenerWebagent() {}
 };
 
 }  // namespace autofill
