@@ -169,6 +169,24 @@
       "revId": "f6ddd798dd4c8a5795fe1ad9bb9e980a91cdbcad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b7386f3c_864dc27e",
+        "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-09-05T16:35:13Z",
+      "side": 1,
+      "message": "Yep, unifying the logic later sgtm. I added a TODO.",
+      "parentUuid": "dbca9ce6_cc5e2bd8",
+      "revId": "f6ddd798dd4c8a5795fe1ad9bb9e980a91cdbcad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
