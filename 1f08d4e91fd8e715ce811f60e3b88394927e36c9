@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d2594fe_b51c3645",
+        "filename": "chrome/browser/prerender/prerender_histograms.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-05T13:22:37Z",
+      "side": 1,
+      "message": "Is there a purpose to this histogram if we don\u0027t have NetworkBytesUsed anymore to compare it to?",
+      "range": {
+        "startLine": 122,
+        "startChar": 59,
+        "endLine": 122,
+        "endChar": 77
+      },
+      "revId": "1f08d4e91fd8e715ce811f60e3b88394927e36c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
