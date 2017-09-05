@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "07d94685_9f1fd79b",
+        "filename": "chrome/browser/guest_view/web_view/chrome_web_view_permission_helper_delegate.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-09-05T08:27:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ef71136_bbb083c1",
+      "range": {
+        "startLine": 69,
+        "startChar": 7,
+        "endLine": 69,
+        "endChar": 27
+      },
+      "revId": "e642cf9b3d530adbf98c1a25691f2c9fa2abc9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3278a1d3_1621d745",
         "filename": "chrome/browser/plugins/plugin_observer.cc",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "e642cf9b3d530adbf98c1a25691f2c9fa2abc9ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70d3f4c1_2bc8361a",
+        "filename": "chrome/browser/plugins/plugin_observer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-09-05T08:27:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3278a1d3_1621d745",
+      "range": {
+        "startLine": 136,
+        "startChar": 8,
+        "endLine": 136,
+        "endChar": 34
+      },
+      "revId": "e642cf9b3d530adbf98c1a25691f2c9fa2abc9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "2aea5f88_0d7ed7df",
+        "filename": "chrome/browser/plugins/plugin_observer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-09-05T08:27:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce397016_90fde8ab",
+      "range": {
+        "startLine": 159,
+        "startChar": 8,
+        "endLine": 159,
+        "endChar": 34
+      },
+      "revId": "e642cf9b3d530adbf98c1a25691f2c9fa2abc9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbdb6fdb_03c2a881",
         "filename": "chrome/browser/plugins/plugin_observer.cc",
         "patchSetId": 11
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "4b9a613d_899c3ea3",
+        "filename": "chrome/browser/plugins/plugin_observer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-09-05T08:27:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbdb6fdb_03c2a881",
+      "revId": "e642cf9b3d530adbf98c1a25691f2c9fa2abc9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08a52c39_7ecdb7e5",
         "filename": "chrome/browser/plugins/plugin_observer.cc",
         "patchSetId": 11
@@ -102,6 +192,24 @@
       "revId": "e642cf9b3d530adbf98c1a25691f2c9fa2abc9ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "651b4784_4ce607ce",
+        "filename": "chrome/browser/plugins/plugin_observer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-09-05T08:27:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08a52c39_7ecdb7e5",
+      "revId": "e642cf9b3d530adbf98c1a25691f2c9fa2abc9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "9c5361ab_789bc2f6",
+        "filename": "chrome/browser/plugins/plugin_observer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-09-05T08:27:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6769cfba_c9c4c2d0",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 10
+      },
+      "revId": "e642cf9b3d530adbf98c1a25691f2c9fa2abc9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11ea5b9a_5feb13b0",
         "filename": "chrome/common/plugin.mojom",
         "patchSetId": 11
@@ -151,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "d89c0235_55088cbb",
+        "filename": "chrome/common/plugin.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-09-05T08:27:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11ea5b9a_5feb13b0",
+      "range": {
+        "startLine": 21,
+        "startChar": 30,
+        "endLine": 21,
+        "endChar": 44
+      },
+      "revId": "e642cf9b3d530adbf98c1a25691f2c9fa2abc9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "baccd3fb_0dc666f3",
         "filename": "chrome/common/plugin.mojom",
         "patchSetId": 11
@@ -162,6 +318,30 @@
       "writtenOn": "2017-09-05T07:21:54Z",
       "side": 1,
       "message": "Can we call this PluginPlaceholder?",
+      "range": {
+        "startLine": 38,
+        "startChar": 10,
+        "endLine": 38,
+        "endChar": 24
+      },
+      "revId": "e642cf9b3d530adbf98c1a25691f2c9fa2abc9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7e8c275_d2345c50",
+        "filename": "chrome/common/plugin.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-09-05T08:27:04Z",
+      "side": 1,
+      "message": "We could, but then we\u0027d lose the idea that the renderer receives these messages.",
+      "parentUuid": "baccd3fb_0dc666f3",
       "range": {
         "startLine": 38,
         "startChar": 10,
@@ -194,6 +374,30 @@
       "revId": "e642cf9b3d530adbf98c1a25691f2c9fa2abc9ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c5a8c7f_8cc4966b",
+        "filename": "chrome/common/render_messages.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-09-05T08:27:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "528e9d9d_1fc2328c",
+      "range": {
+        "startLine": 241,
+        "startChar": 20,
+        "endLine": 241,
+        "endChar": 65
+      },
+      "revId": "e642cf9b3d530adbf98c1a25691f2c9fa2abc9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
