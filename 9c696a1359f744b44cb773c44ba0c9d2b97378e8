@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abf2b52b_2806bfe6",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-05T23:57:52Z",
+      "side": 1,
+      "message": "Let\u0027s call this WAITING_FOR_ENROLLMENT_MANAGER_INIT.\n\nWe\u0027re just waiting for the enrollment manager to initialize fully.",
+      "range": {
+        "startLine": 281,
+        "startChar": 18,
+        "endLine": 281,
+        "endChar": 30
+      },
+      "revId": "9c696a1359f744b44cb773c44ba0c9d2b97378e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a75b0411_dfea9c33",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-05T23:57:52Z",
+      "side": 1,
+      "message": "nit: No curlies for single lines.",
+      "range": {
+        "startLine": 316,
+        "startChar": 32,
+        "endLine": 316,
+        "endChar": 33
+      },
+      "revId": "9c696a1359f744b44cb773c44ba0c9d2b97378e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d933eb92_9bb1e104",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-05T23:57:52Z",
+      "side": 1,
+      "message": "Once the managers exist, you should start observing them.",
+      "range": {
+        "startLine": 318,
+        "startChar": 2,
+        "endLine": 318,
+        "endChar": 1
+      },
+      "revId": "9c696a1359f744b44cb773c44ba0c9d2b97378e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cdbac10_a3df9423",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-05T23:57:52Z",
+      "side": 1,
+      "message": "nit: Newline before.",
+      "range": {
+        "startLine": 319,
+        "startChar": 0,
+        "endLine": 319,
+        "endChar": 1
+      },
+      "revId": "9c696a1359f744b44cb773c44ba0c9d2b97378e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e67b825_c27e91a3",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-05T23:57:52Z",
+      "side": 1,
+      "message": "Wait a sec - why is this necessary? If !IsEnrollmentValid(), we should just be waiting for the enrollment manager to finish enrolling. We don\u0027t need to generate a key pair - the enrollment manager already does that.\n\nTry to follow the same pattern as https://cs.chromium.org/chromium/src/chrome/browser/cryptauth/chrome_cryptauth_service.cc",
+      "range": {
+        "startLine": 320,
+        "startChar": 0,
+        "endLine": 320,
+        "endChar": 52
+      },
+      "revId": "9c696a1359f744b44cb773c44ba0c9d2b97378e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25f1d285_c003a6d5",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-05T23:57:52Z",
+      "side": 1,
+      "message": "nit: No need for an \"else\" if the if() is ended by a return.\n\nif (IsEnrollmentValid()) {\n  // Do stuff.\n  return;\n}\n\n// Else stuff.",
+      "range": {
+        "startLine": 325,
+        "startChar": 2,
+        "endLine": 325,
+        "endChar": 3
+      },
+      "revId": "9c696a1359f744b44cb773c44ba0c9d2b97378e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dcb81bb_48b17b45",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-05T23:57:52Z",
+      "side": 1,
+      "message": "When would this ever occur? Shouldn\u0027t this be a DCHECK()?",
+      "range": {
+        "startLine": 338,
+        "startChar": 0,
+        "endLine": 338,
+        "endChar": 43
+      },
+      "revId": "9c696a1359f744b44cb773c44ba0c9d2b97378e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bb54fc2_08a411d5",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-05T23:57:52Z",
+      "side": 1,
+      "message": "This should be set as soon as we know there is a device manager. So, move this above to OnPrimaryAccountAvailable().",
+      "range": {
+        "startLine": 343,
+        "startChar": 0,
+        "endLine": 343,
+        "endChar": 78
+      },
+      "revId": "9c696a1359f744b44cb773c44ba0c9d2b97378e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

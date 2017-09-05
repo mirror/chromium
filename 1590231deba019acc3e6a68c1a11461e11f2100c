@@ -285,6 +285,30 @@
     },
     {
       "key": {
+        "uuid": "6294b55a_94e05116",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-05T23:57:52Z",
+      "side": 1,
+      "message": "You\u0027ll need to use the preferences service: https://cs.chromium.org/chromium/src/services/preferences/. Follow the same pattern you used for identity_manager_.",
+      "parentUuid": "6dbf3fde_f9a7ad67",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 63
+      },
+      "revId": "1590231deba019acc3e6a68c1a11461e11f2100c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cace23d8_593b11d2",
         "filename": "components/multidevice/service/device_sync_impl.cc",
         "patchSetId": 9
