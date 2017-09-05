@@ -1,0 +1,163 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88d8322e_fd0b0bde",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/chromium_exportable_commits.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-09-05T18:20:24Z",
+      "side": 1,
+      "message": "Ps-\u003ePR?",
+      "revId": "f8b05749b72e634ba7aa381ae28a5d4258125390",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1cf77cb_7be497f2",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/local_wpt.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-09-05T18:20:24Z",
+      "side": 1,
+      "message": "We could add a note here saying that this is crbug.com/676399",
+      "revId": "f8b05749b72e634ba7aa381ae28a5d4258125390",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a1a096e_50969fb6",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/local_wpt.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-09-05T18:20:24Z",
+      "side": 1,
+      "message": "I assume it\u0027s OK to grep through the whole history...\n\nOn my machine it takes about 7 seconds to grep for something that doesn\u0027t exist in Chromium, it goes much faster if we use a limited range, e.g. git log -1 --grep \u003cgrep_str\u003e HEAD~10000..HEAD`",
+      "revId": "f8b05749b72e634ba7aa381ae28a5d4258125390",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "871498c6_5b12cd61",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/local_wpt.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-09-05T18:20:24Z",
+      "side": 1,
+      "message": "Maybe not necessary to convert it to a bool -- usage would be the same either way.",
+      "revId": "f8b05749b72e634ba7aa381ae28a5d4258125390",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b59d16be_73dde878",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/local_wpt_mock.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-09-05T18:20:24Z",
+      "side": 1,
+      "message": "2017",
+      "revId": "f8b05749b72e634ba7aa381ae28a5d4258125390",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d132d34e_be94b61c",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/local_wpt_mock.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-09-05T18:20:24Z",
+      "side": 1,
+      "message": "I\u0027d probably word this as:\n     A list of Change-Id footer values that can be found.\n     A list of Cr-Commit-Position footer values that can be found.\n\nAlso, in other places we seem to be capitalizing the part after the colons in Args sections.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 80
+      },
+      "revId": "f8b05749b72e634ba7aa381ae28a5d4258125390",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a684d07a_a3142ae3",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/local_wpt_mock.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-09-05T18:20:24Z",
+      "side": 1,
+      "message": "This comment is probably unnecessary -- I think that the other \"Mock\" testing classes are generally \"incomplete\" and we only fill in what\u0027s necessary for testing.",
+      "revId": "f8b05749b72e634ba7aa381ae28a5d4258125390",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1156409_8820b65d",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_github_mock.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-09-05T18:20:24Z",
+      "side": 1,
+      "message": "Does this imply that when using MockWPTGitHub, we have a max of one PR that would be considered merged?\n\nAlso, if you think it might be helpful, you could add a comment in __init__ explaining the meaning/use of the *_index attributes of this class.",
+      "revId": "f8b05749b72e634ba7aa381ae28a5d4258125390",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6539cae_ec9b5065",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_github_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-09-05T18:20:24Z",
+      "side": 1,
+      "message": "Would it make sense to split this into two test methods?",
+      "revId": "f8b05749b72e634ba7aa381ae28a5d4258125390",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
