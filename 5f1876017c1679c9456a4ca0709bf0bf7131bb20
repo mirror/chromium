@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c6c0e29_af12e2c4",
+        "filename": "components/offline_pages/core/prefetch/add_unique_urls_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-05T18:37:44Z",
+      "side": 1,
+      "message": "Does it work with ExpectTaskCompletes? Or do we not support that in this test? This is one of the early ones IIRC",
+      "range": {
+        "startLine": 96,
+        "startChar": 2,
+        "endLine": 96,
+        "endChar": 19
+      },
+      "revId": "5f1876017c1679c9456a4ca0709bf0bf7131bb20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
