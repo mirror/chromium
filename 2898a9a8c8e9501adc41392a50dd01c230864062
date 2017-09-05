@@ -154,6 +154,24 @@
     },
     {
       "key": {
+        "uuid": "3c32b6b0_49d71a86",
+        "filename": "content/common/service_worker/service_worker_loader_helpers.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-05T04:54:50Z",
+      "side": 1,
+      "message": "Ah right, and ServiceWorkerHeaderMap is a `using` thing. I see.",
+      "parentUuid": "06cfdb03_b6296541",
+      "revId": "2898a9a8c8e9501adc41392a50dd01c230864062",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "04691825_3bb2be0c",
         "filename": "content/common/service_worker/service_worker_loader_helpers.h",
         "patchSetId": 8
@@ -218,6 +236,24 @@
       "side": 1,
       "message": "I rename that. And now, I feel that remove SaveResponseInfo() from the public interface is also good as you said. There are another idea that remove PopulateResponseHead(), too. What do you think?",
       "parentUuid": "fadedfa1_a3f1813c",
+      "revId": "2898a9a8c8e9501adc41392a50dd01c230864062",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eeec7863_078eea09",
+        "filename": "content/common/service_worker/service_worker_loader_helpers.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-05T04:54:50Z",
+      "side": 1,
+      "message": "Hm good point. For symmetry, if there is SaveResponseHeaders(), I\u0027d like to keep SaveResponseInfo(). So I\u0027d recommend removing SaveResponseHead(), and have the callsites use both SaveResponseHeaders() and SaveResponseInfo().",
+      "parentUuid": "45c32fc3_4cf281c3",
       "revId": "2898a9a8c8e9501adc41392a50dd01c230864062",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
