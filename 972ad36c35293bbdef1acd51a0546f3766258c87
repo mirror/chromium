@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbab96b8_3cd20e2c",
+        "filename": "chrome/browser/ui/passwords/password_manager_presenter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-05T21:23:05Z",
+      "side": 1,
+      "message": "Under what circumstance does this happen?",
+      "range": {
+        "startLine": 446,
+        "startChar": 2,
+        "endLine": 447,
+        "endChar": 11
+      },
+      "revId": "972ad36c35293bbdef1acd51a0546f3766258c87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82e15bf5_db9e08dd",
+        "filename": "chrome/browser/ui/passwords/password_manager_presenter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-05T21:23:05Z",
+      "side": 1,
+      "message": "It\u0027s unusual to have the undooperations themselves add the alternate operation. Doesn\u0027t PasswordManagerPresenter, or some model, have notifications for mutations?",
+      "range": {
+        "startLine": 449,
+        "startChar": 2,
+        "endLine": 450,
+        "endChar": 69
+      },
+      "revId": "972ad36c35293bbdef1acd51a0546f3766258c87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b09f82ce_2e794e60",
+        "filename": "chrome/browser/ui/passwords/password_manager_presenter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-05T21:23:05Z",
+      "side": 1,
+      "message": "private: before this.",
+      "range": {
+        "startLine": 151,
+        "startChar": 4,
+        "endLine": 151,
+        "endChar": 21
+      },
+      "revId": "972ad36c35293bbdef1acd51a0546f3766258c87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a72c2960_83f5d753",
+        "filename": "components/undo_strings.grdp",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-05T21:23:05Z",
+      "side": 1,
+      "message": "These strings should be in chrome, not here (arguably the other ones should too, but that\u0027s for another day).",
+      "range": {
+        "startLine": 41,
+        "startChar": 19,
+        "endLine": 41,
+        "endChar": 46
+      },
+      "revId": "972ad36c35293bbdef1acd51a0546f3766258c87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
