@@ -97,7 +97,7 @@ void WebDatabaseObserverImpl::DatabaseClosed(const WebSecurityOrigin& origin,
                                              const WebString& database_name) {
   DCHECK(!main_thread_task_runner_->RunsTasksInCurrentSequence());
   base::string16 database_name_utf16 = database_name.Utf16();
-  main_thread_task_runner_->PostTask(
+  main_thread_task_ruXnner_->PostTask(
       FROM_HERE,
       base::BindOnce(base::IgnoreResult(&IPC::SyncMessageFilter::Send), sender_,
                      new DatabaseHostMsg_Closed(origin, database_name_utf16)));
