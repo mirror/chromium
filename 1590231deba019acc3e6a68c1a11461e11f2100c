@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "347f6ea2_dd899a1c",
+        "filename": "components/multidevice/service/DEPS",
+        "patchSetId": 9
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-05T18:02:41Z",
+      "side": 1,
+      "message": "Regan, you\u0027ll want to inject the SecureMessageDelegateFactory into the Impl and only use references to the pure-virtual base class.\n\nSame thing for the ash-related stuff for calculating the GcmDeviceInfo. For now, please just inject a GcmDeviceInfo object, and add a TODO for me to use dependency injection to inject this into the component.\n\nThanks!",
+      "parentUuid": "5cdb9bb2_a377c32d",
+      "range": {
+        "startLine": 3,
+        "startChar": 19,
+        "endLine": 3,
+        "endChar": 27
+      },
+      "revId": "1590231deba019acc3e6a68c1a11461e11f2100c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4b7b2a77_ccf8b7c4",
         "filename": "components/multidevice/service/device_sync_impl.cc",
         "patchSetId": 9
