@@ -412,6 +412,9 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
   WebRuntimeFeatures::EnableModuleScriptsDynamicImport(
       base::FeatureList::IsEnabled(features::kModuleScriptsDynamicImport));
 
+  WebRuntimeFeatures::EnableWorkStealingInScriptRunner(
+      base::FeatureList::IsEnabled(features::kWorkStealingInScriptRunner));
+
   // Enable explicitly enabled features, and then disable explicitly disabled
   // ones.
   for (const std::string& feature :
