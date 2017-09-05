@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3a61d4e_1ee0f239",
+        "filename": "cc/output/vulkan_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-09-05T16:53:37Z",
+      "side": 1,
+      "message": "nit: plz correct the order.",
+      "revId": "5a752c3b1d3d3abde13867eac0f07cb3b3370e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
