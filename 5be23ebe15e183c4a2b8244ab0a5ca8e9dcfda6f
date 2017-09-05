@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "001c7173_44e5faad",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-05T17:02:58Z",
+      "side": 1,
+      "message": "Chrome changes should be associated with a bug in the chromium issue tracker.",
+      "revId": "5be23ebe15e183c4a2b8244ab0a5ca8e9dcfda6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42bd7c1c_6e5d11b3",
+        "filename": "chrome/browser/resources/settings/android_apps_page/android_arc_enable_button.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-05T17:02:58Z",
+      "side": 1,
+      "message": "secondaryTest does not exist in this context. You will need to pass e.g. aria-described-by to this element (you should be able to pass an element as a property).",
+      "revId": "5be23ebe15e183c4a2b8244ab0a5ca8e9dcfda6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
