@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "827dc3e0_50c8be99",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/state_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-05T20:47:10Z",
+      "side": 1,
+      "message": "Popping out the stylus tool should have the same shrink animation (ie, not fade out).",
+      "parentUuid": "00cd87ec_43ad2e1c",
+      "revId": "df60dbaa5872e13ea75cc495520b6a6ba375e752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b46e080c_243a1bd3",
         "filename": "chrome/browser/resources/chromeos/login/md_top_header_bar.css",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "df60dbaa5872e13ea75cc495520b6a6ba375e752",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02efaa55_fb34e253",
+        "filename": "chrome/browser/resources/chromeos/login/md_top_header_bar.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-05T20:47:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b46e080c_243a1bd3",
+      "revId": "df60dbaa5872e13ea75cc495520b6a6ba375e752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2b6b3dec_b72131a0",
+        "filename": "chrome/browser/resources/chromeos/login/md_top_header_bar.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-05T20:47:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f5c11ee_00705fb3",
+      "revId": "df60dbaa5872e13ea75cc495520b6a6ba375e752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86c7a86c_eca1fb7c",
         "filename": "chrome/browser/resources/chromeos/login/md_top_header_bar.js",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-05T19:18:35Z",
       "side": 1,
       "message": "if we get rid of short transition, we might want to do this regardless of the current state (otherwise, the transition to e.g. NOT_AVAILABLE state would look janky).",
+      "revId": "df60dbaa5872e13ea75cc495520b6a6ba375e752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cdbff8d_b06be9ec",
+        "filename": "chrome/browser/resources/chromeos/login/md_top_header_bar.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-05T20:47:10Z",
+      "side": 1,
+      "message": "Does the updated code do this? I\u0027m not familiar with how to trigger all of the state transitions.",
+      "parentUuid": "86c7a86c_eca1fb7c",
       "revId": "df60dbaa5872e13ea75cc495520b6a6ba375e752",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
