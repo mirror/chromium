@@ -286,12 +286,6 @@ class CONTENT_EXPORT NavigationHandle {
                                     const GURL& new_referrer_url,
                                     bool new_is_external_protocol) = 0;
 
-  // Simulates failing the network request.
-  virtual NavigationThrottle::ThrottleCheckResult CallWillFailRequestForTesting(
-      net::Error net_error,
-      base::Optional<net::SSLInfo> ssl_info,
-      bool should_ssl_errors_be_fatal) = 0;
-
   // Simulates the reception of the network response.
   virtual NavigationThrottle::ThrottleCheckResult
   CallWillProcessResponseForTesting(
