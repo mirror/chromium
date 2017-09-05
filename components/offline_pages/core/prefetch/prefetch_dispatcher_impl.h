@@ -5,7 +5,9 @@
 #ifndef COMPONENTS_OFFLINE_PAGES_CORE_PREFETCH_PREFETCH_DISPATCHER_IMPL_H_
 #define COMPONENTS_OFFLINE_PAGES_CORE_PREFETCH_PREFETCH_DISPATCHER_IMPL_H_
 
+#include <map>
 #include <memory>
+#include <set>
 #include <string>
 #include <vector>
 
@@ -81,14 +83,14 @@ class PrefetchDispatcherImpl : public PrefetchDispatcher,
    // becomes idle and any task called SchedulePipelineProcessing() before.
    void QueueActionTasks();
 
-  PrefetchService* service_;
-  TaskQueue task_queue_;
-  bool needs_pipeline_processing_ = false;
-  std::unique_ptr<ScopedBackgroundTask> background_task_;
+   PrefetchService* service_;
+   TaskQueue task_queue_;
+   bool needs_pipeline_processing_ = false;
+   std::unique_ptr<ScopedBackgroundTask> background_task_;
 
-  base::WeakPtrFactory<PrefetchDispatcherImpl> weak_factory_;
+   base::WeakPtrFactory<PrefetchDispatcherImpl> weak_factory_;
 
-  DISALLOW_COPY_AND_ASSIGN(PrefetchDispatcherImpl);
+   DISALLOW_COPY_AND_ASSIGN(PrefetchDispatcherImpl);
 };
 
 }  // namespace offline_pages

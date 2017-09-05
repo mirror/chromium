@@ -76,7 +76,7 @@ class PrefetchStoreTestUtil {
   // Will use |clock_| as time source when writing back quota.
   bool SetPrefetchQuota(int64_t available_quota);
 
-  PrefetchStore* store() { return store_.get(); }
+  PrefetchStore* store() { return store_; }
 
   base::SimpleTestClock* clock() { return &clock_; }
 
@@ -85,7 +85,8 @@ class PrefetchStoreTestUtil {
 
   scoped_refptr<base::TestSimpleTaskRunner> task_runner_;
   base::ScopedTempDir temp_directory_;
-  std::unique_ptr<PrefetchStore> store_;
+  std::unique_ptr<PrefetchStore> owned_store_;
+  PrefetchStore* store_;
   base::SimpleTestClock clock_;
 
   DISALLOW_COPY_AND_ASSIGN(PrefetchStoreTestUtil);
