@@ -4,6 +4,8 @@
 
 #include "media/audio/audio_system.h"
 
+#include "base/debug/stack_trace.h"
+
 namespace media {
 
 static AudioSystem* g_last_created = nullptr;
@@ -16,20 +18,24 @@ AudioSystem* AudioSystem::Get() {
 
 void AudioSystem::SetInstance(AudioSystem* audio_system) {
   DCHECK(audio_system);
+  LOG(ERROR) << "AudioSystem::SetInstance >>> "
+             << base::debug::StackTrace(10).ToString() << " <<<";
   if (g_last_created && audio_system) {
     // We create multiple instances of AudioSystem only when testing.
     // We should not encounter this case in production.
-    LOG(WARNING) << "Multiple instances of AudioSystem detected";
+    LOG(ERROR) << "Multiple instances of AudioSystem detected";
   }
   g_last_created = audio_system;
 }
 
 void AudioSystem::ClearInstance(const AudioSystem* audio_system) {
   DCHECK(audio_system);
+  LOG(ERROR) << "AudioSystem::ClearInstance >>> "
+             << base::debug::StackTrace(10).ToString() << " <<<";
   if (g_last_created != audio_system) {
     // We create multiple instances of AudioSystem only when testing.
     // We should not encounter this case in production.
-    LOG(WARNING) << "Multiple instances of AudioSystem detected";
+    LOG(ERROR) << "Multiple instances of AudioSystem detected";
   } else {
     g_last_created = nullptr;
   }
