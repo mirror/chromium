@@ -43,6 +43,8 @@ const base::Feature kAutofillRationalizeFieldTypePredictions{
     base::FEATURE_ENABLED_BY_DEFAULT};
 const base::Feature kAutofillSuppressDisusedAddresses{
     "AutofillSuppressDisusedAddresses", base::FEATURE_DISABLED_BY_DEFAULT};
+const base::Feature kAutofillUpstreamAllowAllEmailDomains{
+    "AutofillUpstreamAllowAllEmailDomains", base::FEATURE_DISABLED_BY_DEFAULT};
 const base::Feature kAutofillUpstreamRequestCvcIfMissing{
     "AutofillUpstreamRequestCvcIfMissing", base::FEATURE_DISABLED_BY_DEFAULT};
 const base::Feature kAutofillUpstreamShowGoogleLogo{
@@ -238,7 +240,10 @@ bool IsCreditCardUploadEnabled(const PrefService* pref_service,
   if (user_email.empty())
     return false;
   std::string domain = gaia::ExtractDomainName(user_email);
-  if (!(domain == "googlemail.com" || domain == "gmail.com" ||
+  // If the "allow all email domains" flag is off, restrict credit card upload
+  // only to Google Accounts with @googlemail, @gmail, or @google domains.
+  if (!base::FeatureList::IsEnabled(kAutofillUpstreamAllowAllEmailDomains) &&
+      !(domain == "googlemail.com" || domain == "gmail.com" ||
         domain == "google.com")) {
     return false;
   }
