@@ -782,6 +782,9 @@ void NotificationViewMD::CreateOrUpdateIconView(
     icon = notification.icon().AsImageSkia();
   icon_view_->SetImage(icon, icon.size());
 
+  // Also, the icon on the right side will be rounded.
+  icon_view_->set_rounded(notification.use_image_as_icon());
+
   // If |use_image_as_icon| is set, hide the icon on the right side when
   // the notification is expanded.
   hide_icon_on_expanded_ = notification.use_image_as_icon();

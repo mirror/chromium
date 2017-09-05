@@ -27,6 +27,8 @@ class MESSAGE_CENTER_EXPORT ProportionalImageView : public views::View {
   void SetImage(const gfx::ImageSkia& image,
                 const gfx::Size& max_image_size);
 
+  void set_rounded(bool rounded) { rounded_ = rounded; }
+
   // Overridden from views::View:
   void OnPaint(gfx::Canvas* canvas) override;
   const char* GetClassName() const override;
@@ -36,6 +38,8 @@ class MESSAGE_CENTER_EXPORT ProportionalImageView : public views::View {
 
   gfx::ImageSkia image_;
   gfx::Size max_image_size_;
+
+  bool rounded_;
 
   DISALLOW_COPY_AND_ASSIGN(ProportionalImageView);
 };
