@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "6ffb959e_d99e0676",
+        "filename": "chrome/browser/ui/cocoa/external_protocol_dialog_cocoa.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-05T03:45:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bfab7522_3a6cdba6",
+      "revId": "0cce1ad6087a12f0ace67678e117f04811bad050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48ded2df_0f710fae",
         "filename": "chrome/browser/ui/views/external_protocol_dialog.cc",
         "patchSetId": 2

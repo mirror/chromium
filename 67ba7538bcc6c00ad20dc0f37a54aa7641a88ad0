@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b9d691a_a8245972",
+        "filename": "chrome/browser/external_protocol/external_protocol_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-05T03:45:53Z",
+      "side": 0,
+      "message": "\u003chistogram name\u003d\"BrowserDialogs.ExternalProtocol.RememberCheckbox\"\n    enum\u003d\"BooleanChecked\"\u003e\n  \u003cobsolete\u003e\n    Deprecated 09/2017 \u003cbecause reason\u003e\n  \u003c/obsolete\u003e",
+      "range": {
+        "startLine": 138,
+        "startChar": 37,
+        "endLine": 138,
+        "endChar": 53
+      },
+      "revId": "67ba7538bcc6c00ad20dc0f37a54aa7641a88ad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

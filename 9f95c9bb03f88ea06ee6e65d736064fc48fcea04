@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88f342f3_8715a9ca",
+        "filename": "chrome/browser/ui/cocoa/external_protocol_dialog_cocoa.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-05T03:45:53Z",
+      "side": 1,
+      "message": "nit: import",
+      "range": {
+        "startLine": 13,
+        "startChar": 1,
+        "endLine": 13,
+        "endChar": 8
+      },
+      "revId": "9f95c9bb03f88ea06ee6e65d736064fc48fcea04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47f80499_9460844e",
+        "filename": "chrome/browser/ui/views/external_protocol_dialog.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-05T03:45:53Z",
+      "side": 1,
+      "message": "nit: RunExternalProtocolDialog()?",
+      "range": {
+        "startLine": 25,
+        "startChar": 46,
+        "endLine": 25,
+        "endChar": 71
+      },
+      "revId": "9f95c9bb03f88ea06ee6e65d736064fc48fcea04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
