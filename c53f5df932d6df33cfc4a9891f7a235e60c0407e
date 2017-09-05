@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5255c0a_61ee4360",
+        "filename": "cc/paint/paint_image.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-05T21:35:36Z",
+      "side": 1,
+      "message": "ImageAnimationCount repetition_count_ here and elsewhere.",
+      "revId": "c53f5df932d6df33cfc4a9891f7a235e60c0407e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
