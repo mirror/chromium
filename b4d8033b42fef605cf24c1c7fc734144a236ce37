@@ -16,6 +16,24 @@
       "revId": "b4d8033b42fef605cf24c1c7fc734144a236ce37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f77fcd2_2445fa4c",
+        "filename": "content/common/shared_interface_ptr.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-05T23:07:33Z",
+      "side": 1,
+      "message": "Let me clarify; if I get rid of this a little nasty raw_ptr_for_testing part would it start to make sense to you, or you have further concerns?  (I just didn\u0027t want to write multiple holders class just to keep Ptr around)",
+      "parentUuid": "7869defe_599d0b7a",
+      "revId": "b4d8033b42fef605cf24c1c7fc734144a236ce37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
