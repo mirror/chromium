@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "8eeb26c1_210390a9",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 26
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-05T23:38:59Z",
+      "side": 1,
+      "message": "Right. If this parameter specifies number of retries, instead of total number of attempts, then I think you want range(retries) instead of range(retries-1) in the loop below.",
+      "parentUuid": "894d34df_eed2a710",
+      "range": {
+        "startLine": 35,
+        "startChar": 32,
+        "endLine": 35,
+        "endChar": 41
+      },
+      "revId": "5574369870852f2dfc82e9ca046070f334770561",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "09ec0c96_6cfcbc16",
         "filename": "build/fuchsia/runner_common.py",
         "patchSetId": 26
@@ -178,6 +202,30 @@
       "side": 1,
       "message": "Not totally sure, this follows https://docs.google.com/document/d/1uXkvvX37arJiBfcpccYW9XS8vcVImLE1zGSXyk6sESc/edit . I assumed that file was for sshd on the target.",
       "parentUuid": "4ed69575_bbedc637",
+      "range": {
+        "startLine": 196,
+        "startChar": 11,
+        "endLine": 196,
+        "endChar": 74
+      },
+      "revId": "5574369870852f2dfc82e9ca046070f334770561",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cd18369_ba61ef86",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 26
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-05T23:38:59Z",
+      "side": 1,
+      "message": "I _think_ sshd won\u0027t actually use that file. Public key can be generates from the main key file (specified by IdentityFile in the config). But I may be wrong about it.",
+      "parentUuid": "8cda69de_d9ca0207",
       "range": {
         "startLine": 196,
         "startChar": 11,
