@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f7d5d83_119e8730",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-05T17:11:11Z",
+      "side": 1,
+      "message": "Add a DCHECK_CURRENTLY_ON(BrowserThread::UI); now that this is only accessed on the UI thread.",
+      "range": {
+        "startLine": 35,
+        "startChar": 16,
+        "endLine": 35,
+        "endChar": 20
+      },
+      "revId": "20d8b1dda04919e6a19a910e5fbae1a482078082",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce10faeb_caedb502",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-05T17:11:11Z",
+      "side": 1,
+      "message": "Nit - change this to e.g.: // Weak reference to IO thread outer class that owns us.",
+      "range": {
+        "startLine": 106,
+        "startChar": 10,
+        "endLine": 106,
+        "endChar": 19
+      },
+      "revId": "20d8b1dda04919e6a19a910e5fbae1a482078082",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78277996_40b31d69",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-05T17:11:11Z",
+      "side": 1,
+      "message": "Add a comment that usually it would be unsafe to get a WeakPtr on the UI thread from weak_ptr_factory_ that lives on the IO thread, but it\u0027s ok in the constructor as |this| can\u0027t be destroyed before its constructor finishes.",
+      "range": {
+        "startLine": 148,
+        "startChar": 26,
+        "endLine": 148,
+        "endChar": 43
+      },
+      "revId": "20d8b1dda04919e6a19a910e5fbae1a482078082",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6596b98b_01c0690e",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-05T17:11:11Z",
+      "side": 1,
+      "message": "This comment is no longer accurate. Change it to e.g. \"Since this constructor runs on the UI thread, a WeakPtr can be safely obtained from the Core.\"",
+      "range": {
+        "startLine": 150,
+        "startChar": 11,
+        "endLine": 150,
+        "endChar": 18
+      },
+      "revId": "20d8b1dda04919e6a19a910e5fbae1a482078082",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90a6b924_eac1251f",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-05T17:11:11Z",
+      "side": 1,
+      "message": "Nit: Why not just {url} using the function parameter?",
+      "range": {
+        "startLine": 30,
+        "startChar": 8,
+        "endLine": 30,
+        "endChar": 12
+      },
+      "revId": "20d8b1dda04919e6a19a910e5fbae1a482078082",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f6b91f5_5fbc815a",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-05T17:11:11Z",
+      "side": 1,
+      "message": "Nit: 10u /* size */\n\n(for bonus points, also rename size to file_size in that constructor)",
+      "range": {
+        "startLine": 35,
+        "startChar": 47,
+        "endLine": 35,
+        "endChar": 49
+      },
+      "revId": "20d8b1dda04919e6a19a910e5fbae1a482078082",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b72d67dc_540cf185",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-05T17:11:11Z",
+      "side": 1,
+      "message": "Nit: add a getter so the factory can be private?",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 13
+      },
+      "revId": "20d8b1dda04919e6a19a910e5fbae1a482078082",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deb4f49b_f8ee039b",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-05T17:11:11Z",
+      "side": 1,
+      "message": "Nit: /* request_index */\n(ditto below)",
+      "range": {
+        "startLine": 92,
+        "startChar": 55,
+        "endLine": 92,
+        "endChar": 56
+      },
+      "revId": "20d8b1dda04919e6a19a910e5fbae1a482078082",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
