@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "ac81820c_72ac8c50",
+        "filename": "chrome/browser/ui/views/find_bar_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-05T00:40:25Z",
+      "side": 1,
+      "message": "You can cross-compile a ChromeOS build on Linux by setting `target_os \u003d \"chromeos\"` in gn args -- see https://chromium.googlesource.com/chromium/src/+/lkcr/docs/old_chromeos_build_instructions.md\n\nI also just tried to repro http://crbug.com/755958 on a ChromeOS pixel device (beta channel), and it does appear to be affected by this bug. I didn\u0027t confirm whether this change *fixes* it, but it\u0027s unlikely you\u0027re introducing a regression for something that currently works on ChromeOS.",
+      "parentUuid": "2fb65b3c_7caa8e9f",
+      "revId": "e66cfc172f5cff67bfdd5b778f3a6767446c2dda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "68a9b42e_64b8ae14",
         "filename": "chrome/browser/ui/views/find_bar_host.cc",
         "patchSetId": 9
