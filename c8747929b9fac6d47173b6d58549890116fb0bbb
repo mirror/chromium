@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35ad3733_568a9e26",
+        "filename": "chrome/browser/ntp_snippets/ntp_snippets_metrics.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-05T10:12:28Z",
+      "side": 1,
+      "message": "I\u0027m not actually sure if this is considered appropriate. It should work the way we want, but there\u0027s not actually a real enum there.",
+      "revId": "c8747929b9fac6d47173b6d58549890116fb0bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
