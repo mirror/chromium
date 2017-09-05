@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "713e3330_c68fd92b",
+        "filename": "third_party/WebKit/Source/core/dom/TaskRunnerHelper.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-09-05T17:07:48Z",
+      "side": 1,
+      "message": "If Document::frame_ is non-null, then document-\u003eContextDocument() \u003d\u003d document. Otherwise, it\u0027s the Document that requested the creation of the passed-in document. ContextDocument() is *usually* attached and therefore has a Frame, but it\u0027s not perfect.",
+      "revId": "07946d9bcee4dfab89058515c912ffb9eb73da3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

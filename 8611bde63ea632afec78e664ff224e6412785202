@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1317b5a_3e1666c0",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-09-05T17:07:48Z",
+      "side": 1,
+      "message": "Moved up the intialization list so that it is valid for all timer constructions.",
+      "revId": "8611bde63ea632afec78e664ff224e6412785202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8446ab3d_4771d594",
+        "filename": "third_party/WebKit/Source/core/dom/TaskRunnerHelper.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-09-05T17:07:48Z",
+      "side": 1,
+      "message": "I want to make this a DCHECK, but there\u0027s a unit test that breaks with that. Fixing that is sufficiently complex that it would nearly double the size of this change, so planning it as a followup: https://chromium-review.googlesource.com/c/chromium/src/+/647381",
+      "revId": "8611bde63ea632afec78e664ff224e6412785202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "435a7b5d_b9f96142",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasAsyncBlobCreator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-09-05T17:07:48Z",
+      "side": 1,
+      "message": "CanvasAsyncBlobCreator might be in a worker context, unclear why this used Document instead of ExecutionContext.",
+      "revId": "8611bde63ea632afec78e664ff224e6412785202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1a0420a_50773d6b",
+        "filename": "third_party/WebKit/Source/core/html/media/MediaDocument.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-09-05T17:07:48Z",
+      "side": 1,
+      "message": "There were a couple of browser_tests that trigger a detach inside attaching head, and attaching body would then try to initialize a task runner in a detached document during body attach and DCHECKing. There\u0027s no reason to continue constructing the MediaDocument once it\u0027s detached, so just bail.",
+      "revId": "8611bde63ea632afec78e664ff224e6412785202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00e99b43_f20bd0f8",
+        "filename": "third_party/WebKit/Source/modules/mediacapturefromelement/HTMLCanvasElementCapture.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-09-05T17:07:48Z",
+      "side": 1,
+      "message": "If element is detached, GetExecutionContext() will be nullptr. Using ExecutionContext::From(script_state) guarantees a valid ExecutionContext based on the current v8 context. This may result in a differnt ExecutionContext in the case of an attached element if it\u0027s accessed across context (i.e., a same-origin iframe accessing an element in its parent\u0027s DOM).",
+      "revId": "8611bde63ea632afec78e664ff224e6412785202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
