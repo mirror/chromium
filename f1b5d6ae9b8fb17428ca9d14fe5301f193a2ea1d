@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2281ea5_0a8449dd",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-05T19:28:26Z",
+      "side": 1,
+      "message": "I should have suggested:\n     Layer()-\u003eSetNeedsRepaint();\n\nI just noticed an issue about change of interest rect when scroll offset changes. In SPv1 we check change of interest rect in GraphicsLayer/CompositedLayerMapping, but we lack the check in SPv2. The easist way (which I also suggest for now) is to just call Layer()-\u003eSetNeedsRepaint() without any condition here. For optimization, we may need a new flag on PaintLayer to indicate probable interest rect changes, and skip repaint if interest rect doesn\u0027t change.",
+      "revId": "f1b5d6ae9b8fb17428ca9d14fe5301f193a2ea1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9a97aa0_42f83c6a",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableAreaTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 803,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-05T19:28:26Z",
+      "side": 1,
+      "message": "Nit: Add 2 spaces\n      \"  \u003cdiv ...\"",
+      "revId": "f1b5d6ae9b8fb17428ca9d14fe5301f193a2ea1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63ee11d3_378560e2",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableAreaTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 861,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-05T19:28:26Z",
+      "side": 1,
+      "message": "Nit: Add 2 spaces:\n      \"  \u003cdiv ...\"",
+      "range": {
+        "startLine": 861,
+        "startChar": 0,
+        "endLine": 861,
+        "endChar": 60
+      },
+      "revId": "f1b5d6ae9b8fb17428ca9d14fe5301f193a2ea1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
