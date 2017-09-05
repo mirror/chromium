@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e8c6f3d_f6e5df23",
+        "filename": "chrome/browser/ui/cocoa/password_reuse_warning_dialog_controller.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-09-05T16:32:29Z",
+      "side": 1,
+      "message": "perhaps we should have an [ImageViewUtils imageViewWithImage:] to mirror the 10.12 SDK\u0027s [NSImageView imageViewWithImage:], like TextFieldUtils/ButtonUtils do",
+      "range": {
+        "startLine": 137,
+        "startChar": 25,
+        "endLine": 137,
+        "endChar": 26
+      },
+      "revId": "62434fa05737b039f75703d79fce577e0b9eb36c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "932aae31_6ae8dbc6",
+        "filename": "chrome/browser/ui/cocoa/password_reuse_warning_dialog_controller.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-09-05T16:32:29Z",
+      "side": 1,
+      "message": "there\u0027s an rtl incantation you need to do somewhere around here - lgrey would know what it is",
+      "range": {
+        "startLine": 164,
+        "startChar": 18,
+        "endLine": 164,
+        "endChar": 26
+      },
+      "revId": "62434fa05737b039f75703d79fce577e0b9eb36c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e5934fe_0d4e51ed",
+        "filename": "ui/base/cocoa/controls/button_utils.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-09-05T16:32:29Z",
+      "side": 1,
+      "message": "?",
+      "range": {
+        "startLine": 39,
+        "startChar": 5,
+        "endLine": 39,
+        "endChar": 9
+      },
+      "revId": "62434fa05737b039f75703d79fce577e0b9eb36c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "221eac7e_c4991dae",
+        "filename": "ui/base/cocoa/controls/textfield_utils.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-09-05T16:32:29Z",
+      "side": 1,
+      "message": "I like this utility method",
+      "range": {
+        "startLine": 23,
+        "startChar": 16,
+        "endLine": 23,
+        "endChar": 31
+      },
+      "revId": "62434fa05737b039f75703d79fce577e0b9eb36c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
