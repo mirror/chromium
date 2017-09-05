@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac7dc981_dcbbcad4",
+        "filename": "base/trace_event/sharded_allocation_register.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-05T16:51:07Z",
+      "side": 1,
+      "message": "maybe slightly more readable if you make this\n\n#elif defined(OS_MACOSX)\nconst size_t ShardCount \u003d 64;\n#else\n// Using ShardCount \u003d 64 adds about 1.6GB of committed memory, which triggers\n// the sandbox\u0027s committed memory limit.\n... \u003d 16\n#endif",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 29
+      },
+      "revId": "479334fa35e4e8d3572d31521dfe868b19e8070f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
