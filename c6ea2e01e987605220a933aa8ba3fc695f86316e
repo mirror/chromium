@@ -16,6 +16,24 @@
       "revId": "c6ea2e01e987605220a933aa8ba3fc695f86316e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37da3fc2_354ed86c",
+        "filename": "tools/perf/page_sets/page_cycler_story.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-09-05T11:14:13Z",
+      "side": 1,
+      "message": "Correct. This should just be written as:\naction_runner.tab.HasReachedQuiescence()\naction_runner.tab.IsServiceWorkerActivatedOrNotRegistered()",
+      "parentUuid": "3592c324_4d4e0f60",
+      "revId": "c6ea2e01e987605220a933aa8ba3fc695f86316e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
