@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "357038fa_90d29f59",
+        "filename": "chrome/browser/ui/ash/launcher/multi_profile_app_window_launcher_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-05T16:48:34Z",
+      "side": 1,
+      "message": "(see line 50 above)",
+      "revId": "363531082d657b4aaa9563edf502200dd495ce41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
