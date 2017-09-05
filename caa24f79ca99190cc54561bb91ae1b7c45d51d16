@@ -1,0 +1,175 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa7f7621_0b59f5d3",
+        "filename": "tools/idl_parser/idl_parser.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-09-05T04:40:57Z",
+      "side": 1,
+      "message": "extended_attribute_list (use snake_case)",
+      "range": {
+        "startLine": 137,
+        "startChar": 38,
+        "endLine": 137,
+        "endChar": 59
+      },
+      "revId": "caa24f79ca99190cc54561bb91ae1b7c45d51d16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bec9977_14f5427c",
+        "filename": "tools/idl_parser/idl_parser.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-09-05T04:40:57Z",
+      "side": 1,
+      "message": "Please add a comment to describe the purpose of this function. It\u0027s better to include the link.\nhttps://heycam.github.io/webidl/#extended-attributes-applicable-to-types",
+      "revId": "caa24f79ca99190cc54561bb91ae1b7c45d51d16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3708970e_9f39e45b",
+        "filename": "tools/idl_parser/idl_parser.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-09-05T04:40:57Z",
+      "side": 1,
+      "message": "I don\u0027t think we need this temporary variable.",
+      "revId": "caa24f79ca99190cc54561bb91ae1b7c45d51d16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23584391_d9b14945",
+        "filename": "tools/idl_parser/idl_parser.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-09-05T04:40:57Z",
+      "side": 1,
+      "message": "Move this line at the beginning of the function and change like:\n\nif not ExtendedAttributeList:\n  return [[], []]",
+      "revId": "caa24f79ca99190cc54561bb91ae1b7c45d51d16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b7b21cd_6c3cc969",
+        "filename": "tools/idl_parser/idl_parser.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-09-05T04:40:57Z",
+      "side": 1,
+      "message": "for extended_attribute in ExtendedAttributeList.GetChildren():",
+      "revId": "caa24f79ca99190cc54561bb91ae1b7c45d51d16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddfc7f75_a9fdf603",
+        "filename": "tools/idl_parser/idl_parser.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-09-05T04:40:57Z",
+      "side": 1,
+      "message": "It\u0027s better to define a const-like variable at the toplevel of idl_parser.py.\n\n_EXTENDED_ATTRIBUTES_APPLICABLE_TO_TYPES \u003d [ ... ]",
+      "range": {
+        "startLine": 144,
+        "startChar": 39,
+        "endLine": 144,
+        "endChar": 79
+      },
+      "revId": "caa24f79ca99190cc54561bb91ae1b7c45d51d16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05976b45_9836c51c",
+        "filename": "tools/idl_parser/idl_parser.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-09-05T04:40:57Z",
+      "side": 1,
+      "message": "applicable_to_types, non_applicable_to_types \u003d SeparateApplicableOrNonApplicable(p[1])",
+      "range": {
+        "startLine": 364,
+        "startChar": 0,
+        "endLine": 365,
+        "endChar": 64
+      },
+      "revId": "caa24f79ca99190cc54561bb91ae1b7c45d51d16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93b2c560_9f5d62f5",
+        "filename": "tools/idl_parser/idl_parser.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-09-05T04:40:57Z",
+      "side": 1,
+      "message": "if applicable_to_types:\n  ...",
+      "revId": "caa24f79ca99190cc54561bb91ae1b7c45d51d16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eefe25e_64cdf00c",
+        "filename": "tools/idl_parser/idl_parser.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-09-05T04:40:57Z",
+      "side": 1,
+      "message": "if non_applicable_to_types:\n  ...",
+      "revId": "caa24f79ca99190cc54561bb91ae1b7c45d51d16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
