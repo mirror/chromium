@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4fc20609_912b02ac",
+        "filename": "chrome/browser/translate/translate_language_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-05T20:02:00Z",
+      "side": 1,
+      "message": "Nit: EXPECT_EQ(expect_translate, !!bubble);",
+      "revId": "88ad7475e8bc6da3c178bbf3428deb6cc229bc2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0cddb46_7ef58c58",
+        "filename": "chrome/browser/translate/translate_language_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-05T20:02:00Z",
+      "side": 1,
+      "message": "Nit: Maybe just do these computations below then (and use a constant for the \"10\" above and in these calculations), instead of hardcoding some floating-point values?",
+      "revId": "88ad7475e8bc6da3c178bbf3428deb6cc229bc2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d0bbbb9_1e2b9160",
+        "filename": "chrome/browser/translate/translate_language_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-05T20:02:00Z",
+      "side": 1,
+      "message": "Nit: \u0027u\u0027 should be sufficient, no need for \"ul\"",
+      "revId": "88ad7475e8bc6da3c178bbf3428deb6cc229bc2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
