@@ -63,6 +63,30 @@
       "revId": "07946d9bcee4dfab89058515c912ffb9eb73da3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cfdd1796_cf43515e",
+        "filename": "third_party/WebKit/Source/core/dom/TaskRunnerHelper.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-09-05T17:47:15Z",
+      "side": 1,
+      "message": "I\u0027d say that dynamic_cast would have been a good option, but we don\u0027t have RTTI and adding IsNullExecutionContextForTesting sounds like an overkill. Do we have other options?",
+      "parentUuid": "40e8ebd6_50836cb2",
+      "range": {
+        "startLine": 90,
+        "startChar": 22,
+        "endLine": 90,
+        "endChar": 28
+      },
+      "revId": "07946d9bcee4dfab89058515c912ffb9eb73da3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
