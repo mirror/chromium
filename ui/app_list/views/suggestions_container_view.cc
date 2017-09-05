@@ -90,8 +90,8 @@ int SuggestionsContainerView::DoUpdate() {
     SearchResult* item = nullptr;
     if (i < display_results.size())
       item = display_results[i];
-    search_result_tile_views_[i]->SetSearchResult(item);
     search_result_tile_views_[i]->SetEnabled(true);
+    search_result_tile_views_[i]->SetSearchResult(item);
   }
 
   parent()->Layout();

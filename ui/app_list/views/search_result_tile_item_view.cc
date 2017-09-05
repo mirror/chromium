@@ -165,6 +165,7 @@ void SearchResultTileItemView::SetSearchResult(SearchResult* item) {
   if (price_ && price_->visible())
     accessible_name += base::UTF8ToUTF16(", ") + price_->text();
   SetAccessibleName(accessible_name);
+  NotifyAccessibilityEvent(ui::AX_EVENT_TEXT_CHANGED, true);
 }
 
 void SearchResultTileItemView::SetRating(float rating) {
