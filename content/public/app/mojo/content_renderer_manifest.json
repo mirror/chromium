@@ -51,7 +51,7 @@
         ]
       },
       "requires": {
-        "content_browser": [ "memory_instrumentation", "renderer" ]
+        "content_browser": [ "renderer" ]
       }
     }
   },

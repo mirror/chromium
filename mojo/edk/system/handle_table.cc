@@ -15,6 +15,7 @@ namespace edk {
 
 namespace {
 
+/*
 const char* GetNameForDispatcherType(Dispatcher::Type type) {
   switch (type) {
     case Dispatcher::Type::UNKNOWN:
@@ -35,7 +36,7 @@ const char* GetNameForDispatcherType(Dispatcher::Type type) {
   NOTREACHED();
   return "unknown";
 }
-
+*/
 }  // namespace
 
 HandleTable::HandleTable() {
@@ -160,6 +161,8 @@ void HandleTable::GetActiveHandlesForTest(std::vector<MojoHandle>* handles) {
 // MemoryDumpProvider implementation.
 bool HandleTable::OnMemoryDump(const base::trace_event::MemoryDumpArgs& args,
                                base::trace_event::ProcessMemoryDump* pmd) {
+  return false;
+  /*
   // Create entries for all relevant dispatcher types to ensure they are present
   // in the final dump.
   std::map<Dispatcher::Type, int> handle_count;
@@ -188,6 +191,7 @@ bool HandleTable::OnMemoryDump(const base::trace_event::MemoryDumpArgs& args,
   }
 
   return true;
+  */
 }
 
 HandleTable::Entry::Entry() {}
