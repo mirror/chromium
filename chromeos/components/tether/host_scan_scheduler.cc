@@ -46,6 +46,7 @@ void HostScanScheduler::ScanRequested() {
 
 void HostScanScheduler::ScanFinished() {
   network_state_handler_->SetTetherScanState(false);
+  ScheduleScan();
 }
 
 void HostScanScheduler::EnsureScan() {
