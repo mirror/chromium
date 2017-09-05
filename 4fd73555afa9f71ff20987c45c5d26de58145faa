@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f4ee066_22f4fdea",
+        "filename": "chrome/browser/signin/signin_error_notifier_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-05T15:34:07Z",
+      "side": 1,
+      "message": "I do not understand what this display_source is used for, so unfortunately I cannot say whether this change looks good to me or not (I do not know much about these notifications unfortunately).\n\n1. May I ask you to take a screenshot and link it from this CL?\n2. Does this source string need to be translated ? Is it presented to the user?",
+      "range": {
+        "startLine": 149,
+        "startChar": 28,
+        "endLine": 149,
+        "endChar": 29
+      },
+      "revId": "4fd73555afa9f71ff20987c45c5d26de58145faa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
