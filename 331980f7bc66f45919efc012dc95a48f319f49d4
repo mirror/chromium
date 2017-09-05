@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce60fb05_5e511e7e",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-05T14:36:10Z",
+      "side": 1,
+      "message": "I don\u0027t understand what this means... does this have to do with ligatures or something? (ie. in some fonts, \"fi\" has a narrower \u0027f\u0027 than the \u0027f\u0027 in \u0027foo\u0027)? Would using a fixed-width font or disabling aliasing/hinting or something help here? I\u0027m not a fan of the proposed workaround.",
+      "revId": "331980f7bc66f45919efc012dc95a48f319f49d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "770b5763_5f38a82b",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-05T14:36:10Z",
+      "side": 1,
+      "message": "I don\u0027t really like this workaround, can you instead use a fixed width font, try to use RenderText\u0027s RenderTextHarfBuzz::set_glyph_width_for_test, or something else? I\u0027d even go so far as to change the testing pattern to something more reliable than to use this workaround (eg. measure each expected output width, and check that the input capped at that width produces the same string). That said, I\u0027m still not an owner here :)",
+      "revId": "331980f7bc66f45919efc012dc95a48f319f49d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
