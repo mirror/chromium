@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7ef3c542_55c63d4b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninAndSyncView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-09-05T09:38:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e57ec54c_410c193d",
+      "range": {
+        "startLine": 304,
+        "startChar": 0,
+        "endLine": 305,
+        "endChar": 82
+      },
+      "revId": "00131a8ef347d007f03a92a1dda8fb984f9c46ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "981f2c98_a502a7bf",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninAndSyncView.java",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "00131a8ef347d007f03a92a1dda8fb984f9c46ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1ebb45a_ba01e211",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninAndSyncView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-09-05T09:38:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "981f2c98_a502a7bf",
+      "range": {
+        "startLine": 306,
+        "startChar": 20,
+        "endLine": 306,
+        "endChar": 34
+      },
+      "revId": "00131a8ef347d007f03a92a1dda8fb984f9c46ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
