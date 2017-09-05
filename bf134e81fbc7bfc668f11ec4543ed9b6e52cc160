@@ -22,6 +22,30 @@
       "revId": "bf134e81fbc7bfc668f11ec4543ed9b6e52cc160",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3658405f_66c5e4aa",
+        "filename": "tools/perf/page_sets/tough_pinch_zoom_cases.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-05T20:41:26Z",
+      "side": 1,
+      "message": "\u003e I don\u0027t think this is the correct fix. In SyntheticTouchscreenPinchGesture::MoveTouchPoints the two touch points move in opposite directions from the anchor point. In this case, that\u0027d mean that the point moving up should leave the screen. The fact that this passes tells me that there\u0027s an issue elsewhere in the pipeline.\n\nIt is okay because we only CHECK whether a touch point is inside the frame rect at a touch start. I think that is correct design because the intuitive behavior is to perform hit testing at a touch start, and later events for the same touch point will be delivered to the same widget.\n\n\u003e Finally, I can\u0027t see any examples of cases where we actually use a non-default element in a pinch gesture (i.e. we always end up defaulting to the document.body) so the intent is to always zoom into the page center/arbitrary location. Perhaps we should just remove that option - simplify the anchor logic and always zoom into the screen center?\n\nI didn\u0027t check if any other benchmark uses non-default element. +1 that simple \u0026 stupid is the best.",
+      "parentUuid": "a9972672_b9432ffa",
+      "range": {
+        "startLine": 24,
+        "startChar": 12,
+        "endLine": 25,
+        "endChar": 33
+      },
+      "revId": "bf134e81fbc7bfc668f11ec4543ed9b6e52cc160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
