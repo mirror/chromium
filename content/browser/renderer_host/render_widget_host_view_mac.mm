@@ -158,6 +158,7 @@ RenderWidgetHostView* GetRenderWidgetHostViewToUse(
                    consumed:(BOOL)consumed;
 - (void)processedGestureScrollEvent:(const blink::WebGestureEvent&)event
                            consumed:(BOOL)consumed;
+- (void)processedOverscrollEvent:(const ui::DidOverscrollParams&)params;
 - (void)keyEvent:(NSEvent*)theEvent wasKeyEquivalent:(BOOL)equiv;
 - (void)windowDidChangeBackingProperties:(NSNotification*)notification;
 - (void)windowChangedGlobalFrame:(NSNotification*)notification;
@@ -1506,6 +1507,11 @@ void RenderWidgetHostViewMac::GestureEventAck(
   }
 }
 
+void RenderWidgetHostViewMac::DidOverscroll(
+    const ui::DidOverscrollParams& params) {
+  [cocoa_view_ processedOverscrollEvent:params];
+}
+
 std::unique_ptr<SyntheticGestureTarget>
 RenderWidgetHostViewMac::CreateSyntheticGestureTarget() {
   RenderWidgetHostImpl* host =
@@ -1832,6 +1838,10 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
                            consumed:(BOOL)consumed {
   [responderDelegate_ rendererHandledGestureScrollEvent:event
                                                consumed:consumed];
+}
+
+- (void)processedOverscrollEvent:(const ui::DidOverscrollParams&)params {
+  [responderDelegate_ rendererHandledOverscrollEvent:params];
 }
 
 - (BOOL)respondsToSelector:(SEL)selector {
