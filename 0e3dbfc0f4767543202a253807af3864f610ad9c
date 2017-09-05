@@ -34,6 +34,24 @@
       "revId": "0e3dbfc0f4767543202a253807af3864f610ad9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5391bfc1_9950c7a7",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1900,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-09-05T21:25:36Z",
+      "side": 1,
+      "message": "I wonder if progressbar being an exception is an oversight in the spec.\n\nTo me, a default aria-valuemax of 100 makes great sense for progressbar.",
+      "parentUuid": "5ab7e886_0ae0842c",
+      "revId": "0e3dbfc0f4767543202a253807af3864f610ad9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
