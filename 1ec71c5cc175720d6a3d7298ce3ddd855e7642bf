@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55ec993d_f22f27c9",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceObserver.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-09-05T20:14:40Z",
+      "side": 1,
+      "message": "I\u0027m not sure we should be adding the existing old buffers here, I think the spec contract is until (fixed) buffer (what\u0027s the size limit) is full OR unload is fired (stop filling buffers at this point).\nmany of these existing buffers don\u0027t have an enforced buffer size or any logic for unload.\nif we are just prototyping something behind a flag maybe this is fine, but this is not yet shippable. Another problem is that the spec has not finalized yet IIRC.",
+      "range": {
+        "startLine": 124,
+        "startChar": 72,
+        "endLine": 124,
+        "endChar": 0
+      },
+      "revId": "1ec71c5cc175720d6a3d7298ce3ddd855e7642bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
