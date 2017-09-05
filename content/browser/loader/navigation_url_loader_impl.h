@@ -61,6 +61,7 @@ class NavigationURLLoaderImpl : public NavigationURLLoader {
                              const GlobalRequestID& request_id,
                              bool is_download,
                              bool is_stream);
+  void NotifyResponseCompleted();
 
   // Notifies the delegate the the request has failed. If |net_error| is a
   // certificate error, the caller must pass valid values for |ssl_info| and

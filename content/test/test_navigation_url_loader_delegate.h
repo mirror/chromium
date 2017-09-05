@@ -70,6 +70,7 @@ class TestNavigationURLLoaderDelegate : public NavigationURLLoaderDelegate {
       bool is_download,
       bool is_stream,
       mojom::URLLoaderFactoryPtrInfo loader_factory_ptr_info) override;
+  void OnResponseCompleted() override;
   void OnRequestFailed(bool in_cache,
                        int net_error,
                        const base::Optional<net::SSLInfo>& ssl_info,

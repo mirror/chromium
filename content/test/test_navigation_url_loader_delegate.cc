@@ -73,6 +73,8 @@ void TestNavigationURLLoaderDelegate::OnResponseStarted(
     response_started_->Quit();
 }
 
+void TestNavigationURLLoaderDelegate::OnResponseCompleted() override {}
+
 void TestNavigationURLLoaderDelegate::OnRequestFailed(
     bool in_cache,
     int net_error,
