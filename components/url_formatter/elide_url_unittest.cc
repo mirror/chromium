@@ -28,6 +28,13 @@ struct Testcase {
   const std::string output;
 };
 
+std::string ReplicateString(const std::string& str, int num_copies) {
+  std::string result;
+  for (int i = 0; i < num_copies; ++i)
+    result += str;
+  return result;
+}
+
 #if !defined(OS_ANDROID)
 void RunUrlTest(Testcase* testcases, size_t num_testcases) {
   const gfx::FontList font_list;
@@ -149,6 +156,12 @@ TEST(TextEliderTest, TestMoreEliding) {
       {"http://www.google.com/foo?bar", "www.google.com/foo?bar"},
       {"http://www.google.com/foo?bar", "google.com/foo?bar"},
 
+      // URL with multiple path segments.
+      {"http://www.google.com/foo/bar", "www.google.com/foo/bar"},
+      {"http://www.google.com/foo/bar", "google.com/foo/" + kEllipsisStr},
+      {"http://xyz.google.com/foo/bar", "xyz.google.com/foo/bar"},
+      {"http://xyz.google.com/foo/bar", kEllipsisStr + "google.com/foo/bar"},
+
       // URL with no path.
       {"http://xyz.google.com", kEllipsisStr + "google.com"},
       {"https://xyz.google.com", kEllipsisStr + "google.com"},
@@ -210,6 +223,21 @@ TEST(TextEliderTest, TestFileURLEliding) {
     // Eliding file URLs with nothing after the ':' shouldn't crash.
     {"file:///aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa:", "aaa" + kEllipsisStr},
     {"file:///aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa:/", "aaa" + kEllipsisStr},
+  };
+
+  RunUrlTest(testcases, arraysize(testcases));
+}
+
+// Test eliding of URLs with very long paths.
+TEST(TextEliderTest, TestLongPathEliding) {
+  const std::string kEllipsisStr(gfx::kEllipsis);
+  const std::string very_long_url =
+      "http://www.example.com" + ReplicateString("/foo", 1023);
+  Testcase testcases[] = {
+      {very_long_url, "www.example.com" + ReplicateString("/foo", 1023)},
+      {very_long_url, "example.com/foo/foo/" + kEllipsisStr + "/foo"},
+      {very_long_url, "example.com" + ReplicateString("/foo", 200) + "/" +
+                          kEllipsisStr + "/foo"},
   };
 
   RunUrlTest(testcases, arraysize(testcases));
