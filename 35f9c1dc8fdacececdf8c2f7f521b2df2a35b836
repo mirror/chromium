@@ -2,6 +2,121 @@
   "comments": [
     {
       "key": {
+        "uuid": "444980d7_8b2f7ab1",
+        "filename": "chrome/browser/ui/views/exit_fullscreen_fab_indicator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-05T23:03:15Z",
+      "side": 1,
+      "message": "MakeUnique.",
+      "range": {
+        "startLine": 25,
+        "startChar": 19,
+        "endLine": 25,
+        "endChar": 22
+      },
+      "revId": "35f9c1dc8fdacececdf8c2f7f521b2df2a35b836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ed7ef82_b1046956",
+        "filename": "chrome/browser/ui/views/exit_fullscreen_fab_indicator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-05T23:03:15Z",
+      "side": 1,
+      "message": "Does this actually do anything for your class?",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 35
+      },
+      "revId": "35f9c1dc8fdacececdf8c2f7f521b2df2a35b836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b11640d_02c36395",
+        "filename": "chrome/browser/ui/views/exit_fullscreen_fab_indicator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-05T23:03:15Z",
+      "side": 1,
+      "message": "Why don\u0027t you do the animation using a layer?",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 50,
+        "endChar": 3
+      },
+      "revId": "35f9c1dc8fdacececdf8c2f7f521b2df2a35b836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3921c66e_49865a3f",
+        "filename": "chrome/browser/ui/views/fab_icon_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-05T23:03:15Z",
+      "side": 1,
+      "message": "This is the default.",
+      "range": {
+        "startLine": 58,
+        "startChar": 2,
+        "endLine": 58,
+        "endChar": 33
+      },
+      "revId": "35f9c1dc8fdacececdf8c2f7f521b2df2a35b836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1098e69d_0baeedd8",
+        "filename": "chrome/browser/ui/views/fab_icon_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-05T23:03:15Z",
+      "side": 1,
+      "message": "Why do you need this in FabIconView? It\u0027s not really related to FabIconView.",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 14
+      },
+      "revId": "35f9c1dc8fdacececdf8c2f7f521b2df2a35b836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff06924f_5335cc5c",
         "filename": "chrome/browser/ui/views/fab_icon_view.h",
         "patchSetId": 9
@@ -42,6 +157,53 @@
         "startChar": 32,
         "endLine": 26,
         "endChar": 35
+      },
+      "revId": "35f9c1dc8fdacececdf8c2f7f521b2df2a35b836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eabce93a_c81a6f9d",
+        "filename": "chrome/browser/ui/views/fab_icon_view.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-05T23:03:15Z",
+      "side": 1,
+      "message": "This name makes me think of fabulous icon view, which I don\u0027t think is what you want. As Evan requests, please use a more descriptive name that doesn\u0027t require one to know md.",
+      "parentUuid": "649b1233_c9f990ae",
+      "range": {
+        "startLine": 26,
+        "startChar": 32,
+        "endLine": 26,
+        "endChar": 35
+      },
+      "revId": "35f9c1dc8fdacececdf8c2f7f521b2df2a35b836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01d1d5d1_d51bcfee",
+        "filename": "chrome/browser/ui/views/fab_icon_view.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-05T23:03:15Z",
+      "side": 1,
+      "message": "This class seems super specific to your needs. Is it really going to be used outside of the exit indicator?",
+      "range": {
+        "startLine": 30,
+        "startChar": 6,
+        "endLine": 30,
+        "endChar": 17
       },
       "revId": "35f9c1dc8fdacececdf8c2f7f521b2df2a35b836",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
