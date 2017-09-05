@@ -22,6 +22,30 @@
       "revId": "3cc7f8d936f84a1a7a4236d8cf1304747b464b0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "859d167c_19c28974",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-05T17:39:55Z",
+      "side": 1,
+      "message": "Good spot :) I looked into Chrome\u0027s methods for zero-padding, but most seem to add quite a bit of code complexity, so instead I added a comment noting this. Even if this code lives till then, the problem would self-fix once the older pending requests succeed or fail and only requests from after that date remain.",
+      "parentUuid": "102a1619_c8cf1b45",
+      "range": {
+        "startLine": 80,
+        "startChar": 59,
+        "endLine": 81,
+        "endChar": 37
+      },
+      "revId": "3cc7f8d936f84a1a7a4236d8cf1304747b464b0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
