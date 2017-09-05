@@ -16,6 +16,24 @@
       "revId": "9f5fab371e58221f4df0aaa34d8f7ed896c031e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57caa84d_e1d5181c",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-09-05T22:37:37Z",
+      "side": 1,
+      "message": "Moved to downloader per our discussion.",
+      "parentUuid": "b2aa6b52_fb712485",
+      "revId": "9f5fab371e58221f4df0aaa34d8f7ed896c031e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
