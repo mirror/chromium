@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b7b2a77_ccf8b7c4",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-05T05:30:35Z",
+      "side": 1,
+      "message": "There was 2 lines referencing browser context here that I deleted, but otherwise I just copied everything over.... Lmk if I did this incorrectly.",
+      "revId": "1590231deba019acc3e6a68c1a11461e11f2100c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
