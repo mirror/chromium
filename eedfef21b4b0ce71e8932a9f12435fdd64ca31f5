@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "b3af76ea_115efadf",
+        "filename": "components/component_updater/android/java/src/org/chromium/components/component_updater/ApkSignatureSchemeV2Verifier.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1174129
+      },
+      "writtenOn": "2017-09-05T13:16:21Z",
+      "side": 1,
+      "message": "Will start that process now.",
+      "parentUuid": "ae85dee8_c4618b20",
+      "revId": "eedfef21b4b0ce71e8932a9f12435fdd64ca31f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9002037_462368c4",
         "filename": "components/component_updater/android/java/src/org/chromium/components/component_updater/ZipUtils.java",
         "patchSetId": 2
@@ -207,6 +225,24 @@
       "side": 1,
       "message": "I\u0027m not so sure about that. In all cases this patch will have to be approved by the current OWNERS for the component update / update client, so it\u0027s better to find something that fits the overall design.",
       "parentUuid": "83017df9_7faa9bb7",
+      "revId": "eedfef21b4b0ce71e8932a9f12435fdd64ca31f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4f61e3f7_82fc0e72",
+        "filename": "components/component_updater/default_component_installer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1174129
+      },
+      "writtenOn": "2017-09-05T13:16:21Z",
+      "side": 1,
+      "message": "I see what you mean now. Moving to update_client where similar CRX things already live.",
+      "parentUuid": "7a6772c2_6cc4e464",
       "revId": "eedfef21b4b0ce71e8932a9f12435fdd64ca31f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
