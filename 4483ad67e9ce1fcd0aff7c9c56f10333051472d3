@@ -51,6 +51,24 @@
       "revId": "4483ad67e9ce1fcd0aff7c9c56f10333051472d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "624720d2_e3de722d",
+        "filename": "third_party/WebKit/Tools/Scripts/test-webkitpy",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-09-05T23:51:52Z",
+      "side": 1,
+      "message": "Ah, right, I need to call sys.exit() on line 61. Will fix.",
+      "parentUuid": "0969b33a_fd7b7c74",
+      "revId": "4483ad67e9ce1fcd0aff7c9c56f10333051472d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
