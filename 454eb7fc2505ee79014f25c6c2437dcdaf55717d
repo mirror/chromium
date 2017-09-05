@@ -22,6 +22,30 @@
       "revId": "454eb7fc2505ee79014f25c6c2437dcdaf55717d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "053870fa_4803f5ff",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-09-05T09:05:36Z",
+      "side": 1,
+      "message": "Drafted a patch: CL:650274.",
+      "parentUuid": "72c9ec2f_ecb8440c",
+      "range": {
+        "startLine": 139,
+        "startChar": 59,
+        "endLine": 139,
+        "endChar": 73
+      },
+      "revId": "454eb7fc2505ee79014f25c6c2437dcdaf55717d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
