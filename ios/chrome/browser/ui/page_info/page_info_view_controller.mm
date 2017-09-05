@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#import "ios/chrome/browser/ui/omnibox/page_info_view_controller.h"
+#import "ios/chrome/browser/ui/page_info/page_info_view_controller.h"
 
 #include "base/bind.h"
 #include "base/location.h"
@@ -13,17 +13,20 @@
 #include "base/strings/sys_string_conversions.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "components/strings/grit/components_strings.h"
+#include "ios/chrome/browser/chrome_url_constants.h"
 #import "ios/chrome/browser/ui/animation_util.h"
 #import "ios/chrome/browser/ui/commands/browser_commands.h"
+#import "ios/chrome/browser/ui/commands/page_info_commands.h"
 #import "ios/chrome/browser/ui/fancy_ui/bidi_container_view.h"
-#include "ios/chrome/browser/ui/omnibox/page_info_model.h"
-#import "ios/chrome/browser/ui/popup_menu/popup_menu_view.h"
+#include "ios/chrome/browser/ui/page_info/page_info_model.h"
 #include "ios/chrome/browser/ui/rtl_geometry.h"
 #include "ios/chrome/browser/ui/ui_util.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
+#import "ios/chrome/browser/ui/url_loader.h"
 #import "ios/chrome/common/material_timing.h"
 #include "ios/chrome/grit/ios_strings.h"
 #import "ios/third_party/material_components_ios/src/components/Typography/src/MaterialTypography.h"
+#include "ios/web/public/referrer.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/l10n/l10n_util_mac.h"
 #import "ui/gfx/ios/NSString+CrStringDrawing.h"
@@ -121,8 +124,9 @@ void PageInfoModelBubbleBridge::OnPageInfoModelChanged() {
   // the controller (and thus this bridge) get destroyed before the message
   // can be delivered.
   base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-      FROM_HERE, base::Bind(&PageInfoModelBubbleBridge::PerformLayout,
-                            weak_ptr_factory_.GetWeakPtr()),
+      FROM_HERE,
+      base::Bind(&PageInfoModelBubbleBridge::PerformLayout,
+                 weak_ptr_factory_.GetWeakPtr()),
       base::TimeDelta::FromMilliseconds(1000 /* milliseconds */));
 }
 
@@ -188,6 +192,9 @@ void PageInfoModelBubbleBridge::PerformLayout() {
 - (CGFloat)addButton:(PageInfoModel::ButtonAction)buttonAction
           toSubviews:(NSMutableArray*)subviews
             atOffset:(CGFloat)offset;
+
+// Show the security help page.
+- (void)showSecurityHelpPage;
 
 @property(nonatomic, strong) UIView* containerView;
 @property(nonatomic, strong) UIView* popupContainer;
@@ -407,6 +414,14 @@ void PageInfoModelBubbleBridge::PerformLayout() {
                                   nil);
 }
 
+- (void)showSecurityHelpPage {
+  [self.dispatcher webPageOrderedOpen:GURL(kPageInfoHelpCenterURL)
+                             referrer:web::Referrer()
+                         inBackground:NO
+                             appendTo:kCurrentTab];
+  [self.dispatcher hidePageInfo];
+}
+
 #pragma mark - Helper methods to create subviews.
 
 - (void)addImageViewForInfo:(const PageInfoModel::SectionInfo&)info
@@ -472,7 +487,7 @@ void PageInfoModelBubbleBridge::PerformLayout() {
     case PageInfoModel::BUTTON_SHOW_SECURITY_HELP:
       messageId = IDS_LEARN_MORE;
       accessibilityID = @"Learn more";
-      [button addTarget:self.dispatcher
+      [button addTarget:self
                     action:@selector(showSecurityHelpPage)
           forControlEvents:UIControlEventTouchUpInside];
       break;
