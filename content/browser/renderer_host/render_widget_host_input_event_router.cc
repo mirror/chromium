@@ -405,8 +405,9 @@ void RenderWidgetHostInputEventRouter::RouteTouchEvent(
     const ui::LatencyInfo& latency) {
   switch (event->GetType()) {
     case blink::WebInputEvent::kTouchStart: {
+      int current_active_touches = active_touches_;
       active_touches_ += CountChangedTouchPoints(*event);
-      if (active_touches_ == 1) {
+      if (!current_active_touches) {
         // Since this is the first touch, it defines the target for the rest
         // of this sequence.
         DCHECK(!touch_target_.target);
@@ -453,12 +454,11 @@ void RenderWidgetHostInputEventRouter::RouteTouchEvent(
       break;
     case blink::WebInputEvent::kTouchEnd:
     case blink::WebInputEvent::kTouchCancel:
-      // It might be safer to test active_touches_ and only decrement it if it's
-      // non-zero, since active_touches_ can be reset to 0 in
-      // OnRenderWidgetHostViewBaseDestroyed, and this can happen between the
-      // TouchStart and a subsequent TouchMove/End/Cancel.
-      DCHECK(active_touches_);
-      active_touches_ -= CountChangedTouchPoints(*event);
+      // Test active_touches_ before decrementing, since its value can be
+      // reset to 0 in OnRenderWidgetHostViewBaseDestroyed, and this can
+      // happen between the TouchStart and a subsequent TouchMove/End/Cancel.
+      if (active_touches_)
+        active_touches_ -= CountChangedTouchPoints(*event);
       if (!touch_target_.target)
         return;
 
