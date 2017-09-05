@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f1ee522_ffeea91a",
+        "filename": "third_party/leveldatabase/leveldb_chromium.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-05T22:29:31Z",
+      "side": 1,
+      "message": "Nit: class-level comment?",
+      "revId": "e058b09719839311a323a2ab5dbd3c64ae6ce713",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbde5db9_5928cfca",
+        "filename": "third_party/leveldatabase/leveldb_chromium.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-05T22:29:31Z",
+      "side": 1,
+      "message": "Nit: I think we generally do GetInstance() for singletons?\n\nIf you\u0027re OK with the extra verbosity, and it doesn\u0027t limit dependency injection, I\u0027d prefer that we expose static methods and consider the singleton an implementation detail. Example:\n\nstatic Cache* web_block_cache() const { return GetInstance()-\u003eweb_block_cache(); }",
+      "revId": "e058b09719839311a323a2ab5dbd3c64ae6ce713",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "870d00b3_e73e5f84",
+        "filename": "third_party/leveldatabase/leveldb_chromium.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-05T22:29:31Z",
+      "side": 1,
+      "message": "Nit: What do you think of \"NULL\" -\u003e \"nullptr\" or \"null\" as a shorthand?",
+      "revId": "e058b09719839311a323a2ab5dbd3c64ae6ce713",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1482257f_66c89387",
+        "filename": "third_party/leveldatabase/leveldb_chromium.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-05T22:29:31Z",
+      "side": 1,
+      "message": "nit: Should this file be leveldb_chrome, to match the namespace and naming guidelines?",
+      "revId": "e058b09719839311a323a2ab5dbd3c64ae6ce713",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3f82ea6_a93049a4",
+        "filename": "third_party/leveldatabase/leveldb_chromium.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-05T22:29:31Z",
+      "side": 1,
+      "message": "Hm... I suppose it\u0027s fairly safe to assume that leveldb won\u0027t grow a chrome namespace, since we also own it :D\n\nIt feels a bit off, though. How would you feel about moving all this ever-growing logic to //storage/leveldb, namespacing it as storage::leveldb, and having every other module depend on //storage/leveldb instead of //third_party/leveldb?\n\n1) This doesn\u0027t have to happen in this CL. chrome::leveldb seems fine for now. I brought it up so I don\u0027t forget.\n2) We can chat over IM for more bandwidth and post a decision here or in a bug.",
+      "revId": "e058b09719839311a323a2ab5dbd3c64ae6ce713",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
