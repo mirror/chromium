@@ -22,6 +22,30 @@
       "revId": "32e173b2c03257eed766df5f02ff709f2ead0eed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d0c9d34_d00e81ad",
+        "filename": "ui/webui/resources/js/cr/ui/list.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-09-05T03:56:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04875705_119ba21d",
+      "range": {
+        "startLine": 582,
+        "startChar": 13,
+        "endLine": 582,
+        "endChar": 36
+      },
+      "revId": "32e173b2c03257eed766df5f02ff709f2ead0eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
