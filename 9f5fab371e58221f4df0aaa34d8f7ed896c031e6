@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2aa6b52_fb712485",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-09-05T20:09:32Z",
+      "side": 1,
+      "message": "This creates a postponed work management code in Dispatcher. With stored bits of state, this is becoming hard to understand.\n\nIt\u0027d be better to avoid making Dispatcher to know about details of startup sequence of DownloadService, especially if there is already PrefetchDownloader that is encapsulating the knowledge of DownloadService.\n\nI\u0027m not sure what the good solution would be, maybe we need to rethink the startup sequence between DownloadService and Prefetch\u0027 Background task...",
+      "revId": "9f5fab371e58221f4df0aaa34d8f7ed896c031e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
