@@ -202,6 +202,42 @@ class TestResourceDispatcherHostDelegate final
   DISALLOW_COPY_AND_ASSIGN(TestResourceDispatcherHostDelegate);
 };
 
+class MojoPipeWriterWithStubOperations : public MojoPipeWriter {
+ public:
+  MojoPipeWriterWithStubOperations(
+      MojoPipeWriter::Delegate* delegate,
+      mojo::ScopedDataPipeConsumerHandle* consumer_handle)
+      : MojoPipeWriter(delegate, consumer_handle) {}
+  ~MojoPipeWriterWithStubOperations() override {}
+  void ResetBeginWriteExpectation() { is_begin_write_expectation_set_ = false; }
+
+  void set_begin_write_expectation(MojoResult begin_write_expectation) {
+    is_begin_write_expectation_set_ = true;
+    begin_write_expectation_ = begin_write_expectation;
+  }
+  void set_end_write_expectation(MojoResult end_write_expectation) {
+    is_end_write_expectation_set_ = true;
+    end_write_expectation_ = end_write_expectation;
+  }
+
+ private:
+  MojoResult BeginWrite(void** data, uint32_t* available) override {
+    if (is_begin_write_expectation_set_)
+      return begin_write_expectation_;
+    return MojoPipeWriter::BeginWrite(data, available);
+  }
+  MojoResult EndWrite(uint32_t written) override {
+    if (is_end_write_expectation_set_)
+      return end_write_expectation_;
+    return MojoPipeWriter::EndWrite(written);
+  }
+
+  bool is_begin_write_expectation_set_ = false;
+  bool is_end_write_expectation_set_ = false;
+  MojoResult begin_write_expectation_ = MOJO_RESULT_UNKNOWN;
+  MojoResult end_write_expectation_ = MOJO_RESULT_UNKNOWN;
+};
+
 class MojoAsyncResourceHandlerWithStubOperations
     : public MojoAsyncResourceHandler {
  public:
@@ -215,18 +251,23 @@ class MojoAsyncResourceHandlerWithStubOperations
                                  std::move(mojo_request),
                                  std::move(url_loader_client),
                                  RESOURCE_TYPE_MAIN_FRAME),
-        task_runner_(new base::TestSimpleTaskRunner) {}
+        task_runner_(new base::TestSimpleTaskRunner) {
+    set_pipe_writer_for_testing(
+        base::MakeUnique<MojoPipeWriterWithStubOperations>(
+            this, response_body_consumer_handle_for_testing()));
+  }
   ~MojoAsyncResourceHandlerWithStubOperations() override {}
 
-  void ResetBeginWriteExpectation() { is_begin_write_expectation_set_ = false; }
+  void ResetBeginWriteExpectation() {
+    PipeWriterForTesting()->ResetBeginWriteExpectation();
+  }
 
   void set_begin_write_expectation(MojoResult begin_write_expectation) {
-    is_begin_write_expectation_set_ = true;
-    begin_write_expectation_ = begin_write_expectation;
+    PipeWriterForTesting()->set_begin_write_expectation(
+        begin_write_expectation);
   }
   void set_end_write_expectation(MojoResult end_write_expectation) {
-    is_end_write_expectation_set_ = true;
-    end_write_expectation_ = end_write_expectation;
+    PipeWriterForTesting()->set_end_write_expectation(end_write_expectation);
   }
   bool has_received_bad_message() const { return has_received_bad_message_; }
   void SetMetadata(scoped_refptr<net::IOBufferWithSize> metadata) {
@@ -243,15 +284,9 @@ class MojoAsyncResourceHandlerWithStubOperations
   }
 
  private:
-  MojoResult BeginWrite(void** data, uint32_t* available) override {
-    if (is_begin_write_expectation_set_)
-      return begin_write_expectation_;
-    return MojoAsyncResourceHandler::BeginWrite(data, available);
-  }
-  MojoResult EndWrite(uint32_t written) override {
-    if (is_end_write_expectation_set_)
-      return end_write_expectation_;
-    return MojoAsyncResourceHandler::EndWrite(written);
+  MojoPipeWriterWithStubOperations* PipeWriterForTesting() const override {
+    return static_cast<MojoPipeWriterWithStubOperations*>(
+        MojoAsyncResourceHandler::PipeWriterForTesting());
   }
   net::IOBufferWithSize* GetResponseMetadata(
       net::URLRequest* request) override {
@@ -273,11 +308,7 @@ class MojoAsyncResourceHandlerWithStubOperations
     return std::move(upload_progress_tracker);
   }
 
-  bool is_begin_write_expectation_set_ = false;
-  bool is_end_write_expectation_set_ = false;
   bool has_received_bad_message_ = false;
-  MojoResult begin_write_expectation_ = MOJO_RESULT_UNKNOWN;
-  MojoResult end_write_expectation_ = MOJO_RESULT_UNKNOWN;
   scoped_refptr<net::IOBufferWithSize> metadata_;
 
   FakeUploadProgressTracker* upload_progress_tracker_ = nullptr;
@@ -324,7 +355,7 @@ class MojoAsyncResourceHandlerTestBase {
       std::unique_ptr<net::UploadDataStream> upload_stream)
       : thread_bundle_(TestBrowserThreadBundle::IO_MAINLOOP),
         browser_context_(new TestBrowserContext()) {
-    MojoAsyncResourceHandler::SetAllocationSizeForTesting(32 * 1024);
+    MojoPipeWriter::SetAllocationSizeForTesting(32 * 1024);
     rdh_.SetDelegate(&rdh_delegate_);
 
     // Create and initialize |request_|.  None of this matters, for these tests,
@@ -372,8 +403,8 @@ class MojoAsyncResourceHandlerTestBase {
   }
 
   virtual ~MojoAsyncResourceHandlerTestBase() {
-    MojoAsyncResourceHandler::SetAllocationSizeForTesting(
-        MojoAsyncResourceHandler::kDefaultAllocationSize);
+    MojoPipeWriter::SetAllocationSizeForTesting(
+        MojoPipeWriter::kDefaultAllocationSize);
     base::RunLoop().RunUntilIdle();
   }
 
@@ -446,7 +477,7 @@ class MojoAsyncResourceHandlerWithAllocationSizeTest
  protected:
   MojoAsyncResourceHandlerWithAllocationSizeTest()
       : MojoAsyncResourceHandlerTestBase(nullptr) {
-    MojoAsyncResourceHandler::SetAllocationSizeForTesting(GetParam());
+    MojoPipeWriter::SetAllocationSizeForTesting(GetParam());
   }
 };
 
@@ -557,7 +588,7 @@ TEST_F(MojoAsyncResourceHandlerTest, OnWillReadAndOnReadCompleted) {
 
 TEST_F(MojoAsyncResourceHandlerTest,
        OnWillReadAndOnReadCompletedWithInsufficientInitialCapacity) {
-  MojoAsyncResourceHandler::SetAllocationSizeForTesting(2);
+  MojoPipeWriter::SetAllocationSizeForTesting(2);
 
   ASSERT_TRUE(CallOnWillStartAndOnResponseStarted());
   ASSERT_EQ(MockResourceLoader::Status::IDLE, mock_loader_->OnWillRead());
@@ -876,7 +907,7 @@ TEST_F(MojoAsyncResourceHandlerTest,
 
 TEST_F(MojoAsyncResourceHandlerTest,
        EndWriteFailsOnWillReadWithInsufficientInitialCapacity) {
-  MojoAsyncResourceHandler::SetAllocationSizeForTesting(2);
+  MojoPipeWriter::SetAllocationSizeForTesting(2);
   ASSERT_TRUE(CallOnWillStartAndOnResponseStarted());
   handler_->set_end_write_expectation(MOJO_RESULT_UNKNOWN);
   ASSERT_EQ(MockResourceLoader::Status::CANCELED, mock_loader_->OnWillRead());
@@ -894,7 +925,7 @@ TEST_F(MojoAsyncResourceHandlerTest, EndWriteFailsOnReadCompleted) {
 
 TEST_F(MojoAsyncResourceHandlerTest,
        EndWriteFailsOnReadCompletedWithInsufficientInitialCapacity) {
-  MojoAsyncResourceHandler::SetAllocationSizeForTesting(2);
+  MojoPipeWriter::SetAllocationSizeForTesting(2);
   ASSERT_TRUE(CallOnWillStartAndOnResponseStarted());
   ASSERT_EQ(MockResourceLoader::Status::IDLE, mock_loader_->OnWillRead());
 
@@ -906,7 +937,7 @@ TEST_F(MojoAsyncResourceHandlerTest,
 
 TEST_F(MojoAsyncResourceHandlerTest,
        EndWriteFailsOnResumeWithInsufficientInitialCapacity) {
-  MojoAsyncResourceHandler::SetAllocationSizeForTesting(8);
+  MojoPipeWriter::SetAllocationSizeForTesting(8);
   ASSERT_TRUE(CallOnWillStartAndOnResponseStarted());
   ASSERT_EQ(MockResourceLoader::Status::IDLE, mock_loader_->OnWillRead());
 
