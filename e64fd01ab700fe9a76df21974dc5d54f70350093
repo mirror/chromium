@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "adcd9b77_f136df96",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/getstarted/popup.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-09-05T20:45:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "adb1c5a0_70ecc1c4",
+      "revId": "e64fd01ab700fe9a76df21974dc5d54f70350093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff82eb62_928828c1",
         "filename": "chrome/common/extensions/docs/examples/tutorials/getstarted/popup.html",
         "patchSetId": 4
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "15d5d1eb_34ace30c",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/getstarted/popup.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-09-05T20:45:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff82eb62_928828c1",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 0
+      },
+      "revId": "e64fd01ab700fe9a76df21974dc5d54f70350093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf267dbc_e7d7005a",
         "filename": "chrome/common/extensions/docs/examples/tutorials/getstarted/popup.html",
         "patchSetId": 4
@@ -62,6 +104,30 @@
       "revId": "e64fd01ab700fe9a76df21974dc5d54f70350093",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61296a11_e1ecbc75",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/getstarted/popup.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-09-05T20:45:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf267dbc_e7d7005a",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 10
+      },
+      "revId": "e64fd01ab700fe9a76df21974dc5d54f70350093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +159,24 @@
       "writtenOn": "2017-08-31T20:36:39Z",
       "side": 1,
       "message": "And then here, we do:\ngetCurrentTabUrl().then((url) \u003d\u003e {\n  return getSavedBackgroundColor(url);\n}).then((savedColor) \u003d\u003e {\n  if (savedColor) {\n    changeBackgroundColor(savedColor);\n    dropdown.value \u003d savedColor;\n  }\n}).catch(function(error) {\n  alert(\u0027Uh oh!  Something bad happened: \u0027 + error);\n});\n\nWDYT?  Is that too much newfangled fanciness for a tutorial?",
+      "revId": "e64fd01ab700fe9a76df21974dc5d54f70350093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30b78145_aeaacc0a",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/getstarted/popup.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-09-05T20:45:12Z",
+      "side": 1,
+      "message": "Currently, the extension APIs don\u0027t use promises and I think most examples in https://github.com/GoogleChrome/chrome-app-samples also don\u0027t. For a getting started tutorial, I think simple callbacks are better. Most beginners may not understand promises well enough.",
+      "parentUuid": "ecf94be4_9331fe8e",
       "revId": "e64fd01ab700fe9a76df21974dc5d54f70350093",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
