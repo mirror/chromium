@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "731ed168_c4626cc2",
+        "filename": "chrome/browser/android/mock_location_settings.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-09-05T03:49:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7797273d_e150230c",
+      "range": {
+        "startLine": 17,
+        "startChar": 8,
+        "endLine": 17,
+        "endChar": 48
+      },
+      "revId": "8bcd9c762d70a724c995148567291c274b561c68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74fcf4e6_312b5bc8",
         "filename": "chrome/browser/android/mock_location_settings.h",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-04T12:24:14Z",
       "side": 1,
       "message": "Before you add more private statics here, could you move all of these to an anonymous namespace in the .cc file instead?",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 54
+      },
+      "revId": "8bcd9c762d70a724c995148567291c274b561c68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d35bda3_680832d3",
+        "filename": "chrome/browser/android/mock_location_settings.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-09-05T03:49:50Z",
+      "side": 1,
+      "message": "Good idea, done!",
+      "parentUuid": "74fcf4e6_312b5bc8",
       "range": {
         "startLine": 49,
         "startChar": 2,
