@@ -22,6 +22,30 @@
       "revId": "3f88aba7ac1c2565af4c3b137ff1ef3057b44510",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16f86345_7cc4c766",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-09-05T15:39:15Z",
+      "side": 1,
+      "message": "Added comments:\n  // Items that do not create break opportunities such as kOutOfFlowPositioned\n  // do not have corresponding characters, and that they do not have bidi level\n  // assigned.",
+      "parentUuid": "cee4fbc0_05d02a5a",
+      "range": {
+        "startLine": 458,
+        "startChar": 57,
+        "endLine": 458,
+        "endChar": 63
+      },
+      "revId": "3f88aba7ac1c2565af4c3b137ff1ef3057b44510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
