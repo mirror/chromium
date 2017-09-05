@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bb15987_66cfd488",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-05T03:29:04Z",
+      "side": 1,
+      "message": "out_error or out_result",
+      "revId": "bdf21d840828d4ac22462af37c9ee1b6a944e2e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9748b580_1264dd6f",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-05T03:29:04Z",
+      "side": 1,
+      "message": "out_error or out_result",
+      "revId": "bdf21d840828d4ac22462af37c9ee1b6a944e2e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a26fc94e_8c390775",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-05T03:29:04Z",
+      "side": 1,
+      "message": "out_error or out_result",
+      "revId": "bdf21d840828d4ac22462af37c9ee1b6a944e2e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2e731cf_ec579e7a",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-05T03:29:04Z",
+      "side": 1,
+      "message": "how about kBadMessageFromNonWindow?",
+      "revId": "bdf21d840828d4ac22462af37c9ee1b6a944e2e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b33d9f72_434974e7",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1043,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-05T03:29:04Z",
+      "side": 1,
+      "message": "I think we can have multiple GetRegistration calls, so |this| can\u0027t be used as the id of the trace event. Can you use |callback| instead? Probably the same thing for Register() also,.",
+      "revId": "bdf21d840828d4ac22462af37c9ee1b6a944e2e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f805c8d_47f9c82f",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1123,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-05T03:29:04Z",
+      "side": 1,
+      "message": "|error_message| is just string16 because the legacy IPC used string16 as an old WebKit convention. Could you perhaps factor out a new function that just uses std::string with a TODO to delete the old function? It feels better than the UTF16ToASCII() call which relies on the internal implementation of the function.",
+      "revId": "bdf21d840828d4ac22462af37c9ee1b6a944e2e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d080361f_e4a73908",
+        "filename": "content/common/service_worker/service_worker_container.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-05T03:29:04Z",
+      "side": 1,
+      "message": "current client -\u003e the ServiceWorkerContainer that this interface hosts.",
+      "revId": "bdf21d840828d4ac22462af37c9ee1b6a944e2e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
