@@ -97,6 +97,10 @@ inline bool IsHeapProfilingModeEnabled(HeapProfilingMode mode) {
          mode != kHeapProfilingModeInvalid;
 }
 
+inline bool ShouldNotifyMdps(HeapProfilingMode mode) {
+  return mode != kHeapProfilingModeTaskProfiler;
+}
+
 }  // namespace
 
 // static
@@ -202,8 +206,6 @@ void MemoryDumpManager::EnableHeapProfilingIfNeeded() {
 bool MemoryDumpManager::EnableHeapProfiling(HeapProfilingMode profiling_mode) {
   AutoLock lock(lock_);
 #if BUILDFLAG(USE_ALLOCATOR_SHIM) && !defined(OS_NACL)
-  bool notify_mdps = true;
-
   // TODO(kraynov, ssid): Remove this when heap profiler will be capable to
   // get enabled when tracing had already started.
   if (heap_profiler_serialization_state_) {
@@ -242,7 +244,6 @@ bool MemoryDumpManager::EnableHeapProfiling(HeapProfilingMode profiling_mode) {
     case kHeapProfilingModeTaskProfiler:
       if (!base::debug::ThreadHeapUsageTracker::IsHeapTrackingEnabled())
         base::debug::ThreadHeapUsageTracker::EnableHeapTracking();
-      notify_mdps = false;
       break;
 
     case kHeapProfilingModeDisabled:
@@ -263,7 +264,7 @@ bool MemoryDumpManager::EnableHeapProfiling(HeapProfilingMode profiling_mode) {
   if (heap_profiling_mode_ != kHeapProfilingModeInvalid)
     heap_profiling_mode_ = profiling_mode;
 
-  if (notify_mdps) {
+  if (ShouldNotifyMdps(heap_profiling_mode_)) {
     for (auto mdp : dump_providers_) {
       mdp->dump_provider->OnHeapProfilingEnabled(
           IsHeapProfilingModeEnabled(heap_profiling_mode_));
@@ -405,7 +406,7 @@ void MemoryDumpManager::RegisterDumpProviderInternal(
     heap_profiling_enabled = IsHeapProfilingModeEnabled(heap_profiling_mode_);
   }
 
-  if (heap_profiling_enabled)
+  if (heap_profiling_enabled && ShouldNotifyMdps(heap_profiling_mode_))
     mdp->OnHeapProfilingEnabled(true);
 }
 
