@@ -6,6 +6,7 @@
 
 #include "core/InputTypeNames.h"
 #include "core/css/CSSComputedStyleDeclaration.h"
+#include "core/css/PseudoElement.h"
 #include "core/dom/Attribute.h"
 #include "core/dom/AttributeCollection.h"
 #include "core/dom/DOMNodeIds.h"
@@ -13,7 +14,6 @@
 #include "core/dom/DocumentType.h"
 #include "core/dom/Element.h"
 #include "core/dom/Node.h"
-#include "core/dom/PseudoElement.h"
 #include "core/dom/QualifiedName.h"
 #include "core/frame/LocalFrame.h"
 #include "core/html/HTMLFrameOwnerElement.h"

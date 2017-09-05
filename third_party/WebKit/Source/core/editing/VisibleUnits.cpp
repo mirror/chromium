@@ -27,9 +27,9 @@
 #include "core/editing/VisibleUnits.h"
 
 #include "core/HTMLNames.h"
+#include "core/css/FirstLetterPseudoElement.h"
 #include "core/dom/Document.h"
 #include "core/dom/Element.h"
-#include "core/dom/FirstLetterPseudoElement.h"
 #include "core/dom/NodeTraversal.h"
 #include "core/dom/Text.h"
 #include "core/editing/EditingUtilities.h"

@@ -5,7 +5,7 @@
 #include "core/editing/iterators/TextIteratorTextNodeHandler.h"
 
 #include <algorithm>
-#include "core/dom/FirstLetterPseudoElement.h"
+#include "core/css/FirstLetterPseudoElement.h"
 #include "core/editing/iterators/TextIteratorTextState.h"
 #include "core/layout/LayoutTextFragment.h"
 #include "core/layout/line/InlineTextBox.h"

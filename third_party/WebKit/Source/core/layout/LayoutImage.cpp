@@ -29,7 +29,7 @@
 #include "core/layout/LayoutImage.h"
 
 #include "core/HTMLNames.h"
-#include "core/dom/PseudoElement.h"
+#include "core/css/PseudoElement.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/UseCounter.h"
