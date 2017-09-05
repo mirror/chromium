@@ -1658,8 +1658,8 @@
                 "parameters": [
                     { "name": "offline", "type": "boolean", "description": "True to emulate internet disconnection." },
                     { "name": "latency", "type": "number", "description": "Additional latency (ms)." },
-                    { "name": "downloadThroughput", "type": "number", "description": "Maximal aggregated download throughput." },
-                    { "name": "uploadThroughput", "type": "number", "description": "Maximal aggregated upload throughput." },
+                    { "name": "downloadThroughput", "type": "number", "description": "Maximal aggregated download throughput (bytes)." },
+                    { "name": "uploadThroughput", "type": "number", "description": "Maximal aggregated upload throughput (bytes)." },
                     { "name": "connectionType", "$ref": "ConnectionType", "optional": true, "description": "Connection type if known."}
                 ]
             },
