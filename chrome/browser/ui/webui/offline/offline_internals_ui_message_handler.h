@@ -21,8 +21,6 @@
 namespace offline_pages {
 class PrefetchService;
 enum class GetRequestsResult;
-class GeneratePageBundleRequest;
-class GetOperationRequest;
 }
 
 namespace offline_internals {
@@ -120,10 +118,6 @@ class OfflineInternalsUIMessageHandler : public content::WebUIMessageHandler {
 
   // Prefetch service for prefetching service logs and actions.
   offline_pages::PrefetchService* prefetch_service_;
-
-  std::unique_ptr<offline_pages::GeneratePageBundleRequest>
-      generate_page_bundle_request_;
-  std::unique_ptr<offline_pages::GetOperationRequest> get_operation_request_;
 
   // Factory for creating references in callbacks.
   base::WeakPtrFactory<OfflineInternalsUIMessageHandler> weak_ptr_factory_;
