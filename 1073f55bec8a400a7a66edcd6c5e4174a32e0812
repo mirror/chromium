@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6075ca71_6de3b6b8",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-05T19:49:40Z",
+      "side": 1,
+      "message": "I\u0027m marginally worried about the complicated ifdef here needing to be in sync with several other places in this file (and maybe other files?).  I\u0027m wondering if we should have something like USE_FEATURE_ENGAGEMENT (in the vein of other USE_ flags) instead?\n\nAlso, I assume you changed the definition here so as to exclude iOS?  I\u0027m not really sure of the purpose of the change if it\u0027s not that.",
+      "revId": "1073f55bec8a400a7a66edcd6c5e4174a32e0812",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
