@@ -92,6 +92,7 @@ class WebFrame;
 class WebMediaPlayer;
 class WebMediaPlayerClient;
 class WebMediaPlayerSource;
+class WebMimeHandlerViewManager;
 class WebRemotePlaybackClient;
 class WebRTCPeerConnectionHandler;
 class WebServiceWorkerProvider;
@@ -354,6 +355,13 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
   virtual void AnnotatedRegionsChanged() = 0;
 
   virtual void DidBlockFramebust(const KURL&) {}
+
+  // Returns the instance of WebMimeHandlerViewManager associated with the frame
+  // corresponding to this client.
+  virtual WebMimeHandlerViewManager* GetMimeHandlerViewManager() const {
+    return nullptr;
+  }
+  virtual void ResetMimeHandlerViewManager() const {}
 };
 
 }  // namespace blink

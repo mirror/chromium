@@ -1157,6 +1157,13 @@ blink::WebURL RenderFrameImpl::OverrideFlashEmbedWithHTML(
   return GetContentClient()->renderer()->OverrideFlashEmbedWithHTML(url);
 }
 
+blink::WebMimeHandlerViewManager*
+RenderFrameImpl::CreateMimeHandlerViewManager() {
+  if (!base::FeatureList::IsEnabled(features::kPdfExtensionInOutOfProcessFrame))
+    return nullptr;
+  return GetContentClient()->renderer()->CreateMimeHandlerViewManager(this);
+}
+
 // RenderFrameImpl ----------------------------------------------------------
 RenderFrameImpl::RenderFrameImpl(const CreateParams& params)
     : frame_(NULL),

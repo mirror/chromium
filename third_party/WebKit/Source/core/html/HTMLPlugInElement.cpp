@@ -53,6 +53,7 @@
 #include "platform/network/mime/MIMETypeRegistry.h"
 #include "platform/plugins/PluginData.h"
 #include "public/platform/WebURLRequest.h"
+#include "public/web/WebMimeHandlerViewManager.h"
 
 namespace blink {
 
@@ -351,6 +352,18 @@ v8::Local<v8::Object> HTMLPlugInElement::PluginWrapper() {
   // return the cached allocated Bindings::Instance. Not supporting this
   // edge-case is OK.
   v8::Isolate* isolate = V8PerIsolateData::MainThreadIsolate();
+
+  if (external_handler_id_ != WebMimeHandlerViewManager::kHandlerIdNone) {
+    v8::Local<v8::Object> object =
+        GetMimeHandlerViewManager()->V8ScriptableObject(external_handler_id_,
+                                                        isolate);
+
+    if (!object.IsEmpty()) {
+      plugin_wrapper_.Reset(isolate, object);
+      return plugin_wrapper_.Get(isolate);
+    }
+  }
+
   if (plugin_wrapper_.IsEmpty()) {
     PluginView* plugin;
 
@@ -500,6 +513,9 @@ HTMLPlugInElement::ObjectContentType HTMLPlugInElement::GetObjectContentType() {
     if (mime_type.IsEmpty())
       return ObjectContentType::kFrame;
   }
+
+  if (external_handler_id_ != WebMimeHandlerViewManager::kHandlerIdNone)
+    return ObjectContentType::kFrame;
 
   // If Chrome is started with the --disable-plugins switch, pluginData is 0.
   PluginData* plugin_data = GetDocument().GetFrame()->GetPluginData();
@@ -695,6 +711,16 @@ void HTMLPlugInElement::LazyReattachIfNeeded() {
     LazyReattachIfAttached();
     SetPersistedPlugin(nullptr);
   }
+}
+
+WebMimeHandlerViewManager* HTMLPlugInElement::GetMimeHandlerViewManager()
+    const {
+  return GetDocument().GetFrame()->Client()->GetMimeHandlerViewManager();
+}
+
+void HTMLPlugInElement::ResetExternalHandlerId() {
+  external_handler_id_ = WebMimeHandlerViewManager::kHandlerIdNone;
+  plugin_wrapper_.Reset();
 }
 
 }  // namespace blink

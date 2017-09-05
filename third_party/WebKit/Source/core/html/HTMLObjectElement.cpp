@@ -43,6 +43,7 @@
 #include "core/layout/api/LayoutEmbeddedItem.h"
 #include "core/plugins/PluginView.h"
 #include "platform/network/mime/MIMETypeRegistry.h"
+#include "public/web/WebMimeHandlerViewManager.h"
 
 namespace blink {
 
@@ -293,6 +294,18 @@ void HTMLObjectElement::UpdatePluginInternal() {
   if (!overriden_url.IsEmpty()) {
     url_ = overriden_url.GetString();
     service_type_ = "text/html";
+  } else if (auto* manager = GetMimeHandlerViewManager()) {
+    if (external_handler_id_ == WebMimeHandlerViewManager::kHandlerIdNone) {
+      external_handler_id_ = manager->CreateHandler(
+          GetDocument().CompleteURL(url_), service_type_);
+    } else {
+      manager->ResetParams(external_handler_id_,
+                           GetDocument().CompleteURL(url_), service_type_);
+    }
+    if (external_handler_id_ != WebMimeHandlerViewManager::kHandlerIdNone &&
+        !manager->GetUrl(external_handler_id_).IsEmpty()) {
+      url_ = manager->GetUrl(external_handler_id_).GetString();
+    }
   }
 
   if (!HasValidClassId() || !RequestObject(param_names, param_values)) {

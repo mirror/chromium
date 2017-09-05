@@ -45,6 +45,7 @@ namespace blink {
 
 class WebDevToolsAgentImpl;
 class WebLocalFrameImpl;
+class WebMimeHandlerViewManager;
 class WebSpellCheckPanelHostClient;
 
 class LocalFrameClientImpl final : public LocalFrameClient {
@@ -240,6 +241,10 @@ class LocalFrameClientImpl final : public LocalFrameClient {
   void AnnotatedRegionsChanged() override;
 
   void DidBlockFramebust(const KURL&) override;
+
+  WebMimeHandlerViewManager* GetMimeHandlerViewManager() const override;
+
+  void ResetMimeHandlerViewManager() const override;
 
  private:
   explicit LocalFrameClientImpl(WebLocalFrameImpl*);
