@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a52ac58b_80319376",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1081,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-09-05T15:46:00Z",
+      "side": 0,
+      "message": "Why is this being removed?  This heuristic prevents the recording from accumulating an unlimited backlog.  Without this, some use cases will behave like memory leaks.  Perhaps we could increase kExpensiveOverdrawThreshold instead of removing the heuristic completely?",
+      "range": {
+        "startLine": 1081,
+        "startChar": 8,
+        "endLine": 1081,
+        "endChar": 30
+      },
+      "revId": "51083bfc335f95dd0ed0484532231062b2cbeb9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
