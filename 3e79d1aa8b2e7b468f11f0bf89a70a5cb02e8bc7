@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a6e93b2_a1b57e6a",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-09-05T15:23:40Z",
+      "side": 1,
+      "message": "Do you need 2 calls here? Should we merge them into one API?\nAnother possibility is to eliminate the API and just check for transient parent inside ScopedOverviewAnimationSettings ctor.",
+      "range": {
+        "startLine": 210,
+        "startChar": 16,
+        "endLine": 210,
+        "endChar": 34
+      },
+      "revId": "3e79d1aa8b2e7b468f11f0bf89a70a5cb02e8bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bec118a2_0b65f12f",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 911,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-09-05T15:23:40Z",
+      "side": 1,
+      "message": "nit: use range-based loop to enumerate |children_| (but maybe this can be cleaned up separately here and elsewhere in layer.cc, along with NULL-\u003enullptr).",
+      "range": {
+        "startLine": 911,
+        "startChar": 2,
+        "endLine": 911,
+        "endChar": 47
+      },
+      "revId": "3e79d1aa8b2e7b468f11f0bf89a70a5cb02e8bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
