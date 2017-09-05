@@ -1,0 +1,21 @@
+rootWebArea
+++paragraph
+++++staticText name='100#abcdefghijklmnopqrstuvwxyz'
+++++++inlineTextBox name='100#abcdefghijklmnopqrstuvwxyz'
+++++staticText name=' '
+++++staticText name='abcdefghijklmnopqrstuvwxyz'
+++++++inlineTextBox name='abcdefghijklmnopqrstuvwxyz'
+++paragraph
+++++staticText name='500#abcdefghijklmnopqrstuvwxyz'
+++++++inlineTextBox name='500#abcdefghijklmnopqrstuvwxyz'
+++++staticText name=' '
+++++++inlineTextBox name=' '
+++++staticText name='abcdefghijklmnopqrstuvwxyz'
+++++++inlineTextBox name='abcdefghijklmnopqrstuvwxyz'
+++paragraph
+++++staticText name='900#abcdefghijklmnopqrstuvwxyz'
+++++++inlineTextBox name='900#abcdefghijklmnopqrstuvwxyz'
+++++staticText name=' '
+++++++inlineTextBox name=' '
+++++staticText name='abcdefghijklmnopqrstuvwxyz'
+++++++inlineTextBox name='abcdefghijklmnopqrstuvwxyz'
