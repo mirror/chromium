@@ -56,12 +56,6 @@ class CONTENT_EXPORT ResourceFetcher {
   virtual void SetHeader(const std::string& header,
                          const std::string& value) = 0;
 
-  // DEPRECATED: Starts the request using the specified frame.  Calls |callback|
-  // when done.
-  virtual void Start(blink::WebLocalFrame* frame,
-                     blink::WebURLRequest::RequestContext request_context,
-                     const Callback& callback) = 0;
-
   // Starts the request using the specified frame.  Calls |callback| when
   // done.
   virtual void Start(
