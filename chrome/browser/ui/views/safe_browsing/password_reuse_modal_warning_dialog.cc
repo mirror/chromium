@@ -12,6 +12,7 @@
 #include "components/constrained_window/constrained_window_views.h"
 #include "components/strings/grit/components_strings.h"
 #include "components/vector_icons/vector_icons.h"
+#include "content/public/browser/web_contents.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/color_palette.h"
 #include "ui/gfx/image/image.h"
@@ -23,23 +24,30 @@
 namespace safe_browsing {
 
 #if !defined(OS_MACOSX) || BUILDFLAG(MAC_VIEWS_BROWSER)
-void ShowPasswordReuseModalWarningDialog(content::WebContents* web_contents,
-                                         OnWarningDone done_callback) {
+void ShowPasswordReuseModalWarningDialog(
+    content::WebContents* web_contents,
+    ChromePasswordProtectionService* service,
+    OnWarningDone done_callback) {
   PasswordReuseModalWarningDialog* dialog = new PasswordReuseModalWarningDialog(
-      web_contents, std::move(done_callback));
-  constrained_window::ShowWebModalDialogViews(dialog, web_contents);
+      web_contents, service, std::move(done_callback));
+  constrained_window::CreateBrowserModalDialogViews(
+      dialog, web_contents->GetTopLevelNativeWindow())
+      ->Show();
 }
 #endif  // !OS_MACOSX || MAC_VIEWS_BROWSER
 
 PasswordReuseModalWarningDialog::PasswordReuseModalWarningDialog(
     content::WebContents* web_contents,
+    ChromePasswordProtectionService* service,
     OnWarningDone done_callback)
     : show_softer_warning_(
           PasswordProtectionService::ShouldShowSofterWarning()),
-      done_callback_(std::move(done_callback)) {
+      done_callback_(std::move(done_callback)),
+      service_(service) {
+  service_->AddObserver(this);
+
   set_margins(ChromeLayoutProvider::Get()->GetInsetsMetric(
       views::INSETS_DIALOG_CONTENTS));
-
   // TODO(jialiul): Dialog message should align with title.
   views::GridLayout* layout = views::GridLayout::CreateAndInstall(this);
   views::ColumnSet* column_set = layout->AddColumnSet(0);
@@ -55,10 +63,12 @@ PasswordReuseModalWarningDialog::PasswordReuseModalWarningDialog(
   layout->AddView(message_body_label);
 }
 
-PasswordReuseModalWarningDialog::~PasswordReuseModalWarningDialog() {}
+PasswordReuseModalWarningDialog::~PasswordReuseModalWarningDialog() {
+  service_->RemoveObserver(this);
+}
 
 ui::ModalType PasswordReuseModalWarningDialog::GetModalType() const {
-  return ui::MODAL_TYPE_CHILD;
+  return ui::MODAL_TYPE_WINDOW;
 }
 
 base::string16 PasswordReuseModalWarningDialog::GetWindowTitle() const {
@@ -116,6 +126,14 @@ base::string16 PasswordReuseModalWarningDialog::GetDialogButtonLabel(
       NOTREACHED();
   }
   return base::string16();
+}
+
+void PasswordReuseModalWarningDialog::OnStartPasswordChange() {
+  GetWidget()->Close();
+}
+
+void PasswordReuseModalWarningDialog::OnFinishPasswordChange() {
+  GetWidget()->Close();
 }
 
 }  // namespace safe_browsing
