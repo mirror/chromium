@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f8c3a2a6_ab859c09",
+        "filename": "extensions/renderer/guest_view/mime_handler_view/mime_handler_view_container.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-09-05T22:37:50Z",
+      "side": 1,
+      "message": "Actually we send it in CreateMimeHandlerViewGuestIfNecessary.",
+      "parentUuid": "1816b975_53780e0f",
+      "revId": "13c1275f27dd7e3ff30cb9a1895760ce45b139ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f8d9624_2c35f753",
         "filename": "extensions/renderer/guest_view/mime_handler_view/mime_handler_view_container.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "13c1275f27dd7e3ff30cb9a1895760ce45b139ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b1b1eae_a27f6e9e",
+        "filename": "extensions/renderer/guest_view/mime_handler_view/mime_handler_view_container.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-09-05T22:37:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f8d9624_2c35f753",
+      "revId": "13c1275f27dd7e3ff30cb9a1895760ce45b139ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
