@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04cc74a5_5272c7d2",
+        "filename": "components/security_state/core/security_state_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-05T17:09:55Z",
+      "side": 1,
+      "message": "nit: s/Test/Tests\n\nSame for other places",
+      "range": {
+        "startLine": 628,
+        "startChar": 3,
+        "endLine": 628,
+        "endChar": 7
+      },
+      "revId": "a0f2381313c975c88e4a8c2c5ee172c43dc249ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a2424b8_7faa83ca",
+        "filename": "ios/chrome/browser/web/origin_security_checker.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-05T17:09:55Z",
+      "side": 1,
+      "message": "I believe that functions should do only one thing and the presence of \"And\" word in the name is sort of a red flag. In this specific case I don\u0027t think that we even need this function: clients can simply use existing API (|web::IsOriginSecure(url)| and |url.scheme() !\u003d url::kDataScheme|).\n\nFinally ios/chrome/browser/web does not look like a good place for cleating API which is useful only in very specific context.",
+      "range": {
+        "startLine": 14,
+        "startChar": 5,
+        "endLine": 14,
+        "endChar": 29
+      },
+      "revId": "a0f2381313c975c88e4a8c2c5ee172c43dc249ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
