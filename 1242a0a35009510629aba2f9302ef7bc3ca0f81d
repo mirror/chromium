@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ccbab6a5_3b21c64b",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXLayoutObject.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-05T21:25:28Z",
+      "side": 1,
+      "message": "What\u0027s the logic behind walking the first child?",
+      "revId": "1242a0a35009510629aba2f9302ef7bc3ca0f81d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dc29e95_08ff9b10",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXLayoutObject.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-05T21:25:28Z",
+      "side": 1,
+      "message": "What\u0027s the logic behind walking the first child?",
+      "revId": "1242a0a35009510629aba2f9302ef7bc3ca0f81d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e2f3b74_68568cec",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXLayoutObject.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-05T21:25:28Z",
+      "side": 1,
+      "message": "nit: Always (extra capital)",
+      "revId": "1242a0a35009510629aba2f9302ef7bc3ca0f81d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b6230a9_1a2ff284",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXLayoutObject.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 816,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-05T21:25:28Z",
+      "side": 1,
+      "message": "Are text boxes really special or does this have to\ndo with the css style?\n\nFor example how are we handling white-space: pre?",
+      "revId": "1242a0a35009510629aba2f9302ef7bc3ca0f81d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
