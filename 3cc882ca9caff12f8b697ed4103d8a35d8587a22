@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80012802_5f3beafc",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-09-05T18:46:31Z",
+      "side": 1,
+      "message": "These should be MakeUnique (or upcoming std::make_unique\u003cT\u003e) calls, and probably with auto:\n\nauto request \u003d base::MakeUnique\u003cbase::DictionaryValue\u003e();\n\n(https://cs.chromium.org/chromium/src/base/memory/ptr_util.h?q\u003dbase+MakeUnique\u0026l\u003d23)",
+      "range": {
+        "startLine": 48,
+        "startChar": 2,
+        "endLine": 50,
+        "endChar": 78
+      },
+      "revId": "3cc882ca9caff12f8b697ed4103d8a35d8587a22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12b9c547_2ed75836",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-09-05T18:46:31Z",
+      "side": 1,
+      "message": "/*ZERO_SUGGEST\u003d*/1",
+      "range": {
+        "startLine": 54,
+        "startChar": 37,
+        "endLine": 54,
+        "endChar": 38
+      },
+      "revId": "3cc882ca9caff12f8b697ed4103d8a35d8587a22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb1e4832_364e40e5",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-09-05T18:46:31Z",
+      "side": 1,
+      "message": "s/ran/run/",
+      "range": {
+        "startLine": 98,
+        "startChar": 45,
+        "endLine": 98,
+        "endChar": 48
+      },
+      "revId": "3cc882ca9caff12f8b697ed4103d8a35d8587a22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d398f68_e4af5ec6",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-09-05T18:46:31Z",
+      "side": 1,
+      "message": "I don\u0027t see a former\u003c-\u003elatter distinction here. I would just say \"See its function definition for details on the parameters.\".",
+      "range": {
+        "startLine": 102,
+        "startChar": 25,
+        "endLine": 102,
+        "endChar": 38
+      },
+      "revId": "3cc882ca9caff12f8b697ed4103d8a35d8587a22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8587844a_fec46ade",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-09-05T18:46:31Z",
+      "side": 1,
+      "message": "Please see two comments above.",
+      "range": {
+        "startLine": 109,
+        "startChar": 32,
+        "endLine": 113,
+        "endChar": 69
+      },
+      "revId": "3cc882ca9caff12f8b697ed4103d8a35d8587a22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
