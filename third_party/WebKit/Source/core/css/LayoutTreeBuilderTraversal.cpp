@@ -24,11 +24,11 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "core/dom/LayoutTreeBuilderTraversal.h"
+#include "core/css/LayoutTreeBuilderTraversal.h"
 
 #include "core/HTMLNames.h"
+#include "core/css/PseudoElement.h"
 #include "core/dom/FlatTreeTraversal.h"
-#include "core/dom/PseudoElement.h"
 #include "core/layout/LayoutObject.h"
 
 namespace blink {

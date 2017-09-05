@@ -25,14 +25,14 @@
  *
  */
 
-#include "core/dom/LayoutTreeBuilder.h"
+#include "core/css/LayoutTreeBuilder.h"
 
 #include "core/HTMLNames.h"
 #include "core/SVGNames.h"
+#include "core/css/FirstLetterPseudoElement.h"
+#include "core/css/PseudoElement.h"
 #include "core/css/resolver/StyleResolver.h"
-#include "core/dom/FirstLetterPseudoElement.h"
 #include "core/dom/Node.h"
-#include "core/dom/PseudoElement.h"
 #include "core/dom/Text.h"
 #include "core/dom/V0InsertionPoint.h"
 #include "core/fullscreen/Fullscreen.h"
