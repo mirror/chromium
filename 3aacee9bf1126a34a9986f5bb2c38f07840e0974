@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c8076ab4_81e2720c",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/device/gattserverdisconnected-event/one-event-per-disconnection.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-09-05T23:11:46Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "53e5ab19_3135cfd2",
+      "revId": "3aacee9bf1126a34a9986f5bb2c38f07840e0974",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b53adb50_a1d03e7e",
         "filename": "third_party/WebKit/LayoutTests/bluetooth/device/gattserverdisconnected-event/reconnect-during-disconnected-event.html",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2017-09-05T20:39:40Z",
       "side": 1,
       "message": "Upon re-reading the test description, I\u0027m concerned that the 2nd connect() call isn\u0027t made when handling the gattserverdisconnected event. I think we can\u0027t use eventPromise after all, and need to explicitly use the event handler to ensure the connect() call is made during that event.",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 36
+      },
+      "revId": "3aacee9bf1126a34a9986f5bb2c38f07840e0974",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b66386b9_440b6a37",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/device/gattserverdisconnected-event/reconnect-during-disconnected-event.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-09-05T23:11:46Z",
+      "side": 1,
+      "message": "eventPromise basically does the same thing....waits for the eventHandler to be called and then fires.  I\u0027m not sure how either one would result in a different flow.",
+      "parentUuid": "b53adb50_a1d03e7e",
       "range": {
         "startLine": 18,
         "startChar": 0,
