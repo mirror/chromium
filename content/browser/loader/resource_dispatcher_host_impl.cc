@@ -707,11 +707,6 @@ void ResourceDispatcherHostImpl::DidFinishLoading(ResourceLoader* loader) {
       UMA_HISTOGRAM_CUSTOM_COUNTS("Net.ErrAborted.ReceivedBytes",
                                   loader->request()->GetTotalReceivedBytes(), 1,
                                   50000000, 50);
-
-      if (delegate_) {
-        delegate_->OnAbortedFrameLoad(loader->request()->url(),
-                                      request_loading_time);
-      }
     }
 
     if (loader->request()->url().SchemeIsCryptographic()) {
