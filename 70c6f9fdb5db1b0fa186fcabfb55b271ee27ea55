@@ -16,6 +16,24 @@
       "revId": "70c6f9fdb5db1b0fa186fcabfb55b271ee27ea55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8de3ba8a_a2270811",
+        "filename": "services/ui/ws/platform_display_default.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-09-05T03:22:26Z",
+      "side": 1,
+      "message": "We still run some WS tests on this configuration. I\u0027m not sure if it makes any sense to run those tests, but they do run...",
+      "parentUuid": "7835f228_219a2a91",
+      "revId": "70c6f9fdb5db1b0fa186fcabfb55b271ee27ea55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
