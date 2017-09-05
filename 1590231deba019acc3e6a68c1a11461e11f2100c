@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "5cdb9bb2_a377c32d",
+        "filename": "components/multidevice/service/DEPS",
+        "patchSetId": 9
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-09-05T15:36:56Z",
+      "side": 1,
+      "message": "//components is conceptually lower-level than //chrome and is not allowed to depend on it (see //components/README and //components/DEPS). You\u0027ll need to do some kind of dependency injection here (or move the relevant code from //chrome to the component if that makes sense).",
+      "range": {
+        "startLine": 3,
+        "startChar": 19,
+        "endLine": 3,
+        "endChar": 27
+      },
+      "revId": "1590231deba019acc3e6a68c1a11461e11f2100c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4b7b2a77_ccf8b7c4",
         "filename": "components/multidevice/service/device_sync_impl.cc",
         "patchSetId": 9
