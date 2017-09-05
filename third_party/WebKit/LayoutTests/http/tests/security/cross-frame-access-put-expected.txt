@@ -165,7 +165,7 @@ ALERT: PASS: window.eval should be 'function eval() { [native code] }' and is.
 ALERT: PASS: window.find should be 'function find() { [native code] }' and is.
 ALERT: PASS: window.focus should be 'function () { [native code] }' and is.
 ALERT: PASS: window.getComputedStyle should be 'function getComputedStyle() { [native code] }' and is.
-ALERT: PASS: window.getMatchedCSSRules should be 'function getMatchedCSSRules() { [native code] }' and is.
+ALERT: PASS: window.getMatchedCSSRules should be 'undefined' and is.
 ALERT: PASS: window.getSelection should be 'function getSelection() { [native code] }' and is.
 ALERT: PASS: window.moveBy should be 'function moveBy() { [native code] }' and is.
 ALERT: PASS: window.moveTo should be 'function moveTo() { [native code] }' and is.
@@ -350,7 +350,6 @@ PASS: Unable to set property eval: SecurityError: Blocked a frame with origin "h
 PASS: Unable to set property find: SecurityError: Blocked a frame with origin "http://127.0.0.1:8000" from accessing a cross-origin frame.
 PASS: Unable to set property focus: SecurityError: Blocked a frame with origin "http://127.0.0.1:8000" from accessing a cross-origin frame.
 PASS: Unable to set property getComputedStyle: SecurityError: Blocked a frame with origin "http://127.0.0.1:8000" from accessing a cross-origin frame.
-PASS: Unable to set property getMatchedCSSRules: SecurityError: Blocked a frame with origin "http://127.0.0.1:8000" from accessing a cross-origin frame.
 PASS: Unable to set property getSelection: SecurityError: Blocked a frame with origin "http://127.0.0.1:8000" from accessing a cross-origin frame.
 PASS: Unable to set property moveBy: SecurityError: Blocked a frame with origin "http://127.0.0.1:8000" from accessing a cross-origin frame.
 PASS: Unable to set property moveTo: SecurityError: Blocked a frame with origin "http://127.0.0.1:8000" from accessing a cross-origin frame.
