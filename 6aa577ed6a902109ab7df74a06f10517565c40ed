@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "344fbd99_734bdfb2",
+        "filename": "components/viz/service/surfaces/surface_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-09-05T14:40:08Z",
+      "side": 1,
+      "message": "nit: Would \u0027*str \u003c\u003c \" \" \u003c\u003c label;\u0027 do the same thing?",
+      "range": {
+        "startLine": 566,
+        "startChar": 6,
+        "endLine": 566,
+        "endChar": 18
+      },
+      "revId": "6aa577ed6a902109ab7df74a06f10517565c40ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ede852ca_f3b74fcc",
+        "filename": "services/viz/privileged/interfaces/compositing/frame_sink_manager.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-09-05T14:40:08Z",
+      "side": 1,
+      "message": "nit: maybe \"of which track will be kept\" or just \"that will be tracked\".",
+      "range": {
+        "startLine": 43,
+        "startChar": 40,
+        "endLine": 43,
+        "endChar": 58
+      },
+      "revId": "6aa577ed6a902109ab7df74a06f10517565c40ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69afa775_ae47bc99",
+        "filename": "ui/compositor/compositor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-09-05T14:40:08Z",
+      "side": 1,
+      "message": "nit: Use consistent names (i.e. with or without namespace).",
+      "range": {
+        "startLine": 84,
+        "startChar": 50,
+        "endLine": 84,
+        "endChar": 64
+      },
+      "revId": "6aa577ed6a902109ab7df74a06f10517565c40ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
