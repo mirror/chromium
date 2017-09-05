@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4a46bac_1490a0b3",
+        "filename": "content/browser/browser_plugin/browser_plugin_guest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1000,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-09-05T15:17:00Z",
+      "side": 1,
+      "message": "Since these are widget messages, can you do GetWidget()-\u003eSend() (the implementation in RVH already does this, but it would be better to have it explicitly).",
+      "revId": "be867df5e81f7a11630a8a2f4547ebfde93a8bee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
