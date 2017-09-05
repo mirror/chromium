@@ -274,6 +274,24 @@
       "revId": "b90fcc73c1134f66131f813f92f5daf7400f3b9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3b07f28_0fdeec3c",
+        "filename": "components/subresource_filter/content/renderer/subresource_filter_agent.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-05T17:19:57Z",
+      "side": 1,
+      "message": "Sorry for the delay. You\u0027re right: I talked with the rest of the site isolation team: they reminded me I had pointed out precisely this difference between OOPIF and non-OOPIF mode in the past. Oops.\n\nI\u0027m not a fan of what is essentially \"pick a random frame\". But I don\u0027t have any immediately better ideas either. So I\u0027m feeling pretty hard-pressed to say \u0027lgtm\u0027 but if csharrison@ feels this is the best approach for now, I won\u0027t oppose it either.",
+      "parentUuid": "154b396e_449ab422",
+      "revId": "b90fcc73c1134f66131f813f92f5daf7400f3b9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
