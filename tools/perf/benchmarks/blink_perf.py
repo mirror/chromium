@@ -434,6 +434,19 @@ class BlinkPerfEvents(_BlinkPerfBenchmark):
     return StoryExpectations()
 
 
+@benchmark.Disabled('all')
+@benchmark.Owner(emails=['cblume@chromium.org',
+                         'reveman@chromium.org'])
+class BlinkPerfImageDecoder(_BlinkPerfBenchmark):
+  tag = 'image_decoder'
+  subdir = 'ImageDecoder'
+
+  def SetExtraBrowserOptions(self, options):
+    options.AppendExtraBrowserArgs([
+        '--enable-blink-features=JSImageDecode',
+    ])
+
+
 @benchmark.Owner(emails=['eae@chromium.org'])
 class BlinkPerfLayout(_BlinkPerfBenchmark):
   tag = 'layout'
