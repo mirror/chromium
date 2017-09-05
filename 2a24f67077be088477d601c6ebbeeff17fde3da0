@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5744d8b8_bd28e90d",
+        "filename": "components/viz/common/quads/shared_quad_state.h",
+        "patchSetId": 55
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-09-05T16:51:32Z",
+      "side": 1,
+      "message": "Tip: If you make this\n\nenum ClipState { kClip, kNoClip };\nenum ContentsOpaque { kOpaque, kTransparent };\n\nand use these as parameters, you don\u0027t need the /*are_contents_opaque\u003d*/ comments or named bool variables, _and_ the compiler will make it impossible to mix up the order of these two parameters.",
+      "revId": "2a24f67077be088477d601c6ebbeeff17fde3da0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
