@@ -71,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "650fc810_615b8e82",
+        "filename": "third_party/WebKit/PerformanceTests/ImageDecoder/resources/image_decoder_runner.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-05T16:50:53Z",
+      "side": 1,
+      "message": "This goes from the main thread to the compositor thread, then the compositor thread offloads the decode to a worker thread. As I\u0027ve mentioned this to cblume, this is still being worked on, but the intent will remain the same (and is currently working in this basic case).",
+      "parentUuid": "182ea0c9_588589ff",
+      "revId": "167d0ca0c80bdd920c3353be983a6acf42bd91e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa7275d3_43092f98",
         "filename": "third_party/WebKit/PerformanceTests/ImageDecoder/resources/image_decoder_runner.js",
         "patchSetId": 4
