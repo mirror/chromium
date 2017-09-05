@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4216859a_aa20fefd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorView.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-05T23:45:33Z",
+      "side": 1,
+      "message": "This feels like it\u0027s solely for convenience.  Should this just be a method on Java\u0027s ViewAndroid or on WebContentsAndroid itself?",
+      "range": {
+        "startLine": 280,
+        "startChar": 4,
+        "endLine": 283,
+        "endChar": 5
+      },
+      "revId": "0dbd83228cf1a9f6934e4a5ab767d29af36e7b60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
