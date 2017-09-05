@@ -92,6 +92,8 @@ int SuggestionsContainerView::DoUpdate() {
       item = display_results[i];
     search_result_tile_views_[i]->SetSearchResult(item);
     search_result_tile_views_[i]->SetEnabled(true);
+    search_result_tile_views_[i]->NotifyAccessibilityEvent(
+        ui::AX_EVENT_TEXT_CHANGED, true);
   }
 
   parent()->Layout();
