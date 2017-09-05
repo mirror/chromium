@@ -52,14 +52,14 @@ AutocompleteResult::~AutocompleteResult() {}
 
 void AutocompleteResult::CopyOldMatches(
     const AutocompleteInput& input,
-    const AutocompleteResult& old_matches,
+    AutocompleteResult* old_matches,
     TemplateURLService* template_url_service) {
-  if (old_matches.empty())
+  if (old_matches->empty())
     return;
 
   if (empty()) {
     // If we've got no matches we can copy everything from the last result.
-    CopyFrom(old_matches);
+    Swap(old_matches);
     for (ACMatches::iterator i(begin()); i != end(); ++i)
       i->from_previous = true;
     return;
@@ -82,7 +82,7 @@ void AutocompleteResult::CopyOldMatches(
   // anything permanently.
   ProviderToMatches matches_per_provider, old_matches_per_provider;
   BuildProviderToMatches(&matches_per_provider);
-  old_matches.BuildProviderToMatches(&old_matches_per_provider);
+  old_matches->BuildProviderToMatches(&old_matches_per_provider);
   for (ProviderToMatches::const_iterator i(old_matches_per_provider.begin());
        i != old_matches_per_provider.end(); ++i) {
     MergeMatchesByProvider(input.current_page_classification(),
@@ -285,12 +285,8 @@ void AutocompleteResult::Reset() {
 }
 
 void AutocompleteResult::Swap(AutocompleteResult* other) {
-  const size_t default_match_offset = default_match_ - begin();
-  const size_t other_default_match_offset =
-      other->default_match_ - other->begin();
   matches_.swap(other->matches_);
-  default_match_ = begin() + other_default_match_offset;
-  other->default_match_ = other->begin() + default_match_offset;
+  swap(default_match_, other->default_match_);
   alternate_nav_url_.Swap(&(other->alternate_nav_url_));
 }
 

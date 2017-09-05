@@ -67,7 +67,7 @@ class AutocompleteResult {
   // Copies matches from |old_matches| to provide a consistant result set. See
   // comments in code for specifics.
   void CopyOldMatches(const AutocompleteInput& input,
-                      const AutocompleteResult& old_matches,
+                      AutocompleteResult* old_matches,
                       TemplateURLService* template_url_service);
 
   // Adds a new set of matches to the result set.  Does not re-sort.  Calls
