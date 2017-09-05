@@ -7,7 +7,7 @@
 // and failures are detected.
 
 var availableTests = [
-  function removeSavedPassword() {
+  function removeAndUndoRemoveSavedPassword() {
     var numCalls = 0;
     var numSavedPasswords;
     var callback = function(savedPasswordsList) {
@@ -26,6 +26,10 @@ var availableTests = [
       } else if (numCalls == 2) {
         chrome.test.assertEq(
             savedPasswordsList.length, numSavedPasswords - 1);
+        chrome.passwordsPrivate.undoRemoveSavedPasswordOrException();
+      } else if (numCalls == 3) {
+        chrome.test.assertEq(
+            savedPasswordsList.length, numSavedPasswords);
         chrome.test.succeed();
       } else {
         chrome.test.fail();
@@ -36,7 +40,7 @@ var availableTests = [
     chrome.passwordsPrivate.getSavedPasswordList(callback);
   },
 
-  function removePasswordException() {
+  function removeAndUndoRemovePasswordException() {
     var numCalls = 0;
     var numPasswordExceptions;
     var callback = function(passwordExceptionsList) {
@@ -49,6 +53,10 @@ var availableTests = [
       } else if (numCalls == 2) {
         chrome.test.assertEq(
             passwordExceptionsList.length, numPasswordExceptions - 1);
+        chrome.passwordsPrivate.undoRemoveSavedPasswordOrException();
+      } else if (numCalls == 3) {
+        chrome.test.assertEq(
+            passwordExceptionsList.length, numPasswordExceptions);
         chrome.test.succeed();
       } else {
         chrome.test.fail();

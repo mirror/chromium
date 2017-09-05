@@ -1138,6 +1138,7 @@ void AddPasswordsAndFormsStrings(content::WebUIDataSource* html_source) {
       {"savedPasswordsHeading", IDS_SETTINGS_PASSWORDS_SAVED_HEADING},
       {"passwordExceptionsHeading", IDS_SETTINGS_PASSWORDS_EXCEPTIONS_HEADING},
       {"deletePasswordException", IDS_SETTINGS_PASSWORDS_DELETE_EXCEPTION},
+      {"undoRemovePassword", IDS_MANAGE_PASSWORDS_UNDO},
       {"passwordsDone", IDS_SETTINGS_PASSWORD_DONE},
       {"removePassword", IDS_SETTINGS_PASSWORD_REMOVE},
       {"searchPasswords", IDS_SETTINGS_PASSWORD_SEARCH},
@@ -1152,6 +1153,9 @@ void AddPasswordsAndFormsStrings(content::WebUIDataSource* html_source) {
       {"noCreditCardsFound", IDS_SETTINGS_CREDIT_CARD_NONE},
       {"noPasswordsFound", IDS_SETTINGS_PASSWORDS_NONE},
       {"noExceptionsFound", IDS_SETTINGS_PASSWORDS_EXCEPTIONS_NONE},
+      {"undo", IDS_SETTINGS_PASSWORD_UNDO},
+      {"passwordDeleted", IDS_SETTINGS_PASSWORD_DELETED_PASSWORD},
+      {"exceptionDeleted", IDS_SETTINGS_PASSWORD_DELETED_EXCEPTION},
   };
 
   html_source->AddString(
