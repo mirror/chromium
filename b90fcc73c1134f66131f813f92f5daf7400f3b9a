@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9d15bdc0_ad2793a8",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_special_subframe_navigations_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-05T23:42:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d5260b6_479c23c4",
+      "range": {
+        "startLine": 54,
+        "startChar": 60,
+        "endLine": 54,
+        "endChar": 18
+      },
+      "revId": "b90fcc73c1134f66131f813f92f5daf7400f3b9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7dbcc0f_90422b83",
         "filename": "chrome/browser/subresource_filter/subresource_filter_special_subframe_navigations_browsertest.cc",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-28T16:23:47Z",
       "side": 1,
       "message": "Please include site isolation trybots on this change.",
+      "range": {
+        "startLine": 86,
+        "startChar": 15,
+        "endLine": 86,
+        "endChar": 43
+      },
+      "revId": "b90fcc73c1134f66131f813f92f5daf7400f3b9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "374b5e62_d024e34e",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_special_subframe_navigations_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-05T23:42:46Z",
+      "side": 1,
+      "message": "Adding",
+      "parentUuid": "a7dbcc0f_90422b83",
       "range": {
         "startLine": 86,
         "startChar": 15,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e459b6f4_15486e8b",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_special_subframe_navigations_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-05T23:42:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffd8adb0_39bebc3f",
+      "range": {
+        "startLine": 108,
+        "startChar": 6,
+        "endLine": 108,
+        "endChar": 24
+      },
+      "revId": "b90fcc73c1134f66131f813f92f5daf7400f3b9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11277c35_93652238",
         "filename": "chrome/browser/subresource_filter/subresource_filter_special_subframe_navigations_browsertest.cc",
         "patchSetId": 5
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "2028696b_983419b7",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_special_subframe_navigations_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-05T23:42:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11277c35_93652238",
+      "range": {
+        "startLine": 114,
+        "startChar": 46,
+        "endLine": 114,
+        "endChar": 57
+      },
+      "revId": "b90fcc73c1134f66131f813f92f5daf7400f3b9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34430d35_6141b907",
         "filename": "chrome/browser/subresource_filter/subresource_filter_special_subframe_navigations_browsertest.cc",
         "patchSetId": 5
@@ -105,6 +201,24 @@
       "writtenOn": "2017-08-28T16:23:47Z",
       "side": 1,
       "message": "I\u0027m nervous this is going to be racy. Appending and loading the script is asynchronous. How can we be sure it would have been loaded by line 125?",
+      "revId": "b90fcc73c1134f66131f813f92f5daf7400f3b9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07bfefb6_57b20761",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_special_subframe_navigations_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-05T23:42:46Z",
+      "side": 1,
+      "message": "That\u0027s a good point but I can\u0027t immediately think of a better way to test this. Any thoughts?",
+      "parentUuid": "34430d35_6141b907",
       "revId": "b90fcc73c1134f66131f813f92f5daf7400f3b9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -131,6 +245,30 @@
       "revId": "b90fcc73c1134f66131f813f92f5daf7400f3b9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2fa90d6_246d17a8",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_special_subframe_navigations_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-05T23:42:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a53087f9_db1172d6",
+      "range": {
+        "startLine": 120,
+        "startChar": 0,
+        "endLine": 120,
+        "endChar": 75
+      },
+      "revId": "b90fcc73c1134f66131f813f92f5daf7400f3b9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -307,6 +445,24 @@
       "side": 1,
       "message": "I share your reservations but I think the (logical) drawbacks are not too bad and I\u0027m generally ok with this approach.\n\nIt does makes sense to include a big comment explaining the hack though and why it is necessary.\n\nHonestly, I think the architectural solution to this problem is to move content blocking logic out of the renderer and into the browser, similar to how extensions do it. This is definitely a longer term move though.",
       "parentUuid": "c3b07f28_0fdeec3c",
+      "revId": "b90fcc73c1134f66131f813f92f5daf7400f3b9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e387a3db_61669f12",
+        "filename": "components/subresource_filter/content/renderer/subresource_filter_agent.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-05T23:42:46Z",
+      "side": 1,
+      "message": "Added a comment.",
+      "parentUuid": "d1e9cf3d_3d2cce2b",
       "revId": "b90fcc73c1134f66131f813f92f5daf7400f3b9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
