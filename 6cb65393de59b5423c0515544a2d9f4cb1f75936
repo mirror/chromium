@@ -117,6 +117,30 @@
     },
     {
       "key": {
+        "uuid": "89768040_1214250f",
+        "filename": "chrome/android/java/src/com/google/android/apps/chrome/vr/VrMain.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-05T21:29:30Z",
+      "side": 1,
+      "message": "I\u0027m not sure if vr_shell is the package name long term, \"..chrome.browser.vr\" seems safer? I was going for consistency with the Main launcher, but I agree that if its only for legacy reasons, we shouldn\u0027t do it.\n\nWith that in mind, IIUC, all you\u0027d suggest we do here is rename ChromeLauncherVrActivity to VrLauncherActivity, move it to org/chromium/chrome/browser/vr and export that?",
+      "parentUuid": "a67fd67d_393182dd",
+      "range": {
+        "startLine": 16,
+        "startChar": 13,
+        "endLine": 16,
+        "endChar": 19
+      },
+      "revId": "6cb65393de59b5423c0515544a2d9f4cb1f75936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d23cea1_4bbf1135",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/ChromeLauncherVrActivity.java",
         "patchSetId": 3
@@ -168,6 +192,30 @@
       "writtenOn": "2017-09-05T20:51:28Z",
       "side": 1,
       "message": "what does this do that the CustomTabVrActivity doesn\u0027t?  I still don\u0027t get from the description why that isn\u0027t being exposed.  Does this add necessary intent bits?  Does the first run handling do it?  CCTs already eject in the case where first run hasn\u0027t been completed, so I\u0027m wondering if it is just the extra intent flags that need to be added that are causing this indirection?\n\nThere are discussions that these bouncers might incur some amount of performance penalty, so I\u0027d like a slightly better handle on why we need it.",
+      "range": {
+        "startLine": 37,
+        "startChar": 19,
+        "endLine": 37,
+        "endChar": 31
+      },
+      "revId": "6cb65393de59b5423c0515544a2d9f4cb1f75936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bd470c2_4f674be9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/ChromeLauncherVrActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-05T21:29:30Z",
+      "side": 1,
+      "message": "Yes, its mainly the intent bits and FRE.\n- createCustomTabActivityIntent adds the necessary extra intent flags for how to start the CCT.\n- The FRE for VR is a bit complicated. We don\u0027t want to just crash or exit if the FRE isn\u0027t complete. We have an intermediate FRE activity that prompts the user to exit VR mode. The flow is as follows: 1) We see that FRE isn\u0027t complete (in ChromeLaucherActivity for now), 2) We launcher FRE VR that prompts the user to take the phone off of the headset 3) When the user does so, we finish VR FRE and start regular FRE, 4) When the regular FRE is done, we remove the VR extras from the intent and have it open in a regular Chrome Tab via ChromeLauncherActivity. \n\nAnother reason for an intermediate launcher is that its more future proof. Please see my comment from Patch Set 3, Sept 1.\n\nRE performance penalty, do you know how bad it is?",
+      "parentUuid": "230c69e1_495295a0",
       "range": {
         "startLine": 37,
         "startChar": 19,
