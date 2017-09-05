@@ -421,6 +421,7 @@
     },
     {
       name: "FeaturePolicyExperimentalFeatures",
+      status: "experimental",
     },
     {
       name: "FetchRequestCache",
