@@ -359,6 +359,7 @@ ResourceDispatcherHostImpl::ResourceDispatcherHostImpl(
       delegate_(nullptr),
       loader_delegate_(nullptr),
       allow_cross_origin_auth_prompt_(false),
+      enable_resource_scheduler_(true),
       create_download_handler_intercept_(download_handler_intercept),
       main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()),
       io_thread_task_runner_(io_thread_runner) {
@@ -412,6 +413,11 @@ void ResourceDispatcherHostImpl::SetDelegate(
 
 void ResourceDispatcherHostImpl::SetAllowCrossOriginAuthPrompt(bool value) {
   allow_cross_origin_auth_prompt_ = value;
+}
+
+void ResourceDispatcherHostImpl::SetEnableResourceScheduler(
+    bool enable_resource_scheduler) {
+  enable_resource_scheduler_ = enable_resource_scheduler;
 }
 
 void ResourceDispatcherHostImpl::CancelRequestsForContext(
@@ -1638,10 +1644,13 @@ ResourceDispatcherHostImpl::AddStandardHandlers(
   if (clear_site_data_throttle)
     throttles.push_back(std::move(clear_site_data_throttle));
 
-  // TODO(ricea): Stop looking this up so much.
-  ResourceRequestInfoImpl* info = ResourceRequestInfoImpl::ForRequest(request);
-  throttles.push_back(scheduler_->ScheduleRequest(child_id, route_id,
-                                                  info->IsAsync(), request));
+  if (enable_resource_scheduler_) {
+    // TODO(ricea): Stop looking this up so much.
+    ResourceRequestInfoImpl* info =
+        ResourceRequestInfoImpl::ForRequest(request);
+    throttles.push_back(scheduler_->ScheduleRequest(child_id, route_id,
+                                                    info->IsAsync(), request));
+  }
 
   // Split the handler in two groups: the ones that need to execute
   // WillProcessResponse before mime sniffing and the others.

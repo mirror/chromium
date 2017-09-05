@@ -115,6 +115,7 @@ class CONTENT_EXPORT ResourceDispatcherHostImpl
                            const InterceptorCallback& interceptor) override;
   void ReprioritizeRequest(net::URLRequest* request,
                            net::RequestPriority priority) override;
+  void SetEnableResourceScheduler(bool enable_resource_scheduler) override;
 
   // Puts the resource dispatcher host in an inactive state (unable to begin
   // new requests).  Cancels all pending requests.
@@ -822,6 +823,11 @@ class CONTENT_EXPORT ResourceDispatcherHostImpl
   LoaderDelegate* loader_delegate_;
 
   bool allow_cross_origin_auth_prompt_;
+
+  // Whether or not the resource scheduler should be used. Normally this will be
+  // on except for some C++ Headless embedders who may turn it off in favor of
+  // custom scheduling logic.
+  bool enable_resource_scheduler_;
 
   typedef std::map<GlobalRequestID,
                    base::ObserverList<ResourceMessageDelegate>*> DelegateMap;

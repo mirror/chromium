@@ -50,6 +50,7 @@ class HEADLESS_EXPORT HeadlessBrowserImpl : public HeadlessBrowser,
       HeadlessBrowserContext* browser_context) override;
   HeadlessBrowserContext* GetDefaultBrowserContext() override;
   HeadlessDevToolsTarget* GetDevToolsTarget() override;
+  void SetEnableResourceScheduler(bool enable_resource_scheduler) override;
 
   // HeadlessDevToolsTarget implementation:
   bool AttachClient(HeadlessDevToolsClient* client) override;
