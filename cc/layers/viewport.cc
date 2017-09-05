@@ -222,10 +222,15 @@ LayerImpl* Viewport::MainScrollLayer() const {
 }
 
 gfx::Vector2dF Viewport::ScrollBrowserControls(const gfx::Vector2dF& delta) {
+  float scale_factor = host_impl_->active_tree()->painted_device_scale_factor();
+  gfx::Vector2dF scaled_delta =
+      host_impl_->browser_controls_manager()->TopControlsHeight()
+          ? delta
+          : ScaleVector2d(delta, 1 / scale_factor);
   gfx::Vector2dF excess_delta =
-      host_impl_->browser_controls_manager()->ScrollBy(delta);
+      host_impl_->browser_controls_manager()->ScrollBy(scaled_delta);
 
-  return delta - excess_delta;
+  return scaled_delta - excess_delta;
 }
 
 bool Viewport::ShouldBrowserControlsConsumeScroll(

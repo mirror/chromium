@@ -5105,6 +5105,93 @@ TEST_F(LayerTreeHostImplBrowserControlsTest, FixedContainerDelta) {
   host_impl_->browser_controls_manager()->ScrollEnd();
 }
 
+// Compare the browser controls ratio between the use-zoom-for-dsf enabled one
+// and the disabled one.
+TEST_F(LayerTreeHostImplBrowserControlsTest,
+       BrowserControlsRatioUseZoomForDSF) {
+  SetupBrowserControlsAndScrollLayerWithVirtualViewport(
+      gfx::Size(50, 50), gfx::Size(100, 100), gfx::Size(100, 100));
+  DrawFrame();
+
+  EXPECT_EQ(InputHandler::SCROLL_ON_IMPL_THREAD,
+            host_impl_
+                ->ScrollBegin(BeginState(gfx::Point()).get(),
+                              InputHandler::TOUCHSCREEN)
+                .thread);
+
+  float controls_height =
+      host_impl_->browser_controls_manager()->TopControlsHeight();
+  float content_offset =
+      host_impl_->browser_controls_manager()->ContentTopOffset();
+  EXPECT_EQ(50.f, controls_height);
+  EXPECT_EQ(50.f, content_offset);
+
+  // Scroll after setting the height of TopControl as 50 and DSF as 1
+  host_impl_->ApplyScroll(
+      host_impl_->CurrentlyScrollingNode(),
+      UpdateState(gfx::Point(), gfx::Vector2dF(0.f, 10.f)).get());
+
+  float ratio = host_impl_->active_tree()->CurrentBrowserControlsShownRatio();
+  float scroll_delta = content_offset - ratio * controls_height;
+  float accumulated_scroll_delta = scroll_delta;
+  EXPECT_GT(10.01f, scroll_delta);
+  EXPECT_LT(9.99f, scroll_delta);
+
+  // Scroll after setting the height of TopControl as 50 and DSF as 3.5
+  float device_scale = 3.5f;
+  host_impl_->active_tree()->set_painted_device_scale_factor(device_scale);
+  host_impl_->ApplyScroll(
+      host_impl_->CurrentlyScrollingNode(),
+      UpdateState(gfx::Point(), gfx::Vector2dF(0.f, 10.f)).get());
+
+  ratio = host_impl_->active_tree()->CurrentBrowserControlsShownRatio();
+  scroll_delta =
+      content_offset - ratio * controls_height - accumulated_scroll_delta;
+  accumulated_scroll_delta += scroll_delta;
+  EXPECT_GT(10.01f, scroll_delta);
+  EXPECT_LT(9.99f, scroll_delta);
+
+  host_impl_->active_tree()->set_top_controls_height(0);
+  host_impl_->active_tree()->set_bottom_controls_height(controls_height);
+  host_impl_->active_tree()->SetCurrentBrowserControlsShownRatio(1.f);
+  accumulated_scroll_delta = 0;
+
+  host_impl_->ScrollEnd(EndState().get());
+  EXPECT_EQ(InputHandler::SCROLL_ON_IMPL_THREAD,
+            host_impl_
+                ->ScrollBegin(BeginState(gfx::Point()).get(),
+                              InputHandler::TOUCHSCREEN)
+                .thread);
+
+  // Scroll after setting the height of BottomControl as 50 and DSF as 1
+  device_scale = 1.f;
+  host_impl_->active_tree()->set_painted_device_scale_factor(device_scale);
+  host_impl_->ApplyScroll(
+      host_impl_->CurrentlyScrollingNode(),
+      UpdateState(gfx::Point(), gfx::Vector2dF(0.f, 10.f)).get());
+
+  ratio = host_impl_->active_tree()->CurrentBrowserControlsShownRatio();
+  scroll_delta =
+      content_offset - ratio * controls_height - accumulated_scroll_delta;
+  accumulated_scroll_delta += scroll_delta;
+  EXPECT_GT(10.01f, scroll_delta);
+  EXPECT_LT(9.99f, scroll_delta);
+
+  // Scroll after setting the height of BottomControl as 50 and DSF as 3.5
+  device_scale = 3.5f;
+  host_impl_->active_tree()->set_painted_device_scale_factor(device_scale);
+  host_impl_->ApplyScroll(
+      host_impl_->CurrentlyScrollingNode(),
+      UpdateState(gfx::Point(), gfx::Vector2dF(0.f, 10.f)).get());
+
+  ratio = host_impl_->active_tree()->CurrentBrowserControlsShownRatio();
+  scroll_delta =
+      content_offset - ratio * controls_height - accumulated_scroll_delta;
+  accumulated_scroll_delta += scroll_delta;
+  EXPECT_GT(10.01f / device_scale, scroll_delta);
+  EXPECT_LT(9.99f / device_scale, scroll_delta);
+}
+
 // Push a browser controls ratio from the main thread that we didn't send as a
 // delta and make sure that the ratio is clamped to the [0, 1] range.
 TEST_F(LayerTreeHostImplBrowserControlsTest, BrowserControlsPushUnsentRatio) {
