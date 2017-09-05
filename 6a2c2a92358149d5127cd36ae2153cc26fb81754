@@ -1,0 +1,487 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e9f6fac_0c6a2aab",
+        "filename": "ios/chrome/browser/passwords/credential_manager.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-05T12:27:40Z",
+      "side": 1,
+      "message": "Should you check that the feature is on somewhere?",
+      "range": {
+        "startLine": 35,
+        "startChar": 14,
+        "endLine": 35,
+        "endChar": 38
+      },
+      "revId": "6a2c2a92358149d5127cd36ae2153cc26fb81754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0b05bbb_00ea00d0",
+        "filename": "ios/chrome/browser/passwords/credential_manager.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-05T12:27:40Z",
+      "side": 1,
+      "message": "No need for all caps.",
+      "range": {
+        "startLine": 49,
+        "startChar": 20,
+        "endLine": 49,
+        "endChar": 28
+      },
+      "revId": "6a2c2a92358149d5127cd36ae2153cc26fb81754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "827f09ed_9f0a6220",
+        "filename": "ios/chrome/browser/passwords/credential_manager.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-05T12:27:40Z",
+      "side": 1,
+      "message": "Why is the id suddenly double?",
+      "range": {
+        "startLine": 60,
+        "startChar": 12,
+        "endLine": 60,
+        "endChar": 21
+      },
+      "revId": "6a2c2a92358149d5127cd36ae2153cc26fb81754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c614084_852150dc",
+        "filename": "ios/chrome/browser/passwords/credential_manager.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-05T12:27:40Z",
+      "side": 1,
+      "message": "C-style casts are prohibited. We use static_cast.",
+      "range": {
+        "startLine": 64,
+        "startChar": 15,
+        "endLine": 64,
+        "endChar": 20
+      },
+      "revId": "6a2c2a92358149d5127cd36ae2153cc26fb81754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb4e1ded_bc0802e1",
+        "filename": "ios/chrome/browser/passwords/credential_manager.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-05T12:27:40Z",
+      "side": 1,
+      "message": "If you reject a promise and the call can happen in the real life then we should return true.",
+      "range": {
+        "startLine": 73,
+        "startChar": 13,
+        "endLine": 73,
+        "endChar": 18
+      },
+      "revId": "6a2c2a92358149d5127cd36ae2153cc26fb81754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "793b29ec_c0041f93",
+        "filename": "ios/chrome/browser/passwords/credential_manager.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-05T12:27:40Z",
+      "side": 1,
+      "message": "Remove default so you get a compilation error if not all cases are listed above.",
+      "range": {
+        "startLine": 147,
+        "startChar": 4,
+        "endLine": 147,
+        "endChar": 11
+      },
+      "revId": "6a2c2a92358149d5127cd36ae2153cc26fb81754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e440d4e_0c86f1fc",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-05T12:27:40Z",
+      "side": 1,
+      "message": "I think you don\u0027t need those two methods. They return a default value and it\u0027s enough.\nYou can use OnCredentialManagerUsed where you want to ensure the internals aren\u0027t called.",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 20
+      },
+      "revId": "6a2c2a92358149d5127cd36ae2153cc26fb81754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17075ad2_233a4615",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-05T12:27:40Z",
+      "side": 1,
+      "message": "unused",
+      "range": {
+        "startLine": 64,
+        "startChar": 2,
+        "endLine": 64,
+        "endChar": 20
+      },
+      "revId": "6a2c2a92358149d5127cd36ae2153cc26fb81754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9a42670_71529096",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-05T12:27:40Z",
+      "side": 1,
+      "message": "Constructor first, all the overriden methods grouped together by the base class.",
+      "range": {
+        "startLine": 74,
+        "startChar": 2,
+        "endLine": 74,
+        "endChar": 27
+      },
+      "revId": "6a2c2a92358149d5127cd36ae2153cc26fb81754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83328d57_2e63de45",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-05T12:27:40Z",
+      "side": 1,
+      "message": "Can this class just own the testing store?",
+      "range": {
+        "startLine": 75,
+        "startChar": 8,
+        "endLine": 75,
+        "endChar": 14
+      },
+      "revId": "6a2c2a92358149d5127cd36ae2153cc26fb81754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd3cf3cd_abe80ba1",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-05T12:27:40Z",
+      "side": 1,
+      "message": "Most of the methods should be private",
+      "range": {
+        "startLine": 134,
+        "startChar": 1,
+        "endLine": 134,
+        "endChar": 8
+      },
+      "revId": "6a2c2a92358149d5127cd36ae2153cc26fb81754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b92a1fb0_78e9c684",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-05T12:27:40Z",
+      "side": 1,
+      "message": "Seams like it\u0027s the first",
+      "range": {
+        "startLine": 149,
+        "startChar": 6,
+        "endLine": 149,
+        "endChar": 24
+      },
+      "revId": "6a2c2a92358149d5127cd36ae2153cc26fb81754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca4e14e1_fd833812",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-05T12:27:40Z",
+      "side": 1,
+      "message": "Nobody cares about that.",
+      "range": {
+        "startLine": 185,
+        "startChar": 12,
+        "endLine": 185,
+        "endChar": 17
+      },
+      "revId": "6a2c2a92358149d5127cd36ae2153cc26fb81754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73789bad_dabeecef",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-05T12:27:40Z",
+      "side": 1,
+      "message": "Split the tests so that one test performs one operation. For store you can check the passwords store.",
+      "range": {
+        "startLine": 218,
+        "startChar": 30,
+        "endLine": 218,
+        "endChar": 59
+      },
+      "revId": "6a2c2a92358149d5127cd36ae2153cc26fb81754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29ee75b2_787b79a9",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-05T12:27:40Z",
+      "side": 1,
+      "message": "Does the  page get any signal back?\nIt should and you can test it here. Same about storing and everything else",
+      "range": {
+        "startLine": 355,
+        "startChar": 11,
+        "endLine": 355,
+        "endChar": 15
+      },
+      "revId": "6a2c2a92358149d5127cd36ae2153cc26fb81754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bc048d3_634bff62",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-05T12:27:40Z",
+      "side": 1,
+      "message": "For the secure context the test would flow the same way. Apart from IsSavingAndFillingEnabledForCurrentPage() which is a strange condition to check.\n\nYou should have a credential in the store and really check that it wasn\u0027t touched by the operation.",
+      "range": {
+        "startLine": 364,
+        "startChar": 30,
+        "endLine": 364,
+        "endChar": 73
+      },
+      "revId": "6a2c2a92358149d5127cd36ae2153cc26fb81754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8a4dabd_f054913c",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-05T12:27:40Z",
+      "side": 1,
+      "message": "Save something to the password store directly.",
+      "range": {
+        "startLine": 400,
+        "startChar": 30,
+        "endLine": 400,
+        "endChar": 34
+      },
+      "revId": "6a2c2a92358149d5127cd36ae2153cc26fb81754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a6b29d5_1645f8d5",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-05T12:27:40Z",
+      "side": 1,
+      "message": "Times(1) is redundant",
+      "range": {
+        "startLine": 403,
+        "startChar": 67,
+        "endLine": 403,
+        "endChar": 75
+      },
+      "revId": "6a2c2a92358149d5127cd36ae2153cc26fb81754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87611e9e_f0e60fc6",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-05T12:27:40Z",
+      "side": 1,
+      "message": "You should manually add a couple of credentials and check that both got the flag updated.",
+      "range": {
+        "startLine": 468,
+        "startChar": 30,
+        "endLine": 468,
+        "endChar": 34
+      },
+      "revId": "6a2c2a92358149d5127cd36ae2153cc26fb81754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac200437_5831ae5d",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-05T12:27:40Z",
+      "side": 1,
+      "message": "Group the tests by the method they call.",
+      "range": {
+        "startLine": 661,
+        "startChar": 1,
+        "endLine": 661,
+        "endChar": 0
+      },
+      "revId": "6a2c2a92358149d5127cd36ae2153cc26fb81754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c5e4f71_425613a5",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-05T12:27:40Z",
+      "side": 1,
+      "message": "That inheritance is obsolete. You should create another base for two tests.",
+      "range": {
+        "startLine": 663,
+        "startChar": 47,
+        "endLine": 663,
+        "endChar": 68
+      },
+      "revId": "6a2c2a92358149d5127cd36ae2153cc26fb81754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
