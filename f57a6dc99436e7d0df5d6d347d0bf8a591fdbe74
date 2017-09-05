@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aaf0a955_98531d39",
+        "filename": "components/viz/common/quads/release_callback_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-05T18:51:24Z",
+      "side": 1,
+      "message": "viz should have no notion of BlockingTaskRunner, this is a concept for the layer compositor to pass messages back to the main thread. in viz there is no problem for BlockingTaskRunner to solve.\n\nI think probably the DisplayResourceProvider should only use ReleaseCallback, and LayerTreeResourceProvider could continue to use ReleaseCallbackImpl. Is that possible?\n\nI think maybe you need to go further down the rabbit hole of splitting apart Display vs LayerTree ResourceProvider components before that is possible. WDYT?",
+      "revId": "f57a6dc99436e7d0df5d6d347d0bf8a591fdbe74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
