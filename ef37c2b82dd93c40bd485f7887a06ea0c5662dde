@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c770bc6_a41b4ea7",
+        "filename": "third_party/WebKit/Source/core/input/TouchEventManager.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-09-05T14:42:27Z",
+      "side": 1,
+      "message": "We need some time of test to assert that this doesn\u0027t happen again. Perhaps Navid can advise you where such a test should be added.",
+      "range": {
+        "startLine": 278,
+        "startChar": 10,
+        "endLine": 278,
+        "endChar": 37
+      },
+      "revId": "ef37c2b82dd93c40bd485f7887a06ea0c5662dde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
