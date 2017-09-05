@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "269d679f_817567d8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-09-05T04:08:13Z",
+      "side": 1,
+      "message": "Could you update comment describing IsValidFor()?",
+      "revId": "d6863c19ebeb8318f358575a6a45e1461f494beb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
