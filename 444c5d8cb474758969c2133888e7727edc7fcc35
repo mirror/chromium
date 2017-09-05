@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c492aa1f_5de55f8a",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-09-05T15:24:08Z",
+      "side": 1,
+      "message": "{if ModernMediaControlsEnabled} is how things like this is represented.",
+      "revId": "444c5d8cb474758969c2133888e7727edc7fcc35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a37ecc1_51b66ff7",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-09-05T15:24:08Z",
+      "side": 1,
+      "message": "Maybe mention that you have two lines with the \"modern\" design.",
+      "revId": "444c5d8cb474758969c2133888e7727edc7fcc35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e26043a6_59a183bb",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1088,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-09-05T15:24:08Z",
+      "side": 1,
+      "message": "The TODO is fine but my hope is that we could remove this method as we always show the same couple of buttons with the new UI.",
+      "revId": "444c5d8cb474758969c2133888e7727edc7fcc35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "193b3dd6_edc36ca9",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlSliderElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-09-05T15:24:08Z",
+      "side": 1,
+      "message": "do you still need the `class` attributes even if you have ShadowPseudoId?",
+      "revId": "444c5d8cb474758969c2133888e7727edc7fcc35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
