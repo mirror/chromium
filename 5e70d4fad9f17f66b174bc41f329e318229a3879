@@ -262,6 +262,24 @@
       "revId": "5e70d4fad9f17f66b174bc41f329e318229a3879",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "243e34dd_d8d0a2dc",
+        "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
+        "patchSetId": 4
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-09-05T19:02:58Z",
+      "side": 1,
+      "message": "Oh, I\u0027m sorry about that! I was comparing to the previous patch set, not the spreadsheet. Added it now!",
+      "parentUuid": "2ad377b1_639e687c",
+      "revId": "5e70d4fad9f17f66b174bc41f329e318229a3879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
