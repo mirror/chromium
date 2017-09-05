@@ -8,6 +8,7 @@
 #include <memory>
 #include <string>
 
+#include "base/optional.h"
 #include "content/common/content_export.h"
 #include "content/public/browser/navigation_throttle.h"
 #include "content/public/browser/reload_type.h"
@@ -22,6 +23,7 @@ class GURL;
 
 namespace net {
 class HttpResponseHeaders;
+class SSLInfo;
 }  // namespace net
 
 namespace content {
@@ -231,6 +233,15 @@ class CONTENT_EXPORT NavigationHandle {
   // encountering a server redirect).
   virtual net::HttpResponseInfo::ConnectionInfo GetConnectionInfo() = 0;
 
+  // Returns the SSLInfo for a request that failed due a certificate error. In
+  // the cause of other request failures, returns the null option.
+  // TODO(crrev.com/c/621236): This method is not used outside //content yet.
+  virtual base::Optional<net::SSLInfo> GetSSLInfo() = 0;
+
+  // Returns the whether request for a certificate error should be fatal.
+  // TODO(crrev.com/c/621236): This method is not used outside //content yet.
+  virtual bool ShouldSSLErrorsBeFatal() = 0;
+
   // Returns the ID of the URLRequest associated with this navigation. Can only
   // be called from NavigationThrottle::WillProcessResponse and
   // WebContentsObserver::ReadyToCommitNavigation.
@@ -274,6 +285,12 @@ class CONTENT_EXPORT NavigationHandle {
                                     bool new_method_is_post,
                                     const GURL& new_referrer_url,
                                     bool new_is_external_protocol) = 0;
+
+  // Simulates failing the network request.
+  virtual NavigationThrottle::ThrottleCheckResult CallWillFailRequestForTesting(
+      net::Error net_error,
+      base::Optional<net::SSLInfo> ssl_info,
+      bool should_ssl_errors_be_fatal) = 0;
 
   // Simulates the reception of the network response.
   virtual NavigationThrottle::ThrottleCheckResult

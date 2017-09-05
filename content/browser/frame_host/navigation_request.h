@@ -11,6 +11,7 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
+#include "base/optional.h"
 #include "content/browser/frame_host/navigation_entry_impl.h"
 #include "content/browser/loader/navigation_url_loader_delegate.h"
 #include "content/common/content_export.h"
@@ -19,6 +20,7 @@
 #include "content/public/browser/navigation_throttle.h"
 #include "content/public/common/previews_state.h"
 #include "mojo/public/cpp/system/data_pipe.h"
+#include "url/gurl.h"
 
 namespace content {
 
@@ -219,8 +221,12 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
   // NavigationHandle.
   void OnStartChecksComplete(NavigationThrottle::ThrottleCheckResult result);
   void OnRedirectChecksComplete(NavigationThrottle::ThrottleCheckResult result);
+  void OnFailureChecksComplete(NavigationThrottle::ThrottleCheckResult result);
   void OnWillProcessResponseChecksComplete(
       NavigationThrottle::ThrottleCheckResult result);
+
+  // Called either by OnFailureChecksComplete() or OnRequestFailed() directly.
+  void CommitErrorPage(base::Optional<GURL> error_page_url);
 
   // Have a RenderFrameHost commit the navigation. The NavigationRequest will
   // be destroyed after this call.
@@ -319,6 +325,12 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
   scoped_refptr<ResourceResponse> response_;
   std::unique_ptr<StreamHandle> body_;
   mojo::ScopedDataPipeConsumerHandle handle_;
+
+  // Holds information for the navigation while the WillFailResponse
+  // checks are performed by the NavigationHandle.
+  RenderFrameHostImpl* render_frame_host_;
+  bool has_stale_copy_in_cache_;
+  int net_error_;
 
   base::Closure on_start_checks_complete_closure_;
 

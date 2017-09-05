@@ -44,10 +44,12 @@ TEST_F(DelayNavigationThrottleTest, BasicDelay) {
 
   EXPECT_FALSE(mock_time_task_runner->HasPendingTask());
   EXPECT_EQ(content::NavigationThrottle::DEFER,
-            test_handle->CallWillStartRequestForTesting(
-                false /* is_post */, content::Referrer(),
-                false /* has_user_gesture */, ui::PAGE_TRANSITION_LINK,
-                false /* is_external_protocol */));
+            test_handle
+                ->CallWillStartRequestForTesting(
+                    false /* is_post */, content::Referrer(),
+                    false /* has_user_gesture */, ui::PAGE_TRANSITION_LINK,
+                    false /* is_external_protocol */)
+                .action);
 
   // There may be other throttles that DEFER and post async tasks to the UI
   // thread. Allow them to run to completion, so our throttle is guaranteed to
@@ -68,10 +70,12 @@ TEST_F(DelayNavigationThrottleTest, BasicDelay) {
   // and NavigationHandle::WillProcessResponse and the commit portion of the
   // navigation lifetime can now be invoked.
   EXPECT_EQ(content::NavigationThrottle::PROCEED,
-            test_handle->CallWillProcessResponseForTesting(
-                main_rfh(),
-                net::HttpUtil::AssembleRawHeaders(
-                    kBasicResponseHeaders, strlen(kBasicResponseHeaders))));
+            test_handle
+                ->CallWillProcessResponseForTesting(
+                    main_rfh(),
+                    net::HttpUtil::AssembleRawHeaders(
+                        kBasicResponseHeaders, strlen(kBasicResponseHeaders)))
+                .action);
   test_handle->CallDidCommitNavigationForTesting(url);
   EXPECT_TRUE(test_handle->HasCommitted());
 }
