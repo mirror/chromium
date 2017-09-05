@@ -171,6 +171,7 @@ viz_source_set("unit_tests") {
     "display/display_scheduler_unittest.cc",
     "display/display_unittest.cc",
     "display/gl_renderer_unittest.cc",
+    "display/renderer_pixeltest.cc",
     "display/shader_unittest.cc",
     "display/surface_aggregator_pixeltest.cc",
     "display/surface_aggregator_unittest.cc",
