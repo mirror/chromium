@@ -17,6 +17,7 @@ class UIDevToolsOverlayAgent : public ui_devtools::UiDevToolsBaseAgent<
  public:
   explicit UIDevToolsOverlayAgent(UIDevToolsDOMAgent* dom_agent);
   ~UIDevToolsOverlayAgent() override;
+  int pinned_id() const { return pinned_id_; };
 
   // Overlay::Backend:
   ui_devtools::protocol::Response setInspectMode(

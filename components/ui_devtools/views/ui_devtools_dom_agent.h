@@ -92,6 +92,10 @@ class UIDevToolsDOMAgent : public ui_devtools::UiDevToolsBaseAgent<
   // |element_id| in the highlight overlay.
   void ShowDistancesInHighlightOverlay(int pinned_id, int element_id);
 
+  // Return parent id of the element with id |node_id|. Return 0 if parent does
+  // not exist.
+  int GetParentIdOfNodeId(int node_id);
+
  private:
   // ui::LayerDelegate:
   void OnPaintLayer(const ui::PaintContext& context) override;
