@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2260e4f5_693b78de",
+        "filename": "chromeos/dbus/dbus_method_call_status.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-05T08:23:56Z",
+      "side": 1,
+      "message": "Replacing (DBusMethodCallStatus, T) with base::Optional\u003cT\u003e sounds like a plan.\nIf it\u0027s going to happen, I think it should happen to all callback types and we can get rid of the DBusMethodCallStatus enum.\n\nI\u0027m not sure what is the best plan for VoidDBusMethodCallback, though.",
+      "parentUuid": "9d87492d_ef3e9b39",
+      "revId": "e522c3613f8eabd915ced791751d9743bcfe0abc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "16ab9ef3_0002ab9c",
         "filename": "chromeos/dbus/image_loader_client.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-05T07:49:22Z",
       "side": 1,
       "message": "Clarification: this is static method, while cryptohome_client one is non-static method with WeakPtr. In other words, the callback is not tied to the client class in the former case, while it is in the latter case. Which is the recommended way?",
+      "revId": "e522c3613f8eabd915ced791751d9743bcfe0abc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8916c91_c61038cc",
+        "filename": "chromeos/dbus/image_loader_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-05T08:23:56Z",
+      "side": 1,
+      "message": "Practically, this doesn\u0027t make difference as this object is owned by DBusThreadManager, and it gets destructed after the message loop quits.\nThat being said, I think it\u0027s better to use WeakPtr in terms of consistency with other asynchronous code in Chromium.",
+      "parentUuid": "16ab9ef3_0002ab9c",
       "revId": "e522c3613f8eabd915ced791751d9743bcfe0abc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
