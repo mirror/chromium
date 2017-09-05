@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27f0af6c_18ed644b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-05T06:42:29Z",
+      "side": 1,
+      "message": "\"there are\" -\u003e \"This contains\"",
+      "range": {
+        "startLine": 9,
+        "startChar": 45,
+        "endLine": 9,
+        "endChar": 54
+      },
+      "revId": "e0d5bbcc36abe84e838d1351c3615bf9b9da8c9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34a75ce4_ce594987",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-05T06:42:29Z",
+      "side": 1,
+      "message": "looks like we can remove stringprintf.h",
+      "revId": "e0d5bbcc36abe84e838d1351c3615bf9b9da8c9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "454bfd54_f45ed9d6",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-05T06:42:29Z",
+      "side": 1,
+      "message": "looks like we can remove service_worker-utils.h also",
+      "revId": "e0d5bbcc36abe84e838d1351c3615bf9b9da8c9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "372fac90_4c55616b",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-05T06:42:29Z",
+      "side": 1,
+      "message": "i think we don\u0027t use http_util or io_buffer anymore here",
+      "revId": "e0d5bbcc36abe84e838d1351c3615bf9b9da8c9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd8a4ce7_39721b8f",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-05T06:42:29Z",
+      "side": 1,
+      "message": "probably can remove similar headers from this file too",
+      "revId": "e0d5bbcc36abe84e838d1351c3615bf9b9da8c9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e2678d1_6cf9ec43",
+        "filename": "content/common/service_worker/service_worker_loader_helpers.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-05T06:42:29Z",
+      "side": 1,
+      "message": "nit: insert a blank line between line 13 and 14",
+      "revId": "e0d5bbcc36abe84e838d1351c3615bf9b9da8c9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90a5bba9_4c6f6937",
+        "filename": "content/common/service_worker/service_worker_loader_helpers.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-05T06:42:29Z",
+      "side": 1,
+      "message": "nit: space after \u0027,\u0027",
+      "revId": "e0d5bbcc36abe84e838d1351c3615bf9b9da8c9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
