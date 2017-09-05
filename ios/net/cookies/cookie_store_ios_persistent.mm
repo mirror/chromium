@@ -6,6 +6,8 @@
 
 #import <Foundation/Foundation.h>
 
+#include "base/memory/ptr_util.h"
+#include "ios/net/cookies/nshttp_system_cookie_store.h"
 #include "ios/net/cookies/system_cookie_util.h"
 #include "net/cookies/cookie_monster.h"
 
@@ -16,8 +18,7 @@ namespace net {
 
 CookieStoreIOSPersistent::CookieStoreIOSPersistent(
     net::CookieMonster::PersistentCookieStore* persistent_store)
-    : CookieStoreIOS(persistent_store,
-                     [NSHTTPCookieStorage sharedHTTPCookieStorage]) {}
+    : CookieStoreIOS(persistent_store, new net::NSHTTPSystemCookieStore()) {}
 
 CookieStoreIOSPersistent::~CookieStoreIOSPersistent() {}
 
