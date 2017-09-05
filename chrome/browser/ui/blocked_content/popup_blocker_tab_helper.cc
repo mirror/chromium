@@ -131,7 +131,8 @@ bool PopupBlockerTabHelper::MaybeBlockPopup(
 
   // The subresource_filter triggers an extra aggressive popup blocker on
   // pages where ads are being blocked, even if there is a user gesture.
-  if (user_gesture) {
+  if (user_gesture && base::FeatureList::IsEnabled(
+                          subresource_filter::kSafeBrowsingSubresourceFilter)) {
     auto* driver_factory = subresource_filter::
         ContentSubresourceFilterDriverFactory::FromWebContents(web_contents);
     if (!driver_factory ||
