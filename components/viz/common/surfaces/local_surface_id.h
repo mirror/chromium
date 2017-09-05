@@ -16,11 +16,11 @@
 #include "components/viz/common/viz_common_export.h"
 #include "mojo/public/cpp/bindings/struct_traits.h"
 
-namespace cc {
+namespace viz {
 namespace mojom {
 class LocalSurfaceIdDataView;
 }
-}  // namespace cc
+}  // namespace viz
 
 namespace viz {
 
@@ -65,7 +65,7 @@ class VIZ_COMMON_EXPORT LocalSurfaceId {
   std::string ToString() const;
 
  private:
-  friend struct mojo::StructTraits<cc::mojom::LocalSurfaceIdDataView,
+  friend struct mojo::StructTraits<mojom::LocalSurfaceIdDataView,
                                    LocalSurfaceId>;
 
   uint32_t local_id_;
