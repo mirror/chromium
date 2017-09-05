@@ -221,6 +221,12 @@ void LayoutListMarker::UpdateContent() {
   }
 }
 
+String LayoutListMarker::TextAlternative() const {
+  UChar suffix =
+      ListMarkerText::Suffix(Style()->ListStyleType(), list_item_->Value());
+  return text_ + suffix + ' ';
+}
+
 LayoutUnit LayoutListMarker::GetWidthOfTextWithSuffix() const {
   if (text_.IsEmpty())
     return LayoutUnit();
