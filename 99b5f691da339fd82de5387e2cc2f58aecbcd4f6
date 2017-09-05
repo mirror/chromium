@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f7557663_b9a69853",
+        "filename": "third_party/WebKit/Source/core/editing/EditingTestBase.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-05T01:10:03Z",
+      "side": 1,
+      "message": "Rename to SetCaretTextToBody()",
+      "parentUuid": "7e55d386_c45bc630",
+      "revId": "99b5f691da339fd82de5387e2cc2f58aecbcd4f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78a11e76_24b9612b",
         "filename": "third_party/WebKit/Source/core/editing/EditingTestBase.h",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "99b5f691da339fd82de5387e2cc2f58aecbcd4f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7efd0f7d_ef6e7047",
+        "filename": "third_party/WebKit/Source/core/editing/EditingTestBase.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-05T01:10:03Z",
+      "side": 1,
+      "message": "Rename to SetSelectionTextToBody()",
+      "parentUuid": "78a11e76_24b9612b",
+      "revId": "99b5f691da339fd82de5387e2cc2f58aecbcd4f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1b98101b_41b548ab",
+        "filename": "third_party/WebKit/Source/core/editing/EditingTestBase.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-05T01:10:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "913cb17f_e9a2cbf3",
+      "revId": "99b5f691da339fd82de5387e2cc2f58aecbcd4f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "681d3b9c_2455d774",
         "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSample.h",
         "patchSetId": 9
@@ -67,6 +121,24 @@
       "revId": "99b5f691da339fd82de5387e2cc2f58aecbcd4f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8448d396_677f2442",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSample.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-05T01:10:03Z",
+      "side": 1,
+      "message": "Replace Parse() to SimpleSelection::SetSelectionText()\nRename ToString() to GetSelectionText()",
+      "parentUuid": "681d3b9c_2455d774",
+      "revId": "99b5f691da339fd82de5387e2cc2f58aecbcd4f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
