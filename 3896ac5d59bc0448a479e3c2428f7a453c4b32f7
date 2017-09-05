@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53f0280e_1ad08f38",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-09-05T15:19:09Z",
+      "side": 1,
+      "message": "I know this is just moved from another location, but it looks (at first glance, at least) to be incorrect and dangerous. If this is ok because we expect to be in a non-incognito state here, can you add a comment explaining that?",
+      "range": {
+        "startLine": 36,
+        "startChar": 37,
+        "endLine": 36,
+        "endChar": 56
+      },
+      "revId": "3896ac5d59bc0448a479e3c2428f7a453c4b32f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13c4ae94_2f11b4a1",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-09-05T15:19:09Z",
+      "side": 1,
+      "message": "Can you add a comment explaining that these two nearly-identical traffic annotations are identical except for the \"cookies_allowed\" field? (At least, I think that\u0027s the only difference.) It would save readers of the code having to carefully scan through both trying to understand what, if any, difference there is.",
+      "revId": "3896ac5d59bc0448a479e3c2428f7a453c4b32f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "373f21f2_5611ad74",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-09-05T15:19:09Z",
+      "side": 1,
+      "message": "What\u0027s the purpose of this? Given that you, in some circumstances will still use GET it probably makes sense to note this in the function comment and CL description.",
+      "revId": "3896ac5d59bc0448a479e3c2428f7a453c4b32f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4591b43_4c9d555a",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-09-05T15:19:09Z",
+      "side": 1,
+      "message": "Don\u0027t you need to call AddVariationHeaders here?",
+      "revId": "3896ac5d59bc0448a479e3c2428f7a453c4b32f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
