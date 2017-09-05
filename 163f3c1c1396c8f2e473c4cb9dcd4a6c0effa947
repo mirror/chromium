@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07c95fc1_9b7eee7c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/ImpressionTracker.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-05T09:47:52Z",
+      "side": 1,
+      "message": "nit: prefer something like \"clearTriggered()\", gives a better indication of the purpose of the method and why it is exposed.",
+      "range": {
+        "startLine": 79,
+        "startChar": 16,
+        "endLine": 79,
+        "endChar": 28
+      },
+      "revId": "163f3c1c1396c8f2e473c4cb9dcd4a6c0effa947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "501c0440_5a839033",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarousel.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-05T09:47:52Z",
+      "side": 1,
+      "message": "final?",
+      "range": {
+        "startLine": 42,
+        "startChar": 12,
+        "endLine": 42,
+        "endChar": 29
+      },
+      "revId": "163f3c1c1396c8f2e473c4cb9dcd4a6c0effa947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1aa4c1ed_2ec2b7fd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarousel.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-05T09:47:52Z",
+      "side": 1,
+      "message": "@Nullable",
+      "revId": "163f3c1c1396c8f2e473c4cb9dcd4a6c0effa947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3bc11eb_dff3dff3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarousel.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-05T09:47:52Z",
+      "side": 1,
+      "message": "can be inlined or made private",
+      "range": {
+        "startLine": 61,
+        "startChar": 16,
+        "endLine": 61,
+        "endChar": 32
+      },
+      "revId": "163f3c1c1396c8f2e473c4cb9dcd4a6c0effa947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7fdeff5_f1a4593e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarousel.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-05T09:47:52Z",
+      "side": 1,
+      "message": "not needed anymore",
+      "range": {
+        "startLine": 99,
+        "startChar": 15,
+        "endLine": 99,
+        "endChar": 33
+      },
+      "revId": "163f3c1c1396c8f2e473c4cb9dcd4a6c0effa947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "948c9fff_4966f33f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarousel.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-05T09:47:52Z",
+      "side": 1,
+      "message": "Sorry I missed this before. What we need is for each impression to have a chance to record one scroll event. Currently we register this listener every time onBindViewHolder is called, which can happen more often than carousel#refresh, so there is a risk to get a Shown -\u003e Scrolled -\u003e ... -\u003e Scrolled metric sequence.",
+      "revId": "163f3c1c1396c8f2e473c4cb9dcd4a6c0effa947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
