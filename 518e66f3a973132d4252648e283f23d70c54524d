@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6c5a687_56f5ab94",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/TabWebContentsDelegateAndroid.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-05T15:06:18Z",
+      "side": 1,
+      "message": "Oh, so does that mean we\u0027re going to keep both codepaths around forever?",
+      "range": {
+        "startLine": 224,
+        "startChar": 12,
+        "endLine": 224,
+        "endChar": 56
+      },
+      "revId": "518e66f3a973132d4252648e283f23d70c54524d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
