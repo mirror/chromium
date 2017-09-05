@@ -50705,6 +50705,16 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="OfflinePages.Prefetching.NoItemForFinishedDownload"
+    enum="FinishedDownloadStatus">
+  <owner>carlosk@chromium.org</owner>
+  <summary>
+    Reports the unexpected situation of a prefetch archive download having
+    finished but no respective item being found in the prefetch SQL store. These
+    results are split by the archive download succeeding or failing.
+  </summary>
+</histogram>
+
 <histogram name="OfflinePages.Prefetching.OfflinePageImportResult"
     enum="OfflinePrefetchPageImportResult">
   <owner>carlosk@chromium.org</owner>
