@@ -16,6 +16,24 @@
       "revId": "2740c0d62c4b7f81dbe70b08a3c9caa0ce6436a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8d9720c_d2c04d8a",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-09-05T17:42:27Z",
+      "side": 1,
+      "message": "Yup, good catch! I moved the TODO / early-out to be a bit more general, so we now can\u0027t hit this with an empty image.",
+      "parentUuid": "2bc131c0_ee49d827",
+      "revId": "2740c0d62c4b7f81dbe70b08a3c9caa0ce6436a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
