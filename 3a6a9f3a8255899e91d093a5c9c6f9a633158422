@@ -189,6 +189,24 @@
     },
     {
       "key": {
+        "uuid": "50960707_a1fd2c1a",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleScriptFetcher.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-09-05T00:50:36Z",
+      "side": 1,
+      "message": "Can we make this : public GarbageCollectedFinalized\u003cModuleScriptFetcher\u003e?",
+      "parentUuid": "40ca8ffb_11a5ac88",
+      "revId": "3a6a9f3a8255899e91d093a5c9c6f9a633158422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2739b257_a9d0b2f2",
         "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleScriptFetcher.h",
         "patchSetId": 11
@@ -218,6 +236,24 @@
       "side": 1,
       "message": "Because ScriptResource::Fetch() requires FetchParameters\u0026 (not const FetchParameters\u0026).",
       "parentUuid": "2739b257_a9d0b2f2",
+      "revId": "3a6a9f3a8255899e91d093a5c9c6f9a633158422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a91c0938_b17c24f4",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleScriptFetcher.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-09-05T00:50:36Z",
+      "side": 1,
+      "message": "Please add comment about that.",
+      "parentUuid": "85a501a4_f10f9c36",
       "revId": "3a6a9f3a8255899e91d093a5c9c6f9a633158422",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
