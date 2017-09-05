@@ -34,6 +34,24 @@
       "revId": "be867df5e81f7a11630a8a2f4547ebfde93a8bee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "66d08808_48b07361",
+        "filename": "content/browser/browser_plugin/browser_plugin_guest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1000,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-09-05T15:49:18Z",
+      "side": 1,
+      "message": "Perfect, thank you!",
+      "parentUuid": "47c5b459_0707a0a6",
+      "revId": "be867df5e81f7a11630a8a2f4547ebfde93a8bee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
