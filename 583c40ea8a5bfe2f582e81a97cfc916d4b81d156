@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8494070d_a8f498ed",
+        "filename": "content/common/sandbox_linux/sandbox_linux.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000985
+      },
+      "writtenOn": "2017-09-05T14:20:24Z",
+      "side": 1,
+      "message": "When can this be null?\n\nIf this cannot be null, this should be a const gpu::GPUInfo\u0026\nIf it can be null, we should try to avoid it ever being null. If we can\u0027t, it should still be a const pointer.",
+      "range": {
+        "startLine": 97,
+        "startChar": 32,
+        "endLine": 97,
+        "endChar": 61
+      },
+      "revId": "583c40ea8a5bfe2f582e81a97cfc916d4b81d156",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
