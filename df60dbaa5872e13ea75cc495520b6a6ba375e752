@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00cd87ec_43ad2e1c",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/state_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-05T19:18:35Z",
+      "side": 1,
+      "message": "What\u0027s intended behavior for windows that were not launched as a result of an action from the lock screen UI, e.g. due to popping out the stylus tool? Should we keep the fade out animation in those cases (we could introduce remember whether the action was launched via HandleNewNoteRequestFromLockScreen, and remove the animation only if that is the case).",
+      "revId": "df60dbaa5872e13ea75cc495520b6a6ba375e752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b46e080c_243a1bd3",
+        "filename": "chrome/browser/resources/chromeos/login/md_top_header_bar.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-05T19:18:35Z",
+      "side": 1,
+      "message": "can we handle background-color similar to size and border radius property (so the background color is animated on fade-out, too)",
+      "revId": "df60dbaa5872e13ea75cc495520b6a6ba375e752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f5c11ee_00705fb3",
+        "filename": "chrome/browser/resources/chromeos/login/md_top_header_bar.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-05T19:18:35Z",
+      "side": 1,
+      "message": "would this work:\n\nif (this.lockScreenAppsState_ !\u003d LOCK_SCREEN_APPS_STATE.FOREGROUND) {\n  var transitionOut \u003d previousState \u003d\u003d LOCK_SCREEN_APPS_STATE.FOREGROUND \u0026\u0026\n      this.lockScreenAppsState_ \u003d\u003d LOCK_SCREEN_APPS_STATE.AVAILABLE;\n  $(\u0027new-note-action-container\u0027).classList.toggle(\u0027new-note-action-container-activated\u0027,\n                                                   transitionOut);\n  if (transitionOut) {\n    this.runOnNoteActionTransitionEnd_(function() {\n      $(\u0027new-note-action-container\u0027)\n          .classList.toggle(\u0027new-note-action-container-activated\u0027, false);\n  });\n\n  $(\u0027new-note-action\u0027).style.removeProperty(\u0027border-bottom-left-radius\u0027);\n  $(\u0027new-note-action\u0027).style.removeProperty(\u0027border-bottom-right-radius\u0027);\n  $(\u0027new-note-action\u0027).style.removeProperty(\u0027height\u0027);\n  $(\u0027new-note-action\u0027).style.removeProperty(\u0027width\u0027);\n}",
+      "revId": "df60dbaa5872e13ea75cc495520b6a6ba375e752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86c7a86c_eca1fb7c",
+        "filename": "chrome/browser/resources/chromeos/login/md_top_header_bar.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-05T19:18:35Z",
+      "side": 1,
+      "message": "if we get rid of short transition, we might want to do this regardless of the current state (otherwise, the transition to e.g. NOT_AVAILABLE state would look janky).",
+      "revId": "df60dbaa5872e13ea75cc495520b6a6ba375e752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
