@@ -18,6 +18,7 @@ class GURL;
 
 namespace blink {
 class WebLocalFrame;
+class WebMimeHandlerViewManager;
 struct WebPluginParams;
 class WebURL;
 }
@@ -81,6 +82,9 @@ class ChromeExtensionsRendererClient
   void RunScriptsAtDocumentStart(content::RenderFrame* render_frame);
   void RunScriptsAtDocumentEnd(content::RenderFrame* render_frame);
   void RunScriptsAtDocumentIdle(content::RenderFrame* render_frame);
+
+  static blink::WebMimeHandlerViewManager* CreateMimeHandlerViewManager(
+      content::RenderFrame* render_frame);
 
   extensions::Dispatcher* extension_dispatcher() {
     return extension_dispatcher_.get();
