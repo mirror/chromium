@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da382c78_8e567103",
+        "filename": "third_party/WebKit/Source/core/paint/PaintTiming.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-09-05T13:10:38Z",
+      "side": 0,
+      "message": "We need to report this timestamp, which will be different from the non-swap versions of the timestamp.",
+      "range": {
+        "startLine": 235,
+        "startChar": 1,
+        "endLine": 235,
+        "endChar": 28
+      },
+      "revId": "43837c04cf7f9d6b3c17a067b824b289edba4866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
