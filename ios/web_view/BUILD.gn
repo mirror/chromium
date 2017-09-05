@@ -49,6 +49,15 @@ ios_web_view_public_headers = [
   "public/cwv_web_view.h",
   "public/cwv_web_view_configuration.h",
 ]
+if (ios_web_view_enable_sync) {
+  ios_web_view_public_headers += [
+    "public/ChromeSync.h",
+    "public/cwv_authentication_controller.h",
+    "public/cwv_authentication_controller_delegate.h",
+    "public/cwv_identity.h",
+    "public/cwv_web_view+sync.h",
+  ]
+}
 
 ios_web_view_sources = [
   "internal/app/application_context.cc",
@@ -109,6 +118,42 @@ ios_web_view_sources = [
   "internal/web_view_web_state_policy_decider.mm",
 ]
 ios_web_view_sources += ios_web_view_public_headers
+if (ios_web_view_enable_sync) {
+  ios_web_view_sources += [
+    "internal/content_settings/web_view_cookie_settings_factory.cc",
+    "internal/content_settings/web_view_cookie_settings_factory.h",
+    "internal/content_settings/web_view_host_content_settings_map_factory.cc",
+    "internal/content_settings/web_view_host_content_settings_map_factory.h",
+    "internal/cwv_web_view+sync.mm",
+    "internal/signin/cwv_authentication_controller.mm",
+    "internal/signin/cwv_authentication_controller_internal.h",
+    "internal/signin/cwv_identity.mm",
+    "internal/signin/web_view_account_consistency_service_factory.h",
+    "internal/signin/web_view_account_consistency_service_factory.mm",
+    "internal/signin/web_view_account_fetcher_service_factory.cc",
+    "internal/signin/web_view_account_fetcher_service_factory.h",
+    "internal/signin/web_view_account_reconcilor_factory.cc",
+    "internal/signin/web_view_account_reconcilor_factory.h",
+    "internal/signin/web_view_account_tracker_service_factory.cc",
+    "internal/signin/web_view_account_tracker_service_factory.h",
+    "internal/signin/web_view_gaia_cookie_manager_service_factory.cc",
+    "internal/signin/web_view_gaia_cookie_manager_service_factory.h",
+    "internal/signin/web_view_oauth2_token_service_factory.h",
+    "internal/signin/web_view_oauth2_token_service_factory.mm",
+    "internal/signin/web_view_profile_oauth2_token_service_ios_provider_impl.h",
+    "internal/signin/web_view_profile_oauth2_token_service_ios_provider_impl.mm",
+    "internal/signin/web_view_signin_client_impl.h",
+    "internal/signin/web_view_signin_client_impl.mm",
+    "internal/signin/web_view_signin_client_factory.cc",
+    "internal/signin/web_view_signin_client_factory.h",
+    "internal/signin/web_view_signin_error_controller_factory.cc",
+    "internal/signin/web_view_signin_error_controller_factory.h",
+    "internal/signin/web_view_signin_manager_factory.cc",
+    "internal/signin/web_view_signin_manager_factory.h",
+    "internal/web_view_sync_initializer.cc",
+    "internal/web_view_sync_initializer.h",
+  ]
+}
 
 ios_web_view_deps = [
   ":packed_resources",
@@ -140,6 +185,13 @@ ios_web_view_deps = [
   "//ui/base",
   "//url",
 ]
+if (ios_web_view_enable_sync) {
+  ios_web_view_deps += [
+    "//components/content_settings/core/browser",
+    "//components/signin/core/browser",
+    "//components/signin/ios/browser",
+  ]
+}
 
 ios_framework_bundle("web_view") {
   output_name = "ChromeWebView"
@@ -154,6 +206,9 @@ ios_framework_bundle("web_view") {
   public = [
     "public/ChromeWebView.h",
   ]
+  if (ios_web_view_enable_sync) {
+    public += [ "public/ChromeSync.h" ]
+  }
 
   sources = ios_web_view_sources
   if (ios_web_view_include_cronet) {
