@@ -32,6 +32,7 @@
 <translation id="2190355936436201913">(रिक्त)</translation>
 <translation id="2289052229480071835">आपल्या स्क्रीनवरील लक्ष्यांना स्पर्श करा टॅप करा.</translation>
 <translation id="2297836609126180313"><ph name="QUANTITY" /> TB/s</translation>
+<translation id="24452542372838207">सूचना विस्तृत करा</translation>
 <translation id="2482878487686419369">सूचना</translation>
 <translation id="2497284189126895209">सर्व फाइल</translation>
 <translation id="2522350507219695259">कॅलिब्रेशन पूर्ण झाले</translation>
@@ -72,7 +73,6 @@
 <translation id="4968171027979920686">{SECONDS,plural, =1{1 सेकंद}one{# सेकंद}other{# सेकंद}}</translation>
 <translation id="4971687151119236543">मीडिया मागील ट्रॅक</translation>
 <translation id="4999762576397546063">Ctrl+<ph name="KEY_COMBO_NAME" /></translation>
-<translation id="5016049845330225051">सर्चबॉक्समधील मजकूर साफ करण्‍‍‍‍याचे बटण</translation>
 <translation id="5046499563572181734">येथे टॅप करा</translation>
 <translation id="5076340679995252485">&amp;पेस्ट करा</translation>
 <translation id="5120799197269191491">शोध+<ph name="KEY_COMBO_NAME" /></translation>
@@ -162,6 +162,7 @@
 <translation id="9002566407876343676">उघडा</translation>
 <translation id="9038489124413477075">अनामित फोल्डर</translation>
 <translation id="9044832324875206639">{SECONDS,plural, =1{1 से}one{# से}other{# से}}</translation>
+<translation id="9059834730836941392">सूचना संकुचित करा</translation>
 <translation id="9150735707954472829">टॅब</translation>
 <translation id="9161053988251441839">सुचवलेले अ‍ॅप्स</translation>
 <translation id="9170848237812810038">&amp;पूर्ववत करा</translation>
