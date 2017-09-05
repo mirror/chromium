@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "807c2cf9_43d3df3f",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-09-05T18:23:30Z",
+      "side": 1,
+      "message": "Now that you\u0027re not using UpdateViewContent in Patchset 4 anymore (I think), can you return false here, thus not breaking the promise of this function? :-)",
+      "parentUuid": "6b18c5a3_ff8d77a8",
+      "range": {
+        "startLine": 445,
+        "startChar": 35,
+        "endLine": 445,
+        "endChar": 61
+      },
+      "revId": "3f17d166b2b55632fadd382c65c9292d58f1e525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "de943f3e_6be0f920",
         "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
         "patchSetId": 1
@@ -375,6 +399,30 @@
       "revId": "3f17d166b2b55632fadd382c65c9292d58f1e525",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "793322e6_fdc327d5",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 881,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-09-05T18:23:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "aab7233f_8193f7b4",
+      "range": {
+        "startLine": 881,
+        "startChar": 18,
+        "endLine": 881,
+        "endChar": 56
+      },
+      "revId": "3f17d166b2b55632fadd382c65c9292d58f1e525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
