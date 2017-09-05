@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a0c0b24_1ea1db5b",
+        "filename": "ui/message_center/views/proportional_image_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-09-05T08:40:36Z",
+      "side": 1,
+      "message": "please assign the default value here instead of inside the ctor.",
+      "range": {
+        "startLine": 42,
+        "startChar": 15,
+        "endLine": 42,
+        "endChar": 16
+      },
+      "revId": "36f2387d28e6cddb2f1ba93e95314e7560701bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
