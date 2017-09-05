@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1f3184dc_f098e2a2",
+        "filename": "chrome/android/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 1154,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-05T19:52:57Z",
+      "side": 1,
+      "message": "I like it. Done.",
+      "parentUuid": "71413c98_9e48fef1",
+      "revId": "dc021574aa89c2272f73fdd6d7c69628a311ec4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "14b7bce6_8920b093",
         "filename": "docs/static_initializers.md",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-05T17:57:40Z",
       "side": 1,
       "message": "Why are we handling these in a completely different manner than we do on desktop? I know the scripts are different, and it\u0027d be great to reconcile them at some point (though obviously not in this CL). This, though, seems to be pushing us in the opposite direction.",
+      "revId": "dc021574aa89c2272f73fdd6d7c69628a311ec4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38f1ea31_84e2acab",
+        "filename": "docs/static_initializers.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-05T19:52:57Z",
+      "side": 1,
+      "message": "Before doing this, I looked through how desktop does the check. There used to be more expectations than just SIs, but over time they were all deleted as no actually useful (people would just always raise the expectations. I took that as a sign that all of the complexity from it is no longer justified.) I took this to mean it wouldn\u0027t be worth the complexity of having resource_sizes.py understand perf_expectations.json.\n\nContrast: \n * Custom test script to have the test run\n * Entire directory of perf_expectation-related tools.\n * Use of chartjson\n\nWith:\n * A build target that you can build locally\n * Expectations as constants in the target that you build.\n\nSo, since perf_expectation.json stuff is intimately tied with sizes.py, and Android doesn\u0027t use sizes.py, I didn\u0027t think it worth the effort of adding a lot of complexity to resource_sizes.py for it to use perf_expectations.json.\n\nAgree that it\u0027d be nice to converge sizes.py and resource_sizes.py, but I think if we did, we\u0027d also remove the perf_expectations logic in favour of something simpler.",
+      "parentUuid": "14b7bce6_8920b093",
       "revId": "dc021574aa89c2272f73fdd6d7c69628a311ec4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
