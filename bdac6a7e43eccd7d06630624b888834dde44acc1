@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "346711a4_444c6bf1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-05T09:25:06Z",
+      "side": 1,
+      "message": "Nit: you can simply state that bug is caused by changing UI objects from non-UI thread. \"UI objects should be modified from UI thread only\" is a well-known rule of Android, so there\u0027s no need to elaborate here.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 33
+      },
+      "revId": "bdac6a7e43eccd7d06630624b888834dde44acc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

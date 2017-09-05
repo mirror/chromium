@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e57ec54c_410c193d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninAndSyncView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-05T09:25:06Z",
+      "side": 1,
+      "message": "Sorry, I didn\u0027t realise that androidSyncSettingsChanged is invoked from different threads. If it\u0027s the case, you can simplify your comment to \"AndroidSyncSettings calls this method from non-UI threads\".",
+      "range": {
+        "startLine": 304,
+        "startChar": 0,
+        "endLine": 305,
+        "endChar": 82
+      },
+      "revId": "00131a8ef347d007f03a92a1dda8fb984f9c46ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "981f2c98_a502a7bf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninAndSyncView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-05T09:25:06Z",
+      "side": 1,
+      "message": "Nit: can you use runOnUiThread here? From AndroidSyncSettings it looks like this method can be sometimes invoked from UI thread as well. Also, it makes obvious the fact that we don\u0027t need to postpone update till the next frame, but simply ensure thread correctness.",
+      "range": {
+        "startLine": 306,
+        "startChar": 20,
+        "endLine": 306,
+        "endChar": 34
+      },
+      "revId": "00131a8ef347d007f03a92a1dda8fb984f9c46ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
