@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3dd1fe8f_b451d288",
+        "filename": "third_party/WebKit/Source/bindings/scripts/compute_interfaces_info_individual.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-05T05:00:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b610dfb7_9342434b",
+      "range": {
+        "startLine": 109,
+        "startChar": 4,
+        "endLine": 109,
+        "endChar": 25
+      },
+      "revId": "b262472ed0d458d3106247adb62ca63e006677a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9fc43f0_de8168c0",
         "filename": "third_party/WebKit/Source/bindings/scripts/idl_definitions.py",
         "patchSetId": 2
