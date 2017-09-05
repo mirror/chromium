@@ -12,6 +12,7 @@ import v8_utilities  # pylint: disable=W0403
 
 CALLBACK_FUNCTION_H_INCLUDES = frozenset([
     'bindings/core/v8/NativeValueTraits.h',
+    'platform/bindings/ScriptState.h',
     'platform/bindings/ScriptWrappable.h',
     'platform/bindings/TraceWrapperV8Reference.h',
     'platform/heap/Handle.h',
@@ -19,7 +20,6 @@ CALLBACK_FUNCTION_H_INCLUDES = frozenset([
 ])
 CALLBACK_FUNCTION_CPP_INCLUDES = frozenset([
     'bindings/core/v8/ExceptionState.h',
-    'platform/bindings/ScriptState.h',
     'bindings/core/v8/NativeValueTraitsImpl.h',
     'bindings/core/v8/ToV8ForCore.h',
     'bindings/core/v8/V8BindingForCore.h',
