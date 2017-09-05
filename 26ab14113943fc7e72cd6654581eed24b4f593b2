@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "173d6414_edc67c1f",
+        "filename": "tools/grit/grit/grd_reader.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-09-05T21:26:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f4a4702_a3ba4168",
+      "revId": "26ab14113943fc7e72cd6654581eed24b4f593b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa0bcb3e_0a2aa8a6",
         "filename": "tools/grit/grit/tool/build.py",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "26ab14113943fc7e72cd6654581eed24b4f593b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be0eb7e9_72fa9826",
+        "filename": "tools/grit/grit/tool/build.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-09-05T21:26:57Z",
+      "side": 1,
+      "message": "List of tuples sounds good to me, easy to write and parse.",
+      "parentUuid": "fa0bcb3e_0a2aa8a6",
+      "revId": "26ab14113943fc7e72cd6654581eed24b4f593b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
