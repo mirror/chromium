@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bde23f31_cc3bf25b",
+        "filename": "components/cronet/url_request_context_config.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-09-05T21:19:37Z",
+      "side": 0,
+      "message": "nit: Please remove URLRequestContextConfigBuilder::enable_sdch as well: https://cs.chromium.org/chromium/src/components/cronet/url_request_context_config.h?rcl\u003db603f725724ec998b6045346be4051049260535a\u0026l\u003d219",
+      "range": {
+        "startLine": 483,
+        "startChar": 52,
+        "endLine": 483,
+        "endChar": 63
+      },
+      "revId": "b94fe008deca1f2ce346b3efff063ffb153eb20a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
