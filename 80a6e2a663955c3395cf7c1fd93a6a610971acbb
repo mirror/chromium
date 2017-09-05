@@ -69,6 +69,24 @@
       "revId": "80a6e2a663955c3395cf7c1fd93a6a610971acbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29b1aaf1_991e4240",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1116,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-09-05T19:53:27Z",
+      "side": 1,
+      "message": "ok. So I will add an histogram parameter to toggle and show funcs, and record UMA at here (start of swiping) and remove the UMA at CompleteAppListDrag, is that right?",
+      "parentUuid": "5c651df8_35a48315",
+      "revId": "80a6e2a663955c3395cf7c1fd93a6a610971acbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
