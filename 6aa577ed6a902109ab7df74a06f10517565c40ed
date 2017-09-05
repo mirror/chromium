@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "29a378a9_b85f9f29",
+        "filename": "android_webview/browser/hardware_renderer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-09-05T14:49:35Z",
+      "side": 1,
+      "message": "HardwareRenderer",
+      "revId": "6aa577ed6a902109ab7df74a06f10517565c40ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b02369c_67e24eae",
+        "filename": "components/viz/service/surfaces/surface_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-09-05T14:49:35Z",
+      "side": 1,
+      "message": "make_pair(frame_sink_id, label) ought to be sufficient.\n\nBetter yet, I think you can simply do this:\n\nvalid_frame_sink_labels_.emplace(frame_sink_id, label);\n\nThis will avoid an extra copy/move by calling the constructor inline.",
+      "revId": "6aa577ed6a902109ab7df74a06f10517565c40ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "344fbd99_734bdfb2",
         "filename": "components/viz/service/surfaces/surface_manager.cc",
         "patchSetId": 6
@@ -36,6 +70,30 @@
       "writtenOn": "2017-09-05T14:40:08Z",
       "side": 1,
       "message": "nit: maybe \"of which track will be kept\" or just \"that will be tracked\".",
+      "range": {
+        "startLine": 43,
+        "startChar": 40,
+        "endLine": 43,
+        "endChar": 58
+      },
+      "revId": "6aa577ed6a902109ab7df74a06f10517565c40ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e14b801f_964d7204",
+        "filename": "services/viz/privileged/interfaces/compositing/frame_sink_manager.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-09-05T14:49:35Z",
+      "side": 1,
+      "message": "Starts the scope of temporary references tied to this |frame_sink_id|. Temporary references tied\nto this |frame_sink_id| will be dropped on InvalidateFrameSinkId. This must be called before\nCreate(Root)CompositorFrameSink is called.",
+      "parentUuid": "ede852ca_f3b74fcc",
       "range": {
         "startLine": 43,
         "startChar": 40,
