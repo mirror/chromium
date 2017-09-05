@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7869defe_599d0b7a",
+        "filename": "content/common/shared_interface_ptr.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-09-05T22:29:45Z",
+      "side": 1,
+      "message": "This helper doesn\u0027t make too much sense to me. It adds unnecessary cost (extra field and a check in get()), and it is a little confusing because the whole point of this class is to manage the lifetime of |ptr_|.\n\nDoes it make sense to do a little more work in testing code to setup a real SharedInterfacePtr and get rid of this CreateForTesting?",
+      "revId": "b4d8033b42fef605cf24c1c7fc734144a236ce37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
