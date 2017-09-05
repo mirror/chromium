@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e764fba_52d04158",
+        "filename": "ios/public/provider/chrome/browser/signin/fake_chrome_identity_interaction_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-05T15:43:18Z",
+      "side": 1,
+      "message": "1. I think this should be weak to keep the same semantics.\n2. Or maybe make it strong as I think that should be the right semantics for it (I mean a fake identity is just an simple object, I doubt we would have any lifecycle issues is we retain it here).",
+      "range": {
+        "startLine": 15,
+        "startChar": 21,
+        "endLine": 15,
+        "endChar": 38
+      },
+      "revId": "f3eeb2a523a8ef38fee61a672273037f34250a9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d5236bb_ad816c75",
+        "filename": "ios/public/provider/chrome/browser/signin/fake_chrome_identity_interaction_manager.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-05T15:43:18Z",
+      "side": 1,
+      "message": "Should this be [completion copy]?",
+      "range": {
+        "startLine": 108,
+        "startChar": 24,
+        "endLine": 108,
+        "endChar": 34
+      },
+      "revId": "f3eeb2a523a8ef38fee61a672273037f34250a9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
