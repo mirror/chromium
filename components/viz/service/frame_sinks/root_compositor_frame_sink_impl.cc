@@ -39,12 +39,16 @@ RootCompositorFrameSinkImpl::RootCompositorFrameSinkImpl(
                  base::Unretained(this)));
   frame_sink_manager->RegisterBeginFrameSource(
       display_begin_frame_source_.get(), frame_sink_id);
-  display_->Initialize(this, frame_sink_manager->surface_manager());
+  SurfaceManager* surface_manager = frame_sink_manager->surface_manager();
+  display_->Initialize(this, surface_manager);
+  surface_manager->AddObserver(&hit_test_aggregator_);
 }
 
 RootCompositorFrameSinkImpl::~RootCompositorFrameSinkImpl() {
-  support_->frame_sink_manager()->UnregisterBeginFrameSource(
+  FrameSinkManagerImpl* frame_sink_manager = support_->frame_sink_manager();
+  frame_sink_manager->UnregisterBeginFrameSource(
       display_begin_frame_source_.get());
+  frame_sink_manager->surface_manager()->RemoveObserver(&hit_test_aggregator_);
 }
 
 void RootCompositorFrameSinkImpl::SetDisplayVisible(bool visible) {
@@ -88,6 +92,13 @@ void RootCompositorFrameSinkImpl::SubmitCompositorFrame(
     compositor_frame_sink_binding_.Close();
     OnClientConnectionLost();
   }
+}
+
+void RootCompositorFrameSinkImpl::SubmitHitTestRegionList(
+    SurfaceId surface_id,
+    mojom::HitTestRegionListPtr hit_test_region_list) {
+  hit_test_aggregator_.SubmitHitTestRegionList(surface_id,
+                                               std::move(hit_test_region_list));
 }
 
 void RootCompositorFrameSinkImpl::DidNotProduceFrame(

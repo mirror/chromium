@@ -16,6 +16,7 @@
 #include "base/threading/thread_checker.h"
 #include "components/viz/common/surfaces/frame_sink_id.h"
 #include "components/viz/service/frame_sinks/primary_begin_frame_source.h"
+#include "components/viz/service/frame_sinks/root_compositor_frame_sink_impl.h"
 #include "components/viz/service/surfaces/surface_manager.h"
 #include "components/viz/service/surfaces/surface_observer.h"
 #include "components/viz/service/viz_service_export.h"
@@ -152,6 +153,10 @@ class VIZ_SERVICE_EXPORT FrameSinkManagerImpl : public SurfaceObserver,
   void RecursivelyDetachBeginFrameSource(const FrameSinkId& frame_sink_id,
                                          BeginFrameSource* source);
 
+  bool ValidateHitTestRegionList(
+      FrameSinkId frame_sink_id,
+      const mojom::HitTestRegionListPtr& hit_test_region_list);
+
   // Returns true if |child framesink| is or has |search_frame_sink_id| as a
   // child.
   bool ChildContains(const FrameSinkId& child_frame_sink_id,
@@ -193,6 +198,11 @@ class VIZ_SERVICE_EXPORT FrameSinkManagerImpl : public SurfaceObserver,
                      std::unique_ptr<mojom::CompositorFrameSink>,
                      FrameSinkIdHash>
       compositor_frame_sinks_;
+
+  std::unordered_map<FrameSinkId,
+                     std::unique_ptr<RootCompositorFrameSinkImpl>,
+                     FrameSinkIdHash>
+      root_compositor_frame_sinks_;
 
   THREAD_CHECKER(thread_checker_);
 
