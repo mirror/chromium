@@ -1566,10 +1566,10 @@ void FeatureInfo::InitializeFloatAndHalfFloatFeatures(
         (gl_version_info_->is_es || gl_version_info_->IsAtLeastGL(3, 0))) {
       bool full_half_float_support = true;
       GLenum internal_formats[] = {
-          GL_R16F, GL_RG16F, GL_RGBA16F,
+          GL_R16F, GL_RG16F, GL_RGB16F, GL_RGBA16F,
       };
       GLenum formats[] = {
-          GL_RED, GL_RG, GL_RGBA,
+          GL_RED, GL_RG, GL_RGB, GL_RGBA,
       };
       GLenum data_type = GL_FLOAT;
       if (gl_version_info_->is_es2)
