@@ -22,6 +22,30 @@
       "revId": "309a1313a467f933e6b438666d5612008bb7a9f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad4eca8c_72b30943",
+        "filename": "media/mojo/clients/mojo_video_decoder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-09-05T18:04:48Z",
+      "side": 1,
+      "message": "First off, the requirements:\n  - GetChannelToken() can fail, for example if the context has been lost. (Note that we construct a new GpuAcceleratorFactories each time DefaultRendererFactory creates a Renderer.)\n  - MojoVideoDecoder does work without a channel token, it just doesn\u0027t support a command buffer anymore. Technically it\u0027s the Decoder\u0027s job to fail if it needs one. (The Decoder is also responsible for failing if it can\u0027t find the command buffer, which would indicate that it got started in a different process.)\n\nBasically, this code carries on because it\u0027s technically possible that it could work. That will become true in practice as well once the Cast WebRTC decoder is using this path, but it may be better to handle that explicitly.\n\nWe can easily return a failure here, BindRemoteDecoder() is only called from Initialize().",
+      "parentUuid": "a3142792_470e2ad8",
+      "range": {
+        "startLine": 217,
+        "startChar": 6,
+        "endLine": 217,
+        "endChar": 19
+      },
+      "revId": "309a1313a467f933e6b438666d5612008bb7a9f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
