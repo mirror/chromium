@@ -22,6 +22,30 @@
       "revId": "ce00e03a111b1149bc1b4f78344764524ec0ee92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c78f7412_86d6e794",
+        "filename": "ui/app_list/views/suggestions_container_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-09-05T19:12:10Z",
+      "side": 1,
+      "message": "If using old style, the ChromeVox annoucement is \u0027Files, Disabled, Button\u0027. So the key point is to notify the change after the view is enabled. So I think I could move the NotifyAccessibilityEvent here without changing the logic.",
+      "parentUuid": "9194f92c_0407f92c",
+      "range": {
+        "startLine": 94,
+        "startChar": 34,
+        "endLine": 94,
+        "endChar": 49
+      },
+      "revId": "ce00e03a111b1149bc1b4f78344764524ec0ee92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
