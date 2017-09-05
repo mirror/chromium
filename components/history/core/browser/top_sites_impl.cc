@@ -789,6 +789,10 @@ void TopSitesImpl::SetTopSites(const MostVisitedURLList& new_top_sites,
 
   ResetThreadSafeCache();
   ResetThreadSafeImageCache();
+
+  // Log each TopSitesChanged notification sent out.
+  UMA_HISTOGRAM_COUNTS_100("TopSites.CountNotifyTopSitesChanged", 1);
+
   if (location == CALL_LOCATION_FROM_FORCED_URLS)
     NotifyTopSitesChanged(TopSitesObserver::ChangeReason::FORCED_URL);
   else

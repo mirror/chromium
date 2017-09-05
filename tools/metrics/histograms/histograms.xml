@@ -83666,6 +83666,13 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="TopSites.CountNotifyTopSitesChanged" units="scaled count">
+  <owner>chengx@chromium.org</owner>
+  <summary>
+    The number of TopSitesChanged notifications sent out by top sites service.
+  </summary>
+</histogram>
+
 <histogram name="TopSites.NumberOfApplyBlacklist">
   <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
   <summary>The number of times TopSitesImpl::ApplyBlacklist is called.</summary>
