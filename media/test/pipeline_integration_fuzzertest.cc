@@ -23,10 +23,23 @@ namespace {
 // Keep these aligned with BUILD.gn's pipeline_integration_fuzzer_variants
 enum FuzzerVariant {
   SRC,
-  MP4_FLAC,
-  MP4_AVC1,
-  WEBM_VP9,
+  ADTS,
+  MP2T_AACLC,
+  MP2T_AACSBR,
+  MP2T_AVC,
+  MP2T_MP3,
   MP3,
+  MP4_AACLC,
+  MP4_AACSBR,
+  MP4_AVC1,
+  MP4_FLAC,
+  WEBM_OPUS,
+  WEBM_VORBIS,
+  WEBM_VP8,
+  WEBM_VP9,
+  MP2T_AACLC_AVC,
+  MP4_AACLC_AVC,
+  WEBM_OPUS_VP9,
 };
 
 }  // namespace
@@ -153,9 +166,46 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
       test.RunTest(data, size);
       break;
     }
-    case MP4_FLAC: {
+    case ADTS: {
       media::MediaSourcePipelineIntegrationFuzzerTest test;
-      test.RunTest(data, size, "audio/mp4; codecs=\"flac\"");
+      test.RunTest(data, size, "audio/aac");
+      break;
+    }
+    case MP2T_AACLC: {
+      media::MediaSourcePipelineIntegrationFuzzerTest test;
+      // Note, "mp4a.40.2" appears to be an equivalent codec substring.
+      test.RunTest(data, size, "video/mp2t; codecs=\"mp4a.67\"");
+      break;
+    }
+    case MP2T_AACSBR: {
+      media::MediaSourcePipelineIntegrationFuzzerTest test;
+      test.RunTest(data, size, "video/mp2t; codecs=\"mp4a.40.5\"");
+      break;
+    }
+    case MP2T_AVC: {
+      media::MediaSourcePipelineIntegrationFuzzerTest test;
+      test.RunTest(data, size, "video/mp2t; codecs=\"avc1.42E01E\"");
+      break;
+    }
+    case MP2T_MP3: {
+      media::MediaSourcePipelineIntegrationFuzzerTest test;
+      // Note, "mp4a.6B" appears to be an equivalent codec substring.
+      test.RunTest(data, size, "video/mp2t; codecs=\"mp4a.69\"");
+      break;
+    }
+    case MP3: {
+      media::MediaSourcePipelineIntegrationFuzzerTest test;
+      test.RunTest(data, size, "audio/mpeg");
+      break;
+    }
+    case MP4_AACLC: {
+      media::MediaSourcePipelineIntegrationFuzzerTest test;
+      test.RunTest(data, size, "audio/mp4; codecs=\"mp4a.40.2\"");
+      break;
+    }
+    case MP4_AACSBR: {
+      media::MediaSourcePipelineIntegrationFuzzerTest test;
+      test.RunTest(data, size, "audio/mp4; codecs=\"mp4a.40.5\"");
       break;
     }
     case MP4_AVC1: {
@@ -163,14 +213,44 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
       test.RunTest(data, size, "video/mp4; codecs=\"avc1.42E01E\"");
       break;
     }
+    case MP4_FLAC: {
+      media::MediaSourcePipelineIntegrationFuzzerTest test;
+      test.RunTest(data, size, "audio/mp4; codecs=\"flac\"");
+      break;
+    }
+    case WEBM_OPUS: {
+      media::MediaSourcePipelineIntegrationFuzzerTest test;
+      test.RunTest(data, size, "audio/webm; codecs=\"opus\"");
+      break;
+    }
+    case WEBM_VORBIS: {
+      media::MediaSourcePipelineIntegrationFuzzerTest test;
+      test.RunTest(data, size, "audio/webm; codecs=\"vorbis\"");
+      break;
+    }
+    case WEBM_VP8: {
+      media::MediaSourcePipelineIntegrationFuzzerTest test;
+      test.RunTest(data, size, "video/webm; codecs=\"vp8\"");
+      break;
+    }
     case WEBM_VP9: {
       media::MediaSourcePipelineIntegrationFuzzerTest test;
       test.RunTest(data, size, "video/webm; codecs=\"vp9\"");
       break;
     }
-    case MP3: {
+    case MP2T_AACLC_AVC: {
       media::MediaSourcePipelineIntegrationFuzzerTest test;
-      test.RunTest(data, size, "audio/mpeg");
+      test.RunTest(data, size, "video/mp2t; codecs=\"mp4a.40.2,avc1.42E01E\"");
+      break;
+    }
+    case MP4_AACLC_AVC: {
+      media::MediaSourcePipelineIntegrationFuzzerTest test;
+      test.RunTest(data, size, "video/mp4; codecs=\"mp4a.40.2,avc1.42E01E\"");
+      break;
+    }
+    case WEBM_OPUS_VP9: {
+      media::MediaSourcePipelineIntegrationFuzzerTest test;
+      test.RunTest(data, size, "video/webm; codecs=\"opus,vp9\"");
       break;
     }
   }
