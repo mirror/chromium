@@ -56,7 +56,8 @@ DelegatedFrameHost::DelegatedFrameHost(const viz::FrameSinkId& frame_sink_id,
   factory->GetContextFactory()->AddObserver(this);
   viz::HostFrameSinkManager* host_frame_sink_manager =
       factory->GetContextFactoryPrivate()->GetHostFrameSinkManager();
-  host_frame_sink_manager->RegisterFrameSinkId(frame_sink_id_, this);
+  host_frame_sink_manager->RegisterFrameSinkId(frame_sink_id_, this,
+                                               "DelegatedFrameHost");
   CreateCompositorFrameSinkSupport();
 }
 

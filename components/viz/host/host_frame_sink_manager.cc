@@ -42,7 +42,8 @@ void HostFrameSinkManager::BindAndSetManager(
 }
 
 void HostFrameSinkManager::RegisterFrameSinkId(const FrameSinkId& frame_sink_id,
-                                               HostFrameSinkClient* client) {
+                                               HostFrameSinkClient* client,
+                                               const std::string& label) {
   DCHECK(frame_sink_id.is_valid());
   DCHECK(client);
 
@@ -50,7 +51,7 @@ void HostFrameSinkManager::RegisterFrameSinkId(const FrameSinkId& frame_sink_id,
   DCHECK(!data.IsFrameSinkRegistered());
   DCHECK(!data.HasCompositorFrameSinkData());
   data.client = client;
-  frame_sink_manager_->RegisterFrameSinkId(frame_sink_id);
+  frame_sink_manager_->RegisterFrameSinkId(frame_sink_id, label);
 }
 
 void HostFrameSinkManager::InvalidateFrameSinkId(
