@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3dbf56be_510c01a9",
+        "filename": "cc/test/fake_layer_tree_frame_sink.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-09-05T18:38:57Z",
+      "side": 1,
+      "message": "I use this in a number of places in test code (not just in this file).",
+      "parentUuid": "fa6c7efd_9a5cd17a",
+      "revId": "99dad2fd7f89f0517c5371a956fd68a811bede0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9fb4192f_5f392f96",
         "filename": "cc/test/fake_layer_tree_frame_sink.h",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c9d7df1a_bb514362",
+        "filename": "cc/test/fake_layer_tree_frame_sink.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-09-05T18:38:57Z",
+      "side": 1,
+      "message": "The case I\u0027m trying to avoid here is:\n\nFakeLayerTreeFrameSink::Builder builder;\nauto val \u003d builder.AllContexts(...).AllContexts(...).Build();\nauto val2 \u003d builder.Build();  \u003c\u003c Don\u0027t want to allow this second usage, as the Builder is not usable after calls to Build.\n\n\nPutting the rvalue qualifier ensures that Builders are only used in a temporary way that prevents this double-Build:\n\natuo val \u003d Builder().AllContexts(...).AllContexts(...).Build();",
+      "parentUuid": "9fb4192f_5f392f96",
+      "revId": "99dad2fd7f89f0517c5371a956fd68a811bede0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7b2b4133_75b5e73a",
         "filename": "cc/test/fake_layer_tree_frame_sink.h",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-05T18:27:57Z",
       "side": 1,
       "message": "same here, just use an lvalue reference? Can you give an example you\u0027re trying to avoid and why you think it\u0027s likely?",
+      "revId": "99dad2fd7f89f0517c5371a956fd68a811bede0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25e1731b_47aeaf51",
+        "filename": "cc/test/fake_layer_tree_frame_sink.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-09-05T18:38:57Z",
+      "side": 1,
+      "message": "See above for the rationale. The return value may be able to be an lvalue reference in this case though (the rvalue qualifier might be all I need).",
+      "parentUuid": "7b2b4133_75b5e73a",
       "revId": "99dad2fd7f89f0517c5371a956fd68a811bede0e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
