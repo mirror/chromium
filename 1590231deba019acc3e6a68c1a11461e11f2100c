@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "ae4df0a0_f754d61c",
+        "filename": "components/multidevice/service/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-05T18:27:48Z",
+      "side": 1,
+      "message": "Please remove this dep.",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 12
+      },
+      "revId": "1590231deba019acc3e6a68c1a11461e11f2100c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abeb59f3_278658ad",
+        "filename": "components/multidevice/service/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-05T18:27:48Z",
+      "side": 1,
+      "message": "And this.",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 13
+      },
+      "revId": "1590231deba019acc3e6a68c1a11461e11f2100c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65e793cd_1f957e5b",
+        "filename": "components/multidevice/service/DEPS",
+        "patchSetId": 9
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-05T18:27:48Z",
+      "side": 1,
+      "message": "Please remove.",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 9
+      },
+      "revId": "1590231deba019acc3e6a68c1a11461e11f2100c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5cdb9bb2_a377c32d",
         "filename": "components/multidevice/service/DEPS",
         "patchSetId": 9
@@ -49,6 +118,52 @@
     },
     {
       "key": {
+        "uuid": "fc8e0d6e_7b76f487",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-05T18:27:48Z",
+      "side": 1,
+      "message": "You need to use another Mojo pointer as you did for the Identity service.",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 63
+      },
+      "revId": "1590231deba019acc3e6a68c1a11461e11f2100c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cace23d8_593b11d2",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-05T18:27:48Z",
+      "side": 1,
+      "message": "tengs@: The old implementation used prefs::kEasyUnlockDeviceId. Should we change this pattern for the service?",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 58
+      },
+      "revId": "1590231deba019acc3e6a68c1a11461e11f2100c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4b7b2a77_ccf8b7c4",
         "filename": "components/multidevice/service/device_sync_impl.cc",
         "patchSetId": 9
@@ -60,6 +175,139 @@
       "writtenOn": "2017-09-05T05:30:35Z",
       "side": 1,
       "message": "There was 2 lines referencing browser context here that I deleted, but otherwise I just copied everything over.... Lmk if I did this incorrectly.",
+      "revId": "1590231deba019acc3e6a68c1a11461e11f2100c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef5ee5ff_1e8883c7",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-05T18:27:48Z",
+      "side": 1,
+      "message": "See my response to blundell@\u0027s comment. Let\u0027s just inject this for now.",
+      "parentUuid": "4b7b2a77_ccf8b7c4",
+      "revId": "1590231deba019acc3e6a68c1a11461e11f2100c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "445329e7_f6b2274b",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-05T18:27:48Z",
+      "side": 1,
+      "message": "You only should do this after enrollment finished during initialization when it previously was not enrolled.",
+      "range": {
+        "startLine": 284,
+        "startChar": 4,
+        "endLine": 284,
+        "endChar": 24
+      },
+      "revId": "1590231deba019acc3e6a68c1a11461e11f2100c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bb0ba21_49ddeb37",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-05T18:27:48Z",
+      "side": 1,
+      "message": "nit: Move the creation of the managers to its own helper function.",
+      "range": {
+        "startLine": 366,
+        "startChar": 32,
+        "endLine": 366,
+        "endChar": 33
+      },
+      "revId": "1590231deba019acc3e6a68c1a11461e11f2100c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e395fe3_1ac81bbd",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-05T18:27:48Z",
+      "side": 1,
+      "message": "As I mentioned in another comment, this was my mistake. You don\u0027t need an extra state for this since it\u0027s a synchronous operation.",
+      "range": {
+        "startLine": 367,
+        "startChar": 0,
+        "endLine": 367,
+        "endChar": 48
+      },
+      "revId": "1590231deba019acc3e6a68c1a11461e11f2100c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc5dda3a_69596398",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-05T18:27:48Z",
+      "side": 1,
+      "message": "Instead, just do the check here (once you move the manager creation to another function, this one won\u0027t be as bloated).\n\nIn general, try avoid function names like BranchGenerateKeyOrSync(). Your functions should do one thing.",
+      "range": {
+        "startLine": 383,
+        "startChar": 2,
+        "endLine": 383,
+        "endChar": 25
+      },
+      "revId": "1590231deba019acc3e6a68c1a11461e11f2100c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f172ae8_783c09c7",
+        "filename": "components/multidevice/service/device_sync_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-05T18:27:48Z",
+      "side": 1,
+      "message": "nit: Move to the end of the description. Also, you can assign to me.",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 63
+      },
       "revId": "1590231deba019acc3e6a68c1a11461e11f2100c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

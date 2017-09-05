@@ -566,6 +566,30 @@
     },
     {
       "key": {
+        "uuid": "67985b28_3653f44e",
+        "filename": "components/multidevice/service/device_sync_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-05T18:27:48Z",
+      "side": 1,
+      "message": "Ah, sorry about that. For some reason, I thought that the CryptAuth manager creation was asynchronous. We don\u0027t need an extra State since it is actually a synchronous operation.",
+      "parentUuid": "b09ad197_694eb945",
+      "range": {
+        "startLine": 72,
+        "startChar": 4,
+        "endLine": 72,
+        "endChar": 31
+      },
+      "revId": "1d026fde0f5b5b96e49493961e2f42ed7367825c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13d0487d_8bc70571",
         "filename": "components/multidevice/service/device_sync_impl.h",
         "patchSetId": 8
