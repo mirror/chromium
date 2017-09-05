@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0af670be_c6f22778",
+        "filename": "chrome/browser/ui/cocoa/omnibox/omnibox_popup_matrix.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-09-05T17:17:51Z",
+      "side": 1,
+      "message": "Even if it\u0027s trivial and also duplicates the comment below, this should have its own comment.",
+      "revId": "ac9c9ace601ce4bd4023ed68b7f9961999a66d63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f918f992_34bd85e7",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_popup_contents_view.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-09-05T17:17:51Z",
+      "side": 1,
+      "message": "GetMatchIcon for consistency.",
+      "range": {
+        "startLine": 344,
+        "startChar": 37,
+        "endLine": 344,
+        "endChar": 44
+      },
+      "revId": "ac9c9ace601ce4bd4023ed68b7f9961999a66d63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a49fbb1c_0415fc87",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_result_view.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-09-05T17:17:51Z",
+      "side": 1,
+      "message": "This looks dead. Can you remove it as long as you\u0027re in here?",
+      "revId": "ac9c9ace601ce4bd4023ed68b7f9961999a66d63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71a6b3dc_af49f94a",
+        "filename": "components/omnibox/browser/omnibox_popup_model.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-09-05T17:17:51Z",
+      "side": 1,
+      "message": "Would it make sense to have a larger cache? Like 2 * GetMaxMatches() maybe? Or 3? To avoid re-fetches as the user types and backspaces and maybe sees a varying set of URL matches? Honestly asking, I haven\u0027t given this much thought.",
+      "revId": "ac9c9ace601ce4bd4023ed68b7f9961999a66d63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15765d26_27a26366",
+        "filename": "components/omnibox/browser/omnibox_popup_model.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-09-05T17:17:51Z",
+      "side": 1,
+      "message": "We still need to check !IsSearchType, right? This looks like the right place to do so.",
+      "revId": "ac9c9ace601ce4bd4023ed68b7f9961999a66d63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6735daf1_81b0cda2",
+        "filename": "components/omnibox/browser/omnibox_popup_model.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-09-05T17:17:51Z",
+      "side": 1,
+      "message": "You can remove this comment. The cache is a simpler solution and isn\u0027t duplicating information about what\u0027s currently displayed so I don\u0027t think the motivation still exists for this.",
+      "revId": "ac9c9ace601ce4bd4023ed68b7f9961999a66d63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d998ca1a_dec488ba",
+        "filename": "components/omnibox/browser/omnibox_popup_model.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-09-05T17:17:51Z",
+      "side": 1,
+      "message": "Is the reason why you\u0027ve got this guarded but not the fetching section is that you anticipate that we may have Android and iOS call this for favicons only? (Using an empty image as a signal to use their own type-based logic.)\n\nIf so, you should probably guard the extension icon block as well. Alternatively, just guard everything here until we figure out how to approach favicons on those platforms.",
+      "revId": "ac9c9ace601ce4bd4023ed68b7f9961999a66d63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

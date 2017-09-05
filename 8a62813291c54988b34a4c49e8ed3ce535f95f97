@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c9aa33d_a0ef5746",
+        "filename": "chrome/browser/ui/cocoa/omnibox/omnibox_popup_view_mac.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-09-05T17:17:51Z",
+      "side": 0,
+      "message": "Eliminating duplicate logic is 🔥.",
+      "revId": "8a62813291c54988b34a4c49e8ed3ce535f95f97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
