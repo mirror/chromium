@@ -22,6 +22,30 @@
       "revId": "0a1e1080ddd2125cab5039e60ef20824316befe8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd1df4aa_ca91e986",
+        "filename": "content/browser/renderer_host/media/media_stream_ui_proxy_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-05T22:17:45Z",
+      "side": 1,
+      "message": "Good catch, thank you. The reason why this isn\u0027t failing the dcheck is because in the test the IO and UI threads currently run on the same thread.",
+      "parentUuid": "ec850897_eec140c5",
+      "range": {
+        "startLine": 351,
+        "startChar": 23,
+        "endLine": 351,
+        "endChar": 25
+      },
+      "revId": "0a1e1080ddd2125cab5039e60ef20824316befe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
