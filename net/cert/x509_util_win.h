@@ -79,6 +79,12 @@ NET_EXPORT scoped_refptr<X509Certificate> CreateX509CertificateFromCertContexts(
 NET_EXPORT ScopedPCCERT_CONTEXT
 CreateCertContextWithChain(const X509Certificate* cert);
 
+// As CreateCertContextWithChain above, but any intermediates that could not be
+// converted are reported in |*intermediate_errors| instead of returning NULL.
+NET_EXPORT ScopedPCCERT_CONTEXT
+CreateCertContextWithChain(const X509Certificate* cert,
+                           size_t* intermediate_errors);
+
 // Calculates the SHA-256 fingerprint of the certificate.  Returns an empty
 // (all zero) fingerprint on failure.
 NET_EXPORT SHA256HashValue CalculateFingerprint256(PCCERT_CONTEXT cert);

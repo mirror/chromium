@@ -784,12 +784,16 @@ int CertVerifyProcNSS::VerifyInternalImpl(
   // target cert is explicitly referred to in this function, creating NSS
   // certificates for the intermediates is required for PKIXVerifyCert to find
   // them during chain building.
+  size_t intermediate_errors;
   ScopedCERTCertificateList input_chain =
-      x509_util::CreateCERTCertificateListFromX509Certificate(cert);
+      x509_util::CreateCERTCertificateListFromX509Certificate(
+          cert, &intermediate_errors);
   if (input_chain.empty()) {
     verify_result->cert_status |= CERT_STATUS_INVALID;
     return ERR_CERT_INVALID;
   }
+  if (intermediate_errors)
+    LOG(WARNING) << intermediate_errors << " intermediates failed parsing.";
   CERTCertificate* cert_handle = input_chain[0].get();
 
   if (!ocsp_response.empty() && cache_ocsp_response_from_side_channel_) {

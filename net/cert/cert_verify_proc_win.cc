@@ -854,11 +854,15 @@ int CertVerifyProcWin::VerifyInternal(
   // CRLSet.
   ScopedThreadLocalCRLSet thread_local_crlset(crl_set);
 
-  ScopedPCCERT_CONTEXT cert_list = x509_util::CreateCertContextWithChain(cert);
+  size_t intermediate_errors;
+  ScopedPCCERT_CONTEXT cert_list =
+      x509_util::CreateCertContextWithChain(cert, &intermediate_errors);
   if (!cert_list) {
     verify_result->cert_status |= CERT_STATUS_INVALID;
     return ERR_CERT_INVALID;
   }
+  if (intermediate_errors)
+    LOG(WARNING) << intermediate_errors << " intermediates failed parsing.";
 
   // Build and validate certificate chain.
   CERT_CHAIN_PARA chain_para;

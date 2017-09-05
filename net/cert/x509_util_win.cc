@@ -58,6 +58,17 @@ scoped_refptr<X509Certificate> CreateX509CertificateFromCertContexts(
 }
 
 ScopedPCCERT_CONTEXT CreateCertContextWithChain(const X509Certificate* cert) {
+  size_t intermediate_errors;
+  ScopedPCCERT_CONTEXT context(
+      CreateCertContextWithChain(cert, &intermediate_errors));
+  if (intermediate_errors)
+    return nullptr;
+  return context;
+}
+
+ScopedPCCERT_CONTEXT CreateCertContextWithChain(const X509Certificate* cert,
+                                                size_t* intermediate_errors) {
+  *intermediate_errors = 0;
   // Create an in-memory certificate store to hold the certificate and its
   // intermediate certificates. The store will be referenced in the returned
   // PCCERT_CONTEXT, and will not be freed until the PCCERT_CONTEXT is freed.
@@ -86,7 +97,7 @@ ScopedPCCERT_CONTEXT CreateCertContextWithChain(const X509Certificate* cert) {
         base::checked_cast<DWORD>(CRYPTO_BUFFER_len(intermediate)),
         CERT_STORE_ADD_ALWAYS, NULL);
     if (!ok)
-      return nullptr;
+      (*intermediate_errors)++;
   }
 #else
   PCCERT_CONTEXT os_cert_handle = cert->os_cert_handle();

@@ -744,12 +744,16 @@ int VerifyWithGivenFlags(X509Certificate* cert,
       CFArrayInsertValueAtIndex(mutable_keychain_search_list, 0, keychain);
     }
 
+    size_t intermediate_errors;
     ScopedCFTypeRef<CFMutableArrayRef> cert_array(
-        x509_util::CreateSecCertificateArrayForX509Certificate(cert));
+        x509_util::CreateSecCertificateArrayForX509Certificate(
+            cert, &intermediate_errors));
     if (!cert_array) {
       verify_result->cert_status |= CERT_STATUS_INVALID;
       return ERR_CERT_INVALID;
     }
+    if (intermediate_errors)
+      LOG(WARNING) << intermediate_errors << " intermediates failed parsing.";
 
     // Beginning with the certificate chain as supplied by the server, attempt
     // to verify the chain. If a failure is encountered, trim a certificate

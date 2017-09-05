@@ -8,6 +8,7 @@
 #include "base/files/file_util.h"
 #include "net/cert/scoped_nss_types.h"
 #include "net/cert/x509_certificate.h"
+#include "net/cert/x509_util.h"
 #include "net/test/cert_test_util.h"
 #include "net/test/test_certificate_data.h"
 #include "net/test/test_data_directory.h"
@@ -136,6 +137,48 @@ TEST(X509UtilNSSTest, CreateCERTCertificateListFromX509Certificate) {
             BytesForNSSCert(nss_certs[2].get()));
   EXPECT_EQ(BytesForX509CertHandle(x509_cert->GetIntermediateCertificates()[2]),
             BytesForNSSCert(nss_certs[3].get()));
+}
+
+TEST(X509UtilTest, CreateCERTCertificateListFromX509CertificateErrors) {
+  scoped_refptr<X509Certificate> ok_cert(
+      ImportCertFromFile(GetTestCertsDirectory(), "ok_cert.pem"));
+  ASSERT_TRUE(ok_cert);
+
+  bssl::UniquePtr<CRYPTO_BUFFER> bad_cert =
+      x509_util::CreateCryptoBuffer(base::StringPiece("invalid"));
+  ASSERT_TRUE(bad_cert);
+
+  scoped_refptr<X509Certificate> ok_cert2(
+      ImportCertFromFile(GetTestCertsDirectory(), "root_ca_cert.pem"));
+  ASSERT_TRUE(ok_cert);
+
+  scoped_refptr<X509Certificate> cert_with_intermediates(
+      X509Certificate::CreateFromHandle(
+          ok_cert->os_cert_handle(),
+          {bad_cert.get(), ok_cert2->os_cert_handle()}));
+  ASSERT_TRUE(cert_with_intermediates);
+  EXPECT_EQ(2U, cert_with_intermediates->GetIntermediateCertificates().size());
+
+  // Normal CreateCERTCertificateListFromX509Certificate fails with invalid
+  // certs in chain.
+  ScopedCERTCertificateList nss_certs =
+      x509_util::CreateCERTCertificateListFromX509Certificate(
+          cert_with_intermediates.get());
+  EXPECT_TRUE(nss_certs.empty());
+
+  // 2-arg version reports errors through separate arg.
+  size_t intermediate_errors;
+  nss_certs = x509_util::CreateCERTCertificateListFromX509Certificate(
+      cert_with_intermediates.get(), &intermediate_errors);
+  EXPECT_EQ(1U, intermediate_errors);
+  ASSERT_EQ(2U, nss_certs.size());
+  for (const auto& nss_cert : nss_certs)
+    ASSERT_TRUE(nss_cert.get());
+
+  EXPECT_EQ(BytesForX509Cert(ok_cert.get()),
+            BytesForNSSCert(nss_certs[0].get()));
+  EXPECT_EQ(BytesForX509Cert(ok_cert2.get()),
+            BytesForNSSCert(nss_certs[1].get()));
 }
 
 TEST(X509UtilNSSTest, CreateCERTCertificateListFromBytes) {
