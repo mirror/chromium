@@ -16,6 +16,47 @@
       "revId": "120f9bd45fa46d6aa77de06069a95be43d69b4f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e8d6d43_6c31deb0",
+        "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-05T13:49:53Z",
+      "side": 1,
+      "message": "heh, I gave the opposite advice at https://chromium-review.googlesource.com/c/chromium/src/+/616740/9/content/child/service_worker/web_service_worker_provider_impl.cc#164\n\nThe more I see kNone code, the more I think it should be kOK or kSuccess. But we can change that later.",
+      "parentUuid": "3e2de736_69b07e98",
+      "revId": "120f9bd45fa46d6aa77de06069a95be43d69b4f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d45d46ee_8e6faa1d",
+        "filename": "content/child/service_worker/web_service_worker_provider_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-05T13:49:53Z",
+      "side": 1,
+      "message": "You can remove the comments for these overrides. They are documented in blink::WebServiceWorkerProvider. So just add to the front:\n\n// blink::WebServiceWorkerProvider implementation",
+      "range": {
+        "startLine": 49,
+        "startChar": 17,
+        "endLine": 49,
+        "endChar": 19
+      },
+      "revId": "120f9bd45fa46d6aa77de06069a95be43d69b4f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
