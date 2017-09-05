@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "394264d0_15f61143",
+        "filename": "chrome/browser/resources/local_ntp/voice.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-05T14:49:01Z",
+      "side": 1,
+      "message": "Out of curiosity: What does this do?",
+      "range": {
+        "startLine": 387,
+        "startChar": 17,
+        "endLine": 387,
+        "endChar": 0
+      },
+      "revId": "2e7cc67424d52811fd817f00404ce9fbc256fa7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
