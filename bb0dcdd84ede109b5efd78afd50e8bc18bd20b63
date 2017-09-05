@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5f2ecc49_37ffe111",
+        "filename": "media/blink/multibuffer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-09-05T22:18:13Z",
+      "side": 1,
+      "message": "I\u0027m not really a fan of base::flat_map\u003c\u003e for this purpose, and I have a fair amount of experience with that type of map implementation from LPC. They tend to work great for small maps/sets, but come back and bite you when the data becomes unexpectedly large. \n\nIn this particular instance, size could be limited to an upper limit, but even then, flat_map isn\u0027t going to be ideal for code that is 99% inserts. Doing this operation without the second pass is expensive. There are optimizations in the ReleaseBlock call which makes releasing batches significantly cheaper.\n\nI bet that if you replaced map\u003c\u003e with flat_map\u003c\u003e in the rest of the multibuffer code, you\u0027d get a small speedup in some benchmarks, and some minor memory savings, but in return, some pages on the internet with hundreds of videos on it becomes completely unusable.\n\nSince the size of the maps are small compared to the buffered data, it feels unhelpful to trade memory savings for potential performance problems.  flat_map\u003c\u003e is nice data type when used with caution though.",
+      "parentUuid": "8e0b7f5c_68d239a9",
+      "revId": "bb0dcdd84ede109b5efd78afd50e8bc18bd20b63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "137edf18_9d3c48dd",
         "filename": "media/blink/multibuffer.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "bb0dcdd84ede109b5efd78afd50e8bc18bd20b63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5c34444_1b3bc7c7",
+        "filename": "media/blink/multibuffer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-09-05T22:18:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "137edf18_9d3c48dd",
+      "revId": "bb0dcdd84ede109b5efd78afd50e8bc18bd20b63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5f1b2a6b_7191e17d",
+        "filename": "media/blink/multibuffer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-09-05T22:18:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ec16064_5b4d1166",
+      "revId": "bb0dcdd84ede109b5efd78afd50e8bc18bd20b63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd374cb0_8b4a0269",
         "filename": "media/blink/multibuffer_data_source_unittest.cc",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-05T21:04:22Z",
       "side": 1,
       "message": "Do the above tests check the inverse? I.e. ensure we _don\u0027t_ grow when we haven\u0027t read that much?",
+      "revId": "bb0dcdd84ede109b5efd78afd50e8bc18bd20b63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "924a374f_8f98589a",
+        "filename": "media/blink/multibuffer_data_source_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1556,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-09-05T22:18:13Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "bd374cb0_8b4a0269",
       "revId": "bb0dcdd84ede109b5efd78afd50e8bc18bd20b63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
