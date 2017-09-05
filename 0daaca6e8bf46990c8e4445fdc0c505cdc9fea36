@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bceaa484_90f1822d",
+        "filename": "chrome/browser/media/webrtc/media_stream_devices_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-05T09:49:29Z",
+      "side": 1,
+      "message": "nit: You have to add #include \u003calgorithm\u003e for std::find_if",
+      "range": {
+        "startLine": 129,
+        "startChar": 13,
+        "endLine": 129,
+        "endChar": 20
+      },
+      "revId": "0daaca6e8bf46990c8e4445fdc0c505cdc9fea36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc5bd2f5_c2596f03",
+        "filename": "extensions/shell/browser/media_capture_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-05T09:49:29Z",
+      "side": 1,
+      "message": "nit: #include \u003calgorithm\u003e for std::find_if",
+      "range": {
+        "startLine": 29,
+        "startChar": 19,
+        "endLine": 29,
+        "endChar": 26
+      },
+      "revId": "0daaca6e8bf46990c8e4445fdc0c505cdc9fea36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
