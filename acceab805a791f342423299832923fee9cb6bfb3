@@ -1,0 +1,239 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dec4f8fb_7b7d43b2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-05T10:59:27Z",
+      "side": 1,
+      "message": "Nit: I suppose this pink spaces are probably a Gerrit way of showing trailing whitespaces. Can you please remove them?",
+      "range": {
+        "startLine": 10,
+        "startChar": 72,
+        "endLine": 10,
+        "endChar": 73
+      },
+      "revId": "acceab805a791f342423299832923fee9cb6bfb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58918faf_c49bc991",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-05T10:59:27Z",
+      "side": 1,
+      "message": "Nit: since this method is a bunch on \"setupXXX\" calls, can we name it setupPreferences, please?",
+      "range": {
+        "startLine": 119,
+        "startChar": 17,
+        "endLine": 119,
+        "endChar": 34
+      },
+      "revId": "acceab805a791f342423299832923fee9cb6bfb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4181c6a_a78b5d67",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-05T10:59:27Z",
+      "side": 1,
+      "message": "mSignInPreference can be null here.",
+      "range": {
+        "startLine": 148,
+        "startChar": 0,
+        "endLine": 148,
+        "endChar": 70
+      },
+      "revId": "acceab805a791f342423299832923fee9cb6bfb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfd6e4fb_204a6dcb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-05T10:59:27Z",
+      "side": 1,
+      "message": "Nit: do we need this newline here? It applies to many newlines in this CL. I think that removing newlines in cases like this one can improve readability.",
+      "revId": "acceab805a791f342423299832923fee9cb6bfb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cfbd843_860dc406",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-05T10:59:27Z",
+      "side": 1,
+      "message": "Nit: can we use early return here?",
+      "range": {
+        "startLine": 167,
+        "startChar": 0,
+        "endLine": 167,
+        "endChar": 33
+      },
+      "revId": "acceab805a791f342423299832923fee9cb6bfb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e67cb90_440bbf72",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-05T10:59:27Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 181,
+        "startChar": 0,
+        "endLine": 181,
+        "endChar": 43
+      },
+      "revId": "acceab805a791f342423299832923fee9cb6bfb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d551752b_41a8cafb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-05T10:59:27Z",
+      "side": 1,
+      "message": "I think you also need to call chromeBasePreference.setManagedPreferenceDelegate(mManagedPreferenceDelegate) here.",
+      "revId": "acceab805a791f342423299832923fee9cb6bfb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad3b49db_b1a2124c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-05T10:59:27Z",
+      "side": 1,
+      "message": "There are two places where you look for PREF_SEARCH_ENGINE. Does it make sense to introduce a new field for it (similarly to mSignInPreference)?",
+      "revId": "acceab805a791f342423299832923fee9cb6bfb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c12271d_19006f57",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-05T10:59:27Z",
+      "side": 1,
+      "message": "Nit: s/Notification/Notifications/",
+      "range": {
+        "startLine": 228,
+        "startChar": 17,
+        "endLine": 228,
+        "endChar": 44
+      },
+      "revId": "acceab805a791f342423299832923fee9cb6bfb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c20f91da_4b4c9541",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-05T10:59:27Z",
+      "side": 1,
+      "message": "Content of this onPreferenceClickListener doesn\u0027t change during the app lifetime. Can we move it next to setupPreference above, please?",
+      "range": {
+        "startLine": 237,
+        "startChar": 0,
+        "endLine": 246,
+        "endChar": 15
+      },
+      "revId": "acceab805a791f342423299832923fee9cb6bfb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc4bd979_dcb64d99",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-05T10:59:27Z",
+      "side": 1,
+      "message": "It looks like this method is unused. Can we remove it?",
+      "range": {
+        "startLine": 329,
+        "startChar": 0,
+        "endLine": 338,
+        "endChar": 5
+      },
+      "revId": "acceab805a791f342423299832923fee9cb6bfb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
