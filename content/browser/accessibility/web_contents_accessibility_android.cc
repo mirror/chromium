@@ -888,7 +888,7 @@ jboolean WebContentsAccessibilityAndroid::AdjustSlider(
   // To behave similarly to an Android SeekBar, move by an increment of
   // approximately 20%.
   float original_value = value;
-  float delta = (max - min) / 5.0f;
+  float delta = (max - min) / 20.0f;
   value += (increment ? delta : -delta);
   value = std::max(std::min(value, max), min);
   if (value != original_value) {
