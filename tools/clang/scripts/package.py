@@ -238,7 +238,10 @@ def main():
   # Copy a whitelist of files to the directory we're going to tar up.
   # This supports the same patterns that the fnmatch module understands.
   exe_ext = '.exe' if sys.platform == 'win32' else ''
-  want = ['bin/llvm-symbolizer' + exe_ext,
+  want = [
+          'bin/llvm-symbolizer' + exe_ext,
+          'bin/llvm-cov' + exe_ext,
+          'bin/llvm-profdata' + exe_ext,
           'bin/sancov' + exe_ext,
           'lib/clang/*/asan_blacklist.txt',
           'lib/clang/*/cfi_blacklist.txt',
