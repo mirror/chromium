@@ -108,11 +108,7 @@ void ExtensionAppWindowLauncherController::RegisterApp(AppWindow* app_window) {
   aura::Window* window = app_window->GetNativeWindow();
   const ash::ShelfID shelf_id = GetShelfId(app_window);
   DCHECK(!shelf_id.IsNull());
-
   window->SetProperty(ash::kShelfIDKey, new std::string(shelf_id.Serialize()));
-  window->SetProperty<int>(
-      ash::kShelfItemTypeKey,
-      app_window->window_type_is_panel() ? ash::TYPE_APP_PANEL : ash::TYPE_APP);
 
   // Windows created by IME extension should be treated the same way as the
   // virtual keyboard window, which does not register itself in launcher.
