@@ -46,6 +46,30 @@
       "revId": "6a8189147b146d72e91e10cca7f7f432dc42ed2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a67664c6_3102fd56",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 2386,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-09-05T05:33:05Z",
+      "side": 1,
+      "message": "It\u0027s used for reader mode -- I\u0027m not sure if it\u0027s shipping but regardless there\u0027s a test testInfoBarContainerSwapsWebContents that otherwise fails (setCVC calls down into AttachTabHelpers so onShow needs to be after for the permissions code to think it\u0027s visible).\n\nHow can I test whether there\u0027s an unnecessary resize? I\u0027d guess that it would occur due to the relative positions of onSizeChanged and setContentViewCore, and the onShow is unrelated.",
+      "parentUuid": "0ea040b1_953c716b",
+      "range": {
+        "startLine": 2386,
+        "startChar": 8,
+        "endLine": 2386,
+        "endChar": 26
+      },
+      "revId": "6a8189147b146d72e91e10cca7f7f432dc42ed2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
