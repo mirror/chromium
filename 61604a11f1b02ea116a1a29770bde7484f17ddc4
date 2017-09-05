@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60069ef7_5ea5b733",
+        "filename": "base/tracked_objects.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-05T16:00:36Z",
+      "side": 0,
+      "message": "Check with siggi@, I\u0027d tend to think the OS might still use worker threads (and possibly re-renter Chrome from them).",
+      "revId": "61604a11f1b02ea116a1a29770bde7484f17ddc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
