@@ -112,6 +112,24 @@
     },
     {
       "key": {
+        "uuid": "8f44244e_b9fcd915",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/AcceleratedImageBufferSurface.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-09-05T15:31:11Z",
+      "side": 1,
+      "message": "The color spaces are linearRGB, Rec2020 and P3. When the pixels are opaque everything works fine. When the pixels are transparent, the color values are different:\n\nSource (SRGB): 155, 27, 27, 128\n\nExpected linearRGB: 0.329346, 0.011765, 0.011765, 0.501953\nActual linearRGB:   0.163940, 0.007324, 0.007324, 0.501953\n\nExpected P3: 0.270508, 0.019608, 0.015686, 0.501953\nActual P3:   0.136230, 0.012527, 0.010002, 0.501953",
+      "parentUuid": "b76e8bd5_82fd1496",
+      "revId": "aeaa7edf5a1dca93e4c2cd499c0225b559e205be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e170c638_80c1748e",
         "filename": "third_party/WebKit/Source/platform/graphics/gpu/AcceleratedImageBufferSurface.cpp",
         "patchSetId": 2
@@ -126,6 +144,24 @@
       "revId": "aeaa7edf5a1dca93e4c2cd499c0225b559e205be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16de8de7_ff24fcf7",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/AcceleratedImageBufferSurface.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-09-05T15:31:11Z",
+      "side": 1,
+      "message": "Ack. This fixes the mini-test issue.",
+      "parentUuid": "e170c638_80c1748e",
+      "revId": "aeaa7edf5a1dca93e4c2cd499c0225b559e205be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
