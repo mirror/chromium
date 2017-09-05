@@ -33,6 +33,24 @@
       "revId": "80a6e2a663955c3395cf7c1fd93a6a610971acbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9f76647_fbcdcd8c",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1116,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-09-05T17:02:12Z",
+      "side": 1,
+      "message": "I am not quite sure for his. But the old logic in ShowAppList() in Shell will only recode the UMA when IsAppListVisible() is true. But here, we can enter the if condition means IsAppListVisible() is false. So I removed the logic for UMA and only call Show app list here.\nnewcomer@, do you think do we need to add an UMA here? Or anywhere else? I found we already have one UMA in CompleteAppListDrag?",
+      "parentUuid": "5fb69a58_b8f9fd63",
+      "revId": "80a6e2a663955c3395cf7c1fd93a6a610971acbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
