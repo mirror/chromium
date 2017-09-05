@@ -774,10 +774,9 @@ bool AXLayoutObject::CanIgnoreSpaceNextTo(Node* adjacent_node) const {
 
 bool AXLayoutObject::CanIgnoreTextAsEmpty() const {
   DCHECK(layout_object_->IsText());
+  DCHECK(layout_object_->Parent());
+
   LayoutText* layout_text = ToLayoutText(layout_object_);
-  if (!layout_text->HasTextBoxes()) {
-    return true;
-  }
 
   // Ignore empty text
   if (layout_text->HasEmptyText()) {
@@ -789,20 +788,54 @@ bool AXLayoutObject::CanIgnoreTextAsEmpty() const {
   if (!node)
     return false;
 
-  // Don't ignore static text in editable text controls.
-  if (HasEditableStyle(*node))
+  // ALways keep if anything other than collapsible whitespace.
+  if (!layout_text->IsAllCollapsibleWhitespace())
     return false;
 
-  // Ignore extra whitespace-only text if a sibling doesn't will be presented
-  // separately by scren readers whether whitespace is there or not.
+  bool has_text_boxes = layout_text->HasTextBoxes();
+
+  // Will now look at sibling nodes.
   // Using "skipping children" methods as we need the closest element to the
   // whitespace markup-wise, e.g. tag1 in these examples:
   // [whitespace] <tag1><tag2>x</tag2></tag1>
   // <span>[whitespace]</span> <tag1><tag2>x</tag2></tag1>
-  if (layout_text->GetText().Impl()->ContainsOnlyWhitespace() &&
-      (CanIgnoreSpaceNextTo(FlatTreeTraversal::NextSkippingChildren(*node)) ||
-       CanIgnoreSpaceNextTo(
-           FlatTreeTraversal::PreviousSkippingChildren(*node))))
+  Node* prev_node = FlatTreeTraversal::PreviousSkippingChildren(*node);
+  Node* next_node = FlatTreeTraversal::NextSkippingChildren(*node);
+
+  // Unrendered whitespace may be a soft break and requires special handling.
+  if (!has_text_boxes) {
+    // TODO(aleventhal) Find better way to determine if space is a soft break.
+    // Is soft break if: 1) whitespace, 2) no text boxes, 3) has inline parent.
+    bool is_soft_break = layout_object_->Parent()->IsLayoutInline();
+    if (!is_soft_break)
+      return true;  // Unrendered whitespace that is not a soft break.
+
+    if (!prev_node || !next_node)
+      return true;  // Soft break without a sibling can be ignored
+
+    // No previous layout object, no need for extra space here.
+    LayoutObject* prev_layout_obj = prev_node->GetLayoutObject();
+    if (!prev_layout_obj)
+      return true;
+    if (prev_layout_obj->IsText() &&
+        ToLayoutText(prev_layout_obj)->IsAllCollapsibleWhitespace())
+      return true;  // Ignore newline " " after " " already there
+
+    // No previous layout object, no need for extra space here.
+    LayoutObject* next_layout_obj = next_node->GetLayoutObject();
+    if (!next_layout_obj)
+      return true;
+    if (next_layout_obj->IsText() &&
+        ToLayoutText(next_layout_obj)->IsAllCollapsibleWhitespace())
+      return true;  // Ignore newline " " after " " already there
+  }
+
+  if (HasEditableStyle(*node))
+    return false;  // Keep all rendered whitespace in editable text.
+
+  // Ignore extra whitespace-only text if a sibling will be presented
+  // separately by screen readers whether whitespace is there or not.
+  if (CanIgnoreSpaceNextTo(prev_node) || CanIgnoreSpaceNextTo(next_node))
     return true;
 
   // Text elements with empty whitespace are returned, because of cases
@@ -1253,11 +1286,23 @@ String AXLayoutObject::TextAlternative(bool recursive,
     } else if (layout_object_->IsText() &&
                (!recursive || !layout_object_->IsCounter())) {
       LayoutText* layout_text = ToLayoutText(layout_object_);
-      String result = layout_text->PlainText();
-      if (!result.IsEmpty() || layout_text->IsAllCollapsibleWhitespace())
-        text_alternative = result;
-      else
-        text_alternative = layout_text->GetText();
+      String visible_text = layout_text->PlainText();  // Actual rendered text.
+      // If no text boxes we assume this is unrendered end-of-line whitespace.
+      // TODO find robust way to deterministically detect end-of-line space.
+      if (visible_text.IsEmpty()) {
+        // No visible rendered text -- must be whitespace.
+        // Either it is useful whitespace for separating words or not.
+        if (layout_text->IsAllCollapsibleWhitespace()) {
+          if (cached_is_ignored_)
+            return "";
+          // If no textboxes, this was unrendered whitespace at the line's end.
+          text_alternative = layout_text->HasTextBoxes() ? "" : " ";
+        } else {
+          text_alternative = layout_text->GetText();
+        }
+      } else {
+        text_alternative = visible_text;
+      }
       found_text_alternative = true;
     } else if (layout_object_->IsListMarker() && !recursive) {
       text_alternative = ToLayoutListMarker(layout_object_)->GetText();
