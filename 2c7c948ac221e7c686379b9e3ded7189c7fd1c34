@@ -33,6 +33,24 @@
       "revId": "2c7c948ac221e7c686379b9e3ded7189c7fd1c34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "909695a2_35e87954",
+        "filename": "content/public/common/resource_request_completion_status.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-05T06:40:31Z",
+      "side": 1,
+      "message": "\u003e I\u0027m not really an owner here but it seems OK for the ctor to take an |int| since |error_code| is an int?\n\nI have no strong opinion here. I\u0027ll make |error_code| to an int if there is no objection.\n\n\u003e Also did you consider adding another ctor for ResourceRequestCompletionStatus(int error_code, int64_t length) too? I guess it\u0027s weird because Error is always OK? But still seems to help readability over setting the len in two statements after the ctor.\n\nI\u0027d prefer to have only the ctor that takes the required params (i.e., |error_code| in this case), or the params for all member fields. As my previous comment, |length| would be an optional param and it looks odd that the struct treats only |length| as special.",
+      "parentUuid": "924f89ab_30188679",
+      "revId": "2c7c948ac221e7c686379b9e3ded7189c7fd1c34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
