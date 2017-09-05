@@ -746,10 +746,6 @@ void TopSitesImpl::SetTopSites(const MostVisitedURLList& new_top_sites,
     histogram_recorded_ = true;
   }
 
-  if (!delta.deleted.empty() || !delta.added.empty() || !delta.moved.empty()) {
-    backend_->UpdateTopSites(delta, record_or_not);
-  }
-
   last_num_urls_changed_ = delta.added.size() + delta.moved.size();
 
   // We always do the following steps (setting top sites in cache, and resetting
@@ -789,10 +785,16 @@ void TopSitesImpl::SetTopSites(const MostVisitedURLList& new_top_sites,
 
   ResetThreadSafeCache();
   ResetThreadSafeImageCache();
-  if (location == CALL_LOCATION_FROM_FORCED_URLS)
-    NotifyTopSitesChanged(TopSitesObserver::ChangeReason::FORCED_URL);
-  else
-    NotifyTopSitesChanged(TopSitesObserver::ChangeReason::MOST_VISITED);
+
+  // If top sites has a change, update the database and notify its observers.
+  if (!delta.deleted.empty() || !delta.added.empty() || !delta.moved.empty()) {
+    backend_->UpdateTopSites(delta, record_or_not);
+
+    if (location == CALL_LOCATION_FROM_FORCED_URLS)
+      NotifyTopSitesChanged(TopSitesObserver::ChangeReason::FORCED_URL);
+    else
+      NotifyTopSitesChanged(TopSitesObserver::ChangeReason::MOST_VISITED);
+  }
 
   // Restart the timer that queries history for top sites. This is done to
   // ensure we stay in sync with history.
