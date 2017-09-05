@@ -14,8 +14,8 @@ rootWebArea focusable
 ++++textField focusable name='l2'
 ++++textField focusable name='l2'
 ++++++genericContainer
-++++++++staticText name='value'
-++++++++++inlineTextBox name='value'
+++++++++staticText name='value  *'
+++++++++++inlineTextBox name='value  *'
 ++++labelText
 ++++++staticText name='Email'
 ++++++++inlineTextBox name='Email'
