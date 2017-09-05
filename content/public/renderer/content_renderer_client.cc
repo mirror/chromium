@@ -252,6 +252,12 @@ GURL ContentRendererClient::OverrideFlashEmbedWithHTML(const GURL& url) {
   return GURL();
 }
 
+blink::WebMimeHandlerViewManager*
+ContentRendererClient::CreateMimeHandlerViewManager(
+    RenderFrame* render_frame) const {
+  return nullptr;
+}
+
 std::unique_ptr<base::TaskScheduler::InitParams>
 ContentRendererClient::GetTaskSchedulerInitParams() {
   return nullptr;

@@ -6,12 +6,15 @@
 
 #include <stddef.h>
 
+#include "base/feature_list.h"
 #include "base/strings/string_split.h"
 #include "base/strings/utf_string_conversions.h"
+#include "content/public/common/content_features.h"
 #include "content/public/renderer/render_frame.h"
 #include "content/public/renderer/render_view.h"
 #include "extensions/common/extension_messages.h"
 #include "extensions/common/stack_frame.h"
+#include "extensions/renderer/mime_handler_view/mime_handler_view_manager.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
 #include "third_party/WebKit/public/web/WebView.h"
 
@@ -84,6 +87,12 @@ ExtensionsRenderFrameObserver::ExtensionsRenderFrameObserver(
   registry->AddInterface(
       base::Bind(&ExtensionsRenderFrameObserver::BindAppWindowRequest,
                  base::Unretained(this)));
+
+  if (base::FeatureList::IsEnabled(
+          features::kPdfExtensionInOutOfProcessFrame)) {
+    registry->AddInterface(base::Bind(MimeHandlerViewManager::CreateInterface,
+                                      render_frame->GetRoutingID()));
+  }
 }
 
 ExtensionsRenderFrameObserver::~ExtensionsRenderFrameObserver() {

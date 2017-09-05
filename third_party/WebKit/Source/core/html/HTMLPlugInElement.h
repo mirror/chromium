@@ -28,6 +28,7 @@
 #include "core/html/HTMLFrameOwnerElement.h"
 #include "platform/bindings/ActiveScriptWrappable.h"
 #include "platform/bindings/SharedPersistent.h"
+#include "public/web/WebMimeHandlerViewManager.h"
 #include "v8/include/v8.h"
 
 namespace blink {
@@ -86,6 +87,11 @@ class CORE_EXPORT HTMLPlugInElement
   virtual Vector<WebParsedFeaturePolicyDeclaration> ConstructContainerPolicy()
       const;
 
+  void ResetExternalHandlerId();
+  WebMimeHandlerViewManager::HandlerId external_handler_id() const {
+    return external_handler_id_;
+  }
+
  protected:
   HTMLPlugInElement(const QualifiedName& tag_name,
                     Document&,
@@ -118,12 +124,15 @@ class CORE_EXPORT HTMLPlugInElement
   void DispatchErrorEvent();
   bool IsErrorplaceholder();
   void LazyReattachIfNeeded();
+  WebMimeHandlerViewManager* GetMimeHandlerViewManager() const;
 
   String service_type_;
   String url_;
   KURL loaded_url_;
   Member<HTMLImageLoader> image_loader_;
   bool is_delaying_load_event_;
+  WebMimeHandlerViewManager::HandlerId external_handler_id_ =
+      WebMimeHandlerViewManager::kHandlerIdNone;
 
  private:
   // EventTarget overrides:
@@ -180,6 +189,7 @@ class CORE_EXPORT HTMLPlugInElement
 
   bool RequestObjectInternal(const Vector<String>& param_names,
                              const Vector<String>& param_values);
+  void TryUsingExternalHandler();
 
   v8::Global<v8::Object> plugin_wrapper_;
   bool needs_plugin_update_;

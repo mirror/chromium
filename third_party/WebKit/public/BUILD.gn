@@ -551,6 +551,7 @@ source_set("blink_headers") {
     "web/WebMemoryStatistics.h",
     "web/WebMenuItemInfo.h",
     "web/WebMetaElement.h",
+    "web/WebMimeHandlerViewManager.h",
     "web/WebNavigationPolicy.h",
     "web/WebNavigationType.h",
     "web/WebNavigatorContentUtilsClient.h",

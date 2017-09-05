@@ -55,6 +55,7 @@ blink_core_sources("exported") {
     "WebLanguageDetectionDetails.cpp",
     "WebMemoryStatistics.cpp",
     "WebMetaElement.cpp",
+    "WebMimeHandlerViewManager.cpp",
     "WebNode.cpp",
     "WebOptionElement.cpp",
     "WebPageImportanceSignals.cpp",
