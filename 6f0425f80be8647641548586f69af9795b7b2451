@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23c95869_92237985",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1238,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-09-05T20:51:02Z",
+      "side": 1,
+      "message": "I think this part isn\u0027t needed.  Won\u0027t it be false already?",
+      "range": {
+        "startLine": 1238,
+        "startChar": 50,
+        "endLine": 1238,
+        "endChar": 75
+      },
+      "revId": "6f0425f80be8647641548586f69af9795b7b2451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd8cb5dc_fceaac4e",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-09-05T20:51:02Z",
+      "side": 1,
+      "message": "Could we keep these private, and add a new method called ForceVerticalScrollbarForFirstLayout?\n\nThat makes it clear that this is an edge case and that PLSA is normally responsible for determining its own scrollbar existence.",
+      "range": {
+        "startLine": 230,
+        "startChar": 31,
+        "endLine": 230,
+        "endChar": 35
+      },
+      "revId": "6f0425f80be8647641548586f69af9795b7b2451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
