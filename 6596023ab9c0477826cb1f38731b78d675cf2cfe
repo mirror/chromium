@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "8cf93291_90ac98f7",
+        "filename": "ash/wm/overview/window_selector_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-05T23:02:12Z",
+      "side": 1,
+      "message": "nit: effect -\u003e affect",
+      "range": {
+        "startLine": 516,
+        "startChar": 72,
+        "endLine": 516,
+        "endChar": 78
+      },
+      "revId": "6596023ab9c0477826cb1f38731b78d675cf2cfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "26227621_e625c505",
         "filename": "ui/app_list/presenter/app_list.cc",
         "patchSetId": 7
@@ -13,6 +36,24 @@
       "writtenOn": "2017-09-05T22:50:02Z",
       "side": 1,
       "message": "xiyuan@, didn\u0027t put the logic further into AppListPresenterImpl::Show, since multiple other funcs will call into AppListPresenterImpl::Show, I am not sure whether we should change the api thre. Is this ok?\nnewcomer@, remove the original IsVisible() restriction, since we only call into this through ShelfLayoutManager::StartGestureDrag to show the app list, IsVisible() is always false in this case.",
+      "revId": "6596023ab9c0477826cb1f38731b78d675cf2cfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24e0fb2d_0cd3ef46",
+        "filename": "ui/app_list/presenter/app_list.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-05T23:02:12Z",
+      "side": 1,
+      "message": "Think it is fine since the UMA only tracks calls from ash.",
+      "parentUuid": "26227621_e625c505",
       "revId": "6596023ab9c0477826cb1f38731b78d675cf2cfe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
