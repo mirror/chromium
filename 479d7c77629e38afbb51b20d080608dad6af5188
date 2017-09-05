@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d176911_e684f65a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SingleWebsitePreferences.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-05T15:18:04Z",
+      "side": 1,
+      "message": "Do you need to check resultCode? I guess we are fine with updating whatever the result...?",
+      "range": {
+        "startLine": 420,
+        "startChar": 25,
+        "endLine": 420,
+        "endChar": 26
+      },
+      "revId": "479d7c77629e38afbb51b20d080608dad6af5188",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e0736d5_f7bae5df",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SingleWebsitePreferences.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-05T15:18:04Z",
+      "side": 1,
+      "message": "Under what circumstances can mSite be null here?",
+      "range": {
+        "startLine": 423,
+        "startChar": 51,
+        "endLine": 423,
+        "endChar": 56
+      },
+      "revId": "479d7c77629e38afbb51b20d080608dad6af5188",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
