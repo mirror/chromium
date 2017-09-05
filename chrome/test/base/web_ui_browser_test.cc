@@ -51,7 +51,7 @@ using content::WebUIMessageHandler;
 
 namespace {
 
-base::LazyInstance<std::vector<std::string>>::DestructorAtExit error_messages_ =
+base::LazyInstance<std::vector<std::string>>::Leaky error_messages_ =
     LAZY_INSTANCE_INITIALIZER;
 
 // Intercepts all log messages.

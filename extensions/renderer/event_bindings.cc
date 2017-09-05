@@ -41,7 +41,7 @@ namespace {
 typedef std::map<std::string, int> EventListenerCounts;
 
 // A map of extension IDs to listener counts for that extension.
-base::LazyInstance<std::map<std::string, EventListenerCounts>>::DestructorAtExit
+base::LazyInstance<std::map<std::string, EventListenerCounts>>::Leaky
     g_listener_counts = LAZY_INSTANCE_INITIALIZER;
 
 // A collection of the unmanaged events (i.e., those for which the browser is
