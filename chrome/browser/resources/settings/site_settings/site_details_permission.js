@@ -42,6 +42,9 @@ Polymer({
    * @private
    */
   siteChanged_: function(site) {
+    if (this.category == '')
+      return;
+
     if (site.source == settings.SiteSettingSource.DEFAULT) {
       this.defaultSetting_ = site.setting;
       this.$.permission.value = settings.ContentSetting.DEFAULT;

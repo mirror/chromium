@@ -153,6 +153,8 @@ Polymer({
    * @private
    */
   updateDefaultValueLabel_: function(category) {
+    if (category == '')
+      return;
     this.browserProxy.getDefaultValueForContentType(category).then(
         defaultValue => {
           this.set(
