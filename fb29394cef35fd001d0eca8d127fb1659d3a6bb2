@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8f4b377_42cb14fe",
+        "filename": "chrome/browser/media/webrtc/media_stream_device_permission_context.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-05T06:52:14Z",
+      "side": 1,
+      "message": "nit: can this be removed?",
+      "revId": "fb29394cef35fd001d0eca8d127fb1659d3a6bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2054a49e_2e9f2f75",
+        "filename": "chrome/browser/media/webrtc/media_stream_device_permission_context.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-05T06:52:14Z",
+      "side": 1,
+      "message": "nit: is this needed?",
+      "revId": "fb29394cef35fd001d0eca8d127fb1659d3a6bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfb0e6f0_0927b0bd",
+        "filename": "chrome/browser/media/webrtc/media_stream_devices_controller_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-05T06:52:14Z",
+      "side": 1,
+      "message": "nit: is this needed?",
+      "revId": "fb29394cef35fd001d0eca8d127fb1659d3a6bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45284343_089ed229",
+        "filename": "chrome/browser/media/webrtc/media_stream_devices_controller_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-05T06:52:14Z",
+      "side": 1,
+      "message": "nit: we should probably inline the above function (up to SetPromptResponseType)",
+      "revId": "fb29394cef35fd001d0eca8d127fb1659d3a6bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "723c177f_a817561a",
+        "filename": "chrome/browser/media/webrtc/media_stream_devices_controller_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-05T06:52:14Z",
+      "side": 1,
+      "message": "nit: is this needed anymore (and it\u0027s header?)",
+      "revId": "fb29394cef35fd001d0eca8d127fb1659d3a6bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
