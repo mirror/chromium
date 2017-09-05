@@ -16,6 +16,7 @@
 #include "base/task_runner_util.h"
 #include "base/threading/thread_checker.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
 #include "content/browser/renderer_host/media/media_stream_manager.h"
 #include "content/browser/renderer_host/media/video_capture_manager.h"
@@ -41,6 +42,7 @@ namespace {
 // human readable names of |devices|.
 std::string GetLogMessageString(MediaDeviceType device_type,
                                 const MediaDeviceInfoArray& device_infos) {
+  TRACE_EVENT0("media", "std::string GetLogMessageString");
   std::string output_string =
       base::StringPrintf("Getting devices of type %d:\n", device_type);
   if (device_infos.empty())
@@ -51,6 +53,7 @@ std::string GetLogMessageString(MediaDeviceType device_type,
 }
 
 MediaDeviceInfoArray GetFakeAudioDevices(bool is_input) {
+  TRACE_EVENT0("media", "MediaDeviceInfoArray GetFakeAudioDevices");
   MediaDeviceInfoArray result;
   if (is_input) {
     result.emplace_back(media::AudioDeviceDescription::kDefaultDeviceId,
@@ -106,16 +109,19 @@ class MediaDevicesManager::CacheInfo {
         is_update_ongoing_(false) {}
 
   void InvalidateCache() {
+    TRACE_EVENT0("media", "InvalidateCache");
     DCHECK(thread_checker_.CalledOnValidThread());
     seq_last_invalidation_ = NewEventSequence();
   }
 
   bool IsLastUpdateValid() const {
+    TRACE_EVENT0("media", "IsLastUpdateValid");
     DCHECK(thread_checker_.CalledOnValidThread());
     return seq_last_update_ > seq_last_invalidation_ && !is_update_ongoing_;
   }
 
   void UpdateStarted() {
+    TRACE_EVENT0("media", "UpdateStarted");
     DCHECK(thread_checker_.CalledOnValidThread());
     DCHECK(!is_update_ongoing_);
     seq_last_update_ = NewEventSequence();
@@ -123,18 +129,21 @@ class MediaDevicesManager::CacheInfo {
   }
 
   void UpdateCompleted() {
+    TRACE_EVENT0("media", "UpdateCompleted");
     DCHECK(thread_checker_.CalledOnValidThread());
     DCHECK(is_update_ongoing_);
     is_update_ongoing_ = false;
   }
 
   bool is_update_ongoing() const {
+    TRACE_EVENT0("media", "is_update_ongoing");
     DCHECK(thread_checker_.CalledOnValidThread());
     return is_update_ongoing_;
   }
 
  private:
   int64_t NewEventSequence() {
+    TRACE_EVENT0("media", "NewEventSequence");
     DCHECK(thread_checker_.CalledOnValidThread());
     return ++current_event_sequence_;
   }
@@ -166,12 +175,14 @@ MediaDevicesManager::MediaDevicesManager(
 }
 
 MediaDevicesManager::~MediaDevicesManager() {
+  TRACE_EVENT0("media", "MediaDevicesManager::~MediaDevicesManager");
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 }
 
 void MediaDevicesManager::EnumerateDevices(
     const BoolDeviceTypes& requested_types,
     const EnumerationCallback& callback) {
+  TRACE_EVENT0("media", "void MediaDevicesManager::EnumerateDevices");
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   StartMonitoring();
 
@@ -191,6 +202,8 @@ void MediaDevicesManager::EnumerateDevices(
 void MediaDevicesManager::SubscribeDeviceChangeNotifications(
     MediaDeviceType type,
     MediaDeviceChangeSubscriber* subscriber) {
+  TRACE_EVENT0("media",
+               "void MediaDevicesManager::SubscribeDeviceChangeNotifications");
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
   auto it = std::find(device_change_subscribers_[type].begin(),
@@ -202,6 +215,9 @@ void MediaDevicesManager::SubscribeDeviceChangeNotifications(
 void MediaDevicesManager::UnsubscribeDeviceChangeNotifications(
     MediaDeviceType type,
     MediaDeviceChangeSubscriber* subscriber) {
+  TRACE_EVENT0(
+      "media",
+      "void MediaDevicesManager::UnsubscribeDeviceChangeNotifications");
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   auto it = std::find(device_change_subscribers_[type].begin(),
                       device_change_subscribers_[type].end(), subscriber);
@@ -211,6 +227,7 @@ void MediaDevicesManager::UnsubscribeDeviceChangeNotifications(
 
 void MediaDevicesManager::SetCachePolicy(MediaDeviceType type,
                                          CachePolicy policy) {
+  TRACE_EVENT0("media", "void MediaDevicesManager::SetCachePolicy");
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK(IsValidMediaDeviceType(type));
   if (cache_policies_[type] == policy)
@@ -226,6 +243,7 @@ void MediaDevicesManager::SetCachePolicy(MediaDeviceType type,
 }
 
 void MediaDevicesManager::StartMonitoring() {
+  TRACE_EVENT0("media", "void MediaDevicesManager::StartMonitoring");
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   if (monitoring_started_)
     return;
@@ -262,6 +280,7 @@ void MediaDevicesManager::StartMonitoring() {
 
 #if defined(OS_MACOSX)
 void MediaDevicesManager::StartMonitoringOnUIThread() {
+  TRACE_EVENT0("media", "void MediaDevicesManager::StartMonitoringOnUIThread");
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   // TODO(erikchen): Remove ScopedTracker below once crbug.com/458404 is fixed.
   tracked_objects::ScopedTracker tracking_profile1(
@@ -281,6 +300,7 @@ void MediaDevicesManager::StartMonitoringOnUIThread() {
 #endif
 
 void MediaDevicesManager::StopMonitoring() {
+  TRACE_EVENT0("media", "void MediaDevicesManager::StopMonitoring");
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   if (!monitoring_started_)
     return;
@@ -291,12 +311,14 @@ void MediaDevicesManager::StopMonitoring() {
 }
 
 bool MediaDevicesManager::IsMonitoringStarted() {
+  TRACE_EVENT0("media", "bool MediaDevicesManager::IsMonitoringStarted");
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   return monitoring_started_;
 }
 
 void MediaDevicesManager::OnDevicesChanged(
     base::SystemMonitor::DeviceType device_type) {
+  TRACE_EVENT0("media", "void MediaDevicesManager::OnDevicesChanged");
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   switch (device_type) {
     case base::SystemMonitor::DEVTYPE_AUDIO:
@@ -313,11 +335,14 @@ void MediaDevicesManager::OnDevicesChanged(
 
 MediaDeviceInfoArray MediaDevicesManager::GetCachedDeviceInfo(
     MediaDeviceType type) {
+  TRACE_EVENT0("media",
+               "MediaDeviceInfoArray MediaDevicesManager::GetCachedDeviceInfo");
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   return current_snapshot_[type];
 }
 
 void MediaDevicesManager::DoEnumerateDevices(MediaDeviceType type) {
+  TRACE_EVENT0("media", "void MediaDevicesManager::DoEnumerateDevices");
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK(IsValidMediaDeviceType(type));
   CacheInfo& cache_info = cache_infos_[type];
@@ -343,6 +368,7 @@ void MediaDevicesManager::DoEnumerateDevices(MediaDeviceType type) {
 }
 
 void MediaDevicesManager::EnumerateAudioDevices(bool is_input) {
+  TRACE_EVENT0("media", "void MediaDevicesManager::EnumerateAudioDevices");
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   MediaDeviceType type =
       is_input ? MEDIA_DEVICE_TYPE_AUDIO_INPUT : MEDIA_DEVICE_TYPE_AUDIO_OUTPUT;
@@ -361,6 +387,8 @@ void MediaDevicesManager::EnumerateAudioDevices(bool is_input) {
 
 void MediaDevicesManager::VideoInputDevicesEnumerated(
     const media::VideoCaptureDeviceDescriptors& descriptors) {
+  TRACE_EVENT0("media",
+               "void MediaDevicesManager::VideoInputDevicesEnumerated");
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   MediaDeviceInfoArray snapshot;
   for (const auto& descriptor : descriptors) {
@@ -372,6 +400,7 @@ void MediaDevicesManager::VideoInputDevicesEnumerated(
 void MediaDevicesManager::AudioDevicesEnumerated(
     MediaDeviceType type,
     media::AudioDeviceDescriptions device_descriptions) {
+  TRACE_EVENT0("media", "void MediaDevicesManager::AudioDevicesEnumerated");
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
   MediaDeviceInfoArray snapshot;
@@ -384,6 +413,7 @@ void MediaDevicesManager::AudioDevicesEnumerated(
 void MediaDevicesManager::DevicesEnumerated(
     MediaDeviceType type,
     const MediaDeviceInfoArray& snapshot) {
+  TRACE_EVENT0("media", "void MediaDevicesManager::DevicesEnumerated");
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK(IsValidMediaDeviceType(type));
   UpdateSnapshot(type, snapshot);
@@ -410,6 +440,7 @@ void MediaDevicesManager::DevicesEnumerated(
 void MediaDevicesManager::UpdateSnapshot(
     MediaDeviceType type,
     const MediaDeviceInfoArray& new_snapshot) {
+  TRACE_EVENT0("media", "void MediaDevicesManager::UpdateSnapshot");
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK(IsValidMediaDeviceType(type));
 
@@ -438,6 +469,7 @@ void MediaDevicesManager::UpdateSnapshot(
 }
 
 void MediaDevicesManager::ProcessRequests() {
+  TRACE_EVENT0("media", "void MediaDevicesManager::ProcessRequests");
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   requests_.erase(std::remove_if(requests_.begin(), requests_.end(),
                                  [this](const EnumerationRequest& request) {
@@ -452,6 +484,7 @@ void MediaDevicesManager::ProcessRequests() {
 
 bool MediaDevicesManager::IsEnumerationRequestReady(
     const EnumerationRequest& request_info) {
+  TRACE_EVENT0("media", "bool MediaDevicesManager::IsEnumerationRequestReady");
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   bool is_ready = true;
   for (size_t i = 0; i < NUM_MEDIA_DEVICE_TYPES; ++i) {
@@ -474,6 +507,7 @@ bool MediaDevicesManager::IsEnumerationRequestReady(
 }
 
 void MediaDevicesManager::HandleDevicesChanged(MediaDeviceType type) {
+  TRACE_EVENT0("media", "void MediaDevicesManager::HandleDevicesChanged");
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK(IsValidMediaDeviceType(type));
   cache_infos_[type].InvalidateCache();
@@ -483,6 +517,7 @@ void MediaDevicesManager::HandleDevicesChanged(MediaDeviceType type) {
 void MediaDevicesManager::NotifyMediaStreamManager(
     MediaDeviceType type,
     const MediaDeviceInfoArray& new_snapshot) {
+  TRACE_EVENT0("media", "void MediaDevicesManager::NotifyMediaStreamManager");
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK(type == MEDIA_DEVICE_TYPE_AUDIO_INPUT ||
          type == MEDIA_DEVICE_TYPE_VIDEO_INPUT);
@@ -508,6 +543,8 @@ void MediaDevicesManager::NotifyMediaStreamManager(
 void MediaDevicesManager::NotifyDeviceChangeSubscribers(
     MediaDeviceType type,
     const MediaDeviceInfoArray& snapshot) {
+  TRACE_EVENT0("media",
+               "void MediaDevicesManager::NotifyDeviceChangeSubscribers");
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK(IsValidMediaDeviceType(type));
 

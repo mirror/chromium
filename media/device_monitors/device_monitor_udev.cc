@@ -12,6 +12,7 @@
 
 #include "base/macros.h"
 #include "base/system_monitor/system_monitor.h"
+#include "base/trace_event/trace_event.h"
 #include "device/udev_linux/udev.h"
 #include "device/udev_linux/udev_linux.h"
 
@@ -39,14 +40,18 @@ namespace media {
 DeviceMonitorLinux::DeviceMonitorLinux(
     const scoped_refptr<base::SingleThreadTaskRunner>& io_task_runner)
     : io_task_runner_(io_task_runner) {
+  TRACE_EVENT0("media", "DeviceMonitorLinux::DeviceMonitorLinux");
   io_task_runner_->PostTask(
       FROM_HERE,
       base::Bind(&DeviceMonitorLinux::Initialize, base::Unretained(this)));
 }
 
-DeviceMonitorLinux::~DeviceMonitorLinux() {}
+DeviceMonitorLinux::~DeviceMonitorLinux() {
+  TRACE_EVENT0("media", "DeviceMonitorLinux::~DeviceMonitorLinux");
+}
 
 void DeviceMonitorLinux::Initialize() {
+  TRACE_EVENT0("media", "void DeviceMonitorLinux::Initialize");
   DCHECK(io_task_runner_->BelongsToCurrentThread());
 
   // We want to be notified of IO message loop destruction to delete |udev_|.
@@ -63,11 +68,14 @@ void DeviceMonitorLinux::Initialize() {
 }
 
 void DeviceMonitorLinux::WillDestroyCurrentMessageLoop() {
+  TRACE_EVENT0("media",
+               "void DeviceMonitorLinux::WillDestroyCurrentMessageLoop");
   DCHECK(io_task_runner_->BelongsToCurrentThread());
   udev_.reset();
 }
 
 void DeviceMonitorLinux::OnDevicesChanged(udev_device* device) {
+  TRACE_EVENT0("media", "void DeviceMonitorLinux::OnDevicesChanged");
   DCHECK(io_task_runner_->BelongsToCurrentThread());
   DCHECK(device);
 
