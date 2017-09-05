@@ -118,6 +118,30 @@
       "revId": "6a8189147b146d72e91e10cca7f7f432dc42ed2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7841131e_db975e4f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 2386,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-09-05T15:46:49Z",
+      "side": 1,
+      "message": "I believe the order of things that happens is this:\n\nHere we are setting a fake size to ContentViewCore, because we know it itself will soon resize to that. If we do nothing, it ends up sending a (0,0) layout which is its actual size for now. When we call setContentViewCore it makes ContainerView inside it to start listening to various visibility and hierarchy changes and respond to them with (My size might have changed). onShow triggers one of these signals (switching it from hidden to visible). That makes it check its size, which it realizes is not the fake size (yet), but (0,0).\n\nWe don\u0027t want that. For this call, we want it to stay unaware that its current size is fake, because the next size update will set it to that value anyway.",
+      "parentUuid": "06a5b095_a011e5d1",
+      "range": {
+        "startLine": 2386,
+        "startChar": 8,
+        "endLine": 2386,
+        "endChar": 26
+      },
+      "revId": "6a8189147b146d72e91e10cca7f7f432dc42ed2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
