@@ -42,13 +42,13 @@ public class NtpUiCaptureTestData {
             createSiteSuggestion("Shop.rr", "shop"),
             createSiteSuggestion("Now Entertainment", "movies")};
 
-    private static final int[] FAKE_MOST_VISITED_COLORS = {
+    private static final int[] FALLBACK_COLORS = {
             0xff306090, // Muted blue.
             0xff903060, // Muted purplish red.
             0xff309060, // Muted green.
             0xff603090, // Muted purple.
             0xff906030, // Muted brown.
-            0xff303090, // Muted dark blue.
+            0xff787878, // Grey, the default fallback color as defined in fallback_icon_style.cc.
             0xff609060, // Muted brownish green.
             0xff903030 // Muted red.
     };
@@ -144,18 +144,14 @@ public class NtpUiCaptureTestData {
 
         final Map<String, Integer> colorMap = new HashMap<>();
         for (int i = 0; i < SITE_SUGGESTIONS.length; i++) {
-            colorMap.put(SITE_SUGGESTIONS[i].url, FAKE_MOST_VISITED_COLORS[i]);
+            colorMap.put(SITE_SUGGESTIONS[i].url, FALLBACK_COLORS[i]);
         }
         return new LargeIconBridge() {
             @Override
             public boolean getLargeIconForUrl(
-                    final String pageUrl, int desiredSizePx, final LargeIconCallback callback) {
-                ThreadUtils.postOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        callback.onLargeIconAvailable(
-                                iconMap.get(pageUrl), colorMap.get(pageUrl), true);
-                    }
+                    String url, int desiredSizePx, LargeIconCallback callback) {
+                ThreadUtils.postOnUiThread(() -> {
+                    callback.onLargeIconAvailable(iconMap.get(url), colorMap.get(url), true);
                 });
                 return true;
             }
