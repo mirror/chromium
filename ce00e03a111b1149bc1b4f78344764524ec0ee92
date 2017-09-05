@@ -46,6 +46,30 @@
       "revId": "ce00e03a111b1149bc1b4f78344764524ec0ee92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00dadb10_fb046797",
+        "filename": "ui/app_list/views/suggestions_container_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-09-05T19:15:59Z",
+      "side": 1,
+      "message": "I would prefer keep order and + some comment explaining why.",
+      "parentUuid": "c78f7412_86d6e794",
+      "range": {
+        "startLine": 94,
+        "startChar": 34,
+        "endLine": 94,
+        "endChar": 49
+      },
+      "revId": "ce00e03a111b1149bc1b4f78344764524ec0ee92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
