@@ -22,6 +22,30 @@
       "revId": "ae995a00708a8c6c508d526b33a9533adcd8a530",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7349ea37_a88f39ac",
+        "filename": "components/safe_browsing/browser/threat_details.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-05T17:45:58Z",
+      "side": 1,
+      "message": "SB_THREAT_TYPE_PASSWORD_REUSE corresponds to the phishguard modal warning dialog.\nWe\u0027re going to send ThreatDetails for this modal dialog in the way similar to interstitial.\nSorry, it is indeed confusing. Let me remove it. I\u0027ll add it back when the modal warning is ready to send post-warning report.",
+      "parentUuid": "530b9661_4696eea1",
+      "range": {
+        "startLine": 507,
+        "startChar": 55,
+        "endLine": 507,
+        "endChar": 60
+      },
+      "revId": "ae995a00708a8c6c508d526b33a9533adcd8a530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
