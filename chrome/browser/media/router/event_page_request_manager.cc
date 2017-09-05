@@ -10,9 +10,13 @@
 #include "base/containers/circular_deque.h"
 #include "base/logging.h"
 #include "base/macros.h"
+#include "chrome/browser/media/router/event_page_request_manager_factory.h"
+#include "chrome/browser/media/router/media_router_factory.h"
+#include "chrome/browser/media/router/mojo/media_router_mojo_impl.h"
 #include "extensions/browser/event_page_tracker.h"
 #include "extensions/browser/process_manager.h"
 #include "extensions/browser/process_manager_factory.h"
+#include "extensions/common/extension.h"
 
 namespace media_router {
 
@@ -54,11 +58,14 @@ void EventPageRequestManager::OnMojoConnectionsReady() {
 
   base::circular_deque<base::OnceClosure> requests;
   requests.swap(pending_requests_);
+  LOG(ERROR) << "___________________ begin executing requests";
   for (base::OnceClosure& request : requests) {
+    LOG(ERROR) << "___________________ executing...";
     DCHECK(mojo_connections_ready_);
     // The requests should not queue additional requests when executed.
     std::move(request).Run();
   }
+  LOG(ERROR) << "___________________ done executing requests";
   DCHECK(pending_requests_.empty());
   wakeup_attempt_count_ = 0;
 }

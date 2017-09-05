@@ -12,7 +12,9 @@
 #include "base/gtest_prod_util.h"
 #include "base/memory/weak_ptr.h"
 #include "chrome/browser/media/router/mojo/media_router_mojo_metrics.h"
+#include "chrome/common/media_router/mojo/media_router.mojom.h"
 #include "components/keyed_service/core/keyed_service.h"
+#include "mojo/public/cpp/bindings/interface_request.h"
 
 namespace content {
 class BrowserContext;
@@ -20,7 +22,7 @@ class BrowserContext;
 
 namespace extensions {
 class EventPageTracker;
-}
+}  // namespace extensions
 
 namespace media_router {
 
@@ -127,6 +129,10 @@ class EventPageRequestManager : public KeyedService {
   int wakeup_attempt_count_ = 0;
 
   bool mojo_connections_ready_ = false;
+
+  // A flag to ensure that we record the provider version once, during the
+  // initial event page wakeup attempt.
+  bool provider_version_was_recorded_ = false;
 
   // Records the current reason the extension is being woken up.  Is set to
   // MediaRouteProviderWakeReason::TOTAL_COUNT if there is no pending reason.
