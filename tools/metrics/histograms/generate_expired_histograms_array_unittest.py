@@ -30,6 +30,27 @@ const size_t kNumExpiredHistograms = 2;
 #endif  // TEST_TEST_H_
 """)
 
+_EXPECTED_HEADER_FILE_CONTENT_EMPTY_ARRAY = (
+"""// Generated from generate_expired_histograms_array.py. Do not edit!
+
+#ifndef TEST_TEST_H_
+#define TEST_TEST_H_
+
+#include <stdint.h>
+
+namespace some_namespace {
+
+// Contains hashes of expired histograms.
+const uint64_t* kExpiredHistogramsHashes = nullptr;
+
+const size_t kNumExpiredHistograms = 0;
+
+}  // namespace some_namespace
+
+#endif  // TEST_TEST_H_
+""")
+
+
 class ExpiredHistogramsTest(unittest.TestCase):
 
   def testGetExpiredHistograms(self):
@@ -70,13 +91,12 @@ class ExpiredHistogramsTest(unittest.TestCase):
     base_date = datetime.date(2000, 10, 01)
 
     with self.assertRaises(generate_expired_histograms_array.Error) as error:
-        _ = generate_expired_histograms_array._GetExpiredHistograms(histograms,
-            base_date)
+        _ = generate_expired_histograms_array._GetExpiredHistograms(
+            histograms, base_date)
 
     self.assertEqual(
         "Unable to parse expiry date 2000-10-01 in histogram SecondHistogram.",
         str(error.exception))
-
 
   def testGenerateHeaderFileContent(self):
     header_filename = "test/test.h"
@@ -93,8 +113,14 @@ class ExpiredHistogramsTest(unittest.TestCase):
 
     content = generate_expired_histograms_array._GenerateHeaderFileContent(
         header_filename, namespace, hash_datatype, histogram_map)
-
     self.assertEqual(_EXPECTED_HEADER_FILE_CONTENT, content)
+
+    empty_array_content = (
+        generate_expired_histograms_array._GenerateHeaderFileContent(
+            header_filename, namespace, hash_datatype, dict()))
+    self.assertEqual(_EXPECTED_HEADER_FILE_CONTENT_EMPTY_ARRAY,
+                     empty_array_content)
+
 
 if __name__ == "__main__":
   unittest.main()
