@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5029a856_a91359ba",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-09-05T06:23:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "06ee3847_f4cb03c2",
+      "revId": "d5513881609dc573cb7e50d7e5373fa5e77e62f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "762ec042_90ebf4f6",
         "filename": "third_party/WebKit/Source/build/scripts/json5_generator.py",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "d5513881609dc573cb7e50d7e5373fa5e77e62f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bdc5ef2_f3c91b06",
+        "filename": "third_party/WebKit/Source/build/scripts/json5_generator.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-09-05T06:23:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "762ec042_90ebf4f6",
+      "revId": "d5513881609dc573cb7e50d7e5373fa5e77e62f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "429c18c0_f31c8b68",
+        "filename": "third_party/WebKit/Source/build/scripts/json5_generator.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-09-05T06:23:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0693bfa6_851d73bb",
+      "revId": "d5513881609dc573cb7e50d7e5373fa5e77e62f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d5e26a0_864bca02",
         "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "d5513881609dc573cb7e50d7e5373fa5e77e62f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea131c69_d9608a6d",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-09-05T06:23:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3d5e26a0_864bca02",
+      "revId": "d5513881609dc573cb7e50d7e5373fa5e77e62f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
