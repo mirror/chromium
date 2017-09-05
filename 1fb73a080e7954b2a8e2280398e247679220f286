@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "9d96f334_a7e1fbdd",
+        "filename": "content/renderer/media/mojo_audio_input_ipc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-09-05T08:34:36Z",
+      "side": 1,
+      "message": "Comment on why Unretained is safe.",
+      "revId": "1fb73a080e7954b2a8e2280398e247679220f286",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1c17cd9_4218059b",
         "filename": "content/renderer/media/mojo_audio_input_ipc.cc",
         "patchSetId": 2
@@ -13,6 +30,41 @@
       "writtenOn": "2017-09-04T15:02:32Z",
       "side": 1,
       "message": "I\u0027m really not sure any of these base::Passed() are correct, but it\u0027s what the error messages proposed. Please take an extra look at them! :)",
+      "revId": "1fb73a080e7954b2a8e2280398e247679220f286",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61857633_44d8fee7",
+        "filename": "content/renderer/media/mojo_audio_input_ipc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-09-05T08:34:36Z",
+      "side": 1,
+      "message": "Use BindOnce, this makes rvalues implicitly Passed. Explicitly using Passed is mostly useful when you have to bind a value which you cannot (or don\u0027t want to) move into a repeating callback (note that this makes the repeating callback only callable once anyways).",
+      "parentUuid": "a1c17cd9_4218059b",
+      "revId": "1fb73a080e7954b2a8e2280398e247679220f286",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "901255de_db862b1e",
+        "filename": "content/renderer/media/mojo_audio_input_ipc.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-09-05T08:34:36Z",
+      "side": 1,
+      "message": "Ah, if you\u0027re passing in the function to create the stream like this, I think you could assume the callback posts to the main thread so you don\u0027t have to pass in |main_task_runner|.",
       "revId": "1fb73a080e7954b2a8e2280398e247679220f286",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
