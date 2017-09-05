@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e542c2ad_3b0ddb9b",
+        "filename": "chrome/browser/android/ntp/content_suggestions_notifier_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-09-05T09:04:05Z",
+      "side": 1,
+      "message": "Also, you\u0027re aware that RecordContentSuggestionsNotificationOptOut records \"NewTabPage.ContentSuggestions.Notifications.AutoOptOuts\"? I\u0027m not sure we should have the \"Auto\" in there.",
+      "range": {
+        "startLine": 302,
+        "startChar": 47,
+        "endLine": 302,
+        "endChar": 75
+      },
+      "revId": "5b7a56055023c674239e39662358fd3fe266a339",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f309c8b_9c66f215",
+        "filename": "chrome/browser/android/ntp/content_suggestions_notifier_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-09-05T09:04:05Z",
+      "side": 1,
+      "message": "I had a think about what we want to record and I couldn\u0027t really come up with a better solution than this. With this approach we get a % of the number of total users who have at one point opted out. If a user opts out and opts back in again we still consider them opted out.\n\nIf we record people who opt back in things get more complicated - we have 3 groups of users:\n- those who\u0027ve never opted out.\n- those who\u0027ve opted out.\n- those who\u0027ve opted out and opted in.\nWhat\u0027s more, once a use enters the last group, we don\u0027t know whether they are currently opted out or in - all we know is that they\u0027ve done each one at least once.\n\nThe final approach would be logging for all users at some point whether they are opted-in or opted-out. This would give us an accurate %, but would add logging to some point and the only points I can think of that make sense are on the startup path which would add latency for this.\n\nSo I think this approach is probably the best as I guess the number of people who re-opt-in will be small and not worth the bother, but I wanted your opinion.",
+      "range": {
+        "startLine": 302,
+        "startChar": 4,
+        "endLine": 302,
+        "endChar": 46
+      },
+      "revId": "5b7a56055023c674239e39662358fd3fe266a339",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
