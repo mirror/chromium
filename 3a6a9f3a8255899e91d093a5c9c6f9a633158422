@@ -207,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "081f582c_d0002c00",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleScriptFetcher.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-05T03:40:54Z",
+      "side": 1,
+      "message": "Ah, it\u0027s feasible. Done.\n\nI blindly assumed DocumentModuleScriptFetcher already inherits other GarbageCollectedFinalized object and cannot make this the leftmost deriving class :p",
+      "parentUuid": "50960707_a1fd2c1a",
+      "revId": "3a6a9f3a8255899e91d093a5c9c6f9a633158422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2739b257_a9d0b2f2",
         "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleScriptFetcher.h",
         "patchSetId": 11
@@ -257,6 +275,24 @@
       "revId": "3a6a9f3a8255899e91d093a5c9c6f9a633158422",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69a5b4ee_a317d00d",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleScriptFetcher.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-05T03:40:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a91c0938_b17c24f4",
+      "revId": "3a6a9f3a8255899e91d093a5c9c6f9a633158422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
