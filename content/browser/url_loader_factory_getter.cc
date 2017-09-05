@@ -30,6 +30,7 @@ void URLLoaderFactoryGetter::Initialize(StoragePartitionImpl* partition) {
 
 mojom::URLLoaderFactoryPtr* URLLoaderFactoryGetter::GetNetworkFactory() {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  DCHECK(test_factory_.is_bound());
   return test_factory_.is_bound() ? &test_factory_ : &network_factory_;
 }
 
