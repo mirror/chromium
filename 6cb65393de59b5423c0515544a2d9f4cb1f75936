@@ -48,6 +48,29 @@
     },
     {
       "key": {
+        "uuid": "cc571203_17b768fd",
+        "filename": "chrome/android/java/src/com/google/android/apps/chrome/vr/VrMain.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-05T20:51:28Z",
+      "side": 1,
+      "message": "The only reason the Main alias has this package is historical.  I think we can put this in the existing chromium package structure.",
+      "range": {
+        "startLine": 5,
+        "startChar": 12,
+        "endLine": 5,
+        "endChar": 18
+      },
+      "revId": "6cb65393de59b5423c0515544a2d9f4cb1f75936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "06fca776_f3b01b64",
         "filename": "chrome/android/java/src/com/google/android/apps/chrome/vr/VrMain.java",
         "patchSetId": 3
@@ -64,6 +87,92 @@
         "startChar": 20,
         "endLine": 16,
         "endChar": 27
+      },
+      "revId": "6cb65393de59b5423c0515544a2d9f4cb1f75936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a67fd67d_393182dd",
+        "filename": "chrome/android/java/src/com/google/android/apps/chrome/vr/VrMain.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-05T20:51:28Z",
+      "side": 1,
+      "message": "Since this isn\u0027t an alias, I don\u0027t think we need to have this extend another class.  We could just call this VrLauncherActivity and have the contents here.  I also think \"Main\" is a bit overloaded and likely is meant to represent ACTION_MAIN for the intent, which this doesn\u0027t handle.  I think the VrLauncherActiivty is a fine name to expose.\n\nI think the question is whether you believe vr_shell will be the package name long term.  That is where we want to keep with something stable and expect it not to move around.  If we restructure the chrome packages, then this would break (as we can\u0027t rename anything in the manifest) and thus will have to orphan this somewhere.",
+      "range": {
+        "startLine": 16,
+        "startChar": 13,
+        "endLine": 16,
+        "endChar": 19
+      },
+      "revId": "6cb65393de59b5423c0515544a2d9f4cb1f75936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d23cea1_4bbf1135",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/ChromeLauncherVrActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-05T20:51:28Z",
+      "side": 1,
+      "message": "The things from ChromeLauncher that should be shared in my opinion are:\n\nsetIntent(IntentUtils.sanitizeIntent(getIntent()));\nIntentHandler.addTimestampToIntent(getIntent());\nrecordIntentMetrics();\n\nThose at least look generic enough, but I\u0027ll need to defer to mariakhomenko@ about the metrics stuff to see if it should be recorded for VR.\n\nIf all of those are valid, I think we should add a static to ChromeLauncherActivity that does something like \"validateIntentForLaunch\" that runs through the necessary bits for stuff skipping the launcher.",
+      "revId": "6cb65393de59b5423c0515544a2d9f4cb1f75936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05735fe3_93fec184",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/ChromeLauncherVrActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-05T20:51:28Z",
+      "side": 1,
+      "message": "I would do:\n\nif (!VrIntentUtils....) {\n    finish();\n}\n\nThen the rest isn\u0027t as indented.  You might also want to consider finishAndRemoveTask in the failure case.",
+      "range": {
+        "startLine": 22,
+        "startChar": 12,
+        "endLine": 22,
+        "endChar": 25
+      },
+      "revId": "6cb65393de59b5423c0515544a2d9f4cb1f75936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "230c69e1_495295a0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/ChromeLauncherVrActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-05T20:51:28Z",
+      "side": 1,
+      "message": "what does this do that the CustomTabVrActivity doesn\u0027t?  I still don\u0027t get from the description why that isn\u0027t being exposed.  Does this add necessary intent bits?  Does the first run handling do it?  CCTs already eject in the case where first run hasn\u0027t been completed, so I\u0027m wondering if it is just the extra intent flags that need to be added that are causing this indirection?\n\nThere are discussions that these bouncers might incur some amount of performance penalty, so I\u0027d like a slightly better handle on why we need it.",
+      "range": {
+        "startLine": 37,
+        "startChar": 19,
+        "endLine": 37,
+        "endChar": 31
       },
       "revId": "6cb65393de59b5423c0515544a2d9f4cb1f75936",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
