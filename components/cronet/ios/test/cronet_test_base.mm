@@ -53,6 +53,8 @@ NSMutableArray<NSData*>* _responseData;
   return body;
 }
 
+// TODO(lilyhoughton) rename to waitForOneRequest; add function to wait for all
+// requests
 - (BOOL)waitForDone {
   int64_t deadline_ns = 20 * NSEC_PER_SEC;
   return dispatch_semaphore_wait(
@@ -66,7 +68,8 @@ NSMutableArray<NSData*>* _responseData;
 - (void)URLSession:(NSURLSession*)session
                     task:(NSURLSessionTask*)task
     didCompleteWithError:(NSError*)error {
-  [self setError:error];
+  if (error)
+    [self setError:error];
   dispatch_semaphore_signal(_semaphore);
 }
 
@@ -90,11 +93,11 @@ NSMutableArray<NSData*>* _responseData;
 - (void)URLSession:(NSURLSession*)session
           dataTask:(NSURLSessionDataTask*)dataTask
     didReceiveData:(NSData*)data {
-  _totalBytesReceived += [data length];
-  if (_responseData == nil) {
-    _responseData = [[NSMutableArray alloc] init];
-  }
-  [_responseData addObject:data];
+  //_totalBytesReceived += [data length];
+  // if (_responseData == nil) {
+  //  _responseData = [[NSMutableArray alloc] init];
+  //}
+  //[_responseData addObject:data];
 }
 
 - (void)URLSession:(NSURLSession*)session
