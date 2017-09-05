@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2986e7b1_19d71f20",
+        "filename": "third_party/WebKit/Source/core/editing/Position.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-05T08:42:10Z",
+      "side": 1,
+      "message": "nit: s/Node*/const Node* const/",
+      "revId": "317cd8b08ab6bb80d9b5cb47874f230e23b9be31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15989006_c8d2fa02",
+        "filename": "third_party/WebKit/Source/core/editing/PositionTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-05T08:42:10Z",
+      "side": 1,
+      "message": "This test checks the node not in flat tree,\nwe can use simpler one: \u003cdiv id\u003d\u0027host\u003echild\u003c/div\u003e\nBecause, shadow tree doesn\u0027t have SLOT elements.",
+      "revId": "317cd8b08ab6bb80d9b5cb47874f230e23b9be31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28220ba2_22f1538d",
+        "filename": "third_party/WebKit/Source/core/editing/PositionTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-05T08:42:10Z",
+      "side": 1,
+      "message": "nit: s/\u003cdiv id\u003d\u0027inner\u0027 \u003e/\u003cdiv id\u003d\u0027inner\u0027\u003e/",
+      "revId": "317cd8b08ab6bb80d9b5cb47874f230e23b9be31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70896e8b_c18d44d9",
+        "filename": "third_party/WebKit/Source/core/editing/PositionTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-05T08:42:10Z",
+      "side": 1,
+      "message": "I don\u0027t think we need to check whether \"inner\" is rendered or not,\nsince this check is done by test in shadow DOM.",
+      "revId": "317cd8b08ab6bb80d9b5cb47874f230e23b9be31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a1fbfea_837891fa",
+        "filename": "third_party/WebKit/Source/core/editing/PositionTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-05T08:42:10Z",
+      "side": 1,
+      "message": "EXPECT_EQ(PositionInFlatTree(GetDocument(), 0), \n  ToPositionInFlatTree(Position(GetDocument, 0));\nis simpler.\n\nNo need to use variables.\nAlso, variable names should not be abbrevation.",
+      "revId": "317cd8b08ab6bb80d9b5cb47874f230e23b9be31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
