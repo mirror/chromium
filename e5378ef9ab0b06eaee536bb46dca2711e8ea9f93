@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "2c0e47e5_7447c090",
+        "filename": "build/vs_toolchain.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-09-05T21:25:17Z",
+      "side": 1,
+      "message": "Yeah, it just feels weird to have an explanation for why we are making it writable, but no explanation for why we are making it readable. Maybe:\n\n# Make the file writable so that we can delete it now, and keep it readable.\n\nI just worry the perceived disconnect could cause some (minor) confusion.",
+      "parentUuid": "7e3e5f92_963bff0d",
+      "revId": "e5378ef9ab0b06eaee536bb46dca2711e8ea9f93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5504751e_7f2fe4c3",
         "filename": "build/vs_toolchain.py",
         "patchSetId": 2
