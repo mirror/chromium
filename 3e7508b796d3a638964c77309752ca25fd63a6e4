@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0c71e2cb_27a6965f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-09-05T21:36:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9dabff70_0b81aeb4",
+      "revId": "3e7508b796d3a638964c77309752ca25fd63a6e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "559d1b58_83295bc4",
         "filename": "components/viz/service/surfaces/surface_manager.h",
         "patchSetId": 9
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "ab6684ba_5ff8707e",
+        "filename": "components/viz/service/surfaces/surface_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-09-05T21:36:52Z",
+      "side": 1,
+      "message": "We decided to drop |label| from RegisterFrameSinkId and add a separate SetFrameSinkDebugLabel so that the label can be in sync with the window\u0027s name.\nI\u0027ll let you know when the new patch is up.",
+      "parentUuid": "559d1b58_83295bc4",
+      "range": {
+        "startLine": 129,
+        "startChar": 0,
+        "endLine": 129,
+        "endChar": 60
+      },
+      "revId": "3e7508b796d3a638964c77309752ca25fd63a6e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "13f20166_655e651d",
         "filename": "services/ui/ws/server_window.cc",
         "patchSetId": 9
@@ -53,6 +95,30 @@
       "writtenOn": "2017-09-05T20:16:34Z",
       "side": 1,
       "message": "Do you need to update this if the name changes?",
+      "range": {
+        "startLine": 56,
+        "startChar": 49,
+        "endLine": 56,
+        "endChar": 58
+      },
+      "revId": "3e7508b796d3a638964c77309752ca25fd63a6e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52b299fd_0e8bf04c",
+        "filename": "services/ui/ws/server_window.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-09-05T21:36:52Z",
+      "side": 1,
+      "message": "Good point. We didn\u0027t realize that the name could change. I will drop the |label| parameter and add a separate SetFrameSinkDebugLabel API.\nI\u0027ll let you know when the new patch is up.",
+      "parentUuid": "13f20166_655e651d",
       "range": {
         "startLine": 56,
         "startChar": 49,
