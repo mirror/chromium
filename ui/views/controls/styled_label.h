@@ -15,6 +15,7 @@
 #include "ui/gfx/geometry/size.h"
 #include "ui/gfx/range/range.h"
 #include "ui/views/controls/link_listener.h"
+#include "ui/views/style/typography.h"
 #include "ui/views/view.h"
 
 namespace views {
@@ -35,6 +36,7 @@ class VIEWS_EXPORT StyledLabel : public View, public LinkListener {
   // Parameters that define label style for a styled label's text range.
   struct VIEWS_EXPORT RangeStyleInfo {
     RangeStyleInfo();
+    RangeStyleInfo(const RangeStyleInfo& copy);
     ~RangeStyleInfo();
 
     // Creates a range style info with default values for link.
@@ -42,23 +44,29 @@ class VIEWS_EXPORT StyledLabel : public View, public LinkListener {
 
     // The font style that will be applied to the range. Should be a bitmask of
     // values defined in gfx::Font::FontStyle (ITALIC, UNDERLINE).
-    int font_style;
+    // DEPRECATED: Use TextStyle::STYLE_LINK.
+    int font_style = gfx::Font::NORMAL;
 
     // The font weight to be applied to the range. Default is Weight::NORMAL.
-    gfx::Font::Weight weight;
+    // DEPRECATED: Use TextStyle.
+    gfx::Font::Weight weight = gfx::Font::Weight::NORMAL;
 
     // The text color for the range. Default is SK_ColorTRANSPARENT, indicating
     // the theme's default color should be used.
-    SkColor color;
+    // DEPRECATED: Use TextStyle.
+    SkColor color = SK_ColorTRANSPARENT;
 
     // Tooltip for the range.
     base::string16 tooltip;
 
     // If set, the whole range will be put on a single line.
-    bool disable_line_wrapping;
+    bool disable_line_wrapping = false;
 
     // If set, the range will be created as a link.
-    bool is_link;
+    // DEPRECATED: Use TextStyle::STYLE_LINK.
+    bool is_link = false;
+
+    int text_style = -1;
   };
 
   // Note that any trailing whitespace in |text| will be trimmed.
@@ -70,17 +78,20 @@ class VIEWS_EXPORT StyledLabel : public View, public LinkListener {
 
   const base::string16& text() const { return text_; }
 
-  // Sets the fonts used by all labels. Can be augemented by styling set by
-  // AddStyleRange and SetDefaultStyle.
-  void SetBaseFontList(const gfx::FontList& font_list);
-
   // Marks the given range within |text_| with style defined by |style_info|.
   // |range| must be contained in |text_|.
   void AddStyleRange(const gfx::Range& range, const RangeStyleInfo& style_info);
 
-  // Sets the default style to use for any part of the text that isn't within
-  // a range set by AddStyleRange.
-  void SetDefaultStyle(const RangeStyleInfo& style_info);
+  // Sets the default color to use for any part of the text that isn't within
+  // a range set by AddStyleRange(). Use sparingly: color should come from
+  // SetDefaultTextStyle() instead.
+  void SetDefaultColor(SkColor color);
+
+  // Set the context of this text. All ranges have the same context.
+  void SetTextContext(int text_context);
+
+  // Set the default text style.
+  void SetDefaultTextStyle(int text_style);
 
   // Get or set the distance in pixels between baselines of multi-line text.
   // Default is 0, indicating the distance between lines should be the standard
@@ -114,6 +125,7 @@ class VIEWS_EXPORT StyledLabel : public View, public LinkListener {
   int GetHeightForWidth(int w) const override;
   void Layout() override;
   void PreferredSizeChanged() override;
+  void OnNativeThemeChanged(const ui::NativeTheme* theme) override;
 
   // LinkListener implementation:
   void LinkClicked(Link* source, int event_flags) override;
@@ -144,15 +156,15 @@ class VIEWS_EXPORT StyledLabel : public View, public LinkListener {
   // The text to display.
   base::string16 text_;
 
+  int text_context_ = style::CONTEXT_LABEL;
+  int default_text_style_ = style::STYLE_PRIMARY;
+  SkColor default_color_ = SK_ColorTRANSPARENT;
+
+  // Line height. If zero, style::GetLineHeight() is used.
+  int specified_line_height_ = 0;
+
   // Fonts used to display text. Can be augmented by RangeStyleInfo.
   gfx::FontList font_list_;
-
-  // Line height.
-  int specified_line_height_;
-
-  // The default style to use for any part of the text that isn't within
-  // a range in |style_ranges_|.
-  RangeStyleInfo default_style_info_;
 
   // The listener that will be informed of link clicks.
   StyledLabelListener* listener_;
