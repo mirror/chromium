@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "890f3ca6_211c8136",
+        "filename": "components/bookmarks/browser/bookmark_model.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-05T15:42:55Z",
+      "side": 1,
+      "message": "This function is only used in one place. I would prefer you move it to the actual place that uses it. I\u0027ll also mention functions with negatives in the name are harder to read (see TOT  Improving Readability With Positive Booleans).",
+      "range": {
+        "startLine": 180,
+        "startChar": 7,
+        "endLine": 180,
+        "endChar": 44
+      },
+      "revId": "c67da227a4eb079ed4181dfb68fd251bd0017e93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6c63ff8d_b5201ec6",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
         "patchSetId": 21
