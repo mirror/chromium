@@ -1,0 +1,53 @@
+diff --git a/gn/core.gni b/gn/core.gni
+index 862bdd0b9a..247cb47f64 100644
+--- a/gn/core.gni
++++ b/gn/core.gni
+@@ -522,7 +522,7 @@ skia_core_sources += [
+   "$_src/jumper/SkJumper_stages_8bit.cpp",
+ ]
+ if (is_win) {
+-  skia_core_sources += [ "$_src/jumper/SkJumper_generated_win.S" ]
++  #skia_core_sources += [ "$_src/jumper/SkJumper_generated_win.S" ]
+ } else {
+   skia_core_sources += [ "$_src/jumper/SkJumper_generated.S" ]
+ }
+diff --git a/src/jumper/SkJumper.cpp b/src/jumper/SkJumper.cpp
+index 9fff6cefce..c272bd8c26 100644
+--- a/src/jumper/SkJumper.cpp
++++ b/src/jumper/SkJumper.cpp
+@@ -101,7 +101,7 @@ using StartPipelineFn = void(size_t,size_t,size_t,size_t, void**);
+ 
+ extern "C" {
+ 
+-#if __has_feature(memory_sanitizer)
++#if 1 || __has_feature(memory_sanitizer)
+     // We'll just run baseline code.
+ 
+ #elif defined(__arm__)
+@@ -178,7 +178,7 @@ extern "C" {
+ 
+ }
+ 
+-#if !__has_feature(memory_sanitizer) && (defined(__x86_64__) || defined(_M_X64))
++#if 0 && !__has_feature(memory_sanitizer) && (defined(__x86_64__) || defined(_M_X64)) && 0
+     template <SkRasterPipeline::StockStage st>
+     static constexpr StageFn* hsw_8bit() { return nullptr; }
+ 
+@@ -231,7 +231,7 @@ static SkJumper_Engine gEngine = kBaseline;
+ static SkOnce gChooseEngineOnce;
+ 
+ static SkJumper_Engine choose_engine() {
+-#if __has_feature(memory_sanitizer)
++#if 1 || __has_feature(memory_sanitizer)
+     // We'll just run baseline code.
+ 
+ #elif defined(__arm__)
+@@ -310,7 +310,7 @@ static SkJumper_Engine choose_engine() {
+     static SkOnce gChooseLowpOnce;
+ 
+     static SkJumper_Engine choose_lowp() {
+-    #if !__has_feature(memory_sanitizer) && (defined(__x86_64__) || defined(_M_X64))
++    #if 0 && !__has_feature(memory_sanitizer) && (defined(__x86_64__) || defined(_M_X64)) && 0
+         if (1 && SkCpu::Supports(SkCpu::HSW)) {
+             return {
+             #define M(st) hsw_8bit<SkRasterPipeline::st>(),
