@@ -148,6 +148,7 @@
 #import "ios/chrome/browser/ui/reading_list/reading_list_coordinator.h"
 #import "ios/chrome/browser/ui/reading_list/reading_list_menu_notifier.h"
 #include "ios/chrome/browser/ui/rtl_geometry.h"
+#import "ios/chrome/browser/ui/sad_tab/sad_tab_legacy_coordinator.h"
 #import "ios/chrome/browser/ui/side_swipe/side_swipe_controller.h"
 #import "ios/chrome/browser/ui/stack_view/card_view.h"
 #import "ios/chrome/browser/ui/stack_view/page_animation_util.h"
@@ -170,6 +171,7 @@
 #import "ios/chrome/browser/web/error_page_content.h"
 #import "ios/chrome/browser/web/passkit_dialog_provider.h"
 #import "ios/chrome/browser/web/repost_form_tab_helper.h"
+#import "ios/chrome/browser/web/sad_tab_tab_helper.h"
 #import "ios/chrome/browser/web_state_list/web_state_list.h"
 #import "ios/chrome/browser/web_state_list/web_state_opener.h"
 #include "ios/chrome/grit/ios_chromium_strings.h"
@@ -537,6 +539,9 @@ bool IsURLAllowedInIncognito(const GURL& url) {
 
   // Coordinator for Tab History Popup.
   LegacyTabHistoryCoordinator* _tabHistoryCoordinator;
+
+  // Coordinator for displaying Sad Tab.
+  SadTabLegacyCoordinator* _sadTabCoordinator;
 }
 
 // The browser's side swipe controller.  Lazily instantiated on the first call.
@@ -1867,6 +1872,10 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   _tabHistoryCoordinator.presentationProvider = self;
   _tabHistoryCoordinator.tabHistoryUIUpdater = _toolbarController;
 
+  _sadTabCoordinator =
+      [[SadTabLegacyCoordinator alloc] initWithBaseViewController:self];
+  _sadTabCoordinator.dispatcher = _dispatcher;
+
   if (base::FeatureList::IsEnabled(payments::features::kWebPayments)) {
     _paymentRequestManager = [[PaymentRequestManager alloc]
         initWithBaseViewController:self
@@ -2346,6 +2355,9 @@ bubblePresenterForFeature:(const base::Feature&)feature
   if (tabHelper)
     tabHelper->SetLauncher(self);
   tab.webState->SetDelegate(_webStateDelegate.get());
+  // BrowserViewController owns the coordinator that displays the Sad Tab.
+  if (!SadTabTabHelper::FromWebState(tab.webState))
+    SadTabTabHelper::CreateForWebState(tab.webState, _sadTabCoordinator);
 }
 
 - (void)uninstallDelegatesForTab:(Tab*)tab {
@@ -4738,6 +4750,10 @@ bubblePresenterForFeature:(const base::Feature&)feature
   [self updateVoiceSearchBarVisibilityAnimated:NO];
 
   [_paymentRequestManager setActiveWebState:newTab.webState];
+
+  // Update the Sad Tab coordinator webstate so it matches the current tab
+  // webstate.
+  _sadTabCoordinator.webState = newTab.webState;
 
   [self tabSelected:newTab];
   DCHECK_EQ(newTab, [model currentTab]);
