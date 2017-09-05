@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2baba242_35124339",
+        "filename": "chrome/browser/ui/cocoa/omnibox/omnibox_popup_matrix.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-09-05T18:23:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0af670be_c6f22778",
+      "revId": "ac9c9ace601ce4bd4023ed68b7f9961999a66d63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f918f992_34bd85e7",
         "filename": "chrome/browser/ui/views/omnibox/omnibox_popup_contents_view.cc",
         "patchSetId": 11
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "c56f08c3_7f3faa04",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_popup_contents_view.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-09-05T18:23:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f918f992_34bd85e7",
+      "range": {
+        "startLine": 344,
+        "startChar": 37,
+        "endLine": 344,
+        "endChar": 44
+      },
+      "revId": "ac9c9ace601ce4bd4023ed68b7f9961999a66d63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a49fbb1c_0415fc87",
         "filename": "chrome/browser/ui/views/omnibox/omnibox_result_view.h",
         "patchSetId": 11
@@ -56,6 +98,24 @@
       "revId": "ac9c9ace601ce4bd4023ed68b7f9961999a66d63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c189899b_6fb05b8c",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_result_view.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-09-05T18:23:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a49fbb1c_0415fc87",
+      "revId": "ac9c9ace601ce4bd4023ed68b7f9961999a66d63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "020d9fcf_72407dac",
+        "filename": "components/omnibox/browser/omnibox_popup_model.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-09-05T18:23:57Z",
+      "side": 1,
+      "message": "I actually was leaning towards 2x, for the exact same reason, but I held back because then I thought I\u0027d just to justify that choice\n\nSince you have that gut feel as well, I set it to 2x and added a comment to justify why.",
+      "parentUuid": "71a6b3dc_af49f94a",
+      "revId": "ac9c9ace601ce4bd4023ed68b7f9961999a66d63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15765d26_27a26366",
         "filename": "components/omnibox/browser/omnibox_popup_model.cc",
         "patchSetId": 11
@@ -90,6 +168,24 @@
       "revId": "ac9c9ace601ce4bd4023ed68b7f9961999a66d63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4146bd8c_6eb5952d",
+        "filename": "components/omnibox/browser/omnibox_popup_model.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-09-05T18:23:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15765d26_27a26366",
+      "revId": "ac9c9ace601ce4bd4023ed68b7f9961999a66d63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "1d7d4455_58f2df1a",
+        "filename": "components/omnibox/browser/omnibox_popup_model.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-09-05T18:23:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6735daf1_81b0cda2",
+      "revId": "ac9c9ace601ce4bd4023ed68b7f9961999a66d63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d998ca1a_dec488ba",
         "filename": "components/omnibox/browser/omnibox_popup_model.cc",
         "patchSetId": 11
@@ -124,6 +238,24 @@
       "revId": "ac9c9ace601ce4bd4023ed68b7f9961999a66d63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "534c15ad_5e6dc892",
+        "filename": "components/omnibox/browser/omnibox_popup_model.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-09-05T18:23:57Z",
+      "side": 1,
+      "message": "Right. But thinking about what you said, I just guarded out this whole method. That way it\u0027s explicit that Android and iOS don\u0027t even call this method currently.",
+      "parentUuid": "d998ca1a_dec488ba",
+      "revId": "ac9c9ace601ce4bd4023ed68b7f9961999a66d63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
