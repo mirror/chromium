@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d87492d_ef3e9b39",
+        "filename": "chromeos/dbus/dbus_method_call_status.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-05T07:49:22Z",
+      "side": 1,
+      "message": "(off topic): This is just a straight forward fixing, while there is a few more alternatives, I think.\n\n1) OnceCallback\u003cvoid\u003cDBusMethodCallbackStatus, base::Optional\u003cstd::string\u003e\u003e.\n  The second arg is nullopt in case call_status \u003d\u003d FAILURE. Or,\n2) OnceCallback\u003cvoid\u003cbase::Optional\u003cstd::string\u003e\u003e. nullopt in case of failure.\n  Because the nullopt can imply fail, we can skip the first status argument,\n  assuming no new status will be added.\n\nWDYT?",
+      "revId": "e522c3613f8eabd915ced791751d9743bcfe0abc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16ab9ef3_0002ab9c",
+        "filename": "chromeos/dbus/image_loader_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-05T07:49:22Z",
+      "side": 1,
+      "message": "Clarification: this is static method, while cryptohome_client one is non-static method with WeakPtr. In other words, the callback is not tied to the client class in the former case, while it is in the latter case. Which is the recommended way?",
+      "revId": "e522c3613f8eabd915ced791751d9743bcfe0abc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
