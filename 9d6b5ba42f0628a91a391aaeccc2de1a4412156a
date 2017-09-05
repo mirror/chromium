@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf5e624b_7878ae1b",
+        "filename": "skia/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-09-05T13:17:45Z",
+      "side": 1,
+      "message": "Which of the non-public Skia headers are required for this CL?  We should expose the needed functionality in public headers instead of adding private include dirs here.",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 35
+      },
+      "revId": "9d6b5ba42f0628a91a391aaeccc2de1a4412156a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32f84c63_d50cc3e8",
+        "filename": "skia/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-09-05T13:17:45Z",
+      "side": 1,
+      "message": "Is this needed?  Looks like the check above covers the same define.",
+      "range": {
+        "startLine": 85,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 5
+      },
+      "revId": "9d6b5ba42f0628a91a391aaeccc2de1a4412156a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
