@@ -53,7 +53,7 @@ class ResourceFetcherImpl : public ResourceFetcher {
   ~ResourceFetcherImpl() override;
 
   void OnLoadComplete();
-  void Cancel() override;
+  void OnTimeout();
 
   std::unique_ptr<ClientImpl> client_;
 

@@ -36,8 +36,9 @@ const char kAccessControlAllowOriginHeader[] = "Access-Control-Allow-Origin";
 namespace content {
 
 // static
-ResourceFetcher* ResourceFetcher::Create(const GURL& url) {
-  return new ResourceFetcherImpl(url);
+std::unique_ptr<ResourceFetcher> ResourceFetcher::Create(const GURL& url) {
+  // Can not use std::make_unique<> because the constructor is private.
+  return std::unique_ptr<ResourceFetcher>(new ResourceFetcherImpl(url));
 }
 
 // TODO(toyoshim): Internal implementation might be replaced with
@@ -358,14 +359,15 @@ void ResourceFetcherImpl::SetTimeout(const base::TimeDelta& timeout) {
   DCHECK(client_);
   DCHECK(client_->IsActive());
 
-  timeout_timer_.Start(FROM_HERE, timeout, this, &ResourceFetcherImpl::Cancel);
+  timeout_timer_.Start(FROM_HERE, timeout, this,
+                       &ResourceFetcherImpl::OnTimeout);
 }
 
 void ResourceFetcherImpl::OnLoadComplete() {
   timeout_timer_.Stop();
 }
 
-void ResourceFetcherImpl::Cancel() {
+void ResourceFetcherImpl::OnTimeout() {
   DCHECK(client_);
   DCHECK(client_->IsActive());
   client_->Cancel();
