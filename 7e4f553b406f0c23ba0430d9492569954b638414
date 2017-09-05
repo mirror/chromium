@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "36a6f286_8ed2c135",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1651,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-05T17:33:05Z",
+      "side": 1,
+      "message": "There are a lot of other places in RDHI where scheduler_ is accessed; I don\u0027t think the change can be this simple.  I\u0027m specifically concerned by \"scheduler_-\u003eReprioritizeRequest()\" (I don\u0027t think it\u0027s wise to assume the schedule will drop a reprioritize on the floor if it doesn\u0027t recognize the request) and the calls to schedule_-\u003eHasLoadingClients(), which may be based on the client construction/destruction or may be based on having requests in that space.",
+      "range": {
+        "startLine": 1651,
+        "startChar": 34,
+        "endLine": 1651,
+        "endChar": 35
+      },
+      "revId": "7e4f553b406f0c23ba0430d9492569954b638414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "198b7c21_fd0a6000",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-05T17:33:05Z",
+      "side": 1,
+      "message": "How about instead making this something that\u0027s set in construction, or something that\u0027s probed on the ResourceDispatcherHostDelegate?  The delegate pattern  is how historically embedders have controlled the action of content classes, but it has the negative of allowing scheduler usage to vary over the lifetime of the RDHI.  I think setting this type of configuration at construction is also where we\u0027re heading with servicification, though as noted in my previous comment, I don\u0027t think that\u0027s very important.  But you may not have the ability to tweak the constructor in the headless case--I\u0027m not familiar with how that embedder works.  \n\nAnother option that probably isn\u0027t worth it for you unless it\u0027s a good match for your use case is to let the embedder (either in construction or through the delegate) specify the whole ResourceScheduler class.  This would involve specifying an ABC that ResourceScheduler and whatever you wanted to build would inherit from, but it would allow you to do your own scheduling (which the CL description indicates is your goal).",
+      "range": {
+        "startLine": 118,
+        "startChar": 39,
+        "endLine": 118,
+        "endChar": 64
+      },
+      "revId": "7e4f553b406f0c23ba0430d9492569954b638414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8827703d_9c2b0d76",
         "filename": "headless/lib/headless_web_contents_browsertest.cc",
         "patchSetId": 5
