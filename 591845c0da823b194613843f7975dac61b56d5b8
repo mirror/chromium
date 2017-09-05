@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "018e4f53_c078515b",
+        "filename": "third_party/leveldatabase/leveldb_chromium.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-05T22:08:35Z",
+      "side": 1,
+      "message": "(me learning) Is there any difference if the \"using\" is inside the innermost namespace?",
+      "revId": "591845c0da823b194613843f7975dac61b56d5b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
