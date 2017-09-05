@@ -21,6 +21,8 @@ aggregate_vector_icons("components_vector_icons") {
     "forward_arrow.1x.icon",
     "forward_arrow.icon",
     "help_outline.icon",
+    "ic_close.icon",
+    "ic_close.1x.icon",
     "info_outline.icon",
     "location_on.icon",
     "lock.icon",
