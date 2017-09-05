@@ -14,13 +14,20 @@
     <ImageView
         android:id="@+id/browser_icon"
         android:contentDescription="@null"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_gravity="start" />
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp" />
 
+
+    <!-- Refers to Color "black_alpha_87". -->
     <TextView
         android:id="@+id/browser_name"
         android:layout_gravity="center"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#DE000000"
+        android:textSize="13sp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp" />
 </LinearLayout>
