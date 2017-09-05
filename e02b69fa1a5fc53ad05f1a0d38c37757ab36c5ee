@@ -16,6 +16,24 @@
       "revId": "e02b69fa1a5fc53ad05f1a0d38c37757ab36c5ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e4c68c2_4144ca20",
+        "filename": "content/common/service_worker/service_worker_loader_helpers.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1238141
+      },
+      "writtenOn": "2017-09-05T01:06:07Z",
+      "side": 1,
+      "message": "Since it may not be necessary, I decided not to factor out these methods with Matt-san.",
+      "parentUuid": "6abca702_0c226f32",
+      "revId": "e02b69fa1a5fc53ad05f1a0d38c37757ab36c5ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
