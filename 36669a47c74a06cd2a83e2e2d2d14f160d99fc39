@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76634b90_017344d0",
+        "filename": "chrome/browser/task_manager/sampling/task_manager_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-05T09:13:28Z",
+      "side": 1,
+      "message": "I introduced memory_instrumentation::MemoryInstrumentation::RequestGlobalDump in order to avoid to have to think to all these mojo subtleties here (which service to connect to, rember to retain the connector for callback but not leak it).\nI think you can avoid all this and just do\n\nmemory_instrumentation::MemoryInstrumentation::getInstance()-\u003eRequestGlobalDump\n\nSee https://cs.chromium.org/chromium/src/services/resource_coordinator/public/cpp/memory_instrumentation/memory_instrumentation.h?l\u003d47",
+      "range": {
+        "startLine": 536,
+        "startChar": 2,
+        "endLine": 540,
+        "endChar": 0
+      },
+      "revId": "36669a47c74a06cd2a83e2e2d2d14f160d99fc39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "835ee16b_5be645ae",
+        "filename": "chrome/browser/task_manager/sampling/task_manager_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-05T09:13:28Z",
+      "side": 1,
+      "message": "I\u0027d remove this part of the statement because it is likely that will soon be false (https://chromium-review.googlesource.com/c/628658/)",
+      "range": {
+        "startLine": 178,
+        "startChar": 71,
+        "endLine": 179,
+        "endChar": 29
+      },
+      "revId": "36669a47c74a06cd2a83e2e2d2d14f160d99fc39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
