@@ -25,6 +25,53 @@
     },
     {
       "key": {
+        "uuid": "67089adf_ed7a244f",
+        "filename": "base/containers/flat_map.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-09-05T20:58:27Z",
+      "side": 1,
+      "message": "I think this is good. Better to keep it short and readable here, since people can always look below for the details if they\u0027re confused.",
+      "parentUuid": "6f1621e2_f3b06264",
+      "range": {
+        "startLine": 109,
+        "startChar": 0,
+        "endLine": 114,
+        "endChar": 48
+      },
+      "revId": "76594f52ba51f971f2a04871e6ac448fe3985e85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dcc63b2_b9010f21",
+        "filename": "base/containers/flat_map.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-09-05T20:58:27Z",
+      "side": 1,
+      "message": "In the other code I was using \"Key\" which was why this wasn\u0027t required. I\u0027m not actually sure which is better, but we should be consistent.\n\nIf we do define this, we should make key_type \u003d typename tree::key_type since if they diverge very bad things will happen!",
+      "range": {
+        "startLine": 172,
+        "startChar": 8,
+        "endLine": 172,
+        "endChar": 16
+      },
+      "revId": "76594f52ba51f971f2a04871e6ac448fe3985e85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c8be00a5_0d453ba5",
         "filename": "base/containers/flat_map.h",
         "patchSetId": 2
@@ -41,6 +88,53 @@
         "startChar": 0,
         "endLine": 368,
         "endChar": 79
+      },
+      "revId": "76594f52ba51f971f2a04871e6ac448fe3985e85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "640ec463_4780bd34",
+        "filename": "base/containers/flat_map.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-09-05T20:58:27Z",
+      "side": 1,
+      "message": "It looks like this is what we do for insert with a hint, so it sounds good.",
+      "parentUuid": "c8be00a5_0d453ba5",
+      "range": {
+        "startLine": 367,
+        "startChar": 0,
+        "endLine": 368,
+        "endChar": 79
+      },
+      "revId": "76594f52ba51f971f2a04871e6ac448fe3985e85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44a88aa6_220fd5db",
+        "filename": "base/containers/flat_map.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-09-05T20:58:27Z",
+      "side": 1,
+      "message": "This call is crazy!",
+      "range": {
+        "startLine": 419,
+        "startChar": 19,
+        "endLine": 419,
+        "endChar": 38
       },
       "revId": "76594f52ba51f971f2a04871e6ac448fe3985e85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
