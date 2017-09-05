@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "c4ac185e_ff665162",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-09-05T18:35:33Z",
+      "side": 1,
+      "message": "Ah, my bad, the DCHECK is in the ctor.\nHowever, I\u0027m still not happy with returning true.\nIf it\u0027s clear that the accelerator is only needed for bubble_types EXCLUSIVE_ACCESS_BUBBLE_TYPE_BROWSER_FULLSCREEN_EXIT_INSTRUCTION and EXCLUSIVE_ACCESS_BUBBLE_TYPE_EXTENSION_FULLSCREEN_EXIT_INSTRUCTION[1], could we change the constructor to only DHCECK for those bubble_types?\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/ui/views/exclusive_access_bubble_views.cc?rcl\u003d9fd7d4dc420287956370fed61e1edeab580477ad\u0026l\u003d183",
+      "parentUuid": "807c2cf9_43d3df3f",
+      "range": {
+        "startLine": 445,
+        "startChar": 35,
+        "endLine": 445,
+        "endChar": 61
+      },
+      "revId": "3f17d166b2b55632fadd382c65c9292d58f1e525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "de943f3e_6be0f920",
         "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
         "patchSetId": 1
