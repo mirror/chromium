@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "384c531a_e046b0b2",
+        "filename": "chrome/browser/media/webrtc/media_stream_device_permission_context.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-09-05T09:55:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8f4b377_42cb14fe",
+      "revId": "fb29394cef35fd001d0eca8d127fb1659d3a6bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2054a49e_2e9f2f75",
         "filename": "chrome/browser/media/webrtc/media_stream_device_permission_context.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "fb29394cef35fd001d0eca8d127fb1659d3a6bb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c96a834_6a74afeb",
+        "filename": "chrome/browser/media/webrtc/media_stream_device_permission_context.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-09-05T09:55:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2054a49e_2e9f2f75",
+      "revId": "fb29394cef35fd001d0eca8d127fb1659d3a6bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c271307e_f4386401",
+        "filename": "chrome/browser/media/webrtc/media_stream_devices_controller_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-09-05T09:55:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bfb0e6f0_0927b0bd",
+      "revId": "fb29394cef35fd001d0eca8d127fb1659d3a6bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45284343_089ed229",
         "filename": "chrome/browser/media/webrtc/media_stream_devices_controller_browsertest.cc",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "3c823c0d_dbf17462",
+        "filename": "chrome/browser/media/webrtc/media_stream_devices_controller_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-09-05T09:55:00Z",
+      "side": 1,
+      "message": "Done (well I added prompt_factory() because prompt_factory_ is private)",
+      "parentUuid": "45284343_089ed229",
+      "revId": "fb29394cef35fd001d0eca8d127fb1659d3a6bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "723c177f_a817561a",
         "filename": "chrome/browser/media/webrtc/media_stream_devices_controller_browsertest.cc",
         "patchSetId": 2
@@ -84,6 +156,24 @@
       "revId": "fb29394cef35fd001d0eca8d127fb1659d3a6bb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1f13cff_4b43bce5",
+        "filename": "chrome/browser/media/webrtc/media_stream_devices_controller_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-09-05T09:55:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "723c177f_a817561a",
+      "revId": "fb29394cef35fd001d0eca8d127fb1659d3a6bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
