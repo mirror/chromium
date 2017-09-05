@@ -172,6 +172,24 @@
     },
     {
       "key": {
+        "uuid": "68d5bea5_2887da20",
+        "filename": "content/common/service_worker/service_worker_loader_helpers.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1238141
+      },
+      "writtenOn": "2017-09-05T05:47:35Z",
+      "side": 1,
+      "message": "Oops, sorry for lack of explanation.",
+      "parentUuid": "3c32b6b0_49d71a86",
+      "revId": "2898a9a8c8e9501adc41392a50dd01c230864062",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04691825_3bb2be0c",
         "filename": "content/common/service_worker/service_worker_loader_helpers.h",
         "patchSetId": 8
@@ -257,6 +275,24 @@
       "revId": "2898a9a8c8e9501adc41392a50dd01c230864062",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eeaa6b31_b694ef3d",
+        "filename": "content/common/service_worker/service_worker_loader_helpers.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1238141
+      },
+      "writtenOn": "2017-09-05T05:47:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eeec7863_078eea09",
+      "revId": "2898a9a8c8e9501adc41392a50dd01c230864062",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
