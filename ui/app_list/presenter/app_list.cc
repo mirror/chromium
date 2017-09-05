@@ -40,6 +40,11 @@ void AppList::EndDragFromShelf(mojom::AppListState app_list_state) {
     presenter_->EndDragFromShelf(app_list_state);
 }
 
+void AppList::ProcessMouseWheelEvent(int offset) {
+  if (presenter_)
+    presenter_->ProcessMouseWheelEvent(offset);
+}
+
 void AppList::Dismiss() {
   if (presenter_)
     presenter_->Dismiss();

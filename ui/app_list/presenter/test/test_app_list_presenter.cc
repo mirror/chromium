@@ -47,5 +47,9 @@ void TestAppListPresenter::EndDragFromShelf(
   app_list_state_ = app_list_state;
 }
 
+void TestAppListPresenter::ProcessMouseWheelEvent(int offset) {
+  process_mouse_wheel_event_count_++;
+}
+
 }  // namespace test
 }  // namespace app_list
