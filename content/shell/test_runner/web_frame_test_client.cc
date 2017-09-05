@@ -720,6 +720,16 @@ WebFrameTestClient::GetEffectiveConnectionType() {
   return test_runner()->effective_connection_type();
 }
 
+void WebFrameTestClient::DidFailProvisionalLoadWithErrorPage(
+    const blink::WebURLError& error,
+    blink::WebHistoryCommitType commit_type,
+    const base::Optional<std::string>& error_page_content) {
+  if (test_runner()->shouldDumpFrameLoadCallbacks()) {
+    PrintFrameDescription(delegate_, web_frame_test_proxy_base_->web_frame());
+    delegate_->PrintMessage(" - didFailProvisionalLoadWithErrorPage\n");
+  }
+}
+
 TestRunner* WebFrameTestClient::test_runner() {
   return web_view_test_proxy_base_->test_interfaces()->GetTestRunner();
 }
