@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f2359484_aed2fbfb",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-09-05T18:39:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b181b3b7_6d40e86b",
+      "range": {
+        "startLine": 322,
+        "startChar": 23,
+        "endLine": 322,
+        "endChar": 30
+      },
+      "revId": "5039a4492a47692a3b498d62825e372234ca710f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3639f38b_9f698de8",
         "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "5039a4492a47692a3b498d62825e372234ca710f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70719ac9_458dc515",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-09-05T18:39:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3639f38b_9f698de8",
+      "range": {
+        "startLine": 332,
+        "startChar": 38,
+        "endLine": 332,
+        "endChar": 55
+      },
+      "revId": "5039a4492a47692a3b498d62825e372234ca710f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "9ccc9beb_99425043",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-09-05T18:39:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7817021d_acdc2b1a",
+      "range": {
+        "startLine": 333,
+        "startChar": 32,
+        "endLine": 333,
+        "endChar": 39
+      },
+      "revId": "5039a4492a47692a3b498d62825e372234ca710f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d6078b6_57f57c83",
         "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
         "patchSetId": 5
@@ -82,6 +154,30 @@
       "writtenOn": "2017-09-05T15:19:54Z",
       "side": 1,
       "message": "This is highly ineffective, especially if \u0027image\u0027 is on the GPU.  Please file a bug about improving the performance of method.  It would also be nice to not have to make a copy of the image data.",
+      "range": {
+        "startLine": 334,
+        "startChar": 18,
+        "endLine": 334,
+        "endChar": 28
+      },
+      "revId": "5039a4492a47692a3b498d62825e372234ca710f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1feea81_72fad9ac",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-09-05T18:39:09Z",
+      "side": 1,
+      "message": "We have a bug for this (crbug.com/754713). I\u0027ll add the bug info to the comments.\nI talked to brianosman@ about this and asked if Skia can provide us a tagging API to convert null color space images to SRGB ones. This was not acceptable. Instead, he suggested that Skia can treat null-color space SkImages as SRGB. This is an open Skia bug (bugs.chromium.org/p/skia/issues/detail?id\u003d6958).",
+      "parentUuid": "8d6078b6_57f57c83",
       "range": {
         "startLine": 334,
         "startChar": 18,
@@ -114,6 +210,30 @@
       "revId": "5039a4492a47692a3b498d62825e372234ca710f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd78ef7a_0dacbe13",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmapTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-09-05T18:39:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2ddfed7_42109232",
+      "range": {
+        "startLine": 170,
+        "startChar": 20,
+        "endLine": 170,
+        "endChar": 28
+      },
+      "revId": "5039a4492a47692a3b498d62825e372234ca710f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
