@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87d8ad29_d253fffb",
+        "filename": "components/browsing_data/core/counters/passwords_counter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-09-05T12:01:53Z",
+      "side": 1,
+      "message": "I wonder if other PasswordStoreConsumer instances would benefit from calling these two lines together too. Up to password_manager/ owners to decide.",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 23
+      },
+      "revId": "c336668ebef37cb31e601ea5d48759a60892ebd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
