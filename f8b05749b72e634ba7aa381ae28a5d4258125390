@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "161dee3d_2b7d1abd",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/chromium_exportable_commits.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-09-05T19:58:14Z",
+      "side": 1,
+      "message": "Oops. Thanks!",
+      "parentUuid": "88d8322e_fd0b0bde",
+      "revId": "f8b05749b72e634ba7aa381ae28a5d4258125390",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1cf77cb_7be497f2",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/local_wpt.py",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "79b1e0b0_da2412a9",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/local_wpt.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-09-05T19:58:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1cf77cb_7be497f2",
+      "revId": "f8b05749b72e634ba7aa381ae28a5d4258125390",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a1a096e_50969fb6",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/local_wpt.py",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-05T18:20:24Z",
       "side": 1,
       "message": "I assume it\u0027s OK to grep through the whole history...\n\nOn my machine it takes about 7 seconds to grep for something that doesn\u0027t exist in Chromium, it goes much faster if we use a limited range, e.g. git log -1 --grep \u003cgrep_str\u003e HEAD~10000..HEAD`",
+      "revId": "f8b05749b72e634ba7aa381ae28a5d4258125390",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "102ab6c6_2e074a87",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/local_wpt.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-09-05T19:58:14Z",
+      "side": 1,
+      "message": "Note that we are searching the log of local **WPT** repo instead of Chromium. It currently takes less than one second to grep through the whole history of WPT on my workstation.\n\nI\u0027m slightly wary of adding yet another artificial window based on numbers (we already have these: https://crbug.com/752214). WDYT?",
+      "parentUuid": "6a1a096e_50969fb6",
       "revId": "f8b05749b72e634ba7aa381ae28a5d4258125390",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "8748aafc_399bd650",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/local_wpt.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-09-05T19:58:14Z",
+      "side": 1,
+      "message": "Done. Also added docstrings.",
+      "parentUuid": "871498c6_5b12cd61",
+      "revId": "f8b05749b72e634ba7aa381ae28a5d4258125390",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b59d16be_73dde878",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/local_wpt_mock.py",
         "patchSetId": 1
@@ -84,6 +156,24 @@
       "revId": "f8b05749b72e634ba7aa381ae28a5d4258125390",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ba3757b_97989efa",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/local_wpt_mock.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-09-05T19:58:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b59d16be_73dde878",
+      "revId": "f8b05749b72e634ba7aa381ae28a5d4258125390",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +200,30 @@
     },
     {
       "key": {
+        "uuid": "cda8c803_8cf83d0a",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/local_wpt_mock.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-09-05T19:58:14Z",
+      "side": 1,
+      "message": "Done. Good suggestions!",
+      "parentUuid": "d132d34e_be94b61c",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 80
+      },
+      "revId": "f8b05749b72e634ba7aa381ae28a5d4258125390",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a684d07a_a3142ae3",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/local_wpt_mock.py",
         "patchSetId": 1
@@ -124,6 +238,24 @@
       "revId": "f8b05749b72e634ba7aa381ae28a5d4258125390",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0bf1907_cfaabbcb",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/local_wpt_mock.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-09-05T19:58:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a684d07a_a3142ae3",
+      "revId": "f8b05749b72e634ba7aa381ae28a5d4258125390",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -144,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "38d690dd_8142f100",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_github_mock.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-09-05T19:58:14Z",
+      "side": 1,
+      "message": "Yeah, same as unsuccessful PR merge and creation. It was a bit counter-intuitive the first time I saw them, but I find them sufficient so far, since more complicated unit tests can (and probably should) be split into smaller ones. I think we can refactor all of them into lists or a dict of metadata, if the need arises later.\n\nAdded docstring for these arguments and closing this comment. Feel free to reopen if you have other thoughts.",
+      "parentUuid": "a1156409_8820b65d",
+      "revId": "f8b05749b72e634ba7aa381ae28a5d4258125390",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6539cae_ec9b5065",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_github_unittest.py",
         "patchSetId": 1
@@ -158,6 +308,24 @@
       "revId": "f8b05749b72e634ba7aa381ae28a5d4258125390",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0375a7e_b1ef1454",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_github_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-09-05T19:58:14Z",
+      "side": 1,
+      "message": "Indeed! Done.",
+      "parentUuid": "a6539cae_ec9b5065",
+      "revId": "f8b05749b72e634ba7aa381ae28a5d4258125390",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
