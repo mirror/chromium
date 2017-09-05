@@ -11,6 +11,7 @@
 #include "chrome/browser/prerender/prerender_contents.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser_finder.h"
+#include "chrome/browser/ui/disposition_utils.h"
 #include "chrome/browser/ui/extensions/app_launch_params.h"
 #include "chrome/browser/ui/extensions/application_launch.h"
 #include "chrome/browser/web_applications/web_app.h"
@@ -38,12 +39,33 @@ bool ShouldOverrideNavigation(
     const Extension* app,
     content::WebContents* source,
     const navigation_interception::NavigationParams& params) {
-  DVLOG(1) << "ShouldOverrideNavigation called for: " << params.url();
 
   ui::PageTransition transition_type = params.transition_type();
+  WindowOpenDisposition disposition = chrome::GetDisposition(source);
+  DVLOG(1) << "ShouldOverrideNavigation called for: " << params.url();
+  DVLOG(1) << "Transition: "
+           << PageTransitionGetCoreTransitionString(transition_type);
+  DVLOG(1) << "Disposition: " << ui::DispositionToString(disposition);
+
   if (!(PageTransitionCoreTypeIs(transition_type, ui::PAGE_TRANSITION_LINK))) {
     DVLOG(1) << "Don't override: Transition type is "
              << PageTransitionGetCoreTransitionString(transition_type);
+    return false;
+  }
+
+  // CURRENT_TAB is used when clicking on links that just navigate the frame.
+  // FOREGROUND_TAB is used when clicking on links that open a new tab/window
+  // e.g. target=_blank links.
+  // NEW_WINDOW is used when pressing shift and clicking a link or when clicking
+  // "Open in new window" in the context menu. We want to intercept these
+  // navigations but only if they come from an app.
+  // TODO(crbug.com/758774): Don't intercept NEW_WINDOW navigations in regular
+  // websites.
+  if (disposition != WindowOpenDisposition::CURRENT_TAB &&
+      disposition != WindowOpenDisposition::NEW_FOREGROUND_TAB &&
+      disposition != WindowOpenDisposition::NEW_WINDOW) {
+    DVLOG(1) << "Don't override: Disposition is "
+             << ui::DispositionToString(disposition);
     return false;
   }
 
