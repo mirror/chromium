@@ -808,7 +808,7 @@ void NavigationRequest::OnRequestFailed(
   net_error_ = net_error;
 
   if (IsRendererDebugURL(common_params_.url)) {
-    CommitErrorPage();
+    CommitErrorPage(base::nullopt);
   } else {
     // Check if the navigation should be allowed to proceed.
     navigation_handle_->WillFailRequest(
@@ -982,12 +982,16 @@ void NavigationRequest::OnFailureChecksComplete(
   // ... so we can just return or update the net error here.
   if (result.action == NavigationThrottle::CANCEL_AND_IGNORE ||
       result.action == NavigationThrottle::CANCEL) {
-    return;
+    // TODO(REVIEW): What's the appropriate check?
+    if (!result.net_error.has_value()) {
+      return;
+    }
+    net_error_ = result.net_error.value();
   } else if (result.action == NavigationThrottle::BLOCK_RESPONSE) {
     net_error_ = net::ERR_BLOCKED_BY_RESPONSE;
   }
 
-  NavigationRequest::CommitErrorPage();
+  NavigationRequest::CommitErrorPage(result.error_page_url);
 }
 
 void NavigationRequest::OnWillProcessResponseChecksComplete(
@@ -1026,13 +1030,13 @@ void NavigationRequest::OnWillProcessResponseChecksComplete(
   // the destruction of the NavigationRequest.
 }
 
-void NavigationRequest::CommitErrorPage() {
+void NavigationRequest::CommitErrorPage(base::Optional<GURL> error_page_url) {
   TransferNavigationHandleOwnership(render_frame_host_);
   render_frame_host_->navigation_handle()->ReadyToCommitNavigation(
       render_frame_host_);
-  render_frame_host_->FailedNavigation(common_params_, begin_params_,
-                                       request_params_,
-                                       has_stale_copy_in_cache_, net_error_);
+  render_frame_host_->FailedNavigation(
+      common_params_, begin_params_, request_params_, has_stale_copy_in_cache_,
+      net_error_, error_page_url);
 }
 
 void NavigationRequest::CommitNavigation() {
