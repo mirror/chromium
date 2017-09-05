@@ -313,6 +313,10 @@ template("mojom") {
       rebase_path("$root_gen_dir/mojo/public/tools/bindings", root_build_dir),
     ]
 
+    if (!defined(invoker.allow_native_structs) || invoker.allow_native_structs) {
+      common_generator_args += [ "--allow_native_structs" ]
+    }
+
     if (defined(invoker.import_dirs)) {
       foreach(import_dir, invoker.import_dirs) {
         common_generator_args += [
