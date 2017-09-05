@@ -131,6 +131,12 @@ int64_t GetPasswordLastChanged(const WCHAR* username) {
 
 bool CheckBlankPasswordWithPrefs(const WCHAR* username,
                                  PasswordCheckPrefs* prefs) {
+  // If the user name has a backslash, then it is of the form DOMAIN\username.
+  // NetUserInfo() only wants the username portion, so strip out the domain.
+  LPCWSTR backslash = wcschr(username, L'\\');
+  if (backslash)
+    username = backslash + 1;
+
   int64_t last_changed = GetPasswordLastChanged(username);
 
   // If we cannot determine when the password was last changed
