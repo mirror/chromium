@@ -22,6 +22,30 @@
       "revId": "50c48c2690fd0a66c3585de6ddb4fff87a654c1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "738af19f_0170ca24",
+        "filename": "chrome/browser/ui/ash/launcher/multi_profile_app_window_launcher_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-05T20:36:36Z",
+      "side": 1,
+      "message": "I don\u0027t think panels use BrowserFrame; this is handling the same panels created with ChromeNativeAppWindowViewsAuraAsh, it\u0027s just hiding or showing them on user switches (by clearing and restoring the item type property).",
+      "parentUuid": "0c9b282d_d646e11f",
+      "range": {
+        "startLine": 63,
+        "startChar": 6,
+        "endLine": 67,
+        "endChar": 7
+      },
+      "revId": "50c48c2690fd0a66c3585de6ddb4fff87a654c1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
