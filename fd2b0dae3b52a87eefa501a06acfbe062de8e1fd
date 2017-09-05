@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "70adc629_bfbe493f",
+        "filename": "content/browser/frame_host/frame_tree.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-09-05T17:47:15Z",
+      "side": 1,
+      "message": "Yeah, coming back into a BrowsingInstance indeed brings back openers, so yes, we need to deal with that case as well.  Good catch!  And indeed, the third tab (window.open\u0027ed from chrome-urls) will also have a valid opener to the second tab, across BrowsingInstances!  But it still can\u0027t send it postMessages, thanks to our BrowsingInstance checks in OnRouteMessageEvent.\n\nI tried removing the related SiteInstance check and just fixing the GetMainFrame usage in RenderViewHostImpl::SetWebUIProperty(), but that wasn\u0027t enough and revealed a few other problems that we should probably discuss before I continue implementing anything.\n\nTurns out several WebUI tests also rely on test setup done on RenderViewCreated, and it\u0027s too late to generate that at commit time, when the RVH transitions to active, as WebUITestHandler::PreloadJavaScript() wants to inject JS into the RFH before anything runs there.  And moreover, it also relies on rvh-\u003eGetMainFrame() being correct at RenderViewCreated time.  So this is one case that\u0027s broken by not dispatching RenderViewCreated properly anymore, which I\u0027m actually happy about, because it gives us a concrete reason to fix it.\n\nHere are a few ideas/alternatives I\u0027m considering.  Let me know what you think:\n\n1. Dispatch RenderViewCreated as soon as a new pending/speculative main frame RFH is created, even for inactive RVHs.  The navigation may never commit, but that matches the old behavior where we could also send a RenderViewCreated for a rvh that wouldn\u0027t commit the main frame navigation.\n\n2. Change RenderViewHostImpl::GetMainFrame() to internally know about pending main frame navigations, and return the pending RFH if the rvh is inactive.\n\n3. Alternatively, introduce a new method, GetNavigatingMainFrame(), which would do this, similarly to RenderFrameHostManager::GetNavigatingWebUI().\n\n4. Refactor everything on WebUITestHandler::PreloadJavaScript path to use RenderFrameCreated instead.  Also change RenderViewHostImpl::SetWebUIProperty to use the pending RFH if one exists.\n\n5. Disable proxy creation only when transitioning into a WebUI SiteInstance if we didn\u0027t want to deal with any of this. \n\nSome more data:\n6.  There are 20 uses of RenderViewHost::GetMainFrame() outside of content/, and only one is a non-test use (in MemoryDetails::CollectChildInfoOnUIThread, where it can easily be replaced with looking up the main frame from WebContents).  So we could change RenderViewHost::GetMainFrame to RenderViewHost::GetMainFrameForTesting() in a followup.\n\n7.  Inside content/, the non-test uses of RVHI::GetMainFrame() are:\n - RenderViewHostImpl::SetWebUIProperty mentioned above\n - three in interstitials\n - SpeechRecognitionDispatcherHost::OnStartRequest\n - WebContentsImpl::OnMessageReceived to let webUI handle messages if needed.\nFor the last three, it might be safer to have GetMainFrame() return the pending RFH in the inactive case, unless we can prove that it doesn\u0027t matter.\n\n8.  There are 27 mostly non-test uses of WCO::RenderViewCreated, with a lot of what sound like less commonly used features (AnswerCardWebContents, ChromeKeyboardUI, DevToolsEyeDropper, etc.).  There are also 3 uses of NOTIFICATION_WEB_CONTENTS_RENDER_VIEW_HOST_CREATED (auth, prerender, thumbnail_tab_helper), which also currently fires from WebContentsImpl::RenderViewCreated only for active RVHs.  To not miss these notifications, let\u0027s decide whether doing (1) is ok.",
+      "parentUuid": "4ab3c6f7_4e0e9f75",
+      "revId": "fd2b0dae3b52a87eefa501a06acfbe062de8e1fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af85024e_6c652b70",
         "filename": "third_party/WebKit/Source/core/dom/DocumentInit.cpp",
         "patchSetId": 13
