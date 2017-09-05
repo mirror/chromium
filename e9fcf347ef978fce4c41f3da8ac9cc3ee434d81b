@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6599de48_160f6a92",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_failsafe.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-05T19:51:25Z",
+      "side": 1,
+      "message": "We do consider special URLs like about:blank etc. for activation in iframes. Is this only invoked for main-frames?",
+      "revId": "e9fcf347ef978fce4c41f3da8ac9cc3ee434d81b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2581f90_d564cc26",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_failsafe.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-05T19:51:25Z",
+      "side": 1,
+      "message": "newline before namespace closing }",
+      "revId": "e9fcf347ef978fce4c41f3da8ac9cc3ee434d81b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb836026_b6b1475f",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_failsafe.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-05T19:51:25Z",
+      "side": 1,
+      "message": "Add to the comment:\n// profile must outlive this class.",
+      "revId": "e9fcf347ef978fce4c41f3da8ac9cc3ee434d81b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad2bd528_77badf38",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_failsafe.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-05T19:51:25Z",
+      "side": 1,
+      "message": "backs",
+      "range": {
+        "startLine": 28,
+        "startChar": 15,
+        "endLine": 28,
+        "endChar": 19
+      },
+      "revId": "e9fcf347ef978fce4c41f3da8ac9cc3ee434d81b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6f10640_0e960c33",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_failsafe.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-05T19:51:25Z",
+      "side": 1,
+      "message": "Suggestion: kIsInstantNTP\nWhy do we have this as a separate status: do we not consider a new tab page for subresource filtering?",
+      "revId": "e9fcf347ef978fce4c41f3da8ac9cc3ee434d81b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59eeeb87_8037ec7d",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_failsafe.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-05T19:51:25Z",
+      "side": 1,
+      "message": "Since removing the matching configuration is an important step of this routine , how about rephrasing and renaming a bit:\n\nFunction name can be something like CheckSafetyAndRemoveConfigurationIfUnsafe \n\nI am also wondering if we should tie it to showing the UI or should the consumer decide when to call it. In that case the comment can just say \"proceed, otherwise the attempt...\"\n\nThe header can be:\n // Returns the status of the given URL. If the status is kSafe, it is OK to\n // proceed with showing the UI, otherwise the attempt should be aborted, and\n // this class will remove |matching_config| from the global\n // ConfigurationList.",
+      "revId": "e9fcf347ef978fce4c41f3da8ac9cc3ee434d81b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef0524ec_be994b6d",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 36662,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-05T19:51:25Z",
+      "side": 1,
+      "message": "Instant NTP ?",
+      "revId": "e9fcf347ef978fce4c41f3da8ac9cc3ee434d81b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
