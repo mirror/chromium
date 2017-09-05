@@ -80,9 +80,6 @@ class OmniboxResultView : public views::View,
   // class, this is the height of one line of text.
   virtual int GetTextHeight() const;
 
-  // Returns the display width required for the match contents.
-  int GetMatchContentsWidth() const;
-
   // Stores a custom icon as a local data member and schedules a repaint.
   void SetCustomIcon(const gfx::ImageSkia& icon);
 
