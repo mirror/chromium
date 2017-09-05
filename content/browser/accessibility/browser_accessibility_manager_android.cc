@@ -65,7 +65,11 @@ bool BrowserAccessibilityManagerAndroid::ShouldExposePasswordText() {
 
 BrowserAccessibility* BrowserAccessibilityManagerAndroid::GetFocus() {
   BrowserAccessibility* focus = BrowserAccessibilityManager::GetFocus();
-  return GetActiveDescendant(focus);
+  BrowserAccessibilityAndroid* android_focus =
+      static_cast<BrowserAccessibilityAndroid*>(focus);
+  if (!android_focus->IsEditableText())
+    return GetActiveDescendant(focus);
+  return focus;
 }
 
 void BrowserAccessibilityManagerAndroid::NotifyAccessibilityEvent(
