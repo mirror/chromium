@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c751504e_856f585a",
+        "filename": "ios/chrome/browser/ui/content_suggestions/ntp_home_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-09-05T18:08:36Z",
+      "side": 1,
+      "message": "This line clears the prefs. It needs to be after the promo is dismissed, during clean up, so that this test does not leave state behind.",
+      "revId": "02d6e4a1b6e69d912fef15fcb248a8225fbf62d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
