@@ -57,6 +57,24 @@
       "revId": "b262472ed0d458d3106247adb62ca63e006677a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b07aeea6_d3424af4",
+        "filename": "third_party/WebKit/Source/bindings/scripts/idl_definitions.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-09-05T04:50:58Z",
+      "side": 1,
+      "message": "I see. Then I\u0027m fine with having |first_name|.\n\nOur production IDL files don\u0027t have multiple interfaces/dictionaries right now but we should allow multiple definitions anyway.",
+      "parentUuid": "1d2f6fd0_a98c23a5",
+      "revId": "b262472ed0d458d3106247adb62ca63e006677a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
