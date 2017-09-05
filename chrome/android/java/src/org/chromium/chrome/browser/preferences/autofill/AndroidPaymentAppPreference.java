@@ -23,6 +23,7 @@ public class AndroidPaymentAppPreference extends Preference {
     @Override
     protected View onCreateView(ViewGroup parent) {
         View view = super.onCreateView(parent);
+        System.out.println("Parastoo 1: " + getClass().getName());
 
         int iconSize =
                 getContext().getResources().getDimensionPixelSize(R.dimen.payments_favicon_size);
