@@ -230,6 +230,54 @@ std::unique_ptr<views::ToggleImageButton> GeneratePasswordViewButton(
   return button;
 }
 
+void BuildCredentialRow(
+    views::GridLayout* layout,
+    std::unique_ptr<views::View> username_field,
+    std::unique_ptr<views::View> password_field,
+    std::unique_ptr<views::ToggleImageButton> password_view_button) {
+  ColumnSetType type =
+      password_view_button ? TRIPLE_VIEW_COLUMN_SET : DOUBLE_VIEW_COLUMN_SET;
+  BuildColumnSet(layout, type);
+  layout->StartRow(0, type);
+  // TODO(https://crbug.com/761767): Remove this workaround once the grid
+  // layout bug is fixed.
+  int username_width = username_field->GetPreferredSize().width();
+  int password_width = password_field->GetPreferredSize().width();
+  int available_width;
+  if (password_view_button) {
+    available_width = ManagePasswordsBubbleView::kDesiredBubbleWidth -
+                      2 * ChromeLayoutProvider::Get()->GetDistanceMetric(
+                              views::DISTANCE_RELATED_CONTROL_HORIZONTAL) -
+                      password_view_button->GetPreferredSize().width();
+  } else {
+    available_width = ManagePasswordsBubbleView::kDesiredBubbleWidth -
+                      ChromeLayoutProvider::Get()->GetDistanceMetric(
+                          views::DISTANCE_RELATED_CONTROL_HORIZONTAL);
+  }
+  if (username_width > available_width && password_width < available_width) {
+    layout->AddView(username_field.release(), 1, 1, views::GridLayout::FILL,
+                    views::GridLayout::FILL, available_width, 0);
+    layout->AddView(password_field.release(), 1, 1, views::GridLayout::FILL,
+                    views::GridLayout::FILL, 0, 0);
+  } else if (username_width < available_width &&
+             password_width > available_width) {
+    layout->AddView(username_field.release(), 1, 1, views::GridLayout::FILL,
+                    views::GridLayout::FILL, username_width, 0);
+    layout->AddView(password_field.release(), 1, 1, views::GridLayout::FILL,
+                    views::GridLayout::FILL, available_width - username_width,
+                    0);
+  } else {
+    layout->AddView(username_field.release(), 1, 1, views::GridLayout::FILL,
+                    views::GridLayout::FILL, 0, 0);
+    layout->AddView(password_field.release(), 1, 1, views::GridLayout::FILL,
+                    views::GridLayout::FILL, 0, 0);
+  }
+
+  if (password_view_button) {
+    layout->AddView(password_view_button.release());
+  }
+}
+
 }  // namespace
 
 // ManagePasswordsBubbleView::AutoSigninView ----------------------------------
@@ -399,15 +447,8 @@ void ManagePasswordsBubbleView::PendingView::CreateAndSetLayout() {
   }
 
   // Credentials row.
-  const ColumnSetType column_type =
-      (base::FeatureList::IsEnabled(
-          password_manager::features::kEnablePasswordSelection))
-          ? TRIPLE_VIEW_COLUMN_SET
-          : DOUBLE_VIEW_COLUMN_SET;
-  BuildColumnSet(layout, column_type);
   if (!parent_->model()->pending_password().username_value.empty() ||
       edit_button_) {
-    layout->StartRow(0, column_type);
     const autofill::PasswordForm* password_form =
         &parent_->model()->pending_password();
     DCHECK(!username_field_);
@@ -419,15 +460,17 @@ void ManagePasswordsBubbleView::PendingView::CreateAndSetLayout() {
     if (!password_field_) {
       password_field_ = GeneratePasswordLabel(*password_form).release();
     }
-    layout->AddView(username_field_);
-    layout->AddView(password_field_);
+
     // Add the eye icon if password selection feature is on.
-    if (column_type == TRIPLE_VIEW_COLUMN_SET) {
-      if (!password_view_button_) {
-        password_view_button_ = GeneratePasswordViewButton(this).release();
-      }
-      layout->AddView(password_view_button_);
+    if (base::FeatureList::IsEnabled(
+            password_manager::features::kEnablePasswordSelection) &&
+        !password_view_button_) {
+      password_view_button_ = GeneratePasswordViewButton(this).release();
     }
+    BuildCredentialRow(
+        layout, std::unique_ptr<views::View>(username_field_),
+        std::unique_ptr<views::View>(password_field_),
+        std::unique_ptr<views::ToggleImageButton>(password_view_button_));
     layout->AddPaddingRow(0,
                           ChromeLayoutProvider::Get()
                               ->GetInsetsMetric(views::INSETS_DIALOG_CONTENTS)
@@ -798,12 +841,10 @@ ManagePasswordsBubbleView::UpdatePendingView::UpdatePendingView(
     layout->StartRow(0, SINGLE_VIEW_COLUMN_SET);
     layout->AddView(new CredentialsSelectionView(parent->model()));
   } else {
-    BuildColumnSet(layout, DOUBLE_VIEW_COLUMN_SET);
-    layout->StartRow(0, DOUBLE_VIEW_COLUMN_SET);
     const autofill::PasswordForm* password_form =
         &parent_->model()->pending_password();
-    layout->AddView(GenerateUsernameLabel(*password_form).release());
-    layout->AddView(GeneratePasswordLabel(*password_form).release());
+    BuildCredentialRow(layout, GenerateUsernameLabel(*password_form),
+                       GeneratePasswordLabel(*password_form), nullptr);
   }
   layout->AddPaddingRow(
       0,
