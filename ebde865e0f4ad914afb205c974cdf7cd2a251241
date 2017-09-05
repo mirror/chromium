@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9efe896_02387ef5",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-09-05T18:05:23Z",
+      "side": 1,
+      "message": "This definitely looks more correct that comparing to \u00271\u0027. Maybe also verify active_touches is non-zero too to make sure we don\u0027t ever get a TouchStart with a count of 0? (Shouldn\u0027t happen, but I\u0027m thinking defensively here ...).",
+      "range": {
+        "startLine": 410,
+        "startChar": 11,
+        "endLine": 410,
+        "endChar": 33
+      },
+      "revId": "ebde865e0f4ad914afb205c974cdf7cd2a251241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d57a169_80bb196b",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-09-05T18:05:23Z",
+      "side": 1,
+      "message": "Maybe also DCHECK afterwards that active_touches_ \u003e\u003d 0, again thinking defensively?",
+      "range": {
+        "startLine": 461,
+        "startChar": 8,
+        "endLine": 461,
+        "endChar": 23
+      },
+      "revId": "ebde865e0f4ad914afb205c974cdf7cd2a251241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
