@@ -396,7 +396,8 @@ VisiblePositionTemplate<Strategy> TraverseAlgorithm(
   if (pos.AtStartOfTree() || pos.AtEndOfTree())
     return VisiblePositionTemplate<Strategy>();
 
-  const VisiblePositionTemplate<Strategy> result = CreateVisiblePosition(pos);
+  const VisiblePositionTemplate<Strategy> result =
+      CreateVisiblePositionInFlatTree(pos);
   DCHECK_NE(result.DeepEquivalent(), visible_position.DeepEquivalent());
 
   return Traversal::HonorEditingBoundary(
@@ -406,7 +407,8 @@ VisiblePositionTemplate<Strategy> TraverseAlgorithm(
 
 }  // namespace
 
-VisiblePosition LeftPositionOf(const VisiblePosition& visible_position) {
+VisiblePositionInFlatTree LeftPositionOf(
+    const VisiblePositionInFlatTree& visible_position) {
   return TraverseAlgorithm<EditingStrategy, TraversalLeft<EditingStrategy>>(
       visible_position);
 }
@@ -418,7 +420,8 @@ VisiblePositionInFlatTree LeftPositionOf(
       visible_position);
 }
 
-VisiblePosition RightPositionOf(const VisiblePosition& visible_position) {
+VisiblePositionInFlatTree RightPositionOf(
+    const VisiblePositionInFlatTree& visible_position) {
   return TraverseAlgorithm<EditingStrategy, TraversalRight<EditingStrategy>>(
       visible_position);
 }
