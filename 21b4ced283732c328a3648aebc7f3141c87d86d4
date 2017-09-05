@@ -16,6 +16,52 @@
       "revId": "21b4ced283732c328a3648aebc7f3141c87d86d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6be4b237_91ac5156",
+        "filename": "chrome/browser/resources/chromeos/arc_support/background.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-09-05T15:37:13Z",
+      "side": 1,
+      "message": "nit: this.enableEventProcessing(false) ? here and in this file",
+      "range": {
+        "startLine": 432,
+        "startChar": 4,
+        "endLine": 432,
+        "endChar": 24
+      },
+      "revId": "21b4ced283732c328a3648aebc7f3141c87d86d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "507d1c12_7fde6977",
+        "filename": "chrome/browser/resources/chromeos/arc_support/background.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-09-05T15:37:13Z",
+      "side": 1,
+      "message": "nit: remove this unless you need this urgently.",
+      "range": {
+        "startLine": 447,
+        "startChar": 4,
+        "endLine": 447,
+        "endChar": 66
+      },
+      "revId": "21b4ced283732c328a3648aebc7f3141c87d86d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
