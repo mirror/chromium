@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "db3f12d4_335a5041",
+        "filename": "ash/wm/overview/overview_window_drag_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-09-05T16:55:51Z",
+      "side": 1,
+      "message": "It might make more sense to put the logic in WindowSelector::InitiateDrag(), Drag() and CompleteDrag()?",
+      "revId": "aebd17d59ba14f83271838c489a7b459d34582f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "20d4022f_633a4a9a",
         "filename": "ash/wm/overview/overview_window_drag_controller.cc",
         "patchSetId": 4
@@ -36,6 +53,23 @@
     },
     {
       "key": {
+        "uuid": "99d76a27_44a8fb69",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-09-05T16:55:51Z",
+      "side": 1,
+      "message": "Could you make it consistent with kScreenEdgeInsetForDrag in overview_window_drag_controller.cc? You can either modify kScreenEdgeInsetForDrag or the constant here.",
+      "revId": "aebd17d59ba14f83271838c489a7b459d34582f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bf3c3163_2b86aaa8",
         "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
         "patchSetId": 4
@@ -47,6 +81,40 @@
       "writtenOn": "2017-09-05T16:37:43Z",
       "side": 1,
       "message": "instead of using view\u0027s background, can you use solid color layer which is more efficient? (see View::SetPaintToLayer)",
+      "revId": "aebd17d59ba14f83271838c489a7b459d34582f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b6178ba_e7a5cff2",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-09-05T16:55:51Z",
+      "side": 1,
+      "message": "// namespace aura",
+      "revId": "aebd17d59ba14f83271838c489a7b459d34582f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6045f15_75c762a4",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-09-05T16:55:51Z",
+      "side": 1,
+      "message": "// namespace views",
       "revId": "aebd17d59ba14f83271838c489a7b459d34582f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
