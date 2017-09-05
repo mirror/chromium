@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe914709_d1a98ea1",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-05T13:51:03Z",
+      "side": 1,
+      "message": "A comment about the arguments and what happens to them. It\u0027s common to expect that the objects in a unique_ptr is destroyed.",
+      "range": {
+        "startLine": 233,
+        "startChar": 5,
+        "endLine": 233,
+        "endChar": 23
+      },
+      "revId": "6969c74142cbf1ceda1289bde1193695031577e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e509d0e_9eb534bd",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-05T13:51:03Z",
+      "side": 1,
+      "message": "A comment here about those non intuitive conditions.",
+      "range": {
+        "startLine": 257,
+        "startChar": 2,
+        "endLine": 257,
+        "endChar": 4
+      },
+      "revId": "6969c74142cbf1ceda1289bde1193695031577e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
