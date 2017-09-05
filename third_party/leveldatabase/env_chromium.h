@@ -248,19 +248,19 @@ class DBTracker {
   // DBTracker singleton instance.
   static DBTracker* GetInstance();
 
-  // Returns name of memory-infra dump for |tracked_db|. Can be used to attach
-  // additional info to the database dump, or to properly attribute memory
-  // usage in memory dump providers that also dump |tracked_db|.
-  // Note that |tracked_db| should be a live database instance produced by
-  // OpenDatabase() method or leveldb_env::OpenDB() function.
-  static std::string GetMemoryDumpName(leveldb::DB* tracked_db);
-
   // Provides extra information about a tracked database.
   class TrackedDB : public leveldb::DB {
    public:
     // Name that OpenDatabase() was called with.
     virtual const std::string& name() const = 0;
   };
+
+  // Returns name of memory-infra dump for |tracked_db|. Can be used to attach
+  // additional info to the database dump, or to properly attribute memory
+  // usage in memory dump providers that also dump |tracked_db|.
+  // Note that |tracked_db| should be a live database instance produced by
+  // OpenDatabase() method or leveldb_env::OpenDB() function.
+  std::string GetMemoryDumpName(leveldb::DB* tracked_db) const;
 
   // Opens a database and starts tracking it. As long as the opened database
   // is alive (i.e. its instance is not destroyed) the database is exposed to
@@ -285,15 +285,24 @@ class DBTracker {
   class TrackedDBImpl;
   class MemoryDumpProvider;
 
+  // Returns name of memory-infra dump for |db|. Can be used to attach
+  // additional info to the database dump, or to properly attribute memory
+  // usage in memory dump providers that also dump |db|.
+  static std::string GetMemoryDumpName(TrackedDB* db);
+
   DBTracker();
   ~DBTracker();
+
+  // Checks if |db| is tracked and downcasts it to TrackedDB. Otherwise fires
+  // a DCHECK() and returns NULL. Deadlocks if called from VisitDatabases().
+  TrackedDB* ToTrackedDB(leveldb::DB* db) const;
 
   void DatabaseOpened(TrackedDBImpl* database);
   void DatabaseDestroyed(TrackedDBImpl* database);
 
   std::unique_ptr<MemoryDumpProvider> mdp_;
 
-  base::Lock databases_lock_;
+  mutable base::Lock databases_lock_;
   base::LinkedList<TrackedDBImpl> databases_;
 
   DISALLOW_COPY_AND_ASSIGN(DBTracker);

@@ -359,8 +359,9 @@ void SessionStorageDatabase::OnMemoryDump(
 
   // All leveldb databases are already dumped by leveldb_env::DBTracker. Add
   // an edge to avoid double counting.
-  pmd->AddSuballocation(mad->guid(),
-                        leveldb_env::DBTracker::GetMemoryDumpName(db_.get()));
+  pmd->AddSuballocation(
+      mad->guid(),
+      leveldb_env::DBTracker::GetInstance()->GetMemoryDumpName(db_.get()));
 }
 
 bool SessionStorageDatabase::LazyOpen(bool create_if_needed) {

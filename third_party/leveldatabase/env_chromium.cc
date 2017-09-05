@@ -1303,14 +1303,31 @@ DBTracker::~DBTracker() {
   NOTREACHED();  // DBTracker is a singleton
 }
 
+// static
 DBTracker* DBTracker::GetInstance() {
   static DBTracker* instance = new DBTracker();
   return instance;
 }
 
-std::string DBTracker::GetMemoryDumpName(leveldb::DB* tracked_db) {
+// static
+std::string DBTracker::GetMemoryDumpName(TrackedDB* db) {
   return base::StringPrintf("leveldatabase/0x%" PRIXPTR,
-                            reinterpret_cast<uintptr_t>(tracked_db));
+                            reinterpret_cast<uintptr_t>(db));
+}
+
+std::string DBTracker::GetMemoryDumpName(leveldb::DB* db) const {
+  return GetMemoryDumpName(ToTrackedDB(db));
+}
+
+DBTracker::TrackedDB* DBTracker::ToTrackedDB(leveldb::DB* db) const {
+  base::AutoLock lock(databases_lock_);
+  for (auto* i = databases_.head(); i != databases_.end(); i = i->next()) {
+    if (i->value() == db) {
+      return i->value();
+    }
+  }
+  DCHECK(false) << std::hex << db << " is not tracked";
+  return nullptr;
 }
 
 leveldb::Status DBTracker::OpenDatabase(const leveldb::Options& options,
