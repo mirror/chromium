@@ -285,6 +285,30 @@
     },
     {
       "key": {
+        "uuid": "c7be5a6e_7260650e",
+        "filename": "third_party/WebKit/Source/modules/encryptedmedia/NavigatorRequestMediaKeySystemAccess.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-05T05:30:37Z",
+      "side": 1,
+      "message": "I\u0027ve changed it to NotSupportedError as suggested.",
+      "parentUuid": "810b7318_3563a56c",
+      "range": {
+        "startLine": 283,
+        "startChar": 14,
+        "endLine": 283,
+        "endChar": 28
+      },
+      "revId": "1b69e496f08d2cdf2436d6e984ccde3d3ee53d6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50a93d1d_1706b2ff",
         "filename": "third_party/WebKit/Source/platform/RuntimeEnabledFeatures.json5",
         "patchSetId": 6
@@ -335,6 +359,24 @@
       "revId": "1b69e496f08d2cdf2436d6e984ccde3d3ee53d6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d148eca_aab787fb",
+        "filename": "third_party/WebKit/Source/platform/RuntimeEnabledFeatures.json5",
+        "patchSetId": 6
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-05T05:30:37Z",
+      "side": 1,
+      "message": "That\u0027s fine with me. I\u0027ve changed FeaturePolicyExperimentalFeatures to \"experimental\" status so that we don\u0027t need to add virtual test suites. Is that ok?",
+      "parentUuid": "a00095b3_45f66ef5",
+      "revId": "1b69e496f08d2cdf2436d6e984ccde3d3ee53d6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
