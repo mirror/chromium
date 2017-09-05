@@ -18,6 +18,7 @@ import("//third_party/protobuf/proto_library.gni")
 import("//tools/resources/generate_resource_whitelist.gni")
 import("channel.gni")
 import("java_sources.gni")
+import("static_initializers.gni")
 
 manifest_package = "org.chromium.chrome"
 
@@ -1143,4 +1144,26 @@ instrumentation_test_apk("chrome_sync_shell_test_apk") {
     "//ui/android:ui_java",
   ]
   proguard_enabled = !is_java_debug
+}
+
+if (defined(expected_static_initializer_count)) {
+  action("monochrome_static_initializers") {
+    script = "//build/android/resource_sizes.py"
+    inputs = [
+      "$root_build_dir/apks/MonochromePublic.apk",
+    ]
+    outputs = [
+      "$target_gen_dir/$target_name/si_count.txt",
+    ]
+    deps = [
+      ":monochrome_public_apk",
+    ]
+    args = [
+      "--chromium-output-directory=.",
+      "--assert-static-initializer-count=$expected_static_initializer_count",
+      "--touch",
+      rebase_path(outputs[0], root_build_dir),
+      rebase_path(inputs[0], root_build_dir),
+    ]
+  }
 }
