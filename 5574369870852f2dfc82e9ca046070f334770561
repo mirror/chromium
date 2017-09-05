@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1f45a48_fc61f2c3",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 26
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-05T22:55:43Z",
+      "side": 1,
+      "message": "Maybe add a comment that this is the local port that will forward SSH connections to the guest VM",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 22
+      },
+      "revId": "5574369870852f2dfc82e9ca046070f334770561",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e94e9c79_c2592c00",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 26
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-05T22:55:43Z",
+      "side": 1,
+      "message": "should this be retries\u003d1?",
+      "range": {
+        "startLine": 35,
+        "startChar": 32,
+        "endLine": 35,
+        "endChar": 41
+      },
+      "revId": "5574369870852f2dfc82e9ca046070f334770561",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09ec0c96_6cfcbc16",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 26
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-05T22:55:43Z",
+      "side": 1,
+      "message": "nit: remove else and unindent the code below.",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 7
+      },
+      "revId": "5574369870852f2dfc82e9ca046070f334770561",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ed69575_bbedc637",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 26
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-05T22:55:43Z",
+      "side": 1,
+      "message": "nit: do we really need this file? doesn\u0027t seem to be used anywhere.",
+      "range": {
+        "startLine": 196,
+        "startChar": 11,
+        "endLine": 196,
+        "endChar": 74
+      },
+      "revId": "5574369870852f2dfc82e9ca046070f334770561",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24443e08_27f5810f",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 26
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-05T22:55:43Z",
+      "side": 1,
+      "message": "nit: Maybe call it BuildBootfsResults, BootfsConfig or BootfsData?",
+      "range": {
+        "startLine": 210,
+        "startChar": 6,
+        "endLine": 210,
+        "endChar": 19
+      },
+      "revId": "5574369870852f2dfc82e9ca046070f334770561",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cdea643_bf37c2c4",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 26
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-05T22:55:43Z",
+      "side": 1,
+      "message": "nit: add empty line here to separate this command from the one above.",
+      "range": {
+        "startLine": 482,
+        "startChar": 6,
+        "endLine": 482,
+        "endChar": 19
+      },
+      "revId": "5574369870852f2dfc82e9ca046070f334770561",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad14f9d2_032ef0c9",
+        "filename": "tools/mb/mb.py",
+        "patchSetId": 26
+      },
+      "lineNbr": 1087,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-05T22:55:43Z",
+      "side": 1,
+      "message": "maybe rename these to is_android and is_fuchsia. Or maybe replace them with target_os (then \u0027not android and not fuchsia\u0027 will become \u0027target_os not in [\"android\", \"fuchsia\"]\u0027)",
+      "range": {
+        "startLine": 1087,
+        "startChar": 4,
+        "endLine": 1087,
+        "endChar": 11
+      },
+      "revId": "5574369870852f2dfc82e9ca046070f334770561",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
