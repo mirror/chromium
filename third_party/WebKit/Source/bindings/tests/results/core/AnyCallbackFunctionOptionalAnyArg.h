@@ -15,14 +15,13 @@
 
 #include "bindings/core/v8/NativeValueTraits.h"
 #include "core/CoreExport.h"
+#include "platform/bindings/ScriptState.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/bindings/TraceWrapperV8Reference.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/text/WTFString.h"
 
 namespace blink {
-
-class ScriptState;
 
 class CORE_EXPORT AnyCallbackFunctionOptionalAnyArg final : public GarbageCollectedFinalized<AnyCallbackFunctionOptionalAnyArg>, public TraceWrapperBase {
  public:
@@ -38,6 +37,8 @@ class CORE_EXPORT AnyCallbackFunctionOptionalAnyArg final : public GarbageCollec
   v8::Local<v8::Function> v8Value(v8::Isolate* isolate) {
     return callback_.NewLocal(isolate);
   }
+
+  v8::Isolate* GetIsolate() const { return script_state_->GetIsolate(); }
 
  private:
   AnyCallbackFunctionOptionalAnyArg(ScriptState*, v8::Local<v8::Function>);
