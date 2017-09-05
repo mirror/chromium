@@ -84,11 +84,15 @@ void MojoProxyResolverFactoryImpl::Job::OnProxyResolverCreated(int error) {
 }
 
 MojoProxyResolverFactoryImpl::MojoProxyResolverFactoryImpl(
-    std::unique_ptr<ProxyResolverV8TracingFactory> proxy_resolver_factory)
-    : proxy_resolver_impl_factory_(std::move(proxy_resolver_factory)) {}
+    std::unique_ptr<service_manager::ServiceContextRef> service_ref)
+    : MojoProxyResolverFactoryImpl(std::move(service_ref),
+                                   ProxyResolverV8TracingFactory::Create()) {}
 
-MojoProxyResolverFactoryImpl::MojoProxyResolverFactoryImpl()
-    : MojoProxyResolverFactoryImpl(ProxyResolverV8TracingFactory::Create()) {}
+MojoProxyResolverFactoryImpl::MojoProxyResolverFactoryImpl(
+    std::unique_ptr<service_manager::ServiceContextRef> service_ref,
+    std::unique_ptr<ProxyResolverV8TracingFactory> proxy_resolver_factory)
+    : service_ref_(std::move(service_ref)),
+      proxy_resolver_impl_factory_(std::move(proxy_resolver_factory)) {}
 
 MojoProxyResolverFactoryImpl::~MojoProxyResolverFactoryImpl() {
 }

@@ -2761,6 +2761,8 @@ if (enable_net_mojo) {
       "dns/host_resolver_mojo.h",
       "proxy/mojo_proxy_resolver_factory_impl.cc",
       "proxy/mojo_proxy_resolver_factory_impl.h",
+      "proxy/mojo_proxy_resolver_factory_service.cc",
+      "proxy/mojo_proxy_resolver_factory_service.h",
       "proxy/mojo_proxy_resolver_impl.cc",
       "proxy/mojo_proxy_resolver_impl.h",
       "proxy/mojo_proxy_resolver_v8_tracing_bindings.h",

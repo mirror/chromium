@@ -8,16 +8,9 @@
 #include <stddef.h>
 
 #include "base/macros.h"
-#include "base/memory/weak_ptr.h"
 #include "base/threading/thread_checker.h"
 #include "base/timer/timer.h"
 #include "net/proxy/mojo_proxy_resolver_factory.h"
-
-#if !defined(OS_ANDROID)
-namespace content {
-class UtilityProcessHost;
-}
-#endif
 
 namespace base {
 template <typename Type>
@@ -59,10 +52,6 @@ class ChromeMojoProxyResolverFactory : public net::MojoProxyResolverFactory {
   void OnIdleTimeout();
 
   net::interfaces::ProxyResolverFactoryPtr resolver_factory_;
-
-#if !defined(OS_ANDROID)
-  base::WeakPtr<content::UtilityProcessHost> weak_utility_process_host_;
-#endif
 
   size_t num_proxy_resolvers_ = 0;
 

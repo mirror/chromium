@@ -10,20 +10,23 @@
 #include "base/callback.h"
 #include "base/macros.h"
 #include "net/interfaces/proxy_resolver_service.mojom.h"
+#include "services/service_manager/public/cpp/service_context_ref.h"
 
 namespace net {
 class ProxyResolverV8TracingFactory;
 
 class MojoProxyResolverFactoryImpl : public interfaces::ProxyResolverFactory {
  public:
-  MojoProxyResolverFactoryImpl();
   explicit MojoProxyResolverFactoryImpl(
-      std::unique_ptr<ProxyResolverV8TracingFactory> proxy_resolver_factory);
-
+      std::unique_ptr<service_manager::ServiceContextRef> service_ref);
   ~MojoProxyResolverFactoryImpl() override;
 
  private:
   class Job;
+
+  explicit MojoProxyResolverFactoryImpl(
+      std::unique_ptr<service_manager::ServiceContextRef> service_ref,
+      std::unique_ptr<ProxyResolverV8TracingFactory> proxy_resolver_factory);
 
   // interfaces::ProxyResolverFactory override.
   void CreateResolver(
@@ -32,6 +35,8 @@ class MojoProxyResolverFactoryImpl : public interfaces::ProxyResolverFactory {
       interfaces::ProxyResolverFactoryRequestClientPtr client) override;
 
   void RemoveJob(Job* job);
+
+  const std::unique_ptr<service_manager::ServiceContextRef> service_ref_;
 
   const std::unique_ptr<ProxyResolverV8TracingFactory>
       proxy_resolver_impl_factory_;
