@@ -28,6 +28,7 @@
 #include "base/time/time.h"
 #include "ios/net/cookies/cookie_creation_time_manager.h"
 #include "ios/net/cookies/cookie_store_ios_client.h"
+#include "ios/net/cookies/nshttp_system_cookie_store.h"
 #include "ios/net/cookies/system_cookie_util.h"
 #include "ios/net/ios_net_features.h"
 #import "net/base/mac/url_conversions.h"
@@ -159,55 +160,6 @@ NSHTTPCookie* GetNSHTTPCookieFromCookieLine(const std::string& cookie_line,
   return corrected_cookie;
 }
 
-// Compares cookies based on the path lengths and the creation times, as per
-// RFC6265.
-NSInteger CompareCookies(id a, id b, void* context) {
-  NSHTTPCookie* cookie_a = (NSHTTPCookie*)a;
-  NSHTTPCookie* cookie_b = (NSHTTPCookie*)b;
-  // Compare path lengths first.
-  NSUInteger path_length_a = [[cookie_a path] length];
-  NSUInteger path_length_b = [[cookie_b path] length];
-  if (path_length_a < path_length_b)
-    return NSOrderedDescending;
-  if (path_length_b < path_length_a)
-    return NSOrderedAscending;
-
-  // Compare creation times.
-  CookieCreationTimeManager* manager = (CookieCreationTimeManager*)context;
-  DCHECK(manager);
-  base::Time created_a = manager->GetCreationTime(cookie_a);
-  base::Time created_b = manager->GetCreationTime(cookie_b);
-#if !BUILDFLAG(CRONET_BUILD)
-  // CookieCreationTimeManager is returning creation times that are null.
-  // Since in Cronet, the cookie store is recreated on startup, let's suppress
-  // this warning for now.
-  // TODO(mef): Instead of suppressing the warning, assign a creation time
-  // to cookies if one doesn't already exist.
-  DLOG_IF(ERROR, created_a.is_null() || created_b.is_null())
-      << "Cookie without creation date";
-#endif
-  if (created_a < created_b)
-    return NSOrderedAscending;
-  return (created_a > created_b) ? NSOrderedDescending : NSOrderedSame;
-}
-
-// Gets the cookies for |url| from the system cookie store.
-NSArray* GetCookiesForURL(NSHTTPCookieStorage* system_store,
-                          const GURL& url, CookieCreationTimeManager* manager) {
-  NSArray* cookies = [system_store cookiesForURL:net::NSURLWithGURL(url)];
-
-  // Sort cookies by decreasing path length, then creation time, as per RFC6265.
-  return [cookies sortedArrayUsingFunction:CompareCookies context:manager];
-}
-
-// Gets all cookies from the system cookie store.
-NSArray* GetAllCookies(NSHTTPCookieStorage* system_store,
-                       CookieCreationTimeManager* manager) {
-  NSArray* cookies = [system_store cookies];
-
-  // Sort cookies by decreasing path length, then creation time, as per RFC6265.
-  return [cookies sortedArrayUsingFunction:CompareCookies context:manager];
-}
 
 // Builds a cookie line (such as "key1=value1; key2=value2") from an array of
 // cookies.
@@ -276,8 +228,11 @@ bool HasExplicitDomain(const std::string& cookie_line) {
 #pragma mark -
 #pragma mark CookieStoreIOS
 
-CookieStoreIOS::CookieStoreIOS(NSHTTPCookieStorage* cookie_storage)
+CookieStoreIOS::CookieStoreIOS(SystemCookieStore* cookie_storage)
     : CookieStoreIOS(nullptr, cookie_storage) {}
+
+CookieStoreIOS::CookieStoreIOS(NSHTTPCookieStorage* ns_cookie_store)
+    : CookieStoreIOS(new NSHTTPSystemCookieStore(ns_cookie_store)) {}
 
 CookieStoreIOS::~CookieStoreIOS() {
   NotificationTrampoline::GetInstance()->RemoveObserver(this);
@@ -341,7 +296,7 @@ void CookieStoreIOS::SetCookieWithOptionsAsync(
                  (!has_explicit_domain || has_valid_domain);
 
   if (success) {
-    [system_store_ setCookie:cookie];
+    system_store_->SetCookie(cookie);
     creation_time_manager_->SetCreationTime(
         cookie,
         creation_time_manager_->MakeUniqueCreationTime(base::Time::Now()));
@@ -414,7 +369,7 @@ void CookieStoreIOS::SetCookieWithDetailsAsync(const GURL& url,
     NSHTTPCookie* cookie = SystemCookieFromCanonicalCookie(*canonical_cookie);
 
     if (cookie != nil) {
-      [system_store_ setCookie:cookie];
+      system_store_->SetCookie(cookie);
       creation_time_manager_->SetCreationTime(
           cookie, creation_time_manager_->MakeUniqueCreationTime(
               canonical_cookie->CreationDate()));
@@ -445,7 +400,7 @@ void CookieStoreIOS::SetCanonicalCookieAsync(
   NSHTTPCookie* ns_cookie = SystemCookieFromCanonicalCookie(*cookie.get());
 
   if (ns_cookie != nil) {
-    [system_store_ setCookie:ns_cookie];
+    system_store_->SetCookie(ns_cookie);
     creation_time_manager_->SetCreationTime(
         ns_cookie,
         creation_time_manager_->MakeUniqueCreationTime(
@@ -476,7 +431,7 @@ void CookieStoreIOS::GetCookiesWithOptionsAsync(
   // TODO(mkwst): If/when iOS supports Same-Site cookies, we'll need to pass
   // options in here as well. https://crbug.com/459154
   NSArray* cookies =
-      GetCookiesForURL(system_store_, url, creation_time_manager_.get());
+      system_store_->GetCookiesForURL(url, creation_time_manager_.get());
   if (!callback.is_null())
     std::move(callback).Run(BuildCookieLineWithOptions(cookies, options));
 }
@@ -497,7 +452,7 @@ void CookieStoreIOS::GetCookieListWithOptionsAsync(
   // TODO(mkwst): If/when iOS supports Same-Site cookies, we'll need to pass
   // options in here as well. https://crbug.com/459154
   NSArray* cookies =
-      GetCookiesForURL(system_store_, url, creation_time_manager_.get());
+      system_store_->GetCookiesForURL(url, creation_time_manager_.get());
   net::CookieList cookie_list = CanonicalCookieListFromSystemCookies(cookies);
   if (!callback.is_null())
     std::move(callback).Run(cookie_list);
@@ -513,7 +468,7 @@ void CookieStoreIOS::GetAllCookiesAsync(GetCookieListCallback callback) {
     return;
   }
 
-  NSArray* cookies = GetAllCookies(system_store_, creation_time_manager_.get());
+  NSArray* cookies = system_store_->GetAllCookies(creation_time_manager_.get());
   net::CookieList cookie_list = CanonicalCookieListFromSystemCookies(cookies);
   if (!callback.is_null()) {
     std::move(callback).Run(cookie_list);
@@ -526,10 +481,10 @@ void CookieStoreIOS::DeleteCookieAsync(const GURL& url,
   DCHECK(thread_checker_.CalledOnValidThread());
 
   NSArray* cookies =
-      GetCookiesForURL(system_store_, url, creation_time_manager_.get());
+      system_store_->GetCookiesForURL(url, creation_time_manager_.get());
   for (NSHTTPCookie* cookie in cookies) {
     if ([[cookie name] isEqualToString:base::SysUTF8ToNSString(cookie_name)]) {
-      [system_store_ deleteCookie:cookie];
+      system_store_->DeleteCookie(cookie);
       creation_time_manager_->DeleteCreationTime(cookie);
     }
   }
@@ -593,7 +548,7 @@ void CookieStoreIOS::FlushStore(base::OnceClosure closure) {
   if (SystemCookiesAllowed()) {
     // If cookies are disabled, the system store is empty, and the cookies are
     // stashed on disk. Do not delete the cookies on the disk in this case.
-    WriteToCookieMonster([system_store_ cookies]);
+    WriteToCookieMonster(system_store_->GetAllCookies());
   }
   cookie_monster_->FlushStore(std::move(closure));
   flush_closure_.Cancel();
@@ -604,9 +559,9 @@ void CookieStoreIOS::FlushStore(base::OnceClosure closure) {
 
 CookieStoreIOS::CookieStoreIOS(
     net::CookieMonster::PersistentCookieStore* persistent_store,
-    NSHTTPCookieStorage* system_store)
+    SystemCookieStore* system_store)
     : cookie_monster_(new net::CookieMonster(persistent_store, nullptr)),
-      system_store_(system_store),
+      system_store_(base::WrapUnique<SystemCookieStore>(system_store)),
       creation_time_manager_(new CookieCreationTimeManager),
       metrics_enabled_(false),
       cookie_cache_(new CookieCache()),
@@ -644,17 +599,14 @@ base::OnceClosure CookieStoreIOS::WrapClosure(base::OnceClosure callback) {
 
 void CookieStoreIOS::ClearSystemStore() {
   DCHECK(thread_checker_.CalledOnValidThread());
-  base::scoped_nsobject<NSArray> copy(
-      [[NSArray alloc] initWithArray:[system_store_ cookies]]);
-  for (NSHTTPCookie* cookie in copy.get())
-    [system_store_ deleteCookie:cookie];
-  DCHECK_EQ(0u, [[system_store_ cookies] count]);
+  system_store_->ClearStore();
   creation_time_manager_->Clear();
 }
 
 bool CookieStoreIOS::SystemCookiesAllowed() {
   DCHECK(thread_checker_.CalledOnValidThread());
-  return [system_store_ cookieAcceptPolicy] != NSHTTPCookieAcceptPolicyNever;
+  return system_store_->GetCookieAcceptPolicy() !=
+         NSHTTPCookieAcceptPolicyNever;
 }
 
 void CookieStoreIOS::WriteToCookieMonster(NSArray* system_cookies) {
@@ -678,7 +630,7 @@ void CookieStoreIOS::WriteToCookieMonster(NSArray* system_cookies) {
 void CookieStoreIOS::DeleteCookiesWithFilter(const CookieFilterFunction& filter,
                                              DeleteCallback callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  NSArray* cookies = [system_store_ cookies];
+  NSArray* cookies = system_store_->GetAllCookies();
 
   // Collect the cookies to delete.
   base::scoped_nsobject<NSMutableArray> to_delete(
@@ -691,7 +643,7 @@ void CookieStoreIOS::DeleteCookiesWithFilter(const CookieFilterFunction& filter,
 
   // Delete them.
   for (NSHTTPCookie* cookie in to_delete.get()) {
-    [system_store_ deleteCookie:cookie];
+    system_store_->DeleteCookie(cookie);
     creation_time_manager_->DeleteCreationTime(cookie);
   }
 
@@ -781,8 +733,7 @@ bool CookieStoreIOS::GetSystemCookies(
     const std::string& name,
     std::vector<net::CanonicalCookie>* cookies) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  NSURL* url = net::NSURLWithGURL(gurl);
-  NSArray* nscookies = [system_store_ cookiesForURL:url];
+  NSArray* nscookies = system_store_->GetCookiesForURL(gurl);
   bool found_cookies = false;
   for (NSHTTPCookie* nscookie in nscookies) {
     if (nscookie.name.UTF8String == name) {

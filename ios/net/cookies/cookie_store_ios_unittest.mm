@@ -15,6 +15,7 @@
 #include "base/run_loop.h"
 #include "base/strings/sys_string_conversions.h"
 #import "ios/net/cookies/cookie_store_ios_test_util.h"
+#include "ios/net/cookies/nshttp_system_cookie_store.h"
 #import "net/base/mac/url_conversions.h"
 #include "net/cookies/cookie_store_unittest.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -28,8 +29,7 @@ namespace net {
 struct CookieStoreIOSTestTraits {
   static std::unique_ptr<net::CookieStore> Create() {
     ClearCookies();
-    return base::MakeUnique<CookieStoreIOS>(
-        [NSHTTPCookieStorage sharedHTTPCookieStorage]);
+    return base::MakeUnique<CookieStoreIOS>(new NSHTTPSystemCookieStore());
   }
 
   static const bool supports_http_only = false;
@@ -90,8 +90,8 @@ class CookieStoreIOSTest : public testing::Test {
         kTestCookieURL3("http://foo.google.com"),
         kTestCookieURL4("http://bar.google.com/bar"),
         backend_(new TestPersistentCookieStore),
-        store_(base::MakeUnique<net::CookieStoreIOS>(
-            [NSHTTPCookieStorage sharedHTTPCookieStorage])) {
+        system_store_(new net::NSHTTPSystemCookieStore()),
+        store_(base::MakeUnique<net::CookieStoreIOS>(system_store_)) {
     cookie_changed_callback_ = store_->AddCallbackForCookie(
         kTestCookieURL, "abc",
         base::Bind(&RecordCookieChanges, &cookies_changed_, &cookies_removed_));
@@ -115,26 +115,21 @@ class CookieStoreIOSTest : public testing::Test {
   void SetSystemCookie(const GURL& url,
                        const std::string& name,
                        const std::string& value) {
-    NSHTTPCookieStorage* storage =
-        [NSHTTPCookieStorage sharedHTTPCookieStorage];
-    [storage setCookie:[NSHTTPCookie cookieWithProperties:@{
+    system_store_->SetCookie([NSHTTPCookie cookieWithProperties:@{
       NSHTTPCookiePath : base::SysUTF8ToNSString(url.path()),
       NSHTTPCookieName : base::SysUTF8ToNSString(name),
       NSHTTPCookieValue : base::SysUTF8ToNSString(value),
       NSHTTPCookieDomain : base::SysUTF8ToNSString(url.host()),
-    }]];
+    }]);
     net::CookieStoreIOS::NotifySystemCookiesChanged();
     base::RunLoop().RunUntilIdle();
   }
 
   void DeleteSystemCookie(const GURL& gurl, const std::string& name) {
-    NSHTTPCookieStorage* storage =
-        [NSHTTPCookieStorage sharedHTTPCookieStorage];
-    NSURL* nsurl = net::NSURLWithGURL(gurl);
-    NSArray* cookies = [storage cookiesForURL:nsurl];
+    NSArray* cookies = system_store_->GetCookiesForURL(gurl);
     for (NSHTTPCookie* cookie in cookies) {
       if (cookie.name.UTF8String == name) {
-        [storage deleteCookie:cookie];
+        system_store_->DeleteCookie(cookie);
         break;
       }
     }
@@ -150,6 +145,7 @@ class CookieStoreIOSTest : public testing::Test {
 
   base::MessageLoop loop_;
   scoped_refptr<TestPersistentCookieStore> backend_;
+  net::SystemCookieStore* system_store_;
   std::unique_ptr<net::CookieStoreIOS> store_;
   std::unique_ptr<net::CookieStore::CookieChangedSubscription>
       cookie_changed_callback_;
@@ -205,8 +201,8 @@ TEST(CookieStoreIOS, GetAllCookiesForURLAsync) {
   base::MessageLoop loop;
   const GURL kTestCookieURL("http://foo.google.com/bar");
   ClearCookies();
-  std::unique_ptr<CookieStoreIOS> cookie_store(base::MakeUnique<CookieStoreIOS>(
-      [NSHTTPCookieStorage sharedHTTPCookieStorage]));
+  std::unique_ptr<CookieStoreIOS> cookie_store(
+      base::MakeUnique<CookieStoreIOS>(new NSHTTPSystemCookieStore()));
 
   // Add a cookie.
   net::CookieOptions options;
