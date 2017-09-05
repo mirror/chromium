@@ -90,6 +90,14 @@ std::map<std::string, PrefetchItem> AddUniqueUrlsTaskTest::GetAllItems() {
   return map;
 }
 
+TEST_F(AddUniqueUrlsTaskTest, StoreFailure) {
+  store_util()->SimulateInitializationError();
+
+  AddUniqueUrlsTask task(dispatcher(), store(), kTestNamespace, {});
+  task.Run();
+  PumpLoop();
+}
+
 TEST_F(AddUniqueUrlsTaskTest, AddTaskInEmptyStore) {
   std::vector<PrefetchURL> urls;
   urls.push_back(PrefetchURL{kClientId1, kTestURL1, kTestTitle1});
