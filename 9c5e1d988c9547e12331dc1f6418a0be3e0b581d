@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d305a8d2_f8c73f7c",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 832,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-05T10:37:39Z",
+      "side": 1,
+      "message": "This is a copy/paste from another bubble. You should at least combine save and update bubbles by introducing a helper function. At best all the three bubbles would share the same logic. It\u0027s doable.",
+      "range": {
+        "startLine": 832,
+        "startChar": 4,
+        "endLine": 832,
+        "endChar": 5
+      },
+      "revId": "9c5e1d988c9547e12331dc1f6418a0be3e0b581d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
