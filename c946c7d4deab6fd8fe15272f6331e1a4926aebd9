@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ebe11a80_63ee0c0d",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-09-05T12:53:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30efb67d_aec05c2b",
+      "revId": "c946c7d4deab6fd8fe15272f6331e1a4926aebd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4d951cc_324413cc",
         "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
         "patchSetId": 3
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "4fd8884c_609a8d09",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-09-05T12:53:23Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b4d951cc_324413cc",
+      "range": {
+        "startLine": 491,
+        "startChar": 17,
+        "endLine": 491,
+        "endChar": 45
+      },
+      "revId": "c946c7d4deab6fd8fe15272f6331e1a4926aebd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11e46ec9_8efaa24b",
         "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
         "patchSetId": 3
@@ -53,6 +95,24 @@
       "writtenOn": "2017-09-05T00:06:01Z",
       "side": 1,
       "message": "this flow doesn\u0027t look right. UpdateContent should only be called if the bubble was non-null when this method was invoked (in which case a new one shouldn\u0027t be created on the line aove)",
+      "revId": "c946c7d4deab6fd8fe15272f6331e1a4926aebd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c2b3461_ca064715",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-09-05T12:53:23Z",
+      "side": 1,
+      "message": "I\u0027ve change the approach a bit, WDYT of the new one?",
+      "parentUuid": "11e46ec9_8efaa24b",
       "revId": "c946c7d4deab6fd8fe15272f6331e1a4926aebd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
