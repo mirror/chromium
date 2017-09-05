@@ -34,6 +34,24 @@
       "revId": "fdb0dde54b5eeb303baef2ee7216014d48dba4bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50b253e4_cc76fa02",
+        "filename": "content/browser/android/overscroll_controller_android_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-09-05T14:54:34Z",
+      "side": 1,
+      "message": "Acknowledged. I imagine the classes are close enough to a struct hence why they were included in the first place. Still this should normally be avoided.",
+      "parentUuid": "987bf8ff_7a0999e3",
+      "revId": "fdb0dde54b5eeb303baef2ee7216014d48dba4bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
