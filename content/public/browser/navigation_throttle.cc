@@ -8,6 +8,21 @@
 
 namespace content {
 
+NavigationThrottle::ThrottleCheckResult::ThrottleCheckResult(
+    NavigationThrottle::ThrottleCheckAction action)
+    : action(action), net_error(base::nullopt), error_page_url(base::nullopt) {}
+
+NavigationThrottle::ThrottleCheckResult::ThrottleCheckResult(
+    NavigationThrottle::ThrottleCheckAction action,
+    int net_error,
+    GURL error_page_url)
+    : action(action), net_error(net_error), error_page_url(error_page_url) {}
+
+NavigationThrottle::ThrottleCheckResult::ThrottleCheckResult(
+    const NavigationThrottle::ThrottleCheckResult& other) = default;
+
+NavigationThrottle::ThrottleCheckResult::~ThrottleCheckResult() {}
+
 NavigationThrottle::NavigationThrottle(NavigationHandle* navigation_handle)
     : navigation_handle_(navigation_handle) {}
 
@@ -19,6 +34,10 @@ NavigationThrottle::ThrottleCheckResult NavigationThrottle::WillStartRequest() {
 
 NavigationThrottle::ThrottleCheckResult
 NavigationThrottle::WillRedirectRequest() {
+  return NavigationThrottle::PROCEED;
+}
+
+NavigationThrottle::ThrottleCheckResult NavigationThrottle::WillFailRequest() {
   return NavigationThrottle::PROCEED;
 }
 

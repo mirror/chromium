@@ -32,6 +32,11 @@ CancellingNavigationThrottle::WillRedirectRequest() {
 }
 
 NavigationThrottle::ThrottleCheckResult
+CancellingNavigationThrottle::WillFailRequest() {
+  return ProcessState(cancel_time_ == WILL_FAIL_REQUEST);
+}
+
+NavigationThrottle::ThrottleCheckResult
 CancellingNavigationThrottle::WillProcessResponse() {
   return ProcessState(cancel_time_ == WILL_PROCESS_RESPONSE);
 }
@@ -45,13 +50,13 @@ CancellingNavigationThrottle::ProcessState(bool should_cancel) {
         BrowserThread::UI, FROM_HERE,
         base::BindOnce(&CancellingNavigationThrottle::MaybeCancel,
                        weak_ptr_factory_.GetWeakPtr(), should_cancel));
-    return NavigationThrottle::DEFER;
+    return ThrottleCheckResult(NavigationThrottle::DEFER);
   }
   if (should_cancel) {
     OnWillCancel();
-    return NavigationThrottle::CANCEL;
+    return ThrottleCheckResult(NavigationThrottle::CANCEL);
   }
-  return NavigationThrottle::PROCEED;
+  return ThrottleCheckResult(NavigationThrottle::PROCEED);
 }
 
 const char* CancellingNavigationThrottle::GetNameForLogging() {

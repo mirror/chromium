@@ -95,6 +95,7 @@
 #include "chrome/browser/ssl/ssl_cert_reporter.h"
 #include "chrome/browser/ssl/ssl_client_certificate_selector.h"
 #include "chrome/browser/ssl/ssl_error_handler.h"
+#include "chrome/browser/ssl/ssl_error_navigation_throttle.h"
 #include "chrome/browser/subresource_filter/chrome_subresource_filter_client.h"
 #include "chrome/browser/sync_file_system/local/sync_file_system_backend.h"
 #include "chrome/browser/tab_contents/tab_util.h"
@@ -3235,6 +3236,10 @@ ChromeContentBrowserClient::CreateThrottlesForNavigation(
       PDFIFrameNavigationThrottle::MaybeCreateThrottleFor(handle);
   if (pdf_iframe_throttle)
     throttles.push_back(std::move(pdf_iframe_throttle));
+
+#if !defined(OS_IOS)
+  throttles.push_back(base::MakeUnique<SSLErrorNavigationThrottle>(handle));
+#endif
 
   return throttles;
 }

@@ -7,6 +7,9 @@
 
 #include "content/common/content_export.h"
 
+#include "base/optional.h"
+#include "url/gurl.h"
+
 namespace content {
 class NavigationHandle;
 
@@ -16,8 +19,10 @@ class CONTENT_EXPORT NavigationThrottle {
  public:
   // This is returned to the NavigationHandle to allow the navigation to
   // proceed, or to cancel it.
-  enum ThrottleCheckResult {
-    // The navigation proceeds uninterrupted.
+  enum ThrottleCheckAction {
+    // The action proceeds. This can either mean the navigation continues (e.g.
+    // for WillStartRequest) or that the navigation halts (e.g. for
+    // WillFailRequest).
     PROCEED,
 
     // Defers the navigation until the NavigationThrottle calls
@@ -52,6 +57,20 @@ class CONTENT_EXPORT NavigationThrottle {
     BLOCK_RESPONSE,
   };
 
+  class ThrottleCheckResult {
+   public:
+    ThrottleCheckResult(ThrottleCheckAction action);
+    ThrottleCheckResult(ThrottleCheckAction action,
+                        int net_error,
+                        GURL error_page_url);
+    ThrottleCheckResult(const ThrottleCheckResult& other);
+    ~ThrottleCheckResult();
+
+    ThrottleCheckAction action;
+    base::Optional<int> net_error;
+    base::Optional<GURL> error_page_url;
+  };
+
   NavigationThrottle(NavigationHandle* navigation_handle);
   virtual ~NavigationThrottle();
 
@@ -72,6 +91,10 @@ class CONTENT_EXPORT NavigationThrottle {
   // implementer need to destroy the WebContents, it should return CANCEL,
   // CANCEL_AND_IGNORE or DEFER and perform the destruction asynchronously.
   virtual ThrottleCheckResult WillRedirectRequest();
+
+  // TODO: comment
+  // TODO(crrev.com/c/621236): This method is not used outside //content yet.
+  virtual ThrottleCheckResult WillFailRequest();
 
   // Called when a response's headers and metadata are available.
   //
@@ -99,7 +122,7 @@ class CONTENT_EXPORT NavigationThrottle {
   virtual void Resume();
 
   // Cancels a navigation that was previously deferred by this
-  // NavigationThrottle. |result| should be equal to either:
+  // NavigationThrottle. |result|'s action should be equal to either:
   //  - NavigationThrottle::CANCEL,
   //  - NavigationThrottle::CANCEL_AND_IGNORE, or
   //  - NavigationThrottle::BLOCK_REQUEST_AND_COLLAPSE.

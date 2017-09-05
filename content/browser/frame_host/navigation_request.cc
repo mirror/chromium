@@ -789,27 +789,34 @@ void NavigationRequest::OnRequestFailed(
   //   URLs should be allowed to transfer away from the current process, which
   //   didn't request the navigation and may have a higher privilege level than
   //   the blocked destination.
-  RenderFrameHostImpl* render_frame_host = nullptr;
   if (net_error == net::ERR_BLOCKED_BY_CLIENT && !browser_initiated()) {
-    render_frame_host = frame_tree_node_->current_frame_host();
+    render_frame_host_ = frame_tree_node_->current_frame_host();
   } else {
-    render_frame_host =
+    render_frame_host_ =
         frame_tree_node_->render_manager()->GetFrameHostForNavigation(*this);
   }
+  DCHECK(render_frame_host_);
 
   // Don't ask the renderer to commit an URL if the browser will kill it when
   // it does.
-  DCHECK(render_frame_host->CanCommitURL(common_params_.url));
+  DCHECK(render_frame_host_->CanCommitURL(common_params_.url));
 
-  NavigatorImpl::CheckWebUIRendererDoesNotDisplayNormalURL(render_frame_host,
+  NavigatorImpl::CheckWebUIRendererDoesNotDisplayNormalURL(render_frame_host_,
                                                            common_params_.url);
 
-  TransferNavigationHandleOwnership(render_frame_host);
-  render_frame_host->navigation_handle()->ReadyToCommitNavigation(
-      render_frame_host);
-  render_frame_host->FailedNavigation(common_params_, begin_params_,
-                                      request_params_, has_stale_copy_in_cache,
-                                      net_error);
+  has_stale_copy_in_cache_ = has_stale_copy_in_cache;
+  net_error_ = net_error;
+
+  if (IsRendererDebugURL(common_params_.url)) {
+    CommitErrorPage(base::nullopt);
+  } else {
+    // Check if the navigation should be allowed to proceed.
+    navigation_handle_->WillFailRequest(
+        static_cast<net::Error>(net_error), ssl_info,
+        should_ssl_errors_be_fatal,
+        base::Bind(&NavigationRequest::OnFailureChecksComplete,
+                   base::Unretained(this)));
+  }
 }
 
 void NavigationRequest::OnRequestStarted(base::TimeTicks timestamp) {
@@ -825,20 +832,20 @@ void NavigationRequest::OnRequestStarted(base::TimeTicks timestamp) {
 
 void NavigationRequest::OnStartChecksComplete(
     NavigationThrottle::ThrottleCheckResult result) {
-  DCHECK(result != NavigationThrottle::DEFER);
-  DCHECK(result != NavigationThrottle::BLOCK_RESPONSE);
+  DCHECK(result.action != NavigationThrottle::DEFER);
+  DCHECK(result.action != NavigationThrottle::BLOCK_RESPONSE);
 
   if (on_start_checks_complete_closure_)
     on_start_checks_complete_closure_.Run();
   // Abort the request if needed. This will destroy the NavigationRequest.
-  if (result == NavigationThrottle::CANCEL_AND_IGNORE ||
-      result == NavigationThrottle::CANCEL ||
-      result == NavigationThrottle::BLOCK_REQUEST ||
-      result == NavigationThrottle::BLOCK_REQUEST_AND_COLLAPSE) {
+  if (result.action == NavigationThrottle::CANCEL_AND_IGNORE ||
+      result.action == NavigationThrottle::CANCEL ||
+      result.action == NavigationThrottle::BLOCK_REQUEST ||
+      result.action == NavigationThrottle::BLOCK_REQUEST_AND_COLLAPSE) {
     // TODO(clamy): distinguish between CANCEL and CANCEL_AND_IGNORE.
     int error_code = net::ERR_ABORTED;
-    if (result == NavigationThrottle::BLOCK_REQUEST ||
-        result == NavigationThrottle::BLOCK_REQUEST_AND_COLLAPSE) {
+    if (result.action == NavigationThrottle::BLOCK_REQUEST ||
+        result.action == NavigationThrottle::BLOCK_REQUEST_AND_COLLAPSE) {
       error_code = net::ERR_BLOCKED_BY_CLIENT;
     }
 
@@ -937,12 +944,12 @@ void NavigationRequest::OnStartChecksComplete(
 
 void NavigationRequest::OnRedirectChecksComplete(
     NavigationThrottle::ThrottleCheckResult result) {
-  DCHECK(result != NavigationThrottle::DEFER);
-  DCHECK(result != NavigationThrottle::BLOCK_RESPONSE);
+  DCHECK(result.action != NavigationThrottle::DEFER);
+  DCHECK(result.action != NavigationThrottle::BLOCK_RESPONSE);
 
   // Abort the request if needed. This will destroy the NavigationRequest.
-  if (result == NavigationThrottle::CANCEL_AND_IGNORE ||
-      result == NavigationThrottle::CANCEL) {
+  if (result.action == NavigationThrottle::CANCEL_AND_IGNORE ||
+      result.action == NavigationThrottle::CANCEL) {
     // TODO(clamy): distinguish between CANCEL and CANCEL_AND_IGNORE if needed.
     OnRequestFailed(false, net::ERR_ABORTED, base::nullopt, false);
 
@@ -951,8 +958,8 @@ void NavigationRequest::OnRedirectChecksComplete(
     return;
   }
 
-  if (result == NavigationThrottle::BLOCK_REQUEST ||
-      result == NavigationThrottle::BLOCK_REQUEST_AND_COLLAPSE) {
+  if (result.action == NavigationThrottle::BLOCK_REQUEST ||
+      result.action == NavigationThrottle::BLOCK_REQUEST_AND_COLLAPSE) {
     OnRequestFailed(false, net::ERR_BLOCKED_BY_CLIENT, base::nullopt, false);
     // DO NOT ADD CODE after this. The previous call to OnRequestFailed has
     // destroyed the NavigationRequest.
@@ -962,20 +969,46 @@ void NavigationRequest::OnRedirectChecksComplete(
   loader_->FollowRedirect();
 }
 
+void NavigationRequest::OnFailureChecksComplete(
+    NavigationThrottle::ThrottleCheckResult result) {
+  DCHECK(result.action != NavigationThrottle::DEFER);
+
+  // Other *ChecksComplete() functions call OnRequestFailed() depending on the
+  // outcome of the throttles, but that would lead to recursion in this case.
+  // Fortunately:
+  // 1) most of the OnRequestFailed() logic already executed before
+  //    the throttle, and
+  // 2) we don't actually want to send the synthetic failure to the throttles,
+  // ... so we can just return or update the net error here.
+  if (result.action == NavigationThrottle::CANCEL_AND_IGNORE ||
+      result.action == NavigationThrottle::CANCEL) {
+    // TODO(REVIEW): What's the appropriate check?
+    if (!result.net_error.has_value()) {
+      return;
+    }
+    net_error_ = result.net_error.value();
+  } else if (result.action == NavigationThrottle::BLOCK_RESPONSE) {
+    net_error_ = net::ERR_BLOCKED_BY_RESPONSE;
+  }
+
+  NavigationRequest::CommitErrorPage(result.error_page_url);
+}
+
 void NavigationRequest::OnWillProcessResponseChecksComplete(
     NavigationThrottle::ThrottleCheckResult result) {
-  DCHECK(result != NavigationThrottle::DEFER);
+  DCHECK(result.action != NavigationThrottle::DEFER);
 
   // If the NavigationThrottles allowed the navigation to continue, have the
   // processing of the response resume in the network stack.
-  if (result == NavigationThrottle::PROCEED)
+  if (result.action == NavigationThrottle::PROCEED)
     loader_->ProceedWithResponse();
 
   // Abort the request if needed. This includes requests that were blocked by
   // NavigationThrottles and requests that should not commit (e.g. downloads,
   // 204/205s). This will destroy the NavigationRequest.
-  if (result == NavigationThrottle::CANCEL_AND_IGNORE ||
-      result == NavigationThrottle::CANCEL || !response_should_be_rendered_) {
+  if (result.action == NavigationThrottle::CANCEL_AND_IGNORE ||
+      result.action == NavigationThrottle::CANCEL ||
+      !response_should_be_rendered_) {
     // TODO(clamy): distinguish between CANCEL and CANCEL_AND_IGNORE.
     OnRequestFailed(false, net::ERR_ABORTED, base::nullopt, false);
 
@@ -984,7 +1017,7 @@ void NavigationRequest::OnWillProcessResponseChecksComplete(
     return;
   }
 
-  if (result == NavigationThrottle::BLOCK_RESPONSE) {
+  if (result.action == NavigationThrottle::BLOCK_RESPONSE) {
     OnRequestFailed(false, net::ERR_BLOCKED_BY_RESPONSE, base::nullopt, false);
     // DO NOT ADD CODE after this. The previous call to OnRequestFailed has
     // destroyed the NavigationRequest.
@@ -995,6 +1028,15 @@ void NavigationRequest::OnWillProcessResponseChecksComplete(
 
   // DO NOT ADD CODE after this. The previous call to CommitNavigation caused
   // the destruction of the NavigationRequest.
+}
+
+void NavigationRequest::CommitErrorPage(base::Optional<GURL> error_page_url) {
+  TransferNavigationHandleOwnership(render_frame_host_);
+  render_frame_host_->navigation_handle()->ReadyToCommitNavigation(
+      render_frame_host_);
+  render_frame_host_->FailedNavigation(
+      common_params_, begin_params_, request_params_, has_stale_copy_in_cache_,
+      net_error_, error_page_url);
 }
 
 void NavigationRequest::CommitNavigation() {
