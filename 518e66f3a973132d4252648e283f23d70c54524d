@@ -22,6 +22,30 @@
       "revId": "518e66f3a973132d4252648e283f23d70c54524d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8eaf465f_944cae70",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/TabWebContentsDelegateAndroid.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-09-05T15:15:49Z",
+      "side": 1,
+      "message": "Well, we need to have this codepath around for non-Tabbed Activities (Webapps and Custom Tabs).\n\nThis codepath is:\nTab#toggleFullscreenMode(enableFullscreen)\n\nThe other codepath is essentially:\n\u003cremove Tab from Activity\u0027s FullscreenManager\u003e\n\u003cIntent to another Activity\u003e\n\u003cadd Tab to new Activity\u0027s FullscreenManager\u003e\nTab#toggleFullscreenMode(enableFullscreen)\n\nSo it\u0027s not like this is forcing us to keep any \u0027old\u0027 codepaths around.",
+      "parentUuid": "e6c5a687_56f5ab94",
+      "range": {
+        "startLine": 224,
+        "startChar": 12,
+        "endLine": 224,
+        "endChar": 56
+      },
+      "revId": "518e66f3a973132d4252648e283f23d70c54524d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
