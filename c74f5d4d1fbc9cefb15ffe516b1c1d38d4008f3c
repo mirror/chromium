@@ -127,6 +127,24 @@
     },
     {
       "key": {
+        "uuid": "5a0698bf_9dff4c3c",
+        "filename": "base/message_loop/incoming_task_queue.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-05T21:29:02Z",
+      "side": 1,
+      "message": "To reiterate:\n* For Android:\n  * If ScheduleWork() is slow, then having multiple callers won\u0027t speed things up\n  * If ScheduleWork() is fast, then the lock will not be held for a long time.\n  * Code analysis suggests this will be fine in either case.\n* For other platforms\n  * ScheduleWork() is only called once. Other concurrent callers get to bypass the\n    ScheduleWork() call.\n\nThis suggests doing any extra bookkeeping of the status of calls won\u0027t actually speed anything up.",
+      "parentUuid": "58defeef_f20aa0fa",
+      "revId": "c74f5d4d1fbc9cefb15ffe516b1c1d38d4008f3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d56d9d0c_b924a4de",
         "filename": "base/message_loop/incoming_task_queue.h",
         "patchSetId": 4
