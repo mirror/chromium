@@ -161,8 +161,8 @@ void UnlockManagerImpl::OnLifeCycleStateChanged() {
 
   remote_screenlock_state_.reset();
   if (state == RemoteDeviceLifeCycle::State::SECURE_CHANNEL_ESTABLISHED) {
-    DCHECK(life_cycle_->GetConnection());
-    DCHECK(GetMessenger());
+    CHECK(life_cycle_->GetConnection());
+    CHECK(GetMessenger());
     proximity_monitor_ =
         CreateProximityMonitor(life_cycle_->GetConnection(), pref_manager_);
     GetMessenger()->AddObserver(this);
@@ -212,7 +212,8 @@ void UnlockManagerImpl::OnDecryptResponse(const std::string& decrypted_bytes) {
     AcceptAuthAttempt(false);
   } else {
     sign_in_secret_.reset(new std::string(decrypted_bytes));
-    GetMessenger()->DispatchUnlockEvent();
+    if (GetMessenger())
+      GetMessenger()->DispatchUnlockEvent();
   }
 }
 
@@ -225,14 +226,15 @@ void UnlockManagerImpl::OnUnlockResponse(bool success) {
 
   PA_LOG(INFO) << "Unlock response from remote device: "
                << (success ? "success" : "failure");
-  if (success)
+  if (success && GetMessenger())
     GetMessenger()->DispatchUnlockEvent();
   else
     AcceptAuthAttempt(false);
 }
 
 void UnlockManagerImpl::OnDisconnected() {
-  GetMessenger()->RemoveObserver(this);
+  if (GetMessenger())
+    GetMessenger()->RemoveObserver(this);
 }
 
 void UnlockManagerImpl::OnProximityStateChanged() {
@@ -295,6 +297,9 @@ void UnlockManagerImpl::OnAuthAttempted(mojom::AuthType auth_type) {
   if (auth_type != mojom::AuthType::USER_CLICK)
     return;
 
+  if (!GetMessenger())
+    return;
+
   is_attempting_auth_ = true;
 
   if (!life_cycle_) {
@@ -351,7 +356,8 @@ void UnlockManagerImpl::SendSignInChallenge() {
 
 void UnlockManagerImpl::OnGotSignInChallenge(const std::string& challenge) {
   PA_LOG(INFO) << "Got sign-in challenge, sending for decryption...";
-  GetMessenger()->RequestDecryption(challenge);
+  if (GetMessenger())
+    GetMessenger()->RequestDecryption(challenge);
 }
 
 ScreenlockState UnlockManagerImpl::GetScreenlockState() {
