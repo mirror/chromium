@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ddfe1dc1_00d456c2",
+        "filename": "net/quic/chromium/bidirectional_stream_quic_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 964,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-09-05T18:29:21Z",
+      "side": 1,
+      "message": "Why does the behavior of this test change as a result of flipping the flags?",
+      "range": {
+        "startLine": 964,
+        "startChar": 80,
+        "endLine": 964,
+        "endChar": 0
+      },
+      "revId": "b2919b4bbec190a4b422224ed70c2843d8b8a2c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
