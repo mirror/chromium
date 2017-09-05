@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c8bce59_3f2e91e1",
+        "filename": "ui/file_manager/file_manager/foreground/js/selection_menu_controller.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-09-05T07:14:21Z",
+      "side": 1,
+      "message": "remove duplicated line",
+      "revId": "f09a973bf143c40b82ad856fe6952e386b34e798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
