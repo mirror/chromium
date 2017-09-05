@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "feab7558_7a5e4de2",
+        "filename": "content/test/data/accessibility/event/form-disabled-changed.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-09-05T18:25:01Z",
+      "side": 1,
+      "message": "How about changes to aria-disabled, or changing disabled via AOM?",
+      "revId": "4675558c45ccd4b378124b1b3bde0e5aad6f8362",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "635f5d66_8bce2c00",
+        "filename": "content/test/data/accessibility/event/form-required-changed.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-09-05T18:25:01Z",
+      "side": 1,
+      "message": "How about changes to aria-required, or changing required via AOM?",
+      "revId": "4675558c45ccd4b378124b1b3bde0e5aad6f8362",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "234da034_f0eee664",
+        "filename": "third_party/WebKit/Source/core/html/HTMLFormControlElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-09-05T18:25:01Z",
+      "side": 1,
+      "message": "Why is this method CheckedStateChange() instead of DisabledStateChanged()?",
+      "revId": "4675558c45ccd4b378124b1b3bde0e5aad6f8362",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce9524b0_98fce2ef",
+        "filename": "third_party/WebKit/Source/core/html/HTMLFormControlElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-09-05T18:25:01Z",
+      "side": 1,
+      "message": "Why is this method CheckedStateChange() instead of RequiredStateChanged()?",
+      "revId": "4675558c45ccd4b378124b1b3bde0e5aad6f8362",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
