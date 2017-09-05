@@ -46,6 +46,30 @@
       "revId": "284327b9335ac93de792685b6012fbcd47af01e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a1456c7_7953123c",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetUiCaptureTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-05T10:01:30Z",
+      "side": 0,
+      "message": "OK, in that case I would use NewTabPageAdapter.getFirstPositionForType to get the index, and keep the rest using Espresso. If we can get rid of our own home-grown UI interaction code in the long term, that\u0027s probably a good thing.",
+      "parentUuid": "00824901_3a926b7b",
+      "range": {
+        "startLine": 87,
+        "startChar": 68,
+        "endLine": 87,
+        "endChar": 69
+      },
+      "revId": "284327b9335ac93de792685b6012fbcd47af01e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
