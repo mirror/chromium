@@ -293,8 +293,10 @@ static void SetAntiFlickerInUsbDevice(const int vendor_id,
 }
 
 VideoCaptureDeviceMac::VideoCaptureDeviceMac(
-    const VideoCaptureDeviceDescriptor& device_descriptor)
+    const VideoCaptureDeviceDescriptor& device_descriptor,
+    base::RepeatingCallback<void(const std::string&)> emit_log_message_cb)
     : device_descriptor_(device_descriptor),
+      emit_log_message_cb_(std::move(emit_log_message_cb)),
       task_runner_(base::ThreadTaskRunnerHandle::Get()),
       state_(kNotInitialized),
       capture_device_(nil),
@@ -308,7 +310,17 @@ void VideoCaptureDeviceMac::AllocateAndStart(
     const VideoCaptureParams& params,
     std::unique_ptr<VideoCaptureDevice::Client> client) {
   DCHECK(task_runner_->BelongsToCurrentThread());
+  {
+    std::ostringstream string_stream;
+    string_stream
+        << "VideoCaptureDeviceMac::AllocateAndStart: requested params = "
+        << media::VideoCaptureFormat::ToString(params.requested_format);
+    emit_log_message_cb_.Run(string_stream.str());
+  }
   if (state_ != kIdle) {
+    std::ostringstream string_stream;
+    string_stream << "Aborting because state_ != kIdle, state = " << state_;
+    emit_log_message_cb_.Run(string_stream.str());
     return;
   }
 
@@ -336,8 +348,11 @@ void VideoCaptureDeviceMac::AllocateAndStart(
   // will be passed to |ReceiveFrame|.
   capture_format_.pixel_format = PIXEL_FORMAT_UNKNOWN;
 
-  if (!UpdateCaptureResolution())
+  if (!UpdateCaptureResolution()) {
+    emit_log_message_cb_.Run(
+        "Aborting because UpdateCaptureResolution() returned false.");
     return;
+  }
 
   // Try setting the power line frequency removal (anti-flicker). The built-in
   // cameras are normally suspended so the configuration must happen right
@@ -489,6 +504,11 @@ void VideoCaptureDeviceMac::OnPhotoError() {
 void VideoCaptureDeviceMac::ReceiveError(
     const tracked_objects::Location& from_here,
     const std::string& reason) {
+  {
+    std::ostringstream string_stream;
+    string_stream << "VideoCaptureDeviceMac::ReceiveError: reason = " << reason;
+    emit_log_message_cb_.Run(string_stream.str());
+  }
   task_runner_->PostTask(
       FROM_HERE, base::Bind(&VideoCaptureDeviceMac::SetErrorState,
                             weak_factory_.GetWeakPtr(), from_here, reason));
@@ -528,6 +548,12 @@ void VideoCaptureDeviceMac::SetErrorState(
     const tracked_objects::Location& from_here,
     const std::string& reason) {
   DCHECK(task_runner_->BelongsToCurrentThread());
+  {
+    std::ostringstream string_stream;
+    string_stream << "VideoCaptureDeviceMac::SetErrorState: reason = "
+                  << reason;
+    emit_log_message_cb_.Run(string_stream.str());
+  }
   state_ = kError;
   client_->OnError(from_here, reason);
 }

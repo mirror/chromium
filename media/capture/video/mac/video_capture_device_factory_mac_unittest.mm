@@ -7,8 +7,12 @@
 
 namespace media {
 
+static const auto kIgnoreLogMessageCB =
+    base::BindRepeating([](const std::string&) {});
+
 TEST(VideoCaptureDeviceFactoryMacTest, ListDevicesAVFoundation) {
-  VideoCaptureDeviceFactoryMac video_capture_device_factory;
+  VideoCaptureDeviceFactoryMac video_capture_device_factory(
+      kIgnoreLogMessageCB);
 
   VideoCaptureDeviceDescriptors descriptors;
   video_capture_device_factory.GetDeviceDescriptors(&descriptors);

@@ -42,7 +42,9 @@ static bool IsDeviceBlacklisted(
   return is_device_blacklisted;
 }
 
-VideoCaptureDeviceFactoryMac::VideoCaptureDeviceFactoryMac() {
+VideoCaptureDeviceFactoryMac::VideoCaptureDeviceFactoryMac(
+    base::RepeatingCallback<void(const std::string&)> emit_log_message_cb)
+    : emit_log_message_cb_(std::move(emit_log_message_cb)) {
   thread_checker_.DetachFromThread();
 }
 
@@ -53,15 +55,27 @@ std::unique_ptr<VideoCaptureDevice> VideoCaptureDeviceFactoryMac::CreateDevice(
     const VideoCaptureDeviceDescriptor& descriptor) {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK_NE(descriptor.capture_api, VideoCaptureApi::UNKNOWN);
+  {
+    std::ostringstream string_stream;
+    string_stream << "VideoCaptureDeviceFactoryMac::CreateDevice: device_id = "
+                  << descriptor.device_id
+                  << ", display_name = " << descriptor.display_name;
+    emit_log_message_cb_.Run(string_stream.str());
+  }
 
   std::unique_ptr<VideoCaptureDevice> capture_device;
   if (descriptor.capture_api == VideoCaptureApi::MACOSX_DECKLINK) {
     capture_device.reset(new VideoCaptureDeviceDeckLinkMac(descriptor));
   } else {
-    VideoCaptureDeviceMac* device = new VideoCaptureDeviceMac(descriptor);
+    VideoCaptureDeviceMac* device =
+        new VideoCaptureDeviceMac(descriptor, emit_log_message_cb_);
     capture_device.reset(device);
     if (!device->Init(descriptor.capture_api)) {
-      LOG(ERROR) << "Could not initialize VideoCaptureDevice.";
+      std::ostringstream string_stream;
+      string_stream
+          << "Could not initialize VideoCaptureDevice with capture_api = "
+          << static_cast<int>(descriptor.capture_api);
+      emit_log_message_cb_.Run(string_stream.str());
       capture_device.reset();
     }
   }
@@ -76,6 +90,8 @@ void VideoCaptureDeviceFactoryMac::GetDeviceDescriptors(
       FROM_HERE_WITH_EXPLICIT_FUNCTION(
           "458397 VideoCaptureDeviceFactoryMac::GetDeviceDescriptors"));
   DCHECK(thread_checker_.CalledOnValidThread());
+  emit_log_message_cb_.Run(
+      "VideoCaptureDeviceFactoryMac::GetDeviceDescriptors");
   // Loop through all available devices and add to |device_descriptors|.
   NSDictionary* capture_devices;
   DVLOG(1) << "Enumerating video capture devices using AVFoundation";
@@ -130,8 +146,9 @@ void VideoCaptureDeviceFactoryMac::GetSupportedFormats(
 VideoCaptureDeviceFactory*
 VideoCaptureDeviceFactory::CreateVideoCaptureDeviceFactory(
     scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner,
-    gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager) {
-  return new VideoCaptureDeviceFactoryMac();
+    gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
+    base::RepeatingCallback<void(const std::string&)> emit_log_message_cb) {
+  return new VideoCaptureDeviceFactoryMac(std::move(emit_log_message_cb));
 }
 
 }  // namespace media

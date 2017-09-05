@@ -21,7 +21,8 @@ class CAPTURE_EXPORT VideoCaptureDeviceFactoryLinux
     : public VideoCaptureDeviceFactory {
  public:
   explicit VideoCaptureDeviceFactoryLinux(
-      scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner);
+      scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner,
+      base::RepeatingCallback<void(const std::string&)> emit_log_message_cb);
   ~VideoCaptureDeviceFactoryLinux() override;
 
   std::unique_ptr<VideoCaptureDevice> CreateDevice(
@@ -33,7 +34,8 @@ class CAPTURE_EXPORT VideoCaptureDeviceFactoryLinux
       VideoCaptureFormats* supported_formats) override;
 
  private:
-  scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner_;
+  const scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner_;
+  const base::RepeatingCallback<void(const std::string&)> emit_log_message_cb_;
   DISALLOW_COPY_AND_ASSIGN(VideoCaptureDeviceFactoryLinux);
 };
 
