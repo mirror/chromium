@@ -58,11 +58,6 @@ void TexturedElement::Render(UiElementRenderer* renderer,
       view_proj_matrix, copy_rect, computed_opacity(), size(), corner_radius());
 }
 
-void TexturedElement::SetInitializedForTesting() {
-  initialized_ = true;
-  GetTexture()->set_ready_for_testing();
-}
-
 void TexturedElement::Flush(SkSurface* surface) {
   cc::SkiaPaintCanvas paint_canvas(surface->getCanvas());
   paint_canvas.flush();
