@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "accc13fb_d2b4c25a",
+        "filename": "chrome/browser/resources/settings/site_settings/constants.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-05T03:34:01Z",
+      "side": 1,
+      "message": "nit: newline above.",
+      "revId": "199c965f78b23260f08a501fbdd6e892252759aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b5d5f3e_e010676b",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-05T03:34:01Z",
+      "side": 1,
+      "message": "Consider\n\nreturn Array.prototype.map.call(\n        this.root.querySelectorAll(\u0027site-details-permission\u0027),\n        (e) \u003d\u003e e.category).filter((c) \u003d\u003e !!c);\n\nI\u0027m fine with whatever you prefer though.",
+      "revId": "199c965f78b23260f08a501fbdd6e892252759aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f520a42b_b9b59780",
+        "filename": "chrome/browser/resources/settings/site_settings_page/site_settings_page.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-05T03:34:01Z",
+      "side": 1,
+      "message": "How about !category?\n\nAlso, newline after early return.",
+      "revId": "199c965f78b23260f08a501fbdd6e892252759aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea3ed892_8c895b55",
+        "filename": "chrome/test/data/webui/settings/site_details_tests.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-05T03:34:01Z",
+      "side": 1,
+      "message": "Pull this into a helper function.\n\nfunction createException(config) {\n  return Object.assign({\n    embeddingOrigin: \u0027https://foo.com:443\u0027,\n    origin: \u0027https://foo.com:443\u0027,\n    setting: settings.ContentSetting.ALLOW,\n    source: settings.SiteSettingSource.PREFERENCE,\n  }, config);\n}\n\nor even with the setting/source as args if you prefer.",
+      "revId": "199c965f78b23260f08a501fbdd6e892252759aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
