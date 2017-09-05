@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "429cb60a_e68191db",
+        "filename": "third_party/WebKit/LayoutTests/editing/selection/webkitBeforeTextInserted-disconnect-node.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-05T22:28:21Z",
+      "side": 1,
+      "message": "The test is completely synchronous. There is no need to use async_test.\n\nBesides, could you make the test more intuitive with selection_test()? See editing/assert_selection.html for sample usage.",
+      "revId": "f901bca18761ddd0e4ca77899d18a250b1845738",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9dd1137_a03b0851",
+        "filename": "third_party/WebKit/LayoutTests/editing/selection/webkitBeforeTextInserted-event-deleteframe.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-05T22:28:21Z",
+      "side": 1,
+      "message": "Could you make the test synchronous and easier to read by:\n1. Use selection_test(). See editing/assert_selection.html for sample usage.\n2. Follow the approach in editing/inserting/insert_linebreak_remove_frame.html to setup the subframe.\n\nNote: selection_test() is simply a wrapper of assert_selection(). Both have sample usage in editing/assert_selection.html.",
+      "revId": "f901bca18761ddd0e4ca77899d18a250b1845738",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30d984ab_4945eaf9",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-05T22:28:21Z",
+      "side": 1,
+      "message": "Sorry for a previous wrong comment.\n\nInvalidSelectionResetter isn\u0027t helpful here because |passed_selection_for_insertion| is no longer in use after computing |selection_for_insertion|.\n\nWe should instead check in L346 of |selection_for_insertion.IsValidFor(document)|",
+      "revId": "f901bca18761ddd0e4ca77899d18a250b1845738",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca7a9122_45333c20",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-05T22:28:21Z",
+      "side": 1,
+      "message": "Ditto. Sorry for the previous wrong comment.",
+      "revId": "f901bca18761ddd0e4ca77899d18a250b1845738",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
