@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "027ee7cc_4d0e710a",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSampleTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-09-05T06:43:42Z",
+      "side": 1,
+      "message": "Please use SelectionSample functions:\n{\n  return SelectionSample::GetSelectionText(GetDocument().body(), \n  SelectionSample::SetSelectionText(GetDocument().body(), sample_text)) \n}",
+      "revId": "276b013938e5454d96a90766163011ace69092df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eadecb1c_b09bbc0d",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSampleTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-09-05T06:43:42Z",
+      "side": 1,
+      "message": "Could you test\n| EXPECT_EQ(ToText(GetDocument().body().firstChild()).data(), \"abc\");| ?",
+      "revId": "276b013938e5454d96a90766163011ace69092df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50534dd5_c5f9bdba",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSampleTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-09-05T06:43:42Z",
+      "side": 1,
+      "message": "Could you split cases to ordering and parsing?",
+      "revId": "276b013938e5454d96a90766163011ace69092df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a10b570_29071930",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSampleTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-09-05T06:43:42Z",
+      "side": 1,
+      "message": "Could you split cases to namespace, ordering and uppercase?",
+      "revId": "276b013938e5454d96a90766163011ace69092df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c9793a9_4f87d86d",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSampleTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-09-05T06:43:42Z",
+      "side": 1,
+      "message": "If you want to test GetSelectionText ignores xmlns,\nSetBodyContent(\"\u003cdiv xmlns:foo\u003d\u0027http://bar\u0027\u003ebaz\u003c/div\u003e\")\nand confirm EXPECT_EQ(\"\", GetSelectionText(GetDocument().body(), {})) ?",
+      "revId": "276b013938e5454d96a90766163011ace69092df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86edbf4a_544b7cec",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSampleTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-09-05T06:43:42Z",
+      "side": 1,
+      "message": "Could you split cases to 2?",
+      "revId": "276b013938e5454d96a90766163011ace69092df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f2fbbf8_66190671",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSampleTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-09-05T06:43:42Z",
+      "side": 1,
+      "message": "Could you change comment \"Parser does not inserts comment.\"?",
+      "revId": "276b013938e5454d96a90766163011ace69092df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a32dd42e_8206209e",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSampleTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-09-05T06:43:42Z",
+      "side": 1,
+      "message": "This magical behavior is of insertHTML and not intended Parser\u0027s function.\nIf we don\u0027t use this magical behavior in test, could you DCHECK it?",
+      "revId": "276b013938e5454d96a90766163011ace69092df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
