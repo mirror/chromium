@@ -11,7 +11,7 @@
 // of the custom view of NSMenuItems. If the user opens the menu in a non-
 // sticky fashion (i.e. clicks, holds, and drags) and then releases the mouse
 // over the menu item, it will cancel tracking on the |[menuItem_ menu]|.
-@interface MenuTrackedRootView : NSView {
+@interface MenuTrackedRootView : NSButton {
  @private
   // The menu item whose custom view's root view is an instance of this class.
   NSMenuItem* menuItem_;  // weak
