@@ -17,7 +17,6 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/sys_info.h"
 #include "build/build_config.h"
-#include "cc/base/math_util.h"
 #include "cc/base/switches.h"
 #include "content/browser/gpu/gpu_data_manager_impl.h"
 #include "content/public/browser/gpu_utils.h"
@@ -26,6 +25,7 @@
 #include "gpu/config/gpu_feature_type.h"
 #include "gpu/ipc/host/gpu_memory_buffer_support.h"
 #include "media/media_features.h"
+#include "ui/gfx/math_util.h"
 #include "ui/gl/gl_switches.h"
 
 namespace content {
@@ -188,8 +188,8 @@ int NumberOfRendererRasterThreads() {
     }
   }
 
-  return cc::MathUtil::ClampToRange(num_raster_threads, kMinRasterThreads,
-                                    kMaxRasterThreads);
+  return gfx::MathUtil::ClampToRange(num_raster_threads, kMinRasterThreads,
+                                     kMaxRasterThreads);
 }
 
 bool IsZeroCopyUploadEnabled() {

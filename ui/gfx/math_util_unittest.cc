@@ -2,33 +2,31 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "cc/base/math_util.h"
+#include "ui/gfx/math_util.h"
 
 #include <stdint.h>
 
 #include <cmath>
 
-#include "cc/test/geometry_test_utils.h"
-#include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/gfx/geometry/quad_f.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/rect_f.h"
 #include "ui/gfx/transform.h"
 
-namespace cc {
+namespace gfx {
 namespace {
 
 TEST(MathUtilTest, ProjectionOfPerpendicularPlane) {
   // In this case, the m33() element of the transform becomes zero, which could
   // cause a divide-by-zero when projecting points/quads.
 
-  gfx::Transform transform;
+  Transform transform;
   transform.MakeIdentity();
   transform.matrix().set(2, 2, 0);
 
-  gfx::RectF rect = gfx::RectF(0, 0, 1, 1);
-  gfx::RectF projected_rect = MathUtil::ProjectClippedRect(transform, rect);
+  RectF rect = RectF(0, 0, 1, 1);
+  RectF projected_rect = MathUtil::ProjectClippedRect(transform, rect);
 
   EXPECT_EQ(0, projected_rect.x());
   EXPECT_EQ(0, projected_rect.y());
@@ -39,7 +37,7 @@ TEST(MathUtilTest, ProjectionOfAlmostPerpendicularPlane) {
   // In this case, the m33() element of the transform becomes almost zero, which
   // could cause a divide-by-zero when projecting points/quads.
 
-  gfx::Transform transform;
+  Transform transform;
   // The transform is from an actual test page:
   // [ +1.0000 +0.0000 -1.0000 +3144132.0000
   //   +0.0000 +1.0000 +0.0000 +0.0000
@@ -53,8 +51,8 @@ TEST(MathUtilTest, ProjectionOfAlmostPerpendicularPlane) {
   transform.matrix().set(2, 3,
                          static_cast<SkMScalar>(51346917453137000267776.0));
 
-  gfx::RectF rect = gfx::RectF(0, 0, 1, 1);
-  gfx::RectF projected_rect = MathUtil::ProjectClippedRect(transform, rect);
+  RectF rect = RectF(0, 0, 1, 1);
+  RectF projected_rect = MathUtil::ProjectClippedRect(transform, rect);
 
   EXPECT_EQ(0, projected_rect.x());
   EXPECT_EQ(0, projected_rect.y());
@@ -71,7 +69,7 @@ TEST(MathUtilTest, EnclosingClippedRectHandlesInfinityY) {
   // and 10 to infinity for y. However, if there is a bug where the result
   // is set so big as to destroy the precision of ymin, we can't deal well
   // with the resulting rect.
-  gfx::RectF result = MathUtil::ComputeEnclosingClippedRect(h1, h2, h3, h4);
+  RectF result = MathUtil::ComputeEnclosingClippedRect(h1, h2, h3, h4);
 
   EXPECT_FALSE(result.IsEmpty());
   EXPECT_TRUE(result.Contains(50.0f, 50.0f));
@@ -92,7 +90,7 @@ TEST(MathUtilTest, EnclosingClippedRectHandlesNegativeInfinityX) {
   // and 10 to 100 for y. However, if there is a bug where the result
   // is set so big as to destroy the precision of ymin, we can't deal well
   // with the resulting rect.
-  gfx::RectF result = MathUtil::ComputeEnclosingClippedRect(h1, h2, h3, h4);
+  RectF result = MathUtil::ComputeEnclosingClippedRect(h1, h2, h3, h4);
 
   EXPECT_FALSE(result.IsEmpty());
   EXPECT_TRUE(result.Contains(50.0f, 50.0f));
@@ -112,7 +110,7 @@ TEST(MathUtilTest, EnclosingClippedRectHandlesInfinityXY) {
   // The bounds of the enclosing clipped rect should be 10 to infinity for x
   // and -infinity to infinity for y.
   // It would be quite easy for this result to not include anything useful.
-  gfx::RectF result = MathUtil::ComputeEnclosingClippedRect(h1, h2, h3, h4);
+  RectF result = MathUtil::ComputeEnclosingClippedRect(h1, h2, h3, h4);
 
   // Notes: (A) In the mapped shape, (B) In the enclosing rect, but not the
   // mapped shape, (C) In the mapped shape, but clipped.
@@ -140,37 +138,41 @@ TEST(MathUtilTest, EnclosingClippedRectUsesCorrectInitialBounds) {
   // and y. However, if there is a bug where the initial xmin/xmax/ymin/ymax are
   // initialized to numeric_limits<float>::min() (which is zero, not -flt_max)
   // then the enclosing clipped rect will be computed incorrectly.
-  gfx::RectF result = MathUtil::ComputeEnclosingClippedRect(h1, h2, h3, h4);
+  RectF result = MathUtil::ComputeEnclosingClippedRect(h1, h2, h3, h4);
 
   // Due to floating point math in ComputeClippedPointForEdge this result
   // is fairly imprecise.  0.15f was empirically determined.
-  EXPECT_RECT_NEAR(
-      gfx::RectF(gfx::PointF(-100, -100), gfx::SizeF(90, 90)), result, 0.15f);
+  EXPECT_NEAR(-100, result.x(), 0.15f);
+  EXPECT_NEAR(-100, result.y(), 0.15f);
+  EXPECT_NEAR(90, result.width(), 0.15f);
+  EXPECT_NEAR(90, result.height(), 0.15f);
 }
 
 TEST(MathUtilTest, EnclosingRectOfVerticesUsesCorrectInitialBounds) {
-  gfx::PointF vertices[3];
+  PointF vertices[3];
   int num_vertices = 3;
 
-  vertices[0] = gfx::PointF(-10, -100);
-  vertices[1] = gfx::PointF(-100, -10);
-  vertices[2] = gfx::PointF(-30, -30);
+  vertices[0] = PointF(-10, -100);
+  vertices[1] = PointF(-100, -10);
+  vertices[2] = PointF(-30, -30);
 
   // The bounds of the enclosing rect should be -100 to -10 for both x and y.
   // However, if there is a bug where the initial xmin/xmax/ymin/ymax are
   // initialized to numeric_limits<float>::min() (which is zero, not -flt_max)
   // then the enclosing clipped rect will be computed incorrectly.
-  gfx::RectF result =
+  RectF result =
       MathUtil::ComputeEnclosingRectOfVertices(vertices, num_vertices);
 
-  EXPECT_FLOAT_RECT_EQ(gfx::RectF(gfx::PointF(-100, -100), gfx::SizeF(90, 90)),
-                       result);
+  EXPECT_FLOAT_EQ(-100, result.x());
+  EXPECT_FLOAT_EQ(-100, result.y());
+  EXPECT_FLOAT_EQ(90, result.width());
+  EXPECT_FLOAT_EQ(90, result.height());
 }
 
 TEST(MathUtilTest, SmallestAngleBetweenVectors) {
-  gfx::Vector2dF x(1, 0);
-  gfx::Vector2dF y(0, 1);
-  gfx::Vector2dF test_vector(0.5, 0.5);
+  Vector2dF x(1, 0);
+  Vector2dF y(0, 1);
+  Vector2dF test_vector(0.5, 0.5);
 
   // Orthogonal vectors are at an angle of 90 degress.
   EXPECT_EQ(90, MathUtil::SmallestAngleBetweenVectors(x, y));
@@ -194,34 +196,34 @@ TEST(MathUtilTest, SmallestAngleBetweenVectors) {
 }
 
 TEST(MathUtilTest, VectorProjection) {
-  gfx::Vector2dF x(1, 0);
-  gfx::Vector2dF y(0, 1);
-  gfx::Vector2dF test_vector(0.3f, 0.7f);
+  Vector2dF x(1, 0);
+  Vector2dF y(0, 1);
+  Vector2dF test_vector(0.3f, 0.7f);
 
   // Orthogonal vectors project to a zero vector.
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(0, 0), MathUtil::ProjectVector(x, y));
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(0, 0), MathUtil::ProjectVector(y, x));
+  EXPECT_EQ(Vector2dF(0, 0), MathUtil::ProjectVector(x, y));
+  EXPECT_EQ(Vector2dF(0, 0), MathUtil::ProjectVector(y, x));
 
   // Projecting a vector onto the orthonormal basis gives the corresponding
   // component of the vector.
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(test_vector.x(), 0),
-                   MathUtil::ProjectVector(test_vector, x));
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(0, test_vector.y()),
-                   MathUtil::ProjectVector(test_vector, y));
+  EXPECT_EQ(Vector2dF(test_vector.x(), 0),
+            MathUtil::ProjectVector(test_vector, x));
+  EXPECT_EQ(Vector2dF(0, test_vector.y()),
+            MathUtil::ProjectVector(test_vector, y));
 
   // Finally check than an arbitrary vector projected to another one gives a
   // vector parallel to the second vector.
-  gfx::Vector2dF target_vector(0.5, 0.2f);
-  gfx::Vector2dF projected_vector =
+  Vector2dF target_vector(0.5, 0.2f);
+  Vector2dF projected_vector =
       MathUtil::ProjectVector(test_vector, target_vector);
   EXPECT_EQ(projected_vector.x() / target_vector.x(),
             projected_vector.y() / target_vector.y());
 }
 
 TEST(MathUtilTest, MapEnclosedRectWith2dAxisAlignedTransform) {
-  gfx::Rect input(1, 2, 3, 4);
-  gfx::Rect output;
-  gfx::Transform transform;
+  Rect input(1, 2, 3, 4);
+  Rect output;
+  Transform transform;
 
   // Identity.
   output =
@@ -232,161 +234,161 @@ TEST(MathUtilTest, MapEnclosedRectWith2dAxisAlignedTransform) {
   transform.Translate(2.0, 3.0);
   output =
       MathUtil::MapEnclosedRectWith2dAxisAlignedTransform(transform, input);
-  EXPECT_EQ(gfx::Rect(3, 5, 3, 4), output);
+  EXPECT_EQ(Rect(3, 5, 3, 4), output);
 
   // Non-integer translate.
   transform.Translate(0.5, 0.5);
   output =
       MathUtil::MapEnclosedRectWith2dAxisAlignedTransform(transform, input);
-  EXPECT_EQ(gfx::Rect(4, 6, 2, 3), output);
+  EXPECT_EQ(Rect(4, 6, 2, 3), output);
 
   // Scale.
-  transform = gfx::Transform();
+  transform = Transform();
   transform.Scale(2.0, 3.0);
   output =
       MathUtil::MapEnclosedRectWith2dAxisAlignedTransform(transform, input);
-  EXPECT_EQ(gfx::Rect(2, 6, 6, 12), output);
+  EXPECT_EQ(Rect(2, 6, 6, 12), output);
 
   // Rotate Z.
-  transform = gfx::Transform();
+  transform = Transform();
   transform.Translate(1.0, 2.0);
   transform.RotateAboutZAxis(90.0);
   transform.Translate(-1.0, -2.0);
   output =
       MathUtil::MapEnclosedRectWith2dAxisAlignedTransform(transform, input);
-  EXPECT_EQ(gfx::Rect(-3, 2, 4, 3), output);
+  EXPECT_EQ(Rect(-3, 2, 4, 3), output);
 
   // Rotate X.
-  transform = gfx::Transform();
+  transform = Transform();
   transform.RotateAboutXAxis(90.0);
   output =
       MathUtil::MapEnclosedRectWith2dAxisAlignedTransform(transform, input);
   EXPECT_TRUE(output.IsEmpty());
 
-  transform = gfx::Transform();
+  transform = Transform();
   transform.RotateAboutXAxis(180.0);
   output =
       MathUtil::MapEnclosedRectWith2dAxisAlignedTransform(transform, input);
-  EXPECT_EQ(gfx::Rect(1, -6, 3, 4), output);
+  EXPECT_EQ(Rect(1, -6, 3, 4), output);
 
   // Rotate Y.
-  transform = gfx::Transform();
+  transform = Transform();
   transform.RotateAboutYAxis(90.0);
   output =
       MathUtil::MapEnclosedRectWith2dAxisAlignedTransform(transform, input);
   EXPECT_TRUE(output.IsEmpty());
 
-  transform = gfx::Transform();
+  transform = Transform();
   transform.RotateAboutYAxis(180.0);
   output =
       MathUtil::MapEnclosedRectWith2dAxisAlignedTransform(transform, input);
-  EXPECT_EQ(gfx::Rect(-4, 2, 3, 4), output);
+  EXPECT_EQ(Rect(-4, 2, 3, 4), output);
 
   // Translate Z.
-  transform = gfx::Transform();
+  transform = Transform();
   transform.ApplyPerspectiveDepth(10.0);
   transform.Translate3d(0.0, 0.0, 5.0);
   output =
       MathUtil::MapEnclosedRectWith2dAxisAlignedTransform(transform, input);
-  EXPECT_EQ(gfx::Rect(2, 4, 6, 8), output);
+  EXPECT_EQ(Rect(2, 4, 6, 8), output);
 }
 
 TEST(MathUtilTest, MapEnclosingRectWithLargeTransforms) {
-  gfx::Rect input(1, 2, 100, 200);
-  gfx::Rect output;
+  Rect input(1, 2, 100, 200);
+  Rect output;
 
-  gfx::Transform large_x_scale;
+  Transform large_x_scale;
   large_x_scale.Scale(SkDoubleToMScalar(1e37), 1.0);
 
-  gfx::Transform infinite_x_scale;
+  Transform infinite_x_scale;
   infinite_x_scale = large_x_scale * large_x_scale;
 
-  gfx::Transform large_y_scale;
+  Transform large_y_scale;
   large_y_scale.Scale(1.0, SkDoubleToMScalar(1e37));
 
-  gfx::Transform infinite_y_scale;
+  Transform infinite_y_scale;
   infinite_y_scale = large_y_scale * large_y_scale;
 
-  gfx::Transform rotation;
+  Transform rotation;
   rotation.RotateAboutYAxis(170.0);
 
   int max_int = std::numeric_limits<int>::max();
 
   output = MathUtil::MapEnclosingClippedRect(large_x_scale, input);
-  EXPECT_EQ(gfx::Rect(max_int, 2, 0, 200), output);
+  EXPECT_EQ(Rect(max_int, 2, 0, 200), output);
 
   output = MathUtil::MapEnclosingClippedRect(large_x_scale * rotation, input);
-  EXPECT_EQ(gfx::Rect(), output);
+  EXPECT_EQ(Rect(), output);
 
   output = MathUtil::MapEnclosingClippedRect(infinite_x_scale, input);
-  EXPECT_EQ(gfx::Rect(max_int, 2, 0, 200), output);
+  EXPECT_EQ(Rect(max_int, 2, 0, 200), output);
 
   output =
       MathUtil::MapEnclosingClippedRect(infinite_x_scale * rotation, input);
-  EXPECT_EQ(gfx::Rect(), output);
+  EXPECT_EQ(Rect(), output);
 
   output = MathUtil::MapEnclosingClippedRect(large_y_scale, input);
-  EXPECT_EQ(gfx::Rect(1, max_int, 100, 0), output);
+  EXPECT_EQ(Rect(1, max_int, 100, 0), output);
 
   output = MathUtil::MapEnclosingClippedRect(large_y_scale * rotation, input);
-  EXPECT_EQ(gfx::Rect(-100, max_int, 100, 0), output);
+  EXPECT_EQ(Rect(-100, max_int, 100, 0), output);
 
   output = MathUtil::MapEnclosingClippedRect(infinite_y_scale, input);
-  EXPECT_EQ(gfx::Rect(1, max_int, 100, 0), output);
+  EXPECT_EQ(Rect(1, max_int, 100, 0), output);
 
   output =
       MathUtil::MapEnclosingClippedRect(infinite_y_scale * rotation, input);
-  EXPECT_EQ(gfx::Rect(), output);
+  EXPECT_EQ(Rect(), output);
 }
 
 TEST(MathUtilTest, ProjectEnclosingRectWithLargeTransforms) {
-  gfx::Rect input(1, 2, 100, 200);
-  gfx::Rect output;
+  Rect input(1, 2, 100, 200);
+  Rect output;
 
-  gfx::Transform large_x_scale;
+  Transform large_x_scale;
   large_x_scale.Scale(SkDoubleToMScalar(1e37), 1.0);
 
-  gfx::Transform infinite_x_scale;
+  Transform infinite_x_scale;
   infinite_x_scale = large_x_scale * large_x_scale;
 
-  gfx::Transform large_y_scale;
+  Transform large_y_scale;
   large_y_scale.Scale(1.0, SkDoubleToMScalar(1e37));
 
-  gfx::Transform infinite_y_scale;
+  Transform infinite_y_scale;
   infinite_y_scale = large_y_scale * large_y_scale;
 
-  gfx::Transform rotation;
+  Transform rotation;
   rotation.RotateAboutYAxis(170.0);
 
   int max_int = std::numeric_limits<int>::max();
 
   output = MathUtil::ProjectEnclosingClippedRect(large_x_scale, input);
-  EXPECT_EQ(gfx::Rect(max_int, 2, 0, 200), output);
+  EXPECT_EQ(Rect(max_int, 2, 0, 200), output);
 
   output =
       MathUtil::ProjectEnclosingClippedRect(large_x_scale * rotation, input);
-  EXPECT_EQ(gfx::Rect(), output);
+  EXPECT_EQ(Rect(), output);
 
   output = MathUtil::ProjectEnclosingClippedRect(infinite_x_scale, input);
-  EXPECT_EQ(gfx::Rect(max_int, 2, 0, 200), output);
+  EXPECT_EQ(Rect(max_int, 2, 0, 200), output);
 
   output =
       MathUtil::ProjectEnclosingClippedRect(infinite_x_scale * rotation, input);
-  EXPECT_EQ(gfx::Rect(), output);
+  EXPECT_EQ(Rect(), output);
 
   output = MathUtil::ProjectEnclosingClippedRect(large_y_scale, input);
-  EXPECT_EQ(gfx::Rect(1, max_int, 100, 0), output);
+  EXPECT_EQ(Rect(1, max_int, 100, 0), output);
 
   output =
       MathUtil::ProjectEnclosingClippedRect(large_y_scale * rotation, input);
-  EXPECT_EQ(gfx::Rect(-103, max_int, 102, 0), output);
+  EXPECT_EQ(Rect(-103, max_int, 102, 0), output);
 
   output = MathUtil::ProjectEnclosingClippedRect(infinite_y_scale, input);
-  EXPECT_EQ(gfx::Rect(1, max_int, 100, 0), output);
+  EXPECT_EQ(Rect(1, max_int, 100, 0), output);
 
   output =
       MathUtil::ProjectEnclosingClippedRect(infinite_y_scale * rotation, input);
-  EXPECT_EQ(gfx::Rect(), output);
+  EXPECT_EQ(Rect(), output);
 }
 
 TEST(MathUtilTest, RoundUp) {
@@ -504,10 +506,9 @@ TEST(MathUtilTest, Approximate) {
 }
 
 #define EXPECT_SIMILAR_POINT_F(x, y) \
-  EXPECT_TRUE(MathUtil::IsNearlyTheSameForTesting(gfx::PointF x, gfx::PointF y))
+  EXPECT_TRUE(MathUtil::IsNearlyTheSameForTesting(PointF x, PointF y))
 #define EXPECT_DISSIMILAR_POINT_F(x, y) \
-  EXPECT_FALSE(                         \
-      MathUtil::IsNearlyTheSameForTesting(gfx::PointF x, gfx::PointF y))
+  EXPECT_FALSE(MathUtil::IsNearlyTheSameForTesting(PointF x, PointF y))
 
 TEST(MathUtilTest, ApproximatePointF) {
   // Same is similar.
@@ -535,11 +536,9 @@ TEST(MathUtilTest, ApproximatePointF) {
 }
 
 #define EXPECT_SIMILAR_POINT_3F(x, y) \
-  EXPECT_TRUE(                        \
-      MathUtil::IsNearlyTheSameForTesting(gfx::Point3F x, gfx::Point3F y))
+  EXPECT_TRUE(MathUtil::IsNearlyTheSameForTesting(Point3F x, Point3F y))
 #define EXPECT_DISSIMILAR_POINT_3F(x, y) \
-  EXPECT_FALSE(                          \
-      MathUtil::IsNearlyTheSameForTesting(gfx::Point3F x, gfx::Point3F y))
+  EXPECT_FALSE(MathUtil::IsNearlyTheSameForTesting(Point3F x, Point3F y))
 
 TEST(MathUtilTest, ApproximatePoint3F) {
   // Same same.
@@ -565,17 +564,16 @@ TEST(MathUtilTest, ApproximatePoint3F) {
 // the eyepoint and checks to make sure we build a triangle.  We used to build
 // a degenerate quad.
 TEST(MathUtilTest, MapClippedQuadDuplicateTriangle) {
-  gfx::Transform transform;
+  Transform transform;
   transform.MakeIdentity();
   transform.ApplyPerspectiveDepth(50.0);
   transform.RotateAboutYAxis(89.0);
   // We are amost looking along the X-Y plane from (-50, almost 0)
 
-  gfx::QuadF src_quad(gfx::PointF(0.0f, 100.0f), gfx::PointF(0.0f, -100.0f),
-                      gfx::PointF(-99.0f, -300.0f),
-                      gfx::PointF(-99.0f, -100.0f));
+  QuadF src_quad(PointF(0.0f, 100.0f), PointF(0.0f, -100.0f),
+                 PointF(-99.0f, -300.0f), PointF(-99.0f, -100.0f));
 
-  gfx::Point3F clipped_quad[8];
+  Point3F clipped_quad[8];
   int num_vertices_in_clipped_quad;
 
   MathUtil::MapClippedQuad3d(transform, src_quad, clipped_quad,
@@ -589,15 +587,15 @@ TEST(MathUtilTest, MapClippedQuadDuplicateTriangle) {
 // a degenerate quad.  The quirk here is that the two shared points are first
 // and last, not sequential.
 TEST(MathUtilTest, MapClippedQuadDuplicateTriangleWrapped) {
-  gfx::Transform transform;
+  Transform transform;
   transform.MakeIdentity();
   transform.ApplyPerspectiveDepth(50.0);
   transform.RotateAboutYAxis(89.0);
 
-  gfx::QuadF src_quad(gfx::PointF(-99.0f, -100.0f), gfx::PointF(0.0f, 100.0f),
-                      gfx::PointF(0.0f, -100.0f), gfx::PointF(-99.0f, -300.0f));
+  QuadF src_quad(PointF(-99.0f, -100.0f), PointF(0.0f, 100.0f),
+                 PointF(0.0f, -100.0f), PointF(-99.0f, -300.0f));
 
-  gfx::Point3F clipped_quad[8];
+  Point3F clipped_quad[8];
   int num_vertices_in_clipped_quad;
 
   MathUtil::MapClippedQuad3d(transform, src_quad, clipped_quad,
@@ -610,15 +608,15 @@ TEST(MathUtilTest, MapClippedQuadDuplicateTriangleWrapped) {
 // behind us.  We don't want two vertices at infinity crossing in and out
 // of w < 0 space.
 TEST(MathUtilTest, MapClippedQuadDuplicateQuad) {
-  gfx::Transform transform;
+  Transform transform;
   transform.MakeIdentity();
   transform.ApplyPerspectiveDepth(50.0);
   transform.RotateAboutYAxis(89.0);
 
-  gfx::QuadF src_quad(gfx::PointF(0.0f, 100.0f), gfx::PointF(400.0f, 0.0f),
-                      gfx::PointF(0.0f, -100.0f), gfx::PointF(-99.0f, -300.0f));
+  QuadF src_quad(PointF(0.0f, 100.0f), PointF(400.0f, 0.0f),
+                 PointF(0.0f, -100.0f), PointF(-99.0f, -300.0f));
 
-  gfx::Point3F clipped_quad[8];
+  Point3F clipped_quad[8];
   int num_vertices_in_clipped_quad;
 
   MathUtil::MapClippedQuad3d(transform, src_quad, clipped_quad,
@@ -628,4 +626,4 @@ TEST(MathUtilTest, MapClippedQuadDuplicateQuad) {
 }
 
 }  // namespace
-}  // namespace cc
+}  // namespace gfx

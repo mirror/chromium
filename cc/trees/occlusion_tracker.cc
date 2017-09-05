@@ -8,7 +8,6 @@
 
 #include <algorithm>
 
-#include "cc/base/math_util.h"
 #include "cc/base/region.h"
 #include "cc/layers/layer.h"
 #include "cc/layers/layer_impl.h"
@@ -16,6 +15,7 @@
 #include "cc/trees/layer_tree_impl.h"
 #include "ui/gfx/geometry/quad_f.h"
 #include "ui/gfx/geometry/rect_conversions.h"
+#include "ui/gfx/math_util.h"
 
 namespace cc {
 
@@ -88,8 +88,8 @@ static gfx::Rect ScreenSpaceClipRectInTargetSurface(
           &inverse_screen_space_transform))
     return target_surface->content_rect();
 
-  return MathUtil::ProjectEnclosingClippedRect(inverse_screen_space_transform,
-                                               screen_space_clip_rect);
+  return gfx::MathUtil::ProjectEnclosingClippedRect(
+      inverse_screen_space_transform, screen_space_clip_rect);
 }
 
 static SimpleEnclosedRegion TransformSurfaceOpaqueRegion(
@@ -111,8 +111,8 @@ static SimpleEnclosedRegion TransformSurfaceOpaqueRegion(
   SimpleEnclosedRegion transformed_region;
   for (size_t i = 0; i < region.GetRegionComplexity(); ++i) {
     gfx::Rect transformed_rect =
-        MathUtil::MapEnclosedRectWith2dAxisAlignedTransform(transform,
-                                                            region.GetRect(i));
+        gfx::MathUtil::MapEnclosedRectWith2dAxisAlignedTransform(
+            transform, region.GetRect(i));
     if (have_clip_rect)
       transformed_rect.Intersect(clip_rect_in_new_target);
     transformed_region.Union(transformed_rect);
@@ -216,7 +216,7 @@ static void ReduceOcclusionBelowSurface(
     return;
 
   gfx::Rect affected_area_in_target =
-      MathUtil::MapEnclosingClippedRect(surface_transform, surface_rect);
+      gfx::MathUtil::MapEnclosingClippedRect(surface_transform, surface_rect);
   if (contributing_surface->is_clipped()) {
     affected_area_in_target.Intersect(contributing_surface->clip_rect());
   }
@@ -362,7 +362,7 @@ void OcclusionTracker::MarkOccludedBehindLayer(const LayerImpl* layer) {
 
   for (size_t i = 0; i < opaque_layer_region.GetRegionComplexity(); ++i) {
     gfx::Rect transformed_rect =
-        MathUtil::MapEnclosedRectWith2dAxisAlignedTransform(
+        gfx::MathUtil::MapEnclosedRectWith2dAxisAlignedTransform(
             draw_transform, opaque_layer_region.GetRect(i));
     transformed_rect.Intersect(clip_rect_in_target);
     if (transformed_rect.width() < minimum_tracking_size_.width() &&

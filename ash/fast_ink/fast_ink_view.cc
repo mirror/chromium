@@ -11,7 +11,6 @@
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/shell.h"
 #include "base/threading/thread_task_runner_handle.h"
-#include "cc/base/math_util.h"
 #include "cc/output/compositor_frame.h"
 #include "cc/output/layer_tree_frame_sink.h"
 #include "cc/output/layer_tree_frame_sink_client.h"
@@ -26,6 +25,7 @@
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/gpu_memory_buffer.h"
+#include "ui/gfx/math_util.h"
 #include "ui/views/widget/widget.h"
 
 namespace ash {
@@ -191,7 +191,7 @@ void FastInkView::UpdateBuffer() {
             ->context_factory()
             ->GetGpuMemoryBufferManager()
             ->CreateGpuMemoryBuffer(
-                gfx::ToEnclosedRect(cc::MathUtil::MapClippedRect(
+                gfx::ToEnclosedRect(gfx::MathUtil::MapClippedRect(
                                         screen_to_buffer_transform_,
                                         gfx::RectF(screen_bounds.width(),
                                                    screen_bounds.height())))
@@ -210,7 +210,7 @@ void FastInkView::UpdateBuffer() {
   }
 
   // Convert update rectangle to pixel coordinates.
-  gfx::Rect pixel_rect = cc::MathUtil::MapEnclosingClippedRect(
+  gfx::Rect pixel_rect = gfx::MathUtil::MapEnclosingClippedRect(
       screen_to_buffer_transform_, update_rect);
 
   // Constrain pixel rectangle to buffer size and early out if empty.

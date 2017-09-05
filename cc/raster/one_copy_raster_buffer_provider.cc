@@ -15,7 +15,6 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/trace_event/trace_event.h"
 #include "cc/base/histograms.h"
-#include "cc/base/math_util.h"
 #include "cc/resources/resource_util.h"
 #include "cc/resources/scoped_resource.h"
 #include "components/viz/common/resources/platform_color.h"
@@ -25,6 +24,7 @@
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "gpu/command_buffer/client/gpu_memory_buffer_manager.h"
 #include "ui/gfx/buffer_format_util.h"
+#include "ui/gfx/math_util.h"
 
 namespace cc {
 namespace {
@@ -370,7 +370,7 @@ void OneCopyRasterBufferProvider::CopyOnWorkerThread(
     int chunk_size_in_rows =
         std::max(1, max_bytes_per_copy_operation_ / bytes_per_row);
     // Align chunk size to 4. Required to support compressed texture formats.
-    chunk_size_in_rows = MathUtil::UncheckedRoundUp(chunk_size_in_rows, 4);
+    chunk_size_in_rows = gfx::MathUtil::UncheckedRoundUp(chunk_size_in_rows, 4);
     int y = 0;
     int height = rect_to_copy.height();
     while (y < height) {

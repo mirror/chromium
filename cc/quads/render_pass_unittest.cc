@@ -7,7 +7,6 @@
 #include <stddef.h>
 
 #include "base/memory/ptr_util.h"
-#include "cc/base/math_util.h"
 #include "cc/quads/render_pass_draw_quad.h"
 #include "cc/quads/solid_color_draw_quad.h"
 #include "cc/test/geometry_test_utils.h"
