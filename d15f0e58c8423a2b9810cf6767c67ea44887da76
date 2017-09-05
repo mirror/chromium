@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f767eb4a_15c76280",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-09-05T07:47:39Z",
+      "side": 1,
+      "message": "Does this CL resolve this? https://crbug.com/758266\n- Notification height should be 84px\n\nIf so, I wonder if you would mention that in the issue after submit.",
+      "range": {
+        "startLine": 10,
+        "startChar": 2,
+        "endLine": 10,
+        "endChar": 53
+      },
+      "revId": "d15f0e58c8423a2b9810cf6767c67ea44887da76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
