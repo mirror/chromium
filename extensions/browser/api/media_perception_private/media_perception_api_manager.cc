@@ -16,6 +16,24 @@ namespace media_perception = extensions::api::media_perception_private;
 
 namespace extensions {
 
+namespace {
+
+media_perception::State GetStateForServiceError(
+    const media_perception::ServiceError service_error) {
+  media_perception::State state;
+  state.service_error = service_error;
+  return state;
+}
+
+media_perception::Diagnostics GetDiagnosticsForServiceError(
+    const media_perception::ServiceError& service_error) {
+  media_perception::Diagnostics diagnostics;
+  diagnostics.service_error = service_error;
+  return diagnostics;
+}
+
+}  // namespace
+
 // static
 MediaPerceptionAPIManager* MediaPerceptionAPIManager::Get(
     content::BrowserContext* context) {
@@ -64,15 +82,15 @@ void MediaPerceptionAPIManager::GetState(const APIStateCallback& callback) {
   }
 
   if (analytics_process_state_ == AnalyticsProcessState::LAUNCHING) {
-    callback.Run(CallbackStatus::PROCESS_LAUNCHING_ERROR,
-                 media_perception::State());
+    callback.Run(GetStateForServiceError(
+        media_perception::SERVICE_ERROR_SERVICE_BUSY_LAUNCHING));
     return;
   }
 
   // Calling getState with process not running returns State UNINITIALIZED.
   media_perception::State state_uninitialized;
   state_uninitialized.status = media_perception::STATUS_UNINITIALIZED;
-  callback.Run(CallbackStatus::SUCCESS, std::move(state_uninitialized));
+  callback.Run(std::move(state_uninitialized));
 }
 
 void MediaPerceptionAPIManager::SetState(const media_perception::State& state,
@@ -85,8 +103,8 @@ void MediaPerceptionAPIManager::SetState(const media_perception::State& state,
          "or RESTARTING.";
 
   if (analytics_process_state_ == AnalyticsProcessState::LAUNCHING) {
-    callback.Run(CallbackStatus::PROCESS_LAUNCHING_ERROR,
-                 media_perception::State());
+    callback.Run(GetStateForServiceError(
+        media_perception::SERVICE_ERROR_SERVICE_BUSY_LAUNCHING));
     return;
   }
 
@@ -118,7 +136,8 @@ void MediaPerceptionAPIManager::SetState(const media_perception::State& state,
     return;
   }
 
-  callback.Run(CallbackStatus::PROCESS_IDLE_ERROR, media_perception::State());
+  callback.Run(GetStateForServiceError(
+      media_perception::SERVICE_ERROR_SERVICE_NOT_RUNNING));
 }
 
 void MediaPerceptionAPIManager::SetStateInternal(
@@ -146,7 +165,8 @@ void MediaPerceptionAPIManager::UpstartStartCallback(
     bool succeeded) {
   if (!succeeded) {
     analytics_process_state_ = AnalyticsProcessState::IDLE;
-    callback.Run(CallbackStatus::PROCESS_IDLE_ERROR, media_perception::State());
+    callback.Run(GetStateForServiceError(
+        media_perception::SERVICE_ERROR_SERVICE_NOT_RUNNING));
     return;
   }
   analytics_process_state_ = AnalyticsProcessState::RUNNING;
@@ -158,7 +178,8 @@ void MediaPerceptionAPIManager::UpstartRestartCallback(
     bool succeeded) {
   if (!succeeded) {
     analytics_process_state_ = AnalyticsProcessState::IDLE;
-    callback.Run(CallbackStatus::PROCESS_IDLE_ERROR, media_perception::State());
+    callback.Run(GetStateForServiceError(
+        media_perception::SERVICE_ERROR_SERVICE_NOT_RUNNING));
     return;
   }
   analytics_process_state_ = AnalyticsProcessState::RUNNING;
@@ -170,11 +191,11 @@ void MediaPerceptionAPIManager::StateCallback(const APIStateCallback& callback,
                                               const mri::State& state_proto) {
   media_perception::State state;
   if (!succeeded) {
-    callback.Run(CallbackStatus::DBUS_ERROR, media_perception::State());
+    callback.Run(GetStateForServiceError(
+        media_perception::SERVICE_ERROR_SERVICE_UNREACHABLE));
     return;
   }
-  callback.Run(CallbackStatus::SUCCESS,
-               media_perception::StateProtoToIdl(state_proto));
+  callback.Run(media_perception::StateProtoToIdl(state_proto));
 }
 
 void MediaPerceptionAPIManager::GetDiagnosticsCallback(
@@ -182,11 +203,11 @@ void MediaPerceptionAPIManager::GetDiagnosticsCallback(
     bool succeeded,
     const mri::Diagnostics& diagnostics_proto) {
   if (!succeeded) {
-    callback.Run(CallbackStatus::DBUS_ERROR, media_perception::Diagnostics());
+    callback.Run(GetStateForServiceError(
+        media_perception::SERVICE_ERROR_SERVICE_UNREACHABLE));
     return;
   }
-  callback.Run(CallbackStatus::SUCCESS,
-               media_perception::DiagnosticsProtoToIdl(diagnostics_proto));
+  callback.Run(media_perception::DiagnosticsProtoToIdl(diagnostics_proto));
 }
 
 void MediaPerceptionAPIManager::MediaPerceptionSignalHandler(
