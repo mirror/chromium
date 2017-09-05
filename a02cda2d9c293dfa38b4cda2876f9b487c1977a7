@@ -1,0 +1,227 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ebe75a9b_7a06ebd0",
+        "filename": "components/search_provider_logos/logo_common.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-05T12:28:11Z",
+      "side": 1,
+      "message": "I was gonna say \"ref instead of pointer\", but it can be null, right?\nIf we\u0027re already cleaning up the interface, should we make it a base::Optional?",
+      "range": {
+        "startLine": 68,
+        "startChar": 78,
+        "endLine": 68,
+        "endChar": 0
+      },
+      "revId": "a02cda2d9c293dfa38b4cda2876f9b487c1977a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97f6452b_b02da701",
+        "filename": "components/search_provider_logos/logo_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-05T12:28:11Z",
+      "side": 1,
+      "message": "...and it was different from the cached one, i.e. not just a revalidation.",
+      "range": {
+        "startLine": 64,
+        "startChar": 33,
+        "endLine": 64,
+        "endChar": 0
+      },
+      "revId": "a02cda2d9c293dfa38b4cda2876f9b487c1977a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb6f3026_81edd3d9",
+        "filename": "components/search_provider_logos/logo_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-05T12:28:11Z",
+      "side": 1,
+      "message": "Hm, I think it\u0027s even slightly more convoluted than that: If downloading failed, we\u0027re not called back. If we did download something but couldn\u0027t parse it, then we *are* called back (assuming there was a non-null cached logo). If we did parse the json, but then failed to decode the image, we\u0027re again *not* called back.\n\nThis doesn\u0027t make any sense. Not directly related to this CL, but maybe update the description and/or add TODOs as appropriate to make things consistent?",
+      "range": {
+        "startLine": 70,
+        "startChar": 35,
+        "endLine": 70,
+        "endChar": 0
+      },
+      "revId": "a02cda2d9c293dfa38b4cda2876f9b487c1977a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1db0511_6d58b682",
+        "filename": "components/search_provider_logos/logo_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-05T12:28:11Z",
+      "side": 1,
+      "message": "Huh, the callbacks aren\u0027t actually relevant for this API, are they?!",
+      "range": {
+        "startLine": 83,
+        "startChar": 79,
+        "endLine": 83,
+        "endChar": 0
+      },
+      "revId": "a02cda2d9c293dfa38b4cda2876f9b487c1977a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67a21086_817b79d5",
+        "filename": "components/search_provider_logos/logo_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-05T12:28:11Z",
+      "side": 1,
+      "message": "optional: There\u0027s also base::MockCallback which makes this kind of thing a bit more convenient.",
+      "range": {
+        "startLine": 67,
+        "startChar": 75,
+        "endLine": 67,
+        "endChar": 0
+      },
+      "revId": "a02cda2d9c293dfa38b4cda2876f9b487c1977a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62ad4342_6c0b4379",
+        "filename": "components/search_provider_logos/logo_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-05T12:28:11Z",
+      "side": 1,
+      "message": "optional: Shouldn\u0027t be necessary since it\u0027s a StrictMock",
+      "revId": "a02cda2d9c293dfa38b4cda2876f9b487c1977a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b3eabab_2d19dad3",
+        "filename": "components/search_provider_logos/logo_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-05T12:28:11Z",
+      "side": 1,
+      "message": "This is weird: We do update the metadata for the fresh logo, but we do not notify the observers of that. They only get the updated metadata on the next request.\nTODO?",
+      "revId": "a02cda2d9c293dfa38b4cda2876f9b487c1977a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51238066_ed28e26b",
+        "filename": "components/search_provider_logos/logo_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-05T12:28:11Z",
+      "side": 1,
+      "message": "I think this supports null callbacks, i.e. you could just do \"LogoCallback()\"?",
+      "range": {
+        "startLine": 693,
+        "startChar": 62,
+        "endLine": 693,
+        "endChar": 0
+      },
+      "revId": "a02cda2d9c293dfa38b4cda2876f9b487c1977a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2887691_4d92bbf3",
+        "filename": "components/search_provider_logos/logo_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 805,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-05T12:28:11Z",
+      "side": 1,
+      "message": "Could these just be vector\u003cLogoCallback\u003e or is the unique_ptr really required?",
+      "revId": "a02cda2d9c293dfa38b4cda2876f9b487c1977a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f895afa_923556ae",
+        "filename": "components/search_provider_logos/logo_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-05T12:28:11Z",
+      "side": 1,
+      "message": "This is a bit weird: The vectors are passed in by const ref, but here all their contents get nulled out. I guess that\u0027s technically legal, because only the vector itself is const, not its elements? It\u0027s surprising though, at least to me. Maybe pass them by non-const pointer?",
+      "revId": "a02cda2d9c293dfa38b4cda2876f9b487c1977a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ce5f227_b27e236a",
+        "filename": "components/search_provider_logos/logo_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-05T12:28:11Z",
+      "side": 1,
+      "message": "Hm, so here the semantics are slightly different between encoded and decoded observers, right? Encoded always gets called with the fresh logo, but decoded doesn\u0027t, e.g. in case of revalidations. Are we okay with that? I think as-is we\u0027d notify the observers with empty encoded data...\n\nMaybe this should move into the \"else\" below?",
+      "revId": "a02cda2d9c293dfa38b4cda2876f9b487c1977a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
