@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07279699_dc5eb9f5",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/accessibility/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-05T20:40:36Z",
+      "side": 1,
+      "message": "In general, I would have this point to the non-javatests version of the content OWNERS file.  Then if we need to add content specific owners in that file, it would be reflected here.",
+      "range": {
+        "startLine": 1,
+        "startChar": 10,
+        "endLine": 1,
+        "endChar": 23
+      },
+      "revId": "339448f1101e4ed34cd025b91e026ab81793960a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

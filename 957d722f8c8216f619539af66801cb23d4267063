@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b05b434d_a237f6db",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-05T20:40:36Z",
+      "side": 0,
+      "message": "This feels like something we should leave.  Any bugs/features in this code will be Android specific (and this would allow targeting as such via the tooling).",
+      "range": {
+        "startLine": 10,
+        "startChar": 6,
+        "endLine": 10,
+        "endChar": 13
+      },
+      "revId": "957d722f8c8216f619539af66801cb23d4267063",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
