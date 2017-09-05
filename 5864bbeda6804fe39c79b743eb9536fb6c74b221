@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "faf38103_e3cb7d8b",
+        "filename": "components/autofill/core/browser/autofill_experiments.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-05T21:00:33Z",
+      "side": 1,
+      "message": "Should dasher admins be able to control this via policy? Or does that already map to this pref?",
+      "revId": "5864bbeda6804fe39c79b743eb9536fb6c74b221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8c7b40f_0a4b2935",
+        "filename": "components/autofill/core/browser/autofill_experiments.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-05T21:00:33Z",
+      "side": 1,
+      "message": "can we add chromium here?",
+      "range": {
+        "startLine": 247,
+        "startChar": 8,
+        "endLine": 247,
+        "endChar": 14
+      },
+      "revId": "5864bbeda6804fe39c79b743eb9536fb6c74b221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
