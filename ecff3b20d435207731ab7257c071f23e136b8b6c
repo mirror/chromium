@@ -22,6 +22,30 @@
       "revId": "ecff3b20d435207731ab7257c071f23e136b8b6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ea01ad8_47296cab",
+        "filename": "ui/base/test/ui_controls_internal_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1240765
+      },
+      "writtenOn": "2017-09-05T19:13:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5add7609_ecb28526",
+      "range": {
+        "startLine": 142,
+        "startChar": 5,
+        "endLine": 142,
+        "endChar": 28
+      },
+      "revId": "ecff3b20d435207731ab7257c071f23e136b8b6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
