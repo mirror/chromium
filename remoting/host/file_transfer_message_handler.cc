@@ -33,7 +33,7 @@ void FileTransferMessageHandler::OnConnected() {
 void FileTransferMessageHandler::OnIncomingMessage(
     std::unique_ptr<CompoundBuffer> buffer) {
   FileProxyWrapper::State proxy_state = file_proxy_wrapper_->state();
-  if (proxy_state == FileProxyWrapper::kClosing ||
+  if (proxy_state == FileProxyWrapper::kBusy ||
       proxy_state == FileProxyWrapper::kClosed ||
       proxy_state == FileProxyWrapper::kFailed) {
     return;
@@ -52,7 +52,7 @@ void FileTransferMessageHandler::OnIncomingMessage(
 
 void FileTransferMessageHandler::OnDisconnecting() {
   FileProxyWrapper::State proxy_state = file_proxy_wrapper_->state();
-  if (proxy_state != FileProxyWrapper::kClosed &&
+  if (proxy_state != FileProxyWrapper::kBusy &&
       proxy_state != FileProxyWrapper::kFailed) {
     // Channel was closed earlier than expected, cancel the transfer.
     file_proxy_wrapper_->Cancel();
@@ -76,7 +76,7 @@ void FileTransferMessageHandler::StatusCallback(
 
 void FileTransferMessageHandler::SendToFileProxy(
     std::unique_ptr<CompoundBuffer> buffer) {
-  DCHECK_EQ(file_proxy_wrapper_->state(), FileProxyWrapper::kFileCreated);
+  DCHECK_EQ(file_proxy_wrapper_->state(), FileProxyWrapper::kReady);
 
   total_bytes_written_ += buffer->total_bytes();
   file_proxy_wrapper_->WriteChunk(std::move(buffer));
