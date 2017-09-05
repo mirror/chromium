@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b181b3b7_6d40e86b",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-09-05T15:19:54Z",
+      "side": 1,
+      "message": "the word \"convert\" is misleading here.  If I understand the code correctly, we are tagging as sRBG, pixels that were previously untagged. The is no actual conversion of the pixel data, right?",
+      "range": {
+        "startLine": 322,
+        "startChar": 23,
+        "endLine": 322,
+        "endChar": 30
+      },
+      "revId": "5039a4492a47692a3b498d62825e372234ca710f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3639f38b_9f698de8",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-09-05T15:19:54Z",
+      "side": 1,
+      "message": "Do we need to check whether this allocation failed?",
+      "range": {
+        "startLine": 332,
+        "startChar": 38,
+        "endLine": 332,
+        "endChar": 55
+      },
+      "revId": "5039a4492a47692a3b498d62825e372234ca710f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7817021d_acdc2b1a",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-09-05T15:19:54Z",
+      "side": 1,
+      "message": "\"\u003d nullptr\" is not necessary.",
+      "range": {
+        "startLine": 333,
+        "startChar": 32,
+        "endLine": 333,
+        "endChar": 39
+      },
+      "revId": "5039a4492a47692a3b498d62825e372234ca710f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d6078b6_57f57c83",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-09-05T15:19:54Z",
+      "side": 1,
+      "message": "This is highly ineffective, especially if \u0027image\u0027 is on the GPU.  Please file a bug about improving the performance of method.  It would also be nice to not have to make a copy of the image data.",
+      "range": {
+        "startLine": 334,
+        "startChar": 18,
+        "endLine": 334,
+        "endChar": 28
+      },
+      "revId": "5039a4492a47692a3b498d62825e372234ca710f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2ddfed7_42109232",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmapTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-09-05T15:19:54Z",
+      "side": 1,
+      "message": "It seems this test is no longer very effective at testing what it was mean to test.  Perhaps we should use an srgb image as the source image?",
+      "range": {
+        "startLine": 170,
+        "startChar": 20,
+        "endLine": 170,
+        "endChar": 28
+      },
+      "revId": "5039a4492a47692a3b498d62825e372234ca710f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
