@@ -187,15 +187,18 @@ void PermissionDialogTest::AddMediaRequest(PermissionRequestManager* manager,
                                       GetUrl(), false, request_type, audio_id,
                                       video_id, audio_type, video_type, false);
 
+  content::MediaStreamDevices audio_devices(1);
+  audio_devices[0] = content::MediaStreamDevice(
+      content::MEDIA_DEVICE_AUDIO_CAPTURE, audio_id, "Fake Audio");
   // Add fake devices, otherwise the request will auto-block.
   MediaCaptureDevicesDispatcher::GetInstance()->SetTestAudioCaptureDevices(
-      content::MediaStreamDevices(
-          1, content::MediaStreamDevice(content::MEDIA_DEVICE_AUDIO_CAPTURE,
-                                        audio_id, "Fake Audio")));
+      audio_devices);
+
+  content::MediaStreamDevices video_devices(1);
+  video_devices[0] = content::MediaStreamDevice(
+      content::MEDIA_DEVICE_VIDEO_CAPTURE, video_id, "Fake Video");
   MediaCaptureDevicesDispatcher::GetInstance()->SetTestVideoCaptureDevices(
-      content::MediaStreamDevices(
-          1, content::MediaStreamDevice(content::MEDIA_DEVICE_VIDEO_CAPTURE,
-                                        video_id, "Fake Video")));
+      video_devices);
 
   auto response = [](const content::MediaStreamDevices& devices,
                      content::MediaStreamRequestResult result,
