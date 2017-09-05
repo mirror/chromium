@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f51b3e65_78e24cfd",
+        "filename": "chrome/browser/prefs/profile_pref_store_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-05T12:29:24Z",
+      "side": 1,
+      "message": "This is unnecessary.",
+      "range": {
+        "startLine": 250,
+        "startChar": 6,
+        "endLine": 250,
+        "endChar": 37
+      },
+      "revId": "86996e00487385ae9f7ae824f9b8fa8a5c4c5511",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
