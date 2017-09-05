@@ -42,6 +42,28 @@ namespace subresource_filter {
 
 namespace {
 
+safe_browsing::TestV4StoreFactory* g_store_factory;
+
+// This class automatically inserts the SubresourceFilter list into the store
+// map when initializing the test database. This enables using the list even
+// in non chrome-branded builds.
+class InsertingDatabaseFactory : public safe_browsing::TestV4DatabaseFactory {
+ public:
+  std::unique_ptr<safe_browsing::V4Database> Create(
+      const scoped_refptr<base::SequencedTaskRunner>& db_task_runner,
+      std::unique_ptr<safe_browsing::StoreMap> store_map) override {
+    const safe_browsing::ListIdentifier& id =
+        safe_browsing::GetUrlSubresourceFilterId();
+    if (!base::ContainsKey(*store_map, id)) {
+      const base::FilePath store_path("UrlSubresourceFilter.store");
+      (*store_map)[id] =
+          g_store_factory->CreateV4Store(db_task_runner, store_path);
+    }
+    return safe_browsing::TestV4DatabaseFactory::Create(db_task_runner,
+                                                        std::move(store_map));
+  }
+};
+
 // UI manager that never actually shows any interstitials, but emulates as if
 // the user chose to proceed through them.
 class FakeSafeBrowsingUIManager
@@ -84,17 +106,21 @@ void SubresourceFilterBrowserTest::SetUp() {
   sb_factory_->SetTestUIManager(new FakeSafeBrowsingUIManager());
   safe_browsing::SafeBrowsingService::RegisterFactory(sb_factory_.get());
 
+  auto store_factory = base::MakeUnique<safe_browsing::TestV4StoreFactory>();
+  g_store_factory = store_factory.get();
   safe_browsing::V4Database::RegisterStoreFactoryForTest(
-      base::WrapUnique(new safe_browsing::TestV4StoreFactory()));
+      std::move(store_factory));
 
-  v4_db_factory_ = new safe_browsing::TestV4DatabaseFactory();
+  auto v4_db_factory = base::MakeUnique<InsertingDatabaseFactory>();
+  v4_db_factory_ = v4_db_factory.get();
   safe_browsing::V4Database::RegisterDatabaseFactoryForTest(
-      base::WrapUnique(v4_db_factory_));
+      std::move(v4_db_factory));
 
-  v4_get_hash_factory_ =
-      new safe_browsing::TestV4GetHashProtocolManagerFactory();
+  auto v4_get_hash_factory =
+      base::MakeUnique<safe_browsing::TestV4GetHashProtocolManagerFactory>();
+  v4_get_hash_factory_ = v4_get_hash_factory.get();
   safe_browsing::V4GetHashProtocolManager::RegisterFactory(
-      base::WrapUnique(v4_get_hash_factory_));
+      std::move(v4_get_hash_factory));
   InProcessBrowserTest::SetUp();
 }
 

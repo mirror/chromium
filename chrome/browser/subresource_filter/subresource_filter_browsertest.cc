@@ -118,14 +118,12 @@ constexpr const char kEvaluationWallDuration[] =
 constexpr const char kEvaluationCPUDuration[] =
     "SubresourceFilter.SubresourceLoad.Evaluation.CPUDuration";
 
-#if defined(GOOGLE_CHROME_BUILD)
 // Names of navigation chain patterns histogram.
 const char kMatchesPatternHistogramName[] =
     "SubresourceFilter.PageLoad.ActivationList";
 const char kNavigationChainSize[] =
     "SubresourceFilter.PageLoad.RedirectChainLength";
 const char kSubresourceFilterOnlySuffix[] = ".SubresourceFilterOnly";
-#endif
 
 // Other histograms.
 const char kSubresourceFilterActionsHistogram[] = "SubresourceFilter.Actions";
@@ -204,7 +202,6 @@ IN_PROC_BROWSER_TEST_F(SubresourceFilterBrowserTest, MainFrameActivation) {
   EXPECT_TRUE(WasParsedScriptElementLoaded(web_contents()->GetMainFrame()));
 }
 
-#if defined(GOOGLE_CHROME_BUILD)
 IN_PROC_BROWSER_TEST_F(SubresourceFilterBrowserTest,
                        MainFrameActivation_SubresourceFilterList) {
   content::ConsoleObserverDelegate console_observer(web_contents(),
@@ -235,7 +232,6 @@ IN_PROC_BROWSER_TEST_F(SubresourceFilterBrowserTest,
   ui_test_utils::NavigateToURL(browser(), url);
   EXPECT_TRUE(WasParsedScriptElementLoaded(web_contents()->GetMainFrame()));
 }
-#endif
 
 // There should be no document-level de-/reactivation happening on the renderer
 // side as a result of a same document navigation.
@@ -1081,7 +1077,6 @@ IN_PROC_BROWSER_TEST_F(
       static_cast<int>(ActivationDecision::URL_WHITELISTED), 1);
 }
 
-#if defined(GOOGLE_CHROME_BUILD)
 // These tests are only enabled when GOOGLE_CHROME_BUILD is true because the
 // store that this test uses is only populated on GOOGLE_CHROME_BUILD builds.
 IN_PROC_BROWSER_TEST_F(
@@ -1123,6 +1118,5 @@ IN_PROC_BROWSER_TEST_F(
   tester.ExpectUniqueSample(kMatchesPatternHistogramName,
                             static_cast<int>(ActivationList::NONE), 1);
 }
-#endif
 
 }  // namespace subresource_filter
