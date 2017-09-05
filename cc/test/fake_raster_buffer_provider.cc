@@ -46,7 +46,7 @@ bool FakeRasterBufferProviderImpl::IsResourceReadyToDraw(
 }
 
 uint64_t FakeRasterBufferProviderImpl::SetReadyToDrawCallback(
-    const ResourceProvider::ResourceIdArray& resource_ids,
+    const viz::ResourceProvider::ResourceIdArray& resource_ids,
     const base::Callback<void()>& callback,
     uint64_t pending_callback_id) const {
   return 0;

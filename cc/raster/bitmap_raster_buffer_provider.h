@@ -17,15 +17,18 @@ class ConvertableToTraceFormat;
 }
 }
 
-namespace cc {
+namespace viz {
 class LayerTreeResourceProvider;
+}
+
+namespace cc {
 
 class CC_EXPORT BitmapRasterBufferProvider : public RasterBufferProvider {
  public:
   ~BitmapRasterBufferProvider() override;
 
   static std::unique_ptr<RasterBufferProvider> Create(
-      LayerTreeResourceProvider* resource_provider);
+      viz::LayerTreeResourceProvider* resource_provider);
 
   // Overridden from RasterBufferProvider:
   std::unique_ptr<RasterBuffer> AcquireBufferForRaster(
@@ -40,20 +43,20 @@ class CC_EXPORT BitmapRasterBufferProvider : public RasterBufferProvider {
   bool CanPartialRasterIntoProvidedResource() const override;
   bool IsResourceReadyToDraw(viz::ResourceId id) const override;
   uint64_t SetReadyToDrawCallback(
-      const ResourceProvider::ResourceIdArray& resource_ids,
+      const viz::ResourceProvider::ResourceIdArray& resource_ids,
       const base::Closure& callback,
       uint64_t pending_callback_id) const override;
   void Shutdown() override;
 
  protected:
   explicit BitmapRasterBufferProvider(
-      LayerTreeResourceProvider* resource_provider);
+      viz::LayerTreeResourceProvider* resource_provider);
 
  private:
   std::unique_ptr<base::trace_event::ConvertableToTraceFormat> StateAsValue()
       const;
 
-  LayerTreeResourceProvider* resource_provider_;
+  viz::LayerTreeResourceProvider* resource_provider_;
 
   DISALLOW_COPY_AND_ASSIGN(BitmapRasterBufferProvider);
 };

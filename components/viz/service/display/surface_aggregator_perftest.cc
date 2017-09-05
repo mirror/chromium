@@ -7,11 +7,11 @@
 #include "cc/output/compositor_frame.h"
 #include "cc/quads/surface_draw_quad.h"
 #include "cc/quads/texture_draw_quad.h"
-#include "cc/resources/display_resource_provider.h"
 #include "cc/test/fake_output_surface_client.h"
 #include "cc/test/fake_resource_provider.h"
 #include "cc/test/test_context_provider.h"
 #include "cc/test/test_shared_bitmap_manager.h"
+#include "components/viz/common/display/display_resource_provider.h"
 #include "components/viz/service/display/surface_aggregator.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
 #include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
@@ -37,7 +37,7 @@ class SurfaceAggregatorPerfTest : public testing::Test {
     shared_bitmap_manager_ = base::MakeUnique<cc::TestSharedBitmapManager>();
 
     resource_provider_ =
-        cc::FakeResourceProvider::Create<cc::DisplayResourceProvider>(
+        cc::FakeResourceProvider::Create<DisplayResourceProvider>(
             context_provider_.get(), shared_bitmap_manager_.get());
   }
 
@@ -150,7 +150,7 @@ class SurfaceAggregatorPerfTest : public testing::Test {
   FrameSinkManagerImpl manager_;
   scoped_refptr<cc::TestContextProvider> context_provider_;
   std::unique_ptr<SharedBitmapManager> shared_bitmap_manager_;
-  std::unique_ptr<cc::DisplayResourceProvider> resource_provider_;
+  std::unique_ptr<DisplayResourceProvider> resource_provider_;
   std::unique_ptr<SurfaceAggregator> aggregator_;
   cc::LapTimer timer_;
 };
