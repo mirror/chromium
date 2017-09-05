@@ -741,12 +741,12 @@ class HistoryService : public syncer::SyncableService, public KeyedService {
                     const gfx::Size& pixel_size);
 
   // Used by the FaviconService to replace all of the favicon bitmaps mapped to
-  // |page_url| for |icon_type|.
+  // all URLs in |page_urls| for |icon_type|.
   // Use MergeFavicon() if |bitmaps| is incomplete, and favicon bitmaps in the
   // database should be preserved if possible. For instance, favicon bitmaps
   // from sync are 1x only. MergeFavicon() is used to avoid deleting the 2x
   // favicon bitmap if it is present in the history backend.
-  void SetFavicons(const GURL& page_url,
+  void SetFavicons(const std::set<GURL>& page_urls,
                    favicon_base::IconType icon_type,
                    const GURL& icon_url,
                    const std::vector<SkBitmap>& bitmaps);
