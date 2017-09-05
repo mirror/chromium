@@ -28,6 +28,10 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.lang.ref.WeakReference;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -103,11 +107,19 @@ public class JavaBridgeBasicsTest {
     }
 
     TestController mTestController;
+    HashMap<String, Object> mUserData = new HashMap<>();
 
     @Before
     public void setUp() throws Exception {
         mActivityTestRule.setUpContentView();
         mTestController = new TestController();
+        mUserData.put("RetainedJavascriptObjects", new HashSet<Object>());
+        mActivityTestRule.getWebContents().setUserData(new Callable<Map<String, Object>>() {
+            @Override
+            public Map<String, Object> call() {
+                return mUserData;
+            }
+        });
         mActivityTestRule.injectObjectAndReload(mTestController, "testController");
     }
 
@@ -151,7 +163,7 @@ public class JavaBridgeBasicsTest {
         InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
             @Override
             public void run() {
-                mActivityTestRule.getContentViewCore().addPossiblyUnsafeJavascriptInterface(
+                mActivityTestRule.getWebContents().addPossiblyUnsafeJavascriptInterface(
                         new Object(), "testObject", null);
             }
         });
@@ -175,7 +187,7 @@ public class JavaBridgeBasicsTest {
         InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
             @Override
             public void run() {
-                mActivityTestRule.getContentViewCore().removeJavascriptInterface("testObject");
+                mActivityTestRule.getWebContents().removeJavascriptInterface("testObject");
             }
         });
         // Check that the Java object is being held by the Java bridge, thus it's not
@@ -199,11 +211,8 @@ public class JavaBridgeBasicsTest {
         InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
             @Override
             public void run() {
-                mActivityTestRule.getContentViewCore().removeJavascriptInterface("foo");
-                mActivityTestRule.getContentViewCore()
-                        .getWebContents()
-                        .getNavigationController()
-                        .reload(true);
+                mActivityTestRule.getWebContents().removeJavascriptInterface("foo");
+                mActivityTestRule.getWebContents().getNavigationController().reload(true);
             }
         });
         onPageFinishedHelper.waitForCallback(currentCallCount);
@@ -509,6 +518,7 @@ public class JavaBridgeBasicsTest {
                         + "})()"));
         // Force GC on the Java side again. The bridge had to release the inner object, so it must
         // be collected this time.
+        mUserData.clear();
         Runtime.getRuntime().gc();
         Assert.assertEquals(null, object.mWeakRefForInner.get());
     }
@@ -934,19 +944,15 @@ public class JavaBridgeBasicsTest {
         }
 
         // Manually inject the Test object, making sure to use the
-        // ContentViewCore#addJavascriptInterface, not the possibly unsafe version.
+        // WebContents#addJavascriptInterface, not the possibly unsafe version.
         TestCallbackHelperContainer.OnPageFinishedHelper onPageFinishedHelper =
                 mActivityTestRule.getTestCallBackHelperContainer().getOnPageFinishedHelper();
         int currentCallCount = onPageFinishedHelper.getCallCount();
         InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
             @Override
             public void run() {
-                mActivityTestRule.getContentViewCore().addJavascriptInterface(
-                        new Test(), "testObject");
-                mActivityTestRule.getContentViewCore()
-                        .getWebContents()
-                        .getNavigationController()
-                        .reload(true);
+                mActivityTestRule.getWebContents().addJavascriptInterface(new Test(), "testObject");
+                mActivityTestRule.getWebContents().getNavigationController().reload(true);
             }
         });
         onPageFinishedHelper.waitForCallback(currentCallCount);
@@ -1003,8 +1009,7 @@ public class JavaBridgeBasicsTest {
         InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
             @Override
             public void run() {
-                mActivityTestRule.getContentViewCore().setAllowJavascriptInterfacesInspection(
-                        false);
+                mActivityTestRule.getWebContents().setAllowJavascriptInterfacesInspection(false);
             }
         });
 

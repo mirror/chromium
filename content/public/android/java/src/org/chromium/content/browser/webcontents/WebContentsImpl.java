@@ -14,12 +14,14 @@ import android.os.Parcel;
 import android.os.ParcelUuid;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.util.Pair;
 
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.content.browser.AppWebMessagePort;
+import org.chromium.content.browser.JavascriptInterface;
 import org.chromium.content.browser.MediaSessionImpl;
 import org.chromium.content.browser.RenderCoordinates;
 import org.chromium.content.browser.framehost.RenderFrameHostDelegate;
@@ -40,9 +42,12 @@ import org.chromium.ui.OverscrollRefreshHandler;
 import org.chromium.ui.base.EventForwarder;
 import org.chromium.ui.base.WindowAndroid;
 
+import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.Callable;
 
 /**
  * The WebContentsImpl Java wrapper to allow communicating with the native WebContentsImpl
@@ -634,12 +639,58 @@ import java.util.UUID;
         return new Rect(0, 0, width, height);
     }
 
+    @Override
+    public void setAllowJavascriptInterfacesInspection(boolean allow) {
+        nativeSetAllowJavascriptInterfacesInspection(mNativeWebContentsAndroid, allow);
+    }
+
+    @Override
+    public Map<String, Pair<Object, Class>> getJavascriptInterfaces() {
+        return null;
+    }
+
+    @Override
+    public void addJavascriptInterface(Object object, String name) {
+        addPossiblyUnsafeJavascriptInterface(object, name, JavascriptInterface.class);
+    }
+
+    @Override
+    public void addPossiblyUnsafeJavascriptInterface(
+            Object object, String name, Class<? extends Annotation> requiredAnnotation) {
+        if (mNativeWebContentsAndroid != 0 && object != null) {
+            nativeAddJavascriptInterface(
+                    mNativeWebContentsAndroid, object, name, requiredAnnotation);
+        }
+    }
+
+    @Override
+    public void removeJavascriptInterface(String name) {
+        if (mNativeWebContentsAndroid != 0) {
+            nativeRemoveJavascriptInterface(mNativeWebContentsAndroid, name);
+        }
+    }
+
+    @Override
+    public void setUserData(Callable<Map<String, Object>> data) {
+        try {
+            Map<String, Object> map = data.call();
+            if (mNativeWebContentsAndroid != 0) {
+                nativeSetRetainedJavascriptObjects(
+                        mNativeWebContentsAndroid, map.get("RetainedJavascriptObjects"));
+            }
+        } catch (Exception e) {
+            android.util.Log.d("jindor", "interrupted");
+        }
+    }
+
     // This is static to avoid exposing a public destroy method on the native side of this class.
     private static native void nativeDestroyWebContents(long webContentsAndroidPtr);
 
     private static native WebContents nativeFromNativePtr(long webContentsAndroidPtr);
 
     private native WindowAndroid nativeGetTopLevelNativeWindow(long nativeWebContentsAndroid);
+    private native void nativeSetRetainedJavascriptObjects(
+            long nativeWebContentsAndroid, Object retainedJavascriptObjects);
     private native RenderFrameHost nativeGetMainFrame(long nativeWebContentsAndroid);
     private native String nativeGetTitle(long nativeWebContentsAndroid);
     private native String nativeGetVisibleURL(long nativeWebContentsAndroid);
@@ -704,4 +755,9 @@ import java.util.UUID;
     private native boolean nativeHasActiveEffectivelyFullscreenVideo(long nativeWebContentsAndroid);
     private native Rect nativeGetFullscreenVideoSize(long nativeWebContentsAndroid);
     private native EventForwarder nativeGetOrCreateEventForwarder(long nativeWebContentsAndroid);
+    private native void nativeSetAllowJavascriptInterfacesInspection(
+            long nativeWebContentsAndroid, boolean allow);
+    private native void nativeAddJavascriptInterface(
+            long nativeWebContentsAndroid, Object object, String name, Class requiredAnnotation);
+    private native void nativeRemoveJavascriptInterface(long nativeWebContentsAndroid, String name);
 }
