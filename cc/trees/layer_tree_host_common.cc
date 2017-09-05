@@ -10,7 +10,6 @@
 
 #include "base/containers/adapters.h"
 #include "base/trace_event/trace_event.h"
-#include "cc/base/math_util.h"
 #include "cc/layers/heads_up_display_layer_impl.h"
 #include "cc/layers/layer.h"
 #include "cc/layers/layer_impl.h"

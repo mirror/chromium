@@ -11,7 +11,6 @@
 #include "cc/animation/animation_host.h"
 #include "cc/animation/animation_id_provider.h"
 #include "cc/animation/keyframed_animation_curve.h"
-#include "cc/base/math_util.h"
 #include "cc/input/main_thread_scrolling_reason.h"
 #include "cc/layers/layer_impl.h"
 #include "cc/layers/solid_color_scrollbar_layer.h"

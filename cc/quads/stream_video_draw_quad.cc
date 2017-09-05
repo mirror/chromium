@@ -7,7 +7,7 @@
 #include "base/logging.h"
 #include "base/trace_event/trace_event_argument.h"
 #include "base/values.h"
-#include "cc/base/math_util.h"
+#include "ui/gfx/math_util.h"
 
 namespace cc {
 
@@ -53,7 +53,7 @@ const StreamVideoDrawQuad* StreamVideoDrawQuad::MaterialCast(
 void StreamVideoDrawQuad::ExtendValue(
     base::trace_event::TracedValue* value) const {
   value->SetInteger("resource_id", resources.ids[kResourceIdIndex]);
-  MathUtil::AddToTracedValue("matrix", matrix, value);
+  gfx::MathUtil::AddToTracedValue("matrix", matrix, value);
 }
 
 StreamVideoDrawQuad::OverlayResources::OverlayResources() {
