@@ -16,6 +16,24 @@
       "revId": "cafe1169688f80a69d209b1fb4e377cd565541df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daec3511_05e74316",
+        "filename": "chrome/browser/ui/page_info/page_info.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-09-05T01:30:46Z",
+      "side": 1,
+      "message": "For future reference, see extra schemes considered\n\nhere: https://cs.chromium.org/chromium/src/url/url_constants.cc\n\nand here: https://cs.chromium.org/chromium/src/components/content_settings/core/browser/content_settings_utils.h?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d46\n\nBut as discussed offline the answer is no :)",
+      "parentUuid": "2dc085f8_8b5cda79",
+      "revId": "cafe1169688f80a69d209b1fb4e377cd565541df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
