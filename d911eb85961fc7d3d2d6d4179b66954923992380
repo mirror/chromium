@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d9d5795_533f53be",
+        "filename": "chrome/browser/media_galleries/fileapi/av_scanning_file_validator.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-05T15:01:28Z",
+      "side": 1,
+      "message": "s/base::OnceCallback\u003cvoid(base::File::Error)\u003e result_callback/result_callback/\n\nOr better: change the argument type from const ResultCallback\u0026 to ResultCallback and use std::move here https://chromium.googlesource.com/chromium/src/+/lkcr/docs/callback.md#memory-management-and-passing",
+      "range": {
+        "startLine": 77,
+        "startChar": 6,
+        "endLine": 77,
+        "endChar": 65
+      },
+      "revId": "d911eb85961fc7d3d2d6d4179b66954923992380",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b6e2f51_110207dc",
+        "filename": "storage/browser/test/test_file_system_context.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-05T15:01:28Z",
+      "side": 1,
+      "message": "Since this function takes ownership of these TaskRunners, prefer using scoped_refptr https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#object-ownership-and-calling-conventions",
+      "range": {
+        "startLine": 34,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 48
+      },
+      "revId": "d911eb85961fc7d3d2d6d4179b66954923992380",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
