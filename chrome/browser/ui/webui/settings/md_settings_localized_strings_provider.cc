@@ -258,6 +258,10 @@ void AddAboutStrings(content::WebUIDataSource* html_source) {
     {"aboutUpgradeSuccessChannelSwitch",
      IDS_SETTINGS_UPGRADE_SUCCESSFUL_CHANNEL_SWITCH},
     {"aboutUserAgentLabel", IDS_VERSION_UI_USER_AGENT},
+    {"aboutTPMFirmwareUpdateMessage",
+     IDS_SETTINGS_ABOUT_TPM_FIRMWARE_UPDATE_MESSAGE},
+    {"aboutTPMFirmwareUpdateDescription",
+     IDS_SETTINGS_ABOUT_TPM_FIRMWARE_UPDATE_DESCRIPTION},
 
     // About page, channel switcher dialog.
     {"aboutChangeChannel", IDS_SETTINGS_ABOUT_PAGE_CHANGE_CHANNEL},
