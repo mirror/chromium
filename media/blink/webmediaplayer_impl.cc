@@ -2805,8 +2805,11 @@ void WebMediaPlayerImpl::SwitchToLocalRenderer() {
   DCHECK(main_task_runner_->BelongsToCurrentThread());
   disable_pipeline_auto_suspend_ = false;
 
-  // Capabilities reporting may resume now that playback is local.
-  CreateVideoDecodeStatsReporter();
+  // TODO(chcunningham): Re-enable reporting after refactoring Mojo connection.
+  // As is, this call may come in the frame shutdown path and cause a crash
+  // because the |create_decode_stats_recorder_cb_| points to a destroyed
+  // object.
+  // CreateVideoDecodeStatsReporter();
 
   // Requests to restart media pipeline. A local renderer will be created via
   // the |renderer_factory_selector_|.
