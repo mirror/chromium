@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "369da888_51be47b4",
+        "filename": "chrome/browser/media/webrtc/media_stream_devices_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-09-05T10:04:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bceaa484_90f1822d",
+      "range": {
+        "startLine": 129,
+        "startChar": 13,
+        "endLine": 129,
+        "endChar": 20
+      },
+      "revId": "0daaca6e8bf46990c8e4445fdc0c505cdc9fea36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc5bd2f5_c2596f03",
         "filename": "extensions/shell/browser/media_capture_util.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-05T09:49:29Z",
       "side": 1,
       "message": "nit: #include \u003calgorithm\u003e for std::find_if",
+      "range": {
+        "startLine": 29,
+        "startChar": 19,
+        "endLine": 29,
+        "endChar": 26
+      },
+      "revId": "0daaca6e8bf46990c8e4445fdc0c505cdc9fea36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d6e925c_dd81dd4a",
+        "filename": "extensions/shell/browser/media_capture_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-09-05T10:04:22Z",
+      "side": 1,
+      "message": "Done. Thanks!",
+      "parentUuid": "fc5bd2f5_c2596f03",
       "range": {
         "startLine": 29,
         "startChar": 19,
