@@ -16,6 +16,24 @@
       "revId": "c513946481627cabfb49645a10122f15e1ef49ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8be4a0a6_d7a33161",
+        "filename": "android_webview/browser/hardware_renderer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-09-05T15:10:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "084dff07_86e6b345",
+      "revId": "c513946481627cabfb49645a10122f15e1ef49ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
