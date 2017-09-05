@@ -76,6 +76,7 @@ class TestTrayActionClient : public mojom::TrayActionClient {
 
   // mojom::TrayActionClient:
   void RequestNewLockScreenNote() override {}
+  void ToggleForegroundMode(bool move_to_foreground) override {}
 
  private:
   mojo::Binding<ash::mojom::TrayActionClient> binding_;

@@ -48,4 +48,7 @@ interface TrayAction {
 interface TrayActionClient {
   // Requests a lock screen note action to be handled.
   RequestNewLockScreenNote();
+
+  // Toggles the stack order of the lock screen UI and the note app.
+  ToggleForegroundMode(bool move_to_foreground);
 };

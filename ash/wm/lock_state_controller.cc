@@ -360,9 +360,11 @@ void LockStateController::StartImmediatePreLockAnimation(
       SessionStateAnimator::NON_LOCK_SCREEN_CONTAINERS,
       SessionStateAnimator::ANIMATION_LIFT,
       SessionStateAnimator::ANIMATION_SPEED_MOVE_WINDOWS);
+
   animation_sequence->StartAnimation(
       SessionStateAnimator::SHELF, SessionStateAnimator::ANIMATION_FADE_OUT,
       SessionStateAnimator::ANIMATION_SPEED_MOVE_WINDOWS);
+
   // Hide the screen locker containers so we can raise them later.
   animator_->StartAnimation(SessionStateAnimator::LOCK_SCREEN_CONTAINERS,
                             SessionStateAnimator::ANIMATION_HIDE_IMMEDIATELY,
@@ -440,6 +442,11 @@ void LockStateController::StartPostLockAnimation() {
   animation_sequence->StartAnimation(
       SessionStateAnimator::LOCK_SCREEN_CONTAINERS,
       SessionStateAnimator::ANIMATION_RAISE_TO_SCREEN,
+      post_lock_immediate_animation_
+          ? SessionStateAnimator::ANIMATION_SPEED_IMMEDIATE
+          : SessionStateAnimator::ANIMATION_SPEED_MOVE_WINDOWS);
+  animation_sequence->StartAnimation(
+      SessionStateAnimator::SHELF, SessionStateAnimator::ANIMATION_FADE_IN,
       post_lock_immediate_animation_
           ? SessionStateAnimator::ANIMATION_SPEED_IMMEDIATE
           : SessionStateAnimator::ANIMATION_SPEED_MOVE_WINDOWS);

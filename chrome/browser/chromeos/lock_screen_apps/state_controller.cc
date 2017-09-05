@@ -279,6 +279,14 @@ void StateController::RequestNewLockScreenNote() {
   HandleNewNoteRequest(NewNoteRequestType::kTrayAction);
 }
 
+void StateController::ToggleForegroundMode(bool move_to_foreground) {
+  if (move_to_foreground) {
+    MoveToForeground();
+    return;
+  }
+  MoveToBackground();
+}
+
 void StateController::OnSessionStateChanged() {
   if (!session_manager::SessionManager::Get()->IsScreenLocked()) {
     lock_screen_data_->SetSessionLocked(false);

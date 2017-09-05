@@ -29,6 +29,10 @@ namespace keyboard {
 class KeyboardController;
 }
 
+namespace session_manager {
+enum class SessionState;
+}
+
 namespace ui {
 class EventHandler;
 class MenuModel;
@@ -248,6 +252,9 @@ class ASH_EXPORT RootWindowController : public ShellObserver {
 
   // Called when the login status changes after login (such as lock/unlock).
   void UpdateAfterLoginStatusChange(LoginStatus status);
+
+  // Called when the session state changes.
+  void UpdateAfterSessionStateChange(session_manager::SessionState state);
 
  private:
   // TODO(sky): remove this. Temporary during ash-mus unification.

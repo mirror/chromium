@@ -80,6 +80,11 @@ void TrayAction::RequestNewLockScreenNote() {
   tray_action_client_->RequestNewLockScreenNote();
 }
 
+void TrayAction::ToggleForegroundMode(bool move_to_foreground) {
+  if (tray_action_client_)
+    tray_action_client_->ToggleForegroundMode(move_to_foreground);
+}
+
 void TrayAction::NotifyLockScreenNoteStateChanged() {
   for (auto& observer : observers_)
     observer.OnLockScreenNoteStateChanged(GetLockScreenNoteState());
