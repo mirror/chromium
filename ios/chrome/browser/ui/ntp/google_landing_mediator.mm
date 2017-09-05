@@ -149,6 +149,9 @@ void SearchEngineObserver::OnTemplateURLServiceChanged() {
 // The WebStateList that is being observed by this mediator.
 @property(nonatomic, assign, readonly) WebStateList* webStateList;
 
+// The dispatcher for this mediator.
+@property(nonatomic, weak) id<BrowserCommands, UrlLoader> dispatcher;
+
 @end
 
 @implementation GoogleLandingMediator
