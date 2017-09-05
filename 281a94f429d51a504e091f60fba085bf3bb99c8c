@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aba9fd94_4ecc3ad4",
+        "filename": "ash/login/ui/lock_screen_sanity_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-05T17:00:58Z",
+      "side": 1,
+      "message": "This should go in ash::LoginTestBase.",
+      "revId": "281a94f429d51a504e091f60fba085bf3bb99c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86ed0933_e6a3ecb3",
+        "filename": "ash/login/ui/login_auth_user_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-05T17:00:58Z",
+      "side": 1,
+      "message": "Is this how the existing webui code handles joining the two strings?",
+      "revId": "281a94f429d51a504e091f60fba085bf3bb99c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eac46f57_deaa7dbf",
+        "filename": "ash/login/ui/login_base_bubble_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-05T17:00:58Z",
+      "side": 1,
+      "message": "Remove?",
+      "revId": "281a94f429d51a504e091f60fba085bf3bb99c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b23b8d0_1572d866",
+        "filename": "ash/login/ui/login_bubble.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-05T17:00:58Z",
+      "side": 1,
+      "message": "Does views::View::HitTestPoint work? If so, you could probably simplify a lot of this code.",
+      "revId": "281a94f429d51a504e091f60fba085bf3bb99c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eb79e7a_1e6106b6",
+        "filename": "ash/login/ui/login_bubble.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-05T17:00:58Z",
+      "side": 1,
+      "message": "nit: newline above.",
+      "revId": "281a94f429d51a504e091f60fba085bf3bb99c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ce274a7_8eed76d2",
+        "filename": "ash/login/ui/login_bubble.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-05T17:00:58Z",
+      "side": 1,
+      "message": "Add comment. What is button_view? If only applicable for one type of bubble view perhaps change the API to reflect this, ie,\n\n    static LoginBubble* CreateErrorBubble();\n    static LoginBubble* CreateUserMenu(views::View* button_view);",
+      "revId": "281a94f429d51a504e091f60fba085bf3bb99c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a0afd2d_cadc3c9e",
+        "filename": "ash/login/ui/login_user_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-05T17:00:58Z",
+      "side": 1,
+      "message": "Please file a bug.",
+      "revId": "281a94f429d51a504e091f60fba085bf3bb99c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
