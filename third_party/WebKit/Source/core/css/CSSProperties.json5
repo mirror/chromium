@@ -679,7 +679,7 @@
     },
     {
       name: "backdrop-filter",
-      api_class: "CSSPropertyAPIFilter",
+      api_class: true,
       api_methods: ["ParseSingleValue"],
       converter: "ConvertFilterOperations",
       interpolable: true,
@@ -1302,7 +1302,7 @@
     },
     {
       name: "filter",
-      api_class: "CSSPropertyAPIFilter",
+      api_class: true,
       api_methods: ["ParseSingleValue"],
       converter: "ConvertFilterOperations",
       interpolable: true,
@@ -1532,7 +1532,7 @@
     },
     {
       name: "hyphens",
-      api_class: "CSSPropertyAPIInherited",
+      api_class: true,
       inherited: true,
       runtime_flag: "CSSHyphens",
       field_template: "keyword",
@@ -3783,7 +3783,7 @@
 
     {
       name: "font-display",
-      api_class: "CSSPropertyAPIDescriptorOnly",
+      api_class: true,
       is_descriptor: true,
       is_property: false,
       runtime_flag: "CSSFontDisplay",
