@@ -1264,6 +1264,8 @@ source_set("common_unittests") {
     "system/web_notification/login_state_notification_blocker_unittest.cc",
     "system/web_notification/web_notification_tray_unittest.cc",
     "test/ash_test_helper_unittest.cc",
+    "test_media_client.cc",
+    "test_media_client.h",
     "tooltips/tooltip_controller_unittest.cc",
     "tray_action/tray_action_unittest.cc",
     "wallpaper/wallpaper_controller_unittest.cc",
