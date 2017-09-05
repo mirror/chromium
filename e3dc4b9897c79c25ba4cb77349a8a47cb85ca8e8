@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f716cdeb_b74fddb1",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 5542,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-09-05T19:14:54Z",
+      "side": 1,
+      "message": "SSLUIMITMSoftwareTest() shouldn\u0027t be needed:\n\nSSLUIMITMSoftwareEnabledTest() {} should work.",
+      "revId": "e3dc4b9897c79c25ba4cb77349a8a47cb85ca8e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90910808_ce8de99c",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 5552,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-09-05T19:14:54Z",
+      "side": 1,
+      "message": "This can be private.",
+      "revId": "e3dc4b9897c79c25ba4cb77349a8a47cb85ca8e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70b92f39_28df06c1",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 5560,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-09-05T19:14:54Z",
+      "side": 1,
+      "message": "Ditto",
+      "revId": "e3dc4b9897c79c25ba4cb77349a8a47cb85ca8e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc8b28a3_ec1b4991",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 5570,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-09-05T19:14:54Z",
+      "side": 1,
+      "message": "Same here",
+      "revId": "e3dc4b9897c79c25ba4cb77349a8a47cb85ca8e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d74338d1_6dbe26e8",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 5847,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-09-05T19:14:54Z",
+      "side": 1,
+      "message": "Nice catch!",
+      "revId": "e3dc4b9897c79c25ba4cb77349a8a47cb85ca8e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
