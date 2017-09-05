@@ -201,6 +201,8 @@ const char kHostOfflineReasonPolicyChangeRequiresRestart[] =
 
 }  // namespace
 
+#define CHROME_REMOTE_DESKTOP_FILE_TRANSFER_ENABLED
+
 namespace remoting {
 
 class HostProcess : public ConfigWatcher::Delegate,

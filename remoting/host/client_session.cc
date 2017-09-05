@@ -18,6 +18,7 @@
 #include "remoting/host/audio_capturer.h"
 #include "remoting/host/desktop_environment.h"
 #include "remoting/host/file_transfer_message_handler.h"
+#include "remoting/host/file_transfer_to_client_message_handler.h"
 #include "remoting/host/host_extension_session.h"
 #include "remoting/host/input_injector.h"
 #include "remoting/host/mouse_shape_pump.h"
@@ -189,6 +190,11 @@ void ClientSession::SetCapabilities(
         base::Bind(&ClientSession::CreateFileTransferMessageHandler,
                    base::Unretained(this)));
   }
+
+  data_channel_manager_.RegisterCreateHandlerCallback(
+      kFileTransferToClientDataChannelPrefix,
+      base::Bind(&ClientSession::CreateFileTransferToClientMessageHandler,
+                 base::Unretained(this)));
 
   VLOG(1) << "Client capabilities: " << *client_capabilities_;
 
@@ -491,6 +497,17 @@ void ClientSession::CreateFileTransferMessageHandler(
   // lifetime of |pipe|. Once |pipe| is closed, this instance will be cleaned
   // up.
   new FileTransferMessageHandler(
+      channel_name, std::move(pipe),
+      desktop_environment_->CreateFileProxyWrapper());
+}
+
+void ClientSession::CreateFileTransferToClientMessageHandler(
+    const std::string& channel_name,
+    std::unique_ptr<protocol::MessagePipe> pipe) {
+  // FileTransferMessageHandler manages its own lifetime and is tied to the
+  // lifetime of |pipe|. Once |pipe| is closed, this instance will be cleaned
+  // up.
+  new FileTransferToClientMessageHandler(
       channel_name, std::move(pipe),
       desktop_environment_->CreateFileProxyWrapper());
 }

@@ -28,3 +28,29 @@ message FileTransferResponse {
 
   optional uint64 total_bytes_written = 3;
 }
+
+// this should actually be host-initiated, that way we don't have to worry about
+// the host sending error messages because it cant for this direction of file
+// transfer because it will just be sending chunks the whole time.
+message ClientInitiatedFileTransferToClientRequest {
+  optional string filepath = 1;
+}
+
+// sent from client to host at the start of a transfer for file metadata.
+message FileTransferToClientRequest {
+  optional string filename = 1;
+  optional uint64 filesize = 2;
+}
+
+message FileTransferToClientResponse {
+  enum TransferState {
+    IN_PROGRESS = 1; // does this make sense?
+    DONE = 2;
+  }
+  optional TransferState state = 1;
+
+  /*enum ErrorCode {
+    // TODO what errors could happen on the client side?
+  }
+  optional ErrorCode error = 2;*/
+}
