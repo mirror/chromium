@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "778f2eb3_e6bc839e",
+        "filename": "ash/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 1267,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-09-05T23:59:40Z",
+      "side": 1,
+      "message": "Done. Thanks for the info.",
+      "parentUuid": "fe51fb03_2205a138",
+      "range": {
+        "startLine": 1267,
+        "startChar": 5,
+        "endLine": 1267,
+        "endChar": 22
+      },
+      "revId": "6863a10dee9b7d1064e6ea26fea3516c71bc2350",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03a15d2f_4d87228d",
         "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
         "patchSetId": 2
@@ -63,6 +87,24 @@
       "revId": "6863a10dee9b7d1064e6ea26fea3516c71bc2350",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0096e310_b40266cb",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 706,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-09-05T23:59:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03a15d2f_4d87228d",
+      "revId": "6863a10dee9b7d1064e6ea26fea3516c71bc2350",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -83,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "f681eea0_b4f2117e",
+        "filename": "ash/test_media_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-09-05T23:59:40Z",
+      "side": 1,
+      "message": "Removed GMOCKs",
+      "parentUuid": "0bd7c1f6_5017b7e3",
+      "revId": "6863a10dee9b7d1064e6ea26fea3516c71bc2350",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "396edb9b_7ec7de8d",
         "filename": "ash/test_media_client.h",
         "patchSetId": 2
@@ -97,6 +157,24 @@
       "revId": "6863a10dee9b7d1064e6ea26fea3516c71bc2350",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47a60be6_64af353e",
+        "filename": "ash/test_media_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-09-05T23:59:40Z",
+      "side": 1,
+      "message": "done. I am taking inline the code in the test that needs it.",
+      "parentUuid": "396edb9b_7ec7de8d",
+      "revId": "6863a10dee9b7d1064e6ea26fea3516c71bc2350",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
