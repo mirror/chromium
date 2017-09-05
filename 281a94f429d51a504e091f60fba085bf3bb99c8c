@@ -19,6 +19,69 @@
     },
     {
       "key": {
+        "uuid": "f08a1ba1_3a3cbb3a",
+        "filename": "ash/login/ui/login_auth_user_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-05T17:32:01Z",
+      "side": 1,
+      "message": "Use a WeakPtr instead.",
+      "range": {
+        "startLine": 322,
+        "startChar": 53,
+        "endLine": 322,
+        "endChar": 69
+      },
+      "revId": "281a94f429d51a504e091f60fba085bf3bb99c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab8550ef_f9a60356",
+        "filename": "ash/login/ui/login_auth_user_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-05T17:32:01Z",
+      "side": 1,
+      "message": "Unlock attempt counting should be part of OnAuthDone instead of ShowErrorMessage.",
+      "range": {
+        "startLine": 336,
+        "startChar": 6,
+        "endLine": 336,
+        "endChar": 23
+      },
+      "revId": "281a94f429d51a504e091f60fba085bf3bb99c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b780909_88a8d71b",
+        "filename": "ash/login/ui/login_auth_user_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-05T17:32:01Z",
+      "side": 1,
+      "message": "This would be a problem for mash because ime manager lives in the browser process AFAICT. Can we use ImeController to get IME related status in ash? We can add more stuff there if we need more than what it provides.",
+      "revId": "281a94f429d51a504e091f60fba085bf3bb99c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "86ed0933_e6a3ecb3",
         "filename": "ash/login/ui/login_auth_user_view.cc",
         "patchSetId": 1
@@ -36,6 +99,46 @@
     },
     {
       "key": {
+        "uuid": "3c1eaf5d_16800bc6",
+        "filename": "ash/login/ui/login_auth_user_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-05T17:32:01Z",
+      "side": 1,
+      "message": "If |error_bubble_| is per LoginAuthUserView, how could we be sure that we only show one at a time? This could be a problem when the code is used for login where we can have multiple user pods and user can generate errors on different user pods.",
+      "revId": "281a94f429d51a504e091f60fba085bf3bb99c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dba821dc_24243a14",
+        "filename": "ash/login/ui/login_auth_user_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-05T17:32:01Z",
+      "side": 1,
+      "message": "Should this be UTF8ToUTF16 ?",
+      "range": {
+        "startLine": 356,
+        "startChar": 28,
+        "endLine": 356,
+        "endChar": 40
+      },
+      "revId": "281a94f429d51a504e091f60fba085bf3bb99c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eac46f57_deaa7dbf",
         "filename": "ash/login/ui/login_base_bubble_view.cc",
         "patchSetId": 1
@@ -47,6 +150,63 @@
       "writtenOn": "2017-09-05T17:00:58Z",
       "side": 1,
       "message": "Remove?",
+      "revId": "281a94f429d51a504e091f60fba085bf3bb99c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba6e9874_254c0378",
+        "filename": "ash/login/ui/login_bubble.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-05T17:32:01Z",
+      "side": 1,
+      "message": "nit: Can this be constexpr too?",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 5
+      },
+      "revId": "281a94f429d51a504e091f60fba085bf3bb99c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c05ebdd_70ee4651",
+        "filename": "ash/login/ui/login_bubble.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-05T17:32:01Z",
+      "side": 1,
+      "message": "There could be a \"Remove this user\" action in the user menu. How would we support that?",
+      "revId": "281a94f429d51a504e091f60fba085bf3bb99c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fa33be2_a2bf3ef9",
+        "filename": "ash/login/ui/login_bubble.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-05T17:32:01Z",
+      "side": 1,
+      "message": "nit: DCHECK_EQ(nullptr, bubble_view_);",
       "revId": "281a94f429d51a504e091f60fba085bf3bb99c8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +264,23 @@
     },
     {
       "key": {
+        "uuid": "d3aea426_7f91f837",
+        "filename": "ash/login/ui/login_bubble.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-05T17:32:01Z",
+      "side": 1,
+      "message": "nit: insert an empty line before",
+      "revId": "281a94f429d51a504e091f60fba085bf3bb99c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1a0afd2d_cadc3c9e",
         "filename": "ash/login/ui/login_user_view.cc",
         "patchSetId": 1
@@ -115,6 +292,29 @@
       "writtenOn": "2017-09-05T17:00:58Z",
       "side": 1,
       "message": "Please file a bug.",
+      "revId": "281a94f429d51a504e091f60fba085bf3bb99c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8f9131d_37419c2a",
+        "filename": "ash/login/ui/login_user_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-05T17:32:01Z",
+      "side": 1,
+      "message": "UTF8ToUTF16 here and the one below",
+      "range": {
+        "startLine": 372,
+        "startChar": 29,
+        "endLine": 372,
+        "endChar": 41
+      },
       "revId": "281a94f429d51a504e091f60fba085bf3bb99c8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
