@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f5acfcbe_58e5c56c",
+        "filename": "components/viz/host/DEPS",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-09-05T13:32:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87ad74af_fc346dd5",
+      "revId": "f6ddd798dd4c8a5795fe1ad9bb9e980a91cdbcad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1457429d_7dcaf4b7",
         "filename": "components/viz/service/display/surface_aggregator_unittest.cc",
         "patchSetId": 7
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "ab7159ef_25a1a7c8",
+        "filename": "components/viz/service/display/surface_aggregator_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-09-05T13:32:41Z",
+      "side": 1,
+      "message": "Good point, I added a WeakPtr to make sure there are no lifetime issues.",
+      "parentUuid": "1457429d_7dcaf4b7",
+      "range": {
+        "startLine": 394,
+        "startChar": 44,
+        "endLine": 394,
+        "endChar": 60
+      },
+      "revId": "f6ddd798dd4c8a5795fe1ad9bb9e980a91cdbcad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6fd13d1a_79ce5d66",
         "filename": "components/viz/service/frame_sinks/compositor_frame_sink_impl.h",
         "patchSetId": 7
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "8f64c8a8_0fe07cc1",
+        "filename": "components/viz/service/frame_sinks/compositor_frame_sink_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-09-05T13:32:41Z",
+      "side": 1,
+      "message": "Done. (Also, wow, that class comment was super out of date.)",
+      "parentUuid": "6fd13d1a_79ce5d66",
+      "revId": "f6ddd798dd4c8a5795fe1ad9bb9e980a91cdbcad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc42cfda_b0f333e2",
         "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support.h",
         "patchSetId": 7
@@ -73,6 +133,24 @@
       "revId": "f6ddd798dd4c8a5795fe1ad9bb9e980a91cdbcad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b00756a_6a993862",
+        "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-09-05T13:32:41Z",
+      "side": 1,
+      "message": "It\u0027s not possible to merge them because of mojo and the return value. I added a comment here.",
+      "parentUuid": "fc42cfda_b0f333e2",
+      "revId": "f6ddd798dd4c8a5795fe1ad9bb9e980a91cdbcad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
