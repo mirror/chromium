@@ -351,8 +351,9 @@ cr.define('login', function() {
       if (this.lockScreenAppsState_ == state)
         return;
 
+      var previousState = this.lockScreenAppsState_;
       this.lockScreenAppsState_ = state;
-      this.updateUi_();
+      this.updateUi_(previousState);
     },
 
     /** override */
@@ -367,25 +368,10 @@ cr.define('login', function() {
     },
 
     /**
+     * @param {!LockScreenAppsState} previousState
      * @private
      */
-    updateUi_: function() {
-      // Shorten transition duration when moving to available state, in
-      // particular when moving from foreground state - when moving from
-      // foreground state container gets cropped to top right corner
-      // immediately, while action element is updated from full screen with
-      // a transition. If the transition is too long, the action would be
-      // displayed as full square for a fraction of a second, which can look
-      // janky.
-      if (this.lockScreenAppsState_ == LOCK_SCREEN_APPS_STATE.AVAILABLE) {
-        $('new-note-action')
-            .classList.toggle('new-note-action-short-transition', true);
-        this.runOnNoteActionTransitionEnd_(function() {
-          $('new-note-action')
-              .classList.toggle('new-note-action-short-transition', false);
-        });
-      }
-
+    updateUi_: function(previousState) {
       this.swipeDetector_.setEnabled(
           this.lockScreenAppsState_ == LOCK_SCREEN_APPS_STATE.AVAILABLE);
 
@@ -412,7 +398,25 @@ cr.define('login', function() {
       $('new-note-action-container')
           .classList.toggle('new-note-action-above-login-header', false);
 
-      if (this.lockScreenAppsState_ != LOCK_SCREEN_APPS_STATE.FOREGROUND) {
+      // If we're moving from a foreground to an available state, transition
+      // away. Otherwise apply the transition without showing it to the user.
+      if (previousState == LOCK_SCREEN_APPS_STATE.FOREGROUND &&
+          this.lockScreenAppsState_ == LOCK_SCREEN_APPS_STATE.AVAILABLE) {
+        $('new-note-action-container')
+            .classList.toggle('new-note-action-container-activated', true);
+        $('new-note-action').style.removeProperty('height');
+        $('new-note-action').style.removeProperty('width');
+
+        this.runOnNoteActionTransitionEnd_(function() {
+          $('new-note-action-container')
+              .classList.toggle('new-note-action-container-activated', false);
+          $('new-note-action')
+              .style.removeProperty('border-bottom-left-radius');
+          $('new-note-action')
+              .style.removeProperty('border-bottom-right-radius');
+        });
+      } else if (
+          this.lockScreenAppsState_ != LOCK_SCREEN_APPS_STATE.FOREGROUND) {
         // Reset properties that might have been set as a result of activating
         // new note action.
         $('new-note-action-container')
