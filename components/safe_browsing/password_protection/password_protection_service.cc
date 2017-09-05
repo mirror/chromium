@@ -151,9 +151,6 @@ void PasswordProtectionService::OnWarningDone(
   RecordWarningAction(ui_type, action);
   // TODO(jialiul): Need to send post-warning report, trigger event logger and
   // other tasks.
-  if (ui_type == MODAL_DIALOG)
-    web_contents_to_proto_map_.erase(web_contents);
-
   if (action == MARK_AS_LEGITIMATE) {
     DCHECK_EQ(PAGE_INFO, ui_type);
     UpdateSecurityState(SB_THREAT_TYPE_SAFE, web_contents);
