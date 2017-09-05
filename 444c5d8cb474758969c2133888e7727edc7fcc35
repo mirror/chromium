@@ -67,6 +67,52 @@
       "revId": "444c5d8cb474758969c2133888e7727edc7fcc35",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61926516_d3010223",
+        "filename": "third_party/WebKit/Source/modules/media_controls/resources/modernMediaControls.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-09-05T15:46:18Z",
+      "side": 1,
+      "message": "nit: could you put width, height, and min-width together?",
+      "range": {
+        "startLine": 48,
+        "startChar": 2,
+        "endLine": 48,
+        "endChar": 8
+      },
+      "revId": "444c5d8cb474758969c2133888e7727edc7fcc35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e32ae989_5c2fb4ee",
+        "filename": "third_party/WebKit/Source/modules/media_controls/resources/modernMediaControls.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-09-05T15:46:18Z",
+      "side": 1,
+      "message": "nit: generally, omit units for 0 values. It\u0027s inconsistent in this file.",
+      "range": {
+        "startLine": 120,
+        "startChar": 16,
+        "endLine": 120,
+        "endChar": 19
+      },
+      "revId": "444c5d8cb474758969c2133888e7727edc7fcc35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
