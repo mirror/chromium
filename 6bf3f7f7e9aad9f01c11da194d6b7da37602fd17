@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87f1230f_5aad1dfa",
+        "filename": "chrome/browser/local_discovery/service_discovery_client_mdns.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-09-05T20:41:26Z",
+      "side": 1,
+      "message": "What thread is CreateSockets() called on?\n\ng_browser_process should only be called from the UI thread:\nhttps://cs.chromium.org/chromium/src/chrome/browser/browser_process.h?sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d131",
+      "revId": "6bf3f7f7e9aad9f01c11da194d6b7da37602fd17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
