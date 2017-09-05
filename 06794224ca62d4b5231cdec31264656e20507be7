@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ecf2b26_f701d1cf",
+        "filename": "ios/chrome/browser/ui/coordinators/browser_coordinator+internal.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-05T07:16:55Z",
+      "side": 1,
+      "message": "s/it\u0027s/its",
+      "range": {
+        "startLine": 12,
+        "startChar": 67,
+        "endLine": 12,
+        "endChar": 71
+      },
+      "revId": "06794224ca62d4b5231cdec31264656e20507be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
