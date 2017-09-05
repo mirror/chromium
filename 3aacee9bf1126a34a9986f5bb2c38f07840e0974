@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53e5ab19_3135cfd2",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/device/gattserverdisconnected-event/one-event-per-disconnection.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-09-05T20:39:40Z",
+      "side": 1,
+      "message": "I think this should be \"Promise.all([\".\n\n-- also --\n\nI like that the previous test assured that at least 1 disconnect event was received. I don\u0027t like the use of a timeout, but it did ensure there was a higher chance we\u0027d catch duplicate events.\n\nI suggest adding to the array of promises:\n  eventPromise(device, \u0027gattserverdisconnected\u0027)  // Wait until disconnect event received.\n\nThen, stick a timer after that to provide a window of time to catch the duplicates -- unless you can think of a better (and cross browser?) way.",
+      "revId": "3aacee9bf1126a34a9986f5bb2c38f07840e0974",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b53adb50_a1d03e7e",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/device/gattserverdisconnected-event/reconnect-during-disconnected-event.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-09-05T20:39:40Z",
+      "side": 1,
+      "message": "Upon re-reading the test description, I\u0027m concerned that the 2nd connect() call isn\u0027t made when handling the gattserverdisconnected event. I think we can\u0027t use eventPromise after all, and need to explicitly use the event handler to ensure the connect() call is made during that event.",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 36
+      },
+      "revId": "3aacee9bf1126a34a9986f5bb2c38f07840e0974",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
