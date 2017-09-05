@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e58d7549_e4dfad0c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/layouts/phone/stack/Stack.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2279,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-05T23:42:18Z",
+      "side": 1,
+      "message": "Should this be isChromeHomeModernEnabled() ? MODERN_TOP_MARGIN_DP : mLayout.getHeight()?\n\nAt least until #isChromeHomeModernEnabled is removed.",
+      "range": {
+        "startLine": 2279,
+        "startChar": 12,
+        "endLine": 2279,
+        "endChar": 64
+      },
+      "revId": "e8d9e2c0eb8f6f564f161aebbeb02e1dc8b51d98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
