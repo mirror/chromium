@@ -116,11 +116,9 @@ class CORE_EXPORT EventPath final : public GarbageCollected<EventPath> {
                        HeapVector<Member<TouchList>> adjusted_touch_list,
                        const HeapVector<Member<TreeScope>>& tree_scopes);
 
-  using TreeScopeEventContextMap =
-      HeapHashMap<Member<TreeScope>, Member<TreeScopeEventContext>>;
+  TreeScopeEventContext* GetTreeScopeEventContext(TreeScope*);
   TreeScopeEventContext* EnsureTreeScopeEventContext(Node* current_target,
-                                                     TreeScope*,
-                                                     TreeScopeEventContextMap&);
+                                                     TreeScope*);
 
   using RelatedTargetMap = HeapHashMap<Member<TreeScope>, Member<EventTarget>>;
 
