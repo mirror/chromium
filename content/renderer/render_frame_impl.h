@@ -972,7 +972,8 @@ class CONTENT_EXPORT RenderFrameImpl
   void OnFailedNavigation(const CommonNavigationParams& common_params,
                           const RequestNavigationParams& request_params,
                           bool has_stale_copy_in_cache,
-                          int error_code);
+                          int error_code,
+                          base::Optional<GURL> error_page_url);
   void OnReportContentSecurityPolicyViolation(
       const content::CSPViolationParams& violation_params);
   void OnGetSavableResourceLinks();
@@ -1065,7 +1066,8 @@ class CONTENT_EXPORT RenderFrameImpl
   void LoadNavigationErrorPage(const blink::WebURLRequest& failed_request,
                                const blink::WebURLError& error,
                                bool replace,
-                               HistoryEntry* entry);
+                               HistoryEntry* entry,
+                               const base::Optional<GURL>& error_page_url);
   void LoadNavigationErrorPageForHttpStatusError(
       const blink::WebURLRequest& failed_request,
       const GURL& unreachable_url,
@@ -1079,6 +1081,12 @@ class CONTENT_EXPORT RenderFrameImpl
       bool replace,
       blink::WebFrameLoadType frame_load_type,
       const blink::WebHistoryItem& history_item);
+
+  // Like DidFailProvisionalLoad, but allows passing in an |error_page_url|.
+  void DidFailProvisionalLoadInternal(
+      const blink::WebURLError& error,
+      blink::WebHistoryCommitType commit_type,
+      const base::Optional<GURL>& error_page_url);
 
   void HandleJavascriptExecutionResult(const base::string16& javascript,
                                        int id,

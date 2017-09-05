@@ -11,6 +11,7 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
+#include "base/optional.h"
 #include "content/browser/frame_host/navigation_entry_impl.h"
 #include "content/browser/loader/navigation_url_loader_delegate.h"
 #include "content/common/content_export.h"
@@ -19,6 +20,7 @@
 #include "content/public/browser/navigation_throttle.h"
 #include "content/public/common/previews_state.h"
 #include "mojo/public/cpp/system/data_pipe.h"
+#include "url/gurl.h"
 
 namespace content {
 
@@ -224,7 +226,7 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
       NavigationThrottle::ThrottleCheckResult result);
 
   // Called either by OnFailureChecksComplete() or OnRequestFailed() directly.
-  void CommitErrorPage();
+  void CommitErrorPage(base::Optional<GURL> error_page_url);
 
   // Have a RenderFrameHost commit the navigation. The NavigationRequest will
   // be destroyed after this call.
