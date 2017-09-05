@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "932773ba_9920e855",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 4
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-05T17:19:58Z",
+      "side": 1,
+      "message": "Technically these are not really necessary, since we already have similar strings for the Password Bubble:\nhttps://codesearch.chromium.org/chromium/src/chrome/app/generated_resources.grd?l\u003d9838-9843\u0026rcl\u003db4fa5d7faefbd3733358eaf72737f768c39cdee4\n\nDoes it still make sense to duplicate them here, given that the Bubble does not have strings for exceptions and that these are SETTINGS strings?",
+      "range": {
+        "startLine": 595,
+        "startChar": 0,
+        "endLine": 600,
+        "endChar": 12
+      },
+      "revId": "bb6d7d7dcad6d5d07564a52aa0457342dfb0b929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "549767c4_b14bbc6f",
+        "filename": "chrome/browser/extensions/api/passwords_private/passwords_private_apitest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-05T17:19:58Z",
+      "side": 1,
+      "message": "As stated in the comments this is pretty much a poor mans Undo Manager that only really works when deleting passwords and exceptions are not mixed. Since this is only used in tests I figured it is fine to not depend on Undo Manager here and introduce another set of UndoOperation sub classes. What do you think?",
+      "revId": "bb6d7d7dcad6d5d07564a52aa0457342dfb0b929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cd2e052_3197725a",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/password_undo_toast.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-05T17:19:58Z",
+      "side": 1,
+      "message": "This file (and the corresponding JavaScript file) are mostly copied from the similar MD bookmarks toast manager: \n- https://codesearch.chromium.org/chromium/src/chrome/browser/resources/md_bookmarks/toast_manager.html\n- https://codesearch.chromium.org/chromium/src/chrome/browser/resources/md_bookmarks/toast_manager.js\n\nIdeally we would avoid the code duplication and move it in a central place. However, given that bookmark code is not in /settings, I am not quite sure how to do that. Is there a precedent for this?",
+      "revId": "bb6d7d7dcad6d5d07564a52aa0457342dfb0b929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1989d2d1_04696786",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-05T17:19:58Z",
+      "side": 1,
+      "message": "Given that it takes more than a second for the deleted password to actually disappear from the password list, there is a brief period of time where the UNDO Toast is shown while the password is still visible. This seems a bit confusing to me, but I couldn\u0027t find a better way for now. Would it make sense to add callbacks to removeSavedPassword in order to address this issue?",
+      "revId": "bb6d7d7dcad6d5d07564a52aa0457342dfb0b929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b00de87b_a17f5377",
+        "filename": "chrome/browser/ui/passwords/password_manager_presenter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-05T17:19:58Z",
+      "side": 1,
+      "message": "Not adding this Redo Operation results in hitting this DCHECK in Undo Manager: https://codesearch.chromium.org/chromium/src/components/undo/undo_manager.cc?l\u003d124\u0026rcl\u003d266e5d0a07f93f9a267ab82bfd43bb11b58ff5ae\n\nAlso it allows us to easily support redo in the future.",
+      "range": {
+        "startLine": 449,
+        "startChar": 0,
+        "endLine": 450,
+        "endChar": 69
+      },
+      "revId": "bb6d7d7dcad6d5d07564a52aa0457342dfb0b929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f76bb09e_85c85b68",
+        "filename": "components/undo_strings.grdp",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-05T17:19:58Z",
+      "side": 1,
+      "message": "These (and the strings below) are only introduced to not return 0 from |GetUndoLabelId| and |GetRedoLabelId| from my custom UndoOperations and are not used anywhere else. This doesn\u0027t seem like a good reason to me, however. Is simply returning 0 from the overrides alright?",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 14
+      },
+      "revId": "bb6d7d7dcad6d5d07564a52aa0457342dfb0b929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
