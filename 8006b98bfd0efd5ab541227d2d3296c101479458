@@ -34,6 +34,24 @@
       "revId": "8006b98bfd0efd5ab541227d2d3296c101479458",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92ce7230_796569d1",
+        "filename": "chrome/utility/extensions/extensions_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-09-05T17:40:46Z",
+      "side": 1,
+      "message": "Done, removed iTunes support entirely, Window and Mac.",
+      "parentUuid": "c2a9f720_9103f4ef",
+      "revId": "8006b98bfd0efd5ab541227d2d3296c101479458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
