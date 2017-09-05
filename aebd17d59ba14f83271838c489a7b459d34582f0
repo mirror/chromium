@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c5fc48b3_321a3113",
+        "filename": "ash/wm/overview/overview_window_drag_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-09-05T18:54:06Z",
+      "side": 1,
+      "message": "We still want the early return block in line 50-56.",
+      "parentUuid": "db3f12d4_335a5041",
+      "revId": "aebd17d59ba14f83271838c489a7b459d34582f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "20d4022f_633a4a9a",
         "filename": "ash/wm/overview/overview_window_drag_controller.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-05T16:37:43Z",
       "side": 1,
       "message": "is this correct? Shouldn\u0027t the overlay be visible while dragging?",
+      "revId": "aebd17d59ba14f83271838c489a7b459d34582f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de3326b1_9ca5c703",
+        "filename": "ash/wm/overview/overview_window_drag_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-09-05T18:54:06Z",
+      "side": 1,
+      "message": "The bug states it should disappear once dragging starts.",
+      "parentUuid": "20d4022f_633a4a9a",
       "revId": "aebd17d59ba14f83271838c489a7b459d34582f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "cf9117ee_5a75d408",
+        "filename": "ash/wm/overview/window_selector.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-09-05T18:54:06Z",
+      "side": 1,
+      "message": "There\u0027s one for each root window, like window grid.",
+      "parentUuid": "d63cea55_cddfc8cb",
+      "revId": "aebd17d59ba14f83271838c489a7b459d34582f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "99d76a27_44a8fb69",
         "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
         "patchSetId": 4
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "925adaa5_bb413024",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-09-05T18:54:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99d76a27_44a8fb69",
+      "revId": "aebd17d59ba14f83271838c489a7b459d34582f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf3c3163_2b86aaa8",
         "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
         "patchSetId": 4
@@ -81,6 +153,24 @@
       "writtenOn": "2017-09-05T16:37:43Z",
       "side": 1,
       "message": "instead of using view\u0027s background, can you use solid color layer which is more efficient? (see View::SetPaintToLayer)",
+      "revId": "aebd17d59ba14f83271838c489a7b459d34582f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7105db68_ff32f28a",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-09-05T18:54:06Z",
+      "side": 1,
+      "message": "Done. This also gets ride of the artifacts bug i showed you the other day, though i have no idea why.",
+      "parentUuid": "bf3c3163_2b86aaa8",
       "revId": "aebd17d59ba14f83271838c489a7b459d34582f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "ee89564e_1d0e8e26",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-09-05T18:54:06Z",
+      "side": 1,
+      "message": "For future reference is this preferred. Most forward decl i see skip this because the namespace is right there. Done.",
+      "parentUuid": "1b6178ba_e7a5cff2",
+      "revId": "aebd17d59ba14f83271838c489a7b459d34582f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6045f15_75c762a4",
         "filename": "ash/wm/splitview/split_view_overview_overlay.h",
         "patchSetId": 4
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "09f051ba_0df35f5b",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-09-05T18:54:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6045f15_75c762a4",
+      "revId": "aebd17d59ba14f83271838c489a7b459d34582f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c2b5412_4cfa20d9",
         "filename": "ash/wm/splitview/split_view_overview_overlay.h",
         "patchSetId": 4
@@ -132,6 +258,24 @@
       "writtenOn": "2017-09-05T16:37:43Z",
       "side": 1,
       "message": "\"Overlay\" is too generic. Can you come up with better name for this?",
+      "revId": "aebd17d59ba14f83271838c489a7b459d34582f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3152cb8d_f08d76ed",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-09-05T18:54:06Z",
+      "side": 1,
+      "message": "How does SplitViewOverviewIndicatorsOverlay sound? Plural indicators because we will reuse class to add a \"Cannot be snapped\" indicator for un-snappable windows.",
+      "parentUuid": "9c2b5412_4cfa20d9",
       "revId": "aebd17d59ba14f83271838c489a7b459d34582f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
