@@ -46,6 +46,30 @@
       "revId": "d06e4c446b73b045596495147c209e0bf223c6d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25ed2f97_838cf785",
+        "filename": "net/android/java/src/org/chromium/net/NetStringUtil.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-09-05T21:41:23Z",
+      "side": 1,
+      "message": "Sgtm. Chrome always uses ICU, so it will have the proper locale. \nThe Cronet uses icu_alternatives, and therefore this code, but we expect that app will have locale set appropriately for the user.",
+      "parentUuid": "0c9604cf_d984eba4",
+      "range": {
+        "startLine": 99,
+        "startChar": 23,
+        "endLine": 99,
+        "endChar": 55
+      },
+      "revId": "d06e4c446b73b045596495147c209e0bf223c6d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
