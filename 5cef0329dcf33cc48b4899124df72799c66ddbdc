@@ -34,6 +34,24 @@
       "revId": "5cef0329dcf33cc48b4899124df72799c66ddbdc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee0f204a_cf01c815",
+        "filename": "ui/file_manager/file_manager/foreground/js/selection_menu_controller.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-09-05T06:58:13Z",
+      "side": 1,
+      "message": "It was because transitionend is also triggered by ones of the child elements. Fixed.",
+      "parentUuid": "742038b8_e894bf36",
+      "revId": "5cef0329dcf33cc48b4899124df72799c66ddbdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
