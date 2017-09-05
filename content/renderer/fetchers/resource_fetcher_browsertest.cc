@@ -22,6 +22,7 @@
 #include "content/public/test/test_utils.h"
 #include "content/shell/browser/shell.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
+#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "third_party/WebKit/public/platform/WebURLResponse.h"
 #include "third_party/WebKit/public/web/WebFrame.h"
 #include "third_party/WebKit/public/web/WebView.h"
@@ -147,8 +148,10 @@ class ResourceFetcherTests : public ContentBrowserTest {
 
     std::unique_ptr<FetcherDelegate> delegate(new FetcherDelegate);
     std::unique_ptr<ResourceFetcher> fetcher(ResourceFetcher::Create(url));
-    fetcher->Start(frame, WebURLRequest::kRequestContextInternal,
-                   delegate->NewCallback());
+    fetcher->Start(
+        frame, WebURLRequest::kRequestContextInternal,
+        frame->GetDefaultURLLoaderFactoryGetter()->GetNetworkLoaderFactory(),
+        TRAFFIC_ANNOTATION_FOR_TESTS, delegate->NewCallback());
 
     delegate->WaitForResponse();
 
@@ -165,8 +168,10 @@ class ResourceFetcherTests : public ContentBrowserTest {
 
     std::unique_ptr<FetcherDelegate> delegate(new FetcherDelegate);
     std::unique_ptr<ResourceFetcher> fetcher(ResourceFetcher::Create(url));
-    fetcher->Start(frame, WebURLRequest::kRequestContextInternal,
-                   delegate->NewCallback());
+    fetcher->Start(
+        frame, WebURLRequest::kRequestContextInternal,
+        frame->GetDefaultURLLoaderFactoryGetter()->GetNetworkLoaderFactory(),
+        TRAFFIC_ANNOTATION_FOR_TESTS, delegate->NewCallback());
 
     delegate->WaitForResponse();
 
@@ -183,8 +188,10 @@ class ResourceFetcherTests : public ContentBrowserTest {
 
     std::unique_ptr<FetcherDelegate> delegate(new FetcherDelegate);
     std::unique_ptr<ResourceFetcher> fetcher(ResourceFetcher::Create(url));
-    fetcher->Start(frame, WebURLRequest::kRequestContextInternal,
-                   delegate->NewCallback());
+    fetcher->Start(
+        frame, WebURLRequest::kRequestContextInternal,
+        frame->GetDefaultURLLoaderFactoryGetter()->GetNetworkLoaderFactory(),
+        TRAFFIC_ANNOTATION_FOR_TESTS, delegate->NewCallback());
 
     delegate->WaitForResponse();
 
@@ -200,8 +207,10 @@ class ResourceFetcherTests : public ContentBrowserTest {
     GURL url("http://localhost:1339/doesnotexist");
     std::unique_ptr<FetcherDelegate> delegate(new FetcherDelegate);
     std::unique_ptr<ResourceFetcher> fetcher(ResourceFetcher::Create(url));
-    fetcher->Start(frame, WebURLRequest::kRequestContextInternal,
-                   delegate->NewCallback());
+    fetcher->Start(
+        frame, WebURLRequest::kRequestContextInternal,
+        frame->GetDefaultURLLoaderFactoryGetter()->GetNetworkLoaderFactory(),
+        TRAFFIC_ANNOTATION_FOR_TESTS, delegate->NewCallback());
 
     delegate->WaitForResponse();
 
@@ -219,8 +228,10 @@ class ResourceFetcherTests : public ContentBrowserTest {
 
     std::unique_ptr<FetcherDelegate> delegate(new FetcherDelegate);
     std::unique_ptr<ResourceFetcher> fetcher(ResourceFetcher::Create(url));
-    fetcher->Start(frame, WebURLRequest::kRequestContextInternal,
-                   delegate->NewCallback());
+    fetcher->Start(
+        frame, WebURLRequest::kRequestContextInternal,
+        frame->GetDefaultURLLoaderFactoryGetter()->GetNetworkLoaderFactory(),
+        TRAFFIC_ANNOTATION_FOR_TESTS, delegate->NewCallback());
     fetcher->SetTimeout(base::TimeDelta());
 
     delegate->WaitForResponse();
@@ -239,8 +250,10 @@ class ResourceFetcherTests : public ContentBrowserTest {
 
     std::unique_ptr<EvilFetcherDelegate> delegate(new EvilFetcherDelegate);
     std::unique_ptr<ResourceFetcher> fetcher(ResourceFetcher::Create(url));
-    fetcher->Start(frame, WebURLRequest::kRequestContextInternal,
-                   delegate->NewCallback());
+    fetcher->Start(
+        frame, WebURLRequest::kRequestContextInternal,
+        frame->GetDefaultURLLoaderFactoryGetter()->GetNetworkLoaderFactory(),
+        TRAFFIC_ANNOTATION_FOR_TESTS, delegate->NewCallback());
     fetcher->SetTimeout(base::TimeDelta());
     delegate->SetFetcher(fetcher.release());
 
@@ -258,8 +271,10 @@ class ResourceFetcherTests : public ContentBrowserTest {
     std::unique_ptr<ResourceFetcher> fetcher(ResourceFetcher::Create(url));
     fetcher->SetMethod("POST");
     fetcher->SetBody(kBody);
-    fetcher->Start(frame, WebURLRequest::kRequestContextInternal,
-                   delegate->NewCallback());
+    fetcher->Start(
+        frame, WebURLRequest::kRequestContextInternal,
+        frame->GetDefaultURLLoaderFactoryGetter()->GetNetworkLoaderFactory(),
+        TRAFFIC_ANNOTATION_FOR_TESTS, delegate->NewCallback());
 
     delegate->WaitForResponse();
     ASSERT_TRUE(delegate->completed());
@@ -276,8 +291,10 @@ class ResourceFetcherTests : public ContentBrowserTest {
     std::unique_ptr<FetcherDelegate> delegate(new FetcherDelegate);
     std::unique_ptr<ResourceFetcher> fetcher(ResourceFetcher::Create(url));
     fetcher->SetHeader("header", kHeader);
-    fetcher->Start(frame, WebURLRequest::kRequestContextInternal,
-                   delegate->NewCallback());
+    fetcher->Start(
+        frame, WebURLRequest::kRequestContextInternal,
+        frame->GetDefaultURLLoaderFactoryGetter()->GetNetworkLoaderFactory(),
+        TRAFFIC_ANNOTATION_FOR_TESTS, delegate->NewCallback());
 
     delegate->WaitForResponse();
     ASSERT_TRUE(delegate->completed());
