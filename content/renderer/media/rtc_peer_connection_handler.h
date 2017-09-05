@@ -43,7 +43,6 @@ namespace content {
 
 class PeerConnectionDependencyFactory;
 class PeerConnectionTracker;
-class RemoteMediaStreamImpl;
 class RtcDataChannelHandler;
 
 // Mockable wrapper for blink::WebRTCStatsResponse
@@ -199,9 +198,10 @@ class CONTENT_EXPORT RTCPeerConnectionHandler
   void OnIceGatheringChange(
       webrtc::PeerConnectionInterface::IceGatheringState new_state);
   void OnRenegotiationNeeded();
-  void OnAddStream(std::unique_ptr<RemoteMediaStreamImpl> stream);
+  void OnAddStream(std::unique_ptr<WebRtcMediaStreamAdapterMap::AdapterRef>
+                       remote_stream_adapter_ref);
   void OnRemoveStream(
-      const scoped_refptr<webrtc::MediaStreamInterface>& stream);
+      const scoped_refptr<webrtc::MediaStreamInterface>& remote_webrtc_stream);
   void OnDataChannel(std::unique_ptr<RtcDataChannelHandler> handler);
   void OnIceCandidate(const std::string& sdp, const std::string& sdp_mid,
       int sdp_mline_index, int component, int address_family);
@@ -236,6 +236,10 @@ class CONTENT_EXPORT RTCPeerConnectionHandler
       const FirstSessionDescription& local,
       const FirstSessionDescription& remote);
 
+  std::vector<
+      std::unique_ptr<WebRtcMediaStreamAdapterMap::AdapterRef>>::iterator
+  FindRemoteStreamAdapter(
+      const scoped_refptr<webrtc::MediaStreamInterface>& webrtc_stream);
   std::unique_ptr<blink::WebRTCRtpReceiver> GetWebRTCRtpReceiver(
       rtc::scoped_refptr<webrtc::RtpReceiverInterface> webrtc_receiver);
 
@@ -282,10 +286,23 @@ class CONTENT_EXPORT RTCPeerConnectionHandler
   // Local stream adapters. Every stream that is in use by the peer connection
   // has an associated blink and webrtc layer representation of it. This vector
   // keeps track of the relationship between |blink::WebMediaStream|s and
-  // |webrtc::MediaStreamInterface|s. Streams are added and removed from the
-  // peer connection using |AddStream| and |RemoveStream|.
+  // |webrtc::MediaStreamInterface|s. Local streams are added and removed from
+  // the peer connection using |AddStream| and |RemoveStream|.
+  // TODO(hbos): |RTCPeerConnection::getLocalStreams| should return all streams
+  // of all senders and this standalone vector should be removed.
+  // https://crbug.com/738918
   std::vector<std::unique_ptr<WebRtcMediaStreamAdapterMap::AdapterRef>>
       local_streams_;
+  // Remote stream adapters. Every stream that is in use by the peer connection
+  // has an associated blink and webrtc layer representation of it. This vector
+  // keeps track of the relationship between |webrtc::MediaStreamInterface|s and
+  // |blink::WebMediaStream|s. Remote streams are added and removed from the
+  // peer connection on events fired during |setRemoteDescription|.
+  // TODO(hbos): |RTCPeerConnection::getRemoteStreams| should return all streams
+  // of all receivers and this standalone vector should be removed.
+  // https://crbug.com/741618
+  std::vector<std::unique_ptr<WebRtcMediaStreamAdapterMap::AdapterRef>>
+      remote_streams_;
   // Maps |RTCRtpSender::getId|s of |webrtc::RtpSenderInterface| to the
   // corresponding content layer sender. This is needed to retain the senders'
   // associated set of streams for senders created by |AddTrack|.
@@ -328,9 +345,6 @@ class CONTENT_EXPORT RTCPeerConnectionHandler
   std::unique_ptr<FirstSessionDescription> first_local_description_;
   std::unique_ptr<FirstSessionDescription> first_remote_description_;
 
-  std::map<webrtc::MediaStreamInterface*,
-           std::unique_ptr<content::RemoteMediaStreamImpl>>
-      remote_streams_;
   base::TimeTicks ice_connection_checking_start_;
 
   // Track which ICE Connection state that this PeerConnection has gone through.
