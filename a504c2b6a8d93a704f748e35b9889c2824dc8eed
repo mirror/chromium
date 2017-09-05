@@ -33,6 +33,24 @@
       "revId": "a504c2b6a8d93a704f748e35b9889c2824dc8eed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30ba6ce3_a4789095",
+        "filename": "chromecast/media/cma/backend/alsa/stream_mixer_alsa.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-09-05T21:07:54Z",
+      "side": 1,
+      "message": "output_samples_per_second_ is not set otherwise if the PCM device can\u0027t be opened, so the mixer inputs complain (the default value is 0, so it leads to divide-by-0 issues).",
+      "parentUuid": "f1cfc54c_8648ed10",
+      "revId": "a504c2b6a8d93a704f748e35b9889c2824dc8eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
