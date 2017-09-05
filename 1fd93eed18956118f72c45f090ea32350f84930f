@@ -22,6 +22,30 @@
       "revId": "1fd93eed18956118f72c45f090ea32350f84930f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e9cab97_e49466ae",
+        "filename": "android_webview/apk/java/AndroidManifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-09-05T14:46:41Z",
+      "side": 1,
+      "message": "Yes. I think the better way to handle this long term would be to always populate targetSdkVersion (here in system_webview_apk and elsewhere) from android_sdk_version (or perhaps from a separate but related gn variable depending on how it handles prerelease versions).",
+      "parentUuid": "bc559ed0_97eddc3a",
+      "range": {
+        "startLine": 12,
+        "startChar": 52,
+        "endLine": 12,
+        "endChar": 63
+      },
+      "revId": "1fd93eed18956118f72c45f090ea32350f84930f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
