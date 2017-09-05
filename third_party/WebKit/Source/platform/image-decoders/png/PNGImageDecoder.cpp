@@ -50,7 +50,7 @@ PNGImageDecoder::PNGImageDecoder(AlphaOption alpha_option,
       // It would be logical to default to kAnimationNone, but BitmapImage uses
       // that as a signal to never check again, meaning the actual count will
       // never be respected.
-      repetition_count_(kAnimationLoopOnce),
+      repetition_count_(ImageAnimationCount::kLoopOnce),
       has_alpha_channel_(false),
       current_buffer_saw_alpha_(false) {}
 
@@ -122,7 +122,7 @@ void PNGImageDecoder::SetRepetitionCount(int repetition_count) {
 }
 
 int PNGImageDecoder::RepetitionCount() const {
-  return Failed() ? kAnimationLoopOnce : repetition_count_;
+  return Failed() ? ImageAnimationCount::kLoopOnce : repetition_count_;
 }
 
 void PNGImageDecoder::InitializeNewFrame(size_t index) {

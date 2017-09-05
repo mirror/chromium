@@ -70,23 +70,23 @@ TEST(ICOImageDecoderTests, errorInPngInIco) {
 TEST(ICOImageDecoderTests, parseAndDecodeByteByByte) {
   TestByteByByteDecode(&CreateICODecoder,
                        "/LayoutTests/images/resources/png-in-ico.ico", 1u,
-                       kAnimationNone);
+                       ImageAnimationCount::kLoopNone);
   TestByteByByteDecode(&CreateICODecoder,
                        "/LayoutTests/images/resources/2entries.ico", 2u,
-                       kAnimationNone);
+                       ImageAnimationCount::kLoopNone);
   TestByteByByteDecode(&CreateICODecoder,
                        "/LayoutTests/images/resources/greenbox-3frames.cur", 3u,
-                       kAnimationNone);
+                       ImageAnimationCount::kLoopNone);
   TestByteByByteDecode(
       &CreateICODecoder,
       "/LayoutTests/images/resources/icon-without-and-bitmap.ico", 1u,
-      kAnimationNone);
+      ImageAnimationCount::kLoopNone);
   TestByteByByteDecode(&CreateICODecoder,
                        "/LayoutTests/images/resources/1bit.ico", 1u,
-                       kAnimationNone);
+                       ImageAnimationCount::kLoopNone);
   TestByteByByteDecode(&CreateICODecoder,
                        "/LayoutTests/images/resources/bug653075.ico", 2u,
-                       kAnimationNone);
+                       ImageAnimationCount::kLoopNone);
 }
 
 TEST(ICOImageDecoderTests, NullData) {

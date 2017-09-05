@@ -103,15 +103,15 @@ int GIFImageDecoder::RepetitionCount() const {
       // SkCodec returns 0 for both still images and animated images which
       // only play once.
       if (IsAllDataReceived() && codec_->getFrameCount() == 1) {
-        repetition_count_ = kAnimationNone;
+        repetition_count_ = ImageAnimationCount::kLoopNone;
         break;
       }
 
-      repetition_count_ = kAnimationLoopOnce;
+      repetition_count_ = ImageAnimationCount::kLoopOnce;
       break;
     }
     case SkCodec::kRepetitionCountInfinite:
-      repetition_count_ = kAnimationLoopInfinite;
+      repetition_count_ = ImageAnimationCount::kLoopInfinite;
       break;
     default:
       repetition_count_ = repetition_count;

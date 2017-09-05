@@ -56,7 +56,9 @@ class ImageDecodingStoreTest : public ::testing::Test,
   }
 
   size_t FrameCount() override { return 1; }
-  int RepetitionCount() const override { return kAnimationNone; }
+  int RepetitionCount() const override {
+    return ImageAnimationCount::kLoopNone;
+  }
   float FrameDuration() const override { return 0; }
 
  protected:

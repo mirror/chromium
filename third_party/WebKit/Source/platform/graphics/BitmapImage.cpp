@@ -59,7 +59,7 @@ BitmapImage::BitmapImage(ImageObserver* observer, bool is_multipart)
       size_available_(false),
       have_frame_count_(false),
       repetition_count_status_(kUnknown),
-      repetition_count_(kAnimationNone),
+      repetition_count_(ImageAnimationCount::kLoopNone),
       repetitions_complete_(0),
       desired_frame_start_time_(0),
       frame_count_(0),
@@ -114,7 +114,7 @@ PaintImage BitmapImage::CreateAndCacheFrame(size_t index) {
   frames_[index].orientation_ = decoder_->OrientationAtIndex(index);
   frames_[index].have_metadata_ = true;
   frames_[index].is_complete_ = decoder_->FrameIsReceivedAtIndex(index);
-  if (RepetitionCount(false) != kAnimationNone)
+  if (RepetitionCount(false) != ImageAnimationCount::kLoopNone)
     frames_[index].duration_ = decoder_->FrameDurationAtIndex(index);
   frames_[index].has_alpha_ = decoder_->FrameHasAlphaAtIndex(index);
   frames_[index].frame_bytes_ =
@@ -123,7 +123,8 @@ PaintImage BitmapImage::CreateAndCacheFrame(size_t index) {
   PaintImageBuilder builder;
   InitPaintImageBuilder(builder);
   builder.set_paint_image_generator(std::move(generator))
-      .set_frame_index(index);
+      .set_frame_index(index)
+      .set_repetition_count(repetition_count_);
 
   // The caching of the decoded image data by the external users of this image
   // is keyed based on the uniqueID of the underlying SkImage for this
@@ -444,9 +445,11 @@ int BitmapImage::RepetitionCount(bool image_known_to_be_complete) {
     // repetition count may not be accurate yet for GIFs; in this case the
     // decoder will default to cAnimationLoopOnce, and we'll try and read
     // the count again once the whole image is decoded.
-    repetition_count_ = decoder_ ? decoder_->RepetitionCount() : kAnimationNone;
+    repetition_count_ =
+        decoder_ ? decoder_->RepetitionCount() : ImageAnimationCount::kLoopNone;
     repetition_count_status_ =
-        (image_known_to_be_complete || repetition_count_ == kAnimationNone)
+        (image_known_to_be_complete ||
+         repetition_count_ == ImageAnimationCount::kLoopNone)
             ? kCertain
             : kUncertain;
   }
@@ -454,7 +457,7 @@ int BitmapImage::RepetitionCount(bool image_known_to_be_complete) {
 }
 
 bool BitmapImage::ShouldAnimate() {
-  bool animated = RepetitionCount(false) != kAnimationNone &&
+  bool animated = RepetitionCount(false) != ImageAnimationCount::kLoopNone &&
                   !animation_finished_ && GetImageObserver();
   if (animated && animation_policy_ == kImageAnimationPolicyNoAnimation)
     animated = false;
@@ -480,7 +483,7 @@ void BitmapImage::StartAnimation(CatchUpAnimation catch_up_if_necessary) {
   // in a GIF can potentially come after all the rest of the image data, so
   // wait on it.
   if (!all_data_received_ &&
-      (RepetitionCount(false) == kAnimationLoopOnce ||
+      (RepetitionCount(false) == ImageAnimationCount::kLoopOnce ||
        animation_policy_ == kImageAnimationPolicyAnimateOnce) &&
       current_frame_index_ >= (FrameCount() - 1))
     return;
@@ -573,7 +576,8 @@ bool BitmapImage::MaybeAnimated() {
   if (FrameCount() > 1)
     return true;
 
-  return decoder_ && decoder_->RepetitionCount() != kAnimationNone;
+  return decoder_ &&
+         decoder_->RepetitionCount() != ImageAnimationCount::kLoopNone;
 }
 
 void BitmapImage::AdvanceTime(double delta_time_in_seconds) {
@@ -620,7 +624,7 @@ bool BitmapImage::InternalAdvanceAnimation(AnimationAdvancement advancement) {
     // now, so it should now be available.
     // We don't need to special-case cAnimationLoopOnce here because it is
     // 0 (see comments on its declaration in ImageAnimation.h).
-    if ((RepetitionCount(true) != kAnimationLoopInfinite &&
+    if ((RepetitionCount(true) != ImageAnimationCount::kLoopInfinite &&
          repetitions_complete_ > repetition_count_) ||
         animation_policy_ == kImageAnimationPolicyAnimateOnce) {
       animation_finished_ = true;

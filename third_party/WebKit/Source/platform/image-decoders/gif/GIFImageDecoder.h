@@ -79,7 +79,7 @@ class PLATFORM_EXPORT GIFImageDecoder final : public ImageDecoder {
   // |codec_| owns the SegmentStream, but we need access to it to append more
   // data as it arrives.
   SegmentStream* segment_stream_;
-  mutable int repetition_count_ = kAnimationLoopOnce;
+  mutable int repetition_count_ = ImageAnimationCount::kLoopNone;
 };
 
 }  // namespace blink

@@ -86,7 +86,7 @@ TEST(GIFImageDecoderTest, decodeTwoFrames) {
   EXPECT_TRUE(generation_id0 != generation_id1);
 
   EXPECT_EQ(2u, decoder->FrameCount());
-  EXPECT_EQ(kAnimationLoopInfinite, decoder->RepetitionCount());
+  EXPECT_EQ(ImageAnimationCount::kLoopInfinite, decoder->RepetitionCount());
 }
 
 TEST(GIFImageDecoderTest, parseAndDecode) {
@@ -105,7 +105,7 @@ TEST(GIFImageDecoderTest, parseAndDecode) {
   EXPECT_EQ(ImageFrame::kFrameComplete, frame->GetStatus());
   EXPECT_EQ(16, frame->Bitmap().width());
   EXPECT_EQ(16, frame->Bitmap().height());
-  EXPECT_EQ(kAnimationLoopInfinite, decoder->RepetitionCount());
+  EXPECT_EQ(ImageAnimationCount::kLoopInfinite, decoder->RepetitionCount());
 }
 
 TEST(GIFImageDecoderTest, parseByteByByte) {
@@ -129,13 +129,13 @@ TEST(GIFImageDecoderTest, parseByteByByte) {
 
   decoder->DecodeFrameBufferAtIndex(0);
   decoder->DecodeFrameBufferAtIndex(1);
-  EXPECT_EQ(kAnimationLoopInfinite, decoder->RepetitionCount());
+  EXPECT_EQ(ImageAnimationCount::kLoopInfinite, decoder->RepetitionCount());
 }
 
 TEST(GIFImageDecoderTest, parseAndDecodeByteByByte) {
   TestByteByByteDecode(&CreateDecoder, kLayoutTestResourcesDir,
                        "animated-gif-with-offsets.gif", 5u,
-                       kAnimationLoopInfinite);
+                       ImageAnimationCount::kLoopInfinite);
 }
 
 TEST(GIFImageDecoderTest, brokenSecondFrame) {
@@ -186,7 +186,7 @@ TEST(GIFImageDecoderTest, frameIsComplete) {
   EXPECT_FALSE(decoder->Failed());
   EXPECT_TRUE(decoder->FrameIsReceivedAtIndex(0));
   EXPECT_TRUE(decoder->FrameIsReceivedAtIndex(1));
-  EXPECT_EQ(kAnimationLoopInfinite, decoder->RepetitionCount());
+  EXPECT_EQ(ImageAnimationCount::kLoopInfinite, decoder->RepetitionCount());
 }
 
 TEST(GIFImageDecoderTest, frameIsCompleteLoading) {
@@ -346,7 +346,8 @@ TEST(GIFImageDecoderTest, firstFrameHasGreaterSizeThanScreenSize) {
 
 TEST(GIFImageDecoderTest, verifyRepetitionCount) {
   TestRepetitionCount(kLayoutTestResourcesDir, "full2loop.gif", 2);
-  TestRepetitionCount(kDecodersTestingDir, "radient.gif", kAnimationNone);
+  TestRepetitionCount(kDecodersTestingDir, "radient.gif",
+                      ImageAnimationCount::kLoopNone);
 }
 
 TEST(GIFImageDecoderTest, bitmapAlphaType) {

@@ -239,7 +239,7 @@ static void TestByteByByteSizeAvailable(DecoderCreator create_decoder,
       EXPECT_TRUE(decoder->Size().IsEmpty());
       EXPECT_FALSE(decoder->HasEmbeddedColorSpace());
       EXPECT_EQ(0u, decoder->FrameCount());
-      EXPECT_EQ(kAnimationLoopOnce, decoder->RepetitionCount());
+      EXPECT_EQ(ImageAnimationCount::kLoopOnce, decoder->RepetitionCount());
       EXPECT_FALSE(decoder->DecodeFrameBufferAtIndex(0));
     } else {
       EXPECT_TRUE(decoder->IsSizeAvailable());

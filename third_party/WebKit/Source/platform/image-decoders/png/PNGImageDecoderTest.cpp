@@ -172,7 +172,7 @@ static void ExpectStatic(ImageDecoder* decoder) {
   ASSERT_NE(nullptr, frame);
   EXPECT_EQ(ImageFrame::kFrameComplete, frame->GetStatus());
   EXPECT_FALSE(decoder->Failed());
-  EXPECT_EQ(kAnimationNone, decoder->RepetitionCount());
+  EXPECT_EQ(ImageAnimationCount::kLoopNone, decoder->RepetitionCount());
 }
 
 // Decode up to the indicated fcTL offset and then provide an fcTL with the
@@ -313,7 +313,7 @@ TEST(AnimatedPNGTests, repetitionCountTest) {
   TestRepetitionCount(
       "/LayoutTests/images/resources/"
       "png-animated-idat-not-part-of-animation.png",
-      kAnimationNone);
+      ImageAnimationCount::kLoopNone);
 }
 
 // Test if the decoded metdata corresponds to the defined expectations
@@ -457,7 +457,7 @@ TEST(AnimatedPNGTests, ActlErrors) {
     decoder->SetData(no_actl_data, true);
     EXPECT_EQ(1u, decoder->FrameCount());
     EXPECT_FALSE(decoder->Failed());
-    EXPECT_EQ(kAnimationNone, decoder->RepetitionCount());
+    EXPECT_EQ(ImageAnimationCount::kLoopNone, decoder->RepetitionCount());
   }
 
   // Store the acTL for more tests.
@@ -507,7 +507,7 @@ TEST(AnimatedPNGTests, ActlErrors) {
       decoder->SetData(extra_actl_data, true);
       EXPECT_EQ(1u, decoder->FrameCount());
       EXPECT_FALSE(decoder->Failed());
-      EXPECT_EQ(kAnimationNone, decoder->RepetitionCount());
+      EXPECT_EQ(ImageAnimationCount::kLoopNone, decoder->RepetitionCount());
       EXPECT_NE(nullptr, decoder->DecodeFrameBufferAtIndex(0));
       EXPECT_FALSE(decoder->Failed());
     }
@@ -937,14 +937,15 @@ TEST(AnimatedPNGTests, SubsetFromIHDR) {
   ASSERT_EQ(original_data->size(), data->size());
 
   // This will test both byte by byte and using the full data, and compare.
-  TestByteByByteDecode(CreatePNGDecoder, data.Get(), 1, kAnimationNone);
+  TestByteByByteDecode(CreatePNGDecoder, data.Get(), 1,
+                       ImageAnimationCount::kLoopNone);
 }
 
 // Static PNG tests
 
 TEST(StaticPNGTests, repetitionCountTest) {
   TestRepetitionCount("/LayoutTests/images/resources/png-simple.png",
-                      kAnimationNone);
+                      ImageAnimationCount::kLoopNone);
 }
 
 TEST(StaticPNGTests, sizeTest) {

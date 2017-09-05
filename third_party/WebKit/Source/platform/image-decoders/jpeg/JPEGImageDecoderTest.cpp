@@ -273,20 +273,20 @@ TEST(JPEGImageDecoderTest,
   TestByteByByteDecode(&CreateJPEGDecoder,
                        "/LayoutTests/images/resources/"
                        "small-square-with-colorspin-profile.jpg",
-                       1u, kAnimationNone);
+                       1u, ImageAnimationCount::kLoopNone);
 }
 
 TEST(JPEGImageDecoderTest, byteByByteProgressiveJPEG) {
   TestByteByByteDecode(&CreateJPEGDecoder,
                        "/LayoutTests/images/resources/bug106024.jpg", 1u,
-                       kAnimationNone);
+                       ImageAnimationCount::kLoopNone);
 }
 
 TEST(JPEGImageDecoderTest, byteByByteRGBJPEGWithAdobeMarkers) {
   TestByteByByteDecode(
       &CreateJPEGDecoder,
       "/LayoutTests/images/resources/rgb-jpeg-with-adobe-marker-only.jpg", 1u,
-      kAnimationNone);
+      ImageAnimationCount::kLoopNone);
 }
 
 // This test verifies that calling SharedBuffer::MergeSegmentsIntoBuffer() does

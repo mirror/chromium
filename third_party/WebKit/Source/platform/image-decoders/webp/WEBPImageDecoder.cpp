@@ -129,7 +129,7 @@ WEBPImageDecoder::WEBPImageDecoder(AlphaOption alpha_option,
       demux_(0),
       demux_state_(WEBP_DEMUX_PARSING_HEADER),
       have_already_parsed_this_data_(false),
-      repetition_count_(kAnimationLoopOnce),
+      repetition_count_(ImageAnimationCount::kLoopOnce),
       decoded_height_(0) {
   blend_function_ = (alpha_option == kAlphaPremultiplied)
                         ? alphaBlendPremultiplied
@@ -159,7 +159,7 @@ void WEBPImageDecoder::OnSetData(SegmentReader*) {
 }
 
 int WEBPImageDecoder::RepetitionCount() const {
-  return Failed() ? kAnimationLoopOnce : repetition_count_;
+  return Failed() ? ImageAnimationCount::kLoopOnce : repetition_count_;
 }
 
 bool WEBPImageDecoder::FrameIsReceivedAtIndex(size_t index) const {
@@ -214,7 +214,7 @@ bool WEBPImageDecoder::UpdateDemuxer() {
 
     format_flags_ = WebPDemuxGetI(demux_, WEBP_FF_FORMAT_FLAGS);
     if (!(format_flags_ & ANIMATION_FLAG)) {
-      repetition_count_ = kAnimationNone;
+      repetition_count_ = ImageAnimationCount::kLoopNone;
     } else {
       // Since we have parsed at least one frame, even if partially,
       // the global animation (ANIM) properties have been read since
@@ -223,7 +223,7 @@ bool WEBPImageDecoder::UpdateDemuxer() {
       // Repetition count is always <= 16 bits.
       DCHECK_EQ(repetition_count_, repetition_count_ & 0xffff);
       if (!repetition_count_)
-        repetition_count_ = kAnimationLoopInfinite;
+        repetition_count_ = ImageAnimationCount::kLoopInfinite;
       // FIXME: Implement ICC profile support for animated images.
       format_flags_ &= ~ICCP_FLAG;
     }
