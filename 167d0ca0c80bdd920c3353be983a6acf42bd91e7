@@ -37,6 +37,29 @@
     },
     {
       "key": {
+        "uuid": "f33a2b69_d2501667",
+        "filename": "third_party/WebKit/PerformanceTests/ImageDecoder/decode-jpeg.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-09-05T17:04:55Z",
+      "side": 1,
+      "message": "Is it possible to put all calls to runImageDecoderPerfTests into one html file?\n\nOn another note, \"Measures performance\" seems like it\u0027s redundant; don\u0027t all PerfTests do that? (Are others named similarly?)",
+      "range": {
+        "startLine": 7,
+        "startChar": 6,
+        "endLine": 7,
+        "endChar": 30
+      },
+      "revId": "167d0ca0c80bdd920c3353be983a6acf42bd91e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2040de94_0232aa16",
         "filename": "third_party/WebKit/PerformanceTests/ImageDecoder/decode-webp.html",
         "patchSetId": 4
@@ -118,6 +141,24 @@
       "side": 1,
       "message": "\u003e I want to add a comment for the reviewers (I had to learn about this when writing this test):\n\nThanks for the details.\n\n\u003e This call to addRunTestEndMarker() signals PerfTestRunner to check its iterationCount and call done if it has hit the end. That is why the if (!isDone) comes next.\n\nRight, a little tricky / obscure.  Would be nice if addRunTestEndMarker() returned false or something to signal that there are no more iterations. anyho, ...",
       "parentUuid": "fa7275d3_43092f98",
+      "revId": "167d0ca0c80bdd920c3353be983a6acf42bd91e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abd2e3c5_3ebf7881",
+        "filename": "third_party/WebKit/PerformanceTests/ImageDecoder/resources/image_decoder_runner.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-09-05T17:04:55Z",
+      "side": 1,
+      "message": "I think it might be clearer with a better comment above \"if (!isDone)\". Something like:\n\n// addRunTestEndMarker sets isDone to true once all iterations are performed.\n\nI don\u0027t think the existing comment adds anything.",
+      "parentUuid": "50e92c1e_09bd46ab",
       "revId": "167d0ca0c80bdd920c3353be983a6acf42bd91e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
