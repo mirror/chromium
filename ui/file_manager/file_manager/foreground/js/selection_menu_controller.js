@@ -26,6 +26,8 @@ function SelectionMenuController(selectionMenuButton, menu) {
 
   selectionMenuButton.addEventListener('menushow', this.onShowMenu_.bind(this));
   selectionMenuButton.addEventListener('menuhide', this.onHideMenu_.bind(this));
+  this.menu_.addEventListener(
+      'transitionend', this.onTransitionEnd_.bind(this));
 }
 
 /**
@@ -47,6 +49,16 @@ SelectionMenuController.prototype.onShowMenu_ = function() {
  * @private
  */
 SelectionMenuController.prototype.onHideMenu_ = function() {
-  this.menu_.classList.toggle(SelectionMenuController.TOOLBAR_MENU, false);
   this.toggleRipple_.activated = false;
+};
+
+/**
+ * @private
+ */
+SelectionMenuController.prototype.onTransitionEnd_ = function() {
+  if (!this.toggleRipple_.activated)
+    // The fade-out animation is being finished.
+    // Update menu items in the next cycle to avoid flashing in the last frame.
+    setTimeout(this.menu_.classList.toggle.bind(
+        SelectionMenuController.TOOLBAR_MENU, false));
 };
