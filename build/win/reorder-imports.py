@@ -10,11 +10,32 @@ import shutil
 import subprocess
 import sys
 
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..',
+                                'third_party', 'pefile'))
+import pefile
+
 def reorder_imports(input_dir, output_dir, architecture):
   """Run swapimports.exe on the initial chrome.exe, and write to the output
   directory. Also copy over any related files that might be needed
   (pdbs, manifests etc.).
   """
+
+  path = r'C:\Program Files (x86)\Google\Chrome\Application\chrome.exe'
+  pe = pefile.PE(path, fast_load = False)
+  pe.parse_data_directories(directories=[
+      pefile.DIRECTORY_ENTRY['IMAGE_DIRECTORY_ENTRY_IMPORT']])
+
+  for i in xrange(len(pe.DIRECTORY_ENTRY_IMPORT)):
+    print pe.DIRECTORY_ENTRY_IMPORT[i].dll #, peimport.struct#, peimport.imports
+    if pe.DIRECTORY_ENTRY_IMPORT[i].dll.lower() == 'chrome_elf.dll':
+      print 'hey'
+
+  if architecture == 'x64':
+    assert pe.PE_TYPE == pefile.OPTIONAL_HEADER_MAGIC_PE_PLUS
+  else:
+    assert pe.PE_TYPE == pefile.OPTIONAL_HEADER_MAGIC_PE
+
+  return
 
   input_image = os.path.join(input_dir, 'chrome.exe')
   output_image = os.path.join(output_dir, 'chrome.exe')
@@ -49,8 +70,8 @@ def main(argv):
       default='ia32')
   opts, args = parser.parse_args()
 
-  if not opts.input or not opts.output:
-    parser.error('Please provide and input and output directory')
+  #if not opts.input or not opts.output:
+  #  parser.error('Please provide and input and output directory')
   return reorder_imports(opts.input, opts.output, opts.arch)
 
 if __name__ == "__main__":
