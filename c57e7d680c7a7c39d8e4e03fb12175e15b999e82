@@ -52,6 +52,24 @@
       "revId": "c57e7d680c7a7c39d8e4e03fb12175e15b999e82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d09252d8_fa6e152f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-05T17:20:11Z",
+      "side": 1,
+      "message": "I totally agree, something is definitely weird, and we should definitely get a better understanding of why this is going wrong and fix it for M63.\n\nI\u0027d feel more comfortable merging a fix like this back to M62 though, as this is contained within VR and shouldn\u0027t break anything else.",
+      "parentUuid": "e1e6b52d_38e188f5",
+      "revId": "c57e7d680c7a7c39d8e4e03fb12175e15b999e82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
