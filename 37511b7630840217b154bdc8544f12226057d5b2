@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ca991c3_732346a5",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-05T22:09:51Z",
+      "side": 1,
+      "message": "Note: \u0027required\u0027 just logs an error, so we should test to ensure this is not empty since onc::ipconfig::IPAddress is not required in ONC.",
+      "revId": "37511b7630840217b154bdc8544f12226057d5b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4160546e_c06569eb",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-05T22:09:51Z",
+      "side": 1,
+      "message": "onc::ipconfig::NameServers is not a required field so we should fail gracefully here, not assert.",
+      "revId": "37511b7630840217b154bdc8544f12226057d5b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95f2b5b6_8b0053e4",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-05T22:09:51Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "37511b7630840217b154bdc8544f12226057d5b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
