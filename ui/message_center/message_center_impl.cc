@@ -584,28 +584,16 @@ void MessageCenterImpl::UpdateNotification(
   for (size_t i = 0; i < blockers_.size(); ++i)
     blockers_[i]->CheckState();
 
-  if (notification_queue_ && visible_) {
-    // We will allow notifications that are progress types (and stay progress
-    // types) to be updated even if the message center is open.  There are 3
-    // requirements here:
-    //  * Notification of type PROGRESS exists with same ID in the center
-    //  * There are no queued updates for this notification (they imply a change
-    //    that violates the PROGRESS invariant
-    //  * The new notification is type PROGRESS.
-    // TODO(dewittj): Ensure this works when the ID is changed by the caller.
-    // This shouldn't be an issue in practice since only W3C notifications
-    // change the ID on update, and they don't have progress type notifications.
-    bool update_keeps_progress_type =
-        new_notification->type() == NOTIFICATION_TYPE_PROGRESS &&
-        !notification_queue_->Has(old_id) &&
-        notification_list_->HasNotificationOfType(old_id,
-                                                  NOTIFICATION_TYPE_PROGRESS);
-    if (!update_keeps_progress_type) {
-      // Updates are allowed only for progress notifications.
-      notification_queue_->UpdateNotification(old_id,
-                                              std::move(new_notification));
-      return;
-    }
+  // Most updates are enqueued when the message center is visible. Only
+  // immediately update progress type notifications (including those changing to
+  // a non-progress type).
+  if (notification_queue_ && visible_ &&
+      (notification_queue_->Has(old_id) ||
+       !notification_list_->HasNotificationOfType(
+           old_id, NOTIFICATION_TYPE_PROGRESS))) {
+    notification_queue_->UpdateNotification(old_id,
+                                            std::move(new_notification));
+    return;
   }
 
   UpdateNotificationImmediately(old_id, std::move(new_notification));
