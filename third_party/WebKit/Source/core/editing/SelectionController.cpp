@@ -388,7 +388,10 @@ bool SelectionController::HandleSingleClick(
       is_handle_visible ? HandleVisibility::kVisible
                         : HandleVisibility::kNotVisible);
 
-  if (has_editable_style && event.Event().FromTouch()) {
+  // SelectionControllerTest_SetCaretAtHitTestResultWithDisconnectedPosition
+  // makes the IsValidFor() check fail.
+  if (has_editable_style && event.Event().FromTouch() &&
+      position_to_use.IsValidFor(*frame_->GetDocument())) {
     frame_->GetTextSuggestionController().HandlePotentialMisspelledWordTap(
         position_to_use.GetPosition());
   }
