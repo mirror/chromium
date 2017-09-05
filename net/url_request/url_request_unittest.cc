@@ -10387,7 +10387,7 @@ static CertStatus ExpectedCertStatusForFailedOnlineEVRevocationCheck() {
 }
 
 static bool SystemSupportsOCSP() {
-#if defined(OS_ANDROID)
+#if defined(OS_ANDROID) || defined(OS_FUCHSIA)
   // TODO(jnd): http://crbug.com/117478 - EV verification is not yet supported.
   return false;
 #else
@@ -11002,7 +11002,7 @@ INSTANTIATE_TEST_CASE_P(OCSPVerify,
                         testing::ValuesIn(kOCSPVerifyData));
 
 static bool SystemSupportsAIA() {
-#if defined(OS_ANDROID)
+#if defined(OS_ANDROID) || defined(OS_FUCHSIA)
   return false;
 #else
   return true;
@@ -11312,7 +11312,7 @@ TEST_F(HTTPSCRLSetTest, ExpiredCRLSet) {
 }
 
 TEST_F(HTTPSCRLSetTest, CRLSetRevoked) {
-#if defined(OS_ANDROID)
+#if defined(OS_ANDROID) || defined(OS_FUCHSIA)
   LOG(WARNING) << "Skipping test because system doesn't support CRLSets";
   return;
 #endif
