@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3592c324_4d4e0f60",
+        "filename": "tools/perf/page_sets/page_cycler_story.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-05T05:44:56Z",
+      "side": 1,
+      "message": "Does this work well?\n(func1, func2) seems good if util.WaitFor can take a tuple of functions, but this looks like (func1 and func2) and it looks probably equivalent to True.\nIs my understanding collect?",
+      "revId": "c6ea2e01e987605220a933aa8ba3fc695f86316e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
