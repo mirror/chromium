@@ -1,0 +1,216 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78d3c5fa_f42b5d21",
+        "filename": "components/cronet/ios/test/cronet_performance_test.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-09-05T17:43:21Z",
+      "side": 1,
+      "message": "Is it going to be used?",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 3
+      },
+      "revId": "8b795e26c5fcd66286f2b64d5bf7f5191ddb4dd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26898b28_cf7e4ae9",
+        "filename": "components/cronet/ios/test/cronet_performance_test.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-09-05T17:43:21Z",
+      "side": 1,
+      "message": "Since this is C++, you can skip typedef. Also, according to the style guide, the name of the structure type should start with a capital letter; thus, it can be written:\n\nstruct Payload {\n  int size;\n  NSURL* url;\n}",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 12
+      },
+      "revId": "8b795e26c5fcd66286f2b64d5bf7f5191ddb4dd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "966e7c9f_08d945d8",
+        "filename": "components/cronet/ios/test/cronet_performance_test.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-09-05T17:43:21Z",
+      "side": 1,
+      "message": "We don\u0027t need it here but it would be useful to have a matrix with all test param combinations.\n\nWe don\u0027t think we need performance testing with netlog. We know that netlog is slow and we have nothing to compare it to.\n\nPlatform(nonetlog+?quic) - if it is the platform stack then QUIC is not used.",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 9
+      },
+      "revId": "8b795e26c5fcd66286f2b64d5bf7f5191ddb4dd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e3481d1_82e0a972",
+        "filename": "components/cronet/ios/test/cronet_performance_test.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-09-05T17:43:21Z",
+      "side": 1,
+      "message": "I think we are not supposed to connect to external URLs on the test bots. We should think what is the best way to handle it.",
+      "revId": "8b795e26c5fcd66286f2b64d5bf7f5191ddb4dd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6cc4e96_56ebd73e",
+        "filename": "components/cronet/ios/test/cronet_performance_test.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-09-05T17:43:21Z",
+      "side": 1,
+      "message": "Please add comments what each of the booleans represent.",
+      "range": {
+        "startLine": 115,
+        "startChar": 0,
+        "endLine": 119,
+        "endChar": 55
+      },
+      "revId": "8b795e26c5fcd66286f2b64d5bf7f5191ddb4dd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1f28c9f_db47d445",
+        "filename": "components/cronet/ios/test/cronet_performance_test.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-09-05T17:43:21Z",
+      "side": 1,
+      "message": "Some of the test combinations will produce the same results. E.g., if we are testing  the platform implementation then adding or removing AKD4 experimental option doesn\u0027t have any effect. Same for the QUIC \u0026 HTTP2 option. Combining QUIC \u0026 HTTP2 together also doesn\u0027t give us much.",
+      "revId": "8b795e26c5fcd66286f2b64d5bf7f5191ddb4dd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bf1225f_0213c9bd",
+        "filename": "components/cronet/ios/test/cronet_performance_test.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-09-05T17:43:21Z",
+      "side": 1,
+      "message": "Should be HTTP2",
+      "range": {
+        "startLine": 133,
+        "startChar": 25,
+        "endLine": 133,
+        "endChar": 30
+      },
+      "revId": "8b795e26c5fcd66286f2b64d5bf7f5191ddb4dd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9deca874_244fc419",
+        "filename": "components/cronet/ios/test/cronet_performance_test.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-09-05T17:43:21Z",
+      "side": 1,
+      "message": "I don\u0027t see where the forth parameter is used except in the logs. Isn\u0027t it supposed to be used to test the platform performance?",
+      "revId": "8b795e26c5fcd66286f2b64d5bf7f5191ddb4dd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d5ec972_c76aec90",
+        "filename": "components/cronet/ios/test/cronet_test_base.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-09-05T17:43:21Z",
+      "side": 1,
+      "message": "The presubmit check will ask you to file a bug and add it to TODO in parenthesis.",
+      "range": {
+        "startLine": 56,
+        "startChar": 3,
+        "endLine": 56,
+        "endChar": 21
+      },
+      "revId": "8b795e26c5fcd66286f2b64d5bf7f5191ddb4dd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1742888_71106cdb",
+        "filename": "components/cronet/ios/test/cronet_test_base.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-09-05T17:43:21Z",
+      "side": 1,
+      "message": "If we don\u0027t need this code, we should remove it. Tracking _totalBytesReceived could still be useful.",
+      "range": {
+        "startLine": 96,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 35
+      },
+      "revId": "8b795e26c5fcd66286f2b64d5bf7f5191ddb4dd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
