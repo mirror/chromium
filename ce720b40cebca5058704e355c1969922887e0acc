@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "30713396_899b9bcb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-05T15:04:38Z",
+      "side": 1,
+      "message": "Please provide a more complete description of this change.",
+      "revId": "ce720b40cebca5058704e355c1969922887e0acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16cfc61f_097a3d65",
+        "filename": "ios/clean/chrome/browser/ui/commands/java_script_dialog_blocking_commands.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-05T15:04:38Z",
+      "side": 1,
+      "message": "In line with our other conversations about locality, this seems like something that will always and only be handled inside JS dialog component; it doesn\u0027t need to be globally available for dispatch.",
+      "range": {
+        "startLine": 13,
+        "startChar": 8,
+        "endLine": 13,
+        "endChar": 51
+      },
+      "revId": "ce720b40cebca5058704e355c1969922887e0acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e11fff7_68817416",
         "filename": "ios/clean/chrome/browser/ui/dialogs/java_script_dialogs/dialog_blocking/java_script_dialog_blocking_confirmation_coordinator.mm",
         "patchSetId": 3
@@ -41,6 +81,29 @@
         "startChar": 2,
         "endLine": 70,
         "endChar": 60
+      },
+      "revId": "ce720b40cebca5058704e355c1969922887e0acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca8fa2bd_380f2504",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_coordinator_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-05T15:04:38Z",
+      "side": 1,
+      "message": "Why are these disabled?",
+      "range": {
+        "startLine": 71,
+        "startChar": 27,
+        "endLine": 71,
+        "endChar": 50
       },
       "revId": "ce720b40cebca5058704e355c1969922887e0acc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
