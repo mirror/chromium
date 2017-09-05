@@ -109,6 +109,24 @@
     },
     {
       "key": {
+        "uuid": "58defeef_f20aa0fa",
+        "filename": "base/message_loop/incoming_task_queue.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-05T16:10:10Z",
+      "side": 1,
+      "message": "Re:  I don\u0027t think the generic impl of incoming_task_queue.cc should rely on the existing platform-specific implementations.\n\nIncomingTaskQueue should rely on the specified contract of ScheduleWork(), which is to return quickly. A context switch is not in the contract unless the underlying kernel structures are themselves contended.",
+      "parentUuid": "12e283b6_f7975268",
+      "revId": "c74f5d4d1fbc9cefb15ffe516b1c1d38d4008f3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d56d9d0c_b924a4de",
         "filename": "base/message_loop/incoming_task_queue.h",
         "patchSetId": 4
