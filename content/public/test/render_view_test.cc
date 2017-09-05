@@ -299,28 +299,29 @@ void RenderViewTest::SetUp() {
   compositor_deps_.reset(new FakeCompositorDependencies);
   mock_process_.reset(new MockRenderProcess);
 
-  mojom::CreateViewParams view_params;
-  view_params.opener_frame_route_id = MSG_ROUTING_NONE;
-  view_params.window_was_created_with_opener = false;
-  view_params.renderer_preferences = RendererPreferences();
-  view_params.web_preferences = WebPreferences();
-  view_params.view_id = kRouteId;
-  view_params.main_frame_routing_id = kMainFrameRouteId;
-  view_params.main_frame_widget_routing_id = kMainFrameWidgetRouteId;
-  view_params.session_storage_namespace_id = kInvalidSessionStorageNamespaceId;
-  view_params.swapped_out = false;
-  view_params.replicated_frame_state = FrameReplicationState();
-  view_params.proxy_routing_id = MSG_ROUTING_NONE;
-  view_params.hidden = false;
-  view_params.never_visible = false;
-  view_params.initial_size = *InitialSizeParams();
-  view_params.enable_auto_resize = false;
-  view_params.min_size = gfx::Size();
-  view_params.max_size = gfx::Size();
+  mojom::CreateViewParamsPtr view_params = mojom::CreateViewParams::New();
+  view_params->opener_frame_route_id = MSG_ROUTING_NONE;
+  view_params->window_was_created_with_opener = false;
+  view_params->renderer_preferences = RendererPreferences();
+  view_params->web_preferences = WebPreferences();
+  view_params->view_id = kRouteId;
+  view_params->main_frame_routing_id = kMainFrameRouteId;
+  view_params->main_frame_widget_routing_id = kMainFrameWidgetRouteId;
+  view_params->session_storage_namespace_id = kInvalidSessionStorageNamespaceId;
+  view_params->swapped_out = false;
+  view_params->replicated_frame_state = FrameReplicationState();
+  view_params->proxy_routing_id = MSG_ROUTING_NONE;
+  view_params->hidden = false;
+  view_params->never_visible = false;
+  view_params->initial_size = *InitialSizeParams();
+  view_params->enable_auto_resize = false;
+  view_params->min_size = gfx::Size();
+  view_params->max_size = gfx::Size();
 
   // This needs to pass the mock render thread to the view.
-  RenderViewImpl* view = RenderViewImpl::Create(
-      compositor_deps_.get(), view_params, RenderWidget::ShowCallback());
+  RenderViewImpl* view =
+      RenderViewImpl::Create(compositor_deps_.get(), std::move(view_params),
+                             RenderWidget::ShowCallback());
   view_ = view;
 }
 

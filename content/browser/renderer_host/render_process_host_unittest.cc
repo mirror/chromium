@@ -129,9 +129,10 @@ TEST_F(RenderProcessHostUnitTest, ReuseCommittedSite) {
   // return the process of the subframe RFH.
   std::string unique_name("uniqueName0");
   main_test_rfh()->OnCreateChildFrame(
-      process()->GetNextRoutingID(), blink::WebTreeScopeType::kDocument,
-      std::string(), unique_name, blink::WebSandboxFlags::kNone,
-      ParsedFeaturePolicyHeader(), FrameOwnerProperties());
+      process()->GetNextRoutingID(), nullptr,
+      blink::WebTreeScopeType::kDocument, std::string(), unique_name,
+      blink::WebSandboxFlags::kNone, ParsedFeaturePolicyHeader(),
+      FrameOwnerProperties());
   TestRenderFrameHost* subframe = static_cast<TestRenderFrameHost*>(
       contents()->GetFrameTree()->root()->child_at(0)->current_frame_host());
   subframe = static_cast<TestRenderFrameHost*>(
