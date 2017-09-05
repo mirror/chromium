@@ -292,7 +292,7 @@ void InputHandlerProxy::HandleInputEventWithLatencyInfo(
     compositor_event_queue_->Queue(std::move(event_with_callback),
                                    tick_clock_->NowTicks());
     if (needs_animate_input)
-      input_handler_->SetNeedsAnimateInput();
+      RequestAnimation();
     return;
   }
 
