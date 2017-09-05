@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5bf58d2_09f91367",
+        "filename": "third_party/WebKit/Source/devtools/front_end/accessibility/AXBreadcrumbsPane.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-09-05T23:58:41Z",
+      "side": 1,
+      "message": "Fancy",
+      "revId": "19056530d607d1d30cbb4d17fa4cb8ac5b420ba3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff5b6702_673d1186",
+        "filename": "third_party/WebKit/Source/devtools/front_end/accessibility/AXBreadcrumbsPane.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-09-05T23:58:41Z",
+      "side": 1,
+      "message": "This fixes the contextmenu right? Can you add that to the description?",
+      "revId": "19056530d607d1d30cbb4d17fa4cb8ac5b420ba3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2638ae4c_0fc83e7e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/accessibility/AXBreadcrumbsPane.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-09-05T23:58:41Z",
+      "side": 1,
+      "message": "I\u0027ll just trust you that this is better now.",
+      "revId": "19056530d607d1d30cbb4d17fa4cb8ac5b420ba3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cebda5bd_0863a7a7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/accessibility/AXBreadcrumbsPane.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-09-05T23:58:41Z",
+      "side": 1,
+      "message": "Nit: _ means private to the file, not to the class. So you can just use _nodeElement above instead of making this public.",
+      "revId": "19056530d607d1d30cbb4d17fa4cb8ac5b420ba3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20097525_f3011780",
+        "filename": "third_party/WebKit/Source/devtools/front_end/accessibility/AccessibilitySidebarView.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-09-05T23:58:41Z",
+      "side": 1,
+      "message": "I\u0027m having trouble following what each change here fixes. Is the order change here significant?",
+      "revId": "19056530d607d1d30cbb4d17fa4cb8ac5b420ba3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
