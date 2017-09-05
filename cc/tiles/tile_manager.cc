@@ -1512,8 +1512,8 @@ void TileManager::CheckPendingGpuWorkTiles(bool issue_signals) {
                "tree_priority",
                TreePriorityToString(global_state_.tree_priority));
 
-  ResourceProvider::ResourceIdArray required_for_activation_ids;
-  ResourceProvider::ResourceIdArray required_for_draw_ids;
+  viz::ResourceProvider::ResourceIdArray required_for_activation_ids;
+  viz::ResourceProvider::ResourceIdArray required_for_draw_ids;
 
   for (auto it = pending_gpu_work_tiles_.begin();
        it != pending_gpu_work_tiles_.end();) {

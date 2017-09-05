@@ -15,8 +15,8 @@
 #include "base/trace_event/trace_event.h"
 #include "base/trace_event/trace_event_argument.h"
 #include "cc/raster/raster_source.h"
-#include "cc/resources/layer_tree_resource_provider.h"
 #include "cc/resources/resource.h"
+#include "components/viz/common/display/layer_tree_resource_provider.h"
 #include "components/viz/common/resources/platform_color.h"
 
 namespace cc {
@@ -24,7 +24,7 @@ namespace {
 
 class RasterBufferImpl : public RasterBuffer {
  public:
-  RasterBufferImpl(LayerTreeResourceProvider* resource_provider,
+  RasterBufferImpl(viz::LayerTreeResourceProvider* resource_provider,
                    const Resource* resource,
                    uint64_t resource_content_id,
                    uint64_t previous_content_id)
@@ -58,7 +58,7 @@ class RasterBufferImpl : public RasterBuffer {
   }
 
  private:
-  ResourceProvider::ScopedWriteLockSoftware lock_;
+  viz::ResourceProvider::ScopedWriteLockSoftware lock_;
   const Resource* resource_;
   bool resource_has_previous_content_;
 
@@ -69,13 +69,13 @@ class RasterBufferImpl : public RasterBuffer {
 
 // static
 std::unique_ptr<RasterBufferProvider> BitmapRasterBufferProvider::Create(
-    LayerTreeResourceProvider* resource_provider) {
+    viz::LayerTreeResourceProvider* resource_provider) {
   return base::WrapUnique<RasterBufferProvider>(
       new BitmapRasterBufferProvider(resource_provider));
 }
 
 BitmapRasterBufferProvider::BitmapRasterBufferProvider(
-    LayerTreeResourceProvider* resource_provider)
+    viz::LayerTreeResourceProvider* resource_provider)
     : resource_provider_(resource_provider) {}
 
 BitmapRasterBufferProvider::~BitmapRasterBufferProvider() {}
@@ -121,7 +121,7 @@ bool BitmapRasterBufferProvider::IsResourceReadyToDraw(
 }
 
 uint64_t BitmapRasterBufferProvider::SetReadyToDrawCallback(
-    const ResourceProvider::ResourceIdArray& resource_ids,
+    const viz::ResourceProvider::ResourceIdArray& resource_ids,
     const base::Closure& callback,
     uint64_t pending_callback_id) const {
   // Bitmap resources are immediately ready to draw.

@@ -2,18 +2,18 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CC_RESOURCES_SINGLE_RELEASE_CALLBACK_IMPL_H_
-#define CC_RESOURCES_SINGLE_RELEASE_CALLBACK_IMPL_H_
+#ifndef COMPONENTS_VIZ_COMMON_QUADS_SINGLE_RELEASE_CALLBACK_IMPL_H_
+#define COMPONENTS_VIZ_COMMON_QUADS_SINGLE_RELEASE_CALLBACK_IMPL_H_
 
 #include <memory>
 
 #include "base/memory/ptr_util.h"
-#include "cc/cc_export.h"
-#include "cc/resources/release_callback_impl.h"
+#include "components/viz/common/quads/release_callback_impl.h"
+#include "components/viz/common/viz_common_export.h"
 
-namespace cc {
+namespace viz {
 
-class CC_EXPORT SingleReleaseCallbackImpl {
+class VIZ_COMMON_EXPORT SingleReleaseCallbackImpl {
  public:
   static std::unique_ptr<SingleReleaseCallbackImpl> Create(
       const ReleaseCallbackImpl& cb) {
@@ -24,7 +24,7 @@ class CC_EXPORT SingleReleaseCallbackImpl {
 
   void Run(const gpu::SyncToken& sync_token,
            bool is_lost,
-           BlockingTaskRunner* main_thread_task_runner);
+           cc::BlockingTaskRunner* main_thread_task_runner);
 
  private:
   explicit SingleReleaseCallbackImpl(const ReleaseCallbackImpl& callback);
@@ -32,6 +32,6 @@ class CC_EXPORT SingleReleaseCallbackImpl {
   ReleaseCallbackImpl callback_;
 };
 
-}  // namespace cc
+}  // namespace viz
 
-#endif  // CC_RESOURCES_SINGLE_RELEASE_CALLBACK_IMPL_H_
+#endif  // COMPONENTS_VIZ_COMMON_QUADS_SINGLE_RELEASE_CALLBACK_IMPL_H_

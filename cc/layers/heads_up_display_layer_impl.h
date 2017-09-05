@@ -17,6 +17,7 @@
 #include "cc/resources/memory_history.h"
 #include "cc/resources/scoped_resource.h"
 #include "cc/trees/debug_rect_history.h"
+#include "components/viz/common/display/resource_provider.h"
 #include "third_party/skia/include/core/SkRefCnt.h"
 
 class SkCanvas;
@@ -40,11 +41,11 @@ class CC_EXPORT HeadsUpDisplayLayerImpl : public LayerImpl {
   std::unique_ptr<LayerImpl> CreateLayerImpl(LayerTreeImpl* tree_impl) override;
 
   bool WillDraw(DrawMode draw_mode,
-                ResourceProvider* resource_provider) override;
+                viz::ResourceProvider* resource_provider) override;
   void AppendQuads(RenderPass* render_pass,
                    AppendQuadsData* append_quads_data) override;
   void UpdateHudTexture(DrawMode draw_mode,
-                        ResourceProvider* resource_provider,
+                        viz::ResourceProvider* resource_provider,
                         viz::ContextProvider* context_provider,
                         const RenderPassList& list);
 
@@ -133,8 +134,8 @@ class CC_EXPORT HeadsUpDisplayLayerImpl : public LayerImpl {
                      const std::string& label_text) const;
   void DrawDebugRects(SkCanvas* canvas, DebugRectHistory* debug_rect_history);
 
-  void AcquireResource(ResourceProvider* resource_provider);
-  void ReleaseUnmatchedSizeResources(ResourceProvider* resource_provider);
+  void AcquireResource(viz::ResourceProvider* resource_provider);
+  void ReleaseUnmatchedSizeResources(viz::ResourceProvider* resource_provider);
 
   std::vector<std::unique_ptr<ScopedResource>> resources_;
   sk_sp<SkSurface> hud_surface_;

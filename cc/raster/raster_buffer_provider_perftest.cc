@@ -17,7 +17,6 @@
 #include "cc/raster/synchronous_task_graph_runner.h"
 #include "cc/raster/zero_copy_raster_buffer_provider.h"
 #include "cc/resources/resource_pool.h"
-#include "cc/resources/resource_provider.h"
 #include "cc/resources/scoped_resource.h"
 #include "cc/test/fake_resource_provider.h"
 #include "cc/test/test_context_provider.h"
@@ -25,6 +24,7 @@
 #include "cc/test/test_shared_bitmap_manager.h"
 #include "cc/test/test_web_graphics_context_3d.h"
 #include "cc/tiles/tile_task_manager.h"
+#include "components/viz/common/display/resource_provider.h"
 #include "components/viz/common/gpu/context_cache_controller.h"
 #include "components/viz/common/gpu/context_provider.h"
 #include "components/viz/common/resources/platform_color.h"
@@ -244,7 +244,7 @@ class RasterBufferProviderPerfTestBase {
     for (unsigned i = 0; i < num_raster_tasks; ++i) {
       auto resource =
           std::make_unique<ScopedResource>(resource_provider_.get());
-      resource->Allocate(size, ResourceProvider::TEXTURE_HINT_IMMUTABLE,
+      resource->Allocate(size, viz::ResourceProvider::TEXTURE_HINT_IMMUTABLE,
                          viz::RGBA_8888, gfx::ColorSpace());
 
       // No tile ids are given to support partial updates.
@@ -309,7 +309,7 @@ class RasterBufferProviderPerfTestBase {
  protected:
   scoped_refptr<viz::ContextProvider> compositor_context_provider_;
   scoped_refptr<viz::ContextProvider> worker_context_provider_;
-  std::unique_ptr<LayerTreeResourceProvider> resource_provider_;
+  std::unique_ptr<viz::LayerTreeResourceProvider> resource_provider_;
   scoped_refptr<base::TestSimpleTaskRunner> task_runner_;
   std::unique_ptr<SynchronousTaskGraphRunner> task_graph_runner_;
   LapTimer timer_;
@@ -485,14 +485,14 @@ class RasterBufferProviderPerfTest
  private:
   void Create3dResourceProvider() {
     resource_provider_ =
-        FakeResourceProvider::Create<LayerTreeResourceProvider>(
+        FakeResourceProvider::Create<viz::LayerTreeResourceProvider>(
             compositor_context_provider_.get(), nullptr,
             &gpu_memory_buffer_manager_);
   }
 
   void CreateSoftwareResourceProvider() {
     resource_provider_ =
-        FakeResourceProvider::Create<LayerTreeResourceProvider>(
+        FakeResourceProvider::Create<viz::LayerTreeResourceProvider>(
             nullptr, &shared_bitmap_manager_, nullptr);
   }
 
@@ -558,7 +558,7 @@ class RasterBufferProviderCommonPerfTest
   // Overridden from testing::Test:
   void SetUp() override {
     resource_provider_ =
-        FakeResourceProvider::Create<LayerTreeResourceProvider>(
+        FakeResourceProvider::Create<viz::LayerTreeResourceProvider>(
             compositor_context_provider_.get(), nullptr);
   }
 

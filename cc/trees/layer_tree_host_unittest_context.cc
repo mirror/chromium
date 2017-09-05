@@ -883,7 +883,7 @@ class LayerTreeHostContextTestDontUseLostResources
     CHECK(child_context_provider_->BindToCurrentThread());
     shared_bitmap_manager_.reset(new TestSharedBitmapManager);
     child_resource_provider_ =
-        FakeResourceProvider::Create<LayerTreeResourceProvider>(
+        FakeResourceProvider::Create<viz::LayerTreeResourceProvider>(
             child_context_provider_.get(), shared_bitmap_manager_.get());
   }
 
@@ -1040,7 +1040,7 @@ class LayerTreeHostContextTestDontUseLostResources
 
   scoped_refptr<TestContextProvider> child_context_provider_;
   std::unique_ptr<viz::SharedBitmapManager> shared_bitmap_manager_;
-  std::unique_ptr<ResourceProvider> child_resource_provider_;
+  std::unique_ptr<viz::ResourceProvider> child_resource_provider_;
 
   scoped_refptr<VideoFrame> color_video_frame_;
   scoped_refptr<VideoFrame> hw_video_frame_;
