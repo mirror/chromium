@@ -16,6 +16,24 @@
       "revId": "315b910c7341d74bcf989bca336303c0d3bb4930",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fec9564_25d0cc08",
+        "filename": "content/child/service_worker/service_worker_message_filter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-05T06:00:36Z",
+      "side": 0,
+      "message": "It\u0027s still be used to handle ServiceWorkerMsg_DidGetRegistrationForReady, so we\u0027ll remove it next time together with ServiceWorkerMsg_DidGetRegistrationForReady :)",
+      "parentUuid": "d2ac85c2_c9723930",
+      "revId": "315b910c7341d74bcf989bca336303c0d3bb4930",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

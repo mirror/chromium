@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5af263dc_4626c57a",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-05T06:00:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0bb15987_66cfd488",
+      "revId": "bdf21d840828d4ac22462af37c9ee1b6a944e2e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9748b580_1264dd6f",
         "filename": "content/browser/service_worker/service_worker_dispatcher_host_unittest.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "bdf21d840828d4ac22462af37c9ee1b6a944e2e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "711b488f_0a75a903",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-05T06:00:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9748b580_1264dd6f",
+      "revId": "bdf21d840828d4ac22462af37c9ee1b6a944e2e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1d8c6e9f_372b86ea",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-05T06:00:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a26fc94e_8c390775",
+      "revId": "bdf21d840828d4ac22462af37c9ee1b6a944e2e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2e731cf_ec579e7a",
         "filename": "content/browser/service_worker/service_worker_provider_host.cc",
         "patchSetId": 1
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "d2caf004_30b91d15",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-05T06:00:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2e731cf_ec579e7a",
+      "revId": "bdf21d840828d4ac22462af37c9ee1b6a944e2e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b33d9f72_434974e7",
         "filename": "content/browser/service_worker/service_worker_provider_host.cc",
         "patchSetId": 1
@@ -81,6 +153,24 @@
       "writtenOn": "2017-09-05T03:29:04Z",
       "side": 1,
       "message": "I think we can have multiple GetRegistration calls, so |this| can\u0027t be used as the id of the trace event. Can you use |callback| instead? Probably the same thing for Register() also,.",
+      "revId": "bdf21d840828d4ac22462af37c9ee1b6a944e2e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59c03ad5_aaf237ae",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1043,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-05T06:00:36Z",
+      "side": 1,
+      "message": "The id of trace event must either be a pointer or an integer value up to 64 bits, so I chose to use base::TimeTicks::Now().since_origin().InMicroseconds() as the id here.",
+      "parentUuid": "b33d9f72_434974e7",
       "revId": "bdf21d840828d4ac22462af37c9ee1b6a944e2e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "01fcc1fe_b0eb58bd",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1123,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-05T06:00:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f805c8d_47f9c82f",
+      "revId": "bdf21d840828d4ac22462af37c9ee1b6a944e2e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d080361f_e4a73908",
         "filename": "content/common/service_worker/service_worker_container.mojom",
         "patchSetId": 1
@@ -118,6 +226,24 @@
       "revId": "bdf21d840828d4ac22462af37c9ee1b6a944e2e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b286a68b_d04cf27e",
+        "filename": "content/common/service_worker/service_worker_container.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-05T06:00:36Z",
+      "side": 1,
+      "message": "Done and Thanks!",
+      "parentUuid": "d080361f_e4a73908",
+      "revId": "bdf21d840828d4ac22462af37c9ee1b6a944e2e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
