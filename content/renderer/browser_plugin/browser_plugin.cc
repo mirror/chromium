@@ -345,12 +345,11 @@ void BrowserPlugin::ViewRectsChanged(const gfx::Rect& view_rect) {
 
   view_rect_ = view_rect;
 
-  if (!attached())
-    return;
-
-  // Let the browser know about the updated view rect.
-  BrowserPluginManager::Get()->Send(new BrowserPluginHostMsg_UpdateGeometry(
-      browser_plugin_instance_id_, view_rect_, local_surface_id_));
+  if (attached()) {
+    // Let the browser know about the updated view rect.
+    BrowserPluginManager::Get()->Send(new BrowserPluginHostMsg_UpdateGeometry(
+        browser_plugin_instance_id_, view_rect_, local_surface_id_));
+  }
 
   if (rect_size_changed && delegate_)
     delegate_->DidResizeElement(view_rect_.size());
@@ -515,6 +514,7 @@ blink::WebInputEventResult BrowserPlugin::HandleInputEvent(
 
   if (blink::WebInputEvent::IsGestureEventType(event.GetType())) {
     auto gesture_event = static_cast<const blink::WebGestureEvent&>(event);
+
     DCHECK(blink::WebInputEvent::kGestureTapDown == event.GetType() ||
            gesture_event.resending_plugin_id == browser_plugin_instance_id_);
 
