@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5680754d_f3d83ec7",
+        "filename": "cc/layers/viewport.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-09-05T18:33:30Z",
+      "side": 1,
+      "message": "You added this branch in the last patchset and it doesn\u0027t make sense to me.  It seems theoretically wrong for the presence of height should affect the scaling at all.\n\nDid you add this to avoid influencing the return value perhaps?  In that case, I suggest applying the scale factor multiplication within browser_controls_manager()-\u003eScrollBy() instead.",
+      "revId": "70d43c433bb9c2f2b0676a7046011c77829ef0a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
