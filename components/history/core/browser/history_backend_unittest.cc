@@ -1758,19 +1758,21 @@ TEST_F(HistoryBackendTest, SetFaviconMappingsForPageAndRedirects) {
   bitmaps.push_back(CreateBitmap(SK_ColorRED, kLargeEdgeSize));
 
   // Add a favicon.
-  backend_->SetFavicons(url1, favicon_base::FAVICON, icon_url1, bitmaps);
+  backend_->SetFavicons(std::set<GURL>{url1}, favicon_base::FAVICON, icon_url1,
+                        bitmaps);
   EXPECT_EQ(1u, NumIconMappingsForPageURL(url1, favicon_base::FAVICON));
   EXPECT_EQ(1u, NumIconMappingsForPageURL(url2, favicon_base::FAVICON));
 
   // Add one touch_icon
-  backend_->SetFavicons(url1, favicon_base::TOUCH_ICON, icon_url1, bitmaps);
+  backend_->SetFavicons(std::set<GURL>{url1}, favicon_base::TOUCH_ICON,
+                        icon_url1, bitmaps);
   EXPECT_EQ(1u, NumIconMappingsForPageURL(url1, favicon_base::TOUCH_ICON));
   EXPECT_EQ(1u, NumIconMappingsForPageURL(url2, favicon_base::TOUCH_ICON));
   EXPECT_EQ(1u, NumIconMappingsForPageURL(url1, favicon_base::FAVICON));
 
   // Add one TOUCH_PRECOMPOSED_ICON
-  backend_->SetFavicons(
-      url1, favicon_base::TOUCH_PRECOMPOSED_ICON, icon_url1, bitmaps);
+  backend_->SetFavicons({url1}, favicon_base::TOUCH_PRECOMPOSED_ICON, icon_url1,
+                        bitmaps);
   // The touch_icon was replaced.
   EXPECT_EQ(0u, NumIconMappingsForPageURL(url1, favicon_base::TOUCH_ICON));
   EXPECT_EQ(1u, NumIconMappingsForPageURL(url1, favicon_base::FAVICON));
@@ -1782,7 +1784,8 @@ TEST_F(HistoryBackendTest, SetFaviconMappingsForPageAndRedirects) {
       NumIconMappingsForPageURL(url2, favicon_base::TOUCH_PRECOMPOSED_ICON));
 
   // Add a touch_icon.
-  backend_->SetFavicons(url1, favicon_base::TOUCH_ICON, icon_url1, bitmaps);
+  backend_->SetFavicons(std::set<GURL>{url1}, favicon_base::TOUCH_ICON,
+                        icon_url1, bitmaps);
   EXPECT_EQ(1u, NumIconMappingsForPageURL(url1, favicon_base::TOUCH_ICON));
   EXPECT_EQ(1u, NumIconMappingsForPageURL(url1, favicon_base::FAVICON));
   // The TOUCH_PRECOMPOSED_ICON was replaced.
@@ -1791,8 +1794,8 @@ TEST_F(HistoryBackendTest, SetFaviconMappingsForPageAndRedirects) {
       NumIconMappingsForPageURL(url1, favicon_base::TOUCH_PRECOMPOSED_ICON));
 
   // Add a web manifest_icon.
-  backend_->SetFavicons(url1, favicon_base::WEB_MANIFEST_ICON, icon_url2,
-                        bitmaps);
+  backend_->SetFavicons(std::set<GURL>{url1}, favicon_base::WEB_MANIFEST_ICON,
+                        icon_url2, bitmaps);
   EXPECT_EQ(1u,
             NumIconMappingsForPageURL(url1, favicon_base::WEB_MANIFEST_ICON));
   EXPECT_EQ(1u, NumIconMappingsForPageURL(url1, favicon_base::FAVICON));
@@ -1804,7 +1807,8 @@ TEST_F(HistoryBackendTest, SetFaviconMappingsForPageAndRedirects) {
                     url1, favicon_base::TOUCH_PRECOMPOSED_ICON));
 
   // Add a different favicon.
-  backend_->SetFavicons(url1, favicon_base::FAVICON, icon_url2, bitmaps);
+  backend_->SetFavicons(std::set<GURL>{url1}, favicon_base::FAVICON, icon_url2,
+                        bitmaps);
   EXPECT_EQ(1u,
             NumIconMappingsForPageURL(url1, favicon_base::WEB_MANIFEST_ICON));
   EXPECT_EQ(1u, NumIconMappingsForPageURL(url1, favicon_base::FAVICON));
@@ -1851,7 +1855,8 @@ TEST_F(HistoryBackendTest, SetFaviconMappingsForPageAndRedirectsWithFragment) {
   redirects.push_back(url2);
   backend_->recent_redirects_.Put(url2, redirects);
 
-  backend_->SetFavicons(url1, favicon_base::FAVICON, icon_url1, bitmaps);
+  backend_->SetFavicons(std::set<GURL>{url1}, favicon_base::FAVICON, icon_url1,
+                        bitmaps);
   EXPECT_EQ(1u, NumIconMappingsForPageURL(url1, favicon_base::FAVICON));
   EXPECT_EQ(1u, NumIconMappingsForPageURL(url2, favicon_base::FAVICON));
   EXPECT_EQ(1u, NumIconMappingsForPageURL(url3, favicon_base::FAVICON));
@@ -1864,7 +1869,8 @@ TEST_F(HistoryBackendTest, SetFaviconMappingsForPageAndRedirectsWithFragment) {
   backend_->recent_redirects_.Clear();
   backend_->recent_redirects_.Put(url1, redirects);
 
-  backend_->SetFavicons(url1, favicon_base::FAVICON, icon_url1, bitmaps);
+  backend_->SetFavicons(std::set<GURL>{url1}, favicon_base::FAVICON, icon_url1,
+                        bitmaps);
   EXPECT_EQ(1u, NumIconMappingsForPageURL(url1, favicon_base::FAVICON));
   EXPECT_EQ(1u, NumIconMappingsForPageURL(url2, favicon_base::FAVICON));
   EXPECT_EQ(1u, NumIconMappingsForPageURL(url3, favicon_base::FAVICON));
@@ -1905,7 +1911,8 @@ TEST_F(HistoryBackendTest, SetFaviconMappingsForPageDuplicates) {
   bitmaps.push_back(CreateBitmap(SK_ColorBLUE, kSmallEdgeSize));
   bitmaps.push_back(CreateBitmap(SK_ColorRED, kLargeEdgeSize));
 
-  backend_->SetFavicons(url, favicon_base::FAVICON, icon_url, bitmaps);
+  backend_->SetFavicons(std::set<GURL>{url}, favicon_base::FAVICON, icon_url,
+                        bitmaps);
 
   std::vector<IconMapping> icon_mappings;
   EXPECT_TRUE(backend_->thumbnail_db_->GetIconMappingsForPageURL(
@@ -1913,7 +1920,8 @@ TEST_F(HistoryBackendTest, SetFaviconMappingsForPageDuplicates) {
   EXPECT_EQ(1u, icon_mappings.size());
   IconMappingID mapping_id = icon_mappings[0].mapping_id;
 
-  backend_->SetFavicons(url, favicon_base::FAVICON, icon_url, bitmaps);
+  backend_->SetFavicons(std::set<GURL>{url}, favicon_base::FAVICON, icon_url,
+                        bitmaps);
 
   icon_mappings.clear();
   EXPECT_TRUE(backend_->thumbnail_db_->GetIconMappingsForPageURL(
@@ -1935,7 +1943,8 @@ TEST_F(HistoryBackendTest, SetFaviconsDeleteBitmaps) {
   std::vector<SkBitmap> bitmaps;
   bitmaps.push_back(CreateBitmap(SK_ColorBLUE, kSmallEdgeSize));
   bitmaps.push_back(CreateBitmap(SK_ColorRED, kLargeEdgeSize));
-  backend_->SetFavicons(page_url, favicon_base::FAVICON, icon_url, bitmaps);
+  backend_->SetFavicons(std::set<GURL>{page_url}, favicon_base::FAVICON,
+                        icon_url, bitmaps);
 
   // Test initial state.
   std::vector<IconMapping> icon_mappings;
@@ -1961,7 +1970,8 @@ TEST_F(HistoryBackendTest, SetFaviconsDeleteBitmaps) {
   // the small bitmap is in fact deleted.
   bitmaps.clear();
   bitmaps.push_back(CreateBitmap(SK_ColorWHITE, kLargeEdgeSize));
-  backend_->SetFavicons(page_url, favicon_base::FAVICON, icon_url, bitmaps);
+  backend_->SetFavicons(std::set<GURL>{page_url}, favicon_base::FAVICON,
+                        icon_url, bitmaps);
 
   scoped_refptr<base::RefCountedMemory> bitmap_data_out;
   gfx::Size pixel_size_out;
@@ -1987,7 +1997,8 @@ TEST_F(HistoryBackendTest, SetFaviconsReplaceBitmapData) {
   bitmaps.push_back(CreateBitmap(SK_ColorBLUE, kSmallEdgeSize));
 
   // Add bitmap to the database.
-  backend_->SetFavicons(page_url, favicon_base::FAVICON, icon_url, bitmaps);
+  backend_->SetFavicons(std::set<GURL>{page_url}, favicon_base::FAVICON,
+                        icon_url, bitmaps);
 
   favicon_base::FaviconID original_favicon_id =
       backend_->thumbnail_db_->GetFaviconIDForFaviconURL(icon_url,
@@ -2002,7 +2013,8 @@ TEST_F(HistoryBackendTest, SetFaviconsReplaceBitmapData) {
 
   // Call SetFavicons() with completely identical data.
   bitmaps[0] = CreateBitmap(SK_ColorBLUE, kSmallEdgeSize);
-  backend_->SetFavicons(page_url, favicon_base::FAVICON, icon_url, bitmaps);
+  backend_->SetFavicons(std::set<GURL>{page_url}, favicon_base::FAVICON,
+                        icon_url, bitmaps);
 
   favicon_base::FaviconID updated_favicon_id =
       backend_->thumbnail_db_->GetFaviconIDForFaviconURL(icon_url,
@@ -2017,7 +2029,8 @@ TEST_F(HistoryBackendTest, SetFaviconsReplaceBitmapData) {
 
   // Call SetFavicons() with a different bitmap of the same size.
   bitmaps[0] = CreateBitmap(SK_ColorWHITE, kSmallEdgeSize);
-  backend_->SetFavicons(page_url, favicon_base::FAVICON, icon_url, bitmaps);
+  backend_->SetFavicons(std::set<GURL>{page_url}, favicon_base::FAVICON,
+                        icon_url, bitmaps);
 
   updated_favicon_id = backend_->thumbnail_db_->GetFaviconIDForFaviconURL(
       icon_url, favicon_base::FAVICON);
@@ -2045,7 +2058,8 @@ TEST_F(HistoryBackendTest, SetFaviconsSameFaviconURLForTwoPages) {
   bitmaps.push_back(CreateBitmap(SK_ColorBLUE, kSmallEdgeSize));
   bitmaps.push_back(CreateBitmap(SK_ColorRED, kLargeEdgeSize));
 
-  backend_->SetFavicons(page_url1, favicon_base::FAVICON, icon_url, bitmaps);
+  backend_->SetFavicons(std::set<GURL>{page_url1}, favicon_base::FAVICON,
+                        icon_url, bitmaps);
 
   std::vector<favicon_base::FaviconRawBitmapResult> bitmap_results;
   backend_->UpdateFaviconMappingsAndFetch(
@@ -2069,8 +2083,8 @@ TEST_F(HistoryBackendTest, SetFaviconsSameFaviconURLForTwoPages) {
   // Change the icon URL that |page_url1| is mapped to.
   bitmaps.clear();
   bitmaps.push_back(CreateBitmap(SK_ColorWHITE, kSmallEdgeSize));
-  backend_->SetFavicons(
-      page_url1, favicon_base::FAVICON, icon_url_new, bitmaps);
+  backend_->SetFavicons({page_url1}, favicon_base::FAVICON, icon_url_new,
+                        bitmaps);
 
   // |page_url1| should map to a new FaviconID and have valid bitmap data.
   icon_mappings.clear();
@@ -2097,6 +2111,33 @@ TEST_F(HistoryBackendTest, SetFaviconsSameFaviconURLForTwoPages) {
   EXPECT_TRUE(backend_->thumbnail_db_->GetFaviconBitmaps(favicon_id,
                                                          &favicon_bitmaps));
   EXPECT_EQ(2u, favicon_bitmaps.size());
+}
+
+// Test that if two pages share the same favicon, reported via a single call to
+// SetFavicons(), it gets associated to both page URLs.
+TEST_F(HistoryBackendTest, SetFaviconsWithTwoPageURLs) {
+  GURL icon_url("http://www.google.com/favicon.ico");
+  GURL page_url1("http://www.google.com");
+  GURL page_url2("http://www.google.ca");
+  std::vector<SkBitmap> bitmaps;
+  bitmaps.push_back(CreateBitmap(SK_ColorBLUE, kSmallEdgeSize));
+  bitmaps.push_back(CreateBitmap(SK_ColorRED, kLargeEdgeSize));
+
+  backend_->SetFavicons(std::set<GURL>{page_url1, page_url2},
+                        favicon_base::FAVICON, icon_url, bitmaps);
+
+  std::vector<IconMapping> icon_mappings;
+  EXPECT_TRUE(backend_->thumbnail_db_->GetIconMappingsForPageURL(
+      page_url1, &icon_mappings));
+  ASSERT_EQ(1u, icon_mappings.size());
+  favicon_base::FaviconID favicon_id = icon_mappings[0].icon_id;
+  EXPECT_NE(0, favicon_id);
+
+  icon_mappings.clear();
+  EXPECT_TRUE(backend_->thumbnail_db_->GetIconMappingsForPageURL(
+      page_url2, &icon_mappings));
+  ASSERT_EQ(1u, icon_mappings.size());
+  EXPECT_EQ(favicon_id, icon_mappings[0].icon_id);
 }
 
 // Tests calling SetOnDemandFavicons(). Neither |page_url| nor |icon_url| are
@@ -2135,7 +2176,8 @@ TEST_F(HistoryBackendTest, SetOnDemandFaviconsForPageInDB) {
   bitmaps.push_back(CreateBitmap(SK_ColorBLUE, kSmallEdgeSize));
 
   // Add bitmap to the database.
-  backend_->SetFavicons(page_url, favicon_base::FAVICON, icon_url1, bitmaps);
+  backend_->SetFavicons(std::set<GURL>{page_url}, favicon_base::FAVICON,
+                        icon_url1, bitmaps);
   favicon_base::FaviconID original_favicon_id =
       backend_->thumbnail_db_->GetFaviconIDForFaviconURL(icon_url1,
                                                          favicon_base::FAVICON);
@@ -2166,7 +2208,8 @@ TEST_F(HistoryBackendTest, SetOnDemandFaviconsForIconInDB) {
   bitmaps.push_back(CreateBitmap(SK_ColorBLUE, kSmallEdgeSize));
 
   // Add bitmap to the database.
-  backend_->SetFavicons(old_page_url, favicon_base::FAVICON, icon_url, bitmaps);
+  backend_->SetFavicons(std::set<GURL>{old_page_url}, favicon_base::FAVICON,
+                        icon_url, bitmaps);
   favicon_base::FaviconID original_favicon_id =
       backend_->thumbnail_db_->GetFaviconIDForFaviconURL(icon_url,
                                                          favicon_base::FAVICON);
@@ -2244,7 +2287,8 @@ TEST_F(HistoryBackendTest, MergeFaviconPageURLInDB) {
   std::vector<SkBitmap> bitmaps;
   bitmaps.push_back(CreateBitmap(SK_ColorBLUE, kSmallEdgeSize));
 
-  backend_->SetFavicons(page_url, favicon_base::FAVICON, icon_url1, bitmaps);
+  backend_->SetFavicons(std::set<GURL>{page_url}, favicon_base::FAVICON,
+                        icon_url1, bitmaps);
 
   // Test initial state.
   std::vector<IconMapping> icon_mappings;
@@ -2362,7 +2406,8 @@ TEST_F(HistoryBackendTest, MergeFaviconIconURLMappedToDifferentPageURL) {
   std::vector<SkBitmap> bitmaps;
   bitmaps.push_back(CreateBitmap(SK_ColorBLUE, kSmallEdgeSize));
 
-  backend_->SetFavicons(page_url1, favicon_base::FAVICON, icon_url, bitmaps);
+  backend_->SetFavicons(std::set<GURL>{page_url1}, favicon_base::FAVICON,
+                        icon_url, bitmaps);
 
   // Test initial state.
   std::vector<IconMapping> icon_mappings;
@@ -2481,7 +2526,8 @@ TEST_F(HistoryBackendTest, MergeFaviconShowsUpInGetFaviconsForURLResult) {
   bitmaps.push_back(CreateBitmap(SK_ColorRED, kLargeEdgeSize));
 
   // Set some preexisting favicons for |page_url|.
-  backend_->SetFavicons(page_url, favicon_base::FAVICON, icon_url, bitmaps);
+  backend_->SetFavicons(std::set<GURL>{page_url}, favicon_base::FAVICON,
+                        icon_url, bitmaps);
 
   // Merge small favicon.
   std::vector<unsigned char> data;
@@ -2524,7 +2570,8 @@ TEST_F(HistoryBackendTest, FaviconChangedNotificationNewFavicon) {
   {
     std::vector<SkBitmap> bitmaps;
     bitmaps.push_back(CreateBitmap(SK_ColorBLUE, kSmallEdgeSize));
-    backend_->SetFavicons(page_url1, favicon_base::FAVICON, icon_url1, bitmaps);
+    backend_->SetFavicons(std::set<GURL>{page_url1}, favicon_base::FAVICON,
+                          icon_url1, bitmaps);
     ASSERT_EQ(1u, favicon_changed_notifications_page_urls().size());
     EXPECT_EQ(page_url1, favicon_changed_notifications_page_urls()[0]);
     EXPECT_EQ(0u, favicon_changed_notifications_icon_urls().size());
@@ -2557,7 +2604,8 @@ TEST_F(HistoryBackendTest, FaviconChangedNotificationBitmapDataChanged) {
   {
     std::vector<SkBitmap> bitmaps;
     bitmaps.push_back(CreateBitmap(SK_ColorBLUE, kSmallEdgeSize));
-    backend_->SetFavicons(page_url, favicon_base::FAVICON, icon_url, bitmaps);
+    backend_->SetFavicons(std::set<GURL>{page_url}, favicon_base::FAVICON,
+                          icon_url, bitmaps);
     ClearBroadcastedNotifications();
   }
 
@@ -2565,7 +2613,8 @@ TEST_F(HistoryBackendTest, FaviconChangedNotificationBitmapDataChanged) {
   {
     std::vector<SkBitmap> bitmaps;
     bitmaps.push_back(CreateBitmap(SK_ColorWHITE, kSmallEdgeSize));
-    backend_->SetFavicons(page_url, favicon_base::FAVICON, icon_url, bitmaps);
+    backend_->SetFavicons(std::set<GURL>{page_url}, favicon_base::FAVICON,
+                          icon_url, bitmaps);
     EXPECT_EQ(0u, favicon_changed_notifications_page_urls().size());
     ASSERT_EQ(1u, favicon_changed_notifications_icon_urls().size());
     EXPECT_EQ(icon_url, favicon_changed_notifications_icon_urls()[0]);
@@ -2607,8 +2656,10 @@ TEST_F(HistoryBackendTest, FaviconChangedNotificationIconMappingChanged) {
   {
     std::vector<SkBitmap> bitmaps;
     bitmaps.push_back(CreateBitmap(SK_ColorBLUE, kSmallEdgeSize));
-    backend_->SetFavicons(page_url1, favicon_base::FAVICON, icon_url1, bitmaps);
-    backend_->SetFavicons(page_url2, favicon_base::FAVICON, icon_url2, bitmaps);
+    backend_->SetFavicons(std::set<GURL>{page_url1}, favicon_base::FAVICON,
+                          icon_url1, bitmaps);
+    backend_->SetFavicons(std::set<GURL>{page_url2}, favicon_base::FAVICON,
+                          icon_url2, bitmaps);
 
     // Map |page_url3| to |icon_url1| so that the test does not delete the
     // favicon at |icon_url1|.
@@ -2620,7 +2671,8 @@ TEST_F(HistoryBackendTest, FaviconChangedNotificationIconMappingChanged) {
   }
 
   // SetFavicons()
-  backend_->SetFavicons(page_url1, favicon_base::FAVICON, icon_url2, bitmaps);
+  backend_->SetFavicons(std::set<GURL>{page_url1}, favicon_base::FAVICON,
+                        icon_url2, bitmaps);
   EXPECT_THAT(favicon_changed_notifications_page_urls(),
               ElementsAre(page_url1));
   EXPECT_EQ(0u, favicon_changed_notifications_icon_urls().size());
@@ -2666,7 +2718,8 @@ TEST_F(HistoryBackendTest,
   {
     std::vector<SkBitmap> bitmaps;
     bitmaps.push_back(CreateBitmap(SK_ColorBLUE, kSmallEdgeSize));
-    backend_->SetFavicons(page_url4, favicon_base::FAVICON, icon_url, bitmaps);
+    backend_->SetFavicons(std::set<GURL>{page_url4}, favicon_base::FAVICON,
+                          icon_url, bitmaps);
     ClearBroadcastedNotifications();
   }
 
@@ -2710,8 +2763,10 @@ TEST_F(HistoryBackendTest,
   {
     std::vector<SkBitmap> bitmaps;
     bitmaps.push_back(CreateBitmap(SK_ColorBLUE, kSmallEdgeSize));
-    backend_->SetFavicons(page_url1, favicon_base::FAVICON, icon_url1, bitmaps);
-    backend_->SetFavicons(page_url2, favicon_base::FAVICON, icon_url2, bitmaps);
+    backend_->SetFavicons(std::set<GURL>{page_url1}, favicon_base::FAVICON,
+                          icon_url1, bitmaps);
+    backend_->SetFavicons(std::set<GURL>{page_url2}, favicon_base::FAVICON,
+                          icon_url2, bitmaps);
 
     // Map |page_url3| to |icon_url1| so that the test does not delete the
     // favicon at |icon_url1|.
@@ -2726,7 +2781,8 @@ TEST_F(HistoryBackendTest,
   {
     std::vector<SkBitmap> bitmaps;
     bitmaps.push_back(CreateBitmap(SK_ColorWHITE, kSmallEdgeSize));
-    backend_->SetFavicons(page_url1, favicon_base::FAVICON, icon_url2, bitmaps);
+    backend_->SetFavicons(std::set<GURL>{page_url1}, favicon_base::FAVICON,
+                          icon_url2, bitmaps);
     ASSERT_EQ(1u, favicon_changed_notifications_page_urls().size());
     EXPECT_EQ(page_url1, favicon_changed_notifications_page_urls()[0]);
     ASSERT_EQ(1u, favicon_changed_notifications_icon_urls().size());
@@ -2850,11 +2906,13 @@ TEST_F(HistoryBackendTest, NoFaviconChangedNotifications) {
   ASSERT_TRUE(gfx::PNGCodec::EncodeBGRASkBitmap(bitmap, false, &png_bytes));
 
   // Setup
-  backend_->SetFavicons(page_url, favicon_base::FAVICON, icon_url, bitmaps);
+  backend_->SetFavicons(std::set<GURL>{page_url}, favicon_base::FAVICON,
+                        icon_url, bitmaps);
   ClearBroadcastedNotifications();
 
   // SetFavicons()
-  backend_->SetFavicons(page_url, favicon_base::FAVICON, icon_url, bitmaps);
+  backend_->SetFavicons(std::set<GURL>{page_url}, favicon_base::FAVICON,
+                        icon_url, bitmaps);
 
   // MergeFavicon()
   backend_->MergeFavicon(page_url, icon_url, favicon_base::FAVICON,
@@ -2886,10 +2944,10 @@ TEST_F(HistoryBackendTest, TestGetFaviconsForURLWithIconTypesPriority) {
   touch_bitmaps.push_back(CreateBitmap(SK_ColorWHITE, 64));
 
   // Set some preexisting favicons for |page_url|.
-  backend_->SetFavicons(
-      page_url, favicon_base::FAVICON, icon_url, favicon_bitmaps);
-  backend_->SetFavicons(
-      page_url, favicon_base::TOUCH_ICON, touch_icon_url, touch_bitmaps);
+  backend_->SetFavicons(std::set<GURL>{page_url}, favicon_base::FAVICON,
+                        icon_url, favicon_bitmaps);
+  backend_->SetFavicons(std::set<GURL>{page_url}, favicon_base::TOUCH_ICON,
+                        touch_icon_url, touch_bitmaps);
 
   favicon_base::FaviconRawBitmapResult result;
   std::vector<int> icon_types;
@@ -2923,10 +2981,10 @@ TEST_F(HistoryBackendTest, TestGetFaviconsForURLReturnFavicon) {
   touch_bitmaps.push_back(CreateBitmap(SK_ColorWHITE, 32));
 
   // Set some preexisting favicons for |page_url|.
-  backend_->SetFavicons(
-      page_url, favicon_base::FAVICON, icon_url, favicon_bitmaps);
-  backend_->SetFavicons(
-      page_url, favicon_base::TOUCH_ICON, touch_icon_url, touch_bitmaps);
+  backend_->SetFavicons(std::set<GURL>{page_url}, favicon_base::FAVICON,
+                        icon_url, favicon_bitmaps);
+  backend_->SetFavicons(std::set<GURL>{page_url}, favicon_base::TOUCH_ICON,
+                        touch_icon_url, touch_bitmaps);
 
   favicon_base::FaviconRawBitmapResult result;
   std::vector<int> icon_types;
@@ -2956,7 +3014,8 @@ TEST_F(HistoryBackendTest, TestGetFaviconsForURLReturnFaviconEvenItSmaller) {
   bitmaps.push_back(CreateBitmap(SK_ColorBLUE, 16));
 
   // Set preexisting favicons for |page_url|.
-  backend_->SetFavicons(page_url, favicon_base::FAVICON, icon_url, bitmaps);
+  backend_->SetFavicons(std::set<GURL>{page_url}, favicon_base::FAVICON,
+                        icon_url, bitmaps);
 
   favicon_base::FaviconRawBitmapResult result;
   std::vector<int> icon_types;
@@ -3011,7 +3070,8 @@ TEST_F(HistoryBackendTest, GetFaviconsFromDBSelectClosestMatch) {
   bitmaps.push_back(CreateBitmap(SK_ColorBLUE, kSmallEdgeSize));
   bitmaps.push_back(CreateBitmap(SK_ColorRED, kLargeEdgeSize));
 
-  backend_->SetFavicons(page_url, favicon_base::FAVICON, icon_url, bitmaps);
+  backend_->SetFavicons(std::set<GURL>{page_url}, favicon_base::FAVICON,
+                        icon_url, bitmaps);
 
   std::vector<favicon_base::FaviconRawBitmapResult> bitmap_results_out;
   EXPECT_TRUE(backend_->GetFaviconsFromDB(page_url,
@@ -3053,8 +3113,10 @@ TEST_F(HistoryBackendTest, GetFaviconsFromDBIconType) {
   bitmaps.push_back(CreateBitmap(SK_ColorBLUE, kSmallEdgeSize));
 
   std::vector<favicon_base::FaviconRawBitmapData> favicon_bitmap_data;
-  backend_->SetFavicons(page_url, favicon_base::FAVICON, icon_url1, bitmaps);
-  backend_->SetFavicons(page_url, favicon_base::TOUCH_ICON, icon_url2, bitmaps);
+  backend_->SetFavicons(std::set<GURL>{page_url}, favicon_base::FAVICON,
+                        icon_url1, bitmaps);
+  backend_->SetFavicons(std::set<GURL>{page_url}, favicon_base::TOUCH_ICON,
+                        icon_url2, bitmaps);
 
   std::vector<favicon_base::FaviconRawBitmapResult> bitmap_results_out;
   EXPECT_TRUE(backend_->GetFaviconsFromDB(page_url,
@@ -3085,9 +3147,11 @@ TEST_F(HistoryBackendTest, GetFaviconsFromDBMultipleIconTypes) {
   const GURL icon_url2("http://www.google.com/icon2.png");
 
   std::vector<favicon_base::FaviconRawBitmapData> favicon_bitmap_data;
-  backend_->SetFavicons(page_url, favicon_base::FAVICON, icon_url1,
+  backend_->SetFavicons(std::set<GURL>{page_url}, favicon_base::FAVICON,
+                        icon_url1,
                         {CreateBitmap(SK_ColorBLUE, kSmallEdgeSize)});
-  backend_->SetFavicons(page_url, favicon_base::TOUCH_ICON, icon_url2,
+  backend_->SetFavicons(std::set<GURL>{page_url}, favicon_base::TOUCH_ICON,
+                        icon_url2,
                         {CreateBitmap(SK_ColorBLUE, kLargeEdgeSize)});
 
   struct TestCase {

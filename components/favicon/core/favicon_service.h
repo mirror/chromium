@@ -166,9 +166,9 @@ class FaviconService : public KeyedService {
                             scoped_refptr<base::RefCountedMemory> bitmap_data,
                             const gfx::Size& pixel_size) = 0;
 
-  // Set the favicon for |page_url| for |icon_type| in the thumbnail database.
-  // |icon_url| is the single favicon to map to |page_url|. Mappings from
-  // |page_url| to favicons at different icon URLs will be deleted.
+  // Set the favicon for all URLs in |page_urls| for |icon_type| in the
+  // thumbnail database. |icon_url| is the single favicon to map to. Mappings
+  // from page URLs to favicons at different icon URLs will be deleted.
   // A favicon bitmap is added for each image rep in |image|. Any preexisting
   // bitmap data for |icon_url| is deleted. It is important that |image|
   // contains image reps for all of ui::GetSupportedScaleFactors(). Use
@@ -176,7 +176,7 @@ class FaviconService : public KeyedService {
   // TODO(pkotwicz): Save unresized favicon bitmaps to the database.
   // TODO(pkotwicz): Support adding favicons for multiple icon URLs to the
   // thumbnail database.
-  virtual void SetFavicons(const GURL& page_url,
+  virtual void SetFavicons(const std::set<GURL>& page_urls,
                            const GURL& icon_url,
                            favicon_base::IconType icon_type,
                            const gfx::Image& image) = 0;

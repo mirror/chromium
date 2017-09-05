@@ -321,7 +321,8 @@ TEST_F(AndroidProviderBackendTest, UpdateTables) {
 
   // Set favicon to url2.
   std::vector<SkBitmap> bitmaps(1u, CreateBitmap());
-  history_backend->SetFavicons(url2, favicon_base::FAVICON, GURL(), bitmaps);
+  history_backend->SetFavicons(std::set<GURL>{url2}, favicon_base::FAVICON,
+                               GURL(), bitmaps);
   history_backend->Closing();
   }
 
@@ -458,7 +459,8 @@ TEST_F(AndroidProviderBackendTest, QueryHistoryAndBookmarks) {
 
   // Set favicon to url2.
   std::vector<SkBitmap> bitmaps(1u, CreateBitmap());
-  history_backend->SetFavicons(url2, favicon_base::FAVICON, GURL(), bitmaps);
+  history_backend->SetFavicons(std::set<GURL>{url2}, favicon_base::FAVICON,
+                               GURL(), bitmaps);
   history_backend->Closing();
   }
 
@@ -1847,7 +1849,8 @@ TEST_F(AndroidProviderBackendTest, QueryWithoutThumbnailDB) {
 
   // Set favicon to url2.
   std::vector<SkBitmap> bitmaps(1u, CreateBitmap());
-  history_backend->SetFavicons(url2, favicon_base::FAVICON, GURL(), bitmaps);
+  history_backend->SetFavicons(std::set<GURL>{url2}, favicon_base::FAVICON,
+                               GURL(), bitmaps);
   history_backend->Closing();
   }
 
