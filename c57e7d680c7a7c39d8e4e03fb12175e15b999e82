@@ -93,6 +93,30 @@
       "revId": "c57e7d680c7a7c39d8e4e03fb12175e15b999e82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53855a79_e8cc9359",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-05T20:36:01Z",
+      "side": 1,
+      "message": "Oh, didn\u0027t know about that. Thanks!",
+      "parentUuid": "2ce10e5b_a7f19000",
+      "range": {
+        "startLine": 565,
+        "startChar": 8,
+        "endLine": 565,
+        "endChar": 71
+      },
+      "revId": "c57e7d680c7a7c39d8e4e03fb12175e15b999e82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
