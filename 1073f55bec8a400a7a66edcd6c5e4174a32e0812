@@ -16,6 +16,24 @@
       "revId": "1073f55bec8a400a7a66edcd6c5e4174a32e0812",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0f9761e_5b54543f",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-05T20:04:41Z",
+      "side": 1,
+      "message": "I changed it to exclude the MACOS but also changed it because I was told in a previous comment to keep it the same as the other files. Previously the check was \"if defined (OS_WIN) || defined(OS_LINUX)\" however the promos are not included in CHROMEOS which led to the current change which also affected all other files to be changed similarly.\n\ni.e. feature_constants.h \nhttps://chromium-review.googlesource.com/c/chromium/src/+/614367/18/components/feature_engagement/public/feature_constants.h\n\nI wouldn\u0027t mind using having a USE_flag as it would probably be more intuitive to people reading it. Would you mind pointing to me where I would define this flag?",
+      "parentUuid": "6075ca71_6de3b6b8",
+      "revId": "1073f55bec8a400a7a66edcd6c5e4174a32e0812",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
