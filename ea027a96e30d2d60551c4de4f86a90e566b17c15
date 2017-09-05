@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "36411377_2c3d60ff",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-05T11:39:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6db058de_338de476",
+      "range": {
+        "startLine": 312,
+        "startChar": 29,
+        "endLine": 312,
+        "endChar": 0
+      },
+      "revId": "ea027a96e30d2d60551c4de4f86a90e566b17c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c51d4d7_fc097df7",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 2
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "2490be2d_0b3930ac",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-05T11:39:12Z",
+      "side": 1,
+      "message": "To me \"should be quite small\" isn\u0027t a good argument: If they\u0027re small anyway, we might as well apply the limit, just to be safe and for consistency.\nThat we can\u0027t have more than 200 is a better argument. It still feels weird and inconsistent to me that we have a limit, but only apply it in some cases. But as long as there still is a worst-case maximum, I\u0027m okay.",
+      "parentUuid": "14e2d82d_cdd34be0",
+      "range": {
+        "startLine": 317,
+        "startChar": 31,
+        "endLine": 317,
+        "endChar": 0
+      },
+      "revId": "ea027a96e30d2d60551c4de4f86a90e566b17c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "206a7da2_4d8b868e",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 2
@@ -92,6 +140,30 @@
       "revId": "ea027a96e30d2d60551c4de4f86a90e566b17c15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75999169_d098a44f",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-05T11:39:12Z",
+      "side": 1,
+      "message": "fetched_category.has_value() should be equivalent to \"this is a fetch-more\", right? Then it should indeed have no effect here. But agreed, let\u0027s be safe.",
+      "parentUuid": "206a7da2_4d8b868e",
+      "range": {
+        "startLine": 520,
+        "startChar": 4,
+        "endLine": 520,
+        "endChar": 28
+      },
+      "revId": "ea027a96e30d2d60551c4de4f86a90e566b17c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -142,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "18431dc1_1de36c49",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-05T11:39:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35c41074_3eea9fec",
+      "range": {
+        "startLine": 630,
+        "startChar": 26,
+        "endLine": 630,
+        "endChar": 0
+      },
+      "revId": "ea027a96e30d2d60551c4de4f86a90e566b17c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7a2686f_cdf98d67",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 2
@@ -162,6 +258,30 @@
       "revId": "ea027a96e30d2d60551c4de4f86a90e566b17c15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b85a7f2b_829bae96",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-05T11:39:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7a2686f_cdf98d67",
+      "range": {
+        "startLine": 630,
+        "startChar": 4,
+        "endLine": 633,
+        "endChar": 5
+      },
+      "revId": "ea027a96e30d2d60551c4de4f86a90e566b17c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
