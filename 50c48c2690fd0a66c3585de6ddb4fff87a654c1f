@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c9b282d_d646e11f",
+        "filename": "chrome/browser/ui/ash/launcher/multi_profile_app_window_launcher_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-05T17:44:51Z",
+      "side": 1,
+      "message": "Is this case handling panels that use browserframe? Would it be better to put this code in browser_frame_mus?",
+      "range": {
+        "startLine": 63,
+        "startChar": 6,
+        "endLine": 67,
+        "endChar": 7
+      },
+      "revId": "50c48c2690fd0a66c3585de6ddb4fff87a654c1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
