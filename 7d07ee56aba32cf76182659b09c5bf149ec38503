@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4360397_c52a4941",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-09-05T12:33:26Z",
+      "side": 1,
+      "message": "Nit: Please use name for all consts something like kTypeAttributes\nhttps://google.github.io/styleguide/cppguide.html#Constant_Names",
+      "range": {
+        "startLine": 26,
+        "startChar": 11,
+        "endLine": 26,
+        "endChar": 27
+      },
+      "revId": "7d07ee56aba32cf76182659b09c5bf149ec38503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c75419e4_ff92f1c3",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-09-05T12:33:26Z",
+      "side": 1,
+      "message": "Nit: consider using base::StringPrintf in such complicated cases (it\u0027s up to you what\u0027s more readable in each case, using pattern for formatting (like in StringPrintf) is usually more readable and less error prone because whole string with placeholders is seen in code). For example https://cs.chromium.org/chromium/src/components/password_manager/core/browser/login_database.cc?type\u003dcs\u0026q\u003dStringPrintf+file:%5Esrc/components/password_manager/+package:%5Echromium$\u0026l\u003d661",
+      "range": {
+        "startLine": 260,
+        "startChar": 27,
+        "endLine": 261,
+        "endChar": 79
+      },
+      "revId": "7d07ee56aba32cf76182659b09c5bf149ec38503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
