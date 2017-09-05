@@ -1269,6 +1269,10 @@ void QuicConnection::ProcessUdpPacket(const QuicSocketAddress& self_address,
   current_packet_data_ = nullptr;
 }
 
+void QuicConnection::OnBlockedWriterCanWrite() {
+  OnCanWrite();
+}
+
 void QuicConnection::OnCanWrite() {
   DCHECK(!writer_->IsWriteBlocked());
 
