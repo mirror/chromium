@@ -5,19 +5,34 @@
 #import "ios/chrome/browser/passwords/credential_manager.h"
 
 #include "base/mac/foundation_util.h"
+#include "components/password_manager/core/browser/password_manager.h"
+#include "components/password_manager/core/browser/stub_password_manager_client.h"
+#include "components/password_manager/core/browser/test_password_store.h"
+#include "components/password_manager/core/common/password_manager_pref_names.h"
+#include "components/prefs/pref_registry_simple.h"
+#include "components/prefs/testing_pref_service.h"
 #include "ios/chrome/browser/passwords/credential_manager_util.h"
 #include "ios/chrome/browser/ssl/ios_security_state_tab_helper.h"
 #include "ios/web/public/navigation_item.h"
 #include "ios/web/public/navigation_manager.h"
 #include "ios/web/public/ssl_status.h"
+#include "ios/web/public/test/web_js_test.h"
 #include "ios/web/public/test/web_test_with_web_state.h"
 #include "net/ssl/ssl_connection_status_flags.h"
 #include "net/test/cert_test_util.h"
 #include "net/test/test_data_directory.h"
+#include "testing/gmock/include/gmock/gmock.h"
+#include "testing/gtest/include/gtest/gtest.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
 #endif
+
+using password_manager::PasswordStore;
+using password_manager::PasswordManager;
+using password_manager::PasswordFormManager;
+using password_manager::TestPasswordStore;
+using testing::_;
 
 namespace credential_manager {
 
@@ -39,19 +54,139 @@ constexpr char kFileOrigin[] = "file://example_file";
 // SSL certificate to load for testing.
 constexpr char kCertFileName[] = "ok_cert.pem";
 
+// Mocks PasswordManagerClient, used indirectly by CredentialManager.
+class MockPasswordManagerClient
+    : public password_manager::StubPasswordManagerClient {
+ public:
+  MOCK_CONST_METHOD0(IsSavingAndFillingEnabledForCurrentPage, bool());
+  MOCK_CONST_METHOD0(IsFillingEnabledForCurrentPage, bool());
+  MOCK_METHOD0(OnCredentialManagerUsed, bool());
+  MOCK_CONST_METHOD0(IsIncognito, bool());
+  MOCK_METHOD0(NotifyStorePasswordCalled, void());
+  // PromptUserTo*Ptr functions allow to both override PromptUserTo* methods
+  // and expect calls.
+  MOCK_METHOD1(PromptUserToSavePasswordPtr, void(PasswordFormManager*));
+  MOCK_METHOD3(PromptUserToChooseCredentialsPtr,
+               bool(const std::vector<autofill::PasswordForm*>& local_forms,
+                    const GURL& origin,
+                    const CredentialsCallback& callback));
+
+  MockPasswordManagerClient(PasswordStore* store)
+      : store_(store), password_manager_(this) {
+    prefs_.registry()->RegisterBooleanPref(
+        password_manager::prefs::kCredentialsEnableAutosignin, true);
+    prefs_.registry()->RegisterBooleanPref(
+        password_manager::prefs::kWasAutoSignInFirstRunExperienceShown, true);
+  }
+  ~MockPasswordManagerClient() override {}
+
+  // Makes PasswordFormManager accessible at pending_manager(), Save() should be
+  // called manually in test. To put expectation on this function being called,
+  // use PromptUserToSavePasswordPtr.
+  bool PromptUserToSaveOrUpdatePassword(
+      std::unique_ptr<PasswordFormManager> manager,
+      bool update_password) override {
+    manager_.swap(manager);
+    PromptUserToSavePasswordPtr(manager_.get());
+    return true;
+  }
+
+  PasswordStore* GetPasswordStore() const override { return store_; }
+
+  PrefService* GetPrefs() override { return &prefs_; }
+
+  const PasswordManager* GetPasswordManager() const override {
+    return &password_manager_;
+  }
+
+  const GURL& GetLastCommittedEntryURL() const override {
+    return last_committed_url_;
+  }
+
+  // Mocks choosing a credential by the user. To put expectation on this
+  // function being called, use PromptUserToChooseCredentialsPtr.
+  bool PromptUserToChooseCredentials(
+      std::vector<std::unique_ptr<autofill::PasswordForm>> local_forms,
+      const GURL& origin,
+      const CredentialsCallback& callback) override {
+    EXPECT_FALSE(local_forms.empty());
+    const autofill::PasswordForm* form = local_forms[0].get();
+    base::SequencedTaskRunnerHandle::Get()->PostTask(
+        FROM_HERE,
+        base::Bind(callback, base::Owned(new autofill::PasswordForm(*form))));
+    std::vector<autofill::PasswordForm*> raw_forms(local_forms.size());
+    std::transform(local_forms.begin(), local_forms.end(), raw_forms.begin(),
+                   [](const std::unique_ptr<autofill::PasswordForm>& form) {
+                     return form.get();
+                   });
+    PromptUserToChooseCredentialsPtr(raw_forms, origin, callback);
+    return true;
+  }
+
+  PasswordFormManager* pending_manager() const { return manager_.get(); }
+
+  void set_password_store(PasswordStore* store) { store_ = store; }
+
+  void set_current_url(const GURL& current_url) {
+    last_committed_url_ = current_url;
+  }
+
+ private:
+  TestingPrefServiceSimple prefs_;
+  PasswordStore* store_;
+  GURL last_committed_url_{kHttpsWebOrigin};
+  PasswordManager password_manager_;
+  std::unique_ptr<PasswordFormManager> manager_;
+
+  DISALLOW_COPY_AND_ASSIGN(MockPasswordManagerClient);
+};
+
 }  // namespace
 
-// TODO(crbug.com/435048): once JSCredentialManager is implemented and used
-// from CredentialManager methods, mock it and write unit tests for
-// CredentialManager methods SendGetResponse, SendStoreResponse and
-// SendPreventSilentAccessResponse.
-class CredentialManagerTest : public web::WebTestWithWebState {
+// Tests CredentialManager class. Tests are performed as follows:
+// 1. CredentialManager is instantiated. In its constructor it registers a
+//     script command callback for 'credentials' prefix.
+// 2. credential_manager.js is injected to the web page.
+// 3. JavaScript code invoking one of exposed API methods is executed.
+// 4. This results in CredentialManager::HandleScriptCommand being called.
+// 5. Wait for background tasks to finish, optionally for returned Promise to be
+//    resolved or rejected.
+// 6. Check values in JavaScript, stored in variables under 'test_*' prefix by
+//    resolver/rejecter functions.
+// 7. Optionally expect PasswordManagerClient methods to be (not) called.
+class CredentialManagerTest : public web::WebJsTest<web::WebTestWithWebState> {
  public:
+  CredentialManagerTest()
+      : web::WebJsTest<web::WebTestWithWebState>(@[ @"credential_manager" ]) {}
   void SetUp() override {
     WebTestWithWebState::SetUp();
 
     // Used indirectly by WebStateContentIsSecureHtml function.
     IOSSecurityStateTabHelper::CreateForWebState(web_state());
+
+    store_ = new TestPasswordStore;
+    store_->Init(syncer::SyncableService::StartSyncFlare(), nullptr);
+    client_ = base::MakeUnique<MockPasswordManagerClient>(store_.get());
+    manager_ = base::MakeUnique<CredentialManager>(client_.get(), web_state());
+
+    ON_CALL(*client_, IsSavingAndFillingEnabledForCurrentPage())
+        .WillByDefault(testing::Return(true));
+    ON_CALL(*client_, IsFillingEnabledForCurrentPage())
+        .WillByDefault(testing::Return(true));
+    ON_CALL(*client_, OnCredentialManagerUsed())
+        .WillByDefault(testing::Return(true));
+    ON_CALL(*client_, IsIncognito()).WillByDefault(testing::Return(false));
+  }
+
+  void TearDown() override {
+    manager_.reset();
+
+    // Clear and shutdown PasswordStore.
+    store_->Clear();
+    store_->ShutdownOnUIThread();
+    store_ = nullptr;
+
+    WebTestWithWebState::TearDown();
   }
 
   // Updates SSLStatus on web_state()->GetNavigationManager()->GetVisibleItem()
@@ -72,7 +207,458 @@ class CredentialManagerTest : public web::WebTestWithWebState {
     ssl.content_status = content_status;
     ssl.cert_status_host = kHostName;
   }
+
+ protected:
+  std::unique_ptr<MockPasswordManagerClient> client_;
+  std::unique_ptr<CredentialManager> manager_;
+  scoped_refptr<TestPasswordStore> store_;
 };
+
+// Tests storing and then retrieving a PasswordCredential.
+TEST_F(CredentialManagerTest, StoreAndGetPasswordCredential) {
+  // Inject JavaScript and set up secure context.
+  LoadHtml(@"<html></html>", GURL(kHttpsWebOrigin));
+  LoadHtmlAndInject(@"<html></html>");
+  UpdateSslStatus(net::CERT_STATUS_IS_EV, web::SECURITY_STYLE_AUTHENTICATED,
+                  web::SSLStatus::NORMAL_CONTENT);
+
+  // Call API method |store|.
+  ExecuteJavaScript(
+      @"var credential = new PasswordCredential({"
+       "  id: 'id',"
+       "  password: 'pencil',"
+       "  name: 'name',"
+       "  iconURL: 'https://example.com/icon.png'"
+       "});"
+       "navigator.credentials.store(credential);");
+
+  // Wait for credential to be stored.
+  WaitForBackgroundTasks();
+  client_->pending_manager()->Save();
+
+  // Call API method |get|.
+  ExecuteJavaScript(
+      @"navigator.credentials.get({"
+       "  password: true,"
+       "  mediation: 'silent'"
+       "}).then(function(credential) {"
+       "  test_credential_ = credential; "
+       "  test_promise_resolved_ = true;"
+       "})");
+
+  // Wait for PasswordCredential to be obtained and for Promise to be resolved.
+  WaitForCondition(^{
+    return [@YES isEqual:ExecuteJavaScript(@"test_promise_resolved_")];
+  });
+
+  // Check PasswordCredential fields.
+  ASSERT_NSEQ(@"password", ExecuteJavaScript(@"test_credential_.type"));
+  ASSERT_NSEQ(@"id", ExecuteJavaScript(@"test_credential_.id"));
+  ASSERT_NSEQ(@"name", ExecuteJavaScript(@"test_credential_.name"));
+  ASSERT_NSEQ(@"pencil", ExecuteJavaScript(@"test_credential_.password"));
+  ASSERT_NSEQ(@"https://example.com/icon.png",
+              ExecuteJavaScript(@"test_credential_.iconURL"));
+}
+
+// Tests storing and then retrieving a FederatedCredential.
+TEST_F(CredentialManagerTest, StoreAndGetFederatedCredential) {
+  // Inject JavaScript and set up secure context.
+  LoadHtml(@"<html></html>", GURL(kHttpsWebOrigin));
+  LoadHtmlAndInject(@"<html></html>");
+  UpdateSslStatus(net::CERT_STATUS_IS_EV, web::SECURITY_STYLE_AUTHENTICATED,
+                  web::SSLStatus::NORMAL_CONTENT);
+
+  // Call API method |store|.
+  ExecuteJavaScript(
+      @"var credential = new FederatedCredential({"
+       "  id: 'id',"
+       "  provider: 'https://example.com',"
+       "  name: 'name',"
+       "  iconURL: 'https://example.com/icon.png'"
+       "});"
+       "navigator.credentials.store(credential);");
+
+  // Wait for credential to be stored.
+  WaitForBackgroundTasks();
+  client_->pending_manager()->Save();
+
+  // Call API method |get|.
+  ExecuteJavaScript(
+      @"navigator.credentials.get({"
+       "  providers: ['https://example.com'], "
+       "  mediation: 'silent'"
+       "}).then(function(credential) {"
+       "  test_credential_ = credential;"
+       "  test_promise_resolved_ = true;"
+       "})");
+
+  // Wait for FederatedCredential to be obtained and for Promise to be resolved.
+  WaitForCondition(^{
+    return [@YES isEqual:ExecuteJavaScript(@"test_promise_resolved_")];
+  });
+
+  // Check FederatedCredential fields.
+  ASSERT_NSEQ(@"federated", ExecuteJavaScript(@"test_credential_.type"));
+  ASSERT_NSEQ(@"id", ExecuteJavaScript(@"test_credential_.id"));
+  ASSERT_NSEQ(@"name", ExecuteJavaScript(@"test_credential_.name"));
+  ASSERT_NSEQ(@"https://example.com",
+              ExecuteJavaScript(@"test_credential_.provider"));
+  ASSERT_NSEQ(@"https://example.com/icon.png",
+              ExecuteJavaScript(@"test_credential_.iconURL"));
+}
+
+// Tests that storing a credential from insecure context will not happen.
+TEST_F(CredentialManagerTest, TryToStoreCredentialFromInsecureContext) {
+  // Inject JavaScript, set up WebState to have mixed content.
+  LoadHtml(@"<html></html>", GURL(kHttpsWebOrigin));
+  LoadHtmlAndInject(@"<html></html>");
+  UpdateSslStatus(net::CERT_STATUS_IS_EV, web::SECURITY_STYLE_AUTHENTICATED,
+                  web::SSLStatus::DISPLAYED_INSECURE_CONTENT);
+
+  // Expect that user will NOT be prompted to save or update password.
+  EXPECT_CALL(*client_, PromptUserToSavePasswordPtr(_)).Times(0);
+
+  // Expect that PasswordManagerClient methods used by
+  // CredentialManagerImpl::Store will not be called.
+  EXPECT_CALL(*client_, OnCredentialManagerUsed()).Times(0);
+  EXPECT_CALL(*client_, IsSavingAndFillingEnabledForCurrentPage()).Times(0);
+
+  // Call API method |store|.
+  ExecuteJavaScript(
+      @"var credential = new PasswordCredential({"
+       "  id: 'id',"
+       "  password: 'pencil',"
+       "  name: 'name',"
+       "  iconURL: 'https://example.com/icon.png'"
+       "});"
+       "navigator.credentials.store(credential);");
+  WaitForBackgroundTasks();
+}
+
+// Tests that requesting a credential from insecure context will not happen.
+TEST_F(CredentialManagerTest, TryToGetCredentialFromInsecureContext) {
+  // Inject JavaScript, set up WebState to have non-cryptographic scheme.
+  LoadHtml(@"<html></html>", GURL(kHttpWebOrigin));
+  LoadHtmlAndInject(@"<html></html>");
+  client_->set_current_url(GURL(kHttpWebOrigin));
+
+  // Expect that PasswordManagerClient methods used by
+  // CredentialManagerImpl::Get will not be called.
+  EXPECT_CALL(*client_, OnCredentialManagerUsed()).Times(0);
+  EXPECT_CALL(*client_, IsFillingEnabledForCurrentPage()).Times(0);
+
+  // Call API method |get|.
+  ExecuteJavaScript(
+      @"navigator.credentials.get({"
+       "  password: true,"
+       "  mediation: 'required'"
+       "}).then(function(credential) {"
+       "  test_credential_ = credential; "
+       "  test_promise_resolved_ = true;"
+       "})");
+  WaitForBackgroundTasks();
+}
+
+// Test that calling |preventSilentAccess| from insecure context will not reach
+// CredentialManagerImpl::PreventSilentAccess.
+TEST_F(CredentialManagerTest, TryToPreventSilentAccessFromInsecureContext) {
+  // Inject JavaScript, set up WebState to have non-cryptographic scheme.
+  LoadHtml(@"<html></html>", GURL(kHttpWebOrigin));
+  LoadHtmlAndInject(@"<html></html>");
+  client_->set_current_url(GURL(kHttpWebOrigin));
+
+  // Expect that PasswordManagerClient method used by
+  // CredentialManagerImpl::PreventSilentAccess will not be invoked.
+  EXPECT_CALL(*client_, IsSavingAndFillingEnabledForCurrentPage()).Times(0);
+
+  // Call API method |preventSilentAccess|.
+  ExecuteJavaScript(@"navigator.credentials.preventSilentAccess()");
+  WaitForBackgroundTasks();
+}
+
+// Tests that when Credential is requested with required mediation, a prompt to
+// choose credential will be shown to the user.
+TEST_F(CredentialManagerTest, GetCredentialWithRequiredMediation) {
+  // Inject JavaScript and set up secure context.
+  LoadHtml(@"<html></html>", GURL(kHttpsWebOrigin));
+  LoadHtmlAndInject(@"<html></html>");
+  UpdateSslStatus(net::CERT_STATUS_IS_EV, web::SECURITY_STYLE_AUTHENTICATED,
+                  web::SSLStatus::NORMAL_CONTENT);
+
+  // Call API method |store|.
+  ExecuteJavaScript(
+      @"var credential = new PasswordCredential({"
+       "  id: 'id',"
+       "  password: 'pencil',"
+       "  name: 'name',"
+       "  iconURL: 'https://example.com/icon.png'"
+       "});"
+       "navigator.credentials.store(credential).then(function() { "
+       "  test_credential_stored_ = true; });");
+  // Wait for credential to be stored.
+  WaitForBackgroundTasks();
+  client_->pending_manager()->Save();
+
+  // Expect that user will be prompted to choose credentials.
+  EXPECT_CALL(*client_, PromptUserToChooseCredentialsPtr(_, _, _)).Times(1);
+
+  // Call API method |get|.
+  ExecuteJavaScript(
+      @"navigator.credentials.get({"
+       "  password: true,"
+       "  mediation: 'required'"
+       "}).then(function(credential) {"
+       "  test_credential_ = credential; "
+       "  test_promise_resolved_ = true;"
+       "})");
+  // Wait for Promise to be resolved.
+  WaitForCondition(^{
+    return [@YES isEqual:ExecuteJavaScript(@"test_promise_resolved_")];
+  });
+}
+
+// Tests that Promise returned by |navigator.credentials.get| will resolve with
+// |null| if PasswordStore is empty.
+TEST_F(CredentialManagerTest, NullCredentialFromEmptyPasswordStore) {
+  // Inject JavaScript and set up secure context.
+  LoadHtml(@"<html></html>", GURL(kHttpsWebOrigin));
+  LoadHtmlAndInject(@"<html></html>");
+  UpdateSslStatus(net::CERT_STATUS_IS_EV, web::SECURITY_STYLE_AUTHENTICATED,
+                  web::SSLStatus::NORMAL_CONTENT);
+
+  // Call API method |get|.
+  ExecuteJavaScript(
+      @"navigator.credentials.get({"
+       "    password: true,"
+       "    mediation: 'silent'"
+       "}).then(function(credential) {"
+       "    test_credential_ = credential; "
+       "    test_promise_resolved_ = true;"
+       "})");
+  // Wait for Promise to be resolved.
+  WaitForCondition(^{
+    return [@YES isEqual:ExecuteJavaScript(@"test_promise_resolved_")];
+  });
+
+  // Expect that returned Credential is null.
+  EXPECT_NSEQ(NULL, ExecuteJavaScript(@"test_credential_"));
+}
+
+// Tests that after |navigator.credentials.preventSilentAccess| is called, user
+// will be prompted to choose credentials.
+TEST_F(CredentialManagerTest, PreventSilentAccess) {
+  // Inject JavaScript and set up secure context.
+  LoadHtml(@"<html></html>", GURL(kHttpsWebOrigin));
+  LoadHtmlAndInject(@"<html></html>");
+  UpdateSslStatus(net::CERT_STATUS_IS_EV, web::SECURITY_STYLE_AUTHENTICATED,
+                  web::SSLStatus::NORMAL_CONTENT);
+
+  // Call API method |store|.
+  ExecuteJavaScript(
+      @"var credential = new PasswordCredential({"
+       "  id: 'id',"
+       "  password: 'pencil',"
+       "  name: 'name',"
+       "  iconURL: 'https://example.com/icon.png'"
+       "});"
+       "navigator.credentials.store(credential);");
+
+  // Wait for credential to be stored.
+  WaitForBackgroundTasks();
+  client_->pending_manager()->Save();
+
+  // Call API method |preventSilentAccess|.
+  ExecuteJavaScript(
+      @"navigator.credentials.preventSilentAccess()"
+       ".then(function(result) {"
+       "  test_promise_resolved_ = true;"
+       "  test_result_ = (result == undefined);"
+       "});");
+  WaitForBackgroundTasks();
+  client_->pending_manager()->Save();
+
+  // Check that |preventSilentAccess| set a |skip_zero_click| flag on stored
+  // credential.
+  TestPasswordStore::PasswordMap passwords = store_->stored_passwords();
+  std::vector<autofill::PasswordForm> forms = passwords[kHttpsWebOrigin];
+  EXPECT_EQ(1u, forms.size());
+  EXPECT_TRUE(forms[0].skip_zero_click);
+
+  // Wait for Promise to be resolved.
+  WaitForCondition(^{
+    return [@YES isEqual:ExecuteJavaScript(@"test_promise_resolved_")];
+  });
+
+  // Check that Promise was resolved with |undefined|.
+  EXPECT_NSEQ(@YES, ExecuteJavaScript(@"test_result_"));
+}
+
+// Tests that if multiple credentials are stored for a website and mediation
+// requirement is set to 'optional', user will be prompted to choose
+// credentials.
+TEST_F(CredentialManagerTest, PromptUserOnMultipleCredentials) {
+  // Inject JavaScript and set up secure context.
+  LoadHtml(@"<html></html>", GURL(kHttpsWebOrigin));
+  LoadHtmlAndInject(@"<html></html>");
+  UpdateSslStatus(net::CERT_STATUS_IS_EV, web::SECURITY_STYLE_AUTHENTICATED,
+                  web::SSLStatus::NORMAL_CONTENT);
+
+  // Store first FederatedCredential object.
+  ExecuteJavaScript(
+      @"var credential1 = new PasswordCredential({"
+       "  id: 'id1', name: 'Name One', password: 'secret1'"
+       "});"
+       "navigator.credentials.store(credential1);");
+  // Wait for credentials to be stored.
+  WaitForBackgroundTasks();
+  client_->pending_manager()->Save();
+  // Store another FederatedCredential object.
+  ExecuteJavaScript(
+      @"var credential2 = new PasswordCredential({"
+       "  id: 'id2', name: 'Name Two', password: 'secret2'"
+       "});"
+       "navigator.credentials.store(credential2);");
+  // Wait for credentials to be stored.
+  WaitForBackgroundTasks();
+  client_->pending_manager()->Save();
+
+  // Expect that user will be prompted to choose credentials.
+  EXPECT_CALL(*client_, PromptUserToChooseCredentialsPtr(_, _, _)).Times(1);
+
+  // Call API method |get|.
+  ExecuteJavaScript(
+      @"navigator.credentials.get({"
+       "  password: true, "
+       "  mediation: 'optional'"
+       "}).then(function(credential) {"
+       "  test_credential_ = credential;"
+       "  test_promise_resolved_ = true;"
+       "})");
+  // Wait for Promise to be resolved.
+  WaitForCondition(^{
+    return [@YES isEqual:ExecuteJavaScript(@"test_promise_resolved_")];
+  });
+}
+
+// Tests that Promise returned by |navigator.credentials.get| is rejected with
+// TypeError if |mediation| value is invalid.
+TEST_F(CredentialManagerTest, RejectOnInvalidMediationValue) {
+  // Inject JavaScript and set up secure context.
+  LoadHtml(@"<html></html>", GURL(kHttpsWebOrigin));
+  LoadHtmlAndInject(@"<html></html>");
+  UpdateSslStatus(net::CERT_STATUS_IS_EV, web::SECURITY_STYLE_AUTHENTICATED,
+                  web::SSLStatus::NORMAL_CONTENT);
+
+  // Call API method |get| with invalid |mediation| field.
+  ExecuteJavaScript(
+      @"navigator.credentials.get({"
+       "  password: true,"
+       "  mediation: 'maybe'"
+       "}).catch(function(reason) {"
+       "  test_result_valid_type_ = (reason instanceof TypeError);"
+       "  test_promise_rejected_ = true;"
+       "})");
+
+  // Wait for Promise to be rejected.
+  WaitForCondition(^{
+    return [@YES isEqual:ExecuteJavaScript(@"test_promise_rejected_")];
+  });
+  // Check that Promise was rejected with TypeError.
+  EXPECT_NSEQ(@YES, ExecuteJavaScript(@"test_result_valid_type_"));
+}
+
+// Tests that Promise will be rejected with TypeError for invalid Credential.
+TEST_F(CredentialManagerTest, RejectOnInvalidCredential) {
+  // Inject JavaScript and set up secure context.
+  LoadHtml(@"<html></html>", GURL(kHttpsWebOrigin));
+  LoadHtmlAndInject(@"<html></html>");
+  UpdateSslStatus(net::CERT_STATUS_IS_EV, web::SECURITY_STYLE_AUTHENTICATED,
+                  web::SSLStatus::NORMAL_CONTENT);
+
+  // Call |store| with invalid Credential: |password| is not a string.
+  ExecuteJavaScript(
+      @"var credential = new PasswordCredential({"
+       "  id: 'id',"
+       "  password: 15,"
+       "  name: 'name',"
+       "  iconURL: 'https://example.com/icon.png'"
+       "});"
+       "navigator.credentials.store(credential).catch(function(reason) {"
+       "  test_result_valid_type_ = (reason instanceof TypeError);"
+       "  test_promise_rejected_ = true;"
+       "});");
+
+  // Wait for Promise to be rejected.
+  WaitForCondition(^{
+    return [@YES isEqual:ExecuteJavaScript(@"test_promise_rejected_")];
+  });
+
+  // Check that Promise was rejected with TypeError.
+  EXPECT_NSEQ(@YES, ExecuteJavaScript(@"test_result_valid_type_"));
+}
+
+// Tests that Promise returned by |navigator.credentials.get| is rejected with
+// TypeError if |providers| value is invalid.
+TEST_F(CredentialManagerTest, RejectOnInvalidProvidersValue) {
+  // Inject JavaScript and set up secure context.
+  LoadHtml(@"<html></html>", GURL(kHttpsWebOrigin));
+  LoadHtmlAndInject(@"<html></html>");
+  UpdateSslStatus(net::CERT_STATUS_IS_EV, web::SECURITY_STYLE_AUTHENTICATED,
+                  web::SSLStatus::NORMAL_CONTENT);
+
+  // Call API method |get| with invalid |providers| field.
+  ExecuteJavaScript(
+      @"navigator.credentials.get({"
+       "  providers: 'https://exampleprovider.com' /* not a list */"
+       "}).catch(function(reason) {"
+       "  test_result_valid_type_ = (reason instanceof TypeError);"
+       "  test_promise_rejected_ = true;"
+       "})");
+
+  // Wait for Promise to be rejected.
+  WaitForCondition(^{
+    return [@YES isEqual:ExecuteJavaScript(@"test_promise_rejected_")];
+  });
+  // Check that Promise was rejected with TypeError.
+  EXPECT_NSEQ(@YES, ExecuteJavaScript(@"test_result_valid_type_"));
+}
+
+// Tests that Promise returned by |navigator.credentials.get| is rejected with
+// NotSupportedError if password store is not available.
+TEST_F(CredentialManagerTest, RejectOnPasswordStoreUnavailable) {
+  // Inject JavaScript and set up secure context.
+  LoadHtml(@"<html></html>", GURL(kHttpsWebOrigin));
+  LoadHtmlAndInject(@"<html></html>");
+  UpdateSslStatus(net::CERT_STATUS_IS_EV, web::SECURITY_STYLE_AUTHENTICATED,
+                  web::SSLStatus::NORMAL_CONTENT);
+
+  // Make password store unavailable.
+  client_->set_password_store(nullptr);
+
+  // Call API method |get| with correct arguments, set up rejecter to store
+  // reason for failure in |test_*| variables.
+  ExecuteJavaScript(
+      @"navigator.credentials.get({"
+       "  password: true,"
+       "}).catch(function(reason) {"
+       "  test_result_valid_type_ = (reason instanceof DOMException) && "
+       "    (reason.name == DOMException.NOT_SUPPORTED_ERR);"
+       "  test_result_message_ = reason.message;"
+       "  test_promise_rejected_ = true;"
+       "})");
+
+  // Wait for Promise to be rejected.
+  WaitForCondition(^{
+    return [@YES isEqual:ExecuteJavaScript(@"test_promise_rejected_")];
+  });
+
+  // Check that Promise was rejected with NotSupportedError.
+  EXPECT_NSEQ(@YES, ExecuteJavaScript(@"test_result_valid_type_"));
+
+  // Check that Promise message says "Password store is unavailable."
+  EXPECT_NSEQ(@"Password store is unavailable.",
+              ExecuteJavaScript(@"test_result_message_"));
+}
 
 class WebStateContentIsSecureHtmlTest : public CredentialManagerTest {};
 
