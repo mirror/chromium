@@ -40,7 +40,18 @@ void ProportionalImageView::OnPaint(gfx::Canvas* canvas) {
           ? image_
           : gfx::ImageSkiaOperations::CreateResizedImage(
                 image_, skia::ImageOperations::RESIZE_BEST, draw_size);
-  canvas->DrawImageInt(image, draw_bounds.x(), draw_bounds.y());
+  if (rounded_) {
+    SkPath path;
+    path.addCircle(SkIntToScalar(draw_bounds.x() + draw_bounds.width() / 2),
+                   SkIntToScalar(draw_bounds.y() + draw_bounds.height() / 2),
+                   SkIntToScalar(draw_bounds.width() / 2));
+    cc::PaintFlags flags;
+    flags.setAntiAlias(true);
+    canvas->DrawImageInPath(image, draw_bounds.x(), draw_bounds.y(), path,
+                            flags);
+  } else {
+    canvas->DrawImageInt(image, draw_bounds.x(), draw_bounds.y());
+  }
 }
 
 const char* ProportionalImageView::GetClassName() const {

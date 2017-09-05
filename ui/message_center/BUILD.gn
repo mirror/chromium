@@ -39,6 +39,7 @@ component("message_center") {
       ":message_center_vector_icons",
       "//base:i18n",
       "//base/third_party/dynamic_annotations",
+      "//cc/paint",
       "//components/url_formatter",
       "//skia",
       "//ui/accessibility",
