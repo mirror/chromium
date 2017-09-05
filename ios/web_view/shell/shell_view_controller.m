@@ -23,6 +23,7 @@ NSString* const kWebViewShellJavaScriptDialogTextFieldAccessibiltyIdentifier =
     @"WebViewShellJavaScriptDialogTextFieldAccessibiltyIdentifier";
 
 @interface ShellViewController ()<CWVAuthenticationControllerDelegate,
+                                  CWVAutofillControllerDelegate,
                                   CWVNavigationDelegate,
                                   CWVUIDelegate,
                                   UITextFieldDelegate>
@@ -257,6 +258,8 @@ NSString* const kWebViewShellJavaScriptDialogTextFieldAccessibiltyIdentifier =
   _webView.UIDelegate = self;
   _translationDelegate = [[ShellTranslationDelegate alloc] init];
   _webView.translationController.delegate = _translationDelegate;
+  _webView.autofillController.delegate = self;
+  ;
 
   [_webView setAutoresizingMask:UIViewAutoresizingFlexibleWidth |
                                 UIViewAutoresizingFlexibleHeight];
@@ -306,6 +309,31 @@ NSString* const kWebViewShellJavaScriptDialogTextFieldAccessibiltyIdentifier =
 - (BOOL)textFieldShouldReturn:(UITextField*)field {
   NSURLRequest* request =
       [NSURLRequest requestWithURL:[NSURL URLWithString:[field text]]];
+  if ([field.text isEqualToString:@"Multi"]) {
+    NSURL* fileURL =
+        [[NSBundle mainBundle] URLForResource:@"autofill_multi_test"
+                                withExtension:@"html"];
+    NSData* data = [NSData dataWithContentsOfURL:fileURL options:0 error:nil];
+    NSString* base64 = [data base64EncodedStringWithOptions:0];
+
+    NSString* dataString =
+        [NSString stringWithFormat:@"data:text/html;base64,%@", base64];
+    NSURL* dataURL = [NSURL URLWithString:dataString];
+
+    request = [NSURLRequest requestWithURL:dataURL];
+  } else if ([field.text isEqualToString:@"Single"]) {
+    NSURL* fileURL =
+        [[NSBundle mainBundle] URLForResource:@"autofill_single_test"
+                                withExtension:@"html"];
+    NSData* data = [NSData dataWithContentsOfURL:fileURL options:0 error:nil];
+    NSString* base64 = [data base64EncodedStringWithOptions:0];
+
+    NSString* dataString =
+        [NSString stringWithFormat:@"data:text/html;base64,%@", base64];
+    NSURL* dataURL = [NSURL URLWithString:dataString];
+
+    request = [NSURLRequest requestWithURL:dataURL];
+  }
   [_webView loadRequest:request];
   [field resignFirstResponder];
   [self updateToolbar];
@@ -319,6 +347,46 @@ NSString* const kWebViewShellJavaScriptDialogTextFieldAccessibiltyIdentifier =
   }
 
   [_field setText:[[_webView visibleURL] absoluteString]];
+}
+
+#pragma mark CWVAutofillControllerDelegate
+
+- (void)autofillController:(CWVAutofillController*)autofillController
+       showFormSuggestions:
+           (NSArray<CWVAutofillFormSuggestion*>*)formSuggestions {
+  UIAlertController* alertController = [UIAlertController
+      alertControllerWithTitle:@"Pick a suggestion"
+                       message:nil
+                preferredStyle:UIAlertControllerStyleActionSheet];
+  [alertController
+      addAction:[UIAlertAction actionWithTitle:@"Cancel"
+                                         style:UIAlertActionStyleCancel
+                                       handler:nil]];
+
+  for (CWVAutofillFormSuggestion* formSuggestion in formSuggestions) {
+    NSString* title;
+    if (formSuggestion.identifier >= 0) {
+      title = [NSString stringWithFormat:@"%@ %@", formSuggestion.value,
+                                         formSuggestion.displayDescription];
+    } else {
+      title = @"Clear form";
+    }
+    [alertController
+        addAction:[UIAlertAction
+                      actionWithTitle:title
+                                style:UIAlertActionStyleDefault
+                              handler:^(UIAlertAction* _Nonnull action) {
+                                [autofillController
+                                    commitFormSuggestion:formSuggestion];
+                              }]];
+  }
+
+  [self presentViewController:alertController animated:YES completion:nil];
+}
+
+- (void)autofillControllerShouldHideFormSuggestions:
+    (CWVAutofillController*)autofillController {
+  [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark CWVAuthenticationControllerDelegate

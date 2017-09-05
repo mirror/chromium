@@ -4,7 +4,9 @@
 
 #include "ios/web_view/internal/web_view_sync_initializer.h"
 
+#include "components/autofill/core/browser/autofill_manager.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
+#include "components/content_settings/core/common/content_settings_pattern.h"
 #include "components/signin/core/browser/account_fetcher_service.h"
 #include "components/signin/core/browser/signin_manager_base.h"
 #include "ios/web_view/internal/signin/web_view_account_consistency_service_factory.h"
@@ -20,6 +22,11 @@
 
 namespace ios_web_view {
 
+const char kDummyExtensionScheme[] = ":no-extension-scheme:";
+const char* const kNonWildcardDomainNonPortSchemes[] = {kDummyExtensionScheme};
+const size_t kNonWildcardDomainNonPortSchemesSize =
+    arraysize(kNonWildcardDomainNonPortSchemes);
+
 // static
 void WebViewSyncInitializer::InitializeFactories() {
   WebViewAccountConsistencyServiceFactory::GetInstance();
@@ -32,8 +39,8 @@ void WebViewSyncInitializer::InitializeFactories() {
   WebViewSigninErrorControllerFactory::GetInstance();
   WebViewSigninManagerFactory::GetInstance();
 
-  ContentSettingsPattern::SetNonWildcardDomainNonPortScheme(
-      ":no-extension-scheme:");
+  ContentSettingsPattern::SetNonWildcardDomainNonPortSchemes(
+      kNonWildcardDomainNonPortSchemes, kNonWildcardDomainNonPortSchemesSize);
 }
 
 // static
@@ -53,6 +60,7 @@ void WebViewSyncInitializer::RegisterLocalPrefs(PrefRegistrySimple* registry) {
 void WebViewSyncInitializer::RegisterBrowserPrefs(
     user_prefs::PrefRegistrySyncable* registry) {
   HostContentSettingsMap::RegisterProfilePrefs(registry);
+  autofill::AutofillManager::RegisterProfilePrefs(registry);
 }
 
 }  // namespace ios_web_view
