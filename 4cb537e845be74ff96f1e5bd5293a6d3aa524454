@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c52d0c9f_fee7d325",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-05T23:04:43Z",
+      "side": 1,
+      "message": "Should this even be in a conditional?  We should always download the archives ready for download.\n\nThe download service will queue requests until it is initialized.\n\nThen if cleanup enables more downloads it should call QueueActionTasks.",
+      "parentUuid": "45251bfd_df3861e1",
+      "revId": "4cb537e845be74ff96f1e5bd5293a6d3aa524454",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7e360592_c3ddaa68",
         "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.h",
         "patchSetId": 6
@@ -30,6 +48,23 @@
       "writtenOn": "2017-09-05T22:59:49Z",
       "side": 1,
       "message": "There are 3 spaces no in front of those, should be 2. Also may shift the stuff above, there are 2 functions with wrong indenting.",
+      "revId": "4cb537e845be74ff96f1e5bd5293a6d3aa524454",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3542e911_9049020e",
+        "filename": "components/offline_pages/core/prefetch/prefetch_downloader_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-05T23:04:43Z",
+      "side": 1,
+      "message": "Why do we need this DCHECK?  The download service will queue this request.",
       "revId": "4cb537e845be74ff96f1e5bd5293a6d3aa524454",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
