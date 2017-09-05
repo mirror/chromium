@@ -7,6 +7,7 @@ package org.chromium.base.library_loader;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.os.StrictMode;
 import android.os.SystemClock;
 
@@ -228,6 +229,50 @@ public class LibraryLoader {
         }
     }
 
+    /**
+     * Repeatedly reports the native library page residency to files.
+     *
+     * Starts a new thread to collect the residency at (relatively) fixed intervals, and writes the
+     * results to /sdcard/residency-CURRENT_TIME_MILLIS.csv.
+     *
+     * @param count Number of data points.
+     * @param intervalMs Interval in ms.
+     * @return true.
+     */
+    private static void logResidency(final int count, final int intervalMs) {
+        final String externalDirectory = Environment.getExternalStorageDirectory().toString();
+        Context context = ContextUtils.getApplicationContext();
+        final String applicationDirectory = context.getApplicationInfo().nativeLibraryDir;
+        final boolean purge = CommandLine.getInstance().hasSwitch("purge");
+        String allocSizeString = CommandLine.getInstance().getSwitchValue("purge-mb", "0");
+        final int sizeMb = Integer.parseInt(allocSizeString);
+
+        Thread t = new Thread() {
+            @Override
+            public void run() {
+                for (int j = 0; j < 5; j++) {
+                    for (int i = 0; i < count; i++) {
+                        if (purge && i == 0 && j != 0) {
+                            if (!nativePurge(applicationDirectory, sizeMb)) {
+                                throw new RuntimeException("Cannot purge");
+                            }
+                        }
+                        long now = System.currentTimeMillis();
+                        String path = externalDirectory + "/residency-" + now + ".csv";
+                        boolean ok = nativeCollectResidency(path);
+                        if (!ok) Log.w(TAG, "Failed to log residency.");
+                        try {
+                            Thread.sleep(intervalMs);
+                        } catch (InterruptedException e) {
+                            // Ok, we just didn't sleep enough.
+                        }
+                    }
+                }
+            }
+        };
+        t.start();
+    }
+
     /** Prefetches the native libraries in a background thread.
      *
      * Launches an AsyncTask that, through a short-lived forked process, reads a
@@ -238,6 +283,11 @@ public class LibraryLoader {
      * detrimental to the startup time.
      */
     public void asyncPrefetchLibrariesToMemory() {
+        if (CommandLine.getInstance().hasSwitch("log-residency")) {
+            Log.w(TAG, "Logging the native library residency.");
+            logResidency(10, 400);
+            return;
+        }
         if (isNotPrefetchingLibraries()) return;
 
         final boolean coldStart = mPrefetchLibraryHasBeenCalled.compareAndSet(false, true);
@@ -546,4 +596,8 @@ public class LibraryLoader {
     // Returns the percentage of the native library code page that are currently reseident in
     // memory.
     private static native int nativePercentageOfResidentNativeLibraryCode();
+
+    private static native boolean nativeCollectResidency(String filename);
+
+    private static native boolean nativePurge(String path, int sizeMb);
 }
