@@ -70,6 +70,16 @@ class AudioDeviceInfo {
 
 using AudioDeviceSet = DiscreteSet<AudioDeviceInfo>;
 
+#if 0
+double GetDeviceLatencyFromExact(double latency_seconds,
+                                 const media::AudioParameters& device_params) {
+  int device_buffer_size = media::AudioLatency::GetExactBufferSize(
+      base::TimeDelta::FromSecondsD(latency_seconds),
+      device_params.sample_rate(), device_params.frames_per_buffer());
+  return device_buffer_size / static_cast<double>(device_params.sample_rate());
+}
+#endif
+
 AudioDeviceSet AudioDeviceSetForDeviceCapture(
     const blink::WebMediaTrackConstraintSet& constraint_set,
     const AudioDeviceCaptureCapabilities& capabilities,
@@ -83,6 +93,39 @@ AudioDeviceSet AudioDeviceSetForDeviceCapture(
         *failed_constraint_name = constraint_set.device_id.GetName();
       continue;
     }
+
+#if 0
+    double min_device_latency =
+        GetDeviceLatencyFromExact(0, device_capabilities->parameters);
+    double max_device_latency =
+        GetDeviceLatencyFromExact(INT_MAX, device_capabilities->parameters);
+    NumericRangeSet<double> latency_range =
+        NumericRangeSet<double>::FromConstraint(
+            constraint_set.latency, min_device_latency, max_device_latency);
+    if (latency_range.IsEmpty()) {
+      *failed_constraint_name = constraint_set.latency.GetName();
+      continue;
+    }
+
+    if (constraint_set.latency.HasExact()) {
+      double exact_device_latency = GetDeviceLatencyFromExact(
+          constraint_set.latency.Exact(), device_capabilities->parameters);
+      double latency_diff =
+          std::abs(exact_device_latency - constraint_set.latency.Exact());
+      // Allow some reasonable difference (1ms?)
+      const double kMaxLatencyDiffSecs = 0.001;
+      if (latency_diff > kMaxLatencyDiffSecs) {
+        *failed_constraint_name = constraint_set.latency.GetName();
+        continue;
+      }
+    }
+#else
+    if (constraint_set.latency.HasMandatory()) {
+      *failed_constraint_name = constraint_set.latency.GetName();
+      return AudioDeviceSet::EmptySet();
+    }
+#endif
+
     result.push_back(AudioDeviceInfo(device_capabilities));
   }
 
@@ -95,6 +138,11 @@ AudioDeviceSet AudioDeviceSetForDeviceCapture(
 AudioDeviceSet AudioDeviceSetForContentCapture(
     const blink::WebMediaTrackConstraintSet& constraint_set,
     const char** failed_constraint_name = nullptr) {
+  if (constraint_set.latency.HasMandatory()) {
+    *failed_constraint_name = constraint_set.latency.GetName();
+    return AudioDeviceSet::EmptySet();
+  }
+
   if (!constraint_set.device_id.HasExact())
     return AudioDeviceSet::UniversalSet();
 

@@ -309,6 +309,8 @@ void MediaStreamTrack::getSettings(MediaTrackSettings& settings) {
     settings.setEchoCancellation(
         static_cast<bool>(platform_settings.echo_cancellation));
   }
+  if (platform_settings.HasLatency())
+    settings.setLatency(platform_settings.latency);
 
   if (image_capture_)
     image_capture_->GetMediaTrackSettings(settings);

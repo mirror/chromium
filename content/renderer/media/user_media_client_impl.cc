@@ -999,6 +999,9 @@ blink::WebMediaStreamSource UserMediaClientImpl::InitializeAudioSourceObject(
   // is known and surfaced in CreateAudioTracks(), after the track is connected
   // to the source.
   source.SetEchoCancellation(has_sw_echo_cancellation);
+  media::AudioParameters source_params = audio_source->GetAudioParameters();
+  source.SetLatency(source_params.frames_per_buffer() /
+                    static_cast<double>(source_params.sample_rate()));
   return source;
 }
 
@@ -1021,8 +1024,23 @@ MediaStreamAudioSource* UserMediaClientImpl::CreateAudioSource(
       !MediaStreamAudioProcessor::WouldModifyAudio(
           audio_processing_properties)) {
     *has_sw_echo_cancellation = false;
+    base::Optional<double> latency;
+    if (constraints.Basic().latency.HasIdeal())
+      latency = constraints.Basic().latency.Ideal();
+    else {
+      for (const auto& advanced : constraints.Advanced()) {
+        if (advanced.latency.HasExact()) {
+          latency = advanced.latency.Exact();
+          break;
+        } else if (advanced.latency.HasIdeal()) {
+          latency = advanced.latency.Ideal();
+          break;
+        }
+      }
+    }
+
     return new LocalMediaStreamAudioSource(RenderFrameObserver::routing_id(),
-                                           device, source_ready);
+                                           device, latency, source_ready);
   }
 
   // The audio device is not associated with screen capture and also requires

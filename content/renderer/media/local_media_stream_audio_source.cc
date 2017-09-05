@@ -14,6 +14,7 @@ namespace content {
 LocalMediaStreamAudioSource::LocalMediaStreamAudioSource(
     int consumer_render_frame_id,
     const StreamDeviceInfo& device_info,
+    base::Optional<double> requested_latency,
     const ConstraintsCallback& started_callback)
     : MediaStreamAudioSource(true /* is_local_source */),
       consumer_render_frame_id_(consumer_render_frame_id),
@@ -21,8 +22,17 @@ LocalMediaStreamAudioSource::LocalMediaStreamAudioSource(
   DVLOG(1) << "LocalMediaStreamAudioSource::LocalMediaStreamAudioSource()";
   MediaStreamSource::SetDeviceInfo(device_info);
 
+  int frames_per_buffer;
+  if (requested_latency) {
+    frames_per_buffer = media::AudioLatency::GetExactBufferSize(
+        base::TimeDelta::FromSecondsD(*requested_latency),
+        device_info.device.input.sample_rate(),
+        device_info.device.input.frames_per_buffer());
+  } else {
+    frames_per_buffer = device_info.device.input.frames_per_buffer();
+  }
+
   // If the device buffer size was not provided, use a default.
-  int frames_per_buffer = device_info.device.input.frames_per_buffer();
   if (frames_per_buffer <= 0) {
     // TODO(miu): Like in ProcessedLocalAudioSource::GetBufferSize(), we should
     // re-evaluate whether Android needs special treatment here. Or, perhaps we
