@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "63f3aa34_44067a7f",
+        "filename": "chrome/renderer/content_settings_observer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-05T16:07:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f6b0d9b_55cb1a4d",
+      "revId": "89ef7feb80ed9f63aaaa92189b9a645e94b7e361",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6afac0ec_267859ca",
         "filename": "chrome/renderer/content_settings_observer.cc",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "52813fea_a8de29ce",
+        "filename": "chrome/renderer/content_settings_observer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-05T16:07:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6afac0ec_267859ca",
+      "revId": "89ef7feb80ed9f63aaaa92189b9a645e94b7e361",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9e4f09b_89e4c94c",
         "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
         "patchSetId": 10
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-05T10:42:01Z",
       "side": 1,
       "message": "Would it mean we\u0027ll likely send this info only for subresource requests given that we\u0027re trying to enable browser-side navigation anytime soon?",
+      "revId": "89ef7feb80ed9f63aaaa92189b9a645e94b7e361",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1823a0d1_10cbc2d5",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-05T16:07:20Z",
+      "side": 1,
+      "message": "That is correct. Next CL will add client hint headers in the content/browser/frame_host/navigation_request.cc.\n\nThat file currently adds save-data header and user-agent headers for browser initiated navigations.",
+      "parentUuid": "f9e4f09b_89e4c94c",
       "revId": "89ef7feb80ed9f63aaaa92189b9a645e94b7e361",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
