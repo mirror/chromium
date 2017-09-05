@@ -611,6 +611,10 @@ class CC_EXPORT LayerTreeHostImpl
   bool CanConsumeDelta(const ScrollNode& scroll_node,
                        const ScrollState& scroll_state);
 
+  void SetIsMobileOptimized(bool is_mobile_optimized) {
+    is_mobile_optimized_ = is_mobile_optimized;
+  }
+
  protected:
   LayerTreeHostImpl(
       const LayerTreeSettings& settings,
@@ -891,6 +895,8 @@ class CC_EXPORT LayerTreeHostImpl
   // thread.
   bool has_scrolled_by_wheel_;
   bool has_scrolled_by_touch_;
+
+  bool is_mobile_optimized_;
 
   bool touchpad_and_wheel_scroll_latching_enabled_;
 

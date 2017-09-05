@@ -32,6 +32,7 @@ bool StructTraits<viz::mojom::CompositorFrameMetadataDataView,
   out->root_overflow_x_hidden = data.root_overflow_x_hidden();
   out->root_overflow_y_hidden = data.root_overflow_y_hidden();
   out->may_contain_video = data.may_contain_video();
+  out->is_mobile_optimized = data.is_mobile_optimized();
   out->is_resourceless_software_draw_with_scroll_or_animation =
       data.is_resourceless_software_draw_with_scroll_or_animation();
   out->top_controls_height = data.top_controls_height();

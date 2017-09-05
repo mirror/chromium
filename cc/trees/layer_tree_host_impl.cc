@@ -244,6 +244,7 @@ LayerTreeHostImpl::LayerTreeHostImpl(
       scroll_animating_latched_node_id_(ScrollTree::kInvalidNodeId),
       has_scrolled_by_wheel_(false),
       has_scrolled_by_touch_(false),
+      is_mobile_optimized_(false),
       touchpad_and_wheel_scroll_latching_enabled_(false),
       impl_thread_phase_(ImplThreadPhase::IDLE) {
   DCHECK(mutator_host_);
@@ -1655,6 +1656,8 @@ CompositorFrameMetadata LayerTreeHostImpl::MakeCompositorFrameMetadata() const {
     metadata.root_overflow_y_hidden =
         !outer_viewport_scroll_node->user_scrollable_vertical;
   }
+
+  metadata.is_mobile_optimized = is_mobile_optimized_;
 
   if (GetDrawMode() == DRAW_MODE_RESOURCELESS_SOFTWARE) {
     metadata.is_resourceless_software_draw_with_scroll_or_animation =
