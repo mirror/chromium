@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "84ddc7a2_ed7e7cec",
+        "filename": "media/blink/multibuffer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-05T22:30:02Z",
+      "side": 1,
+      "message": "Aren\u0027t the pages with 100s of videos already unusable? :p I jest, but realistically you won\u0027t be able to get more than 25 or 50 videos on a page even without the cache and network issues due to thread caps on the process.\n\nI agree it\u0027s a small optimization in any case given the size of data we\u0027re working with here. I don\u0027t feel strongly, but do feel confident that 100% of possible pages on the web would perform reasonably if we did switch and some large majority would benefit (if only a minor amount).",
+      "parentUuid": "5f2ecc49_37ffe111",
+      "revId": "bb0dcdd84ede109b5efd78afd50e8bc18bd20b63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "137edf18_9d3c48dd",
         "filename": "media/blink/multibuffer.cc",
         "patchSetId": 3
