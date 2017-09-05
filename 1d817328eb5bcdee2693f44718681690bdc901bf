@@ -22,6 +22,30 @@
       "revId": "1d817328eb5bcdee2693f44718681690bdc901bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f073b32_91bfc430",
+        "filename": "chrome/browser/ui/cocoa/omnibox/omnibox_popup_view_mac.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-09-05T21:18:29Z",
+      "side": 1,
+      "message": "Done. The object is eventually set as a retain property on omnibox_popup_cell.h. That will keep a reference to the object for as long as it\u0027s set as that property right?",
+      "parentUuid": "85c5eb42_2d85592e",
+      "range": {
+        "startLine": 353,
+        "startChar": 56,
+        "endLine": 353,
+        "endChar": 67
+      },
+      "revId": "1d817328eb5bcdee2693f44718681690bdc901bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
