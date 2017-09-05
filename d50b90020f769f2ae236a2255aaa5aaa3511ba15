@@ -22,6 +22,75 @@
       "revId": "d50b90020f769f2ae236a2255aaa5aaa3511ba15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34e1c97e_84099950",
+        "filename": "chrome/browser/ui/cocoa/status_bubble_mac.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-05T00:17:47Z",
+      "side": 1,
+      "message": "overloading a method with the same name as an inherited method can lead to confusing errors. Perhaps call these `MouseMovedAt`?",
+      "range": {
+        "startLine": 66,
+        "startChar": 7,
+        "endLine": 66,
+        "endChar": 17
+      },
+      "revId": "d50b90020f769f2ae236a2255aaa5aaa3511ba15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "518903e3_96092ecc",
+        "filename": "chrome/browser/ui/cocoa/status_bubble_mac.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-05T00:17:47Z",
+      "side": 1,
+      "message": "gfx::Point has a constructor taking CGPoint -- usually it\u0027s enough to do something like gfx::Point([NSEvent mouseLocation])",
+      "range": {
+        "startLine": 440,
+        "startChar": 18,
+        "endLine": 440,
+        "endChar": 23
+      },
+      "revId": "d50b90020f769f2ae236a2255aaa5aaa3511ba15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c97c9d24_a00cef56",
+        "filename": "chrome/browser/ui/views/status_bubble_views.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-05T00:17:47Z",
+      "side": 1,
+      "message": "MouseMovedAt",
+      "range": {
+        "startLine": 69,
+        "startChar": 7,
+        "endLine": 69,
+        "endChar": 17
+      },
+      "revId": "d50b90020f769f2ae236a2255aaa5aaa3511ba15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
