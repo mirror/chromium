@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "d38daafb_59f06765",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-05T01:16:12Z",
+      "side": 1,
+      "message": "nit: I prefer writing out `std::unique_ptr\u003cServiceWorkerFetchRequest\u003e` instead of `auto` especially now as the function is defined in a new file",
+      "revId": "e02b69fa1a5fc53ad05f1a0d38c37757ab36c5ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6abca702_0c226f32",
         "filename": "content/common/service_worker/service_worker_loader_helpers.cc",
         "patchSetId": 7
@@ -31,6 +48,23 @@
       "side": 1,
       "message": "Since it may not be necessary, I decided not to factor out these methods with Matt-san.",
       "parentUuid": "6abca702_0c226f32",
+      "revId": "e02b69fa1a5fc53ad05f1a0d38c37757ab36c5ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32450915_6d04da7f",
+        "filename": "content/common/service_worker/service_worker_loader_helpers.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-05T01:16:12Z",
+      "side": 1,
+      "message": "Looking at this interface now, there\u0027s an inconsistency between \"Populate\" and \"Save\" naming.\n\nUnless I\u0027m missing something, there also seems to be no need to expose the SaveResponse* functions in the public part of this class. They are only used internally by this class.\n\nSo we could move them to the private section, or more conventionally for Chromium, into the unnamed namespace in the .cc file. However if we\u0027re removing the Send* functions, then the only callsite will be in PopulateResponseHead(). In that case, it seems like we can just remove the functions and write everything in the body of PopulateResponseHead().",
       "revId": "e02b69fa1a5fc53ad05f1a0d38c37757ab36c5ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
