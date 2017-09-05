@@ -7,6 +7,7 @@
 
 #include "base/command_line.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/histogram_tester.h"
@@ -762,6 +763,46 @@ TEST_F(AccountReconcilorTest, StartReconcileOnlyOnce) {
 
   base::RunLoop().RunUntilIdle();
   ASSERT_FALSE(reconcilor->is_reconcile_started_);
+}
+
+TEST_F(AccountReconcilorTest, Lock) {
+  const std::string account_id =
+      ConnectProfileToAccount("12345", "user@gmail.com");
+  cookie_manager_service()->SetListAccountsResponseOneAccount("user@gmail.com",
+                                                              "12345");
+  AccountReconcilor* reconcilor =
+      AccountReconcilorFactory::GetForProfile(profile());
+  ASSERT_TRUE(reconcilor);
+  ASSERT_FALSE(reconcilor->is_reconcile_started_);
+
+  // AccountReconcilorLock prevents reconcile from starting, as long as one
+  // instance is alive.
+  std::unique_ptr<AccountReconcilor::AccountReconcilorLock> lock_1 =
+      base::MakeUnique<AccountReconcilor::AccountReconcilorLock>(reconcilor);
+  reconcilor->StartReconcile();
+  // lock_1 is blocking the reconcile.
+  EXPECT_FALSE(reconcilor->is_reconcile_started_);
+  {
+    AccountReconcilor::AccountReconcilorLock lock_2(reconcilor);
+    EXPECT_FALSE(reconcilor->is_reconcile_started_);
+    lock_1.reset();
+    // lock_1 is no longer blocking, but lock_2 is still alive.
+    EXPECT_FALSE(reconcilor->is_reconcile_started_);
+  }
+
+  // All locks are deleted, reconcile starts.
+  ASSERT_TRUE(reconcilor->is_reconcile_started_);
+
+  // AccountReconcilorLock aborts current reconcile, and restarts it later.
+  {
+    AccountReconcilor::AccountReconcilorLock lock(reconcilor);
+    EXPECT_FALSE(reconcilor->is_reconcile_started_);
+  }
+  EXPECT_TRUE(reconcilor->is_reconcile_started_);
+
+  // Reconcile can complete successfully after being restarted.
+  base::RunLoop().RunUntilIdle();
+  EXPECT_FALSE(reconcilor->is_reconcile_started_);
 }
 
 TEST_F(AccountReconcilorTest, StartReconcileWithSessionInfoExpiredDefault) {
