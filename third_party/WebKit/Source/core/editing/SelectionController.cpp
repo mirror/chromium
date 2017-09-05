@@ -389,7 +389,7 @@ bool SelectionController::HandleSingleClick(
                         : HandleVisibility::kNotVisible);
 
   if (has_editable_style && event.Event().FromTouch()) {
-    frame_->GetTextSuggestionController().HandlePotentialMisspelledWordTap(
+    frame_->GetTextSuggestionController().HandlePotentialSuggestionTap(
         position_to_use.GetPosition());
   }
 
