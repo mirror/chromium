@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5291ec87_7c25308b",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 949,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-05T07:07:59Z",
+      "side": 1,
+      "message": "hmm.. OK... I\u0027m wondering if we really need these TRACE_EVENT_ASYNCS_ at all, but let\u0027s leave it for now.",
+      "revId": "27cbfdd397854f7ed3b5a30f199b7014001ef764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e372ccb6_8616bb34",
+        "filename": "content/browser/service_worker/service_worker_registration_status.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-05T07:07:59Z",
+      "side": 1,
+      "message": "since this is in content namespace, how about smoething more specific like: \"GetServiceWorkerErrorTypeForRegistration\"",
+      "revId": "27cbfdd397854f7ed3b5a30f199b7014001ef764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

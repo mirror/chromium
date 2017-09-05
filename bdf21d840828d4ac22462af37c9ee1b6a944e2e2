@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "51ac1a9d_aecc2ccf",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1043,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-05T07:07:59Z",
+      "side": 1,
+      "message": "there\u0027s no pointer attached to |callback| like callback.get()? I can\u0027t find it in codesearch now though.",
+      "parentUuid": "59c03ad5_aaf237ae",
+      "revId": "bdf21d840828d4ac22462af37c9ee1b6a944e2e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f805c8d_47f9c82f",
         "filename": "content/browser/service_worker/service_worker_provider_host.cc",
         "patchSetId": 1
