@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afead4a9_54d71d9b",
+        "filename": "components/autofill/core/browser/autofill_test_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-09-05T18:25:03Z",
+      "side": 1,
+      "message": "remove?",
+      "range": {
+        "startLine": 407,
+        "startChar": 25,
+        "endLine": 407,
+        "endChar": 26
+      },
+      "revId": "a7e73a962a529d30b6a1f1f5e5972190a8c5f280",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
