@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a187cb9_522ad2ec",
+        "filename": "chrome/browser/ui/browser_command_controller_interactive_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-05T14:16:12Z",
+      "side": 1,
+      "message": "nit: remove this function, just inline StartTestPage(kFullscreenTriggerHTML);",
+      "revId": "157f0f8fcaac8f639dbf8709cbe3525ac44a4cdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
