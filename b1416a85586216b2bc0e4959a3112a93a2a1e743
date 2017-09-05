@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50f9cc95_21066d9b",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-09-05T08:41:52Z",
+      "side": 1,
+      "message": "Strings shouldn\u0027t contain the name of the browser, because it needs to be configurable (e.g., Chromium, Opera, etc).\n\nI\u0027m not quite sure what to do (will look tomorrow) but I think you should make a placeholder and get the browser name from some other string.",
+      "range": {
+        "startLine": 401,
+        "startChar": 29,
+        "endLine": 401,
+        "endChar": 35
+      },
+      "revId": "b1416a85586216b2bc0e4959a3112a93a2a1e743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f12b5412_cd8f96aa",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-09-05T08:41:52Z",
+      "side": 1,
+      "message": "Same.",
+      "range": {
+        "startLine": 410,
+        "startChar": 25,
+        "endLine": 410,
+        "endChar": 31
+      },
+      "revId": "b1416a85586216b2bc0e4959a3112a93a2a1e743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
