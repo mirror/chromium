@@ -597,8 +597,9 @@ class CONTENT_EXPORT RenderFrameImpl
   void DidStartProvisionalLoad(blink::WebDocumentLoader* document_loader,
                                blink::WebURLRequest& request) override;
   void DidReceiveServerRedirectForProvisionalLoad() override;
-  void DidFailProvisionalLoad(const blink::WebURLError& error,
-                              blink::WebHistoryCommitType commit_type) override;
+  void DidFailProvisionalLoad(
+      const blink::WebURLError& error,
+      blink::WebHistoryCommitType commit_type) override;
   void DidCommitProvisionalLoad(
       const blink::WebHistoryItem& item,
       blink::WebHistoryCommitType commit_type) override;
@@ -779,6 +780,11 @@ class CONTENT_EXPORT RenderFrameImpl
   // didn't schedule anything.
   bool ScheduleFileChooser(const FileChooserParams& params,
                            blink::WebFileChooserCompletion* completion);
+
+  void DidFailProvisionalLoadWithErrorPage(
+      const blink::WebURLError& error,
+      blink::WebHistoryCommitType commit_type,
+      const base::Optional<std::string>& error_page_content);
 
   bool handling_select_range() const { return handling_select_range_; }
 
@@ -1010,10 +1016,12 @@ class CONTENT_EXPORT RenderFrameImpl
   void OnTextTrackSettingsChanged(
       const FrameMsg_TextTrackSettings_Params& params);
   void OnPostMessageEvent(const FrameMsg_PostMessage_Params& params);
-  void OnFailedNavigation(const CommonNavigationParams& common_params,
-                          const RequestNavigationParams& request_params,
-                          bool has_stale_copy_in_cache,
-                          int error_code);
+  void OnFailedNavigation(
+      const CommonNavigationParams& common_params,
+      const RequestNavigationParams& request_params,
+      bool has_stale_copy_in_cache,
+      int error_code,
+      const base::Optional<std::string>& error_page_content);
   void OnReportContentSecurityPolicyViolation(
       const content::CSPViolationParams& violation_params);
   void OnGetSavableResourceLinks();
@@ -1103,10 +1111,12 @@ class CONTENT_EXPORT RenderFrameImpl
 
   // Loads the appropriate error page for the specified failure into the frame.
   // |entry| is only used by PlzNavigate when navigating to a history item.
-  void LoadNavigationErrorPage(const blink::WebURLRequest& failed_request,
-                               const blink::WebURLError& error,
-                               bool replace,
-                               HistoryEntry* entry);
+  void LoadNavigationErrorPage(
+      const blink::WebURLRequest& failed_request,
+      const blink::WebURLError& error,
+      bool replace,
+      HistoryEntry* entry,
+      const base::Optional<std::string>& error_page_content);
   void LoadNavigationErrorPageForHttpStatusError(
       const blink::WebURLRequest& failed_request,
       const GURL& unreachable_url,
