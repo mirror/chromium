@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa5b3156_e0672f7c",
+        "filename": "chrome/browser/chromeos/login/users/avatar/user_image_sync_observer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-05T15:33:51Z",
+      "side": 1,
+      "message": "Can we wrap this, maybe default_user_image::IsValidIndex()?",
+      "revId": "0e5b383dc14d561ed4810b09c0f5ebcfdd73fd65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "265c7a54_675cbe7b",
+        "filename": "chrome/browser/resources/chromeos/login/oobe_change_picture.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-05T15:33:51Z",
+      "side": 1,
+      "message": "Use this.pictureList_ here and below. ready() will be called before any data binding methods.",
+      "revId": "0e5b383dc14d561ed4810b09c0f5ebcfdd73fd65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99606035_1b2dc7da",
+        "filename": "chrome/browser/resources/chromeos/login/oobe_change_picture.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-05T15:33:51Z",
+      "side": 1,
+      "message": "This is redundant. Observer methods get called when the property value changes.",
+      "revId": "0e5b383dc14d561ed4810b09c0f5ebcfdd73fd65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4f1caaf_536a6c00",
+        "filename": "chrome/browser/resources/chromeos/login/oobe_change_picture.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-05T15:33:51Z",
+      "side": 1,
+      "message": "this.pictureList_",
+      "revId": "0e5b383dc14d561ed4810b09c0f5ebcfdd73fd65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b7ce84f_255cb5b3",
+        "filename": "chrome/browser/resources/chromeos/login/oobe_change_picture.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-05T15:33:51Z",
+      "side": 1,
+      "message": "Also redundant.",
+      "revId": "0e5b383dc14d561ed4810b09c0f5ebcfdd73fd65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b64ecc19_a74b09db",
+        "filename": "chrome/browser/resources/chromeos/login/oobe_change_picture.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-05T15:33:51Z",
+      "side": 1,
+      "message": "{}",
+      "revId": "0e5b383dc14d561ed4810b09c0f5ebcfdd73fd65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08a3a145_ea22f81b",
+        "filename": "chrome/browser/resources/chromeos/login/oobe_change_picture.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-05T15:33:51Z",
+      "side": 1,
+      "message": "Rather than copy/paste this from change_picture.js, we could pass firstDefaultImageIndex to cr-picture-list and move the logic there. There might be some other common code we could then move there. That said, I understand wanting to keep this change reasonably simple, so this is fine as-is.",
+      "revId": "0e5b383dc14d561ed4810b09c0f5ebcfdd73fd65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
