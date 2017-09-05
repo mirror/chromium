@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45a0383d_d5b17248",
+        "filename": "chrome/browser/chromeos/policy/display_rotation_default_handler_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-05T10:56:41Z",
+      "side": 1,
+      "message": "nit: Please update the file path.",
+      "range": {
+        "startLine": 155,
+        "startChar": 5,
+        "endLine": 155,
+        "endChar": 68
+      },
+      "revId": "cb2948d3cd4ae20d3d7f648ee423a5df3aa82855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d214a36_90dce1f0",
+        "filename": "chromeos/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-05T10:56:41Z",
+      "side": 1,
+      "message": "nit: I guess, this item is not needed at all? There\u0027s already a \"+components/policy/proto\" item below.",
+      "range": {
+        "startLine": 5,
+        "startChar": 2,
+        "endLine": 5,
+        "endChar": 54
+      },
+      "revId": "cb2948d3cd4ae20d3d7f648ee423a5df3aa82855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
