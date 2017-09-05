@@ -89,6 +89,7 @@ void ScopedStyleResolver::AppendActiveStyleSheets(
   for (auto active_iterator = active_sheets.begin() + index;
        active_iterator != active_sheets.end(); active_iterator++) {
     CSSStyleSheet* sheet = active_iterator->first;
+    DCHECK(!sheet->IsInjected());
     viewport_dependent_media_query_results_.AppendVector(
         sheet->ViewportDependentMediaQueryResults());
     device_dependent_media_query_results_.AppendVector(
@@ -131,7 +132,7 @@ void ScopedStyleResolver::CollectFeaturesTo(
   }
 }
 
-void ScopedStyleResolver::ResetAuthorStyle() {
+void ScopedStyleResolver::ResetStyle() {
   author_style_sheets_.clear();
   viewport_dependent_media_query_results_.clear();
   device_dependent_media_query_results_.clear();
@@ -371,6 +372,7 @@ bool ScopedStyleResolver::HaveSameStyles(const ScopedStyleResolver* first,
         second->author_style_sheets_[first_count]->Contents())
       return false;
   }
+
   return true;
 }
 
