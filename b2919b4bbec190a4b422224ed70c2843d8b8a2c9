@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "e5027897_6b43c19c",
+        "filename": "net/quic/chromium/bidirectional_stream_quic_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 963,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-05T20:22:32Z",
+      "side": 1,
+      "message": "To make it clearer that |can_use_slices()| affects the number of frames in a packet, \ncould you change this to:\n\nif (can_use_slices()) {\n  AddWrite(ConstructDataPacket(...));\n} else {\n  AddWrite(ConstructClientMultipleDataFramePacket(..)\n}\n\nI find this is clearer than creating a MultipleDataFramesPacket for the can_use_slices() case.",
+      "range": {
+        "startLine": 963,
+        "startChar": 11,
+        "endLine": 963,
+        "endChar": 50
+      },
+      "revId": "b2919b4bbec190a4b422224ed70c2843d8b8a2c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ddfe1dc1_00d456c2",
         "filename": "net/quic/chromium/bidirectional_stream_quic_impl_unittest.cc",
         "patchSetId": 2
