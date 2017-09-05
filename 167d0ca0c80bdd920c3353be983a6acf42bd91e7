@@ -60,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "b88a517d_874d9215",
+        "filename": "third_party/WebKit/PerformanceTests/ImageDecoder/decode-jpeg.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-09-05T17:23:25Z",
+      "side": 1,
+      "message": "That is a good question.\nNed?\nWhen testing locally you specify the parent directory and it runs each test inside that. It seems like each .html file represents a separate test. But that might not be the case. Perhaps one file can have multiple tests.\n\nSaid another way, maybe PerfTestRunner.startMeasureValuesAsync() is what really marks a new test.\n\n\n\nRe \"Measures performance\": I agree.\nTaking a quick look, the other tests seem to do the same.\nBut I\u0027m all for breaking convention when appropriate.\nNed?\nCan you help us see what these results look like so we can tell if the performance measurement is implied?\n(I took a look in https://cs.chromium.org/chromium/src/third_party/WebKit/PerformanceTests/DOM/ )",
+      "parentUuid": "f33a2b69_d2501667",
+      "range": {
+        "startLine": 7,
+        "startChar": 6,
+        "endLine": 7,
+        "endChar": 30
+      },
+      "revId": "167d0ca0c80bdd920c3353be983a6acf42bd91e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2040de94_0232aa16",
         "filename": "third_party/WebKit/PerformanceTests/ImageDecoder/decode-webp.html",
         "patchSetId": 4
@@ -71,6 +95,24 @@
       "writtenOn": "2017-09-04T12:54:44Z",
       "side": 1,
       "message": "Could we add a test for loss-less webp while we are here?  I landed a new image called droids.loss-less.webp that you could use ...",
+      "revId": "167d0ca0c80bdd920c3353be983a6acf42bd91e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2f33691_470611ef",
+        "filename": "third_party/WebKit/PerformanceTests/ImageDecoder/decode-webp.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-09-05T17:23:25Z",
+      "side": 1,
+      "message": "Great idea. I\u0027ll add it. Thank you for uploading the image.",
+      "parentUuid": "2040de94_0232aa16",
       "revId": "167d0ca0c80bdd920c3353be983a6acf42bd91e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -165,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "a706907d_6810508d",
+        "filename": "third_party/WebKit/PerformanceTests/ImageDecoder/resources/image_decoder_runner.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-09-05T17:23:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abd2e3c5_3ebf7881",
+      "revId": "167d0ca0c80bdd920c3353be983a6acf42bd91e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ccc5c263_45df9471",
         "filename": "third_party/WebKit/PerformanceTests/ImageDecoder/resources/image_decoder_runner.js",
         "patchSetId": 4
@@ -176,6 +236,24 @@
       "writtenOn": "2017-09-04T12:54:44Z",
       "side": 1,
       "message": "Maybe use \"image.src \u003d imageFile + \"?\" + Math.random();\" here.\n\nOn bug, you mentioned this is set-src could stall at network-level during a test.  Possible work around is XHR the image data, extract a blob response, use the blob as the image.src ?",
+      "revId": "167d0ca0c80bdd920c3353be983a6acf42bd91e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84869734_055c6063",
+        "filename": "third_party/WebKit/PerformanceTests/ImageDecoder/resources/image_decoder_runner.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-09-05T17:23:25Z",
+      "side": 1,
+      "message": "Good idea on Math.random().\n\nI mentioned set-src stalling in the bug, but that was before using the decode() JS API. I was using onload, which includes network. I\u0027ll add a comment to the bug clarifying.\n\nBut now that we use decode() it won\u0027t include the network. It may also be less likely to have stalls in the middle of a decode since it won\u0027t be decoding on the main thread.",
+      "parentUuid": "ccc5c263_45df9471",
       "revId": "167d0ca0c80bdd920c3353be983a6acf42bd91e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
