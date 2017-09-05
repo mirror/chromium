@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5c071dfb_7e49d040",
+        "filename": "media/test/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-05T21:02:34Z",
+      "side": 1,
+      "message": "As-is, they\u0027ll build and execute, but they\u0027ll stop pretty soon due to failed initialization.\n\nmp2t is default-enabled for fuzzer building (use_libfuzzer\u003dtrue): https://cs.chromium.org/chromium/src/media/media_options.gni?sq\u003dpackage:chromium\u0026dr\u0026l\u003d64\n\nAre you asking for additionally gating on those flag(s) here and in the fuzzer test impl? I assume so, and SGTM -- I\u0027ll get another PS uploaded containing that bit soon.",
+      "parentUuid": "11b0d60e_cc784215",
+      "revId": "7730141481a1135753ccc9edbffc2111fc619f38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "add06258_2801cbe3",
         "filename": "media/test/BUILD.gn",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-05T20:46:43Z",
       "side": 1,
       "message": "Is lc more common than sbr?",
+      "revId": "7730141481a1135753ccc9edbffc2111fc619f38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82cf4f8e_8e1a2df9",
+        "filename": "media/test/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-05T21:02:34Z",
+      "side": 1,
+      "message": "LC allows for implicit SBR signaling. SBR (or PS) in the mimetype is explicitly signalling that; in code we construct the {mp2t,mp4}_stream_parser with an indication of whether or not sbr was explicitly signalled in the mimetype. I don\u0027t have frequency numbers - no current UMA\u0027s report explicit SBR vs implicitly signaled SBR vs LC that I\u0027m aware of.\n\n+chcunningham to confirm -- do we need such logging?",
+      "parentUuid": "add06258_2801cbe3",
       "revId": "7730141481a1135753ccc9edbffc2111fc619f38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -64,6 +100,24 @@
       "writtenOn": "2017-09-05T20:46:43Z",
       "side": 1,
       "message": "Seems like this switch statement should just return a string. I.e.\n\nstd::string FuzzerVariantEnumToString(variant) {\n  case ADTS: return \"audio/aac\";\n\n  \n}",
+      "revId": "7730141481a1135753ccc9edbffc2111fc619f38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a42acc3_2abffe60",
+        "filename": "media/test/pipeline_integration_fuzzertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-05T21:02:34Z",
+      "side": 1,
+      "message": "We\u0027d still need to differentiate SRC\u003d vs MSE test types but I agree otherwise and will make the change in upcoming PS.",
+      "parentUuid": "7038e930_a344d1e4",
       "revId": "7730141481a1135753ccc9edbffc2111fc619f38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
