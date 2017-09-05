@@ -31,7 +31,8 @@ OffscreenCanvasSurfaceImpl::OffscreenCanvasSurfaceImpl(
   binding_.set_connection_error_handler(
       base::BindOnce(&OffscreenCanvasSurfaceImpl::OnSurfaceConnectionClosed,
                      base::Unretained(this)));
-  host_frame_sink_manager_->RegisterFrameSinkId(frame_sink_id_, this);
+  host_frame_sink_manager_->RegisterFrameSinkId(frame_sink_id_, this,
+                                                "OffscreenCanvasSurfaceImpl");
 }
 
 OffscreenCanvasSurfaceImpl::~OffscreenCanvasSurfaceImpl() {

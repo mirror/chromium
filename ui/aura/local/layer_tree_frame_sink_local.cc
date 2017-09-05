@@ -24,7 +24,8 @@ LayerTreeFrameSinkLocal::LayerTreeFrameSinkLocal(
       frame_sink_id_(frame_sink_id),
       host_frame_sink_manager_(host_frame_sink_manager),
       weak_factory_(this) {
-  host_frame_sink_manager_->RegisterFrameSinkId(frame_sink_id_, this);
+  host_frame_sink_manager_->RegisterFrameSinkId(frame_sink_id_, this,
+                                                "LayerTreeFrameSinkLocal");
 }
 
 LayerTreeFrameSinkLocal::~LayerTreeFrameSinkLocal() {

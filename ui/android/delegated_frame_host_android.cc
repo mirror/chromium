@@ -65,7 +65,8 @@ DelegatedFrameHostAndroid::DelegatedFrameHostAndroid(
   DCHECK(view_);
   DCHECK(client_);
 
-  host_frame_sink_manager_->RegisterFrameSinkId(frame_sink_id_, this);
+  host_frame_sink_manager_->RegisterFrameSinkId(frame_sink_id_, this,
+                                                "DelegatedFrameHostAndroid");
   CreateNewCompositorFrameSinkSupport();
 }
 
