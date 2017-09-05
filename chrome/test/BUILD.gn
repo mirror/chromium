@@ -1489,6 +1489,7 @@ test("browser_tests") {
       "../browser/themes/theme_service_browsertest.cc",
       "../browser/tracing/chrome_tracing_delegate_browsertest.cc",
       "../browser/translate/translate_browsertest.cc",
+      "../browser/translate/translate_language_browsertest.cc",
       "../browser/translate/translate_manager_browsertest.cc",
       "../browser/ui/ask_google_for_suggestions_dialog_browsertest.cc",
       "../browser/ui/autofill/card_unmask_prompt_view_browsertest.cc",
