@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "688d4203_421ac83d",
+        "filename": "ui/aura/window_occlusion_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-05T16:49:30Z",
+      "side": 1,
+      "message": "sky@ mentioned that we shouldn\u0027t compute window occlusion states in a WindowTreeHost if no one is interested in this information. Could this be achieved by adding StartTrackingWindowOcclusion/StopTrackingWindowOcclusion methods to WindowTreeHost?",
+      "range": {
+        "startLine": 82,
+        "startChar": 2,
+        "endLine": 82,
+        "endChar": 39
+      },
+      "revId": "90ac97cd3c593dc73050cf8a0a6446dd441210d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
