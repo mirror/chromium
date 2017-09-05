@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "feb857fd_fcc36b8f",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_strip_drag_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-09-05T03:26:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba9dbdd4_c11985cf",
+      "revId": "953bef08d77d7b10ac01a80c60064b855883fc7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3bd2052f_1849a888",
         "filename": "chrome/browser/ui/cocoa/tabs/tab_strip_drag_controller.mm",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "953bef08d77d7b10ac01a80c60064b855883fc7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adfef05d_77d5e4b6",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_strip_drag_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-09-05T03:26:20Z",
+      "side": 1,
+      "message": "Resolving because N/A (code deleted).",
+      "parentUuid": "3bd2052f_1849a888",
+      "revId": "953bef08d77d7b10ac01a80c60064b855883fc7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
