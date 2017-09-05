@@ -5,7 +5,6 @@
 #include "media/midi/midi_service.h"
 
 #include "base/feature_list.h"
-#include "base/memory/ptr_util.h"
 #include "base/strings/stringprintf.h"
 #include "media/midi/midi_manager.h"
 #include "media/midi/midi_switches.h"
@@ -27,21 +26,30 @@ bool IsDynamicInstantiationEnabled() {
 
 }  // namespace
 
+std::unique_ptr<MidiManager> MidiService::ManagerFactory::Create(
+    MidiService* service) {
+  return std::unique_ptr<MidiManager>(MidiManager::Create(service));
+}
+
 MidiService::MidiService(void)
-    : task_service_(base::MakeUnique<TaskService>()),
+    : manager_factory_(std::make_unique<ManagerFactory>()),
+      task_service_(std::make_unique<TaskService>()),
       is_dynamic_instantiation_enabled_(IsDynamicInstantiationEnabled()) {
   base::AutoLock lock(lock_);
 
   if (!is_dynamic_instantiation_enabled_)
-    manager_ = base::WrapUnique(MidiManager::Create(this));
+    manager_ = manager_factory_->Create(this);
 }
 
-MidiService::MidiService(std::unique_ptr<MidiManager> manager)
-    : task_service_(base::MakeUnique<TaskService>()),
+MidiService::MidiService(std::unique_ptr<ManagerFactory> factory)
+    : manager_factory_(std::move(factory)),
+      task_service_(std::make_unique<TaskService>()),
       is_dynamic_instantiation_enabled_(false) {
   base::AutoLock lock(lock_);
 
-  manager_ = std::move(manager);
+  // TODO(toyoshim): Stop constructing here even for testing, once the dynamic
+  // instantiation mode is enabled by default.
+  manager_ = manager_factory_->Create(this);
 }
 
 MidiService::~MidiService() {
@@ -67,7 +75,7 @@ void MidiService::StartSession(MidiManagerClient* client) {
   base::AutoLock lock(lock_);
   if (!manager_) {
     DCHECK(is_dynamic_instantiation_enabled_);
-    manager_.reset(MidiManager::Create(this));
+    manager_ = manager_factory_->Create(this);
     if (!manager_destructor_runner_)
       manager_destructor_runner_ = base::ThreadTaskRunnerHandle::Get();
   }
@@ -109,7 +117,7 @@ scoped_refptr<base::SingleThreadTaskRunner> MidiService::GetTaskRunner(
   if (threads_.size() <= runner_id)
     threads_.resize(runner_id + 1);
   if (!threads_[runner_id]) {
-    threads_[runner_id] = base::MakeUnique<base::Thread>(
+    threads_[runner_id] = std::make_unique<base::Thread>(
         base::StringPrintf("MidiServiceThread(%zu)", runner_id));
 #if defined(OS_WIN)
     threads_[runner_id]->init_com_with_mta(true);
