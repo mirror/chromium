@@ -195,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "b4cdbd7e_68f07a83",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1043,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-05T08:28:33Z",
+      "side": 1,
+      "message": "Yeah I also checked around Callback related implementations but could not find any available value from |callback| to act as id.",
+      "parentUuid": "51ac1a9d_aecc2ccf",
+      "revId": "bdf21d840828d4ac22462af37c9ee1b6a944e2e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f805c8d_47f9c82f",
         "filename": "content/browser/service_worker/service_worker_provider_host.cc",
         "patchSetId": 1
