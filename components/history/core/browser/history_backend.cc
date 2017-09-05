@@ -16,7 +16,6 @@
 #include "base/bind.h"
 #include "base/compiler_specific.h"
 #include "base/debug/dump_without_crashing.h"
-#include "base/feature_list.h"
 #include "base/files/file_enumerator.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
@@ -73,6 +72,11 @@ using syncer::ModelTypeChangeProcessor;
 */
 
 namespace history {
+
+// TODO(crbug.com/746268): Clean up this toggle after impact is measured via
+// Finch, which is expected to be neutral.
+const base::Feature kAvoidStrippingRefFromFaviconPageUrls{
+    "AvoidStrippingRefFromFaviconPageUrls", base::FEATURE_DISABLED_BY_DEFAULT};
 
 namespace {
 
@@ -2125,7 +2129,8 @@ bool HistoryBackend::SetFaviconMappingsForPageAndRedirects(
   GetCachedRecentRedirects(page_url, &redirects);
   bool mappings_changed = SetFaviconMappingsForPages(redirects, icon_type,
                                                      icon_ids);
-  if (page_url.has_ref()) {
+  if (page_url.has_ref() &&
+      !base::FeatureList::IsEnabled(kAvoidStrippingRefFromFaviconPageUrls)) {
     // Refs often gets added by Javascript, but the redirect chain is keyed to
     // the URL without a ref.
     // TODO(crbug.com/746268): This can cause orphan favicons, i.e. without a
