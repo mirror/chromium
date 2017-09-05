@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3ee17df3_3b510182",
+        "filename": "ui/accessibility/platform/ax_platform_node_base.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-09-05T19:58:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d66bfd8_b56a2e3d",
+      "revId": "87624453d618dc59cd06ef90a7c22006e73cf393",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6b97d19_201ffb97",
         "filename": "ui/accessibility/platform/ax_platform_node_win.h",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-29T19:12:26Z",
       "side": 1,
       "message": "Maybe GetSelectionAnchorNodeId?",
+      "revId": "87624453d618dc59cd06ef90a7c22006e73cf393",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8973b7a1_5e7dfdbe",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-09-05T19:58:31Z",
+      "side": 1,
+      "message": "int GetSelectionAnchor();\n int GetSelectionFocus();\n void GetSelectionOffsets(int* selection_start, int* selection_end);\n\nThese three methods deal with the node ID.  I could rename them together, but then you\u0027d have something like\n\nGetSelectionOffsetsNodeID which is pretty awkward.",
+      "parentUuid": "b6b97d19_201ffb97",
       "revId": "87624453d618dc59cd06ef90a7c22006e73cf393",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
