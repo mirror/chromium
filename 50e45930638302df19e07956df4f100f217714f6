@@ -1,0 +1,366 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6c1bdfc_d843a685",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-05T16:55:18Z",
+      "side": 1,
+      "message": "DCHECK that result \u003c 0?",
+      "range": {
+        "startLine": 633,
+        "startChar": 56,
+        "endLine": 633,
+        "endChar": 0
+      },
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f33bf7a_30dcdd05",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 3054,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-05T16:55:18Z",
+      "side": 1,
+      "message": "*network_trans_\n\nstd::unique_ptr has an operator* override",
+      "range": {
+        "startLine": 3054,
+        "startChar": 29,
+        "endLine": 3054,
+        "endChar": 51
+      },
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e421ca8_ab5c27f6",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 3062,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-05T16:55:18Z",
+      "side": 1,
+      "message": "replace with SelfInEntryWriters()?",
+      "range": {
+        "startLine": 3062,
+        "startChar": 6,
+        "endLine": 3062,
+        "endChar": 79
+      },
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55e9ffb4_75cdb637",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-05T16:55:18Z",
+      "side": 1,
+      "message": "This comment is a bit too consumer specific. How about, \"The pointers are only valid while the Transaction is alive.\"",
+      "range": {
+        "startLine": 189,
+        "startChar": 71,
+        "endLine": 191,
+        "endChar": 56
+      },
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ff5489a_0131bac0",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-05T16:55:18Z",
+      "side": 1,
+      "message": "can success be renamed to something more specific?",
+      "range": {
+        "startLine": 426,
+        "startChar": 42,
+        "endLine": 426,
+        "endChar": 49
+      },
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c707e2b_6ff2051f",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-05T16:55:18Z",
+      "side": 1,
+      "message": "can success be renamed to something more specific?",
+      "range": {
+        "startLine": 427,
+        "startChar": 54,
+        "endLine": 427,
+        "endChar": 61
+      },
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0bfe411_ff05424d",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-05T16:55:18Z",
+      "side": 1,
+      "message": "The two functions are different and shouldn\u0027t share a comment.",
+      "range": {
+        "startLine": 427,
+        "startChar": 2,
+        "endLine": 427,
+        "endChar": 63
+      },
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80112686_a778e809",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-05T16:55:18Z",
+      "side": 1,
+      "message": "Methods that return pointers to non-const objects shouldn\u0027t be marked const.\n\nhttps://www.chromium.org/developers/coding-style/cpp-dos-and-donts#TOC-Classes-of-const-in-correctness",
+      "range": {
+        "startLine": 473,
+        "startChar": 41,
+        "endLine": 473,
+        "endChar": 46
+      },
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5420add3_a5a14aa9",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-05T16:55:18Z",
+      "side": 1,
+      "message": "should be const",
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cc5f545_35b33b27",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-05T16:55:18Z",
+      "side": 1,
+      "message": "I don\u0027t know that writers cares about this being a partial transaction. Perhaps rename to ResetNetworkTransaction? You can still DCHECK that the size is 1 and that it\u0027s exclusive.",
+      "range": {
+        "startLine": 146,
+        "startChar": 25,
+        "endLine": 146,
+        "endChar": 55
+      },
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "266a3fe2_49a36d3a",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-05T16:55:18Z",
+      "side": 1,
+      "message": "transaction is unused except in a dcheck, remove",
+      "range": {
+        "startLine": 147,
+        "startChar": 17,
+        "endLine": 147,
+        "endChar": 28
+      },
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e55fca9_423d7a91",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-05T16:55:18Z",
+      "side": 1,
+      "message": "This can be done by the transaction itself before calling ResetPartialNetworkTransaction. Doing so would avoid cyclic behavior and make this method clearer.",
+      "range": {
+        "startLine": 153,
+        "startChar": 0,
+        "endLine": 154,
+        "endChar": 67
+      },
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26a6db3e_004c3347",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-05T16:55:18Z",
+      "side": 1,
+      "message": "What\u0027s the purpose of this function? It just calls RemoveTransactionInternal.",
+      "range": {
+        "startLine": 168,
+        "startChar": 25,
+        "endLine": 168,
+        "endChar": 42
+      },
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b69ce3bc_7bae0765",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-05T16:55:18Z",
+      "side": 1,
+      "message": "network",
+      "range": {
+        "startLine": 181,
+        "startChar": 52,
+        "endLine": 181,
+        "endChar": 59
+      },
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57bcd95f_1f832515",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-05T16:55:18Z",
+      "side": 1,
+      "message": "It\u0027s kind of magic that the HC::T\u0027s network transaction info is ready for it when necessary. Instead, what if HC::Writers signaled to HC::T when it\u0027s about to be removed from writers. Then it can perform any necessary cleanup.\n\nSomething like:\n\nvoid HC::Transaction::AboutToRemoveFromWriters(int error_code) {\n  // We\u0027re not currently reading from writers, so remember the error.\n  if (next_state_ \u003d\u003d STATE_NONE || next_state \u003d\u003d STATE_CACHE_READ_DATA_COMPLETE) {\n    shared_writing_error_ \u003d result;\n  }\n\n  SaveNetworkTransactionInfo();\n  entry_ \u003d nullptr;\n}\n\nWDYT?",
+      "range": {
+        "startLine": 184,
+        "startChar": 4,
+        "endLine": 184,
+        "endChar": 30
+      },
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69986498_6bb59304",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-05T16:55:18Z",
+      "side": 1,
+      "message": "unused argument, please remove",
+      "range": {
+        "startLine": 260,
+        "startChar": 40,
+        "endLine": 260,
+        "endChar": 64
+      },
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
