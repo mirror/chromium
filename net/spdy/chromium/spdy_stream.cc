@@ -734,17 +734,16 @@ NextProto SpdyStream::GetNegotiatedProtocol() const {
   return session_->GetNegotiatedProtocol();
 }
 
-void SpdyStream::PossiblyResumeIfSendStalled() {
-  if (IsLocallyClosed()) {
-    return;
+SpdyStream::ShouldRequeueStream SpdyStream::PossiblyResumeIfSendStalled() {
+  if (IsLocallyClosed() || !send_stalled_by_flow_control_ ||
+      session_->IsSendStalled() || !send_window_size_) {
+    return DoNotRequeue;
   }
-  if (send_stalled_by_flow_control_ && !session_->IsSendStalled() &&
-      send_window_size_ > 0) {
-    net_log_.AddEvent(NetLogEventType::HTTP2_STREAM_FLOW_CONTROL_UNSTALLED,
-                      NetLog::IntCallback("stream_id", stream_id_));
-    send_stalled_by_flow_control_ = false;
-    QueueNextDataFrame();
-  }
+  net_log_.AddEvent(NetLogEventType::HTTP2_STREAM_FLOW_CONTROL_UNSTALLED,
+                    NetLog::IntCallback("stream_id", stream_id_));
+  send_stalled_by_flow_control_ = false;
+  QueueNextDataFrame();
+  return Requeue;
 }
 
 bool SpdyStream::IsClosed() const {
