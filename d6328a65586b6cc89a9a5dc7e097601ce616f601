@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab33ca3b_63e6ff62",
+        "filename": "content/browser/tracing/memory_tracing_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-05T16:56:30Z",
+      "side": 1,
+      "message": "You can remove this comment and the \u0026\u0026 !defined(GOOGLE_CHROME_BUILD)\n\nI checked the matching code in content/browser/browser_main_loop.cc, and it does:\n\n#if !defined(GOOGLE_CHROME_BUILD) || defined(OS_ANDROID)\n  // Single-process is an unsupported and not fully tested mode, so\n  // don\u0027t enable it for official Chrome builds (except on Android).\n\nSo just OS_ANDROID should give us what we want",
+      "range": {
+        "startLine": 170,
+        "startChar": 49,
+        "endLine": 171,
+        "endChar": 66
+      },
+      "revId": "d6328a65586b6cc89a9a5dc7e097601ce616f601",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
