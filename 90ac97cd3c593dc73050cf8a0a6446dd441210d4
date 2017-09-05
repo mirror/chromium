@@ -2,6 +2,161 @@
   "comments": [
     {
       "key": {
+        "uuid": "fc0a51b1_fc4f24cd",
+        "filename": "ui/aura/env.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-05T22:33:47Z",
+      "side": 1,
+      "message": "WindowOcclusionTracker should do this, not Env.",
+      "range": {
+        "startLine": 162,
+        "startChar": 2,
+        "endLine": 162,
+        "endChar": 42
+      },
+      "revId": "90ac97cd3c593dc73050cf8a0a6446dd441210d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88393305_4a53a89d",
+        "filename": "ui/aura/env.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-05T22:33:47Z",
+      "side": 1,
+      "message": "Chromium style guide says we should avoid includes like this and instead forward declare and use unique_ptr ( https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#forward-declarations-vs_includes )",
+      "range": {
+        "startLine": 14,
+        "startChar": 10,
+        "endLine": 14,
+        "endChar": 44
+      },
+      "revId": "90ac97cd3c593dc73050cf8a0a6446dd441210d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c06d235e_3ff3d828",
+        "filename": "ui/aura/window.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-05T22:33:47Z",
+      "side": 1,
+      "message": "The default state for windows is they are hidden, so shouldn\u0027t this start out true?",
+      "range": {
+        "startLine": 66,
+        "startChar": 6,
+        "endLine": 66,
+        "endChar": 22
+      },
+      "revId": "90ac97cd3c593dc73050cf8a0a6446dd441210d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a61c202_61f47ac0",
+        "filename": "ui/aura/window.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 732,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-05T22:33:47Z",
+      "side": 1,
+      "message": "Prefer updating the member first with delegate/observer functions named in the past tense. That way if the delegate calls back for occluded it gets the right value.",
+      "revId": "90ac97cd3c593dc73050cf8a0a6446dd441210d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "199d3e53_31a71215",
+        "filename": "ui/aura/window.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-05T22:33:47Z",
+      "side": 1,
+      "message": "Making this public means anyone can use it, which we don\u0027t want. I think you should friend the tracker.",
+      "range": {
+        "startLine": 131,
+        "startChar": 2,
+        "endLine": 131,
+        "endChar": 34
+      },
+      "revId": "90ac97cd3c593dc73050cf8a0a6446dd441210d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab67e36a_38237d84",
+        "filename": "ui/aura/window_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-05T22:33:47Z",
+      "side": 1,
+      "message": "Please indicate this information is asynchronously updated.",
+      "range": {
+        "startLine": 92,
+        "startChar": 5,
+        "endLine": 92,
+        "endChar": 46
+      },
+      "revId": "90ac97cd3c593dc73050cf8a0a6446dd441210d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8d44ff2_165ca0b0",
+        "filename": "ui/aura/window_occlusion_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-05T22:33:47Z",
+      "side": 1,
+      "message": "I don\u0027t think you can guarantee |this| will outlive the task runner. Use a weakptrfactory. Once you do that, I think you can get rid of recompute_scheduled_ in factor of checking the factory.",
+      "range": {
+        "startLine": 64,
+        "startChar": 21,
+        "endLine": 64,
+        "endChar": 43
+      },
+      "revId": "90ac97cd3c593dc73050cf8a0a6446dd441210d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "688d4203_421ac83d",
         "filename": "ui/aura/window_occlusion_tracker.cc",
         "patchSetId": 1
@@ -18,6 +173,53 @@
         "startChar": 2,
         "endLine": 82,
         "endChar": 39
+      },
+      "revId": "90ac97cd3c593dc73050cf8a0a6446dd441210d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a122025b_cd996c64",
+        "filename": "ui/aura/window_occlusion_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-05T22:33:47Z",
+      "side": 1,
+      "message": "That\u0027s painful as most likely code creating the window won\u0027t know the WTH and it would also mean code would have to know to toggle the flag when the window is reparented to a different WTH. I think the registration should be at the window level.",
+      "parentUuid": "688d4203_421ac83d",
+      "range": {
+        "startLine": 82,
+        "startChar": 2,
+        "endLine": 82,
+        "endChar": 39
+      },
+      "revId": "90ac97cd3c593dc73050cf8a0a6446dd441210d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50a3ba2c_f60d5fcc",
+        "filename": "ui/aura/window_occlusion_tracker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-05T22:33:47Z",
+      "side": 1,
+      "message": "Add a description.",
+      "range": {
+        "startLine": 17,
+        "startChar": 6,
+        "endLine": 17,
+        "endChar": 29
       },
       "revId": "90ac97cd3c593dc73050cf8a0a6446dd441210d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
