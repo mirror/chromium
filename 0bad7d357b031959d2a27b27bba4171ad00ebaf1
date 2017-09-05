@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "2c7aed6b_bd785e02",
+        "filename": "chrome/browser/media_galleries/fileapi/av_scanning_file_validator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-05T00:23:33Z",
+      "side": 1,
+      "message": "base::PostTaskAndReplyWithResult(\n    base::CreateCOMSTATaskRunnerWithTraits(\n          {base::MayBlock(), base::TaskPriority::USER_VISIBLE}),\n    ...\n\n(from task_runner_util.h)",
+      "revId": "0bad7d357b031959d2a27b27bba4171ad00ebaf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10d24732_8a938dca",
         "filename": "chrome/browser/media_galleries/fileapi/av_scanning_file_validator.cc",
         "patchSetId": 3
