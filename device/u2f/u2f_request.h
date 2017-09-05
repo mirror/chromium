@@ -12,6 +12,9 @@
 #include "u2f_device.h"
 
 namespace device {
+
+// TODO(pkalinnikov): Factor out device discovery, so that BLE devices could be
+// supplied to this class as well.
 class U2fRequest : HidService::Observer {
  public:
   using ResponseCallback =
@@ -62,6 +65,7 @@ class U2fRequest : HidService::Observer {
   ScopedObserver<HidService, HidService::Observer> hid_service_observer_;
   base::WeakPtrFactory<U2fRequest> weak_factory_;
 };
+
 }  // namespace device
 
 #endif  // DEVICE_U2F_U2F_REQUEST_H_

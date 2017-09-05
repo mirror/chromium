@@ -14,7 +14,7 @@
 namespace device {
 
 // APDU commands are defined as part of ISO 7816-4. Commands can be serialized
-// into either short length encodings, where the maximum data length is 255
+// into either short length encodings, where the maximum data length is 256
 // bytes, or an extended length encoding, where the maximum data length is 65536
 // bytes. This class implements only the extended length encoding. Serialized
 // commands consist of a CLA byte, denoting the class of instruction, an INS
@@ -77,15 +77,19 @@ class U2fApduCommand {
   static constexpr size_t kApduMaxResponseLength = 65536;
   static constexpr size_t kApduMaxLength =
       kApduMaxDataLength + kApduMaxHeader + 2;
+
   // APDU instructions
   static constexpr uint8_t kInsU2fEnroll = 0x01;
   static constexpr uint8_t kInsU2fSign = 0x02;
   static constexpr uint8_t kInsU2fVersion = 0x03;
+
   // P1 instructions
   static constexpr uint8_t kP1TupRequired = 0x01;
   static constexpr uint8_t kP1TupConsumed = 0x02;
   static constexpr uint8_t kP1TupRequiredConsumed =
       kP1TupRequired | kP1TupConsumed;
+  static constexpr uint8_t kP1CheckOnly = 0x07;
+
   static constexpr size_t kMaxKeyHandleLength = 255;
   static constexpr size_t kChallengeDigestLen = 32;
   static constexpr size_t kAppIdDigestLen = 32;
@@ -98,6 +102,7 @@ class U2fApduCommand {
   std::vector<uint8_t> data_;
   std::vector<uint8_t> suffix_;
 };
+
 }  // namespace device
 
 #endif  // DEVICE_U2F_U2F_APDU_COMMAND_H_
