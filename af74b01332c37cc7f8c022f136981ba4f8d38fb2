@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc4edf09_f4d48e30",
+        "filename": "services/viz/privileged/interfaces/compositing/frame_sink_manager.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-09-05T21:23:38Z",
+      "side": 1,
+      "message": "nit: maybe call it label_for_tracing or some such?",
+      "range": {
+        "startLine": 47,
+        "startChar": 65,
+        "endLine": 47,
+        "endChar": 70
+      },
+      "revId": "af74b01332c37cc7f8c022f136981ba4f8d38fb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
