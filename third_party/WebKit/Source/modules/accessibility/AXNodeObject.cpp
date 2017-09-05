@@ -1895,7 +1895,15 @@ float AXNodeObject::MaxValueForRange() const {
   if (isHTMLMeterElement(GetNode()))
     return toHTMLMeterElement(*GetNode()).max();
 
-  return 0.0;
+  switch (AriaRoleAttribute()) {
+    case kScrollBarRole:
+    case kSplitterRole:
+    case kSliderRole:
+      // In ARIA 1.1, the default value for aria-valuemax changed to 100.
+      return 100.0;
+    default:
+      return 0.0;
+  }
 }
 
 float AXNodeObject::MinValueForRange() const {
