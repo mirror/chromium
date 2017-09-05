@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bf061533_49305ab9",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1746,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-05T18:22:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f88460b9_aaf9d8e1",
+      "revId": "403d5b100d13b72474eb27dfb77cc584ce8b52ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7570128e_690053e3",
         "filename": "ui/gfx/render_text_unittest.cc",
         "patchSetId": 7
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "e3f6fe0b_ea69bf48",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 3254,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-05T18:22:28Z",
+      "side": 1,
+      "message": "Done (I was just making the test strings one-liners above).",
+      "parentUuid": "7570128e_690053e3",
+      "range": {
+        "startLine": 3254,
+        "startChar": 4,
+        "endLine": 3254,
+        "endChar": 5
+      },
+      "revId": "403d5b100d13b72474eb27dfb77cc584ce8b52ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d8814d7_88ba3db1",
         "filename": "ui/gfx/render_text_unittest.cc",
         "patchSetId": 7
@@ -53,6 +95,30 @@
       "writtenOn": "2017-09-05T17:02:06Z",
       "side": 1,
       "message": "What\u0027s the reason for using Wide*() here? Can it not be expressed in UTF8?\n\nSame question for the test below.\n\n(If it can\u0027t, please add a comment about it.)",
+      "range": {
+        "startLine": 3694,
+        "startChar": 23,
+        "endLine": 3694,
+        "endChar": 34
+      },
+      "revId": "403d5b100d13b72474eb27dfb77cc584ce8b52ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83c1a165_e577fe58",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 3694,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-05T18:22:28Z",
+      "side": 1,
+      "message": "I added a brief comment with each \\Unnnnnnnn use that requires wide strings. For some reason, the UTF8 universal character name escape code surrogate pair for this emoji (and others that require multiple escape code units) gives these compiler errors: \n\n../../ui/gfx/render_text_unittest.cc:3702:38: error: invalid universal character\n  render_text-\u003eSetText(UTF8ToUTF16(\"x\\uD83D\\uDE01y\\u2728\")); \n                                     ^~~~~~\n../../ui/gfx/render_text_unittest.cc:3702:44: error: invalid universal character\n  render_text-\u003eSetText(UTF8ToUTF16(\"x\\uD83D\\uDE01y\\u2728\")); \n                                           ^~~~~~\n\nLinux supports \\Unnnnnnnn universal character name escape codes in UTF-8 as |UTF8ToUTF16(\"x\\U0001F601y\\u2728\")|, but Windows just drops the code point altogether (see PS5 trybot):\n\n[ RUN      ] RenderTextHarfBuzzTest.HarfBuzz_BreakRunsByEmoji/HarfBuzz\n../../ui/gfx/render_text_unittest.cc(3696): error:       Expected: ToString16Vec({\"x\", \"??\", \"y\", \"?\"})\n      Which is: { L\"x\", L\"\\xD83D\\xDE01\", L\"y\", L\"\\x2728\" }\nTo be equal to: GetRunListStrings()\n      Which is: { L\"xy\", L\"\\x2728\" }\n../../ui/gfx/render_text_unittest.cc(3698): error:       Expected: \"[0][1-\u003e2][3][4]\"\nTo be equal to: GetRunListStructureString()\n      Which is: \"[0-\u003e1][2]\"\n[  FAILED  ] RenderTextHarfBuzzTest.HarfBuzz_BreakRunsByEmoji/HarfBuzz, where GetParam() \u003d 0 (1 ms)\n\nUsing a wide string fixes the \\Unnnnnnnn encoding on Windows, and it seemed beneficial to favor universal character name encoding everywhere, but I can revert these to use hexidecimal escapes in UTF8 strings like |UTF8ToUTF16(\"x\\xF0\\x9F\\x98\\x81y\\xE2\\x9C\\xA8\")|, or something else, if you have a different preference.",
+      "parentUuid": "5d8814d7_88ba3db1",
       "range": {
         "startLine": 3694,
         "startChar": 23,
