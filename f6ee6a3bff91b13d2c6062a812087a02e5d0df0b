@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96707056_aae3f58f",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_strip_drag_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-09-05T16:03:54Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think you need to check `outOfTabHorizDeadZone_` twice.",
+      "revId": "f6ee6a3bff91b13d2c6062a812087a02e5d0df0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
