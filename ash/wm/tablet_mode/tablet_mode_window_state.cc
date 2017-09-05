@@ -77,33 +77,37 @@ bool CanSnap(wm::WindowState* window_state) {
   return window_state->CanSnap();
 }
 
+// Returns the expected window snap position from its state type.
+SplitViewController::SnapPosition GetSnapPositionFromWindowStateType(
+    wm::WindowStateType event_type) {
+  switch (event_type) {
+    case wm::WINDOW_STATE_TYPE_LEFT_SNAPPED:
+      return SplitViewController::LEFT;
+    case wm::WINDOW_STATE_TYPE_RIGHT_SNAPPED:
+      return SplitViewController::RIGHT;
+    case wm::WINDOW_STATE_TYPE_TOP_SNAPPED:
+      return SplitViewController::TOP;
+    case wm::WINDOW_STATE_TYPE_BOTTOM_SNAPPED:
+      return SplitViewController::BOTTOM;
+    default:
+      NOTREACHED() << "Should not reach here. ";
+      return SplitViewController::NONE;
+  }
+}
+
 // Returns the maximized/full screen and/or centered bounds of a window.
 gfx::Rect GetBoundsInMaximizedMode(wm::WindowState* state_object) {
   if (state_object->IsFullscreen() || state_object->IsPinned())
     return ScreenUtil::GetDisplayBoundsInParent(state_object->window());
 
-  if (state_object->GetStateType() == wm::WINDOW_STATE_TYPE_LEFT_SNAPPED) {
+  if (state_object->IsSnapped()) {
     DCHECK(CanSnap(state_object));
+    wm::WindowStateType state_type = state_object->GetStateType();
     return Shell::Get()
         ->split_view_controller()
-        ->GetSnappedWindowBoundsInParent(state_object->window(),
-                                         SplitViewController::LEFT);
-  }
-
-  if (state_object->GetStateType() == wm::WINDOW_STATE_TYPE_RIGHT_SNAPPED) {
-    DCHECK(CanSnap(state_object));
-    return Shell::Get()
-        ->split_view_controller()
-        ->GetSnappedWindowBoundsInParent(state_object->window(),
-                                         SplitViewController::RIGHT);
-  }
-
-  if (state_object->GetStateType() == wm::WINDOW_STATE_TYPE_TOP_SNAPPED) {
-    // TODO(xdai): Implementation.
-  }
-
-  if (state_object->GetStateType() == wm::WINDOW_STATE_TYPE_BOTTOM_SNAPPED) {
-    // TODO(xdai): Implementation.
+        ->GetSnappedWindowBoundsInParent(
+            state_object->window(),
+            GetSnapPositionFromWindowStateType(state_type));
   }
 
   gfx::Rect bounds_in_parent;
@@ -362,18 +366,15 @@ void TabletModeWindowState::UpdateWindow(wm::WindowState* window_state,
     window_state->window()->Hide();
     if (window_state->IsActive())
       window_state->Deactivate();
-  } else if (target_state == wm::WINDOW_STATE_TYPE_LEFT_SNAPPED) {
-    window_state->SetBoundsDirect(
+  } else if (target_state == wm::WINDOW_STATE_TYPE_LEFT_SNAPPED ||
+             target_state == wm::WINDOW_STATE_TYPE_RIGHT_SNAPPED ||
+             target_state == wm::WINDOW_STATE_TYPE_TOP_SNAPPED ||
+             target_state == wm::WINDOW_STATE_TYPE_BOTTOM_SNAPPED) {
+    const gfx::Rect bounds =
         Shell::Get()->split_view_controller()->GetSnappedWindowBoundsInParent(
-            window_state->window(), SplitViewController::LEFT));
-  } else if (target_state == wm::WINDOW_STATE_TYPE_RIGHT_SNAPPED) {
-    window_state->SetBoundsDirect(
-        Shell::Get()->split_view_controller()->GetSnappedWindowBoundsInParent(
-            window_state->window(), SplitViewController::RIGHT));
-  } else if (target_state == wm::WINDOW_STATE_TYPE_TOP_SNAPPED) {
-    // TODO(xdai): Implementation.
-  } else if (target_state == wm::WINDOW_STATE_TYPE_BOTTOM_SNAPPED) {
-    // TODO(xdai): Implementation.
+            window_state->window(),
+            GetSnapPositionFromWindowStateType(target_state));
+    window_state->SetBoundsDirect(bounds);
   } else {
     UpdateBounds(window_state, animated);
   }
