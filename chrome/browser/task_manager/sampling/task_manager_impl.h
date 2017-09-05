@@ -24,6 +24,7 @@
 #include "chrome/browser/task_manager/sampling/task_manager_io_thread_helper.h"
 #include "chrome/browser/task_manager/task_manager_interface.h"
 #include "gpu/ipc/common/memory_stats.h"
+#include "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom.h"
 
 namespace task_manager {
 
@@ -108,6 +109,10 @@ class TaskManagerImpl : public TaskManagerInterface,
 
   void OnVideoMemoryUsageStatsUpdate(
       const gpu::VideoMemoryUsageStats& gpu_memory_stats);
+  void OnReceivedMemoryDump(
+      bool success,
+      uint64_t dump_guid,
+      memory_instrumentation::mojom::GlobalMemoryDumpPtr ptr);
 
   // task_manager::TaskManagerInterface:
   void Refresh() override;
@@ -169,6 +174,10 @@ class TaskManagerImpl : public TaskManagerInterface,
   // This will be set to true while there are observers and the task manager is
   // running.
   bool is_running_;
+
+  // A long-lasting connection to the memory_instrumentation interface on the
+  // content_browser service.
+  memory_instrumentation::mojom::CoordinatorPtr coordinator_;
 
   base::WeakPtrFactory<TaskManagerImpl> weak_ptr_factory_;
   DISALLOW_COPY_AND_ASSIGN(TaskManagerImpl);
