@@ -151,6 +151,24 @@
       "revId": "f6ddd798dd4c8a5795fe1ad9bb9e980a91cdbcad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dbca9ce6_cc5e2bd8",
+        "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-09-05T14:37:51Z",
+      "side": 1,
+      "message": "The fact that they take different number of arguments seems wrong, and only seems to work now because we\u0027re not using the hittest data and submit_time anyway.\n\nI propose something like:\nvoid SubmitCompositorFrame(..., bool success) { put the logic here }\nvoid SubmitCompositorFrame(...) { SubmitCompositorFrame(..., \u0026success); DCHECK(success); }\n\nCompositorFrameImpl can override the second SubmitCompositorFrame and close the connection instead of doing DCHECK.\n\nBut there are many callsites for SubmitCompositorFrame (especially in tests) and this is a fair amount of work that might be wiser to do in a separate CL.",
+      "parentUuid": "3b00756a_6a993862",
+      "revId": "f6ddd798dd4c8a5795fe1ad9bb9e980a91cdbcad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

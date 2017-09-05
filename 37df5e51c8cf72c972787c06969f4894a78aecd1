@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "879f9e5d_bec7da66",
+        "filename": "components/viz/service/frame_sinks/root_compositor_frame_sink_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-09-05T14:37:51Z",
+      "side": 1,
+      "message": "This always fails because we just moved it to display_.",
+      "range": {
+        "startLine": 34,
+        "startChar": 9,
+        "endLine": 34,
+        "endChar": 16
+      },
+      "revId": "37df5e51c8cf72c972787c06969f4894a78aecd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
