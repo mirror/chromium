@@ -51,6 +51,24 @@
       "revId": "2c7c948ac221e7c686379b9e3ded7189c7fd1c34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d7b2ff0_51d376b8",
+        "filename": "content/public/common/resource_request_completion_status.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-05T08:09:35Z",
+      "side": 1,
+      "message": "OK, as I said I\u0027m not owner, so consider my comments non-blocking.",
+      "parentUuid": "909695a2_35e87954",
+      "revId": "2c7c948ac221e7c686379b9e3ded7189c7fd1c34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
