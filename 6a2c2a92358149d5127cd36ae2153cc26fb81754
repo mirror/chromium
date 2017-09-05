@@ -140,6 +140,29 @@
     },
     {
       "key": {
+        "uuid": "e721f09a_e3d342dd",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-05T18:01:24Z",
+      "side": 1,
+      "message": "s/include/import",
+      "range": {
+        "startLine": 19,
+        "startChar": 1,
+        "endLine": 19,
+        "endChar": 8
+      },
+      "revId": "6a2c2a92358149d5127cd36ae2153cc26fb81754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6e440d4e_0c86f1fc",
         "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
         "patchSetId": 6
@@ -255,6 +278,29 @@
     },
     {
       "key": {
+        "uuid": "4755c988_077e7f46",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-05T18:01:24Z",
+      "side": 1,
+      "message": "nit: No need for this. No one will attempt to copy test fixture.",
+      "range": {
+        "startLine": 141,
+        "startChar": 2,
+        "endLine": 141,
+        "endChar": 26
+      },
+      "revId": "6a2c2a92358149d5127cd36ae2153cc26fb81754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b92a1fb0_78e9c684",
         "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
         "patchSetId": 6
@@ -271,6 +317,29 @@
         "startChar": 6,
         "endLine": 149,
         "endChar": 24
+      },
+      "revId": "6a2c2a92358149d5127cd36ae2153cc26fb81754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48b59996_22f7841c",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-05T18:01:24Z",
+      "side": 1,
+      "message": "nit: base::MakeUnique",
+      "range": {
+        "startLine": 167,
+        "startChar": 17,
+        "endLine": 167,
+        "endChar": 34
       },
       "revId": "6a2c2a92358149d5127cd36ae2153cc26fb81754",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
