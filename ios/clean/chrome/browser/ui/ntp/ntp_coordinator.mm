@@ -117,7 +117,7 @@
 - (void)showNTPBookmarksPanel {
   if (!self.bookmarksCoordinator) {
     self.bookmarksCoordinator = [[BookmarksCoordinator alloc] init];
-    self.bookmarksCoordinator.contained = IsIPadIdiom();
+    self.bookmarksCoordinator.mode = IsIPadIdiom() ? CONTAINED : PRESENTED;
     [self addChildCoordinator:self.bookmarksCoordinator];
   }
   [self.bookmarksCoordinator start];
@@ -126,6 +126,7 @@
 - (void)showNTPRecentTabsPanel {
   if (!self.recentTabsCoordinator) {
     self.recentTabsCoordinator = [[RecentTabsCoordinator alloc] init];
+    self.recentTabsCoordinator.mode = IsIPadIdiom() ? CONTAINED : PRESENTED;
     [self addChildCoordinator:self.recentTabsCoordinator];
   }
   [self.recentTabsCoordinator start];
