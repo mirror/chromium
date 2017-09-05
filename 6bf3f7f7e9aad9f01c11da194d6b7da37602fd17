@@ -16,6 +16,24 @@
       "revId": "6bf3f7f7e9aad9f01c11da194d6b7da37602fd17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b96aac3c_fcc8d431",
+        "filename": "chrome/browser/local_discovery/service_discovery_client_mdns.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-05T22:08:37Z",
+      "side": 1,
+      "message": "Indeed, it looks like CreateSockets is being called on the IO thread. Fortunately it\u0027s run as a task posted from the UI thread, so it\u0027s pretty straightforward to pass the NetLog pointer via PostTask.",
+      "parentUuid": "87f1230f_5aad1dfa",
+      "revId": "6bf3f7f7e9aad9f01c11da194d6b7da37602fd17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
