@@ -27,6 +27,8 @@ enum WMEventType {
   WM_EVENT_FULLSCREEN,
   WM_EVENT_SNAP_LEFT,
   WM_EVENT_SNAP_RIGHT,
+  WM_EVENT_SNAP_TOP,
+  WM_EVENT_SNAP_BOTTOM,
 
   // A window is requested to be the given bounds. The request may or
   // may not be fulfilled depending on the requested bounds and window's
