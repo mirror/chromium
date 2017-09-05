@@ -186,10 +186,6 @@ public abstract class CronetEngineBuilderImpl extends ICronetEngineBuilder {
         return this;
     }
 
-    boolean sdchEnabled() {
-        return mSdchEnabled;
-    }
-
     @Override
     public CronetEngineBuilderImpl enableBrotli(boolean value) {
         mBrotiEnabled = value;
