@@ -4,6 +4,7 @@
 
 #include "build/build_config.h"
 #include "core/frame/LocalFrameView.h"
+#include "core/frame/VisualViewport.h"
 #include "core/frame/WebLocalFrameImpl.h"
 #include "core/input/EventHandler.h"
 #include "core/layout/LayoutView.h"
@@ -50,6 +51,46 @@ TEST_F(ScrollbarsTest, DocumentStyleRecalcPreservesScrollbars) {
 
   Compositor().BeginFrame();
   ASSERT_TRUE(plsa->VerticalScrollbar() && plsa->HorizontalScrollbar());
+}
+
+TEST_F(ScrollbarsTest, ScrollbarSizeForUseZoomDSF) {
+  WebView().Resize(WebSize(800, 600));
+  SimRequest request("https://example.com/test.html", "text/html");
+  LoadURL("https://example.com/test.html");
+  request.Complete("<style> body { width: 1600px; height: 1200px; } </style>");
+
+  Compositor().BeginFrame();
+  GetDocument().GetFrame()->SetPageZoomFactor(1.f);
+
+  VisualViewport& visual_viewport =
+      GetDocument().GetPage()->GetVisualViewport();
+  int horizontal_scrollbar = clampTo<int>(std::floor(
+      visual_viewport.LayerForHorizontalScrollbar()->Size().Height()));
+  int vertical_scrollbar = clampTo<int>(
+      std::floor(visual_viewport.LayerForVerticalScrollbar()->Size().Width()));
+
+  float devicePixelRatio = 2.625f;
+  GetDocument().GetFrame()->SetPageZoomFactor(devicePixelRatio);
+  WebView().Resize(IntSize(400, 300));
+
+  EXPECT_EQ(
+      clampTo<int>(std::floor(horizontal_scrollbar * devicePixelRatio)),
+      clampTo<int>(std::floor(
+          visual_viewport.LayerForHorizontalScrollbar()->Size().Height())));
+  EXPECT_EQ(clampTo<int>(std::floor(vertical_scrollbar * devicePixelRatio)),
+            clampTo<int>(std::floor(
+                visual_viewport.LayerForVerticalScrollbar()->Size().Width())));
+
+  GetDocument().GetFrame()->SetPageZoomFactor(1.f);
+  WebView().Resize(IntSize(800, 600));
+
+  EXPECT_EQ(
+      horizontal_scrollbar,
+      clampTo<int>(std::floor(
+          visual_viewport.LayerForHorizontalScrollbar()->Size().Height())));
+  EXPECT_EQ(vertical_scrollbar,
+            clampTo<int>(std::floor(
+                visual_viewport.LayerForVerticalScrollbar()->Size().Width())));
 }
 
 // Ensure that causing a change in scrollbar existence causes a nested layout

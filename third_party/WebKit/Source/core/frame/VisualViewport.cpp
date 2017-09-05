@@ -449,6 +449,16 @@ void VisualViewport::SetupScrollbar(WebScrollbar::Orientation orientation) {
   int thumb_thickness = theme.ThumbThickness();
   int scrollbar_thickness = theme.ScrollbarThickness(kRegularScrollbar);
   int scrollbar_margin = theme.ScrollbarMargin();
+  LocalFrame* frame = MainFrame();
+  if (frame && GetPage().DeviceScaleFactorDeprecated() == 1.f) {
+    double devicePixelRatio = frame->DevicePixelRatio();
+    thumb_thickness =
+        clampTo<int>(std::floor(thumb_thickness * devicePixelRatio));
+    scrollbar_thickness =
+        clampTo<int>(std::floor(scrollbar_thickness * devicePixelRatio));
+    scrollbar_margin =
+        clampTo<int>(std::floor(scrollbar_margin * devicePixelRatio));
+  }
 
   if (!web_scrollbar_layer) {
     ScrollingCoordinator* coordinator = GetPage().GetScrollingCoordinator();
