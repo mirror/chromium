@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dfc9734b_be1872f4",
+        "filename": "build/vs_toolchain.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-09-05T21:13:08Z",
+      "side": 1,
+      "message": "Comment needs updating.",
+      "revId": "e5378ef9ab0b06eaee536bb46dca2711e8ea9f93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5504751e_7f2fe4c3",
+        "filename": "build/vs_toolchain.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-09-05T21:13:08Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "e5378ef9ab0b06eaee536bb46dca2711e8ea9f93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
