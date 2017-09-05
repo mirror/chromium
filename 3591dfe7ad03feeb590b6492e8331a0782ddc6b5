@@ -72,6 +72,29 @@
     },
     {
       "key": {
+        "uuid": "c6eefac2_e7e086a1",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-09-05T18:06:01Z",
+      "side": 1,
+      "message": "The comment on GetURL says:\n\n  // Gets the URL that is currently being displayed, if there is one.\n  // This method is deprecated. DO NOT USE! Pick either |GetVisibleURL| or\n  // |GetLastCommittedURL| as appropriate.\n\nPretty sure you want LastCommittedURL, since the subsequent computation involves the main frame, whose process is determined by the last committed navigation.",
+      "range": {
+        "startLine": 241,
+        "startChar": 23,
+        "endLine": 241,
+        "endChar": 29
+      },
+      "revId": "3591dfe7ad03feeb590b6492e8331a0782ddc6b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2270b662_0baa5b41",
         "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
         "patchSetId": 5
@@ -83,6 +106,23 @@
       "writtenOn": "2017-08-28T20:41:59Z",
       "side": 1,
       "message": "Nit: remove extra newline",
+      "revId": "3591dfe7ad03feeb590b6492e8331a0782ddc6b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cf24fd3_b9cddc3c",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-09-05T18:06:01Z",
+      "side": 1,
+      "message": "I don\u0027t think the RVH can ever be null. Can it?",
       "revId": "3591dfe7ad03feeb590b6492e8331a0782ddc6b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -117,6 +157,23 @@
       "writtenOn": "2017-08-28T20:41:59Z",
       "side": 1,
       "message": "Maybe add a comment here to explain that the observer deletes itself (thus nothing takes ownership of the newly created object).",
+      "revId": "3591dfe7ad03feeb590b6492e8331a0782ddc6b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1555778_0e6ffff2",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3885,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-09-05T18:06:01Z",
+      "side": 1,
+      "message": "Where does the file:// document come from in this scenario?  What alternatives exist to implementing this feature in terms of ExecuteJavaScript?\n\nI\u0027m a little anxious about relaxing this check [though as a counterpoint, the fact that \"about:blank\" is allowed suggests that it\u0027s somewhat a fuzzy security boundary, at best.] But as I understand it, the idea of this function is to ensure that, outside of tests, ExecuteJavaScript is only used to run code in documents that chrome generated in the first place (e.g.: devtools UI, webUI pages, and warning interstitials).",
       "revId": "3591dfe7ad03feeb590b6492e8331a0782ddc6b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
