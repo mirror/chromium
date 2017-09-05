@@ -48,6 +48,11 @@ void FakeMessagePipe::Send(google::protobuf::MessageLite* message,
   SendImpl(message, done);
 }
 
+void FakeMessagePipe::Send(const std::vector<char>& buffer,
+                           const base::Closure& done) {
+  // TODO(jarhar): Implement sending of buffers.
+}
+
 void FakeMessagePipe::Receive(std::unique_ptr<CompoundBuffer> message) {
   if (asynchronous_) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,

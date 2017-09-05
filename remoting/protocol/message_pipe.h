@@ -6,6 +6,7 @@
 #define REMOTING_PROTOCOL_MESSAGE_PIPE_H_
 
 #include <memory>
+#include <vector>
 
 #include "base/callback_forward.h"
 
@@ -54,6 +55,15 @@ class MessagePipe {
   // after this function returns.
   // TODO(zijiehe): the |message| should be const-ref.
   virtual void Send(google::protobuf::MessageLite* message,
+                    const base::Closure& done) = 0;
+
+  // Sends a buffer. |done| is called when the message has been sent to the
+  // client, but it doesn't mean that the client has received it. |done| is
+  // never called if the message is never sent (e.g. if the pipe is destroyed
+  // before the message is sent).
+  // |message| is guaranteed to be used synchronously. It won't be referred
+  // after this function returns.
+  virtual void Send(const std::vector<char>& buffer,
                     const base::Closure& done) = 0;
 };
 
