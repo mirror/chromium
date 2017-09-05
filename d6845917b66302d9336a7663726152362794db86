@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99e76d9b_09674641",
+        "filename": "components/drive/resource_metadata_storage_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-05T03:54:04Z",
+      "side": 1,
+      "message": "Are you going to merge this change to M62?",
+      "range": {
+        "startLine": 486,
+        "startChar": 47,
+        "endLine": 486,
+        "endChar": 50
+      },
+      "revId": "d6845917b66302d9336a7663726152362794db86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
