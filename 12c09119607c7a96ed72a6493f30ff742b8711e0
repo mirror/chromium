@@ -448,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "5303febd_91fdfb38",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1235,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-05T20:57:05Z",
+      "side": 1,
+      "message": "That\u0027s fine |currentURLWithTrustLevel:| was created to workaround UIWebView limitations (no API to get current URL). With WKWebView all clients should rely on lastCommitedURL and |currentURLWithTrustLevel:| should be removed.",
+      "parentUuid": "1628128c_9b0f9252",
+      "range": {
+        "startLine": 1235,
+        "startChar": 21,
+        "endLine": 1235,
+        "endChar": 22
+      },
+      "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0fe7a1e8_f3d90399",
         "filename": "ios/web/web_state/ui/crw_web_controller.mm",
         "patchSetId": 1
@@ -824,6 +848,30 @@
     },
     {
       "key": {
+        "uuid": "df7e84a7_7db3749a",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 4264,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-05T20:57:05Z",
+      "side": 1,
+      "message": "Makes sense.",
+      "parentUuid": "d4c6dbce_1935ea1c",
+      "range": {
+        "startLine": 4264,
+        "startChar": 12,
+        "endLine": 4264,
+        "endChar": 43
+      },
+      "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7419974_52da0c7c",
         "filename": "ios/web/web_state/ui/crw_web_controller.mm",
         "patchSetId": 1
@@ -868,6 +916,30 @@
       "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d08f4a1a_e1afa1d9",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 4320,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-05T20:57:05Z",
+      "side": 1,
+      "message": "Yeah, moving navigation code from WebController to NavigationManager sounds like a great idea.",
+      "parentUuid": "bb02889f_bd3bd5d6",
+      "range": {
+        "startLine": 4320,
+        "startChar": 25,
+        "endLine": 4320,
+        "endChar": 38
+      },
+      "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

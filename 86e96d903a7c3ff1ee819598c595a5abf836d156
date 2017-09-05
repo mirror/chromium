@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6db6f223_de4b1700",
+        "filename": "ios/web/navigation/crw_placeholder_navigation_info.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-05T20:57:05Z",
+      "side": 1,
+      "message": "nit (not worth fixing): s/Create/Creates",
+      "range": {
+        "startLine": 28,
+        "startChar": 3,
+        "endLine": 28,
+        "endChar": 9
+      },
+      "revId": "86e96d903a7c3ff1ee819598c595a5abf836d156",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d976ce24_9919d82d",
+        "filename": "ios/web/navigation/crw_placeholder_navigation_info.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-05T20:57:05Z",
+      "side": 1,
+      "message": "From Style Guide: \"A method that returns an object should have a name beginning with a noun identifying the object returned\"\n\nhttps://g3doc.corp.google.com/company/teams/objc-readability/style_guide.md?cl\u003dhead\n\nMethod which starts with create should return void and clients should call infoForNavigation: if they want to access navigation object. It\u0027s up to you whether or not you want to fix this.",
+      "range": {
+        "startLine": 30,
+        "startChar": 16,
+        "endLine": 30,
+        "endChar": 35
+      },
+      "revId": "86e96d903a7c3ff1ee819598c595a5abf836d156",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23e2d50e_ae371c72",
+        "filename": "ios/web/navigation/crw_placeholder_navigation_info.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-05T20:57:05Z",
+      "side": 1,
+      "message": "Would you mind documenting when this must be called?",
+      "range": {
+        "startLine": 37,
+        "startChar": 12,
+        "endLine": 37,
+        "endChar": 22
+      },
+      "revId": "86e96d903a7c3ff1ee819598c595a5abf836d156",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb9b8322_5b6356f6",
+        "filename": "ios/web/navigation/crw_placeholder_navigation_info.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-05T20:57:05Z",
+      "side": 1,
+      "message": "DCHECK(handler); ?",
+      "range": {
+        "startLine": 36,
+        "startChar": 21,
+        "endLine": 36,
+        "endChar": 0
+      },
+      "revId": "86e96d903a7c3ff1ee819598c595a5abf836d156",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
