@@ -292,6 +292,24 @@
       "revId": "b90fcc73c1134f66131f813f92f5daf7400f3b9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1e9cf3d_3d2cce2b",
+        "filename": "components/subresource_filter/content/renderer/subresource_filter_agent.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-09-05T17:40:25Z",
+      "side": 1,
+      "message": "I share your reservations but I think the (logical) drawbacks are not too bad and I\u0027m generally ok with this approach.\n\nIt does makes sense to include a big comment explaining the hack though and why it is necessary.\n\nHonestly, I think the architectural solution to this problem is to move content blocking logic out of the renderer and into the browser, similar to how extensions do it. This is definitely a longer term move though.",
+      "parentUuid": "c3b07f28_0fdeec3c",
+      "revId": "b90fcc73c1134f66131f813f92f5daf7400f3b9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
