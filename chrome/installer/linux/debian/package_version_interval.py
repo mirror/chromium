@@ -4,6 +4,7 @@
 # found in the LICENSE file.
 
 import re
+import sys
 
 import deb_version
 
@@ -73,8 +74,6 @@ class PackageVersionInterval:
     return self.start == other.start and self.end == other.end
 
 def version_interval_from_exp(op, version):
-  # Allowed relationship operators are specified in:
-  # https://www.debian.org/doc/debian-policy/ch-relationships.html
   open_endpoint = PackageVersionIntervalEndpoint(True, None, None)
   inclusive_endpoint = PackageVersionIntervalEndpoint(False, True, version)
   exclusive_endpoint = PackageVersionIntervalEndpoint(False, False, version)
@@ -82,9 +81,9 @@ def version_interval_from_exp(op, version):
     return PackageVersionInterval(inclusive_endpoint, open_endpoint)
   if op == '<=':
     return PackageVersionInterval(open_endpoint, inclusive_endpoint)
-  if op == '>>':
+  if op == '>>' or op == '>':
     return PackageVersionInterval(exclusive_endpoint, open_endpoint)
-  if op == '<<':
+  if op == '<<' or op == '<':
     return PackageVersionInterval(open_endpoing, exclusive_endpoint)
   assert op == '='
   return PackageVersionInterval(inclusive_endpoint, inclusive_endpoint)
@@ -109,29 +108,30 @@ def parse_dep(dep):
          'not implemented at this time.')
   sys.exit(1)
 
-# Given a list ((package1, interval1), (package2, interval2), ...),
+# Given a map {package1: interval1, package2: interval2, ...},
 # returns a formatted output suitable for use by dpkg-deb.  ex:
 # package1 (< left_endpoint1)
 # package1 (>= right_endpoint1)
 # package2 (< left_endpoint2)
 # package2 (>= right_endpoint2)
 # ...
-def format_package_intervals(l):
-  formatted = ''
-  for (package, interval) in l:
+def format_package_intervals(m):
+  lines = []
+  for package in m:
+    interval = m[package]
     if interval.start._is_open and interval.end._is_open:
-      formatted += package + '\n'
+      lines.append(package + '\n')
     elif (not interval.start._is_open and not interval.end._is_open and
           interval.start._version == interval.end._version):
       assert interval.start._is_inclusive and interval.end._is_inclusive
-      formatted += package + ' (= ' + str(interval.start._version) + ')\n'
+      lines.append(package + ' (= ' + str(interval.start._version) + ')\n')
     else:
       if not interval.start._is_open:
         op = '>=' if interval.start._is_inclusive else '>'
-        formatted += package + ' (' + op + ' '
-        formatted += str(interval.start._version) + ')\n'
+        lines.append(package + ' (' + op + ' ' +
+                     str(interval.start._version) +')\n')
       if not interval.end._is_open:
         op = '<=' if interval.end._is_inclusive else '<'
-        formatted += package + ' (' + op + ' '
-        formatted += str(interval.end._version) + ')\n'
-  return formatted
+        lines.append(package + ' (' + op + ' ' +
+                     str(interval.end._version) + ')\n')
+  return ''.join(sorted(lines))

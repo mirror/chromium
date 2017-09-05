@@ -36,22 +36,22 @@ assert not make_interval(True, None, None, False, True, 7).contains(8)
 assert not make_interval(False, True, 3, True, None, None).contains(2)
 
 # format_package_intervals() test.
-actual = package_version_interval.format_package_intervals([
-    ('a', make_interval(True, None, None, True, None, None)),
-    ('b', make_interval(False, False, 1, True, None, None)),
-    ('c', make_interval(True, None, None, False, False, 2)),
-    ('d', make_interval(False, True, 3, True, None, None)),
-    ('e', make_interval(True, None, None, False, True, 4)),
-    ('f', make_interval(False, True, 5, False, True, 5)),
-    ('g', make_interval(False, False, 6, False, False, 7)),
-])
+actual = package_version_interval.format_package_intervals({
+    'a': make_interval(True, None, None, True, None, None),
+    'b': make_interval(False, False, 1, True, None, None),
+    'c': make_interval(True, None, None, False, False, 2),
+    'd': make_interval(False, True, 3, True, None, None),
+    'e': make_interval(True, None, None, False, True, 4),
+    'f': make_interval(False, True, 5, False, True, 5),
+    'g': make_interval(False, False, 6, False, False, 7),
+})
 expected = """a
 b (> 1)
 c (< 2)
 d (>= 3)
 e (<= 4)
 f (= 5)
-g (> 6)
 g (< 7)
+g (> 6)
 """
 assert expected == actual
