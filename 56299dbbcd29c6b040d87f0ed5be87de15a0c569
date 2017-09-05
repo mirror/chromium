@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "450edfa0_342c5557",
+        "filename": "content/browser/service_worker/embedded_worker_test_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-05T15:21:38Z",
+      "side": 1,
+      "message": "Done, that was from an abandoned attempt.",
+      "parentUuid": "54b80fbe_3e2f5554",
+      "revId": "56299dbbcd29c6b040d87f0ed5be87de15a0c569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a84afc7f_cf1d802d",
         "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-05T11:08:23Z",
       "side": 1,
       "message": "super nit-picky, but I don\u0027t feel repeating the class name for the class-level comment is super useful, but found that you might rather prefer having it?",
+      "revId": "56299dbbcd29c6b040d87f0ed5be87de15a0c569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5aba493_26bf71ec",
+        "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-05T15:21:38Z",
+      "side": 1,
+      "message": "Yes I guess I have two modes for class comments: one is a short sentence fragment \"Controls the blah blah blah.\"; the other is a paragraph with complete sentences. In complete sentence mode, I prefer to use the class name directly instead of \"This class\" or \"This\".\n\nAt least some classes in base/ repeat the class name (AtomicSequenceNumber, LazyInstance, Optional, Pickle, Location), but as you know there\u0027s no official convention and base/ definitely has inconsistencies. I\u0027m also pretty inconsistent myself but when a class looks especially non-obvious I try to write a proper paragraph.",
+      "parentUuid": "a84afc7f_cf1d802d",
       "revId": "56299dbbcd29c6b040d87f0ed5be87de15a0c569",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "26aa19d2_1ac8387b",
+        "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-05T15:21:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a026c87f_6fc4b5da",
+      "revId": "56299dbbcd29c6b040d87f0ed5be87de15a0c569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c411534b_365c1e98",
         "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-05T11:22:48Z",
       "side": 1,
       "message": "nit: could we just do MakeStrongBinding(MakeUnique\u003cMockURLLoaderFactory\u003e(MakeRequest(\u0026mock_loader_factory))) ?\n\n(don\u0027t want to have so many delete this if it can be avoided)",
+      "revId": "56299dbbcd29c6b040d87f0ed5be87de15a0c569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47ea4e63_c8da1249",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-05T15:21:38Z",
+      "side": 1,
+      "message": "Done. I was just copying an appcache_unittest file. I\u0027m still doing a lot of cargo cult programming in Mojo so please let me know if you see things that could be improved.",
+      "parentUuid": "c411534b_365c1e98",
       "revId": "56299dbbcd29c6b040d87f0ed5be87de15a0c569",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
