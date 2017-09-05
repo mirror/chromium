@@ -104,10 +104,11 @@ TEST(SolidColorLayerImplTest, VerifyCorrectOpacityInQuad) {
   host_impl.active_tree()->root_layer_for_testing()->AppendQuads(
       render_pass.get(), &data);
 
+  ASSERT_EQ(render_pass->shared_quad_state_list.size(), 1U);
+  ASSERT_EQ(render_pass->quad_list.front()->stable_id,
+            render_pass->shared_quad_state_list.front()->stable_id);
+  EXPECT_EQ(opacity, render_pass->shared_quad_state_list.front()->opacity);
   ASSERT_EQ(render_pass->quad_list.size(), 1U);
-  EXPECT_EQ(opacity,
-            SolidColorDrawQuad::MaterialCast(render_pass->quad_list.front())
-                ->shared_quad_state->opacity);
   EXPECT_TRUE(render_pass->quad_list.front()->ShouldDrawWithBlending());
 }
 

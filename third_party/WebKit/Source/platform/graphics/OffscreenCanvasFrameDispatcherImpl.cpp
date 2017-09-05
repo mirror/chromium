@@ -141,7 +141,8 @@ void OffscreenCanvasFrameDispatcherImpl::DispatchFrame(
                gfx::Transform());
 
   viz::SharedQuadState* sqs = pass->CreateAndAppendSharedQuadState();
-  sqs->SetAll(gfx::Transform(), bounds, bounds, bounds, false, 1.f,
+  const uint64_t stable_id = 1;
+  sqs->SetAll(stable_id, gfx::Transform(), bounds, bounds, bounds, false, 1.f,
               SkBlendMode::kSrcOver, 0);
 
   viz::TransferableResource resource;

@@ -381,13 +381,15 @@ void SurfaceAggregator::AddColorConversionPass() {
 
   auto* shared_quad_state =
       color_conversion_pass->CreateAndAppendSharedQuadState();
-  shared_quad_state->SetAll(
-      /*quad_to_target_transform=*/gfx::Transform(),
-      /*quad_layer_rect=*/output_rect,
-      /*visible_quad_layer_rect=*/output_rect,
-      /*clip_rect=*/gfx::Rect(),
-      /*is_clipped=*/false, /*opacity=*/1.f,
-      /*blend_mode=*/SkBlendMode::kSrcOver, /*sorting_context_id=*/0);
+  // TODO(weiliangc): Reserve valid stable id for color conversion.
+  shared_quad_state->SetAll(/*stable_id=*/1,
+                            /*quad_to_target_transform=*/gfx::Transform(),
+                            /*quad_layer_rect=*/output_rect,
+                            /*visible_quad_layer_rect=*/output_rect,
+                            /*clip_rect=*/gfx::Rect(),
+                            /*is_clipped=*/false, /*opacity=*/1.f,
+                            /*blend_mode=*/SkBlendMode::kSrcOver,
+                            /*sorting_context_id=*/0);
 
   auto* quad =
       color_conversion_pass->CreateAndAppendDrawQuad<cc::RenderPassDrawQuad>();
@@ -415,11 +417,13 @@ SharedQuadState* SurfaceAggregator::CopySharedQuadState(
   ClipData new_clip_rect = CalculateClipRect(
       clip_rect, ClipData(source_sqs->is_clipped, source_sqs->clip_rect),
       target_transform);
-  copy_shared_quad_state->SetAll(new_transform, source_sqs->quad_layer_rect,
-                                 source_sqs->visible_quad_layer_rect,
-                                 new_clip_rect.rect, new_clip_rect.is_clipped,
-                                 source_sqs->opacity, source_sqs->blend_mode,
-                                 source_sqs->sorting_context_id);
+  uint64_t last_stable_id =
+      dest_render_pass->shared_quad_state_list.back()->stable_id;
+  copy_shared_quad_state->SetAll(
+      last_stable_id + 1, new_transform, source_sqs->quad_layer_rect,
+      source_sqs->visible_quad_layer_rect, new_clip_rect.rect,
+      new_clip_rect.is_clipped, source_sqs->opacity, source_sqs->blend_mode,
+      source_sqs->sorting_context_id);
 
   return copy_shared_quad_state;
 }

@@ -2,16 +2,16 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "components/viz/common/quads/shared_quad_state.h"
+#include "cc/quads/shared_quad_state.h"
 
 #include "base/trace_event/trace_event.h"
 #include "base/trace_event/trace_event_argument.h"
 #include "base/values.h"
 #include "cc/base/math_util.h"
-#include "components/viz/common/traced_value.h"
+#include "cc/debug/traced_value.h"
 #include "third_party/skia/include/core/SkBlendMode.h"
 
-namespace viz {
+namespace cc {
 
 SharedQuadState::SharedQuadState()
     : stable_id(0),
@@ -24,8 +24,7 @@ SharedQuadState::SharedQuadState(const SharedQuadState& other) = default;
 
 SharedQuadState::~SharedQuadState() {
   TRACE_EVENT_OBJECT_DELETED_WITH_ID(
-      TRACE_DISABLED_BY_DEFAULT("cc.debug.quads"), "viz::SharedQuadState",
-      this);
+      TRACE_DISABLED_BY_DEFAULT("cc.debug.quads"), "cc::SharedQuadState", this);
 }
 
 void SharedQuadState::SetAll(uint64_t stable_id,
@@ -50,20 +49,20 @@ void SharedQuadState::SetAll(uint64_t stable_id,
 
 void SharedQuadState::AsValueInto(base::trace_event::TracedValue* value) const {
   value->SetInteger("stable_id", stable_id);
-  cc::MathUtil::AddToTracedValue("transform", quad_to_target_transform, value);
-  cc::MathUtil::AddToTracedValue("layer_content_rect", quad_layer_rect, value);
-  cc::MathUtil::AddToTracedValue("layer_visible_content_rect",
-                                 visible_quad_layer_rect, value);
+  MathUtil::AddToTracedValue("transform", quad_to_target_transform, value);
+  MathUtil::AddToTracedValue("layer_content_rect", quad_layer_rect, value);
+  MathUtil::AddToTracedValue("layer_visible_content_rect",
+                             visible_quad_layer_rect, value);
 
   value->SetBoolean("is_clipped", is_clipped);
 
-  cc::MathUtil::AddToTracedValue("clip_rect", clip_rect, value);
+  MathUtil::AddToTracedValue("clip_rect", clip_rect, value);
 
   value->SetDouble("opacity", opacity);
   value->SetString("blend_mode", SkBlendMode_Name(blend_mode));
   TracedValue::MakeDictIntoImplicitSnapshotWithCategory(
-      TRACE_DISABLED_BY_DEFAULT("cc.debug.quads"), value,
-      "viz::SharedQuadState", this);
+      TRACE_DISABLED_BY_DEFAULT("cc.debug.quads"), value, "cc::SharedQuadState",
+      this);
 }
 
-}  // namespace viz
+}  // namespace cc

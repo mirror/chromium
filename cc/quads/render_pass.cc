@@ -140,12 +140,13 @@ std::unique_ptr<RenderPass> RenderPass::DeepCopy() const {
       copy_pass->CreateAndAppendSharedQuadState();
   *copy_shared_quad_state = **sqs_iter;
   for (auto* quad : quad_list) {
-    while (quad->shared_quad_state != *sqs_iter) {
+    while (quad->stable_id != sqs_iter->stable_id) {
       ++sqs_iter;
       DCHECK(sqs_iter != shared_quad_state_list.end());
       copy_shared_quad_state = copy_pass->CreateAndAppendSharedQuadState();
       *copy_shared_quad_state = **sqs_iter;
     }
+    DCHECK(quad->stable_id == sqs_iter->stable_id);
     DCHECK(quad->shared_quad_state == *sqs_iter);
 
     if (quad->material == DrawQuad::RENDER_PASS) {
@@ -263,7 +264,9 @@ RenderPassDrawQuad* RenderPass::CopyFromAndAppendRenderPassDrawQuad(
   DCHECK(!shared_quad_state_list.empty());
   RenderPassDrawQuad* copy_quad =
       CopyFromAndAppendTypedDrawQuad<RenderPassDrawQuad>(quad);
-  copy_quad->shared_quad_state = shared_quad_state_list.back();
+  const viz::SharedQuadState* shared_quad_state = shared_quad_state_list.back();
+  copy_quad->stable_id = shared_quad_state->stable_id;
+  copy_quad->shared_quad_state = shared_quad_state;
   copy_quad->render_pass_id = render_pass_id;
   return copy_quad;
 }
@@ -301,7 +304,9 @@ DrawQuad* RenderPass::CopyFromAndAppendDrawQuad(const DrawQuad* quad) {
       LOG(FATAL) << "Invalid DrawQuad material " << quad->material;
       break;
   }
-  quad_list.back()->shared_quad_state = shared_quad_state_list.back();
+  const viz::SharedQuadState* shared_quad_state = shared_quad_state_list.back();
+  quad_list.back()->stable_id = shared_quad_state->stable_id;
+  quad_list.back()->shared_quad_state = shared_quad_state;
   return quad_list.back();
 }
 

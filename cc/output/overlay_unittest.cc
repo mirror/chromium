@@ -246,6 +246,8 @@ std::unique_ptr<RenderPass> CreateRenderPass() {
   pass->SetNew(render_pass_id, output_rect, output_rect, gfx::Transform());
 
   SharedQuadState* shared_state = pass->CreateAndAppendSharedQuadState();
+  uint64_t stable_id = pass->shared_quad_state_list.size();
+  shared_state->stable_id = stable_id;
   shared_state->opacity = 1.f;
   return pass;
 }
@@ -259,6 +261,8 @@ std::unique_ptr<RenderPass> CreateRenderPassWithTransform(
   pass->SetNew(render_pass_id, output_rect, output_rect, gfx::Transform());
 
   SharedQuadState* shared_state = pass->CreateAndAppendSharedQuadState();
+  uint64_t stable_id = pass->shared_quad_state_list.size();
+  shared_state->stable_id = stable_id;
   shared_state->opacity = 1.f;
   shared_state->quad_to_target_transform = transform;
   return pass;
@@ -282,6 +286,7 @@ SolidColorDrawQuad* CreateSolidColorQuadAt(
     SkColor color,
     RenderPass* render_pass,
     const gfx::Rect& rect) {
+  DCHECK(shared_quad_state);
   SolidColorDrawQuad* quad =
       render_pass->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
   quad->SetNew(shared_quad_state, rect, rect, color, false);
@@ -292,6 +297,7 @@ TextureDrawQuad* CreateCandidateQuadAt(ResourceProvider* resource_provider,
                                        const SharedQuadState* shared_quad_state,
                                        RenderPass* render_pass,
                                        const gfx::Rect& rect) {
+  DCHECK(shared_quad_state);
   bool needs_blending = false;
   bool premultiplied_alpha = false;
   bool flipped = false;
@@ -345,6 +351,7 @@ StreamVideoDrawQuad* CreateCandidateVideoQuadAt(
     RenderPass* render_pass,
     const gfx::Rect& rect,
     const gfx::Transform& transform) {
+  DCHECK(shared_quad_state);
   bool needs_blending = false;
   gfx::Size resource_size_in_pixels = rect.size();
   bool is_overlay_candidate = true;
@@ -363,6 +370,7 @@ TextureDrawQuad* CreateFullscreenCandidateQuad(
     ResourceProvider* resource_provider,
     const SharedQuadState* shared_quad_state,
     RenderPass* render_pass) {
+  DCHECK(shared_quad_state);
   return CreateCandidateQuadAt(resource_provider, shared_quad_state,
                                render_pass, render_pass->output_rect);
 }
@@ -372,6 +380,7 @@ StreamVideoDrawQuad* CreateFullscreenCandidateVideoQuad(
     const SharedQuadState* shared_quad_state,
     RenderPass* render_pass,
     const gfx::Transform& transform) {
+  DCHECK(shared_quad_state);
   return CreateCandidateVideoQuadAt(resource_provider, shared_quad_state,
                                     render_pass, render_pass->output_rect,
                                     transform);
@@ -381,6 +390,7 @@ YUVVideoDrawQuad* CreateFullscreenCandidateYUVVideoQuad(
     ResourceProvider* resource_provider,
     const SharedQuadState* shared_quad_state,
     RenderPass* render_pass) {
+  DCHECK(shared_quad_state);
   bool needs_blending = false;
   gfx::RectF tex_coord_rect(0, 0, 1, 1);
   gfx::Rect rect = render_pass->output_rect;
@@ -404,6 +414,7 @@ void CreateOpaqueQuadAt(ResourceProvider* resource_provider,
                         const SharedQuadState* shared_quad_state,
                         RenderPass* render_pass,
                         const gfx::Rect& rect) {
+  DCHECK(shared_quad_state);
   SolidColorDrawQuad* color_quad =
       render_pass->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
   color_quad->SetNew(shared_quad_state, rect, rect, SK_ColorBLACK, false);
@@ -414,6 +425,7 @@ void CreateOpaqueQuadAt(ResourceProvider* resource_provider,
                         RenderPass* render_pass,
                         const gfx::Rect& rect,
                         SkColor color) {
+  DCHECK(shared_quad_state);
   DCHECK_EQ(255u, SkColorGetA(color));
   SolidColorDrawQuad* color_quad =
       render_pass->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
@@ -423,6 +435,7 @@ void CreateOpaqueQuadAt(ResourceProvider* resource_provider,
 void CreateFullscreenOpaqueQuad(ResourceProvider* resource_provider,
                                 const SharedQuadState* shared_quad_state,
                                 RenderPass* render_pass) {
+  DCHECK(shared_quad_state);
   CreateOpaqueQuadAt(resource_provider, shared_quad_state, render_pass,
                      render_pass->output_rect);
 }
@@ -451,8 +464,13 @@ static void CompareRenderPassLists(const RenderPassList& expected_list,
          exp_iter != expected->quad_list.cend();
          ++exp_iter, ++act_iter) {
       EXPECT_EQ(exp_iter->rect.ToString(), act_iter->rect.ToString());
-      EXPECT_EQ(exp_iter->shared_quad_state->quad_layer_rect.ToString(),
-                act_iter->shared_quad_state->quad_layer_rect.ToString());
+    }
+    for (auto exp_iter = expected->shared_quad_state_list.cbegin(),
+              act_iter = actual->shared_quad_state_list.cbegin();
+         exp_iter != expected->shared_quad_state_list.cend();
+         ++exp_iter, ++act_iter) {
+      EXPECT_EQ(exp_iter->quad_layer_rect.ToString(),
+                act_iter->quad_layer_rect.ToString());
     }
   }
 }
@@ -675,6 +693,8 @@ TEST_F(FullscreenOverlayTest, RemoveFullscreenQuadFromQuadList) {
                      kOverlayTopLeftRect);
 
   SharedQuadState* shared_state = pass->CreateAndAppendSharedQuadState();
+  uint64_t stable_id = pass->shared_quad_state_list.size();
+  shared_state->stable_id = stable_id;
   shared_state->opacity = 1.f;
   CreateFullscreenCandidateQuad(resource_provider_.get(),
                                 pass->shared_quad_state_list.back(),
@@ -1206,10 +1226,14 @@ TEST_F(SingleOverlayOnTopTest, AllowTransparentOnTop) {
 
   std::unique_ptr<RenderPass> pass = CreateRenderPass();
   SharedQuadState* shared_state = pass->CreateAndAppendSharedQuadState();
+  uint64_t stable_id = pass->shared_quad_state_list.size();
+  shared_state->stable_id = stable_id;
   shared_state->opacity = 0.f;
   CreateSolidColorQuadAt(shared_state, SK_ColorBLACK, pass.get(),
                          kOverlayBottomRightRect);
   shared_state = pass->CreateAndAppendSharedQuadState();
+  stable_id = pass->shared_quad_state_list.size();
+  shared_state->stable_id = stable_id;
   shared_state->opacity = 1.f;
   CreateCandidateQuadAt(resource_provider_.get(), shared_state, pass.get(),
                         kOverlayBottomRightRect);
@@ -1253,10 +1277,14 @@ TEST_F(SingleOverlayOnTopTest, AllowTransparentColorOnTop) {
 TEST_F(SingleOverlayOnTopTest, RejectOpaqueColorOnTop) {
   std::unique_ptr<RenderPass> pass = CreateRenderPass();
   SharedQuadState* shared_state = pass->CreateAndAppendSharedQuadState();
+  uint64_t stable_id = pass->shared_quad_state_list.size();
+  shared_state->stable_id = stable_id;
   shared_state->opacity = 0.5f;
   CreateSolidColorQuadAt(shared_state, SK_ColorBLACK, pass.get(),
                          kOverlayBottomRightRect);
   shared_state = pass->CreateAndAppendSharedQuadState();
+  stable_id = pass->shared_quad_state_list.size();
+  shared_state->stable_id = stable_id;
   shared_state->opacity = 1.f;
   CreateCandidateQuadAt(resource_provider_.get(), shared_state, pass.get(),
                         kOverlayBottomRightRect);
@@ -1276,6 +1304,8 @@ TEST_F(SingleOverlayOnTopTest, RejectOpaqueColorOnTop) {
 TEST_F(SingleOverlayOnTopTest, RejectTransparentColorOnTopWithoutBlending) {
   std::unique_ptr<RenderPass> pass = CreateRenderPass();
   SharedQuadState* shared_state = pass->CreateAndAppendSharedQuadState();
+  uint64_t stable_id = pass->shared_quad_state_list.size();
+  shared_state->stable_id = stable_id;
   CreateSolidColorQuadAt(shared_state, SK_ColorTRANSPARENT, pass.get(),
                          kOverlayBottomRightRect)
       ->needs_blending = false;
@@ -1423,6 +1453,8 @@ TEST_F(UnderlayTest, AllowOnTop) {
                                 pass->shared_quad_state_list.back(),
                                 pass.get());
   pass->CreateAndAppendSharedQuadState()->opacity = 0.5f;
+  uint64_t stable_id = pass->shared_quad_state_list.size();
+  pass->shared_quad_state_list.back()->stable_id = stable_id;
   CreateFullscreenOpaqueQuad(resource_provider_.get(),
                              pass->shared_quad_state_list.back(), pass.get());
 
@@ -2202,6 +2234,8 @@ TEST_P(DCLayerOverlayTest, ClipRect) {
     pass->shared_quad_state_list.back()->is_clipped = true;
     pass->shared_quad_state_list.back()->clip_rect = gfx::Rect(0, 3, 100, 100);
     SharedQuadState* shared_state = pass->CreateAndAppendSharedQuadState();
+    uint64_t stable_id = pass->shared_quad_state_list.size();
+    pass->shared_quad_state_list.back()->stable_id = stable_id;
     shared_state->opacity = 1.f;
     CreateFullscreenCandidateYUVVideoQuad(resource_provider_.get(),
                                           shared_state, pass.get());
@@ -2912,15 +2946,20 @@ TEST_F(CALayerOverlayRPDQTest, RenderPassDrawQuadUnsupportedFilter) {
 }
 
 TEST_F(CALayerOverlayRPDQTest, TooManyRenderPassDrawQuads) {
+  quad_->SetNew(pass_->shared_quad_state_list.back(), kOverlayRect,
+                kOverlayRect, render_pass_id_, 0, gfx::RectF(), gfx::Size(),
+                gfx::Vector2dF(1, 1), gfx::PointF(), gfx::RectF());
   filters_.Append(FilterOperation::CreateBlurFilter(0.8f));
   int count = 35;
 
   for (int i = 0; i < count; ++i) {
     RenderPassDrawQuad* quad =
         pass_->CreateAndAppendDrawQuad<RenderPassDrawQuad>();
+    DCHECK(pass_->shared_quad_state_list.back());
     quad->SetNew(pass_->shared_quad_state_list.back(), kOverlayRect,
                  kOverlayRect, render_pass_id_, 2, gfx::RectF(), gfx::Size(),
                  gfx::Vector2dF(1, 1), gfx::PointF(), gfx::RectF());
+    DCHECK(quad->shared_quad_state);
   }
 
   ProcessForOverlays();

@@ -191,6 +191,9 @@ class LayerTestCommon {
       return host_->host_impl()->task_runner_provider();
     }
     const QuadList& quad_list() const { return render_pass_->quad_list; }
+    const SharedQuadStateList& shared_quad_state_list() const {
+      return render_pass_->shared_quad_state_list;
+    }
     scoped_refptr<AnimationTimeline> timeline() { return timeline_; }
     scoped_refptr<AnimationTimeline> timeline_impl() { return timeline_impl_; }
 
