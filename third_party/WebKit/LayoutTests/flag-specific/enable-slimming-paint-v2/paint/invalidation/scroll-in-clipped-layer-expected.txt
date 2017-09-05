@@ -22,15 +22,7 @@
   "objectPaintInvalidations": [
     {
       "object": "LayoutBlockFlow (positioned) DIV id='moveMe' class='absolute clipped'",
-      "reason": "subtree"
-    },
-    {
-      "object": "LayoutBlockFlow (relative positioned) DIV class='relative green'",
-      "reason": "subtree"
-    },
-    {
-      "object": "LayoutBlockFlow (positioned) DIV class='absolute red'",
-      "reason": "subtree"
+      "reason": "full"
     }
   ]
 }
