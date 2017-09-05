@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0299da11_65bc2f3c",
+        "filename": "extensions/browser/api/web_request/web_request_api_helpers.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1227,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-09-05T22:49:42Z",
+      "side": 1,
+      "message": "Private helper functions like this should go in an anonymous namespace at the top of the file, and adhere to the usual NamingStyle (initial capital).",
+      "revId": "fdce006155cbec858b45c201497b54aa71f9dfa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93ae5dce_6f46c297",
+        "filename": "extensions/browser/api/web_request/web_request_api_helpers.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1231,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-09-05T22:49:42Z",
+      "side": 1,
+      "message": "Nit: return nullptr;",
+      "revId": "fdce006155cbec858b45c201497b54aa71f9dfa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee7308b9_338faac6",
+        "filename": "extensions/browser/api/web_request/web_request_api_helpers.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-09-05T22:49:42Z",
+      "side": 1,
+      "message": "Nit: If possible, it might be better/more clear to the reader to declare\n\n  const net::X509Certificate\u0026 cert\n\nto let the reader know this call will not modify the |cert|.",
+      "revId": "fdce006155cbec858b45c201497b54aa71f9dfa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a759c07_5032e39e",
+        "filename": "extensions/browser/api/web_request/web_request_event_details.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-09-05T22:49:42Z",
+      "side": 1,
+      "message": "Nit: When the condition spans more than 1 line, I think it\u0027s more clear to put the body in { }.",
+      "revId": "fdce006155cbec858b45c201497b54aa71f9dfa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5633a44_ca601b11",
+        "filename": "extensions/browser/api/web_request/web_request_event_details.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-09-05T22:49:42Z",
+      "side": 1,
+      "message": "Note: |ssl_info| returns `const net::SSLInfo\u0026`, i.e. you are making a copy from that reference, which is unnecessary. So, declare |tls_info| as `const net::SSLInfo\u0026`, too.",
+      "revId": "fdce006155cbec858b45c201497b54aa71f9dfa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1435296_f2b658c1",
+        "filename": "extensions/browser/api/web_request/web_request_event_details.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-09-05T22:49:42Z",
+      "side": 1,
+      "message": "When the body spans \u003e 1 line, you definitely need { } for clarity.",
+      "revId": "fdce006155cbec858b45c201497b54aa71f9dfa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5363f49d_e6d30330",
+        "filename": "extensions/browser/api/web_request/web_request_event_details.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-09-05T22:49:42Z",
+      "side": 1,
+      "message": "same here. Also, nullptr.",
+      "revId": "fdce006155cbec858b45c201497b54aa71f9dfa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
