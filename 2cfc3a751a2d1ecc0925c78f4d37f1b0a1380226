@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5826d6c_9191fb06",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_context_menu.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-09-05T16:02:07Z",
+      "side": 1,
+      "message": "nit: const",
+      "range": {
+        "startLine": 105,
+        "startChar": 2,
+        "endLine": 105,
+        "endChar": 20
+      },
+      "revId": "2cfc3a751a2d1ecc0925c78f4d37f1b0a1380226",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db1bd653_fe8c5e2c",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_item.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-09-05T16:02:07Z",
+      "side": 1,
+      "message": "nit: in another file I can see different style:  display::Screen::GetScreen()-\u003e....\nIt would be beneficial to extract this code to separate helper something likeL\nint64_t GetAppListDisplayId() and use it inline.",
+      "range": {
+        "startLine": 51,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 46
+      },
+      "revId": "2cfc3a751a2d1ecc0925c78f4d37f1b0a1380226",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5c0624d_cd90f21a",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_launcher.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-09-05T16:02:07Z",
+      "side": 1,
+      "message": "nit: IIRC parameters by default are not allowed.",
+      "range": {
+        "startLine": 27,
+        "startChar": 16,
+        "endLine": 27,
+        "endChar": 64
+      },
+      "revId": "2cfc3a751a2d1ecc0925c78f4d37f1b0a1380226",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b472e5ac_abc20d80",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_launcher.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-09-05T16:02:07Z",
+      "side": 1,
+      "message": "nit: add comment or empty line to separate this.",
+      "range": {
+        "startLine": 51,
+        "startChar": 8,
+        "endLine": 51,
+        "endChar": 15
+      },
+      "revId": "2cfc3a751a2d1ecc0925c78f4d37f1b0a1380226",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f84ec8ec_aa499e9d",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-09-05T16:02:07Z",
+      "side": 1,
+      "message": "nit: you may use where it is required:\n\nif (display_id \u003d\u003d display::kInvalidDisplayId) {\n    screen \u003d ...\n    ...\n}",
+      "range": {
+        "startLine": 316,
+        "startChar": 8,
+        "endLine": 316,
+        "endChar": 14
+      },
+      "revId": "2cfc3a751a2d1ecc0925c78f4d37f1b0a1380226",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9ccd03e_4c4db94b",
+        "filename": "chrome/browser/ui/app_list/search/arc_app_result.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-09-05T16:02:07Z",
+      "side": 1,
+      "message": "nit: Yet another candidate to use helper: GetAppListDisplayId()",
+      "range": {
+        "startLine": 51,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 16
+      },
+      "revId": "2cfc3a751a2d1ecc0925c78f4d37f1b0a1380226",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
