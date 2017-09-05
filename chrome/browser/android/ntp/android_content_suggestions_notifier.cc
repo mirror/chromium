@@ -94,13 +94,6 @@ void AndroidContentSuggestionsNotifier::UnregisterChannel() {
   return Java_ContentSuggestionsNotifier_unregisterChannel(env);
 }
 
-static void RecordNotificationOptOut(JNIEnv* env,
-                                     const JavaParamRef<jclass>& class_object,
-                                     jint reason) {
-  RecordContentSuggestionsNotificationOptOut(
-      static_cast<ContentSuggestionsNotificationOptOut>(reason));
-}
-
 static void RecordNotificationAction(JNIEnv* env,
                                      const JavaParamRef<jclass>& class_object,
                                      jint action) {
@@ -169,6 +162,6 @@ static void ReceiveFlushedMetrics(JNIEnv* env,
   const bool is_enabled =
       ContentSuggestionsNotifier::ShouldSendNotifications(prefs);
   if (was_enabled && !is_enabled) {
-    RecordContentSuggestionsNotificationOptOut(CONTENT_SUGGESTIONS_IMPLICIT);
+    RecordContentSuggestionsNotificationAutoOptOut();
   }
 }
