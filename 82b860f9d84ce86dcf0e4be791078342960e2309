@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "caeffa3c_25c32578",
+        "filename": "content/browser/background_fetch/background_fetch_delegate.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-09-05T14:50:15Z",
+      "side": 1,
+      "message": "Yes. It\u0027s just a placeholder for when we actually implement it.",
+      "parentUuid": "06f1d05d_dd6dd6b1",
+      "range": {
+        "startLine": 49,
+        "startChar": 17,
+        "endLine": 49,
+        "endChar": 34
+      },
+      "revId": "82b860f9d84ce86dcf0e4be791078342960e2309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06339a6a_9f45b148",
         "filename": "content/browser/background_fetch/background_fetch_delegate_impl.h",
         "patchSetId": 12
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "da11e651_957c52c5",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-09-05T14:50:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06339a6a_9f45b148",
+      "range": {
+        "startLine": 20,
+        "startChar": 78,
+        "endLine": 20,
+        "endChar": 80
+      },
+      "revId": "82b860f9d84ce86dcf0e4be791078342960e2309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4232a06f_5515da33",
         "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
         "patchSetId": 12
@@ -68,6 +116,30 @@
       "revId": "82b860f9d84ce86dcf0e4be791078342960e2309",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "016dbc18_aff2660f",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-09-05T14:50:15Z",
+      "side": 1,
+      "message": "My inclination is to keep it as I find it makes it easier for me to understand the code. Let\u0027s shelve this for now and perhaps talk about it again when Peter\u0027s back.",
+      "parentUuid": "4232a06f_5515da33",
+      "range": {
+        "startLine": 22,
+        "startChar": 36,
+        "endLine": 22,
+        "endChar": 40
+      },
+      "revId": "82b860f9d84ce86dcf0e4be791078342960e2309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
