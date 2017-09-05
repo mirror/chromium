@@ -335,7 +335,15 @@ are exported to translation interchange files (e.g. XMB files), etc.
 
     formatter = GetFormatter(output_node.GetType())
     formatted = formatter(node, output_node.GetLanguage(), output_dir=base_dir)
-    outfile.writelines(formatted)
+    if output_node.GetType() == 'data_package':
+      formatted_data, info = formatted
+      if output_node.GetLanguage() == 'en':
+        import json
+        with open(output_node.GetOutputFilename() + '.info', 'w') as infofile:
+          json.dump(info, infofile, indent=4)
+      outfile.writelines(formatted_data)
+    else:
+      outfile.writelines(formatted)
 
 
   def Process(self):

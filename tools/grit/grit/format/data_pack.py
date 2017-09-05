@@ -40,6 +40,7 @@ DataPackContents = collections.namedtuple(
 def Format(root, lang='en', output_dir='.'):
   """Writes out the data pack file format (platform agnostic resource file)."""
   data = {}
+  info = {}
   for node in root.ActiveDescendants():
     with node:
       if isinstance(node, (include.IncludeNode, message.MessageNode,
@@ -47,7 +48,8 @@ def Format(root, lang='en', output_dir='.'):
         id, value = node.GetDataPackPair(lang, UTF8)
         if value is not None:
           data[id] = value
-  return WriteDataPackToString(data, UTF8)
+          info[id] = (node.attrs.get('name'), node.source)
+  return WriteDataPackToString(data, UTF8), info
 
 
 def ReadDataPack(input_file):
