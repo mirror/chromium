@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd4f80f1_030da11e",
+        "filename": "chrome/browser/chromeos/arc/arc_support_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-05T13:31:52Z",
+      "side": 1,
+      "message": "nit: LOG_IF(ERROR, !auth_delegate_) ...",
+      "revId": "21b4ced283732c328a3648aebc7f3141c87d86d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
