@@ -466,6 +466,7 @@ void ShelfLayoutManager::OnWindowActivated(ActivationReason reason,
 }
 
 void ShelfLayoutManager::OnKeyboardBoundsChanging(const gfx::Rect& new_bounds) {
+  return;
   bool keyboard_is_about_to_hide = false;
   if (new_bounds.IsEmpty() && !keyboard_bounds_.IsEmpty())
     keyboard_is_about_to_hide = true;
