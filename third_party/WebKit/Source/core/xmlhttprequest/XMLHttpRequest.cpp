@@ -262,26 +262,30 @@ class XMLHttpRequest::BlobLoader final
 XMLHttpRequest* XMLHttpRequest::Create(ScriptState* script_state) {
   ExecutionContext* context = ExecutionContext::From(script_state);
   DOMWrapperWorld& world = script_state->World();
-  if (!world.IsIsolatedWorld())
-    return Create(context);
+  v8::Isolate* isolate = script_state->GetIsolate();
 
   XMLHttpRequest* xml_http_request =
-      new XMLHttpRequest(context, true, world.IsolatedWorldSecurityOrigin());
+      world.IsIsolatedWorld()
+          ? new XMLHttpRequest(context, isolate, true,
+                               world.IsolatedWorldSecurityOrigin())
+          : new XMLHttpRequest(context, isolate, false, nullptr);
   xml_http_request->SuspendIfNeeded();
-
   return xml_http_request;
 }
 
 XMLHttpRequest* XMLHttpRequest::Create(ExecutionContext* context) {
-  XMLHttpRequest* xml_http_request =
-      new XMLHttpRequest(context, false, nullptr);
-  xml_http_request->SuspendIfNeeded();
+  v8::Isolate* isolate = v8::Isolate::GetCurrent();
+  CHECK(isolate);
 
+  XMLHttpRequest* xml_http_request =
+      new XMLHttpRequest(context, isolate, false, nullptr);
+  xml_http_request->SuspendIfNeeded();
   return xml_http_request;
 }
 
 XMLHttpRequest::XMLHttpRequest(
     ExecutionContext* context,
+    v8::Isolate* isolate,
     bool is_isolated_world,
     RefPtr<SecurityOrigin> isolated_world_security_origin)
     : SuspendableObject(context),
@@ -293,6 +297,7 @@ XMLHttpRequest::XMLHttpRequest(
       progress_event_throttle_(
           XMLHttpRequestProgressEventThrottle::Create(this)),
       response_type_code_(kResponseTypeDefault),
+      isolate_(isolate),
       is_isolated_world_(is_isolated_world),
       isolated_world_security_origin_(
           std::move(isolated_world_security_origin)),
@@ -309,7 +314,10 @@ XMLHttpRequest::XMLHttpRequest(
       send_flag_(false),
       response_array_buffer_failure_(false) {}
 
-XMLHttpRequest::~XMLHttpRequest() {}
+XMLHttpRequest::~XMLHttpRequest() {
+  binary_response_builder_.Clear();
+  ReportMemoryUsageToV8();
+}
 
 Document* XMLHttpRequest::GetDocument() const {
   DCHECK(GetExecutionContext()->IsDocument());
@@ -434,6 +442,7 @@ Blob* XMLHttpRequest::ResponseBlob() {
         blob_data->SetContentType(
             FinalResponseMIMETypeWithFallback().LowerASCII());
         binary_response_builder_.Clear();
+        ReportMemoryUsageToV8();
       }
       response_blob_ =
           Blob::Create(BlobDataHandle::Create(std::move(blob_data), size));
@@ -463,6 +472,7 @@ DOMArrayBuffer* XMLHttpRequest::ResponseArrayBuffer() {
       // of the 'received bytes' payload when the response buffer allocation
       // fails.
       binary_response_builder_.Clear();
+      ReportMemoryUsageToV8();
       // Mark allocation as failed; subsequent calls to the accessor must
       // continue to report |null|.
       //
@@ -1236,6 +1246,8 @@ void XMLHttpRequest::ClearResponse() {
   binary_response_builder_.Clear();
   response_array_buffer_.Clear();
   response_array_buffer_failure_ = false;
+
+  ReportMemoryUsageToV8();
 }
 
 void XMLHttpRequest::ClearRequest() {
@@ -1819,6 +1831,7 @@ void XMLHttpRequest::DidReceiveData(const char* data, unsigned len) {
     if (!binary_response_builder_)
       binary_response_builder_ = SharedBuffer::Create();
     binary_response_builder_->Append(data, len);
+    ReportMemoryUsageToV8();
   }
 
   if (blob_loader_) {
@@ -1900,6 +1913,15 @@ const AtomicString& XMLHttpRequest::InterfaceName() const {
 
 ExecutionContext* XMLHttpRequest::GetExecutionContext() const {
   return SuspendableObject::GetExecutionContext();
+}
+
+void XMLHttpRequest::ReportMemoryUsageToV8() {
+  size_t size = binary_response_builder_ ? binary_response_builder_->size() : 0;
+  int64_t diff =
+      static_cast<int64_t>(size) -
+      static_cast<int64_t>(binary_response_builder_last_reported_size_);
+  binary_response_builder_last_reported_size_ = size;
+  isolate_->AdjustAmountOfExternalAllocatedMemory(diff);
 }
 
 DEFINE_TRACE(XMLHttpRequest) {
