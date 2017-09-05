@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b341950e_4a332806",
+        "filename": "chrome/browser/chromeos/printing/usb_printer_detector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-09-05T22:56:27Z",
+      "side": 1,
+      "message": "Does it make sense for this to run during CupsPrintManager construction now that CupsPrintManger owns it?",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 5
+      },
+      "revId": "9bf29c4aa0492c347734298c85dbf79023a0be9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ec8406b_9eae8762",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1141,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-09-05T22:56:27Z",
+      "side": 1,
+      "message": "This seems unrelated to the rest of the CL.",
+      "range": {
+        "startLine": 1141,
+        "startChar": 1,
+        "endLine": 1141,
+        "endChar": 21
+      },
+      "revId": "9bf29c4aa0492c347734298c85dbf79023a0be9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
