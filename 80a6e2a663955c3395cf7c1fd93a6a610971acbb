@@ -51,6 +51,24 @@
       "revId": "80a6e2a663955c3395cf7c1fd93a6a610971acbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c651df8_35a48315",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1116,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-09-05T19:48:19Z",
+      "side": 1,
+      "message": "I think it makes more sense to log it on Show (here or by making the histogram parameter part of toggle and show), instead of on drag completion.",
+      "parentUuid": "f9f76647_fbcdcd8c",
+      "revId": "80a6e2a663955c3395cf7c1fd93a6a610971acbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
