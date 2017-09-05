@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06ee3847_f4cb03c2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-09-05T05:56:51Z",
+      "side": 1,
+      "message": "nit: Can you please explain what an alias is in this context?",
+      "revId": "d5513881609dc573cb7e50d7e5373fa5e77e62f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "762ec042_90ebf4f6",
+        "filename": "third_party/WebKit/Source/build/scripts/json5_generator.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-09-05T05:56:51Z",
+      "side": 1,
+      "message": "nit: Lines too long. Use brackets or backslashes to split it up.",
+      "revId": "d5513881609dc573cb7e50d7e5373fa5e77e62f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0693bfa6_851d73bb",
+        "filename": "third_party/WebKit/Source/build/scripts/json5_generator.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-09-05T05:56:51Z",
+      "side": 1,
+      "message": "nit: line too long also, same below.",
+      "revId": "d5513881609dc573cb7e50d7e5373fa5e77e62f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d5e26a0_864bca02",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-09-05T05:56:51Z",
+      "side": 1,
+      "message": "nit: s/Alis/Alias",
+      "revId": "d5513881609dc573cb7e50d7e5373fa5e77e62f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
