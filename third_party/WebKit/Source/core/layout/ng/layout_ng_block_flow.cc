@@ -121,15 +121,6 @@ void LayoutNGBlockFlow::UpdateMargins(
   SetMarginEnd(margins.inline_end);
 }
 
-NGInlineNodeData* LayoutNGBlockFlow::GetNGInlineNodeData() const {
-  DCHECK(ng_inline_node_data_);
-  return ng_inline_node_data_.get();
-}
-
-void LayoutNGBlockFlow::ResetNGInlineNodeData() {
-  ng_inline_node_data_ = WTF::MakeUnique<NGInlineNodeData>();
-}
-
 LayoutUnit LayoutNGBlockFlow::FirstLineBoxBaseline() const {
   // TODO(kojii): Implement. This will stop working once we stop creating line
   // boxes.
@@ -143,17 +134,126 @@ LayoutUnit LayoutNGBlockFlow::InlineBlockBaseline(
   return LayoutBlockFlow::InlineBlockBaseline(line_direction);
 }
 
-RefPtr<NGLayoutResult> LayoutNGBlockFlow::CachedLayoutResult(
+void LayoutNGBlockFlow::PaintObject(const PaintInfo& paint_info,
+                                    const LayoutPoint& paint_offset) const {
+  // TODO(eae): This logic should go in Paint instead and it should drive the
+  // full paint logic for LayoutNGBlockFlow.
+  if (RuntimeEnabledFeatures::LayoutNGPaintFragmentsEnabled())
+    NGBlockFlowPainter(*this).PaintContents(paint_info, paint_offset);
+  else
+    LayoutBlockFlow::PaintObject(paint_info, paint_offset);
+}
+
+LayoutNGTableCell::LayoutNGTableCell(Element* element)
+    : LayoutTableCell(element) {}
+
+LayoutNGTableCell::~LayoutNGTableCell() {}
+
+bool LayoutNGTableCell::IsOfType(LayoutObjectType type) const {
+  return type == kLayoutObjectNGTableCell || LayoutTableCell::IsOfType(type);
+}
+
+void LayoutNGTableCell::UpdateBlockLayout(bool relayout_children) {
+  LayoutAnalyzer::BlockScope analyzer(*this);
+
+  Optional<LayoutUnit> override_logical_width;
+  Optional<LayoutUnit> override_logical_height;
+
+  override_logical_width = LogicalWidth() - BorderAndPaddingLogicalWidth();
+
+  RefPtr<NGConstraintSpace> constraint_space =
+      NGConstraintSpace::CreateFromLayoutObject(*this, override_logical_width,
+                                                override_logical_height);
+
+  RefPtr<NGLayoutResult> result = NGBlockNode(this).Layout(*constraint_space);
+
+  // We need to update our margins as these are calculated once and stored in
+  // LayoutBox::margin_box_outsets_. Typically this happens within
+  // UpdateLogicalWidth and UpdateLogicalHeight.
+  //
+  // This primarily fixes cases where we are embedded inside another layout,
+  // for example LayoutView, LayoutFlexibleBox, etc.
+  UpdateMargins(*constraint_space);
+
+  for (NGOutOfFlowPositionedDescendant descendant :
+       result->OutOfFlowPositionedDescendants())
+    descendant.node.UseOldOutOfFlowPositioning();
+
+  NGPhysicalBoxFragment* fragment =
+      ToNGPhysicalBoxFragment(result->PhysicalFragment().Get());
+
+  // This object has already been positioned in legacy layout by our containing
+  // block. Copy the position and place the fragment.
+  const LayoutBlock* containing_block = ContainingBlock();
+  NGPhysicalOffset physical_offset;
+  if (containing_block) {
+    NGPhysicalSize containing_block_size(containing_block->Size().Width(),
+                                         containing_block->Size().Height());
+    NGLogicalOffset logical_offset(LogicalLeft(), LogicalTop());
+    physical_offset = logical_offset.ConvertToPhysical(
+        constraint_space->WritingMode(), constraint_space->Direction(),
+        containing_block_size, fragment->Size());
+  }
+  fragment->SetOffset(physical_offset);
+
+  physical_root_fragment_ = fragment;
+}
+
+void LayoutNGTableCell::UpdateMargins(
+    const NGConstraintSpace& constraint_space) {
+  NGBoxStrut margins =
+      ComputeMargins(constraint_space, StyleRef(),
+                     constraint_space.WritingMode(), StyleRef().Direction());
+  SetMarginBefore(margins.block_start);
+  SetMarginAfter(margins.block_end);
+  SetMarginStart(margins.inline_start);
+  SetMarginEnd(margins.inline_end);
+}
+
+LayoutUnit LayoutNGTableCell::FirstLineBoxBaseline() const {
+  // TODO(kojii): Implement. This will stop working once we stop creating line
+  // boxes.
+  return LayoutTableCell::FirstLineBoxBaseline();
+}
+
+LayoutUnit LayoutNGTableCell::InlineBlockBaseline(
+    LineDirectionMode line_direction) const {
+  // TODO(kojii): Implement. This will stop working once we stop creating line
+  // boxes.
+  return LayoutTableCell::InlineBlockBaseline(line_direction);
+}
+
+void LayoutNGTableCell::PaintObject(const PaintInfo& paint_info,
+                                    const LayoutPoint& paint_offset) const {
+  // TODO(eae): This logic should go in Paint instead and it should drive the
+  // full paint logic for LayoutNGBlockFlow.
+  if (RuntimeEnabledFeatures::LayoutNGPaintFragmentsEnabled())
+    NGBlockFlowPainter(*this).PaintContents(paint_info, paint_offset);
+  else
+    LayoutTableCell::PaintObject(paint_info, paint_offset);
+}
+
+NGInlineNodeData* LayoutNGData::GetNGInlineNodeData() const {
+  DCHECK(ng_inline_node_data_);
+  return ng_inline_node_data_.get();
+}
+
+void LayoutNGData::ResetNGInlineNodeData() {
+  ng_inline_node_data_ = WTF::MakeUnique<NGInlineNodeData>();
+}
+
+RefPtr<NGLayoutResult> LayoutNGData::CachedLayoutResult(
+    LayoutBox* box,
     const NGConstraintSpace& constraint_space,
     NGBreakToken* break_token) const {
-  if (!cached_result_ || break_token || NeedsLayout())
+  if (!cached_result_ || break_token || box->NeedsLayout())
     return nullptr;
   if (constraint_space != *cached_constraint_space_)
     return nullptr;
   return cached_result_->CloneWithoutOffset();
 }
 
-void LayoutNGBlockFlow::SetCachedLayoutResult(
+void LayoutNGData::SetCachedLayoutResult(
     const NGConstraintSpace& constraint_space,
     NGBreakToken* break_token,
     RefPtr<NGLayoutResult> layout_result) {
@@ -168,16 +268,6 @@ void LayoutNGBlockFlow::SetCachedLayoutResult(
 
   cached_constraint_space_ = &constraint_space;
   cached_result_ = layout_result;
-}
-
-void LayoutNGBlockFlow::PaintObject(const PaintInfo& paint_info,
-                                    const LayoutPoint& paint_offset) const {
-  // TODO(eae): This logic should go in Paint instead and it should drive the
-  // full paint logic for LayoutNGBlockFlow.
-  if (RuntimeEnabledFeatures::LayoutNGPaintFragmentsEnabled())
-    NGBlockFlowPainter(*this).PaintContents(paint_info, paint_offset);
-  else
-    LayoutBlockFlow::PaintObject(paint_info, paint_offset);
 }
 
 }  // namespace blink
