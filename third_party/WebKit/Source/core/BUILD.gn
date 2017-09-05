@@ -1341,6 +1341,7 @@ jumbo_source_set("unit_tests") {
     "dom/DOMImplementationTest.cpp",
     "dom/DocumentStatisticsCollectorTest.cpp",
     "dom/DocumentTest.cpp",
+    "dom/DynamicModuleResolverTest.cpp",
     "dom/ElementTest.cpp",
     "dom/ElementVisibilityObserverTest.cpp",
     "dom/FirstLetterPseudoElementTest.cpp",
