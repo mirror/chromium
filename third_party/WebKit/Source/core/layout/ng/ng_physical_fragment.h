@@ -10,7 +10,11 @@
 #include "core/layout/ng/geometry/ng_physical_size.h"
 #include "core/layout/ng/ng_break_token.h"
 #include "core/loader/resource/ImageResourceObserver.h"
+#include "core/style/ComputedStyle.h"
+#include "platform/LayoutUnit.h"
+#include "platform/geometry/LayoutRect.h"
 #include "platform/graphics/paint/DisplayItemClient.h"
+#include "platform/heap/Handle.h"
 #include "platform/wtf/RefPtr.h"
 
 namespace blink {
@@ -87,10 +91,14 @@ class CORE_EXPORT NGPhysicalFragment : public RefCounted<NGPhysicalFragment>,
 
   // TODO(layout-dev): Implement when we have oveflow support.
   bool HasOverflowClip() const { return false; }
-  LayoutRect VisualRect() const {
-    return LayoutRect(LayoutPoint(), LayoutSize(Size().width, Size().height));
-  }
+  LayoutRect VisualRect() const { return visual_rect_; }
   LayoutRect VisualOverflowRect() const { return VisualRect(); }
+
+  // Update visual rect for this fragment.
+  // This is called not only after layout, but also after transform changes,
+  // because visual overflow may change due to font hinting.
+  // "const" because it only updates cached value that does not affect layout.
+  virtual void UpdateVisualRect() const;
 
   // Should only be used by the parent fragment's layout.
   void SetOffset(NGPhysicalOffset offset) {
@@ -123,11 +131,15 @@ class CORE_EXPORT NGPhysicalFragment : public RefCounted<NGPhysicalFragment>,
                      NGFragmentType type,
                      RefPtr<NGBreakToken> break_token = nullptr);
 
+  // "const" because it only updates cached value that does not affect layout.
+  void SetVisualRect(const LayoutRect& rect) const { visual_rect_ = rect; }
+
   LayoutObject* layout_object_;
   RefPtr<const ComputedStyle> style_;
   NGPhysicalSize size_;
   NGPhysicalOffset offset_;
   RefPtr<NGBreakToken> break_token_;
+  mutable LayoutRect visual_rect_;
 
   unsigned type_ : 2;  // NGFragmentType
   unsigned is_placed_ : 1;
