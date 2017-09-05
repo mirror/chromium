@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4c8776b8_3968520f",
+        "filename": "cc/paint/paint_image.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-05T16:45:46Z",
+      "side": 1,
+      "message": "Right, that\u0027s what is what the intent is (same in the else case)",
+      "parentUuid": "8e31349a_8fd39adc",
+      "revId": "57086f006ab53a2c68eec3ce8429ae82778be4ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fdc2c9f5_8f7b01aa",
         "filename": "cc/paint/paint_image.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-02T23:08:38Z",
       "side": 1,
       "message": "IICTUC (that\u0027s \"continue to understand correctly\"), the *info for readPixels should not have a makeColorSpace applied to it. It happens to do nothing, but the type of color conversion that would be done is, I think, not the desired one.\n\nAnd I also think that the n32info argument to installPixels can avoid having a color space.",
+      "revId": "57086f006ab53a2c68eec3ce8429ae82778be4ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4746c26a_26a39000",
+        "filename": "cc/paint/paint_image.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-05T16:45:46Z",
+      "side": 1,
+      "message": "Thanks for clarifying what IICTUC is :P\n\nSo are you saying that we should in both these lines an info that doesn\u0027t have a color space applied? FWIW, this is the case where color type !\u003d N32, so I\u0027m not even sure what color space application means here, since we\u0027re essentially converting to a wide gamut color space and then converting to RGBA_4444? Should we just DCHECK that there is no color space at this point?",
+      "parentUuid": "fdc2c9f5_8f7b01aa",
       "revId": "57086f006ab53a2c68eec3ce8429ae82778be4ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "03210f2f_29014157",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageFrameGenerator.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-05T16:45:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3c0d792_e6e3d2ec",
+      "revId": "57086f006ab53a2c68eec3ce8429ae82778be4ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3379ed6_da7c12dc",
         "filename": "third_party/WebKit/Source/platform/image-decoders/ImageDecoder.cpp",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "57086f006ab53a2c68eec3ce8429ae82778be4ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b57de23f_3035606e",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/ImageDecoder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-05T16:45:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3379ed6_da7c12dc",
+      "revId": "57086f006ab53a2c68eec3ce8429ae82778be4ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
