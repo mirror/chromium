@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "39585862_f05f72a5",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-09-05T11:56:57Z",
+      "side": 1,
+      "message": "touche.\n\nIIRC, the primary reason for limiting the other ids to 100 was to not make all requests for the next 3 days more expensive, just because somebody dismissed a lot of cards.\nGiven that this list is only kept in memory, the expected duration should be much smaller.",
+      "parentUuid": "2490be2d_0b3930ac",
+      "range": {
+        "startLine": 317,
+        "startChar": 31,
+        "endLine": 317,
+        "endChar": 0
+      },
+      "revId": "ea027a96e30d2d60551c4de4f86a90e566b17c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "206a7da2_4d8b868e",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 2
