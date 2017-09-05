@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d54a8b3_fd707f90",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-05T09:34:57Z",
+      "side": 1,
+      "message": "nit: remove a trailing whitespace",
+      "revId": "1dde0bb4bd367ee86c1f5c4774b2598bf75cb059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06a7945f_b0c4c930",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-05T09:34:57Z",
+      "side": 1,
+      "message": "nit: remove a trailing whitespace",
+      "revId": "1dde0bb4bd367ee86c1f5c4774b2598bf75cb059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9b56814_67ae230f",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-05T09:34:57Z",
+      "side": 1,
+      "message": "nit: s/selectionstate/SelectionState/",
+      "revId": "1dde0bb4bd367ee86c1f5c4774b2598bf75cb059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c1b8845_04b5d21f",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-05T09:34:57Z",
+      "side": 1,
+      "message": "nit: s/FIXME/TODO(editing-dev)/",
+      "revId": "1dde0bb4bd367ee86c1f5c4774b2598bf75cb059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c907fcb_7f05aa46",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-05T09:34:57Z",
+      "side": 1,
+      "message": "nit: s/DCHECK()/DCHECK_EQ()/",
+      "revId": "1dde0bb4bd367ee86c1f5c4774b2598bf75cb059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92c5728d_d0f70edb",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-05T09:34:57Z",
+      "side": 1,
+      "message": "nit: s/DCHECK()/DCHECK_EQ()/",
+      "revId": "1dde0bb4bd367ee86c1f5c4774b2598bf75cb059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71f69bf0_597af87c",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-05T09:34:57Z",
+      "side": 1,
+      "message": "nit: s/DCHECK()/DCHECK_EQ()/",
+      "revId": "1dde0bb4bd367ee86c1f5c4774b2598bf75cb059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
