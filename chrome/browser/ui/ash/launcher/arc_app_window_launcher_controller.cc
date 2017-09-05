@@ -293,7 +293,8 @@ void ArcAppWindowLauncherController::AttachControllerToWindowIfNeeded(
   if (GetAppWindowForTask(task_id))
     return;
 
-  window->SetProperty<int>(ash::kShelfItemTypeKey, ash::TYPE_APP);
+  // TODO(msw): This shouldn't be necessary now (I hope)... (multi-user switching?) 
+  // window->SetProperty<int>(ash::kShelfItemTypeKey, ash::TYPE_APP); 
   window->SetProperty(aura::client::kAppType,
                       static_cast<int>(ash::AppType::ARC_APP));
 
