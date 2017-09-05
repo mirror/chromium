@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a803adc6_a646b17d",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/device/gattserverdisconnected-event/disconnected_gc.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-09-05T23:44:32Z",
+      "side": 1,
+      "message": "The intent of the test is to run GC before the disconnect has been processed. I think delete lines 17-19 (moving 19 comment to 14).",
+      "revId": "c4ad7d283d69541e9e1c0538138d065c51099d3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69540418_0742599c",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/device/gattserverdisconnected-event/one-event-per-disconnection.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-09-05T23:44:32Z",
+      "side": 1,
+      "message": "remove log",
+      "range": {
+        "startLine": 18,
+        "startChar": 61,
+        "endLine": 18,
+        "endChar": 79
+      },
+      "revId": "c4ad7d283d69541e9e1c0538138d065c51099d3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "873ab7f3_d8da3632",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/device/gattserverdisconnected-event/one-event-per-disconnection.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-09-05T23:44:32Z",
+      "side": 1,
+      "message": "add the eventPromise() line to these promises as well. As written it\u0027s not certain that the disconnect will occur before the timeout and the assert that follows. It\u0027s OK to have an event handler to count, and one to generate a promise.",
+      "revId": "c4ad7d283d69541e9e1c0538138d065c51099d3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
