@@ -196,10 +196,6 @@ class FaviconHandler {
     gfx::Image image;
   };
 
-  // Returns the bit mask of favicon_base::IconType based on the handler's type.
-  static int GetIconTypesFromHandlerType(
-      FaviconDriverObserver::NotificationIconType handler_type);
-
   // Called with the result of looking up cached icon data for the manifest's
   // URL, which is used as icon URL.
   void OnFaviconDataForManifestFromFaviconService(

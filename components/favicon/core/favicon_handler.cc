@@ -154,6 +154,37 @@ bool FaviconURLEquals(const FaviconURL& lhs, const FaviconURL& rhs) {
          lhs.icon_sizes == rhs.icon_sizes;
 }
 
+// Returns the bit mask of favicon_base::IconType based on the handler's type.
+int GetIconTypesFromHandlerType(
+    FaviconDriverObserver::NotificationIconType handler_type) {
+  // The grouping below should be kept in sync with the analogous in
+  // HistoryBackend::SetFaviconMappingsForPage().
+  switch (handler_type) {
+    case FaviconDriverObserver::NON_TOUCH_16_DIP:
+    case FaviconDriverObserver::NON_TOUCH_LARGEST:
+      return favicon_base::FAVICON;
+    case FaviconDriverObserver::TOUCH_LARGEST:
+      return favicon_base::TOUCH_ICON | favicon_base::TOUCH_PRECOMPOSED_ICON |
+             favicon_base::WEB_MANIFEST_ICON;
+  }
+  return 0;
+}
+
+// Returns one of the icon types handled by the handler's type, used to delete
+// mappings (HistoryBackend knows about the equivalences so it doesn't matter
+// which one is used).
+favicon_base::IconType GetOneArbitraryIconTypeFromHandlerType(
+    FaviconDriverObserver::NotificationIconType handler_type) {
+  switch (handler_type) {
+    case FaviconDriverObserver::NON_TOUCH_16_DIP:
+    case FaviconDriverObserver::NON_TOUCH_LARGEST:
+      return favicon_base::FAVICON;
+    case FaviconDriverObserver::TOUCH_LARGEST:
+      return favicon_base::TOUCH_ICON;
+  }
+  return favicon_base::INVALID_ICON;
+}
+
 }  // namespace
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -185,7 +216,7 @@ FaviconHandler::FaviconHandler(
       got_favicon_from_history_(false),
       initial_history_result_expired_or_incomplete_(false),
       redownload_icons_(false),
-      icon_types_(FaviconHandler::GetIconTypesFromHandlerType(handler_type)),
+      icon_types_(GetIconTypesFromHandlerType(handler_type)),
       download_largest_icon_(
           handler_type == FaviconDriverObserver::NON_TOUCH_LARGEST ||
           handler_type == FaviconDriverObserver::TOUCH_LARGEST),
@@ -199,20 +230,6 @@ FaviconHandler::FaviconHandler(
 }
 
 FaviconHandler::~FaviconHandler() {
-}
-
-// static
-int FaviconHandler::GetIconTypesFromHandlerType(
-    FaviconDriverObserver::NotificationIconType handler_type) {
-  switch (handler_type) {
-    case FaviconDriverObserver::NON_TOUCH_16_DIP:
-    case FaviconDriverObserver::NON_TOUCH_LARGEST:
-      return favicon_base::FAVICON;
-    case FaviconDriverObserver::TOUCH_LARGEST:
-      return favicon_base::TOUCH_ICON | favicon_base::TOUCH_PRECOMPOSED_ICON |
-             favicon_base::WEB_MANIFEST_ICON;
-  }
-  return 0;
 }
 
 void FaviconHandler::FetchFavicon(const GURL& page_url, bool is_same_document) {
@@ -343,7 +360,8 @@ void FaviconHandler::OnUpdateCandidates(
 
   // |candidates| or |manifest_url| could have been modified via Javascript. If
   // neither changed, ignore the call.
-  if ((!manifests_feature_enabled || manifest_url_ == manifest_url) &&
+  if (candidates_received_ &&
+      (!manifests_feature_enabled || manifest_url_ == manifest_url) &&
       (non_manifest_original_candidates_.size() == candidates.size() &&
        std::equal(candidates.begin(), candidates.end(),
                   non_manifest_original_candidates_.begin(),
@@ -456,10 +474,13 @@ void FaviconHandler::OnGotFinalIconURLCandidates(
 
   candidates_ = std::move(sorted_candidates);
 
-  // TODO(davemoore) Should clear on empty url. Currently we ignore it.
-  // This appears to be what FF does as well.
-  if (current_candidate() && got_favicon_from_history_)
+  if (candidates_.empty()) {
+    if (!delegate_->IsOffTheRecord())
+      service_->DeleteFaviconMappings(
+          page_urls_, GetOneArbitraryIconTypeFromHandlerType(handler_type_));
+  } else if (got_favicon_from_history_) {
     OnGotInitialHistoryDataAndIconURLCandidates();
+  }
 }
 
 // static
