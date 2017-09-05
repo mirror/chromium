@@ -35,15 +35,15 @@ class PrefetchDownloaderImpl : public PrefetchDownloader {
 
   // PrefetchDownloader implementation:
   void SetPrefetchService(PrefetchService* service) override;
+  bool IsDownloadServiceReady() const override;
+  void CleanupDownloadsWhenReady() override;
   void StartDownload(const std::string& download_id,
                      const std::string& download_location) override;
-  void CancelDownload(const std::string& download_id) override;
   void OnDownloadServiceReady(
       const std::set<std::string>& outstanding_download_ids,
       const std::map<std::string, std::pair<base::FilePath, int64_t>>&
           success_downloads) override;
   void OnDownloadServiceUnavailable() override;
-  void OnDownloadServiceShutdown() override;
   void OnDownloadSucceeded(const std::string& download_id,
                            const base::FilePath& file_path,
                            int64_t file_size) override;
@@ -59,6 +59,11 @@ class PrefetchDownloaderImpl : public PrefetchDownloader {
   void OnStartDownload(const std::string& download_id,
                        download::DownloadParams::StartResult result);
 
+  void CleanupDownloads(
+      const std::set<std::string>& outstanding_download_ids,
+      const std::map<std::string, std::pair<base::FilePath, int64_t>>&
+          success_downloads);
+
   // Unowned. It is valid until |this| instance is disposed.
   download::DownloadService* download_service_;
 
@@ -68,16 +73,13 @@ class PrefetchDownloaderImpl : public PrefetchDownloader {
   version_info::Channel channel_;
 
   // Flag to indicate if the download service is ready to take downloads.
-  bool service_started_ = false;
+  bool download_service_started_ = false;
 
-  // TODO(jianli): Investigate making PrefetchService waits for DownloadService
-  // ready in order to avoid queueing.
-  // List of downloads pending to start after the download service starts. Each
-  // item is a pair of download id and download location.
-  std::vector<std::pair<std::string, std::string>> pending_downloads_;
-  // List of ids of downloads waiting to be cancelled after the download service
-  // starts.
-  std::vector<std::string> pending_cancellations_;
+  // Flag to indicate that the download cleanup should be delayed.
+  bool need_to_delay_download_cleanup_ = true;
+
+  std::set<std::string> outstanding_download_ids_;
+  std::map<std::string, std::pair<base::FilePath, int64_t>> success_downloads_;
 
   base::WeakPtrFactory<PrefetchDownloaderImpl> weak_ptr_factory_;
 
