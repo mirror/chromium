@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85c5eb42_2d85592e",
+        "filename": "chrome/browser/ui/cocoa/omnibox/omnibox_popup_view_mac.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-05T20:49:24Z",
+      "side": 1,
+      "message": "The original code returned an autoreleased object, so returned an owned copy here is probably a leak.  Using ToNSImage() instead should work.",
+      "range": {
+        "startLine": 353,
+        "startChar": 56,
+        "endLine": 353,
+        "endChar": 67
+      },
+      "revId": "1d817328eb5bcdee2693f44718681690bdc901bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
