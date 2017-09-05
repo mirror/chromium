@@ -6,12 +6,17 @@ module video_capture.mojom;
 
 import "services/video_capture/public/interfaces/device_factory.mojom";
 
+// Callback interface for receiving log messages.
+interface LogHandler {
+  OnLog(string message);
+};
+
 // Entry point to the Video Capture Service API.
 // The factory provides access to the capture devices connected to the system.
 // By using command-line switches, it is possible to replace this with a "fake"
 // factory, which provides access to fake devices that generates test frames.
 interface DeviceFactoryProvider  {
-  ConnectToDeviceFactory(DeviceFactory& request);
+  ConnectToDeviceFactory(LogHandler log_handler, DeviceFactory& request);
 
   // The service shuts down after a certain delay when no client is connected.
   // This method allows clients to customize this delay.
