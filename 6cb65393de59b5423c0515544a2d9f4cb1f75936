@@ -145,6 +145,24 @@
       "revId": "6cb65393de59b5423c0515544a2d9f4cb1f75936",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc91b9b3_cf553e0f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 810,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-05T17:03:44Z",
+      "side": 1,
+      "message": "\"Is it because of the new code path make this checking not necessary\": Kind of. That check was redundant because we only go through this code path for trusted daydream intents, and we control which activity to open when we get a trusted Daydream intent.",
+      "parentUuid": "b314cb24_f1ec4ade",
+      "revId": "6cb65393de59b5423c0515544a2d9f4cb1f75936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
