@@ -87,6 +87,30 @@
       "revId": "07946d9bcee4dfab89058515c912ffb9eb73da3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "013caba9_000b6eb7",
+        "filename": "third_party/WebKit/Source/core/dom/TaskRunnerHelper.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-09-05T17:53:46Z",
+      "side": 1,
+      "message": "IsNullExecutionContextForTesting is what I was thinking, and I agree it may be overkill. It\u0027s a question of how futureproof we want to be, because right how, we only have the three subclasses explicitly mentioned here (Document, WorkerOrWorkletGlobalScope, NullExecutionContext). But if a new subclass were added (and I don\u0027t know how likely that is), this code would silently fall back to the default task runner for that ExecutionContext, and that\u0027s not great.\n\nI guess it would be zero overheard in release builds to DCHECK IsNullExecutionContextForTesting, so that\u0027s at least not a barrier if we want to go that route.",
+      "parentUuid": "cfdd1796_cf43515e",
+      "range": {
+        "startLine": 90,
+        "startChar": 22,
+        "endLine": 90,
+        "endChar": 28
+      },
+      "revId": "07946d9bcee4dfab89058515c912ffb9eb73da3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
