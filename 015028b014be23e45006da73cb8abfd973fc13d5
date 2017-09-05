@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c74470c_931bd313",
+        "filename": "components/network_error_logging/BUILD.gn",
+        "patchSetId": 11
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-09-05T17:19:06Z",
+      "side": 1,
+      "message": "What about adding a simple test that just creates an instance of the class?",
+      "revId": "015028b014be23e45006da73cb8abfd973fc13d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
