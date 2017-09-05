@@ -117,6 +117,30 @@
       "revId": "479d7c77629e38afbb51b20d080608dad6af5188",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e6d6a19d_da6c630e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SingleWebsitePreferences.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-09-05T18:12:54Z",
+      "side": 1,
+      "message": "Hmmm I\u0027ve had a bit more of a look at this to see when mSite and the preference could *actually* be null, and while I think in practice mSite should never be null when the preference screen is null, because of the order in which they are initialized in \u0027onWebsitePermissionsAvailable\u0027, I\u0027m also starting to get worried we could end up with a race condition if my code calls displaySitePermissions at the same time as the code in \u0027onWebsitePermissionsAvailable\u0027 calls displaySitePermissions, since onWebsitePermissionsAvailable is called asynchronously. (They could try to remove the same pref twice or something and crash..). \n\nI\u0027m also thinking we probably should also persist mSite to the bundle in onSaveInstanceState in the case where it was populated from the origin, wdyt? That would actually help with the race condition issue too, because it wouldn\u0027t have to go get the permissions asynchronously again.",
+      "parentUuid": "ad1bf442_4af66740",
+      "range": {
+        "startLine": 423,
+        "startChar": 51,
+        "endLine": 423,
+        "endChar": 56
+      },
+      "revId": "479d7c77629e38afbb51b20d080608dad6af5188",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
