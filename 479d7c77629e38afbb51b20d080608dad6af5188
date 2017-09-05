@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a0105dab_784fe507",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SingleWebsitePreferences.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-09-05T15:40:32Z",
+      "side": 1,
+      "message": "Yeah - it\u0027s Android\u0027s activity and there\u0027s no documentation saying it will give us a useful result code so we should just update regardless.",
+      "parentUuid": "9d176911_e684f65a",
+      "range": {
+        "startLine": 420,
+        "startChar": 25,
+        "endLine": 420,
+        "endChar": 26
+      },
+      "revId": "479d7c77629e38afbb51b20d080608dad6af5188",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e0736d5_f7bae5df",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SingleWebsitePreferences.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "479d7c77629e38afbb51b20d080608dad6af5188",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33003938_4de2c3f3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SingleWebsitePreferences.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-09-05T15:40:32Z",
+      "side": 1,
+      "message": "If the activity is killed in the background eg due to memory pressure we lose all its state - although actually I just discovered that getPreferenceScreen() will be null too in that case so currently this crashes!\n\nFixed now by nullchecking getPreferenceScreen first. (If it is null then we get an onActivityCreated before the onActivityResult so can rely on the usual initialization path.)",
+      "parentUuid": "4e0736d5_f7bae5df",
+      "range": {
+        "startLine": 423,
+        "startChar": 51,
+        "endLine": 423,
+        "endChar": 56
+      },
+      "revId": "479d7c77629e38afbb51b20d080608dad6af5188",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
