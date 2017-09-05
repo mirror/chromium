@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "eeb3cbc4_df20cd9d",
+        "filename": "chrome/browser/vr/elements/viewport_aware_root.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-09-05T17:38:04Z",
+      "side": 1,
+      "message": "It is also here to prevent it from reaching +/-inf. In practice, this is probably extremely rare. fmod looks like what I need!",
+      "parentUuid": "1a8006fe_f6b53030",
+      "revId": "32d92696b6f7a621849b785cbe0e49565bab794d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd5ff1ea_5ca0a9b6",
         "filename": "chrome/browser/vr/elements/viewport_aware_root_unittest.cc",
         "patchSetId": 2
@@ -65,6 +83,54 @@
     },
     {
       "key": {
+        "uuid": "e741a90f_29ee23cb",
+        "filename": "chrome/browser/vr/elements/viewport_aware_root_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-09-05T17:38:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f62bf12_bec65bb2",
+      "range": {
+        "startLine": 138,
+        "startChar": 69,
+        "endLine": 138,
+        "endChar": 73
+      },
+      "revId": "32d92696b6f7a621849b785cbe0e49565bab794d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "248c87e3_20dc60c0",
+        "filename": "chrome/browser/vr/elements/viewport_aware_root_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-09-05T17:38:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd5ff1ea_5ca0a9b6",
+      "range": {
+        "startLine": 138,
+        "startChar": 26,
+        "endLine": 138,
+        "endChar": 30
+      },
+      "revId": "32d92696b6f7a621849b785cbe0e49565bab794d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23c00f75_50fbcf06",
         "filename": "chrome/browser/vr/elements/viewport_aware_root_unittest.cc",
         "patchSetId": 2
@@ -85,6 +151,30 @@
       "revId": "32d92696b6f7a621849b785cbe0e49565bab794d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dca6566_6c17d1d8",
+        "filename": "chrome/browser/vr/elements/viewport_aware_root_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-09-05T17:38:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23c00f75_50fbcf06",
+      "range": {
+        "startLine": 177,
+        "startChar": 56,
+        "endLine": 177,
+        "endChar": 65
+      },
+      "revId": "32d92696b6f7a621849b785cbe0e49565bab794d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
