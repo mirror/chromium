@@ -878,6 +878,20 @@ class CORE_EXPORT PaintLayer : public DisplayItemClient {
       ShouldRespectOverflowClipType = kRespectOverflowClip,
       const LayoutPoint* offset_from_root = 0,
       const LayoutSize& sub_pixel_accumulation = LayoutSize()) const;
+
+  // Use this method for callsites within paint, and |CollectFragments|
+  // otherwise.
+  void CollectFragmentsForPaint(
+      PaintLayerFragments&,
+      const PaintLayer* root_layer,
+      const LayoutRect& dirty_rect,
+      ClipRectsCacheSlot,
+      GeometryMapperOption,
+      OverlayScrollbarClipBehavior = kIgnorePlatformOverlayScrollbarSize,
+      ShouldRespectOverflowClipType = kRespectOverflowClip,
+      const LayoutPoint* offset_from_root = 0,
+      const LayoutSize& sub_pixel_accumulation = LayoutSize()) const;
+
   void CollectFragments(
       PaintLayerFragments&,
       const PaintLayer* root_layer,
@@ -1020,6 +1034,9 @@ class CORE_EXPORT PaintLayer : public DisplayItemClient {
   // RLS mode it returns false.
   bool IsScrolledByFrameView() const;
 
+  bool ShouldFragmentCompositedBounds(
+      const PaintLayer* compositing_layer) const;
+
  private:
   void SetNeedsCompositingInputsUpdateInternal();
 
@@ -1139,9 +1156,6 @@ class CORE_EXPORT PaintLayer : public DisplayItemClient {
     needs_paint_phase_descendant_block_backgrounds_ |=
         layer.needs_paint_phase_descendant_block_backgrounds_;
   }
-
-  bool ShouldFragmentCompositedBounds(
-      const PaintLayer* compositing_layer) const;
 
   void ExpandRectForStackingChildren(const PaintLayer& composited_layer,
                                      LayoutRect& result,
