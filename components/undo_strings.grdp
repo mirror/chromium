@@ -38,6 +38,18 @@
     <message name="IDS_BOOKMARK_BAR_REDO_REORDER" desc="Menu title for redoing reordering bookmarks">
       &amp;Redo reorder
     </message>
+    <message name="IDS_PASSWORD_LABEL_UNDO_ADD" desc="Label for undoing adding a password">
+      &amp;Undo add
+    </message>
+    <message name="IDS_PASSWORD_LABEL_REDO_ADD" desc="Label for redoing adding a password">
+      &amp;Redo add
+    </message>
+    <message name="IDS_PASSWORD_LABEL_UNDO_DELETE" desc="Label for undoing deletion of a password">
+      &amp;Undo delete
+    </message>
+    <message name="IDS_PASSWORD_LABEL_REDO_DELETE" desc="Label for redoing deletion of a password">
+      &amp;Redo delete
+    </message>
   </if>
 
   <if expr="use_titlecase">
@@ -76,6 +88,18 @@
     </message>
     <message name="IDS_BOOKMARK_BAR_REDO_REORDER" desc="In Title Case: Menu title for redoing reordering bookmarks">
       &amp;Redo Reorder
+    </message>
+    <message name="IDS_PASSWORD_LABEL_UNDO_ADD" desc="Label for undoing adding a password">
+      &amp;Undo Add
+    </message>
+    <message name="IDS_PASSWORD_LABEL_REDO_ADD" desc="Label for redoing adding a password">
+      &amp;Redo Add
+    </message>
+    <message name="IDS_PASSWORD_LABEL_UNDO_DELETE" desc="Label for undoing deletion of a password">
+      &amp;Undo Delete
+    </message>
+    <message name="IDS_PASSWORD_LABEL_REDO_DELETE" desc="Label for redoing deletion of a password">
+      &amp;Redo Delete
     </message>
   </if>
 
