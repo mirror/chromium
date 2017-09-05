@@ -22,6 +22,30 @@
       "revId": "cde74a5f9af70c5efce380dd4b33f6dac1cfbca5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a30a2300_9c4f224b",
+        "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-05T10:05:20Z",
+      "side": 1,
+      "message": "oops, my understanding of std::move was wrong.",
+      "parentUuid": "5efb7b47_a6ce4e09",
+      "range": {
+        "startLine": 61,
+        "startChar": 16,
+        "endLine": 61,
+        "endChar": 24
+      },
+      "revId": "cde74a5f9af70c5efce380dd4b33f6dac1cfbca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
