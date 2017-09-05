@@ -22,6 +22,30 @@
       "revId": "284327b9335ac93de792685b6012fbcd47af01e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00824901_3a926b7b",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetUiCaptureTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-09-05T09:16:26Z",
+      "side": 0,
+      "message": "Yes that\u0027s the problem. When we moved the signin promo to the top for Modern the index became wrong.",
+      "parentUuid": "07a1e9ed_bf95dd55",
+      "range": {
+        "startLine": 87,
+        "startChar": 68,
+        "endLine": 87,
+        "endChar": 69
+      },
+      "revId": "284327b9335ac93de792685b6012fbcd47af01e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
