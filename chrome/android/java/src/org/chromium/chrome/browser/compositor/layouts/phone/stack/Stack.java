@@ -2274,10 +2274,11 @@ public class Stack {
      * @return The maximum height of a layout tab in the tab switcher.
      */
     public float getMaxTabHeight() {
+        float marginAdjustment = 0;
         if (FeatureUtilities.isChromeHomeEnabled() && mCurrentMode == Orientation.PORTRAIT) {
-            return mLayout.getHeight();
+            marginAdjustment = StackLayout.MODERN_TOP_MARGIN_DP;
         }
-        return mLayout.getHeightMinusBrowserControls();
+        return mLayout.getHeightMinusBrowserControls() - marginAdjustment;
     }
 
     /**
