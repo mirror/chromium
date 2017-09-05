@@ -50,6 +50,47 @@
       "revId": "ed0d2741b9a7bed8fffe14ec04f10eb1919542d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "107de277_2ade1a05",
+        "filename": "net/dns/host_resolver_proc.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-09-05T17:56:34Z",
+      "side": 1,
+      "message": "My understanding is that DnsReloaderMaybeReload() does file I/O. The comments in scoped_blocking_call.h suggest that that requires a ScopedBlockingCall (using MAY_BLOCK, which isn\u0027t implemented but I had to look at cross-refs to notice), but the rest of the codebase suggests that it doesn\u0027t, it only requires a MayBlock() TaskTrait. Francois, can you clarify?",
+      "parentUuid": "8e1159b2_c310e5e2",
+      "revId": "ed0d2741b9a7bed8fffe14ec04f10eb1919542d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbf7c8a1_cf84c416",
+        "filename": "net/dns/host_resolver_proc.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-09-05T17:56:34Z",
+      "side": 1,
+      "message": "I noticed after writing most of this comment that MAY_BLOCK isn\u0027t actually supported yet, but if it does get implemented later: what\u0027s the intended distinction between WILL_BLOCK and MAY_BLOCK? At this point we\u0027ve already checked our own cache, but the OS might have a cached result that we\u0027re missing. On Windows and Linux that happens around 10% of the time, on Android it\u0027s rare.",
+      "range": {
+        "startLine": 204,
+        "startChar": 28,
+        "endLine": 204,
+        "endChar": 38
+      },
+      "revId": "ed0d2741b9a7bed8fffe14ec04f10eb1919542d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

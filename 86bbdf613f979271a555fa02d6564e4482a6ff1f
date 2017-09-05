@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7085b8c_29987f43",
+        "filename": "net/dns/host_resolver_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-09-05T17:56:34Z",
+      "side": 0,
+      "message": "While you\u0027re deleting this, you can also delete worker_task_runner_ in HostResolverImpl::Job since this is the only use.",
+      "revId": "86bbdf613f979271a555fa02d6564e4482a6ff1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
