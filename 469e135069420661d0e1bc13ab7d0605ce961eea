@@ -102,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "cfca508f_0f39f03d",
+        "filename": "content/browser/presentation/presentation_service_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-05T20:43:47Z",
+      "side": 1,
+      "message": "Ok, will remove the TODO then.",
+      "parentUuid": "f8c03182_a379ab2d",
+      "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31e96d7d_c5cb0767",
         "filename": "content/browser/presentation/presentation_service_impl.cc",
         "patchSetId": 17
@@ -149,6 +167,24 @@
       "side": 1,
       "message": "I alluded to this in the other review (about trying to keep the state machine of interface as simple as possible, especially when it involves relationships with other interfaces).\n\nNote that as this is renderer called, a malicious renderer could certainly call this more than once (or call it in a case where it\u0027s not a main frame or the receiver delegate isn\u0027t set). I would recommend explicitly checking error conditions and calling mojo::ReportBadMessage() instead of silently ignoring errors.",
       "parentUuid": "173e9322_1604046f",
+      "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f35d42a5_ad31be5b",
+        "filename": "content/browser/presentation/presentation_service_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-05T20:43:47Z",
+      "side": 1,
+      "message": "This currently gets called by any frame that initializes navigator.presentation.receiver (i.e. the Blink code doesn\u0027t check if the frame calling this is a main frame). Also it also doesn\u0027t know if receiver delegate is set (or whether the frame is created in the context of a 1-ua presentation). It may be possible to check these on the Blink side before calling SetReceiver, but I would prefer to investigate that in a separate patch.",
+      "parentUuid": "20b797b4_bd5b4e95",
       "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -293,6 +329,30 @@
       "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "723c96f2_6468cca4",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-05T20:43:47Z",
+      "side": 1,
+      "message": "Ack. It seems safe but I will run some tests to make sure.",
+      "parentUuid": "6f8f556e_0e2f7c43",
+      "range": {
+        "startLine": 158,
+        "startChar": 47,
+        "endLine": 158,
+        "endChar": 59
+      },
+      "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -501,6 +561,24 @@
     },
     {
       "key": {
+        "uuid": "58d2a9aa_02cc069d",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationController.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-05T20:43:47Z",
+      "side": 1,
+      "message": "Ok, then we will guard against GetFrame()-\u003eClient() being null here. Also the callers of GetPresentationService() will check for null.\n\nAlso added ContextLifecycleObserver to PresentationReceiver / PresentationConnection to close their mojo::Bindings in ContextDestroyed().",
+      "parentUuid": "fca06884_b4e29c59",
+      "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7a12b1b_6a00cfbc",
         "filename": "third_party/WebKit/Source/modules/presentation/PresentationReceiver.cpp",
         "patchSetId": 17
@@ -686,6 +764,24 @@
       "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0533cbaf_134c83c1",
+        "filename": "third_party/WebKit/public/platform/modules/presentation/WebPresentationReceiver.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-05T20:43:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbf43b83_c5a82d1d",
+      "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
