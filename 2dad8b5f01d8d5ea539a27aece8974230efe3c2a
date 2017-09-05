@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23803869_1b300a58",
+        "filename": "ios/chrome/browser/ui/browser_list/browser.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-09-05T09:50:21Z",
+      "side": 1,
+      "message": "Should this be a move as opposed to passing a pointer?",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 42
+      },
+      "revId": "2dad8b5f01d8d5ea539a27aece8974230efe3c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1db7688_52bcbafe",
+        "filename": "ios/chrome/browser/ui/browser_list/browser.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-09-05T09:50:21Z",
+      "side": 1,
+      "message": "This class lacks documentation. The one line before the class definition is not enough. Can you add doc on the class members?",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 2
+      },
+      "revId": "2dad8b5f01d8d5ea539a27aece8974230efe3c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "299ad9cd_0c6b4c19",
+        "filename": "ios/chrome/browser/ui/browser_list/browser_list_impl.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-09-05T09:50:21Z",
+      "side": 1,
+      "message": "I\u0027m curious. Why don\u0027t you just use size_type instead of int, saving you that cast? Just for the kInvalidIndex?",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 44
+      },
+      "revId": "2dad8b5f01d8d5ea539a27aece8974230efe3c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7a83be4_8d3cd0d4",
+        "filename": "ios/chrome/browser/ui/browser_list/browser_list_impl_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-09-05T09:50:21Z",
+      "side": 1,
+      "message": "Test classes are not exempted of being documented. Comments on this class and on the test itself would have saved me a it of back and forth.",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 64
+      },
+      "revId": "2dad8b5f01d8d5ea539a27aece8974230efe3c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c986c448_fc809ec2",
+        "filename": "ios/chrome/browser/ui/browser_list/browser_list_impl_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-09-05T09:50:21Z",
+      "side": 1,
+      "message": "Should this code be in setup instead of the constructor?",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 76
+      },
+      "revId": "2dad8b5f01d8d5ea539a27aece8974230efe3c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9714d36b_3e5e3e2b",
+        "filename": "ios/chrome/browser/ui/browser_list/browser_web_state_list_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-09-05T09:50:21Z",
+      "side": 1,
+      "message": "This one too comes a little short on the documentation front… If you don\u0027t mind, more doc would be nice.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 50
+      },
+      "revId": "2dad8b5f01d8d5ea539a27aece8974230efe3c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
