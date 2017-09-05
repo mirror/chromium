@@ -22,6 +22,30 @@
       "revId": "479334fa35e4e8d3572d31521dfe868b19e8070f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "175480b2_07cbb6de",
+        "filename": "base/trace_event/sharded_allocation_register.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1131934
+      },
+      "writtenOn": "2017-09-05T16:58:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac7dc981_dcbbcad4",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 29
+      },
+      "revId": "479334fa35e4e8d3572d31521dfe868b19e8070f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
