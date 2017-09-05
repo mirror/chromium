@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fc38b34_9ddf50ad",
+        "filename": "components/autofill/core/browser/autofill_experiments_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-05T13:03:12Z",
+      "side": 1,
+      "message": "Capital R",
+      "range": {
+        "startLine": 75,
+        "startChar": 7,
+        "endLine": 75,
+        "endChar": 8
+      },
+      "revId": "cafcce86212677412823e81cc6bf27747db5c511",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b6648d1_4905c773",
+        "filename": "components/autofill/core/browser/autofill_experiments_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-05T13:03:12Z",
+      "side": 1,
+      "message": "This can be a simple member?",
+      "revId": "cafcce86212677412823e81cc6bf27747db5c511",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
