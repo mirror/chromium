@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af280ef8_a49bb6e1",
+        "filename": "chrome/browser/autofill/form_structure_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-05T15:34:39Z",
+      "side": 1,
+      "message": "GetTestDataDir().Append(\"autofill\")...",
+      "range": {
+        "startLine": 70,
+        "startChar": 8,
+        "endLine": 70,
+        "endChar": 45
+      },
+      "revId": "4b87d7cde693ffe30fd3f3dc038fb05b51ed9f08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
