@@ -132,10 +132,6 @@ class TestPasswordProtectionService : public PasswordProtectionService {
     return LoginReputationClientRequest::PasswordReuseEvent::NOT_SIGNED_IN;
   }
 
-  LoginReputationClientResponse* latest_response() {
-    return latest_response_.get();
-  }
-
   ~TestPasswordProtectionService() override {}
 
   size_t GetPendingRequestsCount() { return requests_.size(); }
@@ -145,6 +141,8 @@ class TestPasswordProtectionService : public PasswordProtectionService {
   }
 
   std::string checked_feature_name() { return checked_feature_name_; }
+
+  int GetWarningDialogSize() { return warning_dialogs_.size(); }
 
  private:
   bool is_extended_reporting_;
@@ -972,6 +970,7 @@ TEST_P(PasswordProtectionServiceTest,
     EXPECT_EQ(0, reuse_event.domains_matching_password_size());
   }
 }
+
 TEST_P(PasswordProtectionServiceTest, VerifyCanSendPing) {
   GURL suspicious_url("http://phishing.com");
   EXPECT_TRUE(password_protection_service_->CanSendPing(
