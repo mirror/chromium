@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10874e7b_dd33c49c",
+        "filename": "ash/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 1267,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-09-05T22:26:16Z",
+      "side": 1,
+      "message": "curious, should this be in the test/ directory like the above?",
+      "range": {
+        "startLine": 1267,
+        "startChar": 5,
+        "endLine": 1267,
+        "endChar": 22
+      },
+      "revId": "6863a10dee9b7d1064e6ea26fea3516c71bc2350",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
