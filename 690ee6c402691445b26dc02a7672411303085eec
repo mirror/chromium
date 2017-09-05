@@ -141,6 +141,30 @@
       "revId": "690ee6c402691445b26dc02a7672411303085eec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0ce580d_3cb5c5a8",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkUtils.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-09-05T21:20:56Z",
+      "side": 1,
+      "message": "I think this is a good idea. Double checked, only 0.7kB is increased after introducing colors.xml and dimens.xml. But now both java and xml can use the same style data \\o/.",
+      "parentUuid": "3a8c97f5_25aa5e60",
+      "range": {
+        "startLine": 38,
+        "startChar": 5,
+        "endLine": 40,
+        "endChar": 80
+      },
+      "revId": "690ee6c402691445b26dc02a7672411303085eec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
