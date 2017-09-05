@@ -48,7 +48,6 @@ var AboutPageUpdateInfo;
  */
 var BrowserChannel = {
   BETA: 'beta-channel',
-  CANARY: 'canary-channel',
   DEV: 'dev-channel',
   STABLE: 'stable-channel',
 };
@@ -103,8 +102,6 @@ cr.define('settings', function() {
     switch (channel) {
       case BrowserChannel.BETA:
         return 'aboutChannelBeta';
-      case BrowserChannel.CANARY:
-        return 'aboutChannelCanary';
       case BrowserChannel.DEV:
         return 'aboutChannelDev';
       case BrowserChannel.STABLE:
@@ -123,7 +120,6 @@ cr.define('settings', function() {
   function isTargetChannelMoreStable(currentChannel, targetChannel) {
     // List of channels in increasing stability order.
     var channelList = [
-      BrowserChannel.CANARY,
       BrowserChannel.DEV,
       BrowserChannel.BETA,
       BrowserChannel.STABLE,
@@ -190,6 +186,11 @@ cr.define('settings', function() {
     /** @return {!Promise<?RegulatoryInfo>} */
     getRegulatoryInfo() {}
 
+    /**
+     * Request TPM firmware update status from the browser. It results in one or
+     * more 'tpm-firmware-update-status-changed' WebUI events.
+     */
+    refreshTPMFirmareUpdateStatus() {}
     // </if>
 
     // <if expr="_google_chrome and is_macosx">
@@ -264,6 +265,11 @@ cr.define('settings', function() {
     /** @override */
     getRegulatoryInfo() {
       return cr.sendWithPromise('getRegulatoryInfo');
+    }
+
+    /** @override */
+    refreshTPMFirmareUpdateStatus() {
+      chrome.send('refreshTPMFirmareUpdateStatus');
     }
     // </if>
   }

@@ -11,6 +11,7 @@
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/command_line.h"
+#include "base/feature_list.h"
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
 #include "base/i18n/message_formatter.h"
@@ -34,6 +35,7 @@
 #include "chrome/browser/upgrade_detector.h"
 #include "chrome/common/channel_info.h"
 #include "chrome/common/chrome_content_client.h"
+#include "chrome/common/chrome_features.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/chromium_strings.h"
@@ -90,6 +92,10 @@ const char kRegulatoryLabelTextFilename[] = "label.txt";
 
 // Default region code to use if there's no label for the VPD region code.
 const char kDefaultRegionCode[] = "us";
+
+// Flag file indicating a TPM firmware update is available.
+constexpr const base::FilePath::CharType kTPMFirmwareUpdateAvailableFlagFile[] =
+    FILE_PATH_LITERAL("/run/tpm_firmware_update_available");
 
 struct RegulatoryLabel {
   const std::string label_text;
@@ -374,6 +380,10 @@ void AboutHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(
       "getChannelInfo", base::Bind(&AboutHandler::HandleGetChannelInfo,
                                    base::Unretained(this)));
+  web_ui()->RegisterMessageCallback(
+      "refreshTPMFirmareUpdateStatus",
+      base::Bind(&AboutHandler::HandleRefreshTPMFirmwareUpdateStatus,
+                 base::Unretained(this)));
 #endif
 #if defined(OS_MACOSX)
   web_ui()->RegisterMessageCallback(
@@ -586,6 +596,29 @@ void AboutHandler::RequestUpdateOverCellular(const std::string& update_version,
       update_version, update_size);
 }
 
+void AboutHandler::HandleRefreshTPMFirmwareUpdateStatus(
+    const base::ListValue* args) {
+  if (!base::FeatureList::IsEnabled(features::kTPMFirmwareUpdate)) {
+    RefreshTPMFirmwareUpdateStatus(false);
+  }
+
+  if (IsEnterpriseManaged()) {
+    RefreshTPMFirmwareUpdateStatus(false);
+  }
+
+  base::PostTaskWithTraitsAndReplyWithResult(
+      FROM_HERE, {base::MayBlock(), base::TaskPriority::USER_VISIBLE},
+      base::Bind(&base::PathExists,
+                 base::FilePath(kTPMFirmwareUpdateAvailableFlagFile)),
+      base::Bind(&AboutHandler::RefreshTPMFirmwareUpdateStatus,
+                 weak_factory_.GetWeakPtr()));
+}
+
+void AboutHandler::RefreshTPMFirmwareUpdateStatus(bool update_available) {
+  std::unique_ptr<base::DictionaryValue> event(new base::DictionaryValue);
+  event->SetBoolean("updateAvailable", update_available);
+  FireWebUIListener("tpm-firmware-update-status-changed", *event);
+}
 #endif  // defined(OS_CHROMEOS)
 
 void AboutHandler::RequestUpdate() {
