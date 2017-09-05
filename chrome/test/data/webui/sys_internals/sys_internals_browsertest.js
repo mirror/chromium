@@ -22,6 +22,8 @@ SysInternalsBrowserTest.prototype = {
       [{switchName: 'enable-features', switchValue: 'SysInternals'}],
 
   extraLibraries: [
+    'api_test.js',
+    'line_chart/line_chart_test.js',
     ROOT_PATH + 'third_party/mocha/mocha.js',
     ROOT_PATH + 'chrome/test/data/webui/mocha_adapter.js',
   ],
@@ -32,71 +34,10 @@ SysInternalsBrowserTest.prototype = {
   },
 };
 
-// TODO : move this test into its own file.
 TEST_F('SysInternalsBrowserTest', 'getSysInfo', function() {
-  test('message handler integration test', function(done) {
-    function checkConst(constVal) {
-      if (!Number.isInteger(constVal.counterMax)) {
-        throw `result.const.counterMax is invalid : ${counterMax}`;
-      }
-    }
+  ApiTest.getSysInfo();
+});
 
-    function isCounter(number) {
-      return Number.isInteger(number) && number >= 0;
-    }
-
-    function checkCpu(cpu) {
-      return isCounter(cpu.user) && isCounter(cpu.kernel) &&
-          isCounter(cpu.idle) && isCounter(cpu.total);
-    }
-
-    function checkCpus(cpus) {
-      if (!Array.isArray(cpus)) {
-        throw 'result.cpus is not an Array.';
-        return;
-      }
-      for (let i = 0; i < cpus.length; ++i) {
-        if (!checkCpu(cpus[i])) {
-          throw `result.cpus[${i}] : ${JSON.stringify(cpus[i])}`;
-        }
-      }
-    }
-
-    function isMemoryByte(number) {
-      return typeof number === 'number' && number >= 0;
-    }
-
-    function checkMemory(memory) {
-      if (!memory || typeof memory !== 'object' ||
-          !isMemoryByte(memory.available) || !isMemoryByte(memory.total) ||
-          !isMemoryByte(memory.swapFree) || !isMemoryByte(memory.swapTotal) ||
-          !isCounter(memory.pswpin) || !isCounter(memory.pswpout)) {
-        throw `result.memory is invalid : ${JSON.stringify(memory)}`;
-      }
-    }
-
-    function checkZram(zram) {
-      if (!zram || typeof zram !== 'object' ||
-          !isMemoryByte(zram.comprDataSize) ||
-          !isMemoryByte(zram.origDataSize) ||
-          !isMemoryByte(zram.memUsedTotal) || !isCounter(zram.numReads) ||
-          !isCounter(zram.numWrites)) {
-        throw `result.zram is invalid : ${JSON.stringify(zram)}`;
-      }
-    }
-
-    cr.sendWithPromise('getSysInfo').then(function(result) {
-      try {
-        checkConst(result.const);
-        checkCpus(result.cpus);
-        checkMemory(result.memory);
-        checkZram(result.zram);
-        done();
-      } catch (err) {
-        done(new Error(err));
-      }
-    });
-  });
-
-  mocha.run();
+TEST_F('SysInternalsBrowserTest', 'LineChart_LineChart', function() {
+  LineChartTest.LineChart()
 });
