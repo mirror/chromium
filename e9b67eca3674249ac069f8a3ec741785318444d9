@@ -94,6 +94,57 @@
     },
     {
       "key": {
+        "uuid": "870e85a1_59f2076c",
+        "filename": "content/browser/loader/mojo_pipe_writer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-05T10:58:25Z",
+      "side": 1,
+      "message": "nit: please document this method.",
+      "revId": "e9b67eca3674249ac069f8a3ec741785318444d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7124bb8f_90022ed4",
+        "filename": "content/browser/loader/mojo_pipe_writer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-05T10:58:25Z",
+      "side": 1,
+      "message": "nit: please document about the lifetime relationship between |delegate|, |consumer_handle| and this, e.g. they should outlive this writer",
+      "revId": "e9b67eca3674249ac069f8a3ec741785318444d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "467a5c11_80bb7de6",
+        "filename": "content/browser/loader/mojo_pipe_writer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-05T10:58:25Z",
+      "side": 1,
+      "message": "can we have brief comments for these public methods?",
+      "revId": "e9b67eca3674249ac069f8a3ec741785318444d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9512e634_1bc726c4",
         "filename": "content/browser/loader/mojo_pipe_writer.h",
         "patchSetId": 1
@@ -134,6 +185,23 @@
         "endLine": 66,
         "endChar": 17
       },
+      "revId": "e9b67eca3674249ac069f8a3ec741785318444d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10750e4a_bc66dd8d",
+        "filename": "content/browser/loader/mojo_pipe_writer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-05T10:58:25Z",
+      "side": 1,
+      "message": "It\u0027s not from your code but the term |parent| might feel unclear in this helper class context",
       "revId": "e9b67eca3674249ac069f8a3ec741785318444d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
