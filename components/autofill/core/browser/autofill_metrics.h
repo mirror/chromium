@@ -24,6 +24,7 @@
 namespace autofill {
 
 class AutofillField;
+class CreditCard;
 
 class AutofillMetrics {
  public:
@@ -757,6 +758,10 @@ class AutofillMetrics {
   static void LogStoredServerCreditCardCounts(size_t num_masked_cards,
                                               size_t num_unmasked_cards);
 
+  static void LogStoredCreditCardMetrics(
+      const std::vector<std::unique_ptr<CreditCard>>& local_cards,
+      const std::vector<std::unique_ptr<CreditCard>>& server_cards,
+      base::TimeDelta disused_data_threshold);
   // Log the number of profiles available when an autofillable form is
   // submitted.
   static void LogNumberOfProfilesAtAutofillableFormSubmission(
