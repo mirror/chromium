@@ -34,6 +34,24 @@
       "revId": "03ce6d5e46318dda77093dfe8be414f676ef93e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c3ce85f9_cf3669a8",
+        "filename": "cc/paint/image_animation_count.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-05T21:43:02Z",
+      "side": 1,
+      "message": "And back to the original move patch.",
+      "parentUuid": "f11a2f3f_00e4a0b1",
+      "revId": "03ce6d5e46318dda77093dfe8be414f676ef93e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
