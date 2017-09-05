@@ -638,7 +638,7 @@ enum {
       _incognitoController =
           [[IncognitoPanelController alloc] initWithLoader:_loader
                                               browserState:_browserState
-                                        webToolbarDelegate:_webToolbarDelegate];
+                                                dispatcher:self.dispatcher];
     // TODO(crbug.com/708319): Also set panelController for incognito here.
     view = [_incognitoController view];
   } else {

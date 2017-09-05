@@ -1735,9 +1735,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
 
 - (void)browserStateDestroyed {
   [self setActive:NO];
-  // Reset the toolbar opacity in case it was changed for contextual search.
-  [self updateToolbarControlsAlpha:1.0];
-  [self updateToolbarBackgroundAlpha:1.0];
+  [self setToolbarBackgroundAlpha:1.0];
   [_paymentRequestManager close];
   _paymentRequestManager = nil;
   [_toolbarController browserStateDestroyed];
@@ -3855,16 +3853,6 @@ bubblePresenterForFeature:(const base::Feature&)feature
   return [[_model currentTab] webState];
 }
 
-// This is called from within an animation block.
-- (void)toolbarHeightChanged {
-  if ([self headerHeight] != 0) {
-    // Ensure full screen height is updated.
-    Tab* currentTab = [_model currentTab];
-    BOOL visible = self.isToolbarOnScreen;
-    [currentTab updateFullscreenWithToolbarVisible:visible];
-  }
-}
-
 // Load a new URL on a new page/tab.
 - (void)webPageOrderedOpen:(const GURL&)URL
                   referrer:(const web::Referrer&)referrer
@@ -3996,20 +3984,8 @@ bubblePresenterForFeature:(const base::Feature&)feature
   }
 }
 
-- (IBAction)prepareToEnterTabSwitcher:(id)sender {
-  [[_model currentTab] updateSnapshotWithOverlay:YES visibleFrameOnly:YES];
-}
-
 - (ToolbarModelIOS*)toolbarModelIOS {
   return _toolbarModelIOS.get();
-}
-
-- (void)updateToolbarBackgroundAlpha:(CGFloat)alpha {
-  [_toolbarController setBackgroundAlpha:alpha];
-}
-
-- (void)updateToolbarControlsAlpha:(CGFloat)alpha {
-  [_toolbarController setControlsAlpha:alpha];
 }
 
 - (void)willUpdateToolbarSnapshot {
@@ -4444,6 +4420,10 @@ bubblePresenterForFeature:(const base::Feature&)feature
     }
     [self.recentTabsCoordinator start];
   }
+}
+
+- (void)setToolbarBackgroundAlpha:(CGFloat)alpha {
+  [_toolbarController setBackgroundAlpha:alpha];
 }
 
 #pragma mark - Command Handling
