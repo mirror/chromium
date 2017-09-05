@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e0ba5e0_7f1feb13",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-09-05T22:06:34Z",
+      "side": 1,
+      "message": "I\u0027m not sure exactly how the discovery logic works, but aren\u0027t you potentially losing things by clearing out the whole list here?",
+      "revId": "e82d5cfa8533001187026378f12b52e46561cb09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "867d33aa_e75ebe02",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-09-05T22:06:34Z",
+      "side": 1,
+      "message": "\u0027ForceDiscovery\u0027 doesn\u0027t sound like the right name (since they are already discovered, just not connected).  Maybe ForceConnection?  You also mention \u0027Tries\u0027 in the comment which also doesn\u0027t seem very forceful, maybe AttemptConnection?\n\nBut I may be misunderstanding the context here.",
+      "revId": "e82d5cfa8533001187026378f12b52e46561cb09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
