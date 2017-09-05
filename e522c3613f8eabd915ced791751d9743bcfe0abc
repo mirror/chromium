@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "53d29308_e23d1222",
+        "filename": "chromeos/dbus/dbus_method_call_status.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-05T13:11:11Z",
+      "side": 1,
+      "message": "Thanks for clarification. Let\u0027s address it separately.",
+      "parentUuid": "2260e4f5_693b78de",
+      "revId": "e522c3613f8eabd915ced791751d9743bcfe0abc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "16ab9ef3_0002ab9c",
         "filename": "chromeos/dbus/image_loader_client.cc",
         "patchSetId": 1
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Practically, this doesn\u0027t make difference as this object is owned by DBusThreadManager, and it gets destructed after the message loop quits.\nThat being said, I think it\u0027s better to use WeakPtr in terms of consistency with other asynchronous code in Chromium.",
       "parentUuid": "16ab9ef3_0002ab9c",
+      "revId": "e522c3613f8eabd915ced791751d9743bcfe0abc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aeef4813_25303fcd",
+        "filename": "chromeos/dbus/image_loader_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-05T13:11:11Z",
+      "side": 1,
+      "message": "Got it. Thank you for clarification. Let\u0027s address it separately.",
+      "parentUuid": "b8916c91_c61038cc",
       "revId": "e522c3613f8eabd915ced791751d9743bcfe0abc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
