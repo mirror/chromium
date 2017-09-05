@@ -22,6 +22,30 @@
       "revId": "2e7cc67424d52811fd817f00404ce9fbc256fa7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cc9c3a9_b65c38a3",
+        "filename": "chrome/browser/resources/local_ntp/voice.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-09-05T15:12:08Z",
+      "side": 1,
+      "message": "Sets the layout\u0027s direction to LTR so that it cannot inherit a different direction.\nNormally, this would be set to \u0027rtl\u0027 in a parent style upon running Chrome in RTL mode, but the icon doesn\u0027t need to be styled differently in any way (and rtl actually breaks the icon for a reason that is unknown to me).",
+      "parentUuid": "394264d0_15f61143",
+      "range": {
+        "startLine": 387,
+        "startChar": 17,
+        "endLine": 387,
+        "endChar": 0
+      },
+      "revId": "2e7cc67424d52811fd817f00404ce9fbc256fa7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
