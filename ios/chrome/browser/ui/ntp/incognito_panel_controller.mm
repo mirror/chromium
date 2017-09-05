@@ -10,7 +10,8 @@
 #include "components/strings/grit/components_strings.h"
 #include "ios/chrome/browser/application_context.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
-#import "ios/chrome/browser/ui/toolbar/web_toolbar_controller.h"
+#import "ios/chrome/browser/ui/commands/browser_commands.h"
+#include "ios/chrome/browser/ui/rtl_geometry.h"
 #include "ios/chrome/browser/ui/ui_util.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
 #import "ios/chrome/browser/ui/url_loader.h"
@@ -256,23 +257,24 @@ const int kLinkColor = 0x03A9F4;
 // Calculate the background alpha for the toolbar based on how much |scrollView|
 // has scrolled up.
 - (CGFloat)toolbarAlphaForScrollView:(UIScrollView*)scrollView;
+
+@property(nonatomic, weak) id<BrowserCommands> dispatcher;
 @end
 
 @implementation IncognitoPanelController {
-  // Delegate for updating the toolbar's background alpha.
-  __weak id<WebToolbarDelegate> _webToolbarDelegate;
-
   // The scrollview containing the actual views.
   IncognitoNTPView* _incognitoView;
 }
+
+@synthesize dispatcher = _dispatcher;
 
 // Property declared in NewTabPagePanelProtocol.
 @synthesize delegate = _delegate;
 @synthesize view = _view;
 
 - (id)initWithLoader:(id<UrlLoader>)loader
-          browserState:(ios::ChromeBrowserState*)browserState
-    webToolbarDelegate:(id<WebToolbarDelegate>)webToolbarDelegate {
+        browserState:(ios::ChromeBrowserState*)browserState
+          dispatcher:(id<BrowserCommands>)dispatcher {
   self = [super init];
   if (self) {
     _view = [[UIView alloc]
@@ -294,8 +296,8 @@ const int kLinkColor = 0x03A9F4;
     }
     if (!IsIPadIdiom()) {
       [_incognitoView setDelegate:self];
-      _webToolbarDelegate = webToolbarDelegate;
-      [_webToolbarDelegate updateToolbarBackgroundAlpha:0];
+      _dispatcher = dispatcher;
+      [_dispatcher setToolbarBackgroundAlpha:0];
     }
     [_view addSubview:_incognitoView];
   }
@@ -308,9 +310,8 @@ const int kLinkColor = 0x03A9F4;
 }
 
 - (void)dealloc {
-  [_webToolbarDelegate updateToolbarBackgroundAlpha:1];
+  [self.dispatcher setToolbarBackgroundAlpha:1];
   [_incognitoView setDelegate:nil];
-  ;
 }
 
 #pragma mark -
@@ -321,11 +322,11 @@ const int kLinkColor = 0x03A9F4;
 
 - (void)wasShown {
   CGFloat alpha = [self toolbarAlphaForScrollView:_incognitoView];
-  [_webToolbarDelegate updateToolbarBackgroundAlpha:alpha];
+  [self.dispatcher setToolbarBackgroundAlpha:alpha];
 }
 
 - (void)wasHidden {
-  [_webToolbarDelegate updateToolbarBackgroundAlpha:1];
+  [self.dispatcher setToolbarBackgroundAlpha:1];
 }
 
 - (void)dismissModals {
@@ -346,7 +347,7 @@ const int kLinkColor = 0x03A9F4;
 
 - (void)scrollViewDidScroll:(UIScrollView*)scrollView {
   CGFloat alpha = [self toolbarAlphaForScrollView:_incognitoView];
-  [_webToolbarDelegate updateToolbarBackgroundAlpha:alpha];
+  [self.dispatcher setToolbarBackgroundAlpha:alpha];
 }
 
 @end
