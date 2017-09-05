@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb111d70_18f8c0eb",
+        "filename": "content/test/gpu/generate_buildbot_json.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1425,
+      "author": {
+        "id": 1001921
+      },
+      "writtenOn": "2017-09-05T20:27:57Z",
+      "side": 1,
+      "message": "Since these run on linux_android_rel_ng and android_n5x_swarming_rel, I think we should have them on android as well. Unless translator is not used on android?",
+      "range": {
+        "startLine": 1425,
+        "startChar": 22,
+        "endLine": 1425,
+        "endChar": 41
+      },
+      "revId": "92031a972a20076e3e38e0afb3652fdf699dcdcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
