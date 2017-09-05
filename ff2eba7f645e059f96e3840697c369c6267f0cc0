@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fb83ee4e_d4c879b3",
+        "filename": "components/viz/service/surfaces/surface_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-09-05T15:34:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "706a4108_96e046bf",
+      "revId": "ff2eba7f645e059f96e3840697c369c6267f0cc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6eb9e719_468d0b0c",
         "filename": "services/viz/privileged/interfaces/compositing/frame_sink_manager.mojom",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "ff2eba7f645e059f96e3840697c369c6267f0cc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18772ada_29d5c533",
+        "filename": "services/viz/privileged/interfaces/compositing/frame_sink_manager.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-09-05T15:34:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6eb9e719_468d0b0c",
+      "revId": "ff2eba7f645e059f96e3840697c369c6267f0cc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
