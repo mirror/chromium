@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e2de736_69b07e98",
+        "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-05T10:03:57Z",
+      "side": 1,
+      "message": "nit: slightly prefer early exist for error case, i.e.\n\nif (error !\u003d kNone) {\n  DCHECK(...);\n  callbacks-\u003eOnError(...);\n  return;\n}\n\n// non-error code\n...\ncallbacks-\u003eOnSuccess(...);",
+      "revId": "120f9bd45fa46d6aa77de06069a95be43d69b4f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
