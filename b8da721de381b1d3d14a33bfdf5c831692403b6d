@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d71a705d_25e47383",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 12
+      },
+      "lineNbr": 2361,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-05T18:33:59Z",
+      "side": 1,
+      "message": "No. Good catch!\n\nIt seems that the test flakily failed on some mac platform and \u0027webkit-patch rebaseline-cl\u0027 rebaselined the test on that platform.\n\nRestored and removed the extra rebaselines.",
+      "parentUuid": "b136fc3a_d7e1c993",
+      "revId": "b8da721de381b1d3d14a33bfdf5c831692403b6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "88ef77d9_85ffe10f",
         "filename": "third_party/WebKit/Source/platform/graphics/GraphicsLayer.cpp",
         "patchSetId": 12
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-05T16:23:16Z",
       "side": 1,
       "message": "Is this redundant with the call above?",
+      "revId": "b8da721de381b1d3d14a33bfdf5c831692403b6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0495d7ae_7862cce3",
+        "filename": "third_party/WebKit/Source/platform/graphics/GraphicsLayer.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-05T18:33:59Z",
+      "side": 1,
+      "message": "Yes. Removed.",
+      "parentUuid": "88ef77d9_85ffe10f",
       "revId": "b8da721de381b1d3d14a33bfdf5c831692403b6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
