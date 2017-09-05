@@ -271,9 +271,9 @@ void AssociateTouchscreens(
   }
 
   AssociateInternalDevices(&displays, &devices);
-  AssociateUdlDevices(&displays, &devices);
-  AssociateSameSizeDevices(&displays, &devices);
-  AssociateToSingleDisplay(&displays, &devices);
+  // AssociateUdlDevices(&displays, &devices);
+  // AssociateSameSizeDevices(&displays, &devices);
+  // AssociateToSingleDisplay(&displays, &devices);
 
   for (const ManagedDisplayInfo* display : displays)
     VLOG(2) << "Unmatched display " << display->name();

@@ -330,6 +330,12 @@ void EventFactoryEvdev::DispatchTouchEvent(const TouchEventParams& params) {
   TRACE_EVENT1("evdev", "EventFactoryEvdev::DispatchTouchEvent", "device",
                params.device_id);
 
+  // If the system is undergoing touch calibration, we may need to associate
+  // the touch device with a display, before it can be dispatched.
+  DeviceDataManager* device_data_manager = DeviceDataManager::GetInstance();
+  if (device_data_manager->require_touch_association())
+    device_data_manager->AssociateTouchDeviceForCalibration(params.device_id);
+
   gfx::PointF location = GetTransformedEventLocation(params);
   PointerDetails details = GetTransformedEventPointerDetails(params);
 

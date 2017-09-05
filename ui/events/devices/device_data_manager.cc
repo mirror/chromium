@@ -88,6 +88,45 @@ void DeviceDataManager::ConfigureTouchDevices(
     observer.OnTouchDeviceAssociationChanged();
 }
 
+void DeviceDataManager::AssociateTouchDeviceForCalibration(
+    int touch_device_id) {
+  if (!require_touch_association_ || !IsTouchDeviceIdValid(touch_device_id))
+    return;
+  // Do not reassociate the internal touch device.
+  if (touch_device_id ==
+      transform_for_touch_device_under_calibration_.device_id) {
+    return;
+  }
+
+  touch_map_[touch_device_id] = transform_for_touch_device_under_calibration_;
+  touch_map_[touch_device_id].device_id = touch_device_id;
+  ResetTouchCalibrationParams();
+}
+
+void DeviceDataManager::PrepareForTouchDeviceAssociation(
+    const ui::TouchDeviceTransform& transform,
+    int64_t internal_display_id) {
+  require_touch_association_ = true;
+  transform_for_touch_device_under_calibration_ = transform;
+
+  if (internal_display_id != display::kInvalidDisplayId) {
+    // Set the internal touch device id, so we dont end up reassociating it
+    // during calibration. The user might touch the internal touch dispay by
+    // some mistake.
+    for (const auto& touch_transform : touch_map_) {
+      if (touch_transform.display_id == internal_display_id) {
+        transform_for_touch_device_under_calibration_.device_id =
+            touch_transform.device_id;
+        break;
+      }
+    }
+  }
+}
+
+void DeviceDataManager::ResetTouchCalibrationParams() {
+  require_touch_association_ = false;
+}
+
 void DeviceDataManager::ClearTouchDeviceAssociations() {
   for (size_t i = 0; i < touch_map_.size(); ++i)
     touch_map_[i] = TouchDeviceTransform();

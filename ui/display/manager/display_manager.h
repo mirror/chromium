@@ -316,8 +316,13 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
 #if defined(OS_CHROMEOS)
   void SetSoftwareMirroring(bool enabled) override;
   bool SoftwareMirroringEnabled() const override;
+  bool SetTouchCalibrationData(
+      int64_t display_id,
+      const TouchCalibrationData::CalibrationPointPairQuad& point_pair_quad,
+      const gfx::Size& display_bounds);
   void SetTouchCalibrationData(
       int64_t display_id,
+      int32_t touch_device_id,
       const TouchCalibrationData::CalibrationPointPairQuad& point_pair_quad,
       const gfx::Size& display_bounds);
   void ClearTouchCalibrationData(int64_t display_id);
