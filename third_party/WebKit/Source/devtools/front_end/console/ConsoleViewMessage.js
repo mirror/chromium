@@ -1302,20 +1302,23 @@ Console.ConsoleViewMessage = class {
   static _linkifyWithCustomLinkifier(string, linkifier) {
     var container = createDocumentFragment();
     var linkStringRegEx =
-        /(?:[a-zA-Z][a-zA-Z0-9+.-]{2,}:\/\/|data:|www\.)[\w$\-_+*'=\|\/\\(){}[\]^%@&#~,:;.!?]{2,}[\w$\-_+*=\|\/\\({^%@&#~]/;
+        /(\[[^\]]+?\]\()?((?:[a-zA-Z][a-zA-Z0-9+.-]{2,}:\/\/|data:|www\.)[\w$\-_+*'=\|\/\\(){}[\]^%@&#~,:;.!?]{2,}[\w$\-_+*=\|\/\\({^%@&#~])(\))?/;
     var pathLineRegex = /(?:\/[\w\.-]*)+\:[\d]+/;
 
     while (string && string.length < Components.Linkifier.MaxLengthToIgnoreLinkifier) {
-      var linkString = linkStringRegEx.exec(string) || pathLineRegex.exec(string);
-      if (!linkString)
+      var matches = linkStringRegEx.exec(string) || pathLineRegex.exec(string);
+      if (!matches)
         break;
 
-      linkString = linkString[0];
-      var linkIndex = string.indexOf(linkString);
-      var nonLink = string.substring(0, linkIndex);
-      container.appendChild(createTextNode(nonLink));
+      // Whether the URL is a Markdown-style URL with a title.
+      var isAnnotated = matches[1] && matches[3];
+      var linkString = matches[2];
+      var match = isAnnotated ? matches[0] : linkString;
+      var matchIndex = string.indexOf(match);
+      var nonMatch = string.substring(0, matchIndex);
+      container.appendChild(createTextNode(nonMatch));
 
-      var title = linkString;
+      var title = isAnnotated ? matches[1].slice(1, -2) : linkString;
       var realURL = (linkString.startsWith('www.') ? 'http://' + linkString : linkString);
       var splitResult = Common.ParsedURL.splitLineAndColumn(realURL);
       var linkNode;
@@ -1325,7 +1328,7 @@ Console.ConsoleViewMessage = class {
         linkNode = linkifier(title, realURL);
 
       container.appendChild(linkNode);
-      string = string.substring(linkIndex + linkString.length, string.length);
+      string = string.substring(matchIndex + match.length, string.length);
     }
 
     if (string)
