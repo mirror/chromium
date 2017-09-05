@@ -30,11 +30,18 @@ settings.ContentSettingsTypes = {
   MIDI_DEVICES: 'midi-sysex',
   USB_DEVICES: 'usb-chooser-data',
   ZOOM_LEVELS: 'zoom-levels',
-  // <if expr="chromeos">
-  PROTECTED_CONTENT: 'protectedContent',
-  // </if>
+  PROTECTED_CONTENT: getProtectedContent(),
   ADS: 'ads',
 };
+
+// Protected Content / Protected Media Identifier is only available on ChromeOS.
+function getProtectedContent() {
+  var val = '';
+  // <if expr="chromeos">
+  val = 'protectedContent';
+  // </if>
+  return val;
+}
 
 /**
  * Contains the possible string values for a given ContentSettingsTypes.

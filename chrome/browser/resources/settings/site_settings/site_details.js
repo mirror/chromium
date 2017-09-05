@@ -214,10 +214,11 @@ Polymer({
    * @private
    */
   getCategoryList_: function() {
-    return Array.prototype.map.call(
-        this.root.querySelectorAll('site-details-permission'), (element) => {
-          return element.category;
-        });
+    return Array.prototype.map
+        .call(
+            this.root.querySelectorAll('site-details-permission'),
+            (element) => element.category)
+        .filter((category) => category != '');
   },
 
   /**
