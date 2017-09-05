@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7553c706_cc5e0710",
+        "filename": "chrome/browser/chromeos/extensions/device_local_account_external_policy_loader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-05T22:57:27Z",
+      "side": 1,
+      "message": "nit: I wonder whether we should DCHECK(has_owner()) instead. Otherwise, the code seems imply that StartLoading() could be called without an owner, which is not true.",
+      "revId": "cc098e9f79ab111b9eeea1bf3e7f78ee1b9d1f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b7be94c_41586abf",
+        "filename": "chrome/browser/chromeos/extensions/device_local_account_external_policy_loader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-05T22:57:27Z",
+      "side": 1,
+      "message": "Why not use old syntax\n  prefs_.reset(prefs-\u003eDeepCopy());\n?",
+      "revId": "cc098e9f79ab111b9eeea1bf3e7f78ee1b9d1f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
