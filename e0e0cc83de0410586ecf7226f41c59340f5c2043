@@ -213,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "4ebb8213_1962e363",
+        "filename": "services/viz/public/interfaces/compositing/shared_quad_state.mojom",
+        "patchSetId": 54
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-09-05T18:36:18Z",
+      "side": 1,
+      "message": "per our discussion, \"opaqueness\" is a property of content and \"opacity\" is a property of layer. it\u0027s possible that are_contents_opaque \u003d true and opacity \u003c 1. For a rect that can be used as a occlusion to occlude draw quads behind it, it requires that both properties are_contents_opaque \u003d true and opacity \u003d 1 to hold.",
+      "parentUuid": "7512506f_0f7078c4",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 3
+      },
+      "revId": "e0e0cc83de0410586ecf7226f41c59340f5c2043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "961d6eaf_9bab865b",
         "filename": "services/viz/public/interfaces/compositing/shared_quad_state.mojom",
         "patchSetId": 54
@@ -233,6 +257,30 @@
       "revId": "e0e0cc83de0410586ecf7226f41c59340f5c2043",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "266646fb_8c364483",
+        "filename": "services/viz/public/interfaces/compositing/shared_quad_state.mojom",
+        "patchSetId": 54
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-09-05T18:36:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "961d6eaf_9bab865b",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 1
+      },
+      "revId": "e0e0cc83de0410586ecf7226f41c59340f5c2043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

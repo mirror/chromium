@@ -16,6 +16,24 @@
       "revId": "2a24f67077be088477d601c6ebbeeff17fde3da0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0f20a0c_df8e02ac",
+        "filename": "components/viz/common/quads/shared_quad_state.h",
+        "patchSetId": 55
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-09-05T18:36:18Z",
+      "side": 1,
+      "message": "It\u0027s a great tip. Love this suggestion a lot. I will be making this change in another cl because this will change how setall is called for all sqs and this will cause less confusion to reviews as the purpose of this cl is to add a new bool to the sqs.",
+      "parentUuid": "5744d8b8_bd28e90d",
+      "revId": "2a24f67077be088477d601c6ebbeeff17fde3da0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
