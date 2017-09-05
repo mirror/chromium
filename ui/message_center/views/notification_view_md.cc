@@ -109,6 +109,38 @@ gfx::FontList GetTextFontList() {
   return gfx::FontList(font);
 }
 
+#if defined(OS_CHROMEOS)
+// Return true if the default |display_source| should be used for the
+// notifications from the notifier.
+//
+// Ideally, we shuold fix the callers to set appropriate |display_source|, but
+// string resource is frozen in M62. For now, we should use this to prevent
+// empty |display_source| in system notifications.
+// TODO(tetsui): Remove this hack after M62 is released.
+bool IsDefaultDisplaySourceUsed(const NotifierId& notifier) {
+  // The string constants are written in plain to prevent circular dependencies.
+  // This should not be accepted usually but I think it's OK here, as this
+  // function has a clear plan to be removed soon.
+  return notifier.type == NotifierId::SYSTEM_COMPONENT &&
+         (
+             // ARC auth notification.
+             // chrome/browser/chromeos/src/arc_auth_notification.cc
+             notifier.id == "arc_auth" ||
+             // Happiness survey notification.
+             // chrome/browser/chromeos/hats/hats_notification_controller.cc
+             notifier.id == "ash.hats" ||
+             // Sign-in error notification.
+             // chrome/browser/signin/signin_error_notifier_ash.cc
+             // chrome/browser/chromeos/authpolicy/
+             //   auth_policy_credentials_manager.cc
+             notifier.id == "chrome://settings/signin/" ||
+             // CUPS printing notification.
+             // chrome/browser/chromeos/printing/cups_print_job_notification.cc
+             notifier.id ==
+                 "chrome://settings/printing/cups-print-job-notification");
+}
+#endif
+
 // ItemView ////////////////////////////////////////////////////////////////////
 
 // ItemViews are responsible for drawing each list notification item's title and
@@ -589,8 +621,9 @@ void NotificationViewMD::CreateOrUpdateContextTitleView(
   // TODO(tetsui): Remove this after all system notification transition is
   // completed.
   // All system notification should use Notification::CreateSystemNotification()
-  if (notification.display_source().empty() &&
-      notification.origin_url().is_empty()) {
+  if ((notification.display_source().empty() &&
+       notification.origin_url().is_empty()) ||
+      IsDefaultDisplaySourceUsed(notification.notifier_id())) {
     header_row_->SetAppName(l10n_util::GetStringFUTF16(
         IDS_MESSAGE_CENTER_NOTIFICATION_CHROMEOS_SYSTEM,
         MessageCenter::Get()->GetProductOSName()));
