@@ -3349,7 +3349,8 @@ void RenderFrameHostImpl::FailedNavigation(
     const BeginNavigationParams& begin_params,
     const RequestNavigationParams& request_params,
     bool has_stale_copy_in_cache,
-    int error_code) {
+    int error_code,
+    base::Optional<std::string>& error_page_html) {
   TRACE_EVENT2("navigation", "RenderFrameHostImpl::FailedNavigation",
                "frame_tree_node", frame_tree_node_->frame_tree_node_id(),
                "error", error_code);
@@ -3363,7 +3364,8 @@ void RenderFrameHostImpl::FailedNavigation(
   ResetWaitingState();
 
   Send(new FrameMsg_FailedNavigation(routing_id_, common_params, request_params,
-                                     has_stale_copy_in_cache, error_code));
+                                     has_stale_copy_in_cache, error_code,
+                                     error_page_html));
 
   RenderFrameDevToolsAgentHost::OnFailedNavigation(
       this, common_params, begin_params, static_cast<net::Error>(error_code));

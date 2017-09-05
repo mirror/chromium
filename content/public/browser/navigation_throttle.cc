@@ -8,6 +8,23 @@
 
 namespace content {
 
+NavigationThrottle::ThrottleCheckResult::ThrottleCheckResult(
+    NavigationThrottle::ThrottleCheckAction action)
+    : action(action),
+      net_error(base::nullopt),
+      error_page_html(base::nullopt) {}
+
+NavigationThrottle::ThrottleCheckResult::ThrottleCheckResult(
+    NavigationThrottle::ThrottleCheckAction action,
+    int net_error,
+    std::string error_page_html)
+    : action(action), net_error(net_error), error_page_html(error_page_html) {}
+
+NavigationThrottle::ThrottleCheckResult::ThrottleCheckResult(
+    const NavigationThrottle::ThrottleCheckResult& other) = default;
+
+NavigationThrottle::ThrottleCheckResult::~ThrottleCheckResult() {}
+
 NavigationThrottle::NavigationThrottle(NavigationHandle* navigation_handle)
     : navigation_handle_(navigation_handle) {}
 
