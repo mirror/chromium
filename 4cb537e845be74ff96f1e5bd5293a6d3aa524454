@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "ed34aeca_0e978720",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-09-05T23:24:36Z",
+      "side": 1,
+      "message": "I think Jian is removing the queue of started downloads with this patch as well. \nWithout queue, it\u0027s a bit simpler and will work similar to Cleanup reconciling task - they both need to wait and they will wait in the same manner...",
+      "parentUuid": "c52d0c9f_fee7d325",
+      "revId": "4cb537e845be74ff96f1e5bd5293a6d3aa524454",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7e360592_c3ddaa68",
         "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.h",
         "patchSetId": 6
