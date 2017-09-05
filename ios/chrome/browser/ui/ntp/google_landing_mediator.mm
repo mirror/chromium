@@ -153,8 +153,7 @@ void SearchEngineObserver::OnTemplateURLServiceChanged() {
 @property(nonatomic, assign, readonly) WebStateList* webStateList;
 
 // The dispatcher for this mediator.
-@property(nonatomic, weak) id<BrowserCommands, ChromeExecuteCommand, UrlLoader>
-    dispatcher;
+@property(nonatomic, weak) id<BrowserCommands, UrlLoader> dispatcher;
 
 // Perform initial setup.
 - (void)setUp;
@@ -169,9 +168,7 @@ void SearchEngineObserver::OnTemplateURLServiceChanged() {
 
 - (instancetype)initWithConsumer:(id<GoogleLandingConsumer>)consumer
                     browserState:(ios::ChromeBrowserState*)browserState
-                      dispatcher:
-                          (id<BrowserCommands, ChromeExecuteCommand, UrlLoader>)
-                              dispatcher
+                      dispatcher:(id<BrowserCommands, UrlLoader>)dispatcher
                     webStateList:(WebStateList*)webStateList {
   self = [super init];
   if (self) {

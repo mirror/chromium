@@ -10,7 +10,6 @@
 #import "ios/chrome/browser/ui/ntp/google_landing_data_source.h"
 #import "ios/chrome/browser/ui/toolbar/web_toolbar_controller.h"
 
-@protocol ChromeExecuteCommand;
 @protocol GoogleLandingConsumer;
 @protocol OmniboxFocuser;
 @protocol UrlLoader;
@@ -25,7 +24,7 @@ class ChromeBrowserState;
 
 - (instancetype)initWithConsumer:(id<GoogleLandingConsumer>)consumer
                     browserState:(ios::ChromeBrowserState*)browserState
-                      dispatcher:(id<ChromeExecuteCommand, UrlLoader>)dispatcher
+                      dispatcher:(id<UrlLoader>)dispatcher
                     webStateList:(WebStateList*)webStateList
     NS_DESIGNATED_INITIALIZER;
 - (instancetype)init NS_UNAVAILABLE;
