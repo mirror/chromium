@@ -7,10 +7,8 @@
 #include <stddef.h>
 
 #include "base/bind.h"
-#include "base/feature_list.h"
 #include "build/build_config.h"
 #include "chrome/browser/chrome_notification_types.h"
-#include "chrome/browser/history/top_sites_factory.h"
 #include "chrome/browser/ntp_tiles/chrome_most_visited_sites_factory.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/search/instant_io_context.h"
@@ -25,7 +23,6 @@
 #include "chrome/browser/ui/webui/theme_source.h"
 #include "chrome/common/search.mojom.h"
 #include "chrome/grit/theme_resources.h"
-#include "components/history/core/browser/top_sites.h"
 #include "components/search/search.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/notification_service.h"
@@ -43,16 +40,7 @@
 #include "chrome/browser/themes/theme_service_factory.h"
 #endif
 
-namespace {
-
-const base::Feature kNtpTilesFeature{"NTPTilesInInstantService",
-                                     base::FEATURE_ENABLED_BY_DEFAULT};
-
-}  // namespace
-
-InstantService::InstantService(Profile* profile)
-    : profile_(profile),
-      weak_ptr_factory_(this) {
+InstantService::InstantService(Profile* profile) : profile_(profile) {
   // The initialization below depends on a typical set of browser threads. Skip
   // it if we are running in a unit test without the full suite.
   if (!content::BrowserThread::CurrentlyOn(content::BrowserThread::UI))
@@ -81,20 +69,9 @@ InstantService::InstantService(Profile* profile)
                  content::NOTIFICATION_RENDERER_PROCESS_TERMINATED,
                  content::NotificationService::AllSources());
 
-  if (base::FeatureList::IsEnabled(kNtpTilesFeature)) {
-    most_visited_sites_ =
-        ChromeMostVisitedSitesFactory::NewForProfile(profile_);
-    if (most_visited_sites_)
-      most_visited_sites_->SetMostVisitedURLsObserver(this, 8);
-  } else {
-    top_sites_ = TopSitesFactory::GetForProfile(profile_);
-    if (top_sites_) {
-      top_sites_->AddObserver(this);
-      // Immediately query the TopSites state.
-      TopSitesChanged(top_sites_.get(),
-                      history::TopSitesObserver::ChangeReason::MOST_VISITED);
-    }
-  }
+  most_visited_sites_ = ChromeMostVisitedSitesFactory::NewForProfile(profile_);
+  if (most_visited_sites_)
+    most_visited_sites_->SetMostVisitedURLsObserver(this, 8);
 
   if (profile_ && profile_->GetResourceContext()) {
     content::BrowserThread::PostTask(
@@ -151,32 +128,24 @@ void InstantService::RemoveObserver(InstantServiceObserver* observer) {
 void InstantService::OnNewTabPageOpened() {
   if (most_visited_sites_) {
     most_visited_sites_->Refresh();
-  } else if (top_sites_) {
-    top_sites_->SyncWithHistory();
   }
 }
 
 void InstantService::DeleteMostVisitedItem(const GURL& url) {
   if (most_visited_sites_) {
     most_visited_sites_->AddOrRemoveBlacklistedUrl(url, true);
-  } else if (top_sites_) {
-    top_sites_->AddBlacklistedURL(url);
   }
 }
 
 void InstantService::UndoMostVisitedDeletion(const GURL& url) {
   if (most_visited_sites_) {
     most_visited_sites_->AddOrRemoveBlacklistedUrl(url, false);
-  } else if (top_sites_) {
-    top_sites_->RemoveBlacklistedURL(url);
   }
 }
 
 void InstantService::UndoAllMostVisitedDeletions() {
   if (most_visited_sites_) {
     most_visited_sites_->ClearBlacklistedUrls();
-  } else if (top_sites_) {
-    top_sites_->ClearBlacklistedURLs();
   }
 }
 
@@ -215,9 +184,6 @@ void InstantService::Shutdown() {
 
   if (most_visited_sites_) {
     most_visited_sites_.reset();
-  } else if (top_sites_) {
-    top_sites_->RemoveObserver(this);
-    top_sites_ = nullptr;
   }
 
   instant_io_context_ = NULL;
@@ -255,20 +221,6 @@ void InstantService::OnRendererProcessTerminated(int process_id) {
         base::BindOnce(&InstantIOContext::RemoveInstantProcessOnIO,
                        instant_io_context_, process_id));
   }
-}
-
-void InstantService::OnTopSitesReceived(
-    const history::MostVisitedURLList& data) {
-  most_visited_items_.clear();
-  for (const history::MostVisitedURL& mv_url : data) {
-    InstantMostVisitedItem item;
-    item.url = mv_url.url;
-    item.title = mv_url.title;
-    item.source = ntp_tiles::TileSource::TOP_SITES;
-    most_visited_items_.push_back(item);
-  }
-
-  NotifyAboutMostVisitedItems();
 }
 
 void InstantService::OnURLsAvailable(
@@ -421,23 +373,6 @@ void InstantService::BuildThemeInfo() {
   }
 }
 #endif  // !defined(OS_ANDROID)
-
-void InstantService::TopSitesLoaded(history::TopSites* top_sites) {
-  DCHECK(!most_visited_sites_);
-  DCHECK_EQ(top_sites_.get(), top_sites);
-}
-
-void InstantService::TopSitesChanged(history::TopSites* top_sites,
-                                     ChangeReason change_reason) {
-  DCHECK(!most_visited_sites_);
-  DCHECK_EQ(top_sites_.get(), top_sites);
-  // As forced urls already come from tiles, we can safely ignore those updates.
-  if (change_reason == history::TopSitesObserver::ChangeReason::FORCED_URL)
-    return;
-  top_sites_->GetMostVisitedURLs(base::Bind(&InstantService::OnTopSitesReceived,
-                                            weak_ptr_factory_.GetWeakPtr()),
-                                 false);
-}
 
 void InstantService::OnSearchEngineBaseURLChanged(
     SearchEngineBaseURLTracker::ChangeReason change_reason) {

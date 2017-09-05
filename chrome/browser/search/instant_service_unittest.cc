@@ -11,6 +11,8 @@
 #include "chrome/browser/search/instant_unittest_base.h"
 #include "chrome/browser/search/search.h"
 #include "chrome/common/search/instant_types.h"
+#include "components/ntp_tiles/ntp_tile.h"
+#include "components/ntp_tiles/section_type.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "url/gurl.h"
 
@@ -65,11 +67,13 @@ TEST_F(InstantServiceTest, DispatchGoogleURLUpdated) {
   NotifyGoogleBaseURLUpdate(new_base_url);
 }
 
-TEST_F(InstantServiceTest, GetSuggestionFromClientSide) {
-  history::MostVisitedURLList url_list;
-  url_list.push_back(history::MostVisitedURL());
+TEST_F(InstantServiceTest, GetNTPTileSuggestion) {
+  ntp_tiles::NTPTilesVector suggestions;
+  suggestions.push_back(ntp_tiles::NTPTile());
+  std::map<ntp_tiles::SectionType, ntp_tiles::NTPTilesVector> suggestions_map;
+  suggestions_map[ntp_tiles::SectionType::PERSONALIZED] = suggestions;
 
-  instant_service_->OnTopSitesReceived(url_list);
+  instant_service_->OnURLsAvailable(suggestions_map);
 
   auto items = instant_service_->most_visited_items_;
   ASSERT_EQ(1, (int)items.size());
