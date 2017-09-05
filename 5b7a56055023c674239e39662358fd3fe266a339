@@ -45,6 +45,54 @@
       "revId": "5b7a56055023c674239e39662358fd3fe266a339",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d04877aa_e7d4fa82",
+        "filename": "chrome/browser/android/ntp/content_suggestions_notifier_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-05T09:14:10Z",
+      "side": 1,
+      "message": "Presumably we could subtract (opt-outs - opt-ins) to get a roughly accurate count of currently-opted out users. I don\u0027t think it\u0027s worth the extra complexity, though. We\u0027re measuring opt-outs as a proxy for inconveniencing users. If a user opts out, then back in, it\u0027s likely that we still inconvenienced them some.",
+      "parentUuid": "6f309c8b_9c66f215",
+      "range": {
+        "startLine": 302,
+        "startChar": 4,
+        "endLine": 302,
+        "endChar": 46
+      },
+      "revId": "5b7a56055023c674239e39662358fd3fe266a339",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a1fead34_206d8601",
+        "filename": "chrome/browser/android/ntp/content_suggestions_notifier_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-05T09:14:10Z",
+      "side": 1,
+      "message": "Yes. Unfortunately, I didn\u0027t realize my mistake until the data started coming in. I left it as-is because I didn\u0027t want to break the data continuity. I guess that argument doesn\u0027t apply here. Do you think I should use the proper name here?",
+      "parentUuid": "e542c2ad_3b0ddb9b",
+      "range": {
+        "startLine": 302,
+        "startChar": 47,
+        "endLine": 302,
+        "endChar": 75
+      },
+      "revId": "5b7a56055023c674239e39662358fd3fe266a339",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
