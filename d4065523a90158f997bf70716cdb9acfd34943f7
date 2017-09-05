@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7b267c00_eb9bead1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 52
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-09-05T16:02:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79a46cd1_541e4fd4",
+      "range": {
+        "startLine": 7,
+        "startChar": 17,
+        "endLine": 7,
+        "endChar": 26
+      },
+      "revId": "d4065523a90158f997bf70716cdb9acfd34943f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22098bf7_c53769ce",
         "filename": "components/exo/surface.cc",
         "patchSetId": 52
@@ -45,6 +69,30 @@
       "revId": "d4065523a90158f997bf70716cdb9acfd34943f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "990c3833_b5de4243",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 754,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-09-05T16:02:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22098bf7_c53769ce",
+      "range": {
+        "startLine": 754,
+        "startChar": 49,
+        "endLine": 754,
+        "endChar": 74
+      },
+      "revId": "d4065523a90158f997bf70716cdb9acfd34943f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
