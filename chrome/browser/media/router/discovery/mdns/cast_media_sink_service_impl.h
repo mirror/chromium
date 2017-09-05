@@ -110,6 +110,9 @@ class CastMediaSinkServiceImpl
 
   CastDeviceCountMetrics metrics_;
 
+  // Owned by |g_browser_process|.
+  net::NetLog* const net_log_;
+
   SEQUENCE_CHECKER(sequence_checker_);
 
   DISALLOW_COPY_AND_ASSIGN(CastMediaSinkServiceImpl);

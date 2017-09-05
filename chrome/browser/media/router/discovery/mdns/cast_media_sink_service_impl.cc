@@ -55,7 +55,8 @@ CastMediaSinkServiceImpl::CastMediaSinkServiceImpl(
     DiscoveryNetworkMonitor* network_monitor)
     : MediaSinkServiceBase(callback),
       cast_socket_service_(cast_socket_service),
-      network_monitor_(network_monitor) {
+      network_monitor_(network_monitor),
+      net_log_(g_browser_process->net_log()) {
   DETACH_FROM_SEQUENCE(sequence_checker_);
   DCHECK(cast_socket_service_);
   DCHECK(network_monitor_);
@@ -138,7 +139,7 @@ void CastMediaSinkServiceImpl::OpenChannel(const net::IPEndPoint& ip_endpoint,
            << " name: " << cast_sink.sink().name();
 
   cast_socket_service_->OpenSocket(
-      ip_endpoint, g_browser_process->net_log(),
+      ip_endpoint, net_log_,
       base::BindOnce(&CastMediaSinkServiceImpl::OnChannelOpened, AsWeakPtr(),
                      std::move(cast_sink)),
       this);
