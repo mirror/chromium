@@ -1323,6 +1323,8 @@ bool QuicConnection::ProcessValidatedPacket(const QuicPacketHeader& header) {
             last_packet_destination_address_.host().Normalized()) {
       if (FLAGS_quic_reloadable_flag_quic_allow_one_address_change &&
           AllowSelfAddressChange()) {
+        QUIC_FLAG_COUNT_N(quic_reloadable_flag_quic_allow_one_address_change, 2,
+                          2);
         OnSelfAddressChange();
       } else {
         CloseConnection(
