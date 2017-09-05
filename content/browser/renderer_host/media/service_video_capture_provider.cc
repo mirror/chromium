@@ -9,6 +9,7 @@
 #include "content/public/browser/browser_thread.h"
 #include "content/public/common/service_manager_connection.h"
 #include "media/base/scoped_callback_runner.h"
+#include "mojo/public/cpp/bindings/strong_binding.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "services/video_capture/public/interfaces/constants.mojom.h"
 #include "services/video_capture/public/uma/video_capture_service_event.h"
@@ -18,13 +19,8 @@ namespace {
 class ServiceConnectorImpl
     : public content::ServiceVideoCaptureProvider::ServiceConnector {
  public:
-  ServiceConnectorImpl() {
-    DCHECK(content::BrowserThread::CurrentlyOn(content::BrowserThread::UI));
-    connector_ = content::ServiceManagerConnection::GetForProcess()
-                     ->GetConnector()
-                     ->Clone();
-    DETACH_FROM_SEQUENCE(sequence_checker_);
-  }
+  ServiceConnectorImpl(std::unique_ptr<service_manager::Connector> connector)
+      : connector_(std::move(connector)) {}
 
   void BindFactoryProvider(
       video_capture::mojom::DeviceFactoryProviderPtr* provider) override {
@@ -33,7 +29,21 @@ class ServiceConnectorImpl
 
  private:
   std::unique_ptr<service_manager::Connector> connector_;
-  SEQUENCE_CHECKER(sequence_checker_);
+};
+
+class LogHandlerImpl : public video_capture::mojom::LogHandler {
+ public:
+  LogHandlerImpl(
+      base::RepeatingCallback<void(const std::string&)> emit_log_message_cb)
+      : emit_log_message_cb_(std::move(emit_log_message_cb)) {}
+
+  // video_capture::mojom::LogHandler implementation.
+  void OnLog(const std::string& message) override {
+    emit_log_message_cb_.Run(message);
+  }
+
+ private:
+  base::RepeatingCallback<void(const std::string&)> emit_log_message_cb_;
 };
 
 }  // anonymous namespace
@@ -41,9 +51,11 @@ class ServiceConnectorImpl
 namespace content {
 
 ServiceVideoCaptureProvider::ServiceVideoCaptureProvider(
+    std::unique_ptr<service_manager::Connector> connector,
     base::RepeatingCallback<void(const std::string&)> emit_log_message_cb)
-    : ServiceVideoCaptureProvider(base::MakeUnique<ServiceConnectorImpl>(),
-                                  std::move(emit_log_message_cb)) {}
+    : ServiceVideoCaptureProvider(
+          base::MakeUnique<ServiceConnectorImpl>(std::move(connector)),
+          std::move(emit_log_message_cb)) {}
 
 ServiceVideoCaptureProvider::ServiceVideoCaptureProvider(
     std::unique_ptr<ServiceConnector> service_connector,
@@ -116,8 +128,12 @@ void ServiceVideoCaptureProvider::LazyConnectToService() {
   time_of_last_connect_ = base::TimeTicks::Now();
 
   service_connector_->BindFactoryProvider(&device_factory_provider_);
+  video_capture::mojom::LogHandlerPtr log_handler_ptr;
+  mojo::MakeStrongBinding(
+      base::MakeUnique<LogHandlerImpl>(emit_log_message_cb_),
+      mojo::MakeRequest(&log_handler_ptr));
   device_factory_provider_->ConnectToDeviceFactory(
-      mojo::MakeRequest(&device_factory_));
+      std::move(log_handler_ptr), mojo::MakeRequest(&device_factory_));
   // Unretained |this| is safe, because |this| owns |device_factory_|.
   device_factory_.set_connection_error_handler(base::BindOnce(
       &ServiceVideoCaptureProvider::OnLostConnectionToDeviceFactory,

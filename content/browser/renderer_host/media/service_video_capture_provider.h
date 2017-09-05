@@ -7,6 +7,7 @@
 
 #include "base/threading/thread_checker.h"
 #include "content/browser/renderer_host/media/video_capture_provider.h"
+#include "services/service_manager/public/cpp/connector.h"
 #include "services/video_capture/public/interfaces/device_factory.mojom.h"
 #include "services/video_capture/public/interfaces/device_factory_provider.mojom.h"
 
@@ -27,10 +28,10 @@ class CONTENT_EXPORT ServiceVideoCaptureProvider : public VideoCaptureProvider {
         video_capture::mojom::DeviceFactoryProviderPtr* provider) = 0;
   };
 
-  // The parameterless constructor creates a default ServiceConnector which
-  // uses the ServiceManager associated with the current process to connect
-  // to the video capture service.
-  explicit ServiceVideoCaptureProvider(
+  // This constructor creates a default ServiceConnector which uses the given
+  // service_manager::Connector to connect to the video capture service.
+  ServiceVideoCaptureProvider(
+      std::unique_ptr<service_manager::Connector> connector,
       base::RepeatingCallback<void(const std::string&)> emit_log_message_cb);
   // Lets clients provide a custom ServiceConnector.
   ServiceVideoCaptureProvider(

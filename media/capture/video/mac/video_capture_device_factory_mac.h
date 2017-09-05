@@ -16,7 +16,8 @@ namespace media {
 class CAPTURE_EXPORT VideoCaptureDeviceFactoryMac
     : public VideoCaptureDeviceFactory {
  public:
-  VideoCaptureDeviceFactoryMac();
+  VideoCaptureDeviceFactoryMac(
+      base::RepeatingCallback<void(const std::string&)> emit_log_message_cb);
   ~VideoCaptureDeviceFactoryMac() override;
 
   std::unique_ptr<VideoCaptureDevice> CreateDevice(
@@ -28,6 +29,9 @@ class CAPTURE_EXPORT VideoCaptureDeviceFactoryMac
       VideoCaptureFormats* supported_formats) override;
 
   DISALLOW_COPY_AND_ASSIGN(VideoCaptureDeviceFactoryMac);
+
+ private:
+  base::RepeatingCallback<void(const std::string&)> emit_log_message_cb_;
 };
 
 }  // namespace media
