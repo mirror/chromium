@@ -9,8 +9,9 @@
 async_test(function(t) {
     var track = document.querySelector("track");
 
-    track.onload = t.step_func_done(function() {
+    track.onerror = t.step_func_done(function() {
         assert_equals(track.track.cues.length, 0);
     });
+    track.onload = t.unreached_func("Empty file should have failed loading");
 });
 </script>
