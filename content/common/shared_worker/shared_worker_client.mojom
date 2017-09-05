@@ -1,0 +1,15 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module content.mojom;
+
+import "third_party/WebKit/public/platform/web_feature.mojom";
+import "third_party/WebKit/public/web/shared_worker_creation_context_type.mojom";
+
+interface SharedWorkerClient {
+  OnCreated(blink.mojom.SharedWorkerCreationContextType creation_context_type);
+  OnConnected(array<blink.mojom.WebFeature> features_used);
+  OnScriptLoadFailed();
+  OnFeatureUsed(blink.mojom.WebFeature feature);
+};
