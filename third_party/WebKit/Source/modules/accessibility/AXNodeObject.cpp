@@ -1895,7 +1895,16 @@ float AXNodeObject::MaxValueForRange() const {
   if (isHTMLMeterElement(GetNode()))
     return toHTMLMeterElement(*GetNode()).max();
 
-  return 0.0;
+  // In ARIA 1.1, default value of scrollbar, separator and slider
+  // for aria-valuemax were changed to 100.
+  switch (AriaRoleAttribute()) {
+    case kScrollBarRole:
+    case kSplitterRole:
+    case kSliderRole:
+      return 100.0f;
+    default:
+      return 0.0f;
+  }
 }
 
 float AXNodeObject::MinValueForRange() const {
