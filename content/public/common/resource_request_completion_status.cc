@@ -4,20 +4,16 @@
 
 #include "content/public/common/resource_request_completion_status.h"
 
-#include "net/base/net_errors.h"
-
 namespace content {
 
-ResourceRequestCompletionStatus::ResourceRequestCompletionStatus() {}
+ResourceRequestCompletionStatus::ResourceRequestCompletionStatus() = default;
 ResourceRequestCompletionStatus::ResourceRequestCompletionStatus(
     const ResourceRequestCompletionStatus& status) = default;
 
-ResourceRequestCompletionStatus::ResourceRequestCompletionStatus(int64_t length)
-    : error_code(net::OK),
-      completion_time(base::TimeTicks::Now()),
-      encoded_data_length(length),
-      encoded_body_length(length) {}
+ResourceRequestCompletionStatus::ResourceRequestCompletionStatus(
+    net::Error error_code)
+    : error_code(error_code), completion_time(base::TimeTicks::Now()) {}
 
-ResourceRequestCompletionStatus::~ResourceRequestCompletionStatus() {}
+ResourceRequestCompletionStatus::~ResourceRequestCompletionStatus() = default;
 
 }  // namespace content
