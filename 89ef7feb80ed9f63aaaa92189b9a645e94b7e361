@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f6b0d9b_55cb1a4d",
+        "filename": "chrome/renderer/content_settings_observer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-05T10:42:01Z",
+      "side": 1,
+      "message": "nit: calling the origin part \u0027hostname\u0027 feels a bit weird, should this rather be \u0027origin\u0027?",
+      "revId": "89ef7feb80ed9f63aaaa92189b9a645e94b7e361",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6afac0ec_267859ca",
+        "filename": "chrome/renderer/content_settings_observer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-05T10:42:01Z",
+      "side": 1,
+      "message": "nit: would just do\n\nauto\u0026 rule \u003d content_setting_rules_-\u003eclient_hints_rules\n\nwork?",
+      "revId": "89ef7feb80ed9f63aaaa92189b9a645e94b7e361",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9e4f09b_89e4c94c",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-05T10:42:01Z",
+      "side": 1,
+      "message": "Would it mean we\u0027ll likely send this info only for subresource requests given that we\u0027re trying to enable browser-side navigation anytime soon?",
+      "revId": "89ef7feb80ed9f63aaaa92189b9a645e94b7e361",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
