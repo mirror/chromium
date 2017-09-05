@@ -148,7 +148,28 @@ void SplitViewController::SnapWindow(aura::Window* window,
   if (stacking_target)
     window->parent()->StackChildBelow(stacking_target, window);
 
-  NotifySplitViewStateChanged(previous_state, state_);
+  // Snap window may still be called when the state is unchanged (ie. swapping
+  // windows).
+  if (previous_state != state_)
+    NotifySplitViewStateChanged(previous_state, state_);
+}
+
+void SplitViewController::SwapWindows() {
+  if (state_ != BOTH_SNAPPED)
+    return;
+
+  DCHECK(left_window_ && right_window_);
+
+  aura::Window* new_left_window = right_window_;
+  aura::Window* new_right_window = left_window_;
+
+  StopObserving(left_window_);
+  StopObserving(right_window_);
+  left_window_ = nullptr;
+  right_window_ = nullptr;
+
+  SnapWindow(new_left_window, LEFT);
+  SnapWindow(new_right_window, RIGHT);
 }
 
 aura::Window* SplitViewController::GetDefaultSnappedWindow() {
