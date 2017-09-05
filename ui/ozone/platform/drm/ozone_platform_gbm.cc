@@ -115,12 +115,12 @@ class OzonePlatformGbm : public OzonePlatform {
     registry->AddInterface<ozone::mojom::DeviceCursor>(
         base::Bind(&OzonePlatformGbm::CreateDeviceCursorBinding,
                    weak_factory_.GetWeakPtr()),
-        gpu_task_runner_);
+        base::ThreadTaskRunnerHandle::Get());
 
     registry->AddInterface<ozone::mojom::DrmDevice>(
         base::Bind(&OzonePlatformGbm::CreateDrmDeviceBinding,
                    weak_factory_.GetWeakPtr()),
-        gpu_task_runner_);
+        base::ThreadTaskRunnerHandle::Get());
   }
   void CreateDeviceCursorBinding(
       ozone::mojom::DeviceCursorRequest request,
@@ -225,7 +225,6 @@ class OzonePlatformGbm : public OzonePlatform {
     // complete.
     // TODO(rjk): Make it possible to turn this on.
     // using_mojo_ = args.connector != nullptr;
-    gpu_task_runner_ = base::ThreadTaskRunnerHandle::Get();
 
     if (!single_process_)
       gl_api_loader_.reset(new GlApiLoader());
@@ -287,7 +286,6 @@ class OzonePlatformGbm : public OzonePlatform {
   std::unique_ptr<GlApiLoader> gl_api_loader_;
   std::unique_ptr<GbmSurfaceFactory> surface_factory_;
   scoped_refptr<IPC::MessageFilter> gpu_message_filter_;
-  scoped_refptr<base::SingleThreadTaskRunner> gpu_task_runner_;
 
   // TODO(rjkroege,sadrul): Provide a more elegant solution for this issue when
   // running in single process mode.
