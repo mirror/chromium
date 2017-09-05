@@ -109,6 +109,18 @@ Polymer({
   },
 
   /**
+   * Function returns the string that is passed in. Hand-wavey hackery needed
+   * so that aria-label is not reflected. This is to avoid a duplicate
+   * aria-label...
+   * @param {string} str
+   * @type {string}
+   * @private
+   */
+  passThrough_: function(str) {
+    return str;
+  },
+
+  /**
    * @param {boolean} managed Whether the auto-detect setting is controlled.
    * @param {boolean} valueFromPolicy The value of the auto-detect setting
    *     forced by policy.

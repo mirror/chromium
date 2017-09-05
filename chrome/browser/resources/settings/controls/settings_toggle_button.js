@@ -12,6 +12,12 @@ Polymer({
   behaviors: [SettingsBooleanControlBehavior],
 
   properties: {
+    ariaLabel: {
+      type: String,
+      reflectToAttribute: false,
+      value: '',
+    },
+
     elideLabel: {
       type: Boolean,
       reflectToAttribute: true,
@@ -29,6 +35,14 @@ Polymer({
   /** @override */
   focus: function() {
     this.$.control.focus();
+  },
+
+  /**
+   * @return {string}
+   * @private
+   */
+  ariaLabel_: function() {
+    return this.label || this.ariaLabel;
   },
 
   /**
