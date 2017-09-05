@@ -1671,6 +1671,23 @@ RenderFrameHostImpl::PassNavigationHandleOwnership() {
   return std::move(navigation_handle_);
 }
 
+void RenderFrameHostImpl::TakeNavigationRequest(
+    std::unique_ptr<NavigationRequest> navigation_request) {
+  navigation_requests_.insert(std::move(navigation_request));
+}
+
+void RenderFrameHostImpl::ReleaseNavigationRequest(
+    NavigationRequest* navigation_request) {
+  for (const std::unique_ptr<NavigationRequest>& request :
+       navigation_requests_) {
+    if (request.get() == navigation_request) {
+      navigation_requests_.erase(request);
+      return;
+    }
+  }
+  NOTREACHED();
+}
+
 void RenderFrameHostImpl::SwapOut(
     RenderFrameProxyHost* proxy,
     bool is_loading) {
@@ -2614,6 +2631,15 @@ bool RenderFrameHostImpl::GetSuddenTerminationDisablerState(
 void RenderFrameHostImpl::OnDidStopLoading() {
   TRACE_EVENT1("navigation", "RenderFrameHostImpl::OnDidStopLoading",
                "frame_tree_node", frame_tree_node_->frame_tree_node_id());
+
+  // PlzNavigate
+  if (IsBrowserSideNavigationEnabled()) {
+    // If the renderer still has at least one navigation to commit, don't mark
+    // this RenderFrameHost as having stopped loading until all navigation have
+    // been handled.
+    if (!navigation_requests_.empty())
+      return;
+  }
 
   // This method should never be called when the frame is not loading.
   // Unfortunately, it can happen if a history navigation happens during a
