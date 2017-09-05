@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "df408d4a_8cedd200",
+        "filename": "media/test/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-09-05T21:17:19Z",
+      "side": 1,
+      "message": "I\u0027m not sure which is more common - but I expect we see a lot of *both*.\n\n\u003e LC allows for implicit SBR signaling. SBR (or PS) in the mimetype is explicitly signalling that\n\nIIRC implicit signaling is really flexible. I think it will work for any type of AAC wrapping, including mepg2, mp4, as well as all levels (lc, sbr, ps) and in any direction. \n\n\u003e chcunningham to confirm -- do we need such logging?\n\nNo strong opinion - first time anyone has asked for it. One thing to keep in mind is we cannot easily know the level of AAC when implicit signalling is used. We rely on ffmpeg to tell us that the sample rate, channel count, etc have changed and we update our state to match. But AFAIK we are not told the specific level of AAC that was implicitly signaled.",
+      "parentUuid": "82cf4f8e_8e1a2df9",
+      "revId": "7730141481a1135753ccc9edbffc2111fc619f38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5856d277_794cdd13",
         "filename": "media/test/pipeline_integration_fuzzertest.cc",
         "patchSetId": 1
