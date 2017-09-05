@@ -65,7 +65,7 @@ constexpr size_t kRecentlyClosedItems = 3;
 
 // The number of updates to skip to alleviate the machine when a previous update
 // was too slow.
-constexpr int kUpdatesToSkipUnderHeavyLoad = 10;
+constexpr int kUpdatesToSkipUnderHeavyLoad = 5;
 
 // The delay before updating the JumpList for users who haven't used it in a
 // session. A delay of 2000 ms is chosen to coalesce more updates when tabs are
@@ -339,14 +339,17 @@ void JumpList::InitializeTimerForUpdate() {
 void JumpList::ProcessNotifications() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
-  if (updates_to_skip_ > 0) {
-    --updates_to_skip_;
-    return;
-  }
-
   // Retrieve the recently closed URLs synchronously.
   if (tab_restore_has_pending_notification_) {
     tab_restore_has_pending_notification_ = false;
+
+    // Skip the updates triggered by TabRestore service as a penalty for
+    // previous slow updates.
+    if (updates_to_skip_ > 0) {
+      --updates_to_skip_;
+      return;
+    }
+
     ProcessTabRestoreServiceNotification();
 
     // Force a TopSite history sync when closing a first tab in one session.
@@ -435,12 +438,24 @@ void JumpList::OnMostVisitedURLsAvailable(
     const history::MostVisitedURLList& urls) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
-  top_sites_has_pending_notification_ = false;
-
   // There is no need to update the JumpList if the top most visited sites in
   // display have not changed.
-  if (MostVisitedItemsUnchanged(most_visited_pages_, urls, kMostVisitedItems))
+  if (MostVisitedItemsUnchanged(most_visited_pages_, urls, kMostVisitedItems)) {
+    top_sites_has_pending_notification_ = false;
     return;
+  }
+
+  // Skip the updates triggered by TopSites service as a penalty for previous
+  // slow updates. We put the skip here as many TopSites notifications actually
+  // cannot pass the filters to get here. Skipping these notifications makes the
+  // penalty fake. We don't reset top_sites_has_pending_notification_ flag so
+  // that it will be attempted to handle in the next update.
+  if (updates_to_skip_ > 0) {
+    --updates_to_skip_;
+    return;
+  }
+
+  top_sites_has_pending_notification_ = false;
 
   most_visited_pages_.clear();
 
