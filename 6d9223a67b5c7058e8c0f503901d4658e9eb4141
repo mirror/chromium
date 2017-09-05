@@ -39,6 +39,30 @@
       "revId": "6d9223a67b5c7058e8c0f503901d4658e9eb4141",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43853847_d1f8fc46",
+        "filename": "content/renderer/media/webrtc/rtc_rtp_receiver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-05T09:24:39Z",
+      "side": 0,
+      "message": "The content receiver state is supposed to match the webrtc receiver state, hence the DCHECK. But this DCHECK can\u0027t run unless the adapter is already initialized, which would limit this constructor only to run on the main thread - an unnecessary restriction that complicated the RTCPeerConnectionHandler/Observer code.\n\nThere are already DCHECKs in the content receiver\u0027s getters to ensure the state matches - it\u0027s enough to DCHECK on usage, to DCHECK on construction is superflous.",
+      "parentUuid": "efda12c7_61bf6bf1",
+      "range": {
+        "startLine": 26,
+        "startChar": 27,
+        "endLine": 26,
+        "endChar": 28
+      },
+      "revId": "6d9223a67b5c7058e8c0f503901d4658e9eb4141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "9daa8ad2_72199812",
+        "filename": "content/renderer/media/rtc_peer_connection_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1032,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-05T09:24:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2138a67d_4e66d650",
+      "range": {
+        "startLine": 1032,
+        "startChar": 11,
+        "endLine": 1032,
+        "endChar": 34
+      },
+      "revId": "f04ad9855cce6ebc99a061fbdfca131d7bea7c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ce4e7c8_8e84245f",
         "filename": "content/renderer/media/webrtc/webrtc_media_stream_track_adapter.cc",
         "patchSetId": 2
@@ -62,6 +86,30 @@
       "revId": "f04ad9855cce6ebc99a061fbdfca131d7bea7c4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e12ca2d_b105b264",
+        "filename": "content/renderer/media/webrtc/webrtc_media_stream_track_adapter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-05T09:24:39Z",
+      "side": 1,
+      "message": "Changed to const\u0026 based on offline discussion.",
+      "parentUuid": "4ce4e7c8_8e84245f",
+      "range": {
+        "startLine": 40,
+        "startChar": 17,
+        "endLine": 40,
+        "endChar": 18
+      },
+      "revId": "f04ad9855cce6ebc99a061fbdfca131d7bea7c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +136,30 @@
     },
     {
       "key": {
+        "uuid": "dd121d89_e797d4a7",
+        "filename": "content/renderer/media/webrtc/webrtc_media_stream_track_adapter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-05T09:24:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfada434_ef80c8fb",
+      "range": {
+        "startLine": 177,
+        "startChar": 4,
+        "endLine": 177,
+        "endChar": 17
+      },
+      "revId": "f04ad9855cce6ebc99a061fbdfca131d7bea7c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5f792b1_73a8bbfe",
         "filename": "content/renderer/media/webrtc/webrtc_media_stream_track_adapter.h",
         "patchSetId": 2
@@ -111,6 +183,30 @@
     },
     {
       "key": {
+        "uuid": "1282f3b0_e11a0c3f",
+        "filename": "content/renderer/media/webrtc/webrtc_media_stream_track_adapter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-05T09:24:39Z",
+      "side": 1,
+      "message": "Changed to const\u0026 based on offline discussion.",
+      "parentUuid": "d5f792b1_73a8bbfe",
+      "range": {
+        "startLine": 46,
+        "startChar": 6,
+        "endLine": 46,
+        "endChar": 19
+      },
+      "revId": "f04ad9855cce6ebc99a061fbdfca131d7bea7c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "109e011b_baa404d4",
         "filename": "content/renderer/media/webrtc/webrtc_media_stream_track_adapter_map.h",
         "patchSetId": 2
@@ -131,6 +227,30 @@
       "revId": "f04ad9855cce6ebc99a061fbdfca131d7bea7c4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9f342cd_b0b2d662",
+        "filename": "content/renderer/media/webrtc/webrtc_media_stream_track_adapter_map.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-05T09:24:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "109e011b_baa404d4",
+      "range": {
+        "startLine": 99,
+        "startChar": 49,
+        "endLine": 99,
+        "endChar": 51
+      },
+      "revId": "f04ad9855cce6ebc99a061fbdfca131d7bea7c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
