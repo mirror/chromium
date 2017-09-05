@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "871a3315_92af4257",
+        "filename": "cc/animation/animation_host.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-05T00:01:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c6f36ef_b1a534dc",
+      "range": {
+        "startLine": 611,
+        "startChar": 7,
+        "endLine": 611,
+        "endChar": 12
+      },
+      "revId": "7320a4cd877e6d73533d38e75df4f0edbf7cfc7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d251dbb_3567ed6d",
         "filename": "cc/animation/animation_host.cc",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "7320a4cd877e6d73533d38e75df4f0edbf7cfc7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "827a4b62_7cd902c1",
+        "filename": "cc/animation/animation_host.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-05T00:01:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d251dbb_3567ed6d",
+      "range": {
+        "startLine": 620,
+        "startChar": 22,
+        "endLine": 620,
+        "endChar": 70
+      },
+      "revId": "7320a4cd877e6d73533d38e75df4f0edbf7cfc7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "64cec1ec_96609c56",
+        "filename": "cc/animation/animation_host.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-05T00:01:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9ff6ace_671d622b",
+      "range": {
+        "startLine": 189,
+        "startChar": 9,
+        "endLine": 189,
+        "endChar": 20
+      },
+      "revId": "7320a4cd877e6d73533d38e75df4f0edbf7cfc7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e31f774_84d031af",
         "filename": "cc/animation/animation_host_unittest.cc",
         "patchSetId": 8
@@ -91,6 +163,30 @@
       "revId": "7320a4cd877e6d73533d38e75df4f0edbf7cfc7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a803ee16_96abf6b8",
+        "filename": "cc/animation/animation_host_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-05T00:01:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e31f774_84d031af",
+      "range": {
+        "startLine": 8,
+        "startChar": 9,
+        "endLine": 8,
+        "endChar": 42
+      },
+      "revId": "7320a4cd877e6d73533d38e75df4f0edbf7cfc7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "0d5a03d2_6e3aaa5b",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-05T00:01:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a63d44b6_632659bc",
+      "range": {
+        "startLine": 455,
+        "startChar": 2,
+        "endLine": 455,
+        "endChar": 49
+      },
+      "revId": "7320a4cd877e6d73533d38e75df4f0edbf7cfc7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "792495b6_0589d4b9",
         "filename": "third_party/WebKit/Source/core/animation/Animation.h",
         "patchSetId": 8
@@ -137,6 +257,30 @@
       "revId": "7320a4cd877e6d73533d38e75df4f0edbf7cfc7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75ede25a_3bc45cf5",
+        "filename": "third_party/WebKit/Source/core/animation/Animation.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-05T00:01:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "792495b6_0589d4b9",
+      "range": {
+        "startLine": 212,
+        "startChar": 7,
+        "endLine": 212,
+        "endChar": 30
+      },
+      "revId": "7320a4cd877e6d73533d38e75df4f0edbf7cfc7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "9909df0d_b69e0659",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-05T00:01:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35d34b86_d2845858",
+      "range": {
+        "startLine": 373,
+        "startChar": 8,
+        "endLine": 374,
+        "endChar": 33
+      },
+      "revId": "7320a4cd877e6d73533d38e75df4f0edbf7cfc7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80e620d0_a42441e2",
         "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.h",
         "patchSetId": 8
@@ -183,6 +351,30 @@
       "revId": "7320a4cd877e6d73533d38e75df4f0edbf7cfc7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "693b2d02_66059185",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-05T00:01:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80e620d0_a42441e2",
+      "range": {
+        "startLine": 74,
+        "startChar": 38,
+        "endLine": 74,
+        "endChar": 45
+      },
+      "revId": "7320a4cd877e6d73533d38e75df4f0edbf7cfc7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
