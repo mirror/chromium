@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99f63083_608e05bd",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 12
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1235104
+      },
+      "writtenOn": "2017-09-05T23:35:19Z",
+      "side": 1,
+      "message": "This string was flagged by localization, and in investigating the loc bug, I noticed that the string does not follow UX writing style. If possible, please revise to \n\"Use a name that\u0027s $1 characters or less.\"\n\nSo if the character limit is 12 characters, the string would say \"Use a name that\u0027s 12 characters or less.\"\n\nThe string \"This name is too long\" could be similarly revised to say \"Use a shorter name\".",
+      "range": {
+        "startLine": 245,
+        "startChar": 3,
+        "endLine": 245,
+        "endChar": 64
+      },
+      "revId": "ed2387b81702c4d43f04b17bd6d8518e687bc42e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
