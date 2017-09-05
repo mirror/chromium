@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1816b975_53780e0f",
+        "filename": "extensions/renderer/guest_view/mime_handler_view/mime_handler_view_container.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-09-05T20:32:01Z",
+      "side": 1,
+      "message": "Not related to your change but there seems to be no other use for |element_size_| other than checking if it is empty.",
+      "revId": "13c1275f27dd7e3ff30cb9a1895760ce45b139ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f8d9624_2c35f753",
+        "filename": "extensions/renderer/guest_view/mime_handler_view/mime_handler_view_container.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-09-05T20:32:01Z",
+      "side": 1,
+      "message": "(nit) Can we add a comment here explaining when we hit this line and end up creating a guest? I assume this is when OnGuestReady arrives and we have already received the |view_id_|?",
+      "revId": "13c1275f27dd7e3ff30cb9a1895760ce45b139ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
