@@ -4,6 +4,8 @@
 
 #include "media/audio/audio_system.h"
 
+#include "base/debug/stack_trace.h"
+
 namespace media {
 
 static AudioSystem* g_last_created = nullptr;
