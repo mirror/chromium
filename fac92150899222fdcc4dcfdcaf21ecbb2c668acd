@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d1c1b0c_89977da4",
+        "filename": "chrome/browser/ui/tab_helpers.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-09-05T19:42:37Z",
+      "side": 1,
+      "message": "Possibly, we should pass a getter or weak reference here instead, in case this object outlives the UkmRecorder.",
+      "range": {
+        "startLine": 243,
+        "startChar": 20,
+        "endLine": 243,
+        "endChar": 53
+      },
+      "revId": "fac92150899222fdcc4dcfdcaf21ecbb2c668acd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d008a7a_12948df9",
+        "filename": "components/ukm/content/source_url_recorder_web_contents_observer.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-09-05T19:42:37Z",
+      "side": 1,
+      "message": "If I\u0027m interpreting Martin right, include chrome:// URLs, but skip chrome-extensions until we start checking Extension Sync setting.",
+      "range": {
+        "startLine": 61,
+        "startChar": 36,
+        "endLine": 61,
+        "endChar": 69
+      },
+      "revId": "fac92150899222fdcc4dcfdcaf21ecbb2c668acd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
