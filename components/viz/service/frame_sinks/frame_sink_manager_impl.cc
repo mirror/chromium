@@ -44,6 +44,7 @@ FrameSinkManagerImpl::~FrameSinkManagerImpl() {
   // All FrameSinks should be unregistered prior to FrameSinkManager
   // destruction.
   compositor_frame_sinks_.clear();
+  root_compositor_frame_sinks_.clear();
   DCHECK_EQ(clients_.size(), 0u);
   DCHECK_EQ(registered_sources_.size(), 0u);
   surface_manager_.RemoveObserver(this);
@@ -78,6 +79,7 @@ void FrameSinkManagerImpl::InvalidateFrameSinkId(
     const FrameSinkId& frame_sink_id) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   compositor_frame_sinks_.erase(frame_sink_id);
+  root_compositor_frame_sinks_.erase(frame_sink_id);
   surface_manager_.InvalidateFrameSinkId(frame_sink_id);
 }
 
@@ -91,13 +93,14 @@ void FrameSinkManagerImpl::CreateRootCompositorFrameSink(
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK_NE(surface_handle, gpu::kNullSurfaceHandle);
   DCHECK_EQ(0u, compositor_frame_sinks_.count(frame_sink_id));
+  DCHECK_EQ(0u, root_compositor_frame_sinks_.count(frame_sink_id));
   DCHECK(display_provider_);
 
   std::unique_ptr<BeginFrameSource> begin_frame_source;
   auto display = display_provider_->CreateDisplay(
       frame_sink_id, surface_handle, renderer_settings, &begin_frame_source);
 
-  compositor_frame_sinks_[frame_sink_id] =
+  root_compositor_frame_sinks_[frame_sink_id] =
       base::MakeUnique<RootCompositorFrameSinkImpl>(
           this, frame_sink_id, std::move(display),
           std::move(begin_frame_source), std::move(request), std::move(client),
@@ -110,6 +113,7 @@ void FrameSinkManagerImpl::CreateCompositorFrameSink(
     mojom::CompositorFrameSinkClientPtr client) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK_EQ(0u, compositor_frame_sinks_.count(frame_sink_id));
+  DCHECK_EQ(0u, root_compositor_frame_sinks_.count(frame_sink_id));
 
   compositor_frame_sinks_[frame_sink_id] =
       base::MakeUnique<CompositorFrameSinkImpl>(
@@ -358,12 +362,40 @@ void FrameSinkManagerImpl::OnClientConnectionLost(
     client_->OnClientConnectionClosed(frame_sink_id);
 }
 
+bool FrameSinkManagerImpl::ValidateHitTestRegionList(
+    FrameSinkId frame_sink_id,
+    const mojom::HitTestRegionListPtr& hit_test_region_list) {
+  for (const auto& region : hit_test_region_list->regions) {
+    // If client_id is 0 then use the client_id that
+    // matches the compositor frame.
+    if (region->frame_sink_id.client_id() == 0) {
+      region->frame_sink_id = FrameSinkId(frame_sink_id.client_id(),
+                                          region->frame_sink_id.sink_id());
+    }
+    // TODO(gklassen): Ensure that |region->frame_sink_id| is a child of
+    // |frame_sink_id|.
+  }
+  return true;
+}
+
 void FrameSinkManagerImpl::SubmitHitTestRegionList(
     const SurfaceId& surface_id,
     uint64_t frame_index,
     mojom::HitTestRegionListPtr hit_test_region_list) {
-  // TODO(gklassen): Route hit_test_region_list to appropriate
-  // matching RootCompositorFrameSink
+  FrameSinkId frame_sink_id = surface_id.frame_sink_id();
+  if (!ValidateHitTestRegionList(frame_sink_id, hit_test_region_list))
+    return;
+  for (auto iter = root_compositor_frame_sinks_.begin();
+       iter != root_compositor_frame_sinks_.end(); ++iter) {
+    auto root_frame_sink_id = iter->first;
+    if (root_frame_sink_id == frame_sink_id ||
+        ChildContains(root_frame_sink_id, frame_sink_id)) {
+      RootCompositorFrameSinkImpl* root_compositor_frame_sink_impl =
+          iter->second.get();
+      root_compositor_frame_sink_impl->SubmitHitTestRegionList(
+          surface_id, std::move(hit_test_region_list));
+    }
+  }
 }
 
 void FrameSinkManagerImpl::OnAggregatedHitTestRegionListUpdated(

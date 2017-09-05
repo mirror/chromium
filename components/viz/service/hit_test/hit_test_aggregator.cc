@@ -48,13 +48,13 @@ HitTestAggregator::HitTestAggregator(HitTestAggregatorDelegate* delegate)
 HitTestAggregator::~HitTestAggregator() = default;
 
 void HitTestAggregator::SubmitHitTestRegionList(
-    const SurfaceId& frame_sink_id,
+    const SurfaceId& surface_id,
     mojom::HitTestRegionListPtr hit_test_region_list) {
   DCHECK(ValidateHitTestRegionList(hit_test_region_list));
   // TODO(gklassen): Runtime validation that hit_test_region_list is valid.
   // TODO(gklassen): Inform FrameSink that the hit_test_region_list is invalid.
   // TODO(gklassen): FrameSink needs to inform the host of a difficult renderer.
-  pending_[frame_sink_id] = std::move(hit_test_region_list);
+  pending_[surface_id] = std::move(hit_test_region_list);
 }
 
 void HitTestAggregator::PostTaskAggregate(const SurfaceId& display_surface_id) {
@@ -77,6 +77,9 @@ void HitTestAggregator::Aggregate(const SurfaceId& display_surface_id) {
   }
 
   AppendRoot(display_surface_id);
+
+  // TODO(gklassen): Invoke Swap at BeginFrame and remove this call.
+  Swap();
 }
 
 void HitTestAggregator::Swap() {
