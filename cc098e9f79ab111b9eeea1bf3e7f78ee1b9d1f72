@@ -69,6 +69,24 @@
       "revId": "cc098e9f79ab111b9eeea1bf3e7f78ee1b9d1f72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "989dbb10_a3a2c842",
+        "filename": "chrome/browser/chromeos/extensions/device_local_account_external_policy_loader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-05T23:21:30Z",
+      "side": 1,
+      "message": "CreateDeepCopy looks better. :)",
+      "parentUuid": "34730cf6_0b3e2f4a",
+      "revId": "cc098e9f79ab111b9eeea1bf3e7f78ee1b9d1f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
