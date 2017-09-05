@@ -64,6 +64,12 @@ class PasswordManager {
   removeException(exception) {}
 
   /**
+   * Should undo the last saved password or exception removal and notify that
+   * the list has changed.
+   */
+  undoRemoveSavedPasswordOrException_() {}
+
+  /**
    * Gets the saved password for a given login pair.
    * @param {!PasswordManager.LoginPair} loginPair The saved password that
    *     should be retrieved.
@@ -130,6 +136,11 @@ class PasswordManagerImpl {
   /** @override */
   removeException(exception) {
     chrome.passwordsPrivate.removePasswordException(exception);
+  }
+
+  /** @override */
+  undoRemoveSavedPasswordOrException() {
+    chrome.passwordsPrivate.undoRemoveSavedPasswordOrException();
   }
 
   /** @override */
@@ -211,6 +222,7 @@ Polymer({
   listeners: {
     'show-password': 'showPassword_',
     'password-menu-tap': 'onPasswordMenuTap_',
+    'command-undo': 'undoRemoveSavedPasswordOrException_',
   },
 
   /**
@@ -327,6 +339,7 @@ Polymer({
    */
   onMenuRemovePasswordTap_: function() {
     this.passwordManager_.removeSavedPassword(this.activePassword.loginPair);
+    passwords.UndoManager.getInstance().show(this.i18n('passwordDeleted'));
     /** @type {CrActionMenuElement} */ (this.$.menu).close();
   },
 
@@ -337,6 +350,7 @@ Polymer({
    */
   onRemoveExceptionButtonTap_: function(e) {
     this.passwordManager_.removeException(e.model.item.urls.origin);
+    passwords.UndoManager.getInstance().show(this.i18n('exceptionDeleted'));
   },
 
   /**
@@ -353,6 +367,10 @@ Polymer({
             event.detail.item);
     menu.showAt(target);
     this.activeDialogAnchor_ = target;
+  },
+
+  undoRemoveSavedPasswordOrException_: function(event) {
+    this.passwordManager_.undoRemoveSavedPasswordOrException();
   },
 
   /**
