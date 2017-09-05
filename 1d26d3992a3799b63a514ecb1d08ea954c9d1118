@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30fab061_1494dd02",
+        "filename": "third_party/WebKit/Source/core/dom/events/EventPath.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-09-05T21:44:38Z",
+      "side": 1,
+      "message": "nit: it\u0027s not obvious that this doesn\u0027t copy; I\u0027d prefer saying \"TreeScopeEventContext*\" explicitly, or \"const auto\u0026\".",
+      "revId": "1d26d3992a3799b63a514ecb1d08ea954c9d1118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
