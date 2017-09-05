@@ -134,6 +134,18 @@ def ExtractSpecialComment(comment):
     lines.append(line)
   return '\n'.join(lines)
 
+def SeparateApplicableOrNonApplicable(ExtendedAttributeList):
+  applicable_to_types = []
+  non_applicable_to_types = []
+  extended_attribute_list = []
+  if ExtendedAttributeList != None:
+    extended_attribute_list = ExtendedAttributeList.GetChildren()
+  for extended_attribute in extended_attribute_list:
+    if extended_attribute.GetName() in ['Clamp', 'EnforceRange', 'TreatNullAs']:
+      applicable_to_types.append(extended_attribute)
+    else:
+      non_applicable_to_types.append(extended_attribute)
+  return [applicable_to_types, non_applicable_to_types]
 
 #
 # IDL Parser
@@ -146,6 +158,7 @@ def ExtractSpecialComment(comment):
 #                | <item> ...."""
 #
 # Where new item is the result of a match against one or more sets of items
+
 # separated by the "|".
 #
 # The function is called with an object 'p' where p[0] is the output object
@@ -329,11 +342,10 @@ class IDLParser(object):
     p[0] = self.BuildError(p, 'Dictionary')
 
   def p_DictionaryMembers(self, p):
-    """DictionaryMembers : ExtendedAttributeList DictionaryMember DictionaryMembers
+    """DictionaryMembers : DictionaryMember DictionaryMembers
                          |"""
     if len(p) > 1:
-      p[2].AddChildren(p[1])
-      p[0] = ListFromConcat(p[2], p[3])
+      p[0] = ListFromConcat(p[1], p[2])
 
   # Error recovery for DictionaryMembers
   def p_DictionaryMembersError(self, p):
@@ -341,14 +353,25 @@ class IDLParser(object):
     p[0] = self.BuildError(p, 'DictionaryMembers')
 
   def p_DictionaryMember(self, p):
-    """DictionaryMember : Required Type identifier Default ';'"""
-    p[0] = self.BuildNamed('Key', p, 3, ListFromConcat(p[1], p[2], p[4]))
-
-  def p_Required(self, p):
-    """Required : REQUIRED
-                |"""
-    if len(p) > 1:
-      p[0] = self.BuildTrue('REQUIRED')
+    """DictionaryMember : ExtendedAttributeList REQUIRED TypeWithExtendedAttributes identifier Default ';'
+                        | ExtendedAttributeList Type identifier Default ';'"""
+    if len(p) > 6:
+      p[2] = self.BuildTrue('REQUIRED')
+      p[0] = self.BuildNamed('Key', p, 4, ListFromConcat(p[2], p[3], p[5]))
+      p[0].AddChildren(p[1])
+    else:
+      applicable_and_non_applicable = SeparateApplicableOrNonApplicable(p[1])
+      applicable_to_types = applicable_and_non_applicable[0]
+      non_applicable_to_types = applicable_and_non_applicable[1]
+      if applicable_to_types != []:
+        attributes = self.BuildProduction('ExtAttributes', p, 1,
+            applicable_to_types)
+        p[2].AddChildren(attributes)
+      p[0] = self.BuildNamed('Key', p, 3, ListFromConcat(p[2], p[4]))
+      if non_applicable_to_types != []:
+        p[1] = self.BuildProduction('ExtAttributes', p, 1,
+            non_applicable_to_types)
+        p[0].AddChildren(p[1])
 
   def p_PartialDictionary(self, p):
     """PartialDictionary : DICTIONARY identifier '{' DictionaryMembers '}' ';'"""
@@ -787,6 +810,15 @@ class IDLParser(object):
       p[0] = self.BuildProduction('Type', p, 1, p[1])
     else:
       p[0] = self.BuildProduction('Type', p, 1, ListFromConcat(p[1], p[2]))
+
+  def p_TypeWithExtendedAttributes(self, p):
+    """ TypeWithExtendedAttributes : ExtendedAttributeList SingleType
+                                   | ExtendedAttributeList UnionType Null"""
+    if len(p) < 4:
+      p[0] = self.BuildProduction('Type', p, 2, p[2])
+    else:
+      p[0] = self.BuildProduction('Type', p, 2, ListFromConcat(p[2], p[3]))
+    p[0].AddChildren(p[1])
 
   def p_SingleType(self, p):
     """SingleType : NonAnyType
