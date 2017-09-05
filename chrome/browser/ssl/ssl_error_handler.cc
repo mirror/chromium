@@ -851,6 +851,21 @@ void SSLErrorHandler::StartHandlingError() {
   // - the only certificate error is CERT_STATUS_AUTHORITY_INVALID
   // - the certificate contains a string that indicates it was issued by a
   //   MITM software
+  if (IsMITMSoftwareInterstitialEnabled()) {
+    LOG(ERROR) << "MITM software interstitial enabled!";
+  } else {
+    LOG(ERROR) << "MITM software interstitial disabled!";
+  }
+  if (delegate_->IsErrorOverridable()) {
+    LOG(ERROR) << "Error overridable!";
+  } else {
+    LOG(ERROR) << "Error is non-overridable.";
+  }
+  if (IsOnlyCertError(net::CERT_STATUS_AUTHORITY_INVALID)) {
+    LOG(ERROR) << "Correct cert errors";
+  } else {
+    LOG(ERROR) << "Incorrect cert errors!";
+  }
   if (IsMITMSoftwareInterstitialEnabled() && !delegate_->IsErrorOverridable() &&
       IsOnlyCertError(net::CERT_STATUS_AUTHORITY_INVALID)) {
     const std::string found_mitm_software =
