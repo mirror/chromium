@@ -9,7 +9,6 @@
 #include <utility>
 
 #include "base/callback_helpers.h"
-#include "base/feature_list.h"
 #include "base/files/file_util.h"
 #include "base/lazy_instance.h"
 #include "base/macros.h"
@@ -25,9 +24,11 @@
 #include "chrome/browser/ssl/ssl_blocking_page.h"
 #include "chrome/browser/ssl/ssl_cert_reporter.h"
 #include "chrome/browser/ssl/ssl_error_assistant.pb.h"
+#include "chrome/browser/ssl/ssl_error_navigation_throttle.h"
 #include "chrome/common/features.h"
 #include "chrome/grit/browser_resources.h"
 #include "components/network_time/network_time_tracker.h"
+#include "components/security_interstitials/content/security_interstitial_page.h"
 #include "components/ssl_errors/error_classification.h"
 #include "components/ssl_errors/error_info.h"
 #include "content/public/browser/browser_thread.h"
@@ -576,7 +577,9 @@ class SSLErrorHandlerDelegateImpl : public SSLErrorHandler::Delegate {
       const GURL& request_url,
       std::unique_ptr<SSLCertReporter> ssl_cert_reporter,
       const base::Callback<void(content::CertificateRequestResultType)>&
-          callback)
+          callback,
+      content::SSLErrorNavigationThrottle* throttle,
+      content::NavigationHandle* navigation_handle)
       : web_contents_(web_contents),
         ssl_info_(ssl_info),
         profile_(profile),
@@ -584,7 +587,9 @@ class SSLErrorHandlerDelegateImpl : public SSLErrorHandler::Delegate {
         options_mask_(options_mask),
         request_url_(request_url),
         ssl_cert_reporter_(std::move(ssl_cert_reporter)),
-        callback_(callback) {}
+        callback_(callback),
+        throttle_(throttle),
+        navigation_handle_(navigation_handle) {}
   ~SSLErrorHandlerDelegateImpl() override;
 
   // SSLErrorHandler::Delegate methods:
@@ -604,6 +609,10 @@ class SSLErrorHandlerDelegateImpl : public SSLErrorHandler::Delegate {
                                 ssl_errors::ClockState clock_state) override;
 
  private:
+  // Can show either using the committed interstitials path or the old path.
+  void ShowInterstitial(
+      security_interstitials::SecurityInterstitialPage* interstitial_page);
+
   content::WebContents* web_contents_;
   const net::SSLInfo& ssl_info_;
   Profile* const profile_;
@@ -613,6 +622,8 @@ class SSLErrorHandlerDelegateImpl : public SSLErrorHandler::Delegate {
   std::unique_ptr<CommonNameMismatchHandler> common_name_mismatch_handler_;
   std::unique_ptr<SSLCertReporter> ssl_cert_reporter_;
   const base::Callback<void(content::CertificateRequestResultType)> callback_;
+  content::SSLErrorNavigationThrottle* throttle_;
+  content::NavigationHandle* navigation_handle_;
 };
 
 SSLErrorHandlerDelegateImpl::~SSLErrorHandlerDelegateImpl() {
@@ -665,10 +676,9 @@ void SSLErrorHandlerDelegateImpl::ShowCaptivePortalInterstitial(
     const GURL& landing_url) {
 #if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
   // Show captive portal blocking page. The interstitial owns the blocking page.
-  (new CaptivePortalBlockingPage(web_contents_, request_url_, landing_url,
-                                 std::move(ssl_cert_reporter_), ssl_info_,
-                                 callback_))
-      ->Show();
+  ShowInterstitial(new CaptivePortalBlockingPage(
+      web_contents_, request_url_, landing_url, std::move(ssl_cert_reporter_),
+      ssl_info_, callback_));
 #else
   NOTREACHED();
 #endif
@@ -679,10 +689,9 @@ void SSLErrorHandlerDelegateImpl::ShowMITMSoftwareInterstitial(
     bool is_enterprise_managed) {
 #if !defined(OS_IOS)
   // Show MITM software blocking page. The interstitial owns the blocking page.
-  (new MITMSoftwareBlockingPage(
-       web_contents_, cert_error_, request_url_, std::move(ssl_cert_reporter_),
-       ssl_info_, mitm_software_name, is_enterprise_managed, callback_))
-      ->Show();
+  ShowInterstitial(new MITMSoftwareBlockingPage(
+      web_contents_, cert_error_, request_url_, std::move(ssl_cert_reporter_),
+      ssl_info_, mitm_software_name, is_enterprise_managed, callback_));
 #else
   NOTREACHED();
 #endif
@@ -690,23 +699,37 @@ void SSLErrorHandlerDelegateImpl::ShowMITMSoftwareInterstitial(
 
 void SSLErrorHandlerDelegateImpl::ShowSSLInterstitial() {
   // Show SSL blocking page. The interstitial owns the blocking page.
-  (SSLBlockingPage::Create(
-       web_contents_, cert_error_, ssl_info_, request_url_, options_mask_,
-       base::Time::NowFromSystemTime(), std::move(ssl_cert_reporter_),
-       base::FeatureList::IsEnabled(kSuperfishInterstitial) &&
-           IsSuperfish(ssl_info_.cert),
-       callback_))
-      ->Show();
+  ShowInterstitial(SSLBlockingPage::Create(
+      web_contents_, cert_error_, ssl_info_, request_url_, options_mask_,
+      base::Time::NowFromSystemTime(), std::move(ssl_cert_reporter_),
+      base::FeatureList::IsEnabled(kSuperfishInterstitial) &&
+          IsSuperfish(ssl_info_.cert),
+      callback_));
 }
 
 void SSLErrorHandlerDelegateImpl::ShowBadClockInterstitial(
     const base::Time& now,
     ssl_errors::ClockState clock_state) {
   // Show bad clock page. The interstitial owns the blocking page.
-  (new BadClockBlockingPage(web_contents_, cert_error_, ssl_info_, request_url_,
-                            now, clock_state, std::move(ssl_cert_reporter_),
-                            callback_))
-      ->Show();
+  ShowInterstitial(new BadClockBlockingPage(
+      web_contents_, cert_error_, ssl_info_, request_url_, now, clock_state,
+      std::move(ssl_cert_reporter_), callback_));
+}
+
+void SSLErrorHandlerDelegateImpl::ShowInterstitial(
+    security_interstitials::SecurityInterstitialPage* interstitial_page) {
+#if defined(OS_IOS)
+  interstitial_page->Show();
+#else
+  if (base::FeatureList::IsEnabled(kCommittedInterstitials)) {
+    content::NavigationThrottle::ThrottleCheckResult result(
+        content::NavigationThrottle::CANCEL, cert_error_,
+        interstitial_page->GetHTMLContents());
+    navigation_handle_->CancelDeferredNavigation(throttle_, result);
+  } else {
+    interstitial_page->Show();
+  }
+#endif
 }
 
 }  // namespace
@@ -724,9 +747,16 @@ void SSLErrorHandler::HandleSSLError(
     const GURL& request_url,
     int options_mask,
     std::unique_ptr<SSLCertReporter> ssl_cert_reporter,
-    const base::Callback<void(content::CertificateRequestResultType)>&
-        callback) {
+    const base::Callback<void(content::CertificateRequestResultType)>& callback,
+    content::SSLErrorNavigationThrottle* throttle,
+    content::NavigationHandle* navigation_handle) {
   DCHECK(!FromWebContents(web_contents));
+#if !defined(OS_IOS)
+  if (base::FeatureList::IsEnabled(kCommittedInterstitials)) {
+    DCHECK(navigation_handle);
+    DCHECK(throttle);
+  }
+#endif
 
   Profile* profile =
       Profile::FromBrowserContext(web_contents->GetBrowserContext());
@@ -735,10 +765,15 @@ void SSLErrorHandler::HandleSSLError(
       std::unique_ptr<SSLErrorHandler::Delegate>(
           new SSLErrorHandlerDelegateImpl(
               web_contents, ssl_info, profile, cert_error, options_mask,
-              request_url, std::move(ssl_cert_reporter), callback)),
+              request_url, std::move(ssl_cert_reporter), callback, throttle,
+              navigation_handle)),
       web_contents, profile, cert_error, ssl_info, request_url, callback);
   web_contents->SetUserData(UserDataKey(), base::WrapUnique(error_handler));
   error_handler->StartHandlingError();
+}
+
+bool SSLErrorHandler::AreCommittedInterstitialsEnabled() {
+  return base::FeatureList::IsEnabled(kCaptivePortalCertificateList);
 }
 
 // static
@@ -835,7 +870,7 @@ void SSLErrorHandler::StartHandlingError() {
   // name-mismatch. If there are multiple errors, it indicates that the captive
   // portal landing page itself will have SSL errors, and so it's not a very
   // helpful place to direct the user to go.
-  if (base::FeatureList::IsEnabled(kCaptivePortalCertificateList) &&
+  if (SSLErrorHandler::AreCommittedInterstitialsEnabled() &&
       only_error_is_name_mismatch &&
       g_config.Pointer()->IsKnownCaptivePortalCert(ssl_info_)) {
     RecordUMA(CAPTIVE_PORTAL_CERT_FOUND);
