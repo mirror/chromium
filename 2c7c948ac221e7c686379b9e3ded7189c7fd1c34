@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c436f18_256b7609",
+        "filename": "content/public/common/resource_request_completion_status.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-05T04:12:23Z",
+      "side": 1,
+      "message": "Comment is kinda jarring. It could say it sets |error_code| to |error_code| and |completion_time| to base::TimeTicks::Now().",
+      "revId": "2c7c948ac221e7c686379b9e3ded7189c7fd1c34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "924f89ab_30188679",
+        "filename": "content/public/common/resource_request_completion_status.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-05T04:12:23Z",
+      "side": 1,
+      "message": "I\u0027m not really an owner here but it seems OK for the ctor to take an |int| since |error_code| is an int?\n\nAlso did you consider adding another ctor for ResourceRequestCompletionStatus(int error_code, int64_t length) too? I guess it\u0027s weird because Error is always OK? But still seems to help readability over setting the len in two statements after the ctor.",
+      "revId": "2c7c948ac221e7c686379b9e3ded7189c7fd1c34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
