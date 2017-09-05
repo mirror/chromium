@@ -16,6 +16,24 @@
       "revId": "0760db0d0a69f9cb6699dc91189df27ecf3b2842",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5c3c517_d40146e2",
+        "filename": "DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 931,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-09-05T18:56:07Z",
+      "side": 1,
+      "message": "Done: reduced to 4. Will need to remember to update this file if we add more in the future!",
+      "parentUuid": "e63a6367_90d21328",
+      "revId": "0760db0d0a69f9cb6699dc91189df27ecf3b2842",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
