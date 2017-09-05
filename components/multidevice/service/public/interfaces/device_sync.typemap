@@ -1,0 +1,28 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+mojom = "//components/multidevice/service/public/interfaces/device_sync.mojom"
+
+public_headers = [
+  "components/cryptauth/proto/cryptauth_api.pb.h",
+  "//components/cryptauth/remote_device.h",
+]
+
+traits_headers = [ 
+  "//components/multidevice/service/public/interfaces/device_sync_struct_traits.h"
+]
+
+sources = [
+  "//components/multidevice/service/public/interfaces/device_sync_struct_traits.cc",
+]
+
+public_deps = [
+  "//components/cryptauth:cryptauth",
+  "//components/cryptauth/proto",
+]
+
+type_mappings = [
+  "device_sync.mojom.BeaconSeed=cryptauth::BeaconSeed",
+  "device_sync.mojom.RemoteDevice=cryptauth::RemoteDevice",
+]

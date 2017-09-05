@@ -43,7 +43,7 @@ class MultiDeviceServiceTest : public service_manager::test::ServiceTest {
       on_callback_invoked_->Run();
     }
 
-    void OnDevicesSynced(bool success) override {
+    void OnDevicesSynced(bool success, bool device_list_changed) override {
       if (success) {
         num_times_device_synced_.success_count++;
       } else {
