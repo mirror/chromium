@@ -37,16 +37,9 @@ path_finder.add_typ_dir_to_sys_path()
 import typ
 
 
-def main():
-    ret = typ.main(top_level_dir=path_finder.get_scripts_dir(),
-                   path=[path_finder.get_webkitpy_thirdparty_dir()],
-                   win_multiprocessing='spawn')
-    if ret:
-        sys.exit(ret)
-    path_finder.add_blink_tools_dir_to_sys_path()
-    sys.exit(typ.main(top_level_dir=path_finder.get_blink_tools_dir(),
-                      path=[],
-                      win_multiprocessing='spawn'))
-
 if __name__ == "__main__":
-    main()
+    path_finder.add_blink_tools_dir_to_sys_path()
+    sys.exit(typ.main(top_level_dirs=[path_finder.get_scripts_dir(),
+                                      path_finder.get_blink_tools_dir()],
+                      path=[path_finder.get_webkitpy_thirdparty_dir()],
+                      win_multiprocessing='spawn'))
