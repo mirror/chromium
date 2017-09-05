@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc559ed0_97eddc3a",
+        "filename": "android_webview/apk/java/AndroidManifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-09-05T14:43:22Z",
+      "side": 1,
+      "message": "I worry this may hide issues until we move default to O MR1 and migrate unpublished to something else, is there a better way to structure this long term?",
+      "range": {
+        "startLine": 12,
+        "startChar": 52,
+        "endLine": 12,
+        "endChar": 63
+      },
+      "revId": "1fd93eed18956118f72c45f090ea32350f84930f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
