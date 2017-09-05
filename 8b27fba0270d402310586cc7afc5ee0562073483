@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a93596e1_23cc1746",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-05T01:02:53Z",
+      "side": 1,
+      "message": "Tangential to this CL, but it\u0027s probably worth documenting/adding DCHECKs in SWProviderHost  that once a Provider Host has a running_hosted_version, it never loses it.",
+      "revId": "8b27fba0270d402310586cc7afc5ee0562073483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
