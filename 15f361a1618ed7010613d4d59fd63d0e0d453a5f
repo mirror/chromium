@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6765f7f6_dfd11e81",
+        "filename": "components/offline_pages/core/prefetch/download_completed_task.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-05T23:49:11Z",
+      "side": 0,
+      "message": "In my previous CL (https://crrev.com/c/636323) I forgot to rollback the header file so the name here is already |row_was_updated| when it should still be |success|.",
+      "range": {
+        "startLine": 28,
+        "startChar": 34,
+        "endLine": 28,
+        "endChar": 49
+      },
+      "revId": "15f361a1618ed7010613d4d59fd63d0e0d453a5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
