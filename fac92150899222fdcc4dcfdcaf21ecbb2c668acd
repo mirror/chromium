@@ -45,6 +45,29 @@
       "revId": "fac92150899222fdcc4dcfdcaf21ecbb2c668acd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5316758_ec18edb1",
+        "filename": "components/ukm/content/source_url_recorder_web_contents_observer.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-09-05T20:49:24Z",
+      "side": 1,
+      "message": "It might be a better interface to just move this function out of the class, and move the class into the .cc file, since you aren\u0027t actually exposing the class.",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 33,
+        "endChar": 62
+      },
+      "revId": "fac92150899222fdcc4dcfdcaf21ecbb2c668acd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
