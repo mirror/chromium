@@ -88,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "68d1c8bb_5b5abd32",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-09-05T19:54:20Z",
+      "side": 1,
+      "message": "openURL:options:completionHandler: is iOS 10+. This didn\u0027t crash before because this feature isn\u0027t launched yet and it only has a unit test which runs in iOS10+.\nBy the way, this if condition needs to go to:\nhttps://cs.chromium.org/chromium/src/ios/chrome/browser/payments/ios_payment_instrument_launcher_unittest.mm?l\u003d170",
+      "parentUuid": "ba3f291f_a61819c3",
+      "revId": "256b91a719f11d8c6533cf03ff01af0122685afb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1baf2894_08949c6a",
         "filename": "ios/chrome/browser/physical_web/physical_web_initial_state_recorder.mm",
         "patchSetId": 4
