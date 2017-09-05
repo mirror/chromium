@@ -74,6 +74,9 @@ interface VideoDecoder {
   // frame's backing textures will be safe to overwrite.
   OnReleaseMailbox(mojo.common.mojom.UnguessableToken release_token,
                    gpu.mojom.SyncToken release_sync_token);
+
+  // Inform the decoder that a new OverlayInfo is available.
+  OnOverlayInfoChanged(OverlayInfo overlay_info);
 };
 
 interface VideoDecoderClient {

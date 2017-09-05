@@ -15,6 +15,7 @@
 #include "media/base/bind_to_current_loop.h"
 #include "media/base/decoder_buffer.h"
 #include "media/base/demuxer_stream.h"
+#include "media/base/overlay_info.h"
 #include "media/base/video_frame.h"
 #include "media/mojo/common/media_type_converters.h"
 #include "media/mojo/common/mojo_decoder_buffer_converter.h"
@@ -27,19 +28,23 @@ MojoVideoDecoder::MojoVideoDecoder(
     scoped_refptr<base::SingleThreadTaskRunner> task_runner,
     GpuVideoAcceleratorFactories* gpu_factories,
     MediaLog* media_log,
-    mojom::VideoDecoderPtr remote_decoder)
+    mojom::VideoDecoderPtr remote_decoder,
+    const RequestOverlayInfoCB& request_overlay_info_cb)
     : task_runner_(task_runner),
       remote_decoder_info_(remote_decoder.PassInterface()),
       gpu_factories_(gpu_factories),
       client_binding_(this),
       media_log_service_(media_log),
       media_log_binding_(&media_log_service_),
+      request_overlay_info_cb_(request_overlay_info_cb),
       weak_factory_(this) {
   DVLOG(1) << __func__;
 }
 
 MojoVideoDecoder::~MojoVideoDecoder() {
   DVLOG(1) << __func__;
+  if (request_overlay_info_cb_)
+    request_overlay_info_cb_.Run(false, ProvideOverlayInfoCB());
 }
 
 std::string MojoVideoDecoder::GetDisplayName() const {
@@ -57,12 +62,18 @@ void MojoVideoDecoder::Initialize(const VideoDecoderConfig& config,
   if (!weak_this_)
     weak_this_ = weak_factory_.GetWeakPtr();
 
+  bool first_init = !remote_decoder_bound_;
   if (!remote_decoder_bound_)
     BindRemoteDecoder();
 
   if (has_connection_error_) {
     task_runner_->PostTask(FROM_HERE, base::Bind(init_cb, false));
     return;
+  }
+
+  if (first_init) {
+    auto capabilities = gpu_factories_->GetVideoDecodeAcceleratorCapabilities();
+    RequestOverlayInfo(capabilities);
   }
 
   initialized_ = false;
@@ -224,6 +235,32 @@ void MojoVideoDecoder::BindRemoteDecoder() {
   remote_decoder_->Construct(
       std::move(client_ptr_info), std::move(media_log_ptr_info),
       std::move(remote_consumer_handle), std::move(command_buffer_id));
+}
+
+void MojoVideoDecoder::RequestOverlayInfo(
+    const VideoDecodeAccelerator::Capabilities& capabilities) {
+  if (!request_overlay_info_cb_)
+    return;
+
+  bool overlays_supported = !!(
+      capabilities.flags &
+      VideoDecodeAccelerator::Capabilities::SUPPORTS_EXTERNAL_OUTPUT_SURFACE);
+  if (!overlays_supported)
+    return;
+
+  bool requires_restart_for_overlays =
+      !(capabilities.flags & VideoDecodeAccelerator::Capabilities::
+                                 SUPPORTS_SET_EXTERNAL_OUTPUT_SURFACE);
+  request_overlay_info_cb_.Run(
+      requires_restart_for_overlays,
+      BindToCurrentLoop(base::Bind(&MojoVideoDecoder::OnOverlayInfoAvailable,
+                                   weak_factory_.GetWeakPtr())));
+}
+
+void MojoVideoDecoder::OnOverlayInfoAvailable(const OverlayInfo& overlay_info) {
+  if (has_connection_error_)
+    return;
+  remote_decoder_->OnOverlayInfoChanged(overlay_info);
 }
 
 void MojoVideoDecoder::Stop() {
