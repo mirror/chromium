@@ -41,16 +41,20 @@ class TestNavigationThrottle : public NavigationThrottle {
       NavigationHandle* handle,
       NavigationThrottle::ThrottleCheckResult will_start_result,
       NavigationThrottle::ThrottleCheckResult will_redirect_result,
+      NavigationThrottle::ThrottleCheckResult will_fail_result,
       NavigationThrottle::ThrottleCheckResult will_process_result,
       base::Closure did_call_will_start,
+      base::Closure did_call_will_fail,
       base::Closure did_call_will_redirect,
       base::Closure did_call_will_process)
       : NavigationThrottle(handle),
         will_start_result_(will_start_result),
         will_redirect_result_(will_redirect_result),
+        will_fail_result_(will_fail_result),
         will_process_result_(will_process_result),
         did_call_will_start_(did_call_will_start),
         did_call_will_redirect_(did_call_will_redirect),
+        did_call_will_fail_(did_call_will_fail),
         did_call_will_process_(did_call_will_process) {}
   ~TestNavigationThrottle() override {}
 
@@ -89,6 +93,17 @@ class TestNavigationThrottle : public NavigationThrottle {
     return will_redirect_result_;
   }
 
+  NavigationThrottle::ThrottleCheckResult WillFailRequest() override {
+    NavigationHandleImpl* navigation_handle_impl =
+        static_cast<NavigationHandleImpl*>(navigation_handle());
+    CHECK_EQ(request_context_type_,
+             navigation_handle_impl->request_context_type());
+
+    BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
+                            did_call_will_fail_);
+    return will_fail_result_;
+  }
+
   NavigationThrottle::ThrottleCheckResult WillProcessResponse() override {
     NavigationHandleImpl* navigation_handle_impl =
         static_cast<NavigationHandleImpl*>(navigation_handle());
@@ -102,9 +117,11 @@ class TestNavigationThrottle : public NavigationThrottle {
 
   NavigationThrottle::ThrottleCheckResult will_start_result_;
   NavigationThrottle::ThrottleCheckResult will_redirect_result_;
+  NavigationThrottle::ThrottleCheckResult will_fail_result_;
   NavigationThrottle::ThrottleCheckResult will_process_result_;
   base::Closure did_call_will_start_;
   base::Closure did_call_will_redirect_;
+  base::Closure did_call_will_fail_;
   base::Closure did_call_will_process_;
   RequestContextType request_context_type_ = REQUEST_CONTEXT_TYPE_UNSPECIFIED;
 };
@@ -119,11 +136,13 @@ class TestNavigationThrottleInstaller : public WebContentsObserver {
       WebContents* web_contents,
       NavigationThrottle::ThrottleCheckResult will_start_result,
       NavigationThrottle::ThrottleCheckResult will_redirect_result,
+      NavigationThrottle::ThrottleCheckResult will_failresult,
       NavigationThrottle::ThrottleCheckResult will_process_result,
       const GURL& expected_start_url = GURL())
       : WebContentsObserver(web_contents),
         will_start_result_(will_start_result),
         will_redirect_result_(will_redirect_result),
+        will_fail_result_(will_fail_result),
         will_process_result_(will_process_result),
         expected_start_url_(expected_start_url),
         weak_factory_(this) {}
@@ -147,6 +166,14 @@ class TestNavigationThrottleInstaller : public WebContentsObserver {
     will_redirect_loop_runner_ = nullptr;
   }
 
+  void WaitForThrottleWillFail() {
+    if (will_fail_called_)
+      return;
+    will_fail_loop_runner_ = new MessageLoopRunner();
+    will_fail_loop_runner_->Run();
+    will_fail_loop_runner_ = nullptr;
+  }
+
   void WaitForThrottleWillProcess() {
     if (will_process_called_)
       return;
@@ -165,6 +192,7 @@ class TestNavigationThrottleInstaller : public WebContentsObserver {
 
   int will_start_called() { return will_start_called_; }
   int will_redirect_called() { return will_redirect_called_; }
+  int will_fail_called() { return will_fail_called_; }
   int will_process_called() { return will_process_called_; }
 
   int install_count() { return install_count_; }
@@ -182,6 +210,12 @@ class TestNavigationThrottleInstaller : public WebContentsObserver {
       will_redirect_loop_runner_->Quit();
   }
 
+  virtual void DidCallWillFailRequest() {
+    will_fail_called_++;
+    if (will_fail_loop_runner_)
+      will_fail_loop_runner_->Quit();
+  }
+
   virtual void DidCallWillProcessResponse() {
     will_process_called_++;
     if (will_process_loop_runner_)
@@ -195,10 +229,12 @@ class TestNavigationThrottleInstaller : public WebContentsObserver {
       return;
 
     std::unique_ptr<NavigationThrottle> throttle(new TestNavigationThrottle(
-        handle, will_start_result_, will_redirect_result_, will_process_result_,
+        handle, will_start_result_, will_redirect_result_, will_fail_results_, will_process_result_,
         base::Bind(&TestNavigationThrottleInstaller::DidCallWillStartRequest,
                    weak_factory_.GetWeakPtr()),
         base::Bind(&TestNavigationThrottleInstaller::DidCallWillRedirectRequest,
+                   weak_factory_.GetWeakPtr()),
+        base::Bind(&TestNavigationThrottleInstaller::DidCallWillFailRequest,
                    weak_factory_.GetWeakPtr()),
         base::Bind(&TestNavigationThrottleInstaller::DidCallWillProcessResponse,
                    weak_factory_.GetWeakPtr())));
@@ -217,14 +253,17 @@ class TestNavigationThrottleInstaller : public WebContentsObserver {
 
   NavigationThrottle::ThrottleCheckResult will_start_result_;
   NavigationThrottle::ThrottleCheckResult will_redirect_result_;
+  NavigationThrottle::ThrottleCheckResult will_fail_result_;
   NavigationThrottle::ThrottleCheckResult will_process_result_;
   int will_start_called_ = 0;
   int will_redirect_called_ = 0;
+  int will_fail_called_ = 0;
   int will_process_called_ = 0;
   TestNavigationThrottle* navigation_throttle_ = nullptr;
   int install_count_ = 0;
   scoped_refptr<MessageLoopRunner> will_start_loop_runner_;
   scoped_refptr<MessageLoopRunner> will_redirect_loop_runner_;
+  scoped_refptr<MessageLoopRunner> will_fail_loop_runner_;
   scoped_refptr<MessageLoopRunner> will_process_loop_runner_;
   GURL expected_start_url_;
 
@@ -243,6 +282,7 @@ class TestDeferringNavigationThrottleInstaller
       WebContents* web_contents,
       NavigationThrottle::ThrottleCheckResult will_start_result,
       NavigationThrottle::ThrottleCheckResult will_redirect_result,
+      NavigationThrottle::ThrottleCheckResult will_fail_result,
       NavigationThrottle::ThrottleCheckResult will_process_result,
       GURL expected_start_url = GURL())
       : TestNavigationThrottleInstaller(web_contents,
@@ -252,6 +292,7 @@ class TestDeferringNavigationThrottleInstaller
                                         expected_start_url),
         will_start_deferred_result_(will_start_result),
         will_redirect_deferred_result_(will_redirect_result),
+        will_fail_deferred_result_(will_fail_result),
         will_process_deferred_result_(will_process_result) {}
 
  protected:
@@ -265,6 +306,11 @@ class TestDeferringNavigationThrottleInstaller
     Continue(will_redirect_deferred_result_);
   }
 
+  void DidCallWillFailRequest() override {
+    TestNavigationThrottleInstaller::DidCallWillStartRequest();
+    Continue(will_fail_deferred_result_);
+  }
+
   void DidCallWillProcessResponse() override {
     TestNavigationThrottleInstaller::DidCallWillStartRequest();
     Continue(will_process_deferred_result_);
@@ -273,6 +319,7 @@ class TestDeferringNavigationThrottleInstaller
  private:
   NavigationThrottle::ThrottleCheckResult will_start_deferred_result_;
   NavigationThrottle::ThrottleCheckResult will_redirect_deferred_result_;
+  NavigationThrottle::ThrottleCheckResult will_fail_deferred_result_;
   NavigationThrottle::ThrottleCheckResult will_process_deferred_result_;
 };
 
