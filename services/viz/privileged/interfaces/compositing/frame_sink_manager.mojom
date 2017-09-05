@@ -40,9 +40,9 @@ interface DisplayPrivate {
 // frame sink manager host which will forward the request to the frame sink
 // manager.
 interface FrameSinkManager {
-  // Registers |frame_sink_id| will be used. This must be called before
-  // Create(Root)CompositorFrameSink() is called.
-  RegisterFrameSinkId(cc.mojom.FrameSinkId frame_sink_id);
+  // Registers |frame_sink_id| of which will be kept track. This must be called
+  // before Create(Root)CompositorFrameSink() is called.
+  RegisterFrameSinkId(cc.mojom.FrameSinkId frame_sink_id, string label);
 
   // Invalidates |frame_sink_id| which cleans up any unsatisified surface
   // sequences or dangling temporary references assigned to it. If there is a
