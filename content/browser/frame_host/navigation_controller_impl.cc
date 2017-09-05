@@ -991,6 +991,7 @@ bool NavigationControllerImpl::RendererDidNavigate(
   NotifyNavigationEntryCommitted(details);
 
   if (active_entry->GetURL().SchemeIs(url::kHttpsScheme)) {
+    CHECK(!!active_entry->GetSSL().certificate);
     UMA_HISTOGRAM_BOOLEAN("Navigation.SecureSchemeHasSSLStatus",
                           !!active_entry->GetSSL().certificate);
   }
