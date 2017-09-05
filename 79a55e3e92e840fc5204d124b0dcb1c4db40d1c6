@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c280b7bf_68162672",
+        "filename": "chrome/browser/resources/md_extensions/navigation_helper.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-05T19:42:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "945e85fd_e33c8e36",
+      "revId": "79a55e3e92e840fc5204d124b0dcb1c4db40d1c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc897789_59cf0713",
         "filename": "chrome/browser/resources/md_extensions/sidebar.js",
         "patchSetId": 9
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "1f09b82e_bf8421af",
+        "filename": "chrome/browser/resources/md_extensions/sidebar.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-05T19:42:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc897789_59cf0713",
+      "revId": "79a55e3e92e840fc5204d124b0dcb1c4db40d1c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41484b26_08971a16",
         "filename": "chrome/browser/resources/md_extensions/sidebar.js",
         "patchSetId": 9
@@ -50,6 +86,24 @@
       "revId": "79a55e3e92e840fc5204d124b0dcb1c4db40d1c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d2df8c9_1ea23ee8",
+        "filename": "chrome/browser/resources/md_extensions/sidebar.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-05T19:42:38Z",
+      "side": 1,
+      "message": "You\u0027re right, top level paths will work. Done.",
+      "parentUuid": "41484b26_08971a16",
+      "revId": "79a55e3e92e840fc5204d124b0dcb1c4db40d1c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
