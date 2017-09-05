@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cee4fbc0_05d02a5a",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-09-05T15:06:30Z",
+      "side": 1,
+      "message": "Please expand on why we have trailing non-length items.",
+      "range": {
+        "startLine": 458,
+        "startChar": 57,
+        "endLine": 458,
+        "endChar": 63
+      },
+      "revId": "3f88aba7ac1c2565af4c3b137ff1ef3057b44510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
