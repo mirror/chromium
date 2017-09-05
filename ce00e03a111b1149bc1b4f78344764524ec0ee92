@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9194f92c_0407f92c",
+        "filename": "ui/app_list/views/suggestions_container_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-09-05T18:59:52Z",
+      "side": 1,
+      "message": "do we really need set this after SetEnabled(true)?\nI prefer old style, it is more logical.",
+      "range": {
+        "startLine": 94,
+        "startChar": 34,
+        "endLine": 94,
+        "endChar": 49
+      },
+      "revId": "ce00e03a111b1149bc1b4f78344764524ec0ee92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
