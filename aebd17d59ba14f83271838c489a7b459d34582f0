@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "c964b267_d2b4239a",
+        "filename": "ash/wm/overview/window_selector.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-05T23:50:08Z",
+      "side": 1,
+      "message": "My question is why you need one for each root window. You only need this on the screen where drag is happening?",
+      "parentUuid": "cf9117ee_5a75d408",
+      "revId": "aebd17d59ba14f83271838c489a7b459d34582f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "99d76a27_44a8fb69",
         "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
         "patchSetId": 4
@@ -247,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "61344394_a54d7245",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-05T23:50:08Z",
+      "side": 1,
+      "message": "Yes, this is recommended for more complicated cases like long list, or nested\nbut this is probably simple enough to omit them. I\u0027ll leave it to you guys.",
+      "parentUuid": "09f051ba_0df35f5b",
+      "revId": "aebd17d59ba14f83271838c489a7b459d34582f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c2b5412_4cfa20d9",
         "filename": "ash/wm/splitview/split_view_overview_overlay.h",
         "patchSetId": 4
@@ -276,6 +312,24 @@
       "side": 1,
       "message": "How does SplitViewOverviewIndicatorsOverlay sound? Plural indicators because we will reuse class to add a \"Cannot be snapped\" indicator for un-snappable windows.",
       "parentUuid": "9c2b5412_4cfa20d9",
+      "revId": "aebd17d59ba14f83271838c489a7b459d34582f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "286f51b4_7250265d",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-05T23:50:08Z",
+      "side": 1,
+      "message": "oh i see. Hmm, then just Overlay is fine. Sorry about that.",
+      "parentUuid": "3152cb8d_f08d76ed",
       "revId": "aebd17d59ba14f83271838c489a7b459d34582f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
