@@ -23,6 +23,7 @@ class GURL;
 
 namespace content {
 
+class GinJavaBridgeDispatcherHost;
 class WebContentsImpl;
 
 // Android wrapper around WebContents that provides safer passage from java and
@@ -39,6 +40,10 @@ class CONTENT_EXPORT WebContentsAndroid
   base::android::ScopedJavaLocalRef<jobject> GetJavaObject();
 
   // Methods called from Java
+  void SetRetainedJavascriptObjects(
+      JNIEnv* env,
+      const base::android::JavaParamRef<jobject>& obj,
+      const base::android::JavaParamRef<jobject>& retained_javascript_objects);
   base::android::ScopedJavaLocalRef<jobject> GetTopLevelNativeWindow(
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& obj);
@@ -217,6 +222,23 @@ class CONTENT_EXPORT WebContentsAndroid
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& obj);
 
+  void SetAllowJavascriptInterfacesInspection(
+      JNIEnv* env,
+      const base::android::JavaParamRef<jobject>& obj,
+      jboolean allow);
+
+  void AddJavascriptInterface(
+      JNIEnv* env,
+      const base::android::JavaParamRef<jobject>& /* obj */,
+      const base::android::JavaParamRef<jobject>& object,
+      const base::android::JavaParamRef<jstring>& name,
+      const base::android::JavaParamRef<jclass>& safe_annotation_clazz);
+
+  void RemoveJavascriptInterface(
+      JNIEnv* env,
+      const base::android::JavaParamRef<jobject>& /* obj */,
+      const base::android::JavaParamRef<jstring>& name);
+
   void SetMediaSession(
       const base::android::ScopedJavaLocalRef<jobject>& j_media_session);
 
@@ -239,6 +261,9 @@ class CONTENT_EXPORT WebContentsAndroid
   WebContentsImpl* web_contents_;
   NavigationControllerAndroid navigation_controller_;
   base::android::ScopedJavaGlobalRef<jobject> obj_;
+
+  // Manages injecting Java objects.
+  scoped_refptr<GinJavaBridgeDispatcherHost> java_bridge_dispatcher_host_;
 
   base::WeakPtrFactory<WebContentsAndroid> weak_factory_;
 
