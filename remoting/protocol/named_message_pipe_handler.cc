@@ -41,6 +41,13 @@ void NamedMessagePipeHandler::Send(const google::protobuf::MessageLite& message,
   pipe_->Send(const_cast<google::protobuf::MessageLite*>(&message), done);
 }
 
+void NamedMessagePipeHandler::Send(const std::vector<char>& buffer,
+                                   const base::Closure& done) {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  DCHECK(connected());
+  pipe_->Send(buffer, done);
+}
+
 void NamedMessagePipeHandler::OnIncomingMessage(
     std::unique_ptr<CompoundBuffer> message) {}
 

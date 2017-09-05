@@ -40,6 +40,8 @@ class FakeMessagePipe final : public MessagePipe {
   void Start(EventHandler* event_handler) override;
   void Send(google::protobuf::MessageLite* message,
             const base::Closure& done) override;
+  void Send(const std::vector<char>& buffer,
+            const base::Closure& done) override;
 
   // Forwards |message| to EventHandler.
   void Receive(std::unique_ptr<CompoundBuffer> message);

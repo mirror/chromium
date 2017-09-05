@@ -7,6 +7,7 @@
 
 #include <memory>
 #include <string>
+#include <vector>
 
 #include "base/callback.h"
 #include "base/macros.h"
@@ -31,6 +32,8 @@ class WebrtcDataStreamAdapter : public MessagePipe,
   void Start(EventHandler* event_handler) override;
   void Send(google::protobuf::MessageLite* message,
             const base::Closure& done) override;
+  void Send(const std::vector<char>& buffer,
+            const base::Closure& done) override;
 
  private:
   enum class State { CONNECTING, OPEN, CLOSED };
@@ -38,6 +41,8 @@ class WebrtcDataStreamAdapter : public MessagePipe,
   // webrtc::DataChannelObserver interface.
   void OnStateChange() override;
   void OnMessage(const webrtc::DataBuffer& buffer) override;
+
+  void Send(const rtc::CopyOnWriteBuffer& buffer, const base::Closure& done);
 
   rtc::scoped_refptr<webrtc::DataChannelInterface> channel_;
 

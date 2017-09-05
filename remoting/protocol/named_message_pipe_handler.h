@@ -52,6 +52,11 @@ class NamedMessagePipeHandler : public MessagePipe::EventHandler {
   void Send(const google::protobuf::MessageLite& message,
             const base::Closure& done);
 
+  // Sends the buffer through the pipe. This function should only be called
+  // once connected() returns true. See comments of
+  // remoting::protocol::MessagePipe::Send() for details.
+  void Send(const std::vector<char>& buffer, const base::Closure& done);
+
   // Derived classes can override these functions to receive data from the
   // connection or observe the connection state. These functions will not be
   // called unless |pipe_| has been opened.

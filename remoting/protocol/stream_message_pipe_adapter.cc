@@ -55,6 +55,11 @@ void StreamMessagePipeAdapter::Send(google::protobuf::MessageLite* message,
     writer_->Write(SerializeAndFrameMessage(*message), done);
 }
 
+void StreamMessagePipeAdapter::Send(const std::vector<char>& buffer,
+                                    const base::Closure& done) {
+  // TODO(jarhar): Impement sending of buffers.
+}
+
 void StreamMessagePipeAdapter::CloseOnError(int error) {
   // Stop reading and writing on error.
   writer_.reset();

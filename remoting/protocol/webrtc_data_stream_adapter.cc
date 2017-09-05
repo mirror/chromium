@@ -5,6 +5,7 @@
 #include "remoting/protocol/webrtc_data_stream_adapter.h"
 
 #include <stdint.h>
+#include <string.h>
 
 #include "base/bind.h"
 #include "base/callback.h"
@@ -54,6 +55,21 @@ void WebrtcDataStreamAdapter::Send(google::protobuf::MessageLite* message,
   buffer.SetSize(message->ByteSize());
   message->SerializeWithCachedSizesToArray(
       reinterpret_cast<uint8_t*>(buffer.data()));
+  Send(buffer, done);
+}
+
+void WebrtcDataStreamAdapter::Send(const std::vector<char>& buffer,
+                                   const base::Closure& done) {
+  DCHECK(state_ == State::OPEN);
+
+  rtc::CopyOnWriteBuffer rtc_buffer;
+  rtc_buffer.SetSize(buffer.size());
+  memcpy(rtc_buffer.data(), buffer.data(), buffer.size());
+  Send(rtc_buffer, done);
+}
+
+void WebrtcDataStreamAdapter::Send(const rtc::CopyOnWriteBuffer& buffer,
+                                   const base::Closure& done) {
   webrtc::DataBuffer data_buffer(std::move(buffer), true /* binary */);
   if (!channel_->Send(data_buffer)) {
     LOG(ERROR) << "Send failed on data channel " << channel_->label();

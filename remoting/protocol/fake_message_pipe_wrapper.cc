@@ -29,6 +29,11 @@ void FakeMessagePipeWrapper::Send(google::protobuf::MessageLite* message,
   pipe_->Send(message, done);
 }
 
+void FakeMessagePipeWrapper::Send(const std::vector<char>& buffer,
+                                  const base::Closure& done) {
+  pipe_->Send(buffer, done);
+}
+
 void FakeMessagePipeWrapper::Receive(std::unique_ptr<CompoundBuffer> message) {
   pipe_->Receive(std::move(message));
 }
