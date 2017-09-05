@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2459a0a8_dd706c6f",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_item_result.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-09-05T15:30:42Z",
+      "side": 1,
+      "message": "TODO(layout-dev): crbug.com/714962 Remove once fragment painting is enabled by default.",
+      "revId": "923e3c83d24b3088f3694474709abad179f5493f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b191fb1c_ef807b5c",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_layout_algorithm.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-09-05T15:30:42Z",
+      "side": 1,
+      "message": "by adding spacing.\n          ^^^^^^^\n\nReplace spaces with spacing, \"adding spaces\" makes it sound like it adds space characters.",
+      "range": {
+        "startLine": 332,
+        "startChar": 62,
+        "endLine": 332,
+        "endChar": 68
+      },
+      "revId": "923e3c83d24b3088f3694474709abad179f5493f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a79f4eaa_d94b3064",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_layout_algorithm.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-09-05T15:30:42Z",
+      "side": 1,
+      "message": "// Mutate the existing shape result if only used here, if not create a copy.",
+      "revId": "923e3c83d24b3088f3694474709abad179f5493f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae563207_16d12c23",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-09-05T15:30:42Z",
+      "side": 1,
+      "message": "Could we make this a const reference or can it be null?",
+      "range": {
+        "startLine": 45,
+        "startChar": 8,
+        "endLine": 45,
+        "endChar": 26
+      },
+      "revId": "923e3c83d24b3088f3694474709abad179f5493f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23b00eef_9e827b2e",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_physical_text_fragment.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-09-05T15:30:42Z",
+      "side": 1,
+      "message": "add TODO",
+      "range": {
+        "startLine": 76,
+        "startChar": 20,
+        "endLine": 76,
+        "endChar": 25
+      },
+      "revId": "923e3c83d24b3088f3694474709abad179f5493f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9c7217f_7b8bb12c",
+        "filename": "third_party/WebKit/Source/platform/text/TextRun.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-09-05T15:30:42Z",
+      "side": 1,
+      "message": "Using Optional here adds a lot of overhead, how about using -1 to indicate failure instead?",
+      "revId": "923e3c83d24b3088f3694474709abad179f5493f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
