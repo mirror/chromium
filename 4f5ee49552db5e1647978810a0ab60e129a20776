@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98f74c93_73374891",
+        "filename": "base/numerics/safe_conversions_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-09-05T17:03:19Z",
+      "side": 1,
+      "message": "Can you not make this always, rather than #if NDEBUG?",
+      "range": {
+        "startLine": 123,
+        "startChar": 0,
+        "endLine": 123,
+        "endChar": 12
+      },
+      "revId": "4f5ee49552db5e1647978810a0ab60e129a20776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
