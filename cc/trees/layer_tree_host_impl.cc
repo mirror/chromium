@@ -86,6 +86,7 @@
 #include "gpu/GLES2/gl2extchromium.h"
 #include "gpu/command_buffer/client/context_support.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
+#include "third_party/skia/include/gpu/GrContext.h"
 #include "ui/gfx/geometry/point_conversions.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gfx/geometry/scroll_offset.h"
@@ -1849,18 +1850,43 @@ void LayerTreeHostImpl::SetContentHasNonAAPaint(bool flag) {
   }
 }
 
-bool LayerTreeHostImpl::CanUseGpuRasterization() {
+void LayerTreeHostImpl::GetGpuRasterizationCapabilities(
+    bool* gpu_rasterization_enabled,
+    bool* gpu_rasterization_supported,
+    int* max_msaa_samples,
+    bool* supports_disable_msaa) {
+  *gpu_rasterization_enabled = false;
+  *gpu_rasterization_supported = false;
+  *max_msaa_samples = 0;
+  *supports_disable_msaa = false;
+
   if (!(layer_tree_frame_sink_ && layer_tree_frame_sink_->context_provider() &&
         layer_tree_frame_sink_->worker_context_provider()))
-    return false;
+    return;
 
   viz::ContextProvider* context_provider =
       layer_tree_frame_sink_->worker_context_provider();
   viz::ContextProvider::ScopedContextLock scoped_context(context_provider);
-  if (!context_provider->GrContext())
-    return false;
 
-  return true;
+  const auto& caps = context_provider->ContextCapabilities();
+  *gpu_rasterization_enabled = caps.gpu_rasterization;
+  if (!*gpu_rasterization_enabled && !settings_.gpu_rasterization_forced)
+    return;
+
+  // Do not check GrContext above. It is lazy-created, and we only want to
+  // create it if it might be used.
+  GrContext* gr_context = context_provider->GrContext();
+  *gpu_rasterization_supported = !!gr_context;
+  if (!*gpu_rasterization_supported)
+    return;
+
+  *supports_disable_msaa = caps.multisample_compatibility;
+  if (!caps.msaa_is_slow && !caps.avoid_stencil_buffers) {
+    // Skia may blacklist MSAA independently of Chrome. Query skia for the
+    // requested sample count. This will return 0 if MSAA is unsupported.
+    *max_msaa_samples = gr_context->caps()->getSampleCount(
+        caps.max_samples, ToGrPixelConfig(settings_.preferred_tile_format));
+  }
 }
 
 bool LayerTreeHostImpl::UpdateGpuRasterizationStatus() {
@@ -1873,17 +1899,12 @@ bool LayerTreeHostImpl::UpdateGpuRasterizationStatus() {
 
   int requested_msaa_samples = RequestedMSAASampleCount();
   int max_msaa_samples = 0;
-  viz::ContextProvider* compositor_context_provider =
-      layer_tree_frame_sink_->context_provider();
   bool gpu_rasterization_enabled = false;
+  bool gpu_rasterization_supported = false;
   bool supports_disable_msaa = false;
-  if (compositor_context_provider) {
-    const auto& caps = compositor_context_provider->ContextCapabilities();
-    gpu_rasterization_enabled = caps.gpu_rasterization;
-    supports_disable_msaa = caps.multisample_compatibility;
-    if (!caps.msaa_is_slow && !caps.avoid_stencil_buffers)
-      max_msaa_samples = caps.max_samples;
-  }
+  GetGpuRasterizationCapabilities(&gpu_rasterization_enabled,
+                                  &gpu_rasterization_supported,
+                                  &max_msaa_samples, &supports_disable_msaa);
 
   bool use_gpu = false;
   bool use_msaa = false;
@@ -1911,7 +1932,7 @@ bool LayerTreeHostImpl::UpdateGpuRasterizationStatus() {
   }
 
   if (use_gpu && !use_gpu_rasterization_) {
-    if (!CanUseGpuRasterization()) {
+    if (!gpu_rasterization_supported) {
       // If GPU rasterization is unusable, e.g. if GlContext could not
       // be created due to losing the GL context, force use of software
       // raster.
