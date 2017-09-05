@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4118ef0b_6039ca75",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-05T12:59:33Z",
+      "side": 1,
+      "message": "Nit: can you please reorder methods here to follow some logical order (e.g., the order they\u0027re invoked from setupPreferences)?",
+      "range": {
+        "startLine": 159,
+        "startChar": 23,
+        "endLine": 159,
+        "endChar": 38
+      },
+      "revId": "06d447db6246563754c409c99d0b21099a490da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe619dd7_4661cec0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-05T12:59:33Z",
+      "side": 1,
+      "message": "This line can actually trigger an assert here: https://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/search_engines/TemplateUrlService.java?l\u003d334\u0026rcl\u003d6e3b6f62563438f85d868bb3cbfbf81503359bf3. It wasn\u0027t a problem before, because every call to updatePreferences was creating new instance.",
+      "range": {
+        "startLine": 202,
+        "startChar": 0,
+        "endLine": 202,
+        "endChar": 72
+      },
+      "revId": "06d447db6246563754c409c99d0b21099a490da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38cc87f9_c255e70f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-05T12:59:33Z",
+      "side": 1,
+      "message": "Nit: s/setupPasswordPreference/setupSavedPasswordsPreference/ to be more clear and consistent with PREF_SAVED_PASSWORDS.",
+      "range": {
+        "startLine": 208,
+        "startChar": 17,
+        "endLine": 208,
+        "endChar": 40
+      },
+      "revId": "06d447db6246563754c409c99d0b21099a490da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18d1e775_2f427c1d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-05T12:59:33Z",
+      "side": 1,
+      "message": "IIUC, you don\u0027t need this findPreference and if, because setupChromeBasePreference already has this check.",
+      "range": {
+        "startLine": 209,
+        "startChar": 0,
+        "endLine": 211,
+        "endChar": 33
+      },
+      "revId": "06d447db6246563754c409c99d0b21099a490da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eebd746a_928066d4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-05T12:59:33Z",
+      "side": 1,
+      "message": "Hm, since setupPreference also has an internal findPreference and null check, does it make sense to rewrite it in the following way?\n\nPreference notifications \u003d setupPreference(PREF_NOTIFICATIONS, R.string.prefs_notifications,\n        NotificationsPreferences.class);\nnotifications.setOnPreferenceClickLitener(...);\n\nI know it contradicts a bit with my previous comment to this chunk, but I didn\u0027t realize we can get rid of this \"if\" altogether, sorry for that.",
+      "range": {
+        "startLine": 222,
+        "startChar": 0,
+        "endLine": 225,
+        "endChar": 56
+      },
+      "revId": "06d447db6246563754c409c99d0b21099a490da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a86cf0ae_ceea7c95",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-05T12:59:33Z",
+      "side": 1,
+      "message": "Ditto for setupPreference.",
+      "range": {
+        "startLine": 254,
+        "startChar": 0,
+        "endLine": 255,
+        "endChar": 37
+      },
+      "revId": "06d447db6246563754c409c99d0b21099a490da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f10d8aa_3f6343b3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-05T12:59:33Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 267,
+        "startChar": 0,
+        "endLine": 269,
+        "endChar": 46
+      },
+      "revId": "06d447db6246563754c409c99d0b21099a490da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
