@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86e48d72_0499ddc6",
+        "filename": "chrome/browser/signin/easy_unlock_app_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-05T20:32:30Z",
+      "side": 1,
+      "message": "ASSERT_EQ instead of CHECK_EQ?",
+      "range": {
+        "startLine": 151,
+        "startChar": 6,
+        "endLine": 151,
+        "endChar": 14
+      },
+      "revId": "acc238e52a36370caee07011bd89ee4c5e0bee69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "feede202_8c7b6052",
+        "filename": "chrome/browser/signin/easy_unlock_app_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-05T20:32:30Z",
+      "side": 1,
+      "message": "nit: UserUpdatedCount\n\n(same for the reset)",
+      "range": {
+        "startLine": 254,
+        "startChar": 9,
+        "endLine": 254,
+        "endChar": 27
+      },
+      "revId": "acc238e52a36370caee07011bd89ee4c5e0bee69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99a2f72e_6c1ab4e9",
+        "filename": "chrome/browser/signin/easy_unlock_app_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-05T20:32:30Z",
+      "side": 0,
+      "message": "this can now be void (given that the return value is never used)",
+      "range": {
+        "startLine": 173,
+        "startChar": 2,
+        "endLine": 173,
+        "endChar": 6
+      },
+      "revId": "eb411b20648b4f1035300f50112d8bf04f59341e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64618574_1ea694ef",
+        "filename": "chrome/browser/signin/easy_unlock_app_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-05T20:32:30Z",
+      "side": 0,
+      "message": "can you switch these LOG(ERROR)s to ADD_FAILURE (so the new version of the tests fail in cases where |Consume*| methods return false).",
+      "range": {
+        "startLine": 175,
+        "startChar": 6,
+        "endLine": 175,
+        "endChar": 16
+      },
+      "revId": "eb411b20648b4f1035300f50112d8bf04f59341e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
