@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf7377f7_99a0af7c",
+        "filename": "chrome/browser/ui/signin_view_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-05T16:52:38Z",
+      "side": 1,
+      "message": "Please friend a test so you don\u0027t have public test only code like this.",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 62
+      },
+      "revId": "21ce2b22e082fab1cb7970e95f2f277b8c958e69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
