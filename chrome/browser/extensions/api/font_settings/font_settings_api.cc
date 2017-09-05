@@ -59,17 +59,17 @@ const char kSetFromIncognitoError[] =
 // |script| is NULL, uses prefs::kWebKitCommonScript.
 std::string GetFontNamePrefPath(fonts::GenericFamily generic_family_enum,
                                 fonts::ScriptCode script_enum) {
-  std::string script = fonts::ToString(script_enum);
-  if (script.empty())
-    script = prefs::kWebKitCommonScript;
-  std::string generic_family = fonts::ToString(generic_family_enum);
-
   // Format is <prefix-(includes-dot)><family>.<script>
   std::string result;
   result.append(pref_names_util::kWebKitFontPrefPrefix);
-  result.append(generic_family);
+  result.append(fonts::ToString(generic_family_enum));
   result.push_back('.');
-  result.append(script);
+
+  const char* script = fonts::ToString(script_enum);
+  if (!script || script[0] == 0)
+    result.append(script);
+  else
+    result.append(prefs::kWebKitCommonScript);
   return result;
 }
 
