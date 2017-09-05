@@ -95,6 +95,40 @@
     },
     {
       "key": {
+        "uuid": "b76e8bd5_82fd1496",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/AcceleratedImageBufferSurface.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1185214
+      },
+      "writtenOn": "2017-09-05T14:02:52Z",
+      "side": 1,
+      "message": "What color space is being rendered to when the test fails? If it\u0027s wider than sRGB, then the paint colors (which are sRGB) are going to change in the destination surface.",
+      "revId": "aeaa7edf5a1dca93e4c2cd499c0225b559e205be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e170c638_80c1748e",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/AcceleratedImageBufferSurface.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1185214
+      },
+      "writtenOn": "2017-09-05T14:02:52Z",
+      "side": 1,
+      "message": "FYI: You should be using SkColorSetARGB (not SkPackARGB32) here. SkPaint colors are SkColor, but SkPack* produces SkPMColor, which may be in a different byte order. I don\u0027t think it affects this test, but worth fixing.",
+      "revId": "aeaa7edf5a1dca93e4c2cd499c0225b559e205be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2224843c_c808561a",
         "filename": "third_party/WebKit/Source/platform/graphics/gpu/AcceleratedImageBufferSurface.cpp",
         "patchSetId": 2
