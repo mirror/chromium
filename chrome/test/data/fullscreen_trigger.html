@@ -1,0 +1,19 @@
+<!--
+  The html/js to help testing keyboard events. It receives key down events and
+  set document.body into fullscreen mode when the key code is 'KeyS'.
+-->
+<html>
+  <head>
+    <title>
+      Browser Command Controller Interactive Browser Test Utility Page
+    </title>
+  </head>
+  <body></body>
+  <script>
+    document.addEventListener('keydown', (e) => {
+      if (e.code == 'KeyS') {
+        document.body.webkitRequestFullscreen();
+      }
+    });
+  </script>
+</html>

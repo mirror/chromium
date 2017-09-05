@@ -38,6 +38,10 @@ namespace {
 // keys (see FinishTestAndVerifyResult() function).
 constexpr char kFullscreenKeyboardLockHTML[] = "/fullscreen_keyboardlock.html";
 
+// The html file to receive keydown events and set its body into fullscreen if
+// code 'KeyS' is received.
+constexpr char kFullscreenTriggerHTML[] = "/fullscreen_trigger.html";
+
 // On MacOSX command key is used for most of the shortcuts, so replace it with
 // control to reduce the complexity of comparison of the results.
 void NormalizeMetaKeyForMacOS(std::string* output) {
@@ -164,6 +168,9 @@ class BrowserCommandControllerInteractiveTest : public InProcessBrowserTest {
       content::RunAllPendingInMessageLoop();
   }
 
+  // Starts |file| into current active tab and wait for load.
+  void StartTestPage(const char* file);
+
  private:
   void SetUpOnMainThread() override;
 
@@ -184,13 +191,7 @@ void BrowserCommandControllerInteractiveTest::StartFullscreenLockPage() {
   ASSERT_EQ(2, GetTabCount());
   ASSERT_EQ(1U, GetBrowserCount());
 
-  if (!embedded_test_server()->Started())
-    ASSERT_TRUE(embedded_test_server()->Start());
-  ui_test_utils::NavigateToURLWithDisposition(
-      GetActiveBrowser(),
-      embedded_test_server()->GetURL(kFullscreenKeyboardLockHTML),
-      WindowOpenDisposition::CURRENT_TAB,
-      ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
+  StartTestPage(kFullscreenKeyboardLockHTML);
 }
 
 void BrowserCommandControllerInteractiveTest::SendShortcut(
@@ -317,20 +318,7 @@ void BrowserCommandControllerInteractiveTest::
         this->GetActiveBrowser()));
     if (js_fullscreen) {
       if (!this->IsActiveTabFullscreen()) {
-        static const std::string page =
-            "<html><head></head><body></body><script>"
-            "document.addEventListener('keydown', "
-            "    (e) => {"
-            "      if (e.code == 'KeyS') { "
-            "        document.body.webkitRequestFullscreen();"
-            "      }"
-            "    });"
-            "</script></html>";
-        ui_test_utils::NavigateToURLWithDisposition(
-            this->GetActiveBrowser(),
-            GURL("data:text/html," + page),
-            WindowOpenDisposition::CURRENT_TAB,
-            ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
+        StartTestPage(kFullscreenTriggerHTML);
         ASSERT_NO_FATAL_FAILURE(this->SendJsFullscreenShortcutAndWait());
       }
     } else {
@@ -421,6 +409,16 @@ void BrowserCommandControllerInteractiveTest::FinishTestAndVerifyResult() {
   NormalizeMetaKeyForMacOS(&expected_result_);
   base::TrimWhitespaceASCII(result, base::TRIM_ALL, &result);
   ASSERT_EQ(expected_result_, result);
+}
+
+void BrowserCommandControllerInteractiveTest::StartTestPage(const char* file) {
+  if (!embedded_test_server()->Started())
+    ASSERT_TRUE(embedded_test_server()->Start());
+  ui_test_utils::NavigateToURLWithDisposition(
+      GetActiveBrowser(),
+      embedded_test_server()->GetURL(file),
+      WindowOpenDisposition::CURRENT_TAB,
+      ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
 }
 
 void BrowserCommandControllerInteractiveTest::SetUpOnMainThread() {
