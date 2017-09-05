@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59ef6858_8ba32348",
+        "filename": "ios/clean/chrome/browser/ui/ntp/ntp_coordinator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-05T15:16:09Z",
+      "side": 1,
+      "message": "Check the coordinator\u0027s mode here instead; same below.",
+      "range": {
+        "startLine": 70,
+        "startChar": 8,
+        "endLine": 70,
+        "endChar": 19
+      },
+      "revId": "192b248b6d0ef9888b0c20e5a8346e0024878b3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
