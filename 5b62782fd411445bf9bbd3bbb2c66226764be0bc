@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ab3ccf2_62426ab6",
+        "filename": "ios/chrome/browser/ui/commands/browser_commands.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-05T16:16:06Z",
+      "side": 1,
+      "message": "The intent wasn\u0027t that commands would replace delegation, or that the dispatcher would be used for realtime UI synchronization. I\u0027d prefer if this was still handled by explicit delegation in the old architecture, and by the broadcaster in the new architecture.",
+      "range": {
+        "startLine": 111,
+        "startChar": 8,
+        "endLine": 111,
+        "endChar": 33
+      },
+      "revId": "5b62782fd411445bf9bbd3bbb2c66226764be0bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
