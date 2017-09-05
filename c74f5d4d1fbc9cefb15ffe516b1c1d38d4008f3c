@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "12e283b6_f7975268",
+        "filename": "base/message_loop/incoming_task_queue.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-05T15:14:40Z",
+      "side": 1,
+      "message": "An atomic variable can help if we want to avoid mutual exclusion between calls to ScheduleWork:\n\nIncomingTaskQueue::PostPendingTask() {\n  // Add task to queue.\n  // ...\n\n  auto old_value \u003d NoBarrier_AtomicIncrement(\u0026num_schedule_work_, 1);\n  if (old_value \u003c 0) {\n    // Too late!\n  } else {\n    message_loop_-\u003eScheduleWork();\n  }\n\n  NoBarrier_AtomicIncrement(\u0026num_schedule_work, -1);\n}\n\nIncomingTaskQueue::WillDestroyCurrentMessageLoop() {\n  for (;;) {\n    int old_value \u003d NoBarrier_CompareAndSwap(\n        \u0026num_schedule_work_, 0, std::numeric_limits\u003cint\u003e::min());\n    if (old_value \u003d\u003d 0) {\n      // No pending ScheduleWork! Ok to cleanup.\n      // return;\n    }\n  }\n  // Use ConditionVariable instead of spinning if we think it\u0027s worth it.\n}\n\nDisclaimer: Didn\u0027t check if barriers are required.",
+      "parentUuid": "f7a309fa_4bc87858",
+      "revId": "c74f5d4d1fbc9cefb15ffe516b1c1d38d4008f3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d56d9d0c_b924a4de",
         "filename": "base/message_loop/incoming_task_queue.h",
         "patchSetId": 4
