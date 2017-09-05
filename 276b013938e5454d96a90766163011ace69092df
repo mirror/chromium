@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4eecd72e_a41e5959",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSampleTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-05T08:32:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "027ee7cc_4d0e710a",
+      "revId": "276b013938e5454d96a90766163011ace69092df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eadecb1c_b09bbc0d",
         "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSampleTest.cpp",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "276b013938e5454d96a90766163011ace69092df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72b0b424_6e4a968c",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSampleTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-05T08:32:39Z",
+      "side": 1,
+      "message": "Test against body.innerHTML()",
+      "parentUuid": "eadecb1c_b09bbc0d",
+      "revId": "276b013938e5454d96a90766163011ace69092df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "bec0c1fb_736ba5a5",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSampleTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-05T08:32:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50534dd5_c5f9bdba",
+      "revId": "276b013938e5454d96a90766163011ace69092df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a10b570_29071930",
         "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSampleTest.cpp",
         "patchSetId": 11
@@ -67,6 +121,24 @@
       "revId": "276b013938e5454d96a90766163011ace69092df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6362c62_0eb4c7e4",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSampleTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-05T08:32:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a10b570_29071930",
+      "revId": "276b013938e5454d96a90766163011ace69092df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "bcd91531_07f0366b",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSampleTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-05T08:32:39Z",
+      "side": 1,
+      "message": "Discuss offline.\nThis test demonstrates SelectionSample::GetSelectionText() doesn\u0027t\nhandle XML namespace.\n\nIn proper implementation, we should have XML namespace declaration\nin extracted HTML fragment.",
+      "parentUuid": "7c9793a9_4f87d86d",
+      "revId": "276b013938e5454d96a90766163011ace69092df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86edbf4a_544b7cec",
         "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSampleTest.cpp",
         "patchSetId": 11
@@ -101,6 +191,24 @@
       "revId": "276b013938e5454d96a90766163011ace69092df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c33b694c_e238a109",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSampleTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-05T08:32:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86edbf4a_544b7cec",
+      "revId": "276b013938e5454d96a90766163011ace69092df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "f9f92841_f03020c8",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSampleTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-05T08:32:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f2fbbf8_66190671",
+      "revId": "276b013938e5454d96a90766163011ace69092df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a32dd42e_8206209e",
         "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSampleTest.cpp",
         "patchSetId": 11
@@ -135,6 +261,24 @@
       "revId": "276b013938e5454d96a90766163011ace69092df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2261b552_c69e862c",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSampleTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-05T08:32:39Z",
+      "side": 1,
+      "message": "Discuss offline.\nThis test demonstrates how HTML parser works to mitigate confusion of\ntest script writes.",
+      "parentUuid": "a32dd42e_8206209e",
+      "revId": "276b013938e5454d96a90766163011ace69092df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
