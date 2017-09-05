@@ -9,6 +9,7 @@
 
 #include "base/macros.h"
 #include "base/supports_user_data.h"
+#import "ios/chrome/browser/web_state_list/web_state_list.h"
 
 class WebStateList;
 class WebStateListDelegate;
@@ -24,11 +25,12 @@ class ChromeBrowserState;
 // UI elements (Tab strip, ...).
 class Browser : public base::SupportsUserData {
  public:
-  explicit Browser(ios::ChromeBrowserState* browser_state);
+  Browser(ios::ChromeBrowserState* browser_state,
+          WebStateListDelegate* delegate);
   ~Browser() override;
 
-  WebStateList& web_state_list() { return *web_state_list_.get(); }
-  const WebStateList& web_state_list() const { return *web_state_list_.get(); }
+  WebStateList& web_state_list() { return web_state_list_; }
+  const WebStateList& web_state_list() const { return web_state_list_; }
 
   CommandDispatcher* dispatcher() { return dispatcher_; }
 
@@ -40,8 +42,7 @@ class Browser : public base::SupportsUserData {
   __strong ChromeBroadcaster* broadcaster_;
   __strong CommandDispatcher* dispatcher_;
   ios::ChromeBrowserState* browser_state_;
-  std::unique_ptr<WebStateListDelegate> web_state_list_delegate_;
-  std::unique_ptr<WebStateList> web_state_list_;
+  WebStateList web_state_list_;
 
   DISALLOW_COPY_AND_ASSIGN(Browser);
 };
