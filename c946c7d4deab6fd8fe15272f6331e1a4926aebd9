@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30efb67d_aec05c2b",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-05T00:06:01Z",
+      "side": 1,
+      "message": "Widget::SetFullscreen() has this check - there\u0027s no need to check here as well. Same in exit.",
+      "revId": "c946c7d4deab6fd8fe15272f6331e1a4926aebd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4d951cc_324413cc",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-05T00:06:01Z",
+      "side": 1,
+      "message": "Why can\u0027t this be GURL()? (comment?). I see there\u0027s an early exit in ExclusiveAccessBubbleViews::UpdateContent(), but so long as the bubble type is also changing it should be fine to use GURL()",
+      "range": {
+        "startLine": 491,
+        "startChar": 17,
+        "endLine": 491,
+        "endChar": 45
+      },
+      "revId": "c946c7d4deab6fd8fe15272f6331e1a4926aebd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11e46ec9_8efaa24b",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-05T00:06:01Z",
+      "side": 1,
+      "message": "this flow doesn\u0027t look right. UpdateContent should only be called if the bubble was non-null when this method was invoked (in which case a new one shouldn\u0027t be created on the line aove)",
+      "revId": "c946c7d4deab6fd8fe15272f6331e1a4926aebd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
