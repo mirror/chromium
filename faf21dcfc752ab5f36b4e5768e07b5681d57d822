@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f23d3ba_daebcddd",
+        "filename": "ui/gfx/math_util.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-05T20:10:09Z",
+      "side": 1,
+      "message": "I was hoping to see us move these onto gfx::Transform to replace the methods there so that we don\u0027t have 2 different methods. This would make those 2 different methods even closer instead, which feels pretty unfortunate. Can we move this to gfx by making it first-class on the types and replacing competing things?",
+      "revId": "faf21dcfc752ab5f36b4e5768e07b5681d57d822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
