@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a066f3ae_751a5309",
+        "filename": "chrome/android/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 1162,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-09-05T21:25:37Z",
+      "side": 1,
+      "message": "there is no magic GN variables to use instead here? You\u0027re the expert, just wondering if this could fail on some configs",
+      "range": {
+        "startLine": 1162,
+        "startChar": 35,
+        "endLine": 1162,
+        "endChar": 36
+      },
+      "revId": "988c26ff7d30a607e5f92b3c1de4fdacdfea8ff4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4177965a_a71176a8",
+        "filename": "chrome/android/static_initializers.gni",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-09-05T21:25:37Z",
+      "side": 1,
+      "message": "what about x86?",
+      "range": {
+        "startLine": 11,
+        "startChar": 6,
+        "endLine": 11,
+        "endChar": 16
+      },
+      "revId": "988c26ff7d30a607e5f92b3c1de4fdacdfea8ff4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
