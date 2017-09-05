@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7e3e5f92_963bff0d",
+        "filename": "build/vs_toolchain.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-09-05T21:22:31Z",
+      "side": 1,
+      "message": "Hm, I figured the comment is still good: The file is already readable (on Windows), we just need to also make it writable. Before this patch, the next line also removed the r bit, now it only adds w.",
+      "parentUuid": "dfc9734b_be1872f4",
+      "revId": "e5378ef9ab0b06eaee536bb46dca2711e8ea9f93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5504751e_7f2fe4c3",
         "filename": "build/vs_toolchain.py",
         "patchSetId": 2
