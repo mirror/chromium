@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9972672_b9432ffa",
+        "filename": "tools/perf/page_sets/tough_pinch_zoom_cases.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-09-05T18:07:13Z",
+      "side": 1,
+      "message": "I don\u0027t think this is the correct fix. In SyntheticTouchscreenPinchGesture::MoveTouchPoints the two touch points move in opposite directions from the anchor point. In this case, that\u0027d mean that the point moving up should leave the screen. The fact that this passes tells me that there\u0027s an issue elsewhere in the pipeline.\n\nI suspect it\u0027s in GpuBenchmarking::PinchBy. Up to that point, anchor_x/y is relative to the layout viewport. We multiply by the PSF there, presumably because we want to make it relative to the visual viewport but we don\u0027t apply the visual viewport offset so this will lead to invalid coordinates unless we\u0027re pinching into (0, 0).\n\nCould you try fixing that and seeing if that helps? I suspect we may also sometimes be trying to create impossible pinch gestures. e.g. AndroidToughPinchZoomCasesPageSet sets a scale factor of 7 which we try to perform in one gesture. On most devices, that\u0027s not possible in a single gesture as your fingers would run off the screen before you reached the 7x magnification.\n\nFinally, I can\u0027t see any examples of cases where we actually use a non-default element in a pinch gesture (i.e. we always end up defaulting to the document.body) so the intent is to always zoom into the page center/arbitrary location. Perhaps we should just remove that option - simplify the anchor logic and always zoom into the screen center?",
+      "range": {
+        "startLine": 24,
+        "startChar": 12,
+        "endLine": 25,
+        "endChar": 33
+      },
+      "revId": "bf134e81fbc7bfc668f11ec4543ed9b6e52cc160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
