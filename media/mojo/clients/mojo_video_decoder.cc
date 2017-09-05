@@ -36,6 +36,7 @@ MojoVideoDecoder::MojoVideoDecoder(
       media_log_binding_(&media_log_service_),
       weak_factory_(this) {
   DVLOG(1) << __func__;
+  DCHECK(gpu_factories_);
 }
 
 MojoVideoDecoder::~MojoVideoDecoder() {
@@ -212,13 +213,11 @@ void MojoVideoDecoder::BindRemoteDecoder() {
       DemuxerStream::VIDEO, &remote_consumer_handle);
 
   media::mojom::CommandBufferIdPtr command_buffer_id;
-  if (gpu_factories_) {
-    base::UnguessableToken channel_token = gpu_factories_->GetChannelToken();
-    if (channel_token) {
-      command_buffer_id = media::mojom::CommandBufferId::New();
-      command_buffer_id->channel_token = std::move(channel_token);
-      command_buffer_id->route_id = gpu_factories_->GetCommandBufferRouteId();
-    }
+  base::UnguessableToken channel_token = gpu_factories_->GetChannelToken();
+  if (channel_token) {
+    command_buffer_id = media::mojom::CommandBufferId::New();
+    command_buffer_id->channel_token = std::move(channel_token);
+    command_buffer_id->route_id = gpu_factories_->GetCommandBufferRouteId();
   }
 
   remote_decoder_->Construct(
