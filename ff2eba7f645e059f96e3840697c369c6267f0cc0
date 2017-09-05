@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "706a4108_96e046bf",
+        "filename": "components/viz/service/surfaces/surface_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-09-05T15:15:15Z",
+      "side": 1,
+      "message": "nit: drop the braces.",
+      "revId": "ff2eba7f645e059f96e3840697c369c6267f0cc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eb9e719_468d0b0c",
+        "filename": "services/viz/privileged/interfaces/compositing/frame_sink_manager.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-09-05T15:15:15Z",
+      "side": 1,
+      "message": "Drop the first line. Seems awkward.",
+      "revId": "ff2eba7f645e059f96e3840697c369c6267f0cc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
