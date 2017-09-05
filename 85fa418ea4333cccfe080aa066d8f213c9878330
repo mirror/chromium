@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aefc3e5c_c709e3eb",
+        "filename": "content/browser/dom_storage/session_storage_database.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-05T23:10:12Z",
+      "side": 1,
+      "message": "nit: I\u0027d prefer that we keep the static method and don\u0027t add GetInstance() to callers, if that\u0027s OK with you. (and assuming it doesn\u0027t ruin future plans such as dependency injection)",
+      "revId": "85fa418ea4333cccfe080aa066d8f213c9878330",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88317aa8_2d8ec3b4",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1330,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-05T23:10:12Z",
+      "side": 1,
+      "message": "If I understand correctly, this logic will cause all the untracked databases to be reported as \"leveldatabase/0x00000000\" (8 more zeroes on 64-bit). I mildly prefer the approach I suggested in https://crrev.com/2983723002 where ToTrackedDB() behaves more like blink\u0027s To*. (unconditional static_cast with DCHECK)\n\nI\u0027d be happy to chat about this in person and learn about your reasoning for this approach, if you have some time!",
+      "revId": "85fa418ea4333cccfe080aa066d8f213c9878330",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
