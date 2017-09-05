@@ -233,8 +233,8 @@
 #include "chrome/browser/metrics/chromeos_metrics_provider.h"
 #include "chrome/browser/ui/webui/chromeos/login/enable_debugging_screen_handler.h"
 #include "chrome/browser/ui/webui/chromeos/login/hid_detection_screen_handler.h"
-#include "chrome/browser/ui/webui/chromeos/login/reset_screen_handler.h"
 #include "chrome/browser/ui/webui/chromeos/login/signin_screen_handler.h"
+#include "chrome/browser/ui/webui/settings/browser_lifetime_handler.h"
 #include "chromeos/audio/audio_devices_pref_handler_impl.h"
 #include "chromeos/chromeos_switches.h"
 #include "chromeos/network/proxy/proxy_config_handler.h"
@@ -409,7 +409,6 @@ void RegisterLocalState(PrefRegistrySimple* registry) {
   chromeos::NetworkThrottlingObserver::RegisterPrefs(registry);
   chromeos::Preferences::RegisterPrefs(registry);
   chromeos::RegisterDisplayLocalStatePrefs(registry);
-  chromeos::ResetScreenHandler::RegisterPrefs(registry);
   chromeos::ResourceReporter::RegisterPrefs(registry);
   chromeos::ServicesCustomizationDocument::RegisterPrefs(registry);
   chromeos::SigninScreenHandler::RegisterPrefs(registry);
@@ -431,6 +430,7 @@ void RegisterLocalState(PrefRegistrySimple* registry) {
   policy::DeviceStatusCollector::RegisterPrefs(registry);
   policy::DMTokenStorage::RegisterPrefs(registry);
   policy::PolicyCertServiceFactory::RegisterPrefs(registry);
+  settings::BrowserLifetimeHandler::RegisterPrefs(registry);
   quirks::QuirksManager::RegisterPrefs(registry);
 #endif
 

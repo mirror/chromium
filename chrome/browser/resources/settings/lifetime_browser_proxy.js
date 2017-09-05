@@ -15,8 +15,13 @@ cr.define('settings', function() {
     // First signs out current user and then performs a restart.
     signOutAndRestart() {}
 
-    // Triggers a factory reset.
-    factoryReset() {}
+    /**
+     * Triggers a factory reset. The parameter indicates whether a to install a
+     * TPM firmware update (if available) after the reset.
+     *
+     * @param {boolean} requestTpmFirmwareUpdate
+     */
+    factoryReset(requestTpmFirmwareUpdate) {}
     // </if>
   }
 
@@ -43,6 +48,11 @@ cr.define('settings', function() {
     /** @override */
     factoryReset() {
       chrome.send('factoryReset');
+    }
+
+    /** @override */
+    factoryReset(requestTpmFirmwareUpdate) {
+      chrome.send('factoryReset', [requestTpmFirmwareUpdate]);
     }
     // </if>
   }

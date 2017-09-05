@@ -57,6 +57,12 @@
     <message name="IDS_SETTINGS_ABOUT_PAGE_RELAUNCH_AND_POWERWASH" desc="The label for the  button that relaunches and powerwashes the browser once update is complete">
       Relaunch and Powerwash
     </message>
+    <message name="IDS_SETTINGS_ABOUT_TPM_FIRMWARE_UPDATE_MESSAGE"  desc="TPM firmware update action message on the about page.">
+      Powerwash for added security
+    </message>
+    <message name="IDS_SETTINGS_ABOUT_TPM_FIRMWARE_UPDATE_DESCRIPTION"  desc="TPM firmware update action description on the about page.">
+      This upgrade resets your Chromebook and removes current user data.
+    </message>
     <message name="IDS_SETTINGS_UPGRADE_UPDATING" desc="Status label: Updating ChromiumOS or ChromeOS">
       Updating your device
     </message>
