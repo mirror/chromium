@@ -2155,8 +2155,8 @@
             ],
             "experiments": [
                 {
-                    "name": "ModalToggleEnabled",
-                    "enable_features": [
+                    "name": "ModalToggleDisabled",
+                    "disable_features": [
                         "DisplayPersistenceToggleInPermissionPrompts",
                         "ModalPermissionPrompts"
                     ]
