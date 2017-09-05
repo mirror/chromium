@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dd6ed99c_5d2600a7",
+        "filename": "mojo/public/cpp/bindings/lib/native_struct_serialization.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-09-05T20:16:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e6561c3_ccd5e50b",
+      "revId": "28fd09c905bf0c9680266cc155c924429224b46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1441da1b_7c6b60c3",
         "filename": "mojo/public/cpp/bindings/lib/native_struct_serialization.h",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "28fd09c905bf0c9680266cc155c924429224b46e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b39b30f6_a33644d0",
+        "filename": "mojo/public/cpp/bindings/lib/native_struct_serialization.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-09-05T20:16:24Z",
+      "side": 1,
+      "message": "Sorry, this is a stale comment. It was true at one point. removed :)",
+      "parentUuid": "1441da1b_7c6b60c3",
+      "revId": "28fd09c905bf0c9680266cc155c924429224b46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2447051f_0f392a19",
+        "filename": "mojo/public/cpp/bindings/tests/test_native_types.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-09-05T20:16:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66970971_e21f3313",
+      "revId": "28fd09c905bf0c9680266cc155c924429224b46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4053f0d1_3258e84c",
         "filename": "mojo/public/tools/bindings/generators/cpp_templates/module-shared-internal.h.tmpl",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "28fd09c905bf0c9680266cc155c924429224b46e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4db670b3_3c008892",
+        "filename": "mojo/public/tools/bindings/generators/cpp_templates/module-shared-internal.h.tmpl",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-09-05T20:16:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4053f0d1_3258e84c",
+      "revId": "28fd09c905bf0c9680266cc155c924429224b46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "660d11ec_551eb1dc",
+        "filename": "mojo/public/tools/bindings/mojom.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-09-05T20:16:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "616ca6de_08b13a01",
+      "revId": "28fd09c905bf0c9680266cc155c924429224b46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3340d3e8_3873d86c",
         "filename": "mojo/public/tools/bindings/mojom_bindings_generator.py",
         "patchSetId": 4
@@ -101,6 +191,24 @@
       "revId": "28fd09c905bf0c9680266cc155c924429224b46e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d72d806c_47f80a5c",
+        "filename": "mojo/public/tools/bindings/mojom_bindings_generator.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-09-05T20:16:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3340d3e8_3873d86c",
+      "revId": "28fd09c905bf0c9680266cc155c924429224b46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
