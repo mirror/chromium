@@ -70,6 +70,30 @@
       "revId": "6a8189147b146d72e91e10cca7f7f432dc42ed2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e416e98e_ca34e4ba",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 2386,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-09-05T06:13:42Z",
+      "side": 1,
+      "message": "Hmm. I see. Reader mode actually just started using custom tabs as well, so I dont think we will need swapping for it in the long term.\n\nLooks like that test mostly uses swap to get a side effect and swaps with an empty WebContents. I would really prefer if we can make the test pass using some other way and keep the swap code intact.\n\nLet me try to see if there is another way to make it pass.",
+      "parentUuid": "a67664c6_3102fd56",
+      "range": {
+        "startLine": 2386,
+        "startChar": 8,
+        "endLine": 2386,
+        "endChar": 26
+      },
+      "revId": "6a8189147b146d72e91e10cca7f7f432dc42ed2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
