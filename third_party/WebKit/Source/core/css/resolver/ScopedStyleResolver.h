@@ -72,7 +72,7 @@ class ScopedStyleResolver final
   void CollectFeaturesTo(RuleFeatureSet&,
                          HeapHashSet<Member<const StyleSheetContents>>&
                              visited_shared_style_sheet_contents) const;
-  void ResetAuthorStyle();
+  void ResetStyle();
   bool HasDeepOrShadowSelector() const { return has_deep_or_shadow_selector_; }
   void SetHasUnresolvedKeyframesRule() {
     has_unresolved_keyframes_rule_ = true;

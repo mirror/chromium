@@ -53,8 +53,8 @@ class CORE_EXPORT StyleSheetCollection
 
   static StyleSheetCollection* Create() { return new StyleSheetCollection; }
 
-  const ActiveStyleSheetVector& ActiveAuthorStyleSheets() const {
-    return active_author_style_sheets_;
+  const ActiveStyleSheetVector& ActiveStyleSheets() const {
+    return active_style_sheets_;
   }
   const HeapVector<TraceWrapperMember<StyleSheet>>&
   StyleSheetsForStyleSheetList() const {
@@ -76,7 +76,7 @@ class CORE_EXPORT StyleSheetCollection
   StyleSheetCollection();
 
   HeapVector<TraceWrapperMember<StyleSheet>> style_sheets_for_style_sheet_list_;
-  ActiveStyleSheetVector active_author_style_sheets_;
+  ActiveStyleSheetVector active_style_sheets_;
   bool sheet_list_dirty_ = true;
 };
 

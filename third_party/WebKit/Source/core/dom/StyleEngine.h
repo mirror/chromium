@@ -98,8 +98,8 @@ class CORE_EXPORT StyleEngine final
 
   const HeapVector<
       std::pair<WebStyleSheetId, TraceWrapperMember<CSSStyleSheet>>>&
-  InjectedAuthorStyleSheets() const {
-    return injected_author_style_sheets_;
+  InjectedStyleSheets() const {
+    return injected_style_sheets_;
   }
   CSSStyleSheet* InspectorStyleSheet() const { return inspector_style_sheet_; }
 
@@ -116,8 +116,8 @@ class CORE_EXPORT StyleEngine final
   void ViewportRulesChanged();
   void HtmlImportAddedOrRemoved();
 
-  WebStyleSheetId InjectAuthorSheet(StyleSheetContents* author_sheet);
-  void RemoveInjectedAuthorSheet(WebStyleSheetId author_sheet_id);
+  WebStyleSheetId InjectSheet(StyleSheetContents*);
+  void RemoveInjectedSheet(WebStyleSheetId);
   CSSStyleSheet& EnsureInspectorStyleSheet();
   RuleSet* WatchedSelectorsRuleSet() {
     DCHECK(IsMaster());
@@ -188,7 +188,7 @@ class CORE_EXPORT StyleEngine final
   const TreeOrderedList& TreeBoundaryCrossingScopes() const {
     return tree_boundary_crossing_scopes_;
   }
-  void ResetAuthorStyle(TreeScope&);
+  void ResetStyle(TreeScope&);
 
   StyleResolver* Resolver() const { return resolver_; }
 
@@ -257,7 +257,8 @@ class CORE_EXPORT StyleEngine final
                                               Element& after_element);
   void ScheduleNthPseudoInvalidations(ContainerNode&);
   void ScheduleInvalidationsForRuleSets(TreeScope&,
-                                        const HeapHashSet<Member<RuleSet>>&);
+                                        const HeapHashSet<Member<RuleSet>>&,
+                                        bool);
 
   void ElementWillBeRemoved(Element& element) {
     style_invalidator_.RescheduleSiblingInvalidationsAsDescendants(element);
@@ -272,6 +273,8 @@ class CORE_EXPORT StyleEngine final
   void ApplyRuleSetChanges(TreeScope&,
                            const ActiveStyleSheetVector& old_style_sheets,
                            const ActiveStyleSheetVector& new_style_sheets);
+
+  void CollectMatchingUserRules(ElementRuleCollector&) const;
 
   DECLARE_VIRTUAL_TRACE();
   DECLARE_TRACE_WRAPPERS();
@@ -359,7 +362,7 @@ class CORE_EXPORT StyleEngine final
   int pending_body_stylesheets_ = 0;
 
   HeapVector<std::pair<WebStyleSheetId, TraceWrapperMember<CSSStyleSheet>>>
-      injected_author_style_sheets_;
+      injected_style_sheets_;
   Member<CSSStyleSheet> inspector_style_sheet_;
 
   TraceWrapperMember<DocumentStyleSheetCollection>
@@ -401,7 +404,7 @@ class CORE_EXPORT StyleEngine final
   std::unique_ptr<StyleResolverStats> style_resolver_stats_;
   unsigned style_for_element_count_ = 0;
 
-  WebStyleSheetId injected_author_sheets_id_count_ = 0;
+  WebStyleSheetId injected_sheets_id_count_ = 0;
 
   friend class StyleEngineTest;
 };
