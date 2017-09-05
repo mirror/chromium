@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "56c73a02_de330e42",
+        "filename": "chrome/android/java/res/layout/content_suggestions_card_modern.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-05T10:04:51Z",
+      "side": 1,
+      "message": "Ah got it, you would have to explicitly call updateOfflineBadgeVisibility, right.",
+      "parentUuid": "f13230b6_c53a9378",
+      "range": {
+        "startLine": 35,
+        "startChar": 8,
+        "endLine": 35,
+        "endChar": 26
+      },
+      "revId": "1637816e4039d38d77c6d014056df1251f6004c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8c53a61_cbfd28d3",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsCardViewHolder.java",
         "patchSetId": 1
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Handy, thanks!",
       "parentUuid": "f8c53a61_cbfd28d3",
+      "range": {
+        "startLine": 72,
+        "startChar": 18,
+        "endLine": 72,
+        "endChar": 90
+      },
+      "revId": "1637816e4039d38d77c6d014056df1251f6004c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "01ae4084_feac93c9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsCardViewHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-05T10:04:51Z",
+      "side": 1,
+      "message": "Actually it\u0027s more than a handy shortcut... you NEED to check the Feature flag and a Preference to get the real status of the feature.",
+      "parentUuid": "d3e430e7_1f0e3e34",
       "range": {
         "startLine": 72,
         "startChar": 18,
