@@ -16,6 +16,24 @@
       "revId": "57b28b0ba45e7c139451a678c1974918788e1534",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fafb21a9_c1a4aa84",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/support/check-layout-th.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2017-09-05T20:15:34Z",
+      "side": 1,
+      "message": "Just to close the loop: due to some limitation in w-p-t we can\u0027t condense them. https://github.com/w3c/web-platform-tests/pull/7229",
+      "parentUuid": "24669ce7_ae186313",
+      "revId": "57b28b0ba45e7c139451a678c1974918788e1534",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
