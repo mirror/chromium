@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "36183723_a3657fda",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSample.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-05T04:24:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad747f09_69c75508",
+      "revId": "9cc49236bbffe77a444bc5dfc5aa770d85148fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85788c68_09c17c00",
         "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSample.cpp",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "9cc49236bbffe77a444bc5dfc5aa770d85148fae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02ee6d1d_7505fd60",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSample.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-05T04:24:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85788c68_09c17c00",
+      "revId": "9cc49236bbffe77a444bc5dfc5aa770d85148fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "621011d4_cd0087ba",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSampleTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-05T04:24:26Z",
+      "side": 1,
+      "message": "Add |EXPECT_EQ(\"\", GetDocument().body()-\u003einnerHTML())|.\nSince |innerHTML()| does more than |CountChildren()|,\nI would like to isolate |SampleSelection| from bugs of |innerHTML|.",
+      "parentUuid": "4df7814c_c2ec7412",
+      "revId": "9cc49236bbffe77a444bc5dfc5aa770d85148fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90f58a50_726b3476",
         "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSampleTest.cpp",
         "patchSetId": 10
@@ -84,6 +138,24 @@
       "revId": "9cc49236bbffe77a444bc5dfc5aa770d85148fae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3af7007a_c0599a8e",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSampleTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-05T04:24:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90f58a50_726b3476",
+      "revId": "9cc49236bbffe77a444bc5dfc5aa770d85148fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
