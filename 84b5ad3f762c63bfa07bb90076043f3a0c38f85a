@@ -22,6 +22,30 @@
       "revId": "84b5ad3f762c63bfa07bb90076043f3a0c38f85a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e316d519_f7e97b6c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninAndSyncView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-09-05T09:11:09Z",
+      "side": 1,
+      "message": "I have updated the CL description and added a short comment in the Java code as well. Sorry for the lack of detail.",
+      "parentUuid": "9e4c56f1_9fdc2df4",
+      "range": {
+        "startLine": 304,
+        "startChar": 20,
+        "endLine": 304,
+        "endChar": 34
+      },
+      "revId": "84b5ad3f762c63bfa07bb90076043f3a0c38f85a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
