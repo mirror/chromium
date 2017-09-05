@@ -320,25 +320,16 @@ void EventPath::ShrinkForRelatedTarget(const Node& target) {
 }
 
 void EventPath::AdjustForTouchEvent(TouchEvent& touch_event) {
-  HeapVector<Member<TouchList>> adjusted_touches;
-  HeapVector<Member<TouchList>> adjusted_target_touches;
-  HeapVector<Member<TouchList>> adjusted_changed_touches;
-  HeapVector<Member<TreeScope>> tree_scopes;
-
-  for (const auto& tree_scope_event_context : tree_scope_event_contexts_) {
-    TouchEventContext* touch_event_context =
-        tree_scope_event_context->EnsureTouchEventContext();
-    adjusted_touches.push_back(&touch_event_context->Touches());
-    adjusted_target_touches.push_back(&touch_event_context->TargetTouches());
-    adjusted_changed_touches.push_back(&touch_event_context->ChangedTouches());
-    tree_scopes.push_back(&tree_scope_event_context->GetTreeScope());
+  for (TreeScopeEventContext* tree_scope_event_context :
+       tree_scope_event_contexts_) {
+    tree_scope_event_context->EnsureTouchEventContext();
   }
 
-  AdjustTouchList(touch_event.touches(), adjusted_touches, tree_scopes);
-  AdjustTouchList(touch_event.targetTouches(), adjusted_target_touches,
-                  tree_scopes);
-  AdjustTouchList(touch_event.changedTouches(), adjusted_changed_touches,
-                  tree_scopes);
+  AdjustTouchList(touch_event.touches(), &TouchEventContext::Touches);
+  AdjustTouchList(touch_event.targetTouches(),
+                  &TouchEventContext::TargetTouches);
+  AdjustTouchList(touch_event.changedTouches(),
+                  &TouchEventContext::ChangedTouches);
 
 #if DCHECK_IS_ON()
   for (const auto& tree_scope_event_context : tree_scope_event_contexts_) {
@@ -354,8 +345,7 @@ void EventPath::AdjustForTouchEvent(TouchEvent& touch_event) {
 
 void EventPath::AdjustTouchList(
     const TouchList* touch_list,
-    HeapVector<Member<TouchList>> adjusted_touch_list,
-    const HeapVector<Member<TreeScope>>& tree_scopes) {
+    TouchList& (TouchEventContext::*touch_list_getter)()) {
   if (!touch_list)
     return;
   for (size_t i = 0; i < touch_list->length(); ++i) {
@@ -369,9 +359,13 @@ void EventPath::AdjustTouchList(
 
     RelatedTargetMap related_node_map;
     BuildRelatedNodeMap(*target_node, related_node_map);
-    for (size_t j = 0; j < tree_scopes.size(); ++j) {
-      adjusted_touch_list[j]->Append(touch.CloneWithNewTarget(
-          FindRelatedNode(*tree_scopes[j], related_node_map)));
+    for (const TreeScopeEventContext* tree_scope_event_context :
+         tree_scope_event_contexts_) {
+      auto& touch_event_context =
+          *tree_scope_event_context->GetTouchEventContext();
+      TouchList& adjusted_list = (touch_event_context.*touch_list_getter)();
+      adjusted_list.Append(touch.CloneWithNewTarget(FindRelatedNode(
+          tree_scope_event_context->GetTreeScope(), related_node_map)));
     }
   }
 }

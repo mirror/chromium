@@ -41,6 +41,7 @@ class Event;
 class EventTarget;
 class Node;
 class TouchEvent;
+class TouchEventContext;
 class TouchList;
 class TreeScope;
 
@@ -113,8 +114,7 @@ class CORE_EXPORT EventPath final : public GarbageCollected<EventPath> {
   void ShrinkForRelatedTarget(const Node& target);
 
   void AdjustTouchList(const TouchList*,
-                       HeapVector<Member<TouchList>> adjusted_touch_list,
-                       const HeapVector<Member<TreeScope>>& tree_scopes);
+                       TouchList& (TouchEventContext::*touch_list_getter)());
 
   using TreeScopeEventContextMap =
       HeapHashMap<Member<TreeScope>, Member<TreeScopeEventContext>>;
