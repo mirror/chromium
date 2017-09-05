@@ -46,6 +46,30 @@
       "revId": "711066de2d3386b2172ed694322e856ae4f59ec1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d1ef35c1_98883ba4",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_fetcher_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-09-05T05:00:06Z",
+      "side": 1,
+      "message": "Yes, it\u0027s No!",
+      "parentUuid": "646c139d_5d89abe5",
+      "range": {
+        "startLine": 82,
+        "startChar": 25,
+        "endLine": 82,
+        "endChar": 30
+      },
+      "revId": "711066de2d3386b2172ed694322e856ae4f59ec1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
