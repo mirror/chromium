@@ -55,8 +55,9 @@ bool HitTestQuery::FindTargetInRegionForLocation(
     const gfx::Point& location_in_parent,
     AggregatedHitTestRegion* region,
     Target* target) const {
+  const gfx::Transform transform(region->transform);
   gfx::Point location_transformed(location_in_parent);
-  region->transform.TransformPoint(&location_transformed);
+  transform.TransformPoint(&location_transformed);
   if (!region->rect.Contains(location_transformed))
     return false;
 

@@ -64,13 +64,12 @@ void EventTargeter::FindTargetForLocationNow(
         ServerWindow* target_window =
             event_targeter_delegate_->GetWindowFromFrameSinkId(
                 target.frame_sink_id);
-        if (!target_window) {
-          // TODO(riajiang): There's no target window with this frame_sink_id,
-          // maybe a security fault. http://crbug.com/746470
-          NOTREACHED();
+        if (target_window) {
+          deepest_window.window = target_window;
+          // TODO(riajiang): use |target.location_in_target|.
         }
-        deepest_window.window = target_window;
-        // TODO(riajiang): use |target.location_in_target|.
+        // TODO(riajiang): Investigate when this would be a security fault.
+        // http://crbug.com/746470
       }
     }
   }
