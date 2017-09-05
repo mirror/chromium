@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "91230335_6658fa36",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-09-05T02:54:17Z",
+      "side": 1,
+      "message": "Yeah, that sounds way better - thanks! I had to do something weird to define it as something different depending on the platform *and* make closure happy though - added Chris in to take a look as well since he helped me offline with it.",
+      "parentUuid": "f1997e42_990f3f66",
+      "revId": "121be5b5da8f2c4d6b097e5ee563ad5b9b5e5d57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b6ac94f_35992896",
         "filename": "chrome/test/data/webui/settings/site_details_tests.js",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d96a9436_1b66261c",
+        "filename": "chrome/test/data/webui/settings/site_details_tests.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-09-05T02:54:17Z",
+      "side": 1,
+      "message": "I don\u0027t think git cl format --js does anything, but you\u0027re right, the formatting is weird. I fixed it to be consistent with what site_settings/constants.js did which existed before I touched it.",
+      "parentUuid": "2b6ac94f_35992896",
+      "revId": "121be5b5da8f2c4d6b097e5ee563ad5b9b5e5d57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2b914bf_06296aba",
         "filename": "chrome/test/data/webui/settings/test_site_settings_prefs_browser_proxy.js",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "121be5b5da8f2c4d6b097e5ee563ad5b9b5e5d57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95b1dc47_6dcda87c",
+        "filename": "chrome/test/data/webui/settings/test_site_settings_prefs_browser_proxy.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-09-05T02:54:17Z",
+      "side": 1,
+      "message": "Done (I think cuz I reverted these changes)",
+      "parentUuid": "f2b914bf_06296aba",
+      "revId": "121be5b5da8f2c4d6b097e5ee563ad5b9b5e5d57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
