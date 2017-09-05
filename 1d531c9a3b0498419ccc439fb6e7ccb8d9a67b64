@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b07d9b32_d11cba5f",
+        "filename": "cc/test/fake_layer_tree_frame_sink.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-09-05T18:14:29Z",
+      "side": 1,
+      "message": "danakj@, WDYT?",
+      "parentUuid": "d144436c_0458e001",
+      "range": {
+        "startLine": 38,
+        "startChar": 52,
+        "endLine": 38,
+        "endChar": 54
+      },
+      "revId": "1d531c9a3b0498419ccc439fb6e7ccb8d9a67b64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b92187d_bbcb4f42",
         "filename": "cc/test/fake_layer_tree_frame_sink.h",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "1d531c9a3b0498419ccc439fb6e7ccb8d9a67b64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee6c7c8d_3641f6be",
+        "filename": "cc/test/fake_layer_tree_frame_sink.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-09-05T18:14:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6b92187d_bbcb4f42",
+      "range": {
+        "startLine": 43,
+        "startChar": 40,
+        "endLine": 43,
+        "endChar": 42
+      },
+      "revId": "1d531c9a3b0498419ccc439fb6e7ccb8d9a67b64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7571bee0_241472b0",
+        "filename": "cc/test/fake_layer_tree_frame_sink.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-09-05T18:14:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d97426ed_24a9247a",
+      "range": {
+        "startLine": 45,
+        "startChar": 10,
+        "endLine": 45,
+        "endChar": 40
+      },
+      "revId": "1d531c9a3b0498419ccc439fb6e7ccb8d9a67b64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4a64c9c_604ba2b3",
         "filename": "cc/trees/layer_tree_host_unittest.cc",
         "patchSetId": 3
@@ -82,6 +154,24 @@
       "writtenOn": "2017-08-23T21:03:15Z",
       "side": 1,
       "message": "Here too?",
+      "revId": "1d531c9a3b0498419ccc439fb6e7ccb8d9a67b64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b10e47e_44dcc2a8",
+        "filename": "cc/trees/layer_tree_host_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 5576,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-09-05T18:14:29Z",
+      "side": 1,
+      "message": "Unfortunately, this case uses a viz::TestLayerTreeFrameSink, which is different from the FakeLayerTreeFrameSink which the Builder makes. We could probably refactor more to address this, but didn\u0027t seem worth the extra churn for one more case.",
+      "parentUuid": "c4a64c9c_604ba2b3",
       "revId": "1d531c9a3b0498419ccc439fb6e7ccb8d9a67b64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
