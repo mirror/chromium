@@ -53,6 +53,11 @@ class CastMediaSinkServiceImpl
 
   void OnDialSinkAdded(const MediaSinkInternal& sink);
 
+  // Tries to open cast channels for sinks found by current round of mDNS
+  // discovery, but without opened cast channels.
+  // |cast_sinks|: list of sinks found by current round of mDNS discovery.
+  void ForceDiscovery(const std::vector<MediaSinkInternal>& cast_sinks);
+
  private:
   friend class CastMediaSinkServiceImplTest;
   FRIEND_TEST_ALL_PREFIXES(CastMediaSinkServiceImplTest, TestOnChannelOpened);
@@ -64,6 +69,7 @@ class CastMediaSinkServiceImpl
   FRIEND_TEST_ALL_PREFIXES(CastMediaSinkServiceImplTest, TestOnChannelError);
   FRIEND_TEST_ALL_PREFIXES(CastMediaSinkServiceImplTest, TestOnDialSinkAdded);
   FRIEND_TEST_ALL_PREFIXES(CastMediaSinkServiceImplTest, TestOnFetchCompleted);
+  FRIEND_TEST_ALL_PREFIXES(CastMediaSinkServiceImplTest, TestForceDiscovery);
 
   // CastSocket::Observer implementation.
   void OnError(const cast_channel::CastSocket& socket,

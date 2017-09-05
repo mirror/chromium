@@ -122,9 +122,19 @@ void CastMediaSinkServiceImpl::OnError(const cast_channel::CastSocket& socket,
   DVLOG(1) << "OnError [ip_endpoint]: " << socket.ip_endpoint().ToString()
            << " [error_state]: "
            << cast_channel::ChannelErrorToString(error_state);
+
   auto& ip_address = socket.ip_endpoint().address();
   current_sinks_map_.erase(ip_address);
   MediaSinkServiceBase::RestartTimer();
+
+  // Need a PostTask() here because RemoveSocket() will release the memory of
+  // |socket|. Need to make sure all tasks on |socket| finish before deleting
+  // the object.
+  content::BrowserThread::PostTask(
+      content::BrowserThread::IO, FROM_HERE,
+      base::Bind(
+          base::IgnoreResult(&cast_channel::CastSocketService::RemoveSocket),
+          base::Unretained(cast_socket_service_), socket.id()));
 }
 
 void CastMediaSinkServiceImpl::OnMessage(
@@ -210,6 +220,17 @@ void CastMediaSinkServiceImpl::OnDialSinkAdded(const MediaSinkInternal& sink) {
   // TODO(crbug.com/753175): Dual discovery should not try to open cast channel
   // for non-Cast device.
   OpenChannel(ip_endpoint, CreateCastSinkFromDialSink(sink));
+}
+
+void CastMediaSinkServiceImpl::ForceDiscovery(
+    const std::vector<MediaSinkInternal>& cast_sinks) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+
+  for (const auto& cast_sink : cast_sinks) {
+    const net::IPEndPoint& ip_endpoint = cast_sink.cast_data().ip_endpoint;
+    if (!base::ContainsKey(current_sinks_map_, ip_endpoint.address()))
+      OpenChannel(ip_endpoint, cast_sink);
+  }
 }
 
 }  // namespace media_router

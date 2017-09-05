@@ -88,6 +88,9 @@ class CastMediaSinkService
                   content::BrowserThread::DeleteOnIOThread>
       cast_media_sink_service_impl_;
 
+  // List of cast sinks found in current round of mDNS discovery.
+  std::vector<MediaSinkInternal> cast_sinks_;
+
   DISALLOW_COPY_AND_ASSIGN(CastMediaSinkService);
 };
 

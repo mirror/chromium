@@ -270,6 +270,8 @@ TEST_F(CastMediaSinkServiceImplTest, TestOnChannelError) {
   media_sink_service_impl_.OnError(
       socket, cast_channel::ChannelError::CHANNEL_NOT_OPEN);
   EXPECT_TRUE(media_sink_service_impl_.current_sinks_map_.empty());
+
+  base::RunLoop().RunUntilIdle();
 }
 
 TEST_F(CastMediaSinkServiceImplTest, TestOnDialSinkAdded) {
@@ -338,6 +340,27 @@ TEST_F(CastMediaSinkServiceImplTest, TestOnFetchCompleted) {
   EXPECT_TRUE(base::ContainsValue(sinks, cast_sink1));
   EXPECT_TRUE(base::ContainsValue(sinks, cast_sink2));
   EXPECT_TRUE(base::ContainsValue(sinks, cast_sink3));
+}
+
+TEST_F(CastMediaSinkServiceImplTest, TestForceDiscovery) {
+  auto cast_sink1 = CreateCastSink(1);
+  auto cast_sink2 = CreateCastSink(2);
+  net::IPEndPoint ip_endpoint1 = CreateIPEndPoint(1);
+  net::IPEndPoint ip_endpoint2 = CreateIPEndPoint(2);
+
+  // Find Cast sink 1
+  media_sink_service_impl_.current_sinks_map_[ip_endpoint1.address()] =
+      cast_sink1;
+
+  EXPECT_CALL(*mock_cast_socket_service_,
+              OpenSocketInternal(ip_endpoint1, _, _, _))
+      .Times(0);
+  EXPECT_CALL(*mock_cast_socket_service_,
+              OpenSocketInternal(ip_endpoint2, _, _, _));
+
+  // Force discovery with Cast sink 1, 2
+  std::vector<MediaSinkInternal> sinks{cast_sink1, cast_sink2};
+  media_sink_service_impl_.ForceDiscovery(sinks);
 }
 
 TEST_F(CastMediaSinkServiceImplTest, CacheSinksForKnownNetwork) {

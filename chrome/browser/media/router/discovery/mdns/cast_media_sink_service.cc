@@ -155,8 +155,18 @@ void CastMediaSinkService::SetDnsSdRegistryForTest(DnsSdRegistry* registry) {
 }
 
 void CastMediaSinkService::ForceDiscovery() {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   if (dns_sd_registry_)
     dns_sd_registry_->ForceDiscovery();
+
+  if (!cast_media_sink_service_impl_)
+    return;
+
+  DVLOG(2) << "ForceDiscovery on " << cast_sinks_.size() << " sinks";
+  content::BrowserThread::PostTask(
+      content::BrowserThread::IO, FROM_HERE,
+      base::BindOnce(&CastMediaSinkServiceImpl::ForceDiscovery,
+                     cast_media_sink_service_impl_->AsWeakPtr(), cast_sinks_));
 }
 
 void CastMediaSinkService::OnDnsSdEvent(
@@ -167,7 +177,7 @@ void CastMediaSinkService::OnDnsSdEvent(
   DVLOG(2) << "CastMediaSinkService::OnDnsSdEvent found " << services.size()
            << " services";
 
-  std::vector<MediaSinkInternal> cast_sinks;
+  cast_sinks_.clear();
 
   for (const auto& service : services) {
     // Create Cast sink from mDNS service description.
@@ -178,14 +188,13 @@ void CastMediaSinkService::OnDnsSdEvent(
       continue;
     }
 
-    cast_sinks.push_back(std::move(cast_sink));
+    cast_sinks_.push_back(std::move(cast_sink));
   }
 
   content::BrowserThread::PostTask(
       content::BrowserThread::IO, FROM_HERE,
       base::BindOnce(&CastMediaSinkServiceImpl::OpenChannels,
-                     cast_media_sink_service_impl_->AsWeakPtr(),
-                     std::move(cast_sinks)));
+                     cast_media_sink_service_impl_->AsWeakPtr(), cast_sinks_));
 }
 
 void CastMediaSinkService::OnDialSinkAdded(const MediaSinkInternal& sink) {
