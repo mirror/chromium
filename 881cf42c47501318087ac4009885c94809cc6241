@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25eeda9a_527760b6",
+        "filename": "services/service_manager/public/interfaces/connector.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001287
+      },
+      "writtenOn": "2017-09-05T20:22:09Z",
+      "side": 1,
+      "message": "nit: typo",
+      "range": {
+        "startLine": 108,
+        "startChar": 54,
+        "endLine": 108,
+        "endChar": 62
+      },
+      "revId": "881cf42c47501318087ac4009885c94809cc6241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
