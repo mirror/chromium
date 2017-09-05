@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "381f1f08_22da4ecd",
+        "filename": "gpu/command_buffer/tests/gl_set_aggressively_free_resources_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1212220
+      },
+      "writtenOn": "2017-09-05T14:46:14Z",
+      "side": 1,
+      "message": "This test and tests below are assuming that GLESv3 is supported and they are crashing on\nplatforms that do not support GLESv3.",
+      "range": {
+        "startLine": 35,
+        "startChar": 71,
+        "endLine": 35,
+        "endChar": 0
+      },
+      "revId": "bd8e233ba9ba0e80504ef22e661fecec9d5d71d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
