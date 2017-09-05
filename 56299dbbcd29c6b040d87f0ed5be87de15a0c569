@@ -50,6 +50,23 @@
       "revId": "56299dbbcd29c6b040d87f0ed5be87de15a0c569",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c411534b_365c1e98",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-05T11:22:48Z",
+      "side": 1,
+      "message": "nit: could we just do MakeStrongBinding(MakeUnique\u003cMockURLLoaderFactory\u003e(MakeRequest(\u0026mock_loader_factory))) ?\n\n(don\u0027t want to have so many delete this if it can be avoided)",
+      "revId": "56299dbbcd29c6b040d87f0ed5be87de15a0c569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
