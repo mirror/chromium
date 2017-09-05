@@ -248,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "f1f290f3_c95377c6",
+        "filename": "cc/animation/animation_player.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-09-05T19:01:52Z",
+      "side": 1,
+      "message": "Ok, so my suggestion is that we fold these methods only after ElementAnimations points at AnimationTicker. At that point we can make them all simple forwarders, and leave impl checking to AnimationTicker.",
+      "parentUuid": "87264e1a_e57d7878",
+      "range": {
+        "startLine": 165,
+        "startChar": 7,
+        "endLine": 165,
+        "endChar": 36
+      },
+      "revId": "c4439dfe53a9e7c9a1c9cfcd149e43d9d37759b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "90f95601_0684b7d3",
         "filename": "cc/animation/animation_ticker.cc",
         "patchSetId": 9
