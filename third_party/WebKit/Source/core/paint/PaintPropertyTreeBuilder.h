@@ -89,6 +89,9 @@ struct PaintPropertyTreeBuilderFragmentContext {
   // This variable represents the input cull of current effect, also serves as
   // output clip of child effects that don't have a hard clip.
   const ClipPaintPropertyNode* input_clip_of_current_effect;
+
+  LayoutRect pagination_clip;
+  bool has_pagination_clip = false;
 };
 
 struct PaintPropertyTreeBuilderContext {
@@ -141,7 +144,17 @@ class PaintPropertyTreeBuilder {
                                    PaintPropertyTreeBuilderContext&);
 
  private:
+  ALWAYS_INLINE void UpdateFragmentPropertiesForSelf(
+      const LayoutObject&,
+      PaintPropertyTreeBuilderContext& full_context,
+      PaintPropertyTreeBuilderFragmentContext&,
+      FragmentData*);
+
   ALWAYS_INLINE static void UpdatePaintOffset(
+      const LayoutBoxModelObject&,
+      const LayoutObject* container_for_absolute_position,
+      PaintPropertyTreeBuilderFragmentContext&);
+  ALWAYS_INLINE static void GetPaintOffsetTranslation(
       const LayoutBoxModelObject&,
       PaintPropertyTreeBuilderFragmentContext&,
       const LayoutObject* container_for_absolute_position);
@@ -150,8 +163,7 @@ class PaintPropertyTreeBuilder {
   // offset.
   ALWAYS_INLINE static Optional<IntPoint> UpdateForPaintOffsetTranslation(
       const LayoutObject&,
-      PaintPropertyTreeBuilderFragmentContext&,
-      ObjectPaintProperties&);
+      PaintPropertyTreeBuilderFragmentContext&);
   ALWAYS_INLINE static void UpdatePaintOffsetTranslation(
       const LayoutObject&,
       const Optional<IntPoint>& paint_offset_translation,
@@ -161,7 +173,7 @@ class PaintPropertyTreeBuilder {
   ALWAYS_INLINE static void UpdateForObjectLocationAndSize(
       const LayoutObject&,
       const LayoutObject* container_for_absolute_position,
-      ObjectPaintProperties*,
+      FragmentData*,
       bool& is_actually_needed,
       PaintPropertyTreeBuilderFragmentContext&,
       bool& force_subtree_update,
@@ -187,6 +199,12 @@ class PaintPropertyTreeBuilder {
       ObjectPaintProperties&,
       PaintPropertyTreeBuilderFragmentContext&,
       bool& force_subtree_update);
+  ALWAYS_INLINE void UpdateFragmentClip(
+      const LayoutObject&,
+      ObjectPaintProperties&,
+      PaintPropertyTreeBuilderFragmentContext&,
+      bool& force_subtree_update,
+      bool& clip_changed);
   ALWAYS_INLINE static void UpdateCssClip(
       const LayoutObject&,
       ObjectPaintProperties&,
@@ -230,11 +248,15 @@ class PaintPropertyTreeBuilder {
       ObjectPaintProperties*,
       bool& force_subtree_update);
 
+  static void InitSingleFragmentFromParent(
+      const LayoutObject&,
+      PaintPropertyTreeBuilderContext& full_context,
+      bool needs_paint_properties);
+
   // Ensure the ObjectPaintProperties object is created if it will be needed, or
   // cleared otherwise.
-  ALWAYS_INLINE static void UpdatePaintProperties(
-      const LayoutObject&,
-      PaintPropertyTreeBuilderContext&);
+  ALWAYS_INLINE static void UpdateFragments(const LayoutObject&,
+                                            PaintPropertyTreeBuilderContext&);
 };
 
 }  // namespace blink

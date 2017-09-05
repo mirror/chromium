@@ -388,11 +388,6 @@ void PaintInvalidator::UpdateVisualRectIfNeeded(
 
 void PaintInvalidator::UpdateVisualRect(const LayoutObject& object,
                                         PaintInvalidatorContext& context) {
-  // The paint offset should already be updated through
-  // PaintPropertyTreeBuilder::updatePropertiesForSelf.
-  DCHECK(context.tree_builder_context_->current.paint_offset ==
-         object.PaintOffset());
-
   LayoutRect new_visual_rect = ComputeVisualRectInBacking(object, context);
   if (object.IsBoxModelObject()) {
     context.new_location = ComputeLocationInBacking(object, context);
