@@ -16,6 +16,23 @@
       "revId": "3ef7154ed5dc3f1e206f560e7e55c0219b07c179",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab014594_5ed37c40",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1940,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-09-05T05:04:40Z",
+      "side": 1,
+      "message": "nit: This comment seems unnecessary.",
+      "revId": "3ef7154ed5dc3f1e206f560e7e55c0219b07c179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
