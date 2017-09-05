@@ -20,6 +20,8 @@ class PreviewsDecider;
 
 namespace data_reduction_proxy {
 
+class LoFiUIService;
+
 // Interface to determine if a request should be made for a low fidelity version
 // of the resource.
 class LoFiDecider {
@@ -71,6 +73,11 @@ class LoFiDecider {
       net::URLRequest* request,
       GURL* new_url,
       previews::PreviewsDecider* previews_decider) const = 0;
+
+  virtual void MaybeContinueOrDisableAMPPreview(
+      net::URLRequest* request,
+      int response_code,
+      LoFiUIService* lofi_ui_service) const = 0;
 };
 
 }  // namespace data_reduction_proxy

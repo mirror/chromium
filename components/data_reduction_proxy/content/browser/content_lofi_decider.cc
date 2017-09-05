@@ -13,7 +13,9 @@
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_features.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_headers.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_params.h"
+#include "components/data_reduction_proxy/core/common/lofi_ui_service.h"
 #include "components/previews/core/previews_decider.h"
+#include "components/previews/core/previews_experiments.h"
 #include "content/public/browser/resource_request_info.h"
 #include "content/public/common/previews_state.h"
 #include "content/public/common/resource_type.h"
@@ -23,6 +25,10 @@
 #include "url/gurl.h"
 
 namespace data_reduction_proxy {
+
+// static
+const void* const PreviewsUserData::kPreviewsUserDataKey =
+    "PreviewsUserDataKey";
 
 ContentLoFiDecider::ContentLoFiDecider() {}
 
@@ -188,6 +194,26 @@ void ContentLoFiDecider::MaybeApplyAMPPreview(
 
   // TODO(rajendrant): Apply the matching logic for |request| and update
   // |new_url| to its AMP version.
+}
+
+void ContentLoFiDecider::MaybeContinueOrDisableAMPPreview(
+    net::URLRequest* request,
+    int response_code,
+    LoFiUIService* lofi_ui_service) const {
+  PreviewsUserData* previews_data = static_cast<PreviewsUserData*>(
+      request->GetUserData(PreviewsUserData::kPreviewsUserDataKey));
+  if (!previews_data)
+    return;
+  if (response_code != 200) {
+    // TODO(rajendrant): Redirect the webcontents to the original URL saved in
+    // |previews_data|.
+  } else {
+    // Show the inforbar.
+    lofi_ui_service->OnPreviewsShown(*request,
+                                     previews::PreviewsType::AMP_REDIRECTION,
+                                     previews_data->orig_url());
+  }
+  request->RemoveUserData(PreviewsUserData::kPreviewsUserDataKey);
 }
 
 }  // namespace data_reduction_proxy
