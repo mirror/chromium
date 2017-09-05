@@ -1,0 +1,198 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aac869e9_28255c57",
+        "filename": "content/browser/shared_worker/shared_worker_connector_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-05T09:28:31Z",
+      "side": 1,
+      "message": "DCHECK_CURRENTLY_ON(BrowserThread::IO);",
+      "revId": "452e50e742f20f1092248228fbe93236ef01e581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccaa3e04_1d167dcd",
+        "filename": "content/browser/shared_worker/shared_worker_connector_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-05T09:28:31Z",
+      "side": 1,
+      "message": "std::make_unique\u003cSharedWorkerConnectorImpl\u003e(...)?",
+      "revId": "452e50e742f20f1092248228fbe93236ef01e581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0a1cfa2_8d80ab6a",
+        "filename": "content/browser/shared_worker/shared_worker_connector_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-05T09:28:31Z",
+      "side": 1,
+      "message": "const",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 16
+      },
+      "revId": "452e50e742f20f1092248228fbe93236ef01e581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69007a91_b671deac",
+        "filename": "content/browser/shared_worker/shared_worker_host.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-05T09:28:31Z",
+      "side": 1,
+      "message": "Could you remove this comment?",
+      "range": {
+        "startLine": 116,
+        "startChar": 60,
+        "endLine": 117,
+        "endChar": 42
+      },
+      "revId": "452e50e742f20f1092248228fbe93236ef01e581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49355035_17473bb0",
+        "filename": "content/browser/shared_worker/shared_worker_message_filter.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-05T09:28:31Z",
+      "side": 1,
+      "message": "Looks like this header is no longer necessary.",
+      "revId": "452e50e742f20f1092248228fbe93236ef01e581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a1ec741_21991300",
+        "filename": "content/browser/shared_worker/shared_worker_service_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-05T09:28:31Z",
+      "side": 1,
+      "message": "Which thread can access |filters_|? Could you leave a comment about threading in this class?",
+      "revId": "452e50e742f20f1092248228fbe93236ef01e581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d79c0f0_c97dfb6d",
+        "filename": "content/renderer/shared_worker/shared_worker_client_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-05T09:28:31Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 1,
+        "startChar": 3,
+        "endLine": 1,
+        "endChar": 21
+      },
+      "revId": "452e50e742f20f1092248228fbe93236ef01e581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05c63df4_699a38a4",
+        "filename": "content/renderer/shared_worker/shared_worker_client_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-05T09:28:31Z",
+      "side": 1,
+      "message": "default?",
+      "revId": "452e50e742f20f1092248228fbe93236ef01e581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c43139c_06ced546",
+        "filename": "content/renderer/shared_worker/shared_worker_client_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-05T09:28:31Z",
+      "side": 1,
+      "message": "Could you update the license?\n\n\"Copyright 2017\"",
+      "range": {
+        "startLine": 1,
+        "startChar": 3,
+        "endLine": 1,
+        "endChar": 21
+      },
+      "revId": "452e50e742f20f1092248228fbe93236ef01e581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b20a5693_104383d5",
+        "filename": "content/renderer/shared_worker/shared_worker_client_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-05T09:28:31Z",
+      "side": 1,
+      "message": "explicit",
+      "revId": "452e50e742f20f1092248228fbe93236ef01e581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
