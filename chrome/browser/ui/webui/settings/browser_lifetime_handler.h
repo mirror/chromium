@@ -8,6 +8,8 @@
 #include "base/macros.h"
 #include "chrome/browser/ui/webui/settings/settings_page_ui_handler.h"
 
+class PrefRegistrySimple;
+
 namespace base {
 class ListValue;
 }
@@ -23,6 +25,11 @@ class BrowserLifetimeHandler : public SettingsPageUIHandler {
   void RegisterMessages() override;
   void OnJavascriptAllowed() override {}
   void OnJavascriptDisallowed() override {}
+
+#if defined(OS_CHROMEOS)
+  // Registers Local State preferences.
+  static void RegisterPrefs(PrefRegistrySimple* registry);
+#endif  // defined(OS_CHROMEOS)
 
  private:
   void HandleRestart(const base::ListValue* /*args*/);

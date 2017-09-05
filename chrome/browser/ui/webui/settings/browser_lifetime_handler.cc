@@ -13,6 +13,7 @@
 #include "chrome/browser/browser_process_platform_part.h"
 #include "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h"
 #include "chrome/common/pref_names.h"
+#include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
 #include "components/user_manager/user_manager.h"
 #endif  // defined(OS_CHROMEOS)
@@ -39,6 +40,15 @@ void BrowserLifetimeHandler::RegisterMessages() {
                  base::Unretained(this)));
 #endif  // defined(OS_CHROMEOS)
 }
+
+#if defined(OS_CHROMEOS)
+// static
+void BrowserLifetimeHandler::RegisterPrefs(PrefRegistrySimple* registry) {
+  registry->RegisterBooleanPref(prefs::kFactoryResetRequested, false);
+  registry->RegisterBooleanPref(prefs::kFactoryResetTPMFirmwareUpdateRequested,
+                                false);
+}
+#endif  // defined(OS_CHROMEOS)
 
 void BrowserLifetimeHandler::HandleRestart(
     const base::ListValue* args) {
@@ -69,6 +79,13 @@ void BrowserLifetimeHandler::HandleFactoryReset(
 
   PrefService* prefs = g_browser_process->local_state();
   prefs->SetBoolean(prefs::kFactoryResetRequested, true);
+  bool request_tpm_firmware_update = false;
+  if (args->GetBoolean(0, &request_tpm_firmware_update) &&
+      request_tpm_firmware_update) {
+    prefs->SetBoolean(prefs::kFactoryResetTPMFirmwareUpdateRequested, true);
+  } else {
+    prefs->ClearPref(prefs::kFactoryResetTPMFirmwareUpdateRequested);
+  }
   prefs->CommitPendingWrite();
 
   // Perform sign out. Current chrome process will then terminate, new one will
