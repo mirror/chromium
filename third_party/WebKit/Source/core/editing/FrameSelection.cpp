@@ -113,17 +113,16 @@ Document& FrameSelection::GetDocument() const {
   return *LifecycleContext();
 }
 
-const VisibleSelection& FrameSelection::ComputeVisibleSelectionInDOMTree()
-    const {
+VisibleSelection FrameSelection::ComputeVisibleSelectionInDOMTree() const {
   return selection_editor_->ComputeVisibleSelectionInDOMTree();
 }
 
-const VisibleSelectionInFlatTree&
-FrameSelection::ComputeVisibleSelectionInFlatTree() const {
+VisibleSelectionInFlatTree FrameSelection::ComputeVisibleSelectionInFlatTree()
+    const {
   return selection_editor_->ComputeVisibleSelectionInFlatTree();
 }
 
-const SelectionInDOMTree& FrameSelection::GetSelectionInDOMTree() const {
+SelectionInDOMTree FrameSelection::GetSelectionInDOMTree() const {
   return selection_editor_->GetSelectionInDOMTree();
 }
 
@@ -153,8 +152,7 @@ FrameSelection::ComputeVisibleSelectionInDOMTreeDeprecated() const {
   return ComputeVisibleSelectionInDOMTree();
 }
 
-const VisibleSelectionInFlatTree& FrameSelection::GetSelectionInFlatTree()
-    const {
+VisibleSelectionInFlatTree FrameSelection::GetSelectionInFlatTree() const {
   return ComputeVisibleSelectionInFlatTree();
 }
 
