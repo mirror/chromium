@@ -14,12 +14,10 @@
 #include "ash/shutdown_controller.h"
 #include "ash/shutdown_reason.h"
 #include "ash/test/ash_test_base.h"
-#include "ash/test_screenshot_delegate.h"
 #include "ash/test_shell_delegate.h"
 #include "ash/wm/lock_state_controller_test_api.h"
 #include "ash/wm/power_button_controller.h"
 #include "ash/wm/session_state_animator.h"
-#include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "ash/wm/test_session_state_animator.h"
 #include "base/memory/ptr_util.h"
 #include "base/time/time.h"
@@ -46,8 +44,8 @@ void CheckCalledCallback(bool* flag) {
 // ShutdownController that tracks how many shutdown requests have been made.
 class TestShutdownController : public ShutdownController {
  public:
-  TestShutdownController() {}
-  ~TestShutdownController() override {}
+  TestShutdownController() = default;
+  ~TestShutdownController() override = default;
 
   int num_shutdown_requests() const { return num_shutdown_requests_; }
 
@@ -66,12 +64,8 @@ class TestShutdownController : public ShutdownController {
 
 class LockStateControllerTest : public AshTestBase {
  public:
-  LockStateControllerTest()
-      : power_button_controller_(nullptr),
-        lock_state_controller_(nullptr),
-        session_manager_client_(nullptr),
-        test_animator_(nullptr) {}
-  ~LockStateControllerTest() override {}
+  LockStateControllerTest() = default;
+  ~LockStateControllerTest() override = default;
 
   void SetUp() override {
     session_manager_client_ = new chromeos::FakeSessionManagerClient;
@@ -102,10 +96,7 @@ class LockStateControllerTest : public AshTestBase {
   }
 
  protected:
-  void GenerateMouseMoveEvent() {
-    ui::test::EventGenerator generator(Shell::GetPrimaryRootWindow());
-    generator.MoveMouseTo(10, 10);
-  }
+  void GenerateMouseMoveEvent() { GetEventGenerator().MoveMouseTo(10, 10); }
 
   int NumShutdownRequests() {
     return test_shutdown_controller_.num_shutdown_requests() +
@@ -296,14 +287,6 @@ class LockStateControllerTest : public AshTestBase {
     power_button_controller_->OnLockButtonEvent(false, base::TimeTicks::Now());
   }
 
-  void PressVolumeDown() {
-    GetEventGenerator().PressKey(ui::VKEY_VOLUME_DOWN, ui::EF_NONE);
-  }
-
-  void ReleaseVolumeDown() {
-    GetEventGenerator().ReleaseKey(ui::VKEY_VOLUME_DOWN, ui::EF_NONE);
-  }
-
   void SystemLocks() {
     lock_state_controller_->OnLockStateChanged(true);
     Shell::Get()->session_controller()->LockScreenAndFlushForTest();
@@ -319,11 +302,6 @@ class LockStateControllerTest : public AshTestBase {
     GetSessionControllerClient()->UnlockScreen();
   }
 
-  void EnableTabletMode(bool enable) {
-    Shell::Get()->tablet_mode_controller()->EnableTabletModeWindowManager(
-        enable);
-  }
-
   void Initialize(bool legacy_button, LoginStatus status) {
     power_button_controller_->set_has_legacy_power_button_for_test(
         legacy_button);
@@ -336,14 +314,15 @@ class LockStateControllerTest : public AshTestBase {
       SetCanLockScreen(false);
   }
 
-  PowerButtonController* power_button_controller_;  // not owned
-  LockStateController* lock_state_controller_;      // not owned
-  TestShutdownController test_shutdown_controller_;
   // Ownership is passed on to chromeos::DBusThreadManager.
-  chromeos::FakeSessionManagerClient* session_manager_client_;
-  TestSessionStateAnimator* test_animator_;       // not owned
+  chromeos::FakeSessionManagerClient* session_manager_client_ = nullptr;
+
+  PowerButtonController* power_button_controller_ = nullptr;  // not owned
+  LockStateController* lock_state_controller_ = nullptr;      // not owned
+  TestShutdownController test_shutdown_controller_;
+  TestSessionStateAnimator* test_animator_ = nullptr;  // not owned
   std::unique_ptr<LockStateControllerTestApi> test_api_;
-  TestShellDelegate* shell_delegate_;  // not owned
+  TestShellDelegate* shell_delegate_ = nullptr;  // not owned
 
  private:
   DISALLOW_COPY_AND_ASSIGN(LockStateControllerTest);
@@ -1023,56 +1002,6 @@ TEST_F(LockStateControllerTest, TestHiddenWallpaperLockUnlock) {
   ExpectUnlockAfterUIDestroyedAnimationFinished();
 
   ExpectUnlockedState();
-}
-
-TEST_F(LockStateControllerTest, Screenshot) {
-  // TODO: fails because of no screenshot in mash. http://crbug.com/698033.
-  if (Shell::GetAshConfig() == Config::MASH)
-    return;
-
-  TestScreenshotDelegate* delegate = GetScreenshotDelegate();
-  delegate->set_can_take_screenshot(true);
-
-  EnableTabletMode(false);
-
-  // Screenshot handling should not be active when not in tablet mode.
-  ASSERT_EQ(0, delegate->handle_take_screenshot_count());
-  PressVolumeDown();
-  PressPowerButton();
-  ReleasePowerButton();
-  ReleaseVolumeDown();
-  EXPECT_EQ(0, delegate->handle_take_screenshot_count());
-
-  EnableTabletMode(true);
-
-  // Pressing power alone does not take a screenshot.
-  PressPowerButton();
-  ReleasePowerButton();
-  EXPECT_EQ(0, delegate->handle_take_screenshot_count());
-
-  // Press & release volume then pressing power does not take a screenshot.
-  ASSERT_EQ(0, delegate->handle_take_screenshot_count());
-  PressVolumeDown();
-  ReleaseVolumeDown();
-  PressPowerButton();
-  ReleasePowerButton();
-  EXPECT_EQ(0, delegate->handle_take_screenshot_count());
-
-  // Pressing power and then volume does not take a screenshot.
-  ASSERT_EQ(0, delegate->handle_take_screenshot_count());
-  PressPowerButton();
-  ReleasePowerButton();
-  PressVolumeDown();
-  ReleaseVolumeDown();
-  EXPECT_EQ(0, delegate->handle_take_screenshot_count());
-
-  // Holding volume down and pressing power takes a screenshot.
-  ASSERT_EQ(0, delegate->handle_take_screenshot_count());
-  PressVolumeDown();
-  PressPowerButton();
-  ReleasePowerButton();
-  ReleaseVolumeDown();
-  EXPECT_EQ(1, delegate->handle_take_screenshot_count());
 }
 
 }  // namespace ash
