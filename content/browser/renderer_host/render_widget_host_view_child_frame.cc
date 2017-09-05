@@ -81,7 +81,8 @@ RenderWidgetHostViewChildFrame::RenderWidgetHostViewChildFrame(
       background_color_(SK_ColorWHITE),
       weak_factory_(this) {
   if (!IsUsingMus()) {
-    GetHostFrameSinkManager()->RegisterFrameSinkId(frame_sink_id_, this);
+    GetHostFrameSinkManager()->RegisterFrameSinkId(
+        frame_sink_id_, this, "RenderWidgetHostViewChildFrame");
     CreateCompositorFrameSinkSupport();
   }
 }
