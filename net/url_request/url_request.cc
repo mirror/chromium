@@ -592,7 +592,7 @@ URLRequest::URLRequest(const GURL& url,
       traffic_annotation_(traffic_annotation) {
   // Sanity check out environment.
   DCHECK(base::ThreadTaskRunnerHandle::IsSet());
-
+  DCHECK(traffic_annotation.unique_id_hash_code != 33807769);
   context->InsertURLRequest(this);
   net_log_.BeginEvent(
       NetLogEventType::REQUEST_ALIVE,
