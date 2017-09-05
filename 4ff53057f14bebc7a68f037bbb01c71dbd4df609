@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1cf14176_31fcc97c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-05T21:51:30Z",
+      "side": 1,
+      "message": "Let\u0027s elaborate a little, and say that it\u0027s sufficient to fix the original bug by leaving the dialog open during same-document navigations but close it for cross-document navigations.",
+      "revId": "4ff53057f14bebc7a68f037bbb01c71dbd4df609",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7792c41e_f7f2d03f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-05T21:51:30Z",
+      "side": 1,
+      "message": "We should probably list bug 614998 here, to keep the fixes associated with each other.",
+      "revId": "4ff53057f14bebc7a68f037bbb01c71dbd4df609",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd33076e_22a9853e",
+        "filename": "chrome/browser/printing/print_preview_dialog_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-05T21:51:30Z",
+      "side": 1,
+      "message": "Might be worth a small comment, like:\n// Same-document navigations don\u0027t change the page enough to require the dialog to close.",
+      "revId": "4ff53057f14bebc7a68f037bbb01c71dbd4df609",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
