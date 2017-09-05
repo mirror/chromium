@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0186763_293d4bb8",
+        "filename": "cc/trees/layer_tree_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1988,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-05T17:18:51Z",
+      "side": 1,
+      "message": "nit: This returns the host window\u0027s selection bounds (aka.DIP). I don\u0027t have a good suggestion though. I\u0027d defer to owners.",
+      "range": {
+        "startLine": 1988,
+        "startChar": 10,
+        "endLine": 1988,
+        "endChar": 29
+      },
+      "revId": "f6f390ff83108511d049bbd8316c96d3f1547d7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
