@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5da745eb_117caa99",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-05T15:58:54Z",
+      "side": 1,
+      "message": "passed",
+      "range": {
+        "startLine": 286,
+        "startChar": 56,
+        "endLine": 286,
+        "endChar": 60
+      },
+      "revId": "94d46ab154b580200268cb5644f2191d47919177",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
