@@ -18,6 +18,7 @@
 #include "base/logging.h"
 #include "base/sys_info.h"
 #include "base/system_monitor/system_monitor.h"
+#include "base/trace_event/trace_event.h"
 #include "chromeos/audio/audio_devices_pref_handler_stub.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 
@@ -49,11 +50,13 @@ const double kStereoToStereo[] = {1, 0, 0, 1};
 CrasAudioHandler* g_cras_audio_handler = nullptr;
 
 bool IsSameAudioDevice(const AudioDevice& a, const AudioDevice& b) {
+  TRACE_EVENT0("media", "bool IsSameAudioDevice");
   return a.stable_device_id == b.stable_device_id && a.is_input == b.is_input &&
          a.type == b.type && a.device_name == b.device_name;
 }
 
 bool IsDeviceInList(const AudioDevice& device, const AudioNodeList& node_list) {
+  TRACE_EVENT0("media", "bool IsDeviceInList");
   for (const AudioNode& node : node_list) {
     if (device.stable_device_id == node.StableDeviceId())
       return true;
@@ -62,10 +65,12 @@ bool IsDeviceInList(const AudioDevice& device, const AudioNodeList& node_list) {
 }
 
 CrasAudioClient* GetCrasAudioClient() {
+  TRACE_EVENT0("media", "CrasAudioClient* GetCrasAudioClient");
   return DBusThreadManager::Get()->GetCrasAudioClient();
 }
 
 bool HasCrasAudioClient() {
+  TRACE_EVENT0("media", "bool HasCrasAudioClient");
   return DBusThreadManager::IsInitialized() && DBusThreadManager::Get() &&
          DBusThreadManager::Get()->GetCrasAudioClient();
 }
@@ -73,56 +78,82 @@ bool HasCrasAudioClient() {
 }  // namespace
 
 CrasAudioHandler::AudioObserver::AudioObserver() {
+  TRACE_EVENT0("media", "CrasAudioHandler::AudioObserver::AudioObserver");
 }
 
 CrasAudioHandler::AudioObserver::~AudioObserver() {
+  TRACE_EVENT0("media", "CrasAudioHandler::AudioObserver::~AudioObserver");
 }
 
 void CrasAudioHandler::AudioObserver::OnOutputNodeVolumeChanged(
     uint64_t /* node_id */,
     int /* volume */) {
+  TRACE_EVENT0(
+      "media",
+      "void CrasAudioHandler::AudioObserver::OnOutputNodeVolumeChanged");
 }
 
 void CrasAudioHandler::AudioObserver::OnInputNodeGainChanged(
     uint64_t /* node_id */,
     int /* gain */) {
+  TRACE_EVENT0("media",
+               "void CrasAudioHandler::AudioObserver::OnInputNodeGainChanged");
 }
 
 void CrasAudioHandler::AudioObserver::OnOutputMuteChanged(
     bool /* mute_on */,
-    bool /* system_adjust */) {}
+    bool /* system_adjust */) {
+  TRACE_EVENT0("media",
+               "void CrasAudioHandler::AudioObserver::OnOutputMuteChanged");
+}
 
 void CrasAudioHandler::AudioObserver::OnInputMuteChanged(bool /* mute_on */) {
+  TRACE_EVENT0("media",
+               "void CrasAudioHandler::AudioObserver::OnInputMuteChanged");
 }
 
 void CrasAudioHandler::AudioObserver::OnAudioNodesChanged() {
+  TRACE_EVENT0("media",
+               "void CrasAudioHandler::AudioObserver::OnAudioNodesChanged");
 }
 
 void CrasAudioHandler::AudioObserver::OnActiveOutputNodeChanged() {
+  TRACE_EVENT0(
+      "media",
+      "void CrasAudioHandler::AudioObserver::OnActiveOutputNodeChanged");
 }
 
 void CrasAudioHandler::AudioObserver::OnActiveInputNodeChanged() {
+  TRACE_EVENT0(
+      "media",
+      "void CrasAudioHandler::AudioObserver::OnActiveInputNodeChanged");
 }
 
 void CrasAudioHandler::AudioObserver::OnOuputChannelRemixingChanged(
     bool /* mono_on */) {
+  TRACE_EVENT0(
+      "media",
+      "void CrasAudioHandler::AudioObserver::OnOuputChannelRemixingChanged");
 }
 
 // static
 void CrasAudioHandler::Initialize(
     scoped_refptr<AudioDevicesPrefHandler> audio_pref_handler) {
+  TRACE_EVENT0("media", "void CrasAudioHandler::Initialize");
   CHECK(!g_cras_audio_handler);
   g_cras_audio_handler = new CrasAudioHandler(audio_pref_handler);
 }
 
 // static
 void CrasAudioHandler::InitializeForTesting() {
+  TRACE_EVENT0("media", "void CrasAudioHandler::InitializeForTesting");
   CHECK(!g_cras_audio_handler);
   CrasAudioHandler::Initialize(new AudioDevicesPrefHandlerStub());
 }
 
 // static
 void CrasAudioHandler::Shutdown() {
+  TRACE_EVENT0("media", "void CrasAudioHandler::Shutdown");
   CHECK(g_cras_audio_handler);
   delete g_cras_audio_handler;
   g_cras_audio_handler = nullptr;
@@ -130,17 +161,20 @@ void CrasAudioHandler::Shutdown() {
 
 // static
 bool CrasAudioHandler::IsInitialized() {
+  TRACE_EVENT0("media", "bool CrasAudioHandler::IsInitialized");
   return g_cras_audio_handler != nullptr;
 }
 
 // static
 CrasAudioHandler* CrasAudioHandler::Get() {
+  TRACE_EVENT0("media", "CrasAudioHandler* CrasAudioHandler::Get");
   CHECK(g_cras_audio_handler)
       << "CrasAudioHandler::Get() called before Initialize().";
   return g_cras_audio_handler;
 }
 
 void CrasAudioHandler::OnVideoCaptureStarted(media::VideoFacingMode facing) {
+  TRACE_EVENT0("media", "void CrasAudioHandler::OnVideoCaptureStarted");
   DCHECK(main_task_runner_);
   if (!main_task_runner_->BelongsToCurrentThread()) {
     main_task_runner_->PostTask(
@@ -154,6 +188,7 @@ void CrasAudioHandler::OnVideoCaptureStarted(media::VideoFacingMode facing) {
 }
 
 void CrasAudioHandler::OnVideoCaptureStopped(media::VideoFacingMode facing) {
+  TRACE_EVENT0("media", "void CrasAudioHandler::OnVideoCaptureStopped");
   DCHECK(main_task_runner_);
   if (!main_task_runner_->BelongsToCurrentThread()) {
     main_task_runner_->PostTask(
@@ -168,6 +203,8 @@ void CrasAudioHandler::OnVideoCaptureStopped(media::VideoFacingMode facing) {
 
 void CrasAudioHandler::OnVideoCaptureStartedOnMainThread(
     media::VideoFacingMode facing) {
+  TRACE_EVENT0("media",
+               "void CrasAudioHandler::OnVideoCaptureStartedOnMainThread");
   DCHECK(main_task_runner_->BelongsToCurrentThread());
   // Do nothing if the device doesn't have both front and rear microphones.
   if (!HasDualInternalMic())
@@ -208,6 +245,8 @@ void CrasAudioHandler::OnVideoCaptureStartedOnMainThread(
 
 void CrasAudioHandler::OnVideoCaptureStoppedOnMainThread(
     media::VideoFacingMode facing) {
+  TRACE_EVENT0("media",
+               "void CrasAudioHandler::OnVideoCaptureStoppedOnMainThread");
   DCHECK(main_task_runner_->BelongsToCurrentThread());
   // Do nothing if the device doesn't have both front and rear microphones.
   if (!HasDualInternalMic())
@@ -248,22 +287,27 @@ void CrasAudioHandler::OnVideoCaptureStoppedOnMainThread(
 }
 
 void CrasAudioHandler::AddAudioObserver(AudioObserver* observer) {
+  TRACE_EVENT0("media", "void CrasAudioHandler::AddAudioObserver");
   observers_.AddObserver(observer);
 }
 
 void CrasAudioHandler::RemoveAudioObserver(AudioObserver* observer) {
+  TRACE_EVENT0("media", "void CrasAudioHandler::RemoveAudioObserver");
   observers_.RemoveObserver(observer);
 }
 
 bool CrasAudioHandler::HasKeyboardMic() {
+  TRACE_EVENT0("media", "bool CrasAudioHandler::HasKeyboardMic");
   return GetKeyboardMic() != nullptr;
 }
 
 bool CrasAudioHandler::IsOutputMuted() {
+  TRACE_EVENT0("media", "bool CrasAudioHandler::IsOutputMuted");
   return output_mute_on_;
 }
 
 bool CrasAudioHandler::IsOutputMutedForDevice(uint64_t device_id) {
+  TRACE_EVENT0("media", "bool CrasAudioHandler::IsOutputMutedForDevice");
   const AudioDevice* device = GetDeviceFromId(device_id);
   if (!device)
     return false;
@@ -272,34 +316,43 @@ bool CrasAudioHandler::IsOutputMutedForDevice(uint64_t device_id) {
 }
 
 bool CrasAudioHandler::IsOutputVolumeBelowDefaultMuteLevel() {
+  TRACE_EVENT0("media",
+               "bool CrasAudioHandler::IsOutputVolumeBelowDefaultMuteLevel");
   return output_volume_ <= kMuteThresholdPercent;
 }
 
 bool CrasAudioHandler::IsInputMuted() {
+  TRACE_EVENT0("media", "bool CrasAudioHandler::IsInputMuted");
   return input_mute_on_;
 }
 
 bool CrasAudioHandler::IsInputMutedForDevice(uint64_t device_id) {
+  TRACE_EVENT0("media", "bool CrasAudioHandler::IsInputMutedForDevice");
   const AudioDevice* device = GetDeviceFromId(device_id);
   if (!device)
     return false;
   DCHECK(device->is_input);
-  // We don't record input mute state for each device in the prefs,
-  // for any non-active input device, we assume mute is off.
+  // We don't record input mute state for each device in the prefs,   // for any
+  // non-active input device, we assume mute is off.
   if (device->id == active_input_node_id_)
     return input_mute_on_;
   return false;
 }
 
 int CrasAudioHandler::GetOutputDefaultVolumeMuteThreshold() {
+  TRACE_EVENT0("media",
+               "int CrasAudioHandler::GetOutputDefaultVolumeMuteThreshold");
   return kMuteThresholdPercent;
 }
 
 int CrasAudioHandler::GetOutputVolumePercent() {
+  TRACE_EVENT0("media", "int CrasAudioHandler::GetOutputVolumePercent");
   return output_volume_;
 }
 
 int CrasAudioHandler::GetOutputVolumePercentForDevice(uint64_t device_id) {
+  TRACE_EVENT0("media",
+               "int CrasAudioHandler::GetOutputVolumePercentForDevice");
   if (device_id == active_output_node_id_)
     return output_volume_;
   const AudioDevice* device = GetDeviceFromId(device_id);
@@ -307,10 +360,12 @@ int CrasAudioHandler::GetOutputVolumePercentForDevice(uint64_t device_id) {
 }
 
 int CrasAudioHandler::GetInputGainPercent() {
+  TRACE_EVENT0("media", "int CrasAudioHandler::GetInputGainPercent");
   return input_gain_;
 }
 
 int CrasAudioHandler::GetInputGainPercentForDevice(uint64_t device_id) {
+  TRACE_EVENT0("media", "int CrasAudioHandler::GetInputGainPercentForDevice");
   if (device_id == active_input_node_id_)
     return input_gain_;
   const AudioDevice* device = GetDeviceFromId(device_id);
@@ -318,14 +373,18 @@ int CrasAudioHandler::GetInputGainPercentForDevice(uint64_t device_id) {
 }
 
 uint64_t CrasAudioHandler::GetPrimaryActiveOutputNode() const {
+  TRACE_EVENT0("media",
+               "uint64_t CrasAudioHandler::GetPrimaryActiveOutputNode");
   return active_output_node_id_;
 }
 
 uint64_t CrasAudioHandler::GetPrimaryActiveInputNode() const {
+  TRACE_EVENT0("media", "uint64_t CrasAudioHandler::GetPrimaryActiveInputNode");
   return active_input_node_id_;
 }
 
 void CrasAudioHandler::GetAudioDevices(AudioDeviceList* device_list) const {
+  TRACE_EVENT0("media", "void CrasAudioHandler::GetAudioDevices");
   device_list->clear();
   for (const auto& item : audio_devices_) {
     const AudioDevice& device = item.second;
@@ -334,6 +393,7 @@ void CrasAudioHandler::GetAudioDevices(AudioDeviceList* device_list) const {
 }
 
 bool CrasAudioHandler::GetPrimaryActiveOutputDevice(AudioDevice* device) const {
+  TRACE_EVENT0("media", "bool CrasAudioHandler::GetPrimaryActiveOutputDevice");
   const AudioDevice* active_device = GetDeviceFromId(active_output_node_id_);
   if (!active_device || !device)
     return false;
@@ -342,6 +402,7 @@ bool CrasAudioHandler::GetPrimaryActiveOutputDevice(AudioDevice* device) const {
 }
 
 const AudioDevice* CrasAudioHandler::GetDeviceByType(AudioDeviceType type) {
+  TRACE_EVENT0("media", "const AudioDevice* CrasAudioHandler::GetDeviceByType");
   for (const auto& item : audio_devices_) {
     const AudioDevice& device = item.second;
     if (device.type == type)
@@ -351,10 +412,12 @@ const AudioDevice* CrasAudioHandler::GetDeviceByType(AudioDeviceType type) {
 }
 
 void CrasAudioHandler::GetDefaultOutputBufferSize(int32_t* buffer_size) const {
+  TRACE_EVENT0("media", "void CrasAudioHandler::GetDefaultOutputBufferSize");
   *buffer_size = default_output_buffer_size_;
 }
 
 void CrasAudioHandler::SetKeyboardMicActive(bool active) {
+  TRACE_EVENT0("media", "void CrasAudioHandler::SetKeyboardMicActive");
   const AudioDevice* keyboard_mic = GetKeyboardMic();
   if (!keyboard_mic)
     return;
@@ -368,6 +431,7 @@ void CrasAudioHandler::SetKeyboardMicActive(bool active) {
 }
 
 void CrasAudioHandler::AddActiveNode(uint64_t node_id, bool notify) {
+  TRACE_EVENT0("media", "void CrasAudioHandler::AddActiveNode");
   const AudioDevice* device = GetDeviceFromId(node_id);
   if (!device) {
     VLOG(1) << "AddActiveInputNode: Cannot find device id="
@@ -386,6 +450,7 @@ void CrasAudioHandler::AddActiveNode(uint64_t node_id, bool notify) {
 }
 
 void CrasAudioHandler::ChangeActiveNodes(const NodeIdList& new_active_ids) {
+  TRACE_EVENT0("media", "void CrasAudioHandler::ChangeActiveNodes");
   AudioDeviceList input_devices;
   AudioDeviceList output_devices;
 
@@ -405,15 +470,18 @@ void CrasAudioHandler::ChangeActiveNodes(const NodeIdList& new_active_ids) {
 }
 
 bool CrasAudioHandler::SetActiveInputNodes(const NodeIdList& node_ids) {
+  TRACE_EVENT0("media", "bool CrasAudioHandler::SetActiveInputNodes");
   return SetActiveNodes(node_ids, true /* is_input */);
 }
 
 bool CrasAudioHandler::SetActiveOutputNodes(const NodeIdList& node_ids) {
+  TRACE_EVENT0("media", "bool CrasAudioHandler::SetActiveOutputNodes");
   return SetActiveNodes(node_ids, false /* is_input */);
 }
 
 bool CrasAudioHandler::SetActiveNodes(const NodeIdList& node_ids,
                                       bool is_input) {
+  TRACE_EVENT0("media", "bool CrasAudioHandler::SetActiveNodes");
   AudioDeviceList devices;
   for (uint64_t id : node_ids) {
     const AudioDevice* device = GetDeviceFromId(id);
@@ -429,6 +497,7 @@ bool CrasAudioHandler::SetActiveNodes(const NodeIdList& node_ids,
 
 void CrasAudioHandler::SetActiveDevices(const AudioDeviceList& devices,
                                         bool is_input) {
+  TRACE_EVENT0("media", "void CrasAudioHandler::SetActiveDevices");
   std::set<uint64_t> new_active_ids;
   for (const auto& active_device : devices) {
     CHECK_EQ(is_input, active_device.is_input);
@@ -470,6 +539,8 @@ void CrasAudioHandler::SetActiveDevices(const AudioDeviceList& devices,
 }
 
 void CrasAudioHandler::SwapInternalSpeakerLeftRightChannel(bool swap) {
+  TRACE_EVENT0("media",
+               "void CrasAudioHandler::SwapInternalSpeakerLeftRightChannel");
   for (const auto& item : audio_devices_) {
     const AudioDevice& device = item.second;
     if (!device.is_input && device.type == AUDIO_TYPE_INTERNAL_SPEAKER) {
@@ -480,6 +551,7 @@ void CrasAudioHandler::SwapInternalSpeakerLeftRightChannel(bool swap) {
 }
 
 void CrasAudioHandler::SetOutputMono(bool mono_on) {
+  TRACE_EVENT0("media", "void CrasAudioHandler::SetOutputMono");
   output_mono_on_ = mono_on;
   if (mono_on) {
     GetCrasAudioClient()->SetGlobalOutputChannelRemix(
@@ -496,18 +568,22 @@ void CrasAudioHandler::SetOutputMono(bool mono_on) {
 }
 
 bool CrasAudioHandler::IsOutputMonoEnabled() const {
+  TRACE_EVENT0("media", "bool CrasAudioHandler::IsOutputMonoEnabled");
   return output_mono_on_;
 }
 
 bool CrasAudioHandler::has_alternative_input() const {
+  TRACE_EVENT0("media", "bool CrasAudioHandler::has_alternative_input");
   return has_alternative_input_;
 }
 
 bool CrasAudioHandler::has_alternative_output() const {
+  TRACE_EVENT0("media", "bool CrasAudioHandler::has_alternative_output");
   return has_alternative_output_;
 }
 
 void CrasAudioHandler::SetOutputVolumePercent(int volume_percent) {
+  TRACE_EVENT0("media", "void CrasAudioHandler::SetOutputVolumePercent");
   // Set all active devices to the same volume.
   for (const auto& item : audio_devices_) {
     const AudioDevice& device = item.second;
@@ -519,12 +595,16 @@ void CrasAudioHandler::SetOutputVolumePercent(int volume_percent) {
 void CrasAudioHandler::SetOutputVolumePercentWithoutNotifyingObservers(
     int volume_percent,
     AutomatedVolumeChangeReason reason) {
+  TRACE_EVENT0(
+      "media",
+      "void CrasAudioHandler::SetOutputVolumePercentWithoutNotifyingObservers");
   automated_volume_change_reasons_.push_back(reason);
   SetOutputVolumePercent(volume_percent);
 }
 
 // TODO: Rename the 'Percent' to something more meaningful.
 void CrasAudioHandler::SetInputGainPercent(int gain_percent) {
+  TRACE_EVENT0("media", "void CrasAudioHandler::SetInputGainPercent");
   // TODO(jennyz): Should we set all input devices' gain to the same level?
   for (const auto& item : audio_devices_) {
     const AudioDevice& device = item.second;
@@ -534,10 +614,12 @@ void CrasAudioHandler::SetInputGainPercent(int gain_percent) {
 }
 
 void CrasAudioHandler::AdjustOutputVolumeByPercent(int adjust_by_percent) {
+  TRACE_EVENT0("media", "void CrasAudioHandler::AdjustOutputVolumeByPercent");
   SetOutputVolumePercent(output_volume_ + adjust_by_percent);
 }
 
 void CrasAudioHandler::SetOutputMute(bool mute_on) {
+  TRACE_EVENT0("media", "void CrasAudioHandler::SetOutputMute");
   if (!SetOutputMuteInternal(mute_on))
     return;
 
@@ -554,6 +636,8 @@ void CrasAudioHandler::SetOutputMute(bool mute_on) {
 }
 
 void CrasAudioHandler::AdjustOutputVolumeToAudibleLevel() {
+  TRACE_EVENT0("media",
+               "void CrasAudioHandler::AdjustOutputVolumeToAudibleLevel");
   if (output_volume_ <= kMuteThresholdPercent) {
     // Avoid the situation when sound has been unmuted, but the volume
     // is set to a very low value, so user still can't hear any sound.
@@ -562,6 +646,7 @@ void CrasAudioHandler::AdjustOutputVolumeToAudibleLevel() {
 }
 
 void CrasAudioHandler::SetInputMute(bool mute_on) {
+  TRACE_EVENT0("media", "void CrasAudioHandler::SetInputMute");
   SetInputMuteInternal(mute_on);
   for (auto& observer : observers_)
     observer.OnInputMuteChanged(input_mute_on_);
@@ -570,6 +655,7 @@ void CrasAudioHandler::SetInputMute(bool mute_on) {
 void CrasAudioHandler::SetActiveDevice(const AudioDevice& active_device,
                                        bool notify,
                                        DeviceActivateType activate_by) {
+  TRACE_EVENT0("media", "void CrasAudioHandler::SetActiveDevice");
   if (active_device.is_input)
     GetCrasAudioClient()->SetActiveInputNode(active_device.id);
   else
@@ -590,6 +676,7 @@ void CrasAudioHandler::SetActiveDevice(const AudioDevice& active_device,
 void CrasAudioHandler::SaveDeviceState(const AudioDevice& device,
                                        bool active,
                                        DeviceActivateType activate_by) {
+  TRACE_EVENT0("media", "void CrasAudioHandler::SaveDeviceState");
   // Don't save the active state for non-simple usage device, which is invisible
   // to end users.
   if (!device.is_for_simple_usage())
@@ -607,7 +694,7 @@ void CrasAudioHandler::SaveDeviceState(const AudioDevice& device,
         break;
       default:
         // The device is made active due to its previous active state in prefs,
-        // don't change its active state settings in prefs.
+        // // don't change its active state settings in prefs.
         break;
     }
   }
@@ -615,6 +702,7 @@ void CrasAudioHandler::SaveDeviceState(const AudioDevice& device,
 
 void CrasAudioHandler::SetVolumeGainPercentForDevice(uint64_t device_id,
                                                      int value) {
+  TRACE_EVENT0("media", "void CrasAudioHandler::SetVolumeGainPercentForDevice");
   const AudioDevice* device = GetDeviceFromId(device_id);
   if (!device)
     return;
@@ -626,6 +714,7 @@ void CrasAudioHandler::SetVolumeGainPercentForDevice(uint64_t device_id,
 }
 
 void CrasAudioHandler::SetMuteForDevice(uint64_t device_id, bool mute_on) {
+  TRACE_EVENT0("media", "void CrasAudioHandler::SetMuteForDevice");
   if (device_id == active_output_node_id_) {
     SetOutputMute(mute_on);
     return;
@@ -644,6 +733,7 @@ void CrasAudioHandler::SetMuteForDevice(uint64_t device_id, bool mute_on) {
 }
 
 void CrasAudioHandler::LogErrors() {
+  TRACE_EVENT0("media", "void CrasAudioHandler::LogErrors");
   log_errors_ = true;
 }
 
@@ -655,6 +745,9 @@ void CrasAudioHandler::LogErrors() {
 // period. See crbug.com/503667.
 void CrasAudioHandler::SetActiveHDMIOutoutRediscoveringIfNecessary(
     bool force_rediscovering) {
+  TRACE_EVENT0(
+      "media",
+      "void CrasAudioHandler::SetActiveHDMIOutoutRediscoveringIfNecessary");
   if (!GetDeviceFromId(active_output_node_id_))
     return;
 
@@ -704,6 +797,7 @@ CrasAudioHandler::CrasAudioHandler(
 }
 
 CrasAudioHandler::~CrasAudioHandler() {
+  TRACE_EVENT0("media", "CrasAudioHandler::~CrasAudioHandler");
   hdmi_rediscover_timer_.Stop();
   if (!HasCrasAudioClient())
     return;
@@ -716,6 +810,7 @@ CrasAudioHandler::~CrasAudioHandler() {
 }
 
 void CrasAudioHandler::AudioClientRestarted() {
+  TRACE_EVENT0("media", "void CrasAudioHandler::AudioClientRestarted");
   // Make sure the logging is enabled in case cras server
   // restarts after crashing.
   LogErrors();
@@ -723,11 +818,13 @@ void CrasAudioHandler::AudioClientRestarted() {
 }
 
 void CrasAudioHandler::NodesChanged() {
+  TRACE_EVENT0("media", "void CrasAudioHandler::NodesChanged");
   if (cras_service_available_)
     GetNodes();
 }
 
 void CrasAudioHandler::OutputNodeVolumeChanged(uint64_t node_id, int volume) {
+  TRACE_EVENT0("media", "void CrasAudioHandler::OutputNodeVolumeChanged");
   const AudioDevice* device = this->GetDeviceFromId(node_id);
 
   // If this is not an active output node, ignore this event. Because when this
@@ -780,12 +877,13 @@ void CrasAudioHandler::OutputNodeVolumeChanged(uint64_t node_id, int volume) {
 }
 
 void CrasAudioHandler::ActiveOutputNodeChanged(uint64_t node_id) {
+  TRACE_EVENT0("media", "void CrasAudioHandler::ActiveOutputNodeChanged");
   if (active_output_node_id_ == node_id)
     return;
 
   // Active audio output device should always be changed by chrome.
   // During system boot, cras may change active input to unknown device 0x1,
-  // we don't need to log it, since it is not an valid device.
+  // // we don't need to log it, since it is not an valid device.
   if (GetDeviceFromId(node_id)) {
     LOG_IF(WARNING, log_errors_)
         << "Active output node changed unexpectedly by system node_id="
@@ -794,12 +892,13 @@ void CrasAudioHandler::ActiveOutputNodeChanged(uint64_t node_id) {
 }
 
 void CrasAudioHandler::ActiveInputNodeChanged(uint64_t node_id) {
+  TRACE_EVENT0("media", "void CrasAudioHandler::ActiveInputNodeChanged");
   if (active_input_node_id_ == node_id)
     return;
 
   // Active audio input device should always be changed by chrome.
   // During system boot, cras may change active input to unknown device 0x2,
-  // we don't need to log it, since it is not an valid device.
+  // // we don't need to log it, since it is not an valid device.
   if (GetDeviceFromId(node_id)) {
     LOG_IF(WARNING, log_errors_)
         << "Active input node changed unexpectedly by system node_id="
@@ -808,16 +907,19 @@ void CrasAudioHandler::ActiveInputNodeChanged(uint64_t node_id) {
 }
 
 void CrasAudioHandler::OnAudioPolicyPrefChanged() {
+  TRACE_EVENT0("media", "void CrasAudioHandler::OnAudioPolicyPrefChanged");
   ApplyAudioPolicy();
 }
 
 void CrasAudioHandler::EmitLoginPromptVisibleCalled() {
+  TRACE_EVENT0("media", "void CrasAudioHandler::EmitLoginPromptVisibleCalled");
   // Enable logging after cras server is started, which will be after
   // EmitLoginPromptVisible.
   LogErrors();
 }
 
 const AudioDevice* CrasAudioHandler::GetDeviceFromId(uint64_t device_id) const {
+  TRACE_EVENT0("media", "const AudioDevice* CrasAudioHandler::GetDeviceFromId");
   AudioDeviceMap::const_iterator it = audio_devices_.find(device_id);
   if (it == audio_devices_.end())
     return nullptr;
@@ -826,6 +928,9 @@ const AudioDevice* CrasAudioHandler::GetDeviceFromId(uint64_t device_id) const {
 
 const AudioDevice* CrasAudioHandler::GetDeviceFromStableDeviceId(
     uint64_t stable_device_id) const {
+  TRACE_EVENT0(
+      "media",
+      "const AudioDevice* CrasAudioHandler::GetDeviceFromStableDeviceId");
   for (const auto& item : audio_devices_) {
     const AudioDevice& device = item.second;
     if (device.stable_device_id == stable_device_id)
@@ -835,6 +940,7 @@ const AudioDevice* CrasAudioHandler::GetDeviceFromStableDeviceId(
 }
 
 const AudioDevice* CrasAudioHandler::GetKeyboardMic() const {
+  TRACE_EVENT0("media", "const AudioDevice* CrasAudioHandler::GetKeyboardMic");
   for (const auto& item : audio_devices_) {
     const AudioDevice& device = item.second;
     if (device.is_input && device.type == AUDIO_TYPE_KEYBOARD_MIC)
@@ -844,6 +950,7 @@ const AudioDevice* CrasAudioHandler::GetKeyboardMic() const {
 }
 
 void CrasAudioHandler::SetupAudioInputState() {
+  TRACE_EVENT0("media", "void CrasAudioHandler::SetupAudioInputState");
   // Set the initial audio state to the ones read from audio prefs.
   const AudioDevice* device = GetDeviceFromId(active_input_node_id_);
   if (!device) {
@@ -861,6 +968,7 @@ void CrasAudioHandler::SetupAudioInputState() {
 }
 
 void CrasAudioHandler::SetupAudioOutputState() {
+  TRACE_EVENT0("media", "void CrasAudioHandler::SetupAudioOutputState");
   const AudioDevice* device = GetDeviceFromId(active_output_node_id_);
   if (!device) {
     LOG_IF(ERROR, log_errors_)
@@ -883,7 +991,7 @@ void CrasAudioHandler::SetupAudioOutputState() {
   if (initializing_audio_state_) {
     // During power up, InitializeAudioState() could be called twice, first
     // by CrasAudioHandler constructor, then by cras server restarting signal,
-    // both sending SetOutputNodeVolume requests, and could lead to two
+    // // both sending SetOutputNodeVolume requests, and could lead to two
     // OutputNodeVolumeChanged signals.
     init_node_id_ = active_output_node_id_;
     init_volume_ = output_volume_;
@@ -896,6 +1004,8 @@ void CrasAudioHandler::SetupAudioOutputState() {
 
 // This sets up the state of an additional active node.
 void CrasAudioHandler::SetupAdditionalActiveAudioNodeState(uint64_t node_id) {
+  TRACE_EVENT0("media",
+               "void CrasAudioHandler::SetupAdditionalActiveAudioNodeState");
   const AudioDevice* device = GetDeviceFromId(node_id);
   if (!device) {
     VLOG(1) << "Can't set up audio state for unknown device id ="
@@ -906,7 +1016,7 @@ void CrasAudioHandler::SetupAdditionalActiveAudioNodeState(uint64_t node_id) {
   DCHECK(node_id != active_output_node_id_ && node_id != active_input_node_id_);
 
   // Note: The mute state is a system wide state, we don't set mute per device,
-  // but just keep the mute state consistent for the active node in prefs.
+  // // but just keep the mute state consistent for the active node in prefs.
   // The output volume should be set to the same value for all active output
   // devices. For input devices, we don't restore their gain value so far.
   // TODO(jennyz): crbug.com/417418, track the status for the decison if
@@ -918,6 +1028,7 @@ void CrasAudioHandler::SetupAdditionalActiveAudioNodeState(uint64_t node_id) {
 }
 
 void CrasAudioHandler::InitializeAudioState() {
+  TRACE_EVENT0("media", "void CrasAudioHandler::InitializeAudioState");
   initializing_audio_state_ = true;
   ApplyAudioPolicy();
 
@@ -930,6 +1041,9 @@ void CrasAudioHandler::InitializeAudioState() {
 
 void CrasAudioHandler::InitializeAudioAfterCrasServiceAvailable(
     bool service_is_available) {
+  TRACE_EVENT0(
+      "media",
+      "void CrasAudioHandler::InitializeAudioAfterCrasServiceAvailable");
   if (!service_is_available) {
     LOG(ERROR) << "Cras service is not available";
     cras_service_available_ = false;
@@ -942,6 +1056,7 @@ void CrasAudioHandler::InitializeAudioAfterCrasServiceAvailable(
 }
 
 void CrasAudioHandler::ApplyAudioPolicy() {
+  TRACE_EVENT0("media", "void CrasAudioHandler::ApplyAudioPolicy");
   output_mute_locked_ = false;
   if (!audio_pref_handler_->GetAudioOutputAllowedValue()) {
     // Mute the device, but do not update the preference.
@@ -959,11 +1074,13 @@ void CrasAudioHandler::ApplyAudioPolicy() {
 }
 
 void CrasAudioHandler::SetOutputNodeVolume(uint64_t node_id, int volume) {
+  TRACE_EVENT0("media", "void CrasAudioHandler::SetOutputNodeVolume");
   GetCrasAudioClient()->SetOutputNodeVolume(node_id, volume);
 }
 
 void CrasAudioHandler::SetOutputNodeVolumePercent(uint64_t node_id,
                                                   int volume_percent) {
+  TRACE_EVENT0("media", "void CrasAudioHandler::SetOutputNodeVolumePercent");
   const AudioDevice* device = GetDeviceFromId(node_id);
   if (!device || device->is_input)
     return;
@@ -980,7 +1097,8 @@ void CrasAudioHandler::SetOutputNodeVolumePercent(uint64_t node_id,
     SetOutputNodeVolume(node_id, volume_percent);
 }
 
-bool  CrasAudioHandler::SetOutputMuteInternal(bool mute_on) {
+bool CrasAudioHandler::SetOutputMuteInternal(bool mute_on) {
+  TRACE_EVENT0("media", "bool  CrasAudioHandler::SetOutputMuteInternal");
   if (output_mute_locked_)
     return false;
 
@@ -990,11 +1108,13 @@ bool  CrasAudioHandler::SetOutputMuteInternal(bool mute_on) {
 }
 
 void CrasAudioHandler::SetInputNodeGain(uint64_t node_id, int gain) {
+  TRACE_EVENT0("media", "void CrasAudioHandler::SetInputNodeGain");
   GetCrasAudioClient()->SetInputNodeGain(node_id, gain);
 }
 
 void CrasAudioHandler::SetInputNodeGainPercent(uint64_t node_id,
                                                int gain_percent) {
+  TRACE_EVENT0("media", "void CrasAudioHandler::SetInputNodeGainPercent");
   const AudioDevice* device = GetDeviceFromId(node_id);
   if (!device || !device->is_input)
     return;
@@ -1014,11 +1134,13 @@ void CrasAudioHandler::SetInputNodeGainPercent(uint64_t node_id,
 }
 
 void CrasAudioHandler::SetInputMuteInternal(bool mute_on) {
+  TRACE_EVENT0("media", "void CrasAudioHandler::SetInputMuteInternal");
   input_mute_on_ = mute_on;
   GetCrasAudioClient()->SetInputMute(mute_on);
 }
 
 void CrasAudioHandler::GetNodes() {
+  TRACE_EVENT0("media", "void CrasAudioHandler::GetNodes");
   GetCrasAudioClient()->GetNodes(
       base::Bind(&CrasAudioHandler::HandleGetNodes,
                  weak_ptr_factory_.GetWeakPtr()),
@@ -1028,11 +1150,12 @@ void CrasAudioHandler::GetNodes() {
 
 bool CrasAudioHandler::ChangeActiveDevice(
     const AudioDevice& new_active_device) {
+  TRACE_EVENT0("media", "bool CrasAudioHandler::ChangeActiveDevice");
   uint64_t& current_active_node_id = new_active_device.is_input
                                          ? active_input_node_id_
                                          : active_output_node_id_;
   // If the device we want to switch to is already the current active device,
-  // do nothing.
+  // // do nothing.
   if (new_active_device.active &&
       new_active_device.id == current_active_node_id) {
     return false;
@@ -1067,6 +1190,7 @@ bool CrasAudioHandler::ChangeActiveDevice(
 void CrasAudioHandler::SwitchToDevice(const AudioDevice& device,
                                       bool notify,
                                       DeviceActivateType activate_by) {
+  TRACE_EVENT0("media", "void CrasAudioHandler::SwitchToDevice");
   if (!ChangeActiveDevice(device))
     return;
 
@@ -1078,8 +1202,8 @@ void CrasAudioHandler::SwitchToDevice(const AudioDevice& device,
   SetActiveDevice(device, notify, activate_by);
 
   // content::MediaStreamManager listens to
-  // base::SystemMonitor::DevicesChangedObserver for audio devices,
-  // and updates EnumerateDevices when OnDevicesChanged is called.
+  // base::SystemMonitor::DevicesChangedObserver for audio devices,   // and
+  // updates EnumerateDevices when OnDevicesChanged is called.
   base::SystemMonitor* monitor = base::SystemMonitor::Get();
   // In some unittest, |monitor| might be nullptr.
   if (!monitor)
@@ -1093,6 +1217,7 @@ bool CrasAudioHandler::HasDeviceChange(const AudioNodeList& new_nodes,
                                        AudioDevicePriorityQueue* new_discovered,
                                        bool* device_removed,
                                        bool* active_device_removed) {
+  TRACE_EVENT0("media", "bool CrasAudioHandler::HasDeviceChange");
   *device_removed = false;
   for (const auto& item : audio_devices_) {
     const AudioDevice& device = item.second;
@@ -1128,6 +1253,9 @@ bool CrasAudioHandler::HasDeviceChange(const AudioNodeList& new_nodes,
 
 CrasAudioHandler::DeviceStatus CrasAudioHandler::CheckDeviceStatus(
     const AudioDevice& device) {
+  TRACE_EVENT0(
+      "media",
+      "CrasAudioHandler::DeviceStatus CrasAudioHandler::CheckDeviceStatus");
   const AudioDevice* device_found =
       GetDeviceFromStableDeviceId(device.stable_device_id);
   if (!device_found)
@@ -1145,6 +1273,7 @@ CrasAudioHandler::DeviceStatus CrasAudioHandler::CheckDeviceStatus(
 }
 
 void CrasAudioHandler::NotifyActiveNodeChanged(bool is_input) {
+  TRACE_EVENT0("media", "void CrasAudioHandler::NotifyActiveNodeChanged");
   if (is_input) {
     for (auto& observer : observers_)
       observer.OnActiveInputNodeChanged();
@@ -1156,6 +1285,7 @@ void CrasAudioHandler::NotifyActiveNodeChanged(bool is_input) {
 
 bool CrasAudioHandler::GetActiveDeviceFromUserPref(bool is_input,
                                                    AudioDevice* active_device) {
+  TRACE_EVENT0("media", "bool CrasAudioHandler::GetActiveDeviceFromUserPref");
   bool found_active_device = false;
   bool last_active_device_activate_by_user = false;
   for (const auto& item : audio_devices_) {
@@ -1226,6 +1356,7 @@ void CrasAudioHandler::HandleNonHotplugNodesChange(
     bool has_device_change,
     bool has_device_removed,
     bool active_device_removed) {
+  TRACE_EVENT0("media", "void CrasAudioHandler::HandleNonHotplugNodesChange");
   bool has_current_active_node =
       is_input ? active_input_node_id_ : active_output_node_id_;
 
@@ -1261,6 +1392,7 @@ void CrasAudioHandler::HandleNonHotplugNodesChange(
 void CrasAudioHandler::HandleHotPlugDevice(
     const AudioDevice& hotplug_device,
     const AudioDevicePriorityQueue& device_priority_queue) {
+  TRACE_EVENT0("media", "void CrasAudioHandler::HandleHotPlugDevice");
   // This most likely may happen during the transition period of cras
   // initialization phase, in which a non-simple-usage node may appear like
   // a hotplug node.
@@ -1301,6 +1433,7 @@ void CrasAudioHandler::HandleHotPlugDevice(
 }
 
 void CrasAudioHandler::SwitchToTopPriorityDevice(bool is_input) {
+  TRACE_EVENT0("media", "void CrasAudioHandler::SwitchToTopPriorityDevice");
   AudioDevice top_device =
       is_input ? input_devices_pq_.top() : output_devices_pq_.top();
   if (!top_device.is_for_simple_usage())
@@ -1317,6 +1450,9 @@ void CrasAudioHandler::SwitchToTopPriorityDevice(bool is_input) {
 }
 
 void CrasAudioHandler::SwitchToPreviousActiveDeviceIfAvailable(bool is_input) {
+  TRACE_EVENT0(
+      "media",
+      "void CrasAudioHandler::SwitchToPreviousActiveDeviceIfAvailable");
   AudioDevice previous_active_device;
   if (GetActiveDeviceFromUserPref(is_input, &previous_active_device)) {
     DCHECK(previous_active_device.is_for_simple_usage());
@@ -1331,6 +1467,7 @@ void CrasAudioHandler::SwitchToPreviousActiveDeviceIfAvailable(bool is_input) {
 
 void CrasAudioHandler::UpdateDevicesAndSwitchActive(
     const AudioNodeList& nodes) {
+  TRACE_EVENT0("media", "void CrasAudioHandler::UpdateDevicesAndSwitchActive");
   size_t old_output_device_size = 0;
   size_t old_input_device_size = 0;
   for (const auto& item : audio_devices_) {
@@ -1407,6 +1544,7 @@ void CrasAudioHandler::HandleAudioDeviceChange(
     bool has_device_change,
     bool has_device_removed,
     bool active_device_removed) {
+  TRACE_EVENT0("media", "void CrasAudioHandler::HandleAudioDeviceChange");
   uint64_t& active_node_id =
       is_input ? active_input_node_id_ : active_output_node_id_;
 
@@ -1418,9 +1556,8 @@ void CrasAudioHandler::HandleAudioDeviceChange(
     return;
   }
 
-  // If the previous active device is removed from the new node list,
-  // or changed to inactive by cras, reset active_node_id.
-  // See crbug.com/478968.
+  // If the previous active device is removed from the new node list,   // or
+  // changed to inactive by cras, reset active_node_id. See crbug.com/478968.
   const AudioDevice* active_device = GetDeviceFromId(active_node_id);
   if (!active_device || !active_device->active)
     active_node_id = 0;
@@ -1436,6 +1573,7 @@ void CrasAudioHandler::HandleAudioDeviceChange(
 
 void CrasAudioHandler::HandleGetNodes(const chromeos::AudioNodeList& node_list,
                                       bool success) {
+  TRACE_EVENT0("media", "void CrasAudioHandler::HandleGetNodes");
   if (!success) {
     LOG_IF(ERROR, log_errors_) << "Failed to retrieve audio nodes data";
     return;
@@ -1448,11 +1586,13 @@ void CrasAudioHandler::HandleGetNodes(const chromeos::AudioNodeList& node_list,
 
 void CrasAudioHandler::HandleGetNodesError(const std::string& error_name,
                                            const std::string& error_msg) {
+  TRACE_EVENT0("media", "void CrasAudioHandler::HandleGetNodesError");
   LOG_IF(ERROR, log_errors_) << "Failed to call GetNodes: "
       << error_name  << ": " << error_msg;
 }
 
 void CrasAudioHandler::AddAdditionalActiveNode(uint64_t node_id, bool notify) {
+  TRACE_EVENT0("media", "void CrasAudioHandler::AddAdditionalActiveNode");
   const AudioDevice* device = GetDeviceFromId(node_id);
   if (!device) {
     VLOG(1) << "AddActiveInputNode: Cannot find device id="
@@ -1477,6 +1617,7 @@ void CrasAudioHandler::AddAdditionalActiveNode(uint64_t node_id, bool notify) {
 }
 
 void CrasAudioHandler::RemoveActiveNodeInternal(uint64_t node_id, bool notify) {
+  TRACE_EVENT0("media", "void CrasAudioHandler::RemoveActiveNodeInternal");
   const AudioDevice* device = GetDeviceFromId(node_id);
   if (!device) {
     VLOG(1) << "RemoveActiveInputNode: Cannot find device id="
@@ -1501,6 +1642,9 @@ void CrasAudioHandler::RemoveActiveNodeInternal(uint64_t node_id, bool notify) {
 }
 
 void CrasAudioHandler::UpdateAudioAfterHDMIRediscoverGracePeriod() {
+  TRACE_EVENT0(
+      "media",
+      "void CrasAudioHandler::UpdateAudioAfterHDMIRediscoverGracePeriod");
   VLOG(1) << "HDMI output re-discover grace period ends.";
   hdmi_rediscovering_ = false;
   if (!IsOutputMutedForDevice(active_output_node_id_)) {
@@ -1517,27 +1661,34 @@ void CrasAudioHandler::UpdateAudioAfterHDMIRediscoverGracePeriod() {
 }
 
 bool CrasAudioHandler::IsHDMIPrimaryOutputDevice() const {
+  TRACE_EVENT0("media", "bool CrasAudioHandler::IsHDMIPrimaryOutputDevice");
   const AudioDevice* device = GetDeviceFromId(active_output_node_id_);
   return device && device->type == AUDIO_TYPE_HDMI;
 }
 
 void CrasAudioHandler::StartHDMIRediscoverGracePeriod() {
+  TRACE_EVENT0("media",
+               "void CrasAudioHandler::StartHDMIRediscoverGracePeriod");
   VLOG(1) << "Start HDMI rediscovering grace period.";
   hdmi_rediscovering_ = true;
   hdmi_rediscover_timer_.Stop();
   hdmi_rediscover_timer_.Start(
-      FROM_HERE, base::TimeDelta::FromMilliseconds(
-                     hdmi_rediscover_grace_period_duration_in_ms_),
+      FROM_HERE,
+      base::TimeDelta::FromMilliseconds(
+          hdmi_rediscover_grace_period_duration_in_ms_),
       this, &CrasAudioHandler::UpdateAudioAfterHDMIRediscoverGracePeriod);
 }
 
 void CrasAudioHandler::SetHDMIRediscoverGracePeriodForTesting(
     int duration_in_ms) {
+  TRACE_EVENT0("media",
+               "void CrasAudioHandler::SetHDMIRediscoverGracePeriodForTesting");
   hdmi_rediscover_grace_period_duration_in_ms_ = duration_in_ms;
 }
 
 void CrasAudioHandler::ActivateMicForCamera(
     media::VideoFacingMode camera_facing) {
+  TRACE_EVENT0("media", "void CrasAudioHandler::ActivateMicForCamera");
   const AudioDevice* mic = GetMicForCamera(camera_facing);
   if (!mic || mic->active)
     return;
@@ -1546,6 +1697,8 @@ void CrasAudioHandler::ActivateMicForCamera(
 }
 
 void CrasAudioHandler::ActivateInternalMicForActiveCamera() {
+  TRACE_EVENT0("media",
+               "void CrasAudioHandler::ActivateInternalMicForActiveCamera");
   DCHECK(IsCameraOn());
   if (HasDualInternalMic()) {
     media::VideoFacingMode facing = front_camera_on_
@@ -1562,6 +1715,7 @@ void CrasAudioHandler::ActivateInternalMicForActiveCamera() {
 // matches the active camera, i.e. front microphone for front camera and
 // rear microphone for rear camera.
 void CrasAudioHandler::SwitchToFrontOrRearMic() {
+  TRACE_EVENT0("media", "void CrasAudioHandler::SwitchToFrontOrRearMic");
   DCHECK(HasDualInternalMic());
   if (IsCameraOn()) {
     ActivateInternalMicForActiveCamera();
@@ -1573,6 +1727,7 @@ void CrasAudioHandler::SwitchToFrontOrRearMic() {
 
 const AudioDevice* CrasAudioHandler::GetMicForCamera(
     media::VideoFacingMode camera_facing) {
+  TRACE_EVENT0("media", "const AudioDevice* CrasAudioHandler::GetMicForCamera");
   switch (camera_facing) {
     case media::MEDIA_VIDEO_FACING_USER:
       return GetDeviceByType(AUDIO_TYPE_FRONT_MIC);
@@ -1585,6 +1740,7 @@ const AudioDevice* CrasAudioHandler::GetMicForCamera(
 }
 
 bool CrasAudioHandler::HasDualInternalMic() const {
+  TRACE_EVENT0("media", "bool CrasAudioHandler::HasDualInternalMic");
   bool has_front_mic = false;
   bool has_rear_mic = false;
   for (const auto& item : audio_devices_) {
@@ -1600,15 +1756,18 @@ bool CrasAudioHandler::HasDualInternalMic() const {
 }
 
 bool CrasAudioHandler::IsFrontOrRearMic(const AudioDevice& device) const {
+  TRACE_EVENT0("media", "bool CrasAudioHandler::IsFrontOrRearMic");
   return device.is_input && (device.type == AUDIO_TYPE_FRONT_MIC ||
                              device.type == AUDIO_TYPE_REAR_MIC);
 }
 
 bool CrasAudioHandler::IsCameraOn() const {
+  TRACE_EVENT0("media", "bool CrasAudioHandler::IsCameraOn");
   return front_camera_on_ || rear_camera_on_;
 }
 
 bool CrasAudioHandler::HasExternalDevice(bool is_input) const {
+  TRACE_EVENT0("media", "bool CrasAudioHandler::HasExternalDevice");
   for (const auto& item : audio_devices_) {
     const AudioDevice& device = item.second;
     if (is_input == device.is_input && device.IsExternalDevice())
@@ -1618,6 +1777,8 @@ bool CrasAudioHandler::HasExternalDevice(bool is_input) const {
 }
 
 void CrasAudioHandler::GetDefaultOutputBufferSizeInternal() {
+  TRACE_EVENT0("media",
+               "void CrasAudioHandler::GetDefaultOutputBufferSizeInternal");
   GetCrasAudioClient()->GetDefaultOutputBufferSize(
       base::Bind(&CrasAudioHandler::HandleGetDefaultOutputBufferSize,
                  weak_ptr_factory_.GetWeakPtr()));
@@ -1625,6 +1786,8 @@ void CrasAudioHandler::GetDefaultOutputBufferSizeInternal() {
 
 void CrasAudioHandler::HandleGetDefaultOutputBufferSize(int32_t buffer_size,
                                                         bool success) {
+  TRACE_EVENT0("media",
+               "void CrasAudioHandler::HandleGetDefaultOutputBufferSize");
   if (!success) {
     LOG_IF(ERROR, log_errors_) << "Failed to retrieve output buffer size";
     return;

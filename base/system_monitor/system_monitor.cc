@@ -9,41 +9,49 @@
 #include "base/logging.h"
 #include "base/message_loop/message_loop.h"
 #include "base/time/time.h"
+#include "base/trace_event/trace_event.h"
 
 namespace base {
 
 static SystemMonitor* g_system_monitor = NULL;
 
 SystemMonitor::SystemMonitor()
-    :  devices_changed_observer_list_(
+    : devices_changed_observer_list_(
           new ObserverListThreadSafe<DevicesChangedObserver>()) {
+  TRACE_EVENT0("media", "SystemMonitor::SystemMonitor");
   DCHECK(!g_system_monitor);
   g_system_monitor = this;
 }
 
 SystemMonitor::~SystemMonitor() {
+  TRACE_EVENT0("media", "SystemMonitor::~SystemMonitor");
   DCHECK_EQ(this, g_system_monitor);
   g_system_monitor = NULL;
 }
 
 // static
 SystemMonitor* SystemMonitor::Get() {
+  TRACE_EVENT0("media", "SystemMonitor* SystemMonitor::Get");
   return g_system_monitor;
 }
 
 void SystemMonitor::ProcessDevicesChanged(DeviceType device_type) {
+  TRACE_EVENT0("media", "void SystemMonitor::ProcessDevicesChanged");
   NotifyDevicesChanged(device_type);
 }
 
 void SystemMonitor::AddDevicesChangedObserver(DevicesChangedObserver* obs) {
+  TRACE_EVENT0("media", "void SystemMonitor::AddDevicesChangedObserver");
   devices_changed_observer_list_->AddObserver(obs);
 }
 
 void SystemMonitor::RemoveDevicesChangedObserver(DevicesChangedObserver* obs) {
+  TRACE_EVENT0("media", "void SystemMonitor::RemoveDevicesChangedObserver");
   devices_changed_observer_list_->RemoveObserver(obs);
 }
 
 void SystemMonitor::NotifyDevicesChanged(DeviceType device_type) {
+  TRACE_EVENT0("media", "void SystemMonitor::NotifyDevicesChanged");
   DVLOG(1) << "DevicesChanged with device type " << device_type;
   devices_changed_observer_list_->Notify(
       FROM_HERE, &DevicesChangedObserver::OnDevicesChanged, device_type);

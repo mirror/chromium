@@ -10,6 +10,7 @@
 #include "base/format_macros.h"
 #include "base/macros.h"
 #include "base/strings/stringprintf.h"
+#include "base/trace_event/trace_event.h"
 #include "dbus/bus.h"
 #include "dbus/message.h"
 #include "dbus/object_path.h"
@@ -25,24 +26,32 @@ const char kNoResponseError[] =
 // The CrasAudioClient implementation used in production.
 class CrasAudioClientImpl : public CrasAudioClient {
  public:
-  CrasAudioClientImpl() : cras_proxy_(NULL), weak_ptr_factory_(this) {}
+  CrasAudioClientImpl() : cras_proxy_(NULL), weak_ptr_factory_(this) {
+    TRACE_EVENT0("media", "CrasAudioClientImpl");
+  }
 
-  ~CrasAudioClientImpl() override {}
+  ~CrasAudioClientImpl() override {
+    TRACE_EVENT0("media", "~CrasAudioClientImpl");
+  }
 
   // CrasAudioClient overrides:
   void AddObserver(Observer* observer) override {
+    TRACE_EVENT0("media", "void AddObserver");
     observers_.AddObserver(observer);
   }
 
   void RemoveObserver(Observer* observer) override {
+    TRACE_EVENT0("media", "void RemoveObserver");
     observers_.RemoveObserver(observer);
   }
 
   bool HasObserver(const Observer* observer) const override {
+    TRACE_EVENT0("media", "bool HasObserver");
     return observers_.HasObserver(observer);
   }
 
   void GetVolumeState(const GetVolumeStateCallback& callback) override {
+    TRACE_EVENT0("media", "void GetVolumeState");
     dbus::MethodCall method_call(cras::kCrasControlInterface,
                                  cras::kGetVolumeState);
     cras_proxy_->CallMethod(
@@ -53,6 +62,7 @@ class CrasAudioClientImpl : public CrasAudioClient {
 
   void GetDefaultOutputBufferSize(
       const GetDefaultOutputBufferSizeCallback& callback) override {
+    TRACE_EVENT0("media", "void GetDefaultOutputBufferSize");
     dbus::MethodCall method_call(cras::kCrasControlInterface,
                                  cras::kGetDefaultOutputBufferSize);
     cras_proxy_->CallMethod(
@@ -63,8 +73,8 @@ class CrasAudioClientImpl : public CrasAudioClient {
 
   void GetNodes(const GetNodesCallback& callback,
                 const ErrorCallback& error_callback) override {
-    dbus::MethodCall method_call(cras::kCrasControlInterface,
-                                 cras::kGetNodes);
+    TRACE_EVENT0("media", "void GetNodes");
+    dbus::MethodCall method_call(cras::kCrasControlInterface, cras::kGetNodes);
     cras_proxy_->CallMethodWithErrorCallback(
         &method_call, dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
         base::BindOnce(&CrasAudioClientImpl::OnGetNodes,
@@ -74,96 +84,97 @@ class CrasAudioClientImpl : public CrasAudioClient {
   }
 
   void SetOutputNodeVolume(uint64_t node_id, int32_t volume) override {
+    TRACE_EVENT0("media", "void SetOutputNodeVolume");
     dbus::MethodCall method_call(cras::kCrasControlInterface,
                                  cras::kSetOutputNodeVolume);
     dbus::MessageWriter writer(&method_call);
     writer.AppendUint64(node_id);
     writer.AppendInt32(volume);
-    cras_proxy_->CallMethod(
-        &method_call,
-        dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
-        dbus::ObjectProxy::EmptyResponseCallback());
+    cras_proxy_->CallMethod(&method_call,
+                            dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
+                            dbus::ObjectProxy::EmptyResponseCallback());
   }
 
   void SetOutputUserMute(bool mute_on) override {
+    TRACE_EVENT0("media", "void SetOutputUserMute");
     dbus::MethodCall method_call(cras::kCrasControlInterface,
                                  cras::kSetOutputUserMute);
     dbus::MessageWriter writer(&method_call);
     writer.AppendBool(mute_on);
-    cras_proxy_->CallMethod(
-        &method_call,
-        dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
-        dbus::ObjectProxy::EmptyResponseCallback());
+    cras_proxy_->CallMethod(&method_call,
+                            dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
+                            dbus::ObjectProxy::EmptyResponseCallback());
   }
 
   void SetInputNodeGain(uint64_t node_id, int32_t input_gain) override {
+    TRACE_EVENT0("media", "void SetInputNodeGain");
     dbus::MethodCall method_call(cras::kCrasControlInterface,
                                  cras::kSetInputNodeGain);
     dbus::MessageWriter writer(&method_call);
     writer.AppendUint64(node_id);
     writer.AppendInt32(input_gain);
-    cras_proxy_->CallMethod(
-        &method_call,
-        dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
-        dbus::ObjectProxy::EmptyResponseCallback());
+    cras_proxy_->CallMethod(&method_call,
+                            dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
+                            dbus::ObjectProxy::EmptyResponseCallback());
   }
 
   void SetInputMute(bool mute_on) override {
+    TRACE_EVENT0("media", "void SetInputMute");
     dbus::MethodCall method_call(cras::kCrasControlInterface,
                                  cras::kSetInputMute);
     dbus::MessageWriter writer(&method_call);
     writer.AppendBool(mute_on);
-    cras_proxy_->CallMethod(
-        &method_call,
-        dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
-        dbus::ObjectProxy::EmptyResponseCallback());
+    cras_proxy_->CallMethod(&method_call,
+                            dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
+                            dbus::ObjectProxy::EmptyResponseCallback());
   }
 
   void SetActiveOutputNode(uint64_t node_id) override {
+    TRACE_EVENT0("media", "void SetActiveOutputNode");
     dbus::MethodCall method_call(cras::kCrasControlInterface,
                                  cras::kSetActiveOutputNode);
     dbus::MessageWriter writer(&method_call);
     writer.AppendUint64(node_id);
-    cras_proxy_->CallMethod(
-        &method_call,
-        dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
-        dbus::ObjectProxy::EmptyResponseCallback());
+    cras_proxy_->CallMethod(&method_call,
+                            dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
+                            dbus::ObjectProxy::EmptyResponseCallback());
   }
 
   void SetActiveInputNode(uint64_t node_id) override {
+    TRACE_EVENT0("media", "void SetActiveInputNode");
     dbus::MethodCall method_call(cras::kCrasControlInterface,
                                  cras::kSetActiveInputNode);
     dbus::MessageWriter writer(&method_call);
     writer.AppendUint64(node_id);
-    cras_proxy_->CallMethod(
-        &method_call,
-        dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
-        dbus::ObjectProxy::EmptyResponseCallback());
+    cras_proxy_->CallMethod(&method_call,
+                            dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
+                            dbus::ObjectProxy::EmptyResponseCallback());
   }
 
   void AddActiveInputNode(uint64_t node_id) override {
+    TRACE_EVENT0("media", "void AddActiveInputNode");
     dbus::MethodCall method_call(cras::kCrasControlInterface,
                                  cras::kAddActiveInputNode);
     dbus::MessageWriter writer(&method_call);
     writer.AppendUint64(node_id);
-    cras_proxy_->CallMethod(
-        &method_call,
-        dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
-        dbus::ObjectProxy::EmptyResponseCallback());
+    cras_proxy_->CallMethod(&method_call,
+                            dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
+                            dbus::ObjectProxy::EmptyResponseCallback());
   }
 
   void RemoveActiveInputNode(uint64_t node_id) override {
+    TRACE_EVENT0("media", "void RemoveActiveInputNode");
     dbus::MethodCall method_call(cras::kCrasControlInterface,
                                  cras::kRemoveActiveInputNode);
     dbus::MessageWriter writer(&method_call);
     writer.AppendUint64(node_id);
-    cras_proxy_->CallMethod(
-        &method_call,
-        dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
-        dbus::ObjectProxy::EmptyResponseCallback());
+    cras_proxy_->CallMethod(&method_call,
+                            dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
+                            dbus::ObjectProxy::EmptyResponseCallback());
   }
 
   void AddActiveOutputNode(uint64_t node_id) override {
+    TRACE_EVENT0("media", "void AddActiveOutputNode");
     dbus::MethodCall method_call(cras::kCrasControlInterface,
                                  cras::kAddActiveOutputNode);
     dbus::MessageWriter writer(&method_call);
@@ -174,6 +185,7 @@ class CrasAudioClientImpl : public CrasAudioClient {
   }
 
   void RemoveActiveOutputNode(uint64_t node_id) override {
+    TRACE_EVENT0("media", "void RemoveActiveOutputNode");
     dbus::MethodCall method_call(cras::kCrasControlInterface,
                                  cras::kRemoveActiveOutputNode);
     dbus::MessageWriter writer(&method_call);
@@ -184,6 +196,7 @@ class CrasAudioClientImpl : public CrasAudioClient {
   }
 
   void SwapLeftRight(uint64_t node_id, bool swap) override {
+    TRACE_EVENT0("media", "void SwapLeftRight");
     dbus::MethodCall method_call(cras::kCrasControlInterface,
                                  cras::kSwapLeftRight);
     dbus::MessageWriter writer(&method_call);
@@ -196,6 +209,7 @@ class CrasAudioClientImpl : public CrasAudioClient {
 
   void SetGlobalOutputChannelRemix(int32_t channels,
                                    const std::vector<double>& mixer) override {
+    TRACE_EVENT0("media", "void SetGlobalOutputChannelRemix");
     dbus::MethodCall method_call(cras::kCrasControlInterface,
                                  cras::kSetGlobalOutputChannelRemix);
     dbus::MessageWriter writer(&method_call);
@@ -208,11 +222,13 @@ class CrasAudioClientImpl : public CrasAudioClient {
 
   void WaitForServiceToBeAvailable(
       const WaitForServiceToBeAvailableCallback& callback) override {
+    TRACE_EVENT0("media", "void WaitForServiceToBeAvailable");
     cras_proxy_->WaitForServiceToBeAvailable(callback);
   }
 
  protected:
   void Init(dbus::Bus* bus) override {
+    TRACE_EVENT0("media", "void Init");
     cras_proxy_ = bus->GetObjectProxy(cras::kCrasServiceName,
                                       dbus::ObjectPath(cras::kCrasServicePath));
 
@@ -223,8 +239,7 @@ class CrasAudioClientImpl : public CrasAudioClient {
 
     // Monitor the D-Bus signal for output mute change.
     cras_proxy_->ConnectToSignal(
-        cras::kCrasControlInterface,
-        cras::kOutputMuteChanged,
+        cras::kCrasControlInterface, cras::kOutputMuteChanged,
         base::Bind(&CrasAudioClientImpl::OutputMuteChangedReceived,
                    weak_ptr_factory_.GetWeakPtr()),
         base::Bind(&CrasAudioClientImpl::SignalConnected,
@@ -232,8 +247,7 @@ class CrasAudioClientImpl : public CrasAudioClient {
 
     // Monitor the D-Bus signal for input mute change.
     cras_proxy_->ConnectToSignal(
-        cras::kCrasControlInterface,
-        cras::kInputMuteChanged,
+        cras::kCrasControlInterface, cras::kInputMuteChanged,
         base::Bind(&CrasAudioClientImpl::InputMuteChangedReceived,
                    weak_ptr_factory_.GetWeakPtr()),
         base::Bind(&CrasAudioClientImpl::SignalConnected,
@@ -241,8 +255,7 @@ class CrasAudioClientImpl : public CrasAudioClient {
 
     // Monitor the D-Bus signal for nodes change.
     cras_proxy_->ConnectToSignal(
-        cras::kCrasControlInterface,
-        cras::kNodesChanged,
+        cras::kCrasControlInterface, cras::kNodesChanged,
         base::Bind(&CrasAudioClientImpl::NodesChangedReceived,
                    weak_ptr_factory_.GetWeakPtr()),
         base::Bind(&CrasAudioClientImpl::SignalConnected,
@@ -250,8 +263,7 @@ class CrasAudioClientImpl : public CrasAudioClient {
 
     // Monitor the D-Bus signal for active output node change.
     cras_proxy_->ConnectToSignal(
-        cras::kCrasControlInterface,
-        cras::kActiveOutputNodeChanged,
+        cras::kCrasControlInterface, cras::kActiveOutputNodeChanged,
         base::Bind(&CrasAudioClientImpl::ActiveOutputNodeChangedReceived,
                    weak_ptr_factory_.GetWeakPtr()),
         base::Bind(&CrasAudioClientImpl::SignalConnected,
@@ -259,8 +271,7 @@ class CrasAudioClientImpl : public CrasAudioClient {
 
     // Monitor the D-Bus signal for active input node change.
     cras_proxy_->ConnectToSignal(
-        cras::kCrasControlInterface,
-        cras::kActiveInputNodeChanged,
+        cras::kCrasControlInterface, cras::kActiveInputNodeChanged,
         base::Bind(&CrasAudioClientImpl::ActiveInputNodeChangedReceived,
                    weak_ptr_factory_.GetWeakPtr()),
         base::Bind(&CrasAudioClientImpl::SignalConnected,
@@ -268,8 +279,7 @@ class CrasAudioClientImpl : public CrasAudioClient {
 
     // Monitor the D-Bus signal for output node volume change.
     cras_proxy_->ConnectToSignal(
-        cras::kCrasControlInterface,
-        cras::kOutputNodeVolumeChanged,
+        cras::kCrasControlInterface, cras::kOutputNodeVolumeChanged,
         base::Bind(&CrasAudioClientImpl::OutputNodeVolumeChangedReceived,
                    weak_ptr_factory_.GetWeakPtr()),
         base::Bind(&CrasAudioClientImpl::SignalConnected,
@@ -281,18 +291,21 @@ class CrasAudioClientImpl : public CrasAudioClient {
   void SignalConnected(const std::string& interface_name,
                        const std::string& signal_name,
                        bool success) {
+    TRACE_EVENT0("media", "void SignalConnected");
     LOG_IF(ERROR, !success)
         << "Failed to connect to cras signal:" << signal_name;
   }
 
   void NameOwnerChangedReceived(const std::string& old_owner,
                                 const std::string& new_owner) {
+    TRACE_EVENT0("media", "void NameOwnerChangedReceived");
     for (auto& observer : observers_)
       observer.AudioClientRestarted();
   }
 
   // Called when a OutputMuteChanged signal is received.
   void OutputMuteChangedReceived(dbus::Signal* signal) {
+    TRACE_EVENT0("media", "void OutputMuteChangedReceived");
     // Chrome should always call SetOutputUserMute api to set the output
     // mute state and monitor user_mute state from OutputMuteChanged signal.
     dbus::MessageReader reader(signal);
@@ -307,6 +320,7 @@ class CrasAudioClientImpl : public CrasAudioClient {
 
   // Called when a InputMuteChanged signal is received.
   void InputMuteChangedReceived(dbus::Signal* signal) {
+    TRACE_EVENT0("media", "void InputMuteChangedReceived");
     dbus::MessageReader reader(signal);
     bool mute;
     if (!reader.PopBool(&mute)) {
@@ -318,11 +332,13 @@ class CrasAudioClientImpl : public CrasAudioClient {
   }
 
   void NodesChangedReceived(dbus::Signal* signal) {
+    TRACE_EVENT0("media", "void NodesChangedReceived");
     for (auto& observer : observers_)
       observer.NodesChanged();
   }
 
   void ActiveOutputNodeChangedReceived(dbus::Signal* signal) {
+    TRACE_EVENT0("media", "void ActiveOutputNodeChangedReceived");
     dbus::MessageReader reader(signal);
     uint64_t node_id;
     if (!reader.PopUint64(&node_id)) {
@@ -334,6 +350,7 @@ class CrasAudioClientImpl : public CrasAudioClient {
   }
 
   void ActiveInputNodeChangedReceived(dbus::Signal* signal) {
+    TRACE_EVENT0("media", "void ActiveInputNodeChangedReceived");
     dbus::MessageReader reader(signal);
     uint64_t node_id;
     if (!reader.PopUint64(&node_id)) {
@@ -345,6 +362,7 @@ class CrasAudioClientImpl : public CrasAudioClient {
   }
 
   void OutputNodeVolumeChangedReceived(dbus::Signal* signal) {
+    TRACE_EVENT0("media", "void OutputNodeVolumeChangedReceived");
     dbus::MessageReader reader(signal);
     uint64_t node_id;
     int volume;
@@ -361,6 +379,7 @@ class CrasAudioClientImpl : public CrasAudioClient {
 
   void OnGetVolumeState(const GetVolumeStateCallback& callback,
                         dbus::Response* response) {
+    TRACE_EVENT0("media", "void OnGetVolumeState");
     bool success = true;
     VolumeState volume_state;
     if (response) {
@@ -385,6 +404,7 @@ class CrasAudioClientImpl : public CrasAudioClient {
   void OnGetDefaultOutputBufferSize(
       const GetDefaultOutputBufferSizeCallback& callback,
       dbus::Response* response) {
+    TRACE_EVENT0("media", "void OnGetDefaultOutputBufferSize");
     bool success = true;
     int32_t buffer_size = 0;
 
@@ -403,8 +423,8 @@ class CrasAudioClientImpl : public CrasAudioClient {
     callback.Run(buffer_size, success);
   }
 
-  void OnGetNodes(const GetNodesCallback& callback,
-                  dbus::Response* response) {
+  void OnGetNodes(const GetNodesCallback& callback, dbus::Response* response) {
+    TRACE_EVENT0("media", "void OnGetNodes");
     bool success = true;
     AudioNodeList node_list;
     if (response) {
@@ -439,6 +459,7 @@ class CrasAudioClientImpl : public CrasAudioClient {
 
   void OnError(const ErrorCallback& error_callback,
                dbus::ErrorResponse* response) {
+    TRACE_EVENT0("media", "void OnError");
     // Error response has optional error message argument.
     std::string error_name;
     std::string error_message;
@@ -456,6 +477,7 @@ class CrasAudioClientImpl : public CrasAudioClient {
   bool GetAudioNode(dbus::Response* response,
                     dbus::MessageReader* array_reader,
                     AudioNode* node) {
+    TRACE_EVENT0("media", "bool GetAudioNode");
     while (array_reader->HasMoreData()) {
       dbus::MessageReader dict_entry_reader(response);
       dbus::MessageReader value_reader(response);
@@ -514,36 +536,52 @@ class CrasAudioClientImpl : public CrasAudioClient {
 };
 
 CrasAudioClient::Observer::~Observer() {
+  TRACE_EVENT0("media", "CrasAudioClient::Observer::~Observer");
 }
 
 void CrasAudioClient::Observer::AudioClientRestarted() {
+  TRACE_EVENT0("media", "void CrasAudioClient::Observer::AudioClientRestarted");
 }
 
 void CrasAudioClient::Observer::OutputMuteChanged(bool mute_on) {
+  TRACE_EVENT0("media", "void CrasAudioClient::Observer::OutputMuteChanged");
 }
 
 void CrasAudioClient::Observer::InputMuteChanged(bool mute_on) {
+  TRACE_EVENT0("media", "void CrasAudioClient::Observer::InputMuteChanged");
 }
 
 void CrasAudioClient::Observer::NodesChanged() {
+  TRACE_EVENT0("media", "void CrasAudioClient::Observer::NodesChanged");
 }
 
-void CrasAudioClient::Observer::ActiveOutputNodeChanged(uint64_t node_id) {}
+void CrasAudioClient::Observer::ActiveOutputNodeChanged(uint64_t node_id) {
+  TRACE_EVENT0("media",
+               "void CrasAudioClient::Observer::ActiveOutputNodeChanged");
+}
 
-void CrasAudioClient::Observer::ActiveInputNodeChanged(uint64_t node_id) {}
+void CrasAudioClient::Observer::ActiveInputNodeChanged(uint64_t node_id) {
+  TRACE_EVENT0("media",
+               "void CrasAudioClient::Observer::ActiveInputNodeChanged");
+}
 
 void CrasAudioClient::Observer::OutputNodeVolumeChanged(uint64_t node_id,
                                                         int volume) {
+  TRACE_EVENT0("media",
+               "void CrasAudioClient::Observer::OutputNodeVolumeChanged");
 }
 
 CrasAudioClient::CrasAudioClient() {
+  TRACE_EVENT0("media", "CrasAudioClient::CrasAudioClient");
 }
 
 CrasAudioClient::~CrasAudioClient() {
+  TRACE_EVENT0("media", "CrasAudioClient::~CrasAudioClient");
 }
 
 // static
 CrasAudioClient* CrasAudioClient::Create() {
+  TRACE_EVENT0("media", "CrasAudioClient* CrasAudioClient::Create");
   return new CrasAudioClientImpl();
 }
 
