@@ -15,6 +15,7 @@
 #include "content/public/common/referrer.h"
 #include "content/public/test/navigation_simulator.h"
 #include "net/base/host_port_pair.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 #include "ui/base/page_transition_types.h"
 
 class GURL;
@@ -176,6 +177,11 @@ class NavigationSimulator : public WebContentsObserver {
   // commits. They should be specified before calling |Fail| or |Commit|.
   virtual void SetSocketAddress(const net::HostPortPair& socket_address);
 
+  // Set the request end of the InterfaceProvider that the renderer side
+  // intends to use as its remote interface provider as of this navigation.
+  virtual void SetInterfaceProviderRequest(
+      service_manager::mojom::InterfaceProviderRequest request);
+
   // --------------------------------------------------------------------------
 
   // Gets the last throttle check result computed by the navigation throttles.
@@ -283,6 +289,7 @@ class NavigationSimulator : public WebContentsObserver {
   Referrer referrer_;
   ui::PageTransition transition_;
   bool has_user_gesture_ = true;
+  service_manager::mojom::InterfaceProviderRequest interface_provider_request_;
 
   // These are used to sanity check the content/public/ API calls emitted as
   // part of the navigation.
