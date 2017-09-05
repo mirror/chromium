@@ -30,8 +30,6 @@ class TexturedElement : public UiElement {
   void Render(UiElementRenderer* renderer,
               const gfx::Transform& view_proj_matrix) const final;
 
-  void SetInitializedForTesting();
-
  protected:
   void UpdateTexture();
 
@@ -41,6 +39,8 @@ class TexturedElement : public UiElement {
   void PrepareToDraw() final;
 
  private:
+  friend class FakeTexturedElement;
+
   void Flush(SkSurface* surface);
   void OnSetMode() override;
 
