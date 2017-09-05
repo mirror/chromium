@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9cdc8584_44edf923",
+        "filename": "media/mojo/clients/mojo_video_decoder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-05T17:37:37Z",
+      "side": 1,
+      "message": "not sure that MVD should be doing this, especially given all the logic in ROI.  i know that GVD does, but i\u0027ve never liked that either :)\n\nwhat if RequestOverlayInfo(bool requires_restart) was exposed on the mojo video decoder client, and MCVD could call it during initialization if it\u0027s interested in overlay info?\n\nthen, ROI would just be a pass-through.  MCVD also doesn\u0027t have to assume anything about when MVD will request overlay info.\n\ni think that it still has all the benefits that you outline.",
+      "revId": "dfbe636a24c6a3ac04fb7711edd40f456bf3bd9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
