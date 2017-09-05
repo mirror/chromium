@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e6561c3_ccd5e50b",
+        "filename": "mojo/public/cpp/bindings/lib/native_struct_serialization.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-09-05T18:32:51Z",
+      "side": 1,
+      "message": "nit: please use |data_view| above or remove |data_view|.",
+      "revId": "28fd09c905bf0c9680266cc155c924429224b46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1441da1b_7c6b60c3",
+        "filename": "mojo/public/cpp/bindings/lib/native_struct_serialization.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-09-05T18:32:51Z",
+      "side": 1,
+      "message": "I am not sure I understand: I thought the IPC::Message does corresponds to |iter|?",
+      "revId": "28fd09c905bf0c9680266cc155c924429224b46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66970971_e21f3313",
+        "filename": "mojo/public/cpp/bindings/tests/test_native_types.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-09-05T18:32:51Z",
+      "side": 1,
+      "message": "nit: check return value?",
+      "revId": "28fd09c905bf0c9680266cc155c924429224b46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4053f0d1_3258e84c",
+        "filename": "mojo/public/tools/bindings/generators/cpp_templates/module-shared-internal.h.tmpl",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-09-05T18:32:51Z",
+      "side": 1,
+      "message": "I think what we need is mojo::native::internal::NativeStruct_Data here but not native_struct_serialization, right?",
+      "revId": "28fd09c905bf0c9680266cc155c924429224b46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "616ca6de_08b13a01",
+        "filename": "mojo/public/tools/bindings/mojom.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-09-05T18:32:51Z",
+      "side": 1,
+      "message": "Please also add a comment above the template definition for this flag.",
+      "revId": "28fd09c905bf0c9680266cc155c924429224b46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3340d3e8_3873d86c",
+        "filename": "mojo/public/tools/bindings/mojom_bindings_generator.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-09-05T18:32:51Z",
+      "side": 1,
+      "message": "Actually, //ipc:mojom is okay to use [Native].",
+      "revId": "28fd09c905bf0c9680266cc155c924429224b46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
