@@ -59,6 +59,24 @@
     },
     {
       "key": {
+        "uuid": "db035320_4a2ed289",
+        "filename": "content/common/service_worker/service_worker_loader_helpers.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1238141
+      },
+      "writtenOn": "2017-09-05T04:36:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59aa0c99_5d13daa8",
+      "revId": "2898a9a8c8e9501adc41392a50dd01c230864062",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a22fa6e_5355690f",
         "filename": "content/common/service_worker/service_worker_loader_helpers.h",
         "patchSetId": 8
@@ -70,6 +88,24 @@
       "writtenOn": "2017-09-05T04:04:20Z",
       "side": 1,
       "message": "can we now do a forward declaration for ServiceWorkerResponse and ServiceWorkerHeaderMap, so we don\u0027t need this #include?",
+      "revId": "2898a9a8c8e9501adc41392a50dd01c230864062",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06cfdb03_b6296541",
+        "filename": "content/common/service_worker/service_worker_loader_helpers.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1238141
+      },
+      "writtenOn": "2017-09-05T04:36:56Z",
+      "side": 1,
+      "message": "I think this #include is still need since SaveResponseHeaders() use ServiceWorkerHeaderMap.",
+      "parentUuid": "0a22fa6e_5355690f",
       "revId": "2898a9a8c8e9501adc41392a50dd01c230864062",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -93,6 +129,24 @@
     },
     {
       "key": {
+        "uuid": "dc61224a_17b22302",
+        "filename": "content/common/service_worker/service_worker_loader_helpers.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1238141
+      },
+      "writtenOn": "2017-09-05T04:36:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04691825_3bb2be0c",
+      "revId": "2898a9a8c8e9501adc41392a50dd01c230864062",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fadedfa1_a3f1813c",
         "filename": "content/common/service_worker/service_worker_loader_helpers.h",
         "patchSetId": 8
@@ -104,6 +158,24 @@
       "writtenOn": "2017-09-05T04:04:20Z",
       "side": 1,
       "message": "// Populates |out_head| with the given |response|, including headers.\n\nIt feels slightly better if this is named SaveResponse() to show it\u0027s the superset of SaveResponseHeaders() and SaveResponseInfo().",
+      "revId": "2898a9a8c8e9501adc41392a50dd01c230864062",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45c32fc3_4cf281c3",
+        "filename": "content/common/service_worker/service_worker_loader_helpers.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1238141
+      },
+      "writtenOn": "2017-09-05T04:36:56Z",
+      "side": 1,
+      "message": "I rename that. And now, I feel that remove SaveResponseInfo() from the public interface is also good as you said. There are another idea that remove PopulateResponseHead(), too. What do you think?",
+      "parentUuid": "fadedfa1_a3f1813c",
       "revId": "2898a9a8c8e9501adc41392a50dd01c230864062",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -124,6 +196,24 @@
       "revId": "2898a9a8c8e9501adc41392a50dd01c230864062",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26581238_596c98a4",
+        "filename": "content/common/service_worker/service_worker_loader_helpers.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1238141
+      },
+      "writtenOn": "2017-09-05T04:36:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77b6ca29_513bcb47",
+      "revId": "2898a9a8c8e9501adc41392a50dd01c230864062",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
