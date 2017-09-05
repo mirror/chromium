@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<script src="../resources/gc.js"></script>
+<script src="../resources/testharness.js"></script>
+<script src="../resources/testharnessreport.js"></script>
+
+<!--
+
+Accessibility Object Model
+Explainer: https://github.com/WICG/aom/blob/gh-pages/explainer.md
+Spec: https://wicg.github.io/aom/spec/
+
+-->
+
+<script>
+test(function(t) {
+    assert_true(internals.runtimeFlags.accessibilityObjectModelEnabled);
+}, "Make sure that Accessibility Object Model is enabled");
+</script>
+
+<div id="container"></div>
+
+<script>
+test(function(t) {
+    var container = document.getElementById("container");
+    var child = new AccessibleNode();
+    child.role = "button";
+    container.accessibleNode.appendChild(child);
+
+    var axContainer = accessibilityController.accessibleElementById("container");
+    assert_equals(axContainer.childrenCount, 1);
+    var axChild = axContainer.childAtIndex(0);
+    assert_equals(axChild.role, "AXRole: AXButton");
+}, "Create a virtual AccessibleNode");
+</script>
