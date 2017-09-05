@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cd55b4bf_6cc8c2c4",
+        "filename": "components/payments/core/payment_manifest_downloader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-09-05T15:11:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f3edb34_78545adb",
+      "revId": "3539d2f7164790bbafae163a9ca6602332d4e14b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06a176fe_d8de4b0c",
         "filename": "components/payments/core/payment_manifest_downloader.cc",
         "patchSetId": 1
