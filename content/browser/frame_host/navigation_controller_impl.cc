@@ -1192,7 +1192,9 @@ void NavigationControllerImpl::RendererDidNavigateToNewPage(
     update_virtual_url = new_entry->update_virtual_url_with_url();
     new_entry->GetSSL() = handle->ssl_status();
 
+
     if (new_entry->GetURL().SchemeIs(url::kHttpsScheme)) {
+      CHECK(!!new_entry->GetSSL().certificate);
       UMA_HISTOGRAM_BOOLEAN(
           "Navigation.SecureSchemeHasSSLStatus.NewPagePendingEntryMatches",
           !!new_entry->GetSSL().certificate);
