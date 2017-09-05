@@ -13,9 +13,9 @@
 #include "base/bit_cast.h"
 #include "base/trace_event/trace_event.h"
 #include "cc/base/math_util.h"
+#include "cc/base/resource_util.h"
 #include "cc/paint/skia_paint_canvas.h"
-#include "cc/resources/resource_provider.h"
-#include "cc/resources/resource_util.h"
+#include "components/viz/common/display/resource_provider.h"
 #include "gpu/GLES2/gl2extchromium.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "media/base/video_frame.h"
@@ -192,7 +192,7 @@ VideoFrameExternalResources::~VideoFrameExternalResources() {}
 
 VideoResourceUpdater::VideoResourceUpdater(
     viz::ContextProvider* context_provider,
-    ResourceProvider* resource_provider,
+    viz::ResourceProvider* resource_provider,
     bool use_stream_video_draw_quad)
     : context_provider_(context_provider),
       resource_provider_(resource_provider),
@@ -261,11 +261,11 @@ VideoResourceUpdater::AllocateResource(const gfx::Size& plane_size,
                                        bool has_mailbox,
                                        bool immutable_hint) {
   // TODO(danakj): Abstract out hw/sw resource create/delete from
-  // ResourceProvider and stop using ResourceProvider in this class.
+  // viz::ResourceProvider and stop using viz::ResourceProvider in this class.
   const viz::ResourceId resource_id = resource_provider_->CreateResource(
       plane_size,
-      immutable_hint ? ResourceProvider::TEXTURE_HINT_IMMUTABLE
-                     : ResourceProvider::TEXTURE_HINT_DEFAULT,
+      immutable_hint ? viz::ResourceProvider::TEXTURE_HINT_IMMUTABLE
+                     : viz::ResourceProvider::TEXTURE_HINT_DEFAULT,
       format, color_space);
   DCHECK_NE(resource_id, 0u);
 
@@ -276,7 +276,8 @@ VideoResourceUpdater::AllocateResource(const gfx::Size& plane_size,
     gpu::gles2::GLES2Interface* gl = context_provider_->ContextGL();
 
     gl->GenMailboxCHROMIUM(mailbox.name);
-    ResourceProvider::ScopedWriteLockGL lock(resource_provider_, resource_id);
+    viz::ResourceProvider::ScopedWriteLockGL lock(resource_provider_,
+                                                  resource_id);
     gl->ProduceTextureDirectCHROMIUM(
         lock.GetTexture(),
         resource_provider_->GetResourceTextureTarget(resource_id),
@@ -414,7 +415,7 @@ VideoFrameExternalResources VideoResourceUpdater::CreateForSoftwarePlanes(
         if (!video_renderer_)
           video_renderer_.reset(new media::SkCanvasVideoRenderer);
 
-        ResourceProvider::ScopedWriteLockSoftware lock(
+        viz::ResourceProvider::ScopedWriteLockSoftware lock(
             resource_provider_, plane_resource.resource_id());
         SkiaPaintCanvas canvas(lock.sk_bitmap());
         // This is software path, so canvas and video_frame are always backed
@@ -614,8 +615,8 @@ void VideoResourceUpdater::CopyPlaneTexture(
                                 no_unique_id, no_plane_index);
   resource->add_ref();
 
-  ResourceProvider::ScopedWriteLockGL lock(resource_provider_,
-                                           resource->resource_id());
+  viz::ResourceProvider::ScopedWriteLockGL lock(resource_provider_,
+                                                resource->resource_id());
   DCHECK_EQ(
       resource_provider_->GetResourceTextureTarget(resource->resource_id()),
       (GLenum)GL_TEXTURE_2D);
