@@ -16,6 +16,24 @@
       "revId": "a8851d4cbd2f53089e6c9c82f02a7b933608d977",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50420854_8cf40d1e",
+        "filename": "build/win/reorder-imports.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-09-05T18:54:00Z",
+      "side": 1,
+      "message": "+1\n\nI see you\u0027ve made this gracefully handle the possibility of there being multiple chrome_elf entries in the import table. I\u0027ve never seen the linker produce such a binary, so that would just be very unexpected. Maybe just blow up if that\u0027s the case?",
+      "parentUuid": "642e9faf_23021077",
+      "revId": "a8851d4cbd2f53089e6c9c82f02a7b933608d977",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
