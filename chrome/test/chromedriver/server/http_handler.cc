@@ -705,6 +705,7 @@ HttpHandler::PrepareStandardResponse(
     case kNoSuchFrame:
     case kStaleElementReference:
     case kElementNotVisible:
+    case kMoveTargetOutOfBounds:
     case kInvalidElementState:
     case kNoSuchWindow:
     case kInvalidCookieDomain:
