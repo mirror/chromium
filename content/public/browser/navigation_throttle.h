@@ -7,6 +7,8 @@
 
 #include "content/common/content_export.h"
 
+#include "base/optional.h"
+
 namespace content {
 class NavigationHandle;
 
@@ -54,9 +56,18 @@ class CONTENT_EXPORT NavigationThrottle {
     BLOCK_RESPONSE,
   };
 
-  struct ThrottleCheckResult {
+  class ThrottleCheckResult {
+   public:
+    ThrottleCheckResult(ThrottleCheckAction action);
+    ThrottleCheckResult(ThrottleCheckAction action,
+                        int net_error,
+                        std::string error_page_html);
+    ThrottleCheckResult(const ThrottleCheckResult& other);
+    ~ThrottleCheckResult();
+
     ThrottleCheckAction action;
-    ThrottleCheckResult(ThrottleCheckAction action) : action(action){};
+    base::Optional<int> net_error;
+    base::Optional<std::string> error_page_html;
   };
 
   NavigationThrottle(NavigationHandle* navigation_handle);
@@ -115,7 +126,7 @@ class CONTENT_EXPORT NavigationThrottle {
   virtual void Resume();
 
   // Cancels a navigation that was previously deferred by this
-  // NavigationThrottle. |result| should be equal to either:
+  // NavigationThrottle. |result|'s action should be equal to either:
   //  - NavigationThrottle::CANCEL,
   //  - NavigationThrottle::CANCEL_AND_IGNORE, or
   //  - NavigationThrottle::BLOCK_REQUEST_AND_COLLAPSE.
