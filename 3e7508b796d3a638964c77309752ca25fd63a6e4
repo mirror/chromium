@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "9dabff70_0b81aeb4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-09-05T20:23:04Z",
+      "side": 1,
+      "message": "nit: maybe a small comment about what labels are used for or why we need to do this ...",
+      "revId": "3e7508b796d3a638964c77309752ca25fd63a6e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "559d1b58_83295bc4",
+        "filename": "components/viz/service/surfaces/surface_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-09-05T20:23:04Z",
+      "side": 1,
+      "message": "nit: comment about whether there are any constraints on label as well as what happens if there are duplicate ids.",
+      "range": {
+        "startLine": 129,
+        "startChar": 0,
+        "endLine": 129,
+        "endChar": 60
+      },
+      "revId": "3e7508b796d3a638964c77309752ca25fd63a6e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "13f20166_655e651d",
         "filename": "services/ui/ws/server_window.cc",
         "patchSetId": 9
@@ -18,6 +58,29 @@
         "startChar": 49,
         "endLine": 56,
         "endChar": 58
+      },
+      "revId": "3e7508b796d3a638964c77309752ca25fd63a6e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cf3249f_656aba92",
+        "filename": "services/viz/privileged/interfaces/compositing/frame_sink_manager.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-09-05T20:23:04Z",
+      "side": 1,
+      "message": "nit: again, describe the purpose of |label|.",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 37
       },
       "revId": "3e7508b796d3a638964c77309752ca25fd63a6e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
