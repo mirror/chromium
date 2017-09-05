@@ -277,13 +277,13 @@ ScriptPromise NavigatorRequestMediaKeySystemAccess::requestMediaKeySystemAccess(
   Deprecation::CountDeprecationFeaturePolicy(*document,
                                              WebFeaturePolicyFeature::kEme);
 
-  if (RuntimeEnabledFeatures::FeaturePolicyExperimentalFeaturesEnabled()) {
+  if (RuntimeEnabledFeatures::FeaturePolicyForEncryptedMediaEnabled()) {
     if (!document->GetFrame() || !document->GetFrame()->IsFeatureEnabled(
                                      WebFeaturePolicyFeature::kEme)) {
       return ScriptPromise::RejectWithDOMException(
           script_state,
           DOMException::Create(
-              kNotSupportedError,
+              kSecurityError,
               "requestMediaKeySystemAccess is disabled by feature policy."));
     }
   }
