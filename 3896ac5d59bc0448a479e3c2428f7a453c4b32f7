@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "57ff5741_307070c0",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2017-09-05T18:30:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53f0280e_1ad08f38",
+      "range": {
+        "startLine": 36,
+        "startChar": 37,
+        "endLine": 36,
+        "endChar": 56
+      },
+      "revId": "3896ac5d59bc0448a479e3c2428f7a453c4b32f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13c4ae94_2f11b4a1",
         "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "3896ac5d59bc0448a479e3c2428f7a453c4b32f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ef2dc19_8ac063a8",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2017-09-05T18:30:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13c4ae94_2f11b4a1",
+      "revId": "3896ac5d59bc0448a479e3c2428f7a453c4b32f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "6042c171_e21d9a25",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2017-09-05T18:30:40Z",
+      "side": 1,
+      "message": "Removed. Indeed, the request_body is never empty, so there is no purpose to this check.",
+      "parentUuid": "373f21f2_5611ad74",
+      "revId": "3896ac5d59bc0448a479e3c2428f7a453c4b32f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4591b43_4c9d555a",
         "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
         "patchSetId": 3
@@ -73,6 +133,24 @@
       "revId": "3896ac5d59bc0448a479e3c2428f7a453c4b32f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcb9d0d7_6e635299",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2017-09-05T18:30:40Z",
+      "side": 1,
+      "message": "Forgot to add it. Thanks! Done.",
+      "parentUuid": "e4591b43_4c9d555a",
+      "revId": "3896ac5d59bc0448a479e3c2428f7a453c4b32f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
