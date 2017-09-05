@@ -16,6 +16,103 @@
       "revId": "f21752d05fc006504419340086ca1901a0c363e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc0bb35e_d1059a18",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/controllers/single_test_runner.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-09-05T17:39:25Z",
+      "side": 1,
+      "message": "I like this better :-)",
+      "range": {
+        "startLine": 317,
+        "startChar": 0,
+        "endLine": 353,
+        "endChar": 69
+      },
+      "revId": "f21752d05fc006504419340086ca1901a0c363e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "17d7fc68_3711b893",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/models/test_failures.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-09-05T17:39:25Z",
+      "side": 1,
+      "message": "Nit: If you think there\u0027s a better name for this, it could perhaps be renamed. What do you think about \"text_mismatch_category\"? If you want to keep this name, that\u0027s also OK.",
+      "revId": "f21752d05fc006504419340086ca1901a0c363e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee250969_120229fb",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/models/test_failures.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-09-05T17:39:25Z",
+      "side": 1,
+      "message": "Nit: You could rephrase this to also say \"spaces and tabs\" instead of \"white spaces\". Same below.",
+      "revId": "f21752d05fc006504419340086ca1901a0c363e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e9cfdf7_b1dc672f",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/models/test_run_results.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-09-05T17:39:25Z",
+      "side": 1,
+      "message": "Do you think it would be more or less readable if a little tiny function was extracted from here? e.g.\n\n    if test_failures.has_failure_type(test_failures.FailureTextMismatch, result.failures):\n        test_dict[\u0027text_mismatch\u0027] \u003d _text_mismatch_type(result.failures)\n\n...\n\ndef _text_mismatch_type(failures):\n    for failure in failures:\n        if isinstance(failure, test_failures.FailureTextMismatch):\n            return failure.text_mismatch_special_class()\n    return None\n\nThis method (summarize_results) is really long, so extracting something to outside the function separates the logic from where it\u0027s used, but on the other hand extracting functions sometimes helps readability...",
+      "range": {
+        "startLine": 260,
+        "startChar": 0,
+        "endLine": 264,
+        "endChar": 25
+      },
+      "revId": "f21752d05fc006504419340086ca1901a0c363e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "895a4872_090c8905",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/run_webkit_tests_unittest.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 810,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-09-05T17:39:25Z",
+      "side": 1,
+      "message": "Nit: It\u0027s probably not necessary to use unicode strings (u\u0027...\u0027) I think.",
+      "revId": "f21752d05fc006504419340086ca1901a0c363e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
