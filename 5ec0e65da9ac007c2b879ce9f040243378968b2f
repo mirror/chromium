@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73d51491_e97b700d",
+        "filename": "chrome/browser/chrome_content_gpu_manifest_overlay.json",
+        "patchSetId": 36
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-05T16:03:29Z",
+      "side": 1,
+      "message": "nit: Deprecated",
+      "range": {
+        "startLine": 8,
+        "startChar": 40,
+        "endLine": 8,
+        "endChar": 50
+      },
+      "revId": "5ec0e65da9ac007c2b879ce9f040243378968b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6bef3c9_8f500323",
+        "filename": "chrome/browser/chromeos/arc/video/gpu_arc_video_service_host.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-05T16:03:29Z",
+      "side": 1,
+      "message": "(caveat: haven\u0027t looked at the other change yet).\n\nIf the other CL is going to be touching this file, could we have this change (and the declaration of the VLOGF macro) be in the other CL?",
+      "range": {
+        "startLine": 129,
+        "startChar": 4,
+        "endLine": 129,
+        "endChar": 12
+      },
+      "revId": "5ec0e65da9ac007c2b879ce9f040243378968b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
