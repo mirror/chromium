@@ -35,6 +35,8 @@ class TestRenderFrameHostFactory : public RenderFrameHostFactory {
       FrameTree* frame_tree,
       FrameTreeNode* frame_tree_node,
       int32_t routing_id,
+      service_manager::mojom::InterfaceProviderRequest
+          initial_interfaces_request,
       int32_t widget_routing_id,
       bool hidden,
       bool renderer_initiated_creation) override;
