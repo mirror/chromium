@@ -529,11 +529,21 @@ PositionTemplate<Strategy>::LastPositionInOrAfterNode(Node* node) {
                                       : LastPositionInNode(*node);
 }
 
+// TODO(editing-dev): We should adapt recursive Shadow roots.
 PositionInFlatTree ToPositionInFlatTree(const Position& pos) {
   if (pos.IsNull())
     return PositionInFlatTree();
 
+  // Confirm |anchor| is slottled to Document.
   Node* const anchor = pos.AnchorNode();
+  if (!anchor->isConnected())
+    return PositionInFlatTree();
+  anchor->UpdateDistribution();
+  Node* node = anchor->IsShadowRoot() ? anchor->OwnerShadowHost() : anchor;
+  if (node != &anchor->GetDocument() &&
+      !FlatTreeTraversal::IsDescendantOf(*node, anchor->GetDocument()))
+    return PositionInFlatTree();
+
   if (pos.IsOffsetInAnchor()) {
     if (anchor->IsCharacterDataNode())
       return PositionInFlatTree(anchor, pos.ComputeOffsetInContainerNode());
