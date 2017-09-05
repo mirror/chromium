@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9e028e39_94075a2b",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 12
+      },
+      "lineNbr": 2361,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-09-05T22:34:16Z",
+      "side": 1,
+      "message": "This is strange. I think this patch was just reverted due to this line.",
+      "parentUuid": "d71a705d_25e47383",
+      "revId": "b8da721de381b1d3d14a33bfdf5c831692403b6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "88ef77d9_85ffe10f",
         "filename": "third_party/WebKit/Source/platform/graphics/GraphicsLayer.cpp",
         "patchSetId": 12
