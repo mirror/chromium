@@ -16,6 +16,24 @@
       "revId": "a7c68357629d656a004050f02e565585159ad042",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5edf98b4_eb64dc39",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-09-05T22:02:49Z",
+      "side": 1,
+      "message": "Updated. I\u0027ll put up another CL for the other change.",
+      "parentUuid": "2409cc3a_a2a4f9d7",
+      "revId": "a7c68357629d656a004050f02e565585159ad042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
