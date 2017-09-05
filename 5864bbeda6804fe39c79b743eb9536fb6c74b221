@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1ca69533_018ada0e",
+        "filename": "components/autofill/core/browser/autofill_experiments.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-09-05T21:14:13Z",
+      "side": 1,
+      "message": "I\u0027m honestly not familiar with this area.  I was told the domain check was to prevent use by Dasher accounts (original comment here: https://codereview.chromium.org/1412073004/diff/250001/components/autofill/core/browser/autofill_experiments.cc#newcode72).  However, 1) we do those checks server-side, and 2) Downstream doesn\u0027t have an equivalent check so there\u0027s no feature parity.  I\u0027m not changing anything else related to how Dasher admins act with the feature.\n\nMy assumption is this already maps to that pref, but it\u0027s only an assumption.",
+      "parentUuid": "faf38103_e3cb7d8b",
+      "revId": "5864bbeda6804fe39c79b743eb9536fb6c74b221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8c7b40f_0a4b2935",
         "filename": "components/autofill/core/browser/autofill_experiments.cc",
         "patchSetId": 5
@@ -39,6 +57,30 @@
       "revId": "5864bbeda6804fe39c79b743eb9536fb6c74b221",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09c62639_d88005e2",
+        "filename": "components/autofill/core/browser/autofill_experiments.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-09-05T21:14:13Z",
+      "side": 1,
+      "message": "Added chromium.org and updated unit tests.  Thanks!  (...I\u0027m surprised we never ran into this before now, actually.)",
+      "parentUuid": "f8c7b40f_0a4b2935",
+      "range": {
+        "startLine": 247,
+        "startChar": 8,
+        "endLine": 247,
+        "endChar": 14
+      },
+      "revId": "5864bbeda6804fe39c79b743eb9536fb6c74b221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
