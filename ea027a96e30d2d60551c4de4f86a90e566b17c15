@@ -48,6 +48,53 @@
     },
     {
       "key": {
+        "uuid": "14e2d82d_cdd34be0",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-09-05T09:42:24Z",
+      "side": 1,
+      "message": "I thought about this, but I\u0027m not sure the motivation holds. They should be quite small  and we don\u0027t hold more than 200 archived suggestions anyways. WDYT?\nShould I clarify the comment?",
+      "parentUuid": "5c51d4d7_fc097df7",
+      "range": {
+        "startLine": 317,
+        "startChar": 31,
+        "endLine": 317,
+        "endChar": 0
+      },
+      "revId": "ea027a96e30d2d60551c4de4f86a90e566b17c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "206a7da2_4d8b868e",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-09-05T09:42:24Z",
+      "side": 1,
+      "message": "I also updated this branch. I\u0027m not sure this actually still happens, but let\u0027s be on the safe side.",
+      "range": {
+        "startLine": 520,
+        "startChar": 4,
+        "endLine": 520,
+        "endChar": 28
+      },
+      "revId": "ea027a96e30d2d60551c4de4f86a90e566b17c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e986ade_19023f1b",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 2
@@ -59,6 +106,30 @@
       "writtenOn": "2017-09-05T09:24:54Z",
       "side": 1,
       "message": "Is this really an either/or? Shouldn\u0027t we update both?",
+      "range": {
+        "startLine": 630,
+        "startChar": 26,
+        "endLine": 630,
+        "endChar": 0
+      },
+      "revId": "ea027a96e30d2d60551c4de4f86a90e566b17c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35c41074_3eea9fec",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-09-05T09:42:24Z",
+      "side": 1,
+      "message": "no idea what I was thinking. Fixed. (thanks!)",
+      "parentUuid": "2e986ade_19023f1b",
       "range": {
         "startLine": 630,
         "startChar": 26,
@@ -137,6 +208,30 @@
       "revId": "ea027a96e30d2d60551c4de4f86a90e566b17c15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "869323bb_5a5ead30",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2438,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-09-05T09:42:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ceb1dba7_300d75d5",
+      "range": {
+        "startLine": 2438,
+        "startChar": 55,
+        "endLine": 2438,
+        "endChar": 0
+      },
+      "revId": "ea027a96e30d2d60551c4de4f86a90e566b17c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
