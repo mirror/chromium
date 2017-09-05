@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2eec6cf3_9abf350f",
+        "filename": "net/url_request/url_request_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 10389,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-05T21:25:46Z",
+      "side": 1,
+      "message": "Will we have OCSP, AIA and CRL set implemented in CertVerifyProcBuiltin in the future? If yes, do you want me to file a bug to get these tests enabled once these features are implemented?",
+      "range": {
+        "startLine": 10389,
+        "startChar": 11,
+        "endLine": 10389,
+        "endChar": 32
+      },
+      "revId": "dd6c3f45424115e18c7f7cdfd7a096b25bcfa500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
