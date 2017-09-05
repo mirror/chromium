@@ -920,6 +920,7 @@ component("ash") {
     "//ui/gfx/geometry",
     "//ui/keyboard",
     "//ui/message_center",
+    "//ui/message_center/public/cpp:message_center_public_cpp",
     "//ui/native_theme",
     "//ui/ozone",
     "//ui/platform_window",

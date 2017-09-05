@@ -4,6 +4,24 @@
 
 #include "ui/message_center/message_center_switches.h"
 
+#include "base/command_line.h"
+
+namespace message_center {
+
+bool IsNewStyleNotificationEnabled() {
+// For Chrome OS, the default is Enabled.
+// For other platforms, the default is Disabled.
+#if defined(OS_CHROMEOS)
+  // Returns true if not explicitly disabled.
+  return !base::CommandLine::ForCurrentProcess()->HasSwitch(
+      switches::kDisableMessageCenterNewStyleNotification);
+#else
+  // Returns true if explicitly enabled.
+  return base::CommandLine::ForCurrentProcess()->HasSwitch(
+      switches::kEnableMessageCenterNewStyleNotification);
+#endif
+}
+
 namespace switches {
 
 // Enables message center to always move other notifications upwards when a
@@ -25,3 +43,5 @@ const char kDisableMessageCenterNewStyleNotification[] =
     "disabled-new-style-notification";
 
 }  // namespace switches
+
+}  // namespace message_center

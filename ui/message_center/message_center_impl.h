@@ -24,7 +24,6 @@
 #include "ui/message_center/popup_timers_controller.h"
 
 namespace message_center {
-class MessageCenterImpl;
 
 namespace internal {
 class ChangeQueue;

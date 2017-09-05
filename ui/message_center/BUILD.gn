@@ -28,6 +28,7 @@ component("message_center") {
   deps = [
     "//base",
     "//ui/base",
+    "//ui/message_center/public/cpp:message_center_public_cpp",
     "//ui/strings",
     "//url",
   ]

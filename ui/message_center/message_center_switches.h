@@ -8,6 +8,12 @@
 #include "base/compiler_specific.h"
 #include "ui/message_center/message_center_export.h"
 
+namespace message_center {
+
+// Returns if new style notification is enabled, i.e. NotificationViewMD is
+// used instead of NotificationView.
+bool MESSAGE_CENTER_EXPORT IsNewStyleNotificationEnabled();
+
 namespace switches {
 
 MESSAGE_CENTER_EXPORT extern const char
@@ -24,5 +30,7 @@ MESSAGE_CENTER_EXPORT extern const char
     kDisableMessageCenterNewStyleNotification[];
 
 }  // namespace switches
+
+}  // namespace message_center
 
 #endif  // UI_MESSAGE_CENTER_MESSAGE_CENTER_SWITCHES_H_
