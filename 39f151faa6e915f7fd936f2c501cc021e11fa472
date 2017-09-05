@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e57dc78e_069b6dbc",
+        "filename": "media/capture/content/capture_resolution_chooser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-09-05T21:52:43Z",
+      "side": 1,
+      "message": "We don\u0027t need to worry about it. Interesting idea, though. So far, all use cases for screen capture have fallen into one of these buckets:\n\n1. Fixed size: min \u003d\u003d max.\n2. Fixed aspect ratio: min is same aspect ratio as max, just smaller in width and height (e.g., min\u003d320x180, max\u003d1920x1080). \n3. Any size: min is usually just 1x1 or 2x2, and max being any reasonable larger width and height (like 1920x1080).\n\nIf we had to take landscape versus portrait into account, all this logic gets a bit more complex. And, we\u0027d have to figure out what, semantically, we should do with a min of 800x1000 and a max of 2000x1600. It gets really weird when you consider letterboxing content during capture...",
+      "parentUuid": "da291438_a5fc0ce3",
+      "revId": "39f151faa6e915f7fd936f2c501cc021e11fa472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "14d35e24_e26c1495",
         "filename": "media/capture/content/capture_resolution_chooser.h",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2017-09-01T20:59:50Z",
       "side": 1,
       "message": "Any reason in particular to swap these, just wondering?",
+      "range": {
+        "startLine": 78,
+        "startChar": 12,
+        "endLine": 78,
+        "endChar": 27
+      },
+      "revId": "39f151faa6e915f7fd936f2c501cc021e11fa472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6ce8dc3_b21fbad4",
+        "filename": "media/capture/content/capture_resolution_chooser.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-09-05T21:52:43Z",
+      "side": 1,
+      "message": "Just trying to be consistent everywhere (min_size, then max_size).",
+      "parentUuid": "14d35e24_e26c1495",
       "range": {
         "startLine": 78,
         "startChar": 12,
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "df371d49_39895dba",
+        "filename": "media/capture/content/video_capture_oracle.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-09-05T21:52:43Z",
+      "side": 1,
+      "message": "This should be fine as long as it\u0027s \u003e0. Callers are supposed to sanity-check this upstream (where the extension API calls are handled). I\u0027ll add a DCHECK() here for safety.",
+      "parentUuid": "17672b09_b5b3cf9e",
+      "revId": "39f151faa6e915f7fd936f2c501cc021e11fa472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "709c6fb6_ba1037ba",
         "filename": "media/capture/content/video_capture_oracle.h",
         "patchSetId": 2
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "00d958b7_1e651953",
+        "filename": "media/capture/content/video_capture_oracle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-09-05T21:52:43Z",
+      "side": 1,
+      "message": "Generally, IMHO, it\u0027s good practice to provide the math that went into arriving at a constant value: It\u0027s self-documenting (for future readers) and doesn\u0027t incur any runtime cost. For example, if the above were:\n\n  static constexpr base::TimeDelta kDefaultMinCapturePeriod \u003d\n      base::TimeDelta::FromMicroseconds(200000);\n\nYou might wonder what is so special about 200k microseconds. Or, you might suspect an error if this should be 2M microseconds or 20k microseconds. FWIW, I really should have written this code as:\n\n  static constexpr base::TimeDelta kDefaultMinCapturePeriod \u003d\n      base::TimeDelta::FromMicroseconds(base::Time::kMicrosecondsPerSecond / 5);\n\n...or, even better:\n\n  static constexpr base::TimeDelta kDefaultMinCapturePeriod \u003d\n      base::TimeDelta::FromSeconds(1) / 5;\n\n...but the base/time/* code isn\u0027t yet fully upgraded to use all the new C++11 \"constexpr\" goodness. I 100% blame the base/time/OWNERS for not having done that yet. ;-) http://crbug.com/761570",
+      "parentUuid": "709c6fb6_ba1037ba",
+      "revId": "39f151faa6e915f7fd936f2c501cc021e11fa472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e1bc1585_1628a5cc",
         "filename": "media/capture/video_capture_types.cc",
         "patchSetId": 2
@@ -87,6 +165,24 @@
       "writtenOn": "2017-09-01T20:59:50Z",
       "side": 1,
       "message": "Wasn\u0027t this defined somewhere else?  Do we repeat it here to avoid a dependency?",
+      "revId": "39f151faa6e915f7fd936f2c501cc021e11fa472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37df098c_c4523d3b",
+        "filename": "media/capture/video_capture_types.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-09-05T21:52:43Z",
+      "side": 1,
+      "message": "Thought about this a bit, and I ended up deleting it: Rather than make a decision as to a default parameter used by all of the Video Capture stack, I\u0027d rather client code have explicitly set VideoCaptureFormat::frame_size ahead of time to what the value really should be.\n\nI also adjusted the code such that, if the frame_size is unset (i.e., empty), the suggested constraints will just be empty sizes.",
+      "parentUuid": "e1bc1585_1628a5cc",
       "revId": "39f151faa6e915f7fd936f2c501cc021e11fa472",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
