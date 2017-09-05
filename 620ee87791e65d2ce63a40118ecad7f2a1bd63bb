@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a785c13e_76730513",
+        "filename": "ios/chrome/browser/ui/ntp/incognito_view_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-09-05T16:40:30Z",
+      "side": 1,
+      "message": "webToolbarDelegate?",
+      "revId": "620ee87791e65d2ce63a40118ecad7f2a1bd63bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95cb9c19_2662d308",
+        "filename": "ios/chrome/browser/ui/ntp/new_tab_page_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-09-05T16:40:30Z",
+      "side": 1,
+      "message": "Why is _openTabs part of this CL?",
+      "revId": "620ee87791e65d2ce63a40118ecad7f2a1bd63bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
