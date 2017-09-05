@@ -83,7 +83,7 @@ class MimeHandlerViewContainer : public guest_view::GuestViewContainer,
                        int guest_proxy_routing_id);
   void OnMimeHandlerViewGuestOnLoadCompleted(int element_instance_id);
 
-  void CreateMimeHandlerViewGuest();
+  void CreateMimeHandlerViewGuestIfNecessary();
 
   // The MIME type of the plugin.
   const std::string mime_type_;
@@ -111,6 +111,9 @@ class MimeHandlerViewContainer : public guest_view::GuestViewContainer,
   // queued while the guest is loading and once it is fully loaded they are
   // delivered so that messages aren't lost.
   std::vector<v8::Global<v8::Value>> pending_messages_;
+
+  // True if a guest process has been requested.
+  bool guest_created_ = false;
 
   // True if the guest page has fully loaded and its JavaScript onload function
   // has been called.
