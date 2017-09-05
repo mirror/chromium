@@ -248,6 +248,24 @@
     },
     {
       "key": {
+        "uuid": "35c24fbc_e50d6c09",
+        "filename": "third_party/WebKit/Source/build/scripts/templates/ComputedStyleBase.h.tmpl",
+        "patchSetId": 3
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-05T06:37:10Z",
+      "side": 1,
+      "message": "right, you\u0027ll basically need to check: if there\u0027s a generated getter, don\u0027t generate internal and vice versa.",
+      "parentUuid": "ca34fc65_4487be52",
+      "revId": "adf245b7e2d635d670b7b8f5dbfb0db4a8225204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "82a9a56a_d2a2f478",
         "filename": "third_party/WebKit/Source/build/scripts/templates/fields/base.tmpl",
         "patchSetId": 3
@@ -277,6 +295,24 @@
       "side": 1,
       "message": "I dont remember I had an array idea :v, but whats wrong with this one.",
       "parentUuid": "82a9a56a_d2a2f478",
+      "revId": "adf245b7e2d635d670b7b8f5dbfb0db4a8225204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1155d013_eb0e6769",
+        "filename": "third_party/WebKit/Source/build/scripts/templates/fields/base.tmpl",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-05T06:37:10Z",
+      "side": 1,
+      "message": "Lol alright then. I thought you had an idea of something like\n\n    {% for each method in field.generated_methods %}\n    ....\n    {% endfor %}\n\ninstead of\n\n    {% if getter is generated %}\n    {% endif %}\n    {% if setter is generated %}\n    {% endif %}\n\nwhich should make things shorter. But if I\u0027m mistaken, the code you have is fine as well.",
+      "parentUuid": "3fd1898d_c1b0e0b0",
       "revId": "adf245b7e2d635d670b7b8f5dbfb0db4a8225204",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f267f1d1_11cd071e",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-05T06:37:10Z",
+      "side": 1,
+      "message": "These used to be bit fields, so they shouldn\u0027t have an alignment.",
+      "revId": "2fe668bb2a5268acf408d2cbb0438d32dbaacc09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a694ab4d_c1c94a8c",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 7
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-05T06:37:10Z",
+      "side": 1,
+      "message": "maybe something like:\n\ncustom_functions: Any function specified in the list is not automatically generated in ComputedStyle. Use this when a generated function is not correct.",
+      "revId": "2fe668bb2a5268acf408d2cbb0438d32dbaacc09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
