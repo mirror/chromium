@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19489ca6_c2df504b",
+        "filename": "components/prefs/pref_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-05T09:19:57Z",
+      "side": 1,
+      "message": "Can you implement this method in terms of the one below now, and then remove the no-argument version of PersistentPrefStore::CommitPendingWrite()?",
+      "range": {
+        "startLine": 108,
+        "startChar": 2,
+        "endLine": 108,
+        "endChar": 40
+      },
+      "revId": "2b5c552bea652bd5290e21c79c330ab953e38b86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
