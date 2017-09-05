@@ -27,19 +27,31 @@ class FileProxyWrapper {
     kInitialized = 1,
 
     // CreateFile() has been called. The file may or may not exist yet, but
-    // this means that WriteChunk() can now be called.
+    // this means that WriteChunk() can now be called. This state is only used
+    // when writing to a file.
     kFileCreated = 2,
 
     // Close() has been called. WriteChunk() can no longer be called, but not
     // all chunks may have been written to disk yet. After chunks are written,
-    // the file will be moved to its target location.
+    // the file will be moved to its target location. This state is only used
+    // when writing to a file.
     kClosing = 3,
 
+    // OpenFile() has been called. ReadChunk() can now be called. This state is
+    // only used when reading from a file.
+    kFileOpened = 4,
+
+    // ReadChunk() has been called and FileProxyWrapper is waiting on a read
+    // operation. ReadChunk() cannot be called again until the read callback is
+    // run and the state changes back to kFileOpened. This state is only used
+    // when reading from a file.
+    kReading = 5,
+
     // Close() has been called and succeeded.
-    kClosed = 4,
+    kClosed = 6,
 
     // Cancel() has been called or an error occured.
-    kFailed = 5,
+    kFailed = 7,
   };
 
   // If an error occured while writing the file, State will be kFailed and the
@@ -49,6 +61,13 @@ class FileProxyWrapper {
   typedef base::OnceCallback<
       void(State, base::Optional<protocol::FileTransferResponse_ErrorCode>)>
       StatusCallback;
+
+  // Callback used when opening a file for reading. The int64_t parameter is the
+  // size of the file.
+  typedef base::OnceCallback<void(int64_t)> OpenFileCallback;
+
+  typedef base::OnceCallback<void(std::unique_ptr<std::vector<char>>)>
+      ReadCallback;
 
   // Creates a platform-specific FileProxyWrapper.
   static std::unique_ptr<FileProxyWrapper> Create();
@@ -61,9 +80,18 @@ class FileProxyWrapper {
   // successfully. |status_callback| must not immediately destroy this
   // FileProxyWrapper.
   virtual void Init(StatusCallback status_callback) = 0;
+  // Creates a new file and opens it for writing.
   virtual void CreateFile(const base::FilePath& directory,
                           const std::string& filename) = 0;
+  // Opens an existing file for reading.
+  virtual void OpenFile(const base::FilePath& filepath,
+                        OpenFileCallback open_callback) = 0;
   virtual void WriteChunk(std::unique_ptr<CompoundBuffer> buffer) = 0;
+  // |size| must not be greater than the remaining amount of bytes in the file
+  // from the current read offset. After calling ReadChunk(), ReadChunk() cannot
+  // be called again until |read_callback| is called and state() returns
+  // kFileOpened.
+  virtual void ReadChunk(uint64_t size, ReadCallback read_callback) = 0;
   virtual void Close() = 0;
   virtual void Cancel() = 0;
   virtual State state() = 0;
