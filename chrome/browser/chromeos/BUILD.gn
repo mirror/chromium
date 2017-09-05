@@ -387,6 +387,8 @@ source_set("chromeos") {
     "arc/intent_helper/open_with_menu.h",
     "arc/kiosk/arc_kiosk_bridge.cc",
     "arc/kiosk/arc_kiosk_bridge.h",
+    "arc/lock_screen/arc_lock_screen_bridge.cc",
+    "arc/lock_screen/arc_lock_screen_bridge.h",
     "arc/notification/arc_boot_error_notification.cc",
     "arc/notification/arc_boot_error_notification.h",
     "arc/notification/arc_provision_notification_service.cc",

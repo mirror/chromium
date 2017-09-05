@@ -145,6 +145,7 @@ mojom("arc_bindings") {
     "common/ime.mojom",
     "common/intent_helper.mojom",
     "common/kiosk.mojom",
+    "common/lock_screen.mojom",
     "common/metrics.mojom",
     "common/net.mojom",
     "common/notifications.mojom",
