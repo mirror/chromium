@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ee16208_7d898a6b",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1930,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-05T13:43:50Z",
+      "side": 1,
+      "message": "headers_transaction won\u0027t be reading body, as Read() will remove the transaction from the ActiveEntry.\n\nI\u0027d suggest removing the comment added for this CL.",
+      "range": {
+        "startLine": 1929,
+        "startChar": 28,
+        "endLine": 1930,
+        "endChar": 13
+      },
+      "revId": "bbd6a370cacc3d9ee2cf54da07a0fca56880720d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
