@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e076c35_9bfa94f3",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1513,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-05T16:41:34Z",
+      "side": 1,
+      "message": "some such?",
+      "range": {
+        "startLine": 1513,
+        "startChar": 58,
+        "endLine": 1513,
+        "endChar": 66
+      },
+      "revId": "7d27ed9dd5b19ee6a6e4e03b35d01d65ea8a6256",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d06255ea_ee74ce8c",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1518,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-05T16:41:34Z",
+      "side": 1,
+      "message": "remove \u0027here\u0027 (sorry for the nits)",
+      "range": {
+        "startLine": 1518,
+        "startChar": 5,
+        "endLine": 1518,
+        "endChar": 10
+      },
+      "revId": "7d27ed9dd5b19ee6a6e4e03b35d01d65ea8a6256",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84330faa_ce1cc573",
+        "filename": "chrome/browser/chrome_process_singleton.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-05T16:41:34Z",
+      "side": 1,
+      "message": "is -\u003e if ?",
+      "range": {
+        "startLine": 18,
+        "startChar": 71,
+        "endLine": 18,
+        "endChar": 73
+      },
+      "revId": "7d27ed9dd5b19ee6a6e4e03b35d01d65ea8a6256",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
