@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15179fe0_84621ec2",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1189052
+      },
+      "writtenOn": "2017-09-05T21:01:05Z",
+      "side": 1,
+      "message": "Can you comment on the differences between these two states? Maybe give some examples of when a client could expect one and not the other. Is SERVICE_UNREACHABLE just a catch-all for errors when you can\u0027t say definitively that the SERVICE_NOT_RUNNING would apply?",
+      "range": {
+        "startLine": 45,
+        "startChar": 4,
+        "endLine": 45,
+        "endChar": 23
+      },
+      "revId": "061099114b7c6cc23c34e386daffd392df7fb07d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
