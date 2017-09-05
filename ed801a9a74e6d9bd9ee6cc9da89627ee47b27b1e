@@ -308,6 +308,30 @@
     },
     {
       "key": {
+        "uuid": "fa4e6129_92dfbfd3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-05T18:44:17Z",
+      "side": 1,
+      "message": "I like that the XML defined preferences make it was easy to add a new preference and that our implementation matches the Android documentation for how to create settings screens (https://developer.android.com/guide/topics/ui/settings.html). Unless we have a really compelling reason, I\u0027d like to go with the standard approach so that we don\u0027t have to author our documentation explaining how our preferences work.\n\nIs your concern is that there isn\u0027t Android documentation explicitly stating what happens to ordering when preferences are programatically added/removed? If so, would using the android:order attribute in the XML help alleviate that concern?\n\nWe could also set android:orderingFromXml\u003d\"false\" up to make it very explicit. The Android documentation is clear that android:order will be used when orderingFromXml is false. https://developer.android.com/reference/android/preference/PreferenceGroup.html#attr_android:orderingFromXml",
+      "parentUuid": "7d4a315a_37466605",
+      "range": {
+        "startLine": 185,
+        "startChar": 0,
+        "endLine": 185,
+        "endChar": 88
+      },
+      "revId": "ed801a9a74e6d9bd9ee6cc9da89627ee47b27b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "20b87a2a_44458488",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
         "patchSetId": 4

@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f19ab92_483d210e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-05T18:44:17Z",
+      "side": 1,
+      "message": "nit: put this on the line above and add a blank line after the early return",
+      "range": {
+        "startLine": 184,
+        "startChar": 12,
+        "endLine": 184,
+        "endChar": 39
+      },
+      "revId": "a12cafcf6fea5c95bb8512334819907f5d257f64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d63d4767_89d73a67",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-05T18:44:17Z",
+      "side": 1,
+      "message": "nit: same comment here about single line and blank line",
+      "range": {
+        "startLine": 246,
+        "startChar": 11,
+        "endLine": 246,
+        "endChar": 30
+      },
+      "revId": "a12cafcf6fea5c95bb8512334819907f5d257f64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
