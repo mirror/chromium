@@ -303,7 +303,7 @@ bool CSSProperty::IsAffectedByAllProperty(CSSPropertyID property_id) {
   if (property_id == CSSPropertyAll)
     return false;
 
-  if (!CSSPropertyMetadata::IsEnabledProperty(property_id))
+  if (!CSSPropertyAPI::Get(property_id).IsEnabled())
     return false;
 
   if (property_id == CSSPropertyVariable)

@@ -227,7 +227,7 @@ String StylePropertySerializer::AsText() const {
         property_set_.PropertyAt(n);
     CSSPropertyID property_id = property.Id();
     // Only enabled properties should be part of the style.
-    DCHECK(CSSPropertyMetadata::IsEnabledProperty(property_id));
+    DCHECK(CSSPropertyAPI::Get(property_id).IsEnabled());
     // All shorthand properties should have been expanded at parse time.
     DCHECK(property_set_.IsDescriptorContext() ||
            (CSSPropertyAPI::Get(property_id).IsProperty() &&
