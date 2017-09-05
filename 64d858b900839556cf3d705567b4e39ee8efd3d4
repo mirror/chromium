@@ -16,6 +16,24 @@
       "revId": "64d858b900839556cf3d705567b4e39ee8efd3d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b007be9_1a82a232",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-09-05T16:50:22Z",
+      "side": 1,
+      "message": "I didn\u0027t check the scroll velocity at all, this CL was a quick proof-of-concept before I went out on vacation.  Unless we have a way to inject a device specific factor here, we can either go for a stop-gap solution like this now only to fix the P1 bug, or can keep firing these events as touch to preserve the old behavior (see http://chromium-review.googlesource.com/c/chromium/src/619175).  Which one would you prefer?\n\nIn the meantime, I will check if the scroll velocity here seems acceptable.",
+      "parentUuid": "f9aff9a7_9cae525e",
+      "revId": "64d858b900839556cf3d705567b4e39ee8efd3d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
