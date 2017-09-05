@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c48af767_0492d365",
+        "filename": "components/data_reduction_proxy/core/common/lofi_ui_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1163595
+      },
+      "writtenOn": "2017-09-05T22:32:57Z",
+      "side": 1,
+      "message": "I am also in the process of renaming LoFiUIService and/or LofiDecider to Previews*, in a separate CL.",
+      "range": {
+        "startLine": 22,
+        "startChar": 6,
+        "endLine": 22,
+        "endChar": 19
+      },
+      "revId": "9c05bcdb169ff12b8969088db08fce7ad799e2d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
