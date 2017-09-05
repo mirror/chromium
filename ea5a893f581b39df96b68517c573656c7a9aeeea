@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "aa90fcfd_f58ac2bf",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 1630,
+      "author": {
+        "id": 1144619
+      },
+      "writtenOn": "2017-09-05T23:53:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "629b0d61_883754bb",
+      "revId": "ea5a893f581b39df96b68517c573656c7a9aeeea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69df28e6_e833c0dd",
         "filename": "chrome/test/data/wasm/out-of-bounds.html",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-01T21:57:07Z",
       "side": 1,
       "message": "Nit: add a copyright notice",
+      "revId": "ea5a893f581b39df96b68517c573656c7a9aeeea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2328a20f_0850a5ab",
+        "filename": "chrome/test/data/wasm/out-of-bounds.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1144619
+      },
+      "writtenOn": "2017-09-05T23:53:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69df28e6_e833c0dd",
       "revId": "ea5a893f581b39df96b68517c573656c7a9aeeea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "bc393db8_11811a0d",
+        "filename": "chrome/test/data/wasm/wasm-constants.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1144619
+      },
+      "writtenOn": "2017-09-05T23:53:09Z",
+      "side": 1,
+      "message": "Yes, this is verbatim copied from https://cs.chromium.org/chromium/src/v8/test/mjsunit/wasm/wasm-constants.js, although I changed the copyright header to make the presubmits happy.\n\nwasm-module-builder.js is from https://cs.chromium.org/chromium/src/v8/test/mjsunit/wasm/wasm-module-builder.js, but I added the expression builder code there to make generating test cases more readable.",
+      "parentUuid": "532265b7_2c28e513",
+      "revId": "ea5a893f581b39df96b68517c573656c7a9aeeea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2614812e_6b406432",
         "filename": "chrome/test/v8/wasm-trap-handler.cc",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "ea5a893f581b39df96b68517c573656c7a9aeeea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "72523222_dc0ecabe",
+        "filename": "chrome/test/v8/wasm-trap-handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1144619
+      },
+      "writtenOn": "2017-09-05T23:53:09Z",
+      "side": 1,
+      "message": "Let me investigate some more and see.\n\nThe obvious way is to have V8 count how many Wasm faults were recovered and expose this. We would most likely need to expose this count through V8\u0027s public API, which I\u0027d like to be cautious about doing.\n\nAlternatively, we could wrap V8\u0027s signal handler here [1] to count how many times that returns true. I\u0027m leery of adding extra code just to increment a counter, as it may open the door to more intercepting and potential breaking of the signal handler. That file has other code that runs in a compromised context, so adding a wrapper may not be too bad.\n\nI\u0027m currently digging through how to plumb this value out of the render process into the browser test.\n\nI\u0027ll try to get this working in a dependent CL. If need be, we can fold it back into this one.\n\n[1]: https://cs.chromium.org/chromium/src/components/crash/content/app/breakpad_linux.cc?sq\u003dpackage:chromium\u0026l\u003d2102",
+      "parentUuid": "2614812e_6b406432",
+      "revId": "ea5a893f581b39df96b68517c573656c7a9aeeea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
