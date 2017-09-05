@@ -50,6 +50,24 @@
       "revId": "be9fdbffcad30caaa88f68b19235aa82217845c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8160195b_0fdf10fb",
+        "filename": "third_party/WebKit/LayoutTests/shadow-dom/focus-navigation-slot-fallback-default-tabindex.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1238298
+      },
+      "writtenOn": "2017-09-05T09:09:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78c1ddcf_06eb3124",
+      "revId": "be9fdbffcad30caaa88f68b19235aa82217845c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
