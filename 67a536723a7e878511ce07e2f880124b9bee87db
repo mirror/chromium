@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "6cb4a097_d84c1734",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-05T16:13:25Z",
+      "side": 1,
+      "message": "Also, with regard to duplicate bitmaps in memory... The current sBitmapCache doesn\u0027t protect against duplicates? Is there an easy example of when we would end up with duplicate bitmaps in memory currently?",
+      "parentUuid": "695b1863_03fe95d3",
+      "range": {
+        "startLine": 53,
+        "startChar": 1,
+        "endLine": 53,
+        "endChar": 2
+      },
+      "revId": "67a536723a7e878511ce07e2f880124b9bee87db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7b7bdd53_548799d0",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
         "patchSetId": 2
