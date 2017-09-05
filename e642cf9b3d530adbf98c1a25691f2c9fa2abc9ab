@@ -1,0 +1,268 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ef71136_bbb083c1",
+        "filename": "chrome/browser/guest_view/web_view/chrome_web_view_permission_helper_delegate.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-09-05T07:21:54Z",
+      "side": 1,
+      "message": "This isn\u0027t a message handler.",
+      "range": {
+        "startLine": 69,
+        "startChar": 7,
+        "endLine": 69,
+        "endChar": 27
+      },
+      "revId": "e642cf9b3d530adbf98c1a25691f2c9fa2abc9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3278a1d3_1621d745",
+        "filename": "chrome/browser/plugins/plugin_observer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-09-05T07:21:54Z",
+      "side": 1,
+      "message": "This should set_connection_error_handler() and arrange for |this| to be deleted when it fires. E.g.,\n\nplugin_renderer_interface_.set_connection_error_handler(\n      base::Bind(\u0026PluginObserver::PluginPlaceholderHost::DeleteSelf,\n                 base::Unretained(this)));\n\n\nvoid DeleteSelf() {\n  observer_-\u003eplugin_placeholders_.erase(this);\n}",
+      "range": {
+        "startLine": 136,
+        "startChar": 8,
+        "endLine": 136,
+        "endChar": 34
+      },
+      "revId": "e642cf9b3d530adbf98c1a25691f2c9fa2abc9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce397016_90fde8ab",
+        "filename": "chrome/browser/plugins/plugin_observer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-09-05T07:21:54Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 159,
+        "startChar": 8,
+        "endLine": 159,
+        "endChar": 34
+      },
+      "revId": "e642cf9b3d530adbf98c1a25691f2c9fa2abc9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbdb6fdb_03c2a881",
+        "filename": "chrome/browser/plugins/plugin_observer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-09-05T07:21:54Z",
+      "side": 1,
+      "message": "Remove this entirely.",
+      "revId": "e642cf9b3d530adbf98c1a25691f2c9fa2abc9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08a52c39_7ecdb7e5",
+        "filename": "chrome/browser/plugins/plugin_observer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-09-05T07:21:54Z",
+      "side": 1,
+      "message": "Is this still used?",
+      "revId": "e642cf9b3d530adbf98c1a25691f2c9fa2abc9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6769cfba_c9c4c2d0",
+        "filename": "chrome/browser/plugins/plugin_observer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-09-05T07:21:54Z",
+      "side": 1,
+      "message": "When you remove the placeholder IDs from the messages, you might want a std::map\u003cPluginPlaceholderHost*, std::unique_ptr\u003cPluginPlaceholderHost\u003e\u003e here.",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 10
+      },
+      "revId": "e642cf9b3d530adbf98c1a25691f2c9fa2abc9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11ea5b9a_5feb13b0",
+        "filename": "chrome/common/plugin.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-09-05T07:21:54Z",
+      "side": 1,
+      "message": "Are these placeholder IDs necessary?",
+      "range": {
+        "startLine": 21,
+        "startChar": 30,
+        "endLine": 21,
+        "endChar": 44
+      },
+      "revId": "e642cf9b3d530adbf98c1a25691f2c9fa2abc9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baccd3fb_0dc666f3",
+        "filename": "chrome/common/plugin.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-09-05T07:21:54Z",
+      "side": 1,
+      "message": "Can we call this PluginPlaceholder?",
+      "range": {
+        "startLine": 38,
+        "startChar": 10,
+        "endLine": 38,
+        "endChar": 24
+      },
+      "revId": "e642cf9b3d530adbf98c1a25691f2c9fa2abc9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "528e9d9d_1fc2328c",
+        "filename": "chrome/common/render_messages.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-09-05T07:21:54Z",
+      "side": 1,
+      "message": "Is this sent anywhere? It seems kinda related to the other messages you\u0027re converting.",
+      "range": {
+        "startLine": 241,
+        "startChar": 20,
+        "endLine": 241,
+        "endChar": 65
+      },
+      "revId": "e642cf9b3d530adbf98c1a25691f2c9fa2abc9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e7c6e78_5d8d70d2",
+        "filename": "chrome/renderer/plugins/chrome_plugin_placeholder.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-09-05T07:21:54Z",
+      "side": 1,
+      "message": "Can you remove this?",
+      "range": {
+        "startLine": 49,
+        "startChar": 10,
+        "endLine": 49,
+        "endChar": 25
+      },
+      "revId": "e642cf9b3d530adbf98c1a25691f2c9fa2abc9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44865726_9c829d35",
+        "filename": "chrome/renderer/plugins/chrome_plugin_placeholder.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-09-05T07:21:54Z",
+      "side": 1,
+      "message": "Create the InterfacePtr on demand instead of keeping a field for it.",
+      "range": {
+        "startLine": 51,
+        "startChar": 36,
+        "endLine": 51,
+        "endChar": 51
+      },
+      "revId": "e642cf9b3d530adbf98c1a25691f2c9fa2abc9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cf35703_4452d47f",
+        "filename": "chrome/renderer/plugins/chrome_plugin_placeholder.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-09-05T07:21:54Z",
+      "side": 1,
+      "message": "Given that there\u0027s exactly one client, a Binding seems more appropriate.",
+      "range": {
+        "startLine": 109,
+        "startChar": 8,
+        "endLine": 109,
+        "endChar": 18
+      },
+      "revId": "e642cf9b3d530adbf98c1a25691f2c9fa2abc9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
