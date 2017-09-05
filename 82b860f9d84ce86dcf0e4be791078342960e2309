@@ -163,6 +163,30 @@
       "revId": "82b860f9d84ce86dcf0e4be791078342960e2309",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0137c36_15a8343f",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-09-05T14:54:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24c7e431_2e48d2f4",
+      "range": {
+        "startLine": 96,
+        "startChar": 2,
+        "endLine": 96,
+        "endChar": 6
+      },
+      "revId": "82b860f9d84ce86dcf0e4be791078342960e2309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
