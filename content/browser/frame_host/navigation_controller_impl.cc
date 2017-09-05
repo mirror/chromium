@@ -1192,6 +1192,7 @@ void NavigationControllerImpl::RendererDidNavigateToNewPage(
     update_virtual_url = new_entry->update_virtual_url_with_url();
     new_entry->GetSSL() = handle->ssl_status();
 
+
     if (new_entry->GetURL().SchemeIs(url::kHttpsScheme)) {
       UMA_HISTOGRAM_BOOLEAN(
           "Navigation.SecureSchemeHasSSLStatus.NewPagePendingEntryMatches",
@@ -1378,6 +1379,7 @@ void NavigationControllerImpl::RendererDidNavigateToExistingPage(
             "ExistingPageSameDocumentRendererInitiated",
             has_cert);
       } else {
+        CHECK(has_cert);
         UMA_HISTOGRAM_BOOLEAN(
             "Navigation.SecureSchemeHasSSLStatus."
             "ExistingPageDifferentDocumentRendererInitiated",
