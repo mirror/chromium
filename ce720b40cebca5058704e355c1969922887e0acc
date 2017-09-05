@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "c3e94f5e_3a8a1b63",
+        "filename": "ios/clean/chrome/browser/ui/commands/java_script_dialog_blocking_commands.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-09-05T22:03:51Z",
+      "side": 1,
+      "message": "You\u0027re right; this is only ever handled by the coordinator.  What do you recommend as a solution here then?  UIAlertControllers dismiss themselves when you tap a button, so this is simply used to keep the coordinator hierarchy in sync with the UIViewController hierarchy.  This is the solution we ultimately decided upon for the context menu, but I haven\u0027t heard any update on what the best practice is yet for this.  Should we define internal commands in ios/clean/chrome/browser/ui/dialogs?  Or should we just directly call the coordinator\u0027s |-stop| from within the mediator?",
+      "parentUuid": "16cfc61f_097a3d65",
+      "range": {
+        "startLine": 13,
+        "startChar": 8,
+        "endLine": 13,
+        "endChar": 51
+      },
+      "revId": "ce720b40cebca5058704e355c1969922887e0acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e11fff7_68817416",
         "filename": "ios/clean/chrome/browser/ui/dialogs/java_script_dialogs/dialog_blocking/java_script_dialog_blocking_confirmation_coordinator.mm",
         "patchSetId": 3
@@ -62,6 +86,30 @@
       "revId": "ce720b40cebca5058704e355c1969922887e0acc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa87452e_5187934e",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/java_script_dialogs/dialog_blocking/java_script_dialog_blocking_confirmation_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-09-05T22:03:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e11fff7_68817416",
+      "range": {
+        "startLine": 27,
+        "startChar": 10,
+        "endLine": 27,
+        "endChar": 29
+      },
+      "revId": "ce720b40cebca5058704e355c1969922887e0acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +136,30 @@
     },
     {
       "key": {
+        "uuid": "0658519c_20108d1b",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/java_script_dialogs/dialog_blocking/java_script_dialog_blocking_confirmation_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-09-05T22:03:51Z",
+      "side": 1,
+      "message": "Changed to after.",
+      "parentUuid": "ddd64292_ce5291ef",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 70,
+        "endChar": 60
+      },
+      "revId": "ce720b40cebca5058704e355c1969922887e0acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ca8fa2bd_380f2504",
         "filename": "ios/clean/chrome/browser/ui/tab/tab_coordinator_unittest.mm",
         "patchSetId": 3
@@ -99,6 +171,30 @@
       "writtenOn": "2017-09-05T15:04:38Z",
       "side": 1,
       "message": "Why are these disabled?",
+      "range": {
+        "startLine": 71,
+        "startChar": 27,
+        "endLine": 71,
+        "endChar": 50
+      },
+      "revId": "ce720b40cebca5058704e355c1969922887e0acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "543b857a_1cf93db1",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_coordinator_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-09-05T22:03:51Z",
+      "side": 1,
+      "message": "These were broken on trunk and have been disabled there.  They just snuck into this CL when I was rebasing.",
+      "parentUuid": "ca8fa2bd_380f2504",
       "range": {
         "startLine": 71,
         "startChar": 27,
