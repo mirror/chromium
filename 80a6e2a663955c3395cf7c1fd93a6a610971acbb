@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a8fd7e1_8cc1f2f5",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-05T16:21:06Z",
+      "side": 1,
+      "message": "Make this an arg of AppList::ToggleAppList and record UMA inside the function.",
+      "revId": "80a6e2a663955c3395cf7c1fd93a6a610971acbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fb69a58_b8f9fd63",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1116,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-05T16:21:06Z",
+      "side": 1,
+      "message": "This would lose UMA for kSwipeFromShelf, right?",
+      "revId": "80a6e2a663955c3395cf7c1fd93a6a610971acbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
