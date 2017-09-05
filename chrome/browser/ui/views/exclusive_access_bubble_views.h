@@ -54,6 +54,9 @@ class ExclusiveAccessBubbleViews : public ExclusiveAccessBubble,
 
   views::View* GetView();
 
+  // ExclusiveAccessBubble:
+  void Show() override;
+
  private:
   // Starts or stops polling the mouse location based on |popup_| and
   // |bubble_type_|.
@@ -75,7 +78,6 @@ class ExclusiveAccessBubbleViews : public ExclusiveAccessBubble,
   bool WindowContainsPoint(gfx::Point pos) override;
   bool IsWindowActive() override;
   void Hide() override;
-  void Show() override;
   bool IsAnimating() override;
   bool CanMouseTriggerSlideIn() const override;
 
