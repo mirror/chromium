@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "62e77059_84cc8387",
+        "filename": "third_party/WebKit/PerformanceTests/ImageDecoder/decode-jpeg.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-09-05T17:30:58Z",
+      "side": 1,
+      "message": "\u003e Is it possible to put all calls to runImageDecoderPerfTests into one html file?\nSadly no. Each file in blink_perf/ is one single test case. So we need to do a bit of copy \u0026 paste here.\n\n\u003e \"Measures performance\" is redundant\n\nI think this is fine as to keep as is. Or you can just remove the description string if you think the file name is descriptive enough about what it means to measure.",
+      "parentUuid": "b88a517d_874d9215",
+      "range": {
+        "startLine": 7,
+        "startChar": 6,
+        "endLine": 7,
+        "endChar": 30
+      },
+      "revId": "167d0ca0c80bdd920c3353be983a6acf42bd91e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2040de94_0232aa16",
         "filename": "third_party/WebKit/PerformanceTests/ImageDecoder/decode-webp.html",
         "patchSetId": 4
