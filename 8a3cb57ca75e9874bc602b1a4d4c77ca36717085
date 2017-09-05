@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "cca36cf9_5f7547bb",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXARIAGridRow.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-05T17:42:57Z",
+      "side": 1,
+      "message": "So what exactly happens on different platforms when you have\nnon-row and non-cell content in a table?\n\nIf, for example, VoiceOver ends up completely skipping over\nsome content then this might not be the right design.",
+      "parentUuid": "24154ea9_0637b039",
+      "revId": "8a3cb57ca75e9874bc602b1a4d4c77ca36717085",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5aefaa4b_2ff9bd9e",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXARIAGridRow.h",
         "patchSetId": 4
