@@ -32,6 +32,7 @@
 <translation id="2190355936436201913">(tupu)</translation>
 <translation id="2289052229480071835">Gonga viashirio vya kugusa kwenye skrini yako.</translation>
 <translation id="2297836609126180313"><ph name="QUANTITY" /> TB/s</translation>
+<translation id="24452542372838207">Panua arifa</translation>
 <translation id="2482878487686419369">Arifa</translation>
 <translation id="2497284189126895209">Faili zote</translation>
 <translation id="2522350507219695259">Imemaliza kurekebisha usahihi</translation>
@@ -72,7 +73,6 @@
 <translation id="4968171027979920686">{SECONDS,plural, =1{Sekunde 1}other{Sekunde #}}</translation>
 <translation id="4971687151119236543">Wimbo wa Awali wa Media</translation>
 <translation id="4999762576397546063">Ctrl+<ph name="KEY_COMBO_NAME" /></translation>
-<translation id="5016049845330225051">Futa kitufe cha maandishi kwenye kisanduku cha kutafutia</translation>
 <translation id="5046499563572181734">Gonga hapa</translation>
 <translation id="5076340679995252485">&amp;Bandika</translation>
 <translation id="5120799197269191491">Utafutaji+<ph name="KEY_COMBO_NAME" /></translation>
@@ -162,6 +162,7 @@
 <translation id="9002566407876343676">fungua</translation>
 <translation id="9038489124413477075">Folda isiyo na jina</translation>
 <translation id="9044832324875206639">{SECONDS,plural, =1{Sekunde 1}other{Sekunde #}}</translation>
+<translation id="9059834730836941392">Kunja arifa</translation>
 <translation id="9150735707954472829">Kichupo</translation>
 <translation id="9161053988251441839">PROGRAMU ZINAZOPENDEKEZWA</translation>
 <translation id="9170848237812810038">&amp;Tendua</translation>
