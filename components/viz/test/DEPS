@@ -1,8 +1,10 @@
 include_rules = [
   "+cc",
   "+components/viz",
+  "+gpu/command_buffer/client",
   "+mojo/public/cpp/bindings",
   "+services/viz/privileged/interfaces",
+  "+ui/gl/gl_implementation.h",
 ]
 
 specific_include_rules = {

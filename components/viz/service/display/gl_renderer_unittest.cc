@@ -25,7 +25,6 @@
 #include "cc/test/fake_output_surface.h"
 #include "cc/test/fake_output_surface_client.h"
 #include "cc/test/fake_resource_provider.h"
-#include "cc/test/pixel_test.h"
 #include "cc/test/render_pass_test_utils.h"
 #include "cc/test/test_gles2_interface.h"
 #include "cc/test/test_shared_bitmap_manager.h"
@@ -33,6 +32,7 @@
 #include "components/viz/common/display/renderer_settings.h"
 #include "components/viz/common/quads/copy_output_request.h"
 #include "components/viz/common/quads/copy_output_result.h"
+#include "components/viz/test/pixel_test.h"
 #include "gpu/GLES2/gl2extchromium.h"
 #include "gpu/command_buffer/client/context_support.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -124,15 +124,15 @@ static inline SkBlendMode BlendModeToSkXfermode(BlendMode blend_mode) {
 }
 
 // Explicitly named to be a friend in GLRenderer for shader access.
-class GLRendererShaderPixelTest : public cc::GLRendererPixelTest {
+class GLRendererShaderPixelTest : public GLRendererPixelTest {
  public:
   void SetUp() override {
-    cc::GLRendererPixelTest::SetUp();
+    GLRendererPixelTest::SetUp();
     ASSERT_FALSE(renderer()->IsContextLost());
   }
 
   void TearDown() override {
-    cc::GLRendererPixelTest::TearDown();
+    GLRendererPixelTest::TearDown();
     ASSERT_FALSE(renderer()->IsContextLost());
   }
 

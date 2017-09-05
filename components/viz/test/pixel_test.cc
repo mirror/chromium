@@ -2,7 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "cc/test/pixel_test.h"
+#include "components/viz/test/pixel_test.h"
+
+#include <memory>
 
 #include "base/command_line.h"
 #include "base/memory/ptr_util.h"
@@ -32,42 +34,43 @@
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
-namespace cc {
+namespace viz {
 
 PixelTest::PixelTest()
     : device_viewport_size_(gfx::Size(200, 200)),
       disable_picture_quad_image_filtering_(false),
-      output_surface_client_(new FakeOutputSurfaceClient),
+      output_surface_client_(new cc::FakeOutputSurfaceClient),
       main_thread_task_runner_(
-          BlockingTaskRunner::Create(base::ThreadTaskRunnerHandle::Get())) {}
+          cc::BlockingTaskRunner::Create(base::ThreadTaskRunnerHandle::Get())) {
+}
 PixelTest::~PixelTest() {}
 
-bool PixelTest::RunPixelTest(RenderPassList* pass_list,
+bool PixelTest::RunPixelTest(cc::RenderPassList* pass_list,
                              const base::FilePath& ref_file,
-                             const PixelComparator& comparator) {
+                             const cc::PixelComparator& comparator) {
   return RunPixelTestWithReadbackTarget(pass_list, pass_list->back().get(),
                                         ref_file, comparator);
 }
 
 bool PixelTest::RunPixelTestWithReadbackTarget(
-    RenderPassList* pass_list,
-    RenderPass* target,
+    cc::RenderPassList* pass_list,
+    cc::RenderPass* target,
     const base::FilePath& ref_file,
-    const PixelComparator& comparator) {
-  return RunPixelTestWithReadbackTargetAndArea(
-      pass_list, target, ref_file, comparator, nullptr);
+    const cc::PixelComparator& comparator) {
+  return RunPixelTestWithReadbackTargetAndArea(pass_list, target, ref_file,
+                                               comparator, nullptr);
 }
 
 bool PixelTest::RunPixelTestWithReadbackTargetAndArea(
-    RenderPassList* pass_list,
-    RenderPass* target,
+    cc::RenderPassList* pass_list,
+    cc::RenderPass* target,
     const base::FilePath& ref_file,
-    const PixelComparator& comparator,
+    const cc::PixelComparator& comparator,
     const gfx::Rect* copy_rect) {
   base::RunLoop run_loop;
 
-  std::unique_ptr<viz::CopyOutputRequest> request =
-      viz::CopyOutputRequest::CreateBitmapRequest(
+  std::unique_ptr<CopyOutputRequest> request =
+      CopyOutputRequest::CreateBitmapRequest(
           base::BindOnce(&PixelTest::ReadbackResult, base::Unretained(this),
                          run_loop.QuitClosure()));
   if (copy_rect)
@@ -91,14 +94,14 @@ bool PixelTest::RunPixelTestWithReadbackTargetAndArea(
   return PixelsMatchReference(ref_file, comparator);
 }
 
-bool PixelTest::RunPixelTest(RenderPassList* pass_list,
+bool PixelTest::RunPixelTest(cc::RenderPassList* pass_list,
                              std::vector<SkColor>* ref_pixels,
-                             const PixelComparator& comparator) {
+                             const cc::PixelComparator& comparator) {
   base::RunLoop run_loop;
-  RenderPass* target = pass_list->back().get();
+  cc::RenderPass* target = pass_list->back().get();
 
-  std::unique_ptr<viz::CopyOutputRequest> request =
-      viz::CopyOutputRequest::CreateBitmapRequest(
+  std::unique_ptr<CopyOutputRequest> request =
+      CopyOutputRequest::CreateBitmapRequest(
           base::BindOnce(&PixelTest::ReadbackResult, base::Unretained(this),
                          run_loop.QuitClosure()));
   target->copy_requests.push_back(std::move(request));
@@ -129,16 +132,16 @@ bool PixelTest::RunPixelTest(RenderPassList* pass_list,
 }
 
 void PixelTest::ReadbackResult(base::Closure quit_run_loop,
-                               std::unique_ptr<viz::CopyOutputResult> result) {
+                               std::unique_ptr<CopyOutputResult> result) {
   ASSERT_TRUE(result->HasBitmap());
   result_bitmap_ = result->TakeBitmap();
   quit_run_loop.Run();
 }
 
 bool PixelTest::PixelsMatchReference(const base::FilePath& ref_file,
-                                     const PixelComparator& comparator) {
+                                     const cc::PixelComparator& comparator) {
   base::FilePath test_data_dir;
-  if (!PathService::Get(viz::Paths::DIR_TEST_DATA, &test_data_dir))
+  if (!PathService::Get(Paths::DIR_TEST_DATA, &test_data_dir))
     return false;
 
   // If this is false, we didn't set up a readback on a render pass.
@@ -146,38 +149,38 @@ bool PixelTest::PixelsMatchReference(const base::FilePath& ref_file,
     return false;
 
   base::CommandLine* cmd = base::CommandLine::ForCurrentProcess();
-  if (cmd->HasSwitch(switches::kCCRebaselinePixeltests))
-    return WritePNGFile(*result_bitmap_, test_data_dir.Append(ref_file), true);
+  if (cmd->HasSwitch(cc::switches::kCCRebaselinePixeltests))
+    return cc::WritePNGFile(*result_bitmap_, test_data_dir.Append(ref_file),
+                            true);
 
-  return MatchesPNGFile(
-      *result_bitmap_, test_data_dir.Append(ref_file), comparator);
+  return MatchesPNGFile(*result_bitmap_, test_data_dir.Append(ref_file),
+                        comparator);
 }
 
 void PixelTest::SetUpGLRenderer(bool flipped_output_surface) {
   enable_pixel_output_.reset(new gl::DisableNullDrawGLBindings);
 
-  scoped_refptr<TestInProcessContextProvider> context_provider(
-      new TestInProcessContextProvider(nullptr));
-  output_surface_.reset(new PixelTestOutputSurface(std::move(context_provider),
-                                                   flipped_output_surface));
+  scoped_refptr<cc::TestInProcessContextProvider> context_provider(
+      new cc::TestInProcessContextProvider(nullptr));
+  output_surface_.reset(new cc::PixelTestOutputSurface(
+      std::move(context_provider), flipped_output_surface));
   output_surface_->BindToClient(output_surface_client_.get());
 
-  shared_bitmap_manager_.reset(new TestSharedBitmapManager);
-  gpu_memory_buffer_manager_ =
-      std::make_unique<viz::TestGpuMemoryBufferManager>();
+  shared_bitmap_manager_.reset(new cc::TestSharedBitmapManager);
+  gpu_memory_buffer_manager_ = std::make_unique<TestGpuMemoryBufferManager>();
   // Not relevant for display compositor since it's not delegated.
   constexpr bool delegated_sync_points_required = false;
-  resource_provider_ = std::make_unique<DisplayResourceProvider>(
+  resource_provider_ = std::make_unique<cc::DisplayResourceProvider>(
       output_surface_->context_provider(), shared_bitmap_manager_.get(),
       gpu_memory_buffer_manager_.get(), main_thread_task_runner_.get(),
       delegated_sync_points_required,
       settings_.enable_color_correct_rasterization,
       settings_.resource_settings);
 
-  texture_mailbox_deleter_ = std::make_unique<TextureMailboxDeleter>(
+  texture_mailbox_deleter_ = std::make_unique<cc::TextureMailboxDeleter>(
       base::ThreadTaskRunnerHandle::Get());
 
-  renderer_ = std::make_unique<viz::GLRenderer>(
+  renderer_ = std::make_unique<GLRenderer>(
       &renderer_settings_, output_surface_.get(), resource_provider_.get(),
       texture_mailbox_deleter_.get());
   renderer_->Initialize();
@@ -185,23 +188,23 @@ void PixelTest::SetUpGLRenderer(bool flipped_output_surface) {
 }
 
 void PixelTest::EnableExternalStencilTest() {
-  static_cast<PixelTestOutputSurface*>(output_surface_.get())
+  static_cast<cc::PixelTestOutputSurface*>(output_surface_.get())
       ->set_has_external_stencil_test(true);
 }
 
 void PixelTest::SetUpSoftwareRenderer() {
-  output_surface_.reset(
-      new PixelTestOutputSurface(std::make_unique<SoftwareOutputDevice>()));
+  output_surface_.reset(new cc::PixelTestOutputSurface(
+      std::make_unique<cc::SoftwareOutputDevice>()));
   output_surface_->BindToClient(output_surface_client_.get());
-  shared_bitmap_manager_.reset(new TestSharedBitmapManager());
+  shared_bitmap_manager_.reset(new cc::TestSharedBitmapManager());
   constexpr bool delegated_sync_points_required =
       false;  // Meaningless for software.
-  resource_provider_ = std::make_unique<DisplayResourceProvider>(
+  resource_provider_ = std::make_unique<cc::DisplayResourceProvider>(
       nullptr, shared_bitmap_manager_.get(), gpu_memory_buffer_manager_.get(),
       main_thread_task_runner_.get(), delegated_sync_points_required,
       settings_.enable_color_correct_rasterization,
       settings_.resource_settings);
-  auto renderer = std::make_unique<SoftwareRenderer>(
+  auto renderer = std::make_unique<cc::SoftwareRenderer>(
       &renderer_settings_, output_surface_.get(), resource_provider_.get());
   software_renderer_ = renderer.get();
   renderer_ = std::move(renderer);
@@ -209,4 +212,4 @@ void PixelTest::SetUpSoftwareRenderer() {
   renderer_->SetVisible(true);
 }
 
-}  // namespace cc
+}  // namespace viz
