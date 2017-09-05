@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6db058de_338de476",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-05T09:24:54Z",
+      "side": 1,
+      "message": "nit: AddDismissedArchivedIdsToRequest for consistency with the above?",
+      "range": {
+        "startLine": 312,
+        "startChar": 29,
+        "endLine": 312,
+        "endChar": 0
+      },
+      "revId": "ea027a96e30d2d60551c4de4f86a90e566b17c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c51d4d7_fc097df7",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-05T09:24:54Z",
+      "side": 1,
+      "message": "Should we also check against kMaxExcludedDismissedIds here, just to be safe?",
+      "range": {
+        "startLine": 317,
+        "startChar": 31,
+        "endLine": 317,
+        "endChar": 0
+      },
+      "revId": "ea027a96e30d2d60551c4de4f86a90e566b17c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e986ade_19023f1b",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-05T09:24:54Z",
+      "side": 1,
+      "message": "Is this really an either/or? Shouldn\u0027t we update both?",
+      "range": {
+        "startLine": 630,
+        "startChar": 26,
+        "endLine": 630,
+        "endChar": 0
+      },
+      "revId": "ea027a96e30d2d60551c4de4f86a90e566b17c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ff92a14_69ff56a3",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1070,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-05T09:24:54Z",
+      "side": 1,
+      "message": "This is fun... **it, *it, it  :D",
+      "range": {
+        "startLine": 1070,
+        "startChar": 35,
+        "endLine": 1070,
+        "endChar": 0
+      },
+      "revId": "ea027a96e30d2d60551c4de4f86a90e566b17c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ceb1dba7_300d75d5",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2438,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-05T09:24:54Z",
+      "side": 1,
+      "message": "s/Excluded/Exclude/",
+      "range": {
+        "startLine": 2438,
+        "startChar": 55,
+        "endLine": 2438,
+        "endChar": 0
+      },
+      "revId": "ea027a96e30d2d60551c4de4f86a90e566b17c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
