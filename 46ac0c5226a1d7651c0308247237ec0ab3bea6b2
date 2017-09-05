@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "23e25eb1_6acd5978",
+        "filename": "ash/highlighter/highlighter_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-09-05T23:38:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dce03da7_eb7cc177",
+      "revId": "46ac0c5226a1d7651c0308247237ec0ab3bea6b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3086b6f3_c289338a",
         "filename": "ash/highlighter/highlighter_controller.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-05T22:24:49Z",
       "side": 1,
       "message": "DCHECK?",
+      "revId": "46ac0c5226a1d7651c0308247237ec0ab3bea6b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f17ae3a5_4b11cb44",
+        "filename": "ash/highlighter/highlighter_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-09-05T23:38:54Z",
+      "side": 1,
+      "message": "Putting DCHECK here (right after resetting the pointer) feels redundant. Did you mean that or something else?",
+      "parentUuid": "3086b6f3_c289338a",
       "revId": "46ac0c5226a1d7651c0308247237ec0ab3bea6b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
