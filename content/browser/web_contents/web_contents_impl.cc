@@ -2098,6 +2098,13 @@ RenderWidgetHostImpl* WebContentsImpl::GetRenderWidgetHostWithPageFocus() {
                focused_web_contents->interstitial_page_->GetMainFrame())
         ->GetRenderWidgetHost();
   }
+  if (!GuestMode::IsCrossProcessFrameGuest(focused_web_contents) &&
+      focused_web_contents->browser_plugin_guest_) {
+    // If this is a guest, we need to be controller by our embedder.
+    return focused_web_contents->GetOuterWebContents()
+        ->GetMainFrame()
+        ->GetRenderWidgetHost();
+  }
 
   return focused_web_contents->GetMainFrame()->GetRenderWidgetHost();
 }
@@ -5241,8 +5248,9 @@ void WebContentsImpl::SetAsFocusedWebContentsIfNecessary() {
 
   GetOutermostWebContents()->node_.SetFocusedWebContents(this);
 
-  if (!GuestMode::IsCrossProcessFrameGuest(this) && browser_plugin_guest_)
+  if (!GuestMode::IsCrossProcessFrameGuest(this) && browser_plugin_guest_) {
     return;
+  }
 
   // Send a page level blur to the old contents so that it displays inactive UI
   // and focus this contents to activate it.
