@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fa614bdb_60ec397a",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-09-05T13:58:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8199f08a_3fd8b3e3",
+      "revId": "24585a771f79814deea529388a56dc39f9f2fa67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49de81a6_c6fd3431",
         "filename": "components/exo/surface.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-01T23:42:16Z",
       "side": 1,
       "message": "should we also set current_resource_* here? this way I think there\u0027s also no need to add GetBufferSize...",
+      "revId": "24585a771f79814deea529388a56dc39f9f2fa67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb99ec1d_4f403fa2",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-09-05T13:58:06Z",
+      "side": 1,
+      "message": "It is not necessary to set it.\nTo remove GetBufferSize(), we just need modify UpdateResources(). Please see UpdateResources() for detail.",
+      "parentUuid": "49de81a6_c6fd3431",
       "revId": "24585a771f79814deea529388a56dc39f9f2fa67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
