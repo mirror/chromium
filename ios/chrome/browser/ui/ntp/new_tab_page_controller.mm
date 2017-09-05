@@ -29,7 +29,7 @@
 #import "ios/chrome/browser/ui/content_suggestions/ntp_home_constant.h"
 #import "ios/chrome/browser/ui/ntp/google_landing_mediator.h"
 #import "ios/chrome/browser/ui/ntp/google_landing_view_controller.h"
-#import "ios/chrome/browser/ui/ntp/incognito_panel_controller.h"
+#import "ios/chrome/browser/ui/ntp/incognito_view_controller.h"
 #import "ios/chrome/browser/ui/ntp/new_tab_page_bar_item.h"
 #import "ios/chrome/browser/ui/ntp/new_tab_page_view.h"
 #import "ios/chrome/browser/ui/ntp/recent_tabs/recent_tabs_table_coordinator.h"
@@ -118,7 +118,7 @@ enum {
   __weak id<NewTabPageControllerObserver> _newTabPageObserver;
   BookmarkHomeTabletNTPController* _bookmarkController;
   GoogleLandingViewController* _googleLandingController;
-  id<NewTabPagePanelProtocol> _incognitoController;
+  IncognitoViewController* _incognitoController;
   // The currently visible controller, one of the above.
   __weak id<NewTabPagePanelProtocol> _currentController;
 
@@ -333,10 +333,9 @@ enum {
   // This is not an ideal place to put view controller contaimnent, rather a
   // //web -wasDismissed method on CRWNativeContent would be more accurate. If
   // CRWNativeContent leaks, this will not be called.
-  // TODO(crbug.com/708319): Also call -removeFromParentViewController for
-  // open tabs and incognito here.
   [_googleLandingController removeFromParentViewController];
   [_bookmarkController removeFromParentViewController];
+  [_incognitoController removeFromParentViewController];
   [[self.contentSuggestionsCoordinator viewController]
       removeFromParentViewController];
   [[_openTabsCoordinator viewController] removeFromParentViewController];
@@ -356,12 +355,12 @@ enum {
   // This methods is called by //web immediately before |self|'s view is removed
   // from the view hierarchy, making it an ideal spot to intiate view controller
   // containment methods.
-  // TODO(crbug.com/708319): Also call -willMoveToParentViewController:nil for
-  // open tabs and incognito here.
   [_googleLandingController willMoveToParentViewController:nil];
   [_bookmarkController willMoveToParentViewController:nil];
+  [[_openTabsCoordinator viewController] willMoveToParentViewController:nil];
   [[self.contentSuggestionsCoordinator viewController]
       willMoveToParentViewController:nil];
+  [_incognitoController willMoveToParentViewController:nil];
 }
 
 - (void)reload {
@@ -570,9 +569,7 @@ enum {
 
 - (BOOL)loadPanel:(NewTabPageBarItem*)item {
   DCHECK(self.parentViewController);
-  UIView* view = nil;
   UIViewController* panelController = nil;
-  BOOL created = NO;
   // Only load the controllers once.
   if (item.identifier == ntp_home::BOOKMARKS_PANEL) {
     if (!_bookmarkController) {
@@ -583,7 +580,6 @@ enum {
                                                    loader:_loader];
     }
     panelController = _bookmarkController;
-    view = [_bookmarkController view];
     [_bookmarkController setDelegate:self];
   } else if (item.identifier == ntp_home::HOME_PANEL) {
     if (experimental_flags::IsSuggestionsUIEnabled()) {
@@ -619,9 +615,7 @@ enum {
       panelController = _googleLandingController;
       self.homePanel = _googleLandingController;
     }
-    view = panelController.view;
     [self.homePanel setDelegate:self];
-    [self.ntpView.tabBar setShadowAlpha:[self.homePanel alphaForBottomShadow]];
   } else if (item.identifier == ntp_home::RECENT_TABS_PANEL) {
     if (!_openTabsCoordinator) {
       _openTabsCoordinator =
@@ -631,23 +625,27 @@ enum {
       [_openTabsCoordinator start];
     }
     panelController = [_openTabsCoordinator viewController];
-    view = panelController.view;
     [_openTabsCoordinator setDelegate:self];
   } else if (item.identifier == ntp_home::INCOGNITO_PANEL) {
     if (!_incognitoController)
       _incognitoController =
-          [[IncognitoPanelController alloc] initWithLoader:_loader
-                                              browserState:_browserState
-                                                dispatcher:self.dispatcher];
-    // TODO(crbug.com/708319): Also set panelController for incognito here.
-    view = [_incognitoController view];
+          [[IncognitoViewController alloc] initWithLoader:_loader
+                                               dispatcher:self.dispatcher];
+    panelController = _incognitoController;
   } else {
     NOTREACHED();
     return NO;
   }
 
+  UIView* view = panelController.view;
+  if (item.identifier == ntp_home::HOME_PANEL) {
+    // Update the shadow for the toolbar after the view creation.
+    [self.ntpView.tabBar setShadowAlpha:[self.homePanel alphaForBottomShadow]];
+  }
+
   // Add the panel views to the scroll view in the proper location.
   NSUInteger index = [self tabBarItemIndex:item];
+  BOOL created = NO;
   if (view.superview == nil) {
     created = YES;
     view.frame = [self.ntpView panelFrameForItemAtIndex:index];
@@ -660,13 +658,13 @@ enum {
     // controller would be owned by a coordinator, in this case the old NTP
     // controller adds and removes child view controllers itself when a load
     // is initiated, and when WebController calls -willBeDismissed.
-    // TODO(crbug.com/708319):This 'if' can become a DCHECK once all panels move
-    // to panelControllers.
-    if (panelController)
-      [self.parentViewController addChildViewController:panelController];
+    DCHECK(panelController);
+    [self.parentViewController addChildViewController:panelController];
     [self.ntpView.scrollView addSubview:view];
-    if (panelController)
-      [panelController didMoveToParentViewController:self.parentViewController];
+    [panelController didMoveToParentViewController:self.parentViewController];
+  }
+  if (item.identifier == ntp_home::HOME_PANEL) {
+    //
   }
   return created;
 }
