@@ -601,18 +601,6 @@ class BASE_EXPORT ThreadData {
       const base::TrackingInfo& completed_task,
       const TaskStopwatch& stopwatch);
 
-  // Record the end of a timed run of an object.  The |birth| is the record for
-  // the instance, the |time_posted| records that instant, which is presumed to
-  // be when the task was posted into a queue to run on a worker thread.
-  // The |start_of_run| is when the worker thread started to perform the run of
-  // the task.
-  // The |end_of_run| was just obtained by a call to Now() (just after the task
-  // finished).
-  static void TallyRunOnWorkerThreadIfTracking(
-      const Births* births,
-      const base::TimeTicks& time_posted,
-      const TaskStopwatch& stopwatch);
-
   // Record the end of execution in region, generally corresponding to a scope
   // being exited.
   static void TallyRunInAScopedRegionIfTracking(const Births* births,

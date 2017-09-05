@@ -22,7 +22,6 @@
 #include "base/process/process_handle.h"
 #include "base/third_party/valgrind/memcheck.h"
 #include "base/threading/platform_thread.h"
-#include "base/threading/worker_pool.h"
 #include "base/tracking_info.h"
 #include "build/build_config.h"
 
@@ -35,8 +34,6 @@ class TimeDelta;
 namespace tracked_objects {
 
 namespace {
-
-constexpr char kWorkerThreadSanitizedName[] = "WorkerThread-*";
 
 // When ThreadData is first initialized, should we start in an ACTIVE state to
 // record all of the startup-time tasks, or should we start up DEACTIVATED, so
@@ -558,9 +555,6 @@ ThreadData* ThreadData::next() const { return next_; }
 
 // static
 void ThreadData::InitializeThreadContext(const std::string& thread_name) {
-  if (base::WorkerPool::RunsTasksOnCurrentThread())
-    return;
-  DCHECK_NE(thread_name, kWorkerThreadSanitizedName);
   EnsureTlsInitialization();
   ThreadData* current_thread_data =
       reinterpret_cast<ThreadData*>(tls_index_.Get());
@@ -576,14 +570,8 @@ ThreadData* ThreadData::Get() {
   if (!tls_index_.initialized())
     return NULL;  // For unittests only.
   ThreadData* registered = reinterpret_cast<ThreadData*>(tls_index_.Get());
-  if (registered)
-    return registered;
-
-  // We must be a worker thread, since we didn't pre-register.
-  ThreadData* worker_thread_data =
-      GetRetiredOrCreateThreadData(kWorkerThreadSanitizedName);
-  tls_index_.Set(worker_thread_data);
-  return worker_thread_data;
+  DCHECK(registered);
+  return registered;
 }
 
 // static
@@ -754,38 +742,6 @@ void ThreadData::TallyRunOnNamedThreadIfTracking(
   base::TimeDelta queue_duration;
   if (!start_of_run.is_null()) {
     queue_duration = start_of_run - completed_task.EffectiveTimePosted();
-  }
-  current_thread_data->TallyADeath(*births, queue_duration, stopwatch);
-}
-
-// static
-void ThreadData::TallyRunOnWorkerThreadIfTracking(
-    const Births* births,
-    const base::TimeTicks& time_posted,
-    const TaskStopwatch& stopwatch) {
-  // Even if we have been DEACTIVATED, we will process any pending births so
-  // that our data structures (which counted the outstanding births) remain
-  // consistent.
-  if (!births)
-    return;
-
-  // TODO(jar): Support the option to coalesce all worker-thread activity under
-  // one ThreadData instance that uses locks to protect *all* access.  This will
-  // reduce memory (making it provably bounded), but run incrementally slower
-  // (since we'll use locks on TallyABirth and TallyADeath).  The good news is
-  // that the locks on TallyADeath will be *after* the worker thread has run,
-  // and hence nothing will be waiting for the completion (...  besides some
-  // other thread that might like to run).  Also, the worker threads tasks are
-  // generally longer, and hence the cost of the lock may perchance be amortized
-  // over the long task's lifetime.
-  ThreadData* current_thread_data = stopwatch.GetThreadData();
-  if (!current_thread_data)
-    return;
-
-  base::TimeTicks start_of_run = stopwatch.StartTime();
-  base::TimeDelta queue_duration;
-  if (!start_of_run.is_null()) {
-    queue_duration = start_of_run - time_posted;
   }
   current_thread_data->TallyADeath(*births, queue_duration, stopwatch);
 }
