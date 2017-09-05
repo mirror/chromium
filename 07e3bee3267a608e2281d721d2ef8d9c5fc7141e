@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3aea248_3ac24a87",
+        "filename": "chrome/browser/resources/settings/controls/settings_toggle_button.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-05T19:16:22Z",
+      "side": 1,
+      "message": "While on the one hand this is simpler than something I suggested elsewhere, but it also seems confusing.\n\nWhat do you think about adding an \u0027ariaLabel\u0027 property and getAriaLabel_(ariaLabel, label) { return ariaLabel || label } ?\n\nThat would also give us the ability to set a different aria-label from label.",
+      "revId": "07e3bee3267a608e2281d721d2ef8d9c5fc7141e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
