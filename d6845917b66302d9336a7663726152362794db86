@@ -70,6 +70,30 @@
       "revId": "d6845917b66302d9336a7663726152362794db86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5f418276_d619cb3c",
+        "filename": "components/drive/resource_metadata_storage_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-09-05T04:21:40Z",
+      "side": 1,
+      "message": "Sure, replaced to M62.",
+      "parentUuid": "7e67fbf2_18e0c5c3",
+      "range": {
+        "startLine": 486,
+        "startChar": 47,
+        "endLine": 486,
+        "endChar": 50
+      },
+      "revId": "d6845917b66302d9336a7663726152362794db86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
