@@ -47,7 +47,7 @@ namespace message_center {
 namespace {
 
 // Dimensions.
-constexpr gfx::Insets kContentRowPadding(2, 12, 12, 12);
+constexpr gfx::Insets kContentRowPadding(2, 12, 16, 12);
 constexpr gfx::Insets kActionsRowPadding(8, 8, 8, 8);
 constexpr int kActionsRowHorizontalSpacing = 8;
 constexpr gfx::Insets kActionButtonPadding(0, 12, 0, 12);
