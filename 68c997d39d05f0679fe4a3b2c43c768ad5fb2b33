@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dd2e57b5_02653461",
+        "filename": "chrome/browser/android/locale/special_locale_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-05T19:45:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a9587c7_908e2cb9",
+      "revId": "68c997d39d05f0679fe4a3b2c43c768ad5fb2b33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bcc3275c_7f2cb37f",
         "filename": "chrome/browser/android/locale/special_locale_handler_unittest.cc",
         "patchSetId": 2
