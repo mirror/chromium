@@ -759,12 +759,6 @@ void RenderThreadImpl::Init(
   }
 #endif
 
-  auto registry = base::MakeUnique<service_manager::BinderRegistry>();
-  registry->AddInterface(base::Bind(&WebDatabaseImpl::Create),
-                         GetIOTaskRunner());
-  GetServiceManagerConnection()->AddConnectionFilter(
-      base::MakeUnique<SimpleConnectionFilter>(std::move(registry)));
-
   auto registry_with_source_info =
       base::MakeUnique<service_manager::BinderRegistryWithArgs<
           const service_manager::BindSourceInfo&>>();
@@ -781,6 +775,9 @@ void RenderThreadImpl::Init(
   GetAssociatedInterfaceRegistry()->AddInterface(
       base::Bind(&RenderThreadImpl::OnRendererInterfaceRequest,
                  base::Unretained(this)));
+
+  GetAssociatedInterfaceRegistry()->AddInterface(
+      base::Bind(&WebDatabaseImpl::Create));
 
   InitSkiaEventTracer();
   base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(

@@ -23,7 +23,7 @@ class WebDatabaseImpl : public content::mojom::WebDatabase {
   WebDatabaseImpl();
   ~WebDatabaseImpl() override;
 
-  static void Create(content::mojom::WebDatabaseRequest);
+  static void Create(content::mojom::WebDatabaseAssociatedRequest);
 
  private:
   // content::mojom::Database:

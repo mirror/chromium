@@ -152,6 +152,10 @@ void DatabaseTracker::PrepareToOpenDatabase(Database* database) {
         WebSecurityOrigin(database->GetSecurityOrigin()),
         database->StringIdentifier(), database->DisplayName(),
         database->EstimatedSize());
+    // We write a temporary size of 0 to the QuotaTracker - we will be updated
+    // with the correct size via RPC asynchronously.
+    QuotaTracker::Instance().UpdateDatabaseSize(
+        database->GetSecurityOrigin(), database->StringIdentifier(), 0);
   }
 }
 

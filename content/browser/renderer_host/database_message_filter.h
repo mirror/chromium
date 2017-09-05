@@ -25,10 +25,10 @@ namespace content {
 class DatabaseMessageFilter : public BrowserMessageFilter,
                               public storage::DatabaseTracker::Observer {
  public:
-  explicit DatabaseMessageFilter(int process_id,
-                                 storage::DatabaseTracker* db_tracker);
+  explicit DatabaseMessageFilter(storage::DatabaseTracker* db_tracker);
 
   // BrowserMessageFilter implementation.
+  void OnFilterAdded(IPC::Channel*) override;
   void OnChannelClosing() override;
   base::TaskRunner* OverrideTaskRunnerForMessage(
       const IPC::Message& message) override;
@@ -99,13 +99,14 @@ class DatabaseMessageFilter : public BrowserMessageFilter,
   // the db_tracker task runner.
   void CloseOnDatabaseTrackerTask();
 
-  // Helper function to get the mojo interface for the WebDatabase on the
-  // render process. Creates the WebDatabase connection if it does not already
-  // exist.
-  content::mojom::WebDatabase& GetWebDatabase();
+  // Helper functions to ensure that the database_provider_ is only called on
+  // the IO thread.
+  void WebDatabaseUpdateSize(const url::Origin& origin,
+                             const base::string16& name,
+                             int64_t size);
 
-  // Our render process host ID, used to bind to the correct render process.
-  const int process_id_;
+  void WebDatabaseCloseImmediately(const url::Origin& origin,
+                                   const base::string16& name);
 
   // The database tracker for the current browser context.
   scoped_refptr<storage::DatabaseTracker> db_tracker_;
@@ -118,7 +119,7 @@ class DatabaseMessageFilter : public BrowserMessageFilter,
   storage::DatabaseConnections database_connections_;
 
   // Interface to the render process WebDatabase.
-  content::mojom::WebDatabasePtr database_provider_;
+  content::mojom::WebDatabaseAssociatedPtr database_provider_;
 };
 
 }  // namespace content

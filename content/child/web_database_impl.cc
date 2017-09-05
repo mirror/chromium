@@ -4,7 +4,7 @@
 
 #include "content/child/web_database_impl.h"
 
-#include "mojo/public/cpp/bindings/strong_binding.h"
+#include "mojo/public/cpp/bindings/strong_associated_binding.h"
 #include "third_party/WebKit/public/platform/WebSecurityOrigin.h"
 #include "third_party/WebKit/public/platform/WebString.h"
 #include "third_party/WebKit/public/web/WebDatabase.h"
@@ -19,9 +19,10 @@ WebDatabaseImpl::WebDatabaseImpl() = default;
 
 WebDatabaseImpl::~WebDatabaseImpl() = default;
 
-void WebDatabaseImpl::Create(content::mojom::WebDatabaseRequest request) {
-  mojo::MakeStrongBinding(base::MakeUnique<WebDatabaseImpl>(),
-                          std::move(request));
+void WebDatabaseImpl::Create(
+    content::mojom::WebDatabaseAssociatedRequest request) {
+  mojo::MakeStrongAssociatedBinding(base::MakeUnique<WebDatabaseImpl>(),
+                                    std::move(request));
 }
 
 void WebDatabaseImpl::UpdateSize(const url::Origin& origin,
