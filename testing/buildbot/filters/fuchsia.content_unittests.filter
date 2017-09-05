@@ -79,3 +79,9 @@
 -QuotaPolicyCookieStoreTest.TestDestroyOnBackgroundThread
 -QuotaPolicyCookieStoreTest.TestPersistence
 -QuotaPolicyCookieStoreTest.TestPolicy
+
+# http://crbug.com/761214
+-RendererAudioOutputStreamFactoryIntegrationTest.StreamIntegrationTest
+
+# http://crbug.com/762125
+-VideoCaptureBufferPoolTest.BufferPool/*
