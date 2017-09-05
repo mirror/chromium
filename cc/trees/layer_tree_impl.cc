@@ -1318,7 +1318,7 @@ viz::ContextProvider* LayerTreeImpl::context_provider() const {
   return host_impl_->layer_tree_frame_sink()->context_provider();
 }
 
-LayerTreeResourceProvider* LayerTreeImpl::resource_provider() const {
+viz::LayerTreeResourceProvider* LayerTreeImpl::resource_provider() const {
   return host_impl_->resource_provider();
 }
 

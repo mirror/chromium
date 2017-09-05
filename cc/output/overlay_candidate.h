@@ -22,9 +22,12 @@ namespace gfx {
 class Rect;
 }
 
+namespace viz {
+class DisplayResourceProvider;
+}
+
 namespace cc {
 
-class DisplayResourceProvider;
 class DrawQuad;
 class StreamVideoDrawQuad;
 class TextureDrawQuad;
@@ -34,7 +37,7 @@ class CC_EXPORT OverlayCandidate {
  public:
   // Returns true and fills in |candidate| if |draw_quad| is of a known quad
   // type and contains an overlayable resource.
-  static bool FromDrawQuad(DisplayResourceProvider* resource_provider,
+  static bool FromDrawQuad(viz::DisplayResourceProvider* resource_provider,
                            const DrawQuad* quad,
                            OverlayCandidate* candidate);
   // Returns true if |quad| will not block quads underneath from becoming
@@ -98,20 +101,22 @@ class CC_EXPORT OverlayCandidate {
   bool overlay_handled;
 
  private:
-  static bool FromDrawQuadResource(DisplayResourceProvider* resource_provider,
-                                   const DrawQuad* quad,
-                                   viz::ResourceId resource_id,
-                                   bool y_flipped,
-                                   OverlayCandidate* candidate);
-  static bool FromTextureQuad(DisplayResourceProvider* resource_provider,
+  static bool FromDrawQuadResource(
+      viz::DisplayResourceProvider* resource_provider,
+      const DrawQuad* quad,
+      viz::ResourceId resource_id,
+      bool y_flipped,
+      OverlayCandidate* candidate);
+  static bool FromTextureQuad(viz::DisplayResourceProvider* resource_provider,
                               const TextureDrawQuad* quad,
                               OverlayCandidate* candidate);
-  static bool FromTileQuad(DisplayResourceProvider* resource_provider,
+  static bool FromTileQuad(viz::DisplayResourceProvider* resource_provider,
                            const TileDrawQuad* quad,
                            OverlayCandidate* candidate);
-  static bool FromStreamVideoQuad(DisplayResourceProvider* resource_provider,
-                                  const StreamVideoDrawQuad* quad,
-                                  OverlayCandidate* candidate);
+  static bool FromStreamVideoQuad(
+      viz::DisplayResourceProvider* resource_provider,
+      const StreamVideoDrawQuad* quad,
+      OverlayCandidate* candidate);
 };
 
 class CC_EXPORT OverlayCandidateList : public std::vector<OverlayCandidate> {

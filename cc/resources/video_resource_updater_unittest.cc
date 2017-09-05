@@ -9,13 +9,13 @@
 
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
-#include "cc/resources/resource_provider.h"
+#include "cc/base/blocking_task_runner.h"
 #include "cc/test/fake_output_surface.h"
 #include "cc/test/fake_output_surface_client.h"
 #include "cc/test/fake_resource_provider.h"
 #include "cc/test/test_shared_bitmap_manager.h"
 #include "cc/test/test_web_graphics_context_3d.h"
-#include "cc/trees/blocking_task_runner.h"
+#include "components/viz/common/display/resource_provider.h"
 #include "gpu/GLES2/gl2extchromium.h"
 #include "media/base/video_frame.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -248,8 +248,8 @@ class VideoResourceUpdaterTest : public testing::Test {
   WebGraphicsContext3DUploadCounter* context3d_;
   scoped_refptr<TestContextProvider> context_provider_;
   std::unique_ptr<SharedBitmapManagerAllocationCounter> shared_bitmap_manager_;
-  std::unique_ptr<ResourceProvider> resource_provider3d_;
-  std::unique_ptr<ResourceProvider> resource_provider_software_;
+  std::unique_ptr<viz::ResourceProvider> resource_provider3d_;
+  std::unique_ptr<viz::ResourceProvider> resource_provider_software_;
   gpu::SyncToken release_sync_token_;
 };
 
@@ -365,9 +365,9 @@ TEST_F(VideoResourceUpdaterTest, ReuseResource) {
   // Expect exactly three texture uploads, one for each plane.
   EXPECT_EQ(3, context3d_->UploadCount());
 
-  // Simulate the ResourceProvider releasing the resources back to the video
-  // updater.
-  for (ReleaseCallbackImpl& release_callback : resources.release_callbacks)
+  // Simulate the viz::ResourceProvider releasing the resources back to the
+  // video updater.
+  for (viz::ReleaseCallbackImpl& release_callback : resources.release_callbacks)
     release_callback.Run(gpu::SyncToken(), false, nullptr);
 
   // Allocate resources for the same frame.
@@ -438,7 +438,7 @@ TEST_F(VideoResourceUpdaterTest, ReuseResourceSoftwareCompositor) {
   // Expect exactly one allocated shared bitmap.
   EXPECT_EQ(1, shared_bitmap_manager_->AllocationCount());
 
-  // Simulate the ResourceProvider releasing the resource back to the video
+  // Simulate the viz::ResourceProvider releasing the resource back to the video
   // updater.
   resources.software_release_callback.Run(gpu::SyncToken(), false, nullptr);
 
