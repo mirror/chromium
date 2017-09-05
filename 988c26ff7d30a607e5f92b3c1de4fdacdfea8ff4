@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "2cca4ffc_8b7db6eb",
+        "filename": "build/android/resource_sizes.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 840,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-09-05T21:47:56Z",
+      "side": 1,
+      "message": "nit: it\u0027d be good to move this out of main, whether that\u0027s in PrintStaticInitializerAnalysis or elsewhere (AssertStaticInitializerCount?)",
+      "revId": "988c26ff7d30a607e5f92b3c1de4fdacdfea8ff4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a066f3ae_751a5309",
         "filename": "chrome/android/BUILD.gn",
         "patchSetId": 6

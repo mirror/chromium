@@ -69,6 +69,24 @@
       "revId": "dc021574aa89c2272f73fdd6d7c69628a311ec4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8905075_b74c30a9",
+        "filename": "docs/static_initializers.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-09-05T21:47:56Z",
+      "side": 1,
+      "message": "This seems reasonable, but I want us to push toward consistency here. Would you mind filing a bug for doing so?",
+      "parentUuid": "38f1ea31_84e2acab",
+      "revId": "dc021574aa89c2272f73fdd6d7c69628a311ec4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
