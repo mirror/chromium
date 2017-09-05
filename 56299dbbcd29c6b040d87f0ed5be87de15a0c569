@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54b80fbe_3e2f5554",
+        "filename": "content/browser/service_worker/embedded_worker_test_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-05T11:08:23Z",
+      "side": 1,
+      "message": "nit: still need explicit?",
+      "revId": "56299dbbcd29c6b040d87f0ed5be87de15a0c569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a84afc7f_cf1d802d",
+        "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-05T11:08:23Z",
+      "side": 1,
+      "message": "super nit-picky, but I don\u0027t feel repeating the class name for the class-level comment is super useful, but found that you might rather prefer having it?",
+      "revId": "56299dbbcd29c6b040d87f0ed5be87de15a0c569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a026c87f_6fc4b5da",
+        "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-05T11:08:23Z",
+      "side": 1,
+      "message": "it\u0027s fine to leave routing id etc, but we probably want something for traffic annotation.",
+      "revId": "56299dbbcd29c6b040d87f0ed5be87de15a0c569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
