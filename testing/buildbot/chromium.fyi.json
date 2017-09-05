@@ -10648,7 +10648,7 @@
           "--test-launcher-filter-file=../../testing/buildbot/filters/fuchsia.base_unittests.filter"
         ],
         "swarming": {
-          "can_use_on_swarming_builders": false
+          "can_use_on_swarming_builders": true
         },
         "test": "base_unittests"
       },
