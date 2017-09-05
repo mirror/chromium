@@ -5,7 +5,11 @@
 #include "third_party/leveldatabase/leveldb_chromium.h"
 
 #include <memory>
+#include "base/bind.h"
+#include "base/memory/memory_pressure_listener.h"
 #include "base/sys_info.h"
+
+using MemoryPressureLevel = base::MemoryPressureListener::MemoryPressureLevel;
 
 namespace leveldb {
 namespace chrome {
@@ -26,6 +30,9 @@ class Globals {
   Globals() : browser_block_cache_(NewLRUCache(DefaultBlockCacheSize())) {
     if (!base::SysInfo::IsLowEndDevice())
       web_block_cache_.reset(NewLRUCache(DefaultBlockCacheSize()));
+
+    memory_pressure_listener_.reset(new base::MemoryPressureListener(
+        base::Bind(&Globals::OnMemoryPressure, base::Unretained(this))));
   }
 
   Cache* web_block_cache() const {
@@ -36,11 +43,24 @@ class Globals {
 
   Cache* browser_block_cache() const { return browser_block_cache_.get(); }
 
+  // Called when the system is under memory pressure.
+  void OnMemoryPressure(MemoryPressureLevel memory_pressure_level) {
+    if (memory_pressure_level ==
+        MemoryPressureLevel::MEMORY_PRESSURE_LEVEL_NONE)
+      return;
+    browser_block_cache()->Prune();
+    if (browser_block_cache() == web_block_cache())
+      return;
+    web_block_cache()->Prune();
+  }
+
  private:
   ~Globals() {}
 
   std::unique_ptr<Cache> web_block_cache_;      // NULL on low end devices
   std::unique_ptr<Cache> browser_block_cache_;  // Never NULL
+  // Listens for the system being under memory pressure.
+  std::unique_ptr<base::MemoryPressureListener> memory_pressure_listener_;
 
   DISALLOW_COPY_AND_ASSIGN(Globals);
 };
