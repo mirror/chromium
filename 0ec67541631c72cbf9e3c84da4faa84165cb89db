@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82e1e082_fcf1e5a1",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-09-05T22:25:10Z",
+      "side": 1,
+      "message": "Now StyleEngine gives us the user rules.",
+      "revId": "0ec67541631c72cbf9e3c84da4faa84165cb89db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f15c2f9_ffd8f105",
+        "filename": "third_party/WebKit/Source/core/dom/DocumentStyleSheetCollection.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-09-05T22:25:10Z",
+      "side": 1,
+      "message": "It\u0027s better to check if there\u0027s a rule set right here instead of checking it later in StyleEngine.",
+      "revId": "0ec67541631c72cbf9e3c84da4faa84165cb89db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f4e7ce4_25ede76c",
+        "filename": "third_party/WebKit/Source/core/dom/StyleEngine.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 957,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-09-05T22:25:10Z",
+      "side": 1,
+      "message": "When an injected sheet is added or removed, we have to do invalidations in shadow roots as well.",
+      "revId": "0ec67541631c72cbf9e3c84da4faa84165cb89db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c28d8b13_1363c60b",
+        "filename": "third_party/WebKit/Source/core/dom/StyleEngine.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1133,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-09-05T22:25:10Z",
+      "side": 1,
+      "message": "I\u0027m assuming this will always be true if there are any injected sheets.",
+      "revId": "0ec67541631c72cbf9e3c84da4faa84165cb89db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82f04420_9850bbc8",
+        "filename": "third_party/WebKit/Source/core/dom/StyleEngine.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1134,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-09-05T22:25:10Z",
+      "side": 1,
+      "message": "The list of active sheets includes both injected sheets and author sheets, strictly in that order.",
+      "revId": "0ec67541631c72cbf9e3c84da4faa84165cb89db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "721d5b18_e7f3faf2",
+        "filename": "third_party/WebKit/Source/core/dom/StyleEngine.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1158,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-09-05T22:25:10Z",
+      "side": 1,
+      "message": "This condition here means that there are some author sheets.",
+      "revId": "0ec67541631c72cbf9e3c84da4faa84165cb89db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5e0d5c3_17b097fc",
+        "filename": "third_party/WebKit/Source/core/dom/StyleEngine.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1259,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-09-05T22:25:10Z",
+      "side": 1,
+      "message": "The rules need to have their parent style sheet set for the inspector to treat them as injected rules.",
+      "revId": "0ec67541631c72cbf9e3c84da4faa84165cb89db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7d8b090_8d87065a",
+        "filename": "third_party/WebKit/Source/core/css/resolver/ScopedStyleResolver.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-09-05T22:25:10Z",
+      "side": 1,
+      "message": "This is gone.",
+      "range": {
+        "startLine": 104,
+        "startChar": 36,
+        "endLine": 104,
+        "endChar": 54
+      },
+      "revId": "dc4f93d6486b9977efd0b8c3f50ce3edfa574d56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
