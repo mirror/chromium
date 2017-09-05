@@ -22,6 +22,30 @@
       "revId": "c336668ebef37cb31e601ea5d48759a60892ebd0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "371f3e86_a97f94a9",
+        "filename": "components/browsing_data/core/counters/passwords_counter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-05T13:26:46Z",
+      "side": 1,
+      "message": "Right. I think we should introduce a method CancelAllRequests() instead of InvalidateWeakPtrs() and do these two things inside.\n\nThose who call TryCancelAll() should call CancelAllRequests() instead.",
+      "parentUuid": "87d8ad29_d253fffb",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 23
+      },
+      "revId": "c336668ebef37cb31e601ea5d48759a60892ebd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
