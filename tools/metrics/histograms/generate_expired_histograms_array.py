@@ -15,7 +15,7 @@ import extract_histograms
 import merge_xml
 
 _SCRIPT_NAME = "generate_expired_histograms_array.py"
-_HASH_DATATYPE = "unit64_t"
+_HASH_DATATYPE = "uint64_t"
 _HEADER = """// Generated from {script_name}. Do not edit!
 
 #ifndef {include_guard}
@@ -26,9 +26,7 @@ _HEADER = """// Generated from {script_name}. Do not edit!
 namespace {namespace} {{
 
 // Contains hashes of expired histograms.
-const {hash_datatype} kExpiredHistogramsHashes[] = {{
-{hashes}
-}};
+{array_definition}
 
 const size_t kNumExpiredHistograms = {hashes_size};
 
@@ -37,6 +35,13 @@ const size_t kNumExpiredHistograms = {hashes_size};
 #endif  // {include_guard}
 """
 
+_NON_EMPTY_ARRAY_DEFINITION = (
+"""const {hash_datatype} kExpiredHistogramsHashes[] = {{
+{hashes}
+}};""")
+
+_EMPTY_ARRAY_DEFINITION = (
+"const {hash_datatype}* kExpiredHistogramsHashes = nullptr;")
 
 class Error(Exception):
   pass
@@ -84,8 +89,25 @@ def _GetHashToNameMap(histograms_names):
     hash_to_name_map[_HashName(name)] = name
   return hash_to_name_map
 
+def _GetArrayDefinition(hash_datatype, histograms_map):
+  """Returns array definition for the given histograms.
 
-def _GenerateHeaderFileContent(header_filename, namespace, hash_datatype,
+  If |histogams_map| is not empty, defines an array. Otherwise, defines nullptr.
+
+  Args:
+    hash_datatype: Datatype of histogram names' hash.
+    histograms_map(Dict[str, str]): A dictionary {hash: histogram_name}.
+  """
+  if not histograms_map:
+    return _EMPTY_ARRAY_DEFINITION.format(hash_datatype=hash_datatype)
+  hashes = "\n".join([
+      "  {hash},  // {name}".format(hash=value, name=histograms_map[value])
+      for value in sorted(histograms_map.keys())
+  ])
+  return _NON_EMPTY_ARRAY_DEFINITION.format(hash_datatype=hash_datatype,
+    hashes=hashes)
+
+def _GenerateHeaderFileContent(header_filename, namespace,
                                histograms_map):
   """Generates header file content.
 
@@ -99,16 +121,13 @@ def _GenerateHeaderFileContent(header_filename, namespace, hash_datatype,
     String with the generated content.
   """
   include_guard = re.sub("[^A-Z]", "_", header_filename.upper()) + "_"
-  hashes = "\n".join([
-      "  {hash},  // {name}".format(hash=value, name=histograms_map[value])
-      for value in sorted(histograms_map.keys())
-  ])
+  array_definition = _GetArrayDefinition(_HASH_DATATYPE, histograms_map)
+
   return _HEADER.format(
       script_name=_SCRIPT_NAME,
       include_guard=include_guard,
       namespace=namespace,
-      hash_datatype=hash_datatype,
-      hashes=hashes,
+      array_definition=array_definition,
       hashes_size=len(histograms_map))
 
 
@@ -135,7 +154,7 @@ def _GenerateFile(arguments):
   expired_histograms_names = _GetExpiredHistograms(histograms, today)
   expired_histograms_map = _GetHashToNameMap(expired_histograms_names)
   header_file_content = _GenerateHeaderFileContent(
-      arguments.header_filename, arguments.namespace, _HASH_DATATYPE,
+      arguments.header_filename, arguments.namespace,
       expired_histograms_map)
   with open(os.path.join(arguments.output_dir, arguments.header_filename),
             "w") as generated_file:
