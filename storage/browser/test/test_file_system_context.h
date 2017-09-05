@@ -26,6 +26,8 @@ storage::FileSystemContext* CreateFileSystemContextForTesting(
 // |additional_providers| if needed.
 storage::FileSystemContext*
 CreateFileSystemContextWithAdditionalProvidersForTesting(
+    base::SingleThreadTaskRunner* io_task_runner,
+    base::SequencedTaskRunner* file_task_runner,
     storage::QuotaManagerProxy* quota_manager_proxy,
     std::vector<std::unique_ptr<storage::FileSystemBackend>>
         additional_providers,
