@@ -1514,7 +1514,7 @@ bool QuicConnection::WritePacket(SerializedPacket* packet) {
   // Termination packets are eventually owned by TimeWaitListManager.
   // Others are deleted at the end of this call.
   if (is_termination_packet) {
-    if (termination_packets_.get() == nullptr) {
+    if (termination_packets_ == nullptr) {
       termination_packets_.reset(
           new std::vector<std::unique_ptr<QuicEncryptedPacket>>);
     }
