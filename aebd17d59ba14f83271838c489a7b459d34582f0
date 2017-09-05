@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20d4022f_633a4a9a",
+        "filename": "ash/wm/overview/overview_window_drag_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-05T16:37:43Z",
+      "side": 1,
+      "message": "is this correct? Shouldn\u0027t the overlay be visible while dragging?",
+      "revId": "aebd17d59ba14f83271838c489a7b459d34582f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d63cea55_cddfc8cb",
+        "filename": "ash/wm/overview/window_selector.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-05T16:37:43Z",
+      "side": 1,
+      "message": "Do you really need more than one? I think you can drag only one window, no?",
+      "revId": "aebd17d59ba14f83271838c489a7b459d34582f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf3c3163_2b86aaa8",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-05T16:37:43Z",
+      "side": 1,
+      "message": "instead of using view\u0027s background, can you use solid color layer which is more efficient? (see View::SetPaintToLayer)",
+      "revId": "aebd17d59ba14f83271838c489a7b459d34582f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c2b5412_4cfa20d9",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-05T16:37:43Z",
+      "side": 1,
+      "message": "\"Overlay\" is too generic. Can you come up with better name for this?",
+      "revId": "aebd17d59ba14f83271838c489a7b459d34582f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
