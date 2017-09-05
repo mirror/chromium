@@ -23,7 +23,7 @@
 #include "core/style/ContentData.h"
 
 #include <memory>
-#include "core/dom/PseudoElement.h"
+#include "core/css/PseudoElement.h"
 #include "core/layout/LayoutCounter.h"
 #include "core/layout/LayoutImage.h"
 #include "core/layout/LayoutImageResource.h"

@@ -24,6 +24,8 @@
 
 #include <memory>
 #include "core/animation/ElementAnimations.h"
+#include "core/css/PseudoElement.h"
+#include "core/css/PseudoElementData.h"
 #include "core/css/cssom/InlineStylePropertyMap.h"
 #include "core/dom/AccessibleNode.h"
 #include "core/dom/Attr.h"
@@ -32,8 +34,6 @@
 #include "core/dom/ElementShadow.h"
 #include "core/dom/NamedNodeMap.h"
 #include "core/dom/NodeRareData.h"
-#include "core/dom/PseudoElement.h"
-#include "core/dom/PseudoElementData.h"
 #include "core/html/custom/CustomElementDefinition.h"
 #include "core/html/custom/V0CustomElementDefinition.h"
 #include "core/intersection_observer/ElementIntersectionObserverData.h"

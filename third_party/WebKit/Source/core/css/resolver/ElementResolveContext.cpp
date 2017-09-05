@@ -22,7 +22,7 @@
 
 #include "core/css/resolver/ElementResolveContext.h"
 
-#include "core/dom/LayoutTreeBuilderTraversal.h"
+#include "core/css/LayoutTreeBuilderTraversal.h"
 #include "core/dom/Node.h"
 #include "core/dom/NodeComputedStyle.h"
 #include "core/dom/V0InsertionPoint.h"

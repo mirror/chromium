@@ -25,8 +25,8 @@
 #ifndef NodeComputedStyle_h
 #define NodeComputedStyle_h
 
+#include "core/css/LayoutTreeBuilderTraversal.h"
 #include "core/dom/Element.h"
-#include "core/dom/LayoutTreeBuilderTraversal.h"
 #include "core/dom/Node.h"
 #include "core/dom/V0InsertionPoint.h"
 #include "core/html/HTMLOptGroupElement.h"

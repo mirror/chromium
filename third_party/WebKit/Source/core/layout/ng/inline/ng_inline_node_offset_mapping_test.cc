@@ -4,7 +4,7 @@
 
 #include "core/layout/ng/inline/ng_inline_node.h"
 
-#include "core/dom/FirstLetterPseudoElement.h"
+#include "core/css/FirstLetterPseudoElement.h"
 #include "core/layout/LayoutTestHelper.h"
 #include "core/layout/LayoutTextFragment.h"
 #include "core/layout/ng/inline/ng_offset_mapping_result.h"
