@@ -154,7 +154,7 @@ class MemoryTracingTest : public ContentBrowserTest {
   }
 
   void Navigate(Shell* shell) {
-    NavigateToURL(shell, GetTestUrl("", "title.html"));
+    NavigateToURL(shell, GetTestUrl("", "title1.html"));
   }
 
   MOCK_METHOD2(OnMemoryDumpDone, void(uint32_t request_index, bool successful));
