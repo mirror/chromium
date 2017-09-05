@@ -74,9 +74,7 @@ void RasterSource::PlaybackToCanvas(SkCanvas* input_canvas,
     raster_canvas = color_transform_canvas.get();
   }
 
-  if (!settings.playback_to_shared_canvas)
-    ClearCanvasForPlayback(raster_canvas);
-
+  ClearCanvasForPlayback(raster_canvas);
   RasterCommon(raster_canvas, settings.image_provider);
 }
 
