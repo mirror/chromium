@@ -71,8 +71,7 @@ namespace blink {
 static const CSSValue* ParseCSSValue(const Document* document,
                                      const String& value,
                                      CSSPropertyID property_id) {
-  CSSParserContext* context = CSSParserContext::Create(*document);
-  return CSSParser::ParseFontFaceDescriptor(property_id, value, context);
+  return CSSParser::ParseFontFaceDescriptor(property_id, value, document);
 }
 
 FontFace* FontFace::Create(ExecutionContext* context,

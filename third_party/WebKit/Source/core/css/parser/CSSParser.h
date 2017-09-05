@@ -77,7 +77,7 @@ class CORE_EXPORT CSSParser {
 
   static const CSSValue* ParseFontFaceDescriptor(CSSPropertyID,
                                                  const String&,
-                                                 const CSSParserContext*);
+                                                 const ExecutionContext*);
 
   static ImmutableStylePropertySet* ParseInlineStyleDeclaration(const String&,
                                                                 Element*);

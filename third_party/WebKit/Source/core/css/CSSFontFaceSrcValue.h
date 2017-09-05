@@ -27,6 +27,7 @@
 #define CSSFontFaceSrcValue_h
 
 #include "core/css/CSSValue.h"
+#include "core/dom/ExecutionContext.h"
 #include "core/loader/resource/FontResource.h"
 #include "platform/loader/fetch/ResourceOwner.h"
 #include "platform/weborigin/Referrer.h"
@@ -54,6 +55,12 @@ class CORE_EXPORT CSSFontFaceSrcValue : public CSSValue {
     return new CSSFontFaceSrcValue(g_empty_string, absolute_resource,
                                    Referrer(), true,
                                    should_check_content_security_policy);
+  }
+
+  void UpdateAbsoluteResource(const ExecutionContext* context) {
+    if (IsLocal())
+      return;
+    absolute_resource_ = context->CompleteURL(specified_resource_);
   }
 
   const String& GetResource() const { return absolute_resource_; }

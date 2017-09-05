@@ -6,7 +6,10 @@
 
 #include <memory>
 #include "core/css/CSSColorValue.h"
+#include "core/css/CSSFontFaceSrcValue.h"
 #include "core/css/CSSKeyframeRule.h"
+#include "core/css/CSSUnicodeRangeValue.h"
+#include "core/css/CSSValueList.h"
 #include "core/css/StyleColor.h"
 #include "core/css/StyleRule.h"
 #include "core/css/StyleSheetContents.h"
@@ -239,18 +242,20 @@ bool CSSParser::ParseSystemColor(Color& color, const String& color_string) {
 const CSSValue* CSSParser::ParseFontFaceDescriptor(
     CSSPropertyID property_id,
     const String& property_value,
-    const CSSParserContext* context) {
-  StringBuilder builder;
-  builder.Append("@font-face { ");
-  builder.Append(getPropertyNameString(property_id));
-  builder.Append(" : ");
-  builder.Append(property_value);
-  builder.Append("; }");
-  StyleRuleBase* rule = ParseRule(context, nullptr, builder.ToString());
-  if (!rule || !rule->IsFontFaceRule())
-    return nullptr;
-  return ToStyleRuleFontFace(rule)->Properties().GetPropertyCSSValue(
-      property_id);
+    const ExecutionContext* context) {
+  MutableStylePropertySet* style =
+      MutableStylePropertySet::Create(kCSSFontFaceRuleMode);
+  CSSParser::ParseValue(style, property_id, property_value, true);
+  const CSSValue* value = style->GetPropertyCSSValue(property_id);
+  if (getPropertyNameString(property_id) == "src" && value) {
+    for (size_t i = 0; i < ToCSSValueList(value)->length(); ++i) {
+      CSSFontFaceSrcValue& font_face = const_cast<CSSFontFaceSrcValue&>(
+          ToCSSFontFaceSrcValue(ToCSSValueList(value)->Item(i)));
+      font_face.UpdateAbsoluteResource(context);
+    }
+  }
+
+  return value;
 }
 
 }  // namespace blink
