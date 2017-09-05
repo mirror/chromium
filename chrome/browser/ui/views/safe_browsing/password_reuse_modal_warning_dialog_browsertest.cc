@@ -31,10 +31,12 @@ class PasswordReuseModalWarningTest : public DialogBrowserTest {
     content::WebContents* web_contents =
         browser()->tab_strip_model()->GetActiveWebContents();
     dialog_ = new PasswordReuseModalWarningDialog(
-        web_contents,
+        web_contents, nullptr,
         base::BindOnce(&PasswordReuseModalWarningTest::DialogCallback,
                        base::Unretained(this)));
-    constrained_window::ShowWebModalDialogViews(dialog_, web_contents);
+    constrained_window::CreateBrowserModalDialogViews(
+        dialog_, web_contents->GetTopLevelNativeWindow())
+        ->Show();
   }
 
   void DialogCallback(PasswordProtectionService::WarningAction action) {
