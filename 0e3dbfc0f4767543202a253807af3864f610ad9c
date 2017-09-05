@@ -16,6 +16,24 @@
       "revId": "0e3dbfc0f4767543202a253807af3864f610ad9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ab7e886_0ae0842c",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1900,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-05T20:30:32Z",
+      "side": 1,
+      "message": "Yes, \"progressbar\" seems like an exception, so I think\nthis switch is needed.",
+      "parentUuid": "e151fbc0_d5f79499",
+      "revId": "0e3dbfc0f4767543202a253807af3864f610ad9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
