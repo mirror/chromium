@@ -808,6 +808,7 @@ Resources.ServiceWorkerCacheTreeElement = class extends Resources.StorageCategor
     var swCacheTreeElement = new Resources.SWCacheTreeElement(this._storagePanel, model, cache);
     this._swCacheTreeElements.push(swCacheTreeElement);
     this.appendChild(swCacheTreeElement);
+    // this._listModifiedForTest();
   }
 
   /**
@@ -824,6 +825,7 @@ Resources.ServiceWorkerCacheTreeElement = class extends Resources.StorageCategor
     this.removeChild(swCacheTreeElement);
     this._swCacheTreeElements.remove(swCacheTreeElement);
     this.setExpandable(this.childCount() > 0);
+    // this._listModifiedForTest();
   }
 
   /**
@@ -842,6 +844,9 @@ Resources.ServiceWorkerCacheTreeElement = class extends Resources.StorageCategor
     if (index !== -1)
       return this._swCacheTreeElements[i];
     return null;
+  }
+
+  _listModifiedForTest() {
   }
 };
 
