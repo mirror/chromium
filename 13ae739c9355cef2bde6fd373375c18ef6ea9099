@@ -22,6 +22,30 @@
       "revId": "13ae739c9355cef2bde6fd373375c18ef6ea9099",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5683d64a_be4e0138",
+        "filename": "components/leveldb/public/interfaces/leveldb.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-09-05T22:31:08Z",
+      "side": 1,
+      "message": "I think my prior reply got lost. The options are all sanitized in leveldb::DB::Open. See https://cs.chromium.org/chromium/src/third_party/leveldatabase/src/db/db_impl.cc?sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d90",
+      "parentUuid": "7ee95a21_e39f6da3",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 27
+      },
+      "revId": "13ae739c9355cef2bde6fd373375c18ef6ea9099",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
