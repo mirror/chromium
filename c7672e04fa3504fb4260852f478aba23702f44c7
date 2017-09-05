@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0ff8938_972cada3",
+        "filename": "ios/chrome/share_extension/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-09-05T09:12:30Z",
+      "side": 1,
+      "message": "Alphabetical order please.",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 16
+      },
+      "revId": "c7672e04fa3504fb4260852f478aba23702f44c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
