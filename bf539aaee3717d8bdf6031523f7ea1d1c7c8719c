@@ -22,6 +22,30 @@
       "revId": "bf539aaee3717d8bdf6031523f7ea1d1c7c8719c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b619f865_b4a17482",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-09-05T13:31:43Z",
+      "side": 1,
+      "message": "Moved everything to the helper function in cl 649550, abandoning this cl.",
+      "parentUuid": "fb3691d8_768c250b",
+      "range": {
+        "startLine": 431,
+        "startChar": 65,
+        "endLine": 431,
+        "endChar": 72
+      },
+      "revId": "bf539aaee3717d8bdf6031523f7ea1d1c7c8719c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
