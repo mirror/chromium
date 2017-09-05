@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f4a4702_a3ba4168",
+        "filename": "tools/grit/grit/grd_reader.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-05T20:18:05Z",
+      "side": 1,
+      "message": "should this maybe go in a finally: block?",
+      "revId": "26ab14113943fc7e72cd6654581eed24b4f593b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa0bcb3e_0a2aa8a6",
+        "filename": "tools/grit/grit/tool/build.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-05T20:18:05Z",
+      "side": 1,
+      "message": "This import should go at the top. That said, probably a simpler format would be fine. E.g.:\n\nIDS_FOO1,12345,some/file/path\nIDS_FOO2,12346,some/file/path\n\nCan just use \u0027,\u0027.join() and \u0027\\n\u0027.join()\n\nIf you want to stick with JSON, I think you should use a list of dicts:\n[{ \"name\": \"IDS_FOO1\", \"id\": 13245, \"source\": \"some/file/path\"}, ...]\n\nEither way, I think you should make \"info\" a list of tuples rather than a dict. That way you\u0027re not making assumptions about which field to index on.",
+      "revId": "26ab14113943fc7e72cd6654581eed24b4f593b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
