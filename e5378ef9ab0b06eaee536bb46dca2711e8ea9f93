@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "5bedd755_6fbfbf93",
+        "filename": "build/vs_toolchain.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-09-05T21:34:11Z",
+      "side": 1,
+      "message": "In my mind the file is already readable and we\u0027re just adding IWRITE to that, so I liked the more concise comment. But ok, changed to what you suggested.",
+      "parentUuid": "2c0e47e5_7447c090",
+      "revId": "e5378ef9ab0b06eaee536bb46dca2711e8ea9f93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5504751e_7f2fe4c3",
         "filename": "build/vs_toolchain.py",
         "patchSetId": 2
