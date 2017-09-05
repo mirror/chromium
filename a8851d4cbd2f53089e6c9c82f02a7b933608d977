@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "642e9faf_23021077",
+        "filename": "build/win/reorder-imports.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-09-05T17:32:39Z",
+      "side": 1,
+      "message": "Maybe check here that chrome_elf was at least in the list as it looks like that\u0027s done here https://github.com/google/syzygy/blob/master/syzygy/swapimport/swapimport_app.cc#L181.",
+      "revId": "a8851d4cbd2f53089e6c9c82f02a7b933608d977",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
