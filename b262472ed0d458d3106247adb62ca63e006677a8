@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b610dfb7_9342434b",
+        "filename": "third_party/WebKit/Source/bindings/scripts/compute_interfaces_info_individual.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-09-05T04:11:47Z",
+      "side": 1,
+      "message": "output_file_basename ?",
+      "range": {
+        "startLine": 109,
+        "startChar": 4,
+        "endLine": 109,
+        "endChar": 25
+      },
+      "revId": "b262472ed0d458d3106247adb62ca63e006677a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9fc43f0_de8168c0",
+        "filename": "third_party/WebKit/Source/bindings/scripts/idl_definitions.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-09-05T04:11:47Z",
+      "side": 1,
+      "message": "I\u0027d like not to add this kind of information here. In my mental model, IdlDefinitions and other classes defined in idl_definitions.py shouldn\u0027t have information which is specific to code generator.\n\nWould it be possible to have a helper function in utilities.py that takes an IdlDefinitions and returns the name of the first definition?",
+      "revId": "b262472ed0d458d3106247adb62ca63e006677a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
