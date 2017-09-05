@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad576e05_217926e7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-09-05T13:18:38Z",
+      "side": 1,
+      "message": "please wrap lines at 80c",
+      "revId": "52a6d2abd0f61325b95781682ac4c3373f39964b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
