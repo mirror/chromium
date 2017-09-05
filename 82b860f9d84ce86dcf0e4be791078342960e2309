@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06f1d05d_dd6dd6b1",
+        "filename": "content/browser/background_fetch/background_fetch_delegate.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-05T12:45:13Z",
+      "side": 1,
+      "message": "Is it intentional that this method never gets called anywhere (it didn\u0027t before this patch either, FWIW)?",
+      "range": {
+        "startLine": 49,
+        "startChar": 17,
+        "endLine": 49,
+        "endChar": 34
+      },
+      "revId": "82b860f9d84ce86dcf0e4be791078342960e2309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06339a6a_9f45b148",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-05T12:45:13Z",
+      "side": 1,
+      "message": "Nit: No need to list directory contents here :p",
+      "range": {
+        "startLine": 20,
+        "startChar": 78,
+        "endLine": 20,
+        "endChar": 80
+      },
+      "revId": "82b860f9d84ce86dcf0e4be791078342960e2309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4232a06f_5515da33",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-05T12:45:13Z",
+      "side": 1,
+      "message": "It seems you should be able to get rid of this Core completely, by making StartRequest an IO thread method of the DelegateProxy that posts to UI, and making the Delegate post to IO when calling methods of Delegate::Client (documented of course).",
+      "range": {
+        "startLine": 22,
+        "startChar": 36,
+        "endLine": 22,
+        "endChar": 40
+      },
+      "revId": "82b860f9d84ce86dcf0e4be791078342960e2309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24c7e431_2e48d2f4",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-05T12:45:13Z",
+      "side": 1,
+      "message": "Nit: make these 3 methods public and add a \"// BackgroundFetchDelegate::Client implementation:\" comment.",
+      "range": {
+        "startLine": 96,
+        "startChar": 2,
+        "endLine": 96,
+        "endChar": 6
+      },
+      "revId": "82b860f9d84ce86dcf0e4be791078342960e2309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
