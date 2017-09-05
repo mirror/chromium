@@ -116,6 +116,24 @@
     },
     {
       "key": {
+        "uuid": "5c2a4dd5_9108e3c0",
+        "filename": "ash/login/ui/login_auth_user_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-05T17:37:14Z",
+      "side": 1,
+      "message": "+1 to moving to LockContentsView, there will be a little bit of code w.r.t. selecting the active AuthUserView (ie, finding the correct anchor) since there are multiple AuthUserView instances, but then we guarantee there is only one bubble shown.",
+      "parentUuid": "3c1eaf5d_16800bc6",
+      "revId": "281a94f429d51a504e091f60fba085bf3bb99c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dba821dc_24243a14",
         "filename": "ash/login/ui/login_auth_user_view.cc",
         "patchSetId": 1
