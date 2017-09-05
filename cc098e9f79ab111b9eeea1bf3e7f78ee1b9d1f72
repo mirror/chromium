@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "efdf1995_c4e1586e",
+        "filename": "chrome/browser/chromeos/extensions/device_local_account_external_policy_loader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-05T23:12:48Z",
+      "side": 1,
+      "message": "Good point, done.",
+      "parentUuid": "7553c706_cc5e0710",
+      "revId": "cc098e9f79ab111b9eeea1bf3e7f78ee1b9d1f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4b7be94c_41586abf",
         "filename": "chrome/browser/chromeos/extensions/device_local_account_external_policy_loader.cc",
         "patchSetId": 12
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-05T22:57:27Z",
       "side": 1,
       "message": "Why not use old syntax\n  prefs_.reset(prefs-\u003eDeepCopy());\n?",
+      "revId": "cc098e9f79ab111b9eeea1bf3e7f78ee1b9d1f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34730cf6_0b3e2f4a",
+        "filename": "chrome/browser/chromeos/extensions/device_local_account_external_policy_loader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-05T23:12:48Z",
+      "side": 1,
+      "message": "DeepCopy/CreateDeepCopy is being deprecated.\nAdmittedly, since this CL doesn\u0027t uniformly use Clone(), changed to CreateDeepCopy() for now.",
+      "parentUuid": "4b7be94c_41586abf",
       "revId": "cc098e9f79ab111b9eeea1bf3e7f78ee1b9d1f72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
