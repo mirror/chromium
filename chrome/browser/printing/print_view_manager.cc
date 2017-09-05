@@ -132,6 +132,23 @@ void PrintViewManager::PrintPreviewDone() {
   if (print_preview_state_ == NOT_PREVIEWING)
     return;
 
+#if BUILDFLAG(ENABLE_PRINT_PREVIEW)
+  // Send ClosePrintPreview message for 'afterprint' event.
+  //
+  // On non-Windows, on_print_dialog_shown_callback_ is not null when
+  // we are switching to system dialog printing. We don't need to send
+  // ClosePrintPreviewDialog in such cases. PrintRenderFrameHelper is
+  // responsible to dispatch 'afterprint' event.
+  //
+  // On Windows, on_print_dialog_shown_callback_ is always null, and
+  // we always send ClosePrintPreviewDialog. It's ok to dispatch
+  // 'afterprint' at this timing because system dialog printing on
+  // Windows doesn't need the original frame.
+  if (on_print_dialog_shown_callback_.is_null())
+    print_preview_rfh_->Send(new PrintMsg_ClosePrintPreviewDialog(
+        print_preview_rfh_->GetRoutingID()));
+#endif
+
   if (print_preview_state_ == SCRIPTED_PREVIEW) {
     auto& map = g_scripted_print_preview_closure_map.Get();
     auto it = map.find(scripted_print_preview_rph_);
