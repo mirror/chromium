@@ -44,6 +44,8 @@ const char* PasswordsCounter::GetPrefName() const {
 
 void PasswordsCounter::Count() {
   cancelable_task_tracker()->TryCancelAll();
+  InvalidateWeakPtrs();
+
   // TODO(msramek): We don't actually need the logins themselves, just their
   // count. Consider implementing |PasswordStore::CountAutofillableLogins|.
   // This custom request should also allow us to specify the time range, so that

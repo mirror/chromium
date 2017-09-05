@@ -48,6 +48,8 @@ class PasswordStoreConsumer {
 
   bool HasWeakPtrs() const { return weak_ptr_factory_.HasWeakPtrs(); }
 
+  void InvalidateWeakPtrs();
+
  protected:
   virtual ~PasswordStoreConsumer();
 
