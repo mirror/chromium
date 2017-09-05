@@ -6,6 +6,7 @@ include_rules = [
   "+base/cancelable_callback.h",
   "+base/command_line.h",
   "+base/compiler_specific.h",
+  "+base/debug/crash_logging.h",
   "+base/debug/stack_trace.h",
   "+base/debug/task_annotator.h",
   "+base/feature_list.h",
