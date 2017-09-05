@@ -161,6 +161,24 @@
     },
     {
       "key": {
+        "uuid": "be0c468a_e246e660",
+        "filename": "third_party/WebKit/Source/core/editing/Position.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-09-05T03:47:04Z",
+      "side": 1,
+      "message": "I see CanBeAnchorNode().\nNo need to test for shadow root.",
+      "parentUuid": "b1ca7a68_2afe7302",
+      "revId": "1b7319d50ee8b38cdd0e66053797a69ad225327e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d4d575a_61dcb1f4",
         "filename": "third_party/WebKit/Source/core/editing/Position.h",
         "patchSetId": 7
