@@ -59,6 +59,10 @@ class CONTENT_EXPORT ResourceLoader : public net::URLRequest::Delegate,
   // ResourceHandler::Delegate implementation:
   void OutOfBandCancel(int error_code, bool tell_renderer) override;
 
+  // CHECKs that the associated URLRequest is still present on its context.
+  // Added for http://crbug.com/754704; remove when that bug is resolved.
+  void AssertURLRequestPresent() const;
+
  private:
   // ResourceController implementation for the ResourceLoader.
   class Controller;
@@ -180,6 +184,10 @@ class CONTENT_EXPORT ResourceLoader : public net::URLRequest::Delegate,
   int read_buffer_size_;
 
   net::HttpRawRequestHeaders raw_request_headers_;
+
+  // URLRequestContext of the associated URLRequest.
+  // Added for http://crbug.com/754704; remove when that bug is resolved.
+  const net::URLRequestContext* request_context_;
 
   base::ThreadChecker thread_checker_;
 

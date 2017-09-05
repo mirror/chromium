@@ -1855,6 +1855,10 @@ void ResourceDispatcherHostImpl::CancelRequestsForRoute(
     if (loader.first.child_id != child_id)
       continue;
 
+    // Added for http://crbug.com/754704; remove when that bug is resolved.
+    loader.second->AssertURLRequestPresent();
+
+    context->AssertURLRequestPresent(loader.second->request());
     ResourceRequestInfoImpl* info = loader.second->GetRequestInfo();
 
     GlobalRequestID id(child_id, loader.first.request_id);
