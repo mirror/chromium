@@ -46,6 +46,30 @@
       "revId": "c336668ebef37cb31e601ea5d48759a60892ebd0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5a7d85e_1bab2d80",
+        "filename": "components/browsing_data/core/counters/passwords_counter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-09-05T13:43:35Z",
+      "side": 1,
+      "message": "I added a CancelAllRequests() method and changed other places that cancel requests to use this method instead of TryCancelAll().",
+      "parentUuid": "371f3e86_a97f94a9",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 23
+      },
+      "revId": "c336668ebef37cb31e601ea5d48759a60892ebd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
