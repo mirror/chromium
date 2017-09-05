@@ -94,6 +94,76 @@
       "revId": "67a536723a7e878511ce07e2f880124b9bee87db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "695b1863_03fe95d3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-05T16:01:32Z",
+      "side": 1,
+      "message": "Is the purpose of sBitmapCache, then, to hold on to bitmaps that aren\u0027t actively being used but may be used again soon e.g. while scrolling through a RecyclerView?\n\nWhen this class was only used by downloads, we could destroy the entire cache as soon as downloads was closed. Now that this is being used for Suggestions as well, do we still have a mechanism for clearing out all of the cached bitmaps for a destroyed surface?",
+      "parentUuid": "167f3e9e_71926119",
+      "range": {
+        "startLine": 53,
+        "startChar": 1,
+        "endLine": 53,
+        "endChar": 2
+      },
+      "revId": "67a536723a7e878511ce07e2f880124b9bee87db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b7bdd53_548799d0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-05T16:01:32Z",
+      "side": 1,
+      "message": "Iterating through the entire deduplicate cache each time a bitmap is retrieved seems a bit gratuitous. Perhaps we could compact after a thumbnail retrieval if there are no more requests to process?",
+      "range": {
+        "startLine": 171,
+        "startChar": 16,
+        "endLine": 171,
+        "endChar": 44
+      },
+      "revId": "67a536723a7e878511ce07e2f880124b9bee87db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "343ac651_a4c6a0ce",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-05T16:01:32Z",
+      "side": 1,
+      "message": "Should we compact the deduplicate cache here too?",
+      "range": {
+        "startLine": 202,
+        "startChar": 32,
+        "endLine": 202,
+        "endChar": 0
+      },
+      "revId": "67a536723a7e878511ce07e2f880124b9bee87db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
