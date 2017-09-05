@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "26ab584a_dd91bea1",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXLayoutObject.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-09-05T21:46:42Z",
+      "side": 1,
+      "message": "Probably to be perfect it should look at all the children, but I was trying to simplify here. It would be easy enough to look at them all if we agree on the basic mechanics.",
+      "parentUuid": "ccbab6a5_3b21c64b",
+      "revId": "1242a0a35009510629aba2f9302ef7bc3ca0f81d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e2f3b74_68568cec",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXLayoutObject.cpp",
         "patchSetId": 4
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "9a909358_74817209",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXLayoutObject.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-09-05T21:46:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e2f3b74_68568cec",
+      "revId": "1242a0a35009510629aba2f9302ef7bc3ca0f81d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b6230a9_1a2ff284",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXLayoutObject.cpp",
         "patchSetId": 4
@@ -64,6 +100,24 @@
       "writtenOn": "2017-09-05T21:25:28Z",
       "side": 1,
       "message": "Are text boxes really special or does this have to\ndo with the css style?\n\nFor example how are we handling white-space: pre?",
+      "revId": "1242a0a35009510629aba2f9302ef7bc3ca0f81d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40d74276_6ef4a1fb",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXLayoutObject.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 816,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-09-05T21:46:42Z",
+      "side": 1,
+      "message": "Rule should probably be: if whitespace is not collapsed (editable, white-space: pre, white-space: pre-wrap), then it goes in a11y tree as long as it is rendered (has text boxes).",
+      "parentUuid": "5b6230a9_1a2ff284",
       "revId": "1242a0a35009510629aba2f9302ef7bc3ca0f81d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
