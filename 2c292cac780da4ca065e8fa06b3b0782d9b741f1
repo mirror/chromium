@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "2803f6ca_82e2f3d4",
+        "filename": "media/gpu/android/codec_wrapper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-05T18:06:37Z",
+      "side": 1,
+      "message": "oh -- i see.  i was thinking of AVDA, where it calls back with !data after the key is added, since it no longer has the data.  however, that\u0027s not required, is it?  MediaCodecBridgeImpl will happily re-fill the buffer with whatever data it\u0027s given.\n\ni was thinking that we had to send the null the second time.  AVDA just does it because it has no choice one it unmaps the shared data.\n\nyou\u0027re right.  this isn\u0027t really a special case at all.",
+      "parentUuid": "5d38310e_85408072",
+      "revId": "2c292cac780da4ca065e8fa06b3b0782d9b741f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96da5bd4_3296a35b",
         "filename": "media/gpu/android/codec_wrapper.cc",
         "patchSetId": 3
@@ -188,6 +206,24 @@
       "side": 1,
       "message": "I think I just saw it and was worried it was a bug waiting to happen. My reasoning is that EnterTerminalState() should be safe to call from any state. (In the back of my mind I was imagining a future where we may call SetSurface() before Initialize() and SetSurface() may fail).\n\nI\u0027m still not sure of the right way to treat invariants like this one, where the proof of its safety are kind of non obvious and easy to break. I guess unit tests?",
       "parentUuid": "f4c5d3ad_504542d8",
+      "revId": "2c292cac780da4ca065e8fa06b3b0782d9b741f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cf9ae83_dcd9d68a",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-05T18:06:37Z",
+      "side": 1,
+      "message": "hrm, good question.  maybe convert to DCHECK.  as it\u0027s written, it seems like it\u0027s expected that |!codec_config_| will happen, but it isn\u0027t.  it\u0027s also unclear to me that calling SetSurface before Initialize wouldn\u0027t have other issues besides this one.\n\ni don\u0027t know that one can unit test this effectively; this is more of a \"there does not exist a case where...\", which i think aren\u0027t easily expressible as a test.",
+      "parentUuid": "dc3ed5c9_4c262ea1",
       "revId": "2c292cac780da4ca065e8fa06b3b0782d9b741f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
