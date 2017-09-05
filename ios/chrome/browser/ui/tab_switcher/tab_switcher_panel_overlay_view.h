@@ -15,6 +15,8 @@ class ChromeBrowserState;
 
 enum class TabSwitcherPanelOverlayType {
   OVERLAY_PANEL_EMPTY,
+  // |SIGNED_OUT| state is not managed by the |_container|. For this case,
+  // |_signinPromoView| should be visible.
   OVERLAY_PANEL_USER_SIGNED_OUT,
   OVERLAY_PANEL_USER_SIGNED_IN_SYNC_OFF,
   OVERLAY_PANEL_USER_SIGNED_IN_SYNC_ON_NO_SESSIONS,
