@@ -46,6 +46,30 @@
       "revId": "b2919b4bbec190a4b422224ed70c2843d8b8a2c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59bac7ca_d4cc02d8",
+        "filename": "net/quic/chromium/bidirectional_stream_quic_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 964,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-09-05T19:22:17Z",
+      "side": 1,
+      "message": "Ah, I see. That makes sense. I\u0027m going to add Helen to the CL to make sure this is kosher to her too.",
+      "parentUuid": "82f1521b_02e7d898",
+      "range": {
+        "startLine": 964,
+        "startChar": 80,
+        "endLine": 964,
+        "endChar": 0
+      },
+      "revId": "b2919b4bbec190a4b422224ed70c2843d8b8a2c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
