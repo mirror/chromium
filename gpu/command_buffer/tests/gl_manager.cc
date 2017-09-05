@@ -532,7 +532,11 @@ CommandBufferId GLManager::GetCommandBufferID() const {
   return command_buffer_->GetCommandBufferID();
 }
 
-void GLManager::FlushPendingWork() {
+int32_t GLManager::GetStreamId() const {
+  return 0;
+}
+
+void GLManager::FlushOrderingBarrierOnStream(int32_t stream_id) {
   // This is only relevant for out-of-process command buffers.
 }
 
