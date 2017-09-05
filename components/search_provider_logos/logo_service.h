@@ -11,6 +11,7 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "components/keyed_service/core/keyed_service.h"
+#include "components/search_provider_logos/logo_common.h"
 
 class TemplateURLService;
 
@@ -49,20 +50,47 @@ class LogoService : public KeyedService {
 
   ~LogoService() override;
 
+  // Gets the logo for the default search provider and calls the provided
+  // callbacks with the encoded or decoded logos (for GetEncodedLogo() or
+  // GetLogo(), respectively) The service will:
+  //
+  // 1.  Load a cached logo,
+  //     *   and call on_cached_logo_available with a cached logo, if
+  //         available and still up-to-date.
+  //     *   and call on_cached_logo_available with a null logo, if there is no
+  //         cached logo or it is out-of-date.
+  // 2.  Fetch a fresh logo for the default search engine,
+  //     *   and call on_fresh_logo_available with a fresh logo, if the service
+  //         fetched a fresh logo
+  //     *   and call on_fresh_logo_available with a null logo, if there is no
+  //         fresh logo, and it is necessary to invalidate a non-null cached
+  //         logo.
+  //     *   and do nothing, if the default search engine does not have a logo,
+  //         or the cached and fresh logos were both null, or the service failed
+  //         to fetch a fresh logo.
+  // 3.  Call observer->OnObserverRemoved().
+  void GetLogo(LogoCallback on_cached_logo_available,
+               LogoCallback on_fresh_logo_available);
+  void GetEncodedLogo(EncodedLogoCallback on_cached_logo_available,
+                      EncodedLogoCallback on_fresh_logo_available);
+
   // Gets the logo for the default search provider and notifies |observer|
   // 0-2 times with the results. The service will:
   //
   // 1.  Load a cached logo,
   //     *   and call observer->OnLogoAvailable() with a cached logo, if
   //         available and still up-to-date.
-  //     *   and do nothing, if there is no cached logo or it is out-of-date.
+  //     *   and call on_cached_logo_available with a null logo, if there is no
+  //         cached logo or it is out-of-date.
   // 2.  Fetch a fresh logo for the default search engine,
   //     *   and call OnLogoAvailable() with a fresh logo, if the service
   //         fetched a fresh logo
-  //     *   and call OnLogoAvailable() with a null logo, if the fetched logo
-  //         was null and the cached logo was non-null
+  //     *   and call OnLogoAvailable() with a null logo, if the cached logo was
+  //         null, but the search engine reported that a logo should no longer
+  //         be shown.
   //     *   and do nothing, if the default search engine does not have a logo,
-  //         or both the fresh and cached logos were null.
+  //         or the cached and fresh logos were both null, or the service failed
+  //         to fetch a fresh logo.
   // 3.  Call observer->OnObserverRemoved().
   void GetLogo(search_provider_logos::LogoObserver* observer);
 
