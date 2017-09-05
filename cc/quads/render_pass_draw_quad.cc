@@ -6,9 +6,9 @@
 
 #include "base/trace_event/trace_event_argument.h"
 #include "base/values.h"
-#include "cc/base/math_util.h"
 #include "components/viz/common/traced_value.h"
 #include "third_party/skia/include/core/SkImageFilter.h"
+#include "ui/gfx/math_util.h"
 
 namespace cc {
 
@@ -75,9 +75,10 @@ void RenderPassDrawQuad::ExtendValue(
   viz::TracedValue::SetIDRef(reinterpret_cast<void*>(render_pass_id), value,
                              "render_pass_id");
   value->SetInteger("mask_resource_id", resources.ids[kMaskResourceIdIndex]);
-  MathUtil::AddToTracedValue("mask_texture_size", mask_texture_size, value);
-  MathUtil::AddToTracedValue("mask_uv_rect", mask_uv_rect, value);
-  MathUtil::AddToTracedValue("tex_coord_rect", tex_coord_rect, value);
+  gfx::MathUtil::AddToTracedValue("mask_texture_size", mask_texture_size,
+                                  value);
+  gfx::MathUtil::AddToTracedValue("mask_uv_rect", mask_uv_rect, value);
+  gfx::MathUtil::AddToTracedValue("tex_coord_rect", tex_coord_rect, value);
 }
 
 }  // namespace cc
