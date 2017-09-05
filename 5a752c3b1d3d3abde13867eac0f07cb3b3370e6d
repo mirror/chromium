@@ -16,6 +16,24 @@
       "revId": "5a752c3b1d3d3abde13867eac0f07cb3b3370e6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5b32299_347dbc2b",
+        "filename": "cc/output/vulkan_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-09-05T17:03:15Z",
+      "side": 1,
+      "message": "Why did the \u0027git cl format\u0027 presubmit not catch this? Was this patch uploaded with hooks bypassed?",
+      "parentUuid": "a3a61d4e_1ee0f239",
+      "revId": "5a752c3b1d3d3abde13867eac0f07cb3b3370e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
