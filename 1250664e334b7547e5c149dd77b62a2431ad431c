@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03b230f2_c979082e",
+        "filename": "ios/chrome/common/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-09-05T08:56:07Z",
+      "side": 1,
+      "message": "I would call this target common_extension or extension_common.",
+      "range": {
+        "startLine": 34,
+        "startChar": 12,
+        "endLine": 34,
+        "endChar": 28
+      },
+      "revId": "1250664e334b7547e5c149dd77b62a2431ad431c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f46fce89_be19c351",
+        "filename": "ios/chrome/search_widget_extension/search_action_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-09-05T08:56:07Z",
+      "side": 1,
+      "message": "do we need 2 of those?",
+      "range": {
+        "startLine": 41,
+        "startChar": 6,
+        "endLine": 41,
+        "endChar": 21
+      },
+      "revId": "1250664e334b7547e5c149dd77b62a2431ad431c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
