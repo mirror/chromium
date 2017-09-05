@@ -22,6 +22,30 @@
       "revId": "6a8189147b146d72e91e10cca7f7f432dc42ed2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ea040b1_953c716b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 2386,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-09-05T05:13:14Z",
+      "side": 1,
+      "message": "That is true, this will cause an unnecessary resize if I remember correctly.\n\nAlso, I believe this call, swapContentViewCore is only used for prerender which should now be deprecated everywhere other than the hidden tab use in custom tabs. Is it possible that this change is not needed for your purposes?",
+      "parentUuid": "a07767d8_5fbc362d",
+      "range": {
+        "startLine": 2386,
+        "startChar": 8,
+        "endLine": 2386,
+        "endChar": 26
+      },
+      "revId": "6a8189147b146d72e91e10cca7f7f432dc42ed2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
