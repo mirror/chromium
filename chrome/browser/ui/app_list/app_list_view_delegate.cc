@@ -12,7 +12,6 @@
 #include "base/command_line.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/user_metrics.h"
-#include "base/profiler/scoped_tracker.h"
 #include "build/build_config.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/profiles/profile.h"
@@ -149,9 +148,6 @@ AppListViewDelegate::AppListViewDelegate(AppListControllerDelegate* controller)
 #if defined(GOOGLE_CHROME_BUILD)
   gfx::ImageSkia* image;
   {
-    // TODO(tapted): Remove ScopedTracker below once crbug.com/431326 is fixed.
-    tracked_objects::ScopedTracker tracking_profile(
-        FROM_HERE_WITH_EXPLICIT_FUNCTION("431326 GetImageSkiaNamed()"));
     image = ui::ResourceBundle::GetSharedInstance().GetImageSkiaNamed(
         IDR_APP_LIST_GOOGLE_LOGO_VOICE_SEARCH);
   }
@@ -213,10 +209,6 @@ void AppListViewDelegate::SetProfile(Profile* new_profile) {
       << "Guest mode must use incognito profile";
 
   {
-    // TODO(tapted): Remove ScopedTracker below once crbug.com/431326 is fixed.
-    tracked_objects::ScopedTracker tracking_profile(
-        FROM_HERE_WITH_EXPLICIT_FUNCTION(
-            "431326 AppListViewDelegate TemplateURL etc."));
     TemplateURLService* template_url_service =
         TemplateURLServiceFactory::GetForProfile(profile_);
     template_url_service_observer_.Add(template_url_service);
