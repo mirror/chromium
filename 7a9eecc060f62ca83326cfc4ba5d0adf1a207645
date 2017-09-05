@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6a4d6ee_f2c11448",
+        "filename": "google_apis/test/data/drive/filelist.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-09-05T10:41:27Z",
+      "side": 1,
+      "message": "Note: I made this change because the new test inspects modifiedByMeDate and I wanted to make this value different from modifiedDate.",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 50
+      },
+      "revId": "7a9eecc060f62ca83326cfc4ba5d0adf1a207645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
