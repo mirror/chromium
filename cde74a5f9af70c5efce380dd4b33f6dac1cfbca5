@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5efb7b47_a6ce4e09",
+        "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-05T08:47:06Z",
+      "side": 1,
+      "message": "now that the type of callback_ is changed to OnceCallback by the last rebase, I can just use std::move instead of assigning new instance.",
+      "range": {
+        "startLine": 61,
+        "startChar": 16,
+        "endLine": 61,
+        "endChar": 24
+      },
+      "revId": "cde74a5f9af70c5efce380dd4b33f6dac1cfbca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
