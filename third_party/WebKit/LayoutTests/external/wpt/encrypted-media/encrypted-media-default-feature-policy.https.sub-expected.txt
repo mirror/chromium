@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Default "encrypted-media" feature policy ["self"] allows the top-level document.
+PASS Default "encrypted-media" feature policy ["self"] allows same-origin iframes.
+FAIL Default "encrypted-media" feature policy ["self"] disallows cross-origin iframes. assert_equals: expected "#NotSupportedError: requestMediaKeySystemAccess is disabled by feature policy." but got "#OK"
+PASS Feature policy "encrypted-media" can be enabled in cross-origin iframes using "allow" attribute.
+Harness: the test ran to completion.
+
