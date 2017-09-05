@@ -41,6 +41,12 @@ struct DISPLAY_MANAGER_EXPORT TouchCalibrationData {
                : pair_1.first.x() < pair_2.first.x();
   }
 
+  // Returns a hash that can be used as a key for storing display preferences
+  // for a display associated with a touch device.
+  static uint32_t GenerateTouchDeviceIdentifier(const std::string& device_name,
+                                                uint16_t vendor_id,
+                                                uint16_t product_id);
+
   bool operator==(TouchCalibrationData other) const;
 
   // Calibration point pairs used during calibration. Each point pair contains a
@@ -49,6 +55,9 @@ struct DISPLAY_MANAGER_EXPORT TouchCalibrationData {
 
   // Bounds of the touch display when the calibration was performed.
   gfx::Size bounds;
+
+  // A unique identifier for the touch device.
+  uint32_t touch_device_identifier;
 };
 
 // A class that represents the display's mode info.
@@ -178,6 +187,9 @@ class DISPLAY_MANAGER_EXPORT ManagedDisplayInfo {
 
   // Associate the input device with identifier |id| with this display.
   void AddInputDevice(int id);
+
+  // Disassociate the input device with identifier |id| from this display.
+  void RemoveInputDevice(int id);
 
   // Clear the list of input devices associated with this display.
   void ClearInputDevices();

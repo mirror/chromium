@@ -265,8 +265,9 @@ Polymer({
    * @private
    */
   showTouchCalibrationSetting_: function(display) {
-    return !display.isInternal && display.hasTouchSupport &&
-        loadTimeData.getBoolean('enableTouchCalibrationSetting');
+    // return !display.isInternal && display.hasTouchSupport &&
+        // loadTimeData.getBoolean('enableTouchCalibrationSetting');
+    return !display.isInternal;
   },
 
   /**

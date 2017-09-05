@@ -45,6 +45,23 @@ class EVENTS_DEVICES_EXPORT DeviceDataManager
   void ConfigureTouchDevices(
       const std::vector<ui::TouchDeviceTransform>& transforms);
 
+  // This will temporarily associate the touch device having |touch_device_id|
+  // and the display having id as |display_under_calibration_| until the next
+  // call to |ConfigureTouchDevices()|.
+  void AssociateTouchDeviceForCalibration(int touch_device_id);
+
+  // Initializes the parameters for touch device association. Initializes
+  // |transform_for_touch_device_under_calibration_| that will be associated w
+  // ith the touch device being used during touch calibration.
+  void PrepareForTouchDeviceAssociation(
+      const ui::TouchDeviceTransform& transform,
+      int64_t internal_display_id);
+
+  // Resets params associated with Touch association.
+  void ResetTouchCalibrationParams();
+
+  bool require_touch_association() const { return require_touch_association_; }
+
   void ApplyTouchTransformer(int touch_device_id, float* x, float* y);
 
   // Gets the display that touches from |touch_device_id| should be sent to.
@@ -117,6 +134,18 @@ class EVENTS_DEVICES_EXPORT DeviceDataManager
   // have default values if the device with corresponding ID isn't a touchscreen
   // or doesn't exist.
   std::array<TouchDeviceTransform, kMaxDeviceNum> touch_map_;
+
+  // The id of the display that is undergoing touch calibration. This helps
+  // associate touch devices that are not associated with any displays.
+  // This will have a valid display id when the display that is under going
+  // touch calibration does not have a touch device associated with it. This
+  // is only valid if |require_touch_association_| is true.
+  // The |device_id| field stores the internal touch device's id.
+  ui::TouchDeviceTransform transform_for_touch_device_under_calibration_;
+
+  // Is true when the display that is undergoing touch calibration does not have
+  // a touch device associated with it.
+  bool require_touch_association_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(DeviceDataManager);
 };

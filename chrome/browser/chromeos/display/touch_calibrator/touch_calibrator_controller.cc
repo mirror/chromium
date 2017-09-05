@@ -10,10 +10,19 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/chromeos/display/touch_calibrator/touch_calibrator_view.h"
 #include "ui/display/screen.h"
+#include "ui/events/devices/device_data_manager.h"
+#include "ui/events/devices/touch_device_transform.h"
 #include "ui/events/event.h"
 #include "ui/events/event_constants.h"
 
 namespace chromeos {
+namespace {
+
+display::DisplayManager* GetDisplayManager() {
+  return ash::Shell::Get()->display_manager();
+}
+
+}  // namespace
 
 // Time interval after a touch event during which all other touch events are
 // ignored during calibration.
@@ -57,7 +66,19 @@ void TouchCalibratorController::StartCalibration(
         base::MakeUnique<TouchCalibratorView>(display, is_primary_view);
   }
 
-  ash::Shell::Get()->touch_transformer_controller()->SetForCalibration(true);
+  ui::TouchDeviceTransform touch_device_transform;
+  touch_device_transform.display_id = target_display_.id();
+  touch_device_transform.transform.Translate(
+      GetDisplayManager()
+          ->GetDisplayInfo(target_display_.id())
+          .bounds_in_native()
+          .OffsetFromOrigin());
+  int64_t internal_display_id = display::Display::HasInternalDisplay()
+                                    ? display::Display::InternalDisplayId()
+                                    : display::kInvalidDisplayId;
+  LOG(ERROR) << "Internal Display ID: " << internal_display_id;
+  ui::DeviceDataManager::GetInstance()->PrepareForTouchDeviceAssociation(
+      touch_device_transform, internal_display_id);
 
   // Add self as an event handler target.
   ash::Shell::Get()->AddPreTargetHandler(this);
@@ -74,6 +95,9 @@ void TouchCalibratorController::StopCalibration() {
 
   // Remove self as the event handler.
   ash::Shell::Get()->RemovePreTargetHandler(this);
+
+  // Reset any state change caused in DeviceDataManager.
+  ui::DeviceDataManager::GetInstance()->ResetTouchCalibrationParams();
 
   // Transition all touch calibrator views to their final state for a graceful
   // exit.
@@ -103,6 +127,15 @@ void TouchCalibratorController::OnTouchEvent(ui::TouchEvent* touch) {
     return;
   if (touch->type() != ui::ET_TOUCH_RELEASED)
     return;
+  // If the event is from the internal touch device, do nothing. We do not want
+  // to calibrate or reassociate the internal touch device.
+  if (display::Display::HasInternalDisplay()) {
+    int64_t display_id =
+        ui::DeviceDataManager::GetInstance()->GetTargetDisplayForTouchDevice(
+            touch->source_device_id());
+    if (display_id == display::Display::InternalDisplayId())
+      return;
+  }
   if (base::Time::Now() - last_touch_timestamp_ < kTouchIntervalThreshold)
     return;
   last_touch_timestamp_ = base::Time::Now();
@@ -120,8 +153,8 @@ void TouchCalibratorController::OnTouchEvent(ui::TouchEvent* touch) {
       callback_.Reset();
     }
     StopCalibration();
-    ash::Shell::Get()->display_manager()->SetTouchCalibrationData(
-        target_display_.id(), touch_point_quad_,
+    GetDisplayManager()->SetTouchCalibrationData(
+        target_display_.id(), touch->source_device_id(), touch_point_quad_,
         target_screen_calibration_view->size());
     return;
   }
@@ -151,6 +184,10 @@ void TouchCalibratorController::OnTouchEvent(ui::TouchEvent* touch) {
   // Store touch point corresponding to its display point.
   gfx::Point display_point;
   if (target_screen_calibration_view->GetDisplayPointLocation(&display_point)) {
+    LOG(ERROR) << "Touch event received: " << touch << " [" << touch->GetName()
+               << "]";
+    LOG(ERROR) << display_point.ToString() << " -> "
+               << touch->location().ToString();
     touch_point_quad_[state_index] =
         std::make_pair(display_point, touch->location());
   } else {

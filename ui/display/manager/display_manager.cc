@@ -43,6 +43,8 @@
 #if defined(OS_CHROMEOS)
 #include "base/sys_info.h"
 #include "chromeos/system/devicemode.h"
+#include "ui/events/devices/device_data_manager.h"
+#include "ui/events/devices/touchscreen_device.h"
 #endif
 
 #if defined(OS_WIN)
@@ -133,6 +135,18 @@ bool ContainsDisplayWithId(const std::vector<Display>& displays,
       return true;
   }
   return false;
+}
+
+const ui::TouchscreenDevice& GetTouchScreenDevice(int touch_device_id) {
+  DCHECK(touch_device_id);
+  const std::vector<ui::TouchscreenDevice>& device_list =
+      ui::DeviceDataManager::GetInstance()->GetTouchscreenDevices();
+  for (const auto& device : device_list)
+    if (device.id == touch_device_id)
+      return device;
+
+  NOTREACHED() << "No touchscreen device found with id: " << touch_device_id;
+  return ui::TouchscreenDevice();
 }
 
 }  // namespace
@@ -1031,25 +1045,81 @@ bool DisplayManager::SoftwareMirroringEnabled() const {
   return software_mirroring_enabled();
 }
 
-void DisplayManager::SetTouchCalibrationData(
+bool DisplayManager::SetTouchCalibrationData(
     int64_t display_id,
     const TouchCalibrationData::CalibrationPointPairQuad& point_pair_quad,
     const gfx::Size& display_bounds) {
+  // Find the touch device id associated with the display.
+  const std::vector<int>& input_device_ids =
+      display_info_[display_id].input_devices();
+  for (auto id : input_device_ids) {
+    if (ui::DeviceDataManager::GetInstance()->GetTargetDisplayForTouchDevice(
+            id) == display_id) {
+      SetTouchCalibrationData(display_id, id, point_pair_quad, display_bounds);
+      return true;
+    }
+  }
+  return false;
+}
+
+void DisplayManager::SetTouchCalibrationData(
+    int64_t display_id,
+    int32_t touch_device_id,
+    const TouchCalibrationData::CalibrationPointPairQuad& point_pair_quad,
+    const gfx::Size& display_bounds) {
+  DCHECK(touch_device_id) << "Invalid Touch device id provided";
+
+  // Do not calibrate or perform any association if the touch device is the
+  // internal touch device.
+  if (display::Display::HasInternalDisplay() &&
+      ui::DeviceDataManager::GetInstance()->GetTargetDisplayForTouchDevice(
+          touch_device_id) == display::Display::InternalDisplayId()) {
+    return;
+  }
+
   bool update = false;
+  bool touch_calibration_data_set = false;
+
   TouchCalibrationData calibration_data(point_pair_quad, display_bounds);
+  const ui::TouchscreenDevice& device = GetTouchScreenDevice(touch_device_id);
+  calibration_data.touch_device_identifier =
+      TouchCalibrationData::GenerateTouchDeviceIdentifier(
+          device.name, device.vendor_id, device.product_id);
+
   DisplayInfoList display_info_list;
   for (const auto& display : active_display_list_) {
     ManagedDisplayInfo info = GetDisplayInfo(display.id());
+
+    const std::vector<int>& input_devices = info.input_devices();
+    auto it =
+        std::find(input_devices.begin(), input_devices.end(), touch_device_id);
+
     if (info.id() == display_id) {
+      // Associate the device with the display if they are not already
+      // associated.
+      if (it == input_devices.end())
+        info.AddInputDevice(touch_device_id);
+
+      info.set_touch_support(Display::TOUCH_SUPPORT_AVAILABLE);
       info.SetTouchCalibrationData(calibration_data);
+      touch_calibration_data_set = true;
       update = true;
+    } else {
+      // Disassociate the touch device with every other display.
+      if (it != input_devices.end()) {
+        info.RemoveInputDevice(touch_device_id);
+        info.set_touch_support(Display::TOUCH_SUPPORT_UNAVAILABLE);
+        info.clear_touch_calibration_data();
+        update = true;
+      }
     }
     display_info_list.push_back(info);
   }
+
+  if (update && !touch_calibration_data_set)
+    display_info_[display_id].SetTouchCalibrationData(calibration_data);
   if (update)
     UpdateDisplaysWith(display_info_list);
-  else
-    display_info_[display_id].SetTouchCalibrationData(calibration_data);
 }
 
 void DisplayManager::ClearTouchCalibrationData(int64_t display_id) {

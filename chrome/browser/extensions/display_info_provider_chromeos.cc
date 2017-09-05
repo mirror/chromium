@@ -23,6 +23,7 @@
 #include "ui/display/display_layout_builder.h"
 #include "ui/display/manager/display_manager.h"
 #include "ui/display/types/display_constants.h"
+#include "ui/events/devices/input_device.h"
 #include "ui/gfx/geometry/point.h"
 #include "ui/gfx/geometry/rect.h"
 
@@ -412,11 +413,6 @@ bool ValidateParamsForTouchCalibration(
     return false;
   }
 
-  if (display.touch_support() != display::Display::TOUCH_SUPPORT_AVAILABLE) {
-    *error = "Display Id(" + id + ") does not support touch.";
-    return false;
-  }
-
   return true;
 }
 
@@ -454,6 +450,11 @@ const char DisplayInfoProviderChromeOS::kTouchCalibrationPointsTooLargeError[] =
 // static
 const char DisplayInfoProviderChromeOS::kNativeTouchCalibrationActiveError[] =
     "Another touch calibration is already active.";
+
+// static
+const char DisplayInfoProviderChromeOS::
+    kTouchCalibrationNoTouchDeviceAssociatedError[] =
+        "No touch devices associated with the display";
 
 DisplayInfoProviderChromeOS::DisplayInfoProviderChromeOS() {}
 
@@ -871,8 +872,11 @@ bool DisplayInfoProviderChromeOS::CompleteCustomTouchCalibration(
   }
 
   gfx::Size display_size(bounds.width, bounds.height);
-  ash::Shell::Get()->display_manager()->SetTouchCalibrationData(
-      display.id(), calibration_points, display_size);
+  if (!ash::Shell::Get()->display_manager()->SetTouchCalibrationData(
+          display.id(), calibration_points, display_size)) {
+    *error = kTouchCalibrationNoTouchDeviceAssociatedError;
+    return false;
+  }
   return true;
 }
 

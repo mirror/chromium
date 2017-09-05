@@ -9,6 +9,7 @@
 #include <string>
 #include <vector>
 
+#include "base/hash.h"
 #include "base/logging.h"
 #include "base/stl_util.h"
 #include "base/strings/string_number_conversions.h"
@@ -85,6 +86,16 @@ TouchCalibrationData::TouchCalibrationData(
     const TouchCalibrationData& calibration_data)
     : point_pairs(calibration_data.point_pairs),
       bounds(calibration_data.bounds) {}
+
+// static
+uint32_t TouchCalibrationData::GenerateTouchDeviceIdentifier(
+    const std::string& device_name,
+    uint16_t vendor_id,
+    uint16_t product_id) {
+  std::string hash_str = device_name + " " + base::UintToString(vendor_id) +
+                         " " + base::UintToString(product_id);
+  return base::Hash(hash_str);
+}
 
 bool TouchCalibrationData::operator==(TouchCalibrationData other) const {
   if (bounds != other.bounds)
@@ -501,6 +512,11 @@ bool ManagedDisplayInfo::Use125DSFForUIScaling() const {
 
 void ManagedDisplayInfo::AddInputDevice(int id) {
   input_devices_.push_back(id);
+}
+
+void ManagedDisplayInfo::RemoveInputDevice(int id) {
+  input_devices_.erase(
+      std::find(input_devices_.begin(), input_devices_.end(), id));
 }
 
 void ManagedDisplayInfo::ClearInputDevices() {
