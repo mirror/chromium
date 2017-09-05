@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0ecb0e04_e77b6ddc",
+        "filename": "ios/chrome/browser/ui/browser_list/browser.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-05T13:26:24Z",
+      "side": 1,
+      "message": "As discussed offline, the WebStateListDelegate is not owned by Browser but by BrowserList (to allow multiple Browsers to share the same WebStateListDelegate).",
+      "parentUuid": "23803869_1b300a58",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 42
+      },
+      "revId": "2dad8b5f01d8d5ea539a27aece8974230efe3c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1db7688_52bcbafe",
         "filename": "ios/chrome/browser/ui/browser_list/browser.h",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "2dad8b5f01d8d5ea539a27aece8974230efe3c2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b613ccef_0b5b4fe6",
+        "filename": "ios/chrome/browser/ui/browser_list/browser.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-05T13:26:24Z",
+      "side": 1,
+      "message": "Done (plus added pointer to src/docs/ios/objects.md).",
+      "parentUuid": "b1db7688_52bcbafe",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 2
+      },
+      "revId": "2dad8b5f01d8d5ea539a27aece8974230efe3c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e9d9c195_a6daa50c",
+        "filename": "ios/chrome/browser/ui/browser_list/browser_list_impl.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-05T13:26:24Z",
+      "side": 1,
+      "message": "The API uses \"int\" for consistency with the WebStateList which in turn uses it for consistency with the corresponding desktop class TabStripModel.\n\nFurthermore, the C++ style guide seems to recommend avoiding unsigned integer types:\nhttps://google.github.io/styleguide/cppguide.html#Integer_Types\n\nI\u0027ve added a DCHECK() in CreateNewBrowser() to ensure that we do not create more than INT_MAX Browsers.",
+      "parentUuid": "299ad9cd_0c6b4c19",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 44
+      },
+      "revId": "2dad8b5f01d8d5ea539a27aece8974230efe3c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7a83be4_8d3cd0d4",
         "filename": "ios/chrome/browser/ui/browser_list/browser_list_impl_unittest.mm",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "2dad8b5f01d8d5ea539a27aece8974230efe3c2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdf624da_8d17daf5",
+        "filename": "ios/chrome/browser/ui/browser_list/browser_list_impl_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-05T13:26:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7a83be4_8d3cd0d4",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 64
+      },
+      "revId": "2dad8b5f01d8d5ea539a27aece8974230efe3c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "8a5c3ac6_c6a017e2",
+        "filename": "ios/chrome/browser/ui/browser_list/browser_list_impl_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-05T13:26:24Z",
+      "side": 1,
+      "message": "From gtest FAQ:\n\n\u003e When you need to write per-test set-up and tear-down logic, you have the choice between using the test fixture constructor/destructor or SetUp()/TearDown(). The former is usually preferred (...)\n\nSince the initialisation cannot raise exception and does not call virtual method, I changed the code to use the preferred way to initialise the variable (constructor).\n\nhttps://github.com/google/googletest/blob/master/googletest/docs/FAQ.md#should-i-use-the-constructordestructor-of-the-test-fixture-or-the-set-uptear-down-function",
+      "parentUuid": "c986c448_fc809ec2",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 76
+      },
+      "revId": "2dad8b5f01d8d5ea539a27aece8974230efe3c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9714d36b_3e5e3e2b",
         "filename": "ios/chrome/browser/ui/browser_list/browser_web_state_list_delegate.h",
         "patchSetId": 3
@@ -137,6 +257,30 @@
       "revId": "2dad8b5f01d8d5ea539a27aece8974230efe3c2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f714de31_84a1e2cb",
+        "filename": "ios/chrome/browser/ui/browser_list/browser_web_state_list_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-05T13:26:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9714d36b_3e5e3e2b",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 50
+      },
+      "revId": "2dad8b5f01d8d5ea539a27aece8974230efe3c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
