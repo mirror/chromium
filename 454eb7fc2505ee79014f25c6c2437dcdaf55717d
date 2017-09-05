@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72c9ec2f_ecb8440c",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-09-05T06:22:16Z",
+      "side": 1,
+      "message": "I think that this broke compilation of this unittest on M-61 (3163) branch:\nOn M-61, profile_ is a TestingProfile[1].\nOn ToT, it is a unique_ptr\u003cTestingProfile\u003e[2].\nOn ToT, the change from TestingProfile to unique_ptr\u003cTestingProfile\u003e was done in Hidehiko\u0027s CL:578917 .\n\n[1] https://chromium.googlesource.com/chromium/src/+/61.0.3163.80/chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_unittest.cc#151\n[2] https://cs.chromium.org/chromium/src/chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_unittest.cc?rcl\u003d34bafcf0b406d4810abdcdbfbcb69901db62d02f\u0026l\u003d157",
+      "range": {
+        "startLine": 139,
+        "startChar": 59,
+        "endLine": 139,
+        "endChar": 73
+      },
+      "revId": "454eb7fc2505ee79014f25c6c2437dcdaf55717d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
