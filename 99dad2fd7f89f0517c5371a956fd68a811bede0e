@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "c02d69a1_3209fdb2",
+        "filename": "cc/test/fake_layer_tree_frame_sink.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-05T18:41:58Z",
+      "side": 1,
+      "message": "It\u0027s a good thought, and if rvalue qualifiers were allowed this would be the right way to do it. As they aren\u0027t I suggest a comment on Build saying you can only call it once, and a DCHECK verifying that it is called only once.",
+      "parentUuid": "c9d7df1a_bb514362",
+      "revId": "99dad2fd7f89f0517c5371a956fd68a811bede0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7b2b4133_75b5e73a",
         "filename": "cc/test/fake_layer_tree_frame_sink.h",
         "patchSetId": 4
