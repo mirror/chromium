@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11b0d60e_cc784215",
+        "filename": "media/test/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-05T20:46:43Z",
+      "side": 1,
+      "message": "These targets will just end up failing w/o mp2t support enabled. Should we exclude them if that support is unavailable? Probably ditto with proprietary codecs and other features.",
+      "revId": "7730141481a1135753ccc9edbffc2111fc619f38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "add06258_2801cbe3",
+        "filename": "media/test/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-05T20:46:43Z",
+      "side": 1,
+      "message": "Is lc more common than sbr?",
+      "revId": "7730141481a1135753ccc9edbffc2111fc619f38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5856d277_794cdd13",
+        "filename": "media/test/pipeline_integration_fuzzertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-05T20:46:43Z",
+      "side": 1,
+      "message": "Seems like this switch statement should just return a string. I.e.\n\nstd::string FuzzerVariantEnumToString(variant) {\n  case ADTS: return \"audio/aac\";\n  ... \n}\n\nThen this main function just reduces to:\n\nmedia::ProgressivePipelineIntegrationFuzzerTest(FuzzerVariantEnumToString(variant).RunTest(data, size);",
+      "revId": "7730141481a1135753ccc9edbffc2111fc619f38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7038e930_a344d1e4",
+        "filename": "media/test/pipeline_integration_fuzzertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-05T20:46:43Z",
+      "side": 1,
+      "message": "Seems like this switch statement should just return a string. I.e.\n\nstd::string FuzzerVariantEnumToString(variant) {\n  case ADTS: return \"audio/aac\";\n\n  \n}",
+      "revId": "7730141481a1135753ccc9edbffc2111fc619f38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
