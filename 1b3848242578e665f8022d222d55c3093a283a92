@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c3bbdb4_d5288dd2",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 5581,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-09-05T17:40:40Z",
+      "side": 1,
+      "message": "This is one of the tests that\u0027s failing, you can cross reference the SSLUIMITMSoftwareEnabledTest\u0027s SetUpOnMainThread() method to see the code I am calling in set up.",
+      "revId": "1b3848242578e665f8022d222d55c3093a283a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55eeb6bf_9402303b",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 856,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-09-05T17:40:40Z",
+      "side": 1,
+      "message": "The EnabledWithFinch test I pointed out in the browser test file repeatedly hits this print statement.",
+      "revId": "1b3848242578e665f8022d222d55c3093a283a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
