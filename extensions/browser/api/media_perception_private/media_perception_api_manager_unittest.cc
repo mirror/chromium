@@ -80,36 +80,52 @@ class TestUpstartClient : public FakeUpstartClient {
 
 namespace extensions {
 
-using CallbackStatus = MediaPerceptionAPIManager::CallbackStatus;
-
 namespace {
 
-void RecordStatusAndRunClosure(base::Closure quit_run_loop,
-                               CallbackStatus* status,
-                               CallbackStatus result_status,
-                               media_perception::State result_state) {
-  *status = result_status;
+void RecordStateAndRunClosure(base::Closure quit_run_loop,
+                              media_perception::State* state,
+                              media_perception::State result_state) {
+  *state = result_state;
   quit_run_loop.Run();
 }
 
-CallbackStatus SetStateAndWaitForResponse(
+void RecordDiagnosticsAndRunClosure(
+    base::Closure quit_run_loop,
+    media_perception::Diagnostics* diagnostics,
+    media_perception::Diagnostics result_diagnostics) {
+  *diagnostics = result_diagnostics;
+  quit_run_loop.Run();
+}
+
+media_perception::State SetStateAndWaitForResponse(
     MediaPerceptionAPIManager* manager,
     const media_perception::State& state) {
   base::RunLoop run_loop;
-  CallbackStatus status;
-  manager->SetState(state, base::Bind(&RecordStatusAndRunClosure,
-                                      run_loop.QuitClosure(), &status));
+  media_perception::State state;
+  manager->SetState(state, base::Bind(&RecordStateAndRunClosure,
+                                      run_loop.QuitClosure(), &state));
   run_loop.Run();
-  return status;
+  return state;
 }
 
-CallbackStatus GetStateAndWaitForResponse(MediaPerceptionAPIManager* manager) {
+media_perception::State GetStateAndWaitForResponse(
+    MediaPerceptionAPIManager* manager) {
   base::RunLoop run_loop;
-  CallbackStatus status;
+  media_perception::State state;
   manager->GetState(
-      base::Bind(&RecordStatusAndRunClosure, run_loop.QuitClosure(), &status));
+      base::Bind(&RecordStateAndRunClosure, run_loop.QuitClosure(), &state));
   run_loop.Run();
-  return status;
+  return state;
+}
+
+media_perception::State GetDiagnosticsAndWaitForResponse(
+    MediaPerceptionAPIManager* manager) {
+  base::RunLoop run_loop;
+  media_perception::Diagnostics diagnostics;
+  manager->GetDiagnostics(base::Bind(&RecordDiagnosticsAndRunClosure,
+                                     run_loop.QuitClosure(), &diagnostics));
+  run_loop.Run();
+  return diagnostics;
 }
 
 }  // namespace
@@ -160,17 +176,18 @@ TEST_F(MediaPerceptionAPIManagerTest, UpstartFailure) {
   state.status = media_perception::STATUS_RUNNING;
 
   base::RunLoop run_loop;
-  CallbackStatus status;
-  manager_->SetState(state, base::Bind(&RecordStatusAndRunClosure,
-                                       run_loop.QuitClosure(), &status));
+  media_perception::State state_result;
+  manager_->SetState(state, base::Bind(&RecordStateAndRunClosure,
+                                       run_loop.QuitClosure(), &state_result));
   EXPECT_TRUE(upstart_client_->HandleNextUpstartRequest(false));
   run_loop.Run();
-  EXPECT_EQ(CallbackStatus::PROCESS_IDLE_ERROR, status);
+  EXPECT_EQ(media_perception::SERVICE_ERROR_SERVICE_NOT_RUNNING,
+            state_result.service_error);
 
   // Check that after a failed request, setState RUNNING will go through.
   upstart_client_->set_enqueue_requests(false);
-  EXPECT_EQ(CallbackStatus::SUCCESS,
-            SetStateAndWaitForResponse(manager_.get(), state));
+  EXPECT_EQ(media_perception::SERVICE_ERROR_NONE,
+            SetStateAndWaitForResponse(manager_.get(), state).service_error);
 }
 
 TEST_F(MediaPerceptionAPIManagerTest, UpstartRestartFailure) {
@@ -179,18 +196,19 @@ TEST_F(MediaPerceptionAPIManagerTest, UpstartRestartFailure) {
   state.status = media_perception::STATUS_RESTARTING;
 
   base::RunLoop run_loop;
-  CallbackStatus status;
-  manager_->SetState(state, base::Bind(&RecordStatusAndRunClosure,
-                                       run_loop.QuitClosure(), &status));
+  media_perception::State state_result;
+  manager_->SetState(state, base::Bind(&RecordStateAndRunClosure,
+                                       run_loop.QuitClosure(), &state_result));
   EXPECT_TRUE(upstart_client_->HandleNextUpstartRequest(false));
   run_loop.Run();
-  EXPECT_EQ(CallbackStatus::PROCESS_IDLE_ERROR, status);
+  EXPECT_EQ(media_perception::SERVICE_ERROR_SERVICE_NOT_RUNNING,
+            state_result.service_error);
 
   // Check that after a failed request, setState restarted will still go
   // through.
   upstart_client_->set_enqueue_requests(false);
-  EXPECT_EQ(CallbackStatus::SUCCESS,
-            SetStateAndWaitForResponse(manager_.get(), state));
+  EXPECT_EQ(media_perception::SERVICE_ERROR_NONE,
+            SetStateAndWaitForResponse(manager_.get(), state).service_error);
 }
 
 TEST_F(MediaPerceptionAPIManagerTest, UpstartStall) {
@@ -199,25 +217,25 @@ TEST_F(MediaPerceptionAPIManagerTest, UpstartStall) {
   state.status = media_perception::STATUS_RUNNING;
 
   base::RunLoop run_loop;
-  CallbackStatus status;
-  manager_->SetState(state, base::Bind(&RecordStatusAndRunClosure,
-                                       run_loop.QuitClosure(), &status));
+  media_perception::State state_result;
+  manager_->SetState(state, base::Bind(&RecordStateAndRunClosure,
+                                       run_loop.QuitClosure(), &state_result));
 
-  EXPECT_EQ(CallbackStatus::PROCESS_LAUNCHING_ERROR,
-            GetStateAndWaitForResponse(manager_.get()));
-  EXPECT_EQ(CallbackStatus::PROCESS_LAUNCHING_ERROR,
-            SetStateAndWaitForResponse(manager_.get(), state));
+  EXPECT_EQ(media_perception::SERVICE_ERROR_SERVICE_BUSY_LAUNCHING,
+            GetStateAndWaitForResponse(manager_.get()).service_error);
+  EXPECT_EQ(media_perception::SERVICE_ERROR_SERVICE_BUSY_LAUNCHING,
+            SetStateAndWaitForResponse(manager_.get(), state).service_error);
   EXPECT_TRUE(upstart_client_->HandleNextUpstartRequest(true));
   run_loop.Run();
-  EXPECT_EQ(CallbackStatus::SUCCESS, status);
+  EXPECT_EQ(media_perception::SERVICE_ERROR_NONE, state_result.service_error);
 
   // Verify that after the slow start, things works as normal.
   upstart_client_->set_enqueue_requests(false);
-  EXPECT_EQ(CallbackStatus::SUCCESS,
-            GetStateAndWaitForResponse(manager_.get()));
+  EXPECT_EQ(media_perception::SERVICE_ERROR_NONE,
+            GetStateAndWaitForResponse(manager_.get()).service_error);
   state.status = media_perception::STATUS_SUSPENDED;
-  EXPECT_EQ(CallbackStatus::SUCCESS,
-            SetStateAndWaitForResponse(manager_.get(), state));
+  EXPECT_EQ(media_perception::SERVICE_ERROR_NONE,
+            SetStateAndWaitForResponse(manager_.get(), state).service_error);
 }
 
 TEST_F(MediaPerceptionAPIManagerTest, UpstartRestartStall) {
@@ -226,38 +244,41 @@ TEST_F(MediaPerceptionAPIManagerTest, UpstartRestartStall) {
   state.status = media_perception::STATUS_RESTARTING;
 
   base::RunLoop run_loop;
-  CallbackStatus status;
+  media_perception::State state_result;
   manager_->SetState(state, base::Bind(&RecordStatusAndRunClosure,
-                                       run_loop.QuitClosure(), &status));
+                                       run_loop.QuitClosure(), &state_result));
 
-  EXPECT_EQ(CallbackStatus::PROCESS_LAUNCHING_ERROR,
-            GetStateAndWaitForResponse(manager_.get()));
-  EXPECT_EQ(CallbackStatus::PROCESS_LAUNCHING_ERROR,
-            SetStateAndWaitForResponse(manager_.get(), state));
+  EXPECT_EQ(media_perception::SERVICE_ERROR_SERVICE_BUSY_LAUNCHING,
+            GetStateAndWaitForResponse(manager_.get()).service_error);
+  EXPECT_EQ(media_perception::SERVICE_ERROR_SERVICE_BUSY_LAUNCHING,
+            SetStateAndWaitForResponse(manager_.get(), state).service_error);
   EXPECT_TRUE(upstart_client_->HandleNextUpstartRequest(true));
   run_loop.Run();
-  EXPECT_EQ(CallbackStatus::SUCCESS, status);
+  EXPECT_EQ(media_perception::SERVICE_ERROR_NONE, state_result.service_error);
 
   // Verify that after the slow start, things works as normal.
   upstart_client_->set_enqueue_requests(false);
-  EXPECT_EQ(CallbackStatus::SUCCESS,
-            GetStateAndWaitForResponse(manager_.get()));
+  EXPECT_EQ(media_perception::SERVICE_ERROR_NONE,
+            GetStateAndWaitForResponse(manager_.get()).service_error);
   state.status = media_perception::STATUS_RUNNING;
-  EXPECT_EQ(CallbackStatus::SUCCESS,
-            SetStateAndWaitForResponse(manager_.get(), state));
+  EXPECT_EQ(media_perception::SERVICE_ERROR_NONE,
+            SetStateAndWaitForResponse(manager_.get(), state).service_error);
 }
 
 TEST_F(MediaPerceptionAPIManagerTest, MediaAnalyticsDbusError) {
   media_perception::State state;
   state.status = media_perception::STATUS_RUNNING;
-  EXPECT_EQ(CallbackStatus::SUCCESS,
-            SetStateAndWaitForResponse(manager_.get(), state));
+  EXPECT_EQ(media_perception::SERVICE_ERROR_NONE,
+            SetStateAndWaitForResponse(manager_.get(), state).service_error);
   // Disable the functionality of the fake process.
   media_analytics_client_->set_process_running(false);
-  EXPECT_EQ(CallbackStatus::DBUS_ERROR,
-            GetStateAndWaitForResponse(manager_.get()));
-  EXPECT_EQ(CallbackStatus::DBUS_ERROR,
-            SetStateAndWaitForResponse(manager_.get(), state));
+  EXPECT_EQ(media_perception::SERVICE_ERROR_SERVICE_UNREACHABLE,
+            GetStateAndWaitForResponse(manager_.get()).service_error);
+  EXPECT_EQ(media_perception::SERVICE_ERROR_SERVICE_UNREACHABLE,
+            SetStateAndWaitForResponse(manager_.get(), state).service_error);
+  // Check that getting diagnostics also errors in the same way.
+  EXPECT_EQ(media_perception::SERVICE_ERROR_SERVICE_UNREACHABLE,
+            GetDiagnosticsAndWaitForResponse(manager_.get()).service_error);
 }
 
 }  // namespace extensions
