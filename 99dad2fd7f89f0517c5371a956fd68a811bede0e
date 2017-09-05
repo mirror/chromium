@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa6c7efd_9a5cd17a",
+        "filename": "cc/test/fake_layer_tree_frame_sink.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-05T18:27:57Z",
+      "side": 1,
+      "message": "This could be private?",
+      "revId": "99dad2fd7f89f0517c5371a956fd68a811bede0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fb4192f_5f392f96",
+        "filename": "cc/test/fake_layer_tree_frame_sink.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-05T18:27:57Z",
+      "side": 1,
+      "message": "I think you should not use \u0026\u0026 here, rvalue qualifiers are banned in google style guide.\n\nhttps://google.github.io/styleguide/cppguide.html#C++11",
+      "revId": "99dad2fd7f89f0517c5371a956fd68a811bede0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b2b4133_75b5e73a",
+        "filename": "cc/test/fake_layer_tree_frame_sink.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-05T18:27:57Z",
+      "side": 1,
+      "message": "same here, just use an lvalue reference? Can you give an example you\u0027re trying to avoid and why you think it\u0027s likely?",
+      "revId": "99dad2fd7f89f0517c5371a956fd68a811bede0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
