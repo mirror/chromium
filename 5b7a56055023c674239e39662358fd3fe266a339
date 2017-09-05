@@ -93,6 +93,54 @@
       "revId": "5b7a56055023c674239e39662358fd3fe266a339",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e047972b_f7de930c",
+        "filename": "chrome/browser/android/ntp/content_suggestions_notifier_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-09-05T09:21:01Z",
+      "side": 1,
+      "message": "What was the metric used beforehand?",
+      "parentUuid": "a1fead34_206d8601",
+      "range": {
+        "startLine": 302,
+        "startChar": 47,
+        "endLine": 302,
+        "endChar": 75
+      },
+      "revId": "5b7a56055023c674239e39662358fd3fe266a339",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83403446_4d264580",
+        "filename": "chrome/browser/android/ntp/content_suggestions_notifier_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-09-05T09:21:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d04877aa_e7d4fa82",
+      "range": {
+        "startLine": 302,
+        "startChar": 4,
+        "endLine": 302,
+        "endChar": 46
+      },
+      "revId": "5b7a56055023c674239e39662358fd3fe266a339",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
