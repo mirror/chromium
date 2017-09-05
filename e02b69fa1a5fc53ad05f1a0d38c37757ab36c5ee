@@ -68,6 +68,24 @@
       "revId": "e02b69fa1a5fc53ad05f1a0d38c37757ab36c5ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3db249e7_93fa4ad1",
+        "filename": "content/common/service_worker/service_worker_loader_helpers.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-05T01:21:24Z",
+      "side": 1,
+      "message": "Ah.. no that\u0027s not right. If we remove Send* then the URLLoader classes need  SaveResponseHeaders() for the 500 thing.\n\nAnyway, try to make a naming consistency between \"Populate\" and \"Save\". And we can iterate on the next patchset. It may be possible to remove SaveResponseInfo() from the public interface, or remove PopulateResponseHead(), replacing the callsites with calls to both SaveResponseInfo() and SaveResponseHeaders().",
+      "parentUuid": "32450915_6d04da7f",
+      "revId": "e02b69fa1a5fc53ad05f1a0d38c37757ab36c5ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
