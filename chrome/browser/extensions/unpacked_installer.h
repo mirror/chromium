@@ -15,6 +15,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
 #include "extensions/browser/preload_check.h"
+#include "extensions/common/manifest.h"
 
 class ExtensionService;
 class Profile;
@@ -119,6 +120,20 @@ class UnpackedInstaller
   // Helper to get the Extension::CreateFlags for the installing extension.
   int GetFlags();
 
+  // Helper to load an extension. Should be called on a sequence where file IO
+  // is allowed. Loads the extension, validates extension locales and persists
+  // the ruleset for the Declarative Net Request API, if needed. In case of an
+  // error, returns false and populates |error|.
+  bool LoadExtension(Manifest::Location location,
+                     int flags,
+                     std::string* error);
+
+  // Reads the Declarative Net Request JSON ruleset for the extension, if it
+  // provided one, and persists the indexed ruleset. Returns false and populates
+  // |error| in case of an error. Should be called on a sequence where file IO
+  // is allowed.
+  bool IndexAndPersistRulesIfNeeded(std::string* error);
+
   const Extension* extension() { return extension_.get(); }
 
   // The service we will report results back to.
@@ -132,7 +147,7 @@ class UnpackedInstaller
   base::FilePath extension_path_;
 
   // The extension being installed.
-  scoped_refptr<const Extension> extension_;
+  scoped_refptr<Extension> extension_;
 
   // If true and the extension contains plugins, we prompt the user before
   // loading.

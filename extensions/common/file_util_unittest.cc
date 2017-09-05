@@ -163,22 +163,15 @@ TEST_F(FileUtilTest, InstallUninstallGarbageCollect) {
 TEST_F(FileUtilTest, LoadExtensionWithMetadataFolder) {
   RunDirectoryTest(
       {"_metadata"},
-      std::string("_metadata is a reserved directory that will "
-                  "not be allowed at the time of Chrome Web Store upload."));
+      std::string(
+          "Cannot load extension with file or directory"
+          " name _metadata. Filenames starting with \"_\" are reserved for "
+          "use by the system."));
 }
 
 TEST_F(FileUtilTest, LoadExtensionWithUnderscoreFolder) {
   RunDirectoryTest(
       {"_badfolder"},
-      std::string(
-          "Cannot load extension with file or directory"
-          " name _badfolder. Filenames starting with \"_\" are reserved for "
-          "use by the system."));
-}
-
-TEST_F(FileUtilTest, LoadExtensionWithMetadataAndUnderscoreFolders) {
-  RunDirectoryTest(
-      {"_metadata", "_badfolder"},
       std::string(
           "Cannot load extension with file or directory"
           " name _badfolder. Filenames starting with \"_\" are reserved for "
