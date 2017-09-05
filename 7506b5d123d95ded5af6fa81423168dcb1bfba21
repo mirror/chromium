@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9477923a_490d0b6f",
+        "filename": "ash/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-05T21:21:27Z",
+      "side": 1,
+      "message": "nit: maybe give an example of an accessibility feature instead? \u0027accessibility\u0027 itself isn\u0027t really a \u0027feature\u0027.",
+      "revId": "7506b5d123d95ded5af6fa81423168dcb1bfba21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
