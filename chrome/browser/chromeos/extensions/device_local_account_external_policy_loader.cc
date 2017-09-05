@@ -58,8 +58,11 @@ void DeviceLocalAccountExternalPolicyLoader::StopCache(
 }
 
 void DeviceLocalAccountExternalPolicyLoader::StartLoading() {
-  if (prefs_)
-    LoadFinished();
+  // Through OnExtensionListsUpdated(), |prefs_| might have already loaded but
+  // not consumed because we didn't have an owner then. Pass |prefs_| in that
+  // case if we have an owner now.
+  if (has_owner() && prefs_)
+    LoadFinished(std::move(prefs_));
 }
 
 void DeviceLocalAccountExternalPolicyLoader::OnStoreLoaded(
@@ -78,8 +81,11 @@ void DeviceLocalAccountExternalPolicyLoader::OnStoreError(
 void DeviceLocalAccountExternalPolicyLoader::OnExtensionListsUpdated(
     const base::DictionaryValue* prefs) {
   DCHECK(external_cache_ || prefs->empty());
-  prefs_.reset(prefs->DeepCopy());
-  LoadFinished();
+  prefs_ = base::DictionaryValue::From(
+      std::make_unique<base::Value>(prefs->Clone()));
+  // Only call LoadFinished() when there is an owner to consume |prefs_|.
+  if (has_owner())
+    LoadFinished(std::move(prefs_));
 }
 
 ExternalCache*
