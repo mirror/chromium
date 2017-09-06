@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f41b095_0d89388d",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-06T13:45:41Z",
+      "side": 1,
+      "message": "promiseId is never used in this method. Maybe remove.",
+      "range": {
+        "startLine": 481,
+        "startChar": 6,
+        "endLine": 481,
+        "endChar": 15
+      },
+      "revId": "b7790128f2703dbc174df9d11e4d0fb19250fbcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f409df69_fedc03d1",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-06T13:45:41Z",
+      "side": 1,
+      "message": "Why not put all of this in the function passed to Promise constructor?\n\n  return new Promise(function(resolve, reject) {\n    try {\n      if (options \u0026\u0026 options.password \u0026\u0026 !options.federated) {\n        resolve(new PasswordCredential(options.password);\n        return;\n      }\n      if (option \u0026\u0026 options.federated \u0026\u0026 !options.password) {\n        resolve(new FederatedCredential(options.federated);\n      }\n    } catch (e) {\n      reject(e);\n      return;\n    }\n    reject(Object.create(DOMException.prototype, {\n      name: {value: DOMException.NOT_SUPPORTED_ERR},\n      message: {value: \u0027Invalid CredentialRequestOptions\u0027},\n    });\n  });\n\nNote that I am not an expert of javascript, and don\u0027t have readability in javascript, so maybe this is not consistent with the rest of the code (but to me it looks better than having three variables that need to be kept in sync).",
+      "revId": "b7790128f2703dbc174df9d11e4d0fb19250fbcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
