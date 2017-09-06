@@ -88,18 +88,18 @@ void SourceBufferRange::AdjustEstimatedDurationForNewAppend(
   if (last_appended_buffer->is_duration_estimated()) {
     base::TimeDelta timestamp_delta =
         new_buffers.front()->timestamp() - last_appended_buffer->timestamp();
-    DCHECK(timestamp_delta > base::TimeDelta());
+    DCHECK_GE(timestamp_delta, base::TimeDelta());
     if (last_appended_buffer->duration() != timestamp_delta) {
       DVLOG(1) << "Replacing estimated duration ("
                << last_appended_buffer->duration()
                << ") from previous range-end with derived duration ("
                << timestamp_delta << ").";
       last_appended_buffer->set_duration(timestamp_delta);
-      // To update the range end time here, there is no need to inspect an
-      // entire GOP or even reset the currently tracked |highest_frame_| because
-      // estimated durations should only occur in WebM, which doesn't contain
-      // out-of-order presentation/decode sequences.
-      CHECK_EQ(last_appended_buffer.get(), highest_frame_.get());
+
+      // Caller should take care of updating |highest_frame_|. We cannot assume,
+      // though, that the most recently appended buffer is |highest_frame_|
+      // because there could have been a same-timestamp sequence with
+      // |highest_frame_| not being the most recently appended, even in WebM.
     }
   }
 }
