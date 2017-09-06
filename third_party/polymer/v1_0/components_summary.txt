@@ -304,6 +304,12 @@ Tree: v1.6.2
 Revision: fc3df3875f97cbcee8cfa8f4895d86a4fd2925c7
 Tree link: https://github.com/PolymerElements/paper-tabs/tree/v1.6.2
 
+Name: paper-toast
+Repository: https://github.com/PolymerElements/paper-toast.git
+Tree: v2.0.0
+Revision: 7ba625d1de3511c7eaeefaafafd9085aefcd8a9e
+Tree link: https://github.com/PolymerElements/paper-toast/tree/v2.0.0
+
 Name: paper-toggle-button
 Repository: https://github.com/PolymerElements/paper-toggle-button.git
 Tree: v1.3.0
