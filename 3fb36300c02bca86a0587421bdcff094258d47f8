@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "e266422e_e6460d3e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000389
+      },
+      "writtenOn": "2017-09-06T20:04:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da609697_c1bcf39e",
+      "range": {
+        "startLine": 7,
+        "startChar": 40,
+        "endLine": 7,
+        "endChar": 52
+      },
+      "revId": "3fb36300c02bca86a0587421bdcff094258d47f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6379286_28820f14",
         "filename": "chrome/browser/password_manager/password_manager_util_win.cc",
         "patchSetId": 3
