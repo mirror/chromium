@@ -22,6 +22,40 @@
       "revId": "dc92b12c5b5a3425be332894ab0881c995432949",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba16a9b6_27d61413",
+        "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-09-06T19:14:03Z",
+      "side": 1,
+      "message": "What if the vector is empty, how does the ResultOnceCallback get called in that case?",
+      "revId": "dc92b12c5b5a3425be332894ab0881c995432949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7035cd99_5907c861",
+        "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-09-06T19:14:03Z",
+      "side": 1,
+      "message": "Is StopWorker guaranteed to complete asyncly? If the method can invoke the callback prior to return, I think the \u0027fence\u0027 could attempt to invoke its ResultOnceCallback multiple times.\n\nedit: Ah, ok, looks like it does always complete asyncly, internally it\u0027s using RunSoon(base::BindOnce(callback, SERVICE_WORKER_OK)).",
+      "revId": "dc92b12c5b5a3425be332894ab0881c995432949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
