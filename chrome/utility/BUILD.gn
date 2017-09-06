@@ -52,6 +52,7 @@ static_library("utility") {
     "//ipc",
     "//media",
     "//net:net_with_v8",
+    "//net/interfaces",
     "//printing/features",
     "//services/service_manager/public/cpp",
     "//skia",
