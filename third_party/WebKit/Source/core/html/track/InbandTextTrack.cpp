@@ -25,7 +25,7 @@
 
 #include "core/html/track/InbandTextTrack.h"
 
-#include "core/html/HTMLMediaElement.h"
+#include "core/html/track/TextTrackList.h"
 #include "core/html/track/vtt/VTTCue.h"
 #include "public/platform/WebInbandTextTrack.h"
 #include "public/platform/WebString.h"
@@ -93,9 +93,10 @@ void InbandTextTrack::AddWebVTTCue(double start,
                                    const WebString& id,
                                    const WebString& content,
                                    const WebString& settings) {
-  HTMLMediaElement* owner = MediaElement();
-  DCHECK(owner);
-  VTTCue* cue = VTTCue::Create(owner->GetDocument(), start, end, content);
+  DCHECK(Owner());
+  DCHECK(Owner()->GetExecutionContext()->IsDocument());
+  VTTCue* cue = VTTCue::Create(*ToDocument(Owner()->GetExecutionContext()),
+                               start, end, content);
   cue->setId(id);
   cue->ParseSettings(nullptr, settings);
   addCue(cue);

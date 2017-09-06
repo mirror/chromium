@@ -33,7 +33,6 @@
 
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/dom/ExceptionCode.h"
-#include "core/html/HTMLMediaElement.h"
 #include "core/html/track/CueTimeline.h"
 #include "core/html/track/TextTrackCueList.h"
 #include "core/html/track/TextTrackList.h"
@@ -151,8 +150,8 @@ void TextTrack::setMode(const AtomicString& mode) {
       GetCueTimeline()->AddCues(this, cues_.Get());
   }
 
-  if (MediaElement())
-    MediaElement()->TextTrackModeChanged(this);
+  if (Owner())
+    Owner()->TextTrackModeChanged(this);
 }
 
 TextTrackCueList* TextTrack::cues() {
@@ -355,20 +354,15 @@ const AtomicString& TextTrack::InterfaceName() const {
 }
 
 ExecutionContext* TextTrack::GetExecutionContext() const {
-  HTMLMediaElement* owner = MediaElement();
-  return owner ? owner->GetExecutionContext() : 0;
+  return Owner() ? Owner()->GetExecutionContext() : 0;
 }
 
-HTMLMediaElement* TextTrack::MediaElement() const {
+TextTrackListOwner* TextTrack::Owner() const {
   return track_list_ ? track_list_->Owner() : 0;
 }
 
 CueTimeline* TextTrack::GetCueTimeline() const {
-  return MediaElement() ? &MediaElement()->GetCueTimeline() : nullptr;
-}
-
-Node* TextTrack::Owner() const {
-  return MediaElement();
+  return Owner() ? Owner()->GetCueTimeline() : nullptr;
 }
 
 DEFINE_TRACE(TextTrack) {

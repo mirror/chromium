@@ -27,7 +27,6 @@
 
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/dom/events/MediaElementEventQueue.h"
-#include "core/html/HTMLMediaElement.h"
 #include "core/html/track/InbandTextTrack.h"
 #include "core/html/track/LoadableTextTrack.h"
 #include "core/html/track/TextTrack.h"
@@ -35,7 +34,7 @@
 
 namespace blink {
 
-TextTrackList::TextTrackList(HTMLMediaElement* owner)
+TextTrackList::TextTrackList(TextTrackListOwner* owner)
     : owner_(owner), async_event_queue_(MediaElementEventQueue::Create(this)) {}
 
 TextTrackList::~TextTrackList() {}
@@ -242,7 +241,7 @@ const AtomicString& TextTrackList::InterfaceName() const {
 }
 
 ExecutionContext* TextTrackList::GetExecutionContext() const {
-  return owner_ ? owner_->GetExecutionContext() : 0;
+  return owner_->GetExecutionContext();
 }
 
 void TextTrackList::ScheduleTrackEvent(const AtomicString& event_name,
@@ -295,7 +294,7 @@ bool TextTrackList::HasShowingTracks() {
   return false;
 }
 
-HTMLMediaElement* TextTrackList::Owner() const {
+TextTrackListOwner* TextTrackList::Owner() const {
   return owner_;
 }
 

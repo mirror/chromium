@@ -438,6 +438,7 @@ HTMLMediaElement::HTMLMediaElement(const QualifiedName& tag_name,
                                    Document& document)
     : HTMLElement(tag_name, document),
       SuspendableObject(&document),
+      TextTrackListOwner(&document),
       load_timer_(TaskRunnerHelper::Get(TaskType::kUnthrottled, &document),
                   this,
                   &HTMLMediaElement::LoadTimerFired),
@@ -911,7 +912,7 @@ void HTMLMediaElement::InvokeLoadAlgorithm() {
     // 4.10 - Set the timeline offset to Not-a-Number (NaN).
     // 4.11 - Update the duration attribute to Not-a-Number (NaN).
 
-    GetCueTimeline().UpdateActiveCues(0);
+    GetCueTimeline()->UpdateActiveCues(0);
   } else if (!paused_) {
     // TODO(foolip): There is a proposal to always reset the paused state
     // in the media element load algorithm, to avoid a bogus play() promise
@@ -1841,7 +1842,7 @@ void HTMLMediaElement::SetReadyState(ReadyState state) {
     UpdateDisplayState();
 
   UpdatePlayState();
-  GetCueTimeline().UpdateActiveCues(currentTime());
+  GetCueTimeline()->UpdateActiveCues(currentTime());
 }
 
 void HTMLMediaElement::ProgressEventTimerFired(TimerBase*) {
@@ -2543,7 +2544,7 @@ void HTMLMediaElement::PlaybackProgressTimerFired(TimerBase*) {
   if (!playbackRate())
     return;
 
-  GetCueTimeline().UpdateActiveCues(currentTime());
+  GetCueTimeline()->UpdateActiveCues(currentTime());
 }
 
 void HTMLMediaElement::ScheduleTimeupdateEvent(bool periodic_event) {
@@ -2736,7 +2737,7 @@ void HTMLMediaElement::ForgetResourceSpecificTracks() {
   // algorithm.  The order is explicitly specified as text, then audio, and
   // finally video.  Also 'removetrack' events should not be fired.
   if (text_tracks_) {
-    TrackDisplayUpdateScope scope(this->GetCueTimeline());
+    TrackDisplayUpdateScope scope(*this->GetCueTimeline());
     text_tracks_->RemoveAllInbandTracks();
   }
 
@@ -3060,7 +3061,7 @@ void HTMLMediaElement::SourceWasRemoved(HTMLSourceElement* source) {
 void HTMLMediaElement::TimeChanged() {
   BLINK_MEDIA_LOG << "timeChanged(" << (void*)this << ")";
 
-  GetCueTimeline().UpdateActiveCues(currentTime());
+  GetCueTimeline()->UpdateActiveCues(currentTime());
 
   // 4.8.12.9 steps 12-14. Needed if no ReadyState change is associated with the
   // seek.
@@ -3418,7 +3419,7 @@ void HTMLMediaElement::ContextDestroyed(ExecutionContext*) {
   current_source_node_ = nullptr;
   official_playback_position_ = 0;
   official_playback_position_needs_update_ = true;
-  GetCueTimeline().UpdateActiveCues(0);
+  GetCueTimeline()->UpdateActiveCues(0);
   playing_ = false;
   paused_ = true;
   seeking_ = false;
@@ -3729,10 +3730,10 @@ void HTMLMediaElement::UpdateControlsVisibility() {
     web_media_player_->OnHasNativeControlsChanged(native_controls);
 }
 
-CueTimeline& HTMLMediaElement::GetCueTimeline() {
+CueTimeline* HTMLMediaElement::GetCueTimeline() {
   if (!cue_timeline_)
     cue_timeline_ = new CueTimeline(*this);
-  return *cue_timeline_;
+  return cue_timeline_;
 }
 
 void HTMLMediaElement::ConfigureTextTrackDisplay() {
@@ -3748,7 +3749,7 @@ void HTMLMediaElement::ConfigureTextTrackDisplay() {
   if (!have_visible_text_track && !GetMediaControls())
     return;
 
-  GetCueTimeline().UpdateActiveCues(currentTime());
+  GetCueTimeline()->UpdateActiveCues(currentTime());
 
   // Note: The "time marches on" algorithm (updateActiveCues) runs the "rules
   // for updating the text track rendering" (updateTextTrackDisplay) only for
@@ -3845,6 +3846,7 @@ DEFINE_TRACE(HTMLMediaElement) {
   Supplementable<HTMLMediaElement>::Trace(visitor);
   HTMLElement::Trace(visitor);
   SuspendableObject::Trace(visitor);
+  TextTrackListOwner::Trace(visitor);
 }
 
 DEFINE_TRACE_WRAPPERS(HTMLMediaElement) {
