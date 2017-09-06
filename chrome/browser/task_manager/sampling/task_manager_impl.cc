@@ -26,6 +26,7 @@
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/web_contents.h"
+#include "services/resource_coordinator/public/cpp/memory_instrumentation/memory_instrumentation.h"
 
 #if defined(OS_CHROMEOS)
 #include "chrome/browser/task_manager/providers/arc/arc_process_task_provider.h"
@@ -504,12 +505,35 @@ void TaskManagerImpl::OnVideoMemoryUsageStatsUpdate(
   gpu_memory_stats_ = gpu_memory_stats;
 }
 
+void TaskManagerImpl::OnReceivedMemoryDump(
+    bool success,
+    memory_instrumentation::mojom::GlobalMemoryDumpPtr dump) {
+  if (!success)
+    return;
+  for (const memory_instrumentation::mojom::ProcessMemoryDumpPtr& pmd :
+       dump->process_dumps) {
+    MemoryUsageStats usage;
+    usage.private_bytes = pmd->os_dump->private_footprint_kb * 1024;
+    usage.physical_bytes = pmd->os_dump->private_footprint_kb * 1024;
+    auto it = task_groups_by_proc_id_.find(pmd->pid);
+    if (it == task_groups_by_proc_id_.end())
+      continue;
+    it->second->set_memory_usage(usage);
+  }
+}
+
 void TaskManagerImpl::Refresh() {
   if (IsResourceRefreshEnabled(REFRESH_TYPE_GPU_MEMORY)) {
     content::GpuDataManager::GetInstance()->RequestVideoMemoryUsageStatsUpdate(
         base::Bind(&TaskManagerImpl::OnVideoMemoryUsageStatsUpdate,
                    weak_ptr_factory_.GetWeakPtr()));
   }
+
+  // The callback keeps this object alive until the callback is invoked.
+  auto callback = base::Bind(&TaskManagerImpl::OnReceivedMemoryDump,
+                             weak_ptr_factory_.GetWeakPtr());
+  memory_instrumentation::MemoryInstrumentation::GetInstance()
+      ->RequestGlobalDump(std::move(callback));
 
   for (auto& groups_itr : task_groups_by_proc_id_) {
     groups_itr.second->Refresh(gpu_memory_stats_,

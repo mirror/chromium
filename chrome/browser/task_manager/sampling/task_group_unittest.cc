@@ -113,21 +113,6 @@ TEST_F(TaskGroupTest, SyncRefresh) {
   EXPECT_FALSE(background_refresh_complete_);
 }
 
-// Some fields are refreshed on a per-TaskGroup basis, but require asynchronous
-// work (e.g. on another thread) to complete. Memory is such a field, so verify
-// that it is correctly reported as requiring background calculations.
-TEST_F(TaskGroupTest, AsyncRefresh) {
-  task_group_.Refresh(gpu::VideoMemoryUsageStats(), base::TimeDelta(),
-                      REFRESH_TYPE_MEMORY);
-  EXPECT_FALSE(task_group_.AreBackgroundCalculationsDone());
-
-  ASSERT_FALSE(background_refresh_complete_);
-  run_loop_->Run();
-
-  EXPECT_TRUE(task_group_.AreBackgroundCalculationsDone());
-  EXPECT_TRUE(background_refresh_complete_);
-}
-
 // Some fields are refreshed system-wide, via a SharedSampler, which completes
 // asynchronously. Idle wakeups are reported via SharedSampler on some systems
 // and via asynchronous refresh on others, so we just test that that field
