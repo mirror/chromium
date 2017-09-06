@@ -155,6 +155,24 @@
     },
     {
       "key": {
+        "uuid": "15bcd405_0ec33edd",
+        "filename": "content/public/browser/navigation_throttle.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-06T21:24:34Z",
+      "side": 1,
+      "message": "Looks like this is the root of your concern.\n\nDoes it make sense to have an \u003d\u003d operator that only compares a subset of the values?\nIt sounds to me like that\u0027s going to shoot someone in the foot.",
+      "parentUuid": "987fbb5a_6ae68fc1",
+      "revId": "1534cbb5dcbd73782afeeb2122805f9df59ded07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9114b41c_c6613193",
         "filename": "content/public/test/navigation_simulator.cc",
         "patchSetId": 11
