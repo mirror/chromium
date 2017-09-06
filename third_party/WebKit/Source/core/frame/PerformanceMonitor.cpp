@@ -17,6 +17,7 @@
 #include "core/loader/DocumentLoader.h"
 #include "core/probe/CoreProbes.h"
 #include "platform/Histogram.h"
+#include "platform/instrumentation/resource_coordinator/FrameResourceCoordinator.h"
 #include "platform/wtf/CurrentTime.h"
 #include "platform/wtf/Time.h"
 #include "public/platform/Platform.h"
@@ -26,6 +27,8 @@ namespace blink {
 namespace {
 static const double kLongTaskSubTaskThresholdInSeconds = 0.012;
 static const double kNetworkQuietWindowSeconds = 0.5;
+static const double kLongTaskThresholdSeconds = 0.05;
+static const double kLongTaskIdlenessWindowSeconds = 0.5;
 }  // namespace
 
 // static
@@ -329,6 +332,8 @@ void PerformanceMonitor::DomContentLoadedEventFired(LocalFrame* frame) {
   // connections.
   network_2_quiet_ = 0;
   network_0_quiet_ = 0;
+  // Start to observe long task idleness.
+  long_task_idle_ = 0;
   DidLoadResource();
 }
 
@@ -380,6 +385,27 @@ void PerformanceMonitor::DidProcessTask(double start_time, double end_time) {
   if (network_0_quiet_ > 0)
     network_0_quiet_ += end_time - start_time;
 
+  double task_time = end_time - start_time;
+  // If a long task finished being processed and the timer has already been
+  // started, reset the timer; or if the timers has already been started and
+  // there's no long task during kLongTaskIdlenessWindowSeconds, emit long task
+  // idle signal; or start the timer if it hasn't been started.
+  if (task_time > kLongTaskThresholdSeconds) {
+    if (long_task_idle_ > 0) {
+      long_task_idle_ = MonotonicallyIncreasingTime();
+    }
+  } else if (long_task_idle_ > 0 &&
+             end_time - long_task_idle_ >= kLongTaskIdlenessWindowSeconds) {
+    if (auto* frame_resource_coordinator =
+            local_root_->GetFrameResourceCoordinator()) {
+      frame_resource_coordinator->SetProperty(
+          resource_coordinator::mojom::PropertyType::kLongTaskIdle, true);
+    }
+    long_task_idle_ = -1;
+  } else if (long_task_idle_ == 0) {
+    long_task_idle_ = start_time;
+  }
+
   if (!enabled_)
     return;
   double layout_threshold = thresholds_[kLongLayout];
@@ -392,7 +418,6 @@ void PerformanceMonitor::DidProcessTask(double start_time, double end_time) {
     }
   }
 
-  double task_time = end_time - start_time;
   if (thresholds_[kLongTask] && task_time > thresholds_[kLongTask]) {
     ClientThresholds* client_thresholds = subscriptions_.at(kLongTask);
     for (const auto& it : *client_thresholds) {
