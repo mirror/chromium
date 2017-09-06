@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3eef8cc_a1bcc8df",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-06T21:58:42Z",
+      "side": 1,
+      "message": "I\u0027ve been informed by brettw@ that we [Chrome] now prefers base::MakeUnique.",
+      "revId": "52247dd366a9feafef87455b8552f0f9ed9eb874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
