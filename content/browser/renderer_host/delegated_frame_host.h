@@ -67,6 +67,7 @@ class CONTENT_EXPORT DelegatedFrameHostClient {
   virtual bool DelegatedFrameCanCreateResizeLock() const = 0;
   virtual std::unique_ptr<CompositorResizeLock>
   DelegatedFrameHostCreateResizeLock() = 0;
+  virtual viz::LocalSurfaceId GetLocalSurfaceId() const = 0;
 
   virtual void OnBeginFrame() = 0;
   virtual bool IsAutoResizeEnabled() const = 0;
@@ -282,9 +283,6 @@ class CONTENT_EXPORT DelegatedFrameHost
 
   // State for rendering into a Surface.
   std::unique_ptr<viz::CompositorFrameSinkSupport> support_;
-  gfx::Size current_surface_size_;
-  float current_scale_factor_;
-  std::vector<viz::ReturnedResource> surface_returned_resources_;
 
   // This lock is the one waiting for a frame of the right size to come back
   // from the renderer/GPU process. It is set from the moment the aura window
@@ -321,6 +319,8 @@ class CONTENT_EXPORT DelegatedFrameHost
   bool has_frame_ = false;
   viz::mojom::CompositorFrameSinkClient* renderer_compositor_frame_sink_ =
       nullptr;
+
+  bool enable_surface_synchronization_ = false;
 
   std::unique_ptr<viz::FrameEvictor> frame_evictor_;
 };
