@@ -71,6 +71,9 @@ class TaskGroup {
   double cpu_usage() const { return cpu_usage_; }
   base::Time start_time() const { return start_time_; }
   base::TimeDelta cpu_time() const { return cpu_time_; }
+  void set_memory_usage(const MemoryUsageStats& memory_usage) {
+    memory_usage_ = memory_usage;
+  }
   int64_t private_bytes() const { return memory_usage_.private_bytes; }
   int64_t shared_bytes() const { return memory_usage_.shared_bytes; }
   int64_t physical_bytes() const { return memory_usage_.physical_bytes; }

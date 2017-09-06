@@ -24,7 +24,7 @@ namespace {
 
 // A mask for the refresh types that are done in the background thread.
 const int kBackgroundRefreshTypesMask =
-    REFRESH_TYPE_CPU | REFRESH_TYPE_MEMORY | REFRESH_TYPE_IDLE_WAKEUPS |
+    REFRESH_TYPE_CPU | REFRESH_TYPE_IDLE_WAKEUPS |
 #if defined(OS_WIN)
     REFRESH_TYPE_START_TIME | REFRESH_TYPE_CPU_TIME |
 #endif  // defined(OS_WIN)
