@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc2a7f98_9c40b3d3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/accessibility/AccessibilitySidebarView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-09-06T00:05:17Z",
+      "side": 1,
+      "message": "I think this would be clearer as\nthis._mutePullNode \u003d true;\n...\nthis._mutePullNode \u003d false;\n\nand then I don\u0027t need the big comment",
+      "revId": "21d6c62e62a94fc6101ad54214eaa0db0e048ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
