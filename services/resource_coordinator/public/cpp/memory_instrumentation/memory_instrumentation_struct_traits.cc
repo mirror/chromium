@@ -115,4 +115,135 @@ bool StructTraits<memory_instrumentation::mojom::RequestArgsDataView,
   return true;
 }
 
+// static
+bool StructTraits<memory_instrumentation::mojom::ArgsDataView,
+                  base::trace_event::MemoryDumpArgs>::
+    Read(memory_instrumentation::mojom::ArgsDataView input,
+         base::trace_event::MemoryDumpArgs* out) {
+  if (!input.ReadLevelOfDetail(&out->level_of_detail))
+    return false;
+  return true;
+}
+
+using base::trace_event::MemoryAllocatorDump;
+using Entry = base::trace_event::MemoryAllocatorDump::Entry;
+using base::trace_event::MemoryDumpArgs;
+using base::trace_event::ProcessMemoryDump;
+using MemoryAllocatorDumpEdge =
+    base::trace_event::ProcessMemoryDump::MemoryAllocatorDumpEdge;
+using base::trace_event::MemoryAllocatorDumpGuid;
+using memory_instrumentation::mojom::AllocatorDumpPtr;
+using memory_instrumentation::mojom::AllocatorDump;
+using memory_instrumentation::mojom::EntryDataView;
+using memory_instrumentation::mojom::EntryValue;
+using memory_instrumentation::mojom::EntryValueDataView;
+using memory_instrumentation::mojom::RawProcessMemoryDumpDataView;
+using memory_instrumentation::mojom::AllocatorDumpGuidDataView;
+using memory_instrumentation::mojom::AllocatorDumpEdgeDataView;
+
+// static
+bool StructTraits<AllocatorDumpGuidDataView, MemoryAllocatorDumpGuid>::Read(
+    AllocatorDumpGuidDataView input,
+    MemoryAllocatorDumpGuid* out) {
+  out->SetGuidForSerialization(input.guid());
+  return true;
+}
+
+// static
+bool StructTraits<EntryDataView, Entry>::Read(EntryDataView input, Entry* out) {
+  if (!input.ReadName(&out->name))
+    return false;
+  if (!input.ReadUnits(&out->units))
+    return false;
+  if (!input.ReadValue(out))
+    return false;
+  return true;
+}
+
+// static
+bool UnionTraits<EntryValueDataView, Entry>::Read(
+    EntryValueDataView data,
+    MemoryAllocatorDump::Entry* out) {
+  switch (data.tag()) {
+    case EntryValue::Tag::VALUE_STRING: {
+      std::string value_string;
+      if (!data.ReadValueString(&value_string))
+        return false;
+      out->value_string = std::move(value_string);
+      out->entry_type = Entry::EntryType::kString;
+      break;
+    }
+    case EntryValue::Tag::VALUE_UINT64: {
+      out->value_uint64 = data.value_uint64();
+      out->entry_type = Entry::EntryType::kUint64;
+      break;
+    }
+    default:
+      return false;
+  }
+  return true;
+}
+
+bool StructTraits<AllocatorDumpEdgeDataView, MemoryAllocatorDumpEdge>::Read(
+    AllocatorDumpEdgeDataView input,
+    MemoryAllocatorDumpEdge* out) {
+  if (!input.ReadSource(&out->source))
+    return false;
+  if (!input.ReadTarget(&out->target))
+    return false;
+  out->importance = input.importance();
+  out->overridable = input.overridable();
+  return true;
+}
+
+// static
+std::unordered_map<std::string, AllocatorDumpPtr>
+StructTraits<RawProcessMemoryDumpDataView, ProcessMemoryDump>::allocator_dumps(
+    const ProcessMemoryDump& pmd) {
+  std::unordered_map<std::string, AllocatorDumpPtr> results;
+  for (const auto& kv : pmd.allocator_dumps()) {
+    const std::unique_ptr<MemoryAllocatorDump>& mad = kv.second;
+    results[mad->absolute_name()] = AllocatorDump::New();
+    AllocatorDump* dump = results[mad->absolute_name()].get();
+    dump->weak = mad->flags() && MemoryAllocatorDump::Flags::WEAK;
+    dump->entries = mad->TakeEntriesForSerialization();
+  }
+  return results;
+}
+
+// static
+std::vector<MemoryAllocatorDumpEdge> StructTraits<
+    RawProcessMemoryDumpDataView,
+    ProcessMemoryDump>::allocator_dump_edges(const ProcessMemoryDump& pmd) {
+  return pmd.TakeEdgesForSerialization();
+}
+
+// static
+bool StructTraits<RawProcessMemoryDumpDataView, ProcessMemoryDump>::Read(
+    RawProcessMemoryDumpDataView input,
+    ProcessMemoryDump* out) {
+  MemoryDumpArgs dump_args;
+  if (!input.ReadDumpArgs(&dump_args))
+    return false;
+  out->SetDumpArgsForSerialization(dump_args);
+  std::vector<MemoryAllocatorDumpEdge> edges;
+  if (!input.ReadAllocatorDumpEdges(&edges))
+    return false;
+  out->SetEdgesForSerialization(edges);
+
+  std::unordered_map<std::string, AllocatorDumpPtr> allocator_dumps;
+  if (!input.ReadAllocatorDumps(&allocator_dumps))
+    return false;
+  for (const auto& kv : allocator_dumps) {
+    const std::string& name = kv.first;
+    const AllocatorDumpPtr& dump = kv.second;
+    MemoryAllocatorDump* mad = out->CreateAllocatorDump(name);
+    //    dump->guid = mad->guid();
+    if (dump->weak)
+      mad->set_flags(MemoryAllocatorDump::Flags::WEAK);
+    mad->SetEntriesForSerialization(std::move(dump->entries));
+  }
+  return true;
+}
+
 }  // namespace mojo

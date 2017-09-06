@@ -459,5 +459,28 @@ MemoryAllocatorDump* ProcessMemoryDump::GetBlackHoleMad() {
   return black_hole_mad_.get();
 }
 
+std::vector<ProcessMemoryDump::MemoryAllocatorDumpEdge>
+ProcessMemoryDump::TakeEdgesForSerialization() const {
+  std::vector<MemoryAllocatorDumpEdge> edges;
+  edges.reserve(allocator_dumps_edges_.size());
+  for (auto kv : allocator_dumps_edges_) {
+    edges.push_back(kv.second);
+  }
+  return edges;
+}
+
+void ProcessMemoryDump::SetEdgesForSerialization(
+    std::vector<ProcessMemoryDump::MemoryAllocatorDumpEdge> edges) {
+  AllocatorDumpEdgesMap map;
+  for (auto edge : edges) {
+    map[edge.source] = edge;
+  }
+  allocator_dumps_edges_ = std::move(map);
+}
+
+void ProcessMemoryDump::SetDumpArgsForSerialization(MemoryDumpArgs args) {
+  dump_args_ = args;
+}
+
 }  // namespace trace_event
 }  // namespace base

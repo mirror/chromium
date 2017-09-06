@@ -23,6 +23,30 @@ const char MemoryAllocatorDump::kTypeString[] = "string";
 const char MemoryAllocatorDump::kUnitsBytes[] = "bytes";
 const char MemoryAllocatorDump::kUnitsObjects[] = "objects";
 
+uint64_t MemoryAllocatorDump::GetSizeInternal() const {
+  if (!size_.has_value()) {
+    for (const auto& entry : entries_) {
+      if (entry.entry_type == Entry::kUint64 && entry.name == kNameSize &&
+          entry.units == kUnitsBytes) {
+        size_ = entry.value_uint64;
+        break;
+      }
+    }
+  }
+  DCHECK(size_.has_value());
+  return size_.value_or(0);
+};
+
+std::vector<MemoryAllocatorDump::Entry>
+MemoryAllocatorDump::TakeEntriesForSerialization() {
+  return std::move(entries_);
+}
+
+void MemoryAllocatorDump::SetEntriesForSerialization(
+    std::vector<MemoryAllocatorDump::Entry>&& entries) {
+  entries_ = std::move(entries);
+}
+//
 // static
 MemoryAllocatorDumpGuid MemoryAllocatorDump::GetDumpIdFromName(
     const std::string& absolute_name) {
@@ -37,7 +61,7 @@ MemoryAllocatorDump::MemoryAllocatorDump(const std::string& absolute_name,
       process_memory_dump_(process_memory_dump),
       guid_(guid),
       flags_(Flags::DEFAULT),
-      size_(0) {
+      size_(nullopt) {
   // The |absolute_name| cannot be empty.
   DCHECK(!absolute_name.empty());
 
@@ -116,11 +140,12 @@ void MemoryAllocatorDump::AsValueInto(TracedValue* value) const {
 
 std::unique_ptr<TracedValue> MemoryAllocatorDump::attributes_for_testing()
     const {
-  std::unique_ptr<TracedValue> attributes = base::MakeUnique<TracedValue>();
+  std::unique_ptr<TracedValue> attributes = MakeUnique<TracedValue>();
   DumpAttributes(attributes.get());
   return attributes;
 }
 
+MemoryAllocatorDump::Entry::Entry() = default;
 MemoryAllocatorDump::Entry::Entry(Entry&& other) = default;
 
 MemoryAllocatorDump::Entry::Entry(std::string name,
@@ -143,6 +168,20 @@ bool MemoryAllocatorDump::Entry::operator==(const Entry& rhs) const {
   }
   NOTREACHED();
   return false;
+}
+
+void PrintTo(const MemoryAllocatorDump::Entry& entry, std::ostream* out) {
+  switch (entry.entry_type) {
+    case MemoryAllocatorDump::Entry::EntryType::kUint64:
+      *out << "<Entry(\"" << entry.name << "\", \"" << entry.units << "\", "
+           << entry.value_uint64 << ")>";
+      return;
+    case MemoryAllocatorDump::Entry::EntryType::kString:
+      *out << "<Entry(\"" << entry.name << "\", \"" << entry.units << "\", \""
+           << entry.value_string << "\")>";
+      return;
+  }
+  NOTREACHED();
 }
 
 }  // namespace trace_event

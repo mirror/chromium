@@ -216,6 +216,10 @@ class BASE_EXPORT ProcessMemoryDump {
 
   const MemoryDumpArgs& dump_args() const { return dump_args_; }
 
+  std::vector<MemoryAllocatorDumpEdge> TakeEdgesForSerialization() const;
+  void SetEdgesForSerialization(std::vector<MemoryAllocatorDumpEdge> edges);
+  void SetDumpArgsForSerialization(MemoryDumpArgs args);
+
  private:
   FRIEND_TEST_ALL_PREFIXES(ProcessMemoryDumpTest, BackgroundModeTest);
 

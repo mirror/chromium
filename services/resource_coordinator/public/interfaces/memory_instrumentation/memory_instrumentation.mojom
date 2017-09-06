@@ -48,6 +48,44 @@ struct ChromeMemDump {
 // These structs are internal only (only for the communication between
 // the service and the ClientProcess library)
 
+struct Args {
+  LevelOfDetail level_of_detail;
+};
+
+struct AllocatorDumpGuid {
+  uint64 guid;
+};
+
+struct AllocatorDumpEdge {
+  AllocatorDumpGuid source;
+  AllocatorDumpGuid target;
+  int64 importance;
+  bool overridable;
+};
+
+union EntryValue {
+  uint64 value_uint64;
+  string value_string;
+};
+
+struct Entry {
+  string name;
+  string units;
+  EntryValue value;
+};
+
+struct AllocatorDump {
+  AllocatorDumpGuid guid; 
+  bool weak;
+  array<Entry> entries;
+};
+
+struct RawProcessMemoryDump {
+  Args dump_args;
+  array<AllocatorDumpEdge> allocator_dump_edges;
+  map<string, AllocatorDump> allocator_dumps;
+};
+
 struct VmRegion {
   const uint32 kProtectionFlagsRead = 4;
   const uint32 kProtectionFlagsWrite = 2;
@@ -146,7 +184,7 @@ interface ClientProcess {
   // buffer of the target process and an ACK. A summary of the dump is also
   // returned in case of success.
   RequestChromeMemoryDump(RequestArgs args) =>
-      (bool success, uint64 dump_id, ChromeMemDump? chrome_memory_dump);
+      (bool success, uint64 dump_id, RawProcessMemoryDump? raw_process_memory_dump);
 
   // Requests an OSMemDump for each pid in |pids|.
   // The Memory-infra service deals with two kinds of information:

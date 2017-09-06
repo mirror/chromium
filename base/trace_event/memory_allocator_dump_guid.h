@@ -43,6 +43,8 @@ class BASE_EXPORT MemoryAllocatorDumpGuid {
     return guid_ < other.guid_;
   }
 
+  void SetGuidForSerialization(uint64_t guid) { guid_ = guid; }
+
  private:
   uint64_t guid_;
 
