@@ -52,6 +52,24 @@
       "revId": "4c49d24d9689166e2a20d6bb67c850800821cf3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fe3c8dd_dd9c2019",
+        "filename": "chrome/browser/ui/views/tabs/tab.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-06T18:42:36Z",
+      "side": 1,
+      "message": "I agree with the sentiment and that\u0027s why I made the (mistaken) change in the first place. I don\u0027t particularly love the idea of lots of tiny source files housing code that is only used in one place (and that relies on implementation details of its singular callsite, no less). In this case I think the class can probably just go away, I can\u0027t see why it needs to exist instead of relying on a normal LinearAnimation and using AnimationDelegate. But that refactor is a bridge beyond my original intent of making the tab title slide, so I\u0027d prefer to just restore what we were doing.",
+      "parentUuid": "b9e9e805_9450fb91",
+      "revId": "4c49d24d9689166e2a20d6bb67c850800821cf3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
