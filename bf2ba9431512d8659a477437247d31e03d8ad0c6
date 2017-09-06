@@ -16,6 +16,24 @@
       "revId": "bf2ba9431512d8659a477437247d31e03d8ad0c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f953e64f_5505b1b0",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionControllerTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-09-06T01:18:06Z",
+      "side": 1,
+      "message": "Ah, I screwed up; this test case is *only* fixed by that CL...",
+      "parentUuid": "835289fb_3b38c93f",
+      "revId": "bf2ba9431512d8659a477437247d31e03d8ad0c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
