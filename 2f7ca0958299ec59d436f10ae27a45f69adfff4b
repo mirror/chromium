@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b352a89_03e217b6",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSample.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-09-06T04:16:28Z",
+      "side": 1,
+      "message": "Div element w/o should not be serialized as \u003cdiv\u003e w/o \u003c/div\u003e.\nCould you add some test cases for |IsVoidElement|, typical DOM tree and/or Shadow tree?",
+      "revId": "2f7ca0958299ec59d436f10ae27a45f69adfff4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
