@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "c5620adb_e9d0c255",
+        "filename": "components/search_provider_logos/logo_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-06T09:22:58Z",
+      "side": 1,
+      "message": "I approve :D",
+      "parentUuid": "d8691d69_06a36ae2",
+      "range": {
+        "startLine": 70,
+        "startChar": 35,
+        "endLine": 70,
+        "endChar": 0
+      },
+      "revId": "a02cda2d9c293dfa38b4cda2876f9b487c1977a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1db0511_6d58b682",
         "filename": "components/search_provider_logos/logo_service.h",
         "patchSetId": 1
@@ -307,6 +331,24 @@
     },
     {
       "key": {
+        "uuid": "37e61aa6_af8b16f7",
+        "filename": "components/search_provider_logos/logo_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-06T09:22:58Z",
+      "side": 1,
+      "message": "Well, I\u0027m also just reverse engineering. But this is what\u0027s being tested here:\n- We have a cached logo.\n- Someone calls GetLogo.\n- We hand out the cached logo.\n- We fetch an update from the network. The image data is revalidated, but the metadata changes.\n- We do NOT tell the observer about the new metadata. This seems weird to me.\n\nSo I guess the TODO would be something like: \"Double-check whether we should inform the observer of the fresh metadata.\"\nDoes that make sense?",
+      "parentUuid": "ff62d15e_92e54187",
+      "revId": "a02cda2d9c293dfa38b4cda2876f9b487c1977a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "51238066_ed28e26b",
         "filename": "components/search_provider_logos/logo_service_unittest.cc",
         "patchSetId": 1
@@ -453,6 +495,24 @@
       "side": 1,
       "message": "I fixed this by moving it into OnFreshLogoAvailable(). The only case where they should differ, now, is for decoding failures.\n\nOf course, we\u0027re still decoding when we don\u0027t need to, if observers are only interested in EncodedLogo. I\u0027d like to address that separately.",
       "parentUuid": "2ce5f227_b27e236a",
+      "revId": "a02cda2d9c293dfa38b4cda2876f9b487c1977a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5bed1f40_c6a53157",
+        "filename": "components/search_provider_logos/logo_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-06T09:22:58Z",
+      "side": 1,
+      "message": "Agreed, that\u0027ll be easier to address once LogoObserver is gone.",
+      "parentUuid": "7cee6647_9926339b",
       "revId": "a02cda2d9c293dfa38b4cda2876f9b487c1977a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

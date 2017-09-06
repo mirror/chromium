@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48563523_13e967b7",
+        "filename": "components/search_provider_logos/logo_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-06T09:22:58Z",
+      "side": 1,
+      "message": "nit: This is now technically correct (the best kind of correct!), but it\u0027s quite subtle. Maybe explicitly add \"(i.e. not just revalidated the existing one)\"?",
+      "range": {
+        "startLine": 67,
+        "startChar": 31,
+        "endLine": 67,
+        "endChar": 0
+      },
+      "revId": "a18f2cd6d7cd9ca6ca820fc29eab1cfa891a8525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae7d536f_e428e9d4",
+        "filename": "components/search_provider_logos/logo_service_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-06T09:22:58Z",
+      "side": 1,
+      "message": "Doesn\u0027t \"Eq(base::nullopt)\" work for this?",
+      "range": {
+        "startLine": 192,
+        "startChar": 24,
+        "endLine": 192,
+        "endChar": 0
+      },
+      "revId": "a18f2cd6d7cd9ca6ca820fc29eab1cfa891a8525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14d2d1b1_29c5192a",
+        "filename": "components/search_provider_logos/logo_service_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-06T09:22:58Z",
+      "side": 1,
+      "message": "Similar here.",
+      "range": {
+        "startLine": 196,
+        "startChar": 30,
+        "endLine": 196,
+        "endChar": 0
+      },
+      "revId": "a18f2cd6d7cd9ca6ca820fc29eab1cfa891a8525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d318985_33a3a35e",
+        "filename": "components/search_provider_logos/logo_tracker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-06T09:22:58Z",
+      "side": 1,
+      "message": "/*download_failed\u003d*/",
+      "range": {
+        "startLine": 246,
+        "startChar": 65,
+        "endLine": 246,
+        "endChar": 0
+      },
+      "revId": "a18f2cd6d7cd9ca6ca820fc29eab1cfa891a8525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "561054c8_55dc02e2",
+        "filename": "components/search_provider_logos/logo_tracker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-06T09:22:58Z",
+      "side": 1,
+      "message": "Here too.",
+      "range": {
+        "startLine": 256,
+        "startChar": 78,
+        "endLine": 256,
+        "endChar": 0
+      },
+      "revId": "a18f2cd6d7cd9ca6ca820fc29eab1cfa891a8525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b323307_72b68a87",
+        "filename": "components/search_provider_logos/logo_tracker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-06T09:22:58Z",
+      "side": 1,
+      "message": "Hm, this is different: Before, we didn\u0027t cache the (presumably) bad image data, now we do. Handing out and storing data we know is bad seems a bit weird. OTOH, once we get rid of the decoding step if it\u0027s not required, we won\u0027t know anymore...hrm. Not quite sure what to do here. WDYT?",
+      "revId": "a18f2cd6d7cd9ca6ca820fc29eab1cfa891a8525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "776bc39c_d8f76222",
+        "filename": "components/search_provider_logos/logo_tracker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-06T09:22:58Z",
+      "side": 1,
+      "message": "Can we get rid of the \"default\"?",
+      "range": {
+        "startLine": 355,
+        "startChar": 12,
+        "endLine": 355,
+        "endChar": 0
+      },
+      "revId": "a18f2cd6d7cd9ca6ca820fc29eab1cfa891a8525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
