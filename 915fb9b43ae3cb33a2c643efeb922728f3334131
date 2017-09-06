@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "166c4c9d_1f26b524",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1602,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-06T19:17:45Z",
+      "side": 1,
+      "message": "ASSERT_TRUE(result[0].is_tablet_mode);\nEXPECT_TRUE(*result[0].is_tablet_mode);\n\n(otherwise, this would not fail if is_tablet_mode is set to false)",
+      "range": {
+        "startLine": 1602,
+        "startChar": 1,
+        "endLine": 1602,
+        "endChar": 40
+      },
+      "revId": "915fb9b43ae3cb33a2c643efeb922728f3334131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c567b430_8ee59e68",
+        "filename": "extensions/common/api/system_display.idl",
+        "patchSetId": 9
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-06T19:17:45Z",
+      "side": 1,
+      "message": "tablet",
+      "range": {
+        "startLine": 138,
+        "startChar": 7,
+        "endLine": 138,
+        "endChar": 17
+      },
+      "revId": "915fb9b43ae3cb33a2c643efeb922728f3334131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5001decd_75623913",
+        "filename": "extensions/common/api/system_display.idl",
+        "patchSetId": 9
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-06T19:17:45Z",
+      "side": 1,
+      "message": "How about\nShould be used by\n(looking at the code, the property will be provided to extensions, too; the here is that it is not advisable to use this property in an external context).",
+      "range": {
+        "startLine": 139,
+        "startChar": 7,
+        "endLine": 139,
+        "endChar": 19
+      },
+      "revId": "915fb9b43ae3cb33a2c643efeb922728f3334131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bef1abe3_528de8b4",
         "filename": "extensions/common/api/system_display.idl",
         "patchSetId": 9
