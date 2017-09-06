@@ -4,6 +4,7 @@
 
 #include "content/test/test_render_frame.h"
 
+#include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "content/child/web_url_loader_impl.h"
@@ -29,6 +30,11 @@ class MockFrameHost : public mojom::FrameHost {
         static_cast<MockRenderThread*>(RenderThread::Get());
     mock_render_thread->OnCreateWindow(*params, reply.get());
     std::move(callback).Run(std::move(reply));
+  }
+
+  void OpenLocalStorage(
+      mojo::InterfaceRequest<mojom::LevelDBWrapper> request) override {
+    NOTREACHED();
   }
 
   void Bind(mojo::ScopedInterfaceEndpointHandle handle) {

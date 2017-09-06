@@ -16,14 +16,14 @@
 #include "url/gurl.h"
 #include "url/origin.h"
 
+namespace blink {
+class WebLocalFrame;
+}
+
 namespace content {
 class DOMStorageMap;
 class LocalStorageArea;
 class LocalStorageCachedAreas;
-
-namespace mojom {
-class StoragePartitionService;
-}
 
 // An in-process implementation of LocalStorage using a LevelDB Mojo service.
 // Maintains a complete cache of the origin's Map of key/value pairs for fast
@@ -37,10 +37,8 @@ class CONTENT_EXPORT LocalStorageCachedArea
     : public mojom::LevelDBObserver,
       public base::RefCounted<LocalStorageCachedArea> {
  public:
-  LocalStorageCachedArea(
-      const url::Origin& origin,
-      mojom::StoragePartitionService* storage_partition_service,
-      LocalStorageCachedAreas* cached_areas);
+  LocalStorageCachedArea(blink::WebLocalFrame* web_frame,
+                         LocalStorageCachedAreas* cached_areas);
 
   // These correspond to blink::WebStorageArea.
   unsigned GetLength();

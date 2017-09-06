@@ -839,6 +839,8 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // mojom::FrameHost
   void CreateNewWindow(mojom::CreateNewWindowParamsPtr params,
                        CreateNewWindowCallback callback) override;
+  void OpenLocalStorage(
+      mojo::InterfaceRequest<mojom::LevelDBWrapper> request) override;
 
   void RunCreateWindowCompleteCallback(CreateNewWindowCallback callback,
                                        mojom::CreateNewWindowReplyPtr reply,

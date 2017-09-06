@@ -106,8 +106,6 @@ class CONTENT_EXPORT RendererBlinkPlatformImpl : public BlinkPlatformImpl {
       const blink::WebString& cacheStorageCacheName) override;
   blink::WebString DefaultLocale() override;
   void SuddenTerminationChanged(bool enabled) override;
-  std::unique_ptr<blink::WebStorageNamespace> CreateLocalStorageNamespace()
-      override;
   blink::Platform::FileHandle DatabaseOpenFile(
       const blink::WebString& vfs_file_name,
       int desired_flags) override;
@@ -318,8 +316,6 @@ class CONTENT_EXPORT RendererBlinkPlatformImpl : public BlinkPlatformImpl {
   TopLevelBlameContext top_level_blame_context_;
 
   WebTrialTokenValidatorImpl trial_token_validator_;
-
-  std::unique_ptr<LocalStorageCachedAreas> local_storage_cached_areas_;
 
   std::unique_ptr<BlinkInterfaceProviderImpl> blink_interface_provider_;
 

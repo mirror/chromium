@@ -928,9 +928,6 @@ void RenderThreadImpl::Init(
   base::DiscardableMemoryAllocator::SetInstance(
       discardable_shared_memory_manager_.get());
 
-  GetConnector()->BindInterface(mojom::kBrowserServiceName,
-                                mojo::MakeRequest(&storage_partition_service_));
-
 #if defined(OS_LINUX)
   ChildProcess::current()->SetIOThreadPriority(base::ThreadPriority::DISPLAY);
   ChildThreadImpl::current()->SetThreadPriority(
@@ -1092,10 +1089,6 @@ void RenderThreadImpl::RegisterPendingFrameCreate(
                           browser_info, routing_id, std::move(frame_request),
                           std::move(frame_host_interface_broker)))));
   CHECK(result.second) << "Inserting a duplicate item.";
-}
-
-mojom::StoragePartitionService* RenderThreadImpl::GetStoragePartitionService() {
-  return storage_partition_service_.get();
 }
 
 mojom::RendererHost* RenderThreadImpl::GetRendererHost() {
