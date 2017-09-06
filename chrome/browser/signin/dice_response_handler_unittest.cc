@@ -13,6 +13,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
 #include "chrome/test/base/testing_profile.h"
+#include "components/signin/core/browser/account_reconcilor.h"
 #include "components/signin/core/browser/account_tracker_service.h"
 #include "components/signin/core/browser/fake_signin_manager.h"
 #include "components/signin/core/browser/profile_oauth2_token_service.h"
@@ -87,7 +88,8 @@ class DiceTestTokenServiceObserver : public OAuth2TokenService::Observer {
   DISALLOW_COPY_AND_ASSIGN(DiceTestTokenServiceObserver);
 };
 
-class DiceResponseHandlerTest : public testing::Test {
+class DiceResponseHandlerTest : public testing::Test,
+                                public AccountReconcilor::Observer {
  protected:
   DiceResponseHandlerTest()
       : loop_(base::MessageLoop::TYPE_IO),  // URLRequestContext requires IO.
@@ -101,19 +103,30 @@ class DiceResponseHandlerTest : public testing::Test {
                         &token_service_,
                         &account_tracker_service_,
                         nullptr),
+        account_reconcilor_(&token_service_,
+                            &signin_manager_,
+                            &signin_client_,
+                            nullptr),
         dice_response_handler_(&signin_client_,
                                &signin_manager_,
                                &token_service_,
-                               &account_tracker_service_) {
+                               &account_tracker_service_,
+                               &account_reconcilor_),
+        reconcilor_blocked_count_(0),
+        reconcilor_unblocked_count_(0) {
     loop_.SetTaskRunner(task_runner_);
     DCHECK_EQ(task_runner_, base::ThreadTaskRunnerHandle::Get());
     signin_client_.SetURLRequestContext(request_context_getter_.get());
     AccountTrackerService::RegisterPrefs(pref_service_.registry());
     SigninManager::RegisterProfilePrefs(pref_service_.registry());
     account_tracker_service_.Initialize(&signin_client_);
+    account_reconcilor_.AddObserver(this);
   }
 
-  ~DiceResponseHandlerTest() override { task_runner_->ClearPendingTasks(); }
+  ~DiceResponseHandlerTest() override {
+    account_reconcilor_.RemoveObserver(this);
+    task_runner_->ClearPendingTasks();
+  }
 
   DiceResponseParams MakeDiceParams(DiceAction action) {
     DiceResponseParams dice_params;
@@ -131,6 +144,15 @@ class DiceResponseHandlerTest : public testing::Test {
     return dice_params;
   }
 
+  void CheckReconcilorObserverCalls(int blocked_count, int unblocked_count) {
+    EXPECT_EQ(blocked_count, reconcilor_blocked_count_);
+    EXPECT_EQ(unblocked_count, reconcilor_unblocked_count_);
+  }
+
+  // AccountReconcilor::Observer:
+  void OnReconcilorBlocked() override { ++reconcilor_blocked_count_; }
+  void OnReconcilorUnblocked() override { ++reconcilor_unblocked_count_; }
+
   base::MessageLoop loop_;
   scoped_refptr<base::TestMockTimeTaskRunner> task_runner_;
   scoped_refptr<net::TestURLRequestContextGetter> request_context_getter_;
@@ -139,7 +161,10 @@ class DiceResponseHandlerTest : public testing::Test {
   ProfileOAuth2TokenService token_service_;
   AccountTrackerService account_tracker_service_;
   FakeSigninManager signin_manager_;
+  AccountReconcilor account_reconcilor_;
   DiceResponseHandler dice_response_handler_;
+  int reconcilor_blocked_count_;
+  int reconcilor_unblocked_count_;
 };
 
 // Checks that a SIGNIN action triggers a token exchange request.
@@ -151,12 +176,15 @@ TEST_F(DiceResponseHandlerTest, Signin) {
   dice_response_handler_.ProcessDiceHeader(dice_params);
   // Check that a GaiaAuthFetcher has been created.
   ASSERT_THAT(signin_client_.consumer_, testing::NotNull());
+  CheckReconcilorObserverCalls(1, 0);
   // Simulate GaiaAuthFetcher success.
   signin_client_.consumer_->OnClientOAuthSuccess(
       GaiaAuthConsumer::ClientOAuthResult("refresh_token", "access_token", 10));
   // Check that the token has been inserted in the token service.
   EXPECT_TRUE(
       token_service_.RefreshTokenIsAvailable(dice_params.signin_info.gaia_id));
+  // Check that the reconcilor was blocked and unblocked exactly once.
+  CheckReconcilorObserverCalls(1, 1);
 }
 
 // Checks that a GaiaAuthFetcher failure is handled correctly.
@@ -220,6 +248,7 @@ TEST_F(DiceResponseHandlerTest, SigninWithTwoAccounts) {
   // Check that a GaiaAuthFetcher has been created.
   GaiaAuthConsumer* consumer_1 = signin_client_.consumer_;
   ASSERT_THAT(consumer_1, testing::NotNull());
+  CheckReconcilorObserverCalls(1, 0);
   // Start second request.
   signin_client_.consumer_ = nullptr;
   dice_response_handler_.ProcessDiceHeader(dice_params_2);
@@ -237,6 +266,8 @@ TEST_F(DiceResponseHandlerTest, SigninWithTwoAccounts) {
   // Check that the token has been inserted in the token service.
   EXPECT_TRUE(token_service_.RefreshTokenIsAvailable(
       dice_params_2.signin_info.gaia_id));
+  // Check that the reconcilor was blocked and unblocked exactly once.
+  CheckReconcilorObserverCalls(1, 1);
 }
 
 TEST_F(DiceResponseHandlerTest, Timeout) {
@@ -257,6 +288,8 @@ TEST_F(DiceResponseHandlerTest, Timeout) {
   // Check that the token has not been inserted in the token service.
   EXPECT_FALSE(
       token_service_.RefreshTokenIsAvailable(dice_params.signin_info.gaia_id));
+  // Check that the reconcilor was blocked and unblocked exactly once.
+  CheckReconcilorObserverCalls(1, 1);
 }
 
 TEST_F(DiceResponseHandlerTest, SignoutMainAccount) {
@@ -281,6 +314,8 @@ TEST_F(DiceResponseHandlerTest, SignoutMainAccount) {
       dice_params.signout_info.gaia_id[0]));
   EXPECT_FALSE(token_service_.RefreshTokenIsAvailable(kSecondaryGaiaID));
   EXPECT_FALSE(signin_manager_.IsAuthenticated());
+  // Check that the reconcilor was not blocked.
+  CheckReconcilorObserverCalls(0, 0);
 }
 
 TEST_F(DiceResponseHandlerTest, SignoutSecondaryAccount) {
@@ -468,6 +503,9 @@ TEST_F(DiceResponseHandlerTest, FixAuthError) {
   EXPECT_TRUE(
       token_service_.RefreshTokenIsAvailable(dice_params.signin_info.gaia_id));
   EXPECT_TRUE(token_service_observer->token_received());
+  // Check that the reconcilor was not blocked or unblocked when fixing auth
+  // errors.
+  CheckReconcilorObserverCalls(0, 0);
 }
 
 // Tests that the Dice Signout response is ignored when kDiceFixAuthErrors is
