@@ -1319,6 +1319,16 @@ void AXObjectCacheImpl::AddPermissionStatusListener() {
   if (!document_->GetExecutionContext())
     return;
 
+  // Passing an Origin to Mojo crashes if the host is empty because
+  // blink::SecurityOrigin sets unique to false, but url::Origin sets
+  // unique to true. This only happens for some obscure corner cases
+  // like on Android where the system registers unusual protocol handlers,
+  // and we don't need any special permissions in those cases.
+  //
+  // http://crbug.com/759528 and http://crbug.com/762716
+  if (document_->Url().Host().IsEmpty())
+    return;
+
   ConnectToPermissionService(document_->GetExecutionContext(),
                              mojo::MakeRequest(&permission_service_));
 
