@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "013bbf5f_f48cf402",
+        "filename": "build/win/reorder-imports.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-09-06T03:05:50Z",
+      "side": 1,
+      "message": "Maybe we can use lld-link one day, and give that some switch to make it do what we want.\n\nBut some brittle gn-only thing would be fine too as long as we have a verification build step, right?",
+      "parentUuid": "d0e767f2_bb1d51d9",
+      "range": {
+        "startLine": 24,
+        "startChar": 60,
+        "endLine": 24,
+        "endChar": 0
+      },
+      "revId": "cf357e4d70c3f537994bbbce771b678bc6ef2d3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3edee97d_fab00cf0",
         "filename": "build/win/reorder-imports.py",
         "patchSetId": 8
@@ -36,6 +60,24 @@
       "writtenOn": "2017-09-06T02:50:48Z",
       "side": 1,
       "message": "Musing: if the import list originally looks like a, b, elf, c this will make it look like elf, b, a, c.\n\nThat\u0027s probably fine (and is the same behaviour as swapimports.exe afaict from https://github.com/google/syzygy/blob/master/syzygy/swapimport/swapimport_app.cc), but I wonder if elf, a, b, c would be a more natural final order.",
+      "revId": "cf357e4d70c3f537994bbbce771b678bc6ef2d3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "639f1445_5993a9db",
+        "filename": "build/win/reorder-imports.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-09-06T03:05:50Z",
+      "side": 1,
+      "message": "Looks more natural to me too. But given that this is the behavior of the current script and doing it like this is a bit less code, I\u0027d leave this as-is for now.",
+      "parentUuid": "3edee97d_fab00cf0",
       "revId": "cf357e4d70c3f537994bbbce771b678bc6ef2d3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
