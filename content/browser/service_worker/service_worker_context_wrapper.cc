@@ -16,6 +16,7 @@
 #include "base/lazy_instance.h"
 #include "base/location.h"
 #include "base/logging.h"
+#include "base/memory/weak_ptr.h"
 #include "base/profiler/scoped_tracker.h"
 #include "base/single_thread_task_runner.h"
 #include "base/task_scheduler/post_task.h"
@@ -38,6 +39,52 @@
 namespace content {
 
 namespace {
+
+// This class provides a fence feature.
+// Used in ServiceWorkerContextWrapper::StopAllServiceWorkersForOriginOnIO(),
+// run |callback_| after all ServiceWorkerVersion::StopWorker() completed.
+class StopWorkerFenceCallback
+    : public base::RefCounted<StopWorkerFenceCallback> {
+ public:
+  StopWorkerFenceCallback(
+      ServiceWorkerContext::ResultOnceCallback callback,
+      scoped_refptr<base::SingleThreadTaskRunner> task_runner_for_callback)
+      : callback_(std::move(callback)),
+        task_runner_for_callback_(task_runner_for_callback) {}
+
+  base::Callback<void(ServiceWorkerStatusCode)> WaitForOneWorker() {
+    CHECK(counter_ < std::numeric_limits<int>::max());
+    DCHECK_GE(counter_, 0);
+    counter_++;
+    return base::Bind(&StopWorkerFenceCallback::OnStopWorkerFinished, this);
+  }
+
+ private:
+  friend class base::RefCounted<StopWorkerFenceCallback>;
+  ~StopWorkerFenceCallback() = default;
+
+  void OnStopWorkerFinished(ServiceWorkerStatusCode stop_worker_result) {
+    DCHECK_GE(counter_, 1);
+    results_.push_back(stop_worker_result);
+    --counter_;
+    if (counter_ > 0)
+      return;
+    bool result = true;
+    for (auto status : results_) {
+      if (status != SERVICE_WORKER_OK) {
+        result = false;
+        break;
+      }
+    }
+    task_runner_for_callback_->PostTask(
+        FROM_HERE, base::BindOnce(std::move(callback_), result));
+  }
+
+  int counter_ = 0;
+  std::vector<ServiceWorkerStatusCode> results_;
+  ServiceWorkerContext::ResultOnceCallback callback_;
+  scoped_refptr<base::SingleThreadTaskRunner> task_runner_for_callback_;
+};
 
 typedef std::set<std::string> HeaderNameSet;
 base::LazyInstance<HeaderNameSet>::DestructorAtExit g_excluded_header_name_set =
@@ -425,23 +472,39 @@ void ServiceWorkerContextWrapper::DidCheckHasServiceWorker(
 }
 
 void ServiceWorkerContextWrapper::StopAllServiceWorkersForOrigin(
-    const GURL& origin) {
+    const GURL& origin,
+    ResultOnceCallback callback) {
   if (!BrowserThread::CurrentlyOn(BrowserThread::IO)) {
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
         base::BindOnce(
-            &ServiceWorkerContextWrapper::StopAllServiceWorkersForOrigin, this,
-            origin));
+            &ServiceWorkerContextWrapper::StopAllServiceWorkersForOriginOnIO,
+            this, origin, base::Passed(&callback),
+            base::ThreadTaskRunnerHandle::Get()));
     return;
   }
+  StopAllServiceWorkersForOriginOnIO(origin, std::move(callback),
+                                     base::ThreadTaskRunnerHandle::Get());
+}
+
+void ServiceWorkerContextWrapper::StopAllServiceWorkersForOriginOnIO(
+    const GURL& origin,
+    ResultOnceCallback callback,
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner_for_callback) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
   if (!context_core_.get()) {
+    task_runner_for_callback->PostTask(
+        FROM_HERE, base::BindOnce(std::move(callback), false));
     return;
   }
   std::vector<ServiceWorkerVersionInfo> live_versions = GetAllLiveVersionInfo();
+  scoped_refptr<StopWorkerFenceCallback> barrier =
+      base::MakeRefCounted<StopWorkerFenceCallback>(std::move(callback),
+                                                    task_runner_for_callback);
   for (const ServiceWorkerVersionInfo& info : live_versions) {
     ServiceWorkerVersion* version = GetLiveVersion(info.version_id);
     if (version && version->scope().GetOrigin() == origin)
-      version->StopWorker(base::Bind(&ServiceWorkerUtils::NoOpStatusCallback));
+      version->StopWorker(barrier->WaitForOneWorker());
   }
 }
 

@@ -68,7 +68,8 @@
                 "domain": "Security"
             },
             {
-                "domain": "ServiceWorker"
+                "domain": "ServiceWorker",
+                "async": ["stopWorkersForOrigin"]
             },
             {
                 "domain": "Storage",
