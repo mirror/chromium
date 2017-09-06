@@ -366,8 +366,14 @@ TEST_F(TemplateURLPrepopulateDataTest, GetEngineTypeForAllPrepopulatedEngines) {
   for (const PrepopulatedEngine* engine : all_engines) {
     std::unique_ptr<TemplateURLData> data =
         TemplateURLDataFromPrepopulatedEngine(*engine);
-    EXPECT_EQ(engine->type,
-              TemplateURL(*data).GetEngineType(SearchTermsData()));
+    TemplateURL t_url(*data);
+    SearchTermsData search_data;
+    EXPECT_EQ(engine->type, t_url.GetEngineType(search_data));
+    // Test that search term is successfully extracted from generated search
+    // url.
+    GURL search_url = t_url.GenerateSearchURL(search_data);
+    EXPECT_TRUE(t_url.IsSearchURL(search_url, search_data))
+        << "Search url is incorrectly detected for " << search_url;
   }
 }
 
