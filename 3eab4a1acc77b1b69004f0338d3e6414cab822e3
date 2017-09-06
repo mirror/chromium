@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e687e1e7_16c1f85c",
+        "filename": "chrome/browser/chromeos/policy/device_status_collector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-09-06T13:14:23Z",
+      "side": 1,
+      "message": "Restored this part to the old version [1]\n\nhttps://chromium-review.googlesource.com/c/chromium/src/+/606650/9/chrome/browser/chromeos/policy/device_status_collector.cc",
+      "range": {
+        "startLine": 504,
+        "startChar": 2,
+        "endLine": 504,
+        "endChar": 44
+      },
+      "revId": "3eab4a1acc77b1b69004f0338d3e6414cab822e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48644e03_5ba05f0c",
+        "filename": "components/policy/proto/device_management_backend.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-09-06T13:14:23Z",
+      "side": 1,
+      "message": "tpm_version belongs here by context, but by id it belongs to the end of this proto message. Should I keep it here, or put it at the end?",
+      "range": {
+        "startLine": 683,
+        "startChar": 0,
+        "endLine": 683,
+        "endChar": 35
+      },
+      "revId": "3eab4a1acc77b1b69004f0338d3e6414cab822e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
