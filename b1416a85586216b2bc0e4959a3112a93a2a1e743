@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "27c924b8_9b64b021",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-09-06T03:07:01Z",
+      "side": 1,
+      "message": "Ah. There are two separate files that have Chrome and Chromium specific strings that need to be updated. There are some strings in this file that use a placeholder but that method is deprecated[1].\n\n[1] https://groups.google.com/a/chromium.org/forum/#!msg/chromium-dev/PBs5JfR0Aoc/NOcIHII9u14J",
+      "parentUuid": "50f9cc95_21066d9b",
+      "range": {
+        "startLine": 401,
+        "startChar": 29,
+        "endLine": 401,
+        "endChar": 35
+      },
+      "revId": "b1416a85586216b2bc0e4959a3112a93a2a1e743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f12b5412_cd8f96aa",
         "filename": "chrome/app/generated_resources.grd",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "b1416a85586216b2bc0e4959a3112a93a2a1e743",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e72f3034_5eb0958a",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-09-06T03:07:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f12b5412_cd8f96aa",
+      "range": {
+        "startLine": 410,
+        "startChar": 25,
+        "endLine": 410,
+        "endChar": 31
+      },
+      "revId": "b1416a85586216b2bc0e4959a3112a93a2a1e743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
