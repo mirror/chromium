@@ -78,6 +78,24 @@
     },
     {
       "key": {
+        "uuid": "af9dbc9e_515c5541",
+        "filename": "chrome/test/data/extensions/api_test/networking_private/chromeos/test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-06T20:35:53Z",
+      "side": 1,
+      "message": "Looking more closely now I see what you are suggesting. Done for just these two helpers for now.",
+      "parentUuid": "e4cf452e_fc2c909a",
+      "revId": "196a2d2a11f4a7d1e6bfb16650d6cc6ec6549bdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c73f447_dbccd953",
         "filename": "chrome/test/data/extensions/api_test/networking_private/test.js",
         "patchSetId": 4
