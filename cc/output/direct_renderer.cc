@@ -78,7 +78,7 @@ DirectRenderer::DrawingFrame::~DrawingFrame() = default;
 
 DirectRenderer::DirectRenderer(const viz::RendererSettings* settings,
                                OutputSurface* output_surface,
-                               DisplayResourceProvider* resource_provider)
+                               viz::DisplayResourceProvider* resource_provider)
     : settings_(settings),
       output_surface_(output_surface),
       resource_provider_(resource_provider),
@@ -633,7 +633,7 @@ bool DirectRenderer::UseRenderPass(const RenderPass* render_pass) {
                enlarge_pass_texture_amount_.height());
   if (!texture->id()) {
     texture->Allocate(
-        size, ResourceProvider::TEXTURE_HINT_IMMUTABLE_FRAMEBUFFER,
+        size, viz::ResourceProvider::TEXTURE_HINT_IMMUTABLE_FRAMEBUFFER,
         BackbufferFormat(), current_frame()->current_render_pass->color_space);
   } else if (render_pass->cache_render_pass &&
              !render_pass->has_damage_from_contributing_content) {

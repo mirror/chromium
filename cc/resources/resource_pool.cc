@@ -17,9 +17,9 @@
 #include "base/trace_event/memory_dump_manager.h"
 #include "build/build_config.h"
 #include "cc/base/container_util.h"
-#include "cc/resources/resource_provider.h"
-#include "cc/resources/resource_util.h"
+#include "cc/base/resource_util.h"
 #include "cc/resources/scoped_resource.h"
+#include "components/viz/common/display/resource_provider.h"
 
 using base::trace_event::MemoryAllocatorDump;
 using base::trace_event::MemoryDumpLevelOfDetail;
@@ -42,7 +42,7 @@ bool ResourceMeetsSizeRequirements(const gfx::Size& requested_size,
     return false;
 
   // GetArea will crash on overflow, however all sizes in use are tile sizes.
-  // These are capped at ResourceProvider::max_texture_size(), and will not
+  // These are capped at viz::ResourceProvider::max_texture_size(), and will not
   // overflow.
   float actual_area = actual_size.GetArea();
   float requested_area = requested_size.GetArea();
@@ -60,10 +60,10 @@ constexpr base::TimeDelta ResourcePool::kDefaultExpirationDelay;
 
 void ResourcePool::PoolResource::OnMemoryDump(
     base::trace_event::ProcessMemoryDump* pmd,
-    const ResourceProvider* resource_provider,
+    const viz::ResourceProvider* resource_provider,
     bool is_free) const {
-  // Resource IDs are not process-unique, so log with the ResourceProvider's
-  // unique id.
+  // Resource IDs are not process-unique, so log with the
+  // viz::ResourceProvider's unique id.
   std::string parent_node =
       base::StringPrintf("cc/resource_memory/provider_%d/resource_%d",
                          resource_provider->tracing_id(), id());
@@ -84,7 +84,7 @@ void ResourcePool::PoolResource::OnMemoryDump(
   }
 }
 
-ResourcePool::ResourcePool(ResourceProvider* resource_provider,
+ResourcePool::ResourcePool(viz::ResourceProvider* resource_provider,
                            base::SingleThreadTaskRunner* task_runner,
                            gfx::BufferUsage usage,
                            const base::TimeDelta& expiration_delay,
@@ -109,9 +109,9 @@ ResourcePool::ResourcePool(ResourceProvider* resource_provider,
   base::MemoryCoordinatorClientRegistry::GetInstance()->Register(this);
 }
 
-ResourcePool::ResourcePool(ResourceProvider* resource_provider,
+ResourcePool::ResourcePool(viz::ResourceProvider* resource_provider,
                            base::SingleThreadTaskRunner* task_runner,
-                           ResourceProvider::TextureHint hint,
+                           viz::ResourceProvider::TextureHint hint,
                            const base::TimeDelta& expiration_delay,
                            bool disallow_non_exact_reuse)
     : resource_provider_(resource_provider),

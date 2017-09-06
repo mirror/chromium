@@ -32,7 +32,8 @@ struct VIZ_COMMON_EXPORT TransferableResource {
       const std::vector<TransferableResource>& input);
 
   ResourceId id;
-  // Refer to ResourceProvider::Resource for the meaning of the following data.
+  // Refer to ResourceProvider::Resource for the meaning of the following
+  // data.
   ResourceFormat format;
   gfx::BufferFormat buffer_format;
   uint32_t filter;

@@ -14,9 +14,9 @@
 #include "cc/quads/solid_color_draw_quad.h"
 #include "cc/quads/texture_draw_quad.h"
 #include "cc/resources/scoped_resource.h"
-#include "cc/resources/single_release_callback_impl.h"
 #include "cc/trees/layer_tree_impl.h"
 #include "cc/trees/occlusion.h"
+#include "components/viz/common/quads/single_release_callback_impl.h"
 #include "components/viz/common/resources/platform_color.h"
 
 namespace cc {
@@ -42,7 +42,7 @@ TextureLayerImpl::~TextureLayerImpl() { FreeTextureMailbox(); }
 
 void TextureLayerImpl::SetTextureMailbox(
     const viz::TextureMailbox& mailbox,
-    std::unique_ptr<SingleReleaseCallbackImpl> release_callback) {
+    std::unique_ptr<viz::SingleReleaseCallbackImpl> release_callback) {
   DCHECK_EQ(mailbox.IsValid(), !!release_callback);
   FreeTextureMailbox();
   texture_mailbox_ = mailbox;
@@ -79,7 +79,7 @@ void TextureLayerImpl::PushPropertiesTo(LayerImpl* layer) {
 }
 
 bool TextureLayerImpl::WillDraw(DrawMode draw_mode,
-                                ResourceProvider* resource_provider) {
+                                viz::ResourceProvider* resource_provider) {
   if (draw_mode == DRAW_MODE_RESOURCELESS_SOFTWARE)
     return false;
 
@@ -112,7 +112,7 @@ bool TextureLayerImpl::WillDraw(DrawMode draw_mode,
 
     if (!texture_copy_->id()) {
       texture_copy_->Allocate(texture_mailbox_.size_in_pixels(),
-                              ResourceProvider::TEXTURE_HINT_IMMUTABLE,
+                              viz::ResourceProvider::TEXTURE_HINT_IMMUTABLE,
                               resource_provider->best_texture_format(),
                               gfx::ColorSpace());
     }
@@ -260,7 +260,7 @@ void TextureLayerImpl::FreeTextureMailbox() {
     release_callback_ = nullptr;
   } else if (external_texture_resource_) {
     DCHECK(!own_mailbox_);
-    ResourceProvider* resource_provider =
+    viz::ResourceProvider* resource_provider =
         layer_tree_impl()->resource_provider();
     resource_provider->DeleteResource(external_texture_resource_);
     external_texture_resource_ = 0;

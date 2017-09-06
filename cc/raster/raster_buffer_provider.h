@@ -11,7 +11,7 @@
 #include "cc/raster/raster_source.h"
 #include "cc/raster/task_graph_runner.h"
 #include "cc/raster/tile_task.h"
-#include "cc/resources/resource_provider.h"
+#include "components/viz/common/display/resource_provider.h"
 #include "components/viz/common/resources/resource_format.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/size.h"
@@ -79,7 +79,7 @@ class CC_EXPORT RasterBufferProvider {
   // avoid creating a new callback unnecessarily. If the caller does not
   // have a pending callback, 0 should be passed for |pending_callback_id|.
   virtual uint64_t SetReadyToDrawCallback(
-      const ResourceProvider::ResourceIdArray& resource_ids,
+      const viz::ResourceProvider::ResourceIdArray& resource_ids,
       const base::Callback<void()>& callback,
       uint64_t pending_callback_id) const = 0;
 

@@ -87,7 +87,7 @@ std::unique_ptr<LayerImpl> HeadsUpDisplayLayerImpl::CreateLayerImpl(
 }
 
 void HeadsUpDisplayLayerImpl::AcquireResource(
-    ResourceProvider* resource_provider) {
+    viz::ResourceProvider* resource_provider) {
   for (auto& resource : resources_) {
     if (!resource_provider->InUseByConsumer(resource->id())) {
       resource.swap(resources_.back());
@@ -97,22 +97,23 @@ void HeadsUpDisplayLayerImpl::AcquireResource(
 
   auto resource = std::make_unique<ScopedResource>(resource_provider);
   resource->Allocate(internal_content_bounds_,
-                     ResourceProvider::TEXTURE_HINT_IMMUTABLE_FRAMEBUFFER,
+                     viz::ResourceProvider::TEXTURE_HINT_IMMUTABLE_FRAMEBUFFER,
                      resource_provider->best_render_buffer_format(),
                      gfx::ColorSpace());
   resources_.push_back(std::move(resource));
 }
 
 void HeadsUpDisplayLayerImpl::ReleaseUnmatchedSizeResources(
-    ResourceProvider* resource_provider) {
+    viz::ResourceProvider* resource_provider) {
   base::EraseIf(resources_,
                 [this](const std::unique_ptr<ScopedResource>& resource) {
                   return internal_content_bounds_ != resource->size();
                 });
 }
 
-bool HeadsUpDisplayLayerImpl::WillDraw(DrawMode draw_mode,
-                                       ResourceProvider* resource_provider) {
+bool HeadsUpDisplayLayerImpl::WillDraw(
+    DrawMode draw_mode,
+    viz::ResourceProvider* resource_provider) {
   if (draw_mode == DRAW_MODE_RESOURCELESS_SOFTWARE)
     return false;
 
@@ -159,7 +160,7 @@ void HeadsUpDisplayLayerImpl::AppendQuads(
 
 void HeadsUpDisplayLayerImpl::UpdateHudTexture(
     DrawMode draw_mode,
-    ResourceProvider* resource_provider,
+    viz::ResourceProvider* resource_provider,
     viz::ContextProvider* context_provider,
     const RenderPassList& list) {
   if (draw_mode == DRAW_MODE_RESOURCELESS_SOFTWARE || !resources_.back()->id())
@@ -168,10 +169,10 @@ void HeadsUpDisplayLayerImpl::UpdateHudTexture(
   if (context_provider) {
     ScopedGpuRaster gpu_raster(context_provider);
 
-    ResourceProvider::ScopedWriteLockGL lock(resource_provider,
-                                             resources_.back()->id());
+    viz::ResourceProvider::ScopedWriteLockGL lock(resource_provider,
+                                                  resources_.back()->id());
 
-    ResourceProvider::ScopedSkSurface scoped_surface(
+    viz::ResourceProvider::ScopedSkSurface scoped_surface(
         context_provider->GrContext(), lock.GetTexture(), lock.target(),
         lock.size(), lock.format(), false /* use_distance_field_text */,
         false /* can_use_lcd_text */, 0 /* msaa_sample_count */);

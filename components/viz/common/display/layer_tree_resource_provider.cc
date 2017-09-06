@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "cc/resources/layer_tree_resource_provider.h"
+#include "components/viz/common/display/layer_tree_resource_provider.h"
 
 #include "build/build_config.h"
 #include "components/viz/common/resources/resource_format_utils.h"
@@ -12,16 +12,16 @@
 
 using gpu::gles2::GLES2Interface;
 
-namespace cc {
+namespace viz {
 
 LayerTreeResourceProvider::LayerTreeResourceProvider(
-    viz::ContextProvider* compositor_context_provider,
-    viz::SharedBitmapManager* shared_bitmap_manager,
+    ContextProvider* compositor_context_provider,
+    SharedBitmapManager* shared_bitmap_manager,
     gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
-    BlockingTaskRunner* blocking_main_thread_task_runner,
+    cc::BlockingTaskRunner* blocking_main_thread_task_runner,
     bool delegated_sync_points_required,
     bool enable_color_correct_rasterization,
-    const viz::ResourceSettings& resource_settings)
+    const ResourceSettings& resource_settings)
     : ResourceProvider(compositor_context_provider,
                        shared_bitmap_manager,
                        gpu_memory_buffer_manager,
@@ -35,7 +35,7 @@ LayerTreeResourceProvider::~LayerTreeResourceProvider() {}
 gpu::SyncToken LayerTreeResourceProvider::GetSyncTokenForResources(
     const ResourceIdArray& resource_ids) {
   gpu::SyncToken latest_sync_token;
-  for (viz::ResourceId id : resource_ids) {
+  for (ResourceId id : resource_ids) {
     const gpu::SyncToken& sync_token = GetResource(id)->mailbox().sync_token();
     if (sync_token.release_count() > latest_sync_token.release_count())
       latest_sync_token = sync_token;
@@ -45,7 +45,7 @@ gpu::SyncToken LayerTreeResourceProvider::GetSyncTokenForResources(
 
 void LayerTreeResourceProvider::PrepareSendToParent(
     const ResourceIdArray& resource_ids,
-    std::vector<viz::TransferableResource>* list) {
+    std::vector<TransferableResource>* list) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   GLES2Interface* gl = ContextGL();
 
@@ -53,7 +53,7 @@ void LayerTreeResourceProvider::PrepareSendToParent(
   // as pointers so we don't have to look up the resource id multiple times.
   std::vector<Resource*> resources;
   resources.reserve(resource_ids.size());
-  for (const viz::ResourceId id : resource_ids)
+  for (const ResourceId id : resource_ids)
     resources.push_back(GetResource(id));
 
   // Lazily create any mailboxes and verify all unverified sync tokens.
@@ -106,14 +106,14 @@ void LayerTreeResourceProvider::PrepareSendToParent(
   DCHECK_EQ(resources.size(), resource_ids.size());
   for (size_t i = 0; i < resources.size(); ++i) {
     Resource* source = resources[i];
-    const viz::ResourceId id = resource_ids[i];
+    const ResourceId id = resource_ids[i];
 
     DCHECK(!settings_.delegated_sync_points_required ||
            !source->needs_sync_token());
     DCHECK(!settings_.delegated_sync_points_required ||
            Resource::LOCALLY_USED != source->synchronization_state());
 
-    viz::TransferableResource resource;
+    TransferableResource resource;
     TransferResource(source, id, &resource);
 
     source->exported_count++;
@@ -122,12 +122,12 @@ void LayerTreeResourceProvider::PrepareSendToParent(
 }
 
 void LayerTreeResourceProvider::ReceiveReturnsFromParent(
-    const std::vector<viz::ReturnedResource>& resources) {
+    const std::vector<ReturnedResource>& resources) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   GLES2Interface* gl = ContextGL();
 
-  for (const viz::ReturnedResource& returned : resources) {
-    viz::ResourceId local_id = returned.id;
+  for (const ReturnedResource& returned : resources) {
+    ResourceId local_id = returned.id;
     ResourceMap::iterator map_iterator = resources_.find(local_id);
     // Resource was already lost (e.g. it belonged to a child that was
     // destroyed).
@@ -165,8 +165,8 @@ void LayerTreeResourceProvider::ReceiveReturnsFromParent(
 
 void LayerTreeResourceProvider::TransferResource(
     Resource* source,
-    viz::ResourceId id,
-    viz::TransferableResource* resource) {
+    ResourceId id,
+    TransferableResource* resource) {
   DCHECK(!source->locked_for_write);
   DCHECK(!source->lock_for_read_count);
   DCHECK(source->origin != Resource::EXTERNAL || source->mailbox().IsValid());
@@ -207,7 +207,7 @@ void LayerTreeResourceProvider::TransferResource(
 
 LayerTreeResourceProvider::ScopedWriteLockGpuMemoryBuffer ::
     ScopedWriteLockGpuMemoryBuffer(LayerTreeResourceProvider* resource_provider,
-                                   viz::ResourceId resource_id)
+                                   ResourceId resource_id)
     : resource_provider_(resource_provider), resource_id_(resource_id) {
   Resource* resource = resource_provider->LockForWrite(resource_id);
   DCHECK(IsGpuResourceType(resource->type));
@@ -251,4 +251,4 @@ gfx::GpuMemoryBuffer* LayerTreeResourceProvider::
   return gpu_memory_buffer_.get();
 }
 
-}  // namespace cc
+}  // namespace viz

@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CC_RESOURCES_RESOURCE_UTIL_H_
-#define CC_RESOURCES_RESOURCE_UTIL_H_
+#ifndef CC_BASE_RESOURCE_UTIL_H_
+#define CC_BASE_RESOURCE_UTIL_H_
 
 #include <stddef.h>
 
@@ -11,15 +11,15 @@
 
 #include "base/macros.h"
 #include "base/numerics/safe_math.h"
+#include "cc/base/base_export.h"
 #include "cc/base/math_util.h"
-#include "cc/cc_export.h"
 #include "components/viz/common/resources/resource_format.h"
 #include "components/viz/common/resources/resource_format_utils.h"
 #include "ui/gfx/geometry/size.h"
 
 namespace cc {
 
-class CC_EXPORT ResourceUtil {
+class CC_BASE_EXPORT ResourceUtil {
  public:
   // Returns true if the width is valid and fits in bytes, false otherwise.
   template <typename T>
@@ -215,4 +215,4 @@ T ResourceUtil::BytesInternal(int width,
 
 }  // namespace cc
 
-#endif  // CC_RESOURCES_RESOURCE_UTIL_H_
+#endif  // CC_BASE_RESOURCE_UTIL_H_
