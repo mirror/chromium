@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "78c740e8_f3631250",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-06T21:50:39Z",
+      "side": 1,
+      "message": "Interesting observation! I\u0027ll change toggle() to openDrawer() too.",
+      "parentUuid": "13179975_20a96319",
+      "range": {
+        "startLine": 166,
+        "startChar": 10,
+        "endLine": 166,
+        "endChar": 29
+      },
+      "revId": "8cc169f85432da2598cff0a24571af4fdad800e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "457b40f2_0f547bff",
         "filename": "chrome/browser/resources/md_extensions/sidebar.js",
         "patchSetId": 10
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-06T01:39:53Z",
       "side": 1,
       "message": "This is very tightly coupled with |onMenuButtonTap_|. Consider moving this logic there and using |selected| directly for readability.",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 7
+      },
+      "revId": "8cc169f85432da2598cff0a24571af4fdad800e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faf1b79e_2c4cf4b4",
+        "filename": "chrome/browser/resources/md_extensions/sidebar.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-06T21:50:39Z",
+      "side": 1,
+      "message": "I don\u0027t think we need/want Manager to know what \"selected \u003d -1|0|1|2\" means, since that\u0027s specific to the \u003cpaper-menu\u003e implementation within \u003csidebar\u003e. \n\nPageState had sort of become the de facto thing to be passed around for inter-element communication, and its up to each element to decide what to do with it.",
+      "parentUuid": "457b40f2_0f547bff",
       "range": {
         "startLine": 41,
         "startChar": 0,
