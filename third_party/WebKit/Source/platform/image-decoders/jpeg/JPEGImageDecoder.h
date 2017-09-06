@@ -26,12 +26,14 @@
 #ifndef JPEGImageDecoder_h
 #define JPEGImageDecoder_h
 
-#include "platform/image-decoders/ImageDecoder.h"
 #include <memory>
+#include "platform/image-decoders/ImageDecoder.h"
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/RefPtr.h"
+#include "platform/wtf/Time.h"
+#include "third_party/skia/include/codec/SkCodec.h"
 
 namespace blink {
-
-class JPEGImageReader;
 
 class PLATFORM_EXPORT JPEGImageDecoder final : public ImageDecoder {
   WTF_MAKE_NONCOPYABLE(JPEGImageDecoder);
@@ -43,26 +45,21 @@ class PLATFORM_EXPORT JPEGImageDecoder final : public ImageDecoder {
   // ImageDecoder:
   String FilenameExtension() const override { return "jpg"; }
   void OnSetData(SegmentReader* data) override;
+  std::vector<SkISize> GetSupportedDecodeSizes() override;
   IntSize DecodedSize() const override { return decoded_size_; }
-  bool SetSize(unsigned width, unsigned height) override;
   IntSize DecodedYUVSize(int component) const override;
   size_t DecodedYUVWidthBytes(int component) const override;
+  bool SetSize(unsigned width, unsigned height) override;
+  int RepetitionCount() const override;
+  bool FrameIsReceivedAtIndex(size_t) const override;
+  TimeDelta FrameDurationAtIndex(size_t) const override;
+  // CAUTION: SetFailed() deletes |codec_|. Be careful to avoid
+  // accessing deleted memory.
+  bool SetFailed() override;
+
   bool CanDecodeToYUV() override;
   bool DecodeToYUV() override;
   void SetImagePlanes(std::unique_ptr<ImagePlanes>) override;
-  std::vector<SkISize> GetSupportedDecodeSizes() override;
-  bool HasImagePlanes() const { return image_planes_.get(); }
-
-  bool OutputScanlines();
-  unsigned DesiredScaleNumerator() const;
-  void Complete();
-
-  void SetOrientation(ImageOrientation orientation) {
-    orientation_ = orientation;
-  }
-  void SetDecodedSize(unsigned width, unsigned height);
-
-  void AddSupportedDecodeSize(unsigned width, unsigned height);
 
  private:
   // ImageDecoder:
@@ -74,7 +71,16 @@ class PLATFORM_EXPORT JPEGImageDecoder final : public ImageDecoder {
   // data coming, sets the "decode failure" flag.
   void Decode(bool only_size, bool generate_all_sizes = false);
 
-  std::unique_ptr<JPEGImageReader> reader_;
+  bool HasImagePlanes() const { return image_planes_.get(); }
+  bool OutputScanlines();
+  unsigned DesiredScaleNumerator() const;
+  void Complete();
+  void SetOrientation(ImageOrientation orientation) {
+    orientation_ = orientation;
+  }
+  void SetDecodedSize(unsigned width, unsigned height);
+  void AddSupportedDecodeSize(unsigned width, unsigned height);
+
   std::unique_ptr<ImagePlanes> image_planes_;
   IntSize decoded_size_;
   std::vector<SkISize> supported_decode_sizes_;
