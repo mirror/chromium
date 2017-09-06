@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3f0862a_b5c6f3f9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-09-06T20:12:09Z",
+      "side": 1,
+      "message": "nit: maybe Label FrameSinkIds for debugging purposes.",
+      "range": {
+        "startLine": 7,
+        "startChar": 6,
+        "endLine": 7,
+        "endChar": 18
+      },
+      "revId": "4afacda3f9c63c474fad2f67d884d50577a42811",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea61ec52_26a3747d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-09-06T20:12:09Z",
+      "side": 1,
+      "message": "nit: now out-of-date.?",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 20
+      },
+      "revId": "4afacda3f9c63c474fad2f67d884d50577a42811",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
