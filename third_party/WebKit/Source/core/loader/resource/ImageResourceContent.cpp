@@ -626,8 +626,4 @@ const ResourceError& ImageResourceContent::GetResourceError() const {
   return info_->GetResourceError();
 }
 
-bool ImageResourceContent::IsCacheValidator() const {
-  return info_->IsCacheValidator();
-}
-
 }  // namespace blink
