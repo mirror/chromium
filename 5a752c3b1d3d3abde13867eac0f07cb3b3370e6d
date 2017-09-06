@@ -34,6 +34,24 @@
       "revId": "5a752c3b1d3d3abde13867eac0f07cb3b3370e6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0f971bb_34f00dc8",
+        "filename": "cc/output/vulkan_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1241467
+      },
+      "writtenOn": "2017-09-06T04:23:40Z",
+      "side": 1,
+      "message": "Sorry, My mistake. \nGit cl upload gave multiple warnings, the first being : \nnot signing \"Contributor License Agreement\", which I was working on anyway (done now). and I overlooked the next thinking that was the only warning and pressed y.\n\nUploaded next patch with correction and after running git cl format. Will take care from now on.",
+      "parentUuid": "e5b32299_347dbc2b",
+      "revId": "5a752c3b1d3d3abde13867eac0f07cb3b3370e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
