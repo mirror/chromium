@@ -22,6 +22,7 @@ class ScrollView;
 namespace ash {
 
 class LoginAuthUserView;
+class LoginBubble;
 class LoginUserView;
 
 // LockContentsView hosts the root view for the lock screen. All other lock
@@ -133,6 +134,8 @@ class ASH_EXPORT LockContentsView : public views::View,
   std::vector<OnRotate> rotation_actions_;
 
   ScopedObserver<display::Screen, display::DisplayObserver> display_observer_;
+
+  std::unique_ptr<LoginBubble> error_bubble_;
 
   DISALLOW_COPY_AND_ASSIGN(LockContentsView);
 };

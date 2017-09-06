@@ -4,8 +4,10 @@
 
 #include "ash/login/ui/login_auth_user_view.h"
 
+#include "ash/ime/ime_controller.h"
 #include "ash/login/lock_screen_controller.h"
 #include "ash/login/ui/lock_screen.h"
+#include "ash/login/ui/login_bubble.h"
 #include "ash/login/ui/login_constants.h"
 #include "ash/login/ui/login_display_style.h"
 #include "ash/login/ui/login_password_view.h"
@@ -13,8 +15,13 @@
 #include "ash/login/ui/login_user_view.h"
 #include "ash/login/ui/pin_keyboard_animation.h"
 #include "ash/shell.h"
+#include "ash/strings/grit/ash_strings.h"
+#include "base/strings/string16.h"
 #include "base/strings/utf_string_conversions.h"
 #include "components/user_manager/user.h"
+#include "ui/base/ime/chromeos/ime_keyboard.h"
+#include "ui/base/ime/chromeos/input_method_manager.h"
+#include "ui/base/l10n/l10n_util.h"
 #include "ui/compositor/callback_layer_animation_observer.h"
 #include "ui/compositor/layer_animation_sequence.h"
 #include "ui/compositor/layer_animator.h"
@@ -97,8 +104,9 @@ LoginPasswordView* LoginAuthUserView::TestApi::password_view() const {
 
 LoginAuthUserView::LoginAuthUserView(const mojom::UserInfoPtr& user,
                                      const OnAuthCallback& on_auth,
-                                     const LoginUserView::OnTap& on_tap)
-    : on_auth_(on_auth) {
+                                     const LoginUserView::OnTap& on_tap,
+                                     LoginBubble* error_bubble)
+    : on_auth_(on_auth), error_bubble_(error_bubble), weak_factory_(this) {
   // Build child views.
   user_view_ = new LoginUserView(LoginDisplayStyle::kLarge,
                                  true /*show_dropdown*/, on_tap);
@@ -313,9 +321,46 @@ void LoginAuthUserView::OnAuthSubmit(bool is_pin,
                                      const base::string16& password) {
   Shell::Get()->lock_screen_controller()->AuthenticateUser(
       current_user()->account_id, base::UTF16ToUTF8(password), is_pin,
-      base::BindOnce([](OnAuthCallback on_auth,
-                        bool auth_success) { on_auth.Run(auth_success); },
-                     on_auth_));
+      base::BindOnce(&LoginAuthUserView::OnAuthDone,
+                     weak_factory_.GetWeakPtr()));
+}
+
+void LoginAuthUserView::OnAuthDone(bool auth_success) {
+  if (error_bubble_)
+    error_bubble_->Close();
+
+  if (!auth_success) {
+    ShowErrorMessage();
+    ++unlock_attempt_;
+  } else {
+    unlock_attempt_ = 0;
+  }
+
+  on_auth_.Run(auth_success);
+}
+
+void LoginAuthUserView::ShowErrorMessage() {
+  if (!error_bubble_)
+    return;
+
+  std::string error_text = l10n_util::GetStringUTF8(
+      unlock_attempt_ ? IDS_ASH_LOGIN_ERROR_AUTHENTICATING_2ND_TIME
+                      : IDS_ASH_LOGIN_ERROR_AUTHENTICATING);
+  ImeController* ime_controller = Shell::Get()->ime_controller();
+  if (ime_controller->IsCapsLockEnabled()) {
+    error_text +=
+        "\n" + l10n_util::GetStringUTF8(IDS_ASH_LOGIN_ERROR_CAPS_LOCK_HINT);
+  }
+
+  // Display a hint to switch keyboards if there are other active input
+  // methods.
+  if (ime_controller->available_imes().size() > 1) {
+    error_text += "\n" + l10n_util::GetStringUTF8(
+                             IDS_ASH_LOGIN_ERROR_KEYBOARD_SWITCH_HINT);
+  }
+
+  error_bubble_->Show(base::UTF8ToUTF16(error_text), base::string16(),
+                      password_view_);
 }
 
 }  // namespace ash

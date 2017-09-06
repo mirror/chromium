@@ -6,6 +6,7 @@
 
 #include "ash/login/ui/lock_screen.h"
 #include "ash/login/ui/login_auth_user_view.h"
+#include "ash/login/ui/login_bubble.h"
 #include "ash/login/ui/login_display_style.h"
 #include "ash/login/ui/login_user_view.h"
 #include "ash/shell.h"
@@ -127,6 +128,8 @@ LockContentsView::LockContentsView(LoginDataDispatcher* data_dispatcher)
     : data_dispatcher_(data_dispatcher), display_observer_(this) {
   data_dispatcher_->AddObserver(this);
   display_observer_.Add(display::Screen::GetScreen());
+  error_bubble_ =
+      base::WrapUnique<LoginBubble>(LoginBubble::CreateErrorBubble());
 }
 
 LockContentsView::~LockContentsView() {
@@ -175,7 +178,8 @@ void LockContentsView::OnUsersChanged(
       users[0],
       base::Bind(&LockContentsView::OnAuthenticate, base::Unretained(this)),
       base::Bind(&LockContentsView::SwapPrimaryAndSecondaryAuth,
-                 base::Unretained(this), true /*is_primary*/));
+                 base::Unretained(this), true /*is_primary*/),
+      error_bubble_.get());
   AddChildView(primary_auth_);
 
   // Build layout for additional users.
@@ -240,7 +244,8 @@ void LockContentsView::CreateLowDensityLayout(
       users[1],
       base::Bind(&LockContentsView::OnAuthenticate, base::Unretained(this)),
       base::Bind(&LockContentsView::SwapPrimaryAndSecondaryAuth,
-                 base::Unretained(this), false /*is_primary*/));
+                 base::Unretained(this), false /*is_primary*/),
+      error_bubble_.get());
   opt_secondary_auth_->SetAuthMethods(LoginAuthUserView::AUTH_NONE);
   AddChildView(opt_secondary_auth_);
 }

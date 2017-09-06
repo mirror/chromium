@@ -23,7 +23,7 @@ class LoginAuthUserViewUnittest : public LoginTestBase {
     user_ = CreateUser("user");
     view_ = new LoginAuthUserView(
         user_, base::Bind([](bool auth_success) {}) /*on_auth*/,
-        base::Closure() /*on_tap*/);
+        base::Closure() /*on_tap*/, nullptr /*error_bubble*/);
 
     // We proxy |view_| inside of |container_| so we can control layout.
     container_ = new views::View();
