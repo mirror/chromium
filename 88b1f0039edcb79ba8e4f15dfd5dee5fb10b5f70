@@ -77,6 +77,24 @@
     },
     {
       "key": {
+        "uuid": "e1deac48_00526650",
+        "filename": "chromecast/app/android/crash_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1230862
+      },
+      "writtenOn": "2017-09-06T20:46:57Z",
+      "side": 1,
+      "message": "So if a minidump is in the crash dump directory, it will be uploaded automatically but CastCrashUploader only checks that dump directory every 20 minutes. This is to upload dumps immediately(also grabbing the logcat) for the case of a user sending feedback.",
+      "parentUuid": "7588fcab_507f33f6",
+      "revId": "88b1f0039edcb79ba8e4f15dfd5dee5fb10b5f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "facc359b_55456cab",
         "filename": "chromecast/app/android/crash_handler.h",
         "patchSetId": 1
