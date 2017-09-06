@@ -11,9 +11,13 @@ namespace viz {
 
 CopyOutputResult::CopyOutputResult() {}
 
-CopyOutputResult::CopyOutputResult(std::unique_ptr<SkBitmap> bitmap)
-    : size_(bitmap->width(), bitmap->height()), bitmap_(std::move(bitmap)) {
+CopyOutputResult::CopyOutputResult(std::unique_ptr<SkBitmap> bitmap,
+                                   const gfx::ColorSpace& bitmap_color_space)
+    : size_(bitmap->width(), bitmap->height()),
+      bitmap_(std::move(bitmap)),
+      bitmap_color_space_(bitmap_color_space) {
   DCHECK(bitmap_);
+  DCHECK(!bitmap_->colorSpace());
 }
 
 CopyOutputResult::CopyOutputResult(

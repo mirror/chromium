@@ -45,8 +45,11 @@ void CopyOutputRequest::SendEmptyResult() {
   SendResult(CopyOutputResult::CreateEmptyResult());
 }
 
-void CopyOutputRequest::SendBitmapResult(std::unique_ptr<SkBitmap> bitmap) {
-  SendResult(CopyOutputResult::CreateBitmapResult(std::move(bitmap)));
+void CopyOutputRequest::SendBitmapResult(
+    std::unique_ptr<SkBitmap> bitmap,
+    const gfx::ColorSpace& bitmap_color_space) {
+  SendResult(CopyOutputResult::CreateBitmapResult(std::move(bitmap),
+                                                  bitmap_color_space));
 }
 
 void CopyOutputRequest::SendTextureResult(

@@ -83,7 +83,8 @@ class VIZ_COMMON_EXPORT CopyOutputRequest {
   const TextureMailbox& texture_mailbox() const { return *texture_mailbox_; }
 
   void SendEmptyResult();
-  void SendBitmapResult(std::unique_ptr<SkBitmap> bitmap);
+  void SendBitmapResult(std::unique_ptr<SkBitmap> bitmap,
+                        const gfx::ColorSpace& bitmap_color_space);
   void SendTextureResult(
       const gfx::Size& size,
       const TextureMailbox& texture_mailbox,
