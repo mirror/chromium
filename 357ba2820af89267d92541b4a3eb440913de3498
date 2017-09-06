@@ -16,6 +16,24 @@
       "revId": "357ba2820af89267d92541b4a3eb440913de3498",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "755ebc0b_a62d4558",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-06T20:59:14Z",
+      "side": 1,
+      "message": "\u003e This patch also enables zero copy for the UI right? I def think that\u0027s worth mentioning in this CL description, if not worth doing as its own patch first.\n\nYup. I\u0027ve updated the CL description. There\u0027s not much on Mac that draws UI using the\ngpu process yet, and we\u0027re early in release, so I think this is safe..",
+      "parentUuid": "565d602e_ed42406b",
+      "revId": "357ba2820af89267d92541b4a3eb440913de3498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
