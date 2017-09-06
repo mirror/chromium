@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9030e2cc_ff71b6e5",
+        "filename": "chrome/browser/resources/policy_base.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-09-06T19:23:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11dc4762_f281610c",
+      "revId": "d5d82dee48335f9c3b3cf22d3c2fca7aafbb1c09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7290390a_93f20737",
         "filename": "chrome/browser/resources/policy_tool.js",
         "patchSetId": 15
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2bdd2cfa_97cb9893",
+        "filename": "chrome/browser/resources/policy_tool.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-09-06T19:23:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7290390a_93f20737",
+      "revId": "d5d82dee48335f9c3b3cf22d3c2fca7aafbb1c09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "298408b6_bafa0a5c",
         "filename": "chrome/browser/resources/policy_tool.js",
         "patchSetId": 15
@@ -50,6 +86,24 @@
       "revId": "d5d82dee48335f9c3b3cf22d3c2fca7aafbb1c09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2169f78_e4636dbb",
+        "filename": "chrome/browser/resources/policy_tool.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-09-06T19:23:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "298408b6_bafa0a5c",
+      "revId": "d5d82dee48335f9c3b3cf22d3c2fca7aafbb1c09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
