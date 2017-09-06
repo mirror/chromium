@@ -34,6 +34,24 @@
       "revId": "04f2c755f3b698c2309b26cfc490479f7184171c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb37b91c_77b8aaf7",
+        "filename": "content/browser/renderer_host/delegated_frame_host.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-06T17:58:33Z",
+      "side": 1,
+      "message": "Awesome, thanks :)",
+      "parentUuid": "ca46f82e_124c9a3e",
+      "revId": "04f2c755f3b698c2309b26cfc490479f7184171c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
