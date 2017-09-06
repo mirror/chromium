@@ -16,6 +16,14 @@
 #include "extensions/browser/event_router_factory.h"
 #include "extensions/common/extension_id.h"
 
+namespace base {
+class RunLoop;
+}  // namespace base
+
+namespace content {
+class BrowserContext;
+}  // namespace content
+
 namespace extensions {
 
 // An EventRouter that tests can use to observe, await, or verify events
@@ -40,6 +48,9 @@ class TestEventRouter : public EventRouter {
   // Returns the number of times an event has been broadcast or dispatched.
   int GetEventCount(std::string event_name) const;
 
+  // Waits until an event with the given name is dispatched.
+  void WaitForEvent(const std::string& event_name);
+
   void AddEventObserver(EventObserver* obs);
   void RemoveEventObserver(EventObserver* obs);
 
@@ -61,6 +72,10 @@ class TestEventRouter : public EventRouter {
 
   // Count of dispatched and broadcasted events by event name.
   std::map<std::string, int> seen_events_;
+
+  // For awaiting waiting a particular event.
+  std::unique_ptr<base::RunLoop> run_loop_;
+  std::string wait_for_event_name_;
 
   base::ObserverList<EventObserver, false> observers_;
 

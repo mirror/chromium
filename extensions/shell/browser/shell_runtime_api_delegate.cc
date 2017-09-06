@@ -16,20 +16,16 @@ using extensions::api::runtime::PlatformInfo;
 
 namespace extensions {
 
-ShellRuntimeAPIDelegate::ShellRuntimeAPIDelegate() {
-}
+ShellRuntimeAPIDelegate::ShellRuntimeAPIDelegate() {}
 
-ShellRuntimeAPIDelegate::~ShellRuntimeAPIDelegate() {
-}
+ShellRuntimeAPIDelegate::~ShellRuntimeAPIDelegate() {}
 
-void ShellRuntimeAPIDelegate::AddUpdateObserver(UpdateObserver* observer) {
-}
+void ShellRuntimeAPIDelegate::AddUpdateObserver(UpdateObserver* observer) {}
 
-void ShellRuntimeAPIDelegate::RemoveUpdateObserver(UpdateObserver* observer) {
-}
+void ShellRuntimeAPIDelegate::RemoveUpdateObserver(UpdateObserver* observer) {}
 
-void ShellRuntimeAPIDelegate::ReloadExtension(const std::string& extension_id) {
-}
+void ShellRuntimeAPIDelegate::ReloadExtensionAsync(
+    const std::string& extension_id) {}
 
 bool ShellRuntimeAPIDelegate::CheckForUpdates(
     const std::string& extension_id,
@@ -37,8 +33,7 @@ bool ShellRuntimeAPIDelegate::CheckForUpdates(
   return false;
 }
 
-void ShellRuntimeAPIDelegate::OpenURL(const GURL& uninstall_url) {
-}
+void ShellRuntimeAPIDelegate::OpenURL(const GURL& uninstall_url) {}
 
 bool ShellRuntimeAPIDelegate::GetPlatformInfo(PlatformInfo* info) {
 #if defined(OS_CHROMEOS)
