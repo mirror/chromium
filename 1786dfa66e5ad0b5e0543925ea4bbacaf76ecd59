@@ -16,6 +16,24 @@
       "revId": "1786dfa66e5ad0b5e0543925ea4bbacaf76ecd59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72214cd6_12475378",
+        "filename": "ash/display/touch_calibrator_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-09-06T20:37:06Z",
+      "side": 1,
+      "message": "Done.\nI dont remember adding these. \"git cl format .\" did it probably?",
+      "parentUuid": "409e12c9_aae2e64a",
+      "revId": "1786dfa66e5ad0b5e0543925ea4bbacaf76ecd59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
