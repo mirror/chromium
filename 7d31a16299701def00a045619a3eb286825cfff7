@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c64fc509_e89f19e3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-09-06T17:53:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ef1c5d3_73e848d3",
+      "range": {
+        "startLine": 12,
+        "startChar": 77,
+        "endLine": 12,
+        "endChar": 78
+      },
+      "revId": "7d31a16299701def00a045619a3eb286825cfff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e43e12e_cf7cf030",
         "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-06T12:52:19Z",
       "side": 1,
       "message": "Is it OK to log all these messages as LOG(ERROR), given that not all of them are errors?",
+      "range": {
+        "startLine": 218,
+        "startChar": 11,
+        "endLine": 218,
+        "endChar": 12
+      },
+      "revId": "7d31a16299701def00a045619a3eb286825cfff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83fbf299_d551f71d",
+        "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-09-06T17:53:36Z",
+      "side": 1,
+      "message": "Apologies, I used this to manually verify that the logs arrive and then forgot to remove it.\n\nRemoved.",
+      "parentUuid": "4e43e12e_cf7cf030",
       "range": {
         "startLine": 218,
         "startChar": 11,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "417a432f_916c1dbd",
+        "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1256,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-09-06T17:53:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7e50860_b4b8d27e",
+      "range": {
+        "startLine": 1256,
+        "startChar": 7,
+        "endLine": 1256,
+        "endChar": 29
+      },
+      "revId": "7d31a16299701def00a045619a3eb286825cfff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51696152_fbc74ef2",
         "filename": "content/browser/renderer_host/media/media_stream_manager.h",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "7d31a16299701def00a045619a3eb286825cfff7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b67c9c8_8691ba83",
+        "filename": "content/browser/renderer_host/media/media_stream_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-09-06T17:53:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51696152_fbc74ef2",
+      "range": {
+        "startLine": 295,
+        "startChar": 22,
+        "endLine": 295,
+        "endChar": 37
+      },
+      "revId": "7d31a16299701def00a045619a3eb286825cfff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
