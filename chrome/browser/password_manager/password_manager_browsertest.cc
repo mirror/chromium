@@ -87,6 +87,26 @@ class PasswordManagerBrowserTestWarning
   DISALLOW_COPY_AND_ASSIGN(PasswordManagerBrowserTestWarning);
 };
 
+// This is a subclass to enable kEnableManualSaving and kEnablePasswordSelection
+// features.
+class PasswordManagerBrowserTestForPasswordSelection
+    : public PasswordManagerBrowserTestBase {
+ public:
+  PasswordManagerBrowserTestForPasswordSelection() = default;
+  ~PasswordManagerBrowserTestForPasswordSelection() override = default;
+
+  void SetUp() override {
+    scoped_feature_list_.InitWithFeatures(
+        {password_manager::features::kEnableManualSaving,
+         password_manager::features::kEnablePasswordSelection},
+        {});
+    PasswordManagerBrowserTestBase::SetUp();
+  }
+
+ private:
+  base::test::ScopedFeatureList scoped_feature_list_;
+};
+
 class MockLoginModelObserver : public password_manager::LoginModelObserver {
  public:
   MOCK_METHOD2(OnAutofillDataAvailableInternal,
@@ -2386,6 +2406,32 @@ IN_PROC_BROWSER_TEST_F(PasswordManagerBrowserTestBase,
   EXPECT_FALSE(prompt_observer->IsUpdatePromptShownAutomatically());
   CheckThatCredentialsStored(base::ASCIIToUTF16("temp"),
                              base::ASCIIToUTF16("pw"));
+}
+
+IN_PROC_BROWSER_TEST_F(PasswordManagerBrowserTestForPasswordSelection,
+                       MultiplePasswordsWithPasswordSelectionEnabled) {
+  // Check that save password bubble is shown for 3 different passwords.
+  NavigateToFile("/password/password_form.html");
+  NavigationObserver observer(WebContents());
+  std::string fill_and_submit =
+      "document.getElementById('chg_password_wo_username_field').value = "
+      "'pass1';"
+      "document.getElementById('chg_new_password_wo_username_1').value = "
+      "'pass2';"
+      "document.getElementById('chg_new_password_wo_username_2').value = "
+      "'pass3';"
+      "document.getElementById('chg_submit_wo_username_button').click()";
+  ASSERT_TRUE(content::ExecuteScript(RenderViewHost(), fill_and_submit));
+  observer.Wait();
+  // 3 possible passwords are going to be shown in a dropdown when the password
+  // selection feature is enabled. The first one will be selected by default.
+  // The save password prompt is expected.
+  BubbleObserver bubble_observer(WebContents());
+  EXPECT_TRUE(bubble_observer.IsSavePromptShownAutomatically());
+  bubble_observer.AcceptSavePrompt();
+  WaitForPasswordStore();
+  CheckThatCredentialsStored(base::ASCIIToUTF16(""),
+                             base::ASCIIToUTF16("pass1"));
 }
 
 IN_PROC_BROWSER_TEST_F(PasswordManagerBrowserTestBase,
