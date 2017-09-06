@@ -1881,7 +1881,21 @@ float AXNodeObject::ValueForRange() const {
   if (isHTMLMeterElement(GetNode()))
     return toHTMLMeterElement(*GetNode()).value();
 
-  return 0.0;
+  // In ARIA 1.1, default values for aria-valuenow were changed as below.
+  // - scrollbar, slider : half way between aria-valuemin and aria-valuemax
+  // - separator : 50
+  // - spinbutton : 0
+  switch (AriaRoleAttribute()) {
+    case kScrollBarRole:
+    case kSliderRole:
+      return (MinValueForRange() + MaxValueForRange()) / 2.0f;
+    case kSplitterRole:
+      return 50.0f;
+    case kSpinButtonRole:
+      return 0.0f;
+    default:
+      return 0.0f;
+  }
 }
 
 float AXNodeObject::MaxValueForRange() const {
