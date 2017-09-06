@@ -64,8 +64,7 @@ class CachedPolicyKeyLoaderChromeOS {
   void OnPolicyKeyLoaded(const std::string& key);
 
   // Callback for getting the sanitized username from |cryptohome_client_|.
-  void OnGetSanitizedUsername(chromeos::DBusMethodCallStatus call_status,
-                              const std::string& sanitized_username);
+  void OnGetSanitizedUsername(base::Optional<std::string> sanitized_username);
 
   void NotifyAndClearCallbacks();
 

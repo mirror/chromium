@@ -170,13 +170,9 @@ bool CrOSComponentInstallerTraits::IsCompatible(
 // point.
 static void LoadResult(
     const base::Callback<void(const std::string&)>& load_callback,
-    chromeos::DBusMethodCallStatus call_status,
-    const std::string& result) {
-  PostTask(
-      FROM_HERE,
-      base::BindOnce(
-          load_callback,
-          call_status != chromeos::DBUS_METHOD_CALL_SUCCESS ? "" : result));
+    base::Optional<std::string> result) {
+  PostTask(FROM_HERE,
+           base::BindOnce(load_callback, result.value_or(std::string())));
 }
 
 // Internal function to load a component.

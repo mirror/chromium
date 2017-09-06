@@ -213,15 +213,13 @@ class AsyncMethodCallerImpl : public AsyncMethodCaller {
                                  const DataCallback& callback) override {
     DBusThreadManager::Get()->GetCryptohomeClient()->GetSanitizedUsername(
         cryptohome_id,
-        base::Bind(&AsyncMethodCallerImpl::GetSanitizedUsernameCallback,
-                   weak_ptr_factory_.GetWeakPtr(), callback));
+        base::BindOnce(&AsyncMethodCallerImpl::GetSanitizedUsernameCallback,
+                       weak_ptr_factory_.GetWeakPtr(), callback));
   }
 
-  virtual void GetSanitizedUsernameCallback(
-      const DataCallback& callback,
-      const chromeos::DBusMethodCallStatus call_status,
-      const std::string& result) {
-    callback.Run(true, result);
+  void GetSanitizedUsernameCallback(const DataCallback& callback,
+                                    base::Optional<std::string> result) {
+    callback.Run(true, result.value_or(std::string()));
   }
 
  private:
