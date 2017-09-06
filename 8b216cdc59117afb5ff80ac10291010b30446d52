@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5adddfa1_6420833f",
+        "filename": "third_party/WebKit/Source/core/xmlhttprequest/XMLHttpRequest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1933,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-06T06:45:15Z",
+      "side": 1,
+      "message": "Add \"if (diff !\u003d 0)\".",
+      "revId": "8b216cdc59117afb5ff80ac10291010b30446d52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
