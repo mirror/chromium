@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "30b0c032_a778ecef",
+        "filename": "third_party/leveldatabase/leveldb_chromium.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-09-06T18:32:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f1ee522_ffeea91a",
+      "revId": "e058b09719839311a323a2ab5dbd3c64ae6ce713",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbde5db9_5928cfca",
         "filename": "third_party/leveldatabase/leveldb_chromium.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-05T22:29:31Z",
       "side": 1,
       "message": "Nit: I think we generally do GetInstance() for singletons?\n\nIf you\u0027re OK with the extra verbosity, and it doesn\u0027t limit dependency injection, I\u0027d prefer that we expose static methods and consider the singleton an implementation detail. Example:\n\nstatic Cache* web_block_cache() const { return GetInstance()-\u003eweb_block_cache(); }",
+      "revId": "e058b09719839311a323a2ab5dbd3c64ae6ce713",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91810ed1_241bdd73",
+        "filename": "third_party/leveldatabase/leveldb_chromium.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-09-06T18:32:53Z",
+      "side": 1,
+      "message": "Agreed with GetInstance - that change is done.\n\nI\u0027m mildly opposed to putting Globals into leveldb_chrome.h because:\n\n1. I think it\u0027s a lousy class name, but limited to an anonymous\n   namespace in a *.cc. Making that public makes me want a better name.\n2. It sees verbose. Instead of leveldb::chrome::GetSharedWebBlockCache()\n   we would now have leveldb::chrome::Globals::web_block_cache().\n\nBut I really mean \"mildly opposed\", so if after reading this message you still prefer this change just let me know and I\u0027m happy to make it.",
+      "parentUuid": "fbde5db9_5928cfca",
       "revId": "e058b09719839311a323a2ab5dbd3c64ae6ce713",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "36846d5d_f6cae95d",
+        "filename": "third_party/leveldatabase/leveldb_chromium.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-09-06T18:32:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "870d00b3_e73e5f84",
+      "revId": "e058b09719839311a323a2ab5dbd3c64ae6ce713",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1482257f_66c89387",
         "filename": "third_party/leveldatabase/leveldb_chromium.h",
         "patchSetId": 1
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "31a76c27_f6f11009",
+        "filename": "third_party/leveldatabase/leveldb_chromium.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-09-06T18:32:53Z",
+      "side": 1,
+      "message": "Done. It\u0027s inconsistent with env_chromium.h, port_chromium.h, etc., but you\u0027re right - it\u0027s correct and will match once https://bugs.chromium.org/p/chromium/issues/detail?id\u003d762598 is done.",
+      "parentUuid": "1482257f_66c89387",
+      "revId": "e058b09719839311a323a2ab5dbd3c64ae6ce713",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3f82ea6_a93049a4",
         "filename": "third_party/leveldatabase/leveldb_chromium.h",
         "patchSetId": 1
@@ -84,6 +156,24 @@
       "revId": "e058b09719839311a323a2ab5dbd3c64ae6ce713",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b7d6c2f_0067ef11",
+        "filename": "third_party/leveldatabase/leveldb_chromium.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-09-06T18:32:53Z",
+      "side": 1,
+      "message": "Agreed with your objections. I filed the bug above, and we can agree on the final namespace/location in https://bugs.chromium.org/p/chromium/issues/detail?id\u003d762598.",
+      "parentUuid": "b3f82ea6_a93049a4",
+      "revId": "e058b09719839311a323a2ab5dbd3c64ae6ce713",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
