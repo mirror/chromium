@@ -1853,4 +1853,21 @@ TEST_F(VisibleUnitsTest,
                 two->lastChild(), visible_position, kContentIsEditable));
 }
 
+TEST_F(VisibleUnitsTest, StartOfWordOnFirstLetter) {
+  SetBodyContent(
+      "<style>p::first-letter {color: red}</style>"
+      //  0123456789012
+      "<div> (2) abc def</div>"
+      "  <p> (2) abc def</p>");
+  Element* const div = GetDocument().QuerySelector("div");
+  EXPECT_EQ(Position(div->firstChild(), 5),
+            StartOfWord(CreateVisiblePosition(Position(div->firstChild(), 6)))
+                .DeepEquivalent());
+  Element* const sample = GetDocument().QuerySelector("p");
+  EXPECT_EQ(
+      Position(sample->firstChild(), 5),
+      StartOfWord(CreateVisiblePosition(Position(sample->firstChild(), 6)))
+          .DeepEquivalent());
+}
+
 }  // namespace blink
