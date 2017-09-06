@@ -122,6 +122,10 @@
   [self showAlert:@"showRecentTabs"];
 }
 
+- (void)setToolbarBackgroundAlpha:(CGFloat)alpha {
+  [self showAlert:@"setToolbarBackgroundAlpha:"];
+}
+
 - (void)sharePage {
   [self showAlert:@"sharePage"];
 }

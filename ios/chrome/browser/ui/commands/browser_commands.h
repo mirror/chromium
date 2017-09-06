@@ -107,6 +107,9 @@
 // Shows recent tabs.
 - (void)showRecentTabs;
 
+// Sets the alpha for the toolbar's background views.
+- (void)setToolbarBackgroundAlpha:(CGFloat)alpha;
+
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_COMMANDS_BROWSER_COMMANDS_H_
