@@ -2,6 +2,125 @@
   "comments": [
     {
       "key": {
+        "uuid": "9fd144c0_8aaea108",
+        "filename": "content/browser/devtools/protocol/service_worker_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-06T01:52:36Z",
+      "side": 1,
+      "message": "\"DidStopWorkersForOrigin\" is consistent with the other callbacks in this class.",
+      "revId": "51279127275ec7f0936ce589fb5a02018aff2a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5aa91d21_00492db9",
+        "filename": "content/browser/devtools/protocol/service_worker_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-06T01:52:36Z",
+      "side": 1,
+      "message": "Everyone else is saying if (!enabled_) return OK;\n\nAre you sure !enabled_ should be an error? (Personally, I\u0027m not familiar with this file and can\u0027t find documentation about Enabled/Disabled.)",
+      "revId": "51279127275ec7f0936ce589fb5a02018aff2a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e844827c_266bb5fc",
+        "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-06T01:52:36Z",
+      "side": 1,
+      "message": "Can you add a lightweight comment about what this class does?",
+      "revId": "51279127275ec7f0936ce589fb5a02018aff2a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75da4126_c9bfe443",
+        "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-06T01:52:36Z",
+      "side": 1,
+      "message": "\"Child\" in the name sounds a bit unfamiliar. Is that a common terminology for barriers?\n\nSince the class is about stopping workers, I kind of prefer something more specific like WaitForOneWorker() with documentation that returns a callback to call when the worker stopped, and it delays calling the barrier callback until the returned callback is called.",
+      "revId": "51279127275ec7f0936ce589fb5a02018aff2a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "554acac9_4b81fe02",
+        "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-06T01:52:36Z",
+      "side": 1,
+      "message": "It\u0027s maybe overkill, but I wonder if we should check for overflow and just not increment counter in that case. I.e., if (counter_ \u003c std::numeric_limits\u003cint\u003e::max()) { counter_++; }\n\n(Would it crash if we call the barrier callback \"early\"? If so, we could also return a dummy callback when counter is overflowing)\n\nCould also add a DCHECK_GE(counter_, 0); here",
+      "revId": "51279127275ec7f0936ce589fb5a02018aff2a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "904912f1_3970ef2e",
+        "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-06T01:52:36Z",
+      "side": 1,
+      "message": "it\u0027s nicer to early return if counter_ \u003e 0, it\u0027ll save some indentation",
+      "revId": "51279127275ec7f0936ce589fb5a02018aff2a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d23aec0_b19c32d3",
+        "filename": "content/browser/service_worker/service_worker_context_wrapper.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-06T01:52:36Z",
+      "side": 1,
+      "message": "It\u0027d rather StopAllServiceWorkersForOrigin just have to be called from the IO thread, instead of adding this new function.",
+      "revId": "51279127275ec7f0936ce589fb5a02018aff2a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c2d413d3_44489d2c",
         "filename": "content/public/browser/service_worker_context.h",
         "patchSetId": 12
@@ -13,6 +132,40 @@
       "writtenOn": "2017-09-06T01:45:43Z",
       "side": 1,
       "message": "Is the plan we\u0027ll deprecate this non-once one eventually?  It seems a bit unfortunate to have these two, and name the other one \u0027...OnceCallback\u0027.",
+      "revId": "51279127275ec7f0936ce589fb5a02018aff2a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fd351f8_3dc9f53c",
+        "filename": "content/public/browser/service_worker_context.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-06T01:52:36Z",
+      "side": 1,
+      "message": "For now, I\u0027d rather just write out  base::OnceCallback\u003cvoid(bool success)\u003e everywhere, then having two ResultCallbacks. The ResultCallback should be converted to OnceCallback, but we haven\u0027t gotten around to doing it.",
+      "revId": "51279127275ec7f0936ce589fb5a02018aff2a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c92e33b_2e3dfb56",
+        "filename": "content/public/browser/service_worker_context.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-06T01:52:36Z",
+      "side": 1,
+      "message": "Can you just change this function contract to require being called on the IO thread? I see only one other user, so it should be easy. IMO the \"called from any thread\" pattern should generally be avoided by default.",
       "revId": "51279127275ec7f0936ce589fb5a02018aff2a1b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
