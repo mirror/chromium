@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4af4d67a_706717db",
+        "filename": "ios/chrome/browser/ui/ntp/incognito_panel_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-06T14:17:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6431a311_2626b315",
+      "range": {
+        "startLine": 16,
+        "startChar": 10,
+        "endLine": 16,
+        "endChar": 25
+      },
+      "revId": "0c0c0fe1c507c22b64d3f0050b27c31fc31f122a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed6c02c9_e2a10783",
         "filename": "ios/chrome/browser/ui/ntp/incognito_panel_controller.mm",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "0c0c0fe1c507c22b64d3f0050b27c31fc31f122a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64c6c045_87a64e01",
+        "filename": "ios/chrome/browser/ui/ntp/incognito_panel_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-06T14:17:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed6c02c9_e2a10783",
+      "range": {
+        "startLine": 13,
+        "startChar": 40,
+        "endLine": 13,
+        "endChar": 56
+      },
+      "revId": "0c0c0fe1c507c22b64d3f0050b27c31fc31f122a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
