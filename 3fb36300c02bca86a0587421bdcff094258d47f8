@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b234dc9_116364f2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-06T19:21:52Z",
+      "side": 1,
+      "message": "Windows 10 17003?",
+      "range": {
+        "startLine": 7,
+        "startChar": 40,
+        "endLine": 7,
+        "endChar": 52
+      },
+      "revId": "3fb36300c02bca86a0587421bdcff094258d47f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6379286_28820f14",
+        "filename": "chrome/browser/password_manager/password_manager_util_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-06T19:21:52Z",
+      "side": 1,
+      "message": "The documentation https://msdn.microsoft.com/en-us/library/windows/desktop/ms681385(v\u003dvs.85).aspx lists more reasons for this error than just blanc password.",
+      "range": {
+        "startLine": 464,
+        "startChar": 11,
+        "endLine": 464,
+        "endChar": 28
+      },
+      "revId": "3fb36300c02bca86a0587421bdcff094258d47f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afb4d906_4b9a5759",
+        "filename": "chrome/browser/password_manager/password_manager_util_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-06T19:21:52Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 465,
+        "startChar": 21,
+        "endLine": 465,
+        "endChar": 29
+      },
+      "revId": "3fb36300c02bca86a0587421bdcff094258d47f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
