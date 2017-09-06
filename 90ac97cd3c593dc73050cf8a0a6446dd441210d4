@@ -134,6 +134,23 @@
     },
     {
       "key": {
+        "uuid": "0c90f619_cd4b4ec6",
+        "filename": "ui/aura/window_occlusion_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-06T16:49:09Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem right. A window being invisible doesn\u0027t necessarily mean it\u0027s occluded, does it?",
+      "revId": "90ac97cd3c593dc73050cf8a0a6446dd441210d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e8d44ff2_165ca0b0",
         "filename": "ui/aura/window_occlusion_tracker.cc",
         "patchSetId": 1
