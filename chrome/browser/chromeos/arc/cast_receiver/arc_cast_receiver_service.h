@@ -48,8 +48,9 @@ class ArcCastReceiverService
 
   ArcBridgeService* const arc_bridge_service_;  // Owned by ArcServiceManager.
 
-  // Registrar to observe pref changes.
+  // Registrars to observe pref changes.
   std::unique_ptr<PrefChangeRegistrar> pref_change_registrar_;
+  std::unique_ptr<PrefChangeRegistrar> local_state_change_registrar_;
 
   DISALLOW_COPY_AND_ASSIGN(ArcCastReceiverService);
 };

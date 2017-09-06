@@ -66,7 +66,13 @@ ArcCastReceiverService::ArcCastReceiverService(content::BrowserContext* context,
       prefs::kCastReceiverEnabled,
       base::Bind(&ArcCastReceiverService::OnCastReceiverEnabledChanged,
                  base::Unretained(this)));
-  pref_change_registrar_->Add(
+
+  local_state_change_registrar_ = base::MakeUnique<PrefChangeRegistrar>();
+  local_state_change_registrar_->Init(
+      Profile::FromBrowserContext(context)->GetPrefs());
+  // Observe prefs for the Cast Receiver. We can use base::Unretained() here
+  // because we own |local_state_change_registrar_|.
+  local_state_change_registrar_->Add(
       prefs::kCastReceiverName,
       base::Bind(&ArcCastReceiverService::OnCastReceiverNameChanged,
                  base::Unretained(this)));
@@ -104,7 +110,8 @@ void ArcCastReceiverService::OnCastReceiverNameChanged() const {
   if (!cast_receiver_instance)
     return;
   const PrefService::Preference* pref =
-      pref_change_registrar_->prefs()->FindPreference(prefs::kCastReceiverName);
+      local_state_change_registrar_->prefs()->FindPreference(
+          prefs::kCastReceiverName);
   if (!pref)
     return;
   cast_receiver_instance->SetName(pref->GetValue()->GetString(),
