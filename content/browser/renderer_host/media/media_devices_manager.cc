@@ -263,19 +263,9 @@ void MediaDevicesManager::StartMonitoring() {
 #if defined(OS_MACOSX)
 void MediaDevicesManager::StartMonitoringOnUIThread() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  // TODO(erikchen): Remove ScopedTracker below once crbug.com/458404 is fixed.
-  tracked_objects::ScopedTracker tracking_profile1(
-      FROM_HERE_WITH_EXPLICIT_FUNCTION(
-          "458404 MediaDevicesManager::GetBrowserMainLoop"));
   BrowserMainLoop* browser_main_loop = content::BrowserMainLoop::GetInstance();
   if (!browser_main_loop)
     return;
-
-  // TODO(erikchen): Remove ScopedTracker below once crbug.com/458404 is
-  // fixed.
-  tracked_objects::ScopedTracker tracking_profile3(
-      FROM_HERE_WITH_EXPLICIT_FUNCTION(
-          "458404 MediaDevicesManager::DeviceMonitorMac::StartMonitoring"));
   browser_main_loop->device_monitor_mac()->StartMonitoring();
 }
 #endif
