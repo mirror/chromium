@@ -261,7 +261,7 @@ function MockClock() {
   /**
    * An internal counter for assigning timeout ids.
    */
-  this.nextTimeoutId_ = 0;
+  this.lastTimeoutId_ = 0;
 
 
   /**
@@ -297,7 +297,7 @@ function MockClock() {
   this.reset = function() {
     this.time = 0;
     this.pendingTimeouts = [];
-    this.nextTimeoutId_ = 0;
+    this.lastTimeoutId_ = 0;
     this.stubs_.reset();
   };
 
@@ -309,7 +309,7 @@ function MockClock() {
    *    has not yet fired.
    */
   this.isTimeoutSet = function(id) {
-    return id < this.nextTimeoutId_ &&
+    return id <= this.lastTimeoutId_ &&
         this.pendingTimeouts.map(t => t.id).includes(id);
   };
 
@@ -331,7 +331,7 @@ function MockClock() {
       }
     });
     this.stubs_.replace(window, 'setTimeout', (callback, interval) => {
-      const timeoutId = ++this.nextTimeoutId_;
+      const timeoutId = ++this.lastTimeoutId_;
       this.pendingTimeouts.push({
         'callback': callback,
         'activationTime': this.time + interval,

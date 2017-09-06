@@ -37,19 +37,19 @@ function getChromeUILanguage() {
 
 /**
  * Enum for keycodes.
- * @enum {number}
+ * @enum {!string}
  * @const
  */
 const KEYCODE = {
-  ENTER: 13,
-  ESC: 27,
-  PERIOD: 190
+  ENTER: 'Enter',
+  ESC: 'Escape',
+  PERIOD: 'Period'
 };
 
 
 /**
  * The set of possible recognition errors.
- * @enum {number}
+ * @enum {!number}
  * @const
  */
 const RecognitionError = {
@@ -113,7 +113,8 @@ speech.messages = {
  * @private
  */
 speech.State_ = {
-  // Initial state of the controller. Is never re-entered.
+  // Initial state of the controller. It is never re-entered. The single
+  // exception to this are tests (see |speech.uninit_()|).
   // The only state from which the |speech.init()| method can be called.
   // The UI overlay is hidden, recognition is inactive.
   UNINITIALIZED: -1,
@@ -258,7 +259,7 @@ speech.recognition_;
 
 /**
  * Initialize the speech module as part of the local NTP. Adds event handlers
- * and shows the fakebox speech microphone icon.
+ * and shows the fakebox microphone microphone icon.
  * @param {!string} googleBaseUrl Base URL for sending queries to Search.
  * @param {!Object} translatedStrings Dictionary of localized string messages.
  * @param {!HTMLElement} fakeboxMicrophoneElem Fakebox microphone icon element.
@@ -309,27 +310,6 @@ speech.init = function(
 
 
 /**
- * Resets the internal state of Voice Search and disables the speech
- * recognition interface. Only used for testing.
- * @param {HTMLElement} fakeboxMicrophoneElem Fakebox microphone icon element.
- * @param {!Object} searchboxApiHandle SearchBox API handle.
- * @private
- */
-speech.uninit_ = function(fakeboxMicrophoneElem, searchboxApiHandle) {
-  speech.reset_();
-  speech.googleBaseUrl_ = null;
-  speech.messages = {};
-  speech.currentState_ = speech.State_.UNINITIALIZED;
-  fakeboxMicrophoneElem.hidden = true;
-  fakeboxMicrophoneElem.title = '';
-  fakeboxMicrophoneElem.onmouseup = null;
-  window.removeEventListener('keydown', speech.onKeyDown);
-  searchboxApiHandle.onfocuschange = null;
-  speech.recognition_ = null;
-};
-
-
-/**
  * Initializes and configures the speech recognition API.
  * @private
  */
@@ -368,7 +348,6 @@ speech.start_ = function() {
   // If |speech.start_()| is called too soon after |speech.stop_()| then the
   // recognition interface hasn't yet reset and an error occurs. In this case
   // we need to hard-reset it and reissue the |recognition_.start()| command.
-  // TODO(oskopek): Add tests + possibly fix the root cause.
   try {
     speech.recognition_.start();
     speech.currentState_ = speech.State_.STARTED;
@@ -558,7 +537,6 @@ speech.handleRecognitionOnNoMatch_ = function() {
  */
 speech.handleRecognitionEnd_ = function() {
   window.clearTimeout(speech.idleTimer_);
-  window.clearTimeout(speech.permissionTimer_);
 
   let error;
   switch (speech.currentState_) {
@@ -588,6 +566,11 @@ speech.handleRecognitionEnd_ = function() {
 };
 
 
+speech.getUserAgent_ = function() {
+  return window.navigator.userAgent;
+};
+
+
 /**
  * Handles the following keyboard actions.
  * - <CTRL> + <SHIFT> + <.> starts voice input(<CMD> + <SHIFT> + <.> on mac).
@@ -602,17 +585,17 @@ speech.onKeyDown = function(event) {
 
   if (!speech.isRecognizing_()) {
     const ctrlKeyPressed = event.ctrlKey ||
-        (isUserAgentMac(window.navigator.userAgent) && event.metaKey);
+        (isUserAgentMac(speech.getUserAgent_()) && event.metaKey);
     if (speech.currentState_ == speech.State_.READY &&
-        event.keyCode == KEYCODE.PERIOD && event.shiftKey && ctrlKeyPressed) {
+        event.code == KEYCODE.PERIOD && event.shiftKey && ctrlKeyPressed) {
       speech.toggleStartStop();
     }
   } else {
     // Ensures that keyboard events are not propagated during voice input.
     event.stopPropagation();
-    if (event.keyCode == KEYCODE.ESC) {
+    if (event.code == KEYCODE.ESC) {
       speech.abort_();
-    } else if (event.keyCode == KEYCODE.ENTER && speech.finalResult_) {
+    } else if (event.code == KEYCODE.ENTER && speech.finalResult_) {
       speech.submitFinalResult_();
     }
   }
@@ -671,6 +654,22 @@ speech.onOmniboxFocused = function() {
 
 
 /**
+ *
+ */
+speech.navigateToUrl_ = function(url) {
+  window.location.href = url;
+};
+
+
+/**
+ *
+ */
+speech.encodeURIComponent_ = function(uriComponent) {
+  return encodeURIComponent(uriComponent).replace(/%20/g, '+');
+};
+
+
+/**
  * Submits the final spoken speech query to perform a search.
  * @private
  */
@@ -682,16 +681,15 @@ speech.submitFinalResult_ = function() {
   }
 
   // Getting |speech.finalResult_| needs to happen before stopping speech.
-  const encodedQuery =
-      encodeURIComponent(speech.finalResult_).replace(/%20/g, '+');
+  const encodedQuery = speech.encodeURIComponent_(speech.finalResult_);
   const queryUrl = speech.googleBaseUrl_ +
       // Add the actual query.
       'search?q=' + encodedQuery +
       // Add a parameter to indicate that this request is a voice search.
       '&gs_ivs=1';
 
-  speech.stop_();
-  window.location.href = queryUrl;
+  speech.abort_();
+  speech.navigateToUrl_(queryUrl);
 };
 
 
@@ -767,7 +765,7 @@ speech.resetIdleTimer_ = function(duration) {
  */
 speech.resetErrorTimer_ = function(duration) {
   window.clearTimeout(speech.errorTimer_);
-  speech.errorTimer_ = window.setTimeout(speech.stop_, duration);
+  speech.errorTimer_ = window.setTimeout(speech.abort_, duration);
 };
 
 
@@ -813,7 +811,6 @@ speech.isUiDefinitelyHidden_ = function() {
  * @private
  */
 speech.isRecognitionInitialized_ = function() {
-  // TODO(oskopek): Do handlers of |recognition_| get reset? Verify and test.
   return !!speech.recognition_;
 };
 
