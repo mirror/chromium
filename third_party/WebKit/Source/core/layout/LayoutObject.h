@@ -1463,10 +1463,6 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
   }
 
   bool IsSelectable() const;
-  // Obtains the selection colors that should be used when painting a selection.
-  Color SelectionBackgroundColor() const;
-  Color SelectionForegroundColor(const GlobalPaintFlags) const;
-  Color SelectionEmphasisMarkColor(const GlobalPaintFlags) const;
 
   /**
      * Returns the local coordinates of the caret within this layout object.
@@ -2103,7 +2099,7 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
   ComputedStyle* CachedFirstLineStyle() const;
   StyleDifference AdjustStyleDifference(StyleDifference) const;
 
-  Color SelectionColor(int color_property, const GlobalPaintFlags) const;
+  // Color SelectionColor(int color_property, const GlobalPaintFlags) const;
 
   void RemoveShapeImageClient(ShapeValue*);
   void RemoveCursorImageClient(const CursorList*);
