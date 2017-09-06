@@ -99,6 +99,7 @@ class GeolocationServiceImpl;
 class KeepAliveHandleFactory;
 class MediaInterfaceProxy;
 class NavigationHandleImpl;
+class NavigationRequest;
 class PermissionServiceContext;
 class RenderFrameHostDelegate;
 class RenderFrameProxyHost;
@@ -351,8 +352,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
 
   // Called when a new navigation starts in this RenderFrameHost. Ownership of
   // |navigation_handle| is transferred.
-  // PlzNavigate: called when a navigation is ready to commit in this
-  // RenderFrameHost.
   void SetNavigationHandle(
       std::unique_ptr<NavigationHandleImpl> navigation_handle);
 
@@ -361,6 +360,20 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // from the RenderFrameHost that issued the initial request to the new
   // RenderFrameHost that will issue the transferring request.
   std::unique_ptr<NavigationHandleImpl> PassNavigationHandleOwnership();
+
+  // PlzNavigate
+  // Gives the ownership of a NavigationRequest to this RenderFrameHost.
+  void TakeNavigationRequest(
+      std::unique_ptr<NavigationRequest> navigation_request);
+  // PlzNavigate
+  // Release a NavigationRequest. It is called when its associated response
+  // complete.
+  void ReleaseNavigationRequest(NavigationRequest* navigation_request);
+
+  // PlzNavigate
+  // Clears all stored NavigationRequest. This is called on destruction pf teh
+  // WebContents.
+  void ClearNavigationRequests();
 
   // Tells the renderer that this RenderFrame is being swapped out for one in a
   // different renderer process.  It should run its unload handler and move to
@@ -1308,6 +1321,11 @@ class CONTENT_EXPORT RenderFrameHostImpl
   std::unique_ptr<LegacyIPCFrameInputHandler> legacy_frame_input_handler_;
 
   std::unique_ptr<KeepAliveHandleFactory> keep_alive_handle_factory_;
+
+  // PlzNavigate
+  // Holds NavigationRequests that this RenderFrameHost has been
+  // asked to commit until their responses are complete.
+  std::vector<std::unique_ptr<NavigationRequest>> navigation_requests_;
 
   // NOTE: This must be the last member.
   base::WeakPtrFactory<RenderFrameHostImpl> weak_ptr_factory_;

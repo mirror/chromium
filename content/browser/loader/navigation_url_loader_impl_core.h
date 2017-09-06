@@ -82,6 +82,9 @@ class NavigationURLLoaderImplCore
                              bool is_download,
                              bool is_stream);
 
+  // Notifies |loader_| on the UI thread that the response completed.
+  void NotifyResponseCompleted();
+
   // Notifies |loader_| on the UI thread that the request failed.
   void NotifyRequestFailed(bool in_cache,
                            int net_error,
