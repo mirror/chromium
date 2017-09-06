@@ -33,6 +33,24 @@
       "revId": "5be23ebe15e183c4a2b8244ab0a5ca8e9dcfda6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6158e1dd_8169e84e",
+        "filename": "chrome/browser/resources/settings/android_apps_page/android_arc_enable_button.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1232844
+      },
+      "writtenOn": "2017-09-06T03:57:29Z",
+      "side": 1,
+      "message": "You mean pass it in with something like:\n\u003candroid-arc-enable-button\n    aria-described-by\u003d\"[[$(\u0027#secondaryText\u0027)]]\"\u003e\n\nand here I write:\naria-describedBy\u003d\"[[ariaDescribedBy]]\" ?",
+      "parentUuid": "42bd7c1c_6e5d11b3",
+      "revId": "5be23ebe15e183c4a2b8244ab0a5ca8e9dcfda6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
