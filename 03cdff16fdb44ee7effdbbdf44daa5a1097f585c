@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59034966_f69cfebb",
+        "filename": "services/resource_coordinator/resource_coordinator_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-09-06T21:29:08Z",
+      "side": 1,
+      "message": "Can you add a TODO to make tracing::Coordinator and memory_instrumentation::CoordinatorImpl have more consistent naming with each other? i.e. drop or add Impl (I think the former is now the current Mojo recommendation).",
+      "revId": "03cdff16fdb44ee7effdbbdf44daa5a1097f585c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
