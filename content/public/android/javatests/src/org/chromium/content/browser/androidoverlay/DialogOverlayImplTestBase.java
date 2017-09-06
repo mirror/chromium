@@ -48,8 +48,9 @@ public abstract class DialogOverlayImplTestBase extends ContentShellTestBase {
         // AndroidOverlayClient
         public static final int SURFACE_READY = 0;
         public static final int DESTROYED = 1;
-        public static final int CLOSE = 2;
-        public static final int CONNECTION_ERROR = 2;
+        public static final int POWER_EFFICIENT = 2;
+        public static final int CLOSE = 3;
+        public static final int CONNECTION_ERROR = 4;
         // AndroidOverlayProviderImpl.Callbacks
         public static final int RELEASED = 100;
         // Internal to test only.
@@ -93,6 +94,11 @@ public abstract class DialogOverlayImplTestBase extends ContentShellTestBase {
         @Override
         public void onDestroyed() {
             mPending.add(new Event(DESTROYED));
+        }
+
+        @Override
+        public void onPowerEfficientState(boolean powerEfficient) {
+            mPending.add(new Event(POWER_EFFICIENT));
         }
 
         @Override
