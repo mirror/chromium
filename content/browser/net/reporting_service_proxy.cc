@@ -32,10 +32,34 @@ class ReportingServiceProxyImpl : public mojom::ReportingServiceProxy {
       : request_context_getter_(std::move(request_context_getter)) {}
 
   // mojom::ReportingServiceProxy:
+
+  void QueueInterventionReport(const GURL& url,
+                               const std::string& message,
+                               const std::string& source_file,
+                               int line_number) override {
+    auto body = base::MakeUnique<base::DictionaryValue>();
+    body->SetString("message", message);
+    body->SetString("sourceFile", source_file);
+    body->SetInteger("lineNumber", line_number);
+    QueueReport(url, "default", "intervention", std::move(body));
+  }
+
+  void QueueDeprecationReport(const GURL& url,
+                              const std::string& message,
+                              const std::string& source_file,
+                              int line_number) override {
+    auto body = base::MakeUnique<base::DictionaryValue>();
+    body->SetString("message", message);
+    body->SetString("sourceFile", source_file);
+    body->SetInteger("lineNumber", line_number);
+    QueueReport(url, "default", "deprecation", std::move(body));
+  }
+
+ private:
   void QueueReport(const GURL& url,
                    const std::string& group,
                    const std::string& type,
-                   std::unique_ptr<base::Value> body) override {
+                   std::unique_ptr<base::Value> body) {
     net::URLRequestContext* request_context =
         request_context_getter_->GetURLRequestContext();
     if (!request_context) {
@@ -53,7 +77,6 @@ class ReportingServiceProxyImpl : public mojom::ReportingServiceProxy {
     reporting_service->QueueReport(url, group, type, std::move(body));
   }
 
- private:
   scoped_refptr<net::URLRequestContextGetter> request_context_getter_;
 };
 
