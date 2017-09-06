@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "391861b2_d1761a76",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/media/media-source/mediasource-duration.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-06T22:49:10Z",
+      "side": 1,
+      "message": "Hmm. It\u0027s also possible that the implementation chunks the parsing and coded-frame-processing of mediaData from l.181, resulting more than one durationchange event caused by that appendBuffer operation. Hence I\u0027d rather delay starting the counts until this point. We might need to later add some delay here in case \u0027updateend\u0027 and \u0027loadedmetadata\u0027 are insufficient to prevent flakes from previously queued \u0027durationchange\u0027 from such chunked processing.",
+      "parentUuid": "975ed02e_4b9bffe4",
+      "range": {
+        "startLine": 189,
+        "startChar": 21,
+        "endLine": 189,
+        "endChar": 28
+      },
+      "revId": "dca6c54be94f8bf84117ccf98016a7229e8d7bfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "371fcc91_2c18dbc8",
         "filename": "third_party/WebKit/LayoutTests/http/tests/media/media-source/mediasource-duration.html",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "dca6c54be94f8bf84117ccf98016a7229e8d7bfa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf38a4ba_1d4a0f89",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/media/media-source/mediasource-duration.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-06T22:49:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "371fcc91_2c18dbc8",
+      "range": {
+        "startLine": 204,
+        "startChar": 0,
+        "endLine": 204,
+        "endChar": 125
+      },
+      "revId": "dca6c54be94f8bf84117ccf98016a7229e8d7bfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
