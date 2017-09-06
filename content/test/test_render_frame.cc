@@ -4,6 +4,7 @@
 
 #include "content/test/test_render_frame.h"
 
+#include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "content/child/web_url_loader_impl.h"
@@ -31,7 +32,14 @@ class MockFrameHost : public mojom::FrameHost {
     std::move(callback).Run(std::move(reply));
   }
 
-  void IssueKeepAliveHandle(mojom::KeepAliveHandleRequest request) override {}
+  void IssueKeepAliveHandle(mojom::KeepAliveHandleRequest request) override {
+    NOTREACHED();
+  }
+
+  void OpenLocalStorage(
+      mojo::InterfaceRequest<mojom::LevelDBWrapper> request) override {
+    NOTREACHED();
+  }
 
   void Bind(mojo::ScopedInterfaceEndpointHandle handle) {
     binding_.Bind(mojom::FrameHostAssociatedRequest(std::move(handle)));

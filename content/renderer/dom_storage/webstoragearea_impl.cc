@@ -13,6 +13,9 @@
 #include "content/renderer/dom_storage/dom_storage_dispatcher.h"
 #include "content/renderer/render_thread_impl.h"
 #include "third_party/WebKit/public/platform/WebURL.h"
+#include "third_party/WebKit/public/web/WebDocument.h"
+#include "third_party/WebKit/public/web/WebLocalFrame.h"
+#include "url/origin.h"
 
 using blink::WebString;
 using blink::WebURL;
@@ -34,11 +37,13 @@ WebStorageAreaImpl* WebStorageAreaImpl::FromConnectionId(int id) {
   return g_all_areas_map.Pointer()->Lookup(id);
 }
 
-WebStorageAreaImpl::WebStorageAreaImpl(int64_t namespace_id, const GURL& origin)
+WebStorageAreaImpl::WebStorageAreaImpl(int64_t namespace_id,
+                                       blink::WebLocalFrame* frame)
     : connection_id_(g_all_areas_map.Pointer()->Add(this)),
-      cached_area_(dispatcher()->OpenCachedArea(connection_id_,
-                                                namespace_id,
-                                                origin)) {}
+      cached_area_(dispatcher()->OpenCachedArea(
+          connection_id_,
+          namespace_id,
+          url::Origin(frame->GetDocument().GetSecurityOrigin()).GetURL())) {}
 
 WebStorageAreaImpl::~WebStorageAreaImpl() {
   g_all_areas_map.Pointer()->Remove(connection_id_);
