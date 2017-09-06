@@ -22,6 +22,30 @@
       "revId": "78f3f3d51f81fa2c49679b570dad83aa0ee61abf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "658a81d4_8e66f752",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1161559
+      },
+      "writtenOn": "2017-09-06T19:58:07Z",
+      "side": 1,
+      "message": "Since STATUS_NONE is default value and ServiceError is optional (can just check for its existence), I didn\u0027t think it was necessary.",
+      "parentUuid": "5290520d_96429ad9",
+      "range": {
+        "startLine": 56,
+        "startChar": 4,
+        "endLine": 56,
+        "endChar": 10
+      },
+      "revId": "78f3f3d51f81fa2c49679b570dad83aa0ee61abf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
