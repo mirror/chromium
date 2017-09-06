@@ -376,6 +376,7 @@ class CORE_EXPORT LayoutTableSection final : public LayoutTableBoxComponent {
   // Honor breaking restrictions inside the table row, and adjust position and
   // size accordingly.
   void AdjustRowForPagination(LayoutTableRow&, SubtreeLayoutScope&);
+  int OffsetForHeader() const;
 
   bool PaintedOutputOfObjectHasNoEffectRegardlessOfSize() const override;
 
