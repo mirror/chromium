@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68982f39_4c595d20",
+        "filename": "media/capture/content/animated_content_sampler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-09-06T21:47:57Z",
+      "side": 1,
+      "message": "nit: DCHECK_GT(period, base::TimeDelta());",
+      "revId": "91bf3cd4b2e542d87004539f4e28904e704decf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
