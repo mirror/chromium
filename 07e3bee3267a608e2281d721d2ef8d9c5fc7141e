@@ -34,6 +34,24 @@
       "revId": "07e3bee3267a608e2281d721d2ef8d9c5fc7141e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3cff6b4_34e982db",
+        "filename": "chrome/browser/resources/settings/controls/settings_toggle_button.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-06T16:20:49Z",
+      "side": 1,
+      "message": "If the screen reader is reading this twice, can we just not set aria-label on the paper-toggle-button?\n\nOtherwise, maybe name this differently, say \u0027a11yLabel\u0027? That would also remove the need to set \u0027reflectToAttribute\u0027 or provide an empty default value (i.e. just \u0027a11yLabel: String\u0027).\n\nOr, if we want to make \u0027ariaLabel\u0027 \"just work\" for settings-toggle-button (which is appealing), we could provide an observer for the \u0027ariaLabel\u0027 property which would explicitly set the attribute for the paper-toggle-button and unset it for the element itself? (I\u0027m not 100% certain if/how that would work).",
+      "parentUuid": "47bc31f8_a6db730a",
+      "revId": "07e3bee3267a608e2281d721d2ef8d9c5fc7141e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
