@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "13da7d61_5186ab4f",
+        "filename": "chrome/android/java/res/drawable/new_tab_icon.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-09-06T19:14:48Z",
+      "side": 1,
+      "message": "Correct, these were just forgotten flags due to lack of lint. Other examples across the codebase: https://cs.chromium.org/search/?q\u003d%22%3Cvector%22+-file:third_party+lang:xml\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
+      "parentUuid": "df52fc38_1f4a72ae",
+      "range": {
+        "startLine": 2,
+        "startChar": 28,
+        "endLine": 2,
+        "endChar": 35
+      },
+      "revId": "dfacf870ffd6d3471fc280bf75ba77a6aece13d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92924cd6_e731cc2f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/IncognitoBottomSheetContent.java",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "dfacf870ffd6d3471fc280bf75ba77a6aece13d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e41e10e7_d64cc695",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/IncognitoBottomSheetContent.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-09-06T19:14:48Z",
+      "side": 1,
+      "message": "+1 for fixing separately for easier merging.",
+      "parentUuid": "92924cd6_e731cc2f",
+      "range": {
+        "startLine": 37,
+        "startChar": 27,
+        "endLine": 37,
+        "endChar": 0
+      },
+      "revId": "dfacf870ffd6d3471fc280bf75ba77a6aece13d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "cb3764f5_1408fffd",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActionsNotificationTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-09-06T19:14:48Z",
+      "side": 1,
+      "message": "Unfortunately even field accesses are API level 19+. Since the all the tests target M+ I think it is cleaner to target the entire class.\n\nSee:\n/tmp/tmpvtqYI8/SRC_ROOT1/chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActionsNotificationTest.java:66 Field requires API level 19 (current min is 16): `android.app.Notification#extras`: NewApi [warning]\n                notification.extras.getString(Notification.EXTRA_TITLE));\n                ~~~~~~~~~~~~~~~~~~~\n/tmp/tmpvtqYI8/SRC_ROOT1/chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActionsNotificationTest.java:69 Field requires API level 19 (current min is 16): `android.app.Notification#extras`: NewApi [warning]\n                notification.extras.getString(Notification.EXTRA_TEXT));\n                ~~~~~~~~~~~~~~~~~~~\n/tmp/tmpvtqYI8/SRC_ROOT1/chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActionsNotificationTest.java:70 Field requires API level 19 (current min is 16): `android.app.Notification#actions`: NewApi [warning]\n        Assert.assertEquals(\"Share\", notification.actions[0].title);\n                                     ~~~~~~~~~~~~~~~~~~~~\n/tmp/tmpvtqYI8/SRC_ROOT1/chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActionsNotificationTest.java:70 Field requires API level 19 (current min is 16): `android.app.Notification.Action#title`: NewApi [warning]\n        Assert.assertEquals(\"Share\", notification.actions[0].title);\n                                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n/tmp/tmpvtqYI8/SRC_ROOT1/chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActionsNotificationTest.java:71 Field requires API level 19 (current min is 16): `android.app.Notification#actions`: NewApi [warning]\n        Assert.assertEquals(\"Open in Chrome\", notification.actions[1].title);\n                                              ~~~~~~~~~~~~~~~~~~~~\n/tmp/tmpvtqYI8/SRC_ROOT1/chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActionsNotificationTest.java:71 Field requires API level 19 (current min is 16): `android.app.Notification.Action#title`: NewApi [warning]\n        Assert.assertEquals(\"Open in Chrome\", notification.actions[1].title);\n                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n/tmp/tmpvtqYI8/SRC_ROOT1/chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActionsNotificationTest.java:73 Field requires API level 19 (current min is 16): `android.app.Notification#actions`: NewApi [warning]\n        notification.actions[1].actionIntent.send();\n        ~~~~~~~~~~~~~~~~~~~~\n/tmp/tmpvtqYI8/SRC_ROOT1/chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActionsNotificationTest.java:73 Field requires API level 19 (current min is 16): `android.app.Notification.Action#actionIntent`: NewApi [warning]\n        notification.actions[1].actionIntent.send();\n        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+      "parentUuid": "6cac119e_599e2faf",
+      "range": {
+        "startLine": 42,
+        "startChar": 17,
+        "endLine": 42,
+        "endChar": 30
+      },
+      "revId": "dfacf870ffd6d3471fc280bf75ba77a6aece13d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53d24fe0_d92e7c68",
         "filename": "content/public/android/java/res/menu/select_action_menu.xml",
         "patchSetId": 4
@@ -85,6 +157,24 @@
       "revId": "dfacf870ffd6d3471fc280bf75ba77a6aece13d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20d91097_2bd78b05",
+        "filename": "content/public/android/java/res/menu/select_action_menu.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-09-06T19:14:48Z",
+      "side": 1,
+      "message": "It\u0027s removed due to SelectionPopupController#canPasteAsPlainText, I was surprised that it worked too...\n\nResolving to unblock this CL, but it would be good to understand why this works the way it does.",
+      "parentUuid": "53d24fe0_d92e7c68",
+      "revId": "dfacf870ffd6d3471fc280bf75ba77a6aece13d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
