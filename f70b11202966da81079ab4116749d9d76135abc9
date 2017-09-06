@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1564d78c_d5e34a99",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/SuggestionsSheetVisibilityChangeObserverTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-06T09:36:31Z",
+      "side": 1,
+      "message": "Yes, otherwise I need to reference the events as TestVisibilityChangeObserver.Event.Hidden, which is a mouthful",
+      "parentUuid": "50ef08ca_d9a73ccd",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 141
+      },
+      "revId": "f70b11202966da81079ab4116749d9d76135abc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fe958ccc_cdc6b16f",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/SuggestionsSheetVisibilityChangeObserverTest.java",
         "patchSetId": 1
@@ -59,6 +83,30 @@
       "writtenOn": "2017-09-06T09:30:27Z",
       "side": 1,
       "message": "Are you testing with a Debug build on a very slow device?",
+      "range": {
+        "startLine": 66,
+        "startChar": 22,
+        "endLine": 66,
+        "endChar": 36
+      },
+      "revId": "f70b11202966da81079ab4116749d9d76135abc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "976c2de7_519698fc",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/SuggestionsSheetVisibilityChangeObserverTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-06T09:36:31Z",
+      "side": 1,
+      "message": "Debug builds on Nexus 6P\n\ntestHomeSheetVisibilityOnWebPage:                61 PASS, 39 FAIL, 0 CRASH, 0 TIMEOUT\ntestHomeSheetVisibilityOnOmniboxAndSwipeToolbar: 59 PASS, 41 FAIL, 0 CRASH, 0 TIMEOUT\ntestHomeSheetVisibilityOnOmnibox:                63 PASS, 37 FAIL, 0 CRASH, 0 TIMEOUT\ntestHomeSheetVisibilityOnNewTab:                 54 PASS, 46 FAIL, 0 CRASH, 0 TIMEOUT\n0 of 4 tests passed in all 100 runs\n\nAll the failures I looked at are \n\njunit.framework.AssertionFailedError: Tab never selected/initialized.\n\tat junit.framework.Assert.fail(Assert.java:50)\n\tat junit.framework.Assert.assertTrue(Assert.java:20)\n\tat [...].CriteriaHelper.pollInstrumentationThread(CriteriaHelper.java:79)\n\tat [...].CriteriaHelper.pollUiThread(CriteriaHelper.java:117)\n\tat [...].CriteriaHelper.pollUiThread(CriteriaHelper.java:138)\n\tat [...].ChromeActivityTestCommon.startMainActivityFromIntent(ChromeActivityTestCommon.java:385)\n\tat [...].ChromeActivityTestCommon.startMainActivityWithURL(ChromeActivityTestCommon.java:351)\n\tat [...].ChromeActivityTestCommon.startMainActivityOnBlankPage(ChromeActivityTestCommon.java:359)\n\tat [...].ChromeActivityTestRule.startMainActivityOnBlankPage(ChromeActivityTestRule.java:248)\n\tat [...].BottomSheetTestRule.startMainActivityOnBlankPage(BottomSheetTestRule.java:142)\n\tat [...].BottomSheetTestRule.startMainActivityOnBottomSheet(BottomSheetTestRule.java:132)\n\tat [...].SuggestionsSheetVisibilityChangeObserverTest.setUp(SuggestionsSheetVisibilityChangeObserverTest.java:67)",
+      "parentUuid": "6466deed_9ca7ff99",
       "range": {
         "startLine": 66,
         "startChar": 22,
