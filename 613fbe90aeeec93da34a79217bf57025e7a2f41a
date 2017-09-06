@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e67a867_e2909a44",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-09-06T09:37:37Z",
+      "side": 1,
+      "message": "nit: trailing space",
+      "revId": "613fbe90aeeec93da34a79217bf57025e7a2f41a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0c2f1cf_fd355fea",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-09-06T09:37:37Z",
+      "side": 1,
+      "message": "nit: trailing space",
+      "revId": "613fbe90aeeec93da34a79217bf57025e7a2f41a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9b55b1f_afb9d851",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1892,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-09-06T09:37:37Z",
+      "side": 1,
+      "message": "I don\u0027t know much of this code, nor can see the bug, but shouldn\u0027t this be TextLength() instead of 0?",
+      "revId": "613fbe90aeeec93da34a79217bf57025e7a2f41a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "117ab543_316f591a",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1896,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-09-06T09:37:37Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "613fbe90aeeec93da34a79217bf57025e7a2f41a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
