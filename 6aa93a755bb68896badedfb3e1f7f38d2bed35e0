@@ -70,6 +70,30 @@
       "revId": "6aa93a755bb68896badedfb3e1f7f38d2bed35e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9df5a859_307a6301",
+        "filename": "content/test/gpu/generate_buildbot_json.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 1431,
+      "author": {
+        "id": 1105284
+      },
+      "writtenOn": "2017-09-06T19:28:47Z",
+      "side": 1,
+      "message": "I removed the disabled config.  We\u0027ll see how it goes.",
+      "parentUuid": "59f068c4_533f33dc",
+      "range": {
+        "startLine": 1431,
+        "startChar": 11,
+        "endLine": 1431,
+        "endChar": 41
+      },
+      "revId": "6aa93a755bb68896badedfb3e1f7f38d2bed35e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
