@@ -26,6 +26,9 @@ public class BuildInfo {
      */
     private BuildInfo() {}
 
+    /** Initialization-on-demand holder. */
+    private static class Holder { private static String[] sBuildInfoStrings = getAll(); }
+
     @SuppressWarnings("deprecation")
     @CalledByNative
     private static String[] getAll() {
@@ -68,16 +71,6 @@ public class BuildInfo {
         }
     }
 
-    /**
-     * @return The build fingerprint for the current Android install.  The value is truncated to a
-     * 128 characters as this is used for crash and UMA reporting, which should avoid huge
-     * strings.
-     */
-    private static String getAndroidBuildFingerprint() {
-        return Build.FINGERPRINT.substring(
-                0, Math.min(Build.FINGERPRINT.length(), MAX_FINGERPRINT_LENGTH));
-    }
-
     private static String getGMSVersionCode(PackageManager packageManager) {
         String msg = "gms versionCode not available.";
         try {
@@ -89,17 +82,55 @@ public class BuildInfo {
         return msg;
     }
 
+    /**
+     * @return The build fingerprint for the current Android install.  The value is truncated to a
+     * 128 characters as this is used for crash and UMA reporting, which should avoid huge
+     * strings.
+     */
+    public static String getAndroidBuildFingerprint() {
+        return Build.FINGERPRINT.substring(
+                0, Math.min(Build.FINGERPRINT.length(), MAX_FINGERPRINT_LENGTH));
+    }
+
+    public static String getBrand() {
+        return Holder.sBuildInfoStrings[0];
+    }
+
+    public static String getDevice() {
+        return Holder.sBuildInfoStrings[1];
+    }
+
+    public static String getBuildId() {
+        return Holder.sBuildInfoStrings[2];
+    }
+
+    public static String getModel() {
+        return Holder.sBuildInfoStrings[4];
+    }
+
+    public static String getPackageLabel() {
+        return Holder.sBuildInfoStrings[7];
+    }
+
     public static String getPackageVersionName() {
-        return getAll()[10];
+        return Holder.sBuildInfoStrings[10];
+    }
+
+    public static String getGMSVersionCode() {
+        return Holder.sBuildInfoStrings[12];
+    }
+
+    public static String getInstallerPackageName() {
+        return Holder.sBuildInfoStrings[13];
+    }
+
+    public static String getAbiName() {
+        return Holder.sBuildInfoStrings[14];
     }
 
     /** Returns a string that is different each time the apk changes. */
     public static String getExtractedFileSuffix() {
-        return getAll()[15];
-    }
-
-    public static String getPackageLabel() {
-        return getAll()[7];
+        return Holder.sBuildInfoStrings[15];
     }
 
     public static String getPackageName() {

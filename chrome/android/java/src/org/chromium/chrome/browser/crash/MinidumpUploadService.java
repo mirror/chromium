@@ -296,7 +296,6 @@ public class MinidumpUploadService extends IntentService {
      *         service. This can only happen on KitKat and below, due to a framework bug.
      */
     public static void tryUploadCrashDump(File minidumpFile) throws SecurityException {
-        assert !shouldUseJobSchedulerForUploads();
         CrashFileManager fileManager =
                 new CrashFileManager(ContextUtils.getApplicationContext().getCacheDir());
         Intent intent =
