@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "94465d26_e47d070e",
+        "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-06T07:39:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "733668c3_ff048565",
+      "revId": "91672090bdf9c11ff303f5347c6c2c4bb5783077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9479784_196f1cb6",
         "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "9ab996d5_a3837129",
+        "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-06T07:39:34Z",
+      "side": 1,
+      "message": "I had this going for X as well, and then it was slightly annoying to do the overflow thing, so I canned it. I guess I left it in this state in case you wanted X scroll back \u003dP",
+      "parentUuid": "e9479784_196f1cb6",
+      "revId": "91672090bdf9c11ff303f5347c6c2c4bb5783077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b8063f7_7a4251d3",
         "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
         "patchSetId": 2
@@ -47,6 +83,30 @@
       "writtenOn": "2017-09-04T11:03:47Z",
       "side": 1,
       "message": "Any reason for these to be exported? They aren\u0027t used anywhere else.",
+      "range": {
+        "startLine": 1006,
+        "startChar": 0,
+        "endLine": 1007,
+        "endChar": 31
+      },
+      "revId": "91672090bdf9c11ff303f5347c6c2c4bb5783077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6c71963_c7bc47bc",
+        "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1007,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-06T07:39:34Z",
+      "side": 1,
+      "message": "Closure can\u0027t find them otherwise.",
+      "parentUuid": "1b8063f7_7a4251d3",
       "range": {
         "startLine": 1006,
         "startChar": 0,
