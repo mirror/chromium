@@ -226,6 +226,30 @@
     },
     {
       "key": {
+        "uuid": "70819ee9_4361ea1d",
+        "filename": "components/arc/common/cert_store.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1124166
+      },
+      "writtenOn": "2017-09-06T14:01:10Z",
+      "side": 1,
+      "message": "The reason was to follow keymaster interface",
+      "parentUuid": "5d804faf_3e2782ff",
+      "range": {
+        "startLine": 175,
+        "startChar": 0,
+        "endLine": 177,
+        "endChar": 0
+      },
+      "revId": "a68d67008a21ac105b3fc71fa0feb3e52b3765c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "66d362d8_9b5b0c00",
         "filename": "components/arc/common/cert_store.mojom",
         "patchSetId": 3
@@ -237,6 +261,30 @@
       "writtenOn": "2017-09-06T13:33:11Z",
       "side": 1,
       "message": "This RPC (and the ones below) are suffixed \"Operation\" in the keymaster header, i.e. \"BeginOperation\", \"UpdateOperation\", \"FinishOperation\", \"AbortOperation\". Match the names?",
+      "range": {
+        "startLine": 179,
+        "startChar": 2,
+        "endLine": 179,
+        "endChar": 7
+      },
+      "revId": "a68d67008a21ac105b3fc71fa0feb3e52b3765c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7a2163f_ac6fa045",
+        "filename": "components/arc/common/cert_store.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1124166
+      },
+      "writtenOn": "2017-09-06T14:01:10Z",
+      "side": 1,
+      "message": "When mojom interface is generated, the callback type is constructed from \u003cmethod name\u003e + \"Response\". Thus naming the method: BeginOperation and the response structure: BeginOperationResponse causes a compilation error, because the callback will be declared as BeginOperationResponse too.",
+      "parentUuid": "66d362d8_9b5b0c00",
       "range": {
         "startLine": 179,
         "startChar": 2,
