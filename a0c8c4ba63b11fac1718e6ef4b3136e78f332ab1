@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f22c733e_2a7d2138",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-06T17:41:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49c6de17_1ed22d57",
+      "revId": "a0c8c4ba63b11fac1718e6ef4b3136e78f332ab1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "325b1a68_07caf5ff",
         "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "a0c8c4ba63b11fac1718e6ef4b3136e78f332ab1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aa7fdf5_9daaa9ec",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-06T17:41:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "325b1a68_07caf5ff",
+      "revId": "a0c8c4ba63b11fac1718e6ef4b3136e78f332ab1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7cd0d3cd_986b96a2",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-06T17:41:38Z",
+      "side": 1,
+      "message": "In this particular case, we haven\u0027t done any I/O yet, we\u0027ve simply failed to serialize the data provided to us by the website to a protobuf (in memory). So we shouldn\u0027t blow anything away. I\u0027ve added a TODO about logging to UMA though.",
+      "parentUuid": "943b3345_4eb53271",
+      "revId": "a0c8c4ba63b11fac1718e6ef4b3136e78f332ab1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be498f6a_2056484b",
         "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
         "patchSetId": 3
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "e1fa76dc_3b97b42b",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-06T17:41:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be498f6a_2056484b",
+      "revId": "a0c8c4ba63b11fac1718e6ef4b3136e78f332ab1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84ea760d_7a1fd49d",
         "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
         "patchSetId": 3
@@ -84,6 +156,24 @@
       "revId": "a0c8c4ba63b11fac1718e6ef4b3136e78f332ab1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6943ed06_19b76488",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-06T17:41:38Z",
+      "side": 1,
+      "message": "But I shouldn\u0027t: https://www.chromium.org/developers/coding-style/cpp-dos-and-donts#TOC-Variable-initialization",
+      "parentUuid": "84ea760d_7a1fd49d",
+      "revId": "a0c8c4ba63b11fac1718e6ef4b3136e78f332ab1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
