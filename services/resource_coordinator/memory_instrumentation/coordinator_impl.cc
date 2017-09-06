@@ -15,6 +15,7 @@
 #include "base/logging.h"
 #include "base/memory/ref_counted.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/strings/pattern.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/trace_event/memory_dump_manager.h"
 #include "base/trace_event/memory_dump_request_args.h"
@@ -28,6 +29,8 @@
 #if defined(OS_MACOSX) && !defined(OS_IOS)
 #include "base/mac/mac_util.h"
 #endif
+
+using base::trace_event::MemoryDumpLevelOfDetail;
 
 namespace memory_instrumentation {
 
@@ -75,6 +78,42 @@ memory_instrumentation::mojom::OSMemDumpPtr CreatePublicOSDump(
   os_dump->resident_set_kb = internal_os_dump.resident_set_kb;
   os_dump->private_footprint_kb = CalculatePrivateFootprintKb(internal_os_dump);
   return os_dump;
+}
+
+uint32_t GetDumpsSumKb(const std::string& pattern,
+                       const base::trace_event::ProcessMemoryDump& pmd) {
+  uint64_t sum = 0;
+  for (const auto& kv : pmd.allocator_dumps()) {
+    auto name = base::StringPiece(kv.first);
+    if (base::MatchPattern(name, pattern)) {
+      sum += kv.second->GetSizeInternal();
+    }
+  }
+  return sum / 1024;
+}
+
+mojom::ChromeMemDumpPtr CreateDumpSummary(
+    const base::trace_event::ProcessMemoryDump& process_memory_dump) {
+  mojom::ChromeMemDumpPtr result = mojom::ChromeMemDump::New();
+  // TODO(hjd): Transitional until we send the full PMD. See crbug.com/704203
+  result->malloc_total_kb = GetDumpsSumKb("malloc", process_memory_dump);
+  result->v8_total_kb = GetDumpsSumKb("v8/*", process_memory_dump);
+
+  result->command_buffer_total_kb =
+      GetDumpsSumKb("gpu/gl/textures/*", process_memory_dump);
+  result->command_buffer_total_kb +=
+      GetDumpsSumKb("gpu/gl/buffers/*", process_memory_dump);
+  result->command_buffer_total_kb +=
+      GetDumpsSumKb("gpu/gl/renderbuffers/*", process_memory_dump);
+
+  // partition_alloc reports sizes for both allocated_objects and
+  // partitions. The memory allocated_objects uses is a subset of
+  // the partitions memory so to avoid double counting we only
+  // count partitions memory.
+  result->partition_alloc_total_kb =
+      GetDumpsSumKb("partition_alloc/partitions/*", process_memory_dump);
+  result->blink_gc_total_kb = GetDumpsSumKb("blink_gc", process_memory_dump);
+  return result;
 }
 
 }  // namespace
@@ -242,12 +281,8 @@ void CoordinatorImpl::PerformNextQueuedGlobalMemoryDump() {
     return;
   }
 
-  const bool wants_mmaps = request->args.level_of_detail ==
-                           base::trace_event::MemoryDumpLevelOfDetail::DETAILED;
-  const bool dump_only_vm_regions =
-      request->args.dump_type ==
-      base::trace_event::MemoryDumpType::VM_REGIONS_ONLY;
-
+  const bool wants_mmaps = request->args.level_of_detail == MemoryDumpLevelOfDetail::DETAILED;
+  const bool dump_only_vm_regions = request->args.dump_type == MemoryDumpType::VM_REGIONS_ONLY;
   // VM_REGIONS_ONLY dumps must have |level_of_detail| == DETAILED.
   DCHECK(!dump_only_vm_regions || wants_mmaps);
 
@@ -282,16 +317,11 @@ void CoordinatorImpl::PerformNextQueuedGlobalMemoryDump() {
 
     // Don't request a chrome memory dump at all if the client wants only the
     // processes' vm regions, which are retrieved via RequestOSMemoryDump().
-    if (!dump_only_vm_regions) {
+    if (request->WantsChromeDumps()) {
       request->pending_responses.insert({client, ResponseType::kChromeDump});
       auto callback = base::Bind(&CoordinatorImpl::OnChromeMemoryDumpResponse,
                                  base::Unretained(this), client);
       client->RequestChromeMemoryDump(request->args, callback);
-    } else {
-      // Pretend to have received a chrome dump from the client, to match the
-      // expectation of FinalizeGlobalMemoryDumpIfAllManagersReplied().
-      auto chrome_dump = mojom::ChromeMemDump::New();
-      request->responses[client].chrome_dump_ptr = std::move(chrome_dump);
     }
 
 // On most platforms each process can dump data about their own process
@@ -352,7 +382,7 @@ void CoordinatorImpl::OnChromeMemoryDumpResponse(
     mojom::ClientProcess* client,
     bool success,
     uint64_t dump_guid,
-    mojom::ChromeMemDumpPtr chrome_memory_dump) {
+    base::Optional<base::trace_event::ProcessMemoryDump> chrome_memory_dump) {
   using ResponseType = QueuedMemoryDumpRequest::PendingResponse::Type;
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   QueuedMemoryDumpRequest* request = GetCurrentRequest();
@@ -368,7 +398,7 @@ void CoordinatorImpl::OnChromeMemoryDumpResponse(
     return;
   }
 
-  request->responses[client].chrome_dump_ptr = std::move(chrome_memory_dump);
+  request->responses[client].chrome_dump = std::move(chrome_memory_dump);
 
   if (!success) {
     request->failed_memory_dump_count++;
@@ -422,6 +452,11 @@ void CoordinatorImpl::RemovePendingResponse(
   request->pending_responses.erase(it);
 }
 
+struct ResultsForProcess {
+  const base::trace_event::ProcessMemoryDump* raw_process_dump = nullptr;
+  mojom::RawOSMemDump* raw_os_dump = nullptr;
+};
+
 void CoordinatorImpl::FinalizeGlobalMemoryDumpIfAllManagersReplied() {
   DCHECK(!queued_memory_dump_requests_.empty());
   QueuedMemoryDumpRequest* request = &queued_memory_dump_requests_.front();
@@ -435,8 +470,13 @@ void CoordinatorImpl::FinalizeGlobalMemoryDumpIfAllManagersReplied() {
   // details for the child processes to get around sandbox restrictions on
   // opening /proc pseudo files.
 
-  std::map<base::ProcessId, mojom::RawOSMemDumpPtr> os_dumps;
+  std::map<base::ProcessId, ResultsForProcess> all_results;
   for (auto& response : request->responses) {
+    const base::ProcessId& original_pid = response.second.process_id;
+    const base::Optional<base::trace_event::ProcessMemoryDump>& raw_process_dump = response.second.chrome_dump;
+    if (raw_process_dump.has_value())
+      all_results[original_pid].raw_process_dump = &raw_process_dump.value();
+
     // |response| accumulates the replies received by each client process.
     // Depending on the OS each client process might return 1 chrome + 1 OS
     // dump each or, in the case of Linux, only 1 chrome dump each % the
@@ -452,9 +492,9 @@ void CoordinatorImpl::FinalizeGlobalMemoryDumpIfAllManagersReplied() {
       base::ProcessId pid = kv.first;
       mojom::RawOSMemDumpPtr dump = std::move(kv.second);
       if (pid == base::kNullProcessId)
-        pid = response.second.process_id;
-      DCHECK_EQ(0u, os_dumps.count(pid));
-      os_dumps[pid] = std::move(dump);
+        pid = original_pid;
+      DCHECK_EQ(all_results[pid].raw_os_dump, nullptr);
+      all_results[pid].raw_os_dump = dump.get();
     }
 #else
     // This can be empty if the client disconnects before providing both
@@ -463,56 +503,113 @@ void CoordinatorImpl::FinalizeGlobalMemoryDumpIfAllManagersReplied() {
     DCHECK_LE(extra_os_dumps.size(), 1u);
     if (extra_os_dumps.size() == 1u) {
       DCHECK_EQ(base::kNullProcessId, extra_os_dumps.begin()->first);
-      os_dumps[pid] = std::move(extra_os_dumps.begin()->second);
+      DCHECK_EQ(all_results[pid].raw_os_dump, nullptr);
+      all_results[pid].raw_os_dump = extra_os_dumps.begin()->second.get();
     }
 #endif
   }
 
-  const bool dump_only_vm_regions =
-      request->args.dump_type ==
-      base::trace_event::MemoryDumpType::VM_REGIONS_ONLY;
-  std::map<base::ProcessId, mojom::ProcessMemoryDumpPtr> finalized_pmds;
-  for (auto& response : request->responses) {
-    const base::ProcessId pid = response.second.process_id;
-    DCHECK(!finalized_pmds.count(pid));
-    DCHECK_NE(pid, base::kNullProcessId);
+  // Discard results with missing data.
+  std::vector<ResultsForProcess> all_valid_results;
+  all_valid_results.reserve(all_results.size());
+  for (const auto& kv : all_results) {
+    const ResultsForProcess& result = kv.second;
+    bool has_raw_proccess_dump = result.raw_process_dump;
+    bool has_raw_os_dump = result.raw_os_dump;
+    bool has_vm_regions = has_raw_os_dump && result.raw_os_dump->memory_maps.size() > 0;
+  
+    // If we have the OS dump we should have the platform private footprint.
+    if (has_raw_os_dump) DCHECK(result.raw_os_dump->platform_private_footprint);
 
-    // The dump might be nullptr if the client crashed / disconnected before
-    // replying.
-    if (!response.second.chrome_dump_ptr || !os_dumps[pid])
-      continue;
-
-    DCHECK(os_dumps[pid]->platform_private_footprint);
-
-    mojom::ProcessMemoryDumpPtr& pmd = finalized_pmds[pid];
-    pmd = mojom::ProcessMemoryDump::New();
-    pmd->process_type = response.second.process_type;
-    pmd->chrome_dump = std::move(response.second.chrome_dump_ptr);
-    pmd->os_dump = CreatePublicOSDump(*os_dumps[pid]);
-    pmd->pid = pid;
-    if (!dump_only_vm_regions) {
-      tracing_observer_->AddOsDumpToTraceIfEnabled(
-          request->args, pid, pmd->os_dump.get(), &os_dumps[pid]->memory_maps);
-    } else {
-      pmd->os_dump->memory_maps_for_heap_profiler =
-          std::move(os_dumps[pid]->memory_maps);
-    }
+    bool valid = true;
+    valid = valid && has_raw_os_dump;
+    valid = valid && (!wants_raw_proccess_dump || has_raw_proccess_dump);
+    valid = valid && (!wants_vm_regions || has_vm_regions);
+    if (valid)
+      all_valid_results.push_back(result);
   }
+
+  bool add_to_trace = true;
+  bool return_summaries = true;
+  bool return_mmaps = true;
 
   mojom::GlobalMemoryDumpPtr global_dump(mojom::GlobalMemoryDump::New());
-  for (auto& pair : finalized_pmds) {
-    // It's possible that the renderer has died but we still have an os_dump,
-    // because those were computed from the browser process before the renderer
-    // died. We should skip these.
-    mojom::ProcessMemoryDumpPtr& pmd = pair.second;
-    if (!pmd || !pmd->chrome_dump)
+  if (return_summaries) global_dump.process_dumps.reserve(all_valid_results.size());
+  for (const ResultsForProcess& result : all_valid_results) {
+    OSMemDumpPtr os_dump = CreatePublicOSDump(*result.raw_os_dump);
+
+    if (add_to_trace) {
+      tracing_observer_->AddOsDumpToTraceIfEnabled(
+          request->args,
+          pid,
+          os_dump.get(),
+          &raw_os_dump->memory_maps);
+
+      tracing_observer_->AddChromeDumpToTraceIfEnabled(
+          request->args,
+          result->raw_process_dump);
+    }
+
+    if (!return_mmaps && !return_summaries)
       continue;
 
-    // TODO(hjd): We should have a better way to tell if a the dump is filled.
-    if (!pmd->chrome_dump->malloc_total_kb && !dump_only_vm_regions)
-      continue;
+    if (return_mmaps) {
+      os_dump->memory_maps_for_heap_profiler =
+         std::move(result.raw_os_dump->memory_maps);
+    }
+
+    ChromeMemDumpPtr chrome_dump = nullptr;
+    if (return_chrome_dump_summary) {
+      chrome_dump = CreateDumpSummary(*result.raw_process_dump);
+    } else {
+      chrome_dump = mojom::ChromeMemDump::New();
+    }
+    
+    mojom::ProcessMemoryDumpPtr& pmd = mojom::ProcessMemoryDump::New();
+    pmd->process_id = result.process_id;
+    pmd->process_type = result.process_type;
+    pmd->os_dump = std::move(os_dump);
+    pmd->chrome_dump = std::move(chrome_dump);
     global_dump->process_dumps.push_back(std::move(pmd));
   }
+
+//  const bool dump_only_vm_regions =
+//      request->args.dump_type ==
+//      base::trace_event::MemoryDumpType::VM_REGIONS_ONLY;
+//  std::map<base::ProcessId, mojom::ProcessMemoryDumpPtr> finalized_pmds;
+//  for (auto& response : request->responses) {
+//    const base::ProcessId pid = response.second.process_id;
+//    DCHECK(!finalized_pmds.count(pid));
+//    DCHECK_NE(pid, base::kNullProcessId);
+//
+//    // XXX: fix
+//    // The dump might be nullptr if the client crashed / disconnected before
+//    // replying.
+//    if ((!dump_only_vm_regions && !response.second.chrome_dump) ||
+//        !os_dumps[pid])
+//      continue;
+//    mojom::ProcessMemoryDumpPtr& pmd = finalized_pmds[pid];
+//    pmd = mojom::ProcessMemoryDump::New();
+//    pmd->process_type = response.second.process_type;
+//    // XXX: fixup
+//    // Don't try to fill the struct in detailed mode since it is hard to avoid
+//    // double counting.
+//    if (request->args.level_of_detail ==
+//            base::trace_event::MemoryDumpLevelOfDetail::DETAILED ||
+//        dump_only_vm_regions) {
+//    } else {
+//      pmd->chrome_dump = CreateDumpSummary(response.second.chrome_dump.value());
+//    }
+//    pmd->os_dump = CreatePublicOSDump(*os_dumps[pid]);
+//    pmd->pid = pid;
+//    if (dump_only_vm_regions) {
+//      pmd->os_dump->memory_maps_for_heap_profiler =
+//          std::move(os_dumps[pid]->memory_maps);
+//    } else {
+//      tracing_observer_->AddOsDumpToTraceIfEnabled(
+//          request->args, pid, pmd->os_dump.get(), &os_dumps[pid]->memory_maps);
+//    }
+//  }
 
   const auto& callback = request->callback;
   const bool global_success = request->failed_memory_dump_count == 0;
@@ -569,6 +666,18 @@ CoordinatorImpl::QueuedMemoryDumpRequest::PendingResponse::PendingResponse(
 bool CoordinatorImpl::QueuedMemoryDumpRequest::PendingResponse::operator<(
     const PendingResponse& other) const {
   return std::tie(client, type) < std::tie(other.client, other.type);
+}
+
+bool CoordinatorImpl::QueuedMemoryDumpRequest::WantsMmaps() {
+  return args.level_of_detail == MemoryDumpLevelOfDetail::DETAILED;
+}
+
+bool CoordinatorImpl::QueuedMemoryDumpRequest::WantsChromeDumps() {
+  return request->args.dump_type != MemoryDumpType::VM_REGIONS_ONLY;
+}
+
+bool CoordinatorImpl::QueuedMemoryDumpRequest::ShouldAddToTrace() {
+  return true;
 }
 
 }  // namespace memory_instrumentation
