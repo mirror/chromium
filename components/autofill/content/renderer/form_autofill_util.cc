@@ -39,6 +39,11 @@
 #include "third_party/WebKit/public/web/WebNode.h"
 #include "third_party/WebKit/public/web/WebOptionElement.h"
 #include "third_party/WebKit/public/web/WebSelectElement.h"
+#include "third_party/WebKit//webagents/element.h"
+#include "third_party/WebKit//webagents/document.h"
+#include "third_party/WebKit//webagents/html_all_collection.h"
+#include "third_party/WebKit//webagents/html_form_element.h"
+#include "third_party/WebKit//webagents/html_input_element.h"
 
 using blink::WebDocument;
 using blink::WebElement;
@@ -1145,6 +1150,104 @@ bool FormOrFieldsetsToFormData(
   return true;
 }
 
+bool FormOrFieldsetsToFormDataWebagents(
+    const webagents::HTMLFormElement& form_element,
+    const base::Optional<webagents::Element> form_control_element,
+    const std::vector<webagents::Element>& fieldsets,
+    const std::vector<webagents::Element>& control_elements,
+    ExtractMask extract_mask,
+    FormData* form,
+    FormFieldData* field) {
+// TODO(joelhockey): implement
+/*
+  CR_DEFINE_STATIC_LOCAL(WebString, kLabel, ("label"));
+
+  if (form_element)
+    DCHECK(fieldsets.empty());
+  if (field)
+    DCHECK(form_control_element);
+
+  // A map from a FormFieldData's name to the FormFieldData itself.
+  std::map<WebFormControlElement, FormFieldData*> element_map;
+
+  // The extracted FormFields. We use pointers so we can store them in
+  // |element_map|.
+  std::vector<std::unique_ptr<FormFieldData>> form_fields;
+
+  // A vector of bools that indicate whether each field in the form meets the
+  // requirements and thus will be in the resulting |form|.
+  std::vector<bool> fields_extracted(control_elements.size(), false);
+
+  if (!ExtractFieldsFromControlElements(
+          control_elements, field_value_and_properties_map, extract_mask,
+          &form_fields, &fields_extracted, &element_map)) {
+    return false;
+  }
+
+  if (form_element) {
+    // Loop through the label elements inside the form element.  For each label
+    // element, get the corresponding form control element, use the form control
+    // element's name as a key into the <name, FormFieldData> map to find the
+    // previously created FormFieldData and set the FormFieldData's label to the
+    // label.firstChild().nodeValue() of the label element.
+    WebElementCollection labels =
+        form_element->GetElementsByHTMLTagName(kLabel);
+    DCHECK(!labels.IsNull());
+    MatchLabelsAndFields(labels, &element_map);
+  } else {
+    // Same as the if block, but for all the labels in fieldsets.
+    for (size_t i = 0; i < fieldsets.size(); ++i) {
+      WebElementCollection labels =
+          fieldsets[i].GetElementsByHTMLTagName(kLabel);
+      DCHECK(!labels.IsNull());
+      MatchLabelsAndFields(labels, &element_map);
+    }
+  }
+
+  // List of characters a label can't be entirely made of (this list can grow).
+  // Since the term |stop_words| is a known text processing concept we use here
+  // it to refer to such characters. They are not to be confused with words.
+  std::vector<base::char16> stop_words;
+  stop_words.push_back(static_cast<base::char16>(' '));
+  stop_words.push_back(static_cast<base::char16>('*'));
+  stop_words.push_back(static_cast<base::char16>(':'));
+  stop_words.push_back(static_cast<base::char16>('-'));
+  stop_words.push_back(static_cast<base::char16>(L'\u2013'));
+  stop_words.push_back(static_cast<base::char16>('('));
+  stop_words.push_back(static_cast<base::char16>(')'));
+
+  // Loop through the form control elements, extracting the label text from
+  // the DOM.  We use the |fields_extracted| vector to make sure we assign the
+  // extracted label to the correct field, as it's possible |form_fields| will
+  // not contain all of the elements in |control_elements|.
+  for (size_t i = 0, field_idx = 0;
+       i < control_elements.size() && field_idx < form_fields.size(); ++i) {
+    // This field didn't meet the requirements, so don't try to find a label
+    // for it.
+    if (!fields_extracted[i])
+      continue;
+
+    const WebFormControlElement& control_element = control_elements[i];
+    if (form_fields[field_idx]->label.empty()) {
+      form_fields[field_idx]->label = InferLabelForElement(control_element,
+                                                           stop_words);
+    }
+    TruncateString(&form_fields[field_idx]->label, kMaxDataLength);
+
+    if (field && *form_control_element == control_element)
+      *field = *form_fields[field_idx];
+
+    ++field_idx;
+  }
+
+  // Copy the created FormFields into the resulting FormData object.
+  for (const auto& field : form_fields)
+    form->fields.push_back(*field);
+  return true;
+*/
+  return false;
+}
+
 bool UnownedFormElementsAndFieldSetsToFormData(
     const std::vector<blink::WebElement>& fieldsets,
     const std::vector<blink::WebFormControlElement>& control_elements,
@@ -1188,6 +1291,16 @@ GURL StripAuthAndParams(const GURL& gurl) {
 bool ExtractFormData(const WebFormElement& form_element, FormData* data) {
   return WebFormElementToFormData(
       form_element, WebFormControlElement(), nullptr,
+      static_cast<form_util::ExtractMask>(form_util::EXTRACT_VALUE |
+                                          form_util::EXTRACT_OPTION_TEXT |
+                                          form_util::EXTRACT_OPTIONS),
+      data, NULL);
+}
+
+bool ExtractFormDataWebagents(const webagents::HTMLFormElement& form_element,
+                              FormData* data) {
+  return WebFormElementToFormDataWebagents(
+      form_element, base::Optional<webagents::Element>(),
       static_cast<form_util::ExtractMask>(form_util::EXTRACT_VALUE |
                                           form_util::EXTRACT_OPTION_TEXT |
                                           form_util::EXTRACT_OPTIONS),
@@ -1270,8 +1383,21 @@ GURL GetCanonicalActionForForm(const WebFormElement& form) {
   return StripAuthAndParams(full_action);
 }
 
+GURL GetCanonicalActionForFormWebagents(const webagents::HTMLFormElement& form) {
+  WebString action = form.action();
+  if (action.IsNull())
+    action = WebString("");  // missing 'action' attribute implies current URL.
+  GURL full_action(form.ownerDocument().CompleteURL(action));
+  return StripAuthAndParams(full_action);
+}
+
 GURL GetCanonicalOriginForDocument(const WebDocument& document) {
   GURL full_origin(document.Url());
+  return StripAuthAndParams(full_origin);
+}
+
+GURL GetCanonicalOriginForDocumentWebagents(const webagents::Document& document) {
+  GURL full_origin(document.URL());
   return StripAuthAndParams(full_origin);
 }
 
@@ -1310,10 +1436,22 @@ bool IsAutofillableInputElement(const WebInputElement* element) {
          IsCheckableElement(element);
 }
 
+bool IsAutofillableInputElementWebagents(const webagents::HTMLInputElement& element) {
+  return element.type() == "text" ||
+         element.type() == "month" ||
+         element.type() == "checkbox" || element.type() == "radio";
+}
+
 bool IsAutofillableElement(const WebFormControlElement& element) {
   const WebInputElement* input_element = ToWebInputElement(&element);
   return IsAutofillableInputElement(input_element) ||
          IsSelectElement(element) || IsTextAreaElement(element);
+}
+
+bool IsAutofillableElementWebagents(const webagents::Element& element) {
+  return (element.IsHTMLInputElement() &&
+          IsAutofillableInputElementWebagents(element.ToHTMLInputElement())) ||
+         element.IsHTMLSelectElement() || element.IsHTMLTextAreaElement();
 }
 
 const base::string16 GetFormIdentifier(const WebFormElement& form) {
@@ -1321,6 +1459,16 @@ const base::string16 GetFormIdentifier(const WebFormElement& form) {
   CR_DEFINE_STATIC_LOCAL(WebString, kId, ("id"));
   if (identifier.empty())
     identifier = form.GetAttribute(kId).Utf16();
+
+  return identifier;
+}
+
+const base::string16 GetFormIdentifierWebagents(
+    const webagents::HTMLFormElement& form) {
+  base::string16 identifier = form.name().Utf16();
+  CR_DEFINE_STATIC_LOCAL(WebString, kId, ("id"));
+  if (identifier.empty())
+    identifier = form.getAttribute(kId).Utf16();
 
   return identifier;
 }
@@ -1340,6 +1488,19 @@ std::vector<blink::WebFormControlElement> ExtractAutofillableElementsFromSet(
   for (size_t i = 0; i < control_elements.size(); ++i) {
     WebFormControlElement element = control_elements[i];
     if (!IsAutofillableElement(element))
+      continue;
+
+    autofillable_elements.push_back(element);
+  }
+  return autofillable_elements;
+}
+
+std::vector<webagents::Element> ExtractAutofillableElementsFromSetWebagents(
+    const std::vector<webagents::Element>& control_elements) {
+  std::vector<webagents::Element> autofillable_elements;
+  for (size_t i = 0; i < control_elements.size(); ++i) {
+    webagents::Element element = control_elements[i];
+    if (!IsAutofillableElementWebagents(element))
       continue;
 
     autofillable_elements.push_back(element);
@@ -1466,6 +1627,118 @@ void WebFormControlElementToFormField(
   field->value = value;
 }
 
+void WebFormControlElementToFormFieldWebagents(
+    const webagents::Element& element,
+    ExtractMask extract_mask,
+    FormFieldData* field) {
+  DCHECK(field);
+// TODO(joelhockey): implement
+/*
+  CR_DEFINE_STATIC_LOCAL(WebString, kAutocomplete, ("autocomplete"));
+  CR_DEFINE_STATIC_LOCAL(WebString, kId, ("id"));
+  CR_DEFINE_STATIC_LOCAL(WebString, kRole, ("role"));
+  CR_DEFINE_STATIC_LOCAL(WebString, kPlaceholder, ("placeholder"));
+  CR_DEFINE_STATIC_LOCAL(WebString, kClass, ("class"));
+
+  // Save both id and name attributes, if present. If there is only one of them,
+  // it will be saved to |name|. See HTMLFormControlElement::nameForAutofill.
+  field->name = element.NameForAutofill().Utf16();
+  base::string16 id = element.GetAttribute(kId).Utf16();
+  if (id != field->name)
+    field->id = id;
+
+  field->form_control_type = element.FormControlType().Utf8();
+  field->autocomplete_attribute = element.GetAttribute(kAutocomplete).Utf8();
+  if (field->autocomplete_attribute.size() > kMaxDataLength) {
+    // Discard overly long attribute values to avoid DOS-ing the browser
+    // process.  However, send over a default string to indicate that the
+    // attribute was present.
+    field->autocomplete_attribute = "x-max-data-length-exceeded";
+  }
+  if (base::LowerCaseEqualsASCII(element.GetAttribute(kRole).Utf16(),
+                                 "presentation"))
+    field->role = FormFieldData::ROLE_ATTRIBUTE_PRESENTATION;
+
+  field->placeholder = element.GetAttribute(kPlaceholder).Utf16();
+  if (element.HasAttribute(kClass))
+    field->css_classes = element.GetAttribute(kClass).Utf16();
+
+  if (field_value_and_properties_map) {
+    FieldValueAndPropertiesMaskMap::const_iterator it =
+        field_value_and_properties_map->find(element);
+    if (it != field_value_and_properties_map->end())
+      field->properties_mask = it->second.second;
+  }
+
+  if (!IsAutofillableElement(element))
+    return;
+
+  const WebInputElement* input_element = ToWebInputElement(&element);
+  if (IsAutofillableInputElement(input_element) ||
+      IsTextAreaElement(element) ||
+      IsSelectElement(element)) {
+    field->is_autofilled = element.IsAutofilled();
+    if (!g_prevent_layout)
+      field->is_focusable = element.IsFocusable();
+    field->should_autocomplete = element.AutoComplete();
+
+    // Use 'text-align: left|right' if set or 'direction' otherwise.
+    // See crbug.com/482339
+    field->text_direction = element.DirectionForFormData() == "rtl"
+                                ? base::i18n::RIGHT_TO_LEFT
+                                : base::i18n::LEFT_TO_RIGHT;
+    if (element.AlignmentForFormData() == "left")
+      field->text_direction = base::i18n::LEFT_TO_RIGHT;
+    else if (element.AlignmentForFormData() == "right")
+      field->text_direction = base::i18n::RIGHT_TO_LEFT;
+  }
+
+  if (IsAutofillableInputElement(input_element)) {
+    if (IsTextInput(input_element))
+      field->max_length = input_element->MaxLength();
+
+    SetCheckStatus(field, IsCheckableElement(input_element),
+                   input_element->IsChecked());
+  } else if (IsTextAreaElement(element)) {
+    // Nothing more to do in this case.
+  } else if (extract_mask & EXTRACT_OPTIONS) {
+    // Set option strings on the field if available.
+    DCHECK(IsSelectElement(element));
+    const WebSelectElement select_element = element.ToConst<WebSelectElement>();
+    GetOptionStringsFromElement(select_element,
+                                &field->option_values,
+                                &field->option_contents);
+  }
+
+  if (!(extract_mask & EXTRACT_VALUE))
+    return;
+
+  base::string16 value = element.Value().Utf16();
+
+  if (IsSelectElement(element) && (extract_mask & EXTRACT_OPTION_TEXT)) {
+    const WebSelectElement select_element = element.ToConst<WebSelectElement>();
+    // Convert the |select_element| value to text if requested.
+    WebVector<WebElement> list_items = select_element.GetListItems();
+    for (size_t i = 0; i < list_items.size(); ++i) {
+      if (IsOptionElement(list_items[i])) {
+        const WebOptionElement option_element =
+            list_items[i].ToConst<WebOptionElement>();
+        if (option_element.Value().Utf16() == value) {
+          value = option_element.GetText().Utf16();
+          break;
+        }
+      }
+    }
+  }
+
+  // Constrain the maximum data length to prevent a malicious site from DOS'ing
+  // the browser: http://crbug.com/49332
+  TruncateString(&value, kMaxDataLength);
+
+  field->value = value;
+*/
+}
+
 bool WebFormElementToFormData(
     const blink::WebFormElement& form_element,
     const blink::WebFormControlElement& form_control_element,
@@ -1495,6 +1768,35 @@ bool WebFormElementToFormData(
       field_value_and_properties_map, extract_mask, form, field);
 }
 
+bool WebFormElementToFormDataWebagents(
+    const webagents::HTMLFormElement& form_element,
+    base::Optional<webagents::Element> form_control_element,
+    ExtractMask extract_mask,
+    FormData* form,
+    FormFieldData* field) {
+  if (!form_element.ownerDocument().NotStandardIsAttachedToFrame())
+    return false;
+
+  form->name = GetFormIdentifierWebagents(form_element);
+  form->origin = GetCanonicalOriginForDocumentWebagents(form_element.ownerDocument());
+  form->action = form_element.ownerDocument().CompleteURL(form_element.action());
+
+  // If the completed URL is not valid, just use the action we get from
+  // WebKit.
+  if (!form->action.is_valid())
+    form->action = GURL(blink::WebStringToGURL(form_element.action()));
+
+  std::vector<webagents::Element> control_elements;
+  // TODO(joelhockey): implement
+  //form_element.GetFormControlElements(control_elements);
+
+  std::vector<webagents::Element> dummy_fieldset;
+  return FormOrFieldsetsToFormDataWebagents(
+      form_element, form_control_element, dummy_fieldset, control_elements,
+      extract_mask, form, field);
+  return true;
+}
+
 std::vector<WebFormControlElement> GetUnownedFormFieldElements(
     const WebElementCollection& elements,
     std::vector<WebElement>* fieldsets) {
@@ -1515,11 +1817,41 @@ std::vector<WebFormControlElement> GetUnownedFormFieldElements(
   return unowned_fieldset_children;
 }
 
+std::vector<webagents::Element> GetUnownedFormFieldElementsWebagents(
+    const webagents::HTMLAllCollection& elements,
+    std::vector<webagents::Element>* fieldsets) {
+  std::vector<webagents::Element> unowned_fieldset_children;
+// TODO(joelhockey): implement
+/*
+  for (WebElement element = elements.FirstItem(); !element.IsNull();
+       element = elements.NextItem()) {
+    if (element.IsFormControlElement()) {
+      WebFormControlElement control = element.To<WebFormControlElement>();
+      if (control.Form().IsNull())
+        unowned_fieldset_children.push_back(control);
+    }
+
+    if (fieldsets && element.HasHTMLTagName("fieldset") &&
+        !IsElementInsideFormOrFieldSet(element)) {
+      fieldsets->push_back(element);
+    }
+  }
+*/
+  return unowned_fieldset_children;
+}
+
 std::vector<WebFormControlElement> GetUnownedAutofillableFormFieldElements(
     const WebElementCollection& elements,
     std::vector<WebElement>* fieldsets) {
   return ExtractAutofillableElementsFromSet(
       GetUnownedFormFieldElements(elements, fieldsets));
+}
+
+std::vector<webagents::Element> GetUnownedAutofillableFormFieldElementsWebagents(
+    const webagents::HTMLAllCollection& elements,
+    std::vector<webagents::Element>* fieldsets) {
+  return ExtractAutofillableElementsFromSetWebagents(
+      GetUnownedFormFieldElementsWebagents(elements, fieldsets));
 }
 
 bool UnownedCheckoutFormElementsAndFieldSetsToFormData(
@@ -1602,6 +1934,90 @@ bool UnownedCheckoutFormElementsAndFieldSetsToFormData(
       extract_mask, form, field);
 }
 
+bool UnownedCheckoutFormElementsAndFieldSetsToFormDataWebagents(
+    const std::vector<webagents::Element>& fieldsets,
+    const std::vector<webagents::Element>& control_elements,
+    base::Optional<webagents::Element> element,
+    const webagents::Document& document,
+    ExtractMask extract_mask,
+    FormData* form,
+    FormFieldData* field) {
+// TODO(joelhockey): implement
+/*
+  // Only attempt formless Autofill on checkout flows. This avoids the many
+  // false positives found on the non-checkout web. See
+  // http://crbug.com/462375.
+  WebElement html_element = document.DocumentElement();
+
+  // For now this restriction only applies to English-language pages, because
+  // the keywords are not translated. Note that an empty "lang" attribute
+  // counts as English.
+  std::string lang;
+  if (!html_element.IsNull())
+    lang = html_element.GetAttribute("lang").Utf8();
+  if (!lang.empty() &&
+      !base::StartsWith(lang, "en", base::CompareCase::INSENSITIVE_ASCII)) {
+    return UnownedFormElementsAndFieldSetsToFormData(
+        fieldsets, control_elements, element, document, nullptr, extract_mask,
+        form, field);
+  }
+
+  // A potential problem is that this only checks document.title(), but should
+  // actually check the main frame's title. Thus it may make bad decisions for
+  // iframes.
+  base::string16 title(base::ToLowerASCII(document.Title().Utf16()));
+
+  // Don't check the path for url's without a standard format path component,
+  // such as data:.
+  std::string path;
+  GURL url(document.Url());
+  if (url.IsStandard())
+    path = base::ToLowerASCII(url.path());
+
+  const char* const kKeywords[] = {
+    "payment",
+    "checkout",
+    "address",
+    "delivery",
+    "shipping",
+    "wallet"
+  };
+
+  for (const auto* keyword : kKeywords) {
+    // Compare char16 elements of |title| with char elements of |keyword| using
+    // operator==.
+    auto title_pos = std::search(title.begin(), title.end(),
+                                 keyword, keyword + strlen(keyword));
+    if (title_pos != title.end() ||
+        path.find(keyword) != std::string::npos) {
+      form->is_formless_checkout = true;
+      // Found a keyword: treat this as an unowned form.
+      return UnownedFormElementsAndFieldSetsToFormData(
+          fieldsets, control_elements, element, document, nullptr, extract_mask,
+          form, field);
+    }
+  }
+
+  // Since it's not a checkout flow, only add fields that have a non-"off"
+  // autocomplete attribute to the formless autofill.
+  CR_DEFINE_STATIC_LOCAL(WebString, kOffAttribute, ("off"));
+  std::vector<WebFormControlElement> elements_with_autocomplete;
+  for (const WebFormControlElement& element : control_elements) {
+    blink::WebString autocomplete = element.GetAttribute("autocomplete");
+    if (autocomplete.length() && autocomplete != kOffAttribute)
+      elements_with_autocomplete.push_back(element);
+  }
+
+  if (elements_with_autocomplete.empty())
+    return false;
+
+  return UnownedFormElementsAndFieldSetsToFormData(
+      fieldsets, elements_with_autocomplete, element, document, nullptr,
+      extract_mask, form, field);
+*/
+  return false;
+}
+
 bool UnownedPasswordFormElementsAndFieldSetsToFormData(
     const std::vector<blink::WebElement>& fieldsets,
     const std::vector<blink::WebFormControlElement>& control_elements,
@@ -1641,6 +2057,35 @@ bool FindFormAndFieldForFormControlElement(const WebFormControlElement& element,
 
   return WebFormElementToFormData(form_element, element, nullptr, extract_mask,
                                   form, field);
+}
+
+bool FindFormAndFieldForFormControlElementWebagents(
+    const webagents::Element& element,
+    FormData* form,
+    FormFieldData* field) {
+    if (!IsAutofillableElementWebagents(element))
+      return false;
+
+    ExtractMask extract_mask =
+        static_cast<ExtractMask>(EXTRACT_VALUE | EXTRACT_OPTIONS);
+    base::Optional<webagents::HTMLFormElement> form_element =
+        element.ToHTMLInputElement().form();
+    if (!form_element) {
+      // No associated form, try the synthetic form for unowned form elements.
+      webagents::Document document = element.ownerDocument();
+      std::vector<webagents::Element> fieldsets;
+      std::vector<webagents::Element> control_elements =
+          GetUnownedAutofillableFormFieldElementsWebagents(document.all(),
+                                                           &fieldsets);
+      return UnownedCheckoutFormElementsAndFieldSetsToFormDataWebagents(
+          fieldsets, control_elements, element, document, extract_mask,
+          form, field);
+    }
+
+    return WebFormElementToFormDataWebagents(
+        form_element.value(), base::Optional<webagents::Element>(element),
+        extract_mask, form, field);
+    return true;
 }
 
 void FillForm(const FormData& form, const WebFormControlElement& element) {
