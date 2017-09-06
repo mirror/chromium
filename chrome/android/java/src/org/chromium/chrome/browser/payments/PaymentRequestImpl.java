@@ -748,7 +748,7 @@ public class PaymentRequestImpl
         for (Map.Entry<PaymentApp, Map<String, PaymentMethodData>> q : queryApps.entrySet()) {
             q.getKey().getInstruments(q.getValue(), mTopLevelOrigin, mPaymentRequestOrigin,
                     mCertificateChain,
-                    mModifiers == null ? null : Collections.unmodifiableMap(mModifiers), this);
+                    Collections.unmodifiableMap(mModifiers), this);
         }
     }
 
@@ -877,11 +877,11 @@ public class PaymentRequestImpl
 
         mUiShippingOptions = getShippingOptions(details.shippingOptions);
 
+        if (mModifiers == null) mModifiers = new ArrayMap<>();
         for (int i = 0; i < details.modifiers.length; i++) {
             PaymentDetailsModifier modifier = details.modifiers[i];
             String[] methods = modifier.methodData.supportedMethods;
             for (int j = 0; j < methods.length; j++) {
-                if (mModifiers == null) mModifiers = new ArrayMap<>();
                 mModifiers.put(methods[j], modifier);
             }
         }
@@ -894,7 +894,7 @@ public class PaymentRequestImpl
     /** Updates the modifiers for payment instruments and order summary. */
     private void updateInstrumentModifiedTotals() {
         if (!ChromeFeatureList.isEnabled(ChromeFeatureList.WEB_PAYMENTS_MODIFIERS)) return;
-        if (mModifiers == null) return;
+        if (mModifiers == null || mModifiers.isEmpty()) return;
         if (mPaymentMethodsSection == null) return;
 
         for (int i = 0; i < mPaymentMethodsSection.getSize(); i++) {
@@ -928,7 +928,7 @@ public class PaymentRequestImpl
     /** @return The first modifier that matches the given instrument, or null. */
     @Nullable
     private PaymentDetailsModifier getModifier(@Nullable PaymentInstrument instrument) {
-        if (mModifiers == null || instrument == null) return null;
+        if (mModifiers == null || mModifiers.isEmpty() || instrument == null) return null;
         // Makes a copy to ensure it is modifiable.
         Set<String> methodNames = new HashSet<>(instrument.getInstrumentMethodNames());
         methodNames.retainAll(mModifiers.keySet());
