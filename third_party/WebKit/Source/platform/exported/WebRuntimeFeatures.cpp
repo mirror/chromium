@@ -100,6 +100,10 @@ void WebRuntimeFeatures::EnableCompositorTouchAction(bool enable) {
   RuntimeEnabledFeatures::SetCompositorTouchActionEnabled(enable);
 }
 
+void WebRuntimeFeatures::EnableCompositorDrivenImageAnimations(bool enable) {
+  RuntimeEnabledFeatures::SetCompositorDrivenImageAnimationsEnabled(enable);
+}
+
 void WebRuntimeFeatures::EnableCSSHexAlphaColor(bool enable) {
   RuntimeEnabledFeatures::SetCSSHexAlphaColorEnabled(enable);
 }
