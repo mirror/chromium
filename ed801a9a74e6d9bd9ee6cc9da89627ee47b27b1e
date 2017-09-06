@@ -332,6 +332,30 @@
     },
     {
       "key": {
+        "uuid": "f23ddfd9_b70a6f11",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-09-06T12:40:49Z",
+      "side": 1,
+      "message": "I added android:order and android:orderingFromXML to the XML file, thanks!",
+      "parentUuid": "fa4e6129_92dfbfd3",
+      "range": {
+        "startLine": 185,
+        "startChar": 0,
+        "endLine": 185,
+        "endChar": 88
+      },
+      "revId": "ed801a9a74e6d9bd9ee6cc9da89627ee47b27b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20b87a2a_44458488",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
         "patchSetId": 4
