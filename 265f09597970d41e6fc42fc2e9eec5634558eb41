@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "23220bbc_40939205",
+        "filename": "chrome/browser/signin/easy_unlock_app_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-06T18:07:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67eb12db_dda38e2e",
+      "range": {
+        "startLine": 197,
+        "startChar": 6,
+        "endLine": 197,
+        "endChar": 17
+      },
+      "revId": "265f09597970d41e6fc42fc2e9eec5634558eb41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7dd18fce_4fcb52ae",
         "filename": "extensions/browser/test_event_router.cc",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "7f5924eb_fce243fa",
+        "filename": "extensions/browser/test_event_router.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-06T18:07:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7dd18fce_4fcb52ae",
+      "range": {
+        "startLine": 48,
+        "startChar": 6,
+        "endLine": 48,
+        "endChar": 33
+      },
+      "revId": "265f09597970d41e6fc42fc2e9eec5634558eb41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5fd8893a_6c924b11",
         "filename": "extensions/browser/test_event_router.h",
         "patchSetId": 7
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-06T00:37:04Z",
       "side": 1,
       "message": "nit: It would be helpful to add a description",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 6
+      },
+      "revId": "265f09597970d41e6fc42fc2e9eec5634558eb41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa7b0fef_cf018b0d",
+        "filename": "extensions/browser/test_event_router.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-06T18:07:58Z",
+      "side": 1,
+      "message": "Done (moved from the member variable to avoid duplicated comment)",
+      "parentUuid": "5fd8893a_6c924b11",
       "range": {
         "startLine": 45,
         "startChar": 2,
