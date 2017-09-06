@@ -22,6 +22,30 @@
       "revId": "4fd73555afa9f71ff20987c45c5d26de58145faa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b54eaf6_8e7c22ac",
+        "filename": "chrome/browser/signin/signin_error_notifier_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-09-06T08:31:50Z",
+      "side": 1,
+      "message": "I added links to the screenshots in the commit message.\n\nBefore recent notification style change, |display_source| was not shown in this notification, but |display_source| is always expected to be a user facing string, and should be translated. (The documentation was not clear, so there was some confusion.)",
+      "parentUuid": "0f4ee066_22f4fdea",
+      "range": {
+        "startLine": 149,
+        "startChar": 28,
+        "endLine": 149,
+        "endChar": 29
+      },
+      "revId": "4fd73555afa9f71ff20987c45c5d26de58145faa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
