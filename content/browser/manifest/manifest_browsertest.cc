@@ -189,7 +189,7 @@ IN_PROC_BROWSER_TEST_F(ManifestBrowserTest, 404Manifest) {
   EXPECT_EQ(0u, console_error_count());
   ASSERT_EQ(1u, reported_manifest_urls().size());
   EXPECT_EQ(manifest_url(), reported_manifest_urls()[0]);
-  EXPECT_EQ(0u, manifests_reported_when_favicon_url_updated().size());
+  EXPECT_EQ(0u, manifests_reported_when_favicon_url_updated()[0]);
 }
 
 // If a page has an empty manifest, requesting the manifest should return the

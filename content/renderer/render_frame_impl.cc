@@ -3898,8 +3898,6 @@ void RenderFrameImpl::SendUpdateFaviconURL(
     return;
 
   WebVector<blink::WebIconURL> icon_urls = frame_->IconURLs(icon_types_mask);
-  if (icon_urls.empty())
-    return;
 
   std::vector<FaviconURL> urls;
   urls.reserve(icon_urls.size());

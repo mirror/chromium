@@ -1956,13 +1956,12 @@ TEST_F(RenderViewImplTest, SendFaviconURLUpdateEvent) {
       FrameHostMsg_UpdateFaviconURL::ID));
   render_thread_->sink().ClearMessages();
 
-  // An event should not be sent if no favicon url exists. This is an assumption
-  // made by some of Chrome's favicon handling.
+  // An event should also be sent if no favicon url exists.
   LoadHTML("<html>"
            "<head>"
            "</head>"
            "</html>");
-  EXPECT_FALSE(render_thread_->sink().GetFirstMessageMatching(
+  EXPECT_TRUE(render_thread_->sink().GetFirstMessageMatching(
       FrameHostMsg_UpdateFaviconURL::ID));
 }
 
