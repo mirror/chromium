@@ -1228,6 +1228,8 @@ void Shell::OnSessionStateChanged(session_manager::SessionState state) {
   if (state == session_manager::SessionState::ACTIVE) {
     InitializeShelf();
   }
+  for (auto* root_window_controller : GetAllRootWindowControllers())
+    root_window_controller->UpdateAfterSessionStateChange(state);
   // Recreates keyboard on user profile change, to refresh keyboard
   // extensions with the new profile and the extensions call proper IME.
   // |LOGGED_IN_NOT_ACTIVE| is needed so that the virtual keyboard works on
