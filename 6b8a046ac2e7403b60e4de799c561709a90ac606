@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce107304_1d6e74ea",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-06T14:47:38Z",
+      "side": 1,
+      "message": "You need \"return\" after all \"resolve\"/\"reject\" calls because they are just function calls so without the \"return\", the rest of the function will also be executed.\n\nFor example, if the \"options \u0026\u0026 options.password \u0026\u0026 !options.federated\" is true, the promise will be resolved with a PasswordCredential and rejected with a DOMException too. I think this is not correct (nor intended).",
+      "revId": "6b8a046ac2e7403b60e4de799c561709a90ac606",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
