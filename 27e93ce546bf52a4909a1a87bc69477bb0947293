@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "933047cd_3a6cd129",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/service/garbage-collection-ran-during-error.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-09-06T22:19:24Z",
+      "side": 1,
+      "message": "Since you are declaring |service| here it will never get garbage collected :/",
+      "revId": "27e93ce546bf52a4909a1a87bc69477bb0947293",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
