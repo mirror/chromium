@@ -1,0 +1,232 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd81d1ab_65fbda56",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-06T17:51:02Z",
+      "side": 1,
+      "message": "nit: In fact I think it is too low of a number and would personally consider increasing it to 1000. You can think of it as \"anything beyond this number is so high for our measurement that we don\u0027t care knowing what it is\".",
+      "revId": "8cddfff4d700b2484132263a13864d61f2d6b413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1abe8a10_e62c16ef",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-06T17:51:02Z",
+      "side": 1,
+      "message": "A switch-case block would be more appropriate here. It is faster and as we are covering PrefetchItemState existing entries it would generate build errors in case new ones should be added.",
+      "revId": "8cddfff4d700b2484132263a13864d61f2d6b413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5a30440_5ef90a02",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-06T17:51:02Z",
+      "side": 1,
+      "message": "I think a slightly better naming pattern would be something like: OfflinePages.Prefetching.StateCounts.[NewRequest, GeneratePageBundle, ...]. It allows us to use the state name as a histogram suffix construct and would group entries under a clear prefix.",
+      "range": {
+        "startLine": 100,
+        "startChar": 30,
+        "endLine": 100,
+        "endChar": 70
+      },
+      "revId": "8cddfff4d700b2484132263a13864d61f2d6b413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a654669a_e442e3da",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-06T17:51:02Z",
+      "side": 1,
+      "message": "question: Why did you choose a multiple histograms approach instead of a single enumeration one?",
+      "revId": "8cddfff4d700b2484132263a13864d61f2d6b413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6387633e_81e9816f",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-06T17:51:02Z",
+      "side": 1,
+      "message": "What do you mean by \"know the code is correct\"?",
+      "revId": "8cddfff4d700b2484132263a13864d61f2d6b413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "511686f6_865995a0",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-06T17:51:02Z",
+      "side": 1,
+      "message": "Why the choice of state-counting before zombie-fication? And please add a specific note on that reasoning to the comment above.",
+      "revId": "8cddfff4d700b2484132263a13864d61f2d6b413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cf5a242_5eaaef9f",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-06T17:51:02Z",
+      "side": 1,
+      "message": "It seems this comment needs updating.",
+      "revId": "8cddfff4d700b2484132263a13864d61f2d6b413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75f43754_76b92c8e",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-06T17:51:02Z",
+      "side": 1,
+      "message": "Why different number of items specifically for FINISHED and ZOMBIE?",
+      "revId": "8cddfff4d700b2484132263a13864d61f2d6b413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f61fd4a4_06a22900",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-06T17:51:02Z",
+      "side": 1,
+      "message": "nit/suggestion: to be extra sure you *could* add a different number of items at each state so that you can check for different buckets later. If you should chose to do so you could add an increasing number at each iteration of this loop instead of duplicating entries in the vector above.",
+      "range": {
+        "startLine": 285,
+        "startChar": 30,
+        "endLine": 285,
+        "endChar": 48
+      },
+      "revId": "8cddfff4d700b2484132263a13864d61f2d6b413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70c65743_57cf67f4",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-06T17:51:02Z",
+      "side": 1,
+      "message": "Use HistogramTester::ExpectUniqueSample instead as it better reflects what you are trying to test for. This also allows you to remove the 3 double check tests in the end.",
+      "range": {
+        "startLine": 299,
+        "startChar": 19,
+        "endLine": 299,
+        "endChar": 36
+      },
+      "revId": "8cddfff4d700b2484132263a13864d61f2d6b413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75055635_d10d50a2",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-06T17:51:02Z",
+      "side": 1,
+      "message": "Uneeded change.",
+      "revId": "8cddfff4d700b2484132263a13864d61f2d6b413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdad555f_bf311f9e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 50710,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-06T17:51:02Z",
+      "side": 1,
+      "message": "nit: Number of prefetch items in the \u0027AwaitingGcm\u0027 state reported when starting the background task.\nChange the following entries accordingly.",
+      "range": {
+        "startLine": 50710,
+        "startChar": 11,
+        "endLine": 50710,
+        "endChar": 66
+      },
+      "revId": "8cddfff4d700b2484132263a13864d61f2d6b413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
