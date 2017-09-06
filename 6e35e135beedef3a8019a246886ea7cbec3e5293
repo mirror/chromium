@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a298a410_c3907b1b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-06T09:36:33Z",
+      "side": 1,
+      "message": "I\u0027d say URL.",
+      "range": {
+        "startLine": 9,
+        "startChar": 52,
+        "endLine": 9,
+        "endChar": 58
+      },
+      "revId": "6e35e135beedef3a8019a246886ea7cbec3e5293",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9f4873c_7970b2ee",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-06T09:36:33Z",
+      "side": 1,
+      "message": "Note that this whole CL applies to the same origin frames.",
+      "range": {
+        "startLine": 9,
+        "startChar": 278,
+        "endLine": 9,
+        "endChar": 285
+      },
+      "revId": "6e35e135beedef3a8019a246886ea7cbec3e5293",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cda45276_869b9d85",
+        "filename": "ios/chrome/browser/passwords/password_controller_js_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-06T09:36:33Z",
+      "side": 1,
+      "message": "I\u0027d use another URL to avoid confusion, I think it can even be cross origin.",
+      "range": {
+        "startLine": 361,
+        "startChar": 20,
+        "endLine": 361,
+        "endChar": 31
+      },
+      "revId": "6e35e135beedef3a8019a246886ea7cbec3e5293",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d833cd3_ce74bf6e",
+        "filename": "ios/chrome/browser/passwords/resources/password_controller.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-06T09:36:33Z",
+      "side": 1,
+      "message": "What are the cases when isSameOrigin returns false? If there are none then should we introduce an assert in browser. If there are cases then\n- why do we send the passwords to JS at all?\n- is there a security breach because the passwords sent to JS are essentially leaked to the site?",
+      "range": {
+        "startLine": 278,
+        "startChar": 8,
+        "endLine": 278,
+        "endChar": 64
+      },
+      "revId": "6e35e135beedef3a8019a246886ea7cbec3e5293",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
