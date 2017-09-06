@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4099227c_9cbe4e34",
+        "filename": "chrome/profiling/json_exporter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-09-06T18:14:54Z",
+      "side": 0,
+      "message": "You could also do:\n  for (const Address\u0026 addr : base::Reversed(backtrace.addrs())) {\nif you like that better (in base/containers/adapters.h)",
+      "range": {
+        "startLine": 129,
+        "startChar": 39,
+        "endLine": 129,
+        "endChar": 44
+      },
+      "revId": "860b155ba75156bfeef4ee557d68e912602c5e8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
