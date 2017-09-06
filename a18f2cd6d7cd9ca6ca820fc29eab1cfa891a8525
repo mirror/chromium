@@ -290,6 +290,24 @@
     },
     {
       "key": {
+        "uuid": "b8a6aa1d_38d358ca",
+        "filename": "components/search_provider_logos/logo_tracker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-06T13:45:33Z",
+      "side": 1,
+      "message": "OK, then I\u0027ve removed NotifyEncodedLogoObservers() here too.",
+      "parentUuid": "3637603d_13f8aa24",
+      "revId": "a18f2cd6d7cd9ca6ca820fc29eab1cfa891a8525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "776bc39c_d8f76222",
         "filename": "components/search_provider_logos/logo_tracker.cc",
         "patchSetId": 5
