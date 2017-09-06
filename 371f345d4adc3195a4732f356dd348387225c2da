@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "019f3213_e6078435",
+        "filename": "third_party/WebKit/LayoutTests/editing/selection/context-menu-doesnt-clear-selection.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-06T03:54:18Z",
+      "side": 1,
+      "message": "nit: Could you add \u003c!doctype html\u003e to use strict mode? \nSince 70+% of web pages are strict mode.",
+      "revId": "371f345d4adc3195a4732f356dd348387225c2da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e313fcd_43454cd2",
+        "filename": "third_party/WebKit/LayoutTests/editing/selection/context-menu-doesnt-clear-selection.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-06T03:54:18Z",
+      "side": 1,
+      "message": "nit: Could you fix indentation?",
+      "revId": "371f345d4adc3195a4732f356dd348387225c2da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87ce04c8_acd1c7ef",
+        "filename": "third_party/WebKit/LayoutTests/editing/selection/context-menu-doesnt-clear-selection.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-06T03:54:18Z",
+      "side": 1,
+      "message": "Please use w3c test harness to avoid having expected.txt and ease of\nmaintaining test script. Blink is going to use w3c test harness.",
+      "revId": "371f345d4adc3195a4732f356dd348387225c2da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
