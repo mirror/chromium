@@ -22,6 +22,23 @@
       "revId": "b95864ad72d19a564a300cec48f4dbc1586a4439",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62ca8db7_385083c1",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/webp/WEBPImageDecoder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-06T01:57:17Z",
+      "side": 1,
+      "message": "Nit: I wonder if you want to factor this out into its own case above these others, because it feels a bit different, and maybe we should do this before the header size check (if you can really get less data on a subsequent call -- can you?):\n\n  if (consolidated_data_ \u0026\u0026\n      consolidated_data_-\u003esize() \u003e\u003d data_-\u003esize())\n    return true;\n\n  // I\u0027m adding the all data received check here so we fail on very short\n  // truncated streams -- not sure if that\u0027s correct\n  if (data_-\u003esize() \u003c kWebpHeaderSize)\n    return IsAllDataReceived() ? SetFailed() : false;\n\n  if (IsAllDataReceived() \u0026\u0026 !consolidated_data_) {\n    consolidated_data_ \u003d data_-\u003eGetAsSkData();\n  } else ... {\n    ...",
+      "revId": "b95864ad72d19a564a300cec48f4dbc1586a4439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
