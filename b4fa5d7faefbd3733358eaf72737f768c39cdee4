@@ -70,6 +70,24 @@
       "revId": "b4fa5d7faefbd3733358eaf72737f768c39cdee4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9f9709d_df7d602b",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_settings_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-06T05:30:49Z",
+      "side": 0,
+      "message": "Ok thanks. So for M63, could you observe both in ArcSettingsService just like the BT code? Observing one in ArcSettingsService and the other in ArcSettingsServiceImpl seems a bit difficult to follow.\n\nAs you mentioned, it\u0027s probably a good idea to set locale right after app instance is ready, so let\u0027s continue doing so.\n\nAgain, please feel free to land this.",
+      "parentUuid": "db124015_58db4476",
+      "revId": "b4fa5d7faefbd3733358eaf72737f768c39cdee4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
