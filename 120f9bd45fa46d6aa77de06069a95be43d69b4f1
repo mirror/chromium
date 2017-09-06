@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "7e09fcb3_c4b15d2c",
+        "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-06T00:37:08Z",
+      "side": 1,
+      "message": "Good point. All right, let\u0027s do early exit in these OnDid* functions too.",
+      "parentUuid": "622a5cb1_5ccdeb1c",
+      "revId": "120f9bd45fa46d6aa77de06069a95be43d69b4f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d45d46ee_8e6faa1d",
         "filename": "content/child/service_worker/web_service_worker_provider_impl.h",
         "patchSetId": 3
