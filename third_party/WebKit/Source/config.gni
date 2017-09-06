@@ -62,6 +62,7 @@ if (use_default_render_theme) {
   # preference to that.
   feature_defines_list += [ "WTF_USE_DEFAULT_RENDER_THEME=1" ]
 }
+
 if (blink_logging_always_on) {
   feature_defines_list += [ "LOG_DISABLED=0" ]
 }

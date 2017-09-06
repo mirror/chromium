@@ -10,9 +10,13 @@
 #include "platform/wtf/Noncopyable.h"
 #include "platform/wtf/WTFExport.h"
 
+#ifndef LOG_DISABLED
+#define LOG_DISABLED !DCHECK_IS_ON()
+#endif
+
 namespace WTF {
 
-#if !DCHECK_IS_ON()
+#if LOG_DISABLED
 
 #define WTF_CREATE_SCOPED_LOGGER(...) ((void)0)
 #define WTF_CREATE_SCOPED_LOGGER_IF(...) ((void)0)
@@ -64,7 +68,7 @@ class WTF_EXPORT ScopedLogger {
   WTF::ScopedLogger name(condition, __VA_ARGS__)
 #define WTF_APPEND_SCOPED_LOGGER(name, ...) (name.Log(__VA_ARGS__))
 
-#endif  // !DCHECK_IS_ON()
+#endif  // LOG_DISABLED
 
 }  // namespace WTF
 
