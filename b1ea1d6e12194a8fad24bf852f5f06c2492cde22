@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e539dcc5_fcc4ad44",
+        "filename": "components/search_engines/template_url.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-06T16:38:30Z",
+      "side": 1,
+      "message": "This function doesn\u0027t return a value in this case.  Doesn\u0027t that produce a warning?",
+      "revId": "b1ea1d6e12194a8fad24bf852f5f06c2492cde22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daf97a01_d96d81cf",
+        "filename": "components/search_engines/template_url_prepopulate_data_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-06T16:38:30Z",
+      "side": 1,
+      "message": "Nit: Even though it results in duplicated code, I\u0027d factor this check out into a separate test case, since it\u0027s a bit orthogonal to the name/existing function of this one (\"get engine type...\").",
+      "revId": "b1ea1d6e12194a8fad24bf852f5f06c2492cde22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
