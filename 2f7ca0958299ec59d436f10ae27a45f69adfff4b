@@ -16,6 +16,24 @@
       "revId": "2f7ca0958299ec59d436f10ae27a45f69adfff4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47466c9d_e0ae3696",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSample.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-06T05:55:54Z",
+      "side": 1,
+      "message": "Done.\nShadow tree isn\u0027t related at this time.",
+      "parentUuid": "7b352a89_03e217b6",
+      "revId": "2f7ca0958299ec59d436f10ae27a45f69adfff4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
