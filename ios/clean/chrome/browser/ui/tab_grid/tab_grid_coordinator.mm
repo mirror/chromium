@@ -251,20 +251,21 @@
 
 - (void)showToolsMenu {
   ToolsCoordinator* toolsCoordinator = [[ToolsCoordinator alloc] init];
-  [self addChildCoordinator:toolsCoordinator];
   ToolsMenuConfiguration* menuConfiguration =
       [[ToolsMenuConfiguration alloc] initWithDisplayView:nil];
   menuConfiguration.inTabSwitcher = YES;
   menuConfiguration.noOpenedTabs = self.browser->web_state_list().empty();
   menuConfiguration.inNewTabPage = NO;
   toolsCoordinator.toolsMenuConfiguration = menuConfiguration;
-  [toolsCoordinator start];
+  OverlayServiceFactory::GetInstance()
+      ->GetForBrowserState(self.browser->browser_state())
+      ->ShowOverlayForBrowser(toolsCoordinator, self, self.browser);
   self.toolsMenuCoordinator = toolsCoordinator;
 }
 
 - (void)closeToolsMenu {
   [self.toolsMenuCoordinator stop];
-  [self removeChildCoordinator:self.toolsMenuCoordinator];
+  // |toolsMenuCoordinator| is weak, so it is presumed nil after being stopped.
 }
 
 #pragma mark - URLOpening
