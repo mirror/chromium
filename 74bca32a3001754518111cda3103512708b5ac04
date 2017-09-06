@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27e4cdc5_b79e71f2",
+        "filename": "chrome/browser/ui/views/harmony/harmony_layout_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-06T22:16:30Z",
+      "side": 1,
+      "message": "I\u0027m not sure this is really \"layout unit * 1.5\".  It seems like the desire here was for text or controls to have the same apparent whitespace above them.  The text has more \"built-in\" whitespace in the form of the internal leading (and maybe the cap height minus the x-height).  I imagine, then, that the whitespace here is \"text content to buttons, plus that built-in whitespace\", and the latter is ~8 DIP by default.  So maybe this is \"+ 8\" instead of \"* 1.5\"?\n\nIt seems like we could go further to try and dynamically calculate all this, but ugh.",
+      "revId": "74bca32a3001754518111cda3103512708b5ac04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee18bc46_18749c84",
+        "filename": "ui/views/layout/layout_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-06T22:16:30Z",
+      "side": 1,
+      "message": "Nit: For switch statements conditional on a true enum, don\u0027t use default statements (see http://google.github.io/styleguide/cppguide.html#Loops_and_Switch_Statements ).  (2 places)",
+      "revId": "74bca32a3001754518111cda3103512708b5ac04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30175c68_103b6f4e",
+        "filename": "ui/views/layout/layout_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-06T22:16:30Z",
+      "side": 1,
+      "message": "Nit: For ordering purposes, I might name these something like this:\n\nDISTANCE_DIALOG_CONTENT_MARGIN_BOTTOM_CONTROL\nDISTANCE_DIALOG_CONTENT_MARGIN_BOTTOM_TEXT\nDISTANCE_DIALOG_CONTENT_MARGIN_TOP_CONTROL\nDISTANCE_DIALOG_CONTENT_MARGIN_TOP_TEXT\n\nThat is, more general terms on left, more specific on right, as opposed to \"like an English phrase\".  Actual words to use are arguable.",
+      "revId": "74bca32a3001754518111cda3103512708b5ac04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65393dc2_1c390279",
+        "filename": "ui/views/layout/layout_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-06T22:16:30Z",
+      "side": 1,
+      "message": "Maybe it would make more sense to separate the concept of whether there is a title from the concept of the type of leading content.  This would also let you unify to one ContentType enum.\n\nThis would also matter if we needed to differently encode the case of \"no button row\" from \"button row\", as we apparently do for titles.",
+      "revId": "74bca32a3001754518111cda3103512708b5ac04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
