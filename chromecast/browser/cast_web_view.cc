@@ -16,6 +16,7 @@
 #include "content/public/browser/render_widget_host.h"
 #include "content/public/browser/render_widget_host_view.h"
 #include "ipc/ipc_message.h"
+#include "media/media_features.h"
 #include "net/base/net_errors.h"
 #include "ui/display/display.h"
 #include "ui/display/screen.h"

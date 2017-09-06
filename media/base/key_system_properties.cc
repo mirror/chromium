@@ -11,6 +11,9 @@ namespace media {
 
 #if defined(OS_ANDROID)
 SupportedCodecs KeySystemProperties::GetSupportedSecureCodecs() const {
+#if !BUILDFLAG(CAN_USE_SECURE_CODEC)
+  NOTREACHED();
+#endif
   return EME_CODEC_NONE;
 }
 #endif
