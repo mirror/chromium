@@ -135,6 +135,7 @@ class TopSitesImpl : public TopSites, public HistoryServiceObserver {
   friend class TopSitesImplTest;
   FRIEND_TEST_ALL_PREFIXES(TopSitesImplTest, DiffMostVisited);
   FRIEND_TEST_ALL_PREFIXES(TopSitesImplTest, DiffMostVisitedWithForced);
+  FRIEND_TEST_ALL_PREFIXES(TopSitesImplTest, MostVisitedTitleUnchanged);
 
   typedef base::Callback<void(const MostVisitedURLList&,
                               const MostVisitedURLList&)> PendingCallback;
@@ -158,6 +159,10 @@ class TopSitesImpl : public TopSites, public HistoryServiceObserver {
   static void DiffMostVisited(const MostVisitedURLList& old_list,
                               const MostVisitedURLList& new_list,
                               TopSitesDelta* delta);
+
+  // Checks if the titles stored in |old_list| and |new_list| are unchanged.
+  static bool MostVisitedTitleUnchanged(const MostVisitedURLList& old_list,
+                                        const MostVisitedURLList& new_list);
 
   // The actual implementation of SetPageThumbnail. It returns a more detailed
   // status code (for UMA) rather than just a bool.

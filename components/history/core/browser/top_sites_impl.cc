@@ -474,6 +474,22 @@ void TopSitesImpl::DiffMostVisited(const MostVisitedURLList& old_list,
   }
 }
 
+// static
+bool TopSitesImpl::MostVisitedTitleUnchanged(
+    const MostVisitedURLList& old_list,
+    const MostVisitedURLList& new_list) {
+  // If the two lists have different sizes, the most visited titles are
+  // considered to have changes.
+  if (old_list.size() != new_list.size())
+    return false;
+
+  return std::equal(std::begin(old_list), std::end(old_list),
+                    std::begin(new_list),
+                    [](const auto& old_item_ptr, const auto& new_item_ptr) {
+                      return old_item_ptr.title == new_item_ptr.title;
+                    });
+}
+
 TopSitesImpl::ThumbnailEvent TopSitesImpl::SetPageThumbnailImpl(
     const GURL& url,
     const gfx::Image& thumbnail,
@@ -746,8 +762,15 @@ void TopSitesImpl::SetTopSites(const MostVisitedURLList& new_top_sites,
     histogram_recorded_ = true;
   }
 
+  bool should_notify_observers = false;
   if (!delta.deleted.empty() || !delta.added.empty() || !delta.moved.empty()) {
     backend_->UpdateTopSites(delta, record_or_not);
+    should_notify_observers = true;
+  }
+  // If there is no url change in top sites, check if the titles have changes.
+  if (!should_notify_observers) {
+    should_notify_observers =
+        MostVisitedTitleUnchanged(cache_->top_sites(), top_sites);
   }
 
   last_num_urls_changed_ = delta.added.size() + delta.moved.size();
@@ -789,10 +812,14 @@ void TopSitesImpl::SetTopSites(const MostVisitedURLList& new_top_sites,
 
   ResetThreadSafeCache();
   ResetThreadSafeImageCache();
-  if (location == CALL_LOCATION_FROM_FORCED_URLS)
-    NotifyTopSitesChanged(TopSitesObserver::ChangeReason::FORCED_URL);
-  else
-    NotifyTopSitesChanged(TopSitesObserver::ChangeReason::MOST_VISITED);
+
+  // If top sites have changes in either urls or titles, notify the observers.
+  if (should_notify_observers) {
+    if (location == CALL_LOCATION_FROM_FORCED_URLS)
+      NotifyTopSitesChanged(TopSitesObserver::ChangeReason::FORCED_URL);
+    else
+      NotifyTopSitesChanged(TopSitesObserver::ChangeReason::MOST_VISITED);
+  }
 
   // Restart the timer that queries history for top sites. This is done to
   // ensure we stay in sync with history.
