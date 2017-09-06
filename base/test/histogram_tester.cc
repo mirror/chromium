@@ -5,16 +5,24 @@
 #include "base/test/histogram_tester.h"
 
 #include <stddef.h>
+#include <memory>
 
 #include "base/metrics/histogram.h"
 #include "base/metrics/histogram_samples.h"
 #include "base/metrics/metrics_hashes.h"
+#include "base/metrics/record_histogram_checker.h"
 #include "base/metrics/sample_map.h"
 #include "base/metrics/statistics_recorder.h"
 #include "base/strings/string_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace base {
+
+class DummyRecordChecker : public RecordHistogramChecker {
+ public:
+  ~DummyRecordChecker() override {}
+  bool ShouldRecord(uint64_t histogram_hash) const override { return true; }
+};
 
 HistogramTester::HistogramTester() {
   StatisticsRecorder::Initialize();  // Safe to call multiple times.
@@ -27,9 +35,13 @@ HistogramTester::HistogramTester() {
     histograms_snapshot_[histogram->histogram_name()] =
         histogram->SnapshotSamples();
   }
+
+  backup_record_checker_.reset(StatisticsRecorder::ForceSetRecordChecker(
+      std::make_unique<DummyRecordChecker>()));
 }
 
 HistogramTester::~HistogramTester() {
+  StatisticsRecorder::ForceSetRecordChecker(std::move(backup_record_checker_));
 }
 
 void HistogramTester::ExpectUniqueSample(
