@@ -16,6 +16,24 @@
       "revId": "7ef4521845ab4baa4e5f8b7ea8abe1c16bb927f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d7f5bc2_edb4b467",
+        "filename": "services/device/public/cpp/power_monitor/power_monitor_broadcast_source.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1117489
+      },
+      "writtenOn": "2017-09-06T01:57:03Z",
+      "side": 1,
+      "message": "Callback should still be called on correct thread. That is the job ob PowerMonitor which uses ThreadSafeObserverList to make sure callbacks are called on the same thread where the observer add added. For example, with the current implementation the mojo binding in PowerMonitorBroadcastSource is done on UI thread but GPU watchdog\u0027s OnSuspend/OnResume are called on the watchdog thread.",
+      "parentUuid": "02178f3b_9cf55c06",
+      "revId": "7ef4521845ab4baa4e5f8b7ea8abe1c16bb927f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
