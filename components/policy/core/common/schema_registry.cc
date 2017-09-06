@@ -59,7 +59,7 @@ void SchemaRegistry::UnregisterComponent(const PolicyNamespace& ns) {
     schema_map_ = new SchemaMap(map);
     Notify(false);
   } else {
-    NOTREACHED();
+    // NOTREACHED();
   }
 }
 

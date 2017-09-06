@@ -106,17 +106,6 @@ bool ShouldShowThrobber(TabRendererData::NetworkState state) {
 ////////////////////////////////////////////////////////////////////////////////
 // Drawing and utility functions
 
-// Returns the width of the tab endcap in DIP.  More precisely, this is the
-// width of the curve making up either the outer or inner edge of the stroke;
-// since these two curves are horizontally offset by 1 px (regardless of scale),
-// the total width of the endcap from tab outer edge to the inside end of the
-// stroke inner edge is (GetUnscaledEndcapWidth() * scale) + 1.
-//
-// The value returned here must be at least Tab::kMinimumEndcapWidth.
-float GetTabEndcapWidth() {
-  return GetLayoutInsets(TAB).left() - 0.5f;
-}
-
 void DrawHighlight(gfx::Canvas* canvas,
                    const SkPoint& p,
                    SkScalar radius,
@@ -148,11 +137,20 @@ gfx::Path GetFillPath(float scale, const gfx::Size& size, float endcap_width) {
   // ClipPath with anti-aliasing enabled it can cause artifacts.
   const float bottom = std::ceil(size.height() * scale);
 
+  const float inverse_slope =
+      Tab::GetInverseDiagonalSlopeForEndcapWidth(endcap_width);
+
+  gfx::SizeF curve_size = Tab::GetCurveSizeForEndcapWidth(endcap_width);
+
   gfx::Path fill;
   fill.moveTo(right - 1, bottom);
-  fill.rCubicTo(-0.75 * scale, 0, -1.625 * scale, -0.5 * scale, -2 * scale,
-                -1.5 * scale);
-  fill.lineTo(right - 1 - (endcap_width - 2) * scale, 2.5 * scale);
+  fill.rCubicTo(
+      -scale, 0,
+      (inverse_slope * curve_size.height() / 2.f - curve_size.width()) * scale,
+      -(curve_size.height() / 2.f) * scale, -curve_size.width() * scale,
+      -curve_size.height() * scale);
+  fill.lineTo(right - 1 - (endcap_width - curve_size.width()) * scale,
+              (1 + curve_size.height()) * scale);
   // Prevent overdraw in the center near minimum width (only happens if
   // scale < 2).  We could instead avoid this by increasing the tab inset
   // values, but that would shift all the content inward as well, unless we
@@ -161,15 +159,29 @@ gfx::Path GetFillPath(float scale, const gfx::Size& size, float endcap_width) {
   const float scaled_endcap_width = 1 + endcap_width * scale;
   const float overlap = scaled_endcap_width * 2 - right;
   const float offset = (overlap > 0) ? (overlap / 2) : 0;
-  fill.rCubicTo(-0.375 * scale, -1 * scale, -1.25 * scale + offset,
-                -1.5 * scale, -2 * scale + offset, -1.5 * scale);
+
+  fill.rCubicTo(-inverse_slope * (curve_size.height() / 2.f) * scale,
+                -(curve_size.height() / 2.f) * scale,
+                -scale * (curve_size.width() - 1.f) + offset,
+                -(curve_size.height()) * scale,
+                -(curve_size.width()) * scale + offset,
+                -(curve_size.height()) * scale);
+
   if (overlap < 0)
     fill.lineTo(scaled_endcap_width, scale);
-  fill.rCubicTo(-0.75 * scale, 0, -1.625 * scale - offset, 0.5 * scale,
-                -2 * scale - offset, 1.5 * scale);
-  fill.lineTo(1 + 2 * scale, bottom - 1.5 * scale);
-  fill.rCubicTo(-0.375 * scale, scale, -1.25 * scale, 1.5 * scale, -2 * scale,
-                1.5 * scale);
+  fill.rCubicTo(
+      -scale, 0,
+      (inverse_slope * (curve_size.height() / 2.f) - curve_size.width()) *
+              scale -
+          offset,
+      (curve_size.height() / 2.f) * scale, -curve_size.width() * scale - offset,
+      curve_size.height() * scale);
+
+  fill.lineTo(1 + curve_size.width() * scale,
+              bottom - curve_size.height() * scale);
+  fill.rCubicTo(-inverse_slope * (curve_size.height() / 2.f) * scale, scale,
+                -scale, curve_size.height() * scale,
+                -curve_size.width() * scale, curve_size.height() * scale);
   fill.close();
   return fill;
 }
@@ -183,36 +195,59 @@ gfx::Path GetFillPath(float scale, const gfx::Size& size, float endcap_width) {
 gfx::Path GetBorderPath(float scale,
                         bool unscale_at_end,
                         bool extend_to_top,
-                        float endcap_width,
-                        const gfx::Size& size) {
+                        const gfx::Size& size,
+                        float endcap_width) {
   const float top = scale - 1;
   const float right = size.width() * scale;
   const float bottom = size.height() * scale;
 
+  float inverse_slope =
+      Tab::GetInverseDiagonalSlopeForEndcapWidth(endcap_width);
+
   gfx::Path path;
+
+  gfx::SizeF curve_size = Tab::GetCurveSizeForEndcapWidth(endcap_width);
+
   path.moveTo(0, bottom);
   path.rLineTo(0, -1);
-  path.rCubicTo(0.75 * scale, 0, 1.625 * scale, -0.5 * scale, 2 * scale,
-                -1.5 * scale);
-  path.lineTo((endcap_width - 2) * scale, top + 1.5 * scale);
+  path.rCubicTo(
+      scale, 0,
+      (curve_size.width() - inverse_slope * (curve_size.height() / 2.f)) *
+          scale,
+      -(curve_size.height() / 2.f) * scale, curve_size.width() * scale,
+      -(curve_size.height()) * scale);
+
+  path.lineTo((endcap_width - curve_size.width()) * scale,
+              top + curve_size.height() * scale);
   if (extend_to_top) {
     // Create the vertical extension by extending the side diagonals until
     // they reach the top of the bounds.
     const float dy = 2.5 * scale - 1;
-    const float dx = Tab::GetInverseDiagonalSlope() * dy;
+    const float dx = inverse_slope * dy;
     path.rLineTo(dx, -dy);
-    path.lineTo(right - (endcap_width - 2) * scale - dx, 0);
+    path.lineTo(right - (endcap_width - curve_size.width()) * scale - dx, 0);
     path.rLineTo(dx, dy);
   } else {
-    path.rCubicTo(0.375 * scale, -scale, 1.25 * scale, -1.5 * scale, 2 * scale,
-                  -1.5 * scale);
+    path.rCubicTo(inverse_slope * scale * curve_size.height() / 2.f,
+                  -(curve_size.height() / 2.f) * scale,
+                  scale * (curve_size.width() - 1.f),
+                  -(curve_size.height()) * scale, curve_size.width() * scale,
+                  -(curve_size.height()) * scale);
     path.lineTo(right - endcap_width * scale, top);
-    path.rCubicTo(0.75 * scale, 0, 1.625 * scale, 0.5 * scale, 2 * scale,
-                  1.5 * scale);
+
+    path.rCubicTo(
+        scale, 0,
+        (curve_size.width() - inverse_slope * curve_size.height() / 2.f) *
+            scale,
+        (curve_size.height() / 2.f) * scale, curve_size.width() * scale,
+        curve_size.height() * scale);
   }
-  path.lineTo(right - 2 * scale, bottom - 1 - 1.5 * scale);
-  path.rCubicTo(0.375 * scale, scale, 1.25 * scale, 1.5 * scale, 2 * scale,
-                1.5 * scale);
+  path.lineTo(right - curve_size.width() * scale,
+              bottom - 1 - curve_size.height() * scale);
+  path.rCubicTo((curve_size.height() / 2.f) * inverse_slope * scale,
+                (curve_size.height() / 2.f) * scale,
+                scale * (curve_size.width() - 1.f), curve_size.height() * scale,
+                curve_size.width() * scale, curve_size.height() * scale);
   path.rLineTo(0, 1);
   path.close();
 
@@ -429,6 +464,10 @@ void Tab::ThrobberView::OnPaint(gfx::Canvas* canvas) {
 // static
 const char Tab::kViewClassName[] = "Tab";
 
+// static
+const gfx::SizeF kMaxCurveSize = gfx::SizeF(2, 1.5f);
+const gfx::SizeF kMinCurveSize = gfx::SizeF(1, 1);
+
 Tab::Tab(TabController* controller, gfx::AnimationContainer* container)
     : controller_(controller),
       closing_(false),
@@ -457,7 +496,7 @@ Tab::Tab(TabController* controller, gfx::AnimationContainer* container)
 
   set_id(VIEW_ID_TAB);
 
-  SetBorder(views::CreateEmptyBorder(GetLayoutInsets(TAB)));
+  SetBorderForEndcapWidth(TabStrip::GetTabEndcapMaxWidth());
 
   title_->SetHorizontalAlignment(gfx::ALIGN_TO_HEAD);
   title_->SetElideBehavior(gfx::FADE_TAIL);
@@ -621,7 +660,8 @@ gfx::Size Tab::GetMinimumActiveSize() {
 // static
 gfx::Size Tab::GetStandardSize() {
   constexpr int kNetTabWidth = 193;
-  const int overlap = GetOverlap();
+  const int overlap =
+      GetOverlapForEndcapWidth(TabStrip::GetTabEndcapMaxWidth());
   return gfx::Size(kNetTabWidth + overlap, GetMinimumInactiveSize().height());
 }
 
@@ -637,7 +677,7 @@ int Tab::GetPinnedWidth() {
 }
 
 // static
-float Tab::GetInverseDiagonalSlope() {
+float Tab::GetInverseDiagonalSlopeForEndcapWidth(float endcap_width) {
   // This is computed from the border path as follows:
   // * The endcap width is enough for the whole stroke outer curve, i.e. the
   //   side diagonal plus the curves on both its ends.
@@ -648,14 +688,25 @@ float Tab::GetInverseDiagonalSlope() {
   //   so the diagonal is ((height - 1.5 - 1.5) * scale - 1 - (scale - 1)) px
   //   high.  Simplifying this gives (height - 4) * scale px, or (height - 4)
   //   DIP.
-  return (GetTabEndcapWidth() - kMinimumEndcapWidth) /
-         (Tab::GetMinimumInactiveSize().height() - 4);
+  const gfx::SizeF curve_size = Tab::GetCurveSizeForEndcapWidth(endcap_width);
+  return (endcap_width - curve_size.width() * 2.f) /
+         (Tab::GetMinimumInactiveSize().height() - 1 -
+          2.f * curve_size.height());
 }
 
-// static
-int Tab::GetOverlap() {
+int Tab::GetOverlapForEndcapWidth(float endcap_width) {
   // We want to overlap the endcap portions entirely.
-  return gfx::ToCeiledInt(GetTabEndcapWidth());
+  return gfx::ToRoundedInt(endcap_width);
+}
+
+gfx::SizeF Tab::GetCurveSizeForEndcapWidth(float endcap_width) {
+  float ratio = (endcap_width - kMinimumEndcapWidth) /
+                (TabStrip::GetTabEndcapMaxWidth() - kMinimumEndcapWidth);
+
+  return gfx::SizeF(kMinCurveSize.width() +
+                        ratio * (kMaxCurveSize.width() - kMinCurveSize.width()),
+                    kMinCurveSize.height() + ratio * (kMaxCurveSize.height() -
+                                                      kMinCurveSize.height()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -720,7 +771,7 @@ bool Tab::GetHitTestMask(gfx::Path* mask) const {
   *mask =
       GetBorderPath(GetWidget()->GetCompositor()->device_scale_factor(), true,
                     widget && (widget->IsMaximized() || widget->IsFullscreen()),
-                    GetTabEndcapWidth(), size());
+                    size(), controller_->GetTabEndcapWidth());
   return true;
 }
 
@@ -743,9 +794,7 @@ void Tab::OnPaint(gfx::Canvas* canvas) {
 
   gfx::Path clip;
   if (!controller_->ShouldPaintTab(
-          this,
-          base::Bind(&GetBorderPath, canvas->image_scale(), true, false,
-                     GetTabEndcapWidth()),
+          this, base::Bind(&GetBorderPath, canvas->image_scale(), true, false),
           &clip))
     return;
 
@@ -753,7 +802,8 @@ void Tab::OnPaint(gfx::Canvas* canvas) {
 }
 
 void Tab::Layout() {
-  const gfx::Rect lb = GetContentsBounds();
+  SetBorderForEndcapWidth(controller_->GetTabEndcapWidth());
+  gfx::Rect lb = GetContentsBounds();
   showing_icon_ = ShouldShowIcon();
   // See comments in IconCapacity().
   const int extra_padding =
@@ -1003,6 +1053,16 @@ void Tab::OnGestureEvent(ui::GestureEvent* event) {
   event->SetHandled();
 }
 
+void Tab::SetBorderForEndcapWidth(float endcap_width) {
+  // TODO(pkasting): This should probably scale down more slowly than the endcap
+  // width does, so that at the minimum endcap width there's still a bit of
+  // padding inside the endcap before the contents.
+  const gfx::Insets insets = GetLayoutInsets(TAB);
+  const int horizontal_inset = gfx::ToRoundedInt(endcap_width);
+  SetBorder(views::CreateEmptyBorder(insets.top(), horizontal_inset,
+                                     insets.bottom(), horizontal_inset));
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // Tab, private
 
@@ -1094,7 +1154,7 @@ void Tab::PaintTabBackground(gfx::Canvas* canvas,
   // |y_offset| is only set when |fill_id| is being used.
   DCHECK(!y_offset || fill_id);
 
-  const float endcap_width = GetTabEndcapWidth();
+  const float endcap_width = controller_->GetTabEndcapWidth();
   const ui::ThemeProvider* tp = GetThemeProvider();
   const SkColor active_color = tp->GetColor(ThemeProperties::COLOR_TOOLBAR);
   const SkColor inactive_color =
@@ -1113,7 +1173,7 @@ void Tab::PaintTabBackground(gfx::Canvas* canvas,
     gfx::Path fill_path =
         GetFillPath(canvas->image_scale(), size(), endcap_width);
     gfx::Path stroke_path = GetBorderPath(canvas->image_scale(), false, false,
-                                          endcap_width, size());
+                                          size(), endcap_width);
     PaintTabBackgroundFill(canvas, fill_path, active, paint_hover_effect,
                            active_color, inactive_color, fill_id, y_offset);
     gfx::ScopedCanvas scoped_canvas(clip ? canvas : nullptr);
@@ -1131,7 +1191,7 @@ void Tab::PaintTabBackground(gfx::Canvas* canvas,
     gfx::Path fill_path =
         GetFillPath(canvas->image_scale(), size(), endcap_width);
     gfx::Path stroke_path = GetBorderPath(canvas->image_scale(), false, false,
-                                          endcap_width, size());
+                                          size(), endcap_width);
     cc::PaintRecorder recorder;
 
     {
