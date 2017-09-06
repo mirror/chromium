@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2514dacb_64444155",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-06T20:28:53Z",
+      "side": 1,
+      "message": "nit: std::make_unique\u003c\u003e()",
+      "revId": "c2ef890f3a527983f8825a75a2feda90c2396db5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
