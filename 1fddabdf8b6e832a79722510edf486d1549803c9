@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e3d1672_f65bff6a",
+        "filename": "chrome/browser/resources/md_extensions/manager.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-09-06T01:39:53Z",
+      "side": 0,
+      "message": "Why does the drawer need to be inside the sidebar?",
+      "range": {
+        "startLine": 65,
+        "startChar": 6,
+        "endLine": 65,
+        "endChar": 71
+      },
+      "revId": "1fddabdf8b6e832a79722510edf486d1549803c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13179975_20a96319",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-09-06T01:39:53Z",
+      "side": 1,
+      "message": "Can this be false? The dialog is modal, so the menu shouldn\u0027t be clickable when the sidebar is open, this means that |toggle| will always open the sidebar.\n\nIf you remove this call, then also consider removing the property all-together.",
+      "range": {
+        "startLine": 166,
+        "startChar": 10,
+        "endLine": 166,
+        "endChar": 29
+      },
+      "revId": "8cc169f85432da2598cff0a24571af4fdad800e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "457b40f2_0f547bff",
+        "filename": "chrome/browser/resources/md_extensions/sidebar.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-09-06T01:39:53Z",
+      "side": 1,
+      "message": "This is very tightly coupled with |onMenuButtonTap_|. Consider moving this logic there and using |selected| directly for readability.",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 7
+      },
+      "revId": "8cc169f85432da2598cff0a24571af4fdad800e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
