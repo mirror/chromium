@@ -123,6 +123,24 @@
     },
     {
       "key": {
+        "uuid": "fdac6abd_b50e4269",
+        "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-06T08:03:42Z",
+      "side": 1,
+      "message": "CHECK is better than doing NOTREACHED and trying to gracefully handle with the return statement. \n\nYeah, we can just do CHECK(counter_ \u003c max); and be done with it.",
+      "parentUuid": "08db2e0c_6e8feca3",
+      "revId": "51279127275ec7f0936ce589fb5a02018aff2a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "904912f1_3970ef2e",
         "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
         "patchSetId": 12
