@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c1a35ab_3aee83a0",
+        "filename": "content/child/child_thread_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-09-06T23:43:10Z",
+      "side": 1,
+      "message": "Is there any race condition where the PowerMonitorBroadcastSource isn\u0027t guaranteed to be fully initialized (since PowerMonitorBroadcastSource::Client::Init is called on a different thread), and operations start being done on the power_monitor_? I don\u0027t see any; only asking. It looks like it\u0027s fine that the initialization is done in the background, and once the device::mojom::PowerMonitorClient is set up, power events will start being broadcast to any observers which have since been registered.",
+      "revId": "ccfcc08b6f77f42fa34353f53e75d3d004d91fbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
