@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9331e1d5_e89bcb13",
+        "filename": "base/trace_event/memory_allocator_dump.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-09-06T18:09:21Z",
+      "side": 1,
+      "message": "We will also need a default constructor :(",
+      "range": {
+        "startLine": 51,
+        "startChar": 4,
+        "endLine": 51,
+        "endChar": 12
+      },
+      "revId": "ea56919056b91745906380b439cd8242ed0cefc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
