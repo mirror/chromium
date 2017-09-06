@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a945fdf9_ca44cf61",
+        "filename": "chrome/browser/ui/cocoa/password_reuse_warning_dialog_controller.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-09-06T02:46:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e8c6f3d_f6e5df23",
+      "range": {
+        "startLine": 137,
+        "startChar": 25,
+        "endLine": 137,
+        "endChar": 26
+      },
+      "revId": "62434fa05737b039f75703d79fce577e0b9eb36c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "932aae31_6ae8dbc6",
         "filename": "chrome/browser/ui/cocoa/password_reuse_warning_dialog_controller.mm",
         "patchSetId": 13
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "68915fa4_d4a1e655",
+        "filename": "ui/base/cocoa/controls/button_utils.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-09-06T02:46:18Z",
+      "side": 1,
+      "message": "Whoops, my bad",
+      "parentUuid": "2e5934fe_0d4e51ed",
+      "range": {
+        "startLine": 39,
+        "startChar": 5,
+        "endLine": 39,
+        "endChar": 9
+      },
+      "revId": "62434fa05737b039f75703d79fce577e0b9eb36c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "221eac7e_c4991dae",
         "filename": "ui/base/cocoa/controls/textfield_utils.mm",
         "patchSetId": 13
@@ -82,6 +130,30 @@
       "writtenOn": "2017-09-05T16:32:29Z",
       "side": 1,
       "message": "I like this utility method",
+      "range": {
+        "startLine": 23,
+        "startChar": 16,
+        "endLine": 23,
+        "endChar": 31
+      },
+      "revId": "62434fa05737b039f75703d79fce577e0b9eb36c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6293eb72_c9494400",
+        "filename": "ui/base/cocoa/controls/textfield_utils.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-09-06T02:46:18Z",
+      "side": 1,
+      "message": "Glad to hear :)",
+      "parentUuid": "221eac7e_c4991dae",
       "range": {
         "startLine": 23,
         "startChar": 16,
