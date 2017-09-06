@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "1f00592f_a29a4f1d",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-06T02:43:37Z",
+      "side": 1,
+      "message": "I\u0027m trying to cover the parsing of the URL only (nothing to do with elision).  Windows parses \u0027C:path\u0027 into \u0027C:/path\u0027 (see line 298), so a fixed-width font won\u0027t fix the problem.  The point was to just pick a sane initial width.",
+      "parentUuid": "cf67e22a_ac0713ec",
+      "revId": "331980f7bc66f45919efc012dc95a48f319f49d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "770b5763_5f38a82b",
         "filename": "components/url_formatter/elide_url_unittest.cc",
         "patchSetId": 5
@@ -48,6 +66,24 @@
       "writtenOn": "2017-09-05T14:36:10Z",
       "side": 1,
       "message": "I don\u0027t really like this workaround, can you instead use a fixed width font, try to use RenderText\u0027s RenderTextHarfBuzz::set_glyph_width_for_test, or something else? I\u0027d even go so far as to change the testing pattern to something more reliable than to use this workaround (eg. measure each expected output width, and check that the input capped at that width produces the same string). That said, I\u0027m still not an owner here :)",
+      "revId": "331980f7bc66f45919efc012dc95a48f319f49d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e677e321_1d1bd6b2",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-06T02:43:37Z",
+      "side": 1,
+      "message": "I\u0027ll have to think about whether using a fix-width font dilutes the value of this testing.  Matt, thoughts?  Michael, the \"measure expected output width, check that input capped produced same string\" is what the original test cases all do.  The problem with that approach is that you can\u0027t verify that other widths do NOT produce unexpected output.  Hence the original intent here - walk through all possible widths and make sure the sequence of shortened strings is exactly as expected.  That means a ton of elision calls, and tests that can take ~10+ seconds each to run.  The compromise here gets around that.\n\nWe could #ifdef the test expectations to vary the sequence across platforms, but that\u0027s nasty.",
+      "parentUuid": "770b5763_5f38a82b",
       "revId": "331980f7bc66f45919efc012dc95a48f319f49d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
