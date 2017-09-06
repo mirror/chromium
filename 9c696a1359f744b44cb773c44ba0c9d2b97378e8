@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8538752e_6fb74e2f",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-06T01:51:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abf2b52b_2806bfe6",
+      "range": {
+        "startLine": 281,
+        "startChar": 18,
+        "endLine": 281,
+        "endChar": 30
+      },
+      "revId": "9c696a1359f744b44cb773c44ba0c9d2b97378e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a75b0411_dfea9c33",
         "filename": "components/multidevice/service/device_sync_impl.cc",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "9c696a1359f744b44cb773c44ba0c9d2b97378e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aa22669_039ac398",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-06T01:51:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a75b0411_dfea9c33",
+      "range": {
+        "startLine": 316,
+        "startChar": 32,
+        "endLine": 316,
+        "endChar": 33
+      },
+      "revId": "9c696a1359f744b44cb773c44ba0c9d2b97378e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f4c260f3_e8d9e2f9",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-06T01:51:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d933eb92_9bb1e104",
+      "range": {
+        "startLine": 318,
+        "startChar": 2,
+        "endLine": 318,
+        "endChar": 1
+      },
+      "revId": "9c696a1359f744b44cb773c44ba0c9d2b97378e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4cdbac10_a3df9423",
         "filename": "components/multidevice/service/device_sync_impl.cc",
         "patchSetId": 10
@@ -91,6 +163,30 @@
       "revId": "9c696a1359f744b44cb773c44ba0c9d2b97378e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02878be6_85108ade",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-06T01:51:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4cdbac10_a3df9423",
+      "range": {
+        "startLine": 319,
+        "startChar": 0,
+        "endLine": 319,
+        "endChar": 1
+      },
+      "revId": "9c696a1359f744b44cb773c44ba0c9d2b97378e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "2c6972c3_42ed788c",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-06T01:51:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e67b825_c27e91a3",
+      "range": {
+        "startLine": 320,
+        "startChar": 0,
+        "endLine": 320,
+        "endChar": 52
+      },
+      "revId": "9c696a1359f744b44cb773c44ba0c9d2b97378e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25f1d285_c003a6d5",
         "filename": "components/multidevice/service/device_sync_impl.cc",
         "patchSetId": 10
@@ -137,6 +257,30 @@
       "revId": "9c696a1359f744b44cb773c44ba0c9d2b97378e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efc527f0_fadc7704",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-06T01:51:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25f1d285_c003a6d5",
+      "range": {
+        "startLine": 325,
+        "startChar": 2,
+        "endLine": 325,
+        "endChar": 3
+      },
+      "revId": "9c696a1359f744b44cb773c44ba0c9d2b97378e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "04c79b41_50a7ddd5",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-06T01:51:28Z",
+      "side": 1,
+      "message": "Done - I am using \nGetPrimaryAccountWhenAvailable() in  https://cs.chromium.org/chromium/src/services/identity/public/interfaces/identity_manager.mojom?dr\u003dCSs, which doesn\u0027t have AccountInfo as an optional, so I don\u0027t believe this necessary.  \nInitially, I was using GetPrimaryAccountInfo(), which has AccountInfo as an Optional value.",
+      "parentUuid": "0dcb81bb_48b17b45",
+      "range": {
+        "startLine": 338,
+        "startChar": 0,
+        "endLine": 338,
+        "endChar": 43
+      },
+      "revId": "9c696a1359f744b44cb773c44ba0c9d2b97378e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9bb54fc2_08a411d5",
         "filename": "components/multidevice/service/device_sync_impl.cc",
         "patchSetId": 10
@@ -183,6 +351,30 @@
       "revId": "9c696a1359f744b44cb773c44ba0c9d2b97378e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0fb459c_9bc834cf",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-06T01:51:28Z",
+      "side": 1,
+      "message": "Ok, I moved remote_device_provider_ initialization to OnPrimaryAccountAvailable() if GetEnrollmentManager()-\u003eIsEnrollmentValid().  If IsEnrollmentValid() is false, we have to wait until the first enrollment is complete in order to access the GetUserPrivateKey() to properly initialize the RemoteDeviceProvider",
+      "parentUuid": "9bb54fc2_08a411d5",
+      "range": {
+        "startLine": 343,
+        "startChar": 0,
+        "endLine": 343,
+        "endChar": 78
+      },
+      "revId": "9c696a1359f744b44cb773c44ba0c9d2b97378e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
