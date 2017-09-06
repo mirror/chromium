@@ -94,4 +94,13 @@ void CrashHandler::InitializeUploader() {
                                            UploadCrashToStaging());
 }
 
+// static
+void CrashHandler::UploadDumps(std::string crash_dump_path) {
+  JNIEnv* env = base::android::AttachCurrentThread();
+  base::android::ScopedJavaLocalRef<jstring> crash_dump_path_java =
+      base::android::ConvertUTF8ToJavaString(env, crash_dump_path);
+  Java_CastCrashHandler_initializeUploader(env, crash_dump_path_java,
+                                           UploadCrashToStaging());
+}
+
 }  // namespace chromecast
