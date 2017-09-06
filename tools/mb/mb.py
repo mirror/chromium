@@ -1084,6 +1084,7 @@ class MetaBuildWrapper(object):
     isolate_map = self.ReadIsolateMap()
 
     android = 'target_os="android"' in vals['gn_args']
+    fuchsia = 'target_os="fuchsia"' in vals['gn_args']
 
     # This should be true if tests with type='windowed_test_launcher' are
     # expected to run using xvfb. For example, Linux Desktop, X11 CrOS and
@@ -1092,7 +1093,7 @@ class MetaBuildWrapper(object):
     # and both can run under Xvfb.
     # TODO(tonikitoo,msisov,fwang): Find a way to run tests for the Wayland
     # backend.
-    use_xvfb = self.platform == 'linux2' and not android
+    use_xvfb = self.platform == 'linux2' and not android and not fuchsia
 
     asan = 'is_asan=true' in vals['gn_args']
     msan = 'is_msan=true' in vals['gn_args']
@@ -1119,6 +1120,8 @@ class MetaBuildWrapper(object):
           '--logdog-bin-cmd', '../../bin/logdog_butler',
           '--logcat-output-file', '${ISOLATED_OUTDIR}/logcats',
           '--store-tombstones']
+    if fuchsia and test_type != 'script':
+      cmdline = [os.path.join('bin', 'run_%s' % target)]
     elif use_xvfb and test_type == 'windowed_test_launcher':
       extra_files = [
           '../../testing/test_env.py',
