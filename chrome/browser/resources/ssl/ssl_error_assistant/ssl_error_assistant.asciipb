@@ -157,6 +157,13 @@ mitm_software {
   issuer_organization_regex: "avast! Web/Mail Shield"
 }
 
+# Certificate used by testing domain mitm-software.badssl.com.
+mitm_software {
+  name: "BadSSL Antivirus",
+  issuer_common_name_regex: "BadSSL MITM Software Test",
+  issuer_organization_regex: "BadSSL"
+}
+
 mitm_software {
   name: "Bitdefender Antivirus",
   issuer_common_name_regex: "Bitdefender Personal CA.Net-Defender",
