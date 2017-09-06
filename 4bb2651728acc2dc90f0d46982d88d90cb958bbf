@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2ec55f3a_2efb09fe",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2397,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-06T20:39:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbf23fda_0eb3802a",
+      "range": {
+        "startLine": 2397,
+        "startChar": 32,
+        "endLine": 2397,
+        "endChar": 0
+      },
+      "revId": "4bb2651728acc2dc90f0d46982d88d90cb958bbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73f94cd2_75ef434a",
         "filename": "third_party/WebKit/Source/core/layout/LayoutObject.cpp",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-06T20:26:02Z",
       "side": 1,
       "message": "Does it make sense to assign new_container_whitelisted_touch_action here?",
+      "range": {
+        "startLine": 2426,
+        "startChar": 4,
+        "endLine": 2426,
+        "endChar": 22
+      },
+      "revId": "4bb2651728acc2dc90f0d46982d88d90cb958bbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07f875d7_758be818",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2426,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-06T20:39:15Z",
+      "side": 1,
+      "message": "Yes, I think that makes it more readable, moved from initialization to this line. If new_container_rect is empty it now means we haven\u0027t set new_container_whitelisted_touch_action and will get set here (not sure if all tooling can tell that it must always get set before it\u0027s used but we\u0027ll see).",
+      "parentUuid": "73f94cd2_75ef434a",
       "range": {
         "startLine": 2426,
         "startChar": 4,
