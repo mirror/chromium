@@ -52,6 +52,24 @@
       "revId": "1155593af7ff0c95336942c0852020ce6699d7ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27457238_0384f7d8",
+        "filename": "cc/layers/layer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-09-06T17:49:14Z",
+      "side": 1,
+      "message": "I think Layer::SetMaskLayer is inconsistent with PictureLayer::SetLayerMaskType because Layer::SetMaskLayer may be the first time that a layer is set as a mask layer, so it always sets the type, even if transitioning to that type is not a valid state change.  It could probably use a comment that says something like this to avoid confusion that SetLayerMaskType will clobber the mask type.",
+      "parentUuid": "a541c9ff_84795a0a",
+      "revId": "1155593af7ff0c95336942c0852020ce6699d7ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
