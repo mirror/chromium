@@ -1018,6 +1018,11 @@
       status: "experimental",
     },
     {
+      name: "StopLoadingInBackgroundAndroid",
+      status: "test",
+    },
+
+    {
       name: "Suborigins",
       status: "experimental",
     },

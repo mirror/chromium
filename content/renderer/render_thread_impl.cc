@@ -1278,6 +1278,11 @@ void RenderThreadImpl::InitializeWebKit(
           ->renderer()
           ->AllowStoppingTimersWhenProcessBackgrounded());
 
+  renderer_scheduler_->SetLoadingQueueStoppingWhenBackgroundedEnabled(
+      GetContentClient()
+          ->renderer()
+          ->AllowStoppingLoadingWhenProcessBackgrounded());
+
   SkGraphics::SetResourceCacheSingleAllocationByteLimit(
       kImageCacheSingleAllocationByteLimit);
 

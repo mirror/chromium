@@ -186,6 +186,8 @@ RendererSchedulerImpl::MainThreadOnly::MainThreadOnly(
       renderer_paused(false),
       timer_queue_stopping_when_backgrounded_enabled(false),
       timer_queue_stopped_when_backgrounded(false),
+      loading_queue_stopping_when_backgrounded_enabled(false),
+      loading_queue_stopped_when_backgrounded(false),
       was_shutdown(false),
       loading_tasks_seem_expensive(false),
       timer_tasks_seem_expensive(false),
@@ -993,16 +995,18 @@ void RendererSchedulerImpl::UpdatePolicyLocked(UpdateType update_type) {
                          &new_policy_duration);
   }
 
-  bool timer_queue_newly_stopped = false;
+  bool timer_queue_newly_stopped =
+      !main_thread_only().timer_queue_stopped_when_backgrounded;
+  bool loading_queue_newly_stopped =
+      !main_thread_only().loading_queue_stopped_when_backgrounded;
   if (main_thread_only().renderer_backgrounded &&
       main_thread_only().timer_queue_stopping_when_backgrounded_enabled) {
+    // Stop timer tasks in background
     base::TimeTicks stop_timers_at =
         main_thread_only().background_status_changed_at +
         base::TimeDelta::FromMilliseconds(
             kStopTimersWhenBackgroundedDelayMillis);
 
-    timer_queue_newly_stopped =
-        !main_thread_only().timer_queue_stopped_when_backgrounded;
     main_thread_only().timer_queue_stopped_when_backgrounded =
         now >= stop_timers_at;
     timer_queue_newly_stopped &=
@@ -1012,6 +1016,25 @@ void RendererSchedulerImpl::UpdatePolicyLocked(UpdateType update_type) {
       UpdatePolicyDuration(now, stop_timers_at, &new_policy_duration);
   } else {
     main_thread_only().timer_queue_stopped_when_backgrounded = false;
+  }
+
+  if (RuntimeEnabledFeatures::StopLoadingInBackgroundAndroidEnabled() &&
+      main_thread_only().renderer_backgrounded &&
+      main_thread_only().loading_queue_stopping_when_backgrounded_enabled) {
+    // Stop loading tasks in background
+    base::TimeTicks stop_loading_at =
+        main_thread_only().background_status_changed_at +
+        base::TimeDelta::FromMilliseconds(
+            kStopLoadingWhenBackgroundedDelayMillis);
+    main_thread_only().loading_queue_stopped_when_backgrounded =
+        now >= stop_loading_at;
+    loading_queue_newly_stopped &=
+        main_thread_only().loading_queue_stopped_when_backgrounded;
+
+    if (!main_thread_only().loading_queue_stopped_when_backgrounded)
+      UpdatePolicyDuration(now, stop_loading_at, &new_policy_duration);
+  } else {
+    main_thread_only().loading_queue_stopped_when_backgrounded = false;
   }
 
   if (new_policy_duration > base::TimeDelta()) {
@@ -1154,6 +1177,9 @@ void RendererSchedulerImpl::UpdatePolicyLocked(UpdateType update_type) {
   if (main_thread_only().timer_queue_stopped_when_backgrounded)
     new_policy.timer_queue_policy().is_stopped = true;
 
+  if (main_thread_only().loading_queue_stopped_when_backgrounded)
+    new_policy.loading_queue_policy().is_stopped = true;
+
   if (main_thread_only().renderer_paused) {
     new_policy.loading_queue_policy().is_paused = true;
     new_policy.timer_queue_policy().is_paused = true;
@@ -1227,7 +1253,7 @@ void RendererSchedulerImpl::UpdatePolicyLocked(UpdateType update_type) {
   DCHECK(compositor_task_queue_->IsQueueEnabled());
   main_thread_only().current_policy = new_policy;
 
-  if (timer_queue_newly_stopped)
+  if (timer_queue_newly_stopped || loading_queue_newly_stopped)
     Platform::Current()->RequestPurgeMemory();
 }
 
@@ -1437,6 +1463,12 @@ void RendererSchedulerImpl::SetTimerQueueStoppingWhenBackgroundedEnabled(
   main_thread_only().timer_queue_stopping_when_backgrounded_enabled = enabled;
 }
 
+void RendererSchedulerImpl::SetLoadingQueueStoppingWhenBackgroundedEnabled(
+    bool enabled) {
+  // Note that this will only take effect for the next backgrounded signal.
+  main_thread_only().loading_queue_stopping_when_backgrounded_enabled = enabled;
+}
+
 std::unique_ptr<base::trace_event::ConvertableToTraceFormat>
 RendererSchedulerImpl::AsValue(base::TimeTicks optional_now) const {
   base::AutoLock lock(any_thread_lock_);
@@ -1516,6 +1548,8 @@ RendererSchedulerImpl::AsValueLocked(base::TimeTicks optional_now) const {
                     main_thread_only().renderer_backgrounded);
   state->SetBoolean("timer_queue_stopped_when_backgrounded",
                     main_thread_only().timer_queue_stopped_when_backgrounded);
+  state->SetBoolean("loading_queue_stopped_when_backgrounded",
+                    main_thread_only().loading_queue_stopped_when_backgrounded);
   state->SetInteger("timer_queue_pause_count",
                     main_thread_only().timer_queue_pause_count);
   state->SetDouble("now", (optional_now - base::TimeTicks()).InMillisecondsF());
@@ -1863,7 +1897,8 @@ void RendererSchedulerImpl::OnTriedToExecuteBlockedTask() {
       main_thread_only().longest_jank_free_task_duration <
           base::TimeDelta::FromMilliseconds(kRailsResponseTimeMillis) ||
       main_thread_only().timer_queue_pause_count ||
-      main_thread_only().timer_queue_stopped_when_backgrounded) {
+      main_thread_only().timer_queue_stopped_when_backgrounded ||
+      main_thread_only().loading_queue_stopped_when_backgrounded) {
     return;
   }
   if (!main_thread_only().timer_tasks_seem_expensive &&

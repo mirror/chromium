@@ -1204,6 +1204,15 @@ bool ChromeContentRendererClient::AllowStoppingTimersWhenProcessBackgrounded() {
 #endif
 }
 
+bool ChromeContentRendererClient::
+    AllowStoppingLoadingWhenProcessBackgrounded() {
+#if defined(OS_ANDROID)
+  return true;
+#else
+  return false;
+#endif
+}
+
 bool ChromeContentRendererClient::AllowPopup() {
 #if BUILDFLAG(ENABLE_EXTENSIONS)
   return ChromeExtensionsRendererClient::GetInstance()->AllowPopup();

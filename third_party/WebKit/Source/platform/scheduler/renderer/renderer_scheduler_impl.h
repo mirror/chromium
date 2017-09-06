@@ -122,6 +122,7 @@ class PLATFORM_EXPORT RendererSchedulerImpl
   void VirtualTimePaused() override;
   void VirtualTimeResumed() override;
   void SetTimerQueueStoppingWhenBackgroundedEnabled(bool enabled) override;
+  void SetLoadingQueueStoppingWhenBackgroundedEnabled(bool enabled) override;
   void SetTopLevelBlameContext(
       base::trace_event::BlameContext* blame_context) override;
   void SetRAILModeObserver(RAILModeObserver* observer) override;
@@ -434,6 +435,11 @@ class PLATFORM_EXPORT RendererSchedulerImpl
   // of shared timers is enabled.
   static const int kStopTimersWhenBackgroundedDelayMillis = 5 * 60 * 1000;
 
+  // The amount of time to wait before suspending loading tasks after the
+  // renderer has been backgrounded. This is used only if background suspension
+  // of loading tasks is enabled.
+  static const int kStopLoadingWhenBackgroundedDelayMillis = 5 * 60 * 1000;
+
   // The time we should stay in a priority-escalated mode after a call to
   // DidAnimateForInputOnCompositorThread().
   static const int kFlingEscalationLimitMillis = 100;
@@ -572,6 +578,8 @@ class PLATFORM_EXPORT RendererSchedulerImpl
     bool renderer_paused;
     bool timer_queue_stopping_when_backgrounded_enabled;
     bool timer_queue_stopped_when_backgrounded;
+    bool loading_queue_stopping_when_backgrounded_enabled;
+    bool loading_queue_stopped_when_backgrounded;
     bool was_shutdown;
     bool loading_tasks_seem_expensive;
     bool timer_tasks_seem_expensive;

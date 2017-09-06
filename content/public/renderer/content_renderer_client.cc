@@ -105,6 +105,10 @@ bool ContentRendererClient::AllowStoppingTimersWhenProcessBackgrounded() {
   return false;
 }
 
+bool ContentRendererClient::AllowStoppingLoadingWhenProcessBackgrounded() {
+  return false;
+}
+
 bool ContentRendererClient::AllowPopup() {
   return false;
 }
