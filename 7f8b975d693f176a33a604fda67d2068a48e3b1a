@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de285dbc_79aa6c0a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-06T22:48:31Z",
+      "side": 1,
+      "message": "nit: s/ARC++/ARC/\n\nyou might need to edit this from Gerrit UI.",
+      "range": {
+        "startLine": 7,
+        "startChar": 26,
+        "endLine": 7,
+        "endChar": 31
+      },
+      "revId": "7f8b975d693f176a33a604fda67d2068a48e3b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
