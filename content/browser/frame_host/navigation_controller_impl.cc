@@ -1194,6 +1194,7 @@ void NavigationControllerImpl::RendererDidNavigateToNewPage(
     new_entry->GetSSL() = handle->ssl_status();
 
     if (new_entry->GetURL().SchemeIs(url::kHttpsScheme) && !rfh->GetParent()) {
+        CHECK(!!new_entry->GetSSL().certificate);
       UMA_HISTOGRAM_BOOLEAN(
           "Navigation.SecureSchemeHasSSLStatus.NewPagePendingEntryMatches",
           !!new_entry->GetSSL().certificate);
