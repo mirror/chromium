@@ -14,6 +14,7 @@
 #include "ash/wm/wm_event.h"
 #include "ash/wm/workspace/phantom_window_controller.h"
 #include "ui/aura/window.h"
+#include "ui/display/screen.h"
 #include "ui/wm/core/coordinate_conversion.h"
 
 namespace ash {
@@ -66,7 +67,11 @@ void OverviewWindowDragController::Drag(const gfx::Point& location_in_screen) {
     UpdatePhantomWindowAndWindowGrid(location_in_screen);
 }
 
-void OverviewWindowDragController::CompleteDrag() {
+void OverviewWindowDragController::CompleteDrag(
+    const gfx::Point& location_in_screen) {
+  // Update window grid bounds and |snap_position_| in case the screen
+  // orientation was changed.
+  UpdatePhantomWindowAndWindowGrid(location_in_screen);
   phantom_window_controller_.reset();
 
   if (!did_move_) {
@@ -78,9 +83,8 @@ void OverviewWindowDragController::CompleteDrag() {
     if (split_state == SplitViewController::NO_SNAP) {
       window_selector_->SelectWindow(item_);
     } else {
-      SnapWindow(split_state == SplitViewController::LEFT_SNAPPED
-                     ? SplitViewController::RIGHT
-                     : SplitViewController::LEFT);
+      SnapWindow(split_view_controller_->GetAvailableSnapPositionFromSnapState(
+          split_state));
     }
   } else {
     did_move_ = false;
@@ -106,9 +110,13 @@ void OverviewWindowDragController::UpdatePhantomWindowAndWindowGrid(
   // dragged window can be snapped if dropped.
   if (split_view_controller_->state() == SplitViewController::NO_SNAP &&
       snap_position_ != last_snap_position) {
+    const gfx::Rect grid_bounds =
+        split_view_controller_->GetSnappedWindowBoundsInScreen(
+            item_->GetWindow(),
+            split_view_controller_->GetOppositeSnapPosition(snap_position_));
     // Do not reposition the item that is currently being dragged.
-    window_selector_->SetBoundsForWindowGridsInScreenIgnoringWindow(
-        GetGridBounds(snap_position_), item_);
+    window_selector_->SetBoundsForWindowGridsInScreenIgnoringWindow(grid_bounds,
+                                                                    item_);
   }
 
   if (snap_position_ == SplitViewController::NONE ||
@@ -140,35 +148,31 @@ void OverviewWindowDragController::UpdatePhantomWindowAndWindowGrid(
 
 SplitViewController::SnapPosition OverviewWindowDragController::GetSnapPosition(
     const gfx::Point& location_in_screen) const {
+  const display::Display::Rotation rotation =
+      display::Screen::GetScreen()
+          ->GetDisplayNearestWindow(item_->GetWindow())
+          .rotation();
+  const bool is_landscape = (rotation == display::Display::ROTATE_0 ||
+                             rotation == display::Display::ROTATE_180);
   gfx::Rect area(
       ScreenUtil::GetDisplayWorkAreaBoundsInParent(item_->GetWindow()));
   ::wm::ConvertRectToScreen(item_->GetWindow()->GetRootWindow(), &area);
-  area.Inset(kScreenEdgeInsetForDrag, 0);
 
-  if (location_in_screen.x() <= area.x())
-    return SplitViewController::LEFT;
-  if (location_in_screen.x() >= area.right() - 1)
-    return SplitViewController::RIGHT;
-  return SplitViewController::NONE;
-}
-
-gfx::Rect OverviewWindowDragController::GetGridBounds(
-    SplitViewController::SnapPosition snap_position) {
-  aura::Window* pending_snapped_window = item_->GetWindow();
-  switch (snap_position) {
-    case SplitViewController::NONE:
-      return gfx::Rect(split_view_controller_->GetDisplayWorkAreaBoundsInParent(
-          pending_snapped_window));
-    case SplitViewController::LEFT:
-      return split_view_controller_->GetSnappedWindowBoundsInScreen(
-          pending_snapped_window, SplitViewController::RIGHT);
-    case SplitViewController::RIGHT:
-      return split_view_controller_->GetSnappedWindowBoundsInScreen(
-          pending_snapped_window, SplitViewController::LEFT);
+  if (is_landscape) {
+    area.Inset(kScreenEdgeInsetForDrag, 0);
+    if (location_in_screen.x() <= area.x())
+      return SplitViewController::LEFT;
+    if (location_in_screen.x() >= area.right() - 1)
+      return SplitViewController::RIGHT;
+    return SplitViewController::NONE;
+  } else {
+    area.Inset(0, kScreenEdgeInsetForDrag);
+    if (location_in_screen.y() <= area.y())
+      return SplitViewController::TOP;
+    if (location_in_screen.y() >= area.bottom() - 1)
+      return SplitViewController::BOTTOM;
+    return SplitViewController::NONE;
   }
-
-  NOTREACHED();
-  return gfx::Rect();
 }
 
 void OverviewWindowDragController::SnapWindow(

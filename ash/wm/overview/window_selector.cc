@@ -146,13 +146,11 @@ gfx::Rect GetGridBoundsInScreen(aura::Window* root_window) {
   SplitViewController* split_view_controller =
       Shell::Get()->split_view_controller();
   if (split_view_controller->IsSplitViewModeActive()) {
-    SplitViewController::SnapPosition oppsite_position =
-        (split_view_controller->default_snap_position() ==
-         SplitViewController::LEFT)
-            ? SplitViewController::RIGHT
-            : SplitViewController::LEFT;
+    SplitViewController::SnapPosition default_snap_position =
+        split_view_controller->default_snap_position();
     return split_view_controller->GetSnappedWindowBoundsInScreen(
-        root_window, oppsite_position);
+        root_window,
+        split_view_controller->GetOppositeSnapPosition(default_snap_position));
   } else {
     return split_view_controller->GetDisplayWorkAreaBoundsInScreen(root_window);
   }
@@ -527,10 +525,11 @@ void WindowSelector::Drag(WindowSelectorItem* item,
   window_drag_controller_->Drag(location_in_screen);
 }
 
-void WindowSelector::CompleteDrag(WindowSelectorItem* item) {
+void WindowSelector::CompleteDrag(WindowSelectorItem* item,
+                                  const gfx::Point& location_in_screen) {
   DCHECK(window_drag_controller_.get());
   DCHECK_EQ(item, window_drag_controller_->item());
-  window_drag_controller_->CompleteDrag();
+  window_drag_controller_->CompleteDrag(location_in_screen);
 }
 
 void WindowSelector::PositionWindows(bool animate) {
@@ -743,6 +742,16 @@ void WindowSelector::OnSplitViewStateChanged(
     // closed or minimized / fullscreened / maximized), also end overview mode
     // if overview mode is active.
     CancelSelection();
+  } else {
+    // Adjust the window grids bounds.
+    SplitViewController* split_view_controller =
+        Shell::Get()->split_view_controller();
+    const gfx::Rect grid_bounds =
+        split_view_controller->GetSnappedWindowBoundsInScreen(
+            split_view_controller->GetDefaultSnappedWindow(),
+            split_view_controller->GetAvailableSnapPositionFromSnapState(
+                state));
+    SetBoundsForWindowGridsInScreen(grid_bounds);
   }
 }
 

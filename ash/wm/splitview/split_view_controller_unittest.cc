@@ -318,6 +318,115 @@ TEST_F(SplitViewControllerTest, DisplayConfigurationChangeTest) {
             new_bounds_window1.x() + new_bounds_window1.width());
   EXPECT_EQ(new_bounds_window2.x(),
             new_bounds_divider.x() + new_bounds_divider.width());
+
+  // Test the screen rotation functionalities.
+  const display::Display& display =
+      display::Screen::GetScreen()->GetDisplayNearestWindow(window1.get());
+  Shell::Get()->display_manager()->SetDisplayRotation(
+      display.id(), display::Display::ROTATE_90,
+      display::Display::ROTATION_SOURCE_ACTIVE);
+
+  const gfx::Rect rotated_bounds_window1 = window1->GetBoundsInScreen();
+  const gfx::Rect rotated_bounds_window2 = window2->GetBoundsInScreen();
+  const gfx::Rect rotated_bounds_divider =
+      split_view_divider()->GetDividerBoundsInScreen(false /* is_dragging */);
+
+  EXPECT_FALSE(new_bounds_window1 == rotated_bounds_window1);
+  EXPECT_FALSE(new_bounds_window2 == rotated_bounds_window2);
+  EXPECT_FALSE(new_bounds_divider == rotated_bounds_divider);
+
+  // Test that |window1|, divider, |window2| are now aligned vertically.
+  EXPECT_EQ(rotated_bounds_divider.y(),
+            rotated_bounds_window1.y() + rotated_bounds_window1.height());
+  EXPECT_EQ(rotated_bounds_window2.y(),
+            rotated_bounds_divider.y() + rotated_bounds_divider.height());
+}
+
+// Tests functionalities related to TOP/BOTTOM_SNAPPED.
+TEST_F(SplitViewControllerTest, TopBottomSnappedStateTest) {
+  UpdateDisplay("407x400");
+  const gfx::Rect bounds(0, 0, 200, 200);
+  std::unique_ptr<aura::Window> window1(CreateWindow(bounds));
+  const display::Display& display =
+      display::Screen::GetScreen()->GetDisplayNearestWindow(window1.get());
+
+  split_view_controller()->SnapWindow(window1.get(), SplitViewController::LEFT);
+  EXPECT_EQ(split_view_controller()->state(),
+            SplitViewController::LEFT_SNAPPED);
+  EXPECT_EQ(split_view_controller()->default_snap_position(),
+            SplitViewController::LEFT);
+
+  // Rotate the screen, and test the snapped state is updated correctly.
+  Shell::Get()->display_manager()->SetDisplayRotation(
+      display.id(), display::Display::ROTATE_90,
+      display::Display::ROTATION_SOURCE_ACTIVE);
+  EXPECT_EQ(split_view_controller()->state(), SplitViewController::TOP_SNAPPED);
+  EXPECT_EQ(split_view_controller()->default_snap_position(),
+            SplitViewController::TOP);
+
+  Shell::Get()->display_manager()->SetDisplayRotation(
+      display.id(), display::Display::ROTATE_180,
+      display::Display::ROTATION_SOURCE_ACTIVE);
+  EXPECT_EQ(split_view_controller()->state(),
+            SplitViewController::LEFT_SNAPPED);
+  EXPECT_EQ(split_view_controller()->default_snap_position(),
+            SplitViewController::LEFT);
+
+  Shell::Get()->display_manager()->SetDisplayRotation(
+      display.id(), display::Display::ROTATE_270,
+      display::Display::ROTATION_SOURCE_ACTIVE);
+  EXPECT_EQ(split_view_controller()->state(), SplitViewController::TOP_SNAPPED);
+  EXPECT_EQ(split_view_controller()->default_snap_position(),
+            SplitViewController::TOP);
+
+  Shell::Get()->display_manager()->SetDisplayRotation(
+      display.id(), display::Display::ROTATE_0,
+      display::Display::ROTATION_SOURCE_ACTIVE);
+  EXPECT_EQ(split_view_controller()->state(),
+            SplitViewController::LEFT_SNAPPED);
+  EXPECT_EQ(split_view_controller()->default_snap_position(),
+            SplitViewController::LEFT);
+
+  // Now snap the window to right.
+  split_view_controller()->SnapWindow(window1.get(),
+                                      SplitViewController::RIGHT);
+  EXPECT_EQ(split_view_controller()->state(),
+            SplitViewController::RIGHT_SNAPPED);
+  EXPECT_EQ(split_view_controller()->default_snap_position(),
+            SplitViewController::RIGHT);
+
+  // Rotate the screen, and test the snapped state is updated correctly.
+  Shell::Get()->display_manager()->SetDisplayRotation(
+      display.id(), display::Display::ROTATE_90,
+      display::Display::ROTATION_SOURCE_ACTIVE);
+  EXPECT_EQ(split_view_controller()->state(),
+            SplitViewController::BOTTOM_SNAPPED);
+  EXPECT_EQ(split_view_controller()->default_snap_position(),
+            SplitViewController::BOTTOM);
+
+  Shell::Get()->display_manager()->SetDisplayRotation(
+      display.id(), display::Display::ROTATE_180,
+      display::Display::ROTATION_SOURCE_ACTIVE);
+  EXPECT_EQ(split_view_controller()->state(),
+            SplitViewController::RIGHT_SNAPPED);
+  EXPECT_EQ(split_view_controller()->default_snap_position(),
+            SplitViewController::RIGHT);
+
+  Shell::Get()->display_manager()->SetDisplayRotation(
+      display.id(), display::Display::ROTATE_270,
+      display::Display::ROTATION_SOURCE_ACTIVE);
+  EXPECT_EQ(split_view_controller()->state(),
+            SplitViewController::BOTTOM_SNAPPED);
+  EXPECT_EQ(split_view_controller()->default_snap_position(),
+            SplitViewController::BOTTOM);
+
+  Shell::Get()->display_manager()->SetDisplayRotation(
+      display.id(), display::Display::ROTATE_0,
+      display::Display::ROTATION_SOURCE_ACTIVE);
+  EXPECT_EQ(split_view_controller()->state(),
+            SplitViewController::RIGHT_SNAPPED);
+  EXPECT_EQ(split_view_controller()->default_snap_position(),
+            SplitViewController::RIGHT);
 }
 
 }  // namespace ash
