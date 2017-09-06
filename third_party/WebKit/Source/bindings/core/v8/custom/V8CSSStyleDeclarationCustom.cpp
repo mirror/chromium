@@ -35,7 +35,6 @@
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "core/CSSPropertyNames.h"
 #include "core/css/CSSPrimitiveValue.h"
-#include "core/css/CSSPropertyMetadata.h"
 #include "core/css/CSSStyleDeclaration.h"
 #include "core/css/CSSValue.h"
 #include "core/css/parser/CSSParser.h"
