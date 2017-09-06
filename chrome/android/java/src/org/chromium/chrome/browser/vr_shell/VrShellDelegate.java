@@ -229,6 +229,10 @@ public class VrShellDelegate
                 // Ignore this. This means our receiver was already unregistered somehow.
             }
         }
+
+        WeakReference<ChromeActivity> targetActivity() {
+            return mTargetActivity;
+        }
     }
 
     /**
@@ -522,7 +526,13 @@ public class VrShellDelegate
     public void onActivityStateChange(Activity activity, int newState) {
         switch (newState) {
             case ActivityState.DESTROYED:
-                if (activity == mActivity) destroy();
+                if (activity == mActivity) {
+                    destroy();
+                    if (sVrBroadcastReceiver == null) break;
+                    if (sVrBroadcastReceiver.targetActivity().get() != activity) break;
+                    sVrBroadcastReceiver.unregister();
+                    sVrBroadcastReceiver = null;
+                }
                 break;
             case ActivityState.PAUSED:
                 if (activity == mActivity) onPause();
@@ -752,7 +762,7 @@ public class VrShellDelegate
 
     private static void removeBlackOverlayView(ChromeActivity activity) {
         if (!sAddedBlackOverlayView) return;
-        View v = (View) activity.getWindow().findViewById(R.id.vr_overlay_view);
+        View v = activity.getWindow().findViewById(R.id.vr_overlay_view);
         assert v != null;
         UiUtils.removeViewFromParent(v);
         sAddedBlackOverlayView = false;
