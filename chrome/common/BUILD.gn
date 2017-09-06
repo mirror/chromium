@@ -388,8 +388,6 @@ static_library("common") {
 
   if (is_win || is_mac) {
     sources += [
-      "media_galleries/itunes_library.cc",
-      "media_galleries/itunes_library.h",
       "media_galleries/picasa_types.cc",
       "media_galleries/picasa_types.h",
       "media_galleries/pmp_constants.h",
