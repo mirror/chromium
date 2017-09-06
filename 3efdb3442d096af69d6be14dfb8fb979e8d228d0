@@ -337,6 +337,24 @@
       "revId": "3efdb3442d096af69d6be14dfb8fb979e8d228d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8082a55_8d4d7430",
+        "filename": "components/exo/shell_surface.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-06T11:47:23Z",
+      "side": 1,
+      "message": "Not sure exactly what \"Android to implement window state change\" means but a good process is to just submit updates to the new aura-shell protocol that provide what\u0027s needed and unless they are large they can be discussed and evaluated as part of the review process.\n\n@tomasz, remote-shell configure events is what you\u0027d need to use today but in the future when we move to xdg-shell we can instead use the configure event that is part of that interface.",
+      "parentUuid": "33099d14_f32a89f0",
+      "revId": "3efdb3442d096af69d6be14dfb8fb979e8d228d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
