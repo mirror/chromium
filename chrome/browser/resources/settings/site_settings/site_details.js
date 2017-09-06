@@ -222,10 +222,12 @@ Polymer({
    * @private
    */
   getCategoryList_: function() {
-    return Array.prototype.map.call(
-        this.root.querySelectorAll('site-details-permission'), (element) => {
-          return element.category;
-        });
+    var categoryList = [];
+    this.root.querySelectorAll('site-details-permission').forEach((element) => {
+      if (element.category != '')
+        categoryList.push(element.category);
+    });
+    return categoryList;
   },
 
   /**

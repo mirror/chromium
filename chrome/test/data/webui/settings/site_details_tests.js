@@ -16,6 +16,16 @@ suite('SiteDetails', function() {
    */
   var prefs;
 
+  // Helper to create a mock permission preference.
+  function createAllowPreferenceExceptionForFoo() {
+    return {
+      embeddingOrigin: 'https://foo.com:443',
+      origin: 'https://foo.com:443',
+      setting: settings.ContentSetting.ALLOW,
+      source: settings.SiteSettingSource.PREFERENCE,
+    };
+  }
+
   // Initialize a site-details before each test.
   setup(function() {
     prefs = {
@@ -59,40 +69,17 @@ suite('SiteDetails', function() {
         unsandboxed_plugins: {
           setting: settings.ContentSetting.ASK,
         },
+        // <if expr="chromeos">
+        protectedContent: {
+          setting: settings.ContentSetting.ALLOW,
+        },
+        // </if>
       },
       exceptions: {
-        auto_downloads: [
-          {
-            embeddingOrigin: 'https://foo.com:443',
-            origin: 'https://foo.com:443',
-            setting: settings.ContentSetting.ALLOW,
-            source: settings.SiteSettingSource.PREFERENCE,
-          },
-        ],
-        background_sync: [
-          {
-            embeddingOrigin: 'https://foo.com:443',
-            origin: 'https://foo.com:443',
-            setting: settings.ContentSetting.ALLOW,
-            source: settings.SiteSettingSource.PREFERENCE,
-          },
-        ],
-        camera: [
-          {
-            embeddingOrigin: 'https://foo.com:443',
-            origin: 'https://foo.com:443',
-            setting: settings.ContentSetting.ALLOW,
-            source: settings.SiteSettingSource.PREFERENCE,
-          },
-        ],
-        geolocation: [
-          {
-            embeddingOrigin: 'https://foo.com:443',
-            origin: 'https://foo.com:443',
-            setting: settings.ContentSetting.ALLOW,
-            source: settings.SiteSettingSource.PREFERENCE,
-          },
-        ],
+        auto_downloads: [createAllowPreferenceExceptionForFoo()],
+        background_sync: [createAllowPreferenceExceptionForFoo()],
+        camera: [createAllowPreferenceExceptionForFoo()],
+        geolocation: [createAllowPreferenceExceptionForFoo()],
         images: [
           {
             embeddingOrigin: 'https://foo.com:443',
@@ -101,30 +88,9 @@ suite('SiteDetails', function() {
             source: settings.SiteSettingSource.DEFAULT,
           },
         ],
-        javascript: [
-          {
-            embeddingOrigin: 'https://foo.com:443',
-            origin: 'https://foo.com:443',
-            setting: settings.ContentSetting.ALLOW,
-            source: settings.SiteSettingSource.PREFERENCE,
-          },
-        ],
-        mic: [
-          {
-            embeddingOrigin: 'https://foo.com:443',
-            origin: 'https://foo.com:443',
-            setting: settings.ContentSetting.ALLOW,
-            source: settings.SiteSettingSource.PREFERENCE,
-          },
-        ],
-        midi_devices: [
-          {
-            embeddingOrigin: 'https://foo.com:443',
-            origin: 'https://foo.com:443',
-            setting: settings.ContentSetting.ALLOW,
-            source: settings.SiteSettingSource.PREFERENCE,
-          },
-        ],
+        javascript: [createAllowPreferenceExceptionForFoo()],
+        mic: [createAllowPreferenceExceptionForFoo()],
+        midi_devices: [createAllowPreferenceExceptionForFoo()],
         notifications: [
           {
             embeddingOrigin: 'https://foo.com:443',
@@ -149,22 +115,11 @@ suite('SiteDetails', function() {
             source: settings.SiteSettingSource.DEFAULT,
           },
         ],
-        sound: [
-          {
-            embeddingOrigin: 'https://foo.com:443',
-            origin: 'https://foo.com:443',
-            setting: settings.ContentSetting.ALLOW,
-            source: 'default',
-          },
-        ],
-        unsandboxed_plugins: [
-          {
-            embeddingOrigin: 'https://foo.com:443',
-            origin: 'https://foo.com:443',
-            setting: settings.ContentSetting.ALLOW,
-            source: settings.SiteSettingSource.PREFERENCE,
-          },
-        ],
+        sound: [createAllowPreferenceExceptionForFoo()],
+        unsandboxed_plugins: [createAllowPreferenceExceptionForFoo()],
+        // <if expr="chromeos">
+        protectedContent: [createAllowPreferenceExceptionForFoo()],
+        // </if>
       }
     };
 
@@ -218,6 +173,11 @@ suite('SiteDetails', function() {
         .then(() => {
           testElement.root.querySelectorAll('site-details-permission')
               .forEach((siteDetailsPermission) => {
+                // PROTECTED_CONTENT is only available on ChromeOS, and is an
+                // empty string on other platforms.
+                if (siteDetailsPermission.category == '')
+                  return;
+
                 // Verify settings match the values specified in |prefs|.
                 var expectedSetting = settings.ContentSetting.ALLOW;
                 var expectedSource = settings.SiteSettingSource.PREFERENCE;
