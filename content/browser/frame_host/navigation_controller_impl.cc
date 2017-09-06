@@ -1379,6 +1379,7 @@ void NavigationControllerImpl::RendererDidNavigateToExistingPage(
             "ExistingPageSameDocumentRendererInitiated",
             has_cert);
       } else {
+        CHECK(has_cert);
         UMA_HISTOGRAM_BOOLEAN(
             "Navigation.SecureSchemeHasSSLStatus."
             "ExistingPageDifferentDocumentRendererInitiated",
