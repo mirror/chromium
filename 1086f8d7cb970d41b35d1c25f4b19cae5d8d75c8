@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "037ad254_518cd431",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-06T22:44:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aaa443a9_72971b28",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 1
+      },
+      "revId": "1086f8d7cb970d41b35d1c25f4b19cae5d8d75c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb1124ec_f944d859",
         "filename": "components/multidevice/service/device_sync_impl.cc",
         "patchSetId": 13
@@ -45,6 +69,30 @@
       "revId": "1086f8d7cb970d41b35d1c25f4b19cae5d8d75c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddf19be5_c3e01add",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-06T22:44:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb1124ec_f944d859",
+      "range": {
+        "startLine": 80,
+        "startChar": 7,
+        "endLine": 80,
+        "endChar": 44
+      },
+      "revId": "1086f8d7cb970d41b35d1c25f4b19cae5d8d75c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "3a049dd3_8a0e3c4d",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-06T22:44:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f784cf85_c10dfebe",
+      "range": {
+        "startLine": 229,
+        "startChar": 0,
+        "endLine": 229,
+        "endChar": 72
+      },
+      "revId": "1086f8d7cb970d41b35d1c25f4b19cae5d8d75c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e781aa4d_eb182ff8",
         "filename": "components/multidevice/service/device_sync_impl.cc",
         "patchSetId": 13
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "c9e34110_de145591",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-06T22:44:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e781aa4d_eb182ff8",
+      "range": {
+        "startLine": 281,
+        "startChar": 21,
+        "endLine": 281,
+        "endChar": 31
+      },
+      "revId": "1086f8d7cb970d41b35d1c25f4b19cae5d8d75c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65bb74fe_23078554",
         "filename": "components/multidevice/service/device_sync_impl.cc",
         "patchSetId": 13
@@ -128,6 +224,30 @@
       "writtenOn": "2017-09-06T19:27:50Z",
       "side": 1,
       "message": "Use user_prefs::PrefRegistrySyncable(). Example: https://cs.chromium.org/chromium/src/ash/session/session_controller.cc",
+      "range": {
+        "startLine": 283,
+        "startChar": 0,
+        "endLine": 283,
+        "endChar": 53
+      },
+      "revId": "1086f8d7cb970d41b35d1c25f4b19cae5d8d75c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9959d496_dee5c9a4",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-06T22:44:17Z",
+      "side": 1,
+      "message": "I think I fixed what you meant? (It uses user_prefs::PrefRegistrySyncable already)",
+      "parentUuid": "65bb74fe_23078554",
       "range": {
         "startLine": 283,
         "startChar": 0,
@@ -163,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "d40f2aef_bcdb78dc",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-06T22:44:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1cb19f0_07675dea",
+      "range": {
+        "startLine": 306,
+        "startChar": 2,
+        "endLine": 306,
+        "endChar": 15
+      },
+      "revId": "1086f8d7cb970d41b35d1c25f4b19cae5d8d75c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7500fff3_7b427b32",
         "filename": "components/multidevice/service/device_sync_impl.cc",
         "patchSetId": 13
@@ -183,6 +327,30 @@
       "revId": "1086f8d7cb970d41b35d1c25f4b19cae5d8d75c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c00156e6_91f792cd",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-06T22:44:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7500fff3_7b427b32",
+      "range": {
+        "startLine": 324,
+        "startChar": 21,
+        "endLine": 324,
+        "endChar": 47
+      },
+      "revId": "1086f8d7cb970d41b35d1c25f4b19cae5d8d75c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +377,30 @@
     },
     {
       "key": {
+        "uuid": "b59060d1_57cafffa",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-06T22:44:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4dc86da_ee313780",
+      "range": {
+        "startLine": 357,
+        "startChar": 21,
+        "endLine": 357,
+        "endChar": 35
+      },
+      "revId": "1086f8d7cb970d41b35d1c25f4b19cae5d8d75c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f255d4bf_ac6a2450",
         "filename": "components/multidevice/service/device_sync_impl.cc",
         "patchSetId": 13
@@ -229,6 +421,30 @@
       "revId": "1086f8d7cb970d41b35d1c25f4b19cae5d8d75c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99bd5fdd_4de5b8f3",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-06T22:44:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f255d4bf_ac6a2450",
+      "range": {
+        "startLine": 359,
+        "startChar": 0,
+        "endLine": 359,
+        "endChar": 42
+      },
+      "revId": "1086f8d7cb970d41b35d1c25f4b19cae5d8d75c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
