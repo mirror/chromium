@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99126751_d818bd13",
+        "filename": "third_party/WebKit/Source/core/css/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-09-06T23:03:07Z",
+      "side": 1,
+      "message": "I\u0027d just do split_count \u003d 10 unconditionally. Once we\u0027re splitting, there\u0027s not any good reason to minimize the number of splits. In the past these conditions have kept getting more and more complicated as people find different configurations where more splitting is required.",
+      "revId": "3ccd576de3d0150758567a60808ca30afdba33af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
