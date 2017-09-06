@@ -7,8 +7,20 @@
 #include "base/memory/ptr_util.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "net/proxy/mojo_proxy_resolver_factory_impl.h"
+#include "net/proxy/proxy_resolver_v8_tracing.h"
 
 namespace net {
+
+namespace {
+
+class TestMojoProxyResolverFactoryImpl : public MojoProxyResolverFactoryImpl {
+ public:
+  TestMojoProxyResolverFactoryImpl()
+      : MojoProxyResolverFactoryImpl(
+            std::unique_ptr<service_manager::ServiceContextRef>()) {}
+};
+
+}  // namespace
 
 TestMojoProxyResolverFactory* TestMojoProxyResolverFactory::GetInstance() {
   return base::Singleton<TestMojoProxyResolverFactory>::get();
@@ -25,7 +37,7 @@ TestMojoProxyResolverFactory::CreateResolver(
 }
 
 TestMojoProxyResolverFactory::TestMojoProxyResolverFactory() {
-  mojo::MakeStrongBinding(std::make_unique<MojoProxyResolverFactoryImpl>(),
+  mojo::MakeStrongBinding(std::make_unique<TestMojoProxyResolverFactoryImpl>(),
                           mojo::MakeRequest(&factory_));
 }
 
