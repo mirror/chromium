@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "88e47aef_bd5ca2c0",
+        "filename": "chrome/android/java/src/com/google/android/apps/chrome/vr/VrMain.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-06T17:33:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cc571203_17b768fd",
+      "range": {
+        "startLine": 5,
+        "startChar": 12,
+        "endLine": 5,
+        "endChar": 18
+      },
+      "revId": "6cb65393de59b5423c0515544a2d9f4cb1f75936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06fca776_f3b01b64",
         "filename": "chrome/android/java/src/com/google/android/apps/chrome/vr/VrMain.java",
         "patchSetId": 3
@@ -141,6 +165,54 @@
     },
     {
       "key": {
+        "uuid": "275b89e3_07356778",
+        "filename": "chrome/android/java/src/com/google/android/apps/chrome/vr/VrMain.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-06T17:33:14Z",
+      "side": 1,
+      "message": "Removed the intermediate launcher in the most recent PS and added the exported activity to chrome.browser.vr.",
+      "parentUuid": "89768040_1214250f",
+      "range": {
+        "startLine": 16,
+        "startChar": 13,
+        "endLine": 16,
+        "endChar": 19
+      },
+      "revId": "6cb65393de59b5423c0515544a2d9f4cb1f75936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cc7216c3_fdf04f3a",
+        "filename": "chrome/android/java/src/com/google/android/apps/chrome/vr/VrMain.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-06T17:33:14Z",
+      "side": 1,
+      "message": "Removed the intermediate launcher in the most recent PS",
+      "parentUuid": "06fca776_f3b01b64",
+      "range": {
+        "startLine": 16,
+        "startChar": 20,
+        "endLine": 16,
+        "endChar": 27
+      },
+      "revId": "6cb65393de59b5423c0515544a2d9f4cb1f75936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d23cea1_4bbf1135",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/ChromeLauncherVrActivity.java",
         "patchSetId": 3
@@ -152,6 +224,24 @@
       "writtenOn": "2017-09-05T20:51:28Z",
       "side": 1,
       "message": "The things from ChromeLauncher that should be shared in my opinion are:\n\nsetIntent(IntentUtils.sanitizeIntent(getIntent()));\nIntentHandler.addTimestampToIntent(getIntent());\nrecordIntentMetrics();\n\nThose at least look generic enough, but I\u0027ll need to defer to mariakhomenko@ about the metrics stuff to see if it should be recorded for VR.\n\nIf all of those are valid, I think we should add a static to ChromeLauncherActivity that does something like \"validateIntentForLaunch\" that runs through the necessary bits for stuff skipping the launcher.",
+      "revId": "6cb65393de59b5423c0515544a2d9f4cb1f75936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbe96e7a_1dd42b22",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/ChromeLauncherVrActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-06T17:33:14Z",
+      "side": 1,
+      "message": "Its not clear to me if this is still relevant.\n\nHaving a sanitized intent with a timestamp still seems reasonable, but we\u0027ve already started a CCT VR before that? If we should still have this, where should it go? We can\u0027t override onCreate for CCT VR.\n\nI think we should probably not worry about this?",
+      "parentUuid": "5d23cea1_4bbf1135",
       "revId": "6cb65393de59b5423c0515544a2d9f4cb1f75936",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -178,6 +268,30 @@
       "revId": "6cb65393de59b5423c0515544a2d9f4cb1f75936",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5dec6e5_464df674",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/ChromeLauncherVrActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-06T17:33:14Z",
+      "side": 1,
+      "message": "N/A in latest PS.",
+      "parentUuid": "05735fe3_93fec184",
+      "range": {
+        "startLine": 22,
+        "startChar": 12,
+        "endLine": 22,
+        "endChar": 25
+      },
+      "revId": "6cb65393de59b5423c0515544a2d9f4cb1f75936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -225,6 +339,30 @@
       "revId": "6cb65393de59b5423c0515544a2d9f4cb1f75936",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52f1d617_4a68e609",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/ChromeLauncherVrActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-06T17:33:14Z",
+      "side": 1,
+      "message": "Removed the intermediate launcher in the latest PS.",
+      "parentUuid": "0bd470c2_4f674be9",
+      "range": {
+        "startLine": 37,
+        "startChar": 19,
+        "endLine": 37,
+        "endChar": 31
+      },
+      "revId": "6cb65393de59b5423c0515544a2d9f4cb1f75936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
