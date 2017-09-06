@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e9b6db56_2425daf0",
+        "filename": "components/security_state/core/security_state_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-06T08:57:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04cc74a5_5272c7d2",
+      "range": {
+        "startLine": 628,
+        "startChar": 3,
+        "endLine": 628,
+        "endChar": 7
+      },
+      "revId": "a0f2381313c975c88e4a8c2c5ee172c43dc249ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a2424b8_7faa83ca",
         "filename": "ios/chrome/browser/web/origin_security_checker.h",
         "patchSetId": 25
@@ -45,6 +69,30 @@
       "revId": "a0f2381313c975c88e4a8c2c5ee172c43dc249ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe8396c4_58f55142",
+        "filename": "ios/chrome/browser/web/origin_security_checker.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-06T08:57:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a2424b8_7faa83ca",
+      "range": {
+        "startLine": 14,
+        "startChar": 5,
+        "endLine": 14,
+        "endChar": 29
+      },
+      "revId": "a0f2381313c975c88e4a8c2c5ee172c43dc249ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
