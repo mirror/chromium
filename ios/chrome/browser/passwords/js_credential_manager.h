@@ -12,8 +12,6 @@ namespace web {
 class WebState;
 }
 
-namespace credential_manager {
-
 // Resolves the Promise identified by |promise_id| with either Credential or
 // undefined. |promise_id| is unique number of a pending promise resolver stored
 // in |__gCrWeb.credentialManager|.
@@ -50,7 +48,5 @@ void RejectPromiseWithInvalidStateError(web::WebState* web_state,
 void RejectPromiseWithNotSupportedError(web::WebState* web_state,
                                         int promise_id,
                                         const base::StringPiece16& message);
-
-}  // namespace credential_manager
 
 #endif  // IOS_CHROME_BROWSER_PASSWORDS_JS_CREDENTIAL_MANAGER_H_

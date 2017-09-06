@@ -10,8 +10,6 @@
 #include "ios/web/public/test/web_test_with_web_state.h"
 #include "url/origin.h"
 
-namespace credential_manager {
-
 namespace {
 
 constexpr char kTestIconUrl[] = "https://www.google.com/favicon.ico";
@@ -211,5 +209,3 @@ TEST_F(JsCredentialManagerTest, RejectWithNotSupportedError) {
   EXPECT_NSEQ(@"An error occured while talking to the credential manager.",
               ExecuteJavaScript(@"test_result_message_"));
 }
-
-}  // namespace credential_manager
