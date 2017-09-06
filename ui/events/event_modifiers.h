@@ -2,28 +2,28 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef UI_EVENTS_OZONE_EVDEV_EVENT_MODIFIERS_EVDEV_H_
-#define UI_EVENTS_OZONE_EVDEV_EVENT_MODIFIERS_EVDEV_H_
+#ifndef UI_EVENTS_EVENT_MODIFIERS_H_
+#define UI_EVENTS_EVENT_MODIFIERS_H_
 
 #include "base/macros.h"
-#include "ui/events/ozone/evdev/events_ozone_evdev_export.h"
+#include "ui/events/events_export.h"
 
 namespace ui {
 
 enum {
-  EVDEV_MODIFIER_NONE,
-  EVDEV_MODIFIER_SHIFT,
-  EVDEV_MODIFIER_CONTROL,
-  EVDEV_MODIFIER_ALT,
-  EVDEV_MODIFIER_COMMAND,
-  EVDEV_MODIFIER_ALTGR,
-  EVDEV_MODIFIER_MOD3,
-  EVDEV_MODIFIER_CAPS_LOCK,
-  EVDEV_MODIFIER_LEFT_MOUSE_BUTTON,
-  EVDEV_MODIFIER_MIDDLE_MOUSE_BUTTON,
-  EVDEV_MODIFIER_RIGHT_MOUSE_BUTTON,
-  EVDEV_MODIFIER_BACK_MOUSE_BUTTON,
-  EVDEV_MODIFIER_FORWARD_MOUSE_BUTTON,
+  MODIFIER_NONE,
+  MODIFIER_SHIFT,
+  MODIFIER_CONTROL,
+  MODIFIER_ALT,
+  MODIFIER_COMMAND,
+  MODIFIER_ALTGR,
+  MODIFIER_MOD3,
+  MODIFIER_CAPS_LOCK,
+  MODIFIER_LEFT_MOUSE_BUTTON,
+  MODIFIER_MIDDLE_MOUSE_BUTTON,
+  MODIFIER_RIGHT_MOUSE_BUTTON,
+  MODIFIER_BACK_MOUSE_BUTTON,
+  MODIFIER_FORWARD_MOUSE_BUTTON,
   EVDEV_NUM_MODIFIERS
 };
 
@@ -42,10 +42,10 @@ enum {
 // currently pressed. However some keys toggle a persistent "lock" for the
 // modifier instead, such as CapsLock. If a modifier is "locked" then its state
 // is inverted until it is unlocked.
-class EVENTS_OZONE_EVDEV_EXPORT EventModifiersEvdev {
+class EVENTS_EXPORT EventModifiers {
  public:
-  EventModifiersEvdev();
-  ~EventModifiersEvdev();
+  EventModifiers();
+  ~EventModifiers();
 
   // Record key press or release for regular modifier key (shift, alt, etc).
   void UpdateModifier(unsigned int modifier, bool down);
@@ -78,9 +78,9 @@ class EVENTS_OZONE_EVDEV_EXPORT EventModifiersEvdev {
   // Update modifier_flags_ from modifiers_down_ and modifier_flags_locked_.
   void UpdateFlags(unsigned int modifier);
 
-  DISALLOW_COPY_AND_ASSIGN(EventModifiersEvdev);
+  DISALLOW_COPY_AND_ASSIGN(EventModifiers);
 };
 
-}  // namspace ui
+}  // namespace ui
 
-#endif  // UI_EVENTS_OZONE_EVDEV_EVENT_MODIFIERS_EVDEV_H_
+#endif  // UI_EVENTS_EVENT_MODIFIERS_H_
