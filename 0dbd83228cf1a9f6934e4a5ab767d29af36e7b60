@@ -22,6 +22,30 @@
       "revId": "0dbd83228cf1a9f6934e4a5ab767d29af36e7b60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1167ff8_8459a2f7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorView.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-09-06T00:10:16Z",
+      "side": 1,
+      "message": "Yes it is for convenience - for CompositorViewHolder to pass the size down to native. Unfortunately we don\u0027t have java ViewAndroid or WebContentsView that would be right for view-related stuff. I could have added it to WebContents but didn\u0027t, because I saw many classes come in pair, dividing their roles for handling main content and view-related ones. I can add WebContents.setSize if you think it looks ok.",
+      "parentUuid": "4216859a_aa20fefd",
+      "range": {
+        "startLine": 280,
+        "startChar": 4,
+        "endLine": 283,
+        "endChar": 5
+      },
+      "revId": "0dbd83228cf1a9f6934e4a5ab767d29af36e7b60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
