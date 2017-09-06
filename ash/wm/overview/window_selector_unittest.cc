@@ -336,11 +336,13 @@ class WindowSelectorTest : public AshTestBase {
   }
 
   gfx::Rect GetSplitViewLeftWindowBounds(aura::Window* window) {
-    return split_view_controller()->GetLeftWindowBoundsInScreen(window);
+    return split_view_controller()->GetSnappedWindowBoundsInScreen(
+        window, SplitViewController::LEFT);
   }
 
   gfx::Rect GetSplitViewRightWindowBounds(aura::Window* window) {
-    return split_view_controller()->GetRightWindowBoundsInScreen(window);
+    return split_view_controller()->GetSnappedWindowBoundsInScreen(
+        window, SplitViewController::RIGHT);
   }
 
   gfx::Rect GetGridBounds() {
@@ -1953,7 +1955,7 @@ TEST_F(WindowSelectorTest, DragOverviewWindowToSnap) {
   window_selector()->InitiateDrag(selector_item1, start_location1);
   const gfx::Point end_location1(0, 0);
   window_selector()->Drag(selector_item1, end_location1);
-  window_selector()->CompleteDrag(selector_item1);
+  window_selector()->CompleteDrag(selector_item1, end_location1);
 
   EXPECT_EQ(split_view_controller()->IsSplitViewModeActive(), true);
   EXPECT_EQ(split_view_controller()->state(),
@@ -1969,7 +1971,7 @@ TEST_F(WindowSelectorTest, DragOverviewWindowToSnap) {
   window_selector()->InitiateDrag(selector_item2, start_location2);
   const gfx::Point end_location2(0, 0);
   window_selector()->Drag(selector_item2, end_location2);
-  window_selector()->CompleteDrag(selector_item2);
+  window_selector()->CompleteDrag(selector_item2, end_location2);
 
   EXPECT_EQ(split_view_controller()->state(),
             SplitViewController::LEFT_SNAPPED);
@@ -1986,7 +1988,7 @@ TEST_F(WindowSelectorTest, DragOverviewWindowToSnap) {
       split_view_controller()->GetDisplayWorkAreaBoundsInScreen(window2.get());
   const gfx::Point end_location3(work_area_rect.width(), 0);
   window_selector()->Drag(selector_item3, end_location3);
-  window_selector()->CompleteDrag(selector_item3);
+  window_selector()->CompleteDrag(selector_item3, end_location3);
 
   EXPECT_EQ(split_view_controller()->state(),
             SplitViewController::BOTH_SNAPPED);
@@ -2049,7 +2051,7 @@ TEST_F(WindowSelectorTest, WindowGridSizeWhileDraggingWithSplitView) {
 
   // Snap window1 to the left and initialize dragging for window2.
   window_selector()->Drag(selector_item, left);
-  window_selector()->CompleteDrag(selector_item);
+  window_selector()->CompleteDrag(selector_item, left);
   ASSERT_EQ(SplitViewController::LEFT_SNAPPED,
             split_view_controller()->state());
   ASSERT_EQ(window1.get(), split_view_controller()->left_window());
@@ -2135,7 +2137,7 @@ TEST_F(WindowSelectorTest, EmptyWindowsListExitOverview) {
   window_selector()->InitiateDrag(selector_item1, start_location1);
   const gfx::Point end_location1(0, 0);
   window_selector()->Drag(selector_item1, end_location1);
-  window_selector()->CompleteDrag(selector_item1);
+  window_selector()->CompleteDrag(selector_item1, end_location1);
 
   EXPECT_EQ(split_view_controller()->IsSplitViewModeActive(), true);
   EXPECT_EQ(split_view_controller()->state(),
