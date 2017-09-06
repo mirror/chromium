@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18ae5831_2cc25b4a",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-06T01:39:00Z",
+      "side": 1,
+      "message": "This change doesn\u0027t relate to fix the issue.\nCould you move this part in another CL?\n\nSorry, my comment about this has not been posted correctly...",
+      "revId": "bd79d20f2e16c8db1d54452fe50fda23edd4095d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
