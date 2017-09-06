@@ -299,6 +299,7 @@ void GraphicsLayer::Paint(const IntRect* interest_rect,
             *this, tracking.under_invalidation_record, InterestRect());
       }
     }
+    GetPaintController().ShowDebugData();
   }
 }
 

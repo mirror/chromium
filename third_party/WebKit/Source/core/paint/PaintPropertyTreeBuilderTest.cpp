@@ -390,8 +390,7 @@ TEST_P(PaintPropertyTreeBuilderTest, Transform) {
       HTMLNames::styleAttr,
       "margin-left: 50px; margin-top: 100px; width: 400px; height: 300px;");
   GetDocument().View()->UpdateAllLifecyclePhases();
-  EXPECT_EQ(nullptr,
-            transform->GetLayoutObject()->FirstFragment()->PaintProperties());
+  EXPECT_EQ(nullptr, transform->GetLayoutObject()->FirstFragment());
 
   transform->setAttribute(
       HTMLNames::styleAttr,
@@ -494,8 +493,7 @@ TEST_P(PaintPropertyTreeBuilderTest, WillChangeTransform) {
       HTMLNames::styleAttr,
       "margin-left: 50px; margin-top: 100px; width: 400px; height: 300px;");
   GetDocument().View()->UpdateAllLifecyclePhases();
-  EXPECT_EQ(nullptr,
-            transform->GetLayoutObject()->FirstFragment()->PaintProperties());
+  EXPECT_EQ(nullptr, transform->GetLayoutObject()->FirstFragment());
 
   transform->setAttribute(
       HTMLNames::styleAttr,
@@ -2445,7 +2443,7 @@ TEST_P(PaintPropertyTreeBuilderTest, CachedProperties) {
             a->GetLayoutObject()->FirstFragment()->PaintProperties());
   EXPECT_EQ(a_transform_node, a_properties->Transform());
 
-  EXPECT_EQ(nullptr, b->GetLayoutObject()->FirstFragment()->PaintProperties());
+  EXPECT_EQ(nullptr, b->GetLayoutObject()->FirstFragment());
 
   EXPECT_EQ(c_properties,
             c->GetLayoutObject()->FirstFragment()->PaintProperties());
