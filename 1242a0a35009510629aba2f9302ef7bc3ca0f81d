@@ -175,6 +175,24 @@
       "revId": "1242a0a35009510629aba2f9302ef7bc3ca0f81d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "77d2b6b8_b732bcb2",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXLayoutObject.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 816,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-09-06T04:00:15Z",
+      "side": 1,
+      "message": "Also, regarding whitespace preservation in things like white-space: pre. We use the layout text already, which will compress whitespace if it needs to. We do additional compression in AXObject::GetName(), but only if the role is not statictext/inlinetextbox.",
+      "parentUuid": "331ab5f3_5388d103",
+      "revId": "1242a0a35009510629aba2f9302ef7bc3ca0f81d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
