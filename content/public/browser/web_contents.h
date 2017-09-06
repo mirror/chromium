@@ -104,6 +104,10 @@ class WebContents : public PageNavigator,
                     public base::SupportsUserData {
  public:
   struct CONTENT_EXPORT CreateParams {
+    // Declared as an enum for extensibility, this enum records if a given
+    // WebContents is considered a popup at creation time.
+    enum class PopupInfo : int { IS_NOT_POPUP, IS_POPUP };
+
     explicit CreateParams(BrowserContext* context);
     CreateParams(const CreateParams& other);
     ~CreateParams();
@@ -171,6 +175,9 @@ class WebContents : public PageNavigator,
     // Note that the pre-created renderer process may not be used if the first
     // navigation requires a dedicated or privileged process, such as a WebUI.
     bool initialize_renderer;
+
+    // This WebContents popup classification.
+    PopupInfo popup_info;
   };
 
   // Creates a new WebContents.

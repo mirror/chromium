@@ -940,6 +940,7 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
                            DialogsFromJavaScriptEndFullscreen);
   FRIEND_TEST_ALL_PREFIXES(WebContentsImplBrowserTest,
                            PopupsFromJavaScriptEndFullscreen);
+  FRIEND_TEST_ALL_PREFIXES(WebContentsImplBrowserTest, WindowOpen_SetsPopupBit);
   FRIEND_TEST_ALL_PREFIXES(RenderFrameHostImplBrowserTest,
                            IframeBeforeUnloadParentHang);
   FRIEND_TEST_ALL_PREFIXES(RenderFrameHostImplBrowserTest,
@@ -1678,6 +1679,10 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
   VideoSizeMap cached_video_sizes_;
 
   bool has_persistent_video_ = false;
+
+  // True if this WebContents is considered a popup (and could have been blocked
+  // by the popup blocker).
+  CreateParams::PopupInfo popup_info_ = CreateParams::PopupInfo::IS_NOT_POPUP;
 
   base::WeakPtrFactory<WebContentsImpl> loading_weak_factory_;
   base::WeakPtrFactory<WebContentsImpl> weak_factory_;
