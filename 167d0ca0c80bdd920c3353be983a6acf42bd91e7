@@ -178,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "fda76012_ccc42a4e",
+        "filename": "third_party/WebKit/PerformanceTests/ImageDecoder/resources/image_decoder_runner.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-06T02:15:04Z",
+      "side": 1,
+      "message": "Ok thanks, so this perf measure will include the costs of moving encoded image data from main thread to the thread that actually does the decode, and some (hopefully small) jitter due to the Promise needing to resolve back on the main thread.",
+      "parentUuid": "650fc810_615b8e82",
+      "revId": "167d0ca0c80bdd920c3353be983a6acf42bd91e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa7275d3_43092f98",
         "filename": "third_party/WebKit/PerformanceTests/ImageDecoder/resources/image_decoder_runner.js",
         "patchSetId": 4
@@ -278,6 +296,24 @@
       "side": 1,
       "message": "Good idea on Math.random().\n\nI mentioned set-src stalling in the bug, but that was before using the decode() JS API. I was using onload, which includes network. I\u0027ll add a comment to the bug clarifying.\n\nBut now that we use decode() it won\u0027t include the network. It may also be less likely to have stalls in the middle of a decode since it won\u0027t be decoding on the main thread.",
       "parentUuid": "ccc5c263_45df9471",
+      "revId": "167d0ca0c80bdd920c3353be983a6acf42bd91e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f0b953d_55f1ffd9",
+        "filename": "third_party/WebKit/PerformanceTests/ImageDecoder/resources/image_decoder_runner.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-06T02:15:04Z",
+      "side": 1,
+      "message": "\u003e Good idea on Math.random().\n\nyeah safer, don\u0027t see that on the current patch though, but assume you\u0027ll fix that.\n\n\u003e I mentioned set-src stalling in the bug, but that was before using the decode() JS API. I was using onload, which includes network. I\u0027ll add a comment to the bug clarifying.\n\nNod.\n\n\u003e But now that we use decode() it won\u0027t include the network. It may also be less likely to have stalls in the middle of a decode since it won\u0027t be decoding on the main thread.\n\nMentioned above about other things that it might include.\n\nI\u0027m not fully convinced that decode() won\u0027t include network.  If I pulled out the network cable, say when half the encoded image data was received, I imagine that\u0027d stall a JS decode() \n\nWe can debate this points later, we\u0027re running without any image perf tests at all after https://chromium-review.googlesource.com/646289  Let\u0027s land this pronto, and observe how well it works ...",
+      "parentUuid": "84869734_055c6063",
       "revId": "167d0ca0c80bdd920c3353be983a6acf42bd91e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
