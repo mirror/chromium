@@ -51,6 +51,9 @@
 #include "ui/wm/core/coordinate_conversion.h"
 #include "ui/wm/core/shadow_types.h"
 
+#include "ui/accessibility/ax_node.h"
+#include "ui/accessibility/ax_node_data.h"
+
 using wallpaper::ColorProfileType;
 
 namespace app_list {
@@ -1074,6 +1077,24 @@ bool AppListView::HandleScroll(const ui::Event* event) {
   return false;
 }
 
+void AppListView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
+  base::string16& announcement;
+  switch (app_list_state_) {
+    case PEEKING:
+      announcement = "Launcher Collapsed";
+      break;
+    case FULLSCREEN_ALL_APPS:
+      announcement = "Launcher, All Apps";
+      break;
+    default:
+      announcement = "blah";
+      break;
+  }
+
+  node_data->SetName(announcement);
+  node_data->role = ui::AX_ROLE_DESKTOP;
+}
+
 void AppListView::SetState(AppListState new_state) {
   AppListState new_state_override = new_state;
   if (is_side_shelf_ || is_tablet_mode_) {
@@ -1090,6 +1111,9 @@ void AppListView::SetState(AppListState new_state) {
 
   switch (new_state_override) {
     case PEEKING: {
+      //
+      NotifyAccessibilityEvent(ui::AX_EVENT_ALERT, false);
+      //
       switch (app_list_state_) {
         case HALF:
         case PEEKING:
@@ -1114,6 +1138,7 @@ void AppListView::SetState(AppListState new_state) {
     case HALF:
       break;
     case FULLSCREEN_ALL_APPS: {
+      NotifyAccessibilityEvent(ui::AX_EVENT_ALERT, false);
       // Set timer to ignore further scroll events for this transition.
       GetAppsGridView()->StartTimerToIgnoreScrollEvents();
 
@@ -1205,8 +1230,9 @@ void AppListView::StartCloseAnimation(base::TimeDelta animation_duration) {
 void AppListView::SetStateFromSearchBoxView(bool search_box_is_empty) {
   switch (app_list_state_) {
     case PEEKING:
-      if (!search_box_is_empty)
+      if (!search_box_is_empty) {
         SetState(HALF);
+      }
       break;
     case HALF:
       if (search_box_is_empty)

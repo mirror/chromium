@@ -137,6 +137,7 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
   bool AcceleratorPressed(const ui::Accelerator& accelerator) override;
   void Layout() override;
   void SchedulePaintInRect(const gfx::Rect& rect) override;
+  void GetAccessibleNodeData(ui::AXNodeData* node_data) override;
 
   // Overridden from ui::EventHandler:
   void OnScrollEvent(ui::ScrollEvent* event) override;
