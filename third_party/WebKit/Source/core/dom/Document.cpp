@@ -99,7 +99,6 @@
 #include "core/dom/ProcessingInstruction.h"
 #include "core/dom/ScriptRunner.h"
 #include "core/dom/ScriptedAnimationController.h"
-#include "core/dom/ScriptedIdleTaskController.h"
 #include "core/dom/SelectorQuery.h"
 #include "core/dom/ShadowRoot.h"
 #include "core/dom/StaticNodeList.h"
@@ -6412,8 +6411,9 @@ ScriptedIdleTaskController& Document::EnsureScriptedIdleTaskController() {
   return *scripted_idle_task_controller_;
 }
 
-int Document::RequestIdleCallback(IdleRequestCallback* callback,
-                                  const IdleRequestOptions& options) {
+int Document::RequestIdleCallback(
+    ScriptedIdleTaskController::IdleTask* callback,
+    const IdleRequestOptions& options) {
   return EnsureScriptedIdleTaskController().RegisterCallback(callback, options);
 }
 

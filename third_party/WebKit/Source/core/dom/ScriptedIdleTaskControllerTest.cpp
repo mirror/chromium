@@ -4,7 +4,7 @@
 
 #include "core/dom/ScriptedIdleTaskController.h"
 
-#include "core/dom/IdleRequestCallback.h"
+#include "bindings/core/v8/IdleRequestCallback.h"
 #include "core/dom/IdleRequestOptions.h"
 #include "core/testing/NullExecutionContext.h"
 #include "platform/testing/TestingPlatformSupport.h"
@@ -12,6 +12,8 @@
 #include "public/platform/Platform.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
+
+#include "core/dom/ScriptedIdleTaskController.h"
 
 namespace blink {
 namespace {
@@ -91,11 +93,11 @@ class MockScriptedIdleTaskControllerPlatform : public TestingPlatformSupport {
   DISALLOW_COPY_AND_ASSIGN(MockScriptedIdleTaskControllerPlatform);
 };
 
-class MockIdleRequestCallback : public IdleRequestCallback {
+class MockIdleRequestCallback
+    : public internal::ScriptedIdleTestController::IdleTask {
  public:
   MOCK_METHOD1(handleEvent, void(IdleDeadline*));
 };
-
 }  // namespace
 
 class ScriptedIdleTaskControllerTest : public ::testing::Test {

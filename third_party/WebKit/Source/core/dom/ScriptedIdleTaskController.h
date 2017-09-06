@@ -5,9 +5,11 @@
 #ifndef ScriptedIdleTaskController_h
 #define ScriptedIdleTaskController_h
 
+#include "bindings/core/v8/IdleRequestCallback.h"
 #include "core/dom/IdleDeadline.h"
 #include "core/dom/SuspendableObject.h"
 #include "platform/Timer.h"
+#include "platform/bindings/TraceWrapperMember.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Vector.h"
 
@@ -17,7 +19,6 @@ class IdleRequestCallbackWrapper;
 }
 
 class ExecutionContext;
-class IdleRequestCallback;
 class IdleRequestOptions;
 
 class CORE_EXPORT ScriptedIdleTaskController
@@ -35,7 +36,31 @@ class CORE_EXPORT ScriptedIdleTaskController
 
   using CallbackId = int;
 
-  int RegisterCallback(IdleRequestCallback*, const IdleRequestOptions&);
+  class IdleTask : public GarbageCollectedFinalized<IdleTask> {
+   public:
+    DEFINE_INLINE_VIRTUAL_TRACE() {}
+    virtual ~IdleTask() {}
+    virtual void invoke(IdleDeadline*) = 0;
+  };
+
+  class V8IdleTask : public ScriptedIdleTaskController::IdleTask,
+                     public TraceWrapperBase {
+   public:
+    static V8IdleTask* Create(IdleRequestCallback* callback) {
+      return new V8IdleTask(callback);
+    };
+    ~V8IdleTask();
+    void invoke(IdleDeadline*) override;
+    DECLARE_TRACE();
+    DECLARE_TRACE_WRAPPERS();
+
+   private:
+    CORE_EXPORT V8IdleTask(IdleRequestCallback*);
+    TraceWrapperMember<IdleRequestCallback> callback_;
+  };
+
+  int RegisterCallback(ScriptedIdleTaskController::IdleTask*,
+                       const IdleRequestOptions&);
   void CancelCallback(CallbackId);
 
   // SuspendableObject interface.
@@ -67,7 +92,7 @@ class CORE_EXPORT ScriptedIdleTaskController
                    IdleDeadline::CallbackType);
 
   WebScheduler* scheduler_;  // Not owned.
-  HeapHashMap<CallbackId, Member<IdleRequestCallback>> callbacks_;
+  HeapHashMap<CallbackId, Member<IdleTask>> callbacks_;
   Vector<CallbackId> pending_timeouts_;
   CallbackId next_callback_id_;
   bool suspended_;
