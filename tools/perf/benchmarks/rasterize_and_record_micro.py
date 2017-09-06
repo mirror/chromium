@@ -51,7 +51,7 @@ class RasterizeAndRecordMicroTop25(_RasterizeAndRecordMicro):
   """Measures rasterize and record performance on the top 25 web pages.
 
   http://www.chromium.org/developers/design-documents/rendering-benchmarks"""
-  page_set = page_sets.Top25PageSet
+  page_set = page_sets.StaticTop25PageSet
 
   @classmethod
   def Name(cls):
