@@ -22,6 +22,30 @@
       "revId": "383af1dbac57a97e256ab6479021bda98fe08aa6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95cb0402_ad07e07f",
+        "filename": "chrome/browser/resources/offline_pages/offline_internals.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-06T23:47:47Z",
+      "side": 1,
+      "message": "In the normal course, we would only ever see an |error| of type {string}.  Error could have a |message| field if it were the result of a thrown exception in |setPrefetchResult|, so it seemed prudent to also log that if we have it.",
+      "parentUuid": "daf1d3f3_76ec6a24",
+      "range": {
+        "startLine": 167,
+        "startChar": 20,
+        "endLine": 167,
+        "endChar": 42
+      },
+      "revId": "383af1dbac57a97e256ab6479021bda98fe08aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
