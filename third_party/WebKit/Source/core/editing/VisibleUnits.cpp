@@ -384,13 +384,6 @@ static PositionTemplate<Strategy> PreviousBoundaryAlgorithm(
   if (!next)
     return it.AtEnd() ? it.StartPosition() : pos;
 
-  Node* node = it.StartContainer();
-  int boundary_offset = remaining_length + next;
-  if (node->IsTextNode() && boundary_offset <= node->MaxCharacterOffset()) {
-    // The next variable contains a usable index into a text node
-    return PositionTemplate<Strategy>(node, boundary_offset);
-  }
-
   // Use the character iterator to translate the next value into a DOM
   // position.
   BackwardsCharacterIteratorAlgorithm<Strategy> char_it(
