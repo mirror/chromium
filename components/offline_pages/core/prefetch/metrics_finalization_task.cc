@@ -93,6 +93,77 @@ bool MarkUrlAsZombie(sql::Connection* db,
   return statement.Run();
 }
 
+void LogStateCountMetrics(PrefetchItemState state, int count) {
+  switch (state) {
+    case PrefetchItemState::NEW_REQUEST:
+      UMA_HISTOGRAM_COUNTS_1000(
+          "OfflinePages.Prefetching.StateCounts.NewRequest", count);
+      break;
+
+    case PrefetchItemState::SENT_GENERATE_PAGE_BUNDLE:
+      UMA_HISTOGRAM_COUNTS_1000(
+          "OfflinePages.Prefetching.StateCounts.SentGeneratePageBundle", count);
+      break;
+
+    case PrefetchItemState::AWAITING_GCM:
+      UMA_HISTOGRAM_COUNTS_1000(
+          "OfflinePages.Prefetching.StateCounts.AwaitingGcm", count);
+      break;
+
+    case PrefetchItemState::RECEIVED_GCM:
+      UMA_HISTOGRAM_COUNTS_1000(
+          "OfflinePages.Prefetching.StateCounts.ReceivedGcm", count);
+      break;
+
+    case PrefetchItemState::SENT_GET_OPERATION:
+      UMA_HISTOGRAM_COUNTS_1000(
+          "OfflinePages.Prefetching.StateCounts.SentGetOperation", count);
+      break;
+
+    case PrefetchItemState::RECEIVED_BUNDLE:
+      UMA_HISTOGRAM_COUNTS_1000(
+          "OfflinePages.Prefetching.StateCounts.ReceivedBundle", count);
+      break;
+
+    case PrefetchItemState::DOWNLOADING:
+      UMA_HISTOGRAM_COUNTS_1000(
+          "OfflinePages.Prefetching.StateCounts.Downloading", count);
+      break;
+
+    case PrefetchItemState::DOWNLOADED:
+      UMA_HISTOGRAM_COUNTS_1000(
+          "OfflinePages.Prefetching.StateCounts.Downloaded", count);
+      break;
+
+    case PrefetchItemState::FINISHED:
+      UMA_HISTOGRAM_COUNTS_1000("OfflinePages.Prefetching.StateCounts.Finished",
+                                count);
+      break;
+
+    case PrefetchItemState::IMPORTING:
+      UMA_HISTOGRAM_COUNTS_1000(
+          "OfflinePages.Prefetching.StateCounts.Importing", count);
+      break;
+
+    case PrefetchItemState::ZOMBIE:
+      UMA_HISTOGRAM_COUNTS_1000("OfflinePages.Prefetching.StateCounts.Zombie",
+                                count);
+      break;
+  }
+}
+
+void CountEntriesInEachState(sql::Connection* db) {
+  static const char kSql[] =
+      "SELECT state, COUNT (*) FROM prefetch_items GROUP BY state";
+  sql::Statement statement(db->GetCachedStatement(SQL_FROM_HERE, kSql));
+  while (statement.Step()) {
+    PrefetchItemState state =
+        static_cast<PrefetchItemState>(statement.ColumnInt(0));
+    int count = statement.ColumnInt(1);
+    LogStateCountMetrics(state, count);
+  }
+}
+
 // These constants represent important indexes in the
 // OfflinePrefetchArchiveActualSizeVsExpected histogram enum.
 const int kEnumZeroArchiveBodyLength = 0;
@@ -185,6 +256,11 @@ bool ReportMetricsAndFinalizeSync(sql::Connection* db) {
   sql::Transaction transaction(db);
   if (!transaction.Begin())
     return false;
+
+  // Gather metrics about the current number of entries with each state.  Check
+  // before zombification so that we will be able to see entries in the finished
+  // state, otherwise we will only see zombies, never finished entries.
+  CountEntriesInEachState(db);
 
   const std::vector<PrefetchItemStats> urls = FetchUrlsSync(db);
 

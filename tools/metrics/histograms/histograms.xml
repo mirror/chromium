@@ -50756,6 +50756,94 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="OfflinePages.Prefetching.StateCounts.AwaitingGcm">
+  <owner>petewil@chromium.org</owner>
+  <summary>
+    Number of prefetch items in the 'AwaitingGcm' state reported when starting
+    the background task.
+  </summary>
+</histogram>
+
+<histogram name="OfflinePages.Prefetching.StateCounts.Downloaded">
+  <owner>petewil@chromium.org</owner>
+  <summary>
+    Number of prefetch items in the 'Downloaded' state reported when starting
+    the background task.
+  </summary>
+</histogram>
+
+<histogram name="OfflinePages.Prefetching.StateCounts.Downloading">
+  <owner>petewil@chromium.org</owner>
+  <summary>
+    Number of prefetch items in the 'Downloading' state reported when starting
+    the background task.
+  </summary>
+</histogram>
+
+<histogram name="OfflinePages.Prefetching.StateCounts.Finished">
+  <owner>petewil@chromium.org</owner>
+  <summary>
+    Number of prefetch items in the 'Finished' state reported when starting the
+    background task.
+  </summary>
+</histogram>
+
+<histogram name="OfflinePages.Prefetching.StateCounts.Importing">
+  <owner>petewil@chromium.org</owner>
+  <summary>
+    Number of prefetch items in the 'Importing' state reported when starting the
+    background task.
+  </summary>
+</histogram>
+
+<histogram name="OfflinePages.Prefetching.StateCounts.NewRequest">
+  <owner>petewil@chromium.org</owner>
+  <summary>
+    Number of prefetch items in the 'NewRequest' state reported when starting
+    the background task.
+  </summary>
+</histogram>
+
+<histogram name="OfflinePages.Prefetching.StateCounts.ReceivedBundle">
+  <owner>petewil@chromium.org</owner>
+  <summary>
+    Number of prefetch items in the 'ReceivedBundle' state reported when
+    starting the background task.
+  </summary>
+</histogram>
+
+<histogram name="OfflinePages.Prefetching.StateCounts.ReceivedGcm">
+  <owner>petewil@chromium.org</owner>
+  <summary>
+    Number of prefetch items in the 'ReceivedGcm' state reported when starting
+    the background task.
+  </summary>
+</histogram>
+
+<histogram name="OfflinePages.Prefetching.StateCounts.SentGeneratePageBundle">
+  <owner>petewil@chromium.org</owner>
+  <summary>
+    Number of prefetch items in the 'SentGeneratePageBundle' state reported when
+    starting the background task.
+  </summary>
+</histogram>
+
+<histogram name="OfflinePages.Prefetching.StateCounts.SentGetOperation">
+  <owner>petewil@chromium.org</owner>
+  <summary>
+    Number of prefetch items in the 'SentGetOperation' state reported when
+    starting the background task.
+  </summary>
+</histogram>
+
+<histogram name="OfflinePages.Prefetching.StateCounts.Zombie">
+  <owner>petewil@chromium.org</owner>
+  <summary>
+    Number of prefetch items in the 'Zombie' state reported when starting the
+    background task.
+  </summary>
+</histogram>
+
 <histogram name="OfflinePages.RedirectResult" enum="OfflinePagesRedirectResult">
   <obsolete>
     Deprecated 8/2016. Use OfflinePages.RequestResult instead.
