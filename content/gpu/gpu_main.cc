@@ -143,6 +143,10 @@ class ContentSandboxHelper : public gpu::GpuSandboxHelper {
     media::DXVAVideoDecodeAccelerator::PreSandboxInitialization();
     media::MediaFoundationVideoEncodeAccelerator::PreSandboxInitialization();
 #endif
+
+    // On Linux, reading system memory doesn't work through the GPU sandbox.
+    // This value is cached, so access it here to populate the cache.
+    base::SysInfo::AmountOfPhysicalMemory();
   }
 
   bool EnsureSandboxInitialized(
