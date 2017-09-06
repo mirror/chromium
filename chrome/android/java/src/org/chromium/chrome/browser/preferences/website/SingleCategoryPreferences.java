@@ -238,6 +238,8 @@ public class SingleCategoryPreferences extends PreferenceFragment
             return website.site().getPopupPermission() == ContentSetting.BLOCK;
         } else if (mCategory.showProtectedMediaSites()) {
             return website.site().getProtectedMediaIdentifierPermission() == ContentSetting.BLOCK;
+        } else if (mCategory.showSoundSites()) {
+            return website.site().getSoundPermission() == ContentSetting.BLOCK;
         }
 
         return false;
@@ -509,11 +511,13 @@ public class SingleCategoryPreferences extends PreferenceFragment
             } else if (mCategory.showProtectedMediaSites()) {
                 PrefServiceBridge.getInstance().setProtectedMediaIdentifierEnabled(
                         (boolean) newValue);
+            } else if (mCategory.showSoundSites()) {
+                PrefServiceBridge.getInstance().setSoundEnabled((boolean) newValue);
             }
 
             // Categories that support adding exceptions also manage the 'Add site' preference.
             if (mCategory.showAutoplaySites() || mCategory.showBackgroundSyncSites()
-                    || mCategory.showJavaScriptSites()) {
+                    || mCategory.showJavaScriptSites() || mCategory.showSoundSites()) {
                 if ((boolean) newValue) {
                     Preference addException = getPreferenceScreen().findPreference(
                             ADD_EXCEPTION_KEY);
@@ -548,6 +552,8 @@ public class SingleCategoryPreferences extends PreferenceFragment
             resource = R.string.website_settings_add_site_description_background_sync;
         } else if (mCategory.showJavaScriptSites()) {
             resource = R.string.website_settings_add_site_description_javascript;
+        } else if (mCategory.showSoundSites()) {
+            resource = R.string.website_settings_add_site_description_sound;
         }
         assert resource > 0;
         return getResources().getString(resource);
@@ -575,9 +581,14 @@ public class SingleCategoryPreferences extends PreferenceFragment
     // AddExceptionPreference.SiteAddedCallback:
     @Override
     public void onAddSite(String hostname) {
+        // The Sound content setting has exception lists for both BLOCK and ALLOW (others just
+        // ALLOW).
+        int setting =
+                (mCategory.showSoundSites() && PrefServiceBridge.getInstance().isSoundEnabled())
+                ? ContentSetting.BLOCK.toInt()
+                : ContentSetting.ALLOW.toInt();
         PrefServiceBridge.getInstance().nativeSetContentSettingForPattern(
-                    mCategory.toContentSettingsType(), hostname,
-                    ContentSetting.ALLOW.toInt());
+                mCategory.toContentSettingsType(), hostname, setting);
 
         Toast.makeText(getActivity(),
                 String.format(getActivity().getString(
@@ -599,10 +610,10 @@ public class SingleCategoryPreferences extends PreferenceFragment
 
         configureGlobalToggles();
 
-        if ((mCategory.showAutoplaySites()
-                    && !PrefServiceBridge.getInstance().isAutoplayEnabled())
+        if ((mCategory.showAutoplaySites() && !PrefServiceBridge.getInstance().isAutoplayEnabled())
                 || (mCategory.showJavaScriptSites()
-                    && !PrefServiceBridge.getInstance().javaScriptEnabled())
+                           && !PrefServiceBridge.getInstance().javaScriptEnabled())
+                || (mCategory.showSoundSites())
                 || (mCategory.showBackgroundSyncSites()
                            && !PrefServiceBridge.getInstance().isBackgroundSyncAllowed())) {
             getPreferenceScreen().addPreference(
@@ -738,6 +749,8 @@ public class SingleCategoryPreferences extends PreferenceFragment
                 } else if (mCategory.showProtectedMediaSites()) {
                     globalToggle.setChecked(
                             PrefServiceBridge.getInstance().isProtectedMediaIdentifierEnabled());
+                } else if (mCategory.showSoundSites()) {
+                    globalToggle.setChecked(PrefServiceBridge.getInstance().isSoundEnabled());
                 }
             }
         }
