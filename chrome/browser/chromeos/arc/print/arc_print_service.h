@@ -39,14 +39,31 @@ class ArcPrintService : public KeyedService,
   // InstanceHolder<mojom::PrintInstance>::Observer override:
   void OnInstanceReady() override;
 
-  // mojom::PrintHost override:
-  void Print(mojo::ScopedHandle pdf_data) override;
+  // mojom::PrintHost overrides:
+  void PrintDeprecated(mojo::ScopedHandle pdf_data) override;
+
+  void Print(mojom::ArcPrintJobPtr printJob) override;
+
+  void Cancel(mojom::ArcPrintJobPtr printJob) override;
+
+  void StartPrinterDiscovery(
+      const std::string& sessionId,
+      const std::vector<std::string>& printerIds) override;
+
+  void StopPrinterDiscovery(const std::string& sessionId) override;
+
+  void ValidatePrinters(const std::string& sessionId,
+                        const std::vector<std::string>& printerIds) override;
+
+  void StartPrinterStateTracking(const std::string& sessionId,
+                                 const std::string& printerId) override;
+
+  void StopPrinterStateTracking(const std::string& sessionId,
+                                const std::string& printerId) override;
+
+  void DestroyDiscoverySession(const std::string& sessionId) override;
 
  private:
-  // Opens the pdf file at |file_path|.
-  // If given |file_path| is nullopt, do nothing.
-  void OpenPdf(base::Optional<base::FilePath> file_path) const;
-
   THREAD_CHECKER(thread_checker_);
 
   ArcBridgeService* const arc_bridge_service_;  // Owned by ArcServiceManager.

@@ -52,13 +52,16 @@ bool PrintBackendCupsIpp::EnumeratePrinters(PrinterList* printer_list) {
 }
 
 std::string PrintBackendCupsIpp::GetDefaultPrinterName() {
+  LOG(ERROR) << "PrintBackendCupsIpp::GetDefaultPrinterName";
   std::vector<CupsPrinter> printers = cups_connection_->GetDests();
   for (const auto& printer : printers) {
+    LOG(ERROR) << "PrintBackendCupsIpp::GetDefaultPrinterName 1";
     if (printer.is_default()) {
       return printer.GetName();
     }
   }
 
+  LOG(ERROR) << "PrintBackendCupsIpp::GetDefaultPrinterName 2";
   return std::string();
 }
 

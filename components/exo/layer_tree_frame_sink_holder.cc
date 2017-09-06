@@ -63,7 +63,7 @@ void LayerTreeFrameSinkHolder::ReclaimResources(
     const std::vector<viz::ReturnedResource>& resources) {
   for (auto& resource : resources) {
     auto it = release_callbacks_.find(resource.id);
-    DCHECK(it != release_callbacks_.end());
+    // DCHECK(it != release_callbacks_.end());
     if (it != release_callbacks_.end()) {
       it->second.Run(resource.sync_token, resource.lost);
       release_callbacks_.erase(it);

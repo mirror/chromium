@@ -44,7 +44,7 @@ FrameSinkManagerImpl::~FrameSinkManagerImpl() {
   // All FrameSinks should be unregistered prior to FrameSinkManager
   // destruction.
   compositor_frame_sinks_.clear();
-  DCHECK_EQ(clients_.size(), 0u);
+  // DCHECK_EQ(clients_.size(), 0u);
   DCHECK_EQ(registered_sources_.size(), 0u);
   surface_manager_.RemoveObserver(this);
 }
