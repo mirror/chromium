@@ -211,6 +211,24 @@
       "revId": "dfacf870ffd6d3471fc280bf75ba77a6aece13d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4b142215_6a29fbc6",
+        "filename": "content/public/android/java/res/menu/select_action_menu.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-09-06T23:37:21Z",
+      "side": 1,
+      "message": "Ack\n\nI would say setting the title in code sounds reasonable to me. Although the current way works, it is still fundamentally wrong because on below-O devices it depends on that we have enough resources as padding. We should remove this kind of dependency. I will have an CL to address it soon, thanks for catching this!",
+      "parentUuid": "9c2231ce_a6707be7",
+      "revId": "dfacf870ffd6d3471fc280bf75ba77a6aece13d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
