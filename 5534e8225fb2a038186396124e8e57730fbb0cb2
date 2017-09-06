@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ee9545f_7f1cf783",
+        "filename": "chrome/browser/previews/previews_infobar_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-06T20:06:47Z",
+      "side": 1,
+      "message": "rm this",
+      "range": {
+        "startLine": 29,
+        "startChar": 14,
+        "endLine": 29,
+        "endChar": 18
+      },
+      "revId": "5534e8225fb2a038186396124e8e57730fbb0cb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a40a1282_2d177015",
+        "filename": "chrome/browser/previews/previews_infobar_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-06T20:06:47Z",
+      "side": 1,
+      "message": "skip fwd declaration, and include the header file.\nFwd declaration is not sufficient since on line 103, we define an object of that type.",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 10
+      },
+      "revId": "5534e8225fb2a038186396124e8e57730fbb0cb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b0789b7_0d55eb75",
+        "filename": "components/data_reduction_proxy/content/browser/content_lofi_decider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-06T20:06:47Z",
+      "side": 1,
+      "message": "rm?",
+      "range": {
+        "startLine": 198,
+        "startChar": 2,
+        "endLine": 204,
+        "endChar": 3
+      },
+      "revId": "5534e8225fb2a038186396124e8e57730fbb0cb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e6801ea_d9c6a04f",
+        "filename": "components/data_reduction_proxy/content/browser/content_lofi_decider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-06T20:06:47Z",
+      "side": 1,
+      "message": "Since this function is AMP specific, can we change the key name to something AMP specific.\n\nAlternatively, change the function name to be NOT AMP specific (and then check that preview was really an AMP preview) for better consistency.",
+      "range": {
+        "startLine": 212,
+        "startChar": 44,
+        "endLine": 212,
+        "endChar": 65
+      },
+      "revId": "5534e8225fb2a038186396124e8e57730fbb0cb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5254ec3_0d490b0e",
+        "filename": "components/data_reduction_proxy/content/browser/content_lofi_decider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-06T20:06:47Z",
+      "side": 1,
+      "message": "Also, may be add a TODO to handle net errors (e.g., DNS failure, unable to connect to the server, HTTPS cert failures).",
+      "range": {
+        "startLine": 216,
+        "startChar": 6,
+        "endLine": 216,
+        "endChar": 19
+      },
+      "revId": "5534e8225fb2a038186396124e8e57730fbb0cb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
