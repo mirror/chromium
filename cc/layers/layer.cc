@@ -448,7 +448,7 @@ void Layer::SetMaskLayer(Layer* mask_layer) {
     inputs_.mask_layer->RemoveFromParent();
     DCHECK(!inputs_.mask_layer->parent());
     inputs_.mask_layer->SetParent(this);
-    if (inputs_.filters.IsEmpty() &&
+    if (inputs_.filters.IsEmpty() && inputs_.background_filters.IsEmpty() &&
         (!layer_tree_host_ ||
          layer_tree_host_->GetSettings().enable_mask_tiling)) {
       inputs_.mask_layer->SetLayerMaskType(
@@ -467,9 +467,12 @@ void Layer::SetFilters(const FilterOperations& filters) {
   if (inputs_.filters == filters)
     return;
   inputs_.filters = filters;
-  if (inputs_.mask_layer)
+  if (inputs_.mask_layer && !filters.IsEmpty())
     inputs_.mask_layer->SetLayerMaskType(
         Layer::LayerMaskType::SINGLE_TEXTURE_MASK);
+  if (inputs_.mask_layer && filters.IsEmpty())
+    inputs_.mask_layer->SetLayerMaskType(
+        Layer::LayerMaskType::MULTI_TEXTURE_MASK);
   SetSubtreePropertyChanged();
   SetPropertyTreesNeedRebuild();
   SetNeedsCommit();
@@ -480,6 +483,13 @@ void Layer::SetBackgroundFilters(const FilterOperations& filters) {
   if (inputs_.background_filters == filters)
     return;
   inputs_.background_filters = filters;
+  if (inputs_.mask_layer && !filters.IsEmpty())
+    inputs_.mask_layer->SetLayerMaskType(
+        Layer::LayerMaskType::SINGLE_TEXTURE_MASK);
+  if (inputs_.mask_layer && filters.IsEmpty())
+    inputs_.mask_layer->SetLayerMaskType(
+        Layer::LayerMaskType::MULTI_TEXTURE_MASK);
+
   SetSubtreePropertyChanged();
   SetPropertyTreesNeedRebuild();
   SetNeedsCommit();
