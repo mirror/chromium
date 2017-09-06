@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "90678519_2be94c4c",
+        "filename": "ios/chrome/browser/ui/ntp/incognito_view_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-06T09:21:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a785c13e_76730513",
+      "revId": "620ee87791e65d2ce63a40118ecad7f2a1bd63bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95cb9c19_2662d308",
         "filename": "ios/chrome/browser/ui/ntp/new_tab_page_controller.mm",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "620ee87791e65d2ce63a40118ecad7f2a1bd63bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19b380a3_c4881ad3",
+        "filename": "ios/chrome/browser/ui/ntp/new_tab_page_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-06T09:21:27Z",
+      "side": 1,
+      "message": "It seems that I forgot to add it here when transitioning it to ViewController.",
+      "parentUuid": "95cb9c19_2662d308",
+      "revId": "620ee87791e65d2ce63a40118ecad7f2a1bd63bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
