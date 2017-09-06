@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "792c5454_272b5ed3",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXLayoutObject.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-09-06T03:15:20Z",
+      "side": 1,
+      "message": "Added a TODO",
+      "parentUuid": "26ab584a_dd91bea1",
+      "revId": "1242a0a35009510629aba2f9302ef7bc3ca0f81d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e2f3b74_68568cec",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXLayoutObject.cpp",
         "patchSetId": 4
@@ -80,6 +98,24 @@
         "id": 1211408
       },
       "writtenOn": "2017-09-05T21:46:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e2f3b74_68568cec",
+      "revId": "1242a0a35009510629aba2f9302ef7bc3ca0f81d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e48896a8_a1bd3744",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXLayoutObject.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-09-06T03:15:20Z",
       "side": 1,
       "message": "Done",
       "parentUuid": "8e2f3b74_68568cec",
@@ -121,6 +157,24 @@
       "revId": "1242a0a35009510629aba2f9302ef7bc3ca0f81d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "331ab5f3_5388d103",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXLayoutObject.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 816,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-09-06T03:15:20Z",
+      "side": 1,
+      "message": "This code block is not needed at all. It was trying to be a broader version of some older code that checked to see if this was an edit box. I\u0027ve added more tests of textarea and input to show that it is not needed. Also, I found that contenteditable doesn\u0027t actually preserve multiple spaces, but rather multiple spaces are encoded with \u0026nbsp;.",
+      "parentUuid": "5b6230a9_1a2ff284",
+      "revId": "1242a0a35009510629aba2f9302ef7bc3ca0f81d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
