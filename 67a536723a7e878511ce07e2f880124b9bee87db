@@ -169,6 +169,30 @@
     },
     {
       "key": {
+        "uuid": "d2cc20ce_19c655ed",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-06T20:11:32Z",
+      "side": 1,
+      "message": "In the duplication example, while I agree this is technically possible, particularly in multi-window where a user may have two instances running of downloads running (for example), I doubt this occurs (often) in the wild. Typically Client A will be suggestions and Client B will be downloads and they won\u0027t be requesting the same bitmaps, right?",
+      "parentUuid": "6ef00c5d_1cfd256e",
+      "range": {
+        "startLine": 53,
+        "startChar": 1,
+        "endLine": 53,
+        "endChar": 2
+      },
+      "revId": "67a536723a7e878511ce07e2f880124b9bee87db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7b7bdd53_548799d0",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
         "patchSetId": 2
@@ -204,6 +228,30 @@
       "side": 1,
       "message": "OK, I\u0027ve moved this to processNextRequest() into an IdleHandler, to give the garbage collection a chance to run.",
       "parentUuid": "7b7bdd53_548799d0",
+      "range": {
+        "startLine": 171,
+        "startChar": 16,
+        "endLine": 171,
+        "endChar": 44
+      },
+      "revId": "67a536723a7e878511ce07e2f880124b9bee87db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89b02bdf_dfd5f369",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-06T20:11:32Z",
+      "side": 1,
+      "message": "Can we remove compactDeduplicationCache here, then, or is it still needed?",
+      "parentUuid": "5b02dbda_879f01e5",
       "range": {
         "startLine": 171,
         "startChar": 16,
@@ -260,6 +308,30 @@
       "revId": "67a536723a7e878511ce07e2f880124b9bee87db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eae16455_03ef6808",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-06T20:11:32Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a376dd7d_1d54c8ab",
+      "range": {
+        "startLine": 202,
+        "startChar": 32,
+        "endLine": 202,
+        "endChar": 0
+      },
+      "revId": "67a536723a7e878511ce07e2f880124b9bee87db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

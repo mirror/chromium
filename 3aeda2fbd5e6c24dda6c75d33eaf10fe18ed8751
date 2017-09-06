@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0048eb59_5c8aa080",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-06T20:11:32Z",
+      "side": 1,
+      "message": "Is my understanding correct?\n\n1. If the LRU cache contains the bitmap, then we return the bitmap\n\n2. If the LRU cache does not contain the bitmap, we check the deduplication cache.\n   a. If something is still holding a strong reference to the bitmap, the deduplication cache\u0027s weak reference will point to the actual bitmap, which will be returned.\n   b. If not, then we will refetch the bitmap from native.\n\n\nCan 2a occur in situations other than 2 clients requesting the same thumbnail? e.g. Client A has already requested it and has a strong reference that\u0027s not in the LRU cache. Client B requests the same bitmap. How often might this actually occur?",
+      "range": {
+        "startLine": 49,
+        "startChar": 7,
+        "endLine": 51,
+        "endChar": 73
+      },
+      "revId": "3aeda2fbd5e6c24dda6c75d33eaf10fe18ed8751",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
