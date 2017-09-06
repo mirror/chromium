@@ -227,7 +227,8 @@ EmptyLocalFrameClient::CreateApplicationCacheHost(
 EmptyRemoteFrameClient::EmptyRemoteFrameClient() = default;
 
 bool EmptyContextMenuClient::ShowContextMenu(const ContextMenu*,
-                                             WebMenuSourceType source_type) {
+                                             WebMenuSourceType source_type,
+                                             unsigned) {
   return false;
 }
 
