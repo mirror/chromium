@@ -380,6 +380,11 @@ const PrefsUtil::TypedPrefMap& PrefsUtil::GetWhitelistedKeys() {
       settings_private::PrefType::PREF_TYPE_NUMBER;
   (*s_whitelist)[::prefs::kLanguageXkbAutoRepeatInterval] =
       settings_private::PrefType::PREF_TYPE_NUMBER;
+
+  // Multidevice settings.
+  (*s_whitelist)[::prefs::kSmsConnectEnabled] =
+      settings_private::PrefType::PREF_TYPE_BOOLEAN;
+
 #else
   (*s_whitelist)[::prefs::kAcceptLanguages] =
       settings_private::PrefType::PREF_TYPE_STRING;

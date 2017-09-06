@@ -475,6 +475,10 @@ extern const char kHasSeenWelcomePage[];
 extern const char kHasSeenWin10PromoPage[];
 #endif
 
+#if defined(OS_CHROMEOS)
+extern const char kSmsConnectEnabled[];
+#endif
+
 extern const char kGLVendorString[];
 extern const char kGLRendererString[];
 extern const char kGLVersionString[];
