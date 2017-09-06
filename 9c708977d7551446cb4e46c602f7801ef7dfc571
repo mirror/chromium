@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "337b5648_8f5d697e",
+        "filename": "components/browsing_data/content/counters/site_settings_counter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-06T15:43:10Z",
+      "side": 1,
+      "message": "Ugh, this is all horrible :-(\n\nThis should really be the SettingSource instead of the content settings provider name, which would have avoided exactly this issue. And the fact that the source is passed around as a string doesn\u0027t exactly make things nicer either :-/\n\nI filed https://crbug.com/762560 to clean this up -- would you mind referencing the bug here?",
+      "range": {
+        "startLine": 49,
+        "startChar": 25,
+        "endLine": 49,
+        "endChar": 32
+      },
+      "revId": "9c708977d7551446cb4e46c602f7801ef7dfc571",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
