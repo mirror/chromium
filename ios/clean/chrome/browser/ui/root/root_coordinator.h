@@ -10,6 +10,9 @@
 
 // Coordinator that runs the root container.
 @interface RootCoordinator : BrowserCoordinator<URLOpening>
+
+// The root coordinator will own whatever dispatcher it is initialized with.
+@property(nonatomic, strong) CommandDispatcher* dispatcher;
 @end
 
 #endif  // IOS_CLEAN_CHROME_BROWSER_UI_ROOT_ROOT_COORDINATOR_H_
