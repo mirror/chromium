@@ -2019,6 +2019,11 @@ void WindowTreeClient::SetCursorTouchVisible(bool enabled) {
     window_manager_client_->WmSetCursorTouchVisible(enabled);
 }
 
+void WindowTreeClient::InjectEvent(const ui::Event& event, int64_t display_id) {
+  if (window_manager_client_)
+    window_manager_client_->WmInjectEvent(ui::Event::Clone(event), display_id);
+}
+
 void WindowTreeClient::SetKeyEventsThatDontHideCursor(
     std::vector<ui::mojom::EventMatcherPtr> cursor_key_list) {
   if (window_manager_client_) {
