@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3abb64bd_ff634a12",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-06T01:19:10Z",
+      "side": 1,
+      "message": "This change is sufficiently complex that it deserves a crbug. Much easier to have long-term discussions, especially if this CL gets reverted. \u003dP.",
+      "revId": "1b5bce0b840a5a780ee8ea25c137f3b3b8a459ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "141a210b_ce95ff3b",
+        "filename": "chrome/browser/extensions/api/font_settings/font_settings_api.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-06T01:19:10Z",
+      "side": 1,
+      "message": "should we reserve first?",
+      "revId": "1b5bce0b840a5a780ee8ea25c137f3b3b8a459ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31b91055_4431540e",
+        "filename": "chrome/browser/font_pref_change_notifier.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-06T01:19:10Z",
+      "side": 1,
+      "message": "ths works because Callback is repeating... but should this be a std:move?",
+      "revId": "1b5bce0b840a5a780ee8ea25c137f3b3b8a459ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef62bc3b_a991b40b",
+        "filename": "chrome/browser/font_pref_change_notifier.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-06T01:19:10Z",
+      "side": 1,
+      "message": "What is the point of this optimization, especially if we don\u0027t call RemovePrefObserverAllPrefs() when removing the last observer? \n\nMostly this seems like a half-implemented optimization, maybe we should remove this and just AddPrefObserver* in the constructor??",
+      "revId": "1b5bce0b840a5a780ee8ea25c137f3b3b8a459ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c541d356_42f3d013",
+        "filename": "chrome/browser/font_pref_change_notifier.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-06T01:19:10Z",
+      "side": 1,
+      "message": "Indicate that this is not re-entrant safe and that callers *must not* remove themselves as observers as part of the callback? Alternatively, would some locks be in order? Taht would cause deadlocks rather than undefined behavior, which seems better.",
+      "revId": "1b5bce0b840a5a780ee8ea25c137f3b3b8a459ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
