@@ -45,6 +45,30 @@
       "revId": "43d87a6099c4a3e3623ba768df64f94f6ef5e0fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b61328e_c16ca7cc",
+        "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-09-06T11:59:28Z",
+      "side": 1,
+      "message": "Sorry, I overlooked the comment. Never mind.",
+      "parentUuid": "d0018ea1_f3dea22c",
+      "range": {
+        "startLine": 41,
+        "startChar": 14,
+        "endLine": 41,
+        "endChar": 24
+      },
+      "revId": "43d87a6099c4a3e3623ba768df64f94f6ef5e0fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
