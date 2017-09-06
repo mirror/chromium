@@ -14,6 +14,7 @@
 #include "base/gtest_prod_util.h"
 #include "base/logging.h"
 #include "base/macros.h"
+#include "base/optional.h"
 #include "base/trace_event/memory_allocator_dump_guid.h"
 #include "base/trace_event/trace_event_argument.h"
 #include "base/values.h"
@@ -47,6 +48,7 @@ class BASE_EXPORT MemoryAllocatorDump {
     // indefinitely lived const char* strings, the only reason we copy
     // them into a std::string is to handle Mojo (de)serialization.
     // TODO(hjd): Investigate optimization (e.g. using StringPiece).
+    Entry();
     Entry(std::string name, std::string units, uint64_t value);
     Entry(std::string name, std::string units, std::string value);
     Entry(Entry&& other);
@@ -106,8 +108,7 @@ class BASE_EXPORT MemoryAllocatorDump {
 
   // Get the size for this dump.
   // The size is the value set with AddScalar(kNameSize, kUnitsBytes, size);
-  // TODO(hjd): Transitional until we send the full PMD. See crbug.com/704203
-  uint64_t GetSizeInternal() const { return size_; };
+  uint64_t GetSizeInternal() const;
 
   // Use enum Flags to set values.
   void set_flags(int flags) { flags_ |= flags; }
@@ -136,7 +137,9 @@ class BASE_EXPORT MemoryAllocatorDump {
   ProcessMemoryDump* const process_memory_dump_;  // Not owned (PMD owns this).
   MemoryAllocatorDumpGuid guid_;
   int flags_;  // See enum Flags.
-  uint64_t size_;
+
+  // size is lazily computed and stored here.
+  mutable Optional<uint64_t> size_;
 
   std::vector<Entry> entries_;
 

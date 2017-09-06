@@ -5,7 +5,6 @@
 #include "base/trace_event/memory_allocator_dump.h"
 
 #include "base/format_macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/trace_event/memory_dump_manager.h"
 #include "base/trace_event/memory_dump_provider.h"
@@ -23,6 +22,20 @@ const char MemoryAllocatorDump::kTypeString[] = "string";
 const char MemoryAllocatorDump::kUnitsBytes[] = "bytes";
 const char MemoryAllocatorDump::kUnitsObjects[] = "objects";
 
+uint64_t MemoryAllocatorDump::GetSizeInternal() const {
+  if (!size_.has_value()) {
+    for (const auto& entry : entries_) {
+      if (entry.entry_type == Entry::kUint64 && entry.name == kNameSize &&
+          entry.units == kUnitsBytes) {
+        size_ = entry.value_uint64;
+        break;
+      }
+    }
+  }
+  DCHECK(size_.has_value());
+  return size_.value_or(0);
+};
+
 // static
 MemoryAllocatorDumpGuid MemoryAllocatorDump::GetDumpIdFromName(
     const std::string& absolute_name) {
@@ -37,7 +50,7 @@ MemoryAllocatorDump::MemoryAllocatorDump(const std::string& absolute_name,
       process_memory_dump_(process_memory_dump),
       guid_(guid),
       flags_(Flags::DEFAULT),
-      size_(0) {
+      size_(nullopt) {
   // The |absolute_name| cannot be empty.
   DCHECK(!absolute_name.empty());
 
@@ -63,8 +76,6 @@ MemoryAllocatorDump::~MemoryAllocatorDump() {
 void MemoryAllocatorDump::AddScalar(const char* name,
                                     const char* units,
                                     uint64_t value) {
-  if (strcmp(kNameSize, name) == 0)
-    size_ = value;
   entries_.emplace_back(name, units, value);
 }
 
@@ -116,11 +127,12 @@ void MemoryAllocatorDump::AsValueInto(TracedValue* value) const {
 
 std::unique_ptr<TracedValue> MemoryAllocatorDump::attributes_for_testing()
     const {
-  std::unique_ptr<TracedValue> attributes = base::MakeUnique<TracedValue>();
+  std::unique_ptr<TracedValue> attributes = std::make_unique<TracedValue>();
   DumpAttributes(attributes.get());
   return attributes;
 }
 
+MemoryAllocatorDump::Entry::Entry() = default;
 MemoryAllocatorDump::Entry::Entry(Entry&& other) = default;
 
 MemoryAllocatorDump::Entry::Entry(std::string name,

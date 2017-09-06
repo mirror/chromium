@@ -218,6 +218,13 @@ TEST(MemoryAllocatorDumpTest, ForbidStringsInBackgroundModeDeathTest) {
   ASSERT_DEATH(dump->AddString("foo", "bar", "baz"), "");
 }
 
+TEST(MemoryAllocatorDumpTest, SizeMustBeGiven) {
+  MemoryDumpArgs dump_args = {MemoryDumpLevelOfDetail::BACKGROUND};
+  ProcessMemoryDump pmd(new HeapProfilerSerializationState, dump_args);
+  MemoryAllocatorDump* dump = pmd.CreateAllocatorDump("malloc");
+  ASSERT_DEATH(dump->GetSizeInternal(), "");
+}
+
 #endif
 
 }  // namespace trace_event
