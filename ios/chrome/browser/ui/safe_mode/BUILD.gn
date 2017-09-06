@@ -2,16 +2,23 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//ios/public/provider/chrome/browser/build_config.gni")
+
 source_set("safe_mode") {
   configs += [ "//build/config/compiler:enable_arc" ]
   sources = [
     "safe_mode_coordinator.h",
     "safe_mode_coordinator.mm",
+    "safe_mode_crashing_modules_config.h",
+    "safe_mode_crashing_modules_config.mm",
+    "safe_mode_util.cc",
+    "safe_mode_util.h",
     "safe_mode_view_controller.h",
     "safe_mode_view_controller.mm",
   ]
 
   deps = [
+    ":resources",
     "resources:fatal_error",
     "//base",
     "//ios/chrome/app",
@@ -21,9 +28,20 @@ source_set("safe_mode") {
     "//ios/chrome/browser/ui",
     "//ios/chrome/browser/ui/fancy_ui",
     "//ui/gfx",
+    ios_packed_resources_target,
   ]
 
   libs = [ "UIKit.framework" ]
+}
+
+bundle_data("resources") {
+  visibility = [ ":safe_mode" ]
+  sources = [
+    "resources/SafeModeCrashingModules.plist",
+  ]
+  outputs = [
+    "{{bundle_resources_dir}}/{{source_file_part}}",
+  ]
 }
 
 source_set("eg_tests") {
@@ -49,6 +67,7 @@ source_set("unit_tests") {
   testonly = true
   sources = [
     "safe_mode_coordinator_unittest.mm",
+    "safe_mode_util_unittest.cc",
     "safe_mode_view_controller_unittest.mm",
   ]
   deps = [
