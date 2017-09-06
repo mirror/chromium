@@ -116,8 +116,15 @@ class MockClientProcess : public mojom::ClientProcess {
         .WillByDefault(
             Invoke([](const MemoryDumpRequestArgs& args,
                       const RequestChromeMemoryDumpCallback& callback) {
-              callback.Run(true, args.dump_guid, nullptr);
+              base::trace_event::MemoryDumpArgs dump_args{
+                  base::trace_event::MemoryDumpLevelOfDetail::DETAILED};
+              base::trace_event::ProcessMemoryDump pmd(nullptr, dump_args);
+              auto* mad = pmd.CreateAllocatorDump("malloc");
+              mad->AddScalar(
+                  base::trace_event::MemoryAllocatorDump::kNameSize,
+                  base::trace_event::MemoryAllocatorDump::kUnitsBytes, 1024);
 
+              callback.Run(true, args.dump_guid, std::move(pmd));
             }));
 
     ON_CALL(*this, RequestOSMemoryDump(_, _, _))
@@ -243,8 +250,10 @@ TEST_F(CoordinatorImplTest, MissingChromeDump) {
           Invoke([](const MemoryDumpRequestArgs& args,
                     const MockClientProcess::RequestChromeMemoryDumpCallback&
                         callback) {
-            auto dump = mojom::ChromeMemDump::New();
-            callback.Run(true, args.dump_guid, std::move(dump));
+            base::trace_event::MemoryDumpArgs dump_args{
+                base::trace_event::MemoryDumpLevelOfDetail::DETAILED};
+            base::trace_event::ProcessMemoryDump pmd(nullptr, dump_args);
+            callback.Run(true, args.dump_guid, std::move(pmd));
           }));
 
   MockGlobalMemoryDumpCallback callback;
@@ -311,7 +320,7 @@ TEST_F(CoordinatorImplTest, ClientCrashDuringGlobalDump) {
                      const MockClientProcess::RequestChromeMemoryDumpCallback&
                          callback) {
             client_process_2.reset();
-            callback.Run(true, args.dump_guid, nullptr);
+            callback.Run(true, args.dump_guid, base::nullopt);
           }));
   ON_CALL(*client_process_2, RequestChromeMemoryDump(_, _))
       .WillByDefault(
@@ -320,7 +329,7 @@ TEST_F(CoordinatorImplTest, ClientCrashDuringGlobalDump) {
                      const MockClientProcess::RequestChromeMemoryDumpCallback&
                          callback) {
             client_process_1.reset();
-            callback.Run(true, args.dump_guid, nullptr);
+            callback.Run(true, args.dump_guid, base::nullopt);
           }));
 
   MockGlobalMemoryDumpCallback callback;
@@ -351,7 +360,7 @@ TEST_F(CoordinatorImplTest, SingleClientCrashDuringGlobalDump) {
             // The dtor here will cause mojo to post an UnregisterClient call to
             // the coordinator.
             client_process.reset();
-            callback.Run(true, args.dump_guid, nullptr);
+            callback.Run(true, args.dump_guid, base::nullopt);
           }));
 
   MockGlobalMemoryDumpCallback callback;
@@ -372,18 +381,29 @@ TEST_F(CoordinatorImplTest, GlobalMemoryDumpStruct) {
           Invoke([](const MemoryDumpRequestArgs& args,
                     const MockClientProcess::RequestChromeMemoryDumpCallback&
                         callback) {
-            auto dump = mojom::ChromeMemDump::New();
-            dump->malloc_total_kb = 1;
-            callback.Run(args.dump_guid, true, std::move(dump));
+            base::trace_event::MemoryDumpArgs dump_args{
+                base::trace_event::MemoryDumpLevelOfDetail::DETAILED};
+            base::trace_event::ProcessMemoryDump pmd(nullptr, dump_args);
+            auto* mad = pmd.CreateAllocatorDump("malloc");
+            mad->AddScalar(base::trace_event::MemoryAllocatorDump::kNameSize,
+                           base::trace_event::MemoryAllocatorDump::kUnitsBytes,
+                           1024);
+
+            callback.Run(true, args.dump_guid, std::move(pmd));
           }));
   EXPECT_CALL(renderer_client, RequestChromeMemoryDump(_, _))
       .WillOnce(
           Invoke([](const MemoryDumpRequestArgs& args,
                     const MockClientProcess::RequestChromeMemoryDumpCallback&
                         callback) {
-            auto dump = mojom::ChromeMemDump::New();
-            dump->malloc_total_kb = 2;
-            callback.Run(args.dump_guid, true, std::move(dump));
+            base::trace_event::MemoryDumpArgs dump_args{
+                base::trace_event::MemoryDumpLevelOfDetail::DETAILED};
+            base::trace_event::ProcessMemoryDump pmd(nullptr, dump_args);
+            auto* mad = pmd.CreateAllocatorDump("malloc");
+            mad->AddScalar(base::trace_event::MemoryAllocatorDump::kNameSize,
+                           base::trace_event::MemoryAllocatorDump::kUnitsBytes,
+                           1024 * 2);
+            callback.Run(true, args.dump_guid, std::move(pmd));
           }));
 #if defined(OS_LINUX)
   EXPECT_CALL(browser_client,
@@ -432,6 +452,7 @@ TEST_F(CoordinatorImplTest, GlobalMemoryDumpStruct) {
   EXPECT_CALL(callback, OnCall(true, Ne(0u), NotNull()))
       .WillOnce(Invoke([&run_loop](bool success, uint64_t dump_guid,
                                    GlobalMemoryDump* global_dump) {
+        EXPECT_TRUE(success);
         EXPECT_EQ(2U, global_dump->process_dumps.size());
         mojom::ProcessMemoryDumpPtr browser_dump = nullptr;
         mojom::ProcessMemoryDumpPtr renderer_dump = nullptr;
