@@ -16,6 +16,24 @@
       "revId": "b9afce70bb759501416fb7a78aad1b20498fdbc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf8f63ee_9d582a22",
+        "filename": "ui/events/blink/input_handler_proxy.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-09-06T18:29:20Z",
+      "side": 1,
+      "message": "Do we need the bool? We can just put the synchronous_input_handler_ on the if condition no?",
+      "parentUuid": "2e78fc3a_ab19f159",
+      "revId": "b9afce70bb759501416fb7a78aad1b20498fdbc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
