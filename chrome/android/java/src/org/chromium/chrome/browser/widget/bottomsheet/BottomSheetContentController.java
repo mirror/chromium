@@ -16,10 +16,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 
+import com.google.android.libraries.hats20.HatsClient;
+import com.google.android.libraries.hats20.HatsDownloadRequest;
+import com.google.android.libraries.hats20.HatsShowRequest;
+import com.google.android.libraries.hats20.storage.HatsDataStore;
+
 import org.chromium.base.ActivityState;
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.ApplicationStatus;
 import org.chromium.base.ApplicationStatus.ActivityStateListener;
+import org.chromium.base.Log;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeActivity;
@@ -67,6 +73,9 @@ public class BottomSheetContentController extends BottomNavigationView
     public static final int TYPE_INCOGNITO_HOME = 4;
     public static final int TYPE_PLACEHOLDER = 5;
 
+    private final String mSiteId = "7ukwh6npnmfm4ifb7ebubwyipe";
+    private final HatsDataStore mHatsDataStore = HatsDataStore.buildFromContext(getContext());
+
     // R.id.action_home is overloaded, so an invalid ID is used to reference the incognito version
     // of the home content.
     private static final int INCOGNITO_HOME_ID = -1;
@@ -76,6 +85,8 @@ public class BottomSheetContentController extends BottomNavigationView
     private static final int PLACEHOLDER_ID = -2;
 
     private final Map<Integer, BottomSheetContent> mBottomSheetContents = new HashMap<>();
+    private HatsShowRequest mRequest;
+    private HatsDownloadRequest mDownloadRequest;
 
     private final BottomSheetObserver mBottomSheetObserver = new EmptyBottomSheetObserver() {
         @Override
@@ -104,6 +115,7 @@ public class BottomSheetContentController extends BottomNavigationView
                 mHighlightedView = mActivity.findViewById(mHighlightItemId);
                 ViewHighlighter.turnOnHighlight(mHighlightedView, false);
             }
+            HatsClient.showSurveyIfAvailable(mRequest);
         }
 
         @Override
@@ -138,6 +150,28 @@ public class BottomSheetContentController extends BottomNavigationView
             if (mBottomSheet.getSheetState() == BottomSheet.SHEET_STATE_PEEK) {
                 clearBottomSheetContents(false);
             }
+            Log.d("HatsLibClient",
+                    "does a valid survey exist? " + mHatsDataStore.validSurveyExists(mSiteId));
+            if (!HatsClient.showSurveyIfAvailable(mRequest)) {
+                Log.e("HatsLibClient",
+                        "expiration date: " + mHatsDataStore.getSurveyExpirationDate(mSiteId, 0));
+                Log.w("HatsLibClient",
+                        "does a valid survey exist? " + mHatsDataStore.validSurveyExists(mSiteId));
+                Log.d("HatsLibClient", "removing survey if expired.");
+                mHatsDataStore.removeSurveyIfExpired(mSiteId);
+                Log.d("HatsLibClient",
+                        "expiration date: " + mHatsDataStore.getSurveyExpirationDate(mSiteId, 0));
+                Log.d("HatsLibClient",
+                        "does a valid survey exist? " + mHatsDataStore.validSurveyExists(mSiteId));
+                mHatsDataStore.removeSurvey(mSiteId);
+                Log.d("HatsLibClient",
+                        "expiration date: " + mHatsDataStore.getSurveyExpirationDate(mSiteId, 0));
+                Log.d("HatsLibClient",
+                        "does a valid survey exist? " + mHatsDataStore.validSurveyExists(mSiteId));
+                HatsClient.downloadSurvey(mDownloadRequest);
+                Log.d("HatsLibClient", "" + HatsClient.showSurveyIfAvailable(mRequest));
+            }
+            Log.d("INJAE", "" + HatsClient.showSurveyIfAvailable(mRequest));
         }
 
         @Override
@@ -231,6 +265,14 @@ public class BottomSheetContentController extends BottomNavigationView
                 if (newState == ActivityState.STOPPED) mSnackbarManager.onStop();
             }
         }, mActivity);
+
+        mRequest = HatsShowRequest.builder((Activity) getContext()).forSiteId(mSiteId).build();
+        mDownloadRequest = HatsDownloadRequest.builder(getContext())
+                                   .forSiteId(mSiteId)
+                                   .withAdvertisingId("")
+                                   .build();
+        HatsClient.downloadSurvey(mDownloadRequest);
+        Log.d("HatsLibClient", "downloaded");
 
         // We use a global layout listener here to ensure we update menu item spacing after the
         // menu icons have their full width.
