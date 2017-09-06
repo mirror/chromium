@@ -9,7 +9,6 @@
 
 namespace switches {
 
-UI_BASE_EXPORT bool IsLinkDisambiguationPopupEnabled();
 UI_BASE_EXPORT bool IsTouchDragDropEnabled();
 
 }  // namespace switches

@@ -306,12 +306,6 @@ void RenderWidgetHostViewBase::DidReceiveRendererFrame() {
   ++renderer_frame_number_;
 }
 
-void RenderWidgetHostViewBase::ShowDisambiguationPopup(
-    const gfx::Rect& rect_pixels,
-    const SkBitmap& zoomed_bitmap) {
-  NOTIMPLEMENTED();
-}
-
 gfx::Size RenderWidgetHostViewBase::GetVisibleViewportSize() const {
   return GetViewBounds().size();
 }

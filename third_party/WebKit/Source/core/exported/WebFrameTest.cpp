@@ -6178,11 +6178,11 @@ TEST_P(CompositedSelectionBoundsTest, InputScrolled) {
 #endif
 #endif
 
-class DisambiguationPopupTestWebViewClient
+class DisambiguationRectTestWebViewClient
     : public FrameTestHelpers::TestWebViewClient {
  public:
-  DisambiguationPopupTestWebViewClient() {}
-  ~DisambiguationPopupTestWebViewClient() override {}
+  DisambiguationRectTestWebViewClient() {}
+  ~DisambiguationRectTestWebViewClient() override {}
 
   // FrameTestHelpers::TestWebViewClient:
   bool DidTapMultipleTargets(const WebSize&,
@@ -6209,11 +6209,11 @@ static WebCoalescedInputEvent FatTap(int x, int y, int diameter) {
   return WebCoalescedInputEvent(event);
 }
 
-TEST_P(ParameterizedWebFrameTest, DisambiguationPopup) {
+TEST_P(ParameterizedWebFrameTest, DisambiguationRect) {
   const std::string html_file = "disambiguation_popup.html";
   RegisterMockedHttpURLLoad(html_file);
 
-  DisambiguationPopupTestWebViewClient client;
+  DisambiguationRectTestWebViewClient client;
   const int kTapDiameter = 100;
 
   // Make sure we initialize to minimum scale, even if the window size
@@ -6268,10 +6268,10 @@ TEST_P(ParameterizedWebFrameTest, DisambiguationPopup) {
   }
 }
 
-TEST_P(ParameterizedWebFrameTest, DisambiguationPopupNoContainer) {
+TEST_P(ParameterizedWebFrameTest, DisambiguationRectNoContainer) {
   RegisterMockedHttpURLLoad("disambiguation_popup_no_container.html");
 
-  DisambiguationPopupTestWebViewClient client;
+  DisambiguationRectTestWebViewClient client;
   const int kTapDiameter = 100;
 
   // Make sure we initialize to minimum scale, even if the window size
@@ -6286,11 +6286,11 @@ TEST_P(ParameterizedWebFrameTest, DisambiguationPopupNoContainer) {
   EXPECT_FALSE(client.Triggered());
 }
 
-TEST_P(ParameterizedWebFrameTest, DisambiguationPopupMobileSite) {
+TEST_P(ParameterizedWebFrameTest, DisambiguationRectMobileSite) {
   const std::string html_file = "disambiguation_popup_mobile_site.html";
   RegisterMockedHttpURLLoad(html_file);
 
-  DisambiguationPopupTestWebViewClient client;
+  DisambiguationRectTestWebViewClient client;
   const int kTapDiameter = 100;
 
   // Make sure we initialize to minimum scale, even if the window size
@@ -6323,11 +6323,11 @@ TEST_P(ParameterizedWebFrameTest, DisambiguationPopupMobileSite) {
   }
 }
 
-TEST_P(ParameterizedWebFrameTest, DisambiguationPopupViewportSite) {
+TEST_P(ParameterizedWebFrameTest, DisambiguationRectViewportSite) {
   const std::string html_file = "disambiguation_popup_viewport_site.html";
   RegisterMockedHttpURLLoad(html_file);
 
-  DisambiguationPopupTestWebViewClient client;
+  DisambiguationRectTestWebViewClient client;
   const int kTapDiameter = 100;
 
   // Make sure we initialize to minimum scale, even if the window size
@@ -6360,11 +6360,11 @@ TEST_P(ParameterizedWebFrameTest, DisambiguationPopupViewportSite) {
   }
 }
 
-TEST_P(ParameterizedWebFrameTest, DisambiguationPopupVisualViewport) {
+TEST_P(ParameterizedWebFrameTest, DisambiguationRectVisualViewport) {
   const std::string html_file = "disambiguation_popup_200_by_800.html";
   RegisterMockedHttpURLLoad(html_file);
 
-  DisambiguationPopupTestWebViewClient client;
+  DisambiguationRectTestWebViewClient client;
   const int kTapDiameter = 100;
 
   FrameTestHelpers::WebViewHelper web_view_helper;
@@ -6415,14 +6415,14 @@ TEST_P(ParameterizedWebFrameTest, DisambiguationPopupVisualViewport) {
   EXPECT_FALSE(client.Triggered());
 }
 
-TEST_P(ParameterizedWebFrameTest, DisambiguationPopupBlacklist) {
+TEST_P(ParameterizedWebFrameTest, DisambiguationRectBlacklist) {
   const unsigned kViewportWidth = 500;
   const unsigned kViewportHeight = 1000;
   const unsigned kDivHeight = 100;
   const std::string html_file = "disambiguation_popup_blacklist.html";
   RegisterMockedHttpURLLoad(html_file);
 
-  DisambiguationPopupTestWebViewClient client;
+  DisambiguationRectTestWebViewClient client;
   const int kTapDiameter = 100;
 
   // Make sure we initialize to minimum scale, even if the window size
@@ -6452,10 +6452,10 @@ TEST_P(ParameterizedWebFrameTest, DisambiguationPopupBlacklist) {
   EXPECT_FALSE(client.Triggered());
 }
 
-TEST_P(ParameterizedWebFrameTest, DisambiguationPopupPageScale) {
+TEST_P(ParameterizedWebFrameTest, DisambiguationRectPageScale) {
   RegisterMockedHttpURLLoad("disambiguation_popup_page_scale.html");
 
-  DisambiguationPopupTestWebViewClient client;
+  DisambiguationRectTestWebViewClient client;
   const int kTapDiameter = 50;
 
   // Make sure we initialize to minimum scale, even if the window size
