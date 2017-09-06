@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d673e36_6fd2709a",
+        "filename": "services/ui/ws/test_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-06T15:23:44Z",
+      "side": 1,
+      "message": "Why not kWindowManagerClientId?",
+      "revId": "a32583bd36f5adc803b64de389e5f8b935688fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63f2e5b3_b3bb51a1",
+        "filename": "services/ui/ws/test_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-06T15:23:44Z",
+      "side": 1,
+      "message": "Can you use a constexpr here?",
+      "revId": "a32583bd36f5adc803b64de389e5f8b935688fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
