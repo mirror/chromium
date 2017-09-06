@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1a44021_452a5d74",
+        "filename": "chrome/browser/password_manager/password_manager_util_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-09-06T16:20:51Z",
+      "side": 1,
+      "message": "Do you not think we should also remove this clause from the if statement as well?",
+      "range": {
+        "startLine": 463,
+        "startChar": 43,
+        "endLine": 463,
+        "endChar": 71
+      },
+      "revId": "58d2360ba3dcef2a78256a67e4cbb4c18defdc12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
