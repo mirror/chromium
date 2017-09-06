@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a078e015_4d3c7f81",
+        "filename": "chrome/browser/ui/views/harmony/harmony_layout_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-09-06T23:46:54Z",
+      "side": 1,
+      "message": "I dunno, these values feel fairly arbitrary to me. I do think they\u0027re compensating for the text\u0027s internal leading, but that leading isn\u0027t 8pt. Even if it was that would mean the text versions should have 8pt *subtracted*, rather than the other way. But that makes them even harder to relate back to the layout unit.\n\nOn the other hand, the spec has us using the control version for checkboxes, which also have some internal padding.\n\nIn terms of dynamic calculation, that seems way out of scope for phase 1 at this point. And for phase 2 hopefully the \"margin combining\" idea you were talking about will make this less necessary.",
+      "parentUuid": "27e4cdc5_b79e71f2",
+      "revId": "74bca32a3001754518111cda3103512708b5ac04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee18bc46_18749c84",
         "filename": "ui/views/layout/layout_provider.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "74bca32a3001754518111cda3103512708b5ac04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c64e7ab_1b1d5704",
+        "filename": "ui/views/layout/layout_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-09-06T23:46:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee18bc46_18749c84",
+      "revId": "74bca32a3001754518111cda3103512708b5ac04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "fd51503b_b8657813",
+        "filename": "ui/views/layout/layout_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-09-06T23:46:54Z",
+      "side": 1,
+      "message": "Done, I like your suggestions.",
+      "parentUuid": "30175c68_103b6f4e",
+      "revId": "74bca32a3001754518111cda3103512708b5ac04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65393dc2_1c390279",
         "filename": "ui/views/layout/layout_provider.h",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-06T22:16:30Z",
       "side": 1,
       "message": "Maybe it would make more sense to separate the concept of whether there is a title from the concept of the type of leading content.  This would also let you unify to one ContentType enum.\n\nThis would also matter if we needed to differently encode the case of \"no button row\" from \"button row\", as we apparently do for titles.",
+      "revId": "74bca32a3001754518111cda3103512708b5ac04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a89687c_5ed0223b",
+        "filename": "ui/views/layout/layout_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-09-06T23:46:54Z",
+      "side": 1,
+      "message": "Okay, I agree with separating out \"no title.\" The only two places that use it, ExtensionInstallDialogView and TaskManagerView, are both kinda special cases already so I don\u0027t feel too bad about giving them a special case of manually constructing their content insets. Especially because ExtensionInstallDialogView is supposed to change to be more regular before Harmony is over.\n\nIn terms of the two enums, I like that the callsites are self-documenting, because you have to say \"the Leading Type is X and the Trailing Type is Y.\" But it would certainly be a lot terser to collapse them, and not have to type all that.",
+      "parentUuid": "65393dc2_1c390279",
       "revId": "74bca32a3001754518111cda3103512708b5ac04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
