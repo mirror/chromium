@@ -156,6 +156,8 @@ class PLATFORM_EXPORT GraphicsLayer : public cc::LayerClient,
 
   bool DrawsContent() const { return draws_content_; }
   void SetDrawsContent(bool);
+  bool DrawsContentForImage() const { return draws_content_for_image_; }
+  void SetDrawsContentForImage(bool);
 
   bool ContentsAreVisible() const { return contents_visible_; }
   void SetContentsVisible(bool);
@@ -314,9 +316,12 @@ class PLATFORM_EXPORT GraphicsLayer : public cc::LayerClient,
 
   void IncrementPaintCount() { ++paint_count_; }
 
+  WebLayer* GetEnclosedWebLayer();
+
   // Helper functions used by settors to keep layer's the state consistent.
   void UpdateChildList();
   void UpdateLayerIsDrawable();
+  void UpdateImageLayerIsDrawable();
   void UpdateContentsRect();
 
   void SetContentsTo(WebLayer*);
@@ -359,6 +364,7 @@ class PLATFORM_EXPORT GraphicsLayer : public cc::LayerClient,
   bool should_flatten_transform_ : 1;
   bool backface_visibility_ : 1;
   bool draws_content_ : 1;
+  bool draws_content_for_image_ : 1;
   bool contents_visible_ : 1;
   bool is_root_for_isolated_group_ : 1;
   bool should_hit_test_ : 1;

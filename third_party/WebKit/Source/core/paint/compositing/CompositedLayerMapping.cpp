@@ -2932,7 +2932,7 @@ GraphicsLayerUpdater::UpdateType CompositedLayerMapping::UpdateTypeForChildren(
 
 struct SetContentsNeedsDisplayFunctor {
   void operator()(GraphicsLayer* layer) const {
-    if (layer->DrawsContent())
+    if (layer->DrawsContent() || layer->DrawsContentForImage())
       layer->SetNeedsDisplay();
   }
 };
