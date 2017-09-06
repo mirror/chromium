@@ -45,6 +45,40 @@
       "revId": "4afacda3f9c63c474fad2f67d884d50577a42811",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adea7889_e897d566",
+        "filename": "components/viz/host/host_frame_sink_manager.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-09-06T20:14:49Z",
+      "side": 1,
+      "message": "nit: Add a comment.",
+      "revId": "4afacda3f9c63c474fad2f67d884d50577a42811",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18928baa_82948d60",
+        "filename": "components/viz/service/surfaces/surface_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-09-06T20:14:49Z",
+      "side": 1,
+      "message": "#if DCHECK_IS_ON()\n  auto it \u003d valid_frame_sink_labels_.find(frame_sink_id);\n  DCHECK(it !\u003d valid_frame_sink_labels_.end());\n  it-\u003esecond \u003d debug_label;\n#else\n  NOTREACHED();\n#endif",
+      "revId": "4afacda3f9c63c474fad2f67d884d50577a42811",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
