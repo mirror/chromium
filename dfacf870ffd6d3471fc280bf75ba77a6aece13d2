@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df52fc38_1f4a72ae",
+        "filename": "chrome/android/java/res/drawable/new_tab_icon.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-06T18:57:53Z",
+      "side": 1,
+      "message": "I assume this is just complaining generally about vector?  Since we use appcompat, this doesn\u0027t apply?",
+      "range": {
+        "startLine": 2,
+        "startChar": 28,
+        "endLine": 2,
+        "endChar": 35
+      },
+      "revId": "dfacf870ffd6d3471fc280bf75ba77a6aece13d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92924cd6_e731cc2f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/IncognitoBottomSheetContent.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-06T18:57:53Z",
+      "side": 1,
+      "message": "From the comment in the other cl, we should fix this by using ApiCompatibilityUtils.getPaddingStart/getPaddingEnd, but that might need to be cherrypicked back to the previous release, so we might want to do that separate if we don\u0027t want to pull this whole change.",
+      "range": {
+        "startLine": 37,
+        "startChar": 27,
+        "endLine": 37,
+        "endChar": 0
+      },
+      "revId": "dfacf870ffd6d3471fc280bf75ba77a6aece13d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cac119e_599e2faf",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActionsNotificationTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-06T18:57:53Z",
+      "side": 1,
+      "message": "Should this be on getWebappNotification or do we need it for everything?",
+      "range": {
+        "startLine": 42,
+        "startChar": 17,
+        "endLine": 42,
+        "endChar": 30
+      },
+      "revId": "dfacf870ffd6d3471fc280bf75ba77a6aece13d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53d24fe0_d92e7c68",
+        "filename": "content/public/android/java/res/menu/select_action_menu.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-06T18:57:53Z",
+      "side": 1,
+      "message": "This surprised me and I left a comment in the cl that landed this:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/617779\n\nI thought this would crash TBH, so I\u0027m curious how this doesn\u0027t.",
+      "revId": "dfacf870ffd6d3471fc280bf75ba77a6aece13d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
