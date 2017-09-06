@@ -85,7 +85,8 @@ WebShareTargetPickerView::WebShareTargetPickerView(
   const ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
   views::BoxLayout* layout = new views::BoxLayout(
       views::BoxLayout::kVertical,
-      provider->GetInsetsMetric(views::INSETS_DIALOG_CONTENTS),
+      provider->GetInsetsForContentType(views::LeadingContentType::TEXT,
+                                        views::TrailingContentType::CONTROL),
       provider->GetDistanceMetric(views::DISTANCE_RELATED_CONTROL_VERTICAL));
   SetLayoutManager(layout);
 
