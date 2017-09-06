@@ -22,6 +22,30 @@
       "revId": "cbc69d4751ed12624fe8133f51219024f971f14c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc5ffdb7_8e893784",
+        "filename": "chrome/browser/extensions/unpacked_installer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-09-06T21:07:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d2d33f9_f2ad4993",
+      "range": {
+        "startLine": 301,
+        "startChar": 8,
+        "endLine": 301,
+        "endChar": 18
+      },
+      "revId": "cbc69d4751ed12624fe8133f51219024f971f14c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

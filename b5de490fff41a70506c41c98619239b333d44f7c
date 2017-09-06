@@ -249,6 +249,30 @@
     },
     {
       "key": {
+        "uuid": "09072436_98499411",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/rule_indexing_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-09-06T21:07:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3141f782_e73301bc",
+      "range": {
+        "startLine": 130,
+        "startChar": 0,
+        "endLine": 130,
+        "endChar": 18
+      },
+      "revId": "b5de490fff41a70506c41c98619239b333d44f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5226a3f1_16cd9931",
         "filename": "chrome/browser/extensions/api/declarative_net_request/rule_indexing_unittest.cc",
         "patchSetId": 8
@@ -558,6 +582,30 @@
     },
     {
       "key": {
+        "uuid": "9c779de3_55a0d83d",
+        "filename": "chrome/browser/extensions/unpacked_installer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-09-06T21:07:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03a25dbd_e5146752",
+      "range": {
+        "startLine": 321,
+        "startChar": 2,
+        "endLine": 321,
+        "endChar": 27
+      },
+      "revId": "b5de490fff41a70506c41c98619239b333d44f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7cfb207_5b644adf",
         "filename": "chrome/browser/extensions/unpacked_installer.h",
         "patchSetId": 8
@@ -745,6 +793,30 @@
       "writtenOn": "2017-09-01T01:18:58Z",
       "side": 1,
       "message": "I\u0027m gonna put a dummy note here as a reminder to revert this partially as we discussed offline.",
+      "range": {
+        "startLine": 368,
+        "startChar": 0,
+        "endLine": 368,
+        "endChar": 77
+      },
+      "revId": "b5de490fff41a70506c41c98619239b333d44f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29d386b0_899d9312",
+        "filename": "extensions/common/file_util.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-09-06T21:07:19Z",
+      "side": 1,
+      "message": "The changes here should still say. In a way we are solving https://bugs.chromium.org/p/chromium/issues/detail?id\u003d402278 by the cleanup metadata code. Hence no special casing of the metadata folder is necessary any longer. Particularly, if a user provides a _metadata folder with non-reserved filenames, it should give a hard error.",
+      "parentUuid": "7615e8d7_e8ee3b77",
       "range": {
         "startLine": 368,
         "startChar": 0,
