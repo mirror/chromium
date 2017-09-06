@@ -126,11 +126,6 @@ class VrShell : device::GvrGamepadDataProvider,
   void ExitCct();
   void ToggleCardboardGamepad(bool enabled);
   void ToggleGvrGamepad(bool enabled);
-  base::android::ScopedJavaGlobalRef<jobject> TakeContentSurface(
-      JNIEnv* env,
-      const base::android::JavaParamRef<jobject>& obj);
-  void RestoreContentSurface(JNIEnv* env,
-                             const base::android::JavaParamRef<jobject>& obj);
   void SetHistoryButtonsEnabled(JNIEnv* env,
                                 const base::android::JavaParamRef<jobject>& obj,
                                 jboolean can_go_back,
@@ -150,6 +145,7 @@ class VrShell : device::GvrGamepadDataProvider,
   void ContentWasShown();
 
   void ContentSurfaceChanged(jobject surface);
+  void ContentOverlaySurfaceChanged(jobject surface);
   void GvrDelegateReady(gvr::ViewerType viewer_type);
 
   void OnPhysicalBackingSizeChanged(
@@ -249,8 +245,6 @@ class VrShell : device::GvrGamepadDataProvider,
 
   device::mojom::GeolocationConfigPtr geolocation_config_;
 
-  jobject content_surface_ = nullptr;
-  bool taken_surface_ = false;
   base::CancelableClosure poll_capturing_media_task_;
   bool is_capturing_audio_ = false;
   bool is_capturing_video_ = false;

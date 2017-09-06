@@ -235,18 +235,35 @@ void VrShellGl::InitializeGl(gfx::AcceleratedWidget window) {
     return;
   }
 
-  unsigned int textures[2];
-  glGenTextures(2, textures);
+  unsigned int textures[3];
+  glGenTextures(3, textures);
   content_texture_id_ = textures[0];
-  webvr_texture_id_ = textures[1];
+  content_overlay_texture_id_ = textures[1];
+  webvr_texture_id_ = textures[2];
+
   content_surface_texture_ = gl::SurfaceTexture::Create(content_texture_id_);
+  content_overlay_surface_texture_ =
+      gl::SurfaceTexture::Create(content_overlay_texture_id_);
   webvr_surface_texture_ = gl::SurfaceTexture::Create(webvr_texture_id_);
-  CreateContentSurface();
+
+  content_surface_ =
+      base::MakeUnique<gl::ScopedJavaSurface>(content_surface_texture_.get());
+  browser_->ContentSurfaceChanged(content_surface_->j_surface().obj());
+  content_overlay_surface_ = base::MakeUnique<gl::ScopedJavaSurface>(
+      content_overlay_surface_texture_.get());
+  browser_->ContentOverlaySurfaceChanged(
+      content_overlay_surface_->j_surface().obj());
+
   content_surface_texture_->SetFrameAvailableCallback(base::Bind(
       &VrShellGl::OnContentFrameAvailable, weak_ptr_factory_.GetWeakPtr()));
+  content_overlay_surface_texture_->SetFrameAvailableCallback(
+      base::Bind(&VrShellGl::OnContentOverlayFrameAvailable,
+                 weak_ptr_factory_.GetWeakPtr()));
   webvr_surface_texture_->SetFrameAvailableCallback(base::Bind(
       &VrShellGl::OnWebVRFrameAvailable, weak_ptr_factory_.GetWeakPtr()));
   content_surface_texture_->SetDefaultBufferSize(
+      content_tex_physical_size_.width(), content_tex_physical_size_.height());
+  content_overlay_surface_texture_->SetDefaultBufferSize(
       content_tex_physical_size_.width(), content_tex_physical_size_.height());
 
   InitializeRenderer();
@@ -256,7 +273,7 @@ void VrShellGl::InitializeGl(gfx::AcceleratedWidget window) {
   // invoked synchronously on this thread (cf the post tasking to the current
   // thread in VrGlThread). I.e., we could probably split GlBrowserInterface
   // into parts.
-  browser_->OnGlInitialized(content_texture_id_);
+  browser_->OnGlInitialized(content_texture_id_, content_overlay_texture_id_);
 
   webvr_vsync_align_ = base::FeatureList::IsEnabled(features::kWebVrVsyncAlign);
 
@@ -280,12 +297,6 @@ void VrShellGl::InitializeGl(gfx::AcceleratedWidget window) {
 
   ready_to_draw_ = true;
   OnVSync(base::TimeTicks::Now());
-}
-
-void VrShellGl::CreateContentSurface() {
-  content_surface_ =
-      base::MakeUnique<gl::ScopedJavaSurface>(content_surface_texture_.get());
-  browser_->ContentSurfaceChanged(content_surface_->j_surface().obj());
 }
 
 void VrShellGl::CreateOrResizeWebVRSurface(const gfx::Size& size) {
@@ -371,6 +382,11 @@ void VrShellGl::ConnectPresentingService(
 
 void VrShellGl::OnContentFrameAvailable() {
   content_surface_texture_->UpdateTexImage();
+}
+
+void VrShellGl::OnContentOverlayFrameAvailable() {
+  LOG(ERROR) << "doFrame";
+  content_overlay_surface_texture_->UpdateTexImage();
 }
 
 void VrShellGl::OnWebVRFrameAvailable() {
@@ -1089,6 +1105,8 @@ void VrShellGl::ContentBoundsChanged(int width, int height) {
 void VrShellGl::ContentPhysicalBoundsChanged(int width, int height) {
   if (content_surface_texture_.get())
     content_surface_texture_->SetDefaultBufferSize(width, height);
+  if (content_overlay_surface_texture_.get())
+    content_overlay_surface_texture_->SetDefaultBufferSize(width, height);
   content_tex_physical_size_.set_width(width);
   content_tex_physical_size_.set_height(height);
 }

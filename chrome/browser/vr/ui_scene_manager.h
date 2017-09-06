@@ -60,7 +60,8 @@ class UiSceneManager {
   // These methods are currently stubbed.
   void SetHistoryButtonsEnabled(bool can_go_back, bool can_go_forward);
 
-  void OnGlInitialized(unsigned int content_texture_id);
+  void OnGlInitialized(unsigned int content_texture_id,
+                       unsigned int content_overlay_texture_id);
   void OnAppButtonClicked();
   void OnAppButtonGesturePerformed(UiInterface::Direction direction);
   void OnWebVrFrameAvailable();
@@ -115,6 +116,7 @@ class UiSceneManager {
   UiElement* exit_prompt_backplane_ = nullptr;
   UiElement* exit_warning_ = nullptr;
   ContentElement* main_content_ = nullptr;
+  ContentElement* main_content_overlay_ = nullptr;
   UiElement* audio_capture_indicator_ = nullptr;
   UiElement* bluetooth_connected_indicator_ = nullptr;
   UiElement* video_capture_indicator_ = nullptr;

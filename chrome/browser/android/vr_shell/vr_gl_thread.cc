@@ -67,6 +67,12 @@ void VrGLThread::ContentSurfaceChanged(jobject surface) {
       base::Bind(&VrShell::ContentSurfaceChanged, weak_vr_shell_, surface));
 }
 
+void VrGLThread::ContentOverlaySurfaceChanged(jobject surface) {
+  main_thread_task_runner_->PostTask(
+      FROM_HERE, base::Bind(&VrShell::ContentOverlaySurfaceChanged,
+                            weak_vr_shell_, surface));
+}
+
 void VrGLThread::GvrDelegateReady(gvr::ViewerType viewer_type) {
   main_thread_task_runner_->PostTask(
       FROM_HERE,
@@ -142,10 +148,11 @@ void VrGLThread::ToggleCardboardGamepad(bool enabled) {
       base::Bind(&VrShell::ToggleCardboardGamepad, weak_vr_shell_, enabled));
 }
 
-void VrGLThread::OnGlInitialized(unsigned int content_texture_id) {
-  task_runner()->PostTask(FROM_HERE,
-                          base::Bind(&vr::UiSceneManager::OnGlInitialized,
-                                     weak_scene_manager_, content_texture_id));
+void VrGLThread::OnGlInitialized(unsigned int content_texture_id,
+                                 unsigned int content_overlay_texture_id) {
+  DCHECK(task_runner()->BelongsToCurrentThread());
+  scene_manager_->OnGlInitialized(content_texture_id,
+                                  content_overlay_texture_id);
 }
 
 void VrGLThread::OnUnsupportedMode(vr::UiUnsupportedMode mode) {

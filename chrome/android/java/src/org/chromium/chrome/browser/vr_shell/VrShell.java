@@ -71,12 +71,6 @@ public interface VrShell {
     void requestToExitVr(@UiUnsupportedMode int reason);
 
     /**
-     * Gives VrShell a chance to clean up any view-dependent state before removing
-     * VrShell from the view hierarchy.
-     */
-    void onBeforeWindowDetached();
-
-    /**
      *  Triggers VrShell to navigate forward.
      */
     void navigateForward();

@@ -28,6 +28,7 @@ class GlBrowserInterface {
   virtual ~GlBrowserInterface() = default;
 
   virtual void ContentSurfaceChanged(jobject surface) = 0;
+  virtual void ContentOverlaySurfaceChanged(jobject surface) = 0;
   virtual void GvrDelegateReady(gvr::ViewerType viewer_type) = 0;
   virtual void UpdateGamepadData(device::GvrGamepadData) = 0;
   virtual void AppButtonGesturePerformed(
@@ -41,7 +42,8 @@ class GlBrowserInterface {
       device::mojom::VRDisplayInfoPtr* info) = 0;
   virtual void OnContentPaused(bool enabled) = 0;
   virtual void ToggleCardboardGamepad(bool enabled) = 0;
-  virtual void OnGlInitialized(unsigned int content_texture_id) = 0;
+  virtual void OnGlInitialized(unsigned int content_texture_id,
+                               unsigned int content_overlay_texture_id) = 0;
   virtual void OnWebVrFrameAvailable() = 0;
   virtual void OnWebVrTimedOut() = 0;
   virtual void OnProjMatrixChanged(const gfx::Transform& proj_matrix) = 0;

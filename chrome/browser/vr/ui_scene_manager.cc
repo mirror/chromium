@@ -408,6 +408,20 @@ void UiSceneManager::CreateContentQuad(ContentInputDelegate* delegate) {
   content_elements_.push_back(main_content.get());
   scene_->AddUiElement(k2dBrowsingContentGroup, std::move(main_content));
 
+  std::unique_ptr<ContentElement> main_content_overlay =
+      base::MakeUnique<ContentElement>(delegate);
+  main_content_overlay->set_name(kContentQuadOverlay);
+  main_content_overlay->set_draw_phase(kPhaseForeground);
+  main_content_overlay->SetSize(kContentWidth, kContentHeight);
+  main_content_overlay->SetVisible(false);
+  main_content_overlay->set_corner_radius(kContentCornerRadius);
+  main_content_overlay->SetTransitionedProperties({BOUNDS});
+  main_content_overlay->SetTranslate(0, 0, kTextureOffset);
+  main_content_overlay_ = main_content_overlay.get();
+  content_elements_.push_back(main_content_overlay.get());
+  scene_->AddUiElement(k2dBrowsingContentGroup,
+                       std::move(main_content_overlay));
+
   // Limit reticle distance to a sphere based on content distance.
   scene_->set_background_distance(kContentDistance *
                                   kBackgroundDistanceMultiplier);
@@ -784,6 +798,7 @@ void UiSceneManager::ConfigureScene() {
     scene_->GetUiElementByName(k2dBrowsingContentGroup)
         ->SetTranslate(0, kFullscreenVerticalOffset, -kFullscreenDistance);
     main_content_->SetSize(kFullscreenWidth, kFullscreenHeight);
+    main_content_overlay_->SetSize(kFullscreenWidth, kFullscreenHeight);
     close_button_->SetTranslate(
         0, kFullscreenVerticalOffset - (kFullscreenHeight / 2) - 0.35,
         -kCloseButtonFullscreenDistance);
@@ -794,6 +809,7 @@ void UiSceneManager::ConfigureScene() {
     scene_->GetUiElementByName(k2dBrowsingContentGroup)
         ->SetTranslate(0, kContentVerticalOffset, -kContentDistance);
     main_content_->SetSize(kContentWidth, kContentHeight);
+    main_content_overlay_->SetSize(kContentWidth, kContentHeight);
     close_button_->SetTranslate(
         0, kContentVerticalOffset - (kContentHeight / 2) - 0.3,
         -kCloseButtonDistance);
@@ -874,8 +890,10 @@ void UiSceneManager::SetIncognito(bool incognito) {
   ConfigureScene();
 }
 
-void UiSceneManager::OnGlInitialized(unsigned int content_texture_id) {
+void UiSceneManager::OnGlInitialized(unsigned int content_texture_id,
+                                     unsigned int content_overlay_texture_id) {
   main_content_->set_texture_id(content_texture_id);
+  main_content_overlay_->set_texture_id(content_overlay_texture_id);
   scene_->OnGlInitialized();
 
   ConfigureScene();

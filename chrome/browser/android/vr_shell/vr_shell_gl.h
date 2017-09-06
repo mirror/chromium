@@ -97,7 +97,6 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
 
   void SetWebVrMode(bool enabled);
   void CreateOrResizeWebVRSurface(const gfx::Size& size);
-  void CreateContentSurface();
   void ContentBoundsChanged(int width, int height);
   void ContentPhysicalBoundsChanged(int width, int height);
   void UIBoundsChanged(int width, int height);
@@ -159,6 +158,7 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
   void CreateUiSurface();
 
   void OnContentFrameAvailable();
+  void OnContentOverlayFrameAvailable();
   void OnWebVRFrameAvailable();
   void ScheduleWebVrFrameTimeout();
   void OnWebVrFrameTimedOut();
@@ -189,6 +189,8 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
 
   // samplerExternalOES texture data for main content image.
   int content_texture_id_ = 0;
+  // samplerExternalOES texture data for main content overlay image.
+  int content_overlay_texture_id_ = 0;
   // samplerExternalOES texture data for WebVR content image.
   int webvr_texture_id_ = 0;
 
@@ -198,9 +200,11 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
   scoped_refptr<gl::GLSurface> surface_;
   scoped_refptr<gl::GLContext> context_;
   scoped_refptr<gl::SurfaceTexture> content_surface_texture_;
+  scoped_refptr<gl::SurfaceTexture> content_overlay_surface_texture_;
   scoped_refptr<gl::SurfaceTexture> webvr_surface_texture_;
 
   std::unique_ptr<gl::ScopedJavaSurface> content_surface_;
+  std::unique_ptr<gl::ScopedJavaSurface> content_overlay_surface_;
 
   std::unique_ptr<gvr::GvrApi> gvr_api_;
   std::unique_ptr<gvr::BufferViewportList> buffer_viewport_list_;

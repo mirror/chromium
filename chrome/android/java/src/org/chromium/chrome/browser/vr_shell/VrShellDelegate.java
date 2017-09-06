@@ -752,7 +752,7 @@ public class VrShellDelegate
 
     private static void removeBlackOverlayView(ChromeActivity activity) {
         if (!sAddedBlackOverlayView) return;
-        View v = (View) activity.getWindow().findViewById(R.id.vr_overlay_view);
+        View v = activity.getWindow().findViewById(R.id.vr_overlay_view);
         assert v != null;
         UiUtils.removeViewFromParent(v);
         sAddedBlackOverlayView = false;
@@ -1408,7 +1408,6 @@ public class VrShellDelegate
     }
 
     private void removeVrViews() {
-        mVrShell.onBeforeWindowDetached();
         mActivity.onExitVr();
         FrameLayout decor = (FrameLayout) mActivity.getWindow().getDecorView();
         decor.removeView(mVrShell.getContainer());

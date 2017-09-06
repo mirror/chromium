@@ -285,13 +285,13 @@ public class ChromeTabbedActivity
 
         @Override
         public boolean canShowBrowserControls() {
-            if (VrShellDelegate.isInVr()) return false;
+            //            if (VrShellDelegate.isInVr()) return false;
             return super.canShowBrowserControls();
         }
 
         @Override
         public boolean canAutoHideBrowserControls() {
-            if (VrShellDelegate.isInVr()) return true;
+            //            if (VrShellDelegate.isInVr()) return true;
             return super.canAutoHideBrowserControls();
         }
     }
@@ -2122,13 +2122,13 @@ public class ChromeTabbedActivity
     @Override
     public void onEnterVr() {
         super.onEnterVr();
-        mControlContainer.setVisibility(View.INVISIBLE);
+        //        mControlContainer.setVisibility(View.INVISIBLE);
     }
 
     @Override
     public void onExitVr() {
         super.onExitVr();
-        mControlContainer.setVisibility(View.VISIBLE);
+        //        mControlContainer.setVisibility(View.VISIBLE);
     }
 
     /**

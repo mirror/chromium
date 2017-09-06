@@ -474,29 +474,6 @@ void VrShell::ConnectPresentingService(
                             base::Passed(&request)));
 }
 
-base::android::ScopedJavaGlobalRef<jobject> VrShell::TakeContentSurface(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj) {
-  if (!content_surface_) {
-    return base::android::ScopedJavaGlobalRef<jobject>(env, nullptr);
-  }
-  taken_surface_ = true;
-  compositor_->SurfaceChanged(nullptr);
-  base::android::ScopedJavaGlobalRef<jobject> surface(env, content_surface_);
-  content_surface_ = nullptr;
-  return surface;
-}
-
-void VrShell::RestoreContentSurface(JNIEnv* env,
-                                    const JavaParamRef<jobject>& obj) {
-  // Don't try to restore the surface if we haven't successfully taken it yet.
-  if (!taken_surface_)
-    return;
-  taken_surface_ = false;
-  PostToGlThread(FROM_HERE, base::Bind(&VrShellGl::CreateContentSurface,
-                                       gl_thread_->GetVrShellGl()));
-}
-
 void VrShell::SetHistoryButtonsEnabled(JNIEnv* env,
                                        const JavaParamRef<jobject>& obj,
                                        jboolean can_go_back,
@@ -507,14 +484,17 @@ void VrShell::SetHistoryButtonsEnabled(JNIEnv* env,
 void VrShell::RequestToExitVr(JNIEnv* env,
                               const JavaParamRef<jobject>& obj,
                               int reason) {
-  ui_->SetExitVrPromptEnabled(true, (vr::UiUnsupportedMode)reason);
+  ui_->SetExitVrPromptEnabled(true, static_cast<vr::UiUnsupportedMode>(reason));
 }
 
 void VrShell::ContentSurfaceChanged(jobject surface) {
-  content_surface_ = surface;
+  compositor_->SurfaceChanged(surface);
+}
+
+void VrShell::ContentOverlaySurfaceChanged(jobject surface) {
   JNIEnv* env = base::android::AttachCurrentThread();
-  Java_VrShellImpl_contentSurfaceChanged(env, j_vr_shell_);
-  compositor_->SurfaceChanged(content_surface_);
+  base::android::ScopedJavaGlobalRef<jobject> ref(env, surface);
+  Java_VrShellImpl_contentOverlaySurfaceChanged(env, j_vr_shell_, ref);
 }
 
 void VrShell::GvrDelegateReady(gvr::ViewerType viewer_type) {

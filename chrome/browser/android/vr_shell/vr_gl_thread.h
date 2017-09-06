@@ -46,6 +46,7 @@ class VrGLThread : public base::android::JavaHandlerThread,
 
   // GlBrowserInterface implementation (VrShellGl calling out to UI/VrShell).
   void ContentSurfaceChanged(jobject surface) override;
+  void ContentOverlaySurfaceChanged(jobject surface) override;
   void GvrDelegateReady(gvr::ViewerType viewer_type) override;
   void UpdateGamepadData(device::GvrGamepadData) override;
   void AppButtonClicked() override;
@@ -58,7 +59,8 @@ class VrGLThread : public base::android::JavaHandlerThread,
       device::mojom::VRDisplayInfoPtr* info) override;
   void OnContentPaused(bool enabled) override;
   void ToggleCardboardGamepad(bool enabled) override;
-  void OnGlInitialized(unsigned int content_texture_id) override;
+  void OnGlInitialized(unsigned int content_texture_id,
+                       unsigned int content_overlay_texture_id) override;
   void OnWebVrFrameAvailable() override;
   void OnWebVrTimedOut() override;
   void OnProjMatrixChanged(const gfx::Transform& proj_matrix) override;
