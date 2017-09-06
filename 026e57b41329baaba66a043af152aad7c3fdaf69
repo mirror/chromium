@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5dd0905c_ab0b1f21",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1068,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-06T02:05:22Z",
+      "side": 1,
+      "message": "This is actually not required. I have addressed this issue in my CL, so that when a node is deleted, and we update editnodes in bookmarkTableView, we also update the delegate, so that it moves the context bar into the right state.\nThanks for fixing this though.",
+      "range": {
+        "startLine": 1068,
+        "startChar": 6,
+        "endLine": 1068,
+        "endChar": 66
+      },
+      "revId": "026e57b41329baaba66a043af152aad7c3fdaf69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1659f76_3a4cca85",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-06T02:05:22Z",
+      "side": 1,
+      "message": "rootnode being nil is an error case, so early return should be fine? We do a DCHECK on rootnode at 136 line.",
+      "range": {
+        "startLine": 223,
+        "startChar": 2,
+        "endLine": 224,
+        "endChar": 34
+      },
+      "revId": "026e57b41329baaba66a043af152aad7c3fdaf69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecf67383_f2cba2e2",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-06T02:05:22Z",
+      "side": 1,
+      "message": "Does this happen if you added a folder and then in the middle of edit, some sync causes refresh contents? In that case that\u0027s not a bug I think, user can always edit the folder name using edit option. This is the right behaviour. So maybe add it as the expected behaviour and not a bug?",
+      "range": {
+        "startLine": 530,
+        "startChar": 2,
+        "endLine": 532,
+        "endChar": 14
+      },
+      "revId": "026e57b41329baaba66a043af152aad7c3fdaf69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a1964d5_d53a649c",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-06T02:05:22Z",
+      "side": 1,
+      "message": "Are these checks necessary in every function?",
+      "range": {
+        "startLine": 567,
+        "startChar": 2,
+        "endLine": 569,
+        "endChar": 3
+      },
+      "revId": "026e57b41329baaba66a043af152aad7c3fdaf69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f91458ff_5e627c68",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 780,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-06T02:05:22Z",
+      "side": 1,
+      "message": "This should not be a dcheck, we should be handling this case, so that if the folder name is empty, then user moves the focus away, we revert to New Folder as the name?",
+      "range": {
+        "startLine": 780,
+        "startChar": 2,
+        "endLine": 780,
+        "endChar": 29
+      },
+      "revId": "026e57b41329baaba66a043af152aad7c3fdaf69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc701a48_4980b1e9",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-06T02:05:22Z",
+      "side": 1,
+      "message": "should this be null? Nil is objective-c specific?",
+      "range": {
+        "startLine": 783,
+        "startChar": 2,
+        "endLine": 783,
+        "endChar": 26
+      },
+      "revId": "026e57b41329baaba66a043af152aad7c3fdaf69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3def8b0d_f465751f",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 782,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-06T02:05:22Z",
+      "side": 1,
+      "message": "No need to verify this, as this is verified in the context bar tests.",
+      "range": {
+        "startLine": 780,
+        "startChar": 2,
+        "endLine": 782,
+        "endChar": 39
+      },
+      "revId": "026e57b41329baaba66a043af152aad7c3fdaf69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecec222a_8404e477",
+        "filename": "ios/chrome/browser/ui/bookmarks/cells/bookmark_table_cell.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-06T02:05:22Z",
+      "side": 1,
+      "message": "Maybe we can decide this and leave it as New Folder if any of those actions happen. Convert this TODO into a statement that this is what happens now. We can change if anyone objects to it",
+      "range": {
+        "startLine": 77,
+        "startChar": 1,
+        "endLine": 81,
+        "endChar": 61
+      },
+      "revId": "026e57b41329baaba66a043af152aad7c3fdaf69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd1b9bca_c881e54a",
+        "filename": "ios/chrome/browser/ui/bookmarks/cells/bookmark_table_cell.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-06T02:05:22Z",
+      "side": 1,
+      "message": "I think this is a corner case, and the repercussions  of disabling refresh are far worse than interrupting user edit. wdyt?",
+      "range": {
+        "startLine": 83,
+        "startChar": 2,
+        "endLine": 84,
+        "endChar": 25
+      },
+      "revId": "026e57b41329baaba66a043af152aad7c3fdaf69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "244597b0_22142a97",
+        "filename": "ios/chrome/browser/ui/bookmarks/cells/bookmark_table_cell.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-06T02:05:22Z",
+      "side": 1,
+      "message": "Can we also select the entire text in the text field like in the mocks, when we start editing?",
+      "range": {
+        "startLine": 92,
+        "startChar": 33,
+        "endLine": 92,
+        "endChar": 0
+      },
+      "revId": "026e57b41329baaba66a043af152aad7c3fdaf69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
