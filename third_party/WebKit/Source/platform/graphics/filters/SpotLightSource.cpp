@@ -31,6 +31,7 @@
 
 #include "platform/graphics/filters/SpotLightSource.h"
 
+#include "platform/graphics/filters/TextStreamFilterOperators.h"
 #include "platform/text/TextStream.h"
 #include "platform/wtf/MathExtras.h"
 
@@ -63,11 +64,6 @@ bool SpotLightSource::SetLimitingConeAngle(float limiting_cone_angle) {
     return false;
   limiting_cone_angle_ = limiting_cone_angle;
   return true;
-}
-
-static TextStream& operator<<(TextStream& ts, const FloatPoint3D& p) {
-  ts << "x=" << p.X() << " y=" << p.Y() << " z=" << p.Z();
-  return ts;
 }
 
 TextStream& SpotLightSource::ExternalRepresentation(TextStream& ts) const {

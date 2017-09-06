@@ -1077,6 +1077,8 @@ component("platform") {
     "graphics/filters/SourceGraphic.h",
     "graphics/filters/SpotLightSource.cpp",
     "graphics/filters/SpotLightSource.h",
+    "graphics/filters/TextStreamFilterOperators.cpp",
+    "graphics/filters/TextStreamFilterOperators.h",
     "graphics/gpu/AcceleratedImageBufferSurface.cpp",
     "graphics/gpu/AcceleratedImageBufferSurface.h",
     "graphics/gpu/DrawingBuffer.cpp",
