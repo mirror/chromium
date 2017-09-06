@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66be42b7_3a3b7842",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 23364,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-06T01:12:19Z",
+      "side": 0,
+      "message": "Please keep these in enums.xml, so that historical data remains viewable.",
+      "range": {
+        "startLine": 23364,
+        "startChar": 66,
+        "endLine": 23364,
+        "endChar": 0
+      },
+      "revId": "55971753691f9e077d4b7474c19dc0718a060561",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
