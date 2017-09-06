@@ -37,6 +37,23 @@
     },
     {
       "key": {
+        "uuid": "c9b9ba25_47bf9441",
+        "filename": "cc/scheduler/compositor_timing_history.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 966,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-06T21:17:27Z",
+      "side": 1,
+      "message": "Doesn\u0027t this only become true if the main thread is fast or we don\u0027t have compositor frames in between main frames? i.e. it looks like it gets set to false if we begin an impl frame. Doesn\u0027t this mean that for slow main thread animations while the compositor is still ticking we wouldn\u0027t report anything?",
+      "revId": "09bff39dd2604bf2a26f20a73032504bdf0e1d1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6f4b6b3_9392413d",
         "filename": "third_party/WebKit/Source/core/animation/DocumentAnimations.cpp",
         "patchSetId": 18
