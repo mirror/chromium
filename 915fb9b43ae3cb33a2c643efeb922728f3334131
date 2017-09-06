@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bef1abe3_528de8b4",
+        "filename": "extensions/common/api/system_display.idl",
+        "patchSetId": 9
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-06T18:25:15Z",
+      "side": 1,
+      "message": "could you please change to sensor?",
+      "revId": "915fb9b43ae3cb33a2c643efeb922728f3334131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
