@@ -27,6 +27,7 @@
 #include "third_party/boringssl/src/include/openssl/evp.h"
 #include "third_party/boringssl/src/include/openssl/mem.h"
 #include "third_party/boringssl/src/include/openssl/pool.h"
+#include "third_party/boringssl/src/include/openssl/rsa.h"
 #include "third_party/boringssl/src/include/openssl/stack.h"
 
 namespace net {
@@ -427,6 +428,17 @@ scoped_refptr<X509Certificate> CreateX509CertificateFromBuffers(
   }
   return X509Certificate::CreateFromDERCertChain(der_chain);
 #endif
+}
+
+bssl::UniquePtr<RSA> ParseRSASPKI(const base::StringPiece& spki_bytes) {
+  crypto::OpenSSLErrStackTracer err_tracer(FROM_HERE);
+  CBS cbs;
+  CBS_init(&cbs, reinterpret_cast<const uint8_t*>(spki_bytes.data()),
+           spki_bytes.size());
+  bssl::UniquePtr<EVP_PKEY> pkey(EVP_parse_public_key(&cbs));
+  if (!pkey)
+    return nullptr;
+  return bssl::UniquePtr<RSA>(EVP_PKEY_get1_RSA(pkey.get()));
 }
 
 }  // namespace x509_util

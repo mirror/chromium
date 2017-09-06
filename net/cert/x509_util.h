@@ -108,6 +108,11 @@ NET_EXPORT bssl::UniquePtr<CRYPTO_BUFFER> CreateCryptoBuffer(
 scoped_refptr<X509Certificate> CreateX509CertificateFromBuffers(
     STACK_OF(CRYPTO_BUFFER) * buffers);
 
+// Parses a DER-encoded RSA SubjectPublicKeyInfo. Returns null if there was a
+// parsing error or the key was not RSA.
+NET_EXPORT bssl::UniquePtr<RSA> ParseRSASPKI(
+    const base::StringPiece& spki_bytes);
+
 } // namespace x509_util
 
 } // namespace net
