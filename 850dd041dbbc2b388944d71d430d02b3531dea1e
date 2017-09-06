@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c16130b_33f68e89",
+        "filename": "chrome/browser/ui/cocoa/password_reuse_warning_dialog_controller.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-09-06T15:13:44Z",
+      "side": 1,
+      "message": "For RTL, calling cocoa_l10n_util::FlipAllSubviewsIfNecessary on contentView might be enough.",
+      "range": {
+        "startLine": 168,
+        "startChar": 39,
+        "endLine": 168,
+        "endChar": 0
+      },
+      "revId": "850dd041dbbc2b388944d71d430d02b3531dea1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
