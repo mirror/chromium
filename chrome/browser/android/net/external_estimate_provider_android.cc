@@ -20,15 +20,18 @@ ExternalEstimateProviderAndroid::ExternalEstimateProviderAndroid()
     : task_runner_(nullptr),
       delegate_(nullptr),
       weak_factory_(this) {
-  if (base::ThreadTaskRunnerHandle::IsSet())
-    task_runner_ = base::ThreadTaskRunnerHandle::Get();
-  JNIEnv* env = base::android::AttachCurrentThread();
-  j_external_estimate_provider_.Reset(
-      Java_ExternalEstimateProviderAndroid_create(
-          env, reinterpret_cast<intptr_t>(this)));
-  DCHECK(!j_external_estimate_provider_.is_null());
-  no_value_ = Java_ExternalEstimateProviderAndroid_getNoValue(env);
+  DCHECK(j_external_estimate_provider_.is_null());
   DCHECK_GE(-1, no_value_);
+
+  if (!base::ThreadTaskRunnerHandle::IsSet())
+    return;
+
+  task_runner_ = base::ThreadTaskRunnerHandle::Get();
+  task_runner_->PostDelayedTask(
+      FROM_HERE,
+      base::Bind(&ExternalEstimateProviderAndroid::CreateJavaObject,
+                 weak_factory_.GetWeakPtr()),
+      base::TimeDelta::FromSeconds(10));
 }
 
 ExternalEstimateProviderAndroid::~ExternalEstimateProviderAndroid() {
@@ -37,6 +40,19 @@ ExternalEstimateProviderAndroid::~ExternalEstimateProviderAndroid() {
     Java_ExternalEstimateProviderAndroid_destroy(
         base::android::AttachCurrentThread(), j_external_estimate_provider_);
   }
+}
+
+void ExternalEstimateProviderAndroid::CreateJavaObject() {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  DCHECK(j_external_estimate_provider_.is_null());
+
+  JNIEnv* env = base::android::AttachCurrentThread();
+  j_external_estimate_provider_.Reset(
+      Java_ExternalEstimateProviderAndroid_create(
+          env, reinterpret_cast<intptr_t>(this)));
+  DCHECK(!j_external_estimate_provider_.is_null());
+  DCHECK_EQ(no_value_, Java_ExternalEstimateProviderAndroid_getNoValue(env));
+  Update();
 }
 
 base::TimeDelta ExternalEstimateProviderAndroid::GetRTT() const {
