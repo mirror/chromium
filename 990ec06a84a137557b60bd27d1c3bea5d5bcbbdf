@@ -16,6 +16,24 @@
       "revId": "990ec06a84a137557b60bd27d1c3bea5d5bcbbdf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17f72b1b_40ab2acd",
+        "filename": "chrome/browser/metrics/renderer_uptime_tracker.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1215674
+      },
+      "writtenOn": "2017-09-06T20:50:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0f84a4b_8ec4b707",
+      "revId": "990ec06a84a137557b60bd27d1c3bea5d5bcbbdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

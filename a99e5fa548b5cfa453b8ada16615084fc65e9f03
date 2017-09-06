@@ -22,6 +22,30 @@
       "revId": "a99e5fa548b5cfa453b8ada16615084fc65e9f03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bf9003a_e38ded39",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1215674
+      },
+      "writtenOn": "2017-09-06T20:50:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6eb8c6e0_1a74c395",
+      "range": {
+        "startLine": 253,
+        "startChar": 39,
+        "endLine": 253,
+        "endChar": 45
+      },
+      "revId": "a99e5fa548b5cfa453b8ada16615084fc65e9f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
