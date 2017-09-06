@@ -24,6 +24,7 @@
 #include "base/process/process_info.h"
 #include "base/profiler/stack_sampling_profiler.h"
 #include "base/single_thread_task_runner.h"
+#include "base/stl_util.h"
 #include "base/synchronization/lock.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
@@ -59,10 +60,10 @@ const ProcessPhase
 // Parameters for browser process sampling. Not const since these may be
 // changed when transitioning from start-up profiling to periodic profiling.
 CallStackProfileParams g_browser_process_sampling_params(
-    metrics::CallStackProfileParams::BROWSER_PROCESS,
-    metrics::CallStackProfileParams::UI_THREAD,
-    metrics::CallStackProfileParams::PROCESS_STARTUP,
-    metrics::CallStackProfileParams::MAY_SHUFFLE);
+    CallStackProfileParams::BROWSER_PROCESS,
+    CallStackProfileParams::UI_THREAD,
+    CallStackProfileParams::PROCESS_STARTUP,
+    CallStackProfileParams::MAY_SHUFFLE);
 
 // ProfilesState --------------------------------------------------------------
 
@@ -131,6 +132,11 @@ class PendingProfiles {
   PendingProfiles();
   ~PendingProfiles();
 
+  // Attemps to merge |profile_state| with existing |to_profile_state|. Returns
+  // true if merged.
+  bool TryProfileMerge(const ProfilesState& profile_state,
+                       ProfilesState* to_profile_state);
+
   mutable base::Lock lock_;
 
   // If true, profiles provided to CollectProfilesIfCollectionEnabled should be
@@ -196,6 +202,11 @@ void PendingProfiles::CollectProfilesIfCollectionEnabled(
     profiles.profiles[0].profile_duration = internal::GetUptime();
   }
 
+  for (ProfilesState& profile_state : profiles_) {
+    if (TryProfileMerge(profiles, &profile_state))
+      return;
+  }
+
   profiles_.push_back(std::move(profiles));
 }
 
@@ -216,6 +227,59 @@ PendingProfiles::PendingProfiles() : collection_enabled_(true) {}
 
 PendingProfiles::~PendingProfiles() {}
 
+bool PendingProfiles::TryProfileMerge(const ProfilesState& profile_state,
+                                      ProfilesState* to_profile_state) {
+  if (profile_state.profiles.empty() || to_profile_state->profiles.empty())
+    return false;
+
+  const auto& params = profile_state.params;
+  // Only periodic profile merging is supported.
+  if (params.trigger != CallStackProfileParams::PERIODIC_COLLECTION)
+    return false;
+
+  const auto& to_params = to_profile_state->params;
+  if (to_params.trigger != params.trigger ||
+      to_params.process != params.process ||
+      to_params.thread != params.thread) {
+    return false;
+  }
+  DCHECK_EQ(1U, profile_state.profiles.size());
+  DCHECK_EQ(1U, to_profile_state->profiles.size());
+  const auto& from_profile = profile_state.profiles[0];
+  auto* to_profile = &to_profile_state->profiles[0];
+
+  // Create a mapping from module id to index.
+  std::map<std::string, int> module_id_to_index;
+  for (const auto& module : to_profile->modules) {
+    module_id_to_index.insert(
+        std::make_pair(module.id, module_id_to_index.size()));
+  }
+
+  for (const auto& base_sample : from_profile.samples) {
+    // Make a copy of the sample so we can update its module indexes.
+    StackSamplingProfiler::Sample sample = base_sample;
+    for (StackSamplingProfiler::Frame& frame : sample.frames) {
+      const auto& module = from_profile.modules[frame.module_index];
+      auto it = module_id_to_index.find(module.id);
+      if (it == module_id_to_index.end()) {
+        module_id_to_index.insert(
+            std::make_pair(module.id, module_id_to_index.size()));
+        to_profile->modules.push_back(module);
+        frame.module_index = module_id_to_index.size() - 1;
+      } else {
+        frame.module_index = it->second;
+      }
+    }
+
+    to_profile->samples.push_back(sample);
+  }
+
+  // Update the profile duration, which stores uptime for periodic profiles.
+  to_profile->profile_duration = from_profile.profile_duration;
+
+  return true;
+}
+
 // Functions to process completed profiles ------------------------------------
 
 // Will be invoked on either the main thread or the profiler's thread. Provides
@@ -234,7 +298,7 @@ ReceiveCompletedProfilesImpl(
   if (CallStackProfileMetricsProvider::IsPeriodicSamplingEnabled() &&
       params->process == CallStackProfileParams::BROWSER_PROCESS &&
       params->thread == CallStackProfileParams::UI_THREAD) {
-    params->trigger = metrics::CallStackProfileParams::PERIODIC_COLLECTION;
+    params->trigger = CallStackProfileParams::PERIODIC_COLLECTION;
     params->start_timestamp = base::TimeTicks::Now();
 
     StackSamplingProfiler::SamplingParams sampling_params;
@@ -273,6 +337,7 @@ uint64_t HashModuleFilename(const base::FilePath& filename) {
 void CopySampleToProto(
     const StackSamplingProfiler::Sample& sample,
     const std::vector<StackSamplingProfiler::Module>& modules,
+    const std::map<std::string, int>& module_index,
     CallStackProfile::Sample* proto_sample) {
   for (const StackSamplingProfiler::Frame& frame : sample.frames) {
     CallStackProfile::Entry* entry = proto_sample->add_entry();
@@ -281,12 +346,13 @@ void CopySampleToProto(
     // leave call_stack_entry empty.
     if (frame.module_index == StackSamplingProfiler::Frame::kUnknownModuleIndex)
       continue;
+    const StackSamplingProfiler::Module& module = modules[frame.module_index];
     int64_t module_offset =
         reinterpret_cast<const char*>(frame.instruction_pointer) -
-        reinterpret_cast<const char*>(modules[frame.module_index].base_address);
+        reinterpret_cast<const char*>(module.base_address);
     DCHECK_GE(module_offset, 0);
     entry->set_address(static_cast<uint64_t>(module_offset));
-    entry->set_module_id_index(frame.module_index);
+    entry->set_module_id_index(module_index.find(module.id)->second);
   }
 }
 
@@ -311,8 +377,99 @@ void CopyAnnotationsToProto(uint32_t new_milestones,
   }
 }
 
+// ProfileProtoEmitter is responsible for converting and adding SampledProfile
+// protos to the ChromeUserMetricsExtension. It has logic to merge profiles
+// together, when appropriate.
+class ProfileProtoEmitter {
+ public:
+  explicit ProfileProtoEmitter(ChromeUserMetricsExtension* uma_proto)
+      : uma_proto_(uma_proto) {}
+  ~ProfileProtoEmitter() {}
+
+  // Emits the given |profile| with the specified |params| to the proto. This
+  // may either create a new corresponding SampledProfile proto or merge the
+  // data into an existing one.
+  void Emit(const StackSamplingProfiler::CallStackProfile& profile,
+            const CallStackProfileParams& params);
+
+ private:
+  // Copies the data from |profile| into |proto_profile|. Uses and updates
+  // |sample_index_| and |module_index_| state to merge/omit various values.
+  void CopyProfileToProto(
+      const StackSamplingProfiler::CallStackProfile& profile,
+      CallStackProfileParams::SampleOrderingSpec ordering_spec,
+      CallStackProfile* proto_profile);
+
+  // Translates CallStackProfileParams's process to the corresponding
+  // execution context Process.
+  Process ToExecutionContextProcess(CallStackProfileParams::Process process);
+
+  // Translates CallStackProfileParams's thread to the corresponding
+  // SampledProfile Thread.
+  Thread ToExecutionContextThread(CallStackProfileParams::Thread thread);
+
+  // Translates CallStackProfileParams's trigger to the corresponding
+  // SampledProfile TriggerEvent.
+  SampledProfile::TriggerEvent ToSampledProfileTriggerEvent(
+      CallStackProfileParams::Trigger trigger);
+
+  // The UMA proto to add entries to.
+  ChromeUserMetricsExtension* uma_proto_;
+
+  // The current/last SampledProfile added to the proto.
+  SampledProfile* sampled_profile_ = nullptr;
+
+  // The last sample added to the proto.
+  StackSamplingProfiler::Sample last_sample_;
+
+  // The bitmask of process milestones.
+  uint32_t milestones_ = 0;
+
+  // Cache of existing samples to their indexes |sampled_profile_| for merging.
+  std::map<StackSamplingProfiler::Sample, int> sample_index_;
+
+  // Cache of existing modules to their indexes in |sampled_profile_|.
+  std::map<std::string, int> module_index_;
+
+  DISALLOW_COPY_AND_ASSIGN(ProfileProtoEmitter);
+};
+
+void ProfileProtoEmitter::Emit(
+    const StackSamplingProfiler::CallStackProfile& profile,
+    const CallStackProfileParams& params) {
+  const auto process = ToExecutionContextProcess(params.process);
+  const auto thread = ToExecutionContextThread(params.thread);
+  const auto trigger = ToSampledProfileTriggerEvent(params.trigger);
+
+  // Merge consecutive periodic profiles for the same process, thread and
+  // sampling period.
+  //
+  // Note: This logic may need expanding when we may want to merge
+  // non-consecutive periodic profiles as well (for example, when periodic
+  // profiles from other threads and processes might be in the list).
+  if (sampled_profile_ && trigger == SampledProfile::PERIODIC_COLLECTION &&
+      sampled_profile_->process() == process &&
+      sampled_profile_->thread() == thread &&
+      sampled_profile_->call_stack_profile().sampling_period_ms() ==
+          profile.sampling_period.InMilliseconds()) {
+   // CopyProfileToProto(profile, params.ordering_spec,
+   //                    sampled_profile_->mutable_call_stack_profile());
+   // return;
+  }
+
+  // Start a new sampled profile.
+  sample_index_.clear();
+  module_index_.clear();
+  sampled_profile_ = uma_proto_->add_sampled_profile();
+  sampled_profile_->set_process(process);
+  sampled_profile_->set_thread(thread);
+  sampled_profile_->set_trigger_event(trigger);
+  CopyProfileToProto(profile, params.ordering_spec,
+                     sampled_profile_->mutable_call_stack_profile());
+}
+
 // Transcode |profile| into |proto_profile|.
-void CopyProfileToProto(
+void ProfileProtoEmitter::CopyProfileToProto(
     const StackSamplingProfiler::CallStackProfile& profile,
     CallStackProfileParams::SampleOrderingSpec ordering_spec,
     CallStackProfile* proto_profile) {
@@ -322,18 +479,35 @@ void CopyProfileToProto(
   const bool preserve_order =
       (ordering_spec == CallStackProfileParams::PRESERVE_ORDER);
 
-  std::map<StackSamplingProfiler::Sample, int> sample_index;
-  uint32_t milestones = 0;
-  for (auto it = profile.samples.begin(); it != profile.samples.end(); ++it) {
+  for (const StackSamplingProfiler::Module& module : profile.modules) {
+    if (base::ContainsKey(module_index_, module.id))
+      continue;
+    CallStackProfile::ModuleIdentifier* module_id =
+        proto_profile->add_module_id();
+    module_id->set_build_id(module.id);
+    module_id->set_name_md5_prefix(HashModuleFilename(module.filename));
+    module_index_.insert(std::make_pair(
+        module.id, static_cast<int>(proto_profile->module_id_size() - 1)));
+  }
+
+  for (const StackSamplingProfiler::Sample& base_sample : profile.samples) {
+    // Copy the sample and modify its module indexes so that it's comparable to
+    // samples from other profiles.
+    StackSamplingProfiler::Sample sample = base_sample;
+    for (StackSamplingProfiler::Frame& frame : sample.frames) {
+      const auto& module = profile.modules[frame.module_index];
+      frame.module_index = module_index_.find(module.id)->second;
+    }
+
     int existing_sample_index = -1;
     if (preserve_order) {
       // Collapse sample with the previous one if they match. Samples match
       // if the frame and all annotations are the same.
-      if (proto_profile->sample_size() > 0 && *it == *(it - 1))
+      if (proto_profile->sample_size() > 0 && sample == last_sample_)
         existing_sample_index = proto_profile->sample_size() - 1;
     } else {
-      auto location = sample_index.find(*it);
-      if (location != sample_index.end())
+      auto location = sample_index_.find(sample);
+      if (location != sample_index_.end())
         existing_sample_index = location->second;
     }
 
@@ -345,33 +519,35 @@ void CopyProfileToProto(
     }
 
     CallStackProfile::Sample* sample_proto = proto_profile->add_sample();
-    CopySampleToProto(*it, profile.modules, sample_proto);
+    // Note: We pass |base_sample| here instead of |sample| since it indexes
+    // into |profile.modules|.
+    CopySampleToProto(base_sample, profile.modules, module_index_,
+                      sample_proto);
     sample_proto->set_count(1);
-    CopyAnnotationsToProto(it->process_milestones & ~milestones, sample_proto);
-    milestones = it->process_milestones;
+    CopyAnnotationsToProto(sample.process_milestones & ~milestones_,
+                           sample_proto);
+    milestones_ = sample.process_milestones;
 
+    last_sample_ = sample;
     if (!preserve_order) {
-      sample_index.insert(std::make_pair(
-          *it, static_cast<int>(proto_profile->sample_size()) - 1));
+      sample_index_.insert(std::make_pair(
+          sample, static_cast<int>(proto_profile->sample_size()) - 1));
     }
   }
 
-  for (const StackSamplingProfiler::Module& module : profile.modules) {
-    CallStackProfile::ModuleIdentifier* module_id =
-        proto_profile->add_module_id();
-    module_id->set_build_id(module.id);
-    module_id->set_name_md5_prefix(HashModuleFilename(module.filename));
-  }
-
+  // Note: The logic below is still OK when merging periodic profiles. The
+  // sampling period is time between samples, which we ensure is the same for
+  // merged profiles in Emit(). The profile duration field holds the process
+  // uptime for periodic samples, so replacing it with the latest is also
+  // correct.
   proto_profile->set_profile_duration_ms(
       profile.profile_duration.InMilliseconds());
   proto_profile->set_sampling_period_ms(
       profile.sampling_period.InMilliseconds());
 }
 
-// Translates CallStackProfileParams's process to the corresponding
-// execution context Process.
-Process ToExecutionContextProcess(CallStackProfileParams::Process process) {
+Process ProfileProtoEmitter::ToExecutionContextProcess(
+    CallStackProfileParams::Process process) {
   switch (process) {
     case CallStackProfileParams::UNKNOWN_PROCESS:
       return UNKNOWN_PROCESS;
@@ -396,9 +572,8 @@ Process ToExecutionContextProcess(CallStackProfileParams::Process process) {
   return UNKNOWN_PROCESS;
 }
 
-// Translates CallStackProfileParams's thread to the corresponding
-// SampledProfile TriggerEvent.
-Thread ToExecutionContextThread(CallStackProfileParams::Thread thread) {
+Thread ProfileProtoEmitter::ToExecutionContextThread(
+    CallStackProfileParams::Thread thread) {
   switch (thread) {
     case CallStackProfileParams::UNKNOWN_THREAD:
       return UNKNOWN_THREAD;
@@ -427,9 +602,7 @@ Thread ToExecutionContextThread(CallStackProfileParams::Thread thread) {
   return UNKNOWN_THREAD;
 }
 
-// Translates CallStackProfileParams's trigger to the corresponding
-// SampledProfile TriggerEvent.
-SampledProfile::TriggerEvent ToSampledProfileTriggerEvent(
+SampledProfile::TriggerEvent ProfileProtoEmitter::ToSampledProfileTriggerEvent(
     CallStackProfileParams::Trigger trigger) {
   switch (trigger) {
     case CallStackProfileParams::UNKNOWN:
@@ -541,21 +714,11 @@ void CallStackProfileMetricsProvider::ProvideCurrentSessionData(
 
   DCHECK(IsReportingEnabledByFieldTrial() || pending_profiles.empty());
 
-  // TODO(asvitkine): For post-startup periodic samples, this is currently
-  // wasteful as each sample is reported in its own profile. We should attempt
-  // to merge profiles to save bandwidth.
+  ProfileProtoEmitter emitter(uma_proto);
   for (const ProfilesState& profiles_state : pending_profiles) {
     for (const StackSamplingProfiler::CallStackProfile& profile :
              profiles_state.profiles) {
-      SampledProfile* sampled_profile = uma_proto->add_sampled_profile();
-      sampled_profile->set_process(ToExecutionContextProcess(
-          profiles_state.params.process));
-      sampled_profile->set_thread(ToExecutionContextThread(
-          profiles_state.params.thread));
-      sampled_profile->set_trigger_event(ToSampledProfileTriggerEvent(
-          profiles_state.params.trigger));
-      CopyProfileToProto(profile, profiles_state.params.ordering_spec,
-                         sampled_profile->mutable_call_stack_profile());
+      emitter.Emit(profile, profiles_state.params);
     }
   }
 }
