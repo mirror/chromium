@@ -349,6 +349,24 @@
     },
     {
       "key": {
+        "uuid": "3accb17f_1a1fbfcc",
+        "filename": "components/search_provider_logos/logo_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-06T13:13:46Z",
+      "side": 1,
+      "message": "Done.\n\nIt probably works the way it does because it\u0027s tightly coupled to the UI. The API right now is basically, \"notifies the observer when it should update the image\". We\u0027re trying to move in a direction where the component simply reports on its state, and the UI makes the decision about when and what to update.",
+      "parentUuid": "37e61aa6_af8b16f7",
+      "revId": "a02cda2d9c293dfa38b4cda2876f9b487c1977a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51238066_ed28e26b",
         "filename": "components/search_provider_logos/logo_service_unittest.cc",
         "patchSetId": 1

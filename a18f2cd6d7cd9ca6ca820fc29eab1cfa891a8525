@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "54c549cb_347f730e",
+        "filename": "components/search_provider_logos/logo_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-06T13:13:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48563523_13e967b7",
+      "range": {
+        "startLine": 67,
+        "startChar": 31,
+        "endLine": 67,
+        "endChar": 0
+      },
+      "revId": "a18f2cd6d7cd9ca6ca820fc29eab1cfa891a8525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae7d536f_e428e9d4",
         "filename": "components/search_provider_logos/logo_service_unittest.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "a18f2cd6d7cd9ca6ca820fc29eab1cfa891a8525",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2df5297_636ff07c",
+        "filename": "components/search_provider_logos/logo_service_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-06T13:13:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae7d536f_e428e9d4",
+      "range": {
+        "startLine": 192,
+        "startChar": 24,
+        "endLine": 192,
+        "endChar": 0
+      },
+      "revId": "a18f2cd6d7cd9ca6ca820fc29eab1cfa891a8525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "abd83b71_4ab046e1",
+        "filename": "components/search_provider_logos/logo_service_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-06T13:13:46Z",
+      "side": 1,
+      "message": "Renamed to Value(m). This matches the value, but also has to check that the Optional isn\u0027t nullopt.",
+      "parentUuid": "14d2d1b1_29c5192a",
+      "range": {
+        "startLine": 196,
+        "startChar": 30,
+        "endLine": 196,
+        "endChar": 0
+      },
+      "revId": "a18f2cd6d7cd9ca6ca820fc29eab1cfa891a8525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d318985_33a3a35e",
         "filename": "components/search_provider_logos/logo_tracker.cc",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "a18f2cd6d7cd9ca6ca820fc29eab1cfa891a8525",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dee0ba73_d4a0da0a",
+        "filename": "components/search_provider_logos/logo_tracker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-06T13:13:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d318985_33a3a35e",
+      "range": {
+        "startLine": 246,
+        "startChar": 65,
+        "endLine": 246,
+        "endChar": 0
+      },
+      "revId": "a18f2cd6d7cd9ca6ca820fc29eab1cfa891a8525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "41319f7e_f961a1ee",
+        "filename": "components/search_provider_logos/logo_tracker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-06T13:13:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "561054c8_55dc02e2",
+      "range": {
+        "startLine": 256,
+        "startChar": 78,
+        "endLine": 256,
+        "endChar": 0
+      },
+      "revId": "a18f2cd6d7cd9ca6ca820fc29eab1cfa891a8525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b323307_72b68a87",
         "filename": "components/search_provider_logos/logo_tracker.cc",
         "patchSetId": 5
@@ -131,6 +251,24 @@
       "revId": "a18f2cd6d7cd9ca6ca820fc29eab1cfa891a8525",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63a47388_293ff491",
+        "filename": "components/search_provider_logos/logo_tracker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-06T13:13:46Z",
+      "side": 1,
+      "message": "I\u0027ve removed it.\n\nMaybe we shouldn\u0027t even notify the encoded callback here: it would be nice to have an invariant that logos are valid even when the encoded form is handed out, and the extra cycles of doing that validation are less likely to matter on desktop.\n\nIf we stop validating (decoding) the image, the question becomes: is it OK to cache data that we haven\u0027t validated? If we continue validating and determine that the data is invalid, what\u0027s the point of returning it to the callback?",
+      "parentUuid": "2b323307_72b68a87",
+      "revId": "a18f2cd6d7cd9ca6ca820fc29eab1cfa891a8525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -154,6 +292,30 @@
       "revId": "a18f2cd6d7cd9ca6ca820fc29eab1cfa891a8525",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e29b79e3_dd328da6",
+        "filename": "components/search_provider_logos/logo_tracker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-06T13:13:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "776bc39c_d8f76222",
+      "range": {
+        "startLine": 355,
+        "startChar": 12,
+        "endLine": 355,
+        "endChar": 0
+      },
+      "revId": "a18f2cd6d7cd9ca6ca820fc29eab1cfa891a8525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
