@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9a49e7b_9d273724",
+        "filename": "third_party/WebKit/Source/core/editing/commands/InsertParagraphSeparatorCommand.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-06T00:08:06Z",
+      "side": 1,
+      "message": "The refactoring itself is legit. The check itself doesn\u0027t look so.\n\nCould you add a note above L179 of:\n\n// TODO(editing-dev): We shouldn\u0027t construct an InsertParagraphSeparatorCommand with none or invalid selection.",
+      "revId": "2745fd55b16c22ad182d7fbb9b0c3561fb3492f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
