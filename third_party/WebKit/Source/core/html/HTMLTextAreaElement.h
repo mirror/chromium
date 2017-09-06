@@ -52,9 +52,6 @@ class CORE_EXPORT HTMLTextAreaElement final : public TextControlElement {
   void setDefaultValue(const String&);
   int textLength() const { return value().length(); }
 
-  String SuggestedValue() const;
-  void SetSuggestedValue(const String&);
-
   // For ValidityState
   String validationMessage() const override;
   bool ValueMissing() const override;
@@ -148,7 +145,6 @@ class CORE_EXPORT HTMLTextAreaElement final : public TextControlElement {
   mutable String value_;
   mutable bool is_dirty_;
   unsigned is_placeholder_visible_ : 1;
-  String suggested_value_;
 };
 
 }  // namespace blink

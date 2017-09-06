@@ -144,9 +144,6 @@ class CORE_EXPORT HTMLInputElement
 
   String LocalizeValue(const String&) const;
 
-  const String& SuggestedValue() const;
-  void SetSuggestedValue(const String&);
-
   void SetEditingValue(const String&);
 
   double valueAsDate(bool& is_null) const;
@@ -405,7 +402,6 @@ class CORE_EXPORT HTMLInputElement
   AtomicString name_;
   // The value string in |value| value mode.
   String non_attribute_value_;
-  String suggested_value_;
   int size_;
   // https://html.spec.whatwg.org/multipage/forms.html#concept-input-value-dirty-flag
   unsigned has_dirty_value_ : 1;

@@ -8,14 +8,20 @@ After setting suggestedValue:
 |   this.value="initial value"
 |   <shadow:root>
 |     <div>
-|       id="inner-editor"
+|       id="placeholder"
+|       pseudo="-webkit-input-placeholder"
+|       style="display: none !important;"
+|       shadow:pseudoId="-webkit-input-placeholder"
 |       "suggested value"
+|     <div>
+|       id="inner-editor"
+|       "initial value"
 | "input.value: initial value"
-| "internals.suggestedValue(input): suggested value"
+| "internals.suggestedValue(input): "
 | "input.selectionStart: 0"
 | "input.selectionEnd: 0"
 | "textarea.value: initial value"
-| "internals.suggestedValue(textarea): suggested value"
+| "internals.suggestedValue(textarea): "
 | "select.value: "
 | "internals.suggestedValue(select): TX"
 
@@ -26,6 +32,12 @@ After setting value:
 |   value="initial value"
 |   this.value="new value"
 |   <shadow:root>
+|     <div>
+|       id="placeholder"
+|       pseudo="-webkit-input-placeholder"
+|       style="display: none !important;"
+|       shadow:pseudoId="-webkit-input-placeholder"
+|       "suggested value"
 |     <div>
 |       id="inner-editor"
 |       "new value"

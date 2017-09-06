@@ -142,6 +142,9 @@ class CORE_EXPORT TextControlElement : public HTMLFormControlElementWithState {
 
   String DirectionForFormData() const;
 
+  void SetSuggestedValue(const String& value);
+  const String& SuggestedValue() const;
+
  protected:
   TextControlElement(const QualifiedName&, Document&);
   bool IsPlaceholderEmpty() const;
@@ -159,6 +162,8 @@ class CORE_EXPORT TextControlElement : public HTMLFormControlElementWithState {
   String ValueWithHardLineBreaks() const;
 
   void CopyNonAttributePropertiesFromElement(const Element&) override;
+
+  String suggested_value_;
 
  private:
   unsigned ComputeSelectionStart() const;
