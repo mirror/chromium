@@ -445,15 +445,14 @@ views::GridLayout* ExtensionInstallDialogView::CreateLayout(
     int column_set_id) {
   container_ = new views::View();
   ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
-  const gfx::Insets content_insets =
-      provider->GetInsetsMetric(views::INSETS_DIALOG_CONTENTS);
+  const gfx::Insets content_insets = provider->GetInsetsForContentType(
+      views::LeadingContentType::NO_TITLE, views::TrailingContentType::TEXT);
 
-  // This is views::GridLayout::CreatePanel(), but without a top or right
-  // margin. The empty dialog title will then become the top margin, and a
-  // padding column will be manually added to handle a right margin. This is
-  // done so that the extension icon can be shown on the right of the dialog
-  // title, but on the same y-axis, and the scroll view used to contain other
-  // content can have its scrollbar aligned with the right edge of the dialog.
+  // The empty dialog title will become the top margin, and a padding column
+  // will be manually added to handle a right margin. This is done so that the
+  // extension icon can be shown on the right of the dialog title, but on the
+  // same y-axis, and the scroll view used to contain other content can have its
+  // scrollbar aligned with the right edge of the dialog.
   views::GridLayout* layout = views::GridLayout::CreateAndInstall(container_);
   container_->SetBorder(views::CreateEmptyBorder(0, content_insets.left(),
                                                  content_insets.bottom(), 0));
