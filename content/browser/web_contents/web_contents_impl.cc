@@ -1739,6 +1739,8 @@ void WebContentsImpl::Init(const WebContents::CreateParams& params) {
   // it should be hidden.
   should_normally_be_visible_ = !params.initially_hidden;
 
+  popup_info_ = params.popup_info;
+
   // The routing ids must either all be set or all be unset.
   DCHECK((params.routing_id == MSG_ROUTING_NONE &&
           params.main_frame_routing_id == MSG_ROUTING_NONE &&
@@ -2331,6 +2333,8 @@ void WebContentsImpl::CreateNewWindow(
   // Create the new web contents. This will automatically create the new
   // WebContentsView. In the future, we may want to create the view separately.
   CreateParams create_params(GetBrowserContext(), site_instance.get());
+  // window.open calls are always considered popups.
+  create_params.popup_info = CreateParams::PopupInfo::IS_POPUP;
   create_params.routing_id = render_view_route_id;
   create_params.main_frame_routing_id = main_frame_route_id;
   create_params.main_frame_widget_routing_id = main_frame_widget_route_id;
