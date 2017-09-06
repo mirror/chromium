@@ -39,10 +39,7 @@ cc_component("ipc") {
 
 mojom("interfaces") {
   sources = [
-    "copy_output_result.mojom",
     "local_surface_id.mojom",
-    "texture_mailbox.mojom",
-    "texture_mailbox_releaser.mojom",
   ]
 
   public_deps = [
@@ -52,16 +49,5 @@ mojom("interfaces") {
     "//ui/gfx/geometry/mojo",
     "//ui/gfx/mojo",
     "//ui/latency/mojo:interfaces",
-  ]
-}
-
-mojom("test_interfaces") {
-  testonly = true
-  sources = [
-    "traits_test_service.mojom",
-  ]
-
-  public_deps = [
-    ":interfaces",
   ]
 }
