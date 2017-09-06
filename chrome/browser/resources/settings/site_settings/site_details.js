@@ -224,7 +224,7 @@ Polymer({
   getCategoryList_: function() {
     var categoryList = [];
     this.root.querySelectorAll('site-details-permission').forEach((element) => {
-      if (element.category != '')
+      if (element.category != '' && !element.hidden)
         categoryList.push(element.category);
     });
     return categoryList;
