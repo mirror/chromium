@@ -119,6 +119,8 @@ class StyleBuilderConverter {
   static FontDescription::FontVariantCaps ConvertFontVariantCaps(
       StyleResolverState&,
       const CSSValue&);
+  static FontVariantEastAsian ConvertFontVariantEastAsian(StyleResolverState&,
+                                                          const CSSValue&);
   static FontDescription::VariantLigatures ConvertFontVariantLigatures(
       StyleResolverState&,
       const CSSValue&);
