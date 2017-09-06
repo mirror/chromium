@@ -9,6 +9,7 @@
 
 namespace views {
 class ColumnSet;
+class Combobox;
 class GridLayout;
 class Textfield;
 }  // namespace views
@@ -27,5 +28,11 @@ views::Textfield* AddFirstTextfieldRow(views::GridLayout* layout,
 views::Textfield* AddTextfieldRow(views::GridLayout* layout,
                                   const base::string16& label,
                                   int column_set_id);
+
+// Adds a views::Combobox to a textfield stack with the given |label|.
+void AddComboboxRow(views::GridLayout* layout,
+                    const base::string16& label,
+                    views::Combobox* combobox,
+                    int column_set_id);
 
 #endif  // CHROME_BROWSER_UI_VIEWS_HARMONY_TEXTFIELD_LAYOUT_H_
