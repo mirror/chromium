@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58e7f21b_c88ec1ea",
+        "filename": "content/browser/renderer_host/delegated_frame_host.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-06T15:25:34Z",
+      "side": 1,
+      "message": "Does this work with --disable-gpu? Before it was dynamic based on what compositing mode you\u0027re in by deferring that to the DirectRenderer impl.",
+      "revId": "04f2c755f3b698c2309b26cfc490479f7184171c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
