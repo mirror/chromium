@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "d25355f9_fc043a77",
+        "filename": "components/metrics/call_stack_profile_metrics_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 840,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2017-09-06T22:03:55Z",
+      "side": 1,
+      "message": "Ah, sorry, didn\u0027t look closely enough.",
+      "parentUuid": "0b0f331a_0f7ef87a",
+      "range": {
+        "startLine": 840,
+        "startChar": 0,
+        "endLine": 840,
+        "endChar": 76
+      },
+      "revId": "541754a96fe237715d24ee71ca3438038ea14dc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae3db2e2_c65adff2",
         "filename": "components/metrics/call_stack_profile_metrics_provider_unittest.cc",
         "patchSetId": 7
