@@ -90,6 +90,9 @@ declare_args() {
   # A temporary arg for enabling MCVD while it's being implemented.
   # See http://crbug.com/660942
   enable_media_codec_video_decoder = false
+
+  # If true, pipeline support hardware secured codecs.
+  can_use_secure_codec = (is_chromecast && !is_cast_audio_only) || is_android
 }
 
 # enable_hls_sample_aes can only be true if enable_mse_mpeg2ts_stream_parser is.

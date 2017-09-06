@@ -28,9 +28,9 @@ class WidevineKeySystemProperties : public media::KeySystemProperties {
 
   WidevineKeySystemProperties(
       media::SupportedCodecs supported_codecs,
-#if defined(OS_ANDROID)
+#if BUILDFLAG(CAN_USE_SECURE_CODEC)
       media::SupportedCodecs supported_secure_codecs,
-#endif  // defined(OS_ANDROID)
+#endif  // BUILDFLAG(CAN_USE_SECURE_CODEC)
       Robustness max_audio_robustness,
       Robustness max_video_robustness,
       media::EmeSessionTypeSupport persistent_license_support,
@@ -43,7 +43,7 @@ class WidevineKeySystemProperties : public media::KeySystemProperties {
       media::EmeInitDataType init_data_type) const override;
 
   media::SupportedCodecs GetSupportedCodecs() const override;
-#if defined(OS_ANDROID)
+#if BUILDFLAG(CAN_USE_SECURE_CODEC)
   media::SupportedCodecs GetSupportedSecureCodecs() const override;
 #endif
 
@@ -63,7 +63,7 @@ class WidevineKeySystemProperties : public media::KeySystemProperties {
 
  private:
   const media::SupportedCodecs supported_codecs_;
-#if defined(OS_ANDROID)
+#if BUILDFLAG(CAN_USE_SECURE_CODEC)
   const media::SupportedCodecs supported_secure_codecs_;
 #endif  // defined(OS_ANDROID)
   const Robustness max_audio_robustness_;

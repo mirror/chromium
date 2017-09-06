@@ -10,6 +10,7 @@
 #include "build/build_config.h"
 #include "media/base/eme_constants.h"
 #include "media/base/media_export.h"
+#include "media/media_features.h"
 
 namespace media {
 
@@ -28,7 +29,7 @@ class MEDIA_EXPORT KeySystemProperties {
   // Returns the codecs supported by this key system.
   virtual SupportedCodecs GetSupportedCodecs() const = 0;
 
-#if defined(OS_ANDROID)
+#if BUILDFLAG(CAN_USE_SECURE_CODEC)
   // Returns the codecs with hardware-secure support in this key system.
   virtual SupportedCodecs GetSupportedSecureCodecs() const;
 #endif
