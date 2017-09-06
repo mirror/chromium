@@ -26,7 +26,8 @@ PlatformSensorAndroid::PlatformSensorAndroid(
 }
 
 PlatformSensorAndroid::~PlatformSensorAndroid() {
-  StopSensor();
+  JNIEnv* env = AttachCurrentThread();
+  Java_PlatformSensor_sensorDestructed(env, j_object_);
 }
 
 mojom::ReportingMode PlatformSensorAndroid::GetReportingMode() {
