@@ -680,6 +680,7 @@ message DeviceStatusReportRequest {
   // e.g. 1435.0.2011_12_16_1635.
   optional string os_version = 1;
   optional string firmware_version = 2;
+  optional string tpm_version = 20;
 
   // "Verified", "Dev". Same as verified mode.
   // If the mode is unknown, this field should not be set.
