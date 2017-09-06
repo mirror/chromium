@@ -65,6 +65,14 @@ CWV_EXPORT
                         completionHandler:
                             (void (^)(NSString*))completionHandler;
 
+- (BOOL)webView:(CWVWebView*)webView shouldPreviewLinkWithURL:(NSURL*)linkURL;
+
+- (UIViewController*)webView:(CWVWebView*)webView
+    previewingViewControllerForLinkWithURL:(NSURL*)linkURL;
+
+- (void)webView:(CWVWebView*)webView
+    commitPreviewingViewController:(UIViewController*)previewingViewController;
+
 @end
 
 #endif  // IOS_WEB_VIEW_PUBLIC_CWV_UI_DELEGATE_H_

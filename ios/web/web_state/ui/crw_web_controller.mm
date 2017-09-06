@@ -3873,6 +3873,9 @@ registerLoadRequestForURL:(const GURL&)requestURL
       [_webView addGestureRecognizer:recognizer];
     }
 
+    // TODO: Add setter/getter to control this.
+    _webView.allowsLinkPreview = YES;
+
     // WKWebViews with invalid or empty frames have exhibited rendering bugs, so
     // resize the view to match the container view upon creation.
     [_webView setFrame:[_containerView bounds]];
@@ -4171,6 +4174,26 @@ registerLoadRequestForURL:(const GURL&)requestURL
                            completionHandler(input);
                          }
                        }];
+}
+
+- (BOOL)webView:(WKWebView*)webView
+    shouldPreviewElement:(WKPreviewElementInfo*)elementInfo {
+  return self.webStateImpl->ShouldPreviewLink(
+      net::GURLWithNSURL(elementInfo.linkURL));
+}
+
+- (UIViewController*)webView:(WKWebView*)webView
+    previewingViewControllerForElement:(WKPreviewElementInfo*)elementInfo
+                        defaultActions:
+                            (NSArray<id<WKPreviewActionItem>>*)previewActions {
+  return self.webStateImpl->GetPreviewingViewController(
+      net::GURLWithNSURL(elementInfo.linkURL));
+}
+
+- (void)webView:(WKWebView*)webView
+    commitPreviewingViewController:(UIViewController*)previewingViewController {
+  return self.webStateImpl->CommitPreviewingViewController(
+      previewingViewController);
 }
 
 #pragma mark -
