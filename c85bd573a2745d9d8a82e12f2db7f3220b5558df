@@ -22,6 +22,52 @@
       "revId": "c85bd573a2745d9d8a82e12f2db7f3220b5558df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b4b89f1_37097d5a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-06T19:03:42Z",
+      "side": 1,
+      "message": "The comments indicate that this will terminate and not restart?\n\nI wonder if using the same infobar that tells you to re-launch Chrome after a change in about:flags is an option here? Wdyt?",
+      "range": {
+        "startLine": 621,
+        "startChar": 28,
+        "endLine": 621,
+        "endChar": 37
+      },
+      "revId": "c85bd573a2745d9d8a82e12f2db7f3220b5558df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05279cdb_75d9ce33",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 773,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-06T19:03:42Z",
+      "side": 1,
+      "message": "from another cl?",
+      "range": {
+        "startLine": 773,
+        "startChar": 14,
+        "endLine": 773,
+        "endChar": 15
+      },
+      "revId": "c85bd573a2745d9d8a82e12f2db7f3220b5558df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
