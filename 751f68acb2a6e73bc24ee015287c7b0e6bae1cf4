@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "85fecfe4_95161a14",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontDescription.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-09-06T13:21:17Z",
+      "side": 1,
+      "message": "Removed, you\u0027re right, I didn\u0027t review inside the function but just copied.\nNow I reviewed it too, removed and ran tests to see the same results.",
+      "parentUuid": "ba78f271_428ae570",
+      "revId": "751f68acb2a6e73bc24ee015287c7b0e6bae1cf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6cbac615_487fe639",
         "filename": "third_party/WebKit/Source/platform/fonts/shaping/HarfBuzzShaper.cpp",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "751f68acb2a6e73bc24ee015287c7b0e6bae1cf4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d686047d_32da66ca",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/HarfBuzzShaper.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-09-06T13:21:17Z",
+      "side": 1,
+      "message": "Done, yeah, I agree.",
+      "parentUuid": "6cbac615_487fe639",
+      "revId": "751f68acb2a6e73bc24ee015287c7b0e6bae1cf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
