@@ -22,6 +22,30 @@
       "revId": "0a1c0c442ac264f04951856156745717ba629188",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3a54718_fb07c140",
+        "filename": "third_party/crashpad/crashpad/snapshot/snapshot.gyp",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-09-06T16:34:09Z",
+      "side": 1,
+      "message": "\u003e I\u0027ve not added these to the BUILD.gn, as they\u0027re only used from posix/* files at present - I can add them if that\u0027s your preference, though.\n\nI think we do expect it to be available everywhere, though, so we should work it into BUILD.gn to avoid having it break in a more confusing way in the future.",
+      "parentUuid": "0d94a5c3_0ceb31de",
+      "range": {
+        "startLine": 147,
+        "startChar": 13,
+        "endLine": 147,
+        "endChar": 25
+      },
+      "revId": "0a1c0c442ac264f04951856156745717ba629188",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
