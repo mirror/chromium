@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4208c721_3a5e0f89",
+        "filename": "ios/chrome/browser/ui/browser_list/browser.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-06T13:19:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab80126c_40afea8c",
+      "range": {
+        "startLine": 25,
+        "startChar": 48,
+        "endLine": 25,
+        "endChar": 54
+      },
+      "revId": "4c3fb5f326652c92cb224db277e7e026cdabdd64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc5a9f2f_c2a97f36",
         "filename": "ios/chrome/browser/ui/browser_list/browser.h",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "b57013b1_208ab96a",
+        "filename": "ios/chrome/browser/ui/browser_list/browser.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-06T13:19:02Z",
+      "side": 1,
+      "message": "The model code does support multiple Browsers, the missing part is the UI. The support is there is we someday decide to have multiple tab strips in the clean skeleton. This is currently not planned, but already supported.\n\nRemoved as it could be confusing.",
+      "parentUuid": "cc5a9f2f_c2a97f36",
+      "range": {
+        "startLine": 26,
+        "startChar": 12,
+        "endLine": 26,
+        "endChar": 71
+      },
+      "revId": "4c3fb5f326652c92cb224db277e7e026cdabdd64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a2fb87a_c9b86fbc",
         "filename": "ios/chrome/browser/ui/browser_list/browser_list_impl.h",
         "patchSetId": 7
@@ -62,6 +110,24 @@
       "revId": "4c3fb5f326652c92cb224db277e7e026cdabdd64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "776015f4_aca2dfcb",
+        "filename": "ios/chrome/browser/ui/browser_list/browser_list_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-06T13:19:02Z",
+      "side": 1,
+      "message": "Yes, the API returns pointer to the owned Browsers object. If it were a std::vector\u003cBrowser\u003e then, CreateNewBrowser() may invalidate all previously returned objects (when the std::vector is resized).\n\nTo fix this, I would have to either use std::list\u003c\u003e (or another data structure that does not invalidate pointer to objects owned when a new object is added) but it is not much better than std::vector\u003cstd::unique_ptr\u003c\u003e\u003e (as it has to do a separate allocation), or to change the API so that a reference is returned, and ensure that no code ever keep a pointer to the Browser (or to the WebStateList it owns either).\n\nSo, it will stay a std::vector\u003cstd::unique_ptr\u003c\u003e\u003e as it supports random access (which std::list\u003c\u003e does not).",
+      "parentUuid": "2a2fb87a_c9b86fbc",
+      "revId": "4c3fb5f326652c92cb224db277e7e026cdabdd64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
