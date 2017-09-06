@@ -52,6 +52,24 @@
       "revId": "0e3dbfc0f4767543202a253807af3864f610ad9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37f50ff2_273ad3b1",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1900,
+      "author": {
+        "id": 1126984
+      },
+      "writtenOn": "2017-09-06T07:55:23Z",
+      "side": 1,
+      "message": "I cannot decide that we add \"progressbar\" here or not. \nBecause it did not describe about default value for progressbar in ARIA 1.1.\n\nIt\u0027s certain that it does not have problem even if we do not change default value for \"progressbar\" to 100. (it is same as previous one)",
+      "parentUuid": "5391bfc1_9950c7a7",
+      "revId": "0e3dbfc0f4767543202a253807af3864f610ad9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
