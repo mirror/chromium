@@ -477,19 +477,11 @@ std::unique_ptr<gfx::RenderText> OmniboxResultView::CreateClassifiedRenderText(
     ColorKind color_kind = TEXT;
     if (classifications[i].style & ACMatchClassification::URL) {
       color_kind = URL;
-      // URL Standard specifies that a URL "should be rendered as if it were in
-      // a left-to-right embedding". https://url.spec.whatwg.org/#url-rendering
-      //
-      // Consider logical string for domain "ABC.com/hello" (where ABC are
-      // Hebrew (RTL) characters). The normal Bidi algorithm renders this as
-      // "com/hello.CBA"; by forcing LTR, it is rendered as "CBA.com/hello".
-      //
-      // Note that this only applies a LTR embedding at the top level; it
-      // doesn't change the Bidi algorithm, so there are still some URLs that
-      // will render in a confusing order. Consider the logical string
-      // "abc.COM/HELLO/world", which will render as "abc.OLLEH/MOC/world".
-      // See https://crbug.com/351639.
-      render_text->SetDirectionalityMode(gfx::DIRECTIONALITY_FORCE_LTR);
+      // Ensure the text is rendered as a URL. What it means to "render as a
+      // URL" is defined in RenderText (generally, this means the same thing as
+      // DIRECTIONALITY_FORCE_LTR, but there is an experiment to render
+      // characters in a different order).
+      render_text->SetDirectionalityMode(gfx::DIRECTIONALITY_AS_URL);
     } else if (force_dim ||
         (classifications[i].style & ACMatchClassification::DIM)) {
       color_kind = DIMMED_TEXT;
