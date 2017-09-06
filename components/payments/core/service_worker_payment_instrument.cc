@@ -8,7 +8,7 @@ namespace payments {
 ServiceWorkerPaymentInstrument::ServiceWorkerPaymentInstrument(
     std::unique_ptr<StoredPaymentApp> stored_payment_app_info)
     : stored_payment_app_info_(std::move(stored_payment_app_info)),
-      PaymentInstrument() {}
+      PaymentInstrument("", 0, PaymentInstrument::Type::SERVICE_WORKER_APP) {}
 
 ServiceWorkerPaymentInstrument::~ServiceWorkerPaymentInstrument() {}
 

@@ -5,6 +5,8 @@
 #ifndef COMPONENTS_PAYMENTS_CORE_SERVICE_WORKER_PAYMENT_INSTRUMENT_H_
 #define COMPONENTS_PAYMENTS_CORE_SERVICE_WORKER_PAYMENT_INSTRUMENT_H_
 
+#include "components/payments/core/payment_instrument.h"
+
 namespace payments {
 
 class ServiceWorkerPaymentInstrument : public PaymentInstrument {
