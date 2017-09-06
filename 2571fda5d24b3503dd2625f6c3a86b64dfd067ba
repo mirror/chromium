@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33a3cf01_f8e69fdb",
+        "filename": "ui/views/controls/button/md_text_button.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-06T01:45:02Z",
+      "side": 1,
+      "message": "Nit: How about:\n\n  auto* compositor \u003d layer()-\u003eGetCompositor();\n  if (compositor \u0026\u0026 compositor-\u003edevice_scale_factor() \u003d\u003d 1)\n    stroke_alpha \u003d 0x4d;\n\nThis avoids conditional-with-side-effects.",
+      "revId": "2571fda5d24b3503dd2625f6c3a86b64dfd067ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
