@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "55445b58_86c35d04",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1148594
+      },
+      "writtenOn": "2017-09-06T22:08:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f909c317_092e9961",
+      "range": {
+        "startLine": 162,
+        "startChar": 0,
+        "endLine": 162,
+        "endChar": 62
+      },
+      "revId": "2e6dc52a6082792ed17f7bf51ffd084f7c5a5f25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10b0325e_db6c5b2e",
         "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
         "patchSetId": 5
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "4ea0105b_ef0f0873",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1148594
+      },
+      "writtenOn": "2017-09-06T22:08:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10b0325e_db6c5b2e",
+      "range": {
+        "startLine": 214,
+        "startChar": 19,
+        "endLine": 214,
+        "endChar": 41
+      },
+      "revId": "2e6dc52a6082792ed17f7bf51ffd084f7c5a5f25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73f2dfd6_056fdcac",
         "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
         "patchSetId": 5
@@ -83,6 +131,30 @@
       "writtenOn": "2017-08-31T20:14:46Z",
       "side": 1,
       "message": "http://chromium-cpp.appspot.com/#whitelist says:\n\n Be careful with default captures ([\u003d], [\u0026]), and do not bind or store any capturing lambdas outside the lifetime of the stack frame they are defined in; use base::Callback for this instead, as it helps prevent object lifetime mistakes.\n\nTo be clear: the lambda itself is fine, the capturing-by-reference is not. Let\u0027s use base::Bind() for this (even if it is completely safe to do so in this case) because it keeps the codebase consistent, and is correct in case the implementation of Launch() changes in the future.",
+      "range": {
+        "startLine": 233,
+        "startChar": 11,
+        "endLine": 233,
+        "endChar": 20
+      },
+      "revId": "2e6dc52a6082792ed17f7bf51ffd084f7c5a5f25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95752cff_9ab401c6",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1148594
+      },
+      "writtenOn": "2017-09-06T22:08:55Z",
+      "side": 1,
+      "message": "Removed lambdas.",
+      "parentUuid": "73f2dfd6_056fdcac",
       "range": {
         "startLine": 233,
         "startChar": 11,
