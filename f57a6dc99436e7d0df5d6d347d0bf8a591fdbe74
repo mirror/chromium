@@ -16,6 +16,24 @@
       "revId": "f57a6dc99436e7d0df5d6d347d0bf8a591fdbe74",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5590c6f6_8fee0830",
+        "filename": "components/viz/common/quads/release_callback_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-09-06T11:00:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aaf0a955_98531d39",
+      "revId": "f57a6dc99436e7d0df5d6d347d0bf8a591fdbe74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
