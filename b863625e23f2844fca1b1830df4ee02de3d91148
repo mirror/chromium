@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "198372b4_242c9fcb",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/chromium_exportable_commits.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-09-06T16:59:30Z",
+      "side": 1,
+      "message": "Correct. What about the following wording (already included in the new patchset):\n\n        verify_merged_pr: Whether to verify merged PRs can be found in the local\n            WPT repo. If this argument is True, for each Chromium commit with a\n            corresponding merged PR, we also check the local WPT repo, and still\n            consider the commit exportable if it cannot be found in local WPT.\n            (Note: Chromium commits that have closed but not merged PRs are\n            always considered exported regardless of this argument.)\n\nIs it clearer to you? And is the note useful?",
+      "parentUuid": "033b6e9a_8877f006",
+      "range": {
+        "startLine": 34,
+        "startChar": 26,
+        "endLine": 35,
+        "endChar": 79
+      },
+      "revId": "b863625e23f2844fca1b1830df4ee02de3d91148",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e6c6a98_be0d7698",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/chromium_exportable_commits.py",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "b863625e23f2844fca1b1830df4ee02de3d91148",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf2ec9c2_585adb0d",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/chromium_exportable_commits.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-09-06T16:59:30Z",
+      "side": 1,
+      "message": "Done. Also rearranged the comments a bit. Now it also looks much better to me.",
+      "parentUuid": "4e6c6a98_be0d7698",
+      "range": {
+        "startLine": 103,
+        "startChar": 0,
+        "endLine": 124,
+        "endChar": 49
+      },
+      "revId": "b863625e23f2844fca1b1830df4ee02de3d91148",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
