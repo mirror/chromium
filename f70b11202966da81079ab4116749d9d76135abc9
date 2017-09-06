@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f6d2ec51_d224be71",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/SuggestionsSheetVisibilityChangeObserverTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-06T10:22:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe958ccc_cdc6b16f",
+      "range": {
+        "startLine": 44,
+        "startChar": 36,
+        "endLine": 44,
+        "endChar": 65
+      },
+      "revId": "f70b11202966da81079ab4116749d9d76135abc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6466deed_9ca7ff99",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/SuggestionsSheetVisibilityChangeObserverTest.java",
         "patchSetId": 1
@@ -116,6 +140,30 @@
       "revId": "f70b11202966da81079ab4116749d9d76135abc9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83032feb_956224cf",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/SuggestionsSheetVisibilityChangeObserverTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-06T10:22:05Z",
+      "side": 1,
+      "message": "Will try landing this without the @RetryOnFailure, maybe my debug component build is just much slower than the one from the bots.",
+      "parentUuid": "976c2de7_519698fc",
+      "range": {
+        "startLine": 66,
+        "startChar": 22,
+        "endLine": 66,
+        "endChar": 36
+      },
+      "revId": "f70b11202966da81079ab4116749d9d76135abc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
