@@ -15,23 +15,21 @@ CompositorFrameSinkImpl::CompositorFrameSinkImpl(
     const FrameSinkId& frame_sink_id,
     mojom::CompositorFrameSinkRequest request,
     mojom::CompositorFrameSinkClientPtr client)
-    : support_(
-          CompositorFrameSinkSupport::Create(this,
-                                             frame_sink_manager,
-                                             frame_sink_id,
-                                             false /* is_root */,
-                                             true /* needs_sync_points */)),
-      client_(std::move(client)),
+    : CompositorFrameSinkSupport(client.get(),
+                                 frame_sink_id,
+                                 false /* is_root */,
+                                 true /* needs_sync_points */),
+      compositor_frame_sink_client_(std::move(client)),
       compositor_frame_sink_binding_(this, std::move(request)) {
+  Init(frame_sink_manager);
   compositor_frame_sink_binding_.set_connection_error_handler(
       base::Bind(&CompositorFrameSinkImpl::OnClientConnectionLost,
                  base::Unretained(this)));
 }
 
-CompositorFrameSinkImpl::~CompositorFrameSinkImpl() = default;
-
-void CompositorFrameSinkImpl::SetNeedsBeginFrame(bool needs_begin_frame) {
-  support_->SetNeedsBeginFrame(needs_begin_frame);
+CompositorFrameSinkImpl::~CompositorFrameSinkImpl() {
+  // Reset before destroying |compositor_frame_sink_client_|.
+  ResetClientForDestructor();
 }
 
 void CompositorFrameSinkImpl::SubmitCompositorFrame(
@@ -40,47 +38,17 @@ void CompositorFrameSinkImpl::SubmitCompositorFrame(
     mojom::HitTestRegionListPtr hit_test_region_list,
     uint64_t submit_time) {
   // TODO(gklassen): Route hit-test data to the appropriate HitTestAggregator.
-  if (!support_->SubmitCompositorFrame(local_surface_id, std::move(frame))) {
+  if (!CompositorFrameSinkSupport::SubmitCompositorFrame(local_surface_id,
+                                                         std::move(frame))) {
+    DLOG(ERROR) << "SubmitCompositorFrame failed for " << local_surface_id;
     compositor_frame_sink_binding_.CloseWithReason(
         1, "Surface invariants violation");
     OnClientConnectionLost();
   }
 }
 
-void CompositorFrameSinkImpl::DidNotProduceFrame(
-    const BeginFrameAck& begin_frame_ack) {
-  support_->DidNotProduceFrame(begin_frame_ack);
-}
-
-void CompositorFrameSinkImpl::DidReceiveCompositorFrameAck(
-    const std::vector<ReturnedResource>& resources) {
-  if (client_)
-    client_->DidReceiveCompositorFrameAck(resources);
-}
-
-void CompositorFrameSinkImpl::OnBeginFrame(const BeginFrameArgs& args) {
-  if (client_)
-    client_->OnBeginFrame(args);
-}
-
-void CompositorFrameSinkImpl::OnBeginFramePausedChanged(bool paused) {
-  if (client_)
-    client_->OnBeginFramePausedChanged(paused);
-}
-
-void CompositorFrameSinkImpl::ReclaimResources(
-    const std::vector<ReturnedResource>& resources) {
-  if (client_)
-    client_->ReclaimResources(resources);
-}
-
-void CompositorFrameSinkImpl::WillDrawSurface(
-    const LocalSurfaceId& local_surface_id,
-    const gfx::Rect& damage_rect) {}
-
 void CompositorFrameSinkImpl::OnClientConnectionLost() {
-  support_->frame_sink_manager()->OnClientConnectionLost(
-      support_->frame_sink_id());
+  frame_sink_manager()->OnClientConnectionLost(frame_sink_id());
 }
 
 }  // namespace viz
