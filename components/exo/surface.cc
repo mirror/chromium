@@ -105,6 +105,42 @@ gfx::Size ToTransformedSize(const gfx::Size& size, Transform transform) {
   NOTREACHED();
 }
 
+// Helper function that returns the top left of |uv_rect| after adjusting for
+// |transform|.
+gfx::PointF GetTransformedUVTopLeft(const gfx::RectF& uv_rect,
+                                    Transform transform) {
+  switch (transform) {
+    case Transform::NORMAL:
+      return uv_rect.origin();
+    case Transform::ROTATE_90:
+      return gfx::PointF(1.f - uv_rect.bottom(), uv_rect.x());
+    case Transform::ROTATE_180:
+      return gfx::PointF(1.f - uv_rect.right(), 1.f - uv_rect.bottom());
+    case Transform::ROTATE_270:
+      return gfx::PointF(uv_rect.y(), 1.f - uv_rect.right());
+  }
+
+  NOTREACHED();
+}
+
+// Helper function that returns the bottom right of |uv_rect| after adjusting
+// for |transform|.
+gfx::PointF GetTransformedUVBottomRight(const gfx::RectF& uv_rect,
+                                        Transform transform) {
+  switch (transform) {
+    case Transform::NORMAL:
+      return uv_rect.bottom_right();
+    case Transform::ROTATE_90:
+      return gfx::PointF(1.f - uv_rect.y(), uv_rect.right());
+    case Transform::ROTATE_180:
+      return gfx::PointF(1.f - uv_rect.x(), 1.f - uv_rect.y());
+    case Transform::ROTATE_270:
+      return gfx::PointF(uv_rect.bottom(), 1.f - uv_rect.x());
+  }
+
+  NOTREACHED();
+}
+
 class CustomWindowDelegate : public aura::WindowDelegate {
  public:
   explicit CustomWindowDelegate(Surface* surface) : surface_(surface) {}
@@ -778,12 +814,16 @@ void Surface::AppendContentsToFrame(const gfx::Point& origin,
     if (!state_.crop.IsEmpty()) {
       gfx::SizeF scaled_buffer_size(
           gfx::ScaleSize(transformed_buffer_size, 1.0f / state_.buffer_scale));
-      uv_top_left = state_.crop.origin();
-      uv_top_left.Scale(1.f / scaled_buffer_size.width(),
-                        1.f / scaled_buffer_size.height());
-      uv_bottom_right = state_.crop.bottom_right();
-      uv_bottom_right.Scale(1.f / scaled_buffer_size.width(),
-                            1.f / scaled_buffer_size.height());
+      gfx::RectF normalized_crop = gfx::RectF(state_.crop);
+      normalized_crop.Scale(1.0f / scaled_buffer_size.width(),
+                            1.0f / scaled_buffer_size.height());
+
+      // The crop rectangle is a post-rotation rectangle. It needs to be
+      // inverse-transformed to compute the UV coordinates.
+      uv_top_left =
+          GetTransformedUVTopLeft(normalized_crop, state_.buffer_transform);
+      uv_bottom_right =
+          GetTransformedUVBottomRight(normalized_crop, state_.buffer_transform);
     }
     // Texture quad is only needed if buffer is not fully transparent.
     if (state_.alpha) {
