@@ -13,7 +13,6 @@
 #include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "base/command_line.h"
 #include "base/macros.h"
-#include "base/test/scoped_feature_list.h"
 #include "chrome/app/chrome_command_ids.h"
 #include "chrome/browser/ui/browser_commands.h"
 #include "chrome/browser/ui/exclusive_access/fullscreen_controller.h"
@@ -350,28 +349,9 @@ TEST_F(ImmersiveModeControllerAshTestHostedApp, Layout) {
   EXPECT_EQ(header_height, GetBoundsInWidget(contents_web_view).y());
 }
 
-class ImmersiveModeControllerAshTestTabletMode
-    : public ImmersiveModeControllerAshTest {
- public:
-  ImmersiveModeControllerAshTestTabletMode()
-      : ImmersiveModeControllerAshTest(Browser::TYPE_POPUP, false) {}
-  ~ImmersiveModeControllerAshTestTabletMode() override {}
-
-  void SetUp() override {
-    scoped_feature_list.InitAndEnableFeature(
-        ash::kAutoHideTitleBarsInTabletMode);
-    ImmersiveModeControllerAshTest::SetUp();
-  }
-
- private:
-  base::test::ScopedFeatureList scoped_feature_list;
-
-  DISALLOW_COPY_AND_ASSIGN(ImmersiveModeControllerAshTestTabletMode);
-};
-
-// Verify the immersive mode status is as expected in tablet mode when the auto
-// hide title bars in tablet mode feature is enabled.
-TEST_F(ImmersiveModeControllerAshTestTabletMode, ImmersiveModeStatus) {
+// Verify the immersive mode status is as expected in tablet mode (titlebars are
+// autohidden in tablet mode).
+TEST_F(ImmersiveModeControllerAshTestHostedApp, ImmersiveModeStatusTabletMode) {
   ASSERT_FALSE(controller()->IsEnabled());
 
   // Verify that after entering tablet mode, immersive mode is enabled.
