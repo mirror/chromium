@@ -30,6 +30,7 @@ public class AutofillServerProfilePreferences
     @Override
     public void onCreate(Bundle savedState) {
         super.onCreate(savedState);
+
         PreferenceUtils.addPreferencesFromResource(this, R.xml.autofill_server_profile_preferences);
         getActivity().setTitle(R.string.autofill_edit_profile);
 
