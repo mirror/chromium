@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2593dee0_420127a8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-09-06T18:22:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bfbf5885_9df42c67",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 53
+      },
+      "revId": "a085d4f9d21cee24c4a78e5c849e897b0b8b2e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5929f2b2_17ed15a6",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/paint-timing/first-paint-bg-color.html",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "a085d4f9d21cee24c4a78e5c849e897b0b8b2e18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "464fa17b_4a81fc3e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/paint-timing/first-paint-bg-color.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-09-06T18:22:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5929f2b2_17ed15a6",
+      "range": {
+        "startLine": 19,
+        "startChar": 23,
+        "endLine": 19,
+        "endChar": 24
+      },
+      "revId": "a085d4f9d21cee24c4a78e5c849e897b0b8b2e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
