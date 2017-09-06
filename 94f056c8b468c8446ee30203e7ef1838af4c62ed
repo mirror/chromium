@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c20f483e_466e0bf2",
+        "filename": "components/cronet/android/api/src/org/chromium/net/CronetEngine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-06T17:04:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5eb4bc8_cfb68c56",
+      "range": {
+        "startLine": 162,
+        "startChar": 80,
+        "endLine": 162,
+        "endChar": 0
+      },
+      "revId": "94f056c8b468c8446ee30203e7ef1838af4c62ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aca99bd_da041b48",
         "filename": "components/cronet/android/api/src/org/chromium/net/ICronetEngineBuilder.java",
         "patchSetId": 4
@@ -57,6 +81,24 @@
       "revId": "94f056c8b468c8446ee30203e7ef1838af4c62ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b352ad77_d9ca3b03",
+        "filename": "components/cronet/android/api/src/org/chromium/net/ICronetEngineBuilder.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-06T17:04:30Z",
+      "side": 1,
+      "message": "Done. Got it. Thanks!",
+      "parentUuid": "2e0a02c2_8583c1bb",
+      "revId": "94f056c8b468c8446ee30203e7ef1838af4c62ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
