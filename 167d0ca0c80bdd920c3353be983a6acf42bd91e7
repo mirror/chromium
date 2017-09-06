@@ -338,6 +338,24 @@
     },
     {
       "key": {
+        "uuid": "97ce2bbf_6c91ef3e",
+        "filename": "third_party/WebKit/PerformanceTests/ImageDecoder/resources/image_decoder_runner.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-06T10:33:48Z",
+      "side": 1,
+      "message": "Ack. Let\u0027s proceed, just a presubmit to fix, patch still LGTM.",
+      "parentUuid": "2b2812c7_4ea29f3a",
+      "revId": "167d0ca0c80bdd920c3353be983a6acf42bd91e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1729eb62_20b4bcf3",
         "filename": "tools/perf/benchmarks/blink_perf.py",
         "patchSetId": 4
