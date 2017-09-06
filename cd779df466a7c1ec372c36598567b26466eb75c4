@@ -16,6 +16,24 @@
       "revId": "cd779df466a7c1ec372c36598567b26466eb75c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9518adba_c15840dc",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1536,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-06T21:18:02Z",
+      "side": 1,
+      "message": "Yes, it would affect damage tracking for checker-imaging too. I\u0027ve uploaded https://chromium-review.googlesource.com/c/chromium/src/+/653247 with just this fix.",
+      "parentUuid": "6bd8d0d1_cf965373",
+      "revId": "cd779df466a7c1ec372c36598567b26466eb75c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
