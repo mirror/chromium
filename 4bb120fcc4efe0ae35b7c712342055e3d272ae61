@@ -22,6 +22,30 @@
       "revId": "4bb120fcc4efe0ae35b7c712342055e3d272ae61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b81da54_d88f73d0",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-09-06T22:30:15Z",
+      "side": 1,
+      "message": "Removed. The original intention was to provide an overview without having to look at individual files, but you\u0027re right - prone to getting stale and doesn\u0027t really do much.",
+      "parentUuid": "a920e2ff_ac187204",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 9
+      },
+      "revId": "4bb120fcc4efe0ae35b7c712342055e3d272ae61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
