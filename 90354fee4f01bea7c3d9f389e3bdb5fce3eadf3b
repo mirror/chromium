@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "9e327c5f_579ec194",
+        "filename": "chrome/installer/linux/debian/package_version_interval.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-06T21:09:54Z",
+      "side": 1,
+      "message": "style: 2 blank lines between top-level definitions.",
+      "revId": "90354fee4f01bea7c3d9f389e3bdb5fce3eadf3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "775886bd_51f78ad8",
         "filename": "chrome/installer/linux/debian/package_version_interval.py",
         "patchSetId": 2
@@ -13,6 +30,23 @@
       "writtenOn": "2017-09-06T21:05:22Z",
       "side": 1,
       "message": "Add some tests for parse_dep() as well?",
+      "revId": "90354fee4f01bea7c3d9f389e3bdb5fce3eadf3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c78250d_cfec206e",
+        "filename": "chrome/installer/linux/debian/package_version_interval.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-06T21:09:54Z",
+      "side": 1,
+      "message": "style: See https://google.github.io/styleguide/pyguide.html?showone\u003dComments#Comments",
       "revId": "90354fee4f01bea7c3d9f389e3bdb5fce3eadf3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
