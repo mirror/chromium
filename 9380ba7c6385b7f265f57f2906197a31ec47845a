@@ -25,6 +25,52 @@
     },
     {
       "key": {
+        "uuid": "6573a6a3_78669270",
+        "filename": "base/win/com_base_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-06T07:59:06Z",
+      "side": 1,
+      "message": "base/win/win_util seems to have a code to load combase.dll too.\nwill you modify it to use this?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 1
+      },
+      "revId": "9380ba7c6385b7f265f57f2906197a31ec47845a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc0bedca_67a7cad8",
+        "filename": "base/win/com_base_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-06T07:59:06Z",
+      "side": 1,
+      "message": "optionally can be a namespace instead of class since all meaningful methods are static (and I believe no one instantiate this though ctor/dtor are defined).",
+      "range": {
+        "startLine": 22,
+        "startChar": 12,
+        "endLine": 22,
+        "endChar": 17
+      },
+      "revId": "9380ba7c6385b7f265f57f2906197a31ec47845a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bbde48b7_5a58d6a5",
         "filename": "base/win/com_base_util.h",
         "patchSetId": 4
@@ -41,6 +87,116 @@
         "startChar": 2,
         "endLine": 51,
         "endChar": 0
+      },
+      "revId": "9380ba7c6385b7f265f57f2906197a31ec47845a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0186e9fa_49366261",
+        "filename": "base/win/com_base_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-06T07:59:06Z",
+      "side": 1,
+      "message": "I\u0027m not sure if HStringRef is useful, but agreed that it would be better to move these to HStringRef, or ScopedHString if HStringRef is not needed.",
+      "parentUuid": "bbde48b7_5a58d6a5",
+      "range": {
+        "startLine": 36,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 0
+      },
+      "revId": "9380ba7c6385b7f265f57f2906197a31ec47845a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82ef4107_d7e355fb",
+        "filename": "base/win/com_base_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-06T07:59:06Z",
+      "side": 1,
+      "message": "Do you really need to make these method and EnsureLibraryLoaded() private static methods?\nIf these are not called from unit tests, I think these can be defined in anonymous namespace in .cc.",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 49
+      },
+      "revId": "9380ba7c6385b7f265f57f2906197a31ec47845a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c4964b3_e8fa681b",
+        "filename": "base/win/com_base_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-06T07:59:06Z",
+      "side": 1,
+      "message": "these also can be in anonymous namespace in .cc.",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 30
+      },
+      "revId": "9380ba7c6385b7f265f57f2906197a31ec47845a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11e3fd0b_2260cead",
+        "filename": "base/win/hstring_ref.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-06T07:59:06Z",
+      "side": 1,
+      "message": "Is this really useful?\nIt looks better to merge this into ScopedHString, and use ScopedHString from existing callers to avoid handle leak.",
+      "revId": "9380ba7c6385b7f265f57f2906197a31ec47845a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87fb80a4_a9a9fc2d",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-06T07:59:06Z",
+      "side": 1,
+      "message": "is it ok to leak the HSTRING here?\nprobably it should be a scoped object, or static const instance if it\u0027s performance critical?\n\nditto for other HStringRef instance",
+      "range": {
+        "startLine": 46,
+        "startChar": 13,
+        "endLine": 46,
+        "endChar": 27
       },
       "revId": "9380ba7c6385b7f265f57f2906197a31ec47845a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
