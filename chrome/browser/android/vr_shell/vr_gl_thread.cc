@@ -7,13 +7,13 @@
 #include <utility>
 
 #include "base/message_loop/message_loop.h"
-#include "chrome/browser/android/vr_shell/vr_input_manager.h"
 #include "chrome/browser/android/vr_shell/vr_shell.h"
 #include "chrome/browser/android/vr_shell/vr_shell_gl.h"
 #include "chrome/browser/vr/toolbar_state.h"
 #include "chrome/browser/vr/ui_interface.h"
 #include "chrome/browser/vr/ui_scene.h"
 #include "chrome/browser/vr/ui_scene_manager.h"
+#include "chrome/browser/vr/vr_input_manager.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 
 namespace vr_shell {
