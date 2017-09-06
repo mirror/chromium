@@ -5095,6 +5095,34 @@ TEST_F(SourceBufferStreamTest, AudioRangeEndTimeCases) {
   }
 }
 
+TEST_F(SourceBufferStreamTest, SameTimestampEstimatedDurations) {
+  // BIG TODO: does this repro for Audio too?
+  // Start a coded frame group with a frame having a non-estimated duration.
+  NewCodedFrameGroupAppend("10D10K");
+
+  // Estimated duration, eg a single simple-block cluster after an intervening
+  // init segment. (No repro if new coded frame group is started because that
+  // new frame, if same timestamp, overlap-removes the old frame; and if higher
+  // timestamp it becomes the new "highest_frame" in the range.
+  //
+  // Note: since the MSE spec requires we reset the "need random access point"
+  // on all track buffers when processing an initialization segment, I think we
+  // could avoid this issue by similarly triggering a new coded frame group
+  // *but* that would likely break muxed sequence mode continuity. Given the
+  // very low rate of muxed sequence mode SourceBuffers, and the likelihood of
+  // support for muxed sequence mode being deprecated in MSE spec and in Chrome
+  // impl, resetting "in coded frame group" at initialization segments may be a
+  // route forward.
+  AppendBuffers("10D2EK");
+
+  // The next append, which triggered https://crbug.com/761567, does not need to
+  // be with same timestamp as the earlier ones; it just needs to be in the same
+  // buffered range.  Also, it doesn't need to be a keyframe, have an estimated
+  // duration, nor be in the same coded frame group to trigger that issue.
+  // AppendBuffers("10D20");
+  NewCodedFrameGroupAppend("11D10K");
+}
+
 TEST_F(SourceBufferStreamTest, RangeIsNextInPTS_Simple) {
   // Append a simple GOP where DTS==PTS, perform basic PTS continuity checks.
   NewCodedFrameGroupAppend("10D10K");
