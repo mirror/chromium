@@ -347,6 +347,29 @@
     },
     {
       "key": {
+        "uuid": "e6e4c3bd_951542bb",
+        "filename": "chrome/browser/ui/passwords/password_manager_presenter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-06T11:36:40Z",
+      "side": 1,
+      "message": "The destructor here isn\u0027t trivial. Thus, it shouldn\u0027t be inlined.",
+      "range": {
+        "startLine": 143,
+        "startChar": 4,
+        "endLine": 143,
+        "endChar": 27
+      },
+      "revId": "972ad36c35293bbdef1acd51a0546f3766258c87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b09f82ce_2e794e60",
         "filename": "chrome/browser/ui/passwords/password_manager_presenter.h",
         "patchSetId": 5
@@ -363,6 +386,29 @@
         "startChar": 4,
         "endLine": 151,
         "endChar": 21
+      },
+      "revId": "972ad36c35293bbdef1acd51a0546f3766258c87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abe8ba58_85075280",
+        "filename": "chrome/browser/ui/passwords/password_manager_presenter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-06T11:36:40Z",
+      "side": 1,
+      "message": "Should those two classes go to the .cc ?",
+      "range": {
+        "startLine": 157,
+        "startChar": 8,
+        "endLine": 157,
+        "endChar": 28
       },
       "revId": "972ad36c35293bbdef1acd51a0546f3766258c87",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
