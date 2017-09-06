@@ -105,6 +105,24 @@
     },
     {
       "key": {
+        "uuid": "08db2e0c_6e8feca3",
+        "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-06T06:30:18Z",
+      "side": 1,
+      "message": "I\u0027m also wonder how we should handle this case. I think if |counter_| is overflowing, it\u0027s unusual, so we can give up in that case. \nWhat do you think if just crashing in that situation?\nlike:\n\nif (counter_ \u003d\u003d std::numeric_limits\u003cint\u003e::max()) {\n  NOTREACHED(); // or should we use CHECK(false); for always crashing?\n  return NoOpCallback();\n}",
+      "parentUuid": "554acac9_4b81fe02",
+      "revId": "51279127275ec7f0936ce589fb5a02018aff2a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "904912f1_3970ef2e",
         "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
         "patchSetId": 12
