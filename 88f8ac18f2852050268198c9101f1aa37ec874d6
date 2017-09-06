@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63342448_bf934ad8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-09-06T00:36:59Z",
+      "side": 1,
+      "message": "I think you can do event.consume(true) here, and focus the button. Then you can remove the _onToggleClick, and use the same event listener for \u0027click\u0027 and \u0027mousedown\u0027. I want to avoid checking whether a click was synthetic.",
+      "revId": "88f8ac18f2852050268198c9101f1aa37ec874d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "723d8bde_b005266d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-09-06T00:36:59Z",
+      "side": 1,
+      "message": "This looks unused.",
+      "revId": "88f8ac18f2852050268198c9101f1aa37ec874d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24fb13b0_a9c02428",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-09-06T00:36:59Z",
+      "side": 1,
+      "message": "Can we use accessible name here instead of hidden text? Or maybe a .title?",
+      "revId": "88f8ac18f2852050268198c9101f1aa37ec874d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66fb887a_6c8d87c8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/spectrum.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-09-06T00:36:59Z",
+      "side": 1,
+      "message": "I\u0027d rather explicitly set outline\n\noutline: -webkit-focus-ring-color auto 3px;\n\nI\u0027ve also been putting :focus after data-keyboard-focus just to be safe.",
+      "revId": "88f8ac18f2852050268198c9101f1aa37ec874d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
