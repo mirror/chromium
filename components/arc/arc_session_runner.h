@@ -9,18 +9,35 @@
 
 #include "base/callback.h"
 #include "base/macros.h"
+#include "base/observer_list.h"
 #include "base/time/time.h"
 #include "base/timer/timer.h"
 #include "chromeos/dbus/session_manager_client.h"
-#include "components/arc/arc_session.h"
+// TODO:cmtm the below include statement is a IWYU violation
+// This is just to get components/arc/common/arc_bridge.mojom.h
+// I'll change it to that after
+#include "components/arc/arc_bridge_host_impl.h"
+#include "components/arc/arc_bridge_service.h"
 #include "components/arc/arc_stop_reason.h"
+
+#include "mojo/edk/embedder/embedder.h"
+#include "mojo/edk/embedder/named_platform_handle.h"
+#include "mojo/edk/embedder/named_platform_handle_utils.h"
+#include "mojo/edk/embedder/outgoing_broker_client_invitation.h"
+#include "mojo/edk/embedder/platform_channel_pair.h"
+#include "mojo/edk/embedder/platform_channel_utils_posix.h"
+#include "mojo/edk/embedder/platform_handle_vector.h"
+#include "mojo/edk/embedder/scoped_platform_handle.h"
+#include "mojo/public/cpp/bindings/binding.h"
 
 namespace arc {
 
+using StartArcInstanceResult =
+    chromeos::SessionManagerClient::StartArcInstanceResult;
+
 // Accept requests to start/stop ARC instance. Also supports automatic
 // restarting on unexpected ARC instance crash.
-class ArcSessionRunner : public ArcSession::Observer,
-                         public chromeos::SessionManagerClient::Observer {
+class ArcSessionRunner : public chromeos::SessionManagerClient::Observer {
  public:
   // Observer to notify events across multiple ARC session runs.
   class Observer {
@@ -41,11 +58,7 @@ class ArcSessionRunner : public ArcSession::Observer,
     virtual ~Observer() = default;
   };
 
-  // This is the factory interface to inject ArcSession instance
-  // for testing purpose.
-  using ArcSessionFactory = base::Callback<std::unique_ptr<ArcSession>()>;
-
-  explicit ArcSessionRunner(const ArcSessionFactory& factory);
+  explicit ArcSessionRunner(ArcBridgeService* arc_bridge_service);
   ~ArcSessionRunner() override;
 
   // Add/Remove an observer.
@@ -58,7 +71,7 @@ class ArcSessionRunner : public ArcSession::Observer,
 
   // Stops the ARC service.
   // TODO(yusukes): Remove the parameter.
-  void RequestStop(bool always_stop_session);
+  void RequestStop();
 
   // OnShutdown() should be called when the browser is shutting down. This can
   // only be called on the thread that this class was created on. We assume that
@@ -73,9 +86,6 @@ class ArcSessionRunner : public ArcSession::Observer,
 
   // Returns whether LoginScreen instance is starting.
   bool IsLoginScreenInstanceStarting() const;
-
-  // Returns the current ArcSession instance for testing purpose.
-  ArcSession* GetArcSessionForTesting() { return arc_session_.get(); }
 
   // Normally, automatic restarting happens after a short delay. When testing,
   // however, we'd like it to happen immediately to avoid adding unnecessary
@@ -105,12 +115,11 @@ class ArcSessionRunner : public ArcSession::Observer,
     // ARC instance is not currently running.
     STOPPED,
 
-    // Request to start ARC instance for login screen is received. Starting an
-    // ARC instance.
-    STARTING_FOR_LOGIN_SCREEN,
-
     // Request to start ARC instance is received. Starting an ARC instance.
     STARTING,
+
+    // The instance has started. Waiting for it to connect to the IPC bridge.
+    CONNECTING_MOJO,
 
     // ARC instance has finished initializing, and is now ready for interaction
     // with other services.
@@ -120,15 +129,45 @@ class ArcSessionRunner : public ArcSession::Observer,
     STOPPING,
   };
 
+  enum class TargetState {
+    STOP,
+    MINI,
+    FULL,
+  };
+
   // Starts to run an ARC instance.
-  void StartArcSession();
+  void Start();
+
+  // Stop an ARC instance.
+  void Stop();
 
   // Restarts an ARC instance.
   void RestartArcSession();
 
-  // ArcSession::Observer:
-  void OnSessionReady() override;
-  void OnSessionStopped(ArcStopReason reason) override;
+  void ArcInstanceStopped(bool clean, const std::string& container_instance_id);
+
+  // Completes the termination procedure.
+  void OnStopped(ArcStopReason reason);
+
+  // Sends a StartArcInstance D-Bus request to session_manager.
+  static void SendStartArcInstanceDBusMessage(
+      bool instance_is_for_login_screen,
+      const
+      chromeos::SessionManagerClient::StartArcInstanceCallback&
+      cb);
+
+  // DBus callback for StartArcInstance().
+  void OnInstanceStarted(bool instance_is_for_login_screen,
+                         StartArcInstanceResult result,
+                         const std::string& container_instance_id,
+                         base::ScopedFD socket_fd);
+
+  // Synchronously accepts a connection on |socket_fd| and then processes the
+  // connected socket's file descriptor.
+  static mojo::ScopedMessagePipeHandle ConnectMojo(
+      mojo::edk::ScopedPlatformHandle socket_fd,
+      base::ScopedFD cancel_fd);
+  void OnMojoConnected(mojo::ScopedMessagePipeHandle server_pipe);
 
   // chromeos::SessionManagerClient::Observer:
   void EmitLoginPromptVisibleCalled() override;
@@ -138,23 +177,30 @@ class ArcSessionRunner : public ArcSession::Observer,
   // Observers for the ARC instance state change events.
   base::ObserverList<Observer> observer_list_;
 
-  // Whether a client requests to run session or not.
-  bool run_requested_ = false;
+  // The target state of the container
+  TargetState target_state_ = TargetState::STOP;
+
+  // Container instance id passed from session_manager.
+  // Should be available only after OnInstanceStarted().
+  std::string container_instance_id_;
 
   // Instead of immediately trying to restart the container, give it some time
   // to finish tearing down in case it is still in the process of stopping.
   base::TimeDelta restart_delay_;
   base::OneShotTimer restart_timer_;
 
-  // Factory to inject a fake ArcSession instance for testing.
-  ArcSessionFactory factory_;
+  // Owned by ArcServiceManager.
+  ArcBridgeService* const arc_bridge_service_;
 
   // Current runner's state.
   State state_ = State::STOPPED;
 
-  // ArcSession object for currently running ARC instance. This should be
-  // nullptr if the state is STOPPED, otherwise non-nullptr.
-  std::unique_ptr<ArcSession> arc_session_;
+  // In CONNECTING_MOJO state, this is set to the write side of the pipe
+  // to notify cancelling of the procedure.
+  base::ScopedFD accept_cancel_pipe_;
+
+  // Mojo endpoint.
+  std::unique_ptr<mojom::ArcBridgeHost> arc_bridge_host_;
 
   // WeakPtrFactory to use callbacks.
   base::WeakPtrFactory<ArcSessionRunner> weak_ptr_factory_;

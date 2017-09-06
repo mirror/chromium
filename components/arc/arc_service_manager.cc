@@ -7,7 +7,6 @@
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "components/arc/arc_bridge_service.h"
-#include "components/arc/arc_session.h"
 #include "components/arc/arc_session_runner.h"
 
 namespace arc {
