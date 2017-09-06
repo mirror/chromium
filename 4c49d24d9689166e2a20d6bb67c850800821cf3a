@@ -34,6 +34,24 @@
       "revId": "4c49d24d9689166e2a20d6bb67c850800821cf3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9e9e805_9450fb91",
+        "filename": "chrome/browser/ui/views/tabs/tab.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-06T17:28:30Z",
+      "side": 1,
+      "message": "I like the idea of not declaring FaviconCrashAnimation in this file, but using a unique_ptr when something is most analogous to a member-by-value is a bit misleading (it implied to me that the lifetime was different than it was) and it\u0027s sort of going against our team style guide: \"If it would otherwise make sense to use a type as a member by-value, don\u0027t convert it to a pointer just to be able to forward-declare the type.\" ( https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#forward-declarations-vs_includes ).\n\nMaybe we could pull the class out to its own (small) .h/.cc and #include it above?  I realize this probably feels like total overkill, but I find it kind of refreshing to run into source files that are only a few dozen lines long instead of a thousand :)",
+      "parentUuid": "54514fdc_1cfe1422",
+      "revId": "4c49d24d9689166e2a20d6bb67c850800821cf3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
