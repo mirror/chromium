@@ -22,6 +22,30 @@
       "revId": "b333d077a7dc182360daa7058990f1c053fa980e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10eee360_51902308",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/device/gattserverdisconnected-event/disconnected_gc.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-09-06T18:07:18Z",
+      "side": 1,
+      "message": "Right, not sure what I was thinking.",
+      "parentUuid": "6015400a_a9623a20",
+      "range": {
+        "startLine": 17,
+        "startChar": 3,
+        "endLine": 17,
+        "endChar": 7
+      },
+      "revId": "b333d077a7dc182360daa7058990f1c053fa980e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
