@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "204ef9ab_34a20539",
+        "filename": "ui/message_center/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-06T14:56:50Z",
+      "side": 1,
+      "message": "//ui/message_center/public/...",
+      "revId": "0a731554a9c4651c22a8cd57f5cd9c9df8513a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b2304ac_0f5f99d6",
+        "filename": "ui/message_center/public/cpp/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-06T14:56:50Z",
+      "side": 1,
+      "message": "Could we just name this \"cpp\" so that targets can depend on //ui/message_center/public/cpp/?\n\nWhat\u0027s the benefit over \"component\" versus \"source_set\", that seems to be much more common?",
+      "revId": "0a731554a9c4651c22a8cd57f5cd9c9df8513a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
