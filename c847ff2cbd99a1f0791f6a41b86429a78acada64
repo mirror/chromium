@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1292dfe7_65628620",
+        "filename": "tools/roll_webrtc.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1002100
+      },
+      "writtenOn": "2017-09-06T17:52:15Z",
+      "side": 1,
+      "message": "No need to do this, you can just pass \"--tbr\u003d%s\" % git_author to \u0027git cl upload\u0027.",
+      "revId": "c847ff2cbd99a1f0791f6a41b86429a78acada64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0ee790a_975b2d19",
+        "filename": "tools/roll_webrtc.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1002100
+      },
+      "writtenOn": "2017-09-06T17:52:15Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be necessary; with --tbr and --send-mail, the previous \"git cl set_commit\" should work just fine. This works fine too, if you prefer this method, but this piece of the change isn\u0027t strictly necessary.",
+      "range": {
+        "startLine": 330,
+        "startChar": 27,
+        "endLine": 330,
+        "endChar": 47
+      },
+      "revId": "c847ff2cbd99a1f0791f6a41b86429a78acada64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
