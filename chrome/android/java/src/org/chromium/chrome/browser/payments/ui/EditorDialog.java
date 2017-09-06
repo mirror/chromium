@@ -96,14 +96,17 @@ public class EditorDialog
     private TextView mPhoneInput;
 
     private Animator mDialogInOutAnimator;
-
+    @Nullable
+    private Runnable mDeleteRunnable;
     /**
      * Builds the editor dialog.
      *
      * @param activity        The activity on top of which the UI should be displayed.
      * @param observerForTest Optional event observer for testing.
+     * @param deleteRunnable  The runnable that when called will delete the profile.
      */
-    public EditorDialog(Activity activity, PaymentRequestObserverForTest observerForTest) {
+    public EditorDialog(Activity activity, PaymentRequestObserverForTest observerForTest,
+            Runnable deleteRunnable) {
         super(activity, R.style.FullscreenWhite);
         // Sets transparent background for animating content view.
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -154,6 +157,11 @@ public class EditorDialog
         };
 
         mCardNumberFormatter = new CreditCardNumberFormattingTextWatcher();
+        mDeleteRunnable = deleteRunnable;
+    }
+
+    public EditorDialog(Activity activity, PaymentRequestObserverForTest observerForTest) {
+        this(activity, observerForTest, /*deleteRunnable=*/null);
     }
 
     /** Prevents screenshots of this editor. */
@@ -180,13 +188,20 @@ public class EditorDialog
         EditorDialogToolbar toolbar = (EditorDialogToolbar) mLayout.findViewById(R.id.action_bar);
         toolbar.setTitle(mEditorModel.getTitle());
         toolbar.setTitleTextColor(Color.WHITE);
-        toolbar.setShowDeleteMenuItem(false);
+        toolbar.setShowDeleteMenuItem(mDeleteRunnable != null);
 
         // Show the help article when the user asks.
         toolbar.setOnMenuItemClickListener(new OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                launchAutofillHelpPage(mContext);
+                if (item.getItemId() == R.id.delete_menu_id) {
+                    if (mDeleteRunnable != null) {
+                        mDeleteRunnable.run();
+                        animateOutDialog();
+                    }
+                } else if (item.getItemId() == R.id.help_menu_id) {
+                    launchAutofillHelpPage(mContext);
+                }
                 return true;
             }
         });
