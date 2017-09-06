@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e90a8bb_674bfdc3",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-06T17:40:44Z",
+      "side": 1,
+      "message": "Per \"When should I use Finch?\" on go/newchromefeature, I think this should just be a normal flag, not a Finch feature flag.",
+      "range": {
+        "startLine": 66,
+        "startChar": 20,
+        "endLine": 66,
+        "endChar": 43
+      },
+      "revId": "55f65d7a7e4daf1a2b0f39387e3cc33e50c5a1ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56d3a7b6_dedcf3c5",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-06T17:40:44Z",
+      "side": 1,
+      "message": "not sure that these blocks are necessary, I don\u0027t think this code is used on iOS. (Not sure why they\u0027re there for the MITM interstitial code either, I\u0027ll file a bug)",
+      "range": {
+        "startLine": 723,
+        "startChar": 0,
+        "endLine": 723,
+        "endChar": 19
+      },
+      "revId": "55f65d7a7e4daf1a2b0f39387e3cc33e50c5a1ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6f5af86_0da3d0ae",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 727,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-06T17:40:44Z",
+      "side": 1,
+      "message": "I think there is a memory leak here. If we never call Show() on the SecurityInterstitialPage, then we never create a content::InterstitialPage to take ownership of it, so it\u0027ll never get cleaned up.\n\nLet\u0027s talk about this this afternoon, the lifetimes of all these objects a little bit weird and don\u0027t necessarily make much sense in the committed interstitials case...",
+      "range": {
+        "startLine": 727,
+        "startChar": 4,
+        "endLine": 727,
+        "endChar": 70
+      },
+      "revId": "55f65d7a7e4daf1a2b0f39387e3cc33e50c5a1ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c55c118_ee1d59d8",
+        "filename": "chrome/browser/ssl/ssl_error_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-06T17:40:44Z",
+      "side": 1,
+      "message": "nit: please update this class comment to describe the different behavior based on whether committed interstitials are enabled",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 2
+      },
+      "revId": "55f65d7a7e4daf1a2b0f39387e3cc33e50c5a1ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b6aae2f_d1861de0",
+        "filename": "chrome/browser/ssl/ssl_error_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-06T17:40:44Z",
+      "side": 1,
+      "message": "nit: |throttle|?",
+      "range": {
+        "startLine": 111,
+        "startChar": 6,
+        "endLine": 111,
+        "endChar": 23
+      },
+      "revId": "55f65d7a7e4daf1a2b0f39387e3cc33e50c5a1ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af899b16_6f56cf77",
+        "filename": "chrome/browser/ssl/ssl_error_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-06T17:40:44Z",
+      "side": 1,
+      "message": "nit: it would be nice if we had one canonical place where the flag was checked, instead of having to check it in multiple places. Suggestion: change HandleSSLError to take a callback instead of a |throttle| (as suggested for other reasons in another comment). Specify that the interface is as follows: if the callback is provided, then it will be called with the interstitial HTML when it\u0027s ready. If the callback isn\u0027t provided, then the interstitial page will be shown when it\u0027s ready. That way, SSLErrorHandlerDelegateImpl::ShowInterstitial() can just check whether the callback is null, and SSLErrorNavigationThrottle can be the one place where we check whether the flag is enabled.",
+      "range": {
+        "startLine": 124,
+        "startChar": 14,
+        "endLine": 124,
+        "endChar": 46
+      },
+      "revId": "55f65d7a7e4daf1a2b0f39387e3cc33e50c5a1ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67aecb0a_07097b81",
+        "filename": "chrome/browser/ssl/ssl_error_navigation_throttle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-06T17:40:44Z",
+      "side": 1,
+      "message": "Instead of duplicating this, can we create an instance of it in ChromeContentBrowserClient when we create the throttle and pass it in?",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 0
+      },
+      "revId": "55f65d7a7e4daf1a2b0f39387e3cc33e50c5a1ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae5c4ca3_592045ec",
+        "filename": "chrome/browser/ssl/ssl_error_navigation_throttle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-06T17:40:44Z",
+      "side": 1,
+      "message": "I\u0027m a little confused here -- last I heard, I thought the plan was to continue to use ERR_INSECURE_RESPONSE rather than ERR_CERT_* because it was going to be unwieldy to specify an ERR_CERT_* error code in ChromeContentBrowserClient::AllowCertificateError.",
+      "range": {
+        "startLine": 67,
+        "startChar": 12,
+        "endLine": 67,
+        "endChar": 30
+      },
+      "revId": "55f65d7a7e4daf1a2b0f39387e3cc33e50c5a1ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05bb047c_6862b1af",
+        "filename": "chrome/browser/ssl/ssl_error_navigation_throttle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-06T17:40:44Z",
+      "side": 1,
+      "message": "It seems like we will either need to use PostTask to do this asynchronously, or document a guarantee that SSLErrorHandler::StartHandlingError() will not call back to ShowInterstitial() synchronously. Otherwise, SSLErrorHandler might call CancelDeferredNavigation() synchronously and I\u0027m not sure if it\u0027s valid for a throttle to call CancelDeferredNavigation() within the body of the throttle method? (especially if it returns DEFER after doing so).",
+      "range": {
+        "startLine": 72,
+        "startChar": 2,
+        "endLine": 72,
+        "endChar": 16
+      },
+      "revId": "55f65d7a7e4daf1a2b0f39387e3cc33e50c5a1ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02ab7a7d_2e8c2cdc",
+        "filename": "chrome/browser/ssl/ssl_error_navigation_throttle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-06T17:40:44Z",
+      "side": 1,
+      "message": "nit: generally, it\u0027s hard to review CLs with commented-out code in them -- I\u0027m not sure what the plan is for it so I\u0027m not sure how to review it. (e.g. is this something you left in by accident, not sure what to do about it and want to discuss, intend to commit it as-is and come back to clean up later, etc.)",
+      "range": {
+        "startLine": 95,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 65
+      },
+      "revId": "55f65d7a7e4daf1a2b0f39387e3cc33e50c5a1ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b961a5eb_0ec855e3",
+        "filename": "chrome/browser/ssl/ssl_error_navigation_throttle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-06T17:40:44Z",
+      "side": 1,
+      "message": "The circular dependency here is a bit weird (SSLErrorNavigationThrottle calls into SSLErrorHandler which calls back into SSLErrorNavigationThrottle). It makes it a little hard to reason about and my gut feeling is that it will make it harder to test, though I haven\u0027t thought carefully yet about testing to see if that\u0027s true.\n\nOne possibility would be for SSLErrorHandler::HandleSSLError to take a callback to call when the HTML is ready. (And when calling HandleSSLError on line 111, we\u0027d pass ShowInterstitial as the callback.) That way you can test SSLErrorHandler\u0027s interface standalone without needing to pass in an SSLErrorNavigationThrottle.",
+      "range": {
+        "startLine": 114,
+        "startChar": 60,
+        "endLine": 114,
+        "endChar": 64
+      },
+      "revId": "55f65d7a7e4daf1a2b0f39387e3cc33e50c5a1ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "689a7fd5_d1891991",
+        "filename": "chrome/browser/ssl/ssl_error_navigation_throttle.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-06T17:40:44Z",
+      "side": 1,
+      "message": "please add some documentation to this class",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 32
+      },
+      "revId": "55f65d7a7e4daf1a2b0f39387e3cc33e50c5a1ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
