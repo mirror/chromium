@@ -348,8 +348,9 @@ class CC_EXPORT TileManager : CheckerImageTrackerClient {
   viz::ResourceFormat DetermineResourceFormat(const Tile* tile) const;
   bool DetermineResourceRequiresSwizzle(const Tile* tile) const;
 
-  void DidFinishRunningTileTasksRequiredForActivation();
-  void DidFinishRunningTileTasksRequiredForDraw();
+  void CheckIfReadyToActivate();
+  void CheckIfReadyToDraw();
+
   void DidFinishRunningAllTileTasks();
 
   scoped_refptr<TileTask> CreateTaskSetFinishedTask(
@@ -372,7 +373,7 @@ class CC_EXPORT TileManager : CheckerImageTrackerClient {
 
   bool UsePartialRaster() const;
 
-  void CheckPendingGpuWorkTiles(bool issue_signals);
+  void CheckPendingGpuWorkTiles();
 
   TileManagerClient* client_;
   base::SequencedTaskRunner* task_runner_;
@@ -412,6 +413,7 @@ class CC_EXPORT TileManager : CheckerImageTrackerClient {
   uint64_t next_tile_id_;
 
   std::unordered_set<Tile*> pending_gpu_work_tiles_;
+
   uint64_t pending_required_for_activation_callback_id_ = 0;
   uint64_t pending_required_for_draw_callback_id_ = 0;
   // If true, we should re-compute tile requirements in
