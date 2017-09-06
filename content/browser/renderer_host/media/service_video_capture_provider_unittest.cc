@@ -39,6 +39,7 @@ class MockDeviceFactoryProvider
     : public video_capture::mojom::DeviceFactoryProvider {
  public:
   void ConnectToDeviceFactory(
+      video_capture::mojom::LogHandlerPtr log_handler,
       video_capture::mojom::DeviceFactoryRequest request) override {
     DoConnectToDeviceFactory(request);
   }

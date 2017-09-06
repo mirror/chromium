@@ -55,7 +55,8 @@ namespace media {
 class VideoCaptureDeviceMac : public VideoCaptureDevice {
  public:
   explicit VideoCaptureDeviceMac(
-      const VideoCaptureDeviceDescriptor& device_descriptor);
+      const VideoCaptureDeviceDescriptor& device_descriptor,
+      base::RepeatingCallback<void(const std::string&)> emit_log_message_cb);
   ~VideoCaptureDeviceMac() override;
 
   // VideoCaptureDevice implementation.
@@ -105,7 +106,8 @@ class VideoCaptureDeviceMac : public VideoCaptureDevice {
   // Flag indicating the internal state.
   enum InternalState { kNotInitialized, kIdle, kCapturing, kError };
 
-  VideoCaptureDeviceDescriptor device_descriptor_;
+  const VideoCaptureDeviceDescriptor device_descriptor_;
+  const base::RepeatingCallback<void(const std::string&)> emit_log_message_cb_;
   std::unique_ptr<VideoCaptureDevice::Client> client_;
 
   VideoCaptureFormat capture_format_;

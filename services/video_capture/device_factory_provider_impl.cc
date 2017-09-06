@@ -28,13 +28,15 @@ DeviceFactoryProviderImpl::DeviceFactoryProviderImpl(
     std::unique_ptr<service_manager::ServiceContextRef> service_ref,
     base::Callback<void(float)> set_shutdown_delay_cb)
     : service_ref_(std::move(service_ref)),
-      set_shutdown_delay_cb_(std::move(set_shutdown_delay_cb)) {}
+      set_shutdown_delay_cb_(std::move(set_shutdown_delay_cb)),
+      weak_factory_(this) {}
 
 DeviceFactoryProviderImpl::~DeviceFactoryProviderImpl() {}
 
 void DeviceFactoryProviderImpl::ConnectToDeviceFactory(
+    mojom::LogHandlerPtr log_handler,
     mojom::DeviceFactoryRequest request) {
-  LazyInitializeDeviceFactory();
+  LazyInitializeDeviceFactory(std::move(log_handler));
   factory_bindings_.AddBinding(device_factory_.get(), std::move(request));
 }
 
@@ -42,10 +44,12 @@ void DeviceFactoryProviderImpl::SetShutdownDelayInSeconds(float seconds) {
   set_shutdown_delay_cb_.Run(seconds);
 }
 
-void DeviceFactoryProviderImpl::LazyInitializeDeviceFactory() {
+void DeviceFactoryProviderImpl::LazyInitializeDeviceFactory(
+    mojom::LogHandlerPtr log_handler) {
   if (device_factory_)
     return;
 
+  log_handler_ = std::move(log_handler);
   // Create the platform-specific device factory.
   // The task runner passed to CreateFactory is used for things that need to
   // happen on a "UI thread equivalent", e.g. obtaining screen rotation on
@@ -55,13 +59,21 @@ void DeviceFactoryProviderImpl::LazyInitializeDeviceFactory() {
           base::ThreadTaskRunnerHandle::Get(),
           // TODO(jcliang): Create a GpuMemoryBufferManager from GpuService
           // here.
-          nullptr);
+          nullptr,
+          base::BindRepeating(
+              &DeviceFactoryProviderImpl::SendLogMessageToHandler,
+              weak_factory_.GetWeakPtr()));
   auto video_capture_system = base::MakeUnique<media::VideoCaptureSystemImpl>(
       std::move(media_device_factory));
 
   device_factory_ = base::MakeUnique<DeviceFactoryMediaToMojoAdapter>(
       service_ref_->Clone(), std::move(video_capture_system),
       base::Bind(CreateJpegDecoder));
+}
+
+void DeviceFactoryProviderImpl::SendLogMessageToHandler(
+    const std::string& message) {
+  log_handler_->OnLog(message);
 }
 
 }  // namespace video_capture

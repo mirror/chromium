@@ -418,38 +418,21 @@ MediaStreamManager::MediaStreamManager(
 #endif
       use_fake_ui_(base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kUseFakeUIForMediaStream)) {
+  DCHECK(content::BrowserThread::CurrentlyOn(content::BrowserThread::UI));
   DCHECK(audio_system_);
 
-  if (!video_capture_provider) {
-    scoped_refptr<base::SingleThreadTaskRunner> device_task_runner =
-        std::move(audio_task_runner);
-#if defined(OS_WIN)
-    // Use an STA Video Capture Thread to try to avoid crashes on enumeration of
-    // buggy third party Direct Show modules, http://crbug.com/428958.
-    video_capture_thread_.init_com_with_mta(false);
-    CHECK(video_capture_thread_.Start());
-    device_task_runner = video_capture_thread_.task_runner();
-#endif
-    if (base::FeatureList::IsEnabled(video_capture::kMojoVideoCapture)) {
-      video_capture_provider = base::MakeUnique<VideoCaptureProviderSwitcher>(
-          base::MakeUnique<ServiceVideoCaptureProvider>(
-              base::BindRepeating(&SendVideoCaptureLogMessage)),
-          InProcessVideoCaptureProvider::CreateInstanceForNonDeviceCapture(
-              std::move(device_task_runner),
-              base::BindRepeating(&SendVideoCaptureLogMessage)));
-    } else {
-      video_capture::uma::LogVideoCaptureServiceEvent(
-          video_capture::uma::BROWSER_USING_LEGACY_CAPTURE);
-      video_capture_provider = InProcessVideoCaptureProvider::CreateInstance(
-          base::MakeUnique<media::VideoCaptureSystemImpl>(
-              media::VideoCaptureDeviceFactory::CreateFactory(
-                  BrowserThread::GetTaskRunnerForThread(BrowserThread::UI),
-                  BrowserGpuMemoryBufferManager::current())),
-          std::move(device_task_runner),
-          base::BindRepeating(&SendVideoCaptureLogMessage));
-    }
+  std::unique_ptr<service_manager::Connector> connector;
+  if (!video_capture_provider &&
+      base::FeatureList::IsEnabled(video_capture::kMojoVideoCapture)) {
+    // The Connector must be obtained on the UI thread.
+    DCHECK(content::ServiceManagerConnection::GetForProcess());
+    DCHECK(content::ServiceManagerConnection::GetForProcess()->GetConnector());
+    connector = content::ServiceManagerConnection::GetForProcess()
+                    ->GetConnector()
+                    ->Clone();
   }
-  InitializeMaybeAsync(std::move(video_capture_provider));
+  InitializeMaybeAsync(std::move(audio_task_runner),
+                       std::move(video_capture_provider), std::move(connector));
 
   base::PowerMonitor* power_monitor = base::PowerMonitor::Get();
   // BrowserMainLoop always creates the PowerMonitor instance before creating
@@ -1252,7 +1235,9 @@ void MediaStreamManager::FinalizeMediaAccessRequest(
 }
 
 void MediaStreamManager::InitializeMaybeAsync(
-    std::unique_ptr<VideoCaptureProvider> video_capture_provider) {
+    scoped_refptr<base::SingleThreadTaskRunner> audio_task_runner,
+    std::unique_ptr<VideoCaptureProvider> video_capture_provider,
+    std::unique_ptr<service_manager::Connector> connector) {
   // Some unit tests initialize the MSM in the IO thread and assume the
   // initialization is done synchronously. Other clients call this from a
   // different thread and expect initialization to run asynchronously.
@@ -1260,8 +1245,9 @@ void MediaStreamManager::InitializeMaybeAsync(
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
         base::BindOnce(&MediaStreamManager::InitializeMaybeAsync,
-                       base::Unretained(this),
-                       std::move(video_capture_provider)));
+                       base::Unretained(this), std::move(audio_task_runner),
+                       std::move(video_capture_provider),
+                       std::move(connector)));
     return;
   }
 
@@ -1271,6 +1257,38 @@ void MediaStreamManager::InitializeMaybeAsync(
   // attaching to the VM is required and we may have to access the MSM from
   // callback threads that we don't own and don't want to attach.
   g_media_stream_manager_tls_ptr.Pointer()->Set(this);
+
+  if (!video_capture_provider) {
+    scoped_refptr<base::SingleThreadTaskRunner> device_task_runner =
+        std::move(audio_task_runner);
+#if defined(OS_WIN)
+    // Use an STA Video Capture Thread to try to avoid crashes on enumeration of
+    // buggy third party Direct Show modules, http://crbug.com/428958.
+    video_capture_thread_.init_com_with_mta(false);
+    CHECK(video_capture_thread_.Start());
+    device_task_runner = video_capture_thread_.task_runner();
+#endif
+    if (connector) {
+      video_capture_provider = base::MakeUnique<VideoCaptureProviderSwitcher>(
+          base::MakeUnique<ServiceVideoCaptureProvider>(
+              std::move(connector),
+              base::BindRepeating(&SendVideoCaptureLogMessage)),
+          InProcessVideoCaptureProvider::CreateInstanceForNonDeviceCapture(
+              std::move(device_task_runner),
+              base::BindRepeating(&SendVideoCaptureLogMessage)));
+    } else {
+      video_capture::uma::LogVideoCaptureServiceEvent(
+          video_capture::uma::BROWSER_USING_LEGACY_CAPTURE);
+      video_capture_provider = InProcessVideoCaptureProvider::CreateInstance(
+          base::MakeUnique<media::VideoCaptureSystemImpl>(
+              media::VideoCaptureDeviceFactory::CreateFactory(
+                  BrowserThread::GetTaskRunnerForThread(BrowserThread::UI),
+                  BrowserGpuMemoryBufferManager::current(),
+                  base::BindRepeating(&SendVideoCaptureLogMessage))),
+          std::move(device_task_runner),
+          base::BindRepeating(&SendVideoCaptureLogMessage));
+    }
+  }
 
   // TODO(dalecurtis): Remove ScopedTracker below once crbug.com/457525 is
   // fixed.

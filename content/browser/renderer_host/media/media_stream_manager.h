@@ -55,6 +55,10 @@ namespace url {
 class Origin;
 }
 
+namespace service_manager {
+class Connector;
+}
+
 namespace content {
 
 class AudioInputDeviceManager;
@@ -285,8 +289,15 @@ class CONTENT_EXPORT MediaStreamManager
   using LabeledDeviceRequest = std::pair<std::string, DeviceRequest*>;
   using DeviceRequests = std::list<LabeledDeviceRequest>;
 
+  // |video_capture_provider| and |connector| are optional. If
+  // |video_capture_provider| is nullptr, InitializeMaybeAsync() will create
+  // one. In that case, if |connector| is nullptr, it will set up the (legacy)
+  // video capture stack. Otherwise it will set up a connection to the video
+  // capture service.
   void InitializeMaybeAsync(
-      std::unique_ptr<VideoCaptureProvider> video_capture_provider);
+      scoped_refptr<base::SingleThreadTaskRunner> audio_task_runner,
+      std::unique_ptr<VideoCaptureProvider> video_capture_provider,
+      std::unique_ptr<service_manager::Connector> connector);
 
   // |output_parameters| contains real values only if the request requires it.
   void HandleAccessRequestResponse(
