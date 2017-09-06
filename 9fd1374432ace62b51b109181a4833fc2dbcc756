@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7cd6792_fa9e81c7",
+        "filename": "components/domain_reliability/google_configs.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1001532
+      },
+      "writtenOn": "2017-09-06T02:07:02Z",
+      "side": 1,
+      "message": "We should have some more commentary explaining this. Something like.\n\n// third-party domains that have been approved for use within E2Alerts.\n// DO NOT ADD TO THIS WITHOUT APPROVAL by \u003csomeone\u003e\n// \n// This is intended as a very short-term stopgap to assess Network Error Logging for domains\n// using a third-party collector. To prevent this from being heavily used, domains are\n// restricted both in number (16) and duration in the code base (date_of_landing + 90 days).",
+      "range": {
+        "startLine": 526,
+        "startChar": 0,
+        "endLine": 526,
+        "endChar": 75
+      },
+      "revId": "9fd1374432ace62b51b109181a4833fc2dbcc756",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "886e8aa6_19bdb08f",
+        "filename": "components/domain_reliability/google_configs.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1001532
+      },
+      "writtenOn": "2017-09-06T02:07:02Z",
+      "side": 1,
+      "message": "Can you explain why include_origin_specific_collector is supposed to be true here?",
+      "range": {
+        "startLine": 528,
+        "startChar": 25,
+        "endLine": 528,
+        "endChar": 29
+      },
+      "revId": "9fd1374432ace62b51b109181a4833fc2dbcc756",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
