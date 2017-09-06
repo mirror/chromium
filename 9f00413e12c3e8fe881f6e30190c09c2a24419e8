@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "791cf9cb_942b1be2",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-06T23:53:32Z",
+      "side": 1,
+      "message": "Where did you get this code snippet from?",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 34
+      },
+      "revId": "9f00413e12c3e8fe881f6e30190c09c2a24419e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d43ea7ff_2c720cd8",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-06T23:53:32Z",
+      "side": 1,
+      "message": "Please inject this in this CL.",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 67
+      },
+      "revId": "9f00413e12c3e8fe881f6e30190c09c2a24419e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fa28c46_bb048fa2",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-06T23:53:32Z",
+      "side": 1,
+      "message": "nit: I know this is annoying, so sorry in advance: this file has grown to be a bit unwieldy and hard to parse (the ChromeCryptAuthService implementation only had one class declared in the anonymous namespace, and this one has three and counting). Can you move these classes to their own files? It will greatly improve readability here. Thanks, and sorry again :\u0027(",
+      "range": {
+        "startLine": 61,
+        "startChar": 6,
+        "endLine": 61,
+        "endChar": 37
+      },
+      "revId": "9f00413e12c3e8fe881f6e30190c09c2a24419e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f81694df_ddbb4d95",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-06T23:53:32Z",
+      "side": 1,
+      "message": "callback.Run(access_token.has_value() ? access_token.value() : std::string());",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 35
+      },
+      "revId": "9f00413e12c3e8fe881f6e30190c09c2a24419e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cba5b0ea_3ef1dbbe",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-06T23:53:32Z",
+      "side": 1,
+      "message": "// cryptauth::CryptAuthClientFactory:",
+      "range": {
+        "startLine": 113,
+        "startChar": 0,
+        "endLine": 113,
+        "endChar": 1
+      },
+      "revId": "9f00413e12c3e8fe881f6e30190c09c2a24419e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "216efa74_377fa3de",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-06T23:53:32Z",
+      "side": 1,
+      "message": "nit: No curlies for single line.",
+      "range": {
+        "startLine": 223,
+        "startChar": 71,
+        "endLine": 223,
+        "endChar": 72
+      },
+      "revId": "9f00413e12c3e8fe881f6e30190c09c2a24419e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34e222d2_cc748e24",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-06T23:53:32Z",
+      "side": 1,
+      "message": "nit: No need for /* parameter_name */ if it is implied by the value you pass. This is already clear since you are passing a variable named \"success\".",
+      "range": {
+        "startLine": 228,
+        "startChar": 46,
+        "endLine": 228,
+        "endChar": 60
+      },
+      "revId": "9f00413e12c3e8fe881f6e30190c09c2a24419e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26978226_a157cc14",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-06T23:53:32Z",
+      "side": 1,
+      "message": "InitialEnroll() is two lines, so just move those two lines here and delete that function.",
+      "range": {
+        "startLine": 316,
+        "startChar": 0,
+        "endLine": 316,
+        "endChar": 18
+      },
+      "revId": "9f00413e12c3e8fe881f6e30190c09c2a24419e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7627697_9d3f201e",
+        "filename": "components/multidevice/service/device_sync_impl.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-06T23:53:32Z",
+      "side": 1,
+      "message": "You added a ton of #includes here that aren\u0027t necessary. If the class isn\u0027t a base class and isn\u0027t referenced as a non-pointer in the .h file, forward-declare the class and move the #include to the .cc file.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 64
+      },
+      "revId": "9f00413e12c3e8fe881f6e30190c09c2a24419e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdda774e_e44ef2c1",
+        "filename": "components/multidevice/service/device_sync_impl.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-06T23:53:32Z",
+      "side": 1,
+      "message": "nit: These Observer overrides should be protected.",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 1
+      },
+      "revId": "9f00413e12c3e8fe881f6e30190c09c2a24419e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3910aa5_f8654558",
+        "filename": "components/multidevice/service/device_sync_impl.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-06T23:53:32Z",
+      "side": 1,
+      "message": "This is only used if managers are not injected; note this as you do with request_context_.\n\nAlso, when a C++ destructor is run, fields of the class/struct that are being destroyed are deleted in the reverse order that they are listed in the .h file, meaning that |request_context_ | is deleted BEFORE the managers are deleted. This is problematic because you pass it into the managers, which assume that it is valid for their entire lifecycle.\n\nPlease look over the fields here and make sure that anything that is passed to another object is deleted AFTER the other object is deleted.",
+      "range": {
+        "startLine": 115,
+        "startChar": 31,
+        "endLine": 115,
+        "endChar": 44
+      },
+      "revId": "9f00413e12c3e8fe881f6e30190c09c2a24419e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
