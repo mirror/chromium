@@ -17,6 +17,7 @@
 #include "chrome/browser/vr/exit_vr_prompt_choice.h"
 #include "chrome/browser/vr/ui_interface.h"
 #include "chrome/browser/vr/ui_unsupported_mode.h"
+#include "chrome/browser/vr/vr_input_manager.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "device/geolocation/public/interfaces/geolocation_config.mojom.h"
 #include "device/vr/android/gvr/cardboard_gamepad_data_provider.h"
@@ -39,6 +40,7 @@ class WindowAndroid;
 namespace vr {
 class ToolbarHelper;
 class UiInterface;
+class VrInputManager;
 }  // namespace vr
 
 namespace vr_shell {
@@ -46,7 +48,6 @@ namespace vr_shell {
 class AndroidUiGestureTarget;
 class VrCompositor;
 class VrGLThread;
-class VrInputManager;
 class VrMetricsHelper;
 class VrShellDelegate;
 class VrWebContentsObserver;
@@ -236,7 +237,7 @@ class VrShell : device::GvrGamepadDataProvider,
   VrShellDelegate* delegate_provider_ = nullptr;
   base::android::ScopedJavaGlobalRef<jobject> j_vr_shell_;
 
-  std::unique_ptr<VrInputManager> input_manager_;
+  std::unique_ptr<vr::VrInputManager> input_manager_;
   std::unique_ptr<AndroidUiGestureTarget> android_ui_gesture_target_;
   std::unique_ptr<VrMetricsHelper> metrics_helper_;
 

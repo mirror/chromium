@@ -23,7 +23,6 @@
 #include "chrome/browser/android/vr_shell/android_ui_gesture_target.h"
 #include "chrome/browser/android/vr_shell/vr_compositor.h"
 #include "chrome/browser/android/vr_shell/vr_gl_thread.h"
-#include "chrome/browser/android/vr_shell/vr_input_manager.h"
 #include "chrome/browser/android/vr_shell/vr_shell_delegate.h"
 #include "chrome/browser/android/vr_shell/vr_shell_gl.h"
 #include "chrome/browser/android/vr_shell/vr_usage_monitor.h"
@@ -33,6 +32,7 @@
 #include "chrome/browser/vr/toolbar_helper.h"
 #include "chrome/browser/vr/ui_interface.h"
 #include "chrome/browser/vr/ui_scene_manager.h"
+#include "chrome/browser/vr/vr_input_manager.h"
 #include "chrome/browser/vr/vr_tab_helper.h"
 #include "chrome/common/url_constants.h"
 #include "content/public/browser/browser_context.h"
@@ -202,7 +202,7 @@ void VrShell::SwapContents(
     return;
   }
   input_manager_ =
-      base::MakeUnique<VrInputManager>(GetNonNativePageWebContents());
+      base::MakeUnique<vr::VrInputManager>(GetNonNativePageWebContents());
   // TODO(billorr): Make VrMetricsHelper tab-aware and able to track multiple
   // tabs. crbug.com/684661
   metrics_helper_ =
@@ -606,7 +606,7 @@ void VrShell::ContentWasHidden() {
 void VrShell::ContentWasShown() {
   if (GetNonNativePageWebContents()) {
     input_manager_ =
-        base::MakeUnique<VrInputManager>(GetNonNativePageWebContents());
+        base::MakeUnique<vr::VrInputManager>(GetNonNativePageWebContents());
   }
 }
 
