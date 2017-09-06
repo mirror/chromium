@@ -15,6 +15,7 @@
 #include "base/callback.h"
 #include "base/location.h"
 #include "base/macros.h"
+#include "base/observer_list.h"
 #include "base/strings/string16.h"
 #include "build/build_config.h"
 #include "ui/accessibility/ax_enums.h"
@@ -49,6 +50,7 @@ class NonClientFrameView;
 class ViewsTouchEditingControllerFactory;
 class View;
 class Widget;
+class WidgetCreationObserver;
 
 #if defined(USE_AURA)
 class DesktopNativeWidgetAura;
@@ -121,6 +123,12 @@ class VIEWS_EXPORT ViewsDelegate {
     return desktop_window_tree_host_factory_;
   }
 #endif
+
+  // Add/remove widget creation observer.
+  void AddWidgetCreationObserver(WidgetCreationObserver* observer);
+  void RemoveWidgetCreationObserver(WidgetCreationObserver* observer);
+  bool HasWidgetCreationObserver(const WidgetCreationObserver* observer) const;
+
   // Saves the position, size and "show" state for the window with the
   // specified name.
   virtual void SaveWindowPlacement(const Widget* widget,
@@ -181,7 +189,7 @@ class VIEWS_EXPORT ViewsDelegate {
 
   // Gives the platform a chance to modify the properties of a Widget.
   virtual void OnBeforeWidgetInit(Widget::InitParams* params,
-                                  internal::NativeWidgetDelegate* delegate) = 0;
+                                  internal::NativeWidgetDelegate* delegate);
 
   // Returns the password reveal duration for Textfield.
   virtual base::TimeDelta GetTextfieldPasswordRevealDuration();
@@ -226,6 +234,8 @@ class VIEWS_EXPORT ViewsDelegate {
 #endif
 
   NativeWidgetFactory native_widget_factory_;
+
+  base::ObserverList<WidgetCreationObserver> creation_observers_;
 
   DISALLOW_COPY_AND_ASSIGN(ViewsDelegate);
 };

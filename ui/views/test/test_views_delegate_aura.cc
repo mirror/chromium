@@ -41,6 +41,8 @@ void TestViewsDelegate::OnBeforeWidgetInit(
   if (!params->native_widget && use_desktop_native_widgets_)
     params->native_widget = new DesktopNativeWidgetAura(delegate);
 #endif  // !defined(OS_CHROMEOS)
+
+  ViewsDelegate::OnBeforeWidgetInit(params, delegate);
 }
 
 ui::ContextFactory* TestViewsDelegate::GetContextFactory() {

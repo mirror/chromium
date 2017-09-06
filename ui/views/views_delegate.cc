@@ -9,6 +9,7 @@
 #include "build/build_config.h"
 #include "ui/views/views_touch_selection_controller_factory.h"
 #include "ui/views/widget/native_widget_private.h"
+#include "ui/views/widget/widget_creation_observer.h"
 
 #if defined(USE_AURA)
 #include "ui/views/touchui/touch_selection_menu_runner_views.h"
@@ -44,6 +45,22 @@ ViewsDelegate::~ViewsDelegate() {
 
 ViewsDelegate* ViewsDelegate::GetInstance() {
   return views_delegate;
+}
+
+void ViewsDelegate::AddWidgetCreationObserver(
+    WidgetCreationObserver* observer) {
+  DCHECK(observer);
+  creation_observers_.AddObserver(observer);
+}
+
+void ViewsDelegate::RemoveWidgetCreationObserver(
+    WidgetCreationObserver* observer) {
+  creation_observers_.RemoveObserver(observer);
+}
+
+bool ViewsDelegate::HasWidgetCreationObserver(
+    const WidgetCreationObserver* observer) const {
+  return creation_observers_.HasObserver(observer);
 }
 
 void ViewsDelegate::SaveWindowPlacement(const Widget* widget,
@@ -106,6 +123,13 @@ content::WebContents* ViewsDelegate::CreateWebContents(
     content::BrowserContext* browser_context,
     content::SiteInstance* site_instance) {
   return nullptr;
+}
+
+void ViewsDelegate::OnBeforeWidgetInit(
+    Widget::InitParams* params,
+    internal::NativeWidgetDelegate* delegate) {
+  for (WidgetCreationObserver& observer : creation_observers_)
+    observer.OnBeforeWidgetInit(params, delegate);
 }
 
 base::TimeDelta ViewsDelegate::GetTextfieldPasswordRevealDuration() {

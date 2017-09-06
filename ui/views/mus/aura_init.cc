@@ -42,9 +42,6 @@ class MusViewsDelegate : public ViewsDelegate {
 #if defined(OS_WIN)
   HICON GetSmallWindowIcon() const override { return nullptr; }
 #endif
-  void OnBeforeWidgetInit(
-      Widget::InitParams* params,
-      internal::NativeWidgetDelegate* delegate) override {}
 
   LayoutProvider layout_provider_;
 

@@ -24,11 +24,12 @@ void ShellViewsDelegate::OnBeforeWidgetInit(
   if (params->opacity == views::Widget::InitParams::INFER_OPACITY)
     params->opacity = views::Widget::InitParams::TRANSLUCENT_WINDOW;
 
-  if (params->native_widget)
-    return;
-
-  if (!params->parent && !params->context && !params->child)
+  if (!params->native_widget && !params->parent && !params->context &&
+      !params->child) {
     params->context = Shell::GetPrimaryRootWindow();
+  }
+
+  ViewsDelegate::OnBeforeWidgetInit(params, delegate);
 }
 
 }  // namespace shell

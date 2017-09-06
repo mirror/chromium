@@ -17,6 +17,7 @@
 #include "ui/gfx/native_widget_types.h"
 #include "ui/views/accessibility/native_view_accessibility.h"
 #include "ui/views/views_export.h"
+#include "ui/views/widget/widget_creation_observer.h"
 #include "ui/views/widget/widget_observer.h"
 
 namespace views {
@@ -29,6 +30,7 @@ class Widget;
 class VIEWS_EXPORT NativeViewAccessibilityBase
     : public NativeViewAccessibility,
       public ui::AXPlatformNodeDelegate,
+      public WidgetCreationObserver,
       public WidgetObserver {
  public:
   ~NativeViewAccessibilityBase() override;
@@ -52,7 +54,12 @@ class VIEWS_EXPORT NativeViewAccessibilityBase
   bool AccessibilityPerformAction(const ui::AXActionData& data) override;
   bool ShouldIgnoreHoveredStateForTesting() override;
 
+  // WidgetCreationObserver
+  void OnBeforeWidgetInit(Widget::InitParams* params,
+                          internal::NativeWidgetDelegate* delegate) override;
+
   // WidgetObserver
+  void OnWidgetCreated(Widget* widget) override;
   void OnWidgetDestroying(Widget* widget) override;
 
   Widget* parent_widget() const { return parent_widget_; }

@@ -20,6 +20,8 @@ DesktopTestViewsDelegate::~DesktopTestViewsDelegate() {}
 void DesktopTestViewsDelegate::OnBeforeWidgetInit(
     Widget::InitParams* params,
     internal::NativeWidgetDelegate* delegate) {
+  TestViewsDelegate::OnBeforeWidgetInit(params, delegate);
+
 #if !defined(OS_CHROMEOS)
   // If we already have a native_widget, we don't have to try to come
   // up with one.

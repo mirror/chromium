@@ -28,6 +28,7 @@ void TestViewsDelegate::OnBeforeWidgetInit(
   // TODO(tapted): This should return a *Desktop*NativeWidgetMac.
   if (!params->native_widget && use_desktop_native_widgets_)
     params->native_widget = new NativeWidgetMac(delegate);
+  ViewsDelegate::OnBeforeWidgetInit(params, delegate);
 }
 
 ui::ContextFactory* TestViewsDelegate::GetContextFactory() {

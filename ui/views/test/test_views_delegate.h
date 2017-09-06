@@ -52,6 +52,7 @@ class TestViewsDelegate : public ViewsDelegate {
 #if defined(OS_WIN)
   HICON GetSmallWindowIcon() const override;
 #endif
+
   void OnBeforeWidgetInit(Widget::InitParams* params,
                           internal::NativeWidgetDelegate* delegate) override;
   ui::ContextFactory* GetContextFactory() override;

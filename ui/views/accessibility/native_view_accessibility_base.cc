@@ -11,6 +11,7 @@
 #include "ui/gfx/native_widget_types.h"
 #include "ui/views/controls/native/native_view_host.h"
 #include "ui/views/view.h"
+#include "ui/views/views_delegate.h"
 #include "ui/views/widget/widget.h"
 
 namespace views {
@@ -44,12 +45,16 @@ NativeViewAccessibilityBase::NativeViewAccessibilityBase(View* view)
       parent_widget_(nullptr),
       ax_node_(ui::AXPlatformNode::Create(this)) {
   DCHECK(ax_node_);
+  if (ViewsDelegate::GetInstance())
+    ViewsDelegate::GetInstance()->AddWidgetCreationObserver(this);
 }
 
 NativeViewAccessibilityBase::~NativeViewAccessibilityBase() {
   ax_node_->Destroy();
   if (parent_widget_)
     parent_widget_->RemoveObserver(this);
+  if (ViewsDelegate::GetInstance())
+    ViewsDelegate::GetInstance()->RemoveWidgetCreationObserver(this);
 }
 
 gfx::NativeViewAccessible NativeViewAccessibilityBase::GetNativeObject() {
@@ -217,6 +222,35 @@ bool NativeViewAccessibilityBase::ShouldIgnoreHoveredStateForTesting() {
   return false;
 }
 
+void NativeViewAccessibilityBase::OnBeforeWidgetInit(
+    Widget::InitParams* params,
+    internal::NativeWidgetDelegate* delegate) {
+  if (!view_->GetWidget() || !view_->GetWidget()->GetNativeView())
+    return;
+  if (!params->parent || params->parent != view_->GetWidget()->GetNativeView())
+    return;
+  Widget* child_widget = delegate->AsWidget();
+  if (!child_widget)
+    return;
+  child_widget->AddObserver(this);
+}
+
+void NativeViewAccessibilityBase::OnWidgetCreated(Widget* widget) {
+  if (!widget->GetRootView())
+    return;
+  gfx::NativeViewAccessible widget_accessible =
+      widget->GetRootView()->GetNativeViewAccessible();
+  ui::AXPlatformNode* widget_platform_node =
+      ui::AXPlatformNode::FromNativeViewAccessible(widget_accessible);
+  if (!widget_platform_node)
+    return;
+  NativeViewAccessibilityBase* widget_view_accessibility =
+      static_cast<NativeViewAccessibilityBase*>(
+          widget_platform_node->GetDelegate());
+  DCHECK(widget_view_accessibility);
+  widget_view_accessibility->SetParentWidget(view_->GetWidget());
+}
+
 void NativeViewAccessibilityBase::OnWidgetDestroying(Widget* widget) {
   if (parent_widget_ == widget) {
     parent_widget_->RemoveObserver(this);
@@ -245,10 +279,10 @@ void NativeViewAccessibilityBase::PopulateChildWidgetVector(
     return;
 
   std::set<Widget*> child_widgets;
-  Widget::GetAllOwnedWidgets(widget->GetNativeView(), &child_widgets);
-  for (auto iter = child_widgets.begin(); iter != child_widgets.end(); ++iter) {
-    Widget* child_widget = *iter;
-    DCHECK_NE(widget, child_widget);
+  Widget::GetAllChildWidgets(widget->GetNativeView(), &child_widgets);
+  for (auto* child_widget : child_widgets) {
+    if (widget == child_widget)
+      continue;
 
     if (!child_widget->IsVisible())
       continue;

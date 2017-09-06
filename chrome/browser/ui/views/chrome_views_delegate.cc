@@ -156,6 +156,8 @@ void ChromeViewsDelegate::OnBeforeWidgetInit(
   if (params->opacity == views::Widget::InitParams::INFER_OPACITY)
     params->opacity = GetOpacityForInitParams(*params);
 
+  ViewsDelegate::OnBeforeWidgetInit(params, delegate);
+
   // If we already have a native_widget, we don't have to try to come
   // up with one.
   if (params->native_widget)
