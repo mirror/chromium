@@ -119,8 +119,33 @@ void FoundReadyRegistrationForStartActiveWorker(
   }
 }
 
+void StatusCodeToBoolCallbackAdapter(
+    ServiceWorkerContext::ResultCallback callback,
+    ServiceWorkerStatusCode code) {
+  std::move(callback).Run(code == ServiceWorkerStatusCode::SERVICE_WORKER_OK);
+}
+
+void FinishRegistrationOnIO(ServiceWorkerContext::ResultCallback callback,
+                            ServiceWorkerStatusCode status,
+                            const std::string& status_message,
+                            int64_t registration_id) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  BrowserThread::PostTask(
+      BrowserThread::UI, FROM_HERE,
+      base::BindOnce(std::move(callback), status == SERVICE_WORKER_OK));
+}
+
+void FinishUnregistrationOnIO(ServiceWorkerContext::ResultCallback callback,
+                              ServiceWorkerStatusCode status) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  BrowserThread::PostTask(
+      BrowserThread::UI, FROM_HERE,
+      base::BindOnce(std::move(callback), status == SERVICE_WORKER_OK));
+}
+
 }  // namespace
 
+// static
 void ServiceWorkerContext::AddExcludedHeadersForFetchEvent(
     const std::set<std::string>& header_names) {
   // TODO(pkasting): Remove ScopedTracker below once crbug.com/477117 is fixed.
@@ -132,6 +157,7 @@ void ServiceWorkerContext::AddExcludedHeadersForFetchEvent(
                                           header_names.end());
 }
 
+// static
 bool ServiceWorkerContext::IsExcludedHeaderNameForFetchEvent(
     const std::string& header_name) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
@@ -139,24 +165,9 @@ bool ServiceWorkerContext::IsExcludedHeaderNameForFetchEvent(
          g_excluded_header_name_set.Get().end();
 }
 
+// static
 bool ServiceWorkerContext::ScopeMatches(const GURL& scope, const GURL& url) {
   return ServiceWorkerUtils::ScopeMatches(scope, url);
-}
-
-void ServiceWorkerContextWrapper::OnRegistrationStored(int64_t registration_id,
-                                                       const GURL& pattern) {
-  for (auto& observer : observer_list_)
-    observer.OnRegistrationStored(pattern);
-}
-
-void ServiceWorkerContextWrapper::AddObserver(
-    ServiceWorkerContextObserver* observer) {
-  observer_list_.AddObserver(observer);
-}
-
-void ServiceWorkerContextWrapper::RemoveObserver(
-    ServiceWorkerContextObserver* observer) {
-  observer_list_.RemoveObserver(observer);
 }
 
 ServiceWorkerContextWrapper::ServiceWorkerContextWrapper(
@@ -172,14 +183,6 @@ ServiceWorkerContextWrapper::ServiceWorkerContextWrapper(
   // Add this object as an observer of the wrapped |context_core_|. This lets us
   // forward observer methods to observers outside of content.
   core_observer_list_->AddObserver(this);
-}
-
-ServiceWorkerContextWrapper::~ServiceWorkerContextWrapper() {
-  // Explicitly remove this object as an observer to avoid use-after-frees in
-  // tests where this object is not guaranteed to outlive the
-  // ServiceWorkerContextCore it wraps.
-  core_observer_list_->RemoveObserver(this);
-  DCHECK(!resource_context_);
 }
 
 void ServiceWorkerContextWrapper::Init(
@@ -248,272 +251,86 @@ ResourceContext* ServiceWorkerContextWrapper::resource_context() {
   return resource_context_;
 }
 
-static void FinishRegistrationOnIO(
-    const ServiceWorkerContext::ResultCallback& continuation,
-    ServiceWorkerStatusCode status,
-    const std::string& status_message,
-    int64_t registration_id) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  BrowserThread::PostTask(
-      BrowserThread::UI, FROM_HERE,
-      base::BindOnce(continuation, status == SERVICE_WORKER_OK));
+void ServiceWorkerContextWrapper::OnRegistrationStored(int64_t registration_id,
+                                                       const GURL& pattern) {
+  for (auto& observer : observer_list_)
+    observer.OnRegistrationStored(pattern);
+}
+
+void ServiceWorkerContextWrapper::AddObserver(
+    ServiceWorkerContextObserver* observer) {
+  observer_list_.AddObserver(observer);
+}
+
+void ServiceWorkerContextWrapper::RemoveObserver(
+    ServiceWorkerContextObserver* observer) {
+  observer_list_.RemoveObserver(observer);
 }
 
 void ServiceWorkerContextWrapper::RegisterServiceWorker(
     const GURL& pattern,
     const GURL& script_url,
-    const ResultCallback& continuation) {
+    ResultCallback callback) {
   if (!BrowserThread::CurrentlyOn(BrowserThread::IO)) {
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
         base::BindOnce(&ServiceWorkerContextWrapper::RegisterServiceWorker,
-                       this, pattern, script_url, continuation));
+                       this, pattern, script_url, std::move(callback)));
     return;
   }
   if (!context_core_) {
     BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
-                            base::BindOnce(continuation, false));
+                            base::BindOnce(std::move(callback), false));
     return;
   }
   ServiceWorkerRegistrationOptions options(net::SimplifyUrlForRequest(pattern));
   context()->RegisterServiceWorker(
       net::SimplifyUrlForRequest(script_url), options,
       nullptr /* provider_host */,
-      base::Bind(&FinishRegistrationOnIO, continuation));
-}
-
-static void FinishUnregistrationOnIO(
-    const ServiceWorkerContext::ResultCallback& continuation,
-    ServiceWorkerStatusCode status) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  BrowserThread::PostTask(
-      BrowserThread::UI, FROM_HERE,
-      base::BindOnce(continuation, status == SERVICE_WORKER_OK));
+      base::Bind(&FinishRegistrationOnIO, base::Passed(std::move(callback))));
 }
 
 void ServiceWorkerContextWrapper::UnregisterServiceWorker(
     const GURL& pattern,
-    const ResultCallback& continuation) {
+    ResultCallback callback) {
   if (!BrowserThread::CurrentlyOn(BrowserThread::IO)) {
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
         base::BindOnce(&ServiceWorkerContextWrapper::UnregisterServiceWorker,
-                       this, pattern, continuation));
+                       this, pattern, std::move(callback)));
     return;
   }
   if (!context_core_) {
     BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
-                            base::BindOnce(continuation, false));
+                            base::BindOnce(std::move(callback), false));
     return;
   }
 
   context()->UnregisterServiceWorker(
       net::SimplifyUrlForRequest(pattern),
-      base::Bind(&FinishUnregistrationOnIO, continuation));
+      base::Bind(&FinishUnregistrationOnIO, base::Passed(std::move(callback))));
 }
 
-void ServiceWorkerContextWrapper::UpdateRegistration(const GURL& pattern) {
-  if (!BrowserThread::CurrentlyOn(BrowserThread::IO)) {
-    BrowserThread::PostTask(
-        BrowserThread::IO, FROM_HERE,
-        base::BindOnce(&ServiceWorkerContextWrapper::UpdateRegistration, this,
-                       pattern));
-    return;
-  }
-  if (!context_core_)
-    return;
-  context_core_->storage()->FindRegistrationForPattern(
-      net::SimplifyUrlForRequest(pattern),
-      base::Bind(&ServiceWorkerContextWrapper::DidFindRegistrationForUpdate,
-                 this));
-}
-
-void ServiceWorkerContextWrapper::StartServiceWorker(
-    const GURL& pattern,
-    const StatusCallback& callback) {
-  if (!BrowserThread::CurrentlyOn(BrowserThread::IO)) {
-    BrowserThread::PostTask(
-        BrowserThread::IO, FROM_HERE,
-        base::BindOnce(&ServiceWorkerContextWrapper::StartServiceWorker, this,
-                       pattern, callback));
-    return;
-  }
-  if (!context_core_) {
-    BrowserThread::PostTask(
-        BrowserThread::UI, FROM_HERE,
-        base::BindOnce(callback, SERVICE_WORKER_ERROR_ABORT));
-    return;
-  }
-  context_core_->storage()->FindRegistrationForPattern(
-      net::SimplifyUrlForRequest(pattern),
-      base::Bind(&StartActiveWorkerOnIO, callback));
-}
-
-void ServiceWorkerContextWrapper::SkipWaitingWorker(const GURL& pattern) {
-  if (!BrowserThread::CurrentlyOn(BrowserThread::IO)) {
-    BrowserThread::PostTask(
-        BrowserThread::IO, FROM_HERE,
-        base::BindOnce(&ServiceWorkerContextWrapper::SkipWaitingWorker, this,
-                       pattern));
-    return;
-  }
-  if (!context_core_)
-    return;
-  context_core_->storage()->FindRegistrationForPattern(
-      net::SimplifyUrlForRequest(pattern), base::Bind(&SkipWaitingWorkerOnIO));
-}
-
-void ServiceWorkerContextWrapper::SetForceUpdateOnPageLoad(
-    bool force_update_on_page_load) {
-  if (!BrowserThread::CurrentlyOn(BrowserThread::IO)) {
-    BrowserThread::PostTask(
-        BrowserThread::IO, FROM_HERE,
-        base::BindOnce(&ServiceWorkerContextWrapper::SetForceUpdateOnPageLoad,
-                       this, force_update_on_page_load));
-    return;
-  }
-  if (!context_core_)
-    return;
-  context_core_->set_force_update_on_page_load(force_update_on_page_load);
-}
-
-void ServiceWorkerContextWrapper::GetAllOriginsInfo(
-    const GetUsageInfoCallback& callback) {
+bool ServiceWorkerContextWrapper::StartingExternalRequest(
+    int64_t service_worker_version_id,
+    const std::string& request_uuid) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  if (!context_core_) {
-    BrowserThread::PostTask(
-        BrowserThread::IO, FROM_HERE,
-        base::BindOnce(callback, std::vector<ServiceWorkerUsageInfo>()));
-    return;
-  }
-  context()->storage()->GetAllRegistrationsInfos(base::Bind(
-      &ServiceWorkerContextWrapper::DidGetAllRegistrationsForGetAllOrigins,
-      this, callback));
+  ServiceWorkerVersion* version =
+      context()->GetLiveVersion(service_worker_version_id);
+  if (!version)
+    return false;
+  return version->StartExternalRequest(request_uuid);
 }
 
-void ServiceWorkerContextWrapper::DidGetAllRegistrationsForGetAllOrigins(
-    const GetUsageInfoCallback& callback,
-    ServiceWorkerStatusCode status,
-    const std::vector<ServiceWorkerRegistrationInfo>& registrations) {
+bool ServiceWorkerContextWrapper::FinishedExternalRequest(
+    int64_t service_worker_version_id,
+    const std::string& request_uuid) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  std::vector<ServiceWorkerUsageInfo> usage_infos;
-
-  std::map<GURL, ServiceWorkerUsageInfo> origins;
-  for (const auto& registration_info : registrations) {
-    GURL origin = registration_info.pattern.GetOrigin();
-
-    ServiceWorkerUsageInfo& usage_info = origins[origin];
-    if (usage_info.origin.is_empty())
-      usage_info.origin = origin;
-    usage_info.scopes.push_back(registration_info.pattern);
-    usage_info.total_size_bytes += registration_info.stored_version_size_bytes;
-  }
-
-  for (const auto& origin_info_pair : origins) {
-    usage_infos.push_back(origin_info_pair.second);
-  }
-  callback.Run(usage_infos);
-}
-
-void ServiceWorkerContextWrapper::DidCheckHasServiceWorker(
-    const CheckHasServiceWorkerCallback& callback,
-    ServiceWorkerCapability capability) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-
-  BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
-                          base::BindOnce(callback, capability));
-}
-
-void ServiceWorkerContextWrapper::StopAllServiceWorkersForOrigin(
-    const GURL& origin) {
-  if (!BrowserThread::CurrentlyOn(BrowserThread::IO)) {
-    BrowserThread::PostTask(
-        BrowserThread::IO, FROM_HERE,
-        base::BindOnce(
-            &ServiceWorkerContextWrapper::StopAllServiceWorkersForOrigin, this,
-            origin));
-    return;
-  }
-  if (!context_core_.get()) {
-    return;
-  }
-  std::vector<ServiceWorkerVersionInfo> live_versions = GetAllLiveVersionInfo();
-  for (const ServiceWorkerVersionInfo& info : live_versions) {
-    ServiceWorkerVersion* version = GetLiveVersion(info.version_id);
-    if (version && version->scope().GetOrigin() == origin)
-      version->StopWorker(base::Bind(&ServiceWorkerUtils::NoOpStatusCallback));
-  }
-}
-
-void ServiceWorkerContextWrapper::DidFindRegistrationForUpdate(
-    ServiceWorkerStatusCode status,
-    scoped_refptr<ServiceWorkerRegistration> registration) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-
-  if (status != SERVICE_WORKER_OK)
-    return;
-  if (!context_core_)
-    return;
-  DCHECK(registration);
-  // TODO(jungkees): |force_bypass_cache| is set to true because the call stack
-  // is initiated by an update button on DevTools that expects the cache is
-  // bypassed. However, in order to provide options for callers to choose the
-  // cache bypass mode, plumb |force_bypass_cache| through to
-  // UpdateRegistration().
-  context_core_->UpdateServiceWorker(registration.get(),
-                                     true /* force_bypass_cache */);
-}
-
-namespace {
-
-void StatusCodeToBoolCallbackAdapter(
-    const ServiceWorkerContext::ResultCallback& callback,
-    ServiceWorkerStatusCode code) {
-  callback.Run(code == ServiceWorkerStatusCode::SERVICE_WORKER_OK);
-}
-
-}  // namespace
-
-void ServiceWorkerContextWrapper::DeleteForOrigin(
-    const GURL& origin,
-    const ResultCallback& result) {
-  if (!BrowserThread::CurrentlyOn(BrowserThread::IO)) {
-    BrowserThread::PostTask(
-        BrowserThread::IO, FROM_HERE,
-        base::BindOnce(&ServiceWorkerContextWrapper::DeleteForOrigin, this,
-                       origin, result));
-    return;
-  }
-  if (!context_core_) {
-    BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
-                            base::BindOnce(result, false));
-    return;
-  }
-  context()->UnregisterServiceWorkers(
-      origin.GetOrigin(), base::Bind(&StatusCodeToBoolCallbackAdapter, result));
-}
-
-void ServiceWorkerContextWrapper::CheckHasServiceWorker(
-    const GURL& url,
-    const GURL& other_url,
-    const CheckHasServiceWorkerCallback& callback) {
-  if (!BrowserThread::CurrentlyOn(BrowserThread::IO)) {
-    BrowserThread::PostTask(
-        BrowserThread::IO, FROM_HERE,
-        base::BindOnce(&ServiceWorkerContextWrapper::CheckHasServiceWorker,
-                       this, url, other_url, callback));
-    return;
-  }
-  if (!context_core_) {
-    BrowserThread::PostTask(
-        BrowserThread::UI, FROM_HERE,
-        base::BindOnce(callback, ServiceWorkerCapability::NO_SERVICE_WORKER));
-    return;
-  }
-  context()->CheckHasServiceWorker(
-      net::SimplifyUrlForRequest(url), net::SimplifyUrlForRequest(other_url),
-      base::Bind(&ServiceWorkerContextWrapper::DidCheckHasServiceWorker, this,
-                 callback));
+  ServiceWorkerVersion* version =
+      context()->GetLiveVersion(service_worker_version_id);
+  if (!version)
+    return false;
+  return version->FinishExternalRequest(request_uuid);
 }
 
 void ServiceWorkerContextWrapper::CountExternalRequestsForTest(
@@ -544,6 +361,62 @@ void ServiceWorkerContextWrapper::CountExternalRequestsForTest(
       base::BindOnce(callback, pending_external_request_count));
 }
 
+void ServiceWorkerContextWrapper::GetAllOriginsInfo(
+    const GetUsageInfoCallback& callback) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  if (!context_core_) {
+    BrowserThread::PostTask(
+        BrowserThread::IO, FROM_HERE,
+        base::BindOnce(callback, std::vector<ServiceWorkerUsageInfo>()));
+    return;
+  }
+  context()->storage()->GetAllRegistrationsInfos(base::Bind(
+      &ServiceWorkerContextWrapper::DidGetAllRegistrationsForGetAllOrigins,
+      this, callback));
+}
+
+void ServiceWorkerContextWrapper::DeleteForOrigin(const GURL& origin,
+                                                  ResultCallback callback) {
+  if (!BrowserThread::CurrentlyOn(BrowserThread::IO)) {
+    BrowserThread::PostTask(
+        BrowserThread::IO, FROM_HERE,
+        base::BindOnce(&ServiceWorkerContextWrapper::DeleteForOrigin, this,
+                       origin, std::move(callback)));
+    return;
+  }
+  if (!context_core_) {
+    BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
+                            base::BindOnce(std::move(callback), false));
+    return;
+  }
+  context()->UnregisterServiceWorkers(
+      origin.GetOrigin(), base::Bind(&StatusCodeToBoolCallbackAdapter,
+                                     base::Passed(std::move(callback))));
+}
+
+void ServiceWorkerContextWrapper::CheckHasServiceWorker(
+    const GURL& url,
+    const GURL& other_url,
+    const CheckHasServiceWorkerCallback& callback) {
+  if (!BrowserThread::CurrentlyOn(BrowserThread::IO)) {
+    BrowserThread::PostTask(
+        BrowserThread::IO, FROM_HERE,
+        base::BindOnce(&ServiceWorkerContextWrapper::CheckHasServiceWorker,
+                       this, url, other_url, callback));
+    return;
+  }
+  if (!context_core_) {
+    BrowserThread::PostTask(
+        BrowserThread::UI, FROM_HERE,
+        base::BindOnce(callback, ServiceWorkerCapability::NO_SERVICE_WORKER));
+    return;
+  }
+  context()->CheckHasServiceWorker(
+      net::SimplifyUrlForRequest(url), net::SimplifyUrlForRequest(other_url),
+      base::Bind(&ServiceWorkerContextWrapper::DidCheckHasServiceWorker, this,
+                 callback));
+}
+
 void ServiceWorkerContextWrapper::ClearAllServiceWorkersForTest(
     const base::Closure& callback) {
   if (!BrowserThread::CurrentlyOn(BrowserThread::IO)) {
@@ -559,6 +432,55 @@ void ServiceWorkerContextWrapper::ClearAllServiceWorkersForTest(
     return;
   }
   context_core_->ClearAllServiceWorkersForTest(callback);
+}
+
+void ServiceWorkerContextWrapper::StartActiveWorkerForPattern(
+    const GURL& pattern,
+    StartActiveWorkerCallback info_callback,
+    base::OnceClosure failure_callback) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  FindReadyRegistrationForPattern(
+      pattern, base::Bind(&FoundReadyRegistrationForStartActiveWorker,
+                          base::Passed(&info_callback),
+                          base::Passed(&failure_callback)));
+}
+
+void ServiceWorkerContextWrapper::StartServiceWorkerForNavigationHint(
+    const GURL& document_url,
+    const StartServiceWorkerForNavigationHintCallback& callback) {
+  TRACE_EVENT1("ServiceWorker", "StartServiceWorkerForNavigationHint",
+               "document_url", document_url.spec());
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::BindOnce(
+          &ServiceWorkerContextWrapper::StartServiceWorkerForNavigationHintOnIO,
+          this, document_url,
+          base::Bind(&ServiceWorkerContextWrapper::
+                         RecordStartServiceWorkerForNavigationHintResult,
+                     this, callback)));
+}
+
+void ServiceWorkerContextWrapper::StopAllServiceWorkersForOrigin(
+    const GURL& origin) {
+  if (!BrowserThread::CurrentlyOn(BrowserThread::IO)) {
+    BrowserThread::PostTask(
+        BrowserThread::IO, FROM_HERE,
+        base::BindOnce(
+            &ServiceWorkerContextWrapper::StopAllServiceWorkersForOrigin, this,
+            origin));
+    return;
+  }
+  if (!context_core_.get()) {
+    return;
+  }
+  std::vector<ServiceWorkerVersionInfo> live_versions = GetAllLiveVersionInfo();
+  for (const ServiceWorkerVersionInfo& info : live_versions) {
+    ServiceWorkerVersion* version = GetLiveVersion(info.version_id);
+    if (version && version->scope().GetOrigin() == origin)
+      version->StopWorker(base::Bind(&ServiceWorkerUtils::NoOpStatusCallback));
+  }
 }
 
 ServiceWorkerRegistration* ServiceWorkerContextWrapper::GetLiveRegistration(
@@ -683,54 +605,6 @@ void ServiceWorkerContextWrapper::FindReadyRegistrationForIdOnly(
                  this, callback));
 }
 
-void ServiceWorkerContextWrapper::DidFindRegistrationForFindReady(
-    const FindRegistrationCallback& callback,
-    ServiceWorkerStatusCode status,
-    scoped_refptr<ServiceWorkerRegistration> registration) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  if (status != SERVICE_WORKER_OK) {
-    callback.Run(status, nullptr);
-    return;
-  }
-
-  // Attempt to activate the waiting version because the registration retrieved
-  // from the disk might have only the waiting version.
-  if (registration->waiting_version())
-    registration->ActivateWaitingVersionWhenReady();
-
-  scoped_refptr<ServiceWorkerVersion> active_version =
-      registration->active_version();
-  if (!active_version) {
-    callback.Run(SERVICE_WORKER_ERROR_NOT_FOUND, nullptr);
-    return;
-  }
-
-  if (active_version->status() == ServiceWorkerVersion::ACTIVATING) {
-    // Wait until the version is activated.
-    active_version->RegisterStatusChangeCallback(base::BindOnce(
-        &ServiceWorkerContextWrapper::OnStatusChangedForFindReadyRegistration,
-        this, callback, std::move(registration)));
-    return;
-  }
-
-  DCHECK_EQ(ServiceWorkerVersion::ACTIVATED, active_version->status());
-  callback.Run(SERVICE_WORKER_OK, std::move(registration));
-}
-
-void ServiceWorkerContextWrapper::OnStatusChangedForFindReadyRegistration(
-    const FindRegistrationCallback& callback,
-    scoped_refptr<ServiceWorkerRegistration> registration) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  scoped_refptr<ServiceWorkerVersion> active_version =
-      registration->active_version();
-  if (!active_version ||
-      active_version->status() != ServiceWorkerVersion::ACTIVATED) {
-    callback.Run(SERVICE_WORKER_ERROR_NOT_FOUND, nullptr);
-    return;
-  }
-  callback.Run(SERVICE_WORKER_OK, registration);
-}
-
 void ServiceWorkerContextWrapper::GetAllRegistrations(
     const GetRegistrationsInfosCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
@@ -833,6 +707,71 @@ void ServiceWorkerContextWrapper::GetUserDataForAllRegistrationsByKeyPrefix(
       key_prefix, callback);
 }
 
+void ServiceWorkerContextWrapper::StartServiceWorker(
+    const GURL& pattern,
+    const StatusCallback& callback) {
+  if (!BrowserThread::CurrentlyOn(BrowserThread::IO)) {
+    BrowserThread::PostTask(
+        BrowserThread::IO, FROM_HERE,
+        base::BindOnce(&ServiceWorkerContextWrapper::StartServiceWorker, this,
+                       pattern, callback));
+    return;
+  }
+  if (!context_core_) {
+    BrowserThread::PostTask(
+        BrowserThread::UI, FROM_HERE,
+        base::BindOnce(callback, SERVICE_WORKER_ERROR_ABORT));
+    return;
+  }
+  context_core_->storage()->FindRegistrationForPattern(
+      net::SimplifyUrlForRequest(pattern),
+      base::Bind(&StartActiveWorkerOnIO, callback));
+}
+
+void ServiceWorkerContextWrapper::SkipWaitingWorker(const GURL& pattern) {
+  if (!BrowserThread::CurrentlyOn(BrowserThread::IO)) {
+    BrowserThread::PostTask(
+        BrowserThread::IO, FROM_HERE,
+        base::BindOnce(&ServiceWorkerContextWrapper::SkipWaitingWorker, this,
+                       pattern));
+    return;
+  }
+  if (!context_core_)
+    return;
+  context_core_->storage()->FindRegistrationForPattern(
+      net::SimplifyUrlForRequest(pattern), base::Bind(&SkipWaitingWorkerOnIO));
+}
+
+void ServiceWorkerContextWrapper::UpdateRegistration(const GURL& pattern) {
+  if (!BrowserThread::CurrentlyOn(BrowserThread::IO)) {
+    BrowserThread::PostTask(
+        BrowserThread::IO, FROM_HERE,
+        base::BindOnce(&ServiceWorkerContextWrapper::UpdateRegistration, this,
+                       pattern));
+    return;
+  }
+  if (!context_core_)
+    return;
+  context_core_->storage()->FindRegistrationForPattern(
+      net::SimplifyUrlForRequest(pattern),
+      base::Bind(&ServiceWorkerContextWrapper::DidFindRegistrationForUpdate,
+                 this));
+}
+
+void ServiceWorkerContextWrapper::SetForceUpdateOnPageLoad(
+    bool force_update_on_page_load) {
+  if (!BrowserThread::CurrentlyOn(BrowserThread::IO)) {
+    BrowserThread::PostTask(
+        BrowserThread::IO, FROM_HERE,
+        base::BindOnce(&ServiceWorkerContextWrapper::SetForceUpdateOnPageLoad,
+                       this, force_update_on_page_load));
+    return;
+  }
+  if (!context_core_)
+    return;
+  context_core_->set_force_update_on_page_load(force_update_on_page_load);
+}
+
 void ServiceWorkerContextWrapper::AddObserver(
     ServiceWorkerContextCoreObserver* observer) {
   core_observer_list_->AddObserver(observer);
@@ -849,6 +788,14 @@ bool ServiceWorkerContextWrapper::OriginHasForeignFetchRegistrations(
   if (!context_core_)
     return false;
   return context_core_->storage()->OriginHasForeignFetchRegistrations(origin);
+}
+
+ServiceWorkerContextWrapper::~ServiceWorkerContextWrapper() {
+  // Explicitly remove this object as an observer to avoid use-after-frees in
+  // tests where this object is not guaranteed to outlive the
+  // ServiceWorkerContextCore it wraps.
+  core_observer_list_->RemoveObserver(this);
+  DCHECK(!resource_context_);
 }
 
 void ServiceWorkerContextWrapper::InitInternal(
@@ -890,37 +837,52 @@ void ServiceWorkerContextWrapper::ShutdownOnIO() {
   context_core_.reset();
 }
 
-bool ServiceWorkerContextWrapper::StartingExternalRequest(
-    int64_t service_worker_version_id,
-    const std::string& request_uuid) {
+void ServiceWorkerContextWrapper::DidFindRegistrationForFindReady(
+    const FindRegistrationCallback& callback,
+    ServiceWorkerStatusCode status,
+    scoped_refptr<ServiceWorkerRegistration> registration) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  ServiceWorkerVersion* version =
-      context()->GetLiveVersion(service_worker_version_id);
-  if (!version)
-    return false;
-  return version->StartExternalRequest(request_uuid);
+  if (status != SERVICE_WORKER_OK) {
+    callback.Run(status, nullptr);
+    return;
+  }
+
+  // Attempt to activate the waiting version because the registration retrieved
+  // from the disk might have only the waiting version.
+  if (registration->waiting_version())
+    registration->ActivateWaitingVersionWhenReady();
+
+  scoped_refptr<ServiceWorkerVersion> active_version =
+      registration->active_version();
+  if (!active_version) {
+    callback.Run(SERVICE_WORKER_ERROR_NOT_FOUND, nullptr);
+    return;
+  }
+
+  if (active_version->status() == ServiceWorkerVersion::ACTIVATING) {
+    // Wait until the version is activated.
+    active_version->RegisterStatusChangeCallback(base::BindOnce(
+        &ServiceWorkerContextWrapper::OnStatusChangedForFindReadyRegistration,
+        this, callback, std::move(registration)));
+    return;
+  }
+
+  DCHECK_EQ(ServiceWorkerVersion::ACTIVATED, active_version->status());
+  callback.Run(SERVICE_WORKER_OK, std::move(registration));
 }
 
-bool ServiceWorkerContextWrapper::FinishedExternalRequest(
-    int64_t service_worker_version_id,
-    const std::string& request_uuid) {
+void ServiceWorkerContextWrapper::OnStatusChangedForFindReadyRegistration(
+    const FindRegistrationCallback& callback,
+    scoped_refptr<ServiceWorkerRegistration> registration) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  ServiceWorkerVersion* version =
-      context()->GetLiveVersion(service_worker_version_id);
-  if (!version)
-    return false;
-  return version->FinishExternalRequest(request_uuid);
-}
-
-void ServiceWorkerContextWrapper::StartActiveWorkerForPattern(
-    const GURL& pattern,
-    StartActiveWorkerCallback info_callback,
-    base::OnceClosure failure_callback) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  FindReadyRegistrationForPattern(
-      pattern, base::Bind(&FoundReadyRegistrationForStartActiveWorker,
-                          base::Passed(&info_callback),
-                          base::Passed(&failure_callback)));
+  scoped_refptr<ServiceWorkerVersion> active_version =
+      registration->active_version();
+  if (!active_version ||
+      active_version->status() != ServiceWorkerVersion::ACTIVATED) {
+    callback.Run(SERVICE_WORKER_ERROR_NOT_FOUND, nullptr);
+    return;
+  }
+  callback.Run(SERVICE_WORKER_OK, registration);
 }
 
 void ServiceWorkerContextWrapper::DidDeleteAndStartOver(
@@ -935,21 +897,56 @@ void ServiceWorkerContextWrapper::DidDeleteAndStartOver(
   context_core_->OnStorageWiped();
 }
 
-void ServiceWorkerContextWrapper::StartServiceWorkerForNavigationHint(
-    const GURL& document_url,
-    const StartServiceWorkerForNavigationHintCallback& callback) {
-  TRACE_EVENT1("ServiceWorker", "StartServiceWorkerForNavigationHint",
-               "document_url", document_url.spec());
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+void ServiceWorkerContextWrapper::DidGetAllRegistrationsForGetAllOrigins(
+    const GetUsageInfoCallback& callback,
+    ServiceWorkerStatusCode status,
+    const std::vector<ServiceWorkerRegistrationInfo>& registrations) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  std::vector<ServiceWorkerUsageInfo> usage_infos;
 
-  BrowserThread::PostTask(
-      BrowserThread::IO, FROM_HERE,
-      base::BindOnce(
-          &ServiceWorkerContextWrapper::StartServiceWorkerForNavigationHintOnIO,
-          this, document_url,
-          base::Bind(&ServiceWorkerContextWrapper::
-                         RecordStartServiceWorkerForNavigationHintResult,
-                     this, callback)));
+  std::map<GURL, ServiceWorkerUsageInfo> origins;
+  for (const auto& registration_info : registrations) {
+    GURL origin = registration_info.pattern.GetOrigin();
+
+    ServiceWorkerUsageInfo& usage_info = origins[origin];
+    if (usage_info.origin.is_empty())
+      usage_info.origin = origin;
+    usage_info.scopes.push_back(registration_info.pattern);
+    usage_info.total_size_bytes += registration_info.stored_version_size_bytes;
+  }
+
+  for (const auto& origin_info_pair : origins) {
+    usage_infos.push_back(origin_info_pair.second);
+  }
+  callback.Run(usage_infos);
+}
+
+void ServiceWorkerContextWrapper::DidCheckHasServiceWorker(
+    const CheckHasServiceWorkerCallback& callback,
+    ServiceWorkerCapability capability) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+
+  BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
+                          base::BindOnce(callback, capability));
+}
+
+void ServiceWorkerContextWrapper::DidFindRegistrationForUpdate(
+    ServiceWorkerStatusCode status,
+    scoped_refptr<ServiceWorkerRegistration> registration) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+
+  if (status != SERVICE_WORKER_OK)
+    return;
+  if (!context_core_)
+    return;
+  DCHECK(registration);
+  // TODO(jungkees): |force_bypass_cache| is set to true because the call stack
+  // is initiated by an update button on DevTools that expects the cache is
+  // bypassed. However, in order to provide options for callers to choose the
+  // cache bypass mode, plumb |force_bypass_cache| through to
+  // UpdateRegistration().
+  context_core_->UpdateServiceWorker(registration.get(),
+                                     true /* force_bypass_cache */);
 }
 
 void ServiceWorkerContextWrapper::StartServiceWorkerForNavigationHintOnIO(
