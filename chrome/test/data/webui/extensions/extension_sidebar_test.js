@@ -7,27 +7,44 @@ cr.define('extension_sidebar_tests', function() {
   /** @enum {string} */
   var TestNames = {
     LayoutAndClickHandlers: 'layout and click handlers',
+    UpdateSelected: 'update selected',
   };
 
   suite('ExtensionSidebarTest', function() {
     /** @type {extensions.Sidebar} */
     var sidebar;
 
-    // Import cr_settings_checkbox.html before running suite.
-    suiteSetup(function() {
-      return PolymerTest.importHtml('chrome://extensions/sidebar.html');
+    setup(function() {
+      PolymerTest.clearBody();
+      sidebar = new extensions.Sidebar();
+      document.body.appendChild(sidebar);
     });
 
-    setup(function() {
-      var manager = document.querySelector('extensions-manager');
-      manager.$.drawer.openDrawer();
-      sidebar = manager.$.sidebar;
+    test(assert(TestNames.UpdateSelected), function() {
+      const selector = 'paper-item.iron-selected';
+      expectFalse(!!sidebar.$$(selector));
+
+      sidebar.updateSelected({page: Page.SHORTCUTS});
+      expectEquals(sidebar.$$(selector).id, 'sections-shortcuts');
+
+      sidebar.updateSelected(
+          {page: Page.LIST, type: extensions.ShowingType.APPS});
+      expectEquals(sidebar.$$(selector).id, 'sections-apps');
+
+      sidebar.updateSelected(
+          {page: Page.LIST, type: extensions.ShowingType.EXTENSIONS});
+      expectEquals(sidebar.$$(selector).id, 'sections-extensions');
     });
 
     test(assert(TestNames.LayoutAndClickHandlers), function() {
+      var testVisible = extension_test_util.testVisible.bind(null, sidebar);
+
+      testVisible('#section-menu', false);
+      sidebar.open();
+      testVisible('#section-menu', true);
+
       extension_test_util.testIronIcons(sidebar);
 
-      var testVisible = extension_test_util.testVisible.bind(null, sidebar);
       testVisible('#sections-extensions', true);
       testVisible('#sections-apps', true);
       testVisible('#sections-shortcuts', true);
