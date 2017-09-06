@@ -8,6 +8,7 @@
 
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
+#include "base/process/process.h"
 #include "net/base/net_errors.h"
 #include "net/proxy/mojo_proxy_resolver_v8_tracing_bindings.h"
 #include "net/proxy/proxy_info.h"

@@ -30,6 +30,8 @@
 #include "courgette/third_party/bsdiff/bsdiff.h"
 #include "extensions/features/features.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
+#include "net/interfaces/proxy_resolver_service.mojom.h"
+#include "net/proxy/mojo_proxy_resolver_factory_service.h"
 #include "printing/features/features.h"
 #include "services/service_manager/embedder/embedded_service_info.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
@@ -40,7 +42,6 @@
 #include "chrome/utility/importer/profile_import_impl.h"
 #include "chrome/utility/importer/profile_import_service.h"
 #include "chrome/utility/media_router/dial_device_description_parser_impl.h"
-#include "net/proxy/mojo_proxy_resolver_factory_impl.h"  // nogncheck
 #include "net/proxy/proxy_resolver_v8.h"
 #endif  // !defined(OS_ANDROID)
 
@@ -195,12 +196,6 @@ class SafeArchiveAnalyzerImpl : public chrome::mojom::SafeArchiveAnalyzer {
 #endif  // defined(FULL_SAFE_BROWSING)
 
 #if !defined(OS_ANDROID)
-void CreateProxyResolverFactory(
-    net::interfaces::ProxyResolverFactoryRequest request) {
-  mojo::MakeStrongBinding(base::MakeUnique<net::MojoProxyResolverFactoryImpl>(),
-                          std::move(request));
-}
-
 class ResourceUsageReporterImpl : public chrome::mojom::ResourceUsageReporter {
  public:
   ResourceUsageReporterImpl() {}
@@ -278,9 +273,6 @@ void ChromeContentUtilityClient::UtilityThreadStarted() {
     registry->AddInterface(base::Bind(&FilePatcherImpl::Create),
                            base::ThreadTaskRunnerHandle::Get());
 #if !defined(OS_ANDROID)
-    registry->AddInterface<net::interfaces::ProxyResolverFactory>(
-        base::Bind(CreateProxyResolverFactory),
-        base::ThreadTaskRunnerHandle::Get());
     registry->AddInterface(base::Bind(CreateResourceUsageReporter),
                            base::ThreadTaskRunnerHandle::Get());
     registry->AddInterface(
@@ -337,6 +329,12 @@ void ChromeContentUtilityClient::RegisterServices(
   profiling_info.factory =
       base::Bind(&profiling::ProfilingService::CreateService);
   services->emplace(profiling::mojom::kServiceName, profiling_info);
+
+  service_manager::EmbeddedServiceInfo proxy_resolver_factory_info;
+  proxy_resolver_factory_info.factory =
+      base::Bind(&net::MojoProxyResolverFactoryService::CreateService);
+  services->emplace(net::interfaces::kProxyResolverFactoryServiceName,
+                    proxy_resolver_factory_info);
 
 #if !defined(OS_ANDROID)
   service_manager::EmbeddedServiceInfo profile_import_info;
