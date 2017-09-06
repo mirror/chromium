@@ -20,6 +20,7 @@
 
 namespace base {
 
+class File;
 class HistogramBase;
 class MemoryMappedFile;
 class SharedMemory;
@@ -597,6 +598,8 @@ class BASE_EXPORT PersistentMemoryAllocator {
   }
 
  protected:
+  struct SharedMetadata;
+
   enum MemoryType {
     MEM_EXTERNAL,
     MEM_MALLOC,
@@ -628,7 +631,6 @@ class BASE_EXPORT PersistentMemoryAllocator {
   const uint32_t mem_page_;        // Page size allocations shouldn't cross.
 
  private:
-  struct SharedMetadata;
   struct BlockHeader;
   static const uint32_t kAllocAlignment;
   static const Reference kReferenceQueue;
@@ -756,6 +758,13 @@ class BASE_EXPORT FilePersistentMemoryAllocator
   // won't cause the program to abort. The existing IsCorrupt() call will handle
   // the rest.
   static bool IsFileAcceptable(const MemoryMappedFile& file, bool read_only);
+
+  // Truncate a file to its minimum size based on the contents. The file can
+  // still be used, even in a read/write manner, but no further allocations
+  // from it will be possible without re-extending the file. Returns true if
+  // the truncation was successful.
+  static bool MinimizeFile(File* file);
+  static bool MinimizeFilePath(const FilePath& path);
 
  protected:
   // PersistentMemoryAllocator:
