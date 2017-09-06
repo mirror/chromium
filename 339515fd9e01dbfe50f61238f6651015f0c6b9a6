@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5b476f7e_67eb9e8b",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-06T18:51:53Z",
+      "side": 1,
+      "message": "Comment added.\n\nNone of these functions reacts to closing tab or ignoring warnings. They correspond to users\u0027 specific decisions.",
+      "parentUuid": "ae6bf38b_0b670873",
+      "range": {
+        "startLine": 43,
+        "startChar": 8,
+        "endLine": 43,
+        "endChar": 16
+      },
+      "revId": "339515fd9e01dbfe50f61238f6651015f0c6b9a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09f27a86_2ed14cc8",
         "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.h",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2cbdc388_ee6a779f",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-06T18:51:53Z",
+      "side": 1,
+      "message": "Oops, inaccurate comment. AddObserver() doesn\u0027t call On*() function.\n\nMost of these On*() function will be called in CPPS::OnWarningDone(...). They are not wired up yet in this CL.\nAnd these observers are not owned by CPPS, they will remove themselves from observer_list_ when then get destructed.",
+      "parentUuid": "09f27a86_2ed14cc8",
+      "range": {
+        "startLine": 69,
+        "startChar": 21,
+        "endLine": 69,
+        "endChar": 32
+      },
+      "revId": "339515fd9e01dbfe50f61238f6651015f0c6b9a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "672ebc5d_999622e9",
         "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
         "patchSetId": 8
@@ -68,6 +116,30 @@
       "revId": "339515fd9e01dbfe50f61238f6651015f0c6b9a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bb18e3e_0e67056f",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-06T18:51:53Z",
+      "side": 1,
+      "message": "GetWidget()-\u003eClose() will actually trigger UMA record of  PasswordProtection.ModalWarningDialogAction.SyncPasswordEntry::CLOSE.\n\nLet me think about whether we need additional metrics to distinguish the 3 On*() functions.",
+      "parentUuid": "672ebc5d_999622e9",
+      "range": {
+        "startLine": 136,
+        "startChar": 21,
+        "endLine": 136,
+        "endChar": 22
+      },
+      "revId": "339515fd9e01dbfe50f61238f6651015f0c6b9a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
