@@ -3,7 +3,7 @@
 /* this ALWAYS GENERATED file contains the definitions for the interfaces */
 
 
- /* File created by MIDL compiler version 8.01.0622 */
+ /* File created by MIDL compiler version 8.xx.xxxx */
 /* at a redacted point in time
  */
 /* Compiler settings for ../../third_party/isimpledom/ISimpleDOMDocument.idl:

@@ -3,7 +3,7 @@
 /* this ALWAYS GENERATED file contains the definitions for the interfaces */
 
 
- /* File created by MIDL compiler version 8.01.0622 */
+ /* File created by MIDL compiler version 8.xx.xxxx */
 /* at a redacted point in time
  */
 /* Compiler settings for gen/remoting/host/win/chromoting_lib.idl:
@@ -304,7 +304,7 @@ EXTERN_C const CLSID CLSID_RdpDesktopSession;
 
 #ifdef __cplusplus
 
-class DECLSPEC_UUID("406f7429-b57f-535a-9c79-6ae803e3aeaa")
+class DECLSPEC_UUID("6741fd0a-6a8a-5838-a35e-8088697e2088")
 RdpDesktopSession;
 #endif
 #endif /* __ChromotingLib_LIBRARY_DEFINED__ */

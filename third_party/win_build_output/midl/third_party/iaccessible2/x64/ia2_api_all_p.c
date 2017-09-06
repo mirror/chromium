@@ -3,7 +3,7 @@
 /* this ALWAYS GENERATED file contains the proxy stub code */
 
 
- /* File created by MIDL compiler version 8.01.0622 */
+ /* File created by MIDL compiler version 8.xx.xxxx */
 /* at a redacted point in time
  */
 /* Compiler settings for ../../third_party/iaccessible2/ia2_api_all.idl:

@@ -14,16 +14,23 @@ import tempfile
 
 
 def ZapTimestamp(filename):
+  contents = open(filename, 'rb').read()
   # midl.exe writes timestamp 2147483647 (2^31 - 1) as creation date into its
   # outputs, but using the local timezone.  To make the output timezone-
   # independent, replace that date with a fixed string of the same length.
+  # Also blank out the minor version number.
   if filename.endswith('.tlb'):
-    lookbehind = 'Created by MIDL version 8\.01\.0622 '
+    contents = re.sub(
+        'Created by MIDL version 8\.\d\d\.\d{4} at ... Jan 1. ..:..:.. 2038',
+        'Created by MIDL version 8.xx.xxxx at a redacted point in time',
+        contents)
   else:
-    lookbehind = 'File created by MIDL compiler version 8\.01\.0622 \*/\r\n/\* '
-  contents = open(filename, 'rb').read()
-  contents = re.sub(r'(?<=%s)at ... Jan 1. ..:..:.. 2038' % lookbehind,
-                            'at a redacted point in time', contents)
+    contents = re.sub(
+        'File created by MIDL compiler version 8\.\d\d\.\d{4} \*/\r\n'
+        '/\* at ... Jan 1. ..:..:.. 2038',
+        'File created by MIDL compiler version 8.xx.xxxx */\r\n'
+        '/* at a redacted point in time',
+        contents)
   open(filename, 'wb').write(contents)
 
 
@@ -41,6 +48,7 @@ def main(arch, outdir, tlb, h, dlldata, iid, proxy, idl, *flags):
   if os.path.isdir(os.path.join(source, os.path.basename(idl))):
     source = os.path.join(source, os.path.basename(idl))
   source = os.path.join(source, arch.split('.')[1])  # Append 'x86' or 'x64'.
+  source = os.path.normpath(source)
   if not is_chromoting:
     distutils.dir_util.copy_tree(source, outdir, preserve_times=False)
 
@@ -108,6 +116,8 @@ def main(arch, outdir, tlb, h, dlldata, iid, proxy, idl, *flags):
                                            open(tofile, 'U').readlines(),
                                            fromfile, tofile))
       delete_tmp_dir = False
+      print 'To rebaseline:'
+      print '  copy /y %s\* %s' % (tmp_dir, source)
       sys.exit(1)
     return 0
   finally:
