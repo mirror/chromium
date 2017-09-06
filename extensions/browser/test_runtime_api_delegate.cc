@@ -22,8 +22,8 @@ void TestRuntimeAPIDelegate::AddUpdateObserver(UpdateObserver* observer) {
 void TestRuntimeAPIDelegate::RemoveUpdateObserver(UpdateObserver* observer) {
 }
 
-void TestRuntimeAPIDelegate::ReloadExtension(const std::string& extension_id) {
-}
+void TestRuntimeAPIDelegate::ReloadExtensionAsync(
+    const std::string& extension_id) {}
 
 bool TestRuntimeAPIDelegate::CheckForUpdates(
     const std::string& extension_id,

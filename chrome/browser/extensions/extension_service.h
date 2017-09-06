@@ -58,6 +58,7 @@ class ComponentLoader;
 class CrxInstaller;
 class ExtensionActionStorageManager;
 class ExtensionErrorController;
+class ExtensionLoader;
 class ExtensionRegistry;
 class ExtensionSystem;
 class ExtensionUpdater;
@@ -514,17 +515,18 @@ class ExtensionService
                                 const syncer::StringOrdinal& page_ordinal,
                                 const std::string& install_parameter);
 
-  // Handles sending notification that |extension| was loaded.
-  void NotifyExtensionLoaded(const extensions::Extension* extension);
+  // Sends a notification that |extension| was loaded and handles the remaining
+  // work to enable it.
+  void FinishEnableExtension(const extensions::Extension* extension);
 
-  // Completes extension loading after URLRequestContexts have been updated
-  // on the IO thread.
-  void OnExtensionRegisteredWithRequestContexts(
-      scoped_refptr<const extensions::Extension> extension);
+  // For resources the permission has access to load, ensures the corresponding
+  // URLDataSources are registered with the ChromeURLDataManager.
+  void AddDataSources(const extensions::Extension* extension);
 
-  // Handles sending notification that |extension| was unloaded.
-  void NotifyExtensionUnloaded(const extensions::Extension* extension,
-                               extensions::UnloadedExtensionReason reason);
+  // Notifies that the extension was unloaded and handles remaining work for
+  // unloading.
+  void FinishUnloadExtension(const extensions::Extension* extension,
+                             extensions::UnloadedExtensionReason reason);
 
   // Common helper to finish installing the given extension.
   void FinishInstallation(const extensions::Extension* extension);
@@ -727,6 +729,9 @@ class ExtensionService
 
   // Migrates app data when upgrading a legacy packaged app to a platform app
   std::unique_ptr<extensions::AppDataMigrator> app_data_migrator_;
+
+  // Helper object for extension loading/unloading operations.
+  std::unique_ptr<extensions::ExtensionLoader> extension_loader_;
 
   using InstallGateRegistry = std::map<extensions::ExtensionPrefs::DelayReason,
                                        extensions::InstallGate*>;

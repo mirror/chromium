@@ -260,7 +260,7 @@ void RuntimeAPI::OnBackgroundHostStartup(const Extension* extension) {
 }
 
 void RuntimeAPI::ReloadExtension(const std::string& extension_id) {
-  delegate_->ReloadExtension(extension_id);
+  delegate_->ReloadExtensionAsync(extension_id);
 }
 
 bool RuntimeAPI::CheckForUpdates(
