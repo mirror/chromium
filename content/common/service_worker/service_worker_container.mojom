@@ -43,8 +43,18 @@ interface ServiceWorkerContainerHost {
         array<ServiceWorkerRegistrationObjectInfo>? infos,
         array<ServiceWorkerVersionAttributes>? attrs);
 
+  // Corresponds to getting navigator.serviceWorker.ready attribute.
+  // Gets the service worker registration corresponding with the
+  // ServiceWorkerContainer that this interface hosts.
+  // On success, |error| is kNone with |registration| and |attributes| set.
+  // Otherwise, |error| and |error_msg| describe the failure.
+  GetRegistrationForReady()
+    => (blink.mojom.ServiceWorkerErrorType error,
+        string? error_msg,
+        ServiceWorkerRegistrationObjectInfo? registration,
+        ServiceWorkerVersionAttributes? attributes);
+
   // TODO(leonhsl): implement this interface.
-  // GetRegistrationForReady();
   // GetControllerServiceWorker();
 };
 
