@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cf67e22a_ac0713ec",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-09-06T00:49:53Z",
+      "side": 1,
+      "message": "There are lots of edge cases where a prefix can be rendered wider than the full string. It\u0027s a bit hard to find examples but I found this one:\n\nक्ष\nvs\nक्\n\n(U+0915 U+094D U+0937 vs U+0915 U+094D)\n\nSometimes adding an extra character can completely change the way something is rendered resulting in a smaller glyph.",
+      "parentUuid": "ce60fb05_5e511e7e",
+      "revId": "331980f7bc66f45919efc012dc95a48f319f49d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "770b5763_5f38a82b",
         "filename": "components/url_formatter/elide_url_unittest.cc",
         "patchSetId": 5
