@@ -19,6 +19,7 @@ import android.text.TextUtils;
 import android.util.Pair;
 
 import org.chromium.base.ApiCompatibilityUtils;
+import org.chromium.base.CommandLine;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
 import org.chromium.base.ObserverList;
@@ -28,6 +29,7 @@ import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.SuppressFBWarnings;
 import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.download.ui.BackendProvider;
 import org.chromium.chrome.browser.download.ui.DownloadHistoryAdapter;
 import org.chromium.chrome.browser.externalnav.ExternalNavigationDelegateImpl;
@@ -1369,10 +1371,19 @@ public class DownloadManagerService
      */
     @Override
     public void broadcastDownloadAction(DownloadItem downloadItem, String action) {
-        Intent intent = DownloadNotificationService.buildActionIntent(mContext, action,
-                LegacyHelpers.buildLegacyContentId(false, downloadItem.getId()),
-                downloadItem.getDownloadInfo().isOffTheRecord());
-        mContext.sendBroadcast(intent);
+        if (CommandLine.getInstance().hasSwitch(ChromeSwitches.ENABLE_DOWNLOADS_FOREGROUND)) {
+            Log.e("joy", "Download Manager Service: downloads foreground enabled");
+            Intent intent = DownloadNotificationFactory.buildActionIntent(mContext, action,
+                    LegacyHelpers.buildLegacyContentId(false, downloadItem.getId()),
+                    downloadItem.getDownloadInfo().isOffTheRecord());
+            mContext.startService(intent);
+        } else {
+            Log.e("joy", "Download Manager Service: downloads foreground not enabled");
+            Intent intent = DownloadNotificationService.buildActionIntent(mContext, action,
+                    LegacyHelpers.buildLegacyContentId(false, downloadItem.getId()),
+                    downloadItem.getDownloadInfo().isOffTheRecord());
+            mContext.sendBroadcast(intent);
+        }
     }
 
     /**

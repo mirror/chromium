@@ -403,6 +403,7 @@ public class DownloadNotificationService extends Service {
      *         tracked downloads may not currently be showing notifications.
      */
     public static boolean isTrackingResumableDownloads(Context context) {
+        Log.e("joy", "Download Notification Service: downloads foreground not enabled");
         List<DownloadSharedPreferenceEntry> entries =
                 DownloadSharedPreferenceHelper.getInstance().getEntries();
         for (DownloadSharedPreferenceEntry entry : entries) {
@@ -422,6 +423,7 @@ public class DownloadNotificationService extends Service {
 
     @Override
     public void onTaskRemoved(Intent rootIntent) {
+        Log.e("joy", "Download Notification Service: downloads foreground not enabled");
         super.onTaskRemoved(rootIntent);
         // If we've lost all Activities, cancel the off the record downloads and validate that we
         // should still be showing any download notifications at all.
@@ -433,6 +435,7 @@ public class DownloadNotificationService extends Service {
 
     @Override
     public void onCreate() {
+        Log.e("joy", "Download Notification Service: downloads foreground not enabled");
         mContext = ContextUtils.getApplicationContext();
         mNotificationManager =
                 (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -446,6 +449,7 @@ public class DownloadNotificationService extends Service {
 
     @Override
     public void onDestroy() {
+        Log.e("joy", "Download Notification Service: downloads foreground not enabled");
         updateNotificationsForShutdown();
         rescheduleDownloads();
         super.onDestroy();
@@ -453,6 +457,7 @@ public class DownloadNotificationService extends Service {
 
     @Override
     public int onStartCommand(final Intent intent, int flags, int startId) {
+        Log.e("joy", "Download Notification Service: downloads foreground not enabled");
         // Start a foreground service every time we process a valid intent.  This makes sure we
         // honor the promise that we'll be in the foreground when we start, even if we immediately
         // drop ourselves back.
@@ -496,6 +501,7 @@ public class DownloadNotificationService extends Service {
      * start stopping itself.
      */
     public void addObserver(Observer observer) {
+        Log.e("joy", "Download Notification Service: downloads foreground not enabled");
         mObservers.addObserver(observer);
     }
 
@@ -504,6 +510,7 @@ public class DownloadNotificationService extends Service {
      * stopping itself.
      */
     public void removeObserver(Observer observer) {
+        Log.e("joy", "Download Notification Service: downloads foreground not enabled");
         mObservers.removeObserver(observer);
     }
 
@@ -720,6 +727,7 @@ public class DownloadNotificationService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
+        Log.e("joy", "Download Notification Service: downloads foreground not enabled");
         return mBinder;
     }
 
@@ -760,6 +768,7 @@ public class DownloadNotificationService extends Service {
     public void notifyDownloadProgress(ContentId id, String fileName, Progress progress,
             long bytesReceived, long timeRemainingInMillis, long startTime, boolean isOffTheRecord,
             boolean canDownloadWhileMetered, boolean isTransient, Bitmap icon) {
+        Log.e("joy", "Download Notification Service: downloads foreground not enabled");
         updateActiveDownloadNotification(id, fileName, progress, bytesReceived,
                 timeRemainingInMillis, startTime, isOffTheRecord, canDownloadWhileMetered, false,
                 isTransient, icon);
@@ -872,6 +881,7 @@ public class DownloadNotificationService extends Service {
      * @param id The {@link ContentId} of the download.
      */
     public void cancelNotification(int notificationId, ContentId id) {
+        Log.e("joy", "Download Notification Service: downloads foreground not enabled");
         mNotificationManager.cancel(NOTIFICATION_NAMESPACE, notificationId);
         mDownloadSharedPreferenceHelper.removeSharedPreferenceEntry(id);
 
@@ -891,6 +901,7 @@ public class DownloadNotificationService extends Service {
      */
     @VisibleForTesting
     public void notifyDownloadCanceled(ContentId id) {
+        Log.e("joy", "Download Notification Service: downloads foreground not enabled");
         DownloadSharedPreferenceEntry entry =
                 mDownloadSharedPreferenceHelper.getDownloadSharedPreferenceEntry(id);
         if (entry == null) return;
@@ -909,6 +920,7 @@ public class DownloadNotificationService extends Service {
      */
     public void notifyDownloadPaused(ContentId id, String fileName, boolean isResumable,
             boolean isAutoResumable, boolean isOffTheRecord, boolean isTransient, Bitmap icon) {
+        Log.e("joy", "Download Notification Service: downloads foreground not enabled");
         DownloadSharedPreferenceEntry entry =
                 mDownloadSharedPreferenceHelper.getDownloadSharedPreferenceEntry(id);
         if (!isResumable) {
@@ -980,6 +992,7 @@ public class DownloadNotificationService extends Service {
     public int notifyDownloadSuccessful(ContentId id, String filePath, String fileName,
             long systemDownloadId, boolean isOffTheRecord, boolean isSupportedMimeType,
             boolean isOpenable, Bitmap icon, String originalUrl, String referrer) {
+        Log.e("joy", "Download Notification Service: downloads foreground not enabled");
         int notificationId = getNotificationId(id);
         ChromeNotificationBuilder builder = buildNotification(R.drawable.offline_pin, fileName,
                 mContext.getResources().getString(R.string.download_notification_completed));
@@ -1027,6 +1040,7 @@ public class DownloadNotificationService extends Service {
      */
     @VisibleForTesting
     public void notifyDownloadFailed(ContentId id, String fileName, Bitmap icon) {
+        Log.e("joy", "Download Notification Service: downloads foreground not enabled");
         // If the download is not in history db, fileName could be empty. Get it from
         // SharedPreferences.
         if (TextUtils.isEmpty(fileName)) {
@@ -1379,6 +1393,7 @@ public class DownloadNotificationService extends Service {
      *         {@code null} if {@code intent} is missing any required extras.
      */
     public static ContentId getContentIdFromIntent(Intent intent) {
+        Log.e("joy", "Download Notification Service: downloads foreground not enabled");
         if (!intent.hasExtra(EXTRA_DOWNLOAD_CONTENTID_ID)
                 || !intent.hasExtra(EXTRA_DOWNLOAD_CONTENTID_NAMESPACE)) {
             return null;
@@ -1394,6 +1409,7 @@ public class DownloadNotificationService extends Service {
      * already in progress, do nothing.
      */
     public void resumeAllPendingDownloads() {
+        Log.e("joy", "Download Notification Service: downloads foreground not enabled");
         if (!DownloadManagerService.hasDownloadManagerService()) return;
         List<DownloadSharedPreferenceEntry> entries = mDownloadSharedPreferenceHelper.getEntries();
         for (int i = 0; i < entries.size(); ++i) {

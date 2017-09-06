@@ -10,9 +10,11 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
 
+import org.chromium.base.CommandLine;
 import org.chromium.base.Log;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.VisibleForTesting;
+import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.download.DownloadNotificationService.Observer;
 import org.chromium.components.offline_items_collection.ContentId;
 
@@ -39,6 +41,8 @@ public class SystemDownloadNotifier implements DownloadNotifier, Observer {
     private static final int DOWNLOAD_NOTIFICATION_TYPE_REMOVE_NOTIFICATION = 7;
 
     private final Context mApplicationContext;
+    private final DownloadNotificationService2 mDownloadNotificationService2;
+
     @Nullable
     private DownloadNotificationService mBoundService;
     private Set<String> mActiveDownloads = new HashSet<String>();
@@ -74,6 +78,13 @@ public class SystemDownloadNotifier implements DownloadNotifier, Observer {
      */
     public SystemDownloadNotifier(Context context) {
         mApplicationContext = context.getApplicationContext();
+        if (CommandLine.getInstance().hasSwitch(ChromeSwitches.ENABLE_DOWNLOADS_FOREGROUND)) {
+            Log.e("joy", "System Download Notifier: downloads foreground enabled");
+            mDownloadNotificationService2 = DownloadNotificationService2.getInstance();
+        } else {
+            Log.e("joy", "System Download Notifier: downloads foreground not enabled");
+            mDownloadNotificationService2 = null;
+        }
     }
 
     /**
@@ -163,6 +174,11 @@ public class SystemDownloadNotifier implements DownloadNotifier, Observer {
 
     @Override
     public void notifyDownloadCanceled(ContentId id) {
+        if (mDownloadNotificationService2 != null) {
+            mDownloadNotificationService2.notifyDownloadCanceled(id, false);
+            return;
+        }
+
         DownloadInfo downloadInfo = new DownloadInfo.Builder().setContentId(id).build();
         updateDownloadNotification(
                 new PendingNotificationInfo(DOWNLOAD_NOTIFICATION_TYPE_CANCEL, downloadInfo), true);
@@ -171,6 +187,20 @@ public class SystemDownloadNotifier implements DownloadNotifier, Observer {
     @Override
     public void notifyDownloadSuccessful(DownloadInfo downloadInfo, long systemDownloadId,
             boolean canResolve, boolean isSupportedMimeType) {
+        if (mDownloadNotificationService2 != null) {
+            final int notificationId = mDownloadNotificationService2.notifyDownloadSuccessful(
+                    downloadInfo.getContentId(), downloadInfo.getFilePath(),
+                    downloadInfo.getFileName(), systemDownloadId, downloadInfo.isOffTheRecord(),
+                    isSupportedMimeType, downloadInfo.getIsOpenable(), downloadInfo.getIcon(),
+                    downloadInfo.getOriginalUrl(), downloadInfo.getReferrer());
+
+            if (downloadInfo.getIsOpenable()) {
+                DownloadManagerService.getDownloadManagerService().onSuccessNotificationShown(
+                        downloadInfo, canResolve, notificationId, systemDownloadId);
+            }
+            return;
+        }
+
         PendingNotificationInfo info =
                 new PendingNotificationInfo(DOWNLOAD_NOTIFICATION_TYPE_SUCCESS, downloadInfo);
         info.canResolve = canResolve;
@@ -181,6 +211,14 @@ public class SystemDownloadNotifier implements DownloadNotifier, Observer {
 
     @Override
     public void notifyDownloadFailed(DownloadInfo downloadInfo) {
+        if (mDownloadNotificationService2 != null) {
+            mDownloadNotificationService2.notifyDownloadFailed(
+                    downloadInfo.getContentId(),
+                    downloadInfo.getFileName(),
+                    downloadInfo.getIcon());
+            return;
+        }
+
         updateDownloadNotification(
                 new PendingNotificationInfo(DOWNLOAD_NOTIFICATION_TYPE_FAILURE, downloadInfo),
                 true);
@@ -189,6 +227,15 @@ public class SystemDownloadNotifier implements DownloadNotifier, Observer {
     @Override
     public void notifyDownloadProgress(
             DownloadInfo downloadInfo, long startTime, boolean canDownloadWhileMetered) {
+        if (mDownloadNotificationService2 != null) {
+            mDownloadNotificationService2.notifyDownloadProgress(downloadInfo.getContentId(),
+                    downloadInfo.getFileName(), downloadInfo.getProgress(),
+                    downloadInfo.getBytesReceived(), downloadInfo.getTimeRemainingInMillis(),
+                    startTime, downloadInfo.isOffTheRecord(), canDownloadWhileMetered,
+                    downloadInfo.getIsTransient(), downloadInfo.getIcon());
+            return;
+        }
+
         PendingNotificationInfo info =
                 new PendingNotificationInfo(DOWNLOAD_NOTIFICATION_TYPE_PROGRESS, downloadInfo);
         info.startTime = startTime;
@@ -198,6 +245,13 @@ public class SystemDownloadNotifier implements DownloadNotifier, Observer {
 
     @Override
     public void notifyDownloadPaused(DownloadInfo downloadInfo) {
+        if (mDownloadNotificationService2 != null) {
+            mDownloadNotificationService2.notifyDownloadPaused(downloadInfo.getContentId(),
+                    downloadInfo.getFileName(), true, false, downloadInfo.isOffTheRecord(),
+                    downloadInfo.getIsTransient(), downloadInfo.getIcon(), false);
+            return;
+        }
+
         PendingNotificationInfo info =
                 new PendingNotificationInfo(DOWNLOAD_NOTIFICATION_TYPE_PAUSE, downloadInfo);
         updateDownloadNotification(info, true);
@@ -205,6 +259,14 @@ public class SystemDownloadNotifier implements DownloadNotifier, Observer {
 
     @Override
     public void notifyDownloadInterrupted(DownloadInfo downloadInfo, boolean isAutoResumable) {
+        if (mDownloadNotificationService2 != null) {
+            mDownloadNotificationService2.notifyDownloadPaused(downloadInfo.getContentId(),
+                    downloadInfo.getFileName(), downloadInfo.isResumable(), isAutoResumable,
+                    downloadInfo.isOffTheRecord(), downloadInfo.getIsTransient(),
+                    downloadInfo.getIcon(), false);
+            return;
+        }
+
         PendingNotificationInfo info =
                 new PendingNotificationInfo(DOWNLOAD_NOTIFICATION_TYPE_INTERRUPT, downloadInfo);
         info.isAutoResumable = isAutoResumable;
@@ -213,6 +275,12 @@ public class SystemDownloadNotifier implements DownloadNotifier, Observer {
 
     @Override
     public void removeDownloadNotification(int notificationId, DownloadInfo downloadInfo) {
+        if (mDownloadNotificationService2 != null) {
+            mDownloadNotificationService2.cancelNotification(
+                    notificationId, downloadInfo.getContentId());
+            return;
+        }
+
         PendingNotificationInfo info = new PendingNotificationInfo(
                 DOWNLOAD_NOTIFICATION_TYPE_REMOVE_NOTIFICATION, downloadInfo);
         info.notificationId = notificationId;
@@ -221,6 +289,14 @@ public class SystemDownloadNotifier implements DownloadNotifier, Observer {
 
     @Override
     public void resumePendingDownloads() {
+        if (mDownloadNotificationService2 != null) {
+            if (!DownloadNotificationService2.isTrackingResumableDownloads(mApplicationContext)) {
+                return;
+            }
+            mDownloadNotificationService2.resumeAllPendingDownloads();
+            return;
+        }
+
         if (!DownloadNotificationService.isTrackingResumableDownloads(mApplicationContext)) return;
 
         updateDownloadNotification(
