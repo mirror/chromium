@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b1fce9b_aa74dad3",
+        "filename": "content/public/browser/service_worker_context.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-06T04:17:06Z",
+      "side": 0,
+      "message": "Deleted this: the TODO was buried in this comment; I\u0027m not too sure who \"developers\" are, and it\u0027s just unlikely that this TODO will make us act.",
+      "revId": "7c47854c6f100793a4678b6cbfcc7fb308d211bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
