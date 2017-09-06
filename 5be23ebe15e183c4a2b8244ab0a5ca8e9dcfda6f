@@ -51,6 +51,24 @@
       "revId": "5be23ebe15e183c4a2b8244ab0a5ca8e9dcfda6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b424dafd_1d6745f2",
+        "filename": "chrome/browser/resources/settings/android_apps_page/android_arc_enable_button.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-06T14:37:36Z",
+      "side": 1,
+      "message": "Correct, although I think you want $$() but I\u0027m not sure whether $$() will work in data binding, you may need to add a getSecondaryText_() method (or a secondaryText_ property initialized to $$(\u0027#secondaryText\u0027)).",
+      "parentUuid": "6158e1dd_8169e84e",
+      "revId": "5be23ebe15e183c4a2b8244ab0a5ca8e9dcfda6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
