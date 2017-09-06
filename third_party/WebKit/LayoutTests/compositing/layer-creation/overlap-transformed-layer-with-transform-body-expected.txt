@@ -8,28 +8,27 @@
     },
     {
       "name": "LayoutBlockFlow BODY",
-      "position": [8, 8],
-      "bounds": [784, 584]
+      "bounds": [784, 584],
+      "transform": 1
     },
     {
       "name": "LayoutBlockFlow DIV id='container'",
       "bounds": [256, 256],
       "contentsOpaque": true,
-      "transform": 2
+      "transform": 3
     },
     {
       "name": "LayoutBlockFlow (positioned) DIV id='composited'",
-      "position": [385, 0],
       "contentsOpaque": true,
       "drawsContent": false,
-      "transform": 2
+      "transform": 4
     },
     {
       "name": "LayoutBlockFlow (positioned) DIV id='green'",
-      "position": [8, 8],
       "bounds": [300, 300],
       "contentsOpaque": true,
-      "backgroundColor": "#008000"
+      "backgroundColor": "#008000",
+      "transform": 1
     }
   ],
   "transforms": [
@@ -39,7 +38,7 @@
         [1, 0, 0, 0],
         [0, 1, 0, 0],
         [0, 0, 1, 0],
-        [23, 8, 0, 1]
+        [8, 8, 0, 1]
       ]
     },
     {
@@ -49,7 +48,27 @@
         [1, 0, 0, 0],
         [0, 1, 0, 0],
         [0, 0, 1, 0],
+        [15, 0, 0, 1]
+      ]
+    },
+    {
+      "id": 3,
+      "parent": 2,
+      "transform": [
+        [1, 0, 0, 0],
+        [0, 1, 0, 0],
+        [0, 0, 1, 0],
         [-10, 0, 0, 1]
+      ]
+    },
+    {
+      "id": 4,
+      "parent": 3,
+      "transform": [
+        [1, 0, 0, 0],
+        [0, 1, 0, 0],
+        [0, 0, 1, 0],
+        [385, 0, 0, 1]
       ]
     }
   ]
