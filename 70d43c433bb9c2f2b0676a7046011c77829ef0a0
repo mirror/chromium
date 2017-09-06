@@ -16,6 +16,24 @@
       "revId": "70d43c433bb9c2f2b0676a7046011c77829ef0a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c24e82c_436ca24a",
+        "filename": "cc/layers/viewport.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2017-09-06T01:32:01Z",
+      "side": 1,
+      "message": "No. The reason behind this branch is to apply only to the bottom control (not the top control). The wrong behavior is detected only when I enable \"Chrome home\" flag (i.e., the bottom control). Thus, when the top control is enabled (i.e., TopControlHeight() is not zero), we must keep the existing code.",
+      "parentUuid": "5680754d_f3d83ec7",
+      "revId": "70d43c433bb9c2f2b0676a7046011c77829ef0a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
