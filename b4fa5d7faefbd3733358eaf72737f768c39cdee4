@@ -34,6 +34,24 @@
       "revId": "b4fa5d7faefbd3733358eaf72737f768c39cdee4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81a3d518_a5f86000",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_settings_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-06T04:55:55Z",
+      "side": 0,
+      "message": "OK, then let\u0027s land this to M61 and M62 as-is, and create a follow-up CL (only) for M63.\n\nWhere is the BT code? I\u0027d like to take a look.",
+      "parentUuid": "84b001c5_2fc02cf7",
+      "revId": "b4fa5d7faefbd3733358eaf72737f768c39cdee4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
