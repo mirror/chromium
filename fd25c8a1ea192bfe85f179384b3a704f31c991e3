@@ -34,6 +34,24 @@
       "revId": "fd25c8a1ea192bfe85f179384b3a704f31c991e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa118ff6_b0019e55",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 964,
+      "author": {
+        "id": 1200434
+      },
+      "writtenOn": "2017-09-06T16:18:47Z",
+      "side": 1,
+      "message": "Good question. I think this signal only goes to top document frame? Is that right? That\u0027s what the check in WebViewImpl implies, at least.",
+      "parentUuid": "7836009c_169dace3",
+      "revId": "fd25c8a1ea192bfe85f179384b3a704f31c991e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
