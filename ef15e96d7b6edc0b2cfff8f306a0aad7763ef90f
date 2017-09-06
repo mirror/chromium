@@ -661,6 +661,30 @@
     },
     {
       "key": {
+        "uuid": "653172c7_2d0684d3",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-06T20:11:23Z",
+      "side": 1,
+      "message": "Still a bit confused when I try and dig down into this transformation.  The two look equivalent (as appropriate for the change) on the headers side.  And if makes sense to me that nothing happens in this case if there are other writers.  But in the case where there are no other writers, shouldn\u0027t it be semi-equivalent to the original code (modulo holding on to entry_, since as you point out we\u0027ll need to go through entry-\u003ewriters)?  It looks like the old code (in the \"from writer, no other writers\" case) called HC::ProcessEntryFailure if !success and calls ProcessQueueTransactions otherwise, neither of which call is happening.  I\u0027m sure it\u0027d due to my lack of understanding of the code, but why not?",
+      "parentUuid": "7565f2a5_9b4bcd42",
+      "range": {
+        "startLine": 363,
+        "startChar": 4,
+        "endLine": 363,
+        "endChar": 22
+      },
+      "revId": "ef15e96d7b6edc0b2cfff8f306a0aad7763ef90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c2749518_535389fa",
         "filename": "net/http/http_cache_transaction.cc",
         "patchSetId": 11

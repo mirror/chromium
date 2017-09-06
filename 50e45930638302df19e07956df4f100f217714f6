@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "178111b7_0e189bc5",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 964,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-06T20:11:23Z",
+      "side": 1,
+      "message": "Any reason not to DCHECK?",
+      "range": {
+        "startLine": 964,
+        "startChar": 20,
+        "endLine": 964,
+        "endChar": 25
+      },
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f6c1bdfc_d843a685",
         "filename": "net/http/http_cache_transaction.cc",
         "patchSetId": 14
@@ -18,6 +41,29 @@
         "startChar": 56,
         "endLine": 633,
         "endChar": 0
+      },
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b31a0191_2a86e48a",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 2913,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-06T20:11:23Z",
+      "side": 1,
+      "message": "nit, suggestion: Reverse conditional and use early return?",
+      "range": {
+        "startLine": 2913,
+        "startChar": 6,
+        "endLine": 2913,
+        "endChar": 12
       },
       "revId": "50e45930638302df19e07956df4f100f217714f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -82,6 +128,30 @@
       "writtenOn": "2017-09-05T16:55:18Z",
       "side": 1,
       "message": "This comment is a bit too consumer specific. How about, \"The pointers are only valid while the Transaction is alive.\"",
+      "range": {
+        "startLine": 189,
+        "startChar": 71,
+        "endLine": 191,
+        "endChar": 56
+      },
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "876f87a6_5a26764f",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-06T20:11:23Z",
+      "side": 1,
+      "message": "Agreed.  The place for the above comment, IMO, is at HttpCache::Writers::AddTransaction, as it is the thing that saves the information in the place where it\u0027ll be deleted by the Writers::RemoveTransaction.  It\u0027s easy to imagine a use for this function that doesn\u0027t involve calling HC::W::AddTransaction.",
+      "parentUuid": "55e9ffb4_75cdb637",
       "range": {
         "startLine": 189,
         "startChar": 71,
@@ -163,6 +233,29 @@
     },
     {
       "key": {
+        "uuid": "89e0cd35_359ab51b",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-06T20:11:23Z",
+      "side": 1,
+      "message": "nit, suggestion: \".. and |*this| needs ...\"?",
+      "range": {
+        "startLine": 429,
+        "startChar": 47,
+        "endLine": 429,
+        "endChar": 48
+      },
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80112686_a778e809",
         "filename": "net/http/http_cache_transaction.h",
         "patchSetId": 14
@@ -186,6 +279,29 @@
     },
     {
       "key": {
+        "uuid": "de3e4d2c_2abf9096",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-06T20:11:23Z",
+      "side": 1,
+      "message": "nit, request (i.e. I\u0027d like you to do this, but won\u0027t argue if you don\u0027t want to): I\u0027m concerned that this method isn\u0027t properly documented.  Specifically, it seems to have very specific expectations/restrictions as to when during the transaction it\u0027s called.  Any chance we could expand on what those restrictions are in this comment?",
+      "range": {
+        "startLine": 491,
+        "startChar": 21,
+        "endLine": 491,
+        "endChar": 24
+      },
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5420add3_a5a14aa9",
         "filename": "net/http/http_cache_transaction.h",
         "patchSetId": 14
@@ -197,6 +313,98 @@
       "writtenOn": "2017-09-05T16:55:18Z",
       "side": 1,
       "message": "should be const",
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8331b6c_f0cef860",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-06T20:11:23Z",
+      "side": 1,
+      "message": "nit, suggestion: I think InWriters() would be a fine name; the rest strikes me as being implied.",
+      "range": {
+        "startLine": 495,
+        "startChar": 7,
+        "endLine": 495,
+        "endChar": 25
+      },
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "628b72d7_98093d91",
+        "filename": "net/http/http_cache_transaction_writers_common.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-06T20:11:23Z",
+      "side": 1,
+      "message": "nit, thought: I think of HttpCache::Writers as being a producer class for services consumed by HttpCache::Transaction.  On that line, I think it would be fine to define these structs (and maybe the functions too) within http_cache_writers.* rather than having a separate set of files. Up to you.",
+      "range": {
+        "startLine": 16,
+        "startChar": 17,
+        "endLine": 16,
+        "endChar": 18
+      },
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a5810d8_dd0a290c",
+        "filename": "net/http/http_cache_transaction_writers_common.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-06T20:11:23Z",
+      "side": 1,
+      "message": "nit, suggestion: Maybe put these in a cache_transaction_util namespace?  It feels weird to have them be top level in net:.  Not a big deal either way.",
+      "range": {
+        "startLine": 56,
+        "startChar": 9,
+        "endLine": 56,
+        "endChar": 16
+      },
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20999b2b_3854dc40",
+        "filename": "net/http/http_cache_transaction_writers_common.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-06T20:11:23Z",
+      "side": 1,
+      "message": "This is only called from HttpCache::Writers.  Why is it here and not there?",
+      "range": {
+        "startLine": 62,
+        "startChar": 5,
+        "endLine": 62,
+        "endChar": 29
+      },
       "revId": "50e45930638302df19e07956df4f100f217714f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -357,6 +565,75 @@
         "startChar": 40,
         "endLine": 260,
         "endChar": 64
+      },
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37a929c0_7c23491a",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-06T20:11:23Z",
+      "side": 1,
+      "message": "Any reason not to just do this in ActiveEntry\u0027s destructor?\n\n(Seems like most of the things in the ~HttpCache while loop could be as naturally done in ActiveEntry\u0027s destructor.)",
+      "range": {
+        "startLine": 88,
+        "startChar": 20,
+        "endLine": 88,
+        "endChar": 31
+      },
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5f39d26_0296b03f",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-06T20:11:23Z",
+      "side": 1,
+      "message": "It isn\u0027t at all clear from the comment what the argument is used for; could you fix that?\n\n(From looking at the implementation: I wince at including an argument just so that it can be DCHECK\u0027d on, and would personally prefer that we exposed an accessor for the first entry or did the assertion in the calling code (I *think* GetTransactionCount() \u003d\u003d 1 + SelfInEntryWriters since partials are always exclusive?).  But I do want to keep the assertion, so up to you.)",
+      "range": {
+        "startLine": 134,
+        "startChar": 0,
+        "endLine": 134,
+        "endChar": 64
+      },
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdeb0cda_641c9fd7",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-06T20:11:23Z",
+      "side": 1,
+      "message": "This last sentence looks incorrect compared to the implementation.  I read the implementation as translating to \"May only be called if transaction is present in writers.  If writers is shared, this is a no-op.\"\n\nSimilarly to the above, the only reason for transaction is for the DCHECK, which I think could be replaced by a DCHECK in the caller around SelfInEntryWriters?  I think the extra line in the caller would be a reasonable trade for API simplification at this level.",
+      "range": {
+        "startLine": 139,
+        "startChar": 16,
+        "endLine": 139,
+        "endChar": 18
       },
       "revId": "50e45930638302df19e07956df4f100f217714f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
