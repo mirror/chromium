@@ -22,6 +22,30 @@
       "revId": "9676b9d26d5c1f814e7d415afbc76c89c43bb1b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0864afbe_22bf0199",
+        "filename": "components/history/core/browser/top_sites_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-09-06T23:16:14Z",
+      "side": 1,
+      "message": "Thanks for catching this. I\u0027ve fixed it so that changes in either titles or urls will notify observers.",
+      "parentUuid": "aec96604_a142a8f5",
+      "range": {
+        "startLine": 793,
+        "startChar": 4,
+        "endLine": 796,
+        "endChar": 74
+      },
+      "revId": "9676b9d26d5c1f814e7d415afbc76c89c43bb1b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
