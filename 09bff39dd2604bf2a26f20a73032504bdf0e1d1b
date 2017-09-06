@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6f4b6b3_9392413d",
+        "filename": "third_party/WebKit/Source/core/animation/DocumentAnimations.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-06T14:31:17Z",
+      "side": 1,
+      "message": "chrishtr@: with this, we are going to reset the count to 0 at each frame when there is no animation, is that OK?",
+      "range": {
+        "startLine": 75,
+        "startChar": 4,
+        "endLine": 81,
+        "endChar": 56
+      },
+      "revId": "09bff39dd2604bf2a26f20a73032504bdf0e1d1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6452fd2_2ff92d82",
+        "filename": "third_party/WebKit/Source/core/animation/DocumentTimeline.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-06T14:31:17Z",
+      "side": 1,
+      "message": "chrishtr@: the word \"Internal\" scares me, is it OK to do this? There is a function playState() that returns a String, I didn\u0027t want to use it because string comparison can be expensive.",
+      "range": {
+        "startLine": 199,
+        "startChar": 8,
+        "endLine": 199,
+        "endChar": 63
+      },
+      "revId": "09bff39dd2604bf2a26f20a73032504bdf0e1d1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
