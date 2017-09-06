@@ -76,6 +76,10 @@ bool IOSChromePasswordManagerClient::PromptUserToChooseCredentials(
   return false;
 }
 
+void IOSChromePasswordManagerClient::PromptUserToEnableAutosigninIfNecessary() {
+
+}
+
 bool IOSChromePasswordManagerClient::PromptUserToSaveOrUpdatePassword(
     std::unique_ptr<PasswordFormManager> form_to_save,
     bool update_password) {

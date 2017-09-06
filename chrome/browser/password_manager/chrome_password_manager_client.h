@@ -27,6 +27,8 @@
 #include "content/public/browser/web_contents_user_data.h"
 #include "ui/gfx/geometry/rect.h"
 
+#include "components/password_manager/core/browser/password_manager_client_helper.h"
+
 class Profile;
 
 namespace autofill {
@@ -67,6 +69,7 @@ class ChromePasswordManagerClient
       std::vector<std::unique_ptr<autofill::PasswordForm>> local_forms,
       const GURL& origin,
       const CredentialsCallback& callback) override;
+  void PromptUserToEnableAutosigninIfNecessary() override;
   void ForceSavePassword() override;
   void GeneratePassword() override;
   void NotifyUserAutoSignin(
@@ -183,11 +186,6 @@ class ChromePasswordManagerClient
   // filled.
   bool IsPasswordManagementEnabledForCurrentPage() const;
 
-  // Shows the dialog where the user can accept or decline the global autosignin
-  // setting as a first run experience. The dialog won't appear in Incognito or
-  // when the autosign-in is off.
-  void PromptUserToEnableAutosigninIfNecessary();
-
   // Called as a response to PromptUserToChooseCredentials. nullptr in |form|
   // means that nothing was chosen. |one_local_credential| is true if there was
   // just one local credential to be chosen from.
@@ -234,10 +232,6 @@ class ChromePasswordManagerClient
 
   std::unique_ptr<password_manager::LogManager> log_manager_;
 
-  // Set during 'NotifyUserCouldBeAutoSignedIn' in order to store the
-  // form for potential use during 'NotifySuccessfulLoginWithExistingPassword'.
-  std::unique_ptr<autofill::PasswordForm> possible_auto_sign_in_;
-
   // If set, this stores a ukm::SourceId that is bound to the last committed
   // navigation of the tab owning this ChromePasswordManagerClient.
   base::Optional<ukm::SourceId> ukm_source_id_;
@@ -251,6 +245,8 @@ class ChromePasswordManagerClient
   // Whether navigator.credentials.store() was ever called from this
   // WebContents. Used for testing.
   bool was_store_ever_called_ = false;
+
+  PasswordManagerClientHelper helper_;
 
   DISALLOW_COPY_AND_ASSIGN(ChromePasswordManagerClient);
 };

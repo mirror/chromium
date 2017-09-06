@@ -119,6 +119,11 @@ class PasswordManagerClient {
       const GURL& origin,
       const CredentialsCallback& callback) = 0;
 
+  // Shows the dialog where the user can accept or decline the global autosignin
+  // setting as a first run experience. The dialog won't appear in Incognito or
+  // when the autosign-in is off.
+  virtual void PromptUserToEnableAutosigninIfNecessary() = 0;
+
   // Informs the embedder that the user has manually requested to save the
   // password in the focused password field.
   virtual void ForceSavePassword();

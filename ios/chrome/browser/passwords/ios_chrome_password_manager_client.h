@@ -58,6 +58,7 @@ class IOSChromePasswordManagerClient
       std::vector<std::unique_ptr<autofill::PasswordForm>> local_forms,
       const GURL& origin,
       const CredentialsCallback& callback) override;
+  void PromptUserToEnableAutosigninIfNecessary() override;
   void AutomaticPasswordSave(
       std::unique_ptr<password_manager::PasswordFormManager> saved_form_manager)
       override;
