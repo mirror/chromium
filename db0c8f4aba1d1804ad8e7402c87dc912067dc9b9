@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af0ac57e_02ae5c60",
+        "filename": "media/midi/midi_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-09-06T11:55:25Z",
+      "side": 1,
+      "message": "You can define this function as follows.\n\nMidiService::MidiService(void) : MidiService(std::make_unique\u003cManagerFactory\u003e()) {}",
+      "revId": "db0c8f4aba1d1804ad8e7402c87dc912067dc9b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
