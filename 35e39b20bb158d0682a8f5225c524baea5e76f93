@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c9977b1e_40f933d0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-06T01:32:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ca770d8_035a5348",
+      "range": {
+        "startLine": 7,
+        "startChar": 13,
+        "endLine": 7,
+        "endChar": 16
+      },
+      "revId": "35e39b20bb158d0682a8f5225c524baea5e76f93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4496e1f_1f37488e",
         "filename": "BUILD.gn",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "35e39b20bb158d0682a8f5225c524baea5e76f93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8652cda_8be07ad6",
+        "filename": "BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-06T01:32:06Z",
+      "side": 1,
+      "message": "Yep. This change is solely for inclusion in \"all\" for all platforms. Whether or not the bots should build it will be a separate change since that changes a few config files.",
+      "parentUuid": "d4496e1f_1f37488e",
+      "revId": "35e39b20bb158d0682a8f5225c524baea5e76f93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
