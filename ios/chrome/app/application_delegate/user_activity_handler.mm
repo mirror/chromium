@@ -116,8 +116,6 @@ NSString* const kShortcutQRScanner = @"OpenQRScanner";
       }
       [startupInformation setStartupParameters:startupParams];
     } else if (!webpageURL && base::ios::IsRunningOnIOS10OrLater()) {
-      // spotlight::GetURLForSpotlightItemID uses CSSearchQuery, which is only
-      // supported from iOS 10.
       spotlight::GetURLForSpotlightItemID(itemID, ^(NSURL* contentURL) {
         if (!contentURL) {
           return;
