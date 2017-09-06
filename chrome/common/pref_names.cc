@@ -1372,6 +1372,11 @@ const char kHasSeenWelcomePage[] = "browser.has_seen_welcome_page";
 const char kHasSeenWin10PromoPage[] = "browser.has_seen_win10_promo_page";
 #endif
 
+#if defined(OS_CHROMEOS)
+// Whether the SMS connect multidevice feature is enabled.
+const char kSmsConnectEnabled[] = "multidevice.sms_connect_enabled";
+#endif
+
 // *************** LOCAL STATE ***************
 // These are attached to the machine/installation
 
