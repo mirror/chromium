@@ -26,10 +26,6 @@
 namespace message_center {
 class MessageCenterImpl;
 
-namespace internal {
-class ChangeQueue;
-}
-
 // The default implementation of MessageCenter.
 class MessageCenterImpl : public MessageCenter,
                           public NotificationBlocker::Observer,
@@ -86,7 +82,6 @@ class MessageCenterImpl : public MessageCenter,
   void PausePopupTimers() override;
   const base::string16& GetProductOSName() const override;
   void SetProductOSName(const base::string16& product_os_name) override;
-  void ForceNotificationFlush(const std::string& id) override;
 
   // NotificationBlocker::Observer overrides:
   void OnBlockingStateChanged(NotificationBlocker* blocker) override;
@@ -107,7 +102,6 @@ class MessageCenterImpl : public MessageCenter,
 
  protected:
   void DisableTimersForTest() override;
-  void EnableChangeQueueForTest(bool enable) override;
 
  private:
   struct NotificationCache {
@@ -134,10 +128,6 @@ class MessageCenterImpl : public MessageCenter,
 
   bool locked_ = false;
   bool visible_ = false;
-
-  // Queue for the notifications to delay the addition/updates when the message
-  // center is visible.
-  std::unique_ptr<internal::ChangeQueue> notification_queue_;
 
   base::string16 product_os_name_;
 
