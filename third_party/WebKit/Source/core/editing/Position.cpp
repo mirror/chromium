@@ -529,42 +529,40 @@ PositionTemplate<Strategy>::LastPositionInOrAfterNode(Node* node) {
                                       : LastPositionInNode(*node);
 }
 
+// TODO(editing-dev): We should guarantee
+// |ToPositionInDOMTree(ToPositionInFlatTree(pos)) == pos| unless |pos|
+// appears in flat tree.
 PositionInFlatTree ToPositionInFlatTree(const Position& pos) {
   if (pos.IsNull())
     return PositionInFlatTree();
 
+  // Confirm |anchor| is connected to Document.
   Node* const anchor = pos.AnchorNode();
+  if (!anchor->isConnected())
+    return PositionInFlatTree();
+  if (anchor->IsShadowRoot())
+    return PositionInFlatTree();
+  anchor->UpdateDistribution();
+  if (anchor != &anchor->GetDocument() &&
+      !FlatTreeTraversal::IsDescendantOf(*anchor, anchor->GetDocument()))
+    return PositionInFlatTree();
+
   if (pos.IsOffsetInAnchor()) {
     if (anchor->IsCharacterDataNode())
       return PositionInFlatTree(anchor, pos.ComputeOffsetInContainerNode());
     DCHECK(!anchor->IsActiveSlotOrActiveV0InsertionPoint());
     int offset = pos.ComputeOffsetInContainerNode();
     Node* child = NodeTraversal::ChildAt(*anchor, offset);
-    if (!child) {
-      if (anchor->IsShadowRoot())
-        return PositionInFlatTree(anchor->OwnerShadowHost(),
-                                  PositionAnchorType::kAfterChildren);
+    if (!child)
       return PositionInFlatTree(anchor, PositionAnchorType::kAfterChildren);
-    }
     child->UpdateDistribution();
-    if (child->IsActiveSlotOrActiveV0InsertionPoint()) {
-      if (anchor->IsShadowRoot())
-        return PositionInFlatTree(anchor->OwnerShadowHost(), offset);
+    if (child->IsActiveSlotOrActiveV0InsertionPoint())
       return PositionInFlatTree(anchor, offset);
-    }
     if (Node* parent = FlatTreeTraversal::Parent(*child))
       return PositionInFlatTree(parent, FlatTreeTraversal::Index(*child));
-    // When |pos| isn't appeared in flat tree, we map |pos| to after
-    // children of shadow host.
-    // e.g. "foo",0 in <progress>foo</progress>
-    if (anchor->IsShadowRoot())
-      return PositionInFlatTree(anchor->OwnerShadowHost(),
-                                PositionAnchorType::kAfterChildren);
     return PositionInFlatTree(anchor, PositionAnchorType::kAfterChildren);
   }
 
-  if (anchor->IsShadowRoot())
-    return PositionInFlatTree(anchor->OwnerShadowHost(), pos.AnchorType());
   if (pos.IsBeforeAnchor() || pos.IsAfterAnchor()) {
     if (anchor->CanParticipateInFlatTree() &&
         !FlatTreeTraversal::Parent(*anchor)) {

@@ -183,24 +183,21 @@ TEST_F(PositionTest, ToPositionInFlatTreeWithShadowRoot) {
   const char* shadow_content = "<a><content select=#one></content></a>";
   SetBodyContent(body_content);
   ShadowRoot* shadow_root = SetShadowContent(shadow_content, "host");
-  Element* host = GetDocument().getElementById("host");
 
-  EXPECT_EQ(PositionInFlatTree(host, 0),
-            ToPositionInFlatTree(Position(shadow_root, 0)));
-  EXPECT_EQ(PositionInFlatTree(host, PositionAnchorType::kAfterChildren),
-            ToPositionInFlatTree(Position(shadow_root, 1)));
-  EXPECT_EQ(PositionInFlatTree(host, PositionAnchorType::kAfterChildren),
-            ToPositionInFlatTree(
-                Position(shadow_root, PositionAnchorType::kAfterChildren)));
-  EXPECT_EQ(PositionInFlatTree(host, PositionAnchorType::kBeforeChildren),
-            ToPositionInFlatTree(
-                Position(shadow_root, PositionAnchorType::kBeforeChildren)));
-  EXPECT_EQ(PositionInFlatTree(host, PositionAnchorType::kAfterAnchor),
-            ToPositionInFlatTree(
-                Position(shadow_root, PositionAnchorType::kAfterAnchor)));
-  EXPECT_EQ(PositionInFlatTree(host, PositionAnchorType::kBeforeAnchor),
-            ToPositionInFlatTree(
-                Position(shadow_root, PositionAnchorType::kBeforeAnchor)));
+  EXPECT_TRUE(ToPositionInFlatTree(Position(shadow_root, 0)).IsNull());
+  EXPECT_TRUE(ToPositionInFlatTree(Position(shadow_root, 1)).IsNull());
+  EXPECT_TRUE(ToPositionInFlatTree(
+                  Position(shadow_root, PositionAnchorType::kAfterChildren))
+                  .IsNull());
+  EXPECT_TRUE(ToPositionInFlatTree(
+                  Position(shadow_root, PositionAnchorType::kBeforeChildren))
+                  .IsNull());
+  EXPECT_TRUE(ToPositionInFlatTree(
+                  Position(shadow_root, PositionAnchorType::kAfterAnchor))
+                  .IsNull());
+  EXPECT_TRUE(ToPositionInFlatTree(
+                  Position(shadow_root, PositionAnchorType::kBeforeAnchor))
+                  .IsNull());
 }
 
 TEST_F(PositionTest,
@@ -209,12 +206,9 @@ TEST_F(PositionTest,
   const char* shadow_content = "<content select=#one></content>";
   SetBodyContent(body_content);
   ShadowRoot* shadow_root = SetShadowContent(shadow_content, "host");
-  Element* host = GetDocument().getElementById("host");
 
-  EXPECT_EQ(PositionInFlatTree(host, 0),
-            ToPositionInFlatTree(Position(shadow_root, 0)));
-  EXPECT_EQ(PositionInFlatTree(host, PositionAnchorType::kAfterChildren),
-            ToPositionInFlatTree(Position(shadow_root, 1)));
+  EXPECT_TRUE(ToPositionInFlatTree(Position(shadow_root, 0)).IsNull());
+  EXPECT_TRUE(ToPositionInFlatTree(Position(shadow_root, 1)).IsNull());
 }
 
 TEST_F(PositionTest, ToPositionInFlatTreeWithEmptyShadowRoot) {
@@ -222,10 +216,31 @@ TEST_F(PositionTest, ToPositionInFlatTreeWithEmptyShadowRoot) {
   const char* shadow_content = "";
   SetBodyContent(body_content);
   ShadowRoot* shadow_root = SetShadowContent(shadow_content, "host");
-  Element* host = GetDocument().getElementById("host");
 
-  EXPECT_EQ(PositionInFlatTree(host, PositionAnchorType::kAfterChildren),
-            ToPositionInFlatTree(Position(shadow_root, 0)));
+  EXPECT_TRUE(ToPositionInFlatTree(Position(shadow_root, 0)).IsNull());
+}
+
+TEST_F(PositionTest, ToPositionInFlatTreeDisconnected) {
+  SetBodyContent("<div id='host'><span>bar<span></div>");
+  SetShadowContent("foo", "host");
+  UpdateAllLifecyclePhases();
+  // <div id='host'>
+  //   #shadow-root
+  //     foo
+  //   <span>bar</span>
+  // </div>
+  Node* const span = GetDocument().QuerySelector("#host")->firstChild();
+  DCHECK(span);
+  EXPECT_TRUE(ToPositionInFlatTree(Position(span, 0)).IsNull());
+  Text* const bar = ToText(span->firstChild());
+  DCHECK(bar);
+  EXPECT_TRUE(ToPositionInFlatTree(Position(bar, 0)).IsNull());
+}
+
+TEST_F(PositionTest, ToPositionInFlatTreeDocument) {
+  SetBodyContent("foo");
+  EXPECT_EQ(PositionInFlatTree(GetDocument(), 0),
+            ToPositionInFlatTree(Position(GetDocument(), 0)));
 }
 
 }  // namespace blink
