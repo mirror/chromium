@@ -1,0 +1,322 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "549bea5f_39e3efb2",
+        "filename": "build/android/buildhooks/OWNERS",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-06T17:38:01Z",
+      "side": 1,
+      "message": "nit: might want to leave zpeng here",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 10
+      },
+      "revId": "8ea46993e4d6d42adac1549bde7fac27bba35fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80147912_55a2d384",
+        "filename": "build/android/buildhooks/java/org/chromium/build/BuildHooksAndroid.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-06T17:38:01Z",
+      "side": 1,
+      "message": "should this be final?",
+      "revId": "8ea46993e4d6d42adac1549bde7fac27bba35fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a0b6e04_a1360fa4",
+        "filename": "build/android/buildhooks/java/org/chromium/build/BuildHooksAndroid.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-06T17:38:01Z",
+      "side": 1,
+      "message": "Make all of these abstract rather than dummy methods?",
+      "revId": "8ea46993e4d6d42adac1549bde7fac27bba35fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd87aad4_222f9069",
+        "filename": "build/android/buildhooks/java/org/chromium/build/BuildHooksAndroid.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-06T17:38:01Z",
+      "side": 1,
+      "message": "nit: usually the \"this\" object is passed as first parameter.",
+      "range": {
+        "startLine": 51,
+        "startChar": 36,
+        "endLine": 51,
+        "endChar": 41
+      },
+      "revId": "8ea46993e4d6d42adac1549bde7fac27bba35fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54a95406_3bb5a018",
+        "filename": "build/android/bytecode/java/org/chromium/bytecode/ByteCodeProcessor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-06T17:38:01Z",
+      "side": 1,
+      "message": "nit: rename to \"process\"",
+      "revId": "8ea46993e4d6d42adac1549bde7fac27bba35fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a21ab706_ce56ed81",
+        "filename": "build/android/bytecode/java/org/chromium/bytecode/ByteCodeProcessor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-06T17:38:01Z",
+      "side": 1,
+      "message": "nit: Add a comment saying that this copies over all non-.class files.",
+      "revId": "8ea46993e4d6d42adac1549bde7fac27bba35fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8609ad0_77a153ed",
+        "filename": "build/android/bytecode/java/org/chromium/bytecode/ByteCodeProcessor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-06T17:38:01Z",
+      "side": 1,
+      "message": "nit: remove blank and indent subsequent lines a bit",
+      "revId": "8ea46993e4d6d42adac1549bde7fac27bba35fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43aaa7e5_bfadca93",
+        "filename": "build/android/bytecode/java/org/chromium/bytecode/ByteCodeProcessor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-06T17:38:01Z",
+      "side": 1,
+      "message": "syntax here is a bit weird. I think normally it\u0027d be: [--enable-assert].\n\nIf you don\u0027t want to bother with making it option, then go with --enable-assert\u003dtrue|false (no []s nor \u003c\u003es)",
+      "revId": "8ea46993e4d6d42adac1549bde7fac27bba35fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb302e98_c0c81ba0",
+        "filename": "build/android/bytecode/java/org/chromium/bytecode/CustomResourcesClassAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-06T17:38:01Z",
+      "side": 1,
+      "message": "nit: this comment already exists in ByteCodeProcessor. No need to have it here as well.",
+      "revId": "8ea46993e4d6d42adac1549bde7fac27bba35fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89bd1995_c8f98bc1",
+        "filename": "build/android/bytecode/java/org/chromium/bytecode/CustomResourcesClassAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-06T17:38:01Z",
+      "side": 1,
+      "message": "nit: PROHIBITED_METHODS vs EXCEPTED_METHOD_SIGNATURES. Drop \"SIGNATURES\" from latter.",
+      "revId": "8ea46993e4d6d42adac1549bde7fac27bba35fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f356a6e5_6bbc447d",
+        "filename": "build/android/bytecode/java/org/chromium/bytecode/CustomResourcesClassAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-06T17:38:01Z",
+      "side": 1,
+      "message": "nit: change this to an if() / RuntimeException. This isn\u0027t so much an \"is my logic correct\" check as it is an \"is the input correct\" check.",
+      "revId": "8ea46993e4d6d42adac1549bde7fac27bba35fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62af4d5a_57114778",
+        "filename": "build/android/bytecode/java/org/chromium/bytecode/CustomResourcesClassAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-06T17:38:01Z",
+      "side": 1,
+      "message": "We\u0027d probably be fine to just delete LeakCanary integration rather than add more special-casing for it.",
+      "revId": "8ea46993e4d6d42adac1549bde7fac27bba35fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5136ef57_d9ea0e01",
+        "filename": "build/android/bytecode/java/org/chromium/bytecode/CustomResourcesClassAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-06T17:38:01Z",
+      "side": 1,
+      "message": "nit: add comment that super.createConfigurationContext() does not exist before 17",
+      "revId": "8ea46993e4d6d42adac1549bde7fac27bba35fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c82dfa8_6e4d4c5c",
+        "filename": "build/android/gyp/java_binary_script_wrapper.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-06T17:38:01Z",
+      "side": 1,
+      "message": "There\u0027s nothing in here that\u0027s specific to java, and the arg handling isn\u0027t all that generic (e.g. doesn\u0027t handle other flags, variable length args). Probably better to just call this \"bytecode_processor.py\"",
+      "revId": "8ea46993e4d6d42adac1549bde7fac27bba35fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6bfba31_adb0cdd2",
+        "filename": "build/android/gyp/java_binary_script_wrapper.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-06T17:38:01Z",
+      "side": 1,
+      "message": "anoyying",
+      "revId": "8ea46993e4d6d42adac1549bde7fac27bba35fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92d3140c_61ca63fb",
+        "filename": "build/android/gyp/java_binary_script_wrapper.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-06T17:38:01Z",
+      "side": 1,
+      "message": "No need to use this when the computation is going to be fast anyways. Just use:\nif args.depfile:\n  build_utils.WriteDepFile() \n\nand call os.execv() directly.",
+      "revId": "8ea46993e4d6d42adac1549bde7fac27bba35fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ef48cbf_62565b5d",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 849,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-06T17:38:01Z",
+      "side": 1,
+      "message": "needs a comment as to why \"force_lint\" removes a lint check... Probably just remove this feature?",
+      "revId": "8ea46993e4d6d42adac1549bde7fac27bba35fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3555475_13136a4a",
+        "filename": "build/secondary/third_party/android_tools/support/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-06T17:38:01Z",
+      "side": 1,
+      "message": "Add a comment as to why",
+      "revId": "8ea46993e4d6d42adac1549bde7fac27bba35fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
