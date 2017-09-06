@@ -49,6 +49,40 @@
     },
     {
       "key": {
+        "uuid": "279977ec_b62c4b49",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-06T18:12:58Z",
+      "side": 1,
+      "message": "I think you can still update |damaged_region_|, but early return if |paint_deferred_| is set?",
+      "revId": "3e79d1aa8b2e7b468f11f0bf89a70a5cb02e8bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70f2465c_9ef5a7c5",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 870,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-06T18:12:58Z",
+      "side": 1,
+      "message": "I think this can be simpler:\n\n  if (paint_deferred_)\n    return;\n\nWould that work? (or maybe if (paint_deferred_ \u0026\u0026 content_layer_))",
+      "revId": "3e79d1aa8b2e7b468f11f0bf89a70a5cb02e8bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bec118a2_0b65f12f",
         "filename": "ui/compositor/layer.cc",
         "patchSetId": 4
@@ -90,6 +124,23 @@
         "endLine": 911,
         "endChar": 47
       },
+      "revId": "3e79d1aa8b2e7b468f11f0bf89a70a5cb02e8bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5850483b_553026e1",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 916,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-06T18:12:58Z",
+      "side": 1,
+      "message": "I feel like this shouldn\u0027t go down the tree. Maybe something like this?\n\n  void Layer::SetPaintDeferred(bool deferred) {\n    if (paint_deferred_ \u003d\u003d deferred)\n      return;\n    paint_deferred_ \u003d deferred;\n    if (!paint_deferred_ \u0026\u0026 !damaged_region_.IsEmpty()) {\n      ScheduleDraw();\n      if (layer_mask_) layer_mask_-\u003eScheduleDraw();\n    }\n  }",
       "revId": "3e79d1aa8b2e7b468f11f0bf89a70a5cb02e8bc7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
