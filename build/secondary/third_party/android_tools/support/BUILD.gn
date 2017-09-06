@@ -54,6 +54,7 @@ android_aar_prebuilt("android_support_multidex_java") {
 }
 
 android_java_prebuilt("android_support_annotations_java") {
+  no_build_hooks = true
   _lib_name = "support-annotations"
   jar_path = "$lib_path/$_lib_name/$lib_version/$_lib_name-$lib_version.jar"
 }
