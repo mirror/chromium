@@ -45,15 +45,22 @@
 //          + "_" + <std::string 'registration_id'>
 //          + "_" + <int 'request_index'>
 // value: ""
+//
+// key: "bgfetch_active_request_" + <std::string 'registration_id'>
+//          + "_" + <int 'request_index'>
+// value: <TODO: download_service_guid>
 
 namespace content {
 
 namespace {
 
+// Constants used for Service Worker UserData database keys.
+// Some are duplicated in BackgroundFetchDataManagerTest; keep them in sync.
 const char kSeparator[] = "_";  // Warning: registration IDs may contain these.
 const char kRegistrationKeyPrefix[] = "bgfetch_registration_";
 const char kRequestKeyPrefix[] = "bgfetch_request_";
 const char kPendingRequestKeyPrefix[] = "bgfetch_pending_request_";
+const char kActiveRequestKeyPrefix[] = "bgfetch_active_request_";
 
 std::string RegistrationKey(
     const BackgroundFetchRegistrationId& registration_id) {
@@ -104,6 +111,20 @@ std::string PendingRequestKey(
   return PendingRequestKeyPrefix(
              registration_creation_microseconds_since_unix_epoch,
              registration_id) +
+         base::IntToString(request_index);
+}
+
+std::string ActiveRequestKeyPrefix(
+    const BackgroundFetchRegistrationId& registration_id) {
+  // Allows looking up all active requests within a registration.
+  return kActiveRequestKeyPrefix + registration_id.id() + kSeparator;
+}
+
+std::string ActiveRequestKey(
+    const BackgroundFetchRegistrationId& registration_id,
+    int request_index) {
+  // Allows looking up active request by registration ID and index within that.
+  return ActiveRequestKeyPrefix(registration_id) +
          base::IntToString(request_index);
 }
 
@@ -318,6 +339,158 @@ class CreateRegistrationTask : public BackgroundFetchDataManager::DatabaseTask {
   DISALLOW_COPY_AND_ASSIGN(CreateRegistrationTask);
 };
 
+class StartPendingRequestTask
+    : public BackgroundFetchDataManager::DatabaseTask {
+ public:
+  StartPendingRequestTask(
+      BackgroundFetchDataManager* data_manager,
+      // const BackgroundFetchRegistrationId& previous_registration_id,
+      BackgroundFetchDataManager::NextRequestCallback callback)
+      : DatabaseTask(data_manager),
+        // previous_registration_id_(previous_registration_id),
+        callback_(std::move(callback)),
+        weak_factory_(this) {}
+
+  ~StartPendingRequestTask() override = default;
+
+  void Start() override {
+    DCHECK_CURRENTLY_ON(BrowserThread::IO);
+    service_worker_context()->PostUserDataTransaction(
+        base::Bind(&StartPendingRequestTask::RunTransactionOnDBThread,
+                   weak_factory_.GetWeakPtr()));
+  }
+
+ private:
+  static void RunTransactionOnDBThread(
+      base::WeakPtr<StartPendingRequestTask> weak_this_on_io,
+      UserDataDatabase* db) {
+    // This method runs on the Service Worker database thread. Can't access
+    // |this| as it might get destroyed; post results to |weak_this_on_io|.
+    base::ThreadRestrictions::AssertIOAllowed();
+
+    DatabaseStatus status = DatabaseStatus::kOk;
+
+    // Get lexicographically smallest pending request key.
+    int64_t service_worker_registration_id;
+    std::string pending_request_key;
+    {  // Scope to destroy |itr| as soon as done.
+      auto itr =
+          db->IterateAllRegistrationsByKeyPrefix(kPendingRequestKeyPrefix);
+
+      status = ToDatabaseStatus(itr.GetNext());
+      if (status == DatabaseStatus::kOk) {
+        *service_worker_registration_id = itr.service_worker_registration_id();
+        *pending_request_key = itr.key();
+      }
+    }
+
+    // Parse id and index from pending request key.
+    std::string background_fetch_registration_id;
+    int request_index;
+    if (status == DatabaseStatus::kOk &&
+        !ParsePendingRequestKey(pending_request_key,
+                                background_fetch_registration_id,
+                                request_index)) {
+      status = DatabaseStatus::kFailed;
+    }
+
+    // Get corresponding serialized registration.
+    std::string serialized_registration;
+    if (status == DatabaseStatus::kOk) {
+      status = ToDatabaseStatus(
+          db->Get(service_worker_registration_id,
+                  RegistrationKey(background_fetch_registration_id),
+                  &serialized_registration));
+    }
+
+    // Get corresponding serialized request.
+    std::string serialized_request;
+    if (status == DatabaseStatus::kOk) {
+      status = ToDatabaseStatus(
+          db->Get(service_worker_registration_id,
+                  RequestKey(background_fetch_registration_id, request_index),
+                  &serialized_request));
+    }
+
+    // Update request state from pending to active.
+    if (status == DatabaseStatus::kOk) {
+      status = ToDatabaseStatus(db->DeleteAndWrite(
+          service_worker_registration_id, base::nullopt /* origin */,
+          {pending_request_key},
+          {{ActiveRequestKey(background_fetch_registration_id),
+            std::string()}}));
+    }
+
+    BrowserThread::PostTask(
+        BrowserThread::IO, FROM_HERE,
+        base::BindOnce(&StartPendingRequestTask::DidRunTransaction,
+                       weak_this_on_io, status, service_worker_registration_id,
+                       std::move(background_fetch_registration_id),
+                       request_index, std::move(serialized_registration),
+                       std::move(serialized_request)));
+  }
+
+  void DidRunTransaction(DatabaseStatus status,
+                         int64_t service_worker_registration_id,
+                         std::string background_fetch_registration_id,
+                         int request_index,
+                         std::string serialized_registration,
+                         std::string serialized_request) {
+    DCHECK_CURRENTLY_ON(BrowserThread::IO);
+
+    // Deserialize request.
+    scoped_refptr<BackgroundFetchRequestInfo> request;
+    if (status == DatabaseStatus::kOk &&
+        !DeserializeRequest(serialized_request, &request)) {
+      status = DatabaseStatus::kFailed;
+    }
+
+    // if (status == DatabaseStatus::kOk &&
+    //     service_worker_registration_id !=
+    //         previous_registration_id_.service_worker_registration_id()) {
+    //   // This StartPendingRequestTask was asked to find the next pending
+    //   // request for |previous_registration_id_|, but the next pending
+    //   // request is for a different Background Fetch registration. So
+    //   // consider this as kNotFound, and separately kick off a job controller
+    //   // for the pending registration.
+    //   status = DatabaseStatus::kNotFound;
+    //
+    //   url::Origin origin;
+    //   BackgroundFetchOptions options;
+    //   if (!DeserializeRegistration(serialized_registration, &origin,
+    //                                &options)) {
+    //     status = DatabaseStatus::kFailed;
+    //   } else {
+    //     GetOrStartJobController(
+    //         BackgroundFetchRegistrationId(
+    //             service_worker_registration_id, origin,
+    //             std::move(background_fetch_registration_id)),
+    //         request_index, std::move(options), std::move(request));
+    //   }
+    // }
+
+    switch (status) {
+      case DatabaseStatus::kOk:
+        std::move(callback_).Run(std::move(request));
+        Finished();  // Destroys |this|.
+        return;
+      case DatabaseStatus::kNotFound:
+      case DatabaseStatus::kFailed:
+        // TODO(johnme): Log failures to UMA.
+        std::move(callback_).Run(nullptr);
+        Finished();  // Destroys |this|.
+        return;
+    }
+  }
+
+  // BackgroundFetchRegistrationId previous_registration_id_;
+  BackgroundFetchDataManager::NextRequestCallback callback_;
+
+  base::WeakPtrFactory<StartPendingRequestTask> weak_factory_;  // Keep as last.
+
+  DISALLOW_COPY_AND_ASSIGN(StartPendingRequestTask);
+};
+
 class DeleteRegistrationTask : public BackgroundFetchDataManager::DatabaseTask {
  public:
   DeleteRegistrationTask(
@@ -344,7 +517,8 @@ class DeleteRegistrationTask : public BackgroundFetchDataManager::DatabaseTask {
   void DidGetRegistration(const std::vector<std::string>& data,
                           ServiceWorkerStatusCode status) {
     std::vector<std::string> prefixes_to_clear = {
-        RegistrationKey(registration_id_), RequestKeyPrefix(registration_id_)};
+        RegistrationKey(registration_id_), RequestKeyPrefix(registration_id_),
+        ActiveRequestKeyPrefix(registration_id_)};
 
     if (status == SERVICE_WORKER_OK) {
       DCHECK_EQ(1u, data.size());
@@ -532,6 +706,13 @@ void BackgroundFetchDataManager::PopNextRequest(
     const BackgroundFetchRegistrationId& registration_id,
     NextRequestCallback callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
+
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kEnableBackgroundFetchPersistence)) {
+    AddDatabaseTask(std::make_unique<StartPendingRequestTask>(
+        this, registration_id, std::move(callback)));
+    return;
+  }
 
   auto iter = registrations_.find(registration_id);
   DCHECK(iter != registrations_.end());
