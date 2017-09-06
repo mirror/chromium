@@ -113,8 +113,9 @@ SkImageInfo PaintImage::CreateDecodeImageInfo(const SkISize& size,
 
 bool PaintImage::Decode(void* memory,
                         SkImageInfo* info,
-                        sk_sp<SkColorSpace> color_space) const {
-  auto image = GetSkImage();
+                        sk_sp<SkColorSpace> color_space,
+                        size_t frame_index) const {
+  auto image = GetSkImageForFrame(frame_index);
   DCHECK(image);
   if (color_space) {
     image =
@@ -164,6 +165,19 @@ size_t PaintImage::FrameCount() const {
   return paint_image_generator_
              ? paint_image_generator_->GetFrameMetadata().size()
              : 1u;
+}
+
+sk_sp<SkImage> PaintImage::GetSkImageForFrame(size_t index) const {
+  DCHECK_LT(index, FrameCount());
+
+  if (index == frame_index_)
+    return GetSkImage();
+
+  sk_sp<SkImage> image = SkImage::MakeFromGenerator(
+      base::MakeUnique<SkiaPaintImageGenerator>(paint_image_generator_, index));
+  if (!subset_rect_.IsEmpty())
+    image = image->makeSubset(gfx::RectToSkIRect(subset_rect_));
+  return image;
 }
 
 std::string PaintImage::ToString() const {
