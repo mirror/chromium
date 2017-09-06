@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "e85dff7e_c5f75fed",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-09-06T20:48:44Z",
+      "side": 1,
+      "message": "For Dmitry\u0027s comment, I think this is a bit not like DownloadCleanupTask since this is essentially about processing the items that are ready for download. This task can be scheduled from time to time when the download service is ready. Adding DownloadArchivesWhenReady will be very confusing since this is not just an one-time thing.\n\nFor Justin\u0027s comment, the download service can only take and queue downloads after it is fully up. The reason for this change based on the condition is to remove the additional caching logic in PrefetchDownloaderImpl.\n\nUpdate: We now switch to send download to download service since it has introduced the caching logic.\n\nNote that I added a different condition here. When the download service is unavailable, we should not spin any download.",
+      "parentUuid": "c52d0c9f_fee7d325",
+      "revId": "4cb537e845be74ff96f1e5bd5293a6d3aa524454",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7e360592_c3ddaa68",
         "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.h",
         "patchSetId": 6
@@ -69,6 +87,24 @@
       "revId": "4cb537e845be74ff96f1e5bd5293a6d3aa524454",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cbddf50_c20bb176",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-09-06T20:48:44Z",
+      "side": 1,
+      "message": "All fixed.",
+      "parentUuid": "7e360592_c3ddaa68",
+      "revId": "4cb537e845be74ff96f1e5bd5293a6d3aa524454",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -89,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "f5311892_cda74b13",
+        "filename": "components/offline_pages/core/prefetch/prefetch_downloader_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-09-06T20:48:44Z",
+      "side": 1,
+      "message": "If the download service is not up yet, it can\u0027t take and queue any download request.",
+      "parentUuid": "3542e911_9049020e",
+      "revId": "4cb537e845be74ff96f1e5bd5293a6d3aa524454",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6974cabd_59185ee8",
         "filename": "components/offline_pages/core/prefetch/prefetch_downloader_impl.cc",
         "patchSetId": 6
@@ -100,6 +154,24 @@
       "writtenOn": "2017-09-05T22:59:49Z",
       "side": 1,
       "message": "Should there be:\n download_service_started_ \u003d false; \nhere? When do we expect this callback? Can OnDownloadServiceReady come after that again?\nIt is not clear what \"Nothing can be done\" means in this context...",
+      "revId": "4cb537e845be74ff96f1e5bd5293a6d3aa524454",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb494c4b_5dd03301",
+        "filename": "components/offline_pages/core/prefetch/prefetch_downloader_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-09-06T20:48:44Z",
+      "side": 1,
+      "message": "I thought this was redundant since only one of OnDownloadServiceUnavailable and OnDownloadServiceReady will be called.\n\nChanged to use 3-state enum such we can DCHECK this.",
+      "parentUuid": "6974cabd_59185ee8",
       "revId": "4cb537e845be74ff96f1e5bd5293a6d3aa524454",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
