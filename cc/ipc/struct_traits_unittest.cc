@@ -73,7 +73,9 @@ TEST_F(StructTraitsTest, CopyOutputResult_Bitmap) {
   auto in_bitmap = std::make_unique<SkBitmap>();
   in_bitmap->allocN32Pixels(7, 8);
   in_bitmap->eraseARGB(123, 213, 77, 33);
-  auto input = viz::CopyOutputResult::CreateBitmapResult(std::move(bitmap));
+  gfx::ColorSpace bitmap_color_space = gfx::ColorSpace::CreateDisplayP3D65();
+  auto input = viz::CopyOutputResult::CreateBitmapResult(std::move(bitmap),
+                                                         bitmap_color_space);
   auto size = input->size();
 
   mojom::TraitsTestServicePtr proxy = GetTraitsTestProxy();
@@ -88,6 +90,7 @@ TEST_F(StructTraitsTest, CopyOutputResult_Bitmap) {
   EXPECT_EQ(in_bitmap->getSize(), out_bitmap->getSize());
   EXPECT_EQ(0, std::memcmp(in_bitmap->getPixels(), out_bitmap->getPixels(),
                            in_bitmap->getSize()));
+  EXPECT_EQ(output->bitmap_color_space(), bitmap_color_space);
 }
 
 TEST_F(StructTraitsTest, CopyOutputResult_Texture) {

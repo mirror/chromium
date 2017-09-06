@@ -2617,10 +2617,13 @@ void GLRenderer::EnsureScissorTestDisabled() {
 void GLRenderer::CopyCurrentRenderPassToBitmap(
     std::unique_ptr<CopyOutputRequest> request) {
   TRACE_EVENT0("cc", "GLRenderer::CopyCurrentRenderPassToBitmap");
-  gfx::Rect copy_rect = current_frame()->current_render_pass->output_rect;
+  const cc::RenderPass* current_render_pass =
+      current_frame()->current_render_pass;
+  gfx::Rect copy_rect = current_render_pass->output_rect;
   if (request->has_area())
     copy_rect.Intersect(request->area());
-  GetFramebufferPixelsAsync(copy_rect, std::move(request));
+  GetFramebufferPixelsAsync(copy_rect, current_render_pass->color_space,
+                            std::move(request));
 }
 
 void GLRenderer::ToGLMatrix(float* gl_matrix, const gfx::Transform& transform) {
@@ -2806,6 +2809,7 @@ void GLRenderer::DidReceiveTextureInUseResponses(
 
 void GLRenderer::GetFramebufferPixelsAsync(
     const gfx::Rect& rect,
+    const gfx::ColorSpace& framebuffer_color_space,
     std::unique_ptr<CopyOutputRequest> request) {
   DCHECK(!request->IsEmpty());
   if (request->IsEmpty())
@@ -2859,6 +2863,7 @@ void GLRenderer::GetFramebufferPixelsAsync(
     gl_->GenSyncTokenCHROMIUM(fence_sync, sync_token.GetData());
 
     TextureMailbox texture_mailbox(mailbox, sync_token, GL_TEXTURE_2D);
+    texture_mailbox.set_color_space(framebuffer_color_space);
 
     std::unique_ptr<SingleReleaseCallback> release_callback;
     if (own_mailbox) {
@@ -2904,12 +2909,14 @@ void GLRenderer::GetFramebufferPixelsAsync(
   context_support_->SignalQuery(
       query,
       base::Bind(&GLRenderer::FinishedReadback, weak_ptr_factory_.GetWeakPtr(),
-                 buffer, query, window_rect.size()));
+                 buffer, query, window_rect.size(), framebuffer_color_space));
 }
 
-void GLRenderer::FinishedReadback(unsigned source_buffer,
-                                  unsigned query,
-                                  const gfx::Size& size) {
+void GLRenderer::FinishedReadback(
+    unsigned source_buffer,
+    unsigned query,
+    const gfx::Size& size,
+    const gfx::ColorSpace& framebuffer_color_space) {
   DCHECK(!pending_async_read_pixels_.empty());
 
   if (query != 0) {
@@ -2967,8 +2974,10 @@ void GLRenderer::FinishedReadback(unsigned source_buffer,
     gl_->DeleteBuffers(1, &source_buffer);
   }
 
-  if (bitmap)
-    current_read->copy_request->SendBitmapResult(std::move(bitmap));
+  if (bitmap) {
+    current_read->copy_request->SendBitmapResult(std::move(bitmap),
+                                                 framebuffer_color_space);
+  }
 
   // Conversion from reverse iterator to iterator:
   // Iterator |iter.base() - 1| points to the same element with reverse iterator

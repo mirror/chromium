@@ -8,10 +8,12 @@ import "cc/ipc/texture_mailbox.mojom";
 import "cc/ipc/texture_mailbox_releaser.mojom";
 import "skia/public/interfaces/bitmap.mojom";
 import "ui/gfx/geometry/mojo/geometry.mojom";
+import "ui/gfx/mojo/color_space.mojom";
 
 // See cc/output/copy_output_result.h.
 struct CopyOutputResult {
   gfx.mojom.Size size;
+  gfx.mojom.ColorSpace bitmap_color_space;
   skia.mojom.Bitmap? bitmap;
   TextureMailbox texture_mailbox;
   TextureMailboxReleaser? releaser;

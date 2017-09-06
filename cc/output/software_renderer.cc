@@ -578,7 +578,7 @@ void SoftwareRenderer::CopyCurrentRenderPassToBitmap(
                                    window_copy_rect.y()))
     bitmap->reset();
 
-  request->SendBitmapResult(std::move(bitmap));
+  request->SendBitmapResult(std::move(bitmap), gfx::ColorSpace::CreateSRGB());
 }
 
 void SoftwareRenderer::SetEnableDCLayers(bool enable) {

@@ -33,8 +33,10 @@ class VIZ_COMMON_EXPORT CopyOutputResult {
     return base::WrapUnique(new CopyOutputResult);
   }
   static std::unique_ptr<CopyOutputResult> CreateBitmapResult(
-      std::unique_ptr<SkBitmap> bitmap) {
-    return base::WrapUnique(new CopyOutputResult(std::move(bitmap)));
+      std::unique_ptr<SkBitmap> bitmap,
+      const gfx::ColorSpace& bitmap_color_space) {
+    return base::WrapUnique(
+        new CopyOutputResult(std::move(bitmap), bitmap_color_space));
   }
   static std::unique_ptr<CopyOutputResult> CreateTextureResult(
       const gfx::Size& size,
@@ -52,6 +54,12 @@ class VIZ_COMMON_EXPORT CopyOutputResult {
 
   gfx::Size size() const { return size_; }
   std::unique_ptr<SkBitmap> TakeBitmap();
+  // The color space in which to interpret the pixels from TakeBitmap. Note that
+  // the SkBitmap will not have a color space in its SkImageInfo. This color
+  // space will be invalid for texture results.
+  gfx::ColorSpace bitmap_color_space() const { return bitmap_color_space_; }
+  // The color space for texture results is accessible through the texture
+  // mailbox.
   void TakeTexture(TextureMailbox* texture_mailbox,
                    std::unique_ptr<SingleReleaseCallback>* release_callback);
 
@@ -60,7 +68,8 @@ class VIZ_COMMON_EXPORT CopyOutputResult {
                                    std::unique_ptr<CopyOutputResult>>;
 
   CopyOutputResult();
-  explicit CopyOutputResult(std::unique_ptr<SkBitmap> bitmap);
+  explicit CopyOutputResult(std::unique_ptr<SkBitmap> bitmap,
+                            const gfx::ColorSpace& bitmap_color_space);
   explicit CopyOutputResult(
       const gfx::Size& size,
       const TextureMailbox& texture_mailbox,
@@ -68,6 +77,7 @@ class VIZ_COMMON_EXPORT CopyOutputResult {
 
   gfx::Size size_;
   std::unique_ptr<SkBitmap> bitmap_;
+  gfx::ColorSpace bitmap_color_space_;
   TextureMailbox texture_mailbox_;
   std::unique_ptr<SingleReleaseCallback> release_callback_;
 
