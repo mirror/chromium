@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "408d290b_9076ccab",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1942,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-06T14:48:36Z",
+      "side": 1,
+      "message": "Remove |enable_surface_synchronization|, and directly set |params.enable_surface_synchronization| instead.",
+      "revId": "9aa273c33756783fb831311df6bc9b0c6b4dc945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a86d293_909cb71a",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1955,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-06T14:48:36Z",
+      "side": 1,
+      "message": "I think you can get rid of |synthetic_begin_frame_source| from here, and just set it to |params.synthetic_begin_frame_source|.",
+      "revId": "9aa273c33756783fb831311df6bc9b0c6b4dc945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51c3849c_56f801cc",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1984,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-06T14:48:36Z",
+      "side": 1,
+      "message": "Same here: remove |sink_info|, and directly set |params.compositor_frame_sink_info| instead.",
+      "revId": "9aa273c33756783fb831311df6bc9b0c6b4dc945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c86d3a95_edcf1101",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2100,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-06T14:48:36Z",
+      "side": 1,
+      "message": "Instead of setting |params.local_surface_id_provider| here, and above in lines ~2025, ~1995, can you just set it at the beginning (say line ~1950)?",
+      "revId": "9aa273c33756783fb831311df6bc9b0c6b4dc945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b586e328_849300a9",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2101,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-06T14:48:36Z",
+      "side": 1,
+      "message": "See comment above (if you set it at the beginning of the function, then you don\u0027t need to keep doing this here and above).",
+      "revId": "9aa273c33756783fb831311df6bc9b0c6b4dc945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
