@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0626e21_93d079d9",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 1046,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-09-06T18:13:38Z",
+      "side": 1,
+      "message": "Maybe add a \"release_\" in here somewhere.",
+      "revId": "810655b59e633a6fe15e0b65a3b76b706822397d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
