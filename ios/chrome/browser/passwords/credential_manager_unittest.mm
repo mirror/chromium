@@ -285,8 +285,7 @@ TEST_F(CredentialManagerTest, StorePasswordCredential) {
 
   // Wait for the Promise to be resolved.
   WaitForCondition(^{
-    return static_cast<bool>(
-        [@YES isEqual:ExecuteJavaScript(@"test_promise_resolved_")]);
+    return [@YES isEqual:ExecuteJavaScript(@"test_promise_resolved_")];
   });
 
   // Check that Promise was resolved with undefined.
@@ -333,8 +332,7 @@ TEST_F(CredentialManagerTest, StoreFederatedCredential) {
 
   // Wait for the Promise to be resolved.
   WaitForCondition(^{
-    return static_cast<bool>(
-        [@YES isEqual:ExecuteJavaScript(@"test_promise_resolved_")]);
+    return [@YES isEqual:ExecuteJavaScript(@"test_promise_resolved_")];
   });
 
   // Check that Promise was resolved with undefined.
@@ -391,8 +389,7 @@ TEST_F(CredentialManagerTest, TryToStoreCredentialFromInsecureContext) {
 
   // Wait for Promise to be rejected.
   WaitForCondition(^{
-    return static_cast<bool>(
-        [@YES isEqual:ExecuteJavaScript(@"test_promise_rejected_")]);
+    return [@YES isEqual:ExecuteJavaScript(@"test_promise_rejected_")];
   });
   // Check that Promise was rejected with InvalidStateError.
   EXPECT_NSEQ(@YES, ExecuteJavaScript(@"test_result_valid_type_"));
@@ -421,8 +418,7 @@ TEST_F(CredentialManagerTest, RejectOnInvalidCredential) {
 
   // Wait for Promise to be rejected.
   WaitForCondition(^{
-    return static_cast<bool>(
-        [@YES isEqual:ExecuteJavaScript(@"test_promise_rejected_")]);
+    return [@YES isEqual:ExecuteJavaScript(@"test_promise_rejected_")];
   });
 
   // Check that Promise was rejected with TypeError.
@@ -456,8 +452,7 @@ TEST_F(CredentialManagerTest, GetPasswordCredential) {
 
   // Wait for PasswordCredential to be obtained and for Promise to be resolved.
   WaitForCondition(^{
-    return static_cast<bool>(
-        [@YES isEqual:ExecuteJavaScript(@"test_promise_resolved_")]);
+    return [@YES isEqual:ExecuteJavaScript(@"test_promise_resolved_")];
   });
 
   // Check PasswordCredential fields.
@@ -496,8 +491,7 @@ TEST_F(CredentialManagerTest, GetFederatedCredential) {
 
   // Wait for FederatedCredential to be obtained and for Promise to be resolved.
   WaitForCondition(^{
-    return static_cast<bool>(
-        [@YES isEqual:ExecuteJavaScript(@"test_promise_resolved_")]);
+    return [@YES isEqual:ExecuteJavaScript(@"test_promise_resolved_")];
   });
 
   // Check FederatedCredential fields.
@@ -535,8 +529,7 @@ TEST_F(CredentialManagerTest, TryToGetCredentialFromInsecureContext) {
 
   // Wait for Promise to be rejected.
   WaitForCondition(^{
-    return static_cast<bool>(
-        [@YES isEqual:ExecuteJavaScript(@"test_promise_rejected_")]);
+    return [@YES isEqual:ExecuteJavaScript(@"test_promise_rejected_")];
   });
   // Check that Promise was rejected with InvalidStateError.
   EXPECT_NSEQ(@YES, ExecuteJavaScript(@"test_result_valid_type_"));
@@ -572,8 +565,7 @@ TEST_F(CredentialManagerTest, GetCredentialWithRequiredMediation) {
        "})");
   // Wait for Promise to be resolved.
   WaitForCondition(^{
-    return static_cast<bool>(
-        [@YES isEqual:ExecuteJavaScript(@"test_promise_resolved_")]);
+    return [@YES isEqual:ExecuteJavaScript(@"test_promise_resolved_")];
   });
 }
 
@@ -597,8 +589,7 @@ TEST_F(CredentialManagerTest, NullCredentialFromEmptyPasswordStore) {
        "})");
   // Wait for Promise to be resolved.
   WaitForCondition(^{
-    return static_cast<bool>(
-        [@YES isEqual:ExecuteJavaScript(@"test_promise_resolved_")]);
+    return [@YES isEqual:ExecuteJavaScript(@"test_promise_resolved_")];
   });
 
   // Expect that returned Credential is null.
@@ -642,8 +633,7 @@ TEST_F(CredentialManagerTest, PromptUserOnMultipleCredentials) {
        "})");
   // Wait for Promise to be resolved.
   WaitForCondition(^{
-    return static_cast<bool>(
-        [@YES isEqual:ExecuteJavaScript(@"test_promise_resolved_")]);
+    return [@YES isEqual:ExecuteJavaScript(@"test_promise_resolved_")];
   });
 }
 
@@ -668,8 +658,7 @@ TEST_F(CredentialManagerTest, RejectOnInvalidMediationValue) {
 
   // Wait for Promise to be rejected.
   WaitForCondition(^{
-    return static_cast<bool>(
-        [@YES isEqual:ExecuteJavaScript(@"test_promise_rejected_")]);
+    return [@YES isEqual:ExecuteJavaScript(@"test_promise_rejected_")];
   });
   // Check that Promise was rejected with TypeError.
   EXPECT_NSEQ(@YES, ExecuteJavaScript(@"test_result_valid_type_"));
@@ -695,8 +684,7 @@ TEST_F(CredentialManagerTest, RejectOnInvalidProvidersValue) {
 
   // Wait for Promise to be rejected.
   WaitForCondition(^{
-    return static_cast<bool>(
-        [@YES isEqual:ExecuteJavaScript(@"test_promise_rejected_")]);
+    return [@YES isEqual:ExecuteJavaScript(@"test_promise_rejected_")];
   });
   // Check that Promise was rejected with TypeError.
   EXPECT_NSEQ(@YES, ExecuteJavaScript(@"test_result_valid_type_"));
@@ -728,8 +716,7 @@ TEST_F(CredentialManagerTest, RejectOnPasswordStoreUnavailable) {
 
   // Wait for Promise to be rejected.
   WaitForCondition(^{
-    return static_cast<bool>(
-        [@YES isEqual:ExecuteJavaScript(@"test_promise_rejected_")]);
+    return [@YES isEqual:ExecuteJavaScript(@"test_promise_rejected_")];
   });
 
   // Check that Promise was rejected with NotSupportedError.
@@ -766,8 +753,7 @@ TEST_F(CredentialManagerTest, TryToPreventSilentAccessFromInsecureContext) {
 
   // Wait for Promise to be rejected.
   WaitForCondition(^{
-    return static_cast<bool>(
-        [@YES isEqual:ExecuteJavaScript(@"test_promise_rejected_")]);
+    return [@YES isEqual:ExecuteJavaScript(@"test_promise_rejected_")];
   });
   // Check that Promise was rejected with InvalidStateError.
   EXPECT_NSEQ(@YES, ExecuteJavaScript(@"test_result_valid_type_"));
@@ -821,8 +807,7 @@ TEST_F(CredentialManagerTest, PreventSilentAccess) {
 
   // Wait for Promise to be resolved.
   WaitForCondition(^{
-    return static_cast<bool>(
-        [@YES isEqual:ExecuteJavaScript(@"test_promise_resolved_")]);
+    return [@YES isEqual:ExecuteJavaScript(@"test_promise_resolved_")];
   });
 
   // Check that Promise was resolved with |undefined|.
