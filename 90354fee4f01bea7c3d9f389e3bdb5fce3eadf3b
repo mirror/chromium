@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8be1710c_03b53616",
+        "filename": "chrome/installer/linux/debian/package_version_interval.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-09-06T23:01:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e327c5f_579ec194",
+      "revId": "90354fee4f01bea7c3d9f389e3bdb5fce3eadf3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "775886bd_51f78ad8",
         "filename": "chrome/installer/linux/debian/package_version_interval.py",
         "patchSetId": 2
@@ -36,6 +54,23 @@
     },
     {
       "key": {
+        "uuid": "889f11c4_acdae739",
+        "filename": "chrome/installer/linux/debian/package_version_interval.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-09-06T23:01:49Z",
+      "side": 1,
+      "message": "Done",
+      "revId": "90354fee4f01bea7c3d9f389e3bdb5fce3eadf3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c78250d_cfec206e",
         "filename": "chrome/installer/linux/debian/package_version_interval.py",
         "patchSetId": 2
@@ -50,6 +85,24 @@
       "revId": "90354fee4f01bea7c3d9f389e3bdb5fce3eadf3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2ce623b_b77df176",
+        "filename": "chrome/installer/linux/debian/package_version_interval.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-09-06T23:01:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c78250d_cfec206e",
+      "revId": "90354fee4f01bea7c3d9f389e3bdb5fce3eadf3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
