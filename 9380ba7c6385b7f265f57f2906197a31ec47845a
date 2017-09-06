@@ -48,6 +48,23 @@
     },
     {
       "key": {
+        "uuid": "a713267e_9579c515",
+        "filename": "base/win/com_base_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-06T09:01:05Z",
+      "side": 1,
+      "message": "nit: blank line between c and c++ header blocks as per the example in https://google.github.io/styleguide/cppguide.html#Names_and_Order_of_Includes.",
+      "revId": "9380ba7c6385b7f265f57f2906197a31ec47845a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc0bedca_67a7cad8",
         "filename": "base/win/com_base_util.h",
         "patchSetId": 4
@@ -59,6 +76,30 @@
       "writtenOn": "2017-09-06T07:59:06Z",
       "side": 1,
       "message": "optionally can be a namespace instead of class since all meaningful methods are static (and I believe no one instantiate this though ctor/dtor are defined).",
+      "range": {
+        "startLine": 22,
+        "startChar": 12,
+        "endLine": 22,
+        "endChar": 17
+      },
+      "revId": "9380ba7c6385b7f265f57f2906197a31ec47845a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca44eed6_d13d7881",
+        "filename": "base/win/com_base_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-06T09:01:05Z",
+      "side": 1,
+      "message": "while the style guide says to prefer a namespace over a class (https://google.github.io/styleguide/cppguide.html#Nonmember,_Static_Member,_and_Global_Functions), i don\u0027t see a reason to go against it here. please switch.",
+      "parentUuid": "bc0bedca_67a7cad8",
       "range": {
         "startLine": 22,
         "startChar": 12,
