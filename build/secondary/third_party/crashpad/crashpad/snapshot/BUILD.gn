@@ -112,6 +112,13 @@ static_library("snapshot") {
     "win/thread_snapshot_win.cc",
     "win/thread_snapshot_win.h",
   ]
+
+  if (target_cpu == "x86" || target_cpu == "x64") {
+    sources += [
+      "x86/cpuid_reader.cc",
+      "x86/cpuid_reader.h",
+    ]
+  }
 }
 
 if (is_win) {
