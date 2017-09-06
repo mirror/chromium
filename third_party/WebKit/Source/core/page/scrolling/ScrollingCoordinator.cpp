@@ -727,11 +727,17 @@ void ScrollingCoordinator::UpdateTouchEventTargetRectsIfNeeded() {
                "ScrollingCoordinator::updateTouchEventTargetRectsIfNeeded");
 
   // TODO(chrishtr): implement touch event target rects for SPv2.
-  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled())
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
+    LOG(ERROR) << "ScrollingCoordinator::UpdateTouchEventTargetRectsIfNeeded "
+                  "slim no touch";
     return;
+  }
 
   LayerHitTestRects touch_event_target_rects;
   ComputeTouchEventTargetRects(touch_event_target_rects);
+  LOG(ERROR) << "ScrollingCoordinator::UpdateTouchEventTargetRectsIfNeeded "
+                "register touch: "
+             << touch_event_target_rects.size();
   SetTouchEventTargetRects(touch_event_target_rects);
 }
 
@@ -1075,8 +1081,10 @@ static void AccumulateDocumentTouchEventTargetRects(
   const EventTargetSet* targets =
       document->GetPage()->GetEventHandlerRegistry().EventHandlerTargets(
           event_class);
-  if (!targets)
+  if (!targets) {
+    LOG(ERROR) << "AccumulateDocumentTouchEventTargetRects no target";
     return;
+  }
 
   // If there's a handler on the window, document, html or body element (fairly
   // common in practice), then we can quickly mark the entire document and skip
@@ -1109,6 +1117,8 @@ static void AccumulateDocumentTouchEventTargetRects(
       }
     }
   }
+  LOG(ERROR) << "AccumulateDocumentTouchEventTargetRects p2, target count: "
+             << targets->size();
 
   for (const auto& event_target : *targets) {
     EventTarget* target = event_target.key;
@@ -1169,8 +1179,10 @@ void ScrollingCoordinator::ComputeTouchEventTargetRects(
   TRACE_EVENT0("input", "ScrollingCoordinator::computeTouchEventTargetRects");
 
   Document* document = page_->DeprecatedLocalMainFrame()->GetDocument();
-  if (!document || !document->View())
+  if (!document || !document->View()) {
+    LOG(ERROR) << "ScrollingCoordinator::ComputeTouchEventTargetRects break";
     return;
+  }
 
   AccumulateDocumentTouchEventTargetRects(
       rects, EventHandlerRegistry::kTouchStartOrMoveEventBlocking, document);

@@ -33,8 +33,10 @@ InputEventAckState InputEventDispositionToAck(
       return INPUT_EVENT_ACK_STATE_SET_NON_BLOCKING_DUE_TO_FLING;
     case ui::InputHandlerProxy::DROP_EVENT:
       return INPUT_EVENT_ACK_STATE_NO_CONSUMER_EXISTS;
-    case ui::InputHandlerProxy::DID_HANDLE_NON_BLOCKING:
+    case ui::InputHandlerProxy::DID_HANDLE_NON_BLOCKING: {
+      LOG(ERROR) << "InputEventDispositionToAck non blocking 2";
       return INPUT_EVENT_ACK_STATE_SET_NON_BLOCKING;
+    }
     case ui::InputHandlerProxy::DID_HANDLE_SHOULD_BUBBLE:
       return INPUT_EVENT_ACK_STATE_CONSUMED_SHOULD_BUBBLE;
   }
@@ -139,6 +141,8 @@ void WidgetInputHandlerManager::TransferActiveWheelFlingAnimation(
 void WidgetInputHandlerManager::DispatchNonBlockingEventToMainThread(
     ui::WebScopedInputEvent event,
     const ui::LatencyInfo& latency_info) {
+  LOG(ERROR)
+      << "WidgetInputHandlerManager::DispatchNonBlockingEventToMainThread";
   DCHECK(input_event_queue_);
   input_event_queue_->HandleEvent(
       std::move(event), latency_info, DISPATCH_TYPE_NON_BLOCKING,

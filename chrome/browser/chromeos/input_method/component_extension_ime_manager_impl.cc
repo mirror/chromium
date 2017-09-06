@@ -119,6 +119,7 @@ void OnFilePathChecked(Profile* profile,
                        const std::string* manifest,
                        const base::FilePath* file_path,
                        bool result) {
+  LOG(ERROR) << "OnFilePathChecked start";
   if (result) {
     DoLoadExtension(profile, *extension_id, *manifest, *file_path);
   } else {

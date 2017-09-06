@@ -124,6 +124,7 @@ void InputEventFilter::DispatchNonBlockingEventToMainThread(
   DCHECK(target_task_runner_->BelongsToCurrentThread());
   RouteQueueMap::iterator iter = route_queues_.find(routing_id);
   if (iter != route_queues_.end()) {
+    LOG(ERROR) << "InputEventFilter::DispatchNonBlockingEventToMainThread";
     iter->second->HandleEvent(
         std::move(event), latency_info, DISPATCH_TYPE_NON_BLOCKING,
         INPUT_EVENT_ACK_STATE_SET_NON_BLOCKING, HandledEventCallback());

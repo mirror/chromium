@@ -25,6 +25,7 @@ void TouchHudProjection::Clear() {
 
 void TouchHudProjection::OnTouchEvent(ui::TouchEvent* event) {
   touch_hud_renderer_->HandleTouchEvent(*event);
+  LOG(ERROR) << "TouchHudProjection::OnTouchEvent: " << event->handled();
 }
 
 void TouchHudProjection::SetHudForRootWindowController(

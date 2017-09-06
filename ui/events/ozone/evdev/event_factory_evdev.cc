@@ -327,6 +327,7 @@ void EventFactoryEvdev::DispatchScrollEvent(const ScrollEventParams& params) {
 }
 
 void EventFactoryEvdev::DispatchTouchEvent(const TouchEventParams& params) {
+  LOG(ERROR) << "EventFactoryEvdev::DispatchTouchEvent start";
   TRACE_EVENT1("evdev", "EventFactoryEvdev::DispatchTouchEvent", "device",
                params.device_id);
 

@@ -198,6 +198,8 @@ void EventTarget::SetDefaultAddEventListenerOptions(
     EventListener* event_listener,
     AddEventListenerOptionsResolved& options) {
   options.SetPassiveSpecified(options.hasPassive());
+  LOG(ERROR) << "EventTarget::SetDefaultAddEventListenerOptions has passive: "
+             << options.hasPassive();
 
   if (!IsScrollBlockingEvent(event_type)) {
     if (!options.hasPassive())
@@ -218,6 +220,8 @@ void EventTarget::SetDefaultAddEventListenerOptions(
   if (RuntimeEnabledFeatures::PassiveDocumentEventListenersEnabled() &&
       IsTouchScrollBlockingEvent(event_type)) {
     if (!options.hasPassive()) {
+      LOG(ERROR)
+          << "EventTarget::SetDefaultAddEventListenerOptions passive listener";
       if (Node* node = ToNode()) {
         if (node->IsDocumentNode() ||
             node->GetDocument().documentElement() == node ||
@@ -248,6 +252,8 @@ void EventTarget::SetDefaultAddEventListenerOptions(
                  *v8::String::Utf8Value(
                      v8::Local<v8::Function>::Cast(function)->GetName())) ==
               0) {
+        // LOG(ERROR) << "EventTarget::SetDefaultAddEventListenerOptions smooth
+        // scroll";
         options.setPassive(true);
         if (executing_window) {
           UseCounter::Count(executing_window->document(),
@@ -270,14 +276,22 @@ void EventTarget::SetDefaultAddEventListenerOptions(
   if (Settings* settings = WindowSettings(ExecutingWindow())) {
     switch (settings->GetPassiveListenerDefault()) {
       case PassiveListenerDefault::kFalse:
-        if (!options.hasPassive())
+        if (!options.hasPassive()) {
+          LOG(ERROR) << "EventTarget::SetDefaultAddEventListenerOptions "
+                        "default passive false";
           options.setPassive(false);
+        }
         break;
       case PassiveListenerDefault::kTrue:
-        if (!options.hasPassive())
+        if (!options.hasPassive()) {
+          LOG(ERROR) << "EventTarget::SetDefaultAddEventListenerOptions "
+                        "default passive true";
           options.setPassive(true);
+        }
         break;
       case PassiveListenerDefault::kForceAllTrue:
+        LOG(ERROR)
+            << "EventTarget::SetDefaultAddEventListenerOptions force passive";
         options.setPassive(true);
         break;
     }

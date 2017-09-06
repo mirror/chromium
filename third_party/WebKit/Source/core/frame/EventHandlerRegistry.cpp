@@ -89,6 +89,14 @@ bool EventHandlerRegistry::UpdateEventHandlerTargets(
     EventTarget* target) {
   EventTargetSet* targets = &targets_[handler_class];
   if (op == kAdd) {
+    if (handler_class == kTouchStartOrMoveEventBlocking) {
+      LOG(ERROR) << "EventHandlerRegistry::UpdateEventHandlerTargets add event "
+                    "blocking";
+    }
+    if (handler_class == kTouchStartOrMoveEventPassive) {
+      LOG(ERROR) << "EventHandlerRegistry::UpdateEventHandlerTargets add event "
+                    "passive";
+    }
     if (!targets->insert(target).is_new_entry) {
       // Just incremented refcount, no real change.
       return false;

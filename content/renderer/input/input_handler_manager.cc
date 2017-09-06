@@ -39,8 +39,10 @@ InputEventAckState InputEventDispositionToAck(
       return INPUT_EVENT_ACK_STATE_SET_NON_BLOCKING_DUE_TO_FLING;
     case InputHandlerProxy::DROP_EVENT:
       return INPUT_EVENT_ACK_STATE_NO_CONSUMER_EXISTS;
-    case InputHandlerProxy::DID_HANDLE_NON_BLOCKING:
+    case InputHandlerProxy::DID_HANDLE_NON_BLOCKING: {
+      LOG(ERROR) << "InputEventDispositionToAck non blocking";
       return INPUT_EVENT_ACK_STATE_SET_NON_BLOCKING;
+    }
     case InputHandlerProxy::DID_HANDLE_SHOULD_BUBBLE:
       return INPUT_EVENT_ACK_STATE_CONSUMED_SHOULD_BUBBLE;
   }

@@ -456,6 +456,10 @@ void RenderWidgetHostViewEventHandler::OnScrollEvent(ui::ScrollEvent* event) {
 
 void RenderWidgetHostViewEventHandler::OnTouchEvent(ui::TouchEvent* event) {
   TRACE_EVENT0("input", "RenderWidgetHostViewBase::OnTouchEvent");
+  // LOG(INFO) << "RenderWidgetHostViewBase::OnTouchEvent start " << event->x()
+  // << ", " << event->y();
+  VLOG(0) << "RenderWidgetHostViewBase::OnTouchEvent start " << event->x()
+          << ", " << event->y();
 
   bool had_no_pointer = !pointer_state_.GetPointerCount();
 
@@ -495,9 +499,13 @@ void RenderWidgetHostViewEventHandler::OnTouchEvent(ui::TouchEvent* event) {
   MarkUnchangedTouchPointsAsStationary(&touch_event,
                                        event->pointer_details().id);
   if (ShouldRouteEvent(event)) {
+    LOG(INFO) << "RenderWidgetHostViewBase::OnTouchEvent route " << event->x()
+              << ", " << event->y();
     host_->delegate()->GetInputEventRouter()->RouteTouchEvent(
         host_view_, &touch_event, *event->latency());
   } else {
+    LOG(INFO) << "RenderWidgetHostViewBase::OnTouchEvent no route" << event->x()
+              << ", " << event->y();
     ProcessTouchEvent(touch_event, *event->latency());
   }
 }

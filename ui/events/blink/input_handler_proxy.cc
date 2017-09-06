@@ -1041,6 +1041,8 @@ InputHandlerProxy::EventDisposition InputHandlerProxy::HitTestTouchEvent(
     const blink::WebTouchEvent& touch_event,
     bool* is_touching_scrolling_layer,
     cc::TouchAction* white_listed_touch_action) {
+  TRACE_EVENT_BEGIN1("all", "InputHandlerProxy::HitTestTouchEvent", "result",
+                     0);
   *is_touching_scrolling_layer = false;
   EventDisposition result = DROP_EVENT;
   for (size_t i = 0; i < touch_event.touches_length; ++i) {
@@ -1063,6 +1065,8 @@ InputHandlerProxy::EventDisposition InputHandlerProxy::HitTestTouchEvent(
     if (white_listed_touch_action)
       *white_listed_touch_action &= touch_action;
 
+    LOG(ERROR) << "InputHandlerProxy::HitTestTouchEvent, listener type: "
+               << (int)event_listener_type;
     if (event_listener_type !=
         cc::InputHandler::TouchStartOrMoveEventListenerType::NO_HANDLER) {
       *is_touching_scrolling_layer =
@@ -1107,6 +1111,9 @@ InputHandlerProxy::EventDisposition InputHandlerProxy::HitTestTouchEvent(
   if (touch_result_ == kEventDispositionUndefined ||
       touch_result_ == DROP_EVENT || result == DID_NOT_HANDLE)
     touch_result_ = result;
+  LOG(ERROR) << "InputHandlerProxy::HitTestTouchEvent: " << result;
+  TRACE_EVENT_END1("all", "InputHandlerProxy::HitTestTouchEvent", "result",
+                   result);
   return result;
 }
 
@@ -1136,6 +1143,7 @@ InputHandlerProxy::EventDisposition InputHandlerProxy::HandleTouchStart(
   client_->SetWhiteListedTouchAction(white_listed_touch_action,
                                      touch_event.unique_touch_event_id, result);
 
+  LOG(ERROR) << "InputHandlerProxy::HandleTouchStart: " << result;
   return result;
 }
 
