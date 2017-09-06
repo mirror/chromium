@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34325e6c_ceb3bb2b",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-06T00:59:39Z",
+      "side": 1,
+      "message": "I still don\u0027t understand. The cross face animation in WindowState::SetBoundsDIrectCrossFace won\u0027t work correctly it doesn\u0027t have\nboth (before and after) layers.\n\nYou need to call wm::CrossFadeAnimation with old (current layer), with updated window), don\u0027t you?",
+      "revId": "e16ce506b34e26dcd2b8757eb954176f49abad7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
