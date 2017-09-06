@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21f7ce86_5096d00e",
+        "filename": "chrome/installer/linux/debian/merge-package-versions.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-06T21:16:25Z",
+      "side": 1,
+      "message": "Rename to merge_package_versions.py?",
+      "revId": "6f60a73eda560f46adc0a8d26841493b9d9bbafb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec6d5556_0410e470",
+        "filename": "chrome/installer/linux/debian/merge-package-versions.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-06T21:16:25Z",
+      "side": 1,
+      "message": "Missing sys.argv[0] in the print out?",
+      "revId": "6f60a73eda560f46adc0a8d26841493b9d9bbafb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2ec227e_37b82fab",
+        "filename": "chrome/installer/linux/debian/package_version_interval.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-06T21:16:25Z",
+      "side": 1,
+      "message": "Should the changes to this file in be an earlier CL in the relationship chain?",
+      "revId": "6f60a73eda560f46adc0a8d26841493b9d9bbafb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
