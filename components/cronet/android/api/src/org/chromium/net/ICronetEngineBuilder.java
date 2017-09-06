@@ -25,7 +25,10 @@ public abstract class ICronetEngineBuilder {
     public abstract ICronetEngineBuilder enablePublicKeyPinningBypassForLocalTrustAnchors(
             boolean value);
     public abstract ICronetEngineBuilder enableQuic(boolean value);
-    public abstract ICronetEngineBuilder enableSdch(boolean value);
+    public ICronetEngineBuilder enableSdch(boolean value) {
+        // Sdch is deprecated. This setter does nothing.
+        return this;
+    }
     public ICronetEngineBuilder enableBrotli(boolean value) {
         // Do nothing for older implementations.
         return this;
