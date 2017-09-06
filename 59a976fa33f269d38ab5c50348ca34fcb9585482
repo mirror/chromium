@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b1a463e9_b398e371",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-09-06T09:13:21Z",
+      "side": 1,
+      "message": "I want to mean not nullptr but a invalid value of Position as you know.\nWhat the best term?",
+      "parentUuid": "8c39868e_afc577b3",
+      "revId": "59a976fa33f269d38ab5c50348ca34fcb9585482",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d3939b09_4f40b6bf",
         "filename": "third_party/WebKit/Source/core/editing/Position.cpp",
         "patchSetId": 8
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "931b19a9_bf52d637",
+        "filename": "third_party/WebKit/Source/core/editing/Position.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-09-06T09:13:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0944ffbd_066beb7c",
+      "revId": "59a976fa33f269d38ab5c50348ca34fcb9585482",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea5df7ca_84de4b0a",
         "filename": "third_party/WebKit/Source/core/editing/Position.cpp",
         "patchSetId": 8
@@ -64,6 +100,24 @@
       "writtenOn": "2017-09-06T04:22:36Z",
       "side": 1,
       "message": "Using shadow host for position anchored by shadow root is wrong.\n\n\u003cshadow-host\u003e SH\n#shadow-root \u003d SR\n0\u003ca\u003e1\u003c/a\u003e2\n\nBeforeAnchor(SR) \u003d\u003d BeforeChildren(SH); really?\nBeforeChildren(SR) \u003d\u003d SR@0, BeforeAnchor(\"0\")\nSR@n: They are position in shadow root\nAfterAnchor(SR) \u003d\u003d AfterChildren(SH): really?\nAfterChildren(SR) \u003d\u003d SR@3, AfterAnchor(\"2\")",
+      "revId": "59a976fa33f269d38ab5c50348ca34fcb9585482",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2677636d_7af5cc89",
+        "filename": "third_party/WebKit/Source/core/editing/Position.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-09-06T09:13:21Z",
+      "side": 1,
+      "message": "Just return null for ShadowRoot because ShadowRoot is not in flat tree.",
+      "parentUuid": "ea5df7ca_84de4b0a",
       "revId": "59a976fa33f269d38ab5c50348ca34fcb9585482",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
