@@ -1,0 +1,98 @@
+syntax = "proto3";
+
+package content;
+
+option optimize_for = LITE_RUNTIME;
+
+message FileSystem {
+  string filesystem_url = 1;
+  int64 offset = 2;
+  int64 length = 3;
+  double modification_time = 4;
+}
+
+message File {
+  string path = 1;
+  int64 offset = 2;
+  int64 length = 3;
+  double modification_time = 4;
+}
+
+message ElementBytes {
+  bytes bytes = 1;
+}
+
+message BlobString {
+  string blob = 1;
+}
+
+message Element {
+  oneof data {
+    ElementBytes bytes = 1;
+    File file = 2;
+    FileSystem file_system = 3;
+    BlobString blob = 4;
+  }
+}
+
+message RequestBody {
+  repeated Element elements = 1;
+  int64 identifier = 2;
+  bool contains_sensitive_info = 3;
+}
+
+message HttpBody {
+  string http_content_type = 1;
+  RequestBody request_body = 2;
+  bool contains_passwords = 3;
+}
+
+message Point {
+  int32 x = 1;
+  int32 y = 2;
+}
+
+message PointF {
+  double x = 1;
+  double y = 2;
+}
+
+enum ScrollRestorationType {
+  AUTO = 0;
+  MANUAL = 1;
+}
+
+enum WebReferrerPolicy {
+  Always = 0;
+  Default = 1;
+  NoReferrerWhenDowngrade = 2;
+  Never = 3;
+  Origin = 4;
+  OriginWhenCrossOrigin = 5;
+  NoReferrerWhenDowngradeOriginWhenCrossOrigin = 6;
+  SameOrigin = 7;
+  StrictOrigin = 8;
+}
+
+message Frame {
+  string url_string = 1;
+  string referrer = 2;
+  string target = 3;
+  string state_object = 4;
+  repeated string document_state = 5;
+  ScrollRestorationType scroll_restoration_type = 6;
+  bool did_save_scroll_or_scale_state = 7;
+  PointF visual_viewport_scroll_offset = 8;
+  Point scroll_offset = 9;
+  int64 item_sequence_number = 10;
+  int64 document_sequence_number = 11;
+  double page_scale_factor = 12;
+  WebReferrerPolicy referrer_policy = 13;
+  HttpBody http_body = 14;
+  repeated Frame children = 15;
+}
+
+message Page {
+  repeated string referenced_files = 1;
+  Frame top = 2;
+}

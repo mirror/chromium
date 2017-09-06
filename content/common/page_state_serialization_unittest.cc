@@ -29,68 +29,76 @@ base::NullableString16 NS16(const char* s) {
 //-----------------------------------------------------------------------------
 
 template <typename T>
-void ExpectEquality(const T& a, const T& b) {
-  EXPECT_EQ(a, b);
+void ExpectEquality(const T& expected, const T& actual) {
+  EXPECT_EQ(expected, actual);
 }
 
 template <typename T>
-void ExpectEquality(const std::vector<T>& a, const std::vector<T>& b) {
-  EXPECT_EQ(a.size(), b.size());
-  for (size_t i = 0; i < std::min(a.size(), b.size()); ++i)
-    ExpectEquality(a[i], b[i]);
+void ExpectEquality(const std::vector<T>& expected,
+                    const std::vector<T>& actual) {
+  EXPECT_EQ(expected.size(), actual.size());
+  for (size_t i = 0; i < std::min(expected.size(), actual.size()); ++i)
+    ExpectEquality(expected[i], actual[i]);
 }
 
 template <>
-void ExpectEquality(const ResourceRequestBody::Element& a,
-                    const ResourceRequestBody::Element& b) {
-  EXPECT_EQ(a.type(), b.type());
-  if (a.type() == ResourceRequestBody::Element::TYPE_BYTES &&
-      b.type() == ResourceRequestBody::Element::TYPE_BYTES) {
-    EXPECT_EQ(std::string(a.bytes(), a.length()),
-              std::string(b.bytes(), b.length()));
+void ExpectEquality(const ResourceRequestBody::Element& expected,
+                    const ResourceRequestBody::Element& actual) {
+  EXPECT_EQ(expected.type(), actual.type());
+  if (expected.type() == ResourceRequestBody::Element::TYPE_BYTES &&
+      actual.type() == ResourceRequestBody::Element::TYPE_BYTES) {
+    EXPECT_EQ(std::string(expected.bytes(), expected.length()),
+              std::string(actual.bytes(), actual.length()));
   }
-  EXPECT_EQ(a.path(), b.path());
-  EXPECT_EQ(a.filesystem_url(), b.filesystem_url());
-  EXPECT_EQ(a.offset(), b.offset());
-  EXPECT_EQ(a.length(), b.length());
-  EXPECT_EQ(a.expected_modification_time(), b.expected_modification_time());
-  EXPECT_EQ(a.blob_uuid(), b.blob_uuid());
+  EXPECT_EQ(expected.path(), actual.path());
+  EXPECT_EQ(expected.filesystem_url(), actual.filesystem_url());
+  EXPECT_EQ(expected.offset(), actual.offset());
+  EXPECT_EQ(expected.length(), actual.length());
+  EXPECT_EQ(expected.expected_modification_time(),
+            actual.expected_modification_time());
+  EXPECT_EQ(expected.blob_uuid(), actual.blob_uuid());
 }
 
 template <>
-void ExpectEquality(const ExplodedHttpBody& a, const ExplodedHttpBody& b) {
-  EXPECT_EQ(a.http_content_type, b.http_content_type);
-  EXPECT_EQ(a.contains_passwords, b.contains_passwords);
-  if (a.request_body == nullptr || b.request_body == nullptr) {
-    EXPECT_EQ(nullptr, a.request_body);
-    EXPECT_EQ(nullptr, b.request_body);
+void ExpectEquality(const ExplodedHttpBody& expected,
+                    const ExplodedHttpBody& actual) {
+  EXPECT_EQ(expected.http_content_type, actual.http_content_type);
+  EXPECT_EQ(expected.contains_passwords, actual.contains_passwords);
+  if (expected.request_body == nullptr || actual.request_body == nullptr) {
+    EXPECT_EQ(nullptr, expected.request_body);
+    EXPECT_EQ(nullptr, actual.request_body);
   } else {
-    EXPECT_EQ(a.request_body->identifier(), b.request_body->identifier());
-    ExpectEquality(*a.request_body->elements(), *b.request_body->elements());
+    EXPECT_EQ(expected.request_body->identifier(),
+              actual.request_body->identifier());
+    ExpectEquality(*expected.request_body->elements(),
+                   *actual.request_body->elements());
   }
 }
 
 template <>
-void ExpectEquality(const ExplodedFrameState& a, const ExplodedFrameState& b) {
-  EXPECT_EQ(a.url_string, b.url_string);
-  EXPECT_EQ(a.referrer, b.referrer);
-  EXPECT_EQ(a.referrer_policy, b.referrer_policy);
-  EXPECT_EQ(a.target, b.target);
-  EXPECT_EQ(a.state_object, b.state_object);
-  ExpectEquality(a.document_state, b.document_state);
-  EXPECT_EQ(a.scroll_restoration_type, b.scroll_restoration_type);
-  EXPECT_EQ(a.visual_viewport_scroll_offset, b.visual_viewport_scroll_offset);
-  EXPECT_EQ(a.scroll_offset, b.scroll_offset);
-  EXPECT_EQ(a.item_sequence_number, b.item_sequence_number);
-  EXPECT_EQ(a.document_sequence_number, b.document_sequence_number);
-  EXPECT_EQ(a.page_scale_factor, b.page_scale_factor);
-  ExpectEquality(a.http_body, b.http_body);
-  ExpectEquality(a.children, b.children);
+void ExpectEquality(const ExplodedFrameState& expected,
+                    const ExplodedFrameState& actual) {
+  EXPECT_EQ(expected.url_string, actual.url_string);
+  EXPECT_EQ(expected.referrer, actual.referrer);
+  EXPECT_EQ(expected.referrer_policy, actual.referrer_policy);
+  EXPECT_EQ(expected.target, actual.target);
+  EXPECT_EQ(expected.state_object, actual.state_object);
+  ExpectEquality(expected.document_state, actual.document_state);
+  EXPECT_EQ(expected.scroll_restoration_type, actual.scroll_restoration_type);
+  EXPECT_EQ(expected.visual_viewport_scroll_offset,
+            actual.visual_viewport_scroll_offset);
+  EXPECT_EQ(expected.scroll_offset, actual.scroll_offset);
+  EXPECT_EQ(expected.item_sequence_number, actual.item_sequence_number);
+  EXPECT_EQ(expected.document_sequence_number, actual.document_sequence_number);
+  EXPECT_EQ(expected.page_scale_factor, actual.page_scale_factor);
+  ExpectEquality(expected.http_body, actual.http_body);
+  ExpectEquality(expected.children, actual.children);
 }
 
-void ExpectEquality(const ExplodedPageState& a, const ExplodedPageState& b) {
-  ExpectEquality(a.referenced_files, b.referenced_files);
-  ExpectEquality(a.top, b.top);
+void ExpectEquality(const ExplodedPageState& expected,
+                    const ExplodedPageState& actual) {
+  ExpectEquality(expected.referenced_files, actual.referenced_files);
+  ExpectEquality(expected.top, actual.top);
 }
 
 //-----------------------------------------------------------------------------
@@ -452,6 +460,10 @@ TEST_F(PageStateSerializationTest, BackwardsCompat_v23) {
 
 TEST_F(PageStateSerializationTest, BackwardsCompat_v24) {
   TestBackwardsCompat(24);
+}
+
+TEST_F(PageStateSerializationTest, BackwardsCompat_v25) {
+  TestBackwardsCompat(25);
 }
 
 }  // namespace

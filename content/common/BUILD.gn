@@ -10,6 +10,7 @@ import("//media/media_options.gni")
 import("//mojo/public/tools/bindings/mojom.gni")
 import("//ppapi/features/features.gni")
 import("//sandbox/features.gni")
+import("//third_party/protobuf/proto_library.gni")
 import("//tools/ipc_fuzzer/ipc_fuzzer.gni")
 if (is_mac) {
   import("//build/config/mac/mac_sdk.gni")
@@ -371,6 +372,7 @@ source_set("common") {
   ]
   deps = [
     ":features",
+    ":frame_state_proto",
     "//base",
     "//base/third_party/dynamic_annotations",
     "//build/util:webkit_version",
@@ -426,6 +428,7 @@ source_set("common") {
     "//storage/common",
     "//third_party/boringssl",
     "//third_party/icu",
+    "//third_party/protobuf:protobuf_lite",
     "//ui/accessibility",
     "//ui/base",
     "//ui/base/ime",
@@ -625,6 +628,7 @@ mojom("mojo_bindings") {
     "memory_coordinator.mojom",
     "message_port.mojom",
     "native_types.mojom",
+    "page_state.mojom",
     "push_messaging.mojom",
     "render_frame_message_filter.mojom",
     "render_message_filter.mojom",
@@ -678,4 +682,10 @@ mojom("mojo_bindings") {
   export_class_attribute = "CONTENT_EXPORT"
   export_define = "CONTENT_IMPLEMENTATION=1"
   export_header = "content/common/content_export.h"
+}
+
+proto_library("frame_state_proto") {
+  sources = [
+    "frame_state.proto",
+  ]
 }
