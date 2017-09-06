@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e78fc3a_ab19f159",
+        "filename": "ui/events/blink/input_handler_proxy.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-09-06T18:23:38Z",
+      "side": 1,
+      "message": "Removed |input_handler_-\u003eIsCurrentlyScrollingViewport()|.\n\nI\u0027m not sure about code style but do we need |!!synchronous_input_handler_| here?",
+      "revId": "b9afce70bb759501416fb7a78aad1b20498fdbc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
