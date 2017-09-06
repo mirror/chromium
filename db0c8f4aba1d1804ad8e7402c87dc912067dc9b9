@@ -34,6 +34,24 @@
       "revId": "db0c8f4aba1d1804ad8e7402c87dc912067dc9b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "53fa2ac0_e278591d",
+        "filename": "media/midi/midi_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-09-06T12:47:16Z",
+      "side": 1,
+      "message": "Oh, I didn\u0027t notice that, sorry. You can define another private constructor taking two params though.",
+      "parentUuid": "f54772d2_ef3c4b7d",
+      "revId": "db0c8f4aba1d1804ad8e7402c87dc912067dc9b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
