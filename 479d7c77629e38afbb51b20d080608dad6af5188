@@ -213,6 +213,30 @@
       "revId": "479d7c77629e38afbb51b20d080608dad6af5188",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f285538a_9537e0d7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SingleWebsitePreferences.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-09-06T11:32:37Z",
+      "side": 1,
+      "message": "Thinking about it some more, it should be fine because that code must always be running on the UI thread if it\u0027s updating the layout. So no need for \u0027synchronized\u0027.",
+      "parentUuid": "89544d98_bfc89bac",
+      "range": {
+        "startLine": 423,
+        "startChar": 51,
+        "endLine": 423,
+        "endChar": 56
+      },
+      "revId": "479d7c77629e38afbb51b20d080608dad6af5188",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
