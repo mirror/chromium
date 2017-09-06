@@ -193,6 +193,24 @@
       "revId": "dfacf870ffd6d3471fc280bf75ba77a6aece13d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9c2231ce_a6707be7",
+        "filename": "content/public/android/java/res/menu/select_action_menu.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-06T22:38:50Z",
+      "side": 1,
+      "message": "I guess I\u0027m worried that it might not exist on all versions/configurations of Android.  This still seems somewhat risky to me, but I have nothing more to back that up.  I think setting the title in code only when O+ seems right to me.",
+      "parentUuid": "c252ce38_65318102",
+      "revId": "dfacf870ffd6d3471fc280bf75ba77a6aece13d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
