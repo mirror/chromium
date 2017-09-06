@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "8124243f_61236f89",
+        "filename": "ash/wm/overview/window_selector.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-09-06T01:28:43Z",
+      "side": 1,
+      "message": "True, I changed it so there is only one, and the widget reparents if we switch root windows.",
+      "parentUuid": "c964b267_d2b4239a",
+      "revId": "aebd17d59ba14f83271838c489a7b459d34582f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "99d76a27_44a8fb69",
         "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
         "patchSetId": 4
