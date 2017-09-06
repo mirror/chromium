@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "ca3de5f4_f0926681",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-06T19:10:09Z",
+      "side": 1,
+      "message": "nit: When you rebase this patch against https://chromium-review.googlesource.com/c/chromium/src/+/618062, you can expose a task_runner() method on cast_media_sink_service_impl_ which you can use here (and elsewhere in this file) to post tasks instead of content::BrowserThread::PostTask.",
+      "revId": "e82d5cfa8533001187026378f12b52e46561cb09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e0ba5e0_7f1feb13",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
         "patchSetId": 1
