@@ -530,6 +530,8 @@ public class BottomSheet
         Tab tab = getActiveTab();
         boolean consumeEvent = false;
 
+        if (mFullscreenManager.getPersistentFullscreenMode()) return false;
+
         if (!isSheetOpen() && tab != null && !tab.canGoBack() && !isInOverviewMode()
                 && tab.getLaunchType() == TabLaunchType.FROM_CHROME_UI) {
             mBackButtonDismissesChrome = true;
