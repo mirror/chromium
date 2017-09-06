@@ -15,7 +15,8 @@ namespace blink {
 
 void NGBlockFlowPainter::PaintContents(const PaintInfo& paint_info,
                                        const LayoutPoint& paint_offset) {
-  RefPtr<const NGPhysicalBoxFragment> box_fragment = block_.RootFragment();
+  RefPtr<const NGPhysicalBoxFragment> box_fragment = GetRootFragment(block_);
+
   if (box_fragment)
     PaintBoxFragment(*box_fragment, paint_info, paint_offset);
 }

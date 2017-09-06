@@ -97,26 +97,30 @@ TEST_F(NGBlockLayoutAlgorithmTest, Caching) {
             result->PhysicalFragment()->Size());
 
   // Test pointer-equal constraint space
-  result = block_flow->CachedLayoutResult(*space, nullptr);
+  result =
+      GetNGData(block_flow)->CachedLayoutResult(block_flow, *space, nullptr);
   EXPECT_NE(result.Get(), nullptr);
 
   // Test identical, but not pointer-equal, constraint space
   space = ConstructBlockLayoutTestConstraintSpace(
       kHorizontalTopBottom, TextDirection::kLtr,
       NGLogicalSize(LayoutUnit(100), NGSizeIndefinite));
-  result = block_flow->CachedLayoutResult(*space, nullptr);
+  result =
+      GetNGData(block_flow)->CachedLayoutResult(block_flow, *space, nullptr);
   EXPECT_NE(result.Get(), nullptr);
 
   // Test different constraint space
   space = ConstructBlockLayoutTestConstraintSpace(
       kHorizontalTopBottom, TextDirection::kLtr,
       NGLogicalSize(LayoutUnit(200), NGSizeIndefinite));
-  result = block_flow->CachedLayoutResult(*space, nullptr);
+  result =
+      GetNGData(block_flow)->CachedLayoutResult(block_flow, *space, nullptr);
   EXPECT_EQ(result.Get(), nullptr);
 
   // Test layout invalidation
   block_flow->SetNeedsLayout("");
-  result = block_flow->CachedLayoutResult(*space, nullptr);
+  result =
+      GetNGData(block_flow)->CachedLayoutResult(block_flow, *space, nullptr);
   EXPECT_EQ(result.Get(), nullptr);
 }
 

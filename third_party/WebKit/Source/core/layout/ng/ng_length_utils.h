@@ -131,6 +131,9 @@ CORE_EXPORT LayoutUnit ConstrainByMinMax(LayoutUnit length,
 // Returns scrollbar sizes or this layout object.
 NGBoxStrut GetScrollbarSizes(const LayoutObject*);
 
+// Returns intrinsic padding if this is a table cell.
+NGBoxStrut GetTableCellIntrinsicPadding(const LayoutObject*);
+
 inline NGBoxStrut CalculateBorderScrollbarPadding(
     const NGConstraintSpace& constraint_space,
     const ComputedStyle& style,
