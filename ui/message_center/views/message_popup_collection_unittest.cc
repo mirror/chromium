@@ -716,7 +716,8 @@ TEST_F(MessagePopupCollectionTest, ChangingNotificationSize) {
   std::vector<std::string> notification_ids;
   // adding notifications
   {
-    constexpr int max_visible_popup_notifications = 3;
+    // adding popup notifications
+    constexpr int max_visible_popup_notifications = 2;
     notification_ids.reserve(max_visible_popup_notifications);
     for (int i = 0; i < max_visible_popup_notifications; ++i) {
       notification_ids.push_back(std::to_string(i));
@@ -724,9 +725,18 @@ TEST_F(MessagePopupCollectionTest, ChangingNotificationSize) {
           CreateTestNotification(notification_ids.back(), updates.back().text);
       MessageCenter::Get()->AddNotification(std::move(notification));
     }
+
+    // adding on-popup notification
+    auto notification = CreateTestNotification(
+        std::to_string(max_visible_popup_notifications), updates.back().text);
+    MessageCenter::Get()->AddNotification(std::move(notification));
   }
 
   WaitForTransitionsDone();
+
+  // Confirms that there are 2 toasts of 3 notifications.
+  EXPECT_EQ(2u, GetToastCounts());
+  EXPECT_EQ(3u, MessageCenter::Get()->NotificationCount());
 
   // updating notifications one by one
   for (const std::string& id : notification_ids) {
