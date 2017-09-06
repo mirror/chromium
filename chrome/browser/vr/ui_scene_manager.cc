@@ -6,7 +6,7 @@
 
 #include "base/callback.h"
 #include "base/memory/ptr_util.h"
-#include "cc/base/math_util.h"
+#include "base/numerics/math_util.h"
 #include "chrome/browser/vr/elements/button.h"
 #include "chrome/browser/vr/elements/close_button_texture.h"
 #include "chrome/browser/vr/elements/content_element.h"
@@ -451,7 +451,6 @@ void UiSceneManager::CreateUnderDevelopmentNotice() {
 }
 
 void UiSceneManager::CreateBackground() {
-
   // Background solid-color panels.
   struct Panel {
     UiElementName name;

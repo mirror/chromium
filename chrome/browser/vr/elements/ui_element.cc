@@ -7,9 +7,9 @@
 #include <limits>
 
 #include "base/logging.h"
+#include "base/numerics/math_util.h"
 #include "base/stl_util.h"
 #include "base/time/time.h"
-#include "cc/base/math_util.h"
 #include "chrome/browser/vr/elements/ui_element_transform_operations.h"
 
 namespace vr {
@@ -127,7 +127,7 @@ void UiElement::SetRotate(float x, float y, float z, float radians) {
   cc::TransformOperations operations = transform_operations_;
   cc::TransformOperation& op = operations.at(kRotateIndex);
   op.rotate.axis = {x, y, z};
-  op.rotate.angle = cc::MathUtil::Rad2Deg(radians);
+  op.rotate.angle = base::RadToDeg(radians);
   op.Bake();
   animation_player_.TransitionTransformOperationsTo(
       last_frame_time_, TRANSFORM, transform_operations_, operations);
@@ -224,7 +224,7 @@ bool UiElement::GetRayDistance(const gfx::Point3F& ray_origin,
 void UiElement::NotifyClientFloatAnimated(float opacity,
                                           int target_property_id,
                                           cc::Animation* animation) {
-  opacity_ = cc::MathUtil::ClampToRange(opacity, 0.0f, 1.0f);
+  opacity_ = base::ClampToRange(opacity, 0.0f, 1.0f);
 }
 
 void UiElement::NotifyClientTransformOperationsAnimated(

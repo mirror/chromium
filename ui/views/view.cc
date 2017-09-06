@@ -2,12 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#define _USE_MATH_DEFINES // For VC++ to get M_PI. This has to be first.
-
 #include "ui/views/view.h"
 
 #include <algorithm>
-#include <cmath>
 #include <memory>
 #include <utility>
 
@@ -17,6 +14,7 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
+#include "base/numerics/math_util.h"
 #include "base/stl_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
@@ -1910,7 +1908,7 @@ std::string View::DoPrintViewGraph(bool first, View* view_with_children) {
 
     base::snprintf(bounds_buffer, arraysize(bounds_buffer),
                    "\\n rotation: %3.2f",
-                   std::acos(decomp.quaternion.w()) * 360.0 / M_PI);
+                   base::RadToDeg(std::acos(decomp.quaternion.w()) * 2));
     result.append(bounds_buffer);
 
     base::snprintf(bounds_buffer,

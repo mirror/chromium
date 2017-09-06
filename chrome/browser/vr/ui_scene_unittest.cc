@@ -4,12 +4,11 @@
 
 #include "chrome/browser/vr/ui_scene.h"
 
-#define _USE_MATH_DEFINES  // For M_PI in MSVC.
-#include <cmath>
 #include <utility>
 #include <vector>
 
 #include "base/memory/ptr_util.h"
+#include "base/numerics/math_util.h"
 #include "base/test/gtest_util.h"
 #include "base/values.h"
 #include "chrome/browser/vr/elements/draw_phase.h"
