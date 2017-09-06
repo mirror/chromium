@@ -1100,7 +1100,7 @@ Response InspectorCSSAgent::getComputedStyleForNode(
   *style = protocol::Array<protocol::CSS::CSSComputedStyleProperty>::create();
   for (int id = firstCSSProperty; id <= lastCSSProperty; ++id) {
     CSSPropertyID property_id = static_cast<CSSPropertyID>(id);
-    if (!CSSPropertyMetadata::IsEnabledProperty(property_id) ||
+    if (!CSSPropertyAPI::Get(property_id).IsEnabled() ||
         isShorthandProperty(property_id) ||
         !CSSPropertyAPI::Get(property_id).IsProperty())
       continue;
