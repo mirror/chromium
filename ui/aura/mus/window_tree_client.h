@@ -504,6 +504,7 @@ class AURA_EXPORT WindowTreeClient
   void SetCursorSize(ui::CursorSize cursor_size) override;
   void SetGlobalOverrideCursor(base::Optional<ui::CursorData> cursor) override;
   void SetCursorTouchVisible(bool enabled) override;
+  void InjectEvent(const ui::Event& event, int64_t display_id) override;
   void SetKeyEventsThatDontHideCursor(
       std::vector<ui::mojom::EventMatcherPtr> cursor_key_list) override;
   void RequestClose(Window* window) override;
