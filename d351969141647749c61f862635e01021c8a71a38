@@ -109,6 +109,30 @@
       "revId": "d351969141647749c61f862635e01021c8a71a38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78c867da_b4ea44c8",
+        "filename": "components/arc/common/accessibility_helper.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-09-06T02:17:20Z",
+      "side": 1,
+      "message": "The source of these counts are signed integers and the receiver data structure (ui/accessibility/ax_enums.idl) is also signed.\n\nBeyond that, it is in theory possible for an Android app to return a row count of -1, say if the collection were hidden or something. Stranger things have happened.",
+      "parentUuid": "bbef1c0c_532e36c5",
+      "range": {
+        "startLine": 177,
+        "startChar": 0,
+        "endLine": 178,
+        "endChar": 21
+      },
+      "revId": "d351969141647749c61f862635e01021c8a71a38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
