@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cdc2f5a4_f51a7d56",
+        "filename": "ash/login/lock_screen_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-06T22:10:04Z",
+      "side": 1,
+      "message": "nit: Comment why this can happen? It seems unexpected to me.\n\nAlso, ash:: not needed",
+      "revId": "bb1b3a8e020e40f86dba9fceb020e94351aa2199",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "787bd929_ef390cd6",
+        "filename": "ash/login/lock_screen_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-06T22:10:04Z",
+      "side": 1,
+      "message": "I think you should remove this member variable and just use SessionController::GetLastActiveUserPrefService() below. You should still check it for null, just in case a user (or a test) manages to sign in then lock the screen before prefs load.\n\nYou wouldn\u0027t need to observe session controller then.",
+      "revId": "bb1b3a8e020e40f86dba9fceb020e94351aa2199",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c59cf1c5_168a1df9",
+        "filename": "ash/login/lock_screen_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-06T22:10:04Z",
+      "side": 1,
+      "message": "Does this function have test coverage in lock_screen_controller_unittest.cc? I\u0027m surprised that file doesn\u0027t need to be updated.",
+      "revId": "bb1b3a8e020e40f86dba9fceb020e94351aa2199",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67f11183_a27e11b2",
+        "filename": "ash/public/cpp/ash_pref_names.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-06T22:10:04Z",
+      "side": 1,
+      "message": "nit: Add docs for the type of the prefs (strings? ints?)",
+      "revId": "bb1b3a8e020e40f86dba9fceb020e94351aa2199",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
