@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21b8ba5e_b6427151",
+        "filename": "ash/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 873,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-09-06T21:02:20Z",
+      "side": 1,
+      "message": "Can just be //cc/paint.",
+      "revId": "2b548fa44d097bec221a2c258de395a7c3ac4d89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
