@@ -145,6 +145,30 @@
     },
     {
       "key": {
+        "uuid": "6ef00c5d_1cfd256e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-06T14:42:26Z",
+      "side": 1,
+      "message": "\u003e Is the purpose of sBitmapCache, then, to hold on to bitmaps that aren\u0027t actively being used but may be used again soon e.g. while scrolling through a RecyclerView?\n\nYes, exactly.\n\n\u003e When this class was only used by downloads, we could destroy the entire cache as soon as downloads was closed. Now that this is being used for Suggestions as well, do we still have a mechanism for clearing out all of the cached bitmaps for a destroyed surface?\n\nHm, good point. On trunk we don\u0027t actually clear the cache when destroying the object, because it\u0027s static (only the requests, handler and native pointer are members), but with the deduplication cache we can actually have a LRU cache per instance, because we\u0027re not going to end up with duplicate bitmaps anyway :) It does make dropping the cache under memory pressure a bit more complicated though, because then _that_ is not static anymore. I\u0027m passing in a DiscardableReferencePool now, and draining it in ChromeApplication.\n\n\u003e Also, with regard to duplicate bitmaps in memory... The current sBitmapCache doesn\u0027t protect against duplicates? Is there an easy example of when we would end up with duplicate bitmaps in memory currently?\n\n1) Client A requests a bitmap, bitmap is returned to client and added to cache.\n2) GC happens. Because the LruCache is only referenced by a WeakReference, it gets garbage-collected and the WeakReference is cleared. The bitmap itself is not garbage-collected, because client A still has a strong reference to it.\n3) Client B requests the same bitmap. The WeakReference is empty, so a new empty LruCache is constructed, a new bitmap is fetched and returned to the client, and added to the cache.",
+      "parentUuid": "6cb4a097_d84c1734",
+      "range": {
+        "startLine": 53,
+        "startChar": 1,
+        "endLine": 53,
+        "endChar": 2
+      },
+      "revId": "67a536723a7e878511ce07e2f880124b9bee87db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7b7bdd53_548799d0",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
         "patchSetId": 2
@@ -168,6 +192,30 @@
     },
     {
       "key": {
+        "uuid": "5b02dbda_879f01e5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-06T14:42:26Z",
+      "side": 1,
+      "message": "OK, I\u0027ve moved this to processNextRequest() into an IdleHandler, to give the garbage collection a chance to run.",
+      "parentUuid": "7b7bdd53_548799d0",
+      "range": {
+        "startLine": 171,
+        "startChar": 16,
+        "endLine": 171,
+        "endChar": 44
+      },
+      "revId": "67a536723a7e878511ce07e2f880124b9bee87db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "343ac651_a4c6a0ce",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
         "patchSetId": 2
@@ -179,6 +227,30 @@
       "writtenOn": "2017-09-05T16:01:32Z",
       "side": 1,
       "message": "Should we compact the deduplicate cache here too?",
+      "range": {
+        "startLine": 202,
+        "startChar": 32,
+        "endLine": 202,
+        "endChar": 0
+      },
+      "revId": "67a536723a7e878511ce07e2f880124b9bee87db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a376dd7d_1d54c8ab",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-06T14:42:26Z",
+      "side": 1,
+      "message": "I\u0027m not sure that would be that helpful – if we call this method because of a memory pressure signal, usually garbage collection will happen _after_ the signal has been handled (to collect objects that have been dropped). I also don\u0027t think the empty WeakReferences in the non-compacted cache will take up significant memory compared to the Bitmaps, so I\u0027m tempted to work on the principle that the main advantage of compaction is not to save memory, but to keep performance of the data structure from degrading.",
+      "parentUuid": "343ac651_a4c6a0ce",
       "range": {
         "startLine": 202,
         "startChar": 32,
