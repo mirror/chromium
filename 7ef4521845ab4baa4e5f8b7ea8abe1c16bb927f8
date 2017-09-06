@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02178f3b_9cf55c06",
+        "filename": "services/device/public/cpp/power_monitor/power_monitor_broadcast_source.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-09-06T00:50:49Z",
+      "side": 1,
+      "message": "Does this need a comment indicating that the callbacks will be called on this task_runner? I haven\u0027t checked the GPU watchdog code (for example) to understand whether it can handle having OnSuspend/OnResume called by a different thread than the one it currently expects them on.",
+      "revId": "7ef4521845ab4baa4e5f8b7ea8abe1c16bb927f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
