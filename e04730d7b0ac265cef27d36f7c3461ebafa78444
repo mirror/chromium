@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57067a05_3d8177cd",
+        "filename": "net/quic/chromium/quic_stream_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1031,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-06T19:46:02Z",
+      "side": 1,
+      "message": "Ryan, I still have not figured out why we are triggering this CHECK failure.\nIt\u0027s possible (though very unlikely) that something went wrong when copying the QuicServerId, as QuicServerId doesn\u0027t explicitly define a copy constructor.\n\nSince the copying is not needed, I\u0027ll remove it so we have one fewer thing to consider.",
+      "revId": "e04730d7b0ac265cef27d36f7c3461ebafa78444",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
