@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed14094b_a614cdfd",
+        "filename": "components/ui_devtools/views/window_element.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-06T15:29:26Z",
+      "side": 1,
+      "message": "Don\u0027t need this here. Just declare the var below where you set it to a real value.",
+      "revId": "60f86b8d230c020971857fc295ebb3d45c420865",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c2b70c6_ef80a0f3",
+        "filename": "components/ui_devtools/views/window_element.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-06T15:29:26Z",
+      "side": 1,
+      "message": "Can you actually move this check in UIElement::ReorderChild() instead?",
+      "revId": "60f86b8d230c020971857fc295ebb3d45c420865",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
