@@ -381,6 +381,8 @@ PaintImage BitmapImage::PaintImageForCurrentFrame() {
 
 PassRefPtr<Image> BitmapImage::ImageForDefaultFrame() {
   if (FrameCount() > 1) {
+    // TODO(khushalsagar): Set the repetition policy to kAnimationNone on this
+    // image so cc doesn't animate it.
     return StaticBitmapImage::Create(FrameAtIndex(0u));
   }
 
@@ -455,6 +457,9 @@ int BitmapImage::RepetitionCount(bool image_known_to_be_complete) {
 }
 
 bool BitmapImage::ShouldAnimate() {
+  if (RuntimeEnabledFeatures::CompositorDrivenImageAnimationsEnabled())
+    return false;
+
   bool animated = RepetitionCount(false) != kAnimationNone &&
                   !animation_finished_ && GetImageObserver();
   if (animated && animation_policy_ == kImageAnimationPolicyNoAnimation)
@@ -560,6 +565,7 @@ void BitmapImage::StopAnimation() {
 }
 
 void BitmapImage::ResetAnimation() {
+  // TODO(khushalsagar): Plumb this resetting of animation to cc.
   StopAnimation();
   current_frame_index_ = 0;
   repetitions_complete_ = 0;
