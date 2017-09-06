@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6015400a_a9623a20",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/device/gattserverdisconnected-event/disconnected_gc.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-09-06T17:08:52Z",
+      "side": 1,
+      "message": "We need to run GC before we have yielded javascript execution with a promise. So the simulateGATTDisconnection() and runGarbageCollection calls must happen in the same code block.\n\nJust to be on the safe side, we should release the refernece to the FakePeripheral as well.  Its current implementation doesn\u0027t hold a reference to the device object... but it could change in the future.\n\nSo, I think:\n\n\n  .then(() \u003d\u003e {\n    fake_peripheral.simulateGATTDisconnection();\n    fake_peripheral \u003d undefined;\n    runGarbageCollection()\n  })",
+      "range": {
+        "startLine": 17,
+        "startChar": 3,
+        "endLine": 17,
+        "endChar": 7
+      },
+      "revId": "b333d077a7dc182360daa7058990f1c053fa980e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
