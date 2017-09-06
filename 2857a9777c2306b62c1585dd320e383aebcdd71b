@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71cc288c_bd606794",
+        "filename": "media/filters/source_buffer_stream_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-09-06T18:25:43Z",
+      "side": 1,
+      "message": "nit: I\u0027d use an enum here so tests that override the default granularity are more readable. E.g.\n\nCheckExpectedRangesByTimestamp(\"{ (10000, 100001) }\", MICROSECOND_GRANULARITY);\n\nWhere the default is MILLISECOND_GRANULARITY.",
+      "range": {
+        "startLine": 238,
+        "startChar": 43,
+        "endLine": 238,
+        "endChar": 69
+      },
+      "revId": "2857a9777c2306b62c1585dd320e383aebcdd71b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce91374f_e5777e89",
+        "filename": "media/filters/source_buffer_stream_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 4080,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-09-06T18:25:43Z",
+      "side": 1,
+      "message": "Nit: we chatted about simpler timestamps for readability\nNit: remove estimated duration from this one since its not critical",
+      "range": {
+        "startLine": 4080,
+        "startChar": 28,
+        "endLine": 4080,
+        "endChar": 35
+      },
+      "revId": "2857a9777c2306b62c1585dd320e383aebcdd71b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
