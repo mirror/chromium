@@ -19,6 +19,40 @@
     },
     {
       "key": {
+        "uuid": "6887aee7_7673724e",
+        "filename": "ash/login/ui/login_auth_user_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-06T17:50:25Z",
+      "side": 1,
+      "message": "Can you move ShowErrorMessage/etc into LockContentsView? That way LoginAuthUserView does not need to know how failures are handled and most of the logic stays isolated in LockContentsView.\n\n|unlock_attempt_| can be a LockContents instance member and reset to 0 whenever the auth user changes.",
+      "revId": "b209c0094b4370ac749952cceed0162cc5e2ac79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e46cc6b_aeba40bf",
+        "filename": "ash/login/ui/login_auth_user_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-06T17:50:25Z",
+      "side": 1,
+      "message": "nit: The comment sort of implies authentication success. Can you change it to\n\n    // Called when authentication check is complete.",
+      "revId": "b209c0094b4370ac749952cceed0162cc5e2ac79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "da4f8b86_5710b109",
         "filename": "ash/login/ui/login_auth_user_view.h",
         "patchSetId": 2
@@ -30,6 +64,23 @@
       "writtenOn": "2017-09-06T17:22:03Z",
       "side": 1,
       "message": "nit: LoginBubble* const",
+      "revId": "b209c0094b4370ac749952cceed0162cc5e2ac79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdbe399f_00f2054a",
+        "filename": "ash/login/ui/login_base_bubble_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-06T17:50:25Z",
+      "side": 1,
+      "message": "Is there a reason this should be separate from login_bubble.cc? It doesn\u0027t expose any API and just contains common setup code, so it feels like an implementation detail w.r.t. LoginErrorBubbleView and LoginUserMenuView. Since both of those are defined together in a cc file I think it makes sense to do the same for this as well.",
       "revId": "b209c0094b4370ac749952cceed0162cc5e2ac79",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -166,6 +217,23 @@
       "writtenOn": "2017-09-06T17:22:03Z",
       "side": 1,
       "message": "This does not feel like to be part of LoginBubble.\n\nCan we e.g. have two Show methods, say ShowErrorBubble and ShowUserMenu? We could probably get rid of the two CreateXXX methods and LoginBubbleType and rely on the Show methods to create proper contents view of the bubble.",
+      "revId": "b209c0094b4370ac749952cceed0162cc5e2ac79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "597c6891_885af15e",
+        "filename": "ash/login/ui/login_bubble_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-06T17:50:25Z",
+      "side": 1,
+      "message": "nit: units",
       "revId": "b209c0094b4370ac749952cceed0162cc5e2ac79",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
