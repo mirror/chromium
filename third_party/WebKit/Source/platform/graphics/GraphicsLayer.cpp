@@ -96,6 +96,7 @@ GraphicsLayer::GraphicsLayer(GraphicsLayerClient* client)
       should_flatten_transform_(true),
       backface_visibility_(true),
       draws_content_(false),
+      draws_content_for_image_(false),
       contents_visible_(true),
       is_root_for_isolated_group_(false),
       should_hit_test_(false),
@@ -333,6 +334,16 @@ bool GraphicsLayer::PaintWithoutCommit(
   return true;
 }
 
+WebLayer* GraphicsLayer::GetEnclosedWebLayer() {
+  if (DrawsContent())
+    return layer_->Layer();
+
+  if (DrawsContentForImage())
+    return image_layer_->Layer();
+
+  return nullptr;
+}
+
 void GraphicsLayer::UpdateChildList() {
   WebLayer* child_host = layer_->Layer();
   child_host->RemoveAllChildren();
@@ -370,6 +381,14 @@ void GraphicsLayer::UpdateLayerIsDrawable() {
     for (size_t i = 0; i < link_highlights_.size(); ++i)
       link_highlights_[i]->Invalidate();
   }
+}
+
+void GraphicsLayer::UpdateImageLayerIsDrawable() {
+  image_layer_->Layer()->SetDrawsContent(draws_content_for_image_ &&
+                                         contents_visible_);
+
+  if (draws_content_for_image_)
+    image_layer_->Layer()->Invalidate();
 }
 
 void GraphicsLayer::UpdateContentsRect() {
@@ -648,6 +667,9 @@ std::unique_ptr<JSONObject> GraphicsLayer::LayerAsJSONInternal(
   if (!draws_content_)
     json->SetBoolean("drawsContent", false);
 
+  if (!draws_content_for_image_)
+    json->SetBoolean("drawsContentForImage", false);
+
   if (!contents_visible_)
     json->SetBoolean("contentsVisible", false);
 
@@ -910,6 +932,17 @@ void GraphicsLayer::SetDrawsContent(bool draws_content) {
     paint_controller_.reset();
 }
 
+void GraphicsLayer::SetDrawsContentForImage(bool draws_content) {
+  if (draws_content == draws_content_for_image_)
+    return;
+
+  draws_content_for_image_ = draws_content;
+  UpdateImageLayerIsDrawable();
+
+  if (!draws_content && paint_controller_)
+    paint_controller_.reset();
+}
+
 void GraphicsLayer::SetContentsVisible(bool contents_visible) {
   // NOTE: This early-exit is only correct because we also properly call
   // WebLayer::setDrawsContent() whenever |m_contentsLayer| is set to a new
@@ -919,6 +952,7 @@ void GraphicsLayer::SetContentsVisible(bool contents_visible) {
 
   contents_visible_ = contents_visible;
   UpdateLayerIsDrawable();
+  UpdateImageLayerIsDrawable();
 }
 
 void GraphicsLayer::SetClipParent(WebLayer* parent) {
@@ -1014,12 +1048,13 @@ void GraphicsLayer::SetContentsNeedsDisplay() {
 }
 
 void GraphicsLayer::SetNeedsDisplay() {
-  if (!DrawsContent())
+  WebLayer* layer = GetEnclosedWebLayer();
+  if (!layer)
     return;
 
   // TODO(chrishtr): Stop invalidating the rects once
   // FrameView::paintRecursively() does so.
-  layer_->Layer()->Invalidate();
+  layer->Invalidate();
   for (size_t i = 0; i < link_highlights_.size(); ++i)
     link_highlights_[i]->Invalidate();
   GetPaintController().InvalidateAll();
@@ -1033,11 +1068,12 @@ void GraphicsLayer::SetNeedsDisplayInRect(
     const IntRect& rect,
     PaintInvalidationReason invalidation_reason,
     const DisplayItemClient& client) {
-  if (!DrawsContent())
+  WebLayer* layer = GetEnclosedWebLayer();
+  if (!layer)
     return;
 
   if (!ScopedSetNeedsDisplayInRectForTrackingOnly::s_enabled_) {
-    layer_->Layer()->InvalidateRect(rect);
+    layer->InvalidateRect(rect);
     if (FirstPaintInvalidationTracking::IsEnabled())
       debug_info_.AppendAnnotatedInvalidateRect(rect, invalidation_reason);
     for (size_t i = 0; i < link_highlights_.size(); ++i)
@@ -1074,12 +1110,14 @@ void GraphicsLayer::SetContentsToImage(
     if (!image_layer_) {
       image_layer_ =
           Platform::Current()->CompositorSupport()->CreateImageLayer();
+      SetDrawsContentForImage(true);
       RegisterContentsLayer(image_layer_->Layer());
     }
     image_layer_->SetImage(std::move(paint_image));
     image_layer_->Layer()->SetOpaque(image->CurrentFrameKnownToBeOpaque());
     UpdateContentsRect();
   } else if (image_layer_) {
+    SetDrawsContentForImage(false);
     UnregisterContentsLayer(image_layer_->Layer());
     image_layer_.reset();
   }
@@ -1154,7 +1192,7 @@ void GraphicsLayer::didChangeScrollbarsHidden(bool hidden) {
 }
 
 PaintController& GraphicsLayer::GetPaintController() const {
-  CHECK(DrawsContent());
+  CHECK(DrawsContent() || DrawsContentForImage());
   if (!paint_controller_)
     paint_controller_ = PaintController::Create();
   return *paint_controller_;
