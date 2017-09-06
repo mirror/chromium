@@ -8,16 +8,11 @@
 #include <stddef.h>
 
 #include "base/macros.h"
-#include "base/memory/weak_ptr.h"
 #include "base/threading/thread_checker.h"
 #include "base/timer/timer.h"
 #include "net/proxy/mojo_proxy_resolver_factory.h"
-
-#if !defined(OS_ANDROID)
-namespace content {
-class UtilityProcessHost;
-}
-#endif
+#include "services/service_manager/public/cpp/connector.h"
+#include "services/service_manager/public/interfaces/connector.mojom.h"
 
 namespace base {
 template <typename Type>
@@ -26,8 +21,7 @@ struct DefaultSingletonTraits;
 
 // A factory used to create connections to Mojo proxy resolver services.  On
 // Android, the proxy resolvers will run in the browser process, and on other
-// platforms, they'll all be run in the same utility process. Utility process
-// crashes are detected and the utility process is automatically restarted.
+// platforms, they'll all be run in the same utility process.
 class ChromeMojoProxyResolverFactory : public net::MojoProxyResolverFactory {
  public:
   static ChromeMojoProxyResolverFactory* GetInstance();
@@ -42,6 +36,12 @@ class ChromeMojoProxyResolverFactory : public net::MojoProxyResolverFactory {
   friend struct base::DefaultSingletonTraits<ChromeMojoProxyResolverFactory>;
   ChromeMojoProxyResolverFactory();
   ~ChromeMojoProxyResolverFactory() override;
+
+  void BindConnectorOnUIThread(
+      service_manager::mojom::ConnectorRequest request);
+
+  // Initializes the ServiceManager's connector if it hasn't been already.
+  void InitServiceManagerConnector();
 
   // Creates the proxy resolver factory. On desktop, creates a new utility
   // process before creating it out of process. On Android, creates it on the
@@ -58,11 +58,9 @@ class ChromeMojoProxyResolverFactory : public net::MojoProxyResolverFactory {
   // destroyed.
   void OnIdleTimeout();
 
-  net::interfaces::ProxyResolverFactoryPtr resolver_factory_;
+  std::unique_ptr<service_manager::Connector> service_manager_connector_;
 
-#if !defined(OS_ANDROID)
-  base::WeakPtr<content::UtilityProcessHost> weak_utility_process_host_;
-#endif
+  net::interfaces::ProxyResolverFactoryPtr resolver_factory_;
 
   size_t num_proxy_resolvers_ = 0;
 

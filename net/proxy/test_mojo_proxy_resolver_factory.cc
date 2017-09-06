@@ -10,6 +10,17 @@
 
 namespace net {
 
+namespace {
+
+class TestMojoProxyResolverFactoryImpl : public MojoProxyResolverFactoryImpl {
+ public:
+  TestMojoProxyResolverFactoryImpl()
+      : MojoProxyResolverFactoryImpl(
+            std::unique_ptr<service_manager::ServiceContextRef>()) {}
+};
+
+}  // namespace
+
 TestMojoProxyResolverFactory* TestMojoProxyResolverFactory::GetInstance() {
   return base::Singleton<TestMojoProxyResolverFactory>::get();
 }
@@ -25,7 +36,7 @@ TestMojoProxyResolverFactory::CreateResolver(
 }
 
 TestMojoProxyResolverFactory::TestMojoProxyResolverFactory() {
-  mojo::MakeStrongBinding(std::make_unique<MojoProxyResolverFactoryImpl>(),
+  mojo::MakeStrongBinding(std::make_unique<TestMojoProxyResolverFactoryImpl>(),
                           mojo::MakeRequest(&factory_));
 }
 
