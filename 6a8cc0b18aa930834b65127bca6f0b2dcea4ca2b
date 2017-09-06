@@ -42,6 +42,40 @@
     },
     {
       "key": {
+        "uuid": "5eb16d14_8d8eefa4",
+        "filename": "chrome/test/data/chromeos/app_mode/webstore/downloads/fmmbbdiapbcicajbpkpkdbcgidgppada.crx",
+        "patchSetId": 37
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-06T18:34:26Z",
+      "side": 1,
+      "message": "Any reason to not just pack the extension in the body of the test?  That\u0027s what we normally do, and means we don\u0027t have to include the crx and PEM files in the source tree.",
+      "revId": "6a8cc0b18aa930834b65127bca6f0b2dcea4ca2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37122d26_b74600da",
+        "filename": "extensions/browser/api/virtual_keyboard/virtual_keyboard_api.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-06T18:34:26Z",
+      "side": 1,
+      "message": "wrap the body with brackets",
+      "revId": "6a8cc0b18aa930834b65127bca6f0b2dcea4ca2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e2763628_4a10d6a5",
         "filename": "extensions/common/api/virtual_keyboard.idl",
         "patchSetId": 37
