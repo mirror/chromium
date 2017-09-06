@@ -1117,6 +1117,7 @@
     "args": [
       "--xvfb",
       "../../third_party/WebKit/Tools/Scripts/run-webkit-tests",
+      "--additional-driver-flag=--root-layer-scrolls",
       "--clobber-old-results",
       "--debug-rwt-logging",
       "--no-show-results",
@@ -1130,6 +1131,7 @@
     "args": [
       "--xvfb",
       "../../third_party/WebKit/Tools/Scripts/run-webkit-tests",
+      "--additional-driver-flag=--root-layer-scrolls",
       "--seed", "4",
       "--no-show-results",
       "--clobber-old-results",
