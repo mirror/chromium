@@ -82,12 +82,16 @@ AXRole: AXWebArea
     AXRole: AXMath
         AXRole: AXStaticText "x "
             AXRole: AXInlineTextBox "x "
+        AXRole: AXStaticText " "
         AXRole: AXStaticText "+ "
             AXRole: AXInlineTextBox "+ "
+        AXRole: AXStaticText " "
         AXRole: AXStaticText "a "
             AXRole: AXInlineTextBox "a "
+        AXRole: AXStaticText " "
         AXRole: AXStaticText "/ "
             AXRole: AXInlineTextBox "/ "
+        AXRole: AXStaticText " "
         AXRole: AXStaticText "b"
             AXRole: AXInlineTextBox "b"
     AXRole: AXMain
