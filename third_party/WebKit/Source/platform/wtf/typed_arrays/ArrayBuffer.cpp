@@ -47,20 +47,21 @@ bool ArrayBuffer::Transfer(ArrayBufferContents& result) {
 
   if (all_views_are_neuterable) {
     contents_.Transfer(result);
+
+    while (first_view_) {
+      ArrayBufferView* current = first_view_;
+      RemoveView(current);
+      current->Neuter();
+    }
+
+    is_neutered_ = true;
   } else {
+    // TODO(binji): This is not spec compliant; an ArrayBuffer should never be
+    // copied instead of transferring.
     contents_.CopyTo(result);
     if (!result.Data())
       return false;
   }
-
-  while (first_view_) {
-    ArrayBufferView* current = first_view_;
-    RemoveView(current);
-    if (all_views_are_neuterable || current->IsNeuterable())
-      current->Neuter();
-  }
-
-  is_neutered_ = true;
 
   return true;
 }
