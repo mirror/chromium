@@ -16,6 +16,24 @@
       "revId": "0c93ab7a1c25a91e58a89d9e230d8f0b4e1d190d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77bbc486_59ff5556",
+        "filename": "third_party/polymer/v1_0/components-chromium/iron-flex-layout/classes/compiled_resources2.gyp",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-06T19:17:39Z",
+      "side": 1,
+      "message": "Yeah, they\u0027re unrelated. Just `git rm` all the newly-added iron-flex-layout files manually. I\u0027ll work up a CL to automate that.\n\nThe files were removed in https://chromium-review.googlesource.com/c/chromium/src/+/575388 but bower will re-add them.",
+      "parentUuid": "b6a595b1_9db50c12",
+      "revId": "0c93ab7a1c25a91e58a89d9e230d8f0b4e1d190d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
