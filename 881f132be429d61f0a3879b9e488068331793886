@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8eaf2279_6ac97b2c",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 6
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-09-06T04:21:47Z",
+      "side": 1,
+      "message": "These descriptions should be less about the context and more about giving details about what the text really means (for translators). (e.g., I would imagine a translator would struggle with what \"new\" means in this case because some languages would have different words for various meanings of \"new\").\n\nSo perhaps \"The command to open a link in a newly created window of the same app the user is currently in\". (reword as necessary)",
+      "range": {
+        "startLine": 417,
+        "startChar": 132,
+        "endLine": 417,
+        "endChar": 147
+      },
+      "revId": "881f132be429d61f0a3879b9e488068331793886",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59daf179_9ff2931d",
+        "filename": "chrome/browser/renderer_context_menu/render_view_context_menu.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1144,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-09-06T04:21:47Z",
+      "side": 1,
+      "message": "Invert logic and return early.\n\nAlso, this reverted back to an assignment-in-if-statement (which I don\u0027t like, and is incompatible with early return). Please move the assignment outside, and then simply return if null.",
+      "range": {
+        "startLine": 1144,
+        "startChar": 2,
+        "endLine": 1144,
+        "endChar": 4
+      },
+      "revId": "881f132be429d61f0a3879b9e488068331793886",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8120e87e_6109a089",
+        "filename": "chrome/browser/renderer_context_menu/render_view_context_menu.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1149,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-09-06T04:21:47Z",
+      "side": 1,
+      "message": "Can you just store an int variable with the IDS constant, and then move the GetStringFUTF16 call outside the if statement?",
+      "range": {
+        "startLine": 1149,
+        "startChar": 6,
+        "endLine": 1149,
+        "endChar": 29
+      },
+      "revId": "881f132be429d61f0a3879b9e488068331793886",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
