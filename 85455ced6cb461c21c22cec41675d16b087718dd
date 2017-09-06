@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecec2dcc_203cfdc8",
+        "filename": "chrome/browser/chromeos/hats/hats_notification_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-09-06T07:09:43Z",
+      "side": 1,
+      "message": "Is it okay to have the official google icon under BSD-style license? https://cs.chromium.org/chromium/src/chrome/app/vector_icons/google_g_logo.icon\n\nI remember previously there being issues with the license. Is it different since we have it as a .icon file now?",
+      "revId": "85455ced6cb461c21c22cec41675d16b087718dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
