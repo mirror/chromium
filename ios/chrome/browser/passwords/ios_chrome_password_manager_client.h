@@ -7,6 +7,7 @@
 
 #include "base/macros.h"
 #import "components/password_manager/core/browser/password_manager_client.h"
+#include "components/password_manager/core/browser/password_manager_client_helper.h"
 #include "components/password_manager/core/browser/password_manager_metrics_recorder.h"
 #include "components/password_manager/sync/browser/sync_credentials_filter.h"
 #include "components/prefs/pref_member.h"
@@ -37,7 +38,8 @@ class PasswordFormManager;
 
 // An iOS implementation of password_manager::PasswordManagerClient.
 class IOSChromePasswordManagerClient
-    : public password_manager::PasswordManagerClient {
+    : public password_manager::PasswordManagerClient,
+      public password_manager::PasswordManagerClientHelperDelegate {
  public:
   explicit IOSChromePasswordManagerClient(
       id<PasswordManagerClientDelegate> delegate);
@@ -81,6 +83,9 @@ class IOSChromePasswordManagerClient
   ukm::SourceId GetUkmSourceId() override;
   password_manager::PasswordManagerMetricsRecorder& GetMetricsRecorder()
       override;
+
+  // password_manager::PasswordManagerClientHelperDelegate implementation.
+  void PromptUserToEnableAutosigninIfNecessary() override;
 
  private:
   id<PasswordManagerClientDelegate> delegate_;  // (weak)

@@ -178,3 +178,7 @@ IOSChromePasswordManagerClient::GetMetricsRecorder() {
   }
   return metrics_recorder_.value();
 }
+
+void IOSChromePasswordManagerClient::PromptUserToEnableAutosigninIfNecessary() {
+
+}
