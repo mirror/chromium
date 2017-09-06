@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d9841e1_21cd8218",
+        "filename": "components/proximity_auth/unlock_manager_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1132401
+      },
+      "writtenOn": "2017-09-06T00:44:24Z",
+      "side": 1,
+      "message": "This seems riskier. Why change it to checks?",
+      "range": {
+        "startLine": 165,
+        "startChar": 26,
+        "endLine": 165,
+        "endChar": 0
+      },
+      "revId": "0c46204a0d2a82f50078dc788e608ecad843f105",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
