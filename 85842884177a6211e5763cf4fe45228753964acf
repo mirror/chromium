@@ -2,6 +2,98 @@
   "comments": [
     {
       "key": {
+        "uuid": "bcf62861_880ae981",
+        "filename": "ios/chrome/browser/ui/coordinators/browser_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-06T15:05:27Z",
+      "side": 1,
+      "message": "This is private to this class, so \u0027coordinator\u0027 is implied, and technically the coordinator isn\u0027t presented (the view controller is, or can be).\n\nCan this just be \u0027State\u0027? or maybe \u0027ActivationState\u0027?",
+      "range": {
+        "startLine": 17,
+        "startChar": 11,
+        "endLine": 17,
+        "endChar": 39
+      },
+      "revId": "85842884177a6211e5763cf4fe45228753964acf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d18de6cd_f51e4d35",
+        "filename": "ios/chrome/browser/ui/coordinators/browser_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-06T15:05:27Z",
+      "side": 1,
+      "message": "The same states and callbacks will be used for coordinators whose view controllers are contained instead of presented, so maybe we should use language less specific to the present/dismiss cycle here.\n\nMaybe \u0027inactive\u0027 vs. \u0027active\u0027, so:\n\nSTOPPED_WITH_INACTIVE_VIEW_CONTROLLER\nSTARTED_WITH_ACTIVATING_VIEW_CONTROLLER\nSTARTED_WITH_ACTIVE_VIEW_CONTROLLER\nSTOPPED_WITH_DEACTIVATING_VIEW_CONTROLLER\n\nBut if the five words in each of these values, three of them are identical and that only makes them hard to tell apart. How about just {INACTIVE, ACTIVATING, ACTIVE, DEACTIVATING} ?",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 40
+      },
+      "revId": "85842884177a6211e5763cf4fe45228753964acf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2429aec_e0e9559c",
+        "filename": "ios/chrome/browser/ui/coordinators/browser_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-06T15:05:27Z",
+      "side": 1,
+      "message": "Do you need the enum prefix here?",
+      "range": {
+        "startLine": 27,
+        "startChar": 9,
+        "endLine": 27,
+        "endChar": 37
+      },
+      "revId": "85842884177a6211e5763cf4fe45228753964acf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f63cd502_6bb5b353",
+        "filename": "ios/chrome/browser/ui/coordinators/browser_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-06T15:05:27Z",
+      "side": 1,
+      "message": "We shouldn\u0027t have both this BOOL and presentationState that represents the same information. Can we make this a readonly property whose getter just returns \n\nstate \u003d\u003d ACTIVATING || state \u003d\u003d ACTIVE ?",
+      "range": {
+        "startLine": 51,
+        "startChar": 37,
+        "endLine": 51,
+        "endChar": 44
+      },
+      "revId": "85842884177a6211e5763cf4fe45228753964acf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "90719b4c_e278b8dd",
         "filename": "ios/chrome/browser/ui/coordinators/browser_coordinator.mm",
         "patchSetId": 4
@@ -19,6 +111,116 @@
     },
     {
       "key": {
+        "uuid": "c356df8e_ed0dcee8",
+        "filename": "ios/chrome/browser/ui/coordinators/browser_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-06T15:05:27Z",
+      "side": 1,
+      "message": "Let\u0027s start strict and see what happens. \n\nMaybe add a message to this DCHECK so that if we hit this it isn\u0027t confusing -- \"Unexpected state change -- maybe the view controller is still transitioning?\" (or something).",
+      "parentUuid": "90719b4c_e278b8dd",
+      "revId": "85842884177a6211e5763cf4fe45228753964acf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba056fa3_69928f6d",
+        "filename": "ios/chrome/browser/ui/coordinators/browser_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-06T15:05:27Z",
+      "side": 1,
+      "message": "Pretty sure you don\u0027t need to weak/strong here -- |self| doesn\u0027t own the block, so there\u0027s no retain cycle, and there\u0027s no real case where we think |self| should be dealloced before the block executes.",
+      "range": {
+        "startLine": 140,
+        "startChar": 31,
+        "endLine": 140,
+        "endChar": 39
+      },
+      "revId": "85842884177a6211e5763cf4fe45228753964acf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa0592a2_d515242d",
+        "filename": "ios/chrome/browser/ui/coordinators/browser_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-06T15:05:27Z",
+      "side": 1,
+      "message": "didBecomeActive?",
+      "range": {
+        "startLine": 246,
+        "startChar": 8,
+        "endLine": 246,
+        "endChar": 34
+      },
+      "revId": "85842884177a6211e5763cf4fe45228753964acf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "441c8942_3097246a",
+        "filename": "ios/chrome/browser/ui/coordinators/browser_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-06T15:05:27Z",
+      "side": 1,
+      "message": "didBecomeInactive?",
+      "range": {
+        "startLine": 250,
+        "startChar": 8,
+        "endLine": 250,
+        "endChar": 34
+      },
+      "revId": "85842884177a6211e5763cf4fe45228753964acf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a96e77cf_7c722be6",
+        "filename": "ios/clean/chrome/browser/ui/overlays/test_helpers/overlay_coordinator_test_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-06T15:05:27Z",
+      "side": 1,
+      "message": "No namespace.",
+      "range": {
+        "startLine": 10,
+        "startChar": 10,
+        "endLine": 10,
+        "endChar": 17
+      },
+      "revId": "85842884177a6211e5763cf4fe45228753964acf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1df99fb0_858cbc04",
         "filename": "ios/clean/chrome/browser/ui/overlays/test_helpers/overlay_coordinator_test_util.h",
         "patchSetId": 4
@@ -30,6 +232,70 @@
       "writtenOn": "2017-09-06T01:27:39Z",
       "side": 1,
       "message": "This was added to appease the DCHECK in the BrowserCoordinator presentationState setter.  If we want to keep that DHCECK around, then it\u0027s likely that other BrowserCoordinator unittests will also need this.  Should I move this to ios/chrome/browser/ui/browser_list/test?",
+      "revId": "85842884177a6211e5763cf4fe45228753964acf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c28861f0_92e8ab46",
+        "filename": "ios/clean/chrome/browser/ui/overlays/test_helpers/overlay_coordinator_test_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-06T15:05:27Z",
+      "side": 1,
+      "message": "Not to browser_list, no, since it has nothing to do with browser lists. But somewhere more generic seems sensible (we may want to rename the function \u0027WaitForViewControllerPresentation\u0027, and have it take a BrowserCoordinator, of course).",
+      "parentUuid": "1df99fb0_858cbc04",
+      "revId": "85842884177a6211e5763cf4fe45228753964acf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d05c7da_52150784",
+        "filename": "ios/clean/chrome/browser/ui/overlays/test_helpers/overlay_coordinator_test_util.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-06T15:05:27Z",
+      "side": 1,
+      "message": "ASSERT_TRUE seems correct here too.",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 13
+      },
+      "revId": "85842884177a6211e5763cf4fe45228753964acf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "212d3dda_536b9bd6",
+        "filename": "ios/clean/chrome/browser/ui/overlays/test_helpers/overlay_coordinator_test_util.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-06T15:05:27Z",
+      "side": 1,
+      "message": "Any reason not to use the same AnimateAlongside technology here?",
+      "range": {
+        "startLine": 22,
+        "startChar": 2,
+        "endLine": 22,
+        "endChar": 13
+      },
       "revId": "85842884177a6211e5763cf4fe45228753964acf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
